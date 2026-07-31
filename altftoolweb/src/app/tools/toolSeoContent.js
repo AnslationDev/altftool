@@ -170,7 +170,14 @@ export const buildToolSeoContent = cache(function buildToolSeoContent(slug, tool
   const intro =
     central.intro ||
     override?.intro ||
-    `${name} is a free ${categoryLabel} tool that runs entirely in your browser — nothing to install, no account to create, and your data never leaves your device. Open the page, add your input, and get a clean, copy-ready result in seconds.`;
+    // This used to end with "and your data never leaves your device" — a PRIVACY
+    // claim asserted on ~3,550 uncurated tool pages, and untrue for 30 of them: those
+    // directories call a remote origin or our own /api routes (Dependency Vulnerability
+    // Lookup queries OSV.dev; the IP checker and speed test must reach a server). A tool
+    // that really is local-only can say so in its own curated intro, where the claim is
+    // checked against that tool. The shared fallback now states only what holds for all
+    // of them.
+      `${name} is a free ${categoryLabel} tool that runs in your browser — nothing to install and no account to create. Open the page, add your input, and get a clean, copy-ready result in seconds.`;
 
   // Examples (benefits): central admin override > hand-written code override >
   // category template (with the tool name injected so copy stays unique).
@@ -190,8 +197,10 @@ export const buildToolSeoContent = cache(function buildToolSeoContent(slug, tool
           answer: `Yes — ${name} is completely free on AltFTool, with no signup, no trial limits, and no hidden costs.`,
         },
         {
-          question: `Is my data private when I use ${name}?`,
-          answer: `Yes. ${name} runs in your browser, so what you enter or upload stays on your device instead of being sent to a server.`,
+            // Same correction as the intro: this answered "yes, private" for every
+            // uncurated tool, including the ones that call a server.
+            question: `Do I need an account to use ${name}?`,
+            answer: `No. ${name} is free on AltFTool with no signup and nothing to install — open the page and use it. Tools that need to contact a service to work say so on their own page.`,
         },
         {
           question: `What can I use ${name} for?`,

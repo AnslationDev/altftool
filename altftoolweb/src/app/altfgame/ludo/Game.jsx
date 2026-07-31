@@ -557,6 +557,8 @@ const LudoGame = () => {
                 ref={canvasRef}
                 width={CANVAS_SIZE}
                 height={CANVAS_SIZE}
+                role="application"
+                aria-label="Ludo game canvas. Tap the dice to roll, then tap a highlighted token to move it. Get all four tokens home before your rivals."
                 style={{
                     touchAction: 'none', // Handle all touches in JS
                     width: '90vmin',

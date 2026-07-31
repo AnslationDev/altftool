@@ -3842,10 +3842,10 @@ export const toolContentOverrides = {
     ]
   },
   "fantasy-character-name-generator": {
-    "intro": "The Fantasy Character Name Generator is a powerful tool designed for authors, game developers, and fantasy enthusiasts, generating unique and captivating character names from a single keyword. With the option to specify a theme, users can tailor their results to fit their specific world-building needs. Whether you're writing a novel or creating a new game, this tool helps spark creativity and bring your characters to life.",
+    "intro": "The Fantasy Character Name Generator is a quick tool for authors, game developers, and fantasy enthusiasts: one click produces six unique two-part fantasy character names drawn from a curated name pool. Whether you're writing a novel or creating a new game, it helps you skip past blank-page brainstorming and get straight to a shortlist worth considering.",
     "useCases": [
       "Developing a new role-playing game and needing a diverse cast of characters with unique and memorable names",
-      "Writing a fantasy novel and seeking inspiration for character names that fit the story's specific magical or cultural context",
+      "Writing a fantasy novel and needing a quick shortlist of names to try against a character before committing to one",
       "Creating a tabletop game and wanting to quickly generate names for non-playable characters, such as townspeople or enemies"
     ],
     "benefits": [
@@ -3855,31 +3855,31 @@ export const toolContentOverrides = {
       ],
       [
         "Time-Saving",
-        "With the ability to generate names based on a keyword and theme, you can save hours of brainstorming and focus on developing your story or game"
+        "One click produces six names at once, saving the time you'd spend brainstorming combinations by hand"
       ],
       [
-        "Customization",
-        "The tool's optional theme feature allows you to tailor the generated names to fit the specific needs of your world, whether it's high fantasy, science fiction, or historical fiction"
+        "No Sign-Up Required",
+        "Generate as many rounds of names as you like, for free, with no account or limits"
       ]
     ],
     "faqs": [
       [
-        "How do I use the theme option to get more specific results?",
-        "To use the theme option, simply select a theme from the dropdown list before generating names, and the tool will tailor the results to fit that specific cultural or mythological background"
+        "What does the 'Theme (optional)' field do?",
+        "It's currently a free-text note field and doesn't change the names produced — every click draws from the same curated name pool regardless of what's typed there. Use it as a scratch space for your own notes if you like, or leave it blank."
       ],
       [
         "Can I use the Fantasy Character Name Generator for free?",
         "Yes, the Fantasy Character Name Generator is available for free, with no limits on the number of names you can generate"
       ],
       [
-        "How do I save my favorite generated names for later use?",
-        "You can save your favorite names by clicking on the 'Favorite' button next to each name, and they will be stored in a separate list for easy access later"
+        "How do I keep a name I like?",
+        "There's no built-in save list — copy or note down any name you want to keep before generating again, since each click replaces the current set of six."
       ]
     ],
     "steps": [
-      "Enter a keyword that inspires your character, such as 'dragon' or 'moon', to generate a list of fresh and imaginative names",
-      "Optionally, select a theme from the provided list to narrow down the results and give your character a specific cultural or mythological background",
-      "Browse through the generated list of names, and click on the ones that resonate with you to discover more variations and inspirations"
+      "Optionally type a note into the 'Theme (optional)' text box — it is a free-text field, not a dropdown, and it does not currently change the names produced",
+      "Click the 'Generate' button to produce a fresh set of six two-part fantasy names",
+      "Browse the six names in the list, and click 'Generate' again as many times as you like to roll a new set until one fits your character"
     ]
   },
   "grade-percentage-calculator": {

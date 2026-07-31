@@ -118,11 +118,6 @@ export function buildNetlifyToml({
   }
 
   const allRedirects = [];
-  if (spaFallback) {
-    // Netlify's documented SPA history-pushstate fallback: rewrite everything
-    // to index.html with a 200 so client-side routing handles the path.
-    allRedirects.push({ from: "/*", to: "/index.html", status: 200, force: false });
-  }
   for (let index = 0; index < redirects.length; index += 1) {
     const entry = redirects[index] ?? {};
     const from = String(entry.from ?? "").trim();
@@ -144,6 +139,14 @@ export function buildNetlifyToml({
       };
     }
     allRedirects.push({ from, to, status, force: Boolean(entry.force) });
+  }
+  if (spaFallback) {
+    // Netlify's documented SPA history-pushstate fallback: rewrite everything
+    // to index.html with a 200 so client-side routing handles the path. This
+    // must be appended last — Netlify evaluates [[redirects]] top to bottom
+    // and stops at the first match, so a catch-all placed earlier would
+    // shadow every user-entered redirect/rewrite rule above it.
+    allRedirects.push({ from: "/*", to: "/index.html", status: 200, force: false });
   }
 
   const edges = [];

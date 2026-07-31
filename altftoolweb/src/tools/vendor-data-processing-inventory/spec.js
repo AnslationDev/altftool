@@ -44,10 +44,16 @@ export const spec = {
       const parsed = lines.map((line) => line.split("|").map((cell) => cell.trim()));
       const incomplete = parsed.filter((row) => row.length < headers.length || row.slice(0, headers.length).some((cell) => !cell)).length;
       const tableRows = parsed.map((row) => headers.map((_, index) => row[index] || "—"));
+      // "Require complete rows" / "Flag missing columns" must gate every place
+      // the incomplete-row flag is surfaced, not just the caption — when off,
+      // treat every row as complete for the stat tiles too.
+      const flagIncomplete = Boolean(values.required);
+      const needsReview = flagIncomplete ? incomplete : 0;
+      const completeRows = flagIncomplete ? Math.max(0, lines.length - incomplete) : lines.length;
       return {
         result: lines.length + " record" + (lines.length === 1 ? "" : "s") + " mapped",
-        caption: values.required ? incomplete + " incomplete row(s)" : headers.length + " tracked fields",
-        rows: [["Complete rows", Math.max(0, lines.length - incomplete)], ["Needs review", incomplete], ["Columns", headers.length]],
+        caption: flagIncomplete ? incomplete + " incomplete row(s)" : headers.length + " tracked fields",
+        rows: [["Complete rows", completeRows], ["Needs review", needsReview], ["Columns", headers.length]],
         table: { headers, rows: tableRows.slice(0, 100) },
         list: lines.length ? [] : ["Add one record per line and separate fields with |."],
       };

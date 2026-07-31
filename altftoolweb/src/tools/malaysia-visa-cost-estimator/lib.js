@@ -25,7 +25,6 @@ export const VISA_EXEMPTION_MAX_STAY_DAYS = 30;
  * The Malaysia Digital Arrival Card is free, mandatory for most foreign
  * travellers, and can be submitted from three days before arrival.
  */
-export const MDAC_FEE_RM = 0;
 export const MDAC_WINDOW_DAYS = 3;
 
 /**
@@ -169,7 +168,18 @@ export function estimateMalaysiaVisaCost({
     ? round2(visaFeeRm + processingFeeRm + serviceFeeRm)
     : 0;
   const totalRm = round2(perTravellerRm * travellers);
-  const totalRmInr = round2(totalRm * exchangeRate);
+
+  // Each Malaysian-charge line is rounded once in ringgit, then once after the
+  // FX conversion — the same two-step rounding the line-by-line table uses.
+  // The headline total is then the SUM of those already-rounded line amounts,
+  // not an independently-rounded RM subtotal converted to INR, so the
+  // "Total entry cost" headline always agrees with the line-by-line table to
+  // the paisa (same fix pattern as student-mess-bill-splitter and
+  // unit-test-weightage-calculator).
+  const visaLineInr = route.requiresVisa ? round2(round2(visaFeeRm * travellers) * exchangeRate) : 0;
+  const processingLineInr = route.requiresVisa ? round2(round2(processingFeeRm * travellers) * exchangeRate) : 0;
+  const serviceLineInr = route.requiresVisa ? round2(round2(serviceFeeRm * travellers) * exchangeRate) : 0;
+  const totalRmInr = round2(visaLineInr + processingLineInr + serviceLineInr);
 
   const cardMarkupInr = round2((totalRmInr * cardMarkupPct) / 100);
   const gstOnMarkupInr = round2((cardMarkupInr * GST_ON_FINANCIAL_SERVICES_PCT) / 100);
@@ -196,23 +206,19 @@ export function estimateMalaysiaVisaCost({
       note: route.requiresVisa
         ? `MYR ${visaFeeRm} each`
         : "No visa fee — the visit falls inside the waiver",
-      amountInr: round2(round2(visaFeeRm * travellers) * exchangeRate * (route.requiresVisa ? 1 : 0)),
+      amountInr: visaLineInr,
     },
     {
       id: "processing",
       label: `eVISA processing charge x ${travellers}`,
       note: route.requiresVisa ? `MYR ${processingFeeRm} each` : "Not applicable",
-      amountInr: round2(
-        round2(processingFeeRm * travellers) * exchangeRate * (route.requiresVisa ? 1 : 0),
-      ),
+      amountInr: processingLineInr,
     },
     {
       id: "service",
       label: `Portal service charge x ${travellers}`,
       note: route.requiresVisa ? `MYR ${serviceFeeRm} each` : "Not applicable",
-      amountInr: round2(
-        round2(serviceFeeRm * travellers) * exchangeRate * (route.requiresVisa ? 1 : 0),
-      ),
+      amountInr: serviceLineInr,
     },
     {
       id: "mdac",

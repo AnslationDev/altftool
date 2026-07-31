@@ -676,47 +676,54 @@ export async function resetProjectData() {
 }
 
 // ----------------------------------------------------
-// CONTACT FORM SUBMISSIONS  (local JSON file via Alphobia Vite API)
+// CONTACT FORM SUBMISSIONS / LEADS
+// Firestore-backed: projects/alphobia/contactLeads/{leadId}
+// (see the matching allow-list in firestore.rules)
 // ----------------------------------------------------
-
-/** Base URL of the Alphobia dev server's contacts API. */
-const CONTACTS_API = "http://localhost:5173/api/contacts";
+// NOTE: the public-facing Alphobia marketing site is a separate codebase and
+// isn't part of this admin monorepo, so its contact-form submit handler
+// can't be located or rewired from here. Whatever writes a lead (the public
+// site's form handler, or a server route fronting it) should `addDoc`/
+// `setDoc` a document shaped exactly like firestore.rules' `hasOnly([...])`
+// allow-list for this collection:
+//   { name, email, phone, company, subject, message, status: "new", submittedAt }
+// This module owns only the admin side below: reading, updating status, and
+// deleting leads that already exist in Firestore. This replaces the previous
+// hardcoded `http://localhost:5173/api/contacts` fetch, which had no
+// Firestore backing, no env override, and silently returned [] on every
+// failure outside a local Vite dev server.
 
 /**
  * Fetch all contact submissions (newest first).
- * Reads from the local contacts.json file via the Alphobia Vite dev server.
+ * Errors are intentionally NOT caught/swallowed here — they propagate to the
+ * caller (ContactsTab.jsx already surfaces them via emitAlert) so a fetch
+ * failure shows as an error instead of a misleading empty inbox.
  */
 export async function fetchContactSubmissions() {
-  try {
-    const res = await fetch(CONTACTS_API, { cache: "no-store" });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return await res.json();
-  } catch (err) {
-    console.error("fetchContactSubmissions error:", err);
-    return [];
-  }
+  const snap = await getDocs(query(col("contactLeads"), orderBy("submittedAt", "desc")));
+  return snap.docs.map((d) => {
+    const data = d.data();
+    return {
+      id: d.id,
+      ...data,
+      submittedAt:
+        data.submittedAt && typeof data.submittedAt.toDate === "function"
+          ? data.submittedAt.toDate().toISOString()
+          : data.submittedAt ?? null,
+    };
+  });
 }
 
 /**
  * Update the status of a contact submission (e.g., "new" → "replied").
  */
 export async function updateSubmissionStatus(id, status) {
-  const res = await fetch(CONTACTS_API, {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id, status }),
-  });
-  if (!res.ok) throw new Error(`PATCH failed: HTTP ${res.status}`);
+  await updateDoc(docRef("contactLeads", id), { status });
 }
 
 /**
  * Delete a contact submission by id.
  */
 export async function deleteContactSubmission(id) {
-  const res = await fetch(CONTACTS_API, {
-    method: "DELETE",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ id }),
-  });
-  if (!res.ok) throw new Error(`DELETE failed: HTTP ${res.status}`);
+  await deleteDoc(docRef("contactLeads", id));
 }

@@ -3,7 +3,7 @@ const toolConfig = {
   name: "Eid Mubarak Wishes Generator",
   category: ["Generators"],
   description:
-    "Write Eid greetings in Urdu, Hindi, Arabic, English and nine Indian languages, with transliteration and SMS length check.",
+    "Write Eid greetings in Urdu, Hindi, Arabic, English and eight Indian languages, with transliteration and SMS length check.",
   icon: "moon-star",
   iconColor: "text-[var(--primary)]",
 };

@@ -66,12 +66,17 @@ const round2 = (value) => Math.round(value * 100) / 100;
  * @param {number|string} input.netMonthlyIncome Primary take-home pay after tax and PF.
  * @param {number|string} [input.otherMonthlyIncome] Rent received, freelance, spouse income.
  * @param {Record<string, number|string>} [input.lines] Amount per BUDGET_LINES key.
+ * @param {boolean} [input.rentIsHomeLoanEmi] Whether the "Rent or home loan EMI" line is
+ *   actually a home-loan EMI rather than plain rent. Only an EMI is a loan
+ *   obligation, so this gates whether that line counts inside FOIR — pure
+ *   rent (no loan) must not be treated as a loan obligation.
  * @returns {object} Either { error } or the computed budget.
  */
 export function computeHouseholdBudget({
   netMonthlyIncome,
   otherMonthlyIncome = 0,
   lines = {},
+  rentIsHomeLoanEmi = false,
 } = {}) {
   const primary = toAmount(netMonthlyIncome);
   const other = toAmount(otherMonthlyIncome);
@@ -109,7 +114,9 @@ export function computeHouseholdBudget({
     buckets[line.bucket] += value;
     if (line.housing) {
       housing += value;
-      emiTotal += value; // a home-loan EMI counts inside FOIR too
+      // Only counts inside FOIR when the line is actually a home-loan EMI —
+      // plain rent is not a loan obligation and must not inflate FOIR.
+      if (rentIsHomeLoanEmi) emiTotal += value;
     }
     if (line.emi) emiTotal += value;
   }

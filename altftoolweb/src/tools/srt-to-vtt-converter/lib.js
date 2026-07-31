@@ -80,16 +80,34 @@ export function formatVttTimestamp(ms) {
 /**
  * Escape the characters WebVTT treats as markup, leaving real tags and
  * existing HTML entities alone.
+ *
+ * A *bare* safe-tag name with no class/voice payload — a lone "<c>" or "<v>" —
+ * is ambiguous: ordinary prose can sandwich single-letter tokens (b, i, u, v,
+ * c are common variable names and text-speak) between stray "<"/">" symbols.
+ * Only trust a bare tag when a matching closing tag is present elsewhere on
+ * the line; a tag carrying a class or voice-name payload (e.g. "<c.loud>",
+ * "<v Roger Bingham>") is unambiguous on its own and needs no closing pair.
  */
 export function escapeCueText(line) {
   const tagPattern = new RegExp(`^/?(?:${VTT_SAFE_TAGS.join("|")})(?:[.\\s][^<>]*)?$`, "i");
+  const closingTagNames = new Set(
+    Array.from(line.matchAll(/<\/([^<>\s.]+)[^<>]*>/g), (m) => m[1].toLowerCase()),
+  );
+
   return line
     // "&" that does not already start an entity such as &amp; or &#39;
     .replace(/&(?!(?:[a-zA-Z][a-zA-Z0-9]{1,8}|#\d{1,6}|#x[0-9a-fA-F]{1,6});)/g, "&amp;")
     // "<" that does not open a tag WebVTT understands
     .replace(/<([^<>]*)>|</g, (match, inner) => {
       if (inner === undefined) return "&lt;";
-      return tagPattern.test(inner.trim()) ? `<${inner}>` : `&lt;${inner}&gt;`;
+      const trimmed = inner.trim();
+      if (!tagPattern.test(trimmed)) return `&lt;${inner}&gt;`;
+
+      const isClosingTag = trimmed.startsWith("/");
+      const bareName = trimmed.replace(/^\//, "");
+      const hasPayload = /[.\s]/.test(bareName);
+      const trusted = isClosingTag || hasPayload || closingTagNames.has(bareName.toLowerCase());
+      return trusted ? `<${inner}>` : `&lt;${inner}&gt;`;
     });
 }
 
@@ -104,6 +122,10 @@ export function parseSrt(raw) {
   const issues = [];
 
   let index = 0;
+  // Increments once per parse *attempt* — success or failure — so a warning
+  // never ends up pointing at whichever different cue later happens to take
+  // the same "cues.length + 1" slot after a skip.
+  let attemptIndex = 0;
   while (index < lines.length) {
     if (lines[index].trim() === "") {
       index += 1;
@@ -111,8 +133,10 @@ export function parseSrt(raw) {
     }
 
     let timingLine = index;
+    let originalNumber = null;
     // A bare number on its own line is the SubRip cue counter; the timing line follows.
     if (!SRT_TIMING_RE.test(lines[index]) && /^\s*\d+\s*$/.test(lines[index])) {
+      originalNumber = Number(lines[index].trim());
       timingLine = index + 1;
     }
 
@@ -122,6 +146,12 @@ export function parseSrt(raw) {
       while (index < lines.length && lines[index].trim() !== "") index += 1;
       continue;
     }
+
+    attemptIndex += 1;
+    // Prefer the cue number actually written in the source SRT — it's what
+    // the user sees when they cross-reference a warning against their file —
+    // falling back to the attempt position only when the source has none.
+    const cueLabel = originalNumber ?? attemptIndex;
 
     const startMs = partsToMs(
       Number((match[1] || "0:").slice(0, -1)),
@@ -140,7 +170,7 @@ export function parseSrt(raw) {
     const trailing = (match[9] || "").trim();
     if (trailing) {
       issues.push(
-        `Cue ${cues.length + 1}: dropped SubRip coordinates "${trailing}" — WebVTT uses line/position settings instead.`,
+        `Cue ${cueLabel}: dropped SubRip coordinates "${trailing}" — WebVTT uses line/position settings instead.`,
       );
     }
 
@@ -152,14 +182,16 @@ export function parseSrt(raw) {
     }
 
     if (body.length === 0) {
-      issues.push(`Cue ${cues.length + 1}: has timings but no text; skipped.`);
+      issues.push(`Cue ${cueLabel}: has timings but no text; skipped.`);
       continue;
     }
     if (endMs < startMs) {
-      issues.push(`Cue ${cues.length + 1}: end time is before the start time.`);
+      issues.push(`Cue ${cueLabel}: end time is before the start time.`);
     }
 
-    cues.push({ number: cues.length + 1, startMs, endMs, lines: body });
+    // Preserve the SRT's own cue number when it had one; only synthesize a
+    // dense sequential id (matching prior behaviour) for counterless files.
+    cues.push({ number: originalNumber ?? cues.length + 1, startMs, endMs, lines: body });
   }
 
   return { cues, issues };

@@ -2,8 +2,8 @@
  * Marketplace hero. Parametrized so GPT Image / Midjourney sections can reuse it.
  */
 export default function Hero({
-  title = "Top Trending Seedream 5 Pro Prompt Collections",
-  subtitle = "Browse Seedream 5 Pro prompt examples collected from the community. Instant copy-and-paste setups ready for prompt execution.",
+  title = "Top Trending AI Image Prompt Collections",
+  subtitle = "Browse AI image prompt examples from Seedream 5 Pro, OpenAI, Flux, Krea, and more — collected from the community. Instant copy-and-paste setups ready for prompt execution.",
 }) {
   return (
     <section className="mx-auto max-w-3xl px-4 pt-12 pb-6 text-center sm:pt-16">

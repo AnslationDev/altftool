@@ -137,7 +137,7 @@ export default function SendGiftPage() {
             {!isSubmitted ? (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-1">
-                  <h3 className="font-serif text-2xl font-semibold text-white">
+                  <h3 className="font-serif text-2xl font-semibold text-(--windowswap-foreground)">
                     Send All-Access Gift
                   </h3>
                   <p className="text-xs text-windowswap-cream/70">
@@ -282,19 +282,19 @@ export default function SendGiftPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <h3 className="font-serif text-3xl font-bold text-white">
+                  <h3 className="font-serif text-3xl font-bold text-(--windowswap-foreground)">
                     Request Saved!
                   </h3>
                   <p className="text-sm text-windowswap-cream/80 leading-relaxed max-w-sm">
-                    This is a demonstration copy: gift subscriptions are still in development, and this request has been saved only in this browser&rsquo;s local storage. Nothing has been charged, and nothing has been sent to AltFTool or to <span className="text-white font-semibold">{formData.recipientEmail}</span> — there is no follow-up to expect.
+                    This is a demonstration copy: gift subscriptions are still in development, and this request has been saved only in this browser&rsquo;s local storage. Nothing has been charged, and nothing has been sent to AltFTool or to <span className="text-(--windowswap-foreground) font-semibold">{formData.recipientEmail}</span> — there is no follow-up to expect.
                   </p>
                 </div>
 
                 <div className="bg-[#0b2c30]/40 rounded-2xl p-4 border border-teal-950 text-left w-full max-w-md text-xs space-y-2">
-                  <div><span className="text-windowswap-cream/60">Sender:</span> <span className="text-white font-medium">{formData.senderName}</span></div>
-                  <div><span className="text-windowswap-cream/60">Recipient:</span> <span className="text-white font-medium">{formData.recipientName} ({formData.recipientEmail})</span></div>
-                  <div><span className="text-windowswap-cream/60">Selected Plan:</span> <span className="text-white font-medium capitalize">{formData.plan === "1year" ? "1 Year All-Access ($25)" : formData.plan === "6months" ? "6 Months All-Access ($15)" : "Lifetime All-Access ($60)"}</span></div>
-                  {formData.message && <div><span className="text-windowswap-cream/60">Personal Message:</span> <span className="text-white italic">&quot;{formData.message}&quot;</span></div>}
+                  <div><span className="text-windowswap-cream/60">Sender:</span> <span className="text-(--windowswap-foreground) font-medium">{formData.senderName}</span></div>
+                  <div><span className="text-windowswap-cream/60">Recipient:</span> <span className="text-(--windowswap-foreground) font-medium">{formData.recipientName} ({formData.recipientEmail})</span></div>
+                  <div><span className="text-windowswap-cream/60">Selected Plan:</span> <span className="text-(--windowswap-foreground) font-medium capitalize">{formData.plan === "1year" ? "1 Year All-Access ($25)" : formData.plan === "6months" ? "6 Months All-Access ($15)" : "Lifetime All-Access ($60)"}</span></div>
+                  {formData.message && <div><span className="text-windowswap-cream/60">Personal Message:</span> <span className="text-(--windowswap-foreground) italic">&quot;{formData.message}&quot;</span></div>}
                 </div>
 
                 <button

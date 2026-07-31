@@ -1,6 +1,6 @@
 
 .tripfindbox-root {
-  min-height: 100vh;
+  min-height: 100dvh;
   --background: var(--anslation-ds-page);
   --foreground: var(--anslation-ds-text);
   background: var(--background);
@@ -37,7 +37,7 @@
 
 /* Original TripNest premium travel-tech design */
 .nova-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   background:
     radial-gradient(circle at 20% 0%, rgba(46, 49, 146, 0.38), transparent 34%),
@@ -1091,7 +1091,7 @@
 }
 
 .no-result-reference {
-  min-height: calc(100vh - 120px) !important;
+  min-height: calc(100dvh - 120px) !important;
   padding: 44px 0 !important;
   background:
     radial-gradient(circle at 20% 18%, rgba(46, 49, 146, 0.28), transparent 34%),
@@ -1383,7 +1383,7 @@ html[data-theme="dark"] .tripfindbox-root {
 }
 
 .flow-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   background:
     radial-gradient(circle at 12% 0%, rgba(46, 49, 146, 0.12), transparent 28%),
     #ffffff;
@@ -1436,7 +1436,7 @@ html[data-theme="dark"] .tripfindbox-root {
 .loading-shell,
 .empty-state-card,
 .booking-card {
-  min-height: calc(100vh - 56px);
+  min-height: calc(100dvh - 56px);
   display: grid;
   place-items: center;
   align-content: center;
@@ -3155,7 +3155,7 @@ html {
 }
 
 .no-result-reference {
-  min-height: calc(100vh - 148px);
+  min-height: calc(100dvh - 148px);
   padding: 30px 0 0;
   background: #2E3192;
 }
@@ -3847,7 +3847,7 @@ html[data-theme="light"] .tripfindbox-root {
 }
 
 .flow-page {
-  min-height: 100vh !important;
+  min-height: 100dvh !important;
   background:
     radial-gradient(circle at 10% 0%, rgba(46, 49, 146, 0.1), transparent 30%),
     #ffffff !important;
@@ -3903,7 +3903,7 @@ html[data-theme="light"] .tripfindbox-root {
 
 /* TripNest found-results screen: reference-style structure with TripNest theme */
 .results-found-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   background:
     radial-gradient(circle at 78% 8%, rgba(143, 92, 255, 0.18), transparent 28%),
     linear-gradient(180deg, #12008f 0%, #08006d 52%, #0c0875 100%);
@@ -6285,7 +6285,7 @@ html[data-theme="light"] .tripfindbox-root {
 .nova-page {
   position: relative;
   isolation: isolate;
-  min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
   background:
     radial-gradient(circle at 12% 12%, rgba(125, 76, 255, 0.16), transparent 28%),
@@ -7931,7 +7931,7 @@ html[data-theme="light"] .tripfindbox-root {
 
 /* TripNest no-results support layout */
 .empty-page {
-  min-height: 100vh !important;
+  min-height: 100dvh !important;
   background:
     radial-gradient(circle at 18% 18%, rgba(46, 49, 146, 0.28), transparent 28%),
     linear-gradient(180deg, #ffffff 0 86px, #2E3192 86px 168px, #2E3192 168px 82%, #2E3192 82% 100%) !important;
@@ -9220,7 +9220,7 @@ html[data-theme="light"] .tripfindbox-root {
 .results-found-page,
 .results-found-page.empty-page {
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: clip;
   background:
     radial-gradient(circle at 8% 10%, rgba(46, 49, 146, 0.13), transparent 28%),
@@ -10715,7 +10715,7 @@ html[data-theme="light"] .tripfindbox-root {
 
 /* Sitemap page */
 .sitemap-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   background: #ffffff;
   color: #34313b;
 }
@@ -10911,7 +10911,7 @@ html[data-theme="light"] .tripfindbox-root {
 /* Sitemap generated route pages */
 .site-route-page {
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
   background: #F7F7F7;
   color: #17122a;
 }
@@ -12155,7 +12155,7 @@ html[data-theme="light"] .tripfindbox-root {
 
 /* Static info pages: About, Contact, Privacy, Terms */
 .info-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   background: #ffffff !important;
 }
 
@@ -17980,7 +17980,7 @@ html[data-theme="light"] .tripfindbox-root {
   .results-found-page,
   .results-found-page.empty-page {
     background: #080071 !important;
-    min-height: 100vh;
+    min-height: 100dvh;
     padding-bottom: 112px !important;
   }
 

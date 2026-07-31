@@ -29,12 +29,21 @@ const Header = () => {
           >
             <Menu size={20} />
           </button>
+          {/*
+            This rendered a two-tone "playbuzz" wordmark — another company's
+            brand name, in their own split-colour logo treatment, as the largest
+            text on the page. Renamed to the AltF microsite convention already
+            used by AltFLovePDF, AltFLoveIMG and AltFGame. The href stays
+            /playbuzz because the route has not been renamed yet; see the note
+            in ../page.jsx.
+          */}
           <Link
             href="/playbuzz"
+            aria-label="Quiz Studio home"
             className="text-5xl max-md:text-4xl font-extrabold no-underline leading-none tracking-tight"
             style={{ color: 'var(--anslation-ds-footer-text)' }}
           >
-            <span style={{ color: 'var(--secondary)' }}>play</span>buzz
+            <span style={{ color: 'var(--secondary)' }}>AltF</span>Quiz
           </Link>
           <div
             className="relative"

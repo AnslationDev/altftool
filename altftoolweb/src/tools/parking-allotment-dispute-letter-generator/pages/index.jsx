@@ -31,8 +31,8 @@ const todayIso = () => {
 
 const DEFAULTS = {
   disputeType: "encroachment",
-  societyName: "Green Acres Co-operative Housing Society Ltd",
-  societyAddress: "Plot 14, Sector 8, Kharghar, Navi Mumbai 410210",
+  societyName: "",
+  societyAddress: "",
   memberName: "",
   flatNumber: "",
   wing: "",
@@ -40,8 +40,8 @@ const DEFAULTS = {
   slotNumber: "",
   vehicleNumber: "",
   vehicleType: "car",
-  totalSlots: "40",
-  memberVehicles: "55",
+  totalSlots: "",
+  memberVehicles: "",
   earlierRequestDate: "",
   monthlyCharge: "0",
   incidentSummary: "",
@@ -82,8 +82,8 @@ export default function ToolHome() {
         disputeType,
         societyName,
         societyAddress,
-        memberName: memberName.trim() || "(your name)",
-        flatNumber: flatNumber.trim() || "A-101",
+        memberName: memberName.trim(),
+        flatNumber: flatNumber.trim(),
         wing,
         letterDate,
         replyDays: Number(replyDays),
@@ -203,6 +203,7 @@ export default function ToolHome() {
               id="pk-society"
               className={`mt-2 ${INPUT_CLASS}`}
               type="text"
+              placeholder="Green Acres Co-operative Housing Society Ltd"
               value={societyName}
               onChange={(event) => setSocietyName(event.target.value)}
             />
@@ -215,6 +216,7 @@ export default function ToolHome() {
               id="pk-address"
               className={`mt-2 ${INPUT_CLASS}`}
               type="text"
+              placeholder="Plot 14, Sector 8, Kharghar, Navi Mumbai 410210"
               value={societyAddress}
               onChange={(event) => setSocietyAddress(event.target.value)}
             />
@@ -345,7 +347,7 @@ export default function ToolHome() {
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="pk-slots">
-              Total slots in the society
+              Total slots in the society (optional)
             </label>
             <input
               id="pk-slots"
@@ -354,13 +356,14 @@ export default function ToolHome() {
               inputMode="numeric"
               min="0"
               step="1"
+              placeholder="40"
               value={totalSlots}
               onChange={(event) => setTotalSlots(event.target.value)}
             />
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="pk-vehicles">
-              Member vehicles
+              Member vehicles (optional)
             </label>
             <input
               id="pk-vehicles"
@@ -369,6 +372,7 @@ export default function ToolHome() {
               inputMode="numeric"
               min="0"
               step="1"
+              placeholder="55"
               value={memberVehicles}
               onChange={(event) => setMemberVehicles(event.target.value)}
             />

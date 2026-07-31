@@ -11,6 +11,7 @@ import {
   MIN_START_BPM,
   MIN_TARGET_BPM,
   NORMAL_RESTING_BPM_HIGH,
+  NORMAL_RESTING_BPM_LOW,
   PATTERNS,
   RESONANCE_BPM,
   buildPacer,
@@ -137,8 +138,9 @@ export default function ToolHome() {
         <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">Panic Breathing Pacer</h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Starts near the rate you are breathing at right now and slows you down towards{" "}
-          {RESONANCE_BPM} breaths a minute, with the exhale always longer than the inhale. Small,
-          quiet breaths — not deep ones. Over-breathing is what causes the tingling and dizziness.
+          {RESONANCE_BPM} breaths a minute, with the exhale equal to or longer than the inhale
+          depending on the pattern you choose. Small, quiet breaths — not deep ones.
+          Over-breathing is what causes the tingling and dizziness.
         </p>
       </header>
 
@@ -180,7 +182,11 @@ export default function ToolHome() {
               onChange={(event) => setStart(event.target.value)}
             />
             <p className="mt-1 text-xs text-[var(--muted-foreground)]">
-              Rough guess is fine. Resting is usually {NORMAL_RESTING_BPM_HIGH} or below.
+              Rough guess is fine. A normal resting rate is about {NORMAL_RESTING_BPM_LOW}-
+              {NORMAL_RESTING_BPM_HIGH}
+              {ok && pacer.startsAboveNormal
+                ? " — yours is above that, which is expected during a panic spike."
+                : "."}
             </p>
           </div>
           <div>
@@ -328,6 +334,10 @@ export default function ToolHome() {
               ok ? `${pacer.lastCycleSeconds}s (exhale ${pacer.lastExhaleSeconds}s)` : DASH,
             ],
             ["Exhale share of each breath", ok ? `${pacer.exhaleShare}%` : DASH],
+            [
+              `Reaches resonance (${RESONANCE_BPM} bpm)`,
+              ok ? (pacer.reachesResonance ? "Yes" : "Not quite — lower the target rate") : DASH,
+            ],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

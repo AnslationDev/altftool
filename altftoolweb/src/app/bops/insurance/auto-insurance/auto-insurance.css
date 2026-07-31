@@ -22,7 +22,7 @@ body:has(.auto-insurance-page) [class*="fixed inset-y-0 left-0"][class*="max-w-x
    ========================================================================== */
 .lp {
   width: 100%;
-  min-height: 100vh;
+  min-height: 100dvh;
   background:
     linear-gradient(180deg, #ffffff 0%, #f5f8fd 38%, #eef4fb 100%);
   font-family: var(--font-sans), sans-serif;

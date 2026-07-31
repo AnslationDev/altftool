@@ -24,14 +24,14 @@ export default function HowItWorks() {
 
   return (
     <section className="mt-10">
-      <div className={`p-6 sm:p-8 wp-soft-panel`}>
+      <div className="p-6 sm:p-8 rounded-lg border border-(--border) bg-(--card)">
         <div className="text-center mb-6">
           <h2 className="text-2xl sm:text-3xl font-bold text-(--foreground)">How It Works</h2>
           <p className="text-(--muted-foreground) mt-2">Follow these simple steps to generate and improve your training plan.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {steps.map((step, index) => (
-            <div key={step.title} className={`p-4 wp-soft-panel`}>
+            <div key={step.title} className="p-4 rounded-lg border border-(--border) bg-(--background)">
               <div className="flex items-start gap-3">
                 <div className="w-8 h-8 rounded-full bg-(--primary)/10 text-(--primary) flex items-center justify-center text-sm font-bold shrink-0">
                   {index + 1}

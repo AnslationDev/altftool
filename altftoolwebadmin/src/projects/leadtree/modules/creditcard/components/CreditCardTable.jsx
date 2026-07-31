@@ -259,7 +259,7 @@ export default function CreditCardTable({
                             </button>
                         </Tooltip>
                         <Tooltip label={card.status === "published" ? "Unpublish" : "Publish"}>
-                            <button onClick={() => togglePublish(blog)}
+                            <button onClick={() => togglePublish(card)}
                                 className={`p-1.5 rounded-md transition ${card.status === "published" ? "text-gray-400 hover:bg-gray-100" : "text-green-500 hover:bg-green-50"}`}>
                                 {card.status === "published" ? <Ban className="w-4 h-4" /> : <Send className="w-4 h-4" />}
                             </button>

@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "fantasy-character-name-generator",
   name: "Fantasy Character Name Generator",
   category: ["Fun"],
-  description: "Generate fresh fantasy character names from a keyword.",
+  description: "Generate six random two-part fantasy character names in one click.",
   icon: "shuffle",
   iconColor: "text-violet-600",
 };

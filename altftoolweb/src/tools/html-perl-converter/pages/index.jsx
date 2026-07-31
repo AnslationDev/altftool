@@ -202,7 +202,11 @@ function htmlToPerl(input, options) {
   if (/<script\b/i.test(html)) {
     warnings.push("Inline script tags are preserved. Review JavaScript before embedding in Perl output.");
   }
-  if (html.includes("$") && !variables.size) {
+  let dollarCheckHtml = html;
+  variables.forEach((scalar) => {
+    dollarCheckHtml = dollarCheckHtml.split(`$${scalar}`).join("");
+  });
+  if (dollarCheckHtml.includes("$")) {
     warnings.push("Dollar signs inside HTML may interpolate in Perl heredoc output. Escape them if they are literal values.");
   }
 
@@ -261,9 +265,19 @@ function perlToHtml(input, options) {
   }
 
   if (options.vperlTagsToHtml) {
-    const expressions = countMatches(output, /<%=[\s\S]*?%>/g);
-    output = output.replace(/<%=\s*\$?([a-zA-Z_]\w*)\s*%>/g, (_, name) => `{{ ${toPlaceholderName(name)} }}`);
+    let expressions = 0;
+    output = output.replace(/<%=\s*\$?([a-zA-Z_]\w*)\s*%>/g, (_, name) => {
+      expressions += 1;
+      return `{{ ${toPlaceholderName(name)} }}`;
+    });
     if (expressions) messages.push(`${expressions} VPerl expression${expressions > 1 ? "s" : ""} converted.`);
+
+    const unconvertedExpressions = countMatches(output, /<%=[\s\S]*?%>/g);
+    if (unconvertedExpressions) {
+      warnings.push(
+        `${unconvertedExpressions} VPerl expression${unconvertedExpressions > 1 ? "s use" : " uses"} compound syntax and could not be auto-converted. Rewrite ${unconvertedExpressions > 1 ? "them" : "it"} manually.`
+      );
+    }
   }
 
   const logicBlocks = countMatches(output, /<%(?!\=)[\s\S]*?%>/g);
@@ -328,6 +342,7 @@ function ToggleOption({ active, label, helper, onClick }) {
     <button
       type="button"
       onClick={onClick}
+      aria-pressed={active}
       className={`rounded-lg border p-3 text-left transition ${
         active
           ? "border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-200"
@@ -454,9 +469,14 @@ export default function HTMLPerlConverter() {
                 key={key}
                 type="button"
                 onClick={() => {
+                  if (key === mode) return;
+                  const isDefaultContent = input.trim() === "" || input === SAMPLE_HTML || input === SAMPLE_PERL;
                   setMode(key);
-                  setInput(key === "htmlToPerl" ? SAMPLE_HTML : SAMPLE_PERL);
+                  if (isDefaultContent) {
+                    setInput(key === "htmlToPerl" ? SAMPLE_HTML : SAMPLE_PERL);
+                  }
                 }}
+                aria-pressed={mode === key}
                 className={`rounded-lg border px-4 py-3 text-left transition ${
                   mode === key
                     ? "border-blue-500 bg-blue-600 text-white shadow-sm"

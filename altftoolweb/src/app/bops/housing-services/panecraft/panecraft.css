@@ -16,7 +16,7 @@
   color: var(--pc-ink);
   font-family: var(--pc-serif);
   line-height: 1.6;
-  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .panecraft-page * { box-sizing: border-box; }

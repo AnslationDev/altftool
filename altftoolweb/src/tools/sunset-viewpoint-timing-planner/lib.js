@@ -65,6 +65,17 @@ const RAD = Math.PI / 180;
 const DEG = 180 / Math.PI;
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
+/** Gregorian leap year rule. */
+function isLeapYear(year) {
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+}
+
+/** Number of days in a given month (1-12) of a given year. */
+function daysInMonth(year, month) {
+  const DAYS = [31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  return DAYS[month - 1];
+}
+
 /** Julian Day at 00:00 UT for a Gregorian calendar date. */
 export function julianDay(year, month, day) {
   let y = year;
@@ -244,7 +255,14 @@ export function planSunsetTrip(input) {
     return { error: "Enter the date as YYYY-MM-DD." };
   }
   const [year, month, day] = dateISO.split("-").map(Number);
-  if (year < 1900 || year > 2200 || month < 1 || month > 12 || day < 1 || day > 31) {
+  if (
+    year < 1900 ||
+    year > 2200 ||
+    month < 1 ||
+    month > 12 ||
+    day < 1 ||
+    day > daysInMonth(year, month)
+  ) {
     return { error: "That date is not valid — use a real calendar date between 1900 and 2200." };
   }
   if (drive < 0 || drive > 1440) return { error: "Driving time must be between 0 and 1440 minutes." };
@@ -297,7 +315,13 @@ export function planSunsetTrip(input) {
     { id: "sunset", label: "Sunset", at: sun.sunset },
     { id: "goldenEnd", label: "Golden hour ends (sun at −4°)", at: sun.goldenEnd },
     { id: "blueEnd", label: "Civil twilight ends (sun at −6°) — take a torch", at: sun.blueEnd },
-  ].filter((step) => Number.isFinite(step.at));
+  ]
+    .filter((step) => Number.isFinite(step.at))
+    // The steps above are only in the right order when target === "golden"
+    // (arriveBy always <= goldenStart in that case). For target === "sunset"
+    // the viewpoint arrival can land after golden hour has already started,
+    // so the list must be sorted by its own clock time to read correctly.
+    .sort((a, b) => a.at - b.at);
 
   const notes = [];
   if (sun.blueEnd !== null && sun.sunset !== null) {
@@ -314,7 +338,20 @@ export function planSunsetTrip(input) {
   if (level.id === "fast") {
     notes.push("A pace faster than Naismith's leaves no margin. If anything goes wrong you will be descending in the dark.");
   }
-  const descentAfterDarkRisk = sun.blueEnd !== null && walk.minutes > sun.blueEnd - (sun.goldenEnd ?? sun.sunset);
+  // The return leg descends what the outbound leg ascended (and vice versa),
+  // so it needs its own Naismith estimate rather than reusing the outbound
+  // `walk.minutes` -- Naismith/Langmuir charge almost nothing for descent, so
+  // treating the outbound (ascent-inclusive) time as the return time
+  // overstates how long the walk back actually takes.
+  const returnWalk = naismithMinutes({
+    distanceKm: distance,
+    ascentM: descent,
+    descentM: ascent,
+    descentSlope,
+    fitnessFactor: level.factor,
+  });
+  const descentAfterDarkRisk =
+    sun.blueEnd !== null && returnWalk.minutes > sun.blueEnd - (sun.goldenEnd ?? sun.sunset);
   if (descentAfterDarkRisk) {
     notes.push("The walk back is longer than the light that remains after golden hour. Plan for a head torch and a route you can follow in the dark.");
   }

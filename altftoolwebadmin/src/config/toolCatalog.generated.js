@@ -8583,7 +8583,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Productivity"
     ],
-    "description": "Licence number se state, RTO aur year fields parse kare."
+    "description": "Parse an Indian driving licence number into its state, RTO, issue-year and serial fields, and identify the state it was issued in."
   },
   {
     "slug": "driving-licence-renewal-checklist",
@@ -9169,7 +9169,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Design & Color"
     ],
-    "description": "A collection of emoji icons"
+    "description": "Browse 1,898 emojis across 8 categories with keyword search and skin tones, plus trending GIFs"
   },
   {
     "slug": "emoji-letter-generator",
@@ -11398,7 +11398,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Calculators"
     ],
-    "description": "Split road trip fuel, toll and parking costs fairly by the kilometres each person actually rode, with penny-exact rounding."
+    "description": "Split road trip fuel, toll and parking costs fairly by the kilometres each person actually rode, with paisa-exact rounding."
   },
   {
     "slug": "fuel-cost-trip-calculator",
@@ -16415,7 +16415,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Developer"
     ],
-    "description": "Sort your long url/links"
+    "description": "Shorten a long URL into a compact, shareable link and keep the last few to hand"
   },
   {
     "slug": "linkedin-banner-maker",
@@ -18931,7 +18931,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Calculators"
     ],
-    "description": "Estimate your Netlify bill from team members, bandwidth, build minutes and function invocations on Free or Pro."
+    "description": "Estimate your Netlify bill from bandwidth, function compute, production deploys and web requests on Free, Personal or Pro's credit-based pricing."
   },
   {
     "slug": "netlify-toml-generator",
@@ -23439,7 +23439,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Lifestyle"
     ],
-    "description": "Futuristic property verification and safety management tool for renters."
+    "description": "Score a rental move-in against a weighted, code-referenced security and safety checklist."
   },
   {
     "slug": "repair-quote-comparator",
@@ -30379,11 +30379,11 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "utm-link-builder",
-    "name": "UTM Link Builder",
+    "name": "UTM Builder",
     "categories": [
       "Marketing & Social"
     ],
-    "description": "Build tracked UTM links easily for marketing campaigns."
+    "description": "Free UTM builder for campaign URLs — set utm_source, utm_medium and utm_campaign, then copy a clean tracking link."
   },
   {
     "slug": "uuid-generator",

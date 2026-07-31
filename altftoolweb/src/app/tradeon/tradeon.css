@@ -196,7 +196,7 @@
 }
 .tdn-btn-soft:hover { background: color-mix(in srgb, var(--tdn-iris) 22%, transparent); }
 .tdn-btn-icon {
-  width: 40px; height: 40px; padding: 0; border-radius: var(--anslation-ds-radius);
+  width: 44px; height: 44px; padding: 0; border-radius: var(--anslation-ds-radius);
   background: var(--tdn-surface); border: 1px solid var(--tdn-border); color: var(--tdn-fg);
 }
 .tdn-btn-icon:hover { border-color: var(--tdn-border-strong); background: var(--tdn-card-hover); color: var(--tdn-iris-2); }

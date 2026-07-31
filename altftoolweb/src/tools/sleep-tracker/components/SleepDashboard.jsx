@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { Card, Button, StatCard, EmptyState, Badge } from "@altftool/ui";
+import React, { useState } from "react";
+import { Card, Button, StatCard, EmptyState, Badge, ConfirmModal } from "@altftool/ui";
 
 const parseTime = (timeStr) => {
   const [h, m] = timeStr.split(":").map(Number);
@@ -21,7 +21,67 @@ const getScoreColor = (score) => {
   return "danger";
 };
 
+// Subjective 1-10 rating -> badge tone. Kept separate from the objective
+// Sleep Score (duration/efficiency/continuity) so it never silently changes
+// the documented scoring formula (see seo.js FAQ).
+const getQualityTone = (quality) => {
+  const q = Number(quality);
+  if (!q) return "neutral";
+  if (q >= 8) return "success";
+  if (q >= 6) return "info";
+  if (q >= 4) return "warning";
+  return "danger";
+};
+
+const escapeCsvCell = (value) => `"${String(value ?? "").replaceAll('"', '""')}"`;
+
+function downloadCsv(filename, rows) {
+  const csv = rows.map((row) => row.map(escapeCsvCell).join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const anchor = document.createElement("a");
+  anchor.href = url;
+  anchor.download = filename;
+  document.body.appendChild(anchor);
+  anchor.click();
+  anchor.remove();
+  URL.revokeObjectURL(url);
+}
+
+const CSV_HEADER = [
+  "Date", "Bedtime", "Wake Time", "Time in Bed (min)", "Time to Fall Asleep (min)",
+  "Night Awakenings", "Minutes Awake", "Nap Duration (min)", "Actual Sleep (min)",
+  "Sleep Efficiency (%)", "Sleep Goal (hrs)", "Sleep Quality (1-10)",
+  "Caffeine Intake (cups)", "Alcohol Drinks", "Screen Time Before Bed (min)",
+  "Stress Level", "Activity Level", "Room Environment",
+];
+
+function exportLogsToCsv(logs) {
+  if (!logs || logs.length === 0) return;
+
+  const rows = logs.map((log) => {
+    let bm = parseTime(log.bedtime);
+    let wm = parseTime(log.wakeTime);
+    let tib = wm - bm;
+    if (tib < 0) tib += 24 * 60;
+    const actual = Math.max(0, tib - (Number(log.timeToFallAsleep) || 0) - (Number(log.minutesAwake) || 0));
+    const eff = tib > 0 ? Math.round((actual / tib) * 100) : 0;
+
+    return [
+      log.date, log.bedtime, log.wakeTime, tib, log.timeToFallAsleep,
+      log.nightAwakenings, log.minutesAwake, log.napDuration, actual,
+      eff, log.sleepGoal, log.sleepQuality,
+      log.caffeineIntake, log.alcoholIntake, log.screenTime,
+      log.stressLevel, log.activityLevel, log.roomEnvironment,
+    ];
+  });
+
+  downloadCsv(`sleep-log_${new Date().toISOString().split("T")[0]}.csv`, [CSV_HEADER, ...rows]);
+}
+
 export default function SleepDashboard({ logs, onDelete, onGoToLog }) {
+  const [pendingDeleteId, setPendingDeleteId] = useState(null);
+
   if (!logs || logs.length === 0) {
     return (
       <EmptyState
@@ -43,7 +103,10 @@ export default function SleepDashboard({ logs, onDelete, onGoToLog }) {
   const actualSleepMins = Math.max(0, timeInBedMins - latestLog.timeToFallAsleep - latestLog.minutesAwake);
   const efficiency = timeInBedMins > 0 ? Math.round((actualSleepMins / timeInBedMins) * 100) : 0;
 
-  const targetSleepMins = latestLog.sleepGoal * 60;
+  // Sleep Goal is optional in the form; a missing/empty/zero value must never
+  // reach a division below, or the score renders as a literal "NaN". Fall
+  // back to the widely-recommended 8h target (matches the form's own default).
+  const targetSleepMins = (Number(latestLog.sleepGoal) || 8) * 60;
   const sleepDebtMins = Math.max(0, targetSleepMins - actualSleepMins);
 
   // Calculate Score (Max 100)
@@ -69,6 +132,10 @@ export default function SleepDashboard({ logs, onDelete, onGoToLog }) {
   if (latestLog.caffeineIntake > 2) recommendations.push("High caffeine intake can disrupt deep sleep. Consider cutting back in the afternoon.");
   if (sleepDebtMins > 60) recommendations.push(`You have a sleep debt of ${formatMins(sleepDebtMins)}. Try going to bed slightly earlier tonight.`);
   if (latestLog.screenTime > 30) recommendations.push("Avoid screens for at least an hour before bedtime to improve melatonin production.");
+  if (latestLog.alcoholIntake > 0) recommendations.push("Alcohol before bed can reduce REM sleep even when total duration looks fine. Try to stop drinking at least 3 hours before bedtime.");
+  if (latestLog.stressLevel === "high" || latestLog.stressLevel === "severe") recommendations.push("High stress makes it harder to fall and stay asleep. A short wind-down routine, like breathing exercises or journaling, can help.");
+  if (latestLog.roomEnvironment === "noisy_bright") recommendations.push("A noisy or bright room disrupts sleep continuity. Blackout curtains, earplugs or a white-noise machine can improve your environment.");
+  if (Number(latestLog.sleepQuality) > 0 && Number(latestLog.sleepQuality) <= 4 && totalScore >= 70) recommendations.push("You rated last night's sleep quality low even though the numbers look decent. Consider factors the score doesn't capture, like stress, room comfort or how you felt on waking.");
   if (recommendations.length === 0) recommendations.push("Great job! Keep up the healthy sleep habits.");
 
   return (
@@ -119,7 +186,7 @@ export default function SleepDashboard({ logs, onDelete, onGoToLog }) {
           <h3 className="text-xl font-bold">Recent Sleep Logs</h3>
           <div className="flex gap-2">
             <Button variant="outline" size="sm" onClick={() => window.print()}>Print Report</Button>
-            <Button variant="outline" size="sm" onClick={() => alert('Exporting to CSV...')}>Export Data</Button>
+            <Button variant="outline" size="sm" onClick={() => exportLogsToCsv(logs)}>Export Data</Button>
           </div>
         </div>
 
@@ -166,6 +233,7 @@ export default function SleepDashboard({ logs, onDelete, onGoToLog }) {
                 <th className="py-3 px-4 font-semibold">Bedtime</th>
                 <th className="py-3 px-4 font-semibold">Wake Time</th>
                 <th className="py-3 px-4 font-semibold">Duration</th>
+                <th className="py-3 px-4 font-semibold">Quality</th>
                 <th className="py-3 px-4 font-semibold text-right">Action</th>
               </tr>
             </thead>
@@ -183,8 +251,13 @@ export default function SleepDashboard({ logs, onDelete, onGoToLog }) {
                     <td className="py-3 px-4">{log.bedtime}</td>
                     <td className="py-3 px-4">{log.wakeTime}</td>
                     <td className="py-3 px-4 font-medium">{formatMins(actual)}</td>
+                    <td className="py-3 px-4">
+                      <Badge tone={getQualityTone(log.sleepQuality)}>
+                        {log.sleepQuality ? `${log.sleepQuality}/10` : "—"}
+                      </Badge>
+                    </td>
                     <td className="py-3 px-4 text-right">
-                      <Button variant="danger" size="sm" onClick={() => onDelete(log.id)}>Delete</Button>
+                      <Button variant="danger" size="sm" onClick={() => setPendingDeleteId(log.id)}>Delete</Button>
                     </td>
                   </tr>
                 );
@@ -193,6 +266,20 @@ export default function SleepDashboard({ logs, onDelete, onGoToLog }) {
           </table>
         </div>
       </div>
+
+      <ConfirmModal
+        open={pendingDeleteId !== null}
+        onCancel={() => setPendingDeleteId(null)}
+        onConfirm={() => {
+          onDelete(pendingDeleteId);
+          setPendingDeleteId(null);
+        }}
+        title="Delete sleep log?"
+        message="This will permanently remove this log entry from your history. This can't be undone."
+        confirmText="Delete"
+        cancelText="Cancel"
+        variant="danger"
+      />
 
     </div>
   );

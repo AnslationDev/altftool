@@ -62,6 +62,26 @@ import {
 } from "@altftool/core/experiences";
 import { PRODUCT_SUITE_CATALOG } from "@altftool/core/product-suites";
 import { CANONICAL_CATEGORIES } from "../registry/categoryTaxonomy.js";
+import { canonicalizePublicPath } from "./publicRouteTaxonomy.js";
+
+/**
+ * Nav options assembled from an external catalog can drift onto a URL that
+ * `next.config.mjs` redirects — `/games` 308s to `/tools/games` today, which
+ * cost every visitor who tapped "Games Arcade" an extra round trip. Routing the
+ * catalog href through the alias table keeps the nav on canonical URLs, while
+ * `match` keeps the legacy path so the item still highlights when a visitor
+ * arrives on it from an old link.
+ */
+function canonicalRouteOption(option) {
+  const href = canonicalizePublicPath(option.href);
+  if (href === option.href) return option;
+
+  return {
+    ...option,
+    href,
+    match: [...new Set([...(option.match || []), option.href])],
+  };
+}
 
 const PRODUCT_SUITE_ICONS = {
   "idea-lab": Lightbulb,
@@ -191,8 +211,8 @@ const TOOL_INTENT_ICONS = {
   "Learn & play": Gamepad2,
 };
 
-export const PRODUCT_SUITE_ROUTE_OPTIONS = PRODUCT_SUITE_CATALOG.map(
-  (suite) => ({
+export const PRODUCT_SUITE_ROUTE_OPTIONS = PRODUCT_SUITE_CATALOG.map((suite) =>
+  canonicalRouteOption({
     label: suite.name.replace(/^AltF\s+/, ""),
     href: `/products/${suite.slug}`,
     group: PRODUCT_SUITE_GROUPS[suite.slug] || "Product suites",
@@ -200,8 +220,8 @@ export const PRODUCT_SUITE_ROUTE_OPTIONS = PRODUCT_SUITE_CATALOG.map(
   }),
 );
 
-export const EXPERIENCE_ROUTE_OPTIONS = EXPERIENCE_CATALOG.map(
-  (experience) => ({
+export const EXPERIENCE_ROUTE_OPTIONS = EXPERIENCE_CATALOG.map((experience) =>
+  canonicalRouteOption({
     label: experience.name,
     href: experience.href,
     match: [experience.href],
@@ -211,13 +231,14 @@ export const EXPERIENCE_ROUTE_OPTIONS = EXPERIENCE_CATALOG.map(
 );
 
 export const TOOL_CATEGORY_ROUTE_OPTIONS = CANONICAL_CATEGORIES.map(
-  (category) => ({
-    label: category.label,
-    href: `/tools/${category.slug}`,
-    match: [`/tools/${category.slug}`],
-    group: TOOL_CATEGORY_GROUPS[category.slug] || "More tool categories",
-    icon: TOOL_CATEGORY_ICONS[category.slug] || LayoutGrid,
-  }),
+  (category) =>
+    canonicalRouteOption({
+      label: category.label,
+      href: `/tools/${category.slug}`,
+      match: [`/tools/${category.slug}`],
+      group: TOOL_CATEGORY_GROUPS[category.slug] || "More tool categories",
+      icon: TOOL_CATEGORY_ICONS[category.slug] || LayoutGrid,
+    }),
 );
 
 /**
@@ -398,6 +419,17 @@ export const SITE_ROUTES = {
   cookie: { label: "Cookie", href: "/policypages/cookie" },
 };
 
+/**
+ * Standalone tool destinations that are neither canonical categories nor
+ * directory hubs. One list feeds both the desktop menu and the phone sheet:
+ * they had drifted apart, so `/fullscrn` and `/search-eng` were reachable on a
+ * desktop and unreachable on a phone, which is where 84% of clicks land.
+ */
+export const TOOL_UTILITY_ROUTE_OPTIONS = [
+  { ...SITE_ROUTES.fullScreen, group: "Browser utilities", icon: Maximize2 },
+  { ...SITE_ROUTES.webSearch, group: "Browser utilities", icon: SearchCheck },
+];
+
 export const PUBLIC_NAV_ITEMS = [
   {
     ...SITE_ROUTES.products,
@@ -435,16 +467,10 @@ export const PUBLIC_NAV_ITEMS = [
         icon: GraduationCap,
       },
       ...TOOL_CATEGORY_ROUTE_OPTIONS,
-      {
-        ...SITE_ROUTES.fullScreen,
-        group: "Build & calculate",
-        icon: Maximize2,
-      },
-      {
-        ...SITE_ROUTES.webSearch,
-        group: "Build & calculate",
-        icon: SearchCheck,
-      },
+      // "Build & calculate" was the last surviving label from the retired
+      // grouping scheme described above TOOL_INTENT_ORDER, so it read as a
+      // stray bucket next to the six intent groups.
+      ...TOOL_UTILITY_ROUTE_OPTIONS,
     ],
   },
   {
@@ -655,7 +681,11 @@ export const TOOL_QUICK_LINKS = [
   },
 ];
 
-/** Directory-level destinations shown above the category grid. */
+/**
+ * Directory-level destinations shown above the category grid. Kept in step with
+ * the desktop Tools menu's "Directories & apps" group — Exam Photo Specs was in
+ * that group but missing here, so the phone could not reach it at all.
+ */
 export const TOOL_DIRECTORY_LINKS = [
   { ...SITE_ROUTES.tools, label: "All tools", icon: Wrench },
   { ...SITE_ROUTES.calculators, icon: Calculator },
@@ -663,6 +693,8 @@ export const TOOL_DIRECTORY_LINKS = [
   { ...SITE_ROUTES.pdfTools, icon: FileText },
   { ...SITE_ROUTES.altfGames, icon: Gamepad2 },
   { ...SITE_ROUTES.apps, icon: Smartphone },
+  { ...SITE_ROUTES.examPhoto, icon: GraduationCap },
+  ...TOOL_UTILITY_ROUTE_OPTIONS,
 ];
 
 /**

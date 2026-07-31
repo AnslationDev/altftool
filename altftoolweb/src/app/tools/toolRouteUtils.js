@@ -4,6 +4,7 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import { buildToolSeoContent } from "./toolSeoContent";
 import { primeSeoConfig } from "@/platform/seo/seoConfigSource";
 import {
+  CANONICAL_CATEGORIES,
   getCanonicalCategoryBySlug,
   getLegacyCategorySlugMap,
   slugifyCategory,
@@ -63,6 +64,46 @@ function getCatalogEntries(category = "all") {
 
 export function getToolCatalogCount(category = "all") {
   return getCatalogEntries(category).length;
+}
+
+/**
+ * Every category the directory sidebar renders, with its real tool count.
+ *
+ * ToolsClient used to derive this from whatever `meta` it held, which is the
+ * reason /tools and /tools/[category] pulled the catalogue chunk down after
+ * every load (static/chunks/917906.*, 1,098,526 bytes raw / 226,782 brotli):
+ * getInitialToolCatalog's 64-entry slice represents only 13-18 of the 22
+ * categories, so the sidebar rendered short and each count was a count within
+ * the slice until the chunk arrived. Twenty-two {slug, label, count} rows in
+ * the RSC payload replace it, and the list is complete on first paint instead.
+ *
+ * Canonical display order — categoryTaxonomy owns it — with any slug outside
+ * the canonical set appended alphabetically so a new category cannot silently
+ * disappear from the sidebar.
+ */
+export function getToolCategoryCounts() {
+  const counts = new Map();
+
+  Object.values(toolMetaMap).forEach((tool) => {
+    // Deduped per tool: a tool that repeats a category must not count twice.
+    new Set(
+      getToolCategories(tool).map(slugifyRouteSegment).filter(Boolean),
+    ).forEach((slug) => counts.set(slug, (counts.get(slug) || 0) + 1));
+  });
+
+  const canonicalSlugs = CANONICAL_CATEGORIES.map((entry) => entry.slug);
+  const canonicalSet = new Set(canonicalSlugs);
+  const extraSlugs = [...counts.keys()]
+    .filter((slug) => !canonicalSet.has(slug))
+    .sort();
+
+  return [...canonicalSlugs, ...extraSlugs]
+    .filter((slug) => counts.has(slug))
+    .map((slug) => ({
+      slug,
+      label: formatCategoryLabel(slug),
+      count: counts.get(slug),
+    }));
 }
 
 export function getInitialToolCatalog(category = "all", limit = 64) {
@@ -184,8 +225,16 @@ export async function buildToolMetadata(slug) {
     // it the same way, and a page asking to be indexed is not what we mean.
     //
     // Declaring robots explicitly replaces the inherited directive instead of
-    // appending to it, and dropping the canonical stops these pointing at the
-    // homepage, which invited engines to treat them as duplicates of it.
+    // appending to it.
+    //
+    // The canonical stays self-referencing, deliberately. An earlier version of
+    // this comment claimed it was dropped; it was not, and dropping it would be
+    // wrong twice over. createPageMetadata falls back to `path: args.path || "/"`,
+    // so omitting it canonicalises every unknown slug to the homepage — the exact
+    // duplicate signal that sentence was worried about. And a noindex page SHOULD
+    // point at itself: noindex plus a canonical to a DIFFERENT URL is how the
+    // noindex travels to that URL, a failure this repo already had to fix on
+    // /extensions/[slug].
     return createPageMetadata({
       title: "Tool Not Found",
       description: "The requested tool does not exist.",

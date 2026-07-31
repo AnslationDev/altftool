@@ -12,10 +12,22 @@ export default function ToolHome() {
   const [quiz, setQuiz] = useState(null);
   const [quizAnswer, setQuizAnswer] = useState("");
   const [quizFeedback, setQuizFeedback] = useState(null);
+  const [decimalError, setDecimalError] = useState("");
 
   const toBinary = () => {
-    const num = parseInt(decimalInput, 10);
-    if (isNaN(num)) return;
+    const trimmed = decimalInput.trim();
+    const num = Number(trimmed);
+    if (trimmed === "" || !Number.isFinite(num) || !Number.isInteger(num)) {
+      setDecimalError("Enter a whole number (decimals and scientific notation like 1e5 are fine, but the result must be an integer).");
+      setBinaryResult("");
+      return;
+    }
+    if (num < 0) {
+      setDecimalError("Enter a non-negative number — this tool converts unsigned binary only.");
+      setBinaryResult("");
+      return;
+    }
+    setDecimalError("");
     const bin = num.toString(2);
     setBinaryResult(bin.padStart(8, "0"));
   };
@@ -76,13 +88,22 @@ export default function ToolHome() {
 
               {mode === "decimal-to-binary" ? (
                 <div className="space-y-4">
-                  <label className="text-xs font-bold text-foreground uppercase">Decimal Number</label>
+                  <label htmlFor="binary-tool-decimal-input" className="text-xs font-bold text-foreground uppercase">Decimal Number</label>
                   <input
+                    id="binary-tool-decimal-input"
                     type="number"
+                    min="0"
                     value={decimalInput}
                     onChange={(e) => setDecimalInput(e.target.value)}
+                    aria-invalid={decimalError ? "true" : "false"}
+                    aria-describedby={decimalError ? "binary-tool-decimal-error" : undefined}
                     className="w-full bg-surface-soft border border-border rounded-xl text-sm p-4 outline-none focus:ring-1 focus:ring-primary"
                   />
+                  {decimalError && (
+                    <p id="binary-tool-decimal-error" role="alert" className="text-xs font-bold text-danger">
+                      {decimalError}
+                    </p>
+                  )}
                   <button
                     onClick={toBinary}
                     className="w-full py-3 bg-primary text-primary-foreground rounded-xl font-bold text-sm hover:opacity-90 flex items-center justify-center gap-2"
@@ -101,7 +122,7 @@ export default function ToolHome() {
                       </div>
                       <div className="flex justify-center gap-1 mt-1">
                         {binaryResult.split("").map((_, i) => (
-                          <div key={i} className="w-8 text-[8px] text-muted-foreground text-center font-mono">{Math.pow(2, 7 - i)}</div>
+                          <div key={i} className="w-8 text-[8px] text-muted-foreground text-center font-mono">{Math.pow(2, binaryResult.length - 1 - i)}</div>
                         ))}
                       </div>
                     </div>
@@ -109,8 +130,9 @@ export default function ToolHome() {
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <label className="text-xs font-bold text-foreground uppercase">Binary Number</label>
+                  <label htmlFor="binary-tool-binary-input" className="text-xs font-bold text-foreground uppercase">Binary Number</label>
                   <input
+                    id="binary-tool-binary-input"
                     value={binaryInput}
                     onChange={(e) => setBinaryInput(e.target.value.replace(/[^01]/g, ""))}
                     placeholder="e.g., 101010"
@@ -153,6 +175,7 @@ export default function ToolHome() {
                     value={quizAnswer}
                     onChange={(e) => setQuizAnswer(e.target.value.replace(/[^01]/g, ""))}
                     placeholder="Enter binary..."
+                    aria-label={quiz ? `Binary equivalent of ${quiz.num}` : "Binary quiz answer"}
                     className="w-full bg-background border border-border rounded-xl text-sm p-3 outline-none focus:ring-1 focus:ring-primary font-mono"
                   />
                   <button

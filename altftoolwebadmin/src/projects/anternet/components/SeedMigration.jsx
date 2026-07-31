@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { listDocs, saveDoc } from "../lib/firebase";
+import { listDocs, saveDoc, getDocById } from "../lib/firebase";
 import { Button } from "./ui";
 import {
   BANNERS, TASKS, QUIZ_CATEGORIES, QUESTIONS, SPIN_PRIZES,
@@ -85,6 +85,8 @@ export default function SeedMigration({ notify }) {
         append(`✓ ${p.col}: ${p.data.length} docs written`);
       }
       for (const s of SETTINGS_PLAN) {
+        const existing = await getDocById("settings", s.docId);
+        if (existing && !overwrite) { append(`↷ settings/${s.docId}: skipped (already exists)`); continue; }
         await saveDoc("settings", s.docId, { ...s.data });
         append(`✓ settings/${s.docId} written`);
       }

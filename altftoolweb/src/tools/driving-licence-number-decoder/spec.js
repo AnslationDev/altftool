@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "driving-licence-number-decoder",
   "title": "Driving Licence Number Decoder",
-  "description": "Licence number se state, RTO aur year fields parse kare.",
+  "description": "Parse an Indian driving licence number into its state, RTO, issue-year and serial fields, and identify the state it was issued in.",
   "badge": "India-Specific Utilities",
   "category": [
     "India",
@@ -23,7 +23,7 @@ export const spec = {
       "label": "Normalize",
       "type": "toggle",
       "default": true,
-      "checkboxLabel": "Remove spaces and hyphens"
+      "checkboxLabel": "Strip punctuation and use uppercase"
     }
   ],
   "presets": [

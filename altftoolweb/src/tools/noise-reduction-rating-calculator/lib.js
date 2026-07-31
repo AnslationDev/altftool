@@ -440,7 +440,6 @@ export function compareMethods(input) {
       attenuation: result.attenuation,
       protectedLevel: result.protectedLevel,
       meetsOshaPel: result.meetsOshaPel,
-      meetsNioshRel: result.meetsNioshRel,
     });
   }
   return { rows };

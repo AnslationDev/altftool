@@ -36,9 +36,13 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  const rankedPickCount = Array.isArray(item.top) ? item.top.length : 0;
+
   return createPageMetadata({
     title: getTop9Title(item),
-    description: `${getTop9Description(item)} Explore all nine ranked picks, key context, and the complete curated list on AltFTool.`,
+    description: rankedPickCount
+      ? `${getTop9Description(item)} Explore all ${rankedPickCount} ranked picks, key context, and the complete curated list on AltFTool.`
+      : `${getTop9Description(item)} Key context and the complete curated guide on AltFTool.`,
     path: `/top9/${slug}`,
     image: getTop9Image(item),
     type: getTop9PublishedDate(item) ? "article" : "website",

@@ -388,6 +388,13 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={() => {
+                if (
+                  !window.confirm(
+                    "Reset everything? This clears the repair log and all saved details.",
+                  )
+                ) {
+                  return;
+                }
                 setForm(buildDefaults());
                 setIssues(buildDefaultIssues());
                 setCopied("");

@@ -326,8 +326,15 @@ export function smokeAlarmLife(manufactureDate, todayDate) {
 
   const days = (today.getTime() - made.getTime()) / 86400000;
   const ageYears = days / DAYS_PER_YEAR;
+  const madeMonth = made.getUTCMonth();
   const replaceBy = new Date(made.getTime());
   replaceBy.setUTCFullYear(replaceBy.getUTCFullYear() + SMOKE_ALARM_LIFE_YEARS);
+  if (replaceBy.getUTCMonth() !== madeMonth) {
+    // A Feb 29 manufacture date has no exact anniversary in a non-leap target
+    // year: setUTCFullYear silently rolls it forward into March. Land on the
+    // last day of the intended month (Feb 28) instead.
+    replaceBy.setUTCDate(0);
+  }
 
   // The rule is calendar-based: replace on the tenth anniversary of the
   // manufacture date, so expiry is decided by the date, not by the fractional

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, GraduationCap, RotateCcw, Search } from "lucide-react";
 
-import { CATEGORIES, PROMPTS, fillPrompt, searchPrompts } from "../lib";
+import { CATEGORIES, PROMPTS, fillPrompt, getPrompt, searchPrompts } from "../lib";
 
 const PACK = {
   kicker: "Classroom prompts",
@@ -35,7 +35,7 @@ export default function ToolHome() {
   const [copied, setCopied] = useState(false);
 
   const results = useMemo(() => searchPrompts({ query, category }), [query, category]);
-  const active = useMemo(() => PROMPTS.find((p) => p.id === activeId) || null, [activeId]);
+  const active = useMemo(() => getPrompt(activeId), [activeId]);
   const filled = useMemo(
     () => fillPrompt({ template: active ? active.template : "", values }),
     [active, values],
@@ -54,11 +54,21 @@ export default function ToolHome() {
 
   const clearFields = () => {
     if (!active) return;
+    if (!window.confirm("Clear all the field values you've entered for this prompt? This cannot be undone.")) {
+      return;
+    }
     setValues(Object.fromEntries(active.variables.map((v) => [v.key, ""])));
     setCopied(false);
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the whole pack? This clears your search and category filter and replaces every field with the first prompt's example values, discarding anything you typed.",
+      )
+    ) {
+      return;
+    }
     setQuery("");
     setCategory("All");
     setActiveId(FIRST.id);
@@ -236,7 +246,7 @@ export default function ToolHome() {
         {filled.error ? (
           <p
             role="alert"
-            className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+            className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
           >
             {filled.error}
           </p>
@@ -245,7 +255,7 @@ export default function ToolHome() {
             {filled.missing.length > 0 && (
               <p
                 role="status"
-                className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning)]"
+                className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning-text)]"
               >
                 Still blank: {filled.missing.join(", ")}. They stay visible as {"{{placeholders}}"} in the copied text.
               </p>

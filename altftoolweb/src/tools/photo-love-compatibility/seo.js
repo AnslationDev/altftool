@@ -35,7 +35,7 @@ const seo = {
     ],
     [
       "How is the photo love compatibility score calculated?",
-      "It sums the x and y coordinates of every detected landmark across both photos into one seed, then computes the overall score as (seed mod 28) + 71 — a 71% to 98% range. The three sub-scores use the same seed multiplied by 3, 11 and 7 for chemistry index, expression and mood alignment, and structural harmony, each mapped into a 79–99% band.",
+      "It sums the x and y coordinates of every detected landmark across both photos into one seed, then computes the overall score as (seed mod 28) + 71 — a 71% to 98% range. The three sub-scores use the same seed multiplied by 4, 11 and 5 for chemistry index, expression and mood alignment, and structural harmony, each mapped into a 79–99% band.",
     ],
     [
       "Are my photos uploaded or stored anywhere?",

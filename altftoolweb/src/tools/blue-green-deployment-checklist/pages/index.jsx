@@ -46,6 +46,19 @@ const toNumber = (raw) => {
 
 const DASH = "—";
 
+// The checklist item lists are conditionally assembled from the form inputs
+// (see lib.js phaseItems), so the item at a given array index is not a stable
+// identity — it can change text entirely when a dropdown changes. Derive the
+// "done" key from the item's own text instead of its position so a checked
+// box never silently reattaches to a different, unreviewed item.
+const itemKey = (phaseId, item) => {
+  let hash = 0;
+  for (let i = 0; i < item.length; i += 1) {
+    hash = (hash * 31 + item.charCodeAt(i)) | 0;
+  }
+  return `${phaseId}-${(hash >>> 0).toString(36)}`;
+};
+
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [copied, setCopied] = useState(false);
@@ -103,7 +116,7 @@ export default function ToolHome() {
   const checkedCount = hasError
     ? 0
     : plan.phases.reduce(
-        (sum, phase) => sum + phase.items.filter((_, index) => done[`${phase.id}-${index}`]).length,
+        (sum, phase) => sum + phase.items.filter((item) => done[itemKey(phase.id, item)]).length,
         0,
       );
 
@@ -415,8 +428,8 @@ export default function ToolHome() {
           >
             <h2 className="text-base font-semibold">{phase.title}</h2>
             <ul className="mt-3 space-y-1">
-              {phase.items.map((item, index) => {
-                const key = `${phase.id}-${index}`;
+              {phase.items.map((item) => {
+                const key = itemKey(phase.id, item);
                 const checked = Boolean(done[key]);
                 return (
                   <li key={key}>

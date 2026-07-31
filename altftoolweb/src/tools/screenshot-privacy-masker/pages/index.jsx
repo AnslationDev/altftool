@@ -343,7 +343,6 @@ export default function ScreenshotPrivacyMasker() {
     canvasRef.current.focus();
     const point = getCanvasPoint(event);
     const hit = hitTestRectangles(rectangles, point, point.displayScale * 10);
-    rememberCurrent();
 
     if (hit) {
       const originalRectangle = rectangles.find((rectangle) => rectangle.id === hit.id);
@@ -354,8 +353,10 @@ export default function ScreenshotPrivacyMasker() {
         id: hit.id,
         start: point,
         originalRectangle: { ...originalRectangle },
+        historyRecorded: false,
       };
     } else {
+      rememberCurrent();
       const id = createRectangleId();
       const rectangle = {
         id,
@@ -369,6 +370,7 @@ export default function ScreenshotPrivacyMasker() {
         kind: "draw",
         id,
         start: point,
+        historyRecorded: true,
       };
     }
 
@@ -395,6 +397,11 @@ export default function ScreenshotPrivacyMasker() {
         ),
       );
       return;
+    }
+
+    if (!interaction.historyRecorded) {
+      interaction.historyRecorded = true;
+      rememberCurrent();
     }
 
     const action = {
@@ -437,8 +444,10 @@ export default function ScreenshotPrivacyMasker() {
         setStatus(`${modeLabel(created.mode)} region added.`);
         return current;
       });
-    } else {
+    } else if (interaction.historyRecorded) {
       setStatus("Region position updated.");
+    } else {
+      setStatus("Region selected.");
     }
 
     interactionRef.current = null;
@@ -455,6 +464,24 @@ export default function ScreenshotPrivacyMasker() {
       ),
       message,
     );
+  };
+
+  // Applies an update without pushing a new history entry. Used for
+  // continuous inputs (e.g. dragging the strength slider) where each
+  // intermediate value should not consume its own undo step.
+  const updateSelectedLive = (updates, message) => {
+    if (!selectedId) return;
+    setRectangles((current) =>
+      current.map((rectangle) =>
+        rectangle.id === selectedId ? { ...rectangle, ...updates } : rectangle,
+      ),
+    );
+    if (message) setStatus(message);
+  };
+
+  const beginStrengthAdjustment = (event) => {
+    if (event?.type === "keydown" && event.repeat) return;
+    rememberCurrent();
   };
 
   const removeRectangle = (id) => {
@@ -737,10 +764,11 @@ export default function ScreenshotPrivacyMasker() {
                 </div>
 
                 <div className="flex flex-wrap gap-2" aria-label="Mask type">
-                  {MASK_MODES.map(({ id, label, icon: Icon }) => (
+                  {MASK_MODES.map(({ id, label, icon: Icon, description }) => (
                     <button
                       key={id}
                       type="button"
+                      title={description}
                       className={`btn-secondary inline-flex items-center gap-2 ${
                         activeMode === id
                           ? "border-primary bg-primary/10 text-primary"
@@ -819,7 +847,7 @@ export default function ScreenshotPrivacyMasker() {
                       }
                     >
                       {MASK_MODES.map((mode) => (
-                        <option key={mode.id} value={mode.id}>
+                        <option key={mode.id} value={mode.id} title={mode.description}>
                           {mode.label}
                         </option>
                       ))}
@@ -847,8 +875,10 @@ export default function ScreenshotPrivacyMasker() {
                         step="2"
                         value={selectedRectangle.strength}
                         className="mt-2 w-full accent-[var(--primary)]"
+                        onPointerDown={beginStrengthAdjustment}
+                        onKeyDown={beginStrengthAdjustment}
                         onChange={(event) =>
-                          updateSelected(
+                          updateSelectedLive(
                             { strength: Number(event.target.value) },
                             "Effect strength updated.",
                           )

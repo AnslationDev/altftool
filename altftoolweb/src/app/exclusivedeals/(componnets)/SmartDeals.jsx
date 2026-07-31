@@ -71,8 +71,6 @@
 "use client";
 import Image from "next/image";
 import girlImg from "../(assets)/coupon-image.webp";
-import { useState, useEffect } from "react";
-import { SmartDealsSkeleton } from "../DealsPageSkeleton";
 
 // import your icons
 import icon1 from "../(assets)/material symbol.png";
@@ -80,14 +78,6 @@ import icon2 from "../(assets)/update.png";
 import icon3 from "../(assets)/bag.png";
 
 export default function SmartDeals() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 500);
-    return () => clearTimeout(timer);
-  }, []);
-  if (loading) return <SmartDealsSkeleton />;
-
   return (
     <section className="section animate-slide-up">
       <h2 className="section-title lg:!mb-0">

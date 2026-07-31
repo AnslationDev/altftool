@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Chrome, BookOpen, Star, Download, Tag, Layers, Share2, Check, ShieldCheck } from "lucide-react";
+import { BookOpen, Star, Download, Tag, Layers, Share2, Check } from "lucide-react";
 import Image from "next/image";
 import { getIcon } from "./IconMap";
 
@@ -54,9 +54,13 @@ export default function ExtensionHero({ extension }) {
   };
 
   const categoryText = formatRenderableValue(extension?.category);
-  const ratingText = formatRenderableValue(extension?.rating, "5.0");
+  const ratingText =
+    typeof extension?.rating === "number" && extension.rating > 0
+      ? extension.rating.toFixed(1)
+      : "";
   const versionText = formatRenderableValue(extension?.version);
-  const downloadsText = formatRenderableValue(extension?.downloads, "10k+");
+  const downloadsText = formatRenderableValue(extension?.downloads);
+  const hasFeatures = Array.isArray(extension?.features) && extension.features.length > 0;
 
   return (
     <section aria-label="Extension Hero" className="relative pt-6 pb-12 md:pt-10 md:pb-16 overflow-hidden">
@@ -72,10 +76,6 @@ export default function ExtensionHero({ extension }) {
               />
             </div>
           </div>
-          <div className="absolute -bottom-3 -right-2 bg-[var(--card)] border border-[var(--border)] rounded-full px-3 py-1 text-xs font-semibold text-[var(--foreground)] shadow-md flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
-            <span>Verified</span>
-          </div>
         </div>
 
         <div className="flex-1 space-y-6 text-center lg:text-left">
@@ -87,10 +87,12 @@ export default function ExtensionHero({ extension }) {
               </span>
             ) : null}
 
-            <div className="inline-flex items-center gap-1 bg-[var(--card)] border border-[var(--border)] px-3 py-1 rounded-full text-xs font-medium text-[var(--foreground)] shadow-xs">
-              <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" aria-hidden="true" />
-              <span className="font-semibold">{ratingText}</span>
-            </div>
+            {ratingText ? (
+              <div className="inline-flex items-center gap-1 bg-[var(--card)] border border-[var(--border)] px-3 py-1 rounded-full text-xs font-medium text-[var(--foreground)] shadow-xs">
+                <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" aria-hidden="true" />
+                <span className="font-semibold">{ratingText}</span>
+              </div>
+            ) : null}
 
             {versionText ? (
               <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-[var(--muted)] text-[var(--muted-foreground)] border border-[var(--border)] font-mono">
@@ -99,10 +101,12 @@ export default function ExtensionHero({ extension }) {
               </span>
             ) : null}
 
-            <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-[var(--muted)] text-[var(--muted-foreground)] border border-[var(--border)]">
-              <Download className="w-3 h-3 text-[var(--primary)]" />
-              {downloadsText} active users
-            </span>
+            {downloadsText ? (
+              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium bg-[var(--muted)] text-[var(--muted-foreground)] border border-[var(--border)]">
+                <Download className="w-3 h-3 text-[var(--primary)]" />
+                {downloadsText} active users
+              </span>
+            ) : null}
           </div>
 
           <div>
@@ -134,7 +138,7 @@ export default function ExtensionHero({ extension }) {
             ) : (
               <button
                 type="button"
-                onClick={() => handleScrollToSection("features")}
+                onClick={() => handleScrollToSection(hasFeatures ? "features" : "how-it-works")}
                 className="group inline-flex items-center justify-center px-7 py-3.5 text-sm md:text-base font-bold text-[var(--primary-foreground)] bg-[var(--primary)] rounded-xl shadow-lg shadow-[var(--primary)]/25 hover:brightness-110 hover:-translate-y-0.5 active:scale-[0.98] transition-all duration-200 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/40"
               >
                 <Image

@@ -1,8 +1,8 @@
 const config = {
   slug: "gzip-encryption",
-  name: "Gzip Encryption & Decryption",
+  name: "Gzip Compression & Decompression",
   category: ["Developer Tools"],
-  description: "Gzip encryption and decryption. Quickly and easily encrypt and decrypt gzip strings!",
+  description: "Gzip compression and decompression. Quickly and easily compress and decompress gzip strings (this is compression, not encryption).",
   icon: "zap",
   iconColor: "text-[var(--primary)]",
 };

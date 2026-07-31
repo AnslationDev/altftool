@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Target } from "lucide-react";
 
-import { COMMON_MIN_SIP, computeGoalSip } from "../lib";
+import { COMMON_MIN_SIP, computeGoalSip, isLeapYear } from "../lib";
 
 const INR = new Intl.NumberFormat("en-IN", {
   style: "currency",
@@ -39,7 +39,11 @@ function isoToday() {
 
 function isoPlusYears(iso, years) {
   const [y, m, d] = iso.split("-");
-  return `${Number(y) + years}-${m}-${d}`;
+  const targetYear = Number(y) + years;
+  // Feb 29 does not exist in every year — clamp to Feb 28 so the quick-year
+  // buttons never hand parseIsoDate a nonexistent calendar date.
+  const day = m === "02" && d === "29" && !isLeapYear(targetYear) ? "28" : d;
+  return `${targetYear}-${m}-${day}`;
 }
 
 const DEFAULT_START = isoToday();

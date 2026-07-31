@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The UI Spacing Consistency Checker scans a pasted JSX, HTML or CSS snippet, converts every Tailwind spacing utility to pixels using Tailwind's default step of 1 unit = 4px, and flags any value that is not a multiple of 4. It reads padding, margin and gap classes — p, m, gap, space-x/y and every directional variant such as pt, pb, px, ml — plus any hardcoded npx value in a style block. You get a full inventory with each value's pixel size, a count of off-scale values, and how many distinct sizes the snippet uses.",
+    "The UI Spacing Consistency Checker scans a pasted JSX, HTML or CSS snippet, converts every Tailwind spacing utility to pixels using Tailwind's default step of 1 unit = 4px, and flags any value that is not a multiple of 4. It reads padding, margin and gap classes — p, m, gap, space-x/y and every directional variant such as pt, pb, px, ml — plus any hardcoded N px value in a style block. You get a full inventory with each value's pixel size, a count of off-scale values, and how many distinct sizes the snippet uses.",
   useCases: [
     "A component came back from a handoff with inline styles like marginTop: 18px and you want to know which numbers do not land on the design system's 4px grid before you merge it.",
     "Your buttons look subtly different across three screens, so you paste all three snippets and check how many unique spacing sizes are actually in play.",
@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     [
       "Classes and raw pixels together",
-      "Tailwind utilities are resolved to their pixel value and compared against inline npx styles in the same inventory, so mixed conventions surface side by side.",
+      "Tailwind utilities are resolved to their pixel value and compared against inline N px styles in the same inventory, so mixed conventions surface side by side.",
     ],
     [
       "Unique-size count",

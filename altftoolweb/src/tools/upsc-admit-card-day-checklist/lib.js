@@ -164,7 +164,7 @@ export function toMinutes(hhmm) {
 export function fromMinutes(minutes) {
   const wrapped = ((minutes % MINUTES_PER_DAY) + MINUTES_PER_DAY) % MINUTES_PER_DAY;
   const hours = Math.floor(wrapped / 60);
-  const mins = wrapped % 60;
+  const mins = Math.floor(wrapped % 60);
   const suffix = hours < 12 ? "am" : "pm";
   const hour12 = hours % 12 === 0 ? 12 : hours % 12;
   return {

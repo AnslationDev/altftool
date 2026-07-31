@@ -21,7 +21,7 @@ import EditorPane from "./EditorPane";
 import SettingsDrawer from "./SettingsDrawer";
 import CopyButton from "./CopyButton";
 import DownloadButton from "./DownloadButton";
-import { GhostButton, PrimaryButton } from "./ui";
+import { GhostButton } from "./ui";
 import { labelFor } from "../_lib/formats";
 import { runClientTransform, getClientMeta } from "../_lib/registry.client";
 
@@ -185,16 +185,16 @@ export default function TransformShell({ tool }) {
   }, []);
 
   const statusPill = useMemo(() => {
-    if (status === "loading") return { dot: "bg-blue-500 animate-pulse", label: "Converting…", tone: "text-blue-600 dark:text-blue-400" };
-    if (status === "error") return { dot: "bg-red-500", label: "Error", tone: "text-red-500" };
-    if (status === "ok") return { dot: "bg-emerald-500", label: "Done", tone: "text-emerald-600 dark:text-emerald-400" };
-    return { dot: "bg-slate-400", label: "Ready", tone: "text-slate-500 dark:text-slate-400" };
+    if (status === "loading") return { dot: "bg-primary animate-pulse", label: "Converting…", tone: "text-primary" };
+    if (status === "error") return { dot: "bg-danger", label: "Error", tone: "text-[var(--danger-text)]" };
+    if (status === "ok") return { dot: "bg-success", label: "Done", tone: "text-[var(--success-text)]" };
+    return { dot: "bg-muted-foreground", label: "Ready", tone: "text-muted-foreground" };
   }, [status]);
 
   const engineBadge =
     tool.engine === "browser"
-      ? { icon: Cpu, label: "Runs in your browser", tone: "text-emerald-600 dark:text-emerald-400" }
-      : { icon: Server, label: "Runs on server", tone: "text-blue-600 dark:text-blue-400" };
+      ? { icon: Cpu, label: "Runs in your browser", tone: "text-[var(--success-text)]" }
+      : { icon: Server, label: "Runs on server", tone: "text-primary" };
   const EngineIcon = engineBadge.icon;
 
   return (
@@ -202,15 +202,15 @@ export default function TransformShell({ tool }) {
       {/* header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0">
-          <div className="flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase tracking-wide text-slate-400 dark:text-slate-500">
-            <span className="rounded-md bg-slate-100 px-2 py-0.5 text-slate-600 dark:bg-slate-800 dark:text-slate-300">{labelFor(tool.from)}</span>
+          <div className="flex flex-wrap items-center gap-2 text-[11px] font-bold uppercase tracking-wide text-muted-foreground">
+            <span className="rounded-md bg-muted px-2 py-0.5 text-muted-foreground">{labelFor(tool.from)}</span>
             <ArrowRight className="h-3.5 w-3.5" />
-            <span className="rounded-md bg-blue-100 px-2 py-0.5 text-blue-700 dark:bg-blue-500/20 dark:text-blue-300">{labelFor(tool.to)}</span>
+            <span className="rounded-md bg-primary-soft px-2 py-0.5 text-primary-text">{labelFor(tool.to)}</span>
           </div>
-          <h1 className="mt-2 text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl dark:text-white">{tool.title}</h1>
-          <p className="mt-1 max-w-2xl text-sm text-slate-500 dark:text-slate-400">{tool.description}</p>
+          <h1 className="mt-2 text-2xl font-bold tracking-tight text-foreground sm:text-3xl">{tool.title}</h1>
+          <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{tool.description}</p>
         </div>
-        <div className={`flex shrink-0 items-center gap-2 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold shadow-sm dark:border-slate-700 dark:bg-slate-900 ${engineBadge.tone}`}>
+        <div className={`flex shrink-0 items-center gap-2 rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-semibold shadow-sm ${engineBadge.tone}`}>
           <EngineIcon className="h-4 w-4" />
           {engineBadge.label}
         </div>
@@ -218,10 +218,10 @@ export default function TransformShell({ tool }) {
 
       {/* tool-specific optimization notification banner */}
       {tool.slug.startsWith("svg-") && (
-        <div className="mt-5 flex items-center justify-between rounded-xl border border-blue-100 bg-blue-50/50 px-4 py-3 text-xs text-blue-800 dark:border-blue-500/10 dark:bg-blue-500/5 dark:text-blue-200 animate-fade-in">
+        <div className="mt-5 flex items-center justify-between rounded-xl border border-info/20 bg-info-soft px-4 py-3 text-xs text-[var(--info-text)] animate-fade-in">
           <div className="flex items-center gap-2">
-            <TriangleAlert className="h-4 w-4 shrink-0 text-blue-500" />
-            <span>SVGO optimization is enabled by default. You can adjust SVGR options in Settings.</span>
+            <TriangleAlert className="h-4 w-4 shrink-0 text-info" />
+            <span>SVGO optimization is not applied — markup is converted as-is, attributes and comments included.</span>
           </div>
         </div>
       )}
@@ -244,7 +244,7 @@ export default function TransformShell({ tool }) {
                   icon={Settings}
                   label="Settings"
                   onClick={() => setShowSettings(!showSettings)}
-                  className={showSettings ? "bg-slate-100 text-blue-600 dark:bg-slate-800 dark:text-blue-400" : ""}
+                  className={showSettings ? "bg-muted text-primary" : ""}
                 />
               )}
               <GhostButton icon={RotateCcw} label="Reset" onClick={handleReset} />
@@ -252,7 +252,7 @@ export default function TransformShell({ tool }) {
             </div>
           }
           footer={
-            <span className="text-xs text-slate-400 dark:text-slate-500" suppressHydrationWarning>
+            <span className="text-xs text-muted-foreground" suppressHydrationWarning>
               {input.length.toLocaleString()} characters
             </span>
           }
@@ -260,12 +260,12 @@ export default function TransformShell({ tool }) {
 
         {/* center rail */}
         <div className="flex flex-row items-center justify-center gap-3 md:flex-col md:py-4">
-          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-500/15">
-            <ArrowRight className="h-5 w-5 rotate-90 text-blue-600 md:rotate-0 dark:text-blue-400" />
+          <div className="flex h-11 w-11 items-center justify-center rounded-full bg-primary-soft">
+            <ArrowRight className="h-5 w-5 rotate-90 text-primary md:rotate-0" />
           </div>
-          <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+          <div className="flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2 shadow-sm">
             {status === "loading" ? (
-              <Loader2 className="h-3.5 w-3.5 animate-spin text-blue-500" />
+              <Loader2 className="h-3.5 w-3.5 animate-spin text-primary" />
             ) : (
               <span className={`h-2 w-2 rounded-full ${statusPill.dot}`} />
             )}
@@ -288,7 +288,7 @@ export default function TransformShell({ tool }) {
             </>
           }
           footer={
-            <span className="text-xs text-slate-400 dark:text-slate-500" suppressHydrationWarning>
+            <span className="text-xs text-muted-foreground" suppressHydrationWarning>
               {output.length.toLocaleString()} characters
             </span>
           }
@@ -297,13 +297,13 @@ export default function TransformShell({ tool }) {
 
       {/* error + warnings */}
       {error ? (
-        <div className="mt-4 flex items-start gap-2 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700 dark:border-red-500/30 dark:bg-red-500/10 dark:text-red-300">
+        <div className="mt-4 flex items-start gap-2 rounded-xl border border-danger/30 bg-danger-soft px-4 py-3 text-sm text-[var(--danger-text)]">
           <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" />
           <span className="whitespace-pre-wrap">{error}</span>
         </div>
       ) : null}
       {warnings.length > 0 ? (
-        <div className="mt-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-200">
+        <div className="mt-3 rounded-xl border border-warning/30 bg-warning-soft px-4 py-3 text-sm text-[var(--warning-text)]">
           {warnings.map((w, i) => (
             <div key={i} className="flex items-start gap-2">
               <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" />
@@ -322,22 +322,22 @@ export default function TransformShell({ tool }) {
 
       {/* stats */}
       <div className="mt-5 grid grid-cols-2 gap-3 xl:grid-cols-4">
-        <StatTile icon={FileText} tint="bg-blue-500/10" iconTone="text-blue-500" label="Input" value={`${input.length.toLocaleString()} chars`} />
-        <StatTile icon={FileText} tint="bg-emerald-500/10" iconTone="text-emerald-500" label="Output" value={`${output.length.toLocaleString()} chars`} />
-        <StatTile icon={ShieldCheck} tint="bg-violet-500/10" iconTone="text-violet-500" label="Status" value={statusPill.label} />
-        <StatTile icon={Timer} tint="bg-orange-500/10" iconTone="text-orange-500" label="Time" value={`${elapsed} ms`} />
+        <StatTile icon={FileText} tint="bg-primary-soft" iconTone="text-primary" label="Input" value={`${input.length.toLocaleString()} chars`} />
+        <StatTile icon={FileText} tint="bg-success-soft" iconTone="text-[var(--success-text)]" label="Output" value={`${output.length.toLocaleString()} chars`} />
+        <StatTile icon={ShieldCheck} tint="bg-accent-soft" iconTone="text-accent" label="Status" value={statusPill.label} />
+        <StatTile icon={Timer} tint="bg-warning-soft" iconTone="text-[var(--warning-text)]" label="Time" value={`${elapsed} ms`} />
       </div>
 
       {/* privacy note */}
-      <p className="mt-6 flex items-center gap-2 rounded-xl bg-slate-50 px-4 py-3 text-xs leading-relaxed text-slate-500 dark:bg-slate-800/60 dark:text-slate-400">
-        <Lock className="h-3.5 w-3.5 shrink-0 text-violet-500" />
+      <p className="mt-6 flex items-center gap-2 rounded-xl bg-surface-soft px-4 py-3 text-xs leading-relaxed text-muted-foreground">
+        <Lock className="h-3.5 w-3.5 shrink-0 text-accent" />
         {tool.engine === "browser"
           ? "This conversion runs entirely in your browser — your input never leaves your device."
           : "This conversion runs on our server to use a Node-only library. Your input is processed for the request and never stored."}
       </p>
 
       {toast ? (
-        <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-xl dark:bg-white dark:text-slate-900">
+        <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background shadow-xl">
           {toast}
         </div>
       ) : null}
@@ -347,13 +347,13 @@ export default function TransformShell({ tool }) {
 
 function StatTile({ icon: Icon, tint, iconTone, label, value }) {
   return (
-    <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700/70 dark:bg-slate-950/40">
+    <div className="flex items-center gap-3 rounded-2xl border border-border bg-surface p-4 shadow-sm">
       <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-xl ${tint}`}>
         <Icon className={`h-5 w-5 ${iconTone}`} />
       </div>
       <div className="min-w-0">
-        <p className="text-xs font-medium text-slate-400 dark:text-slate-500">{label}</p>
-        <p className="truncate text-base font-bold text-slate-900 dark:text-white" suppressHydrationWarning>
+        <p className="text-xs font-medium text-muted-foreground">{label}</p>
+        <p className="truncate text-base font-bold text-foreground" suppressHydrationWarning>
           {value}
         </p>
       </div>

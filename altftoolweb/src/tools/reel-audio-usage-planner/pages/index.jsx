@@ -106,6 +106,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the plan? This will replace all your posts and settings with sample data and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setAccountType("business");
     setRotationWindow(String(DEFAULT_ROTATION_WINDOW));
     setPosts(STARTER_POSTS);

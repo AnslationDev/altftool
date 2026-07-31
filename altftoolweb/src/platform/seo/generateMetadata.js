@@ -569,8 +569,11 @@ export function createGameJsonLd({ game, path } = {}) {
   if (!game?.title || !path) return null;
 
   const url = absoluteUrl(path);
-  const playCount = Number(game.plays || 0);
 
+  // No interactionStatistic node here. The game catalog has no backend,
+  // API route, or increment logic that ever produces a real play count —
+  // publishing one would be fabricated structured data (same reasoning as
+  // the missing aggregateRating in createBookJsonLd below).
   return compactJsonLdObject({
     "@context": "https://schema.org",
     "@type": ["VideoGame", "WebApplication"],
@@ -597,13 +600,6 @@ export function createGameJsonLd({ game, path } = {}) {
       priceCurrency: "USD",
       availability: "https://schema.org/InStock",
     },
-    interactionStatistic: playCount
-      ? {
-          "@type": "InteractionCounter",
-          interactionType: { "@type": "PlayAction" },
-          userInteractionCount: playCount,
-        }
-      : undefined,
     publisher: { "@id": `${getSiteUrl()}/#organization` },
     isPartOf: { "@id": `${getSiteUrl()}/#website` },
     mainEntityOfPage: { "@type": "WebPage", "@id": url },

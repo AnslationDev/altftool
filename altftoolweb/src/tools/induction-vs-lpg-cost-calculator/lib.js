@@ -76,7 +76,9 @@ export function compareInductionVsLpg({
   if (values.some((value) => value < 0)) return { error: "None of these values can be negative." };
 
   if (cylinderKg <= 0) return { error: "Cylinder weight must be greater than zero." };
-  if (cylinderKg > 100) return { error: "Domestic cylinders hold 5 kg to 19 kg of gas — check the weight." };
+  if (cylinderKg < 5 || cylinderKg > 19) {
+    return { error: "Domestic cylinders hold 5 kg to 19 kg of gas — check the weight." };
+  }
   if (cylinderPrice <= 0) return { error: "Cylinder price must be greater than zero." };
   if (daysPerCylinder <= 0) return { error: "Days per cylinder must be greater than zero." };
   if (daysPerCylinder > 365) return { error: "A cylinder lasting over a year means you barely cook on gas." };
@@ -89,11 +91,10 @@ export function compareInductionVsLpg({
   if (tariffPerKwh <= 0) return { error: "Electricity tariff must be greater than zero." };
   if (tariffPerKwh > 100) return { error: "Check the tariff — it is entered in rupees per unit (kWh)." };
 
-  const lpgEff = lpgStoveEfficiencyPercent / 100;
   const indEff = inductionEfficiencyPercent / 100;
 
   const pricePerKgLpg = cylinderPrice / cylinderKg;
-  const usefulKwhPerKg = LPG_KWH_PER_KG * lpgEff;
+  const usefulKwhPerKg = usefulKwhPerKgLpg(lpgStoveEfficiencyPercent);
   const lpgCostPerUsefulKwh = usefulKwhPerKg > 0 ? pricePerKgLpg / usefulKwhPerKg : 0;
   const inductionCostPerUsefulKwh = tariffPerKwh / indEff;
 

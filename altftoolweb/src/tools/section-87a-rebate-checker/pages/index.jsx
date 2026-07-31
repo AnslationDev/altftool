@@ -324,14 +324,18 @@ export default function ToolHome() {
             <h2 className="text-base font-semibold">Rebate result</h2>
             {result ? (
               <>
+                {/* Badge color/icon and text must agree, so both read off the
+                    same eligibility outcome instead of the rebate amount —
+                    income under the nil-tax slab is still `eligible`, even
+                    though there is no tax left to rebate (`rebate` is 0). */}
                 <div
                   className={`mt-3 inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold ${
-                    result.rebate > 0
+                    result.eligible || result.relief
                       ? "bg-[var(--muted)] text-[var(--success)]"
                       : "bg-[var(--danger-soft)] text-[var(--danger)]"
                   }`}
                 >
-                  {result.rebate > 0 ? (
+                  {result.eligible || result.relief ? (
                     <BadgeCheck className="h-4 w-4" />
                   ) : (
                     <XCircle className="h-4 w-4" />

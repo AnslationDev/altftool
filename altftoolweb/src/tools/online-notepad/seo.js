@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "What happens if I press Clear?",
-      "Clear empties the note body immediately and there is no undo, since the cleared state is autosaved straight away. The title is left untouched, so export first if the text still matters.",
+      "Clear asks you to confirm before it empties the note body, since the cleared state is autosaved straight away and there is no undo after that. The title is left untouched, so export first if the text still matters.",
     ],
   ],
 };

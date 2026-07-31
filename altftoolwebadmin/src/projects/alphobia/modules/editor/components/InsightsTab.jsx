@@ -158,7 +158,7 @@ export default function InsightsTab() {
                 type="button"
                 onClick={() => setPreviewImg(item.image || "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg")}
                 title="Click to view full image"
-                className="sm:w-1/3 h-40 sm:h-auto bg-slate-200 overflow-hidden relative block hover:opacity-90 transition cursor-pointer"
+                className="sm:w-1/3 h-40 sm:h-auto bg-[var(--surface-soft)] overflow-hidden relative block hover:opacity-90 transition cursor-pointer"
               >
                 <img
                   src={item.image || "https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg"}
@@ -282,7 +282,7 @@ export default function InsightsTab() {
                         type="button"
                         onClick={() => setPreviewImg(formImage)}
                         title="Click to view full image"
-                        className="h-10 w-16 bg-slate-100 rounded border border-[var(--border)] overflow-hidden shrink-0 block hover:opacity-80 transition cursor-pointer"
+                        className="h-10 w-16 bg-[var(--surface-soft)] rounded border border-[var(--border)] overflow-hidden shrink-0 block hover:opacity-80 transition cursor-pointer"
                       >
                         <img src={formImage} alt="Insight Preview" className="w-full h-full object-cover" />
                       </button>

@@ -87,6 +87,7 @@ export const EMERGENCY_FLAG_IDS = [
   "thunderclap",
   "vision",
   "coughing-blood",
+  "black-stool",
   "confusion",
   "fever-rash",
   "severe-abdo",
@@ -135,6 +136,10 @@ export function daysBetween(fromIso, toIso) {
 export function questionCapacity(appointmentMinutes) {
   if (!Number.isFinite(appointmentMinutes) || appointmentMinutes <= 0) return null;
   const available = appointmentMinutes * QUESTION_TIME_FRACTION;
+  // If the rounded minutes shown to the user is 0 (the same rounding the UI
+  // applies to questionMinutes), there is no time to floor up to 1 question —
+  // otherwise the UI would show "1 question fits" next to "0 minutes yours".
+  if (Math.round(available) === 0) return 0;
   const capacity = Math.floor(available / MINUTES_PER_QUESTION);
   return Math.max(1, capacity);
 }

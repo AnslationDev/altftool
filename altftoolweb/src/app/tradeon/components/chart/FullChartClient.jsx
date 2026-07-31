@@ -205,8 +205,8 @@ export default function FullChartClient() {
   return (
     <div className="tradeon-root h-screen flex flex-col overflow-hidden" style={{ background: "var(--tdn-bg)" }}>
       {/* TOP CONTROL BAR */}
-      <header className="tdn-topbar flex items-center gap-1.5 h-11 px-2 shrink-0 overflow-x-auto tdn-scroll-hide">
-        <Link href="/tradeon" className="tdn-btn tdn-btn-icon !w-8 !h-8 shrink-0" title="Home"><Home size={15} /></Link>
+      <header className="tdn-topbar flex items-center gap-1.5 h-12 px-2 shrink-0 overflow-x-auto tdn-scroll-hide">
+        <Link href="/tradeon" className="tdn-btn tdn-btn-icon !w-11 !h-11 shrink-0" title="Home"><Home size={15} /></Link>
         <div className="hidden sm:block shrink-0"><Logo mark size={24} wordmark={false} /></div>
 
         <div className="flex items-center gap-1 tdn-card-i px-1.5 py-0.5 shrink-0">
@@ -270,11 +270,11 @@ export default function FullChartClient() {
               </div>
             )}
           </Menu>
-          <button onClick={() => chartRef.current?.autoScale()} className="tdn-btn tdn-btn-icon !w-8 !h-8" title="Auto scale"><Scaling size={15} /></button>
-          <button onClick={() => chartRef.current?.fit()} className="tdn-btn tdn-btn-icon !w-8 !h-8" title="Reset chart"><RotateCcw size={15} /></button>
-          <button onClick={shot} className="tdn-btn tdn-btn-icon !w-8 !h-8" title="Export screenshot"><Camera size={15} /></button>
-          <button onClick={share} className="tdn-btn tdn-btn-icon !w-8 !h-8" title="Share chart"><Share2 size={15} /></button>
-          <button onClick={toggleFullscreen} className="tdn-btn tdn-btn-icon !w-8 !h-8" title="Fullscreen"><Maximize size={15} /></button>
+          <button onClick={() => chartRef.current?.autoScale()} className="tdn-btn tdn-btn-icon !w-11 !h-11" title="Auto scale"><Scaling size={15} /></button>
+          <button onClick={() => chartRef.current?.fit()} className="tdn-btn tdn-btn-icon !w-11 !h-11" title="Reset chart"><RotateCcw size={15} /></button>
+          <button onClick={shot} className="tdn-btn tdn-btn-icon !w-11 !h-11" title="Export screenshot"><Camera size={15} /></button>
+          <button onClick={share} className="tdn-btn tdn-btn-icon !w-11 !h-11" title="Share chart"><Share2 size={15} /></button>
+          <button onClick={toggleFullscreen} className="tdn-btn tdn-btn-icon !w-11 !h-11" title="Fullscreen"><Maximize size={15} /></button>
           <ThemeToggle />
         </div>
       </header>

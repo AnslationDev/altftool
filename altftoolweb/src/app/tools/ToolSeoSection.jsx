@@ -22,6 +22,12 @@ import EmbedCodeCopy from "@/app/embed/EmbedCodeCopy";
  * src/tools/step-counter/components/StepApp.jsx). Applied to EVERY tool page
  * so all "About this tool" sections read as one designed product. No client
  * JS — the FAQ uses native <details>, all content stays crawlable.
+ *
+ * Reading prose is 15px, not Tailwind's 14px `text-sm`. Almost all tool-page
+ * traffic is phones, where this section gets 318px of usable width at 390px
+ * viewport — every paragraph, step, benefit and FAQ answer was the smallest
+ * type on the page. Eyebrow labels and the embed footnote stay small: they are
+ * labels, not copy.
  */
 
 // Backed by the "--sc-*" tokens in globals.css (light + dark variants,
@@ -100,11 +106,11 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
           {seo.h1}
         </h1>
         {tool?.description ? (
-          <p className="mt-2 max-w-3xl text-sm font-medium" style={{ color: T.muted }}>
+          <p className="mt-2 max-w-3xl text-[15px] font-medium" style={{ color: T.muted }}>
             {tool.description}
           </p>
         ) : null}
-        <p className="mt-4 max-w-3xl text-sm font-medium leading-relaxed" style={{ color: T.muted }}>
+        <p className="mt-4 max-w-3xl text-[15px] font-medium leading-relaxed" style={{ color: T.muted }}>
           {seo.intro}
         </p>
       </div>
@@ -121,7 +127,7 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
               >
                 {index + 1}
               </span>
-              <p className="mt-3 text-sm font-medium leading-relaxed" style={{ color: T.muted }}>
+              <p className="mt-3 text-[15px] font-medium leading-relaxed" style={{ color: T.muted }}>
                 {step}
               </p>
             </li>
@@ -135,10 +141,10 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
         <ul className="mt-5 grid gap-3 sm:grid-cols-3">
           {seo.examples.map((example) => (
             <li key={example.title} className="rounded-2xl p-4" style={{ backgroundColor: T.tile }}>
-              <h3 className="text-sm font-extrabold" style={{ color: T.ink }}>
+              <h3 className="text-[15px] font-extrabold" style={{ color: T.ink }}>
                 {example.title}
               </h3>
-              <p className="mt-1.5 text-sm font-medium leading-relaxed" style={{ color: T.muted }}>
+              <p className="mt-1.5 text-[15px] font-medium leading-relaxed" style={{ color: T.muted }}>
                 {example.body}
               </p>
             </li>
@@ -154,7 +160,7 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
             {seo.useCases.map((useCase) => (
               <li
                 key={useCase}
-                className="flex gap-2.5 text-sm font-medium leading-relaxed"
+                className="flex gap-2.5 text-[15px] font-medium leading-relaxed"
                 style={{ color: T.muted }}
               >
                 <span
@@ -172,15 +178,23 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
       {/* FAQ — native <details>, no client JS, crawlable content */}
       <div className="rounded-[24px] p-5 sm:p-7" style={CARD}>
         <SectionHeading icon={HelpCircle}>Frequently asked questions</SectionHeading>
+        {/*
+          Padding sits on the <summary>, not on the <details>: only the summary
+          toggles, so padding on the wrapper is dead space around the target.
+          With it on the wrapper the tappable row measured 24px tall on a 390px
+          phone (40px for a two-line question) — under the 44px minimum in
+          master.md. min-h-11 plus the padding moved inward makes the whole
+          visible row the target.
+        */}
         <div className="mt-3 space-y-2">
           {seo.faqs.map((faq, index) => (
             <details
               key={faq.question}
-              className="group rounded-2xl px-4 py-3.5"
+              className="group rounded-2xl"
               style={{ backgroundColor: T.tile }}
               open={index === 0}
             >
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-3 rounded-lg text-sm font-bold text-(--sc-ink) transition-colors duration-150 hover:text-(--sc-indigo) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--sc-indigo)]/35 group-open:text-(--sc-indigo) motion-reduce:transition-none [&::-webkit-details-marker]:hidden">
+              <summary className="flex min-h-11 cursor-pointer list-none items-center justify-between gap-3 rounded-2xl px-4 py-2.5 text-[15px] font-bold text-(--sc-ink) transition-colors duration-150 hover:text-(--sc-indigo) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--sc-indigo)]/35 group-open:text-(--sc-indigo) motion-reduce:transition-none [&::-webkit-details-marker]:hidden">
                 {faq.question}
                 <span
                   className="grid h-6 w-6 shrink-0 place-items-center rounded-full transition-transform duration-200 group-open:rotate-45 motion-reduce:transition-none"
@@ -190,7 +204,7 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
                   <Plus className="h-3.5 w-3.5" />
                 </span>
               </summary>
-              <p className="max-w-3xl pt-2 text-sm font-medium leading-relaxed" style={{ color: T.muted }}>
+              <p className="max-w-3xl px-4 pb-4 text-[15px] font-medium leading-relaxed" style={{ color: T.muted }}>
                 {faq.answer}
               </p>
             </details>
@@ -202,12 +216,18 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
       {related.length > 0 && (
         <nav aria-label="Related tools" className="rounded-[24px] p-5 sm:p-7" style={CARD}>
           <SectionHeading icon={LayoutGrid}>Related tools</SectionHeading>
+          {/*
+            min-h-11: these pills measured 32px tall on a 390px phone, and tool
+            names are long enough that they wrap to one pill per row there, so
+            they are a stack of six under-sized targets rather than a dense row.
+            44px is the master.md minimum.
+          */}
           <ul className="mt-4 flex flex-wrap gap-2">
             {related.map((item) => (
               <li key={item.slug}>
                 <Link
                   href={`/tools/all/${item.slug}`}
-                  className="group inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-sm font-bold text-(--sc-ink) transition-all duration-150 hover:-translate-y-0.5 hover:text-(--sc-indigo) hover:shadow-(--sc-shadow-lg) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--sc-indigo)]/35 motion-reduce:transform-none motion-reduce:transition-none"
+                  className="group inline-flex min-h-11 items-center gap-1.5 rounded-full px-4 py-2 text-[15px] font-bold text-(--sc-ink) transition-all duration-150 hover:-translate-y-0.5 hover:text-(--sc-indigo) hover:shadow-(--sc-shadow-lg) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--sc-indigo)]/35 motion-reduce:transform-none motion-reduce:transition-none"
                   style={{ backgroundColor: T.tile }}
                 >
                   {item.name}
@@ -223,7 +243,7 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
       {isEmbeddable(slug) && (
         <section aria-label={`Embed ${tool?.name || seo.name}`} className="rounded-[24px] p-5 sm:p-7" style={CARD}>
           <SectionHeading icon={Code2}>Embed this tool on your site</SectionHeading>
-          <p className="mt-3 max-w-2xl text-sm leading-6" style={{ color: T.muted }}>
+          <p className="mt-3 max-w-2xl text-[15px] leading-6" style={{ color: T.muted }}>
             Add the {tool?.name || seo.name} widget to your blog or website — free, responsive,
             no signup. Just keep the &ldquo;Widget by AltFTool&rdquo; credit link visible.
           </p>
@@ -233,7 +253,7 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
               containerClassName="rounded-xl"
               preClassName="max-h-44 overflow-auto rounded-xl p-3 text-xs leading-5 bg-[var(--sc-tile)] text-[var(--sc-ink)]"
               dividerClassName="pt-2"
-              buttonClassName="inline-flex h-9 items-center gap-2 rounded-full px-4 text-sm font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-(--sc-shadow-lg) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sc-indigo)] motion-reduce:transform-none"
+              buttonClassName="inline-flex min-h-11 items-center gap-2 rounded-full px-4 text-sm font-bold transition-all duration-150 hover:-translate-y-0.5 hover:shadow-(--sc-shadow-lg) focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--sc-indigo)] motion-reduce:transform-none"
               buttonStyle={{ backgroundColor: T.tile, color: T.indigo }}
             />
           </div>

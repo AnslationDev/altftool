@@ -40,25 +40,7 @@ export default function ArticleReader({ article, onClose, bookmarks, onToggleBoo
     if (storedComments) {
       setComments(JSON.parse(storedComments));
     } else {
-      // Default placeholder comments to make the section look active
-      const defaultComments = [
-        {
-          id: 1,
-          name: "Aarav Mehta",
-          text: "This brought back so many memories! Shaktimaan was literally the highlight of my weekend.",
-          votes: 18,
-          date: "2 hours ago"
-        },
-        {
-          id: 2,
-          name: "Sanjana Roy",
-          text: "I still try to buy Kismi chocolates whenever I see them at local shops. Pure nostalgia!",
-          votes: 12,
-          date: "1 hour ago"
-        }
-      ];
-      setComments(defaultComments);
-      localStorage.setItem(`bf-comments-${article.id}`, JSON.stringify(defaultComments));
+      setComments([]);
     }
   }, [article]);
 
@@ -147,6 +129,21 @@ export default function ArticleReader({ article, onClose, bookmarks, onToggleBoo
     setTimeout(() => setShareCopied(false), 2000);
   };
 
+  const openShareWindow = (shareUrl) => {
+    window.open(shareUrl, "_blank", "noopener,noreferrer,width=600,height=520");
+  };
+
+  const shareOnFacebook = () => {
+    const url = encodeURIComponent(window.location.href);
+    openShareWindow(`https://www.facebook.com/sharer/sharer.php?u=${url}`);
+  };
+
+  const shareOnTwitter = () => {
+    const url = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(article.title);
+    openShareWindow(`https://twitter.com/intent/tweet?url=${url}&text=${text}`);
+  };
+
   const reactionConfigs = [
     { type: "lol", label: "LOL", emoji: "😂" },
     { type: "omg", label: "OMG", emoji: "😲" },
@@ -225,11 +222,11 @@ export default function ArticleReader({ article, onClose, bookmarks, onToggleBoo
           <div className="bf-share-section">
             <h4>SHARE THIS ARTICLE</h4>
             <div className="bf-share-buttons">
-              <button className="bf-share-btn bf-fb" title="Share on Facebook">
+              <button className="bf-share-btn bf-fb" onClick={shareOnFacebook} title="Share on Facebook">
                 <Facebook size={18} />
                 <span>Facebook</span>
               </button>
-              <button className="bf-share-btn bf-tw" title="Share on Twitter">
+              <button className="bf-share-btn bf-tw" onClick={shareOnTwitter} title="Share on Twitter">
                 <Twitter size={18} />
                 <span>Twitter</span>
               </button>

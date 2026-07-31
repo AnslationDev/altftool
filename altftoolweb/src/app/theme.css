@@ -1,4 +1,16 @@
-/* LIGHT MODE */
+/* Fallback copy of the `--color-*` platform contract.
+
+   The authoritative set lives in globals.css under `html[data-theme]`, whose
+   specificity (0,1,1) outranks the `:root` below (0,1,0) — so these aliases only
+   ever decide anything when the inline theme-init script has not run and the
+   `data-theme` attribute is missing. Same defensive reasoning as the
+   unconditional `html, body` rule in globals.css.
+
+   There is deliberately no dark-mode block here. Every alias resolves to another
+   custom property rather than a literal, and those are what globals.css
+   re-points per theme, so one definition is already correct in both. The
+   `[data-theme="dark"]` block that used to follow was a byte-for-byte copy of
+   this one and could never change a computed value. */
 
 html {
   background-color: var(--background);
@@ -6,22 +18,6 @@ html {
 
 :root {
   --color-background: var(--background);
-  --color-background-foreground: var(--foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-border: var(--border);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-}
-
-/* DARK MODE */
-[data-theme="dark"] {
-  --color-background: var(--background);
-  --color-background-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --color-secondary: var(--secondary);

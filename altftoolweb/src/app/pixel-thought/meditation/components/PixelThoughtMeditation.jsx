@@ -135,11 +135,19 @@ export default function PixelThoughtMeditation() {
       </div>
 
       <section className={`absolute inset-x-4 top-[12dvh] z-20 grid justify-items-center text-center transition-all duration-1000 max-[600px]:top-[14dvh] ${introVisible ? 'translate-y-0 opacity-100' : 'pointer-events-none -translate-y-6 opacity-0'}`}>
+        {/*
+          The H1 was "Pixel Thoughts" and this sub-line was "A 60-second
+          meditation tool to help clear your mind" — respectively the name and
+          the verbatim tagline of a live third-party product (pixelthoughts.co).
+          Both are replaced with copy that describes what this page does, so the
+          H1 now matches the generic intent the metadata targets instead of
+          announcing another company's brand as the heading of our page.
+        */}
         <h1 className="m-0 text-[clamp(2.4rem,7vw,5.2rem)] font-light leading-none text-white [text-shadow:0_1px_2px_rgba(0,0,0,0.45),0_0_18px_rgba(255,255,255,0.16)]">
-          Pixel Thoughts
+          60-Second Meditation
         </h1>
         <p className="mt-5 max-w-[760px] text-balance text-[clamp(1.08rem,2.9vw,1.55rem)] font-light leading-relaxed text-[#f7ecd2]/90 [text-shadow:0_0_16px_rgba(255,220,150,0.22)]">
-          A 60-second meditation tool to help clear your mind
+          One minute, one worry, and a star to carry it away
         </p>
         <button
           type="button"

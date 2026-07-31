@@ -282,18 +282,23 @@ export function selectFssaiLicence({
 
   // 3. Capacity test, which can override a low turnover.
   const hasCapacityTest = meta.stateMax !== null && meta.capacityUnit !== null;
-  if (hasCapacityTest && capacity > 0) {
+  if (hasCapacityTest) {
     if (capacity > meta.stateMax) {
       raise(
         "central",
         `Capacity of ${capacity} ${meta.capacityUnit} is above the Schedule 1 ceiling of ${meta.stateMax} for a state licence, so a central licence is required whatever the turnover.`,
       );
-    } else if (meta.registrationMax === null || capacity > meta.registrationMax) {
+    } else if (meta.registrationMax === null) {
       raise(
         "state",
-        `Capacity of ${capacity} ${meta.capacityUnit} is above the petty operator ceiling${meta.registrationMax === null ? "" : ` of ${meta.registrationMax}`}, so registration is not available even at a small turnover.`,
+        `This activity has no registration option under Schedule 1, so at least a state licence is required whatever the turnover or capacity.`,
       );
-    } else {
+    } else if (capacity > meta.registrationMax) {
+      raise(
+        "state",
+        `Capacity of ${capacity} ${meta.capacityUnit} is above the petty operator ceiling of ${meta.registrationMax}, so registration is not available even at a small turnover.`,
+      );
+    } else if (capacity > 0) {
       reasons.push(
         `Capacity of ${capacity} ${meta.capacityUnit} stays within the petty operator ceiling of ${meta.registrationMax}.`,
       );

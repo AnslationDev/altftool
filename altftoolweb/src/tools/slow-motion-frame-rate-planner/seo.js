@@ -7,7 +7,7 @@ const seo = {
     "Finding out why 120 fps footage under Indian mains lighting shows rolling brightness bands",
   ],
   benefits: [
-    ["Works in both directions", "Enter a capture rate and get the factor, or name the factor and get the rate to dial in."],
+    ["Every number from two frame rates", "Enter your capture rate and timeline fps and get the slow-motion factor, speed percentage, shutter speed and light cost together."],
     ["Exposes the light cost", "Shows the shutter speed and the stops lost before you discover them on location."],
     ["Flicker checked properly", "Tests both the frame interval and the shutter against the 100 Hz or 120 Hz light pulse."],
   ],

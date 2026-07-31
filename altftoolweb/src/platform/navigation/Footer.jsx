@@ -143,7 +143,8 @@ const Footer = () => {
     <footer className="relative overflow-hidden border-t border-[#0EA5E9]/25 bg-[#020B1D] text-white [font-family:var(--font-inter)]">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_0%_0%,rgba(14,165,233,0.08),transparent_22%),radial-gradient(circle_at_100%_20%,rgba(20,184,166,0.09),transparent_24%),linear-gradient(180deg,rgba(2,11,29,0.98),rgba(2,9,24,1))]" />
       <div className="pointer-events-none absolute -left-10 bottom-0 h-56 w-[42rem] opacity-80">
-        <svg viewBox="0 0 680 180" className="h-full w-full">
+        {/* Ornament only — an untitled SVG is still a graphics node to AT. */}
+        <svg viewBox="0 0 680 180" className="h-full w-full" aria-hidden="true">
           {Array.from({ length: 8 }).map((_, index) => (
             <path
               key={index}
@@ -157,7 +158,7 @@ const Footer = () => {
         </svg>
       </div>
       <div className="pointer-events-none absolute right-0 top-0 h-44 w-[46rem] opacity-85">
-        <svg viewBox="0 0 760 180" className="h-full w-full">
+        <svg viewBox="0 0 760 180" className="h-full w-full" aria-hidden="true">
           {Array.from({ length: 8 }).map((_, index) => (
             <path
               key={index}

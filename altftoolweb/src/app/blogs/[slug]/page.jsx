@@ -21,6 +21,7 @@ import { getRelatedToolsForBlog } from "../utils/relatedTools";
 import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
 import { getMissingBlogRedirect } from "../utils/missingBlogRedirect";
 import { shouldNoindexBlogPost } from "../utils/blogIndexPolicy";
+import { getBlogSeoOverride } from "../utils/blogSeoOverrides";
 import {
   createBlogPostingJsonLd,
   createBreadcrumbJsonLd,
@@ -102,15 +103,22 @@ export async function generateMetadata({ params }) {
     });
   }
 
+  // Authored snippet for posts whose stored Firestore fields measurably lose
+  // the click — either the heading is long enough that compactBrandedTitle()
+  // clips the keyword off the end, or there is no stored seoDescription and the
+  // description falls back to the body's opening sentence cut mid-thought.
+  // See ../utils/blogSeoOverrides.js for the per-post evidence.
+  const seoOverride = getBlogSeoOverride(slug);
+
   // compactBrandedTitle() defaults to 65 chars, which is past the ~60 the SERP
   // renders before truncating; the returned string already ends in "| AltFTool"
   // so resolveDocumentTitle() marks it absolute and the layout template does
   // not append the brand a second time. 60 in, 60 out.
   const title = compactBrandedTitle(
-    blog.seoTitle || `${blog.heading} - AltFTool Blog`,
+    seoOverride?.title || blog.seoTitle || `${blog.heading} - AltFTool Blog`,
     60,
   );
-  const description = getBlogDescription(blog);
+  const description = seoOverride?.description || getBlogDescription(blog);
   const tags = Array.isArray(blog.tags) ? blog.tags.filter(Boolean) : [];
   const metadata = await createPageMetadata({
     title,
@@ -205,13 +213,21 @@ export default async function BlogDetailPage({ params }) {
   const initialRelatedTools = getRelatedToolsForBlog(initialBlog, 6);
   const initialFaqs = deriveBlogFaqItems(initialBlog);
   const initialHowToSteps = deriveBlogHowToSteps(initialBlog, initialRelatedTools);
+  // Keep the structured data telling the same story as the meta description:
+  // without this, an overridden post shipped an authored <meta description> next
+  // to a BlogPosting.description still holding the mid-sentence body fragment.
+  const seoOverride = getBlogSeoOverride(slug);
+  const articleDescription = seoOverride?.description || getBlogDescription(initialBlog);
+  const articleJsonLdSource = seoOverride?.description
+    ? { ...initialBlog, seoDescription: seoOverride.description }
+    : initialBlog;
 
   return (
     <>
       <JsonLd
         id={`blog-schema-${slug}`}
         data={[
-          createBlogPostingJsonLd(initialBlog),
+          createBlogPostingJsonLd(articleJsonLdSource),
           createBreadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Blog", path: "/blogs" },
@@ -224,7 +240,7 @@ export default async function BlogDetailPage({ params }) {
           createHowToJsonLd({
             path: `/blogs/${slug}`,
             name: initialBlog?.heading || initialBlog?.title || "AltFTool blog workflow",
-            description: getBlogDescription(initialBlog),
+            description: articleDescription,
             steps: initialHowToSteps,
           }),
           createItemListJsonLd({

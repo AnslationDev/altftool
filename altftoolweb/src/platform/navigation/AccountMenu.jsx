@@ -59,7 +59,7 @@ export function AccountMenu() {
         aria-label="Sign in"
         aria-busy={loading || undefined}
         title="Sign in"
-        className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-(--card) text-(--foreground) transition hover:bg-(--muted) active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none"
+        className="inline-flex h-[var(--anslation-ds-control-md)] w-[var(--anslation-ds-control-md)] shrink-0 items-center justify-center rounded-md border border-border bg-(--card) text-(--foreground) transition hover:bg-(--muted) active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none"
       >
         <UserRound className="h-5 w-5" aria-hidden="true" />
       </Link>
@@ -74,7 +74,7 @@ export function AccountMenu() {
         aria-haspopup="menu"
         aria-expanded={open}
         onClick={() => setOpen((prev) => !prev)}
-        className="flex h-10 w-10 items-center justify-center rounded-full border border-border bg-primary/10 text-sm font-bold text-primary transition hover:bg-primary/15 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none"
+        className="flex h-[var(--anslation-ds-control-md)] w-[var(--anslation-ds-control-md)] items-center justify-center rounded-full border border-border bg-primary/10 text-sm font-bold text-primary transition hover:bg-primary/15 active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none"
       >
         {initialsOf(user)}
       </button>

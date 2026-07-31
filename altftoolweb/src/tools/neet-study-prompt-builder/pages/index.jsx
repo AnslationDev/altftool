@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Stethoscope } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import {
   DIFFICULTY_LEVELS,
@@ -48,7 +49,7 @@ export default function ToolHome() {
   const [language, setLanguage] = useState(DEFAULTS.language);
   const [correct, setCorrect] = useState(DEFAULTS.correct);
   const [wrong, setWrong] = useState(DEFAULTS.wrong);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -77,15 +78,9 @@ export default function ToolHome() {
     setChapter(NEET_SUBJECTS[next][0]);
   };
 
-  const copyPrompt = async () => {
+  const copyPrompt = () => {
     if (result.error) return;
-    try {
-      await navigator.clipboard.writeText(result.prompt);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("prompt", result.prompt, { label: "NEET study prompt" });
   };
 
   const reset = () => {
@@ -99,7 +94,7 @@ export default function ToolHome() {
     setLanguage(DEFAULTS.language);
     setCorrect(DEFAULTS.correct);
     setWrong(DEFAULTS.wrong);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -280,21 +275,24 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyPrompt}
-              aria-label="Copy the generated NEET study prompt"
+              aria-label={isCopied("prompt") ? "Copied NEET study prompt to clipboard" : "Copy the generated NEET study prompt"}
               className={PRIMARY_BTN}
               disabled={Boolean(result.error)}
             >
-              {copied ? (
+              {isCopied("prompt") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy prompt"}
+              {isCopied("prompt") ? "Copied!" : "Copy prompt"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all fields" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -321,7 +319,13 @@ export default function ToolHome() {
             <dt className="text-xs text-[var(--muted-foreground)]">Pace vs the real paper</dt>
             <dd className="text-base font-semibold">
               {metrics
-                ? `${NUM.format(metrics.paceRatio)}x ${metrics.fasterThanNeetPace ? "(tighter)" : "(easier)"}`
+                ? `${NUM.format(metrics.paceRatio)}x ${
+                    metrics.paceComparison === "tighter"
+                      ? "(tighter)"
+                      : metrics.paceComparison === "easier"
+                        ? "(easier)"
+                        : "(same as real NEET pace)"
+                  }`
                 : DASH}
             </dd>
           </div>

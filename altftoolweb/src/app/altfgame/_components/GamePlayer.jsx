@@ -3,7 +3,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Maximize2, Minimize2, Share2, Check, Keyboard, Info } from "lucide-react";
-import StarRating from "./StarRating";
 import GameThumb from "./GameThumb";
 import { useAutoFitGame } from "@/app/altfgame/_lib/useAutoFitGame";
 
@@ -61,7 +60,6 @@ export default function GamePlayer({ game, children }) {
           <div className="min-w-0">
             <h1 className="truncate text-xl font-bold tracking-tight sm:text-3xl">{game.title}</h1>
             <div className="mt-1 flex items-center gap-3 text-sm text-foreground/60">
-              <StarRating value={game.rating} />
               <span className="rounded-full bg-card px-2.5 py-0.5">{game.category}</span>
             </div>
           </div>

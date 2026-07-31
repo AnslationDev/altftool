@@ -25,6 +25,27 @@ const SETTINGS_DEFAULTS = {
   watchandearn: { title: "Watch & Earn", videoId: "aqz-KE-bpKQ", rewardCoins: 15, durationLabel: "30 sec" },
   mysterygift: { earningLabel: "Mystery Gift Box", cooldownHours: 24, rewardMin: 5, rewardMax: 50, rewardStep: 100, imageUrl: "", lottieUrl: "" },
   bonusladder: { dailyGoal: 1000, coinIconUrl: "", trophyIconUrl: "" },
+  // Same fallbacks as the dedicated Wallet Page / Kho Kho modules, kept in
+  // sync manually (see modules/walletpage/page.jsx, modules/khokho/page.jsx)
+  // so the generic Settings tab bar doesn't show these docs blank.
+  wallet: {
+    cardBackground: { mode: "image" },
+    cardBorderRadius: 30,
+    coinToInrRate: 0.1,
+    conversionTextTemplate: "1 Coin = ₹{rate}",
+    minWithdrawal: 500,
+    progressCaption: "Minimum Withdrawal",
+    withdrawalStatusText: "Withdrawals processed within 24 hrs",
+    redeemButtonText: "Redeem Cash",
+    transferButtonText: "Transfer UPI",
+    paymentIcons: [],
+    bottomInfoText: "",
+  },
+  khokho_splash: { tagline: "Play. Win. Earn.", subtitle: "", durationSec: 5, logoUrl: "" },
+  khokho_home: { liveQuizLabel: "NEXT LIVE QUIZ", joinButtonText: "JOIN THE ARENA", featuredTitle: "FEATURED ARENAS" },
+  khokho_rewards: { prizePool: "", winnerReward: 0, livesPerGame: 1, shareReward: 1 },
+  khokho_leaderboard: { title: "Leaderboard", subtitle: "Real-time Arena" },
+  khokho_settings: { questionDurationSec: 10, revealDelaySec: 4, defaultLives: 1 },
 };
 
 /** Module key → collection schema key (1:1 for Anternet). */

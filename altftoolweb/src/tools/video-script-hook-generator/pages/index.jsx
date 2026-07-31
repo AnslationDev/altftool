@@ -14,10 +14,10 @@ const GHOST_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 
 export default function ToolHome() {
-  const [topic, setTopic] = useState("building a tiny AI business");
-  const [audience, setAudience] = useState("solo creators");
-  const [outcome, setOutcome] = useState("a first paid customer");
-  const [timeframe, setTimeframe] = useState("7 days");
+  const [topic, setTopic] = useState("AI automation");
+  const [audience, setAudience] = useState("freelancers");
+  const [outcome, setOutcome] = useState("more free time");
+  const [timeframe, setTimeframe] = useState("a month");
   const [number, setNumber] = useState("5");
   const [format, setFormat] = useState("short");
   const [tone, setTone] = useState("direct");
@@ -53,10 +53,10 @@ export default function ToolHome() {
   };
 
   const reset = () => {
-    setTopic("building a tiny AI business");
-    setAudience("solo creators");
-    setOutcome("a first paid customer");
-    setTimeframe("7 days");
+    setTopic("AI automation");
+    setAudience("freelancers");
+    setOutcome("more free time");
+    setTimeframe("a month");
     setNumber("5");
     setFormat("short");
     setTone("direct");

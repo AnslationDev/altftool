@@ -1,5 +1,5 @@
 .privacy-policy-tool {
-  min-height: 100vh;
+  min-height: 100dvh;
   --pp-surface: color-mix(in srgb, var(--card), transparent 8%);
   --pp-surface-strong: var(--card);
   --pp-line: color-mix(in srgb, var(--border), var(--primary) 12%);

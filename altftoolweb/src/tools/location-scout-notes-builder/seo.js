@@ -19,7 +19,7 @@ const seo = {
     ],
     [
       "How long does golden hour last?",
-      "Golden hour is the period when the sun is between the horizon and about 6° elevation, so its length depends entirely on latitude and season. Near the equator it can be under half an hour; at 51° north in midsummer it stretches well past an hour, and at high latitudes it can last most of the evening.",
+      "Golden hour is the period when the sun is between the horizon and about 6° elevation, so its length depends entirely on latitude and season. Near the equator it can be under half an hour; at 51° north in midsummer it runs to about 53 minutes, only crossing a full hour past roughly 55° north, and at high latitudes it can last most of the evening.",
     ],
     [
       "What should I check when scouting a location?",

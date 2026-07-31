@@ -51,54 +51,6 @@ const cards = {
                 "Licensed professionals",
                 "Flexible communication",
             ],
-        }, {
-            name: "NordVPN",
-            logo: "/top11/expert-recom/nordVpn.png",
-            reviews: "12,000 Reviews",
-            points: [
-                "Military-grade encryption",
-                "Fast global servers",
-                "No-logs policy",
-            ],
-        },
-        {
-            name: "ExpressVPN",
-            logo: "/top11/top10.png",
-            reviews: "9,000 Reviews",
-            points: [
-                "High-speed streaming",
-                "Trusted privacy",
-                "Wide server network",
-            ],
-        }, {
-            name: "NordVPN",
-            logo: "/top11/expert-recom/nordVpn.png",
-            reviews: "12,000 Reviews",
-            points: [
-                "Military-grade encryption",
-                "Fast global servers",
-                "No-logs policy",
-            ],
-        },
-        {
-            name: "ExpressVPN",
-            logo: "/top11/top10.png",
-            reviews: "9,000 Reviews",
-            points: [
-                "High-speed streaming",
-                "Trusted privacy",
-                "Wide server network",
-            ],
-        },
-         {
-            name: "ExpressVPN",
-            logo: "/top11/top10.png",
-            reviews: "9,000 Reviews",
-            points: [
-                "High-speed streaming",
-                "Trusted privacy",
-                "Wide server network",
-            ],
         },
     ],
     VPN: [
@@ -190,11 +142,6 @@ export default function CategorySection() {
                         <h3 className="text-base font-semibold text-[var(--card-foreground)] mb-1">
                             {item.name}
                         </h3>
-
-                        {/* REVIEWS */}
-                        <p className="text-xs text-[var(--muted-foreground)] mb-4">
-                            {item.reviews} ⭐ Trustpilot
-                        </p>
 
                         {/* FEATURES */}
                         <ul className="space-y-2 mb-6 flex-1">

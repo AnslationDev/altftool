@@ -395,6 +395,7 @@ function AnimatedBackground({ theme }) {
         <canvas
             ref={bgRef}
             className="absolute top-0 left-0 w-full h-full"
+            aria-hidden="true"
             style={{ zIndex: 0 }}
         />
     );
@@ -1072,6 +1073,8 @@ export default function HelixLevels() {
             <canvas
                 ref={canvasRef}
                 className="absolute top-0 left-0 w-full h-full"
+                role="application"
+                aria-label="Helix Jump game canvas. Drag left and right or use the arrow keys to rotate the tower. Guide the ball through the gaps and avoid the red zones."
                 style={{ zIndex: 1 }}
             />
 

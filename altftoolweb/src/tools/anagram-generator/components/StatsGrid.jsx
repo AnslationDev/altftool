@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Type, Layers, Sparkles, CopyCheck, Star, Flame, BarChart3, Clock, BookOpen } from "lucide-react";
+import { Type, Layers, Sparkles, CopyCheck, Star, Flame, BarChart3, Clock } from "lucide-react";
 
 export default function StatsGrid({
   charCount = 0,
@@ -10,8 +10,8 @@ export default function StatsGrid({
   generatedCount = 0,
   copiedTotal = 0,
   favoritesCount = 0,
-  dictionaryMode = "General",
   combinationsEstimate = "0",
+  lastGenerationMs = null,
 }) {
   const STATS = [
     {
@@ -111,14 +111,15 @@ export default function StatsGrid({
       </div>
 
       {/* System Status Details */}
-      <div className="p-4 rounded-2xl bg-surface-soft/80 border border-border/60 flex flex-wrap items-center justify-between gap-4 text-xs">
-        <div className="flex items-center gap-2 text-muted-foreground">
-          <BookOpen size={14} className="text-teal-500 shrink-0" />
-          <span>Dictionary: <strong className="text-foreground capitalize">{dictionaryMode} Mode</strong></span>
-        </div>
+      <div className="p-4 rounded-2xl bg-surface-soft/80 border border-border/60 flex flex-wrap items-center gap-4 text-xs">
         <div className="flex items-center gap-2 text-muted-foreground">
           <Clock size={14} className="text-indigo-500 shrink-0" />
-          <span>Search Speed: <strong className="text-emerald-500 font-mono">&lt; 5ms (Instant)</strong></span>
+          <span>
+            Last Generation Time:{" "}
+            <strong className="text-emerald-500 font-mono">
+              {lastGenerationMs != null ? `${lastGenerationMs.toFixed(1)}ms` : "—"}
+            </strong>
+          </span>
         </div>
       </div>
     </div>

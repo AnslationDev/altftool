@@ -5,10 +5,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LayoutDashboard, FileText, PlusCircle, Tag, Video } from "lucide-react";
 
+import VideoModalCateogry from "./VideoModalCateogry";
+
 export default function ExpertVideoTopBar() {
 
   const pathname = usePathname();
   const [route, setRoute] = useState("overview");
+  const [showCategoryModal, setShowCategoryModal] = useState(false);
 
   const menuItems = [
     // { name:"Overview",icon:LayoutDashboard,href:"/altftool/blogs" },
@@ -71,7 +74,7 @@ export default function ExpertVideoTopBar() {
 
           <div className="flex justify-center gap-5 items-center  ">
             <button
-            //   onClick={() => setShowCategoryModal(true)}
+              onClick={() => setShowCategoryModal(true)}
               className="ml-auto flex items-center gap-2 bg-(--primary) text-white px-4 py-2 rounded-md text-sm hover:opacity-90"
             >
               <Tag size={16} />
@@ -87,6 +90,13 @@ export default function ExpertVideoTopBar() {
 
       </header>
 
+      {showCategoryModal && (
+
+        <VideoModalCateogry
+          onClose={() => setShowCategoryModal(false)}
+        />
+
+      )}
 
     </>
 

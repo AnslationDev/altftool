@@ -143,6 +143,7 @@ export default function TextTool({
               onChange={(e) => setInput(e.target.value)}
               placeholder={placeholder}
               spellCheck={false}
+              aria-label={inputLabel}
               className="h-72 w-full resize-y rounded-md border border-[var(--border)] bg-[var(--background)] p-3 font-mono text-sm outline-none focus:border-[var(--primary)]"
             />
           </div>
@@ -163,8 +164,19 @@ export default function TextTool({
               value={output}
               readOnly
               spellCheck={false}
+              aria-label={outputLabel}
               className="h-72 w-full resize-y rounded-md border border-[var(--border)] bg-[var(--background)] p-3 font-mono text-sm outline-none"
             />
+            {/*
+              The textarea's `value` is a DOM property, not text-node content, so
+              screen readers' live-region mutation observers never see it change —
+              aria-live on the textarea itself would not reliably announce updates.
+              This hidden node mirrors the output as real text content so the
+              "live output as you type" result is actually announced.
+            */}
+            <div aria-live="polite" aria-atomic="true" className="sr-only">
+              {output}
+            </div>
           </div>
         </section>
       </div>

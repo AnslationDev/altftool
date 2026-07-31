@@ -799,6 +799,8 @@ export default function CarromProFinal() {
                   ref={canvasRef}
                   width={BOARD_SIZE}
                   height={BOARD_SIZE}
+                  role="application"
+                  aria-label="Carrom game canvas. Drag the striker to position it, pull back to set power, and release to shoot. Pocket your discs before your opponent."
                   onMouseDown={handleStart}
                   onMouseMove={handleMove}
                   onMouseUp={handleEnd}

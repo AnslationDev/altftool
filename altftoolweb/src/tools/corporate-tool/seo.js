@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How many tools are in the directory?",
-      "39 products across 10 categories. The largest groups are Project Management and Productivity Suite; the rest cover Communication, CRM, Finance, HR, Analytics, Customer Support, Development and File Storage.",
+      "39 products across 10 categories. Project Management is the largest with 5 tools; Communication, Productivity Suite, CRM, Finance, HR, Analytics and Development are tied at 4 tools each, and File Storage and Customer Support round out the list with 3 each.",
     ],
     [
       "Does this show actual prices?",

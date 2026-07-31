@@ -37,7 +37,11 @@ const STATUS_STYLE = {
 };
 const STATUS_LABEL = { active: "In warranty", expiring: "Expiring soon", expired: "Out of warranty" };
 
-const todayIso = () => new Date().toISOString().slice(0, 10);
+const todayIso = () => {
+  const now = new Date();
+  const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 10);
+};
 
 const prettyDate = (iso) => {
   if (!iso) return DASH;
@@ -149,6 +153,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset your appliance list? This will replace all your saved appliances with sample data and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setItems(SEED);
     setNextId(4);
     setDraft(blankDraft());
@@ -408,11 +419,21 @@ export default function ToolHome() {
                   ],
                   [
                     `${row.partName} warranty ends`,
-                    row.partEndIso
-                      ? `${prettyDate(row.partEndIso)}${
-                          row.daysToPart >= 0 ? ` · ${row.daysToPart} days left` : " · lapsed"
-                        }`
-                      : "No separate part cover",
+                    row.partEndIso ? (
+                      <span className="inline-flex flex-wrap items-center justify-end gap-2">
+                        <span>
+                          {prettyDate(row.partEndIso)}
+                          {row.daysToPart >= 0 ? ` · ${row.daysToPart} days left` : " · lapsed"}
+                        </span>
+                        <span
+                          className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${STATUS_STYLE[row.partStatus]}`}
+                        >
+                          {STATUS_LABEL[row.partStatus]}
+                        </span>
+                      </span>
+                    ) : (
+                      "No separate part cover"
+                    ),
                   ],
                   [
                     "Extended warranty",

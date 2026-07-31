@@ -171,7 +171,7 @@ export default async function CategoryPage({ params }) {
           {/* STATS */}
           <div className="bg-white p-5 rounded-2xl shadow border border-gray-300">
             <h3 className="font-bold text-lg mb-2">
-              Top10 Score
+              Top11 Score
             </h3>
             <p className="text-sm text-gray-600">
               Our rankings are based on:
@@ -182,16 +182,6 @@ export default async function CategoryPage({ params }) {
               <li>✔ Brand Reputation</li>
               <li>✔ Features & Benefits</li>
             </ul>
-          </div>
-
-          {/* TRUST */}
-          <div className="bg-white p-5 rounded-2xl shadow border border-gray-300">
-            <h3 className="font-bold text-lg mb-2">
-              Secure Connection
-            </h3>
-            <p className="text-sm text-gray-600">
-              All providers use SSL encryption to keep your data safe.
-            </p>
           </div>
 
           {/* CTA */}

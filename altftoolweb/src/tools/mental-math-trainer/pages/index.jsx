@@ -10,6 +10,7 @@ export default function MentalMathTrainer() {
   const [status, setStatus] = useState("setup");
   const [gameConfig, setGameConfig] = useState(null);
   const [answers, setAnswers] = useState([]);
+  const [bestStreak, setBestStreak] = useState(0);
 
   const handleStart = useCallback((config) => {
     setGameConfig(config);
@@ -27,8 +28,9 @@ export default function MentalMathTrainer() {
     setStatus("playing");
   }, []);
 
-  const handleFinish = useCallback((finalAnswers) => {
+  const handleFinish = useCallback((finalAnswers, finalBestStreak = 0) => {
     setAnswers(finalAnswers);
+    setBestStreak(finalBestStreak);
     setStatus("results");
   }, []);
 
@@ -57,7 +59,13 @@ export default function MentalMathTrainer() {
         )}
 
         {status === "results" && (
-          <Results answers={answers} onRestart={handleRestart} onReset={handleReset} />
+          <Results
+            answers={answers}
+            difficulty={gameConfig?.difficulty}
+            bestStreak={bestStreak}
+            onRestart={handleRestart}
+            onReset={handleReset}
+          />
         )}
 
         <p className="mt-6 text-center text-xs text-[var(--muted-foreground)]">

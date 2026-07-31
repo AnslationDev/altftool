@@ -133,7 +133,7 @@ function addMonths(year, month, count) {
  */
 export function previewTimeline({ scheme, year, month, day, count = 6, modifier = "" }) {
   const releases = [];
-  for (let i = 0; i < count; i += 1) {
+  for (let i = 1; i <= count; i += 1) {
     const next = addMonths(Number(year), Number(month), i);
     const clampedDay = Math.min(Number(day), daysInMonth(next.year, next.month));
     const result = formatCalVer({

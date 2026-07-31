@@ -58,12 +58,29 @@ function makeNode(tag, attrs = {}, parent = null) {
 function parseHtml(source) {
   const raw = String(source || "");
   const bounded = raw.slice(0, MAX_SOURCE_LENGTH);
+  // Matches the interior of a start/end tag while treating '>' as ordinary
+  // text whenever it appears inside a single- or double-quoted attribute
+  // value (e.g. `value="Continue > Next"`), so quoted content never
+  // terminates the tag early.
+  const TAG_INTERIOR = String.raw`(?:"[^"]*"|'[^']*'|[^>"'])*`;
   const inert = bounded
-    .replace(/<(script|style|template)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, "")
-    .replace(/<(script|style|template)\b[^>]*>[\s\S]*$/gi, "");
+    .replace(
+      new RegExp(
+        String.raw`<(script|style|template)\b${TAG_INTERIOR}>[\s\S]*?<\/\1\s*>`,
+        "gi",
+      ),
+      "",
+    )
+    .replace(
+      new RegExp(String.raw`<(script|style|template)\b${TAG_INTERIOR}>[\s\S]*$`, "gi"),
+      "",
+    );
   const root = makeNode("#document");
   const stack = [root];
-  const tokens = /<!--[\s\S]*?-->|<![^>]*>|<\/?[a-zA-Z][^>]*>|[^<]+|</g;
+  const tokens = new RegExp(
+    String.raw`<!--[\s\S]*?-->|<![^>]*>|<\/?[a-zA-Z]${TAG_INTERIOR}>|[^<]+|<`,
+    "g",
+  );
   let nodeCount = 0;
   let nodeTruncated = false;
   let match;

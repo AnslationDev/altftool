@@ -136,13 +136,20 @@ const asciiText = (bytes) =>
 
 /* ------------------------------------------------------------ origin / rpId */
 
+/** True for any address in the 127.0.0.0/8 loopback range, not just 127.0.0.1. */
+function isIPv4Loopback(host) {
+  const match = host.match(/^127\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})$/);
+  if (!match) return false;
+  return match.slice(1).every((octet) => Number(octet) <= 255);
+}
+
 export function parseOrigin(origin) {
   if (typeof origin !== "string" || !origin.trim()) return { error: "No origin given." };
-  const match = origin.trim().match(/^(https?):\/\/([^/:\s]+)(?::(\d+))?\/?$/i);
+  const match = origin.trim().match(/^(https?):\/\/(\[[0-9a-fA-F:]+\]|[^/:\s]+)(?::(\d+))?\/?$/i);
   if (!match) return { error: "An origin looks like https://example.com — scheme and host, no path." };
   const [, scheme, rawHost, port] = match;
   const host = rawHost.toLowerCase();
-  const loopback = host === "localhost" || host === "127.0.0.1" || host === "[::1]";
+  const loopback = host === "localhost" || host === "[::1]" || isIPv4Loopback(host);
   return { scheme: scheme.toLowerCase(), host, port: port || "", loopback };
 }
 

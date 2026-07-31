@@ -27,6 +27,9 @@ export const LABEL_PART_REGEX = /^[A-Za-z0-9]([-A-Za-z0-9_.]*[A-Za-z0-9])?$/;
 export const LABEL_PART_MAX = 63;
 export const PREFIX_MAX = 253;
 
+/** DNS-1123 subdomain pattern (lowercase labels joined by '.') used for the optional key prefix. */
+export const DNS_SUBDOMAIN_REGEX = /^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$/;
+
 /** Validate a label key (optionally "prefix/name"). Returns null when OK. */
 export function validateLabelKey(key) {
   if (typeof key !== "string" || key === "") return "Label key is empty.";
@@ -34,7 +37,7 @@ export function validateLabelKey(key) {
   if (parts.length > 2) return `Key "${key}" has more than one "/".`;
   if (parts.length === 2) {
     const [prefix, name] = parts;
-    if (prefix === "" || prefix.length > PREFIX_MAX) {
+    if (prefix === "" || prefix.length > PREFIX_MAX || !DNS_SUBDOMAIN_REGEX.test(prefix)) {
       return `Key prefix in "${key}" must be a DNS subdomain of at most ${PREFIX_MAX} chars.`;
     }
     if (name === "") return `Key "${key}" has an empty name after the "/".`;

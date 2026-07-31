@@ -33,15 +33,10 @@ export const FORMATS = Object.freeze([
  *  - "embeddedMedia"  → tags inside pictures, fonts and objects embedded in the document.
  *  - "filename"       → the attachment's name.
  *  - "transport"      → what the email itself adds; no attachment clean-up touches it.
+ *
+ * These carrier ids are the values used in each CATALOGUE entry's `carrier`
+ * field below, and in each PREP_STEPS entry's `removes` list.
  */
-export const CARRIERS = Object.freeze([
-  "fileprops",
-  "editingHistory",
-  "hiddenContent",
-  "embeddedMedia",
-  "filename",
-  "transport",
-]);
 
 /**
  * Preparation steps and the carriers each one actually clears.

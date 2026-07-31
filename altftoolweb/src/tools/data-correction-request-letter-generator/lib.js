@@ -219,14 +219,16 @@ export function buildCorrectionLetter({
 
   const delivery = DELIVERY_METHODS.find((item) => item.id === deliveryMethod) || DELIVERY_METHODS[0];
 
-  const subject = `Request for correction of inaccurate personal data — ${name}${accountRef ? ` (ref ${clean(accountRef)})` : ""}`;
+  const ref = clean(accountRef);
+
+  const subject = `Request for correction of inaccurate personal data — ${name}${ref ? ` (ref ${ref})` : ""}`;
 
   const bodyLines = [
     `Dear ${org} Privacy Team,`,
     "",
     `I am writing to exercise my right to have inaccurate personal data about me corrected under ${law.right}.`,
-    accountRef
-      ? `You hold data about me under the reference ${clean(accountRef)}. My details are: ${name}${clean(postalAddress) ? `, ${clean(postalAddress)}` : ""}${clean(email) ? `, ${clean(email)}` : ""}.`
+    ref
+      ? `You hold data about me under the reference ${ref}. My details are: ${name}${clean(postalAddress) ? `, ${clean(postalAddress)}` : ""}${clean(email) ? `, ${clean(email)}` : ""}.`
       : `My details are: ${name}${clean(postalAddress) ? `, ${clean(postalAddress)}` : ""}${clean(email) ? `, ${clean(email)}` : ""}.`,
     "",
     `The following ${rows.length} item${rows.length === 1 ? " is" : "s are"} inaccurate. For each one I have set out the value you currently hold, the correct value, and the evidence supporting it.`,

@@ -21,11 +21,22 @@ const AF_RISK_FACTORS = [
   { id: "smoking", label: "Current Smoking", points: 1, description: "Active tobacco use" },
 ];
 
+// Age, sex, and race are mutually-exclusive demographic categories in this
+// model (a patient has exactly one of each), unlike the eight stackable
+// clinical factors below them. Grouping them here lets `toggle` enforce that
+// exclusivity so the score's true achievable ceiling (14) is also the one
+// the UI can actually produce.
+const EXCLUSIVE_GROUPS = [
+  ["age6574", "age75plus"],
+  ["male", "female"],
+  ["white", "black"],
+];
+
 const RISK_CATEGORIES = [
-  { min: 0, max: 2, label: "Low Risk", annualRate: "< 1%", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200", description: "Low probability of developing AF within 5 years. Routine monitoring and cardiovascular risk factor management recommended." },
-  { min: 3, max: 4, label: "Moderate Risk", annualRate: "1–3%", color: "text-amber-600", bg: "bg-amber-50", border: "border-amber-200", description: "Moderate risk for AF development. Aggressive management of modifiable risk factors (BP, weight, diabetes) is advised." },
-  { min: 5, max: 7, label: "High Risk", annualRate: "3–5%", color: "text-orange-600", bg: "bg-orange-50", border: "border-orange-200", description: "High risk for developing AF. Consider regular ECG monitoring, Holter screening, and lifestyle interventions. Discuss with cardiologist." },
-  { min: 8, max: 12, label: "Very High Risk", annualRate: "> 5%", color: "text-red-600", bg: "bg-red-50", border: "border-red-200", description: "Very high risk. Aggressive screening and management required. Extended rhythm monitoring may be warranted. Specialist evaluation recommended." },
+  { min: 0, max: 2, label: "Low Risk", annualRate: "< 1%", color: "text-[var(--success-text)]", bg: "bg-[var(--success-soft)]", border: "border-[var(--success)]/30", description: "Low probability of developing AF within 5 years. Routine monitoring and cardiovascular risk factor management recommended." },
+  { min: 3, max: 4, label: "Moderate Risk", annualRate: "1–3%", color: "text-[var(--warning-text)]", bg: "bg-[var(--warning-soft)]", border: "border-[var(--warning)]/30", description: "Moderate risk for AF development. Aggressive management of modifiable risk factors (BP, weight, diabetes) is advised." },
+  { min: 5, max: 7, label: "High Risk", annualRate: "3–5%", color: "text-[var(--danger-text)]", bg: "bg-[var(--danger)]/10", border: "border-[var(--danger)]/25", description: "High risk for developing AF. Consider regular ECG monitoring, Holter screening, and lifestyle interventions. Discuss with cardiologist." },
+  { min: 8, max: 14, label: "Very High Risk", annualRate: "> 5%", color: "text-[var(--danger-text)]", bg: "bg-[var(--danger-soft)]", border: "border-[var(--danger)]/45", description: "Very high risk. Aggressive screening and management required. Extended rhythm monitoring may be warranted. Specialist evaluation recommended." },
 ];
 
 const MODIFIABLE_FACTORS = [
@@ -44,10 +55,10 @@ function getRiskCategory(score) {
   return RISK_CATEGORIES[RISK_CATEGORIES.length - 1];
 }
 
-function ScoreGauge({ value, max = 12, category }) {
+function ScoreGauge({ value, max = 14, category }) {
   const clamped = Math.max(0, Math.min(max, value));
   const pct = (clamped / max) * 100;
-  const angle = (pct / 100) * 180 - 90;
+  const angle = 180 - (pct / 100) * 180;
 
   const colorMap = {
     "Low Risk": "#10B981",
@@ -100,7 +111,7 @@ function CheckboxItem({ factor, checked, onChange }) {
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2">
           <span className="text-sm font-semibold text-[var(--foreground)]">{factor.label}</span>
-          <span className={`inline-flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 text-[10px] font-black ${isNegative ? "bg-blue-100 text-blue-700" : "bg-[var(--muted)] text-[var(--muted-foreground)]"}`}>
+          <span className={`inline-flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 text-[10px] font-black ${isNegative ? "bg-[var(--info-soft)] text-[var(--info-text)]" : "bg-[var(--muted)] text-[var(--muted-foreground)]"}`}>
             {factor.points > 0 ? `+${factor.points}` : factor.points}
           </span>
         </div>
@@ -116,7 +127,15 @@ export default function ToolHome() {
   const [result, setResult] = useState(null);
   const [copied, setCopied] = useState(false);
 
-  const toggle = (id) => setSelected((prev) => ({ ...prev, [id]: !prev[id] }));
+  const toggle = (id) =>
+    setSelected((prev) => {
+      const next = { ...prev, [id]: !prev[id] };
+      if (next[id]) {
+        const group = EXCLUSIVE_GROUPS.find((members) => members.includes(id));
+        if (group) group.forEach((memberId) => { if (memberId !== id) next[memberId] = false; });
+      }
+      return next;
+    });
   const toggleMod = (id) => setModifiable((prev) => ({ ...prev, [id]: !prev[id] }));
 
   const score = useMemo(() => {
@@ -154,7 +173,7 @@ ATRIAL FIBRILLATION RISK ASSESSMENT REPORT
 Generated: ${result.date}
 ---------------------------------
 RISK SCORE:
-- AF Risk Score: ${result.score}/12
+- AF Risk Score: ${result.score}/14
 - Risk Category: ${result.category.label}
 - Estimated Annual AF Incidence: ${result.category.annualRate}
 
@@ -236,12 +255,12 @@ Clinical decisions should always be made by qualified healthcare professionals.
               <p className="text-xs text-[var(--muted)] mb-3">Select factors you want to actively manage for prevention</p>
               <div className="space-y-2">
                 {MODIFIABLE_FACTORS.map((f) => (
-                  <label key={f.id} className={`flex items-start gap-3 rounded-lg border p-3 cursor-pointer transition-all ${modifiable[f.id] ? "border-emerald-400 bg-emerald-50" : "border-[var(--border)] bg-[var(--background)] hover:border-emerald-400/50"}`}>
+                  <label key={f.id} className={`flex items-start gap-3 rounded-lg border p-3 cursor-pointer transition-all ${modifiable[f.id] ? "border-[var(--success)]/60 bg-[var(--success-soft)]" : "border-[var(--border)] bg-[var(--background)] hover:border-[var(--success)]/40"}`}>
                     <input
                       type="checkbox"
                       checked={!!modifiable[f.id]}
                       onChange={() => toggleMod(f.id)}
-                      className="mt-0.5 h-4 w-4 rounded accent-emerald-600"
+                      className="mt-0.5 h-4 w-4 rounded accent-[var(--success)]"
                     />
                     <div className="flex-1 min-w-0">
                       <span className="text-sm font-semibold text-[var(--foreground)]">{f.label}</span>
@@ -286,7 +305,7 @@ Clinical decisions should always be made by qualified healthcare professionals.
                   <div className="flex items-start gap-3">
                     <Info className={`h-5 w-5 mt-0.5 shrink-0 ${result.category.color}`} />
                     <div>
-                      <p className={`text-sm font-bold ${result.category.color}`}>Score: {result.score}/12 — {result.category.label}</p>
+                      <p className={`text-sm font-bold ${result.category.color}`}>Score: {result.score}/14 — {result.category.label}</p>
                       <p className="text-sm text-[var(--muted-foreground)] mt-1">{result.category.description}</p>
                     </div>
                   </div>
@@ -300,7 +319,7 @@ Clinical decisions should always be made by qualified healthcare professionals.
                       {result.activeFactors.map((f) => (
                         <div key={f.id} className="flex items-center justify-between rounded-lg border border-[var(--border)] px-3 py-2 text-sm">
                           <span className="font-semibold text-[var(--foreground)]">{f.label}</span>
-                          <span className={`inline-flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 text-[10px] font-black ${f.points < 0 ? "bg-blue-100 text-blue-700" : "bg-[var(--muted)] text-[var(--muted-foreground)]"}`}>
+                          <span className={`inline-flex h-5 min-w-[20px] items-center justify-center rounded-full px-1.5 text-[10px] font-black ${f.points < 0 ? "bg-[var(--info-soft)] text-[var(--info-text)]" : "bg-[var(--muted)] text-[var(--muted-foreground)]"}`}>
                             {f.points > 0 ? `+${f.points}` : f.points}
                           </span>
                         </div>
@@ -317,11 +336,11 @@ Clinical decisions should always be made by qualified healthcare professionals.
                     <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted)] mb-3">Prevention Action Plan</p>
                     <div className="space-y-2">
                       {result.activeModifiable.map((f) => (
-                        <div key={f.id} className="flex items-start gap-2 rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm">
-                          <CheckCircle2 className="h-4 w-4 text-emerald-600 mt-0.5 shrink-0" />
+                        <div key={f.id} className="flex items-start gap-2 rounded-lg border border-[var(--success)]/30 bg-[var(--success-soft)] px-3 py-2 text-sm">
+                          <CheckCircle2 className="h-4 w-4 text-[var(--success-text)] mt-0.5 shrink-0" />
                           <div>
-                            <span className="font-semibold text-emerald-700">{f.label}</span>
-                            <p className="text-xs text-emerald-600 mt-0.5">{f.description}</p>
+                            <span className="font-semibold text-[var(--success-text)]">{f.label}</span>
+                            <p className="text-xs text-[var(--success-text)] mt-0.5">{f.description}</p>
                           </div>
                         </div>
                       ))}

@@ -1,7 +1,7 @@
 "use client";
 /* eslint-disable @next/next/no-img-element */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Inter, Manrope } from 'next/font/google';
 import { Search, X, Compass, SlidersHorizontal, MoreHorizontal, ArrowLeft, MessageCircle, Upload, ChevronDown, Smile, Image as ImageIcon, Download, Share2, Heart } from 'lucide-react';
 
@@ -17,6 +17,35 @@ import { updatePinLikes } from './service/pinActions';
 
 const heights = ["h-[260px]", "h-[280px]", "h-[300px]", "h-[320px]", "h-[340px]", "h-[380px]", "h-[410px]", "h-[420px]", "h-[450px]", "h-[460px]", "h-[500px]"];
 const FALLBACK_PIN_IMAGE = "/altpintrest-images/Listitem → Group - Pin card.png";
+
+// Tracks which pins *this browser* has already liked so a click always
+// toggles like/unlike instead of being able to re-increment the shared
+// Firestore counter indefinitely by clicking (or reloading and clicking
+// again). Firestore rules only allow world-writable updates to the
+// `likes` field (no per-user accounting server-side), so this client-side
+// toggle plus the in-flight guard in handleLike are the available guardrails.
+const LIKED_PINS_STORAGE_KEY = "altpintrest_liked_pins";
+
+const loadLikedPins = () => {
+  if (typeof window === "undefined") return new Set();
+  try {
+    const raw = window.localStorage.getItem(LIKED_PINS_STORAGE_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return new Set(Array.isArray(parsed) ? parsed : []);
+  } catch {
+    return new Set();
+  }
+};
+
+const persistLikedPins = (set) => {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(LIKED_PINS_STORAGE_KEY, JSON.stringify([...set]));
+  } catch {
+    // Ignore storage failures (private browsing, quota, etc.) — the toggle
+    // still works for the current session via React state.
+  }
+};
 
 const getHeightForId = (id) => {
   if (typeof id === 'number') return heights[id % heights.length];
@@ -129,8 +158,9 @@ export default function AltPinterest({ defaultView }) {
   const [activeFilter, setActiveFilter] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [savedItems, setSavedItems] = useState(new Set([1, 3, 5, 7, 9, 10, 12, 14]));
-  const [likedItems, setLikedItems] = useState(new Set());
+  const [likedItems, setLikedItems] = useState(loadLikedPins);
   const [selectedItem, setSelectedItem] = useState(null);
+  const pendingLikesRef = useRef(new Set());
 
   const [firebaseCategories, setFirebaseCategories] = useState([]);
   const [firebasePins, setFirebasePins] = useState([]);
@@ -414,22 +444,48 @@ export default function AltPinterest({ defaultView }) {
     }
   };
 
-  const handleLike = async (e, pinId, originalId) => {
+  const handleLike = async (e, item) => {
     e.stopPropagation();
-    const idToUpdate = originalId || pinId;
-    if (typeof idToUpdate !== 'string') {
+    const idToUpdate = item.originalData?.id || item.id;
+    const likeKey = String(idToUpdate);
+
+    // Ignore extra clicks while a previous like/unlike for this pin is still
+    // in flight — without this guard a fast double-click (or a mis-fired
+    // duplicate event) can send two increments before state updates.
+    if (pendingLikesRef.current.has(likeKey)) return;
+
+    const alreadyLiked = likedItems.has(likeKey);
+
+    const commitToggle = () => {
       setLikedItems(prev => {
         const next = new Set(prev);
-        if (next.has(pinId)) next.delete(pinId);
-        else next.add(pinId);
+        if (alreadyLiked) next.delete(likeKey);
+        else next.add(likeKey);
+        persistLikedPins(next);
         return next;
       });
+    };
+
+    // Mock (non-Firestore) pins have no shared counter to write to — just
+    // toggle the local liked state.
+    if (typeof idToUpdate !== 'string') {
+      commitToggle();
       return;
     }
 
-    const result = await updatePinLikes(idToUpdate);
-    if (!result.success && result.error?.code === 'permission-denied') {
-      alert("Permission Denied: Please update your Firestore Rules to allow likes (see instructions).");
+    pendingLikesRef.current.add(likeKey);
+    try {
+      // A pin the user already liked gets un-liked (decrement) instead of
+      // liked again, so repeatedly clicking the same pin can no longer
+      // inflate its public like count without bound.
+      const result = await updatePinLikes(idToUpdate, alreadyLiked ? -1 : 1);
+      if (result.success) {
+        commitToggle();
+      } else if (result.error?.code === 'permission-denied') {
+        alert("Permission Denied: Please update your Firestore Rules to allow likes (see instructions).");
+      }
+    } finally {
+      pendingLikesRef.current.delete(likeKey);
     }
   };
 
@@ -667,13 +723,16 @@ export default function AltPinterest({ defaultView }) {
                 {/* Actions Header */}
                 <div className="flex items-center justify-between px-6 py-5 sticky top-0 bg-[var(--card)] z-10">
                   <div className="flex items-center gap-6">
-                    <div
-                      onClick={(e) => handleLike(e, selectedItem.id, selectedItem.originalData?.id)}
+                    <button
+                      type="button"
+                      onClick={(e) => handleLike(e, selectedItem)}
+                      aria-pressed={likedItems.has(String(selectedItem.id))}
+                      aria-label={likedItems.has(String(selectedItem.id)) ? "Unlike this pin" : "Like this pin"}
                       className="flex items-center gap-1.5 hover:bg-[var(--muted)] px-2 py-1 rounded-lg cursor-pointer transition-colors text-[var(--foreground)]"
                     >
-                      <Heart size={22} className={selectedItem.originalData?.likes > 0 || likedItems.has(selectedItem.id) ? "fill-[#2563EB] text-[#2563EB]" : ""} />
-                      <span className="font-bold text-[15.5px]">{selectedItem.originalData?.likes || (likedItems.has(selectedItem.id) ? 1 : 0)}</span>
-                    </div>
+                      <Heart size={22} className={likedItems.has(String(selectedItem.id)) ? "fill-[#2563EB] text-[#2563EB]" : ""} />
+                      <span className="font-bold text-[15.5px]">{selectedItem.originalData?.likes || (likedItems.has(String(selectedItem.id)) ? 1 : 0)}</span>
+                    </button>
                     <MessageCircle size={22} className="hover:text-gray-500 cursor-pointer text-[var(--foreground)]" />
                     <button onClick={(e) => handleShare(e, selectedItem)} className="hover:text-gray-500 cursor-pointer text-[var(--foreground)]">
                       <Share2 size={22} />
@@ -759,10 +818,10 @@ export default function AltPinterest({ defaultView }) {
                   </h1>
 
                   <div className="flex items-center gap-3 mt-1">
-                    <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden shrink-0">
-                      <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="user" className="w-full h-full object-cover" />
+                    <div className="w-10 h-10 rounded-full bg-[#E60023] flex items-center justify-center text-white font-extrabold text-lg shrink-0" aria-hidden="true">
+                      P
                     </div>
-                    <span className="text-[14px] font-medium text-[var(--foreground)]">Lamice Neves</span>
+                    <span className="text-[14px] font-medium text-[var(--foreground)]">AltPinterest</span>
                   </div>
 
                   <div className="border-t border-[#E9E9E9] dark:border-[var(--border)] pt-8 mt-4">

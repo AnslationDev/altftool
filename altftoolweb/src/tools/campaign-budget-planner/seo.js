@@ -7,7 +7,7 @@ const seo = {
     "Two weeks into a campaign the actual CPCs came in higher than planned, and you want to re-enter the real numbers and see which channels are now above your target CPA",
   ],
   benefits: [
-    ["Channel economics, not just a pie chart", "Each row carries its own CPC, CTR and conversion rate, so the projection reflects that email converting at 4.5% behaves nothing like display traffic."],
+    ["Channel economics, not just a pie chart", "Each row carries its own CPC and conversion rate feeding the projection (CTR is tracked per channel as reference context), so the projection reflects that email converting at 4.5% behaves nothing like display traffic."],
     ["Target CPA is a live threshold", "Set the number once and every channel whose projected acquisition cost falls below it is highlighted, turning \"where should the next dollar go\" into a visible answer."],
     ["Objective presets that respect your total", "Applying the Lead Generation, Brand Awareness or Product Launch preset redistributes your existing total by percentage rather than replacing your budget with sample figures."],
   ],

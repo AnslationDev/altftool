@@ -37,6 +37,18 @@ export const COMMON_MIN_SIP = 100;
 
 const isNum = (value) => typeof value === "number" && Number.isFinite(value);
 
+/** True for years divisible by 4, except century years not divisible by 400. */
+export function isLeapYear(year) {
+  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+}
+
+/** Number of days in a given calendar month (1-12) of a given year. */
+export function daysInMonth(year, month) {
+  const DAYS = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+  if (month === 2 && isLeapYear(year)) return 29;
+  return DAYS[month - 1];
+}
+
 /** Parses a YYYY-MM-DD string into calendar parts. Returns null if unusable. */
 export function parseIsoDate(value) {
   if (typeof value !== "string") return null;
@@ -45,7 +57,7 @@ export function parseIsoDate(value) {
   const year = Number(match[1]);
   const month = Number(match[2]);
   const day = Number(match[3]);
-  if (month < 1 || month > 12 || day < 1 || day > 31) return null;
+  if (month < 1 || month > 12 || day < 1 || day > daysInMonth(year, month)) return null;
   return { year, month, day };
 }
 
@@ -156,7 +168,6 @@ export function computeGoalSip({
       existingAtMaturity,
       gapToFund: 0,
       monthlySip: 0,
-      firstYearSip: 0,
       finalYearSip: 0,
       totalInvested: existingCorpus,
       wealthGained: existingAtMaturity - existingCorpus,
@@ -182,7 +193,6 @@ export function computeGoalSip({
     existingAtMaturity,
     gapToFund,
     monthlySip,
-    firstYearSip: monthlySip,
     finalYearSip,
     totalInvested,
     wealthGained: projectedValue - totalInvested,

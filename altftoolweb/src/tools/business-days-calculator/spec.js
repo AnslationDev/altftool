@@ -26,7 +26,8 @@ export const spec = {
   ]
 },
   compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
-      const a = new Date(values.start), b = new Date(values.end);
+      const parseLocalDate = (v) => { if (typeof v === "string") { const m = v.match(/^(\d{4})-(\d{2})-(\d{2})/); if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3])); } return new Date(v); };
+      const a = parseLocalDate(values.start), b = parseLocalDate(values.end);
       if (isNaN(a) || isNaN(b) || b < a) return { result: "—", caption: "Pick a valid date range" };
       let count = 0; const d = new Date(a);
       while (d <= b) { const g = d.getDay(); if (g !== 0 && g !== 6) count++; d.setDate(d.getDate() + 1); }

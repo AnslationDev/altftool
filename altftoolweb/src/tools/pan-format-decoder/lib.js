@@ -53,7 +53,7 @@ export const PAN_HOLDER_TYPES = {
   },
   F: {
     label: "Firm",
-    description: "A partnership firm, and older limited liability partnership allotments.",
+    description: "A partnership firm. Limited liability partnerships (LLPs) also carry this code — there is no separate LLP status code.",
     common: true,
   },
   A: {
@@ -85,16 +85,6 @@ export const PAN_HOLDER_TYPES = {
     label: "Government",
     description: "A central or state government office or department.",
     common: true,
-  },
-  E: {
-    label: "Limited Liability Partnership (LLP)",
-    description: "Used on newer LLP allotments; older LLPs may still carry the F code.",
-    common: false,
-  },
-  K: {
-    label: "Krish (Trust)",
-    description: "A rare code that appears on the department's status list alongside T for trusts.",
-    common: false,
   },
 };
 

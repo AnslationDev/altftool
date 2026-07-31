@@ -18,7 +18,7 @@ body {
 }
 
 .roofing-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   overflow-x: hidden;
   background: #ffffff;
   color: #151515;
@@ -328,7 +328,7 @@ body {
   z-index: 96;
   display: none;
   width: min(360px, 88vw);
-  height: 100vh;
+  height: 100dvh;
   padding: 96px 22px 28px;
   background:
     linear-gradient(180deg, rgba(13, 13, 13, 0.98), rgba(8, 8, 8, 0.98)),
@@ -1106,7 +1106,7 @@ body {
 /* ========== HERO ========== */
 .hero {
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1830,7 +1830,7 @@ body {
 
 .blog-page,
 .blog-detail-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   padding: 150px 5vw 90px;
   background: #f7f7f4;
 }

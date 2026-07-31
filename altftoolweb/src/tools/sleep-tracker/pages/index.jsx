@@ -11,6 +11,15 @@ const STORAGE_KEY = "altftool_sleep_logs";
 export default function SleepTrackerHome() {
   const [logs, setLogs] = useState([]);
   const [activeTab, setActiveTab] = useState("dashboard");
+  // Both the load and save effects run on mount, so without this flag the
+  // save effect's first run would persist the initial empty `logs` before
+  // the load effect's setLogs has been reflected in a render, overwriting
+  // previously saved data. Setting it via state (not a ref) matters: the
+  // load effect's setLogs/setHasLoaded calls are batched into one render,
+  // so by the time hasLoaded flips true, `logs` has already updated too —
+  // a ref mutated directly in the load effect would still race, since the
+  // save effect's `logs` closure stays stale within that same commit.
+  const [hasLoaded, setHasLoaded] = useState(false);
 
   // Load from local storage
   useEffect(() => {
@@ -21,17 +30,20 @@ export default function SleepTrackerHome() {
       }
     } catch (e) {
       console.error("Failed to load sleep logs", e);
+    } finally {
+      setHasLoaded(true);
     }
   }, []);
 
   // Save to local storage
   useEffect(() => {
+    if (!hasLoaded) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(logs));
     } catch (e) {
       console.error("Failed to save sleep logs", e);
     }
-  }, [logs]);
+  }, [logs, hasLoaded]);
 
   const handleAddLog = (newLog) => {
     const logWithId = {

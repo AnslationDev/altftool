@@ -52,8 +52,10 @@ html[data-theme="light"] {
   --danger-soft: var(--anslation-ds-danger-soft);
   --destructive: var(--anslation-ds-danger);
   --destructive-foreground: var(--anslation-ds-status-foreground);
+  --danger-text: var(--anslation-ds-danger-text);
   --success: var(--anslation-ds-success);
   --success-soft: var(--anslation-ds-success-soft);
+  --success-text: var(--anslation-ds-success-text);
   --warning: var(--anslation-ds-warning);
   --warning-soft: var(--anslation-ds-warning-soft);
   --warning-text: var(--anslation-ds-warning-text);
@@ -107,8 +109,10 @@ html[data-theme="dark"] {
   --danger-soft: var(--anslation-ds-danger-soft);
   --destructive: var(--anslation-ds-danger);
   --destructive-foreground: var(--anslation-ds-status-foreground);
+  --danger-text: var(--anslation-ds-danger-text);
   --success: var(--anslation-ds-success);
   --success-soft: var(--anslation-ds-success-soft);
+  --success-text: var(--anslation-ds-success-text);
   --warning: var(--anslation-ds-warning);
   --warning-soft: var(--anslation-ds-warning-soft);
   --warning-text: var(--anslation-ds-warning-text);

@@ -116,6 +116,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (typeof window !== "undefined" && !window.confirm("Reset all inputs back to the defaults? Any custom viewpoint, coordinates or trip details you entered will be lost.")) {
+      return;
+    }
     setState(DEFAULTS);
     setCopied(false);
   };
@@ -287,7 +290,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Leave home at
             </p>
@@ -305,13 +308,13 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               aria-label="Copy the sunset timing plan"
-              className={GHOST_BTN}
+              className={PRIMARY_BTN}
               disabled={Boolean(plan.error)}
             >
               {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
               {copied ? "Copied!" : "Copy plan"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>

@@ -1,4 +1,3 @@
-export const HOUR = 1;
 export const DAY = 24;
 export const WEEK = 168;
 export const MONTH = 720;
@@ -81,7 +80,7 @@ export const FOODS = [
     category: "dairy",
     indian: true,
     pantry: { max: 4, label: "2-4 hours" },
-    fridge: { max: 10 * DAY, label: "Follow the pack date, 5-7 days once opened" },
+    fridge: { max: 7 * DAY, label: "Follow the pack date, 5-7 days once opened" },
     freezer: { max: 0, label: "Not recommended" },
     tips: "A little clear whey on top is normal, just stir it in. Once opened, treat the pack date as void.",
     signs: ["Puffed or domed lid", "Mould spots", "Fizzy or yeasty smell"],
@@ -874,7 +873,7 @@ export const FOODS = [
     indian: true,
     pantry: { max: YEAR, label: "Up to 1 year, best within 6 months" },
     fridge: { max: 0, label: "Not needed" },
-    freezer: { max: 6 * MONTH, label: "Freeze new stock 1 week to kill weevil eggs" },
+    freezer: { max: 0, label: "Freeze new stock 1 week to kill weevil eggs" },
     tips: "Old dal is safe but takes far longer to cook and never softens properly. Label the jar with the month you bought it.",
     signs: ["Weevils or small holes in the grains", "Musty smell", "Dal that will not soften after long soaking", "Powdery residue"],
   },

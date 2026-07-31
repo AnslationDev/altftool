@@ -1537,7 +1537,7 @@ export default {
   ]
 },
   "ui-spacing-consistency-checker": {
-  "intro": "The UI Spacing Consistency Checker scans a pasted JSX, HTML or CSS snippet, converts every Tailwind spacing utility to pixels using Tailwind's default step of 1 unit = 4px, and flags any value that is not a multiple of 4. It reads padding, margin and gap classes — p, m, gap, space-x/y and every directional variant such as pt, pb, px, ml — plus any hardcoded npx value in a style block. You get a full inventory with each value's pixel size, a count of off-scale values, and how many distinct sizes the snippet uses.",
+  "intro": "The UI Spacing Consistency Checker scans a pasted JSX, HTML or CSS snippet, converts every Tailwind spacing utility to pixels using Tailwind's default step of 1 unit = 4px, and flags any value that is not a multiple of 4. It reads padding, margin and gap classes — p, m, gap, space-x/y and every directional variant such as pt, pb, px, ml — plus any hardcoded N px value in a style block. You get a full inventory with each value's pixel size, a count of off-scale values, and how many distinct sizes the snippet uses.",
   "useCases": [
     "A component came back from a handoff with inline styles like marginTop: 18px and you want to know which numbers do not land on the design system's 4px grid before you merge it.",
     "Your buttons look subtly different across three screens, so you paste all three snippets and check how many unique spacing sizes are actually in play.",
@@ -1546,7 +1546,7 @@ export default {
   "benefits": [
     [
       "Classes and raw pixels together",
-      "Tailwind utilities are resolved to their pixel value and compared against inline npx styles in the same inventory, so mixed conventions surface side by side."
+      "Tailwind utilities are resolved to their pixel value and compared against inline N px styles in the same inventory, so mixed conventions surface side by side."
     ],
     [
       "Unique-size count",
@@ -4089,10 +4089,10 @@ export default {
   ]
 },
   "utm-link-builder": {
-  "title": "UTM Builder — Free Campaign URL Generator",
+  "title": "UTM Builder Tool: Free Campaign Tracking Links",
   "h1": "UTM Builder",
-  "metaDescription": "Free UTM builder: paste a URL, pick a preset and copy a campaign link with utm_source, utm_medium and utm_campaign set correctly. No signup.",
-  "intro": "This UTM builder turns any page address into a tracked campaign URL. It appends the five standard Google Analytics campaign parameters — utm_source, utm_medium, utm_campaign, utm_term and utm_content, plus an optional utm_id — and normalises every value as you type, converting spaces to underscores and stripping characters outside A–Z, 0–9, underscore and hyphen. The destination is checked with the browser's own URL parser and only http:// or https:// is accepted, so a link that builds is a link that works. Six one-click presets fill source and medium for Google Ads, Facebook, Instagram, LinkedIn, Twitter/X and email newsletters, the preview colour-codes the five standard parameters as they are added, and the builder itself works entirely in the page — no account, and nothing you type is uploaded.",
+  "metaDescription": "Build a UTM tracking link free: paste your URL, tap a preset for Google, Facebook, Instagram or email, and copy the tagged campaign link. No signup.",
+  "intro": "This UTM builder turns any page address into a tracked campaign URL — the same job people look for under UTM generator, campaign URL builder or link tagging tool. It appends the five standard Google Analytics campaign parameters — utm_source, utm_medium, utm_campaign, utm_term and utm_content, plus an optional utm_id — and normalises every value as you type, converting spaces to underscores and stripping characters outside A–Z, 0–9, underscore and hyphen. The destination is checked with the browser's own URL parser and only http:// or https:// is accepted, so a link that builds is a link that works. Six one-click presets fill source and medium for Google Ads, Facebook, Instagram, LinkedIn, Twitter/X and email newsletters, the preview colour-codes the five standard parameters as they are added, and the builder itself works entirely in the page — no account, and nothing you type is uploaded.",
   "useCases": [
     "You are scheduling the same landing page across four channels this week and need four links whose source and medium will not collide in the analytics report.",
     "Last month's report shows 'Facebook', 'facebook' and 'FB' as three separate sources, and you want the next campaign tagged consistently from the start.",
@@ -4115,6 +4115,14 @@ export default {
     ]
   ],
   "faqs": [
+    [
+      "What is a UTM builder?",
+      "A UTM builder is a form that writes campaign tracking parameters onto a link for you instead of you typing them by hand. You give it the destination page and the campaign details — where the link is going and what to call the campaign — and it returns the same page address with utm_source, utm_medium and utm_campaign appended in the format analytics tools expect. The point is consistency: typed by hand, one campaign easily becomes three rows in your report because of a capital letter, a space or a stray ampersand."
+    ],
+    [
+      "Is a UTM generator the same as a UTM builder?",
+      "Yes — UTM builder, UTM generator, UTM link builder, campaign URL builder, UTM tagging tool and UTM parameter tool all describe the same job: adding utm_ parameters to a URL so analytics can attribute the click. There is no technical difference between them, only naming. This page does that job, including the optional utm_term, utm_content and utm_id fields."
+    ],
     [
       "What is a UTM parameter?",
       "A UTM parameter is a tag added to the end of a link — ?utm_source=newsletter&utm_medium=email — that tells your analytics where the click came from. The link opens exactly the same page; the extra values exist only for the report. Anyone can type them by hand, and a UTM builder simply keeps the spelling, spacing and punctuation identical every time."
@@ -5039,8 +5047,8 @@ export default {
   "vehicle-compare": {
   "title": "Car Comparison Tool — Compare Two Vehicles Side by Side",
   "h1": "Vehicle Compare — Side-by-Side Car Specification Comparison",
-  "metaDescription": "Compare two 2024 Indian SUVs side by side — price, ARAI mileage, power and safety — with the better figure bolded. Sample spec data, free, no signup.",
-  "intro": "Vehicle Compare puts two models from a six-car 2024 India shortlist — Hyundai Creta, Kia Seltos, Maruti Brezza, Mahindra Scorpio-N, Tata Nexon and Toyota Innova Hycross — into a single three-column grid across four specs: ex-showroom price, ARAI mileage, maximum power and safety rating. Each row is scored by direction rather than opinion: the lower number wins on price, the higher number wins on mileage, power and safety, and the winning cell is bolded in the accent colour, with ties left unmarked. Above the grid, three proportional bars size each value as value ÷ larger value × 100%, and prices are converted to the Indian lakh/crore scale, so a 21.0 vs 18.5 kmpl or 160 vs 180 HP gap is readable before you parse a digit. Note that the spec figures come from a fixed sample dataset compiled into the page — the tool makes no network request of any kind, so nothing you select is uploaded, but the numbers are a layout demonstration, not a live price feed.",
+  "metaDescription": "Compare two 2024 Indian SUVs side by side — price, ARAI mileage, power and safety — with the better figure bolded. Sample base-variant spec data, free, no signup.",
+  "intro": "Vehicle Compare puts two models from a six-car 2024 India shortlist — Hyundai Creta, Kia Seltos, Maruti Brezza, Mahindra Scorpio-N, Tata Nexon and Toyota Innova Hycross — into a single three-column grid across four specs: ex-showroom price, ARAI mileage, maximum power and safety rating. Each row is scored by direction rather than opinion: the lower number wins on price, the higher number wins on mileage, power and safety, and the winning cell is bolded in the accent colour, with ties left unmarked. Above the grid, three proportional bars size each value as value ÷ larger value × 100%, and prices are converted to the Indian lakh/crore scale, so a gap in mileage, power or price is readable before you parse a digit. Each of the six models carries its own reference figures — rounded from published base-variant, ARAI and NCAP data — compiled into the page. The tool makes no network request of any kind, so nothing you select is uploaded, but the numbers are indicative base-trim figures, not a live price feed; confirm current pricing and variant-specific specs with the manufacturer or a dealer.",
   "useCases": [
     "Laying two shortlisted SUVs on one screen across price, mileage, power and safety instead of flipping between two brochure PDFs or browser tabs.",
     "Showing a first-time buyer how spec trade-offs actually work — the proportional bars make a price gap or a power gap obvious without reading numbers.",
@@ -5067,7 +5075,7 @@ export default {
   "faqs": [
     [
       "are the prices in this car comparison tool live?",
-      "No. The current build renders a fixed sample spec set — ₹12,00,000 / 21.0 kmpl / 160 HP / 5 stars against ₹15,00,000 / 18.5 kmpl / 180 HP / 5 stars — and shows those same figures for every pairing you choose. Use it to see how the side-by-side layout and scoring work, then confirm actual ex-showroom price and mileage with the manufacturer or dealer."
+      "No. Each of the six models has its own fixed reference record — rounded, base-variant price, ARAI mileage, maximum power and NCAP-style safety rating — built into the page, so the figures do change with which two vehicles you pick, but they are not pulled from a live pricing feed. Use it to see how the side-by-side layout and scoring work, then confirm actual ex-showroom price, variant-specific mileage and current safety rating with the manufacturer or dealer."
     ],
     [
       "which cars can I compare?",
@@ -11219,71 +11227,75 @@ export default {
   ]
 },
   "wheregoes-tool": {
-  "title": "Trace URL Redirects — Free WhereGoes Alternative",
-  "h1": "WhereGoes Tool — URL Redirect & Link Checker",
-  "metaDescription": "Paste any short, affiliate or tracking link and see every redirect hop with status codes, response times and headers. Free, no signup, export as JSON or CSV.",
-  "intro": "WhereGoes Tool traces what actually happens when a URL is requested: it follows every redirect hop from the original link to its final destination, reporting the HTTP status code (301, 302, 307…) and response headers at each step. Paste any link and get the full chain in seconds — no signup, no browser extension.",
+  "title": "URL Redirect Checker — See Where a Link Goes",
+  "h1": "URL Redirect Checker — See Every Hop a Link Takes",
+  "metaDescription": "Check where any short or tracking link goes. Trace every redirect hop, its 301/302 status code, response time and headers. Free, no signup, export as CSV.",
+  "intro": "A URL redirect checker shows what really happens when a link is requested. Paste any URL — a shortened link, an affiliate or tracking link, or one of your own — and the trace runs on a server, so you find out where the link leads without your browser ever visiting it. You get every hop in order with its HTTP status code (301, 302, 303, 307, 308), how long that hop took, and its full response headers on demand, plus the final destination URL. Nothing to install, no signup, and the finished chain exports as JSON or CSV. This tool is independent and not affiliated with wheregoes.com.",
   "useCases": [
-    "Checking where a shortened link (bit.ly, t.co, an affiliate or tracking link) actually leads before you click it",
+    "Checking where a shortened link (bit.ly, t.co, an affiliate or tracking link) leads before you click it",
     "Debugging a redirect loop or an unexpected extra hop in your own site's URLs",
-    "Verifying that a 301 redirect is set up correctly after a site migration or URL change"
+    "Confirming a 301 redirect resolves correctly after a site migration or URL change"
   ],
   "benefits": [
     [
-      "Full redirect chain, not just the final URL",
-      "See every hop the link passes through, in order, with the HTTP status code (301, 302, 307, meta refresh…) for each one."
+      "The whole chain, not just the final URL",
+      "Every hop the link passes through, in order, with the HTTP status code (301, 302, 303, 307, 308) returned at each one."
     ],
     [
-      "Response headers included",
-      "Inspect the headers returned at each hop — useful for debugging caching, redirects, and tracking parameters."
+      "Headers for any hop you open",
+      "Expand a row in the redirect table to read the response headers that hop returned — useful for caching, tracking and redirect debugging."
     ],
     [
-      "Free, instant, no signup",
-      "Paste a link and get results in seconds; no account required for normal use."
+      "Timing for each step",
+      "The response time of every hop, and the total, so you can see which redirect in the chain is the slow one."
     ],
     [
-      "Works on any link",
-      "Shortened URLs, affiliate links, UTM-tagged campaign links, or your own site's redirects — trace any of them."
+      "Nothing to install, nothing to sign up for",
+      "Open the page, paste a link, read the chain — no account and no browser extension. The finished trace exports as JSON or CSV."
     ]
   ],
   "faqs": [
     [
-      "What does WhereGoes Tool do?",
-      "It traces the full redirect chain of any URL — every hop from the link you paste to its final destination — and shows the HTTP status code and response headers at each step, so you can see exactly where a link goes before you click it."
+      "How do I check where a URL redirects?",
+      "Paste the URL into the box and run the trace. The redirect chain comes back as a list: every hop from the link you pasted to its final destination, each with its HTTP status code, its response time, and its response headers on demand."
     ],
     [
-      "How do I check where a shortened or tracking link actually goes?",
-      "Paste the link into WhereGoes Tool and it follows every redirect automatically, showing the final destination plus every hop in between — no need to click the link yourself to find out."
+      "How do I see where a shortened or tracking link goes without clicking it?",
+      "The trace runs on a server rather than in your browser, so the redirects are followed for you and you can read the final destination before deciding whether to open it."
     ],
     [
-      "Is WhereGoes Tool free to use?",
-      "Yes, it's free with no signup required for normal use."
+      "What is the difference between a 301 and a 302 redirect?",
+      "A 301 is permanent, and search engines pass ranking signals to the new URL; a 302 is temporary, and the original URL keeps being treated as the real one. Each hop in the chain shows its exact code, so you can tell which type a link is using."
     ],
     [
-      "What's the difference between a 301 and a 302 redirect, and does WhereGoes show it?",
-      "Yes — each hop in the chain shows its exact status code. A 301 is a permanent redirect, and search engines transfer ranking signals to the new URL; a 302 is temporary, and the original URL keeps being treated as the real one. Seeing the code at each hop tells you which type a given link is using."
+      "Can it expand a short URL to its real destination?",
+      "Yes. Paste any shortened link (bit.ly, t.co, or similar) and the chain resolves down to the final destination URL."
     ],
     [
-      "Can I check a UTM-tagged campaign link without losing the tracking parameters?",
-      "Yes — paste the full URL including its UTM parameters, and WhereGoes traces the actual redirect chain while showing exactly what each hop received."
+      "Will my UTM parameters survive the trace?",
+      "Paste the full URL including its UTM parameters — the chain is traced exactly as given, and each row shows the URL that hop was sent to, so you can see where a parameter is dropped."
     ],
     [
-      "Does WhereGoes Tool work as a URL expander for shortened links?",
-      "Yes. Paste any shortened link (bit.ly, t.co, or similar) and it resolves the full chain down to the real final destination URL."
+      "Is this URL redirect checker free?",
+      "Yes — it is free to use, with no signup and no trial limit."
     ],
     [
       "Is there an API for checking redirects programmatically?",
-      "The web tool doesn't expose a public API today — use the page directly by pasting the URL you want to trace."
+      "Not a public, documented one today. Use the page directly by pasting the URL you want to trace."
     ],
     [
-      "Why does the tool show my link resolving through a domain I didn't expect?",
-      "That's normal for tracking, affiliate, and shortened links — they're designed to redirect through one or more intermediate domains before reaching the final page. WhereGoes shows the full path so nothing is hidden."
+      "Is this wheregoes.com?",
+      "No. This is an independent redirect checker on AltFTool and is not affiliated with, endorsed by, or connected to wheregoes.com. It is here because the URL of this page uses that name; the tool itself is our own."
+    ],
+    [
+      "Why does my link resolve through a domain I did not expect?",
+      "That is normal for tracking, affiliate and shortened links — they redirect through one or more intermediate domains before reaching the final page. The chain shows every one of them, so nothing is hidden."
     ]
   ],
   "steps": [
-    "Paste the URL you want to trace into the box.",
-    "WhereGoes Tool follows every redirect hop automatically.",
-    "Review the full chain — final destination, status codes, and response headers for each step."
+    "Paste the URL you want to check into the box.",
+    "Run the trace — every redirect hop is followed for you, server-side.",
+    "Read the chain: final destination, status code, response time and headers for each hop."
   ]
 },
   "whey-scoop-protein-calculator": {

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Shirt } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { MONTHS, REGIONS, VENUES, planWardrobe } from "../lib";
 
 const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
@@ -30,7 +31,7 @@ export default function ToolHome() {
   const [tripDays, setTripDays] = useState(String(DEFAULTS.tripDays));
   const [laundry, setLaundry] = useState(String(DEFAULTS.laundryEveryDays));
   const [venueIds, setVenueIds] = useState(DEFAULTS.venueIds);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const plan = useMemo(
     () =>
@@ -69,16 +70,7 @@ export default function ToolHome() {
     ].join("\n");
   }, [plan, hasError]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("summary", summary, { label: "USA dress code packing plan" });
 
   const reset = () => {
     setRegionId(DEFAULTS.regionId);
@@ -86,7 +78,7 @@ export default function ToolHome() {
     setTripDays(String(DEFAULTS.tripDays));
     setLaundry(String(DEFAULTS.laundryEveryDays));
     setVenueIds(DEFAULTS.venueIds);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -239,17 +231,24 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the USA packing plan"
+              aria-label={
+                isCopied("summary")
+                  ? "Copied the USA packing plan to clipboard"
+                  : "Copy the USA packing plan"
+              }
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("summary") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy plan"}
+              {isCopied("summary") ? "Copied!" : "Copy plan"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button
               type="button"
               onClick={reset}
@@ -274,7 +273,7 @@ export default function ToolHome() {
               "Monthly rainfall",
               hasError ? DASH : `${plan.climate.rainMm} mm over ${plan.climate.rainyDays} wet days`,
             ],
-            ["Tops per day allowed for", hasError ? DASH : NUM.format(plan.topsPerDay)],
+            ["Tops packed per laundry-cycle day", hasError ? DASH : NUM.format(plan.topsPerDay)],
             ["Estimated clothing weight", hasError ? DASH : `${KG.format(plan.totalKg)} kg`],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">

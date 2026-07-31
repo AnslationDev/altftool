@@ -10,7 +10,7 @@ const faqs = [
   },
   {
     q: "Are the personality tests scientifically inspired?",
-    a: "Yes, our assessments are designed using proven psychological concepts, behavioral analysis, and AI-powered insights.",
+    a: "Yes, our assessments are designed using proven psychological concepts and structured behavioral analysis.",
   },
   {
     q: "Do I need to sign up to take the test?",
@@ -26,7 +26,7 @@ const faqs = [
   },
   {
     q: "Are the results accurate?",
-    a: "Our assessments are built on validated psychological frameworks combined with advanced AI analysis. While no test is perfect, users consistently report high accuracy in their results.",
+    a: "Our assessments are built on validated psychological frameworks and a transparent, consistent scoring system. As with any self-assessment, your results reflect patterns in how you answered rather than a clinical diagnosis.",
   },
 ];
 
@@ -77,6 +77,8 @@ export default function Faq() {
                 onClick={() =>
                   setOpen(isOpen ? -1 : i)
                 }
+                aria-expanded={isOpen}
+                aria-controls={`personality-faq-panel-${i}`}
                 className="
                   w-full
                   flex
@@ -124,6 +126,8 @@ export default function Faq() {
 
               {/* Answer */}
               <div
+                id={`personality-faq-panel-${i}`}
+                role="region"
                 className={`
                   grid
                   transition-all duration-300 ease-in-out

@@ -105,6 +105,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset the tracker? This deletes every logged session and setting saved in this browser.")) {
+      return;
+    }
     const anchor = todayIso();
     setToday(anchor);
     setLogs(seedLogs(anchor));

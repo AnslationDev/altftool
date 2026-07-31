@@ -3,6 +3,7 @@ import test from "node:test";
 
 import {
   analyzeResidualPixels,
+  applyExifOrientationToDimensions,
   buildPrivacySafeElaSummary,
   buildResidualRegionGrid,
   calculateWorkingDimensions,
@@ -11,6 +12,7 @@ import {
   detectRasterMime,
   ELA_LIMITATIONS,
   ELA_LIMITS,
+  parseJpegExifOrientation,
   parseRasterDimensions,
   summarizeResidualMagnitudes,
   validateRasterDimensions,
@@ -45,6 +47,46 @@ function jpegHeader(width, height) {
     (width >> 8) & 0xff,
     width & 0xff,
   ]);
+}
+
+function jpegExifApp1Segment(orientation) {
+  // Minimal big-endian TIFF IFD0 carrying a single Orientation (0x0112)
+  // SHORT (type 3) tag, wrapped in an "Exif\0\0" APP1 payload.
+  const tiff = new Uint8Array(8 + 2 + 12 + 4);
+  const view = new DataView(tiff.buffer);
+  tiff.set([0x4d, 0x4d], 0); // "MM" big-endian
+  view.setUint16(2, 42);
+  view.setUint32(4, 8); // IFD0 offset
+  view.setUint16(8, 1); // 1 entry
+  view.setUint16(10, 0x0112); // Orientation tag
+  view.setUint16(12, 3); // type SHORT
+  view.setUint32(14, 1); // count
+  view.setUint16(18, orientation); // value, left-justified in the 4-byte field
+  view.setUint32(22, 0); // next IFD offset
+
+  const exifHeader = Uint8Array.from([
+    0x45, 0x78, 0x69, 0x66, 0x00, 0x00,
+  ]); // "Exif\0\0"
+  const payload = new Uint8Array(exifHeader.length + tiff.length);
+  payload.set(exifHeader, 0);
+  payload.set(tiff, exifHeader.length);
+
+  const segment = new Uint8Array(4 + payload.length);
+  segment.set([0xff, 0xe1], 0);
+  new DataView(segment.buffer).setUint16(2, payload.length + 2);
+  segment.set(payload, 4);
+  return segment;
+}
+
+function jpegHeaderWithOrientation(width, height, orientation) {
+  const soi = Uint8Array.from([0xff, 0xd8]);
+  const app1 = jpegExifApp1Segment(orientation);
+  const sof0 = jpegHeader(width, height).subarray(2); // drop the SOI this already carries
+  const bytes = new Uint8Array(soi.length + app1.length + sof0.length);
+  bytes.set(soi, 0);
+  bytes.set(app1, soi.length);
+  bytes.set(sof0, soi.length + app1.length);
+  return bytes;
 }
 
 function webpVp8xHeader(width, height) {
@@ -262,6 +304,36 @@ test("parses JPEG, PNG, and WebP dimensions before browser decode", () => {
     mimeType: "image/webp",
   });
   assert.equal(parseRasterDimensions(new Uint8Array([1, 2, 3])), null);
+});
+
+test("reads the EXIF Orientation tag from a JPEG APP1 Exif segment", () => {
+  assert.equal(parseJpegExifOrientation(jpegHeaderWithOrientation(40, 20, 6)), 6);
+  assert.equal(parseJpegExifOrientation(jpegHeaderWithOrientation(64, 32, 8)), 8);
+  assert.equal(parseJpegExifOrientation(jpegHeaderWithOrientation(50, 30, 3)), 3);
+  // No Exif APP1 segment at all defaults to 1 (identity), same as a browser
+  // decoder assumes for an untagged JPEG.
+  assert.equal(parseJpegExifOrientation(jpegHeader(1_920, 1_080)), 1);
+  // Non-JPEG input is not applicable; defaults to 1 rather than throwing.
+  assert.equal(parseJpegExifOrientation(pngHeader(1_200, 800)), 1);
+});
+
+test("swaps width/height only for the 90/270-degree EXIF orientations", () => {
+  const raw = { width: 40, height: 20, mimeType: "image/jpeg" };
+  assert.deepEqual(applyExifOrientationToDimensions(raw, 6), {
+    width: 20,
+    height: 40,
+    mimeType: "image/jpeg",
+  });
+  assert.deepEqual(applyExifOrientationToDimensions(raw, 8), {
+    width: 20,
+    height: 40,
+    mimeType: "image/jpeg",
+  });
+  // 180-degree rotation and plain flips do not transpose the axes.
+  assert.deepEqual(applyExifOrientationToDimensions(raw, 3), raw);
+  assert.deepEqual(applyExifOrientationToDimensions(raw, 2), raw);
+  assert.deepEqual(applyExifOrientationToDimensions(raw, 1), raw);
+  assert.equal(applyExifOrientationToDimensions(null, 6), null);
 });
 
 test("rejects excessive source edges and pixel counts before decode", () => {

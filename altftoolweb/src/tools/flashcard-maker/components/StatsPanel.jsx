@@ -1,7 +1,20 @@
 import { BarChart2, Zap, Target, BookOpen } from "lucide-react";
 
+// Weighted contribution of each difficulty tier toward the retention score:
+// cards marked "easy" are considered fully retained, "hard" cards are not
+// yet retained, and "medium" cards sit halfway between the two.
+const RETENTION_WEIGHTS = { easy: 1, medium: 0.5, hard: 0 };
+
+function getRetentionScore(cards) {
+  if (!cards.length) return 0;
+  const total = cards.reduce((sum, c) => sum + (RETENTION_WEIGHTS[c.difficulty] ?? 0.5), 0);
+  return Math.round((total / cards.length) * 100);
+}
+
 export default function StatsPanel({ deck }) {
   if (!deck) return null;
+
+  const retentionScore = getRetentionScore(deck.cards);
 
   return (
     <div className="bg-(--background) p-5 rounded-xl border border-(--border) shadow-sm space-y-4">
@@ -14,7 +27,7 @@ export default function StatsPanel({ deck }) {
         <StatItem label="Total Units" value={deck.cards.length} icon={<BookOpen className="w-3.5 h-3.5 text-blue-500" />} />
         <StatItem label="Mastered" value={deck.cards.filter(c => c.difficulty === 'easy').length} icon={<Target className="w-3.5 h-3.5 text-green-500" />} />
         <StatItem label="In Progress" value={deck.cards.filter(c => c.difficulty === 'medium').length} icon={<Zap className="w-3.5 h-3.5 text-orange-500" />} />
-        <StatItem label="Retention" value="High" icon={<BarChart2 className="w-3.5 h-3.5 text-indigo-500" />} />
+        <StatItem label="Retention" value={`${retentionScore}%`} icon={<BarChart2 className="w-3.5 h-3.5 text-indigo-500" />} />
       </div>
     </div>
   );

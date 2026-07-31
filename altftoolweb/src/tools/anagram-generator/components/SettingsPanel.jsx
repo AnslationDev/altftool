@@ -1,19 +1,17 @@
 "use client";
 
 import React from "react";
-import { Settings, Sliders, ShieldCheck, ArrowUpDown, Filter, Sparkles } from "lucide-react";
+import { Settings, Sliders, ShieldCheck, ArrowUpDown, Sparkles } from "lucide-react";
 
 export default function SettingsPanel({
   count,
   setCount,
-  realWordsOnly,
-  setRealWordsOnly,
   sortMode,
   setSortMode,
   allowDuplicates,
   setAllowDuplicates,
 }) {
-  const PRESETS = [10, 20, 30, 50];
+  const PRESETS = [10, 20, 30, 50, 100];
 
   return (
     <div className="bg-card/80 backdrop-blur-xl border border-border/80 rounded-3xl p-6 sm:p-7 shadow-xl space-y-6">
@@ -43,7 +41,7 @@ export default function SettingsPanel({
         <input
           type="range"
           min={1}
-          max={50}
+          max={100}
           value={count}
           onChange={(e) => setCount(Number(e.target.value))}
           className="w-full accent-teal-500 h-2 bg-border/60 rounded-lg appearance-none cursor-pointer"
@@ -96,39 +94,22 @@ export default function SettingsPanel({
 
       {/* Toggle Controls */}
       <div className="space-y-3 pt-2 border-t border-border/40">
-        {/* Real Words Only Switch */}
-        <div className="flex items-center justify-between p-3 rounded-2xl bg-card border border-border/60 hover:border-indigo-500/40 transition">
-          <div className="flex items-center gap-2.5">
-            <Filter className="w-4 h-4 text-teal-500" />
-            <div>
-              <p className="text-xs font-bold text-foreground">Real Words Preferred</p>
-              <p className="text-[10px] text-muted-foreground">Prioritize dictionary matching words</p>
-            </div>
-          </div>
-          <button
-            onClick={() => setRealWordsOnly(!realWordsOnly)}
-            className={`w-11 h-6 rounded-full transition-colors duration-300 relative p-1 ${realWordsOnly ? "bg-teal-500" : "bg-border"
-              }`}
-          >
-            <div
-              className={`w-4 h-4 rounded-full bg-white shadow-md transform transition-transform duration-300 ${realWordsOnly ? "translate-x-5" : "translate-x-0"
-                }`}
-            />
-          </button>
-        </div>
-
         {/* Allow Duplicates Switch */}
         <div className="flex items-center justify-between p-3 rounded-2xl bg-card border border-border/60 hover:border-indigo-500/40 transition">
           <div className="flex items-center gap-2.5">
             <ShieldCheck className="w-4 h-4 text-indigo-500" />
             <div>
-              <p className="text-xs font-bold text-foreground">Allow Duplicate Letters</p>
+              <p id="allow-duplicates-label" className="text-xs font-bold text-foreground">Allow Duplicate Letters</p>
               <p className="text-[10px] text-muted-foreground">Maintain exact character frequencies</p>
             </div>
           </div>
           <button
+            type="button"
+            role="switch"
+            aria-checked={allowDuplicates}
+            aria-labelledby="allow-duplicates-label"
             onClick={() => setAllowDuplicates(!allowDuplicates)}
-            className={`w-11 h-6 rounded-full transition-colors duration-300 relative p-1 ${allowDuplicates ? "bg-indigo-600" : "bg-border"
+            className={`w-11 h-6 rounded-full transition-colors duration-300 relative p-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal-500/50 ${allowDuplicates ? "bg-indigo-600" : "bg-border"
               }`}
           >
             <div

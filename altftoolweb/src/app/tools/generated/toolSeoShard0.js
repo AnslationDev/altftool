@@ -7082,8 +7082,8 @@ export default {
       "Every result links to its App Store page and a matching Google Play search, so you don't have to search twice."
     ],
     [
-      "Popular and trending picks",
-      "Browse curated popular and trending apps by category if you're not searching for something specific."
+      "Search and browse by category",
+      "Search by keyword or browse by category — including general terms like popular and trending — when you're not searching for something specific."
     ],
     [
       "Free, no signup",
@@ -7105,7 +7105,7 @@ export default {
     ],
     [
       "Can I browse apps without searching for something specific?",
-      "Yes — the popular and trending sections surface curated picks by category if you're just browsing."
+      "Yes — you can search general terms like popular or trending, or use the category filter, to explore apps without knowing exactly what you want."
     ]
   ],
   "steps": [

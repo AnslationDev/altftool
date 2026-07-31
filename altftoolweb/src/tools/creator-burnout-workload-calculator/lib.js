@@ -181,7 +181,8 @@ export function computeWorkload({
   const productionHours = cleaned.reduce((sum, item) => sum + item.hours, 0);
   const totalHours = productionHours + adminHours;
 
-  const wakingHoursPerWeek = (HOURS_PER_DAY - sleepHours) * DAYS_PER_WEEK;
+  const wakingHoursPerDay = HOURS_PER_DAY - sleepHours;
+  const wakingHoursPerWeek = wakingHoursPerDay * DAYS_PER_WEEK;
   if (totalHours > wakingHoursPerWeek) {
     return {
       error: `That schedule needs ${Math.round(totalHours)} hours but you are only awake about ${Math.round(
@@ -192,7 +193,17 @@ export function computeWorkload({
 
   const workingDays = DAYS_PER_WEEK - daysOffPerWeek;
   const hoursPerWorkingDay = totalHours / workingDays;
-  const wakingHoursPerDay = HOURS_PER_DAY - sleepHours;
+  // The weekly check above can pass while the same hours are crammed into too
+  // few working days to be physically possible — guard the per-day rate too.
+  if (hoursPerWorkingDay > wakingHoursPerDay) {
+    return {
+      error: `Spread over ${workingDays} working day${workingDays === 1 ? "" : "s"}, that schedule needs ${Math.round(
+        hoursPerWorkingDay,
+      )} hours on each working day, but you are only awake about ${Math.round(
+        wakingHoursPerDay,
+      )} hours on a working day — spread the work over more days or lower the counts.`,
+    };
+  }
   const shareOfWakingDay = wakingHoursPerDay > 0 ? (hoursPerWorkingDay / wakingHoursPerDay) * 100 : 0;
 
   const sleepDeficitPerNight = Math.max(0, MIN_ADULT_SLEEP_HOURS - sleepHours);
@@ -206,7 +217,7 @@ export function computeWorkload({
   const breakScore =
     clamp((weeksSinceBreak - BREAK_FREE_WEEKS) / (BREAK_MAX_WEEKS - BREAK_FREE_WEEKS), 0, 1) * 100;
 
-  const score = clamp(
+  const rawScore = clamp(
     (hoursScore * SCORE_WEIGHTS.hours +
       sleepScore * SCORE_WEIGHTS.sleep +
       restScore * SCORE_WEIGHTS.restDays +
@@ -215,6 +226,11 @@ export function computeWorkload({
     0,
     100,
   );
+  // Round once, here, so every downstream consumer (the displayed number, the
+  // band/level lookup and the score bar width) reads the same value — a raw
+  // score that rounds up to the next band's floor must not show that band's
+  // label next to a number that still reads like the band below it.
+  const score = Math.round(rawScore);
 
   const band = bandForScore(score);
 

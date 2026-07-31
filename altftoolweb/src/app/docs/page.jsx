@@ -181,7 +181,7 @@ function SectionHeading({ description, eyebrow, id, title }) {
 function TextLink({ children, href }) {
   return (
     <Link
-      className="inline-flex min-h-10 items-center gap-2 rounded-md text-sm font-semibold text-primary transition hover:text-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+      className="inline-flex min-h-11 items-center gap-2 rounded-md text-sm font-semibold text-primary transition hover:text-primary-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
       href={href}
     >
       {children}
@@ -345,7 +345,7 @@ export default function DocsPage() {
               {DOCS_SECTIONS.map((section) => (
                 <li key={section.id}>
                   <a
-                    className="flex min-h-10 items-center rounded-md px-3 text-sm font-medium text-muted-foreground transition hover:bg-muted hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    className="flex min-h-11 items-center rounded-md px-3 text-sm font-medium text-muted-foreground transition hover:bg-muted hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                     href={`#${section.id}`}
                   >
                     {section.label}
@@ -363,7 +363,7 @@ export default function DocsPage() {
               {DOCS_SECTIONS.map((section) => (
                 <li key={section.id}>
                   <a
-                    className="flex min-h-10 items-center border-l-2 border-transparent px-3 text-sm font-medium text-muted-foreground transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    className="flex min-h-11 items-center border-l-2 border-transparent px-3 text-sm font-medium text-muted-foreground transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
                     href={`#${section.id}`}
                   >
                     {section.label}

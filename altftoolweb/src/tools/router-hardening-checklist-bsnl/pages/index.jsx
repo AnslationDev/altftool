@@ -48,10 +48,13 @@ export default function ToolHome() {
   };
 
   const toggleSkipped = (id) => {
+    const turningOn = !notApplicable.includes(id);
     setNotApplicable((current) =>
-      current.includes(id) ? current.filter((item) => item !== id) : [...current, id],
+      turningOn ? [...current, id] : current.filter((item) => item !== id),
     );
-    setCompleted((current) => current.filter((item) => item !== id));
+    if (turningOn) {
+      setCompleted((current) => current.filter((item) => item !== id));
+    }
     setCopied(false);
   };
 
@@ -97,7 +100,14 @@ export default function ToolHome() {
           </div>
 
           <div className="mt-4 flex flex-wrap gap-2">
-            <button type="button" className={GHOST_BTN} onClick={() => setCompleted(HARDENING_STEPS.map((step) => step.id))}>
+            <button
+              type="button"
+              className={GHOST_BTN}
+              onClick={() => {
+                setCompleted(HARDENING_STEPS.map((step) => step.id));
+                setNotApplicable([]);
+              }}
+            >
               Mark all done
             </button>
             <button type="button" className={GHOST_BTN} onClick={() => setCompleted([])}>
@@ -137,7 +147,7 @@ export default function ToolHome() {
                         </span>
                       </div>
                       <div className="mt-3 flex flex-wrap gap-2">
-                        <label className="inline-flex min-h-10 items-center gap-2 rounded-md border border-[var(--border)] px-3 text-xs font-semibold">
+                        <label className="inline-flex min-h-11 items-center gap-2 rounded-md border border-[var(--border)] px-3 text-xs font-semibold">
                           <input
                             type="checkbox"
                             className="h-4 w-4 accent-[var(--primary)]"
@@ -146,7 +156,7 @@ export default function ToolHome() {
                           />
                           Done
                         </label>
-                        <label className="inline-flex min-h-10 items-center gap-2 rounded-md border border-[var(--border)] px-3 text-xs font-semibold">
+                        <label className="inline-flex min-h-11 items-center gap-2 rounded-md border border-[var(--border)] px-3 text-xs font-semibold">
                           <input
                             type="checkbox"
                             className="h-4 w-4 accent-[var(--primary)]"

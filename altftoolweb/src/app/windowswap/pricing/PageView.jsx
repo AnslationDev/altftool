@@ -30,11 +30,11 @@ export default function PricingPage() {
       <header className="w-full max-w-6xl mx-auto px-6 py-8 flex items-center justify-between z-10">
         <Link
           href="/windowswap"
-          className="flex items-center gap-2 text-windowswap-cream hover:text-white transition duration-200 text-sm font-semibold tracking-wide"
+          className="flex items-center gap-2 text-windowswap-cream hover:text-(--windowswap-foreground) transition duration-200 text-sm font-semibold tracking-wide"
         >
           <ArrowLeft className="h-4 w-4" /> Back to WindowSwap
         </Link>
-        <span className="font-serif text-xl tracking-[0.2em] font-medium text-white select-none">
+        <span className="font-serif text-xl tracking-[0.2em] font-medium text-(--windowswap-foreground) select-none">
           WindowSwap
         </span>
         <div className="w-24" /> {/* Alignment balancer */}
@@ -61,14 +61,14 @@ export default function PricingPage() {
           <div className="relative flex items-center p-1 windowswap-card rounded-full select-none">
             <button
               onClick={() => setBillingCycle("monthly")}
-              className={`px-6 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition cursor-pointer ${billingCycle === "monthly" ? "bg-windowswap-terracotta text-white shadow-md" : "text-windowswap-cream/70 hover:text-white"
+              className={`px-6 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition cursor-pointer ${billingCycle === "monthly" ? "bg-windowswap-terracotta text-white shadow-md" : "text-windowswap-cream/70 hover:text-(--windowswap-foreground)"
                 }`}
             >
               Billed Monthly
             </button>
             <button
               onClick={() => setBillingCycle("yearly")}
-              className={`px-6 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition relative cursor-pointer ${billingCycle === "yearly" ? "bg-windowswap-terracotta text-white shadow-md" : "text-windowswap-cream/70 hover:text-white"
+              className={`px-6 py-2 rounded-full text-xs font-semibold tracking-wider uppercase transition relative cursor-pointer ${billingCycle === "yearly" ? "bg-windowswap-terracotta text-white shadow-md" : "text-windowswap-cream/70 hover:text-(--windowswap-foreground)"
                 }`}
             >
               Billed Yearly
@@ -85,14 +85,14 @@ export default function PricingPage() {
             <div className="space-y-6">
               <div className="space-y-2">
                 <span className="text-[10px] tracking-widest text-zinc-400 font-bold uppercase">Standard tier</span>
-                <h3 className="font-serif text-2xl font-semibold text-white">Free Viewing</h3>
+                <h3 className="font-serif text-2xl font-semibold text-(--windowswap-foreground)">Free Viewing</h3>
                 <p className="text-xs text-windowswap-cream/70 leading-relaxed font-light">
                   Basic meditative exploration, random window flips, and beautiful sights from all over the globe.
                 </p>
               </div>
 
               <div className="flex items-baseline">
-                <span className="font-serif text-4xl md:text-5xl font-bold text-white">$0</span>
+                <span className="font-serif text-4xl md:text-5xl font-bold text-(--windowswap-foreground)">$0</span>
                 <span className="text-xs text-zinc-400 font-medium ml-2">/ forever</span>
               </div>
 
@@ -142,7 +142,7 @@ export default function PricingPage() {
             <div className="space-y-6">
               <div className="space-y-2">
                 <span className="text-[10px] tracking-widest text-windowswap-peach font-bold uppercase">All-Access member</span>
-                <h3 className="font-serif text-2xl font-semibold text-white">WindowSwap Premium</h3>
+                <h3 className="font-serif text-2xl font-semibold text-(--windowswap-foreground)">WindowSwap Premium</h3>
                 <p className="text-xs text-windowswap-cream/70 leading-relaxed font-light">
                   Directly fund the global creator network, bookmark cozy spots, filter categories, and skip backward freely.
                 </p>
@@ -151,12 +151,12 @@ export default function PricingPage() {
               <div className="flex items-baseline">
                 {billingCycle === "monthly" ? (
                   <>
-                    <span className="font-serif text-4xl md:text-5xl font-bold text-white">$5</span>
+                    <span className="font-serif text-4xl md:text-5xl font-bold text-(--windowswap-foreground)">$5</span>
                     <span className="text-xs text-windowswap-cream/70 font-medium ml-2">/ month</span>
                   </>
                 ) : (
                   <>
-                    <span className="font-serif text-4xl md:text-5xl font-bold text-white">$50</span>
+                    <span className="font-serif text-4xl md:text-5xl font-bold text-(--windowswap-foreground)">$50</span>
                     <span className="text-xs text-windowswap-cream/70 font-medium ml-2">/ year</span>
                     <span className="text-[9px] text-emerald-500 font-semibold ml-2 select-none">(~$4.16/mo)</span>
                   </>
@@ -168,11 +168,11 @@ export default function PricingPage() {
               <ul className="space-y-3.5 text-xs text-windowswap-cream/95">
                 <li className="flex items-start gap-3">
                   <Check className="h-4 w-4 text-windowswap-terracotta shrink-0 mt-0.5" />
-                  <span className="font-medium text-white">Back Button enabled</span>
+                  <span className="font-medium text-(--windowswap-foreground)">Back Button enabled</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="h-4 w-4 text-windowswap-terracotta shrink-0 mt-0.5" />
-                  <span className="font-medium text-white">Search by weather / country / tags</span>
+                  <span className="font-medium text-(--windowswap-foreground)">Search by weather / country / tags</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <Check className="h-4 w-4 text-windowswap-terracotta shrink-0 mt-0.5" />
@@ -214,7 +214,7 @@ export default function PricingPage() {
         {/* COMPARISON MATRIX SECTION */}
         <div className="space-y-6 max-w-4xl mx-auto">
           <div className="text-center space-y-1">
-            <h3 className="font-serif text-2xl font-medium text-white">Compare standard and premium features</h3>
+            <h3 className="font-serif text-2xl font-medium text-(--windowswap-foreground)">Compare standard and premium features</h3>
             <p className="text-xs text-windowswap-cream/70 font-light">See everything included in the All-Access subscription.</p>
           </div>
 
@@ -239,7 +239,7 @@ export default function PricingPage() {
                           <X className="h-4 w-4 text-zinc-600 mx-auto" />
                         )}
                       </td>
-                      <td className="px-6 py-4 text-center font-semibold text-white">
+                      <td className="px-6 py-4 text-center font-semibold">
                         {item.paid ? (
                           <Check className="h-4 w-4 text-windowswap-terracotta mx-auto font-bold" />
                         ) : (
@@ -259,14 +259,14 @@ export default function PricingPage() {
           <div className="flex flex-col sm:flex-row items-center gap-3">
             <Sparkles className="h-8 w-8 text-windowswap-peach shrink-0" />
             <div className="space-y-1">
-              <h4 className="text-xs font-semibold text-white">Built to support creators</h4>
+              <h4 className="text-xs font-semibold text-(--windowswap-foreground)">Built to support creators</h4>
               <p className="text-[10px] text-windowswap-cream/70 leading-normal font-light">All-Access revenue is designed to go directly toward the people uploading windows.</p>
             </div>
           </div>
           <div className="flex flex-col sm:flex-row items-center gap-3">
             <HelpCircle className="h-8 w-8 text-windowswap-peach shrink-0" />
             <div className="space-y-1">
-              <h4 className="text-xs font-semibold text-white">Not live yet</h4>
+              <h4 className="text-xs font-semibold text-(--windowswap-foreground)">Not live yet</h4>
               <p className="text-[10px] text-windowswap-cream/70 leading-normal font-light">Free viewing works fully today. All-Access billing hasn&rsquo;t launched — nothing is charged.</p>
             </div>
           </div>

@@ -1,4 +1,4 @@
-.voronoi-tool-shell { min-height: 100vh; background: var(--background); color: var(--foreground); padding-bottom: 3.5rem; }
+.voronoi-tool-shell { min-height: 100dvh; background: var(--background); color: var(--foreground); padding-bottom: 3.5rem; }
 .voronoi-tool-container { width: 100%; max-width: 72rem; margin: 0 auto; padding: 0 1rem; }
 @media (min-width: 640px) { .voronoi-tool-container { padding: 0 1.5rem; } }
 @media (min-width: 1024px) { .voronoi-tool-container { padding: 0 2rem; } }

@@ -189,7 +189,7 @@ export function computeIdv({
     usingOwnDeclaration: declaredIdv > 0,
     underInsured,
     underInsuredBy: underInsured ? totalIdv - declared : 0,
-    settlementRatio: shortfallRatio * 100,
+    settlementRatio: Math.min(100, shortfallRatio * 100),
     claimAmount,
     claimPayable,
     claimShortfall,

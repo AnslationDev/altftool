@@ -479,7 +479,13 @@ export function buildUgcBrief(input = {}) {
 
   const totalWords = shotList.reduce((sum, scene) => sum + scene.words, 0);
   const totalCuts = hooks * ctas;
-  const shootMinutes = shotList.length * SHOOT_MINUTES_PER_SCENE + (hooks - 1) * SHOOT_MINUTES_PER_SCENE;
+  // Every extra hook variant re-shoots the hook scene, and every extra CTA
+  // variant re-shoots the CTA scene — both cost one scene's setup-and-shoot
+  // time apiece, same as totalCuts treats them symmetrically below.
+  const shootMinutes =
+    shotList.length * SHOOT_MINUTES_PER_SCENE +
+    (hooks - 1) * SHOOT_MINUTES_PER_SCENE +
+    (ctas - 1) * SHOOT_MINUTES_PER_SCENE;
   const editMinutes = EDIT_MINUTES_BASE + (totalCuts - 1) * EDIT_MINUTES_PER_VARIANT;
 
   const dos = [...BASE_DOS, ...(STRUCTURE_DOS[structure.id] || [])];

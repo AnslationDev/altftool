@@ -48,9 +48,10 @@ function elapsedLabel(hours) {
     const minutes = Math.round((hours - whole) * 60);
     return `${whole} hour${whole === 1 ? "" : "s"}${minutes ? ` ${minutes} min` : ""}`;
   }
-  const days = Math.floor(hours / 24);
-  const rest = Math.round(hours - days * 24);
-  return `${days} day${days === 1 ? "" : "s"}${rest ? ` ${rest} hr` : ""}`;
+  // Beyond ~2 days, fall back to the same week/month/year granularity as
+  // shortDuration() so long-shelf-life pantry items don't render as e.g.
+  // "729 days 23 hr".
+  return shortDuration(hours);
 }
 
 function toLocalInputValue(date) {

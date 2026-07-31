@@ -69,12 +69,25 @@ export function parseDuration(value) {
 export function formatDuration(seconds) {
   const total = Number(seconds);
   if (!Number.isFinite(total) || total < 0) return "—";
-  const whole = Math.floor(total);
+  let whole = Math.floor(total);
   const frac = total - whole;
+  let fracText = "";
+  if (frac >= 0.005) {
+    const fixed = frac.toFixed(2);
+    if (fixed === "1.00") {
+      // toFixed(2) rounded the fractional part up to a whole second (e.g. 59.999 ->
+      // whole 59, frac 0.999 -> "1.00"). Carry it into whole so it propagates into
+      // secs/minutes/hours instead of being silently dropped.
+      whole += 1;
+      fracText = ".00";
+    } else {
+      fracText = fixed.slice(1);
+    }
+  }
   const hours = Math.floor(whole / 3600);
   const minutes = Math.floor((whole % 3600) / 60);
   const secs = whole % 60;
-  const secText = `${String(secs).padStart(2, "0")}${frac >= 0.005 ? frac.toFixed(2).slice(1) : ""}`;
+  const secText = `${String(secs).padStart(2, "0")}${fracText}`;
   if (hours > 0) return `${hours}:${String(minutes).padStart(2, "0")}:${secText}`;
   return `${minutes}:${secText}`;
 }

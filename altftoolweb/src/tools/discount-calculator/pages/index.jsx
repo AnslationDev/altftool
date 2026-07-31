@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Percent, CheckCircle2, RefreshCw, BarChart3, TrendingDown, DollarSign } from "lucide-react";
+import { Percent, CheckCircle2, BarChart3, TrendingDown, DollarSign } from "lucide-react";
 
 export default function ToolHome() {
   const [originalPrice, setOriginalPrice] = useState(100);
@@ -98,16 +98,17 @@ export default function ToolHome() {
                 
                 {/* Original Price */}
                 <div className="space-y-1.5 md:col-span-2">
-                  <label className="text-xs font-bold text-foreground uppercase flex items-center gap-1">
+                  <label htmlFor="original-price" className="text-xs font-bold text-foreground uppercase flex items-center gap-1">
                     <DollarSign size={14} className="text-primary" />
                     Original Item Price
                   </label>
                   <input
+                    id="original-price"
                     type="number"
                     min="0"
                     step="0.01"
                     value={originalPrice}
-                    onChange={(e) => setOriginalPrice(parseFloat(e.target.value) || 0)}
+                    onChange={(e) => setOriginalPrice(Math.max(0, parseFloat(e.target.value) || 0))}
                     className="w-full bg-surface-soft border border-border rounded-xl p-3 text-sm font-bold text-foreground outline-none focus:ring-1 focus:ring-primary"
                   />
                 </div>
@@ -115,10 +116,11 @@ export default function ToolHome() {
                 {/* Primary Discount */}
                 <div className="space-y-1.5">
                   <div className="flex justify-between text-xs text-foreground font-semibold">
-                    <span>Discount Rate</span>
+                    <label htmlFor="discount-rate">Discount Rate</label>
                     <span className="text-primary font-mono">{discount1}%</span>
                   </div>
                   <input
+                    id="discount-rate"
                     type="range"
                     min="0"
                     max="100"
@@ -131,10 +133,11 @@ export default function ToolHome() {
                 {/* Tax Rate */}
                 <div className="space-y-1.5">
                   <div className="flex justify-between text-xs text-foreground font-semibold">
-                    <span>Sales Tax Rate</span>
+                    <label htmlFor="tax-rate">Sales Tax Rate</label>
                     <span className="text-primary font-mono">{taxRate}%</span>
                   </div>
                   <input
+                    id="tax-rate"
                     type="range"
                     min="0"
                     max="25"
@@ -161,10 +164,11 @@ export default function ToolHome() {
                 {useStacked && (
                   <div className="space-y-1.5 bg-surface-soft p-4 rounded-xl border border-border/60 animate-fade-in">
                     <div className="flex justify-between text-xs text-foreground font-semibold">
-                      <span>Secondary Discount Rate</span>
+                      <label htmlFor="secondary-discount-rate">Secondary Discount Rate</label>
                       <span className="text-primary font-mono">{discount2}%</span>
                     </div>
                     <input
+                      id="secondary-discount-rate"
                       type="range"
                       min="0"
                       max="100"
@@ -243,7 +247,7 @@ export default function ToolHome() {
                     title={`Saved: ${savedPercent.toFixed(1)}%`}
                   />
                   <div
-                    className="bg-accent-violet h-full transition-all duration-300"
+                    className="bg-warning h-full transition-all duration-300"
                     style={{ width: `${taxPercent}%` }}
                     title={`Tax: ${taxPercent.toFixed(1)}%`}
                   />
@@ -253,7 +257,7 @@ export default function ToolHome() {
                 <div className="flex flex-wrap gap-4 text-[9px] font-bold text-muted-foreground mt-2">
                   <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-primary" /> Paid Value</span>
                   <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-teal-500/30" /> Savings Value</span>
-                  <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-accent-violet" /> Sales Tax</span>
+                  <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-full bg-warning" /> Sales Tax</span>
                 </div>
 
               </div>

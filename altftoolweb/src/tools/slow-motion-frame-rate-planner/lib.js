@@ -67,19 +67,6 @@ export function formatShutter(shutterSeconds) {
   return `1/${Math.round(1 / shutterSeconds)} s`;
 }
 
-/** Capture frame rate needed for a target slow-motion factor. */
-export function captureFpsForFactor({ projectFps, slowFactor } = {}) {
-  if (!isFiniteNumber(projectFps) || projectFps <= 0) return NaN;
-  if (!isFiniteNumber(slowFactor) || slowFactor <= 0) return NaN;
-  return projectFps * slowFactor;
-}
-
-/** The lowest common capture rate that reaches at least `requiredFps`. */
-export function nearestStandardRate(requiredFps) {
-  if (!isFiniteNumber(requiredFps) || requiredFps <= 0) return null;
-  return COMMON_CAPTURE_RATES.find((rate) => rate >= requiredFps - 1e-9) ?? null;
-}
-
 /**
  * Flicker assessment for a capture rate and shutter under mains lighting.
  * Even exposure needs either the frame interval or the open shutter to span a
@@ -181,56 +168,4 @@ export function planSlowMotion({
     realSecondsPerScreenSecond: 1 / slowFactor,
     flicker: assessFlicker({ captureFps, shutterSeconds, mainsHz }),
   };
-}
-
-/**
- * Plan from the other direction: "I want it N times slower, what do I shoot at?"
- */
-export function planFromFactor({
-  projectFps,
-  slowFactor,
-  shutterAngle = STANDARD_SHUTTER_ANGLE,
-  mainsHz = 50,
-  realDurationSeconds = 0,
-} = {}) {
-  if (!isFiniteNumber(slowFactor) || slowFactor <= 0) {
-    return { error: "Enter a slow-motion factor greater than zero." };
-  }
-  const requiredFps = captureFpsForFactor({ projectFps, slowFactor });
-  if (!isFiniteNumber(requiredFps)) {
-    return { error: "Enter a timeline frame rate greater than zero." };
-  }
-  const standardRate = nearestStandardRate(requiredFps);
-  const plan = planSlowMotion({
-    projectFps,
-    captureFps: standardRate ?? requiredFps,
-    shutterAngle,
-    mainsHz,
-    realDurationSeconds,
-  });
-  if (plan.error) return plan;
-  return {
-    ...plan,
-    requestedFactor: slowFactor,
-    requiredFps,
-    standardRate,
-    /** True when no listed camera rate reaches the request. */
-    beyondCommonRates: standardRate === null,
-  };
-}
-
-/** A ladder of what each common capture rate buys against one timeline rate. */
-export function buildRateLadder({ projectFps, shutterAngle = STANDARD_SHUTTER_ANGLE } = {}) {
-  if (!isFiniteNumber(projectFps) || projectFps <= 0) return [];
-  return COMMON_CAPTURE_RATES.map((captureFps) => {
-    const plan = planSlowMotion({ projectFps, captureFps, shutterAngle, mainsHz: 0 });
-    if (plan.error) return null;
-    return {
-      captureFps,
-      slowFactor: plan.slowFactor,
-      speedPercent: plan.speedPercent,
-      shutterLabel: plan.shutterLabel,
-      stopsLost: plan.stopsLost,
-    };
-  }).filter(Boolean);
 }

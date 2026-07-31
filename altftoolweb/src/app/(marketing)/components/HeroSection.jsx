@@ -167,13 +167,17 @@ export default function HeroSection() {
         </div>
 
         <div className="relative mx-auto hidden w-full max-w-xl items-end justify-center lg:flex lg:justify-end">
+          {/* The wrapper above is `hidden` below lg, so on a phone this image
+              never renders — but eager + high priority fetched it anyway, at
+              the front of the queue, competing with the real LCP element.
+              Mobile is 84% of this site's clicks. Lazy costs desktop nothing:
+              there the image sits in the initial viewport and loads at once. */}
           <Image
             src="/assets/home-hero-team.webp"
             alt="People using AltFTool workspaces together"
             width={1100}
             height={831}
-            loading="eager"
-            fetchPriority="high"
+            loading="lazy"
             sizes="(min-width: 1024px) 42vw, 1px"
             className="h-auto w-full object-contain"
           />

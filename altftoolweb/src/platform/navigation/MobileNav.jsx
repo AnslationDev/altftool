@@ -38,6 +38,13 @@ const FOCUSABLE_SELECTOR = [
  * Focusable descendants that are actually rendered. Links inside a collapsed
  * `<details>` still match the selector, so an unfiltered trap can park focus on
  * an invisible element and appear to break Tab entirely.
+ *
+ * A client-rect test is not enough to spot them: measured in Chrome, a link
+ * inside a closed `<details>` in the Explore sheet still reports one client
+ * rect of 332x44 while `checkVisibility()` returns false and `focus()` refuses
+ * to move focus to it. With 6 collapsed groups that is ~78 unfocusable nodes
+ * inside the trap's list, and today only DOM order keeps `first`/`last` off
+ * them. `checkVisibility()` is the test that agrees with the browser.
  */
 function getVisibleFocusable(root) {
   if (!root) return [];
@@ -45,7 +52,9 @@ function getVisibleFocusable(root) {
     (element) =>
       !element.hasAttribute("disabled") &&
       element.getAttribute("aria-hidden") !== "true" &&
-      element.getClientRects().length > 0,
+      (typeof element.checkVisibility === "function"
+        ? element.checkVisibility()
+        : element.getClientRects().length > 0),
   );
 }
 
@@ -67,6 +76,25 @@ const tileClass =
 const sectionHeadingClass =
   "px-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground";
 
+/**
+ * Decorative icon inside a sheet, rendered only once the client has mounted.
+ *
+ * The sheets stay mounted so their anchors are in the server HTML, but the
+ * icons are the one part of that markup with no crawl or accessibility value:
+ * every one is `aria-hidden`, every link carries a visible text label, and the
+ * three icon-only buttons name themselves with `aria-label`. Measured on the
+ * dev server, the 133 icons this file renders into the three closed sheets
+ * cost 63,419 of a tool page's 535,217 HTML bytes.
+ *
+ * Deferring them is invisible: a sheet is opened from React state, so it
+ * cannot be open before the mount effect has run. The tab bar's own icons are
+ * NOT deferred — those are on screen from the first paint.
+ */
+function SheetIcon({ icon: Icon, ready, className }) {
+  if (!ready || !Icon) return null;
+  return <Icon className={className} aria-hidden="true" />;
+}
+
 function SheetSection({ title, children }) {
   return (
     <section aria-label={title} className="grid gap-2">
@@ -81,7 +109,16 @@ function SheetSection({ title, children }) {
  * HTML) and `inert` while closed, which keeps it out of the tab order and off
  * the accessibility tree without unmounting.
  */
-function Sheet({ id, labelId, open, title, onClose, panelRef, children }) {
+function Sheet({
+  id,
+  labelId,
+  open,
+  title,
+  onClose,
+  panelRef,
+  iconsReady,
+  children,
+}) {
   return (
     <div
       id={id}
@@ -123,9 +160,9 @@ function Sheet({ id, labelId, open, title, onClose, panelRef, children }) {
             type="button"
             onClick={() => onClose({ returnFocus: true })}
             aria-label={`Close ${title}`}
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:bg-muted active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none"
+            className="inline-flex h-[var(--anslation-ds-control-md)] w-[var(--anslation-ds-control-md)] shrink-0 items-center justify-center rounded-md border border-border bg-background text-foreground transition hover:bg-muted active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none"
           >
-            <X className="h-5 w-5" aria-hidden="true" />
+            <SheetIcon icon={X} ready={iconsReady} className="h-5 w-5" />
           </button>
         </div>
 
@@ -141,7 +178,10 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
   const pathname = usePathname() || "";
   const router = useRouter();
   const { setThemeMode, themeMode } = useTheme();
-  const [themeReady, setThemeReady] = useState(false);
+  // One post-mount flag for the two things that must not be server-rendered:
+  // the theme selector's value (it reads localStorage) and the sheets'
+  // decorative icons (see `SheetIcon`).
+  const [mounted, setMounted] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [searchError, setSearchError] = useState("");
   const baseId = useId().replace(/[^a-zA-Z0-9-]/g, "");
@@ -171,7 +211,7 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
   });
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setThemeReady(true), 0);
+    const timer = window.setTimeout(() => setMounted(true), 0);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -191,11 +231,18 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
     if (!activeSheet) return undefined;
 
     const panel = getPanel(activeSheet);
-    const scrollbarWidth =
-      window.innerWidth - document.documentElement.clientWidth;
+    const root = document.documentElement;
+    const scrollbarWidth = window.innerWidth - root.clientWidth;
     const previousOverflow = document.body.style.overflow;
+    const previousRootOverflow = root.style.overflow;
     const previousPaddingRight = document.body.style.paddingRight;
 
+    // `document.scrollingElement` is <html> here, and globals.css puts
+    // `overflow-x: clip` on the root element — the viewport only takes its
+    // overflow from <body> while the root's own overflow is `visible`, so a
+    // body-only lock cannot be relied on to hold. Lock the element that
+    // actually scrolls as well.
+    root.style.overflow = "hidden";
     document.body.style.overflow = "hidden";
     if (scrollbarWidth > 0) {
       document.body.style.paddingRight = `${scrollbarWidth}px`;
@@ -245,6 +292,7 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
       window.clearTimeout(focusTimer);
+      root.style.overflow = previousRootOverflow;
       document.body.style.overflow = previousOverflow;
       document.body.style.paddingRight = previousPaddingRight;
     };
@@ -369,6 +417,7 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
         open={activeSheet === "tools"}
         onClose={onCloseSheet}
         panelRef={toolsPanelRef}
+        iconsReady={mounted}
       >
         <div className="grid gap-5">
           <Link
@@ -376,7 +425,11 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
             className="flex min-h-12 items-center justify-between gap-3 rounded-md bg-primary px-4 py-3 text-sm font-bold text-primary-foreground transition duration-150 hover:bg-(--primary-hover) active:scale-[0.99] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none motion-reduce:transition-none"
           >
             Browse the full tool directory
-            <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <SheetIcon
+              icon={ArrowRight}
+              ready={mounted}
+              className="h-4 w-4 shrink-0"
+            />
           </Link>
 
           <SheetSection title="Jump to">
@@ -389,9 +442,10 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
                     {...linkProps(link.href)}
                     className={tileClass}
                   >
-                    <Icon
+                    <SheetIcon
+                      icon={Icon}
+                      ready={mounted}
                       className="h-4 w-4 shrink-0 text-(--primary-text)"
-                      aria-hidden="true"
                     />
                     <span className="min-w-0 leading-5">{link.label}</span>
                   </Link>
@@ -411,9 +465,10 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
                 <h3
                   className={`${sectionHeadingClass} flex items-center gap-2`}
                 >
-                  <GroupIcon
+                  <SheetIcon
+                    icon={GroupIcon}
+                    ready={mounted}
                     className="h-3.5 w-3.5 text-(--primary-text)"
-                    aria-hidden="true"
                   />
                   {group.label}
                 </h3>
@@ -451,9 +506,10 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
                     {...linkProps(link.href)}
                     className={tileClass}
                   >
-                    <Icon
+                    <SheetIcon
+                      icon={Icon}
+                      ready={mounted}
                       className="h-4 w-4 shrink-0 text-(--primary-text)"
-                      aria-hidden="true"
                     />
                     <span className="min-w-0 leading-5">{link.label}</span>
                   </Link>
@@ -474,6 +530,7 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
         open={activeSheet === "search"}
         onClose={onCloseSheet}
         panelRef={searchPanelRef}
+        iconsReady={mounted}
       >
         <div className="grid gap-5">
           <form className="grid gap-2" onSubmit={handleSearch} role="search">
@@ -498,9 +555,9 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
               />
               <button
                 type="submit"
-                className="inline-flex h-10 shrink-0 items-center gap-2 rounded-md bg-primary px-4 text-sm font-bold text-primary-foreground transition duration-150 hover:bg-(--primary-hover) active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none motion-reduce:transition-none"
+                className="inline-flex h-[var(--anslation-ds-control-md)] shrink-0 items-center gap-2 rounded-md bg-primary px-4 text-sm font-bold text-primary-foreground transition duration-150 hover:bg-(--primary-hover) active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none motion-reduce:transition-none"
               >
-                <Search className="h-4 w-4" aria-hidden="true" />
+                <SheetIcon icon={Search} ready={mounted} className="h-4 w-4" />
                 Go
               </button>
             </div>
@@ -523,9 +580,10 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
                     {...linkProps(link.href)}
                     className={tileClass}
                   >
-                    <Icon
+                    <SheetIcon
+                      icon={Icon}
+                      ready={mounted}
                       className="h-4 w-4 shrink-0 text-(--primary-text)"
-                      aria-hidden="true"
                     />
                     <span className="min-w-0 leading-5">{link.label}</span>
                   </Link>
@@ -540,13 +598,18 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
             className={`${tileClass} justify-between`}
           >
             <span className="flex items-center gap-2.5">
-              <LayoutGrid
+              <SheetIcon
+                icon={LayoutGrid}
+                ready={mounted}
                 className="h-4 w-4 shrink-0 text-(--primary-text)"
-                aria-hidden="true"
               />
               Browse tools by category
             </span>
-            <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <SheetIcon
+              icon={ArrowRight}
+              ready={mounted}
+              className="h-4 w-4 shrink-0"
+            />
           </button>
         </div>
       </Sheet>
@@ -561,6 +624,7 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
         open={activeSheet === "more"}
         onClose={onCloseSheet}
         panelRef={morePanelRef}
+        iconsReady={mounted}
       >
         <div className="grid gap-5">
           <div className="grid grid-cols-3 gap-2">
@@ -569,9 +633,10 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
               onClick={() => onOpenSheet("tools")}
               className={`${tileClass} flex-col justify-center gap-1.5 text-center`}
             >
-              <LayoutGrid
+              <SheetIcon
+                icon={LayoutGrid}
+                ready={mounted}
                 className="h-5 w-5 text-(--primary-text)"
-                aria-hidden="true"
               />
               Tools
             </button>
@@ -580,9 +645,10 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
               onClick={() => onOpenSheet("search")}
               className={`${tileClass} flex-col justify-center gap-1.5 text-center`}
             >
-              <Search
+              <SheetIcon
+                icon={Search}
+                ready={mounted}
                 className="h-5 w-5 text-(--primary-text)"
-                aria-hidden="true"
               />
               Search
             </button>
@@ -590,9 +656,10 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
               {...linkProps(SITE_ROUTES.home.href)}
               className={`${tileClass} flex-col justify-center gap-1.5 text-center`}
             >
-              <House
+              <SheetIcon
+                icon={House}
+                ready={mounted}
                 className="h-5 w-5 text-(--primary-text)"
-                aria-hidden="true"
               />
               Home
             </Link>
@@ -622,12 +689,17 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
                     }`}
                   >
                     <span className="flex items-center gap-2.5">
-                      <Icon className="h-4 w-4" aria-hidden="true" />
+                      <SheetIcon
+                        icon={Icon}
+                        ready={mounted}
+                        className="h-4 w-4"
+                      />
                       {item.label}
                     </span>
-                    <ChevronDown
+                    <SheetIcon
+                      icon={ChevronDown}
+                      ready={mounted}
                       className="h-4 w-4 shrink-0 transition group-open:rotate-180 motion-reduce:transition-none"
-                      aria-hidden="true"
                     />
                   </summary>
 
@@ -660,9 +732,10 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
                                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                                 }`}
                               >
-                                <OptionIcon
+                                <SheetIcon
+                                  icon={OptionIcon}
+                                  ready={mounted}
                                   className="h-4 w-4 shrink-0"
-                                  aria-hidden="true"
                                 />
                                 <span className="min-w-0">{option.label}</span>
                               </Link>
@@ -693,7 +766,7 @@ export default function MobileNav({ activeSheet, onOpenSheet, onCloseSheet }) {
 
           <SheetSection title="Theme">
             <ThemeModeSelector
-              value={themeReady ? themeMode : "system"}
+              value={mounted ? themeMode : "system"}
               onChange={setThemeMode}
             />
           </SheetSection>

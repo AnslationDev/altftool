@@ -11,15 +11,13 @@
  *   error — an operation failed and was not recovered; someone may need to
  *           act; the failure is visible to a user or caller.
  *   warn  — something unexpected or degraded happened but the operation
- *           still succeeded (retry worked, fallback used, limit nearing).
+ *           still succeeded (retry worked, fallback used).
  *   info  — a normal, significant lifecycle or business event worth seeing
  *           in production (startup, config loaded, order placed).
  *   debug — diagnostic state useful to developers, off in production.
  *   trace — extremely fine-grained flow (per-iteration, per-packet),
  *           enabled only while chasing a specific bug.
  */
-
-export const LEVELS = ["trace", "debug", "info", "warn", "error", "fatal"];
 
 /** Questions the decision tree asks, in order, with input keys. */
 export const QUESTIONS = [

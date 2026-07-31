@@ -1,30 +1,21 @@
 "use client";
 import { useState, useEffect, useMemo, useRef } from "react";
 import {
-  TrendingUp, DollarSign, Calendar, ListChecks, ArrowUpRight, BarChart2, Plus,
-  Trash2, RefreshCw, Layers, CheckCircle2, ChevronRight, AlertCircle, Info, PieChart
+  Calendar, ListChecks, ArrowUpRight, BarChart2, Plus,
+  Trash2, RefreshCw, CheckCircle2, Info, PieChart
 } from "lucide-react";
-import { DEFAULT_CHANNELS, PRESETS, DEFAULT_TASKS, fmt, fmtU } from "../data/data";
+import { DEFAULT_CHANNELS, PRESETS, DEFAULT_TASKS, fmt } from "../data/data";
 
 const ANIM_STYLES = `
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.15); }
-  50% { box-shadow: 0 0 25px 6px rgba(37, 99, 235, 0.25); }
-}
-@keyframes shimmer-bar {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(20, 184, 166, 0.15); }
+  50% { box-shadow: 0 0 25px 6px rgba(20, 184, 166, 0.25); }
 }
 @keyframes scale-up {
   from { transform: scale(0.96); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 .primary-glow { animation: pulse-glow 3.5s ease-in-out infinite; }
-.timeline-shimmer {
-  background: linear-gradient(90deg, var(--primary) 0%, var(--primary) 35%, rgba(255, 255, 255, 0.45) 50%, var(--primary) 65%, var(--primary) 100%);
-  background-size: 200% 100%;
-  animation: shimmer-bar 2.2s linear infinite;
-}
 .scale-enter { animation: scale-up 0.3s ease-out; }
 `;
 
@@ -107,8 +98,8 @@ export default function CampaignPlanner() {
       const r = ch.convRate === "" ? 1 : +ch.convRate;
 
       totalBudget += b;
-      const chClicks = b / (c || 0.1);
-      const chConvs = chClicks * ((r || 1) / 100);
+      const chClicks = c > 0 ? b / c : 0;
+      const chConvs = chClicks * (r / 100);
       totalClicks += chClicks;
       totalConvs += chConvs;
     });
@@ -136,13 +127,15 @@ export default function CampaignPlanner() {
   };
 
   const handleBudgetChange = (id, newBudget) => {
-    const nextChannels = channels.map(ch => ch.id === id ? { ...ch, budget: newBudget } : ch);
+    const clamped = newBudget === "" ? "" : Math.max(0, newBudget);
+    const nextChannels = channels.map(ch => ch.id === id ? { ...ch, budget: clamped } : ch);
     setChannels(nextChannels);
     saveState(nextChannels.map(c => ({ ...c, budget: c.budget === "" ? 0 : +c.budget })), tasks);
   };
 
   const handleMetricChange = (id, key, val) => {
-    const nextChannels = channels.map(ch => ch.id === id ? { ...ch, [key]: val } : ch);
+    const clamped = val === "" ? "" : Math.max(0, val);
+    const nextChannels = channels.map(ch => ch.id === id ? { ...ch, [key]: clamped } : ch);
     setChannels(nextChannels);
     saveState(nextChannels.map(c => {
       const fixed = { ...c };
@@ -175,7 +168,8 @@ export default function CampaignPlanner() {
     saveState(channels, nextTasks);
   };
 
-  const handleDeleteTask = (id) => {
+  const handleDeleteTask = (id, text) => {
+    if (!confirm(text ? `Delete task "${text}"?` : "Delete this task?")) return;
     const nextTasks = tasks.filter(t => t.id !== id);
     setTasks(nextTasks);
     saveState(channels, nextTasks);
@@ -190,15 +184,18 @@ export default function CampaignPlanner() {
       setActiveTimelineDay(12);
       localStorage.removeItem("cb_planner_channels");
       localStorage.removeItem("cb_planner_tasks");
+      localStorage.removeItem("cb_planner_target_cpa");
+      localStorage.removeItem("cb_planner_avg_ltv");
+      localStorage.removeItem("cb_planner_active_day");
     }
   };
 
   // Timeline helpers
   const phases = [
-    { key: "creative", name: "Creative Setup", range: [1, 10], color: "rgba(37, 99, 235, 1.0)" },
-    { key: "setup", name: "Tracking Setup", range: [11, 15], color: "rgba(37, 99, 235, 0.75)" },
-    { key: "launch", name: "Campaign Launch", range: [16, 25], color: "rgba(37, 99, 235, 0.50)" },
-    { key: "scale", name: "Scale & Optimize", range: [26, 30], color: "rgba(37, 99, 235, 0.30)" }
+    { key: "creative", name: "Creative Setup", range: [1, 10] },
+    { key: "setup", name: "Tracking Setup", range: [11, 15] },
+    { key: "launch", name: "Campaign Launch", range: [16, 25] },
+    { key: "scale", name: "Scale & Optimize", range: [26, 30] }
   ];
 
   const currentActivePhase = useMemo(() => {
@@ -226,7 +223,7 @@ export default function CampaignPlanner() {
       <div className="primary-glow rounded-xl border border-[var(--primary)]/40 bg-[var(--primary)]/5 p-5">
         <div className="grid grid-cols-1 sm:grid-cols-4 gap-3">
 
-          <div className="rounded-xl border border-[var(--primary)]/20 bg-[var(--card)]/75 p-4 flex flex-col justify-between min-h-[110px]">
+          <div aria-live="polite" className="rounded-xl border border-[var(--primary)]/20 bg-[var(--card)]/75 p-4 flex flex-col justify-between min-h-[110px]">
             <div>
               <span className="text-[9px] font-bold uppercase tracking-widest text-[var(--muted-foreground)]">Total Budget</span>
               <div className="text-3xl font-black font-mono text-[var(--primary)] mt-1">${fmt(animBudget)}</div>
@@ -234,7 +231,7 @@ export default function CampaignPlanner() {
             <p className="text-[10px] text-[var(--muted-foreground)] truncate mt-1">across all channels</p>
           </div>
 
-          <div className="rounded-xl border border-[var(--primary)]/20 bg-[var(--card)]/75 p-4 flex flex-col justify-between min-h-[110px]">
+          <div aria-live="polite" className="rounded-xl border border-[var(--primary)]/20 bg-[var(--card)]/75 p-4 flex flex-col justify-between min-h-[110px]">
             <div>
               <span className="text-[9px] font-bold uppercase tracking-widest text-[var(--primary)]">Projected Conversions</span>
               <div className="text-3xl font-black font-mono text-[var(--foreground)] mt-1">{fmt(animConvs)}</div>
@@ -245,7 +242,7 @@ export default function CampaignPlanner() {
             </div>
           </div>
 
-          <div className="rounded-xl border border-[var(--primary)]/20 bg-[var(--card)]/75 p-4 flex flex-col justify-between min-h-[110px]">
+          <div aria-live="polite" className="rounded-xl border border-[var(--primary)]/20 bg-[var(--card)]/75 p-4 flex flex-col justify-between min-h-[110px]">
             <div>
               <span className="text-[9px] font-bold uppercase tracking-widest text-[var(--muted-foreground)]">Projected ROAS</span>
               <div className="text-3xl font-black font-mono text-[var(--foreground)] mt-1">{fmt(stats.roas, 2)}x</div>
@@ -255,7 +252,7 @@ export default function CampaignPlanner() {
             </span>
           </div>
 
-          <div className="rounded-xl border border-[var(--primary)]/20 bg-[var(--card)]/75 p-4 flex flex-col justify-between min-h-[110px]">
+          <div aria-live="polite" className="rounded-xl border border-[var(--primary)]/20 bg-[var(--card)]/75 p-4 flex flex-col justify-between min-h-[110px]">
             <div>
               <span className="text-[9px] font-bold uppercase tracking-widest text-[var(--muted-foreground)]">Task Progress</span>
               <div className="text-3xl font-black font-mono text-[var(--foreground)] mt-1">{taskStats.completed} / {taskStats.total}</div>
@@ -386,23 +383,23 @@ export default function CampaignPlanner() {
                   const c = ch.cpc === "" ? 0.1 : +ch.cpc;
                   const r = ch.convRate === "" ? 1 : +ch.convRate;
 
-                  const chClicks = b / (c || 0.1);
-                  const chConvs = chClicks * ((r || 1) / 100);
+                  const chClicks = c > 0 ? b / c : 0;
+                  const chConvs = chClicks * (r / 100);
                   const chCpa = chConvs > 0 ? b / chConvs : 0;
 
                   return (
                     <tr key={ch.id} className="hover:bg-[var(--muted)]/20">
                       <td className="px-3 py-3 font-semibold text-[var(--foreground)] truncate max-w-[120px]">{ch.name}</td>
                       <td className="px-3 py-3 font-mono">
-                        <input type="number" step={0.05} value={ch.cpc} onChange={e => { const val = e.target.value; handleMetricChange(ch.id, "cpc", val === "" ? "" : +val); }}
+                        <input type="number" min={0} step={0.05} value={ch.cpc} onChange={e => { const val = e.target.value; handleMetricChange(ch.id, "cpc", val === "" ? "" : +val); }}
                           className="w-14 rounded-xl border border-[var(--input-border)] bg-[var(--input-bg)] px-1 py-0.5 text-xs text-[var(--foreground)] outline-none focus:border-[var(--primary)]" />
                       </td>
                       <td className="px-3 py-3 font-mono">
-                        <input type="number" step={0.1} value={ch.ctr} onChange={e => { const val = e.target.value; handleMetricChange(ch.id, "ctr", val === "" ? "" : +val); }}
+                        <input type="number" min={0} step={0.1} value={ch.ctr} onChange={e => { const val = e.target.value; handleMetricChange(ch.id, "ctr", val === "" ? "" : +val); }}
                           className="w-12 rounded-xl border border-[var(--input-border)] bg-[var(--input-bg)] px-1 py-0.5 text-xs text-[var(--foreground)] outline-none focus:border-[var(--primary)]" />
                       </td>
                       <td className="px-3 py-3 font-mono">
-                        <input type="number" step={0.1} value={ch.convRate} onChange={e => { const val = e.target.value; handleMetricChange(ch.id, "convRate", val === "" ? "" : +val); }}
+                        <input type="number" min={0} step={0.1} value={ch.convRate} onChange={e => { const val = e.target.value; handleMetricChange(ch.id, "convRate", val === "" ? "" : +val); }}
                           className="w-12 rounded-xl border border-[var(--input-border)] bg-[var(--input-bg)] px-1 py-0.5 text-xs text-[var(--foreground)] outline-none focus:border-[var(--primary)]" />
                       </td>
                       <td className={`px-3 py-3 text-right font-mono font-bold ${chCpa <= (targetCPA === "" ? 0 : +targetCPA) ? "text-[var(--primary)]" : "text-[var(--secondary-foreground)]"}`}>
@@ -548,6 +545,8 @@ export default function CampaignPlanner() {
                   <div key={t.id} className="rounded-xl border border-[var(--card-border)] bg-[var(--card)] p-3 flex items-center justify-between gap-3 hover:border-[var(--primary)]/20">
                     <div className="flex items-center gap-3 min-w-0">
                       <button onClick={() => handleToggleTask(t.id)}
+                        aria-label={t.completed ? "Mark task incomplete" : "Mark task complete"}
+                        aria-pressed={t.completed}
                         className={`flex h-5 w-5 items-center justify-center rounded-xl border shrink-0 ${
                           t.completed
                             ? "bg-[var(--primary)] border-[var(--primary)] text-[var(--primary-foreground)]"
@@ -563,7 +562,7 @@ export default function CampaignPlanner() {
                       <span className="px-2 py-0.5 rounded-xl text-[8px] font-black uppercase bg-[var(--primary)]/10 text-[var(--primary)]">
                         {t.phase}
                       </span>
-                      <button onClick={() => handleDeleteTask(t.id)} className="text-red-400 hover:text-red-300 p-1 cursor-default">
+                      <button onClick={() => handleDeleteTask(t.id, t.text)} aria-label="Delete task" className="text-red-400 hover:text-red-300 p-1 cursor-default">
                         <Trash2 className="h-3.5 w-3.5" />
                       </button>
                     </div>

@@ -58,7 +58,7 @@ export default function ReactionTime({ onComplete, beep }) {
 
   const avg = times.length ? Math.round(times.reduce((a,b)=>a+b,0)/times.length) : 0;
 
-  const bgClass = state === "go" ? "bg-green-500" : state === "waiting" ? "bg-[#c0392b]/80" : "bg-[var(--card)]";
+  const bgClass = state === "go" ? "bg-[var(--success)]" : state === "waiting" ? "bg-[var(--danger)]/80" : "bg-[var(--card)]";
   const label = {
     idle: "Click to Start",
     waiting: "Wait for green...",

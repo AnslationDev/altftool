@@ -6,7 +6,7 @@
 import { NextResponse } from "next/server";
 import { enforceRateLimit } from "@altftool/core/http";
 import { initAdmin }  from "@/lib/altflinking/firebaseAdmin";
-import { verifyToken, getUserRole, ok, err } from "@/lib/altflinking/authMiddleware";
+import { verifyToken, getUserRole, ok, err, isAdminRole, sanitizeOrder } from "@/lib/altflinking/authMiddleware";
 import { FieldValue } from "firebase-admin/firestore";
 
 // Valid status transitions by role
@@ -70,7 +70,14 @@ export async function PATCH(request, { params }) {
     if (!roleTransitions) {
       return err("Forbidden", 403);
     }
-    if (role !== "ADMIN" && role !== "SUPERADMIN") {
+    if (isAdminRole(role)) {
+      // Admin/superadmin can move between any current/target pair, but
+      // newStatus must still be a real, known order status — not an
+      // arbitrary client-supplied string.
+      if (!ALLOWED_TRANSITIONS.ADMIN["*"].includes(newStatus)) {
+        return err(`Invalid status: ${newStatus}`, 400);
+      }
+    } else {
       const allowed = roleTransitions[currentStatus] || roleTransitions["*"] || [];
       if (!allowed.includes(newStatus)) {
         return err(
@@ -93,8 +100,22 @@ export async function PATCH(request, { params }) {
       }),
     };
 
-    if (liveLinkUrl) update.liveLinkUrl = liveLinkUrl;
-    if (adminNotes !== undefined) update.adminNotes = adminNotes;
+    // Field-level authorization: liveLinkUrl is publish evidence supplied by
+    // the publisher (or corrected by an admin) — never by the buyer, whose
+    // only transition (PUBLISHED -> DISPUTED) must not let them rewrite it.
+    // adminNotes is admin-authored and restricted to admin roles only.
+    if (liveLinkUrl) {
+      if (role !== "PUBLISHER" && !isAdminRole(role)) {
+        return err("Only the publisher or an admin can set the live link URL", 403);
+      }
+      update.liveLinkUrl = liveLinkUrl;
+    }
+    if (adminNotes !== undefined) {
+      if (!isAdminRole(role)) {
+        return err("Only an admin can set admin notes", 403);
+      }
+      update.adminNotes = adminNotes;
+    }
 
     if (newStatus === "ADMIN_APPROVED") {
       update.adminApprovedBy = user.uid;
@@ -107,7 +128,7 @@ export async function PATCH(request, { params }) {
     }
 
     await docRef.update(update);
-    return ok({ id, ...order, ...update, status: newStatus });
+    return ok(sanitizeOrder({ id, ...order, ...update, status: newStatus }, role));
   } catch (e) {
     console.error("[PATCH /orders/:id]", e);
     return err("Failed to update order", 500);
@@ -136,11 +157,16 @@ export async function GET(request, { params }) {
 
     const order = { id: snap.id, ...snap.data() };
 
-    // RBAC: only involved parties or admin
-    if (role === "BUYER"     && order.buyerId     !== user.uid) return err("Forbidden", 403);
-    if (role === "PUBLISHER" && order.publisherId !== user.uid) return err("Forbidden", 403);
+    // RBAC: only involved parties or admin — unknown/missing role is denied, not skipped
+    if (role === "BUYER") {
+      if (order.buyerId !== user.uid) return err("Forbidden", 403);
+    } else if (role === "PUBLISHER") {
+      if (order.publisherId !== user.uid) return err("Forbidden", 403);
+    } else if (!isAdminRole(role)) {
+      return err("Forbidden", 403);
+    }
 
-    return ok(order);
+    return ok(sanitizeOrder(order, role));
   } catch (e) {
     console.error("[GET /orders/:id]", e);
     return err("Failed to fetch order", 500);

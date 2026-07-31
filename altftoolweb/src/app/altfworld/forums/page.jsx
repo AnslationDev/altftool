@@ -19,7 +19,6 @@ export default function ForumsPage() {
     description: "A frontend-only mock community forum catalog.",
     url: absoluteUrl("/altfworld/forums"),
     isPartOf: { "@id": `${getSiteUrl()}/#website` },
-    numberOfItems: 30000,
   };
 
   return (

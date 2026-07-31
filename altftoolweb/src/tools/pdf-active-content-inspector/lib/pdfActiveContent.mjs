@@ -78,6 +78,16 @@ export const PDF_ACTIVE_GROUPS = Object.freeze([
   },
 ]);
 
+if (PDF_ACTIVE_GROUPS.length !== PDF_ACTIVE_CONTENT_LIMITS.groups) {
+  // PDF_ACTIVE_CONTENT_LIMITS.groups exists to document and guard the
+  // expected cue-group count. Enforce it here so adding or removing a
+  // group without updating the constant fails loudly instead of drifting
+  // silently in a security-relevant inspector.
+  throw new Error(
+    `PDF_ACTIVE_CONTENT_LIMITS.groups (${PDF_ACTIVE_CONTENT_LIMITS.groups}) does not match PDF_ACTIVE_GROUPS.length (${PDF_ACTIVE_GROUPS.length}); update the constant when adding or removing a cue group.`,
+  );
+}
+
 const DELIMITERS = new Set([
   0x28, 0x29, 0x3c, 0x3e, 0x5b, 0x5d, 0x7b, 0x7d, 0x2f, 0x25,
 ]);
@@ -278,8 +288,19 @@ function lexInterestingNames(source) {
     }
     const streamEnd = findEndstream(source, dataStart);
     if (streamEnd < 0) {
+      // No bounded endstream marker exists anywhere in the remainder of the
+      // file, so the true extent of this stream body is unknown. Aborting
+      // the scan here would silently hide every real marker that follows
+      // (see security finding: a single unterminated "stream" token was a
+      // complete scanner bypass). Instead, resume lexing right after the
+      // stream keyword's end-of-line so the rest of the file — including
+      // any bytes that happen to fall inside this malformed stream — is
+      // still inspected. This can surface false-positive marker matches
+      // from binary stream bytes, which is preferable to a false negative
+      // in a security-triage tool.
       unterminatedStream = true;
-      break;
+      index = dataStart;
+      continue;
     }
     streamsSkipped += 1;
     index = streamEnd + "endstream".length;
@@ -374,7 +395,7 @@ export function inspectPdfActiveContentBytes(bytesInput, options = {}) {
       : []),
     ...(lexical.unterminatedStream
       ? [
-          "A recognizable stream start had no bounded endstream marker; scanning stopped early.",
+          "A recognizable stream start had no bounded endstream marker; the remaining bytes were scanned as regular syntax instead of being skipped as stream data, which may produce false-positive marker matches.",
         ]
       : []),
     ...(lexical.unclosedLiteralStrings

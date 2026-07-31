@@ -16,10 +16,15 @@ export default function BlurComparison() {
   const fileInputRef = useRef(null);
   const imgRef = useRef(null);
   const canvasRef = useRef(null);
+  const objectUrlRef = useRef(null);
 
   const handleFile = (file) => {
     if (!file || !file.type.startsWith("image/")) return;
+    if (objectUrlRef.current) {
+      URL.revokeObjectURL(objectUrlRef.current);
+    }
     const url = URL.createObjectURL(file);
+    objectUrlRef.current = url;
     setImageUrl(url);
     setBlurLevel(10);
     setSliderPosition(50);
@@ -32,8 +37,20 @@ export default function BlurComparison() {
   };
 
   const handleRemove = () => {
+    if (objectUrlRef.current) {
+      URL.revokeObjectURL(objectUrlRef.current);
+      objectUrlRef.current = null;
+    }
     setImageUrl(null);
   };
+
+  useEffect(() => {
+    return () => {
+      if (objectUrlRef.current) {
+        URL.revokeObjectURL(objectUrlRef.current);
+      }
+    };
+  }, []);
 
   const handleReset = () => {
     setBlurLevel(10);
@@ -48,13 +65,20 @@ export default function BlurComparison() {
     imgRef.current = e.target;
   };
 
+  // Note: intentionally does not gate on `isDragging` state. It is called
+  // directly from onMouseDown/onTouchStart so a plain click (no drag) also
+  // moves the slider; reading `isDragging` there would close over a stale
+  // value from before the same-tick setIsDragging(true) takes effect. During
+  // an actual drag it's only ever invoked while the window mousemove/touchmove
+  // listeners are attached (see effect below), which are themselves gated on
+  // isDragging, so no separate check is needed here.
   const handleMove = useCallback((clientX) => {
-    if (!isDragging || !containerRef.current) return;
+    if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
     const x = Math.max(0, Math.min(clientX - rect.left, rect.width));
     const percentage = (x / rect.width) * 100;
     setSliderPosition(percentage);
-  }, [isDragging]);
+  }, []);
 
   const handleMouseMove = useCallback((e) => handleMove(e.clientX), [handleMove]);
   const handleTouchMove = useCallback((e) => handleMove(e.touches[0].clientX), [handleMove]);
@@ -77,14 +101,24 @@ export default function BlurComparison() {
 
   const handleDownload = () => {
     if (!imgRef.current) return;
-    
+
     // Draw the blurred image onto a canvas for downloading
     const canvas = document.createElement("canvas");
     canvas.width = imageSize.width;
     canvas.height = imageSize.height;
     const ctx = canvas.getContext("2d");
-    
-    ctx.filter = `blur(${blurLevel}px)`;
+
+    // The on-screen preview applies blur(${blurLevel}px) in CSS pixels, but the
+    // preview is displayed at a scaled-down size (capped by max-w-full / 70vh)
+    // compared to the image's native resolution. A raw pixel radius that looks
+    // right on the small preview is far too weak once applied at native size, so
+    // scale the radius by how much larger the export is than what was visually
+    // verified on screen.
+    const renderedWidth = imgRef.current.getBoundingClientRect().width || imageSize.width;
+    const scaleFactor = renderedWidth > 0 ? imageSize.width / renderedWidth : 1;
+    const exportBlurLevel = blurLevel * scaleFactor;
+
+    ctx.filter = `blur(${exportBlurLevel}px)`;
     ctx.drawImage(imgRef.current, 0, 0, canvas.width, canvas.height);
     
     const link = document.createElement("a");
@@ -137,10 +171,19 @@ export default function BlurComparison() {
 
             {!imageUrl ? (
               <div
+                role="button"
+                tabIndex={0}
+                aria-label="Upload a photo: drop a file here or press Enter to browse"
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={handleDrop}
                 onClick={() => fileInputRef.current?.click()}
-                className="flex flex-1 min-h-[500px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[var(--border)] bg-[var(--muted)]/30 transition-colors hover:border-[var(--primary)] hover:bg-[var(--muted)]/50"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    fileInputRef.current?.click();
+                  }
+                }}
+                className="flex flex-1 min-h-[500px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[var(--border)] bg-[var(--muted)]/30 transition-colors hover:border-[var(--primary)] hover:bg-[var(--muted)]/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--primary)] focus-visible:outline-offset-2"
               >
                 <input
                   ref={fileInputRef}
@@ -220,7 +263,7 @@ export default function BlurComparison() {
 
                 <button
                   onClick={handleRemove}
-                  className="absolute top-4 right-4 p-2 rounded-full bg-red-500/90 text-white opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-600 shadow-sm z-20"
+                  className="absolute top-4 right-4 p-2 rounded-full bg-red-500/90 text-white opacity-0 group-hover:opacity-100 focus-visible:opacity-100 transition-opacity hover:bg-red-600 shadow-sm z-20"
                   title="Remove Image"
                 >
                   <X className="h-4 w-4" />
@@ -256,16 +299,17 @@ export default function BlurComparison() {
               <div className="space-y-4">
                 <div>
                   <div className="flex justify-between text-xs font-medium text-[var(--muted-foreground)] mb-2">
-                    <span>Intensity</span>
+                    <label htmlFor="bc-intensity">Intensity</label>
                     <span className="bg-[var(--primary)]/10 text-[var(--primary)] px-2 py-0.5 rounded-full">{blurLevel}px</span>
                   </div>
-                  <input 
-                    type="range" 
-                    min="1" 
-                    max="100" 
-                    value={blurLevel} 
-                    onChange={(e) => setBlurLevel(+e.target.value)} 
-                    className="w-full accent-[var(--primary)]" 
+                  <input
+                    id="bc-intensity"
+                    type="range"
+                    min="1"
+                    max="100"
+                    value={blurLevel}
+                    onChange={(e) => setBlurLevel(+e.target.value)}
+                    className="w-full accent-[var(--primary)]"
                   />
                 </div>
                 

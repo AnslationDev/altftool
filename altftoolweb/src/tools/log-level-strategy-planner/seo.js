@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "When should I log at warn instead of error?",
-      "Use warn when something unexpected happened but the operation still succeeded — a retry that worked, a fallback that kicked in, a limit being approached. Use error only when the operation failed and was not recovered, because error is the level teams alert on and page for.",
+      "Use warn when something unexpected happened but the operation still succeeded — a retry that worked, or a fallback that kicked in. Use error only when the operation failed and was not recovered, because error is the level teams alert on and page for.",
     ],
     [
       "What is the difference between debug and trace logging?",

@@ -331,16 +331,22 @@ export default function VideoPlayer({
       {showChrome && (
         <div className="windowswap-player-actions absolute bottom-6 right-5 z-20 flex items-center gap-3 text-white">
 
-          <button
-            onClick={() => {
-              onToggleMute();
-              setShowUnmuteHint(false);
-            }}
-            className="h-11 w-11 rounded-full border border-white/40 bg-white/10 backdrop-blur-md text-white flex items-center justify-center transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer"
-            title={isMuted ? "Unmute sound" : "Mute sound"}
-          >
-            {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
-          </button>
+          {/* Vimeo background embeds carry their own baked-in muted audio
+              track with no Player.js integration wired up, so there is no
+              real audio for this control to toggle — only show it for the
+              native <video> fallback path where mute genuinely works. */}
+          {!isActiveVideoVimeo && (
+            <button
+              onClick={() => {
+                onToggleMute();
+                setShowUnmuteHint(false);
+              }}
+              className="h-11 w-11 rounded-full border border-white/40 bg-white/10 backdrop-blur-md text-white flex items-center justify-center transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer"
+              title={isMuted ? "Unmute sound" : "Mute sound"}
+            >
+              {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+            </button>
+          )}
 
           <button
             onClick={handleFullscreenToggle}

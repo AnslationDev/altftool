@@ -93,6 +93,7 @@ export default function VisualMemory({ onComplete, beep }) {
               const isSel = selected.includes(i);
               return (
                 <button key={i} onClick={() => handleCellClick(i)}
+                  aria-label={`Cell ${i + 1} of ${gs * gs}${isSel ? ", selected" : ""}`}
                   className={`aspect-square rounded-lg border ${
                     revealed && isFlash ? "bg-[var(--primary)] border-[var(--primary)]"
                     : isSel ? "bg-[var(--primary)]/50 border-[var(--primary)]/50"

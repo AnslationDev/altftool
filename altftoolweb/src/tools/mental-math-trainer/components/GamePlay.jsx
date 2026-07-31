@@ -171,15 +171,29 @@ export default function GamePlay({ config, onFinish }) {
 
   const handleNext = () => {
     const nextIndex = currentIndex + 1;
-    const effectiveMax = gameMode === "survival" ? questions.length : Math.min(questionCount, questions.length);
 
-    if (lives <= 0 && gameMode === "survival") {
-      onFinish(answers);
+    if (gameMode === "survival") {
+      if (lives <= 0) {
+        onFinish(answers, bestStreak);
+        return;
+      }
+      if (nextIndex >= questions.length) {
+        const newQ = generateQuestion(questionType, difficulty);
+        setQuestions((prev) => [...prev, { ...newQ, type: questionType, difficulty }]);
+      }
+      setCurrentIndex(nextIndex);
+      setUserAnswer("");
+      setIsAnswered(false);
+      setShowFeedback(null);
+      setQuestionStartTime(Date.now());
+      if (inputRef.current) inputRef.current.focus();
       return;
     }
 
+    const effectiveMax = Math.min(questionCount, questions.length);
+
     if (nextIndex >= effectiveMax || (gameMode !== "endless" && nextIndex >= questionCount)) {
-      onFinish(answers);
+      onFinish(answers, bestStreak);
       return;
     }
 
@@ -318,7 +332,11 @@ export default function GamePlay({ config, onFinish }) {
         {/* Answer Input */}
         <div className="mx-auto max-w-md">
           <div className="flex gap-3">
+            <label htmlFor="mental-math-answer-input" className="sr-only">
+              Your answer
+            </label>
             <input
+              id="mental-math-answer-input"
               ref={inputRef}
               type="text"
               inputMode="decimal"

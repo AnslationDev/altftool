@@ -8,10 +8,15 @@ export default function MetricsDisplay({ inputMetrics, outputMetrics, mode }) {
     ? Math.round((outputMetrics.bytes / inputMetrics.bytes) * 100)
     : 0;
 
+  // Base the "reduced"/"increased" label on the actual measured ratio rather
+  // than assuming the mode, since a short Compress-mode input can easily end
+  // up larger after gzip's header/trailer overhead plus Base64 inflation.
+  const sizeIncreased = compressionRatio > 100;
+
   const cards = [
     { icon: <FileText size={16} />, label: 'Input Size', value: formatBytes(inputMetrics.bytes), helper: 'Original' },
     { icon: <Database size={16} />, label: 'Output Size', value: formatBytes(outputMetrics.bytes), helper: mode === 'compress' ? 'Compressed' : 'Decompressed' },
-    { icon: <Zap size={16} />, label: 'Compression', value: compressionRatio + '%', helper: mode === 'compress' ? 'Reduced' : 'Expanded' },
+    { icon: <Zap size={16} />, label: 'Compression', value: compressionRatio + '%', helper: sizeIncreased ? 'Increased' : 'Reduced' },
     { icon: <TrendingDown size={16} />, label: 'Savings', value: formatBytes(inputMetrics.bytes - outputMetrics.bytes), helper: 'Space saved' },
   ];
 
@@ -33,8 +38,10 @@ export default function MetricsDisplay({ inputMetrics, outputMetrics, mode }) {
 
 function formatBytes(bytes) {
   if (bytes === 0) return '0 B';
+  const sign = bytes < 0 ? '-' : '';
+  const absBytes = Math.abs(bytes);
   const k = 1024;
   const sizes = ['B', 'KB', 'MB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
-  return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+  const i = Math.floor(Math.log(absBytes) / Math.log(k));
+  return sign + Math.round((absBytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
 }

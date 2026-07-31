@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation'
 import React, { useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, Calendar, User, Tag, Share2, Facebook, Twitter, Linkedin, Clock, BookOpen } from 'lucide-react'
+import { ArrowLeft, User, Tag, Share2, Facebook, Twitter, Linkedin, Clock, BookOpen } from 'lucide-react'
 import blogData from "../../../(data)/db.json"
 
 function BlogDetailPage() {
@@ -34,13 +34,13 @@ function BlogDetailPage() {
 
     if (!blogDetail) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50">
+            <div className="min-h-screen flex items-center justify-center bg-(--dealspage-background)">
                 <div className="text-center">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-4">Blog Post Not Found</h2>
-                    <p className="text-gray-600 mb-6">The article you&apos;re looking for doesn&apos;t exist.</p>
+                    <h2 className="text-3xl font-bold text-(--foreground) mb-4">Blog Post Not Found</h2>
+                    <p className="text-(--muted-foreground) mb-6">The article you&apos;re looking for doesn&apos;t exist.</p>
                     <Link
                         href="/blogs"
-                        className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                        className="inline-flex items-center gap-2 px-6 py-3 bg-(--primary) text-(--primary-foreground) rounded-lg hover:bg-(--primary-hover) transition-colors"
                     >
                         <ArrowLeft className="w-4 h-4" />
                         Back to Blog
@@ -54,11 +54,11 @@ function BlogDetailPage() {
     const shareTitle = encodeURIComponent(blogDetail.heading)
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-(--dealspage-background)">
             {/* Header Navigation */}
 
             {/* Hero Section */}
-            <article className="bg-white">
+            <article className="bg-(--card)">
             <div className='py-2 px-4' >
                     <Link className='' href={"/exclusivedeals"} >Back</Link>
                     </div>
@@ -68,27 +68,23 @@ function BlogDetailPage() {
 
                     {/* Category Badge */}
                     <div className="mb-6">
-                        <span className="inline-block px-4 py-1.5 bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-full text-sm font-semibold shadow-md">
+                        <span className="inline-block px-4 py-1.5 bg-(--primary) text-(--primary-foreground) rounded-full text-sm font-semibold shadow-md">
                             {blogDetail.category}
                         </span>
                     </div>
 
                     {/* Title */}
-                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
+                    <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-(--foreground) mb-6 leading-tight">
                         {blogDetail.heading}
                     </h1>
 
                     {/* Meta Information */}
-                    <div className="flex flex-wrap items-center gap-6 text-gray-600 mb-8 pb-8 border-b">
+                    <div className="flex flex-wrap items-center gap-6 text-(--muted-foreground) mb-8 pb-8 border-b border-(--border)">
                         <div className="flex items-center gap-2">
-                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-bold">
+                            <div className="w-10 h-10 rounded-full bg-(--primary) flex items-center justify-center text-(--primary-foreground) font-bold">
                                 {blogDetail.author.charAt(0)}
                             </div>
-                            <span className="font-medium text-gray-900">{blogDetail.author}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                            <Calendar className="w-5 h-5" />
-                            <span>{blogDetail.date}</span>
+                            <span className="font-medium text-(--foreground)">{blogDetail.author}</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <Clock className="w-5 h-5" />
@@ -110,24 +106,24 @@ function BlogDetailPage() {
 
                     {/* Article Introduction */}
                     <div className="mb-12">
-                        <p className="text-xl text-gray-700 leading-relaxed font-light">
+                        <p className="text-xl text-(--foreground) leading-relaxed font-light">
                             {blogDetail.description}
                         </p>
                     </div>
 
                     {/* Table of Contents (if content exists) */}
                     {blogDetail.content && blogDetail.content.sections && (
-                        <div className="bg-blue-50 border-l-4 border-blue-500 rounded-lg p-6 mb-12">
+                        <div className="bg-(--primary-soft) border-l-4 border-(--primary) rounded-lg p-6 mb-12">
                             <div className="flex items-center gap-2 mb-4">
-                                <BookOpen className="w-5 h-5 text-blue-600" />
-                                <h2 className="text-lg font-bold text-gray-900">Table of Contents</h2>
+                                <BookOpen className="w-5 h-5 text-(--primary)" />
+                                <h2 className="text-lg font-bold text-(--foreground)">Table of Contents</h2>
                             </div>
                             <ul className="space-y-2">
                                 {blogDetail.content.sections.map((section, index) => (
                                     <li key={index}>
                                         <a
                                             href={`#section-${index}`}
-                                            className="text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+                                            className="text-(--primary) hover:text-(--primary-hover) hover:underline transition-colors"
                                         >
                                             {section.heading}
                                         </a>
@@ -142,7 +138,7 @@ function BlogDetailPage() {
                         <div className="prose prose-lg max-w-none mb-12">
                             {/* Introduction */}
                             {blogDetail.content.introduction && (
-                                <p className="text-gray-700 leading-relaxed mb-10 text-lg first-letter:text-5xl first-letter:font-bold first-letter:text-blue-600 first-letter:mr-1 first-letter:float-left">
+                                <p className="text-(--foreground) leading-relaxed mb-10 text-lg first-letter:text-5xl first-letter:font-bold first-letter:text-(--primary) first-letter:mr-1 first-letter:float-left">
                                     {blogDetail.content.introduction}
                                 </p>
                             )}
@@ -150,13 +146,13 @@ function BlogDetailPage() {
                             {/* Content Sections */}
                             {blogDetail.content.sections && blogDetail.content.sections.map((section, index) => (
                                 <div key={index} id={`section-${index}`} className="mb-10 scroll-mt-20">
-                                    <h2 className="text-3xl font-bold text-gray-900 mb-4 flex items-start gap-3">
-                                        <span className="inline-block w-8 h-8 rounded-full bg-blue-500 text-white text-sm flex items-center justify-center flex-shrink-0 mt-1">
+                                    <h2 className="text-3xl font-bold text-(--foreground) mb-4 flex items-start gap-3">
+                                        <span className="inline-block w-8 h-8 rounded-full bg-(--primary) text-(--primary-foreground) text-sm flex items-center justify-center flex-shrink-0 mt-1">
                                             {index + 1}
                                         </span>
                                         {section.heading}
                                     </h2>
-                                    <p className="text-gray-700 leading-relaxed text-lg mb-6">
+                                    <p className="text-(--foreground) leading-relaxed text-lg mb-6">
                                         {section.content}
                                     </p>
                                 </div>
@@ -164,12 +160,12 @@ function BlogDetailPage() {
 
                             {/* Conclusion */}
                             {blogDetail.content.conclusion && (
-                                <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl p-8 mt-12">
-                                    <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center gap-2">
+                                <div className="bg-(--primary-soft) rounded-2xl p-8 mt-12">
+                                    <h2 className="text-2xl font-bold text-(--foreground) mb-4 flex items-center gap-2">
                                         <span className="text-3xl">💡</span>
                                         Final Thoughts
                                     </h2>
-                                    <p className="text-gray-700 leading-relaxed text-lg">
+                                    <p className="text-(--foreground) leading-relaxed text-lg">
                                         {blogDetail.content.conclusion}
                                     </p>
                                 </div>
@@ -178,12 +174,12 @@ function BlogDetailPage() {
                     )}
 
                     {/* Tags */}
-                    <div className="flex flex-wrap items-center gap-3 mb-8 pb-8 border-b">
-                        <Tag className="w-5 h-5 text-gray-600" />
+                    <div className="flex flex-wrap items-center gap-3 mb-8 pb-8 border-b border-(--border)">
+                        <Tag className="w-5 h-5 text-(--muted-foreground)" />
                         {blogDetail.tags.map((tag, index) => (
                             <span
                                 key={index}
-                                className="px-4 py-2 bg-gradient-to-r from-gray-100 to-gray-200 text-gray-700 rounded-full text-sm font-medium hover:from-blue-100 hover:to-blue-200 hover:text-blue-700 transition-all cursor-pointer shadow-sm"
+                                className="px-4 py-2 bg-(--surface-soft) text-(--muted-foreground) rounded-full text-sm font-medium hover:bg-(--primary-soft) hover:text-(--primary) transition-all cursor-pointer shadow-sm"
                             >
                                 #{tag}
                             </span>
@@ -191,11 +187,11 @@ function BlogDetailPage() {
                     </div>
 
                     {/* Share Section */}
-                    {/* <div className="bg-gray-50 rounded-2xl p-6 mb-12">
+                    {/* <div className="bg-(--surface-soft) rounded-2xl p-6 mb-12">
                         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                             <div className="flex items-center gap-3">
-                                <Share2 className="w-6 h-6 text-gray-700" />
-                                <span className="text-gray-900 font-semibold text-lg">
+                                <Share2 className="w-6 h-6 text-(--muted-foreground)" />
+                                <span className="text-(--foreground) font-semibold text-lg">
                                     Share this article
                                 </span>
                             </div>
@@ -204,7 +200,7 @@ function BlogDetailPage() {
                                     href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="p-3 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors shadow-md hover:shadow-lg"
+                                    className="p-3 rounded-full bg-(--primary) text-(--primary-foreground) hover:bg-(--primary-hover) transition-colors shadow-md hover:shadow-lg"
                                     aria-label="Share on Facebook"
                                 >
                                     <Facebook className="w-5 h-5" />
@@ -213,7 +209,7 @@ function BlogDetailPage() {
                                     href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="p-3 rounded-full bg-sky-500 text-white hover:bg-sky-600 transition-colors shadow-md hover:shadow-lg"
+                                    className="p-3 rounded-full bg-(--secondary) text-(--secondary-foreground) hover:bg-(--primary-hover) transition-colors shadow-md hover:shadow-lg"
                                     aria-label="Share on Twitter"
                                 >
                                     <Twitter className="w-5 h-5" />
@@ -222,7 +218,7 @@ function BlogDetailPage() {
                                     href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="p-3 rounded-full bg-blue-700 text-white hover:bg-blue-800 transition-colors shadow-md hover:shadow-lg"
+                                    className="p-3 rounded-full bg-(--primary) text-(--primary-foreground) hover:bg-(--primary-hover) transition-colors shadow-md hover:shadow-lg"
                                     aria-label="Share on LinkedIn"
                                 >
                                     <Linkedin className="w-5 h-5" />
@@ -232,19 +228,19 @@ function BlogDetailPage() {
                     </div> */}
 
                     {/* Author Card */}
-                    <div className="bg-gradient-to-br from-blue-50 to-purple-50 rounded-2xl p-6 sm:p-8 mb-12 border border-blue-100">
+                    <div className="bg-(--primary-soft) rounded-2xl p-6 sm:p-8 mb-12 border border-(--border)">
                         <div className="flex items-start gap-4">
-                            <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-2xl font-bold flex-shrink-0 shadow-lg">
+                            <div className="w-20 h-20 rounded-full bg-(--primary) flex items-center justify-center text-(--primary-foreground) text-2xl font-bold flex-shrink-0 shadow-lg">
                                 {blogDetail.author.charAt(0)}
                             </div>
                             <div className="flex-1">
                                 <div className="mb-2">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-1">
+                                    <h3 className="text-xl font-bold text-(--foreground) mb-1">
                                         Written by {blogDetail.author}
                                     </h3>
-                                    <p className="text-sm text-gray-600">Content Creator & Industry Expert</p>
+                                    <p className="text-sm text-(--muted-foreground)">Content Creator & Industry Expert</p>
                                 </div>
-                                <p className="text-gray-700 leading-relaxed">
+                                <p className="text-(--foreground) leading-relaxed">
                                     Passionate about exploring trends, sharing insights, and helping readers make informed decisions.
                                     With years of experience in {blogDetail.category.toLowerCase()}, I strive to deliver valuable content
                                     that empowers and inspires.
@@ -260,13 +256,13 @@ function BlogDetailPage() {
 
             {/* Related Posts Section */}
             {relatedPosts.length > 0 && (
-                <section className="bg-white py-16 border-t">
+                <section className="bg-(--card) py-16 border-t border-(--border)">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="flex items-center justify-between mb-8">
-                            <h2 className="text-3xl font-bold text-gray-900">Related Articles</h2>
+                            <h2 className="text-3xl font-bold text-(--foreground)">Related Articles</h2>
                             <Link
                                 href="/blogs"
-                                className="text-blue-600 hover:text-blue-700 font-medium flex items-center gap-2 group"
+                                className="text-(--primary) hover:text-(--primary-hover) font-medium flex items-center gap-2 group"
                             >
                                 View All
                                 <ArrowLeft className="w-4 h-4 rotate-180 group-hover:translate-x-1 transition-transform" />
@@ -279,7 +275,7 @@ function BlogDetailPage() {
                                     href={post.link}
                                     className="group"
                                 >
-                                    <div className="bg-gray-50 rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col">
+                                    <div className="bg-(--surface-soft) rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 h-full flex flex-col">
                                         <div className="relative h-56 overflow-hidden">
                                             <Image
                                                 src={post.image}
@@ -289,21 +285,20 @@ function BlogDetailPage() {
                                                 className="object-cover group-hover:scale-110 transition-transform duration-500"
                                             />
                                             <div className="absolute top-4 left-4">
-                                                <span className="px-3 py-1 bg-white/90 backdrop-blur-sm text-gray-900 rounded-full text-xs font-semibold">
+                                                <span className="px-3 py-1 bg-(--card)/90 backdrop-blur-sm text-(--foreground) rounded-full text-xs font-semibold">
                                                     {post.category}
                                                 </span>
                                             </div>
                                         </div>
                                         <div className="p-6 flex-1 flex flex-col">
-                                            <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-blue-600 transition-colors line-clamp-2">
+                                            <h3 className="text-xl font-bold text-(--foreground) mb-3 group-hover:text-(--primary) transition-colors line-clamp-2">
                                                 {post.heading}
                                             </h3>
-                                            <p className="text-gray-600 text-sm line-clamp-2 mb-4 flex-1">
+                                            <p className="text-(--muted-foreground) text-sm line-clamp-2 mb-4 flex-1">
                                                 {post.description}
                                             </p>
-                                            <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t">
+                                            <div className="flex items-center justify-between text-sm text-(--muted-foreground) pt-4 border-t border-(--border)">
                                                 <span className="font-medium">{post.author}</span>
-                                                <span>{post.date}</span>
                                             </div>
                                         </div>
                                     </div>

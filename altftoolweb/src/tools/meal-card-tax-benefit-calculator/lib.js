@@ -30,15 +30,15 @@ export const HEALTH_AND_EDUCATION_CESS_PCT = 4;
 /** Surcharge slabs on income tax for individuals (Finance Act, Schedule I). */
 export const SURCHARGE_RATES_PCT = [0, 10, 15, 25, 37];
 
+/**
+ * Finance Act 2023: under the default regime of Section 115BAC (the "new"
+ * regime), the highest 37% surcharge slab (income above Rs 5 crore) is capped
+ * at 25%. The old regime still charges the full 37%.
+ */
+export const NEW_REGIME_MAX_SURCHARGE_PCT = 25;
+
 /** Marginal slab rates an individual can face across either regime. */
 export const SLAB_RATES_PCT = [5, 10, 15, 20, 25, 30];
-
-/**
- * Under the default regime of Section 115BAC (the "new" regime), the perquisite
- * exemption for employer-provided free food and beverage vouchers is not
- * available, so the entire card credit is taxable salary.
- */
-export const NEW_REGIME_EXEMPTION_AVAILABLE = false;
 
 export const REGIMES = [
   { id: "old", label: "Old regime (with exemptions)" },
@@ -50,10 +50,17 @@ const isFiniteNumber = (value) => typeof value === "number" && Number.isFinite(v
 /**
  * Effective marginal tax rate as a fraction, including surcharge and cess.
  * Example: 30% slab, no surcharge, 4% cess -> 0.30 * 1.00 * 1.04 = 0.312.
+ *
+ * The surcharge is regime-aware: under the new (115BAC) regime the highest
+ * 37% surcharge slab is capped at NEW_REGIME_MAX_SURCHARGE_PCT (25%) per the
+ * Finance Act 2023, so a caller passing surchargePct=37 with regime="new"
+ * gets the capped 25% actually charged, not the uncapped input value.
  */
-export function effectiveTaxRate({ slabRatePct, surchargePct = 0 }) {
+export function effectiveTaxRate({ slabRatePct, surchargePct = 0, regime = "old" }) {
+  const cappedSurchargePct =
+    regime === "new" ? Math.min(surchargePct, NEW_REGIME_MAX_SURCHARGE_PCT) : surchargePct;
   const slab = slabRatePct / 100;
-  const surcharge = 1 + surchargePct / 100;
+  const surcharge = 1 + cappedSurchargePct / 100;
   const cess = 1 + HEALTH_AND_EDUCATION_CESS_PCT / 100;
   return slab * surcharge * cess;
 }
@@ -118,16 +125,24 @@ export function computeMealCardBenefit({
     return { error: "Surcharge should be between 0% and 40%." };
   }
 
+  // A whole number of months, so the headline annual totals below always
+  // agree with buildMonthlyRows()'s one-row-per-month table: with a
+  // fractional value (e.g. 6.5, which the "months" input does not itself
+  // block) the two used to disagree because the totals here scaled by the
+  // exact fraction while the row loop below produced Math.ceil(eligibleMonths)
+  // full-credit rows.
+  const months = Math.round(eligibleMonths);
+
   const exemptionAllowed = regime === "old";
   const monthlyCeiling = monthlyExemptCeiling({ workingDaysPerMonth, mealsPerWorkingDay });
-  const annualCredit = monthlyCredit * eligibleMonths;
-  const annualCeiling = exemptionAllowed ? monthlyCeiling * eligibleMonths : 0;
+  const annualCredit = monthlyCredit * months;
+  const annualCeiling = exemptionAllowed ? monthlyCeiling * months : 0;
 
   const exemptAmount = Math.min(annualCredit, annualCeiling);
   const taxableAmount = annualCredit - exemptAmount;
   const unusedHeadroom = Math.max(0, annualCeiling - annualCredit);
 
-  const rate = effectiveTaxRate({ slabRatePct, surchargePct });
+  const rate = effectiveTaxRate({ slabRatePct, surchargePct, regime });
   const taxSaved = exemptAmount * rate;
   const taxOnExcess = taxableAmount * rate;
 
@@ -143,10 +158,9 @@ export function computeMealCardBenefit({
     unusedHeadroom,
     effectiveTaxRatePct: rate * 100,
     taxSaved,
-    taxSavedPerMonth: taxSaved / eligibleMonths,
+    taxSavedPerMonth: taxSaved / months,
     taxOnExcess,
-    netGainVersusCash: taxSaved,
-    eligibleMonths,
+    eligibleMonths: months,
   };
 }
 

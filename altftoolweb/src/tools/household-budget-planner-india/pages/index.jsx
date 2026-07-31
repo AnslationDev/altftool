@@ -32,22 +32,26 @@ const GHOST_BTN =
 
 const DEFAULT_INCOME = "95000";
 const DEFAULT_OTHER = "0";
+const DEFAULT_RENT_IS_EMI = false;
+// A realistic, on-track worked example under the tool's own 50/30/20, 30%
+// housing and 40% FOIR rules: needs ~46.3%, wants ~21.1%, savings ~21.1%,
+// housing ~21.1%, and nothing left unallocated is negative.
 const DEFAULT_LINES = {
-  rent: "24000",
-  otherEmi: "8000",
-  groceries: "11000",
-  utilities: "4500",
-  transport: "4000",
-  education: "6000",
-  healthcare: "1500",
-  insurance: "3000",
-  helpAndMaintenance: "2500",
-  diningOut: "4000",
-  shopping: "3500",
-  entertainment: "1200",
-  travel: "2500",
-  giftsAndFestivals: "1500",
-  savings: "14000",
+  rent: "20000",
+  otherEmi: "5000",
+  groceries: "8000",
+  utilities: "3000",
+  transport: "2500",
+  education: "2000",
+  healthcare: "1000",
+  insurance: "1500",
+  helpAndMaintenance: "1000",
+  diningOut: "6000",
+  shopping: "5000",
+  entertainment: "2000",
+  travel: "5000",
+  giftsAndFestivals: "2000",
+  savings: "16000",
   emergencyFund: "4000",
 };
 
@@ -75,6 +79,7 @@ export default function ToolHome() {
   const [income, setIncome] = useState(DEFAULT_INCOME);
   const [otherIncome, setOtherIncome] = useState(DEFAULT_OTHER);
   const [lines, setLines] = useState(DEFAULT_LINES);
+  const [rentIsEmi, setRentIsEmi] = useState(DEFAULT_RENT_IS_EMI);
   const [copied, setCopied] = useState(false);
 
   const result = useMemo(
@@ -83,8 +88,9 @@ export default function ToolHome() {
         netMonthlyIncome: income,
         otherMonthlyIncome: otherIncome,
         lines,
+        rentIsHomeLoanEmi: rentIsEmi,
       }),
-    [income, otherIncome, lines],
+    [income, otherIncome, lines, rentIsEmi],
   );
 
   const hasError = Boolean(result.error);
@@ -116,13 +122,22 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    const confirmed = window.confirm(
+      "Reset the budget? This replaces your income and all 16 expense fields with the sample plan — anything you entered will be lost.",
+    );
+    if (!confirmed) return;
     setIncome(DEFAULT_INCOME);
     setOtherIncome(DEFAULT_OTHER);
     setLines(DEFAULT_LINES);
+    setRentIsEmi(DEFAULT_RENT_IS_EMI);
     setCopied(false);
   };
 
   const clearAll = () => {
+    const confirmed = window.confirm(
+      "Clear all expenses? This zeroes out all 16 expense fields — anything you entered will be lost.",
+    );
+    if (!confirmed) return;
     setLines(emptyLines());
     setCopied(false);
   };
@@ -241,6 +256,24 @@ export default function ToolHome() {
                   value={lines[line.key] ?? "0"}
                   onChange={(event) => setLine(line.key, event.target.value)}
                 />
+                {line.housing ? (
+                  <label
+                    className="mt-2 flex min-h-11 cursor-pointer items-center gap-2 text-sm text-[var(--muted-foreground)]"
+                    htmlFor="hb-rent-is-emi"
+                  >
+                    <input
+                      id="hb-rent-is-emi"
+                      type="checkbox"
+                      className="h-5 w-5 rounded border-[var(--border)] accent-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none"
+                      checked={rentIsEmi}
+                      onChange={(event) => {
+                        setRentIsEmi(event.target.checked);
+                        setCopied(false);
+                      }}
+                    />
+                    This is a home loan EMI (counts toward FOIR)
+                  </label>
+                ) : null}
               </div>
             ))}
           </div>

@@ -11,9 +11,9 @@ export async function generateMetadata() {
     // and this one with none, so search has already picked the parent.
     // Canonicalising here follows that choice instead of fighting it; title and
     // description deliberately match the parent, as a duplicate's should.
-    title: "60-Second Meditation — Pixel Thoughts Alternative",
+    title: "60-Second Meditation to Let a Worry Go",
     description:
-      "Type the worry on your mind, watch it shrink into a star and vanish over 60 seconds. Free, no signup, and your words stay in the page — never stored, never sent to us.",
+      "Type the worry that's on your mind, watch it shrink into a star and disappear over 60 seconds. Free, no signup, nothing you type leaves the page.",
     path: "/pixel-thought/meditation",
     canonical: "/pixel-thought",
   });

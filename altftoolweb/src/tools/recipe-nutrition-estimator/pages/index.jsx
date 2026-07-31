@@ -51,6 +51,11 @@ const whole = (value) =>
     Number.isFinite(value) ? value : 0
   );
 
+// Servings must be a positive number for math/persistence purposes. `Number(value) || 1`
+// only replaces falsy values (0, NaN, "") and lets negative numbers through unchanged,
+// so validate positivity explicitly instead.
+const resolveServings = (value) => (Number(value) > 0 ? Number(value) : 1);
+
 function readRecipes() {
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -144,6 +149,7 @@ function RecipeRow({ row, onIngredient, onGrams, onRemove }) {
         <button
           type="button"
           onClick={() => onGrams(0)}
+          aria-label={`Reset grams for ${ingredient.name}`}
           className="rounded-full px-2 py-0.5 text-[11px] font-semibold text-[var(--muted-foreground)] underline"
         >
           reset
@@ -178,6 +184,14 @@ export default function ToolHome() {
     return INGREDIENTS.filter((item) => item.name.toLowerCase().includes(needle)).slice(0, 8);
   }, [query]);
 
+  // Screen-reader-only announcement for the search-as-you-type ingredient results,
+  // since the visible results list/"nothing matched" text below has no live region.
+  const matchAnnouncement = !query.trim()
+    ? ""
+    : matches.length > 0
+    ? `${matches.length} ingredient${matches.length === 1 ? "" : "s"} found`
+    : "Nothing matched";
+
   const totals = useMemo(() => {
     const base = { kcal: 0, protein: 0, carbs: 0, fat: 0, fiber: 0, grams: 0 };
     return rows.reduce((acc, row) => {
@@ -194,17 +208,21 @@ export default function ToolHome() {
     }, base);
   }, [rows]);
 
+  // Guarded serving count used everywhere servings feed into math, display or
+  // persistence, so a raw 0/negative/blank `servings` state never desyncs the
+  // "N servings" text from the per-serving figures it is meant to describe.
+  const servingsCount = useMemo(() => resolveServings(servings), [servings]);
+
   const perServing = useMemo(() => {
-    const count = Number(servings) > 0 ? Number(servings) : 1;
     return {
-      kcal: totals.kcal / count,
-      protein: totals.protein / count,
-      carbs: totals.carbs / count,
-      fat: totals.fat / count,
-      fiber: totals.fiber / count,
-      grams: totals.grams / count,
+      kcal: totals.kcal / servingsCount,
+      protein: totals.protein / servingsCount,
+      carbs: totals.carbs / servingsCount,
+      fat: totals.fat / servingsCount,
+      fiber: totals.fiber / servingsCount,
+      grams: totals.grams / servingsCount,
     };
-  }, [totals, servings]);
+  }, [totals, servingsCount]);
 
   const split = useMemo(() => {
     const proteinCal = totals.protein * 4;
@@ -262,7 +280,7 @@ export default function ToolHome() {
       `${key.padEnd(16)}${`${num(value, digits)} ${unit}`.padStart(12)}${dv(value, ref).padStart(10)}`;
     return [
       name || "Untitled recipe",
-      `${servings} serving${Number(servings) === 1 ? "" : "s"} · ${whole(totals.grams)} g total · ${whole(
+      `${servingsCount} serving${servingsCount === 1 ? "" : "s"} · ${whole(totals.grams)} g total · ${whole(
         perServing.grams
       )} g per serving`,
       "",
@@ -289,7 +307,7 @@ export default function ToolHome() {
       "Estimates for awareness, not medical advice.",
       "ALTFTool Recipe Nutrition Estimator",
     ].join("\n");
-  }, [name, servings, totals, perServing, split]);
+  }, [name, servingsCount, totals, perServing, split]);
 
   const copyLabel = async () => {
     const success = await safeCopyText(labelText);
@@ -302,7 +320,7 @@ export default function ToolHome() {
     const entry = {
       id: uid(),
       name: name.trim() || "Untitled recipe",
-      servings: Number(servings) || 1,
+      servings: servingsCount,
       rows,
       kcal: Math.round(perServing.kcal),
     };
@@ -316,6 +334,13 @@ export default function ToolHome() {
   };
 
   const resetRecipe = () => {
+    if (
+      !window.confirm(
+        "Reset the recipe? This will replace your ingredients with the demo recipe and cannot be undone."
+      )
+    ) {
+      return;
+    }
     setName(STARTER_RECIPE.name);
     setServings(STARTER_RECIPE.servings);
     setRows(STARTER_RECIPE.rows);
@@ -384,6 +409,9 @@ export default function ToolHome() {
                   />
                 </div>
               </label>
+              <span aria-live="polite" role="status" className="sr-only">
+                {matchAnnouncement}
+              </span>
               {matches.length > 0 && (
                 <div className="mt-2 grid gap-1.5 rounded-md border border-[var(--border)] bg-[var(--background)] p-2">
                   {matches.map((item) => (
@@ -411,7 +439,7 @@ export default function ToolHome() {
             <div className="mt-5">
               <div className="flex items-center justify-between gap-3">
                 <h2 className="text-sm font-semibold uppercase text-[var(--muted-foreground)]">
-                  Ingredients ({rows.length})
+                  Ingredients ({contributors.length})
                 </h2>
                 <span className="text-xs text-[var(--muted-foreground)]">
                   {whole(totals.grams)} g total
@@ -475,7 +503,16 @@ export default function ToolHome() {
                       </button>
                       <button
                         type="button"
-                        onClick={() => setSaved((prev) => prev.filter((item) => item.id !== entry.id))}
+                        onClick={() => {
+                          if (
+                            !window.confirm(
+                              `Delete "${entry.name}" from your saved recipes? This cannot be undone.`
+                            )
+                          ) {
+                            return;
+                          }
+                          setSaved((prev) => prev.filter((item) => item.id !== entry.id));
+                        }}
                         aria-label={`Delete ${entry.name}`}
                         className="flex h-8 w-8 items-center justify-center rounded-md border border-[var(--border)] text-[var(--muted-foreground)] transition hover:border-[var(--anslation-ds-danger)] hover:text-[var(--anslation-ds-danger)]"
                       >

@@ -17,7 +17,6 @@ const carrerbookConfig = {
   color: "#10b981",
   modules: {
       navbar: { label: "Navbar", icon: LayoutPanelTop },
-      service:{label:"Service", icon: LayoutPanelTop },
     footer: { label: "Footer", icon: PanelBottom },
     home: { label: "Home", icon: Home },
     "contact-us": { label: "Contact Us", icon: Contact },

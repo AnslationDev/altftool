@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "What are MICRO and MODIFIER in CalVer?",
-      "MICRO is a plain counter for releases within the same date period — the third fix released in July 2026 under YYYY.MM.MICRO is 2026.7.2 — and it conventionally resets to 0 when the date segment rolls over. MODIFIER is an optional trailing tag such as beta1 or rc2 for pre-releases.",
+      "MICRO is a plain counter for releases within the same date period — the third fix released in July 2026 under YYYY.MM.MICRO is 2026.7.3 — and it conventionally resets to 0 when the date segment rolls over. MODIFIER is an optional trailing tag such as beta1 or rc2 for pre-releases.",
     ],
     [
       "Which projects use calendar versioning?",

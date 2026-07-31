@@ -81,7 +81,7 @@ export const SEGMENT_TYPES = {
 /** TCF policy version 4 and above is TCF v2.2 (in force since 2023). */
 export const TCF_22_POLICY_VERSION = 4;
 
-/** Minimum base64 characters for a nonce-grade 128-bit value — unused here, kept for clarity. */
+/** Multiplier to convert TCF's 36-bit deciseconds-since-epoch timestamps to milliseconds. Used by decodeTcfTimestamp() below, which decodes every Created/LastUpdated field shown in the UI. */
 const DECISECONDS_TO_MS = 100;
 
 /* ------------------------------------------------------------------ */
@@ -387,10 +387,6 @@ function buildWarnings(core, extraSegments) {
     push("warn", "Allowed Vendors segment present", "Segment type 2 (Allowed Vendors) was removed in TCF v2.2 and is ignored by conforming vendors.");
   }
 
-  if (!/^[A-Z]{2}$/.test(core.consentLanguage)) {
-    push("error", "Consent language is not two letters", "ConsentLanguage must be an uppercase ISO 639-1 pair; this string carries something else.");
-  }
-
   return warnings;
 }
 
@@ -443,28 +439,14 @@ export function decodeTcString(input) {
   const purposeOneTreatment = reader.bool();
   const publisherCountryCode = reader.letters(2);
 
-  if (
-    createdRaw === null ||
-    lastUpdatedRaw === null ||
-    cmpId === null ||
-    cmpVersion === null ||
-    consentScreen === null ||
-    vendorListVersion === null ||
-    tcfPolicyVersion === null ||
-    isServiceSpecific === null ||
-    useNonStandardTexts === null ||
-    specialFeatureBits === null ||
-    purposesConsentBits === null ||
-    purposesLiBits === null ||
-    purposeOneTreatment === null
-  ) {
-    return { error: "Core segment is truncated inside the fixed header." };
-  }
+  // createdRaw..purposeOneTreatment above are all read with int()/bool()/raw()
+  // at fixed offsets that end at bit 213 at the latest. The `bits.length <
+  // CORE_VARIABLE_START + 17` guard above already guarantees at least 230
+  // bits are available, so none of those reads can fail for lack of length —
+  // only letters() can still fail, when a 6-bit value decodes above 25 (not
+  // a letter), which is why that's the only truncation-shaped check left.
   if (consentLanguage === null || publisherCountryCode === null) {
     return { error: "ConsentLanguage or PublisherCC holds a 6-bit value above 25, which is not a letter." };
-  }
-  if (reader.position() !== CORE_VARIABLE_START) {
-    return { error: `Internal offset mismatch: header ended at bit ${reader.position()}, expected ${CORE_VARIABLE_START}.` };
   }
 
   const vendorConsent = readVendorSection(reader, "Vendor consent");

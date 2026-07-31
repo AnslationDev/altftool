@@ -22,16 +22,28 @@ export const BANNER_PRESETS = [
 ];
 
 /**
+ * Reddit renders the banner at the mod-configured height on desktop and
+ * laptop widths (the header box is literally that many px tall), but the
+ * mobile header has its own compact, largely fixed height budget — it does
+ * not grow just because a mod picked a tall desktop banner. 128 px (the
+ * "Slim banner" preset) is that budget: a banner already that short or
+ * shorter shows full height on mobile too, but anything taller gets capped
+ * and cropped down to it.
+ */
+export const MOBILE_HEADER_MAX_H = 128;
+
+/**
  * Header boxes the same banner has to survive. Widths are ordinary device
- * widths in CSS pixels; the height is the banner height you set, reduced on
- * narrow screens where Reddit shortens the header.
+ * widths in CSS pixels. Desktop and laptop use the banner height you set,
+ * unchanged; mobile is capped at MOBILE_HEADER_MAX_H because Reddit shortens
+ * the header on narrow screens independently of the desktop height setting.
  */
 export function buildViewports(bannerHeight) {
   const h = Number.isFinite(bannerHeight) && bannerHeight > 0 ? bannerHeight : 384;
   return [
     { id: "desktop", label: "Wide desktop", w: 1920, h },
     { id: "laptop", label: "Laptop", w: 1024, h },
-    { id: "mobile", label: "Phone", w: 412, h: Math.round(h / 2) },
+    { id: "mobile", label: "Phone", w: 412, h: Math.min(h, MOBILE_HEADER_MAX_H) },
   ];
 }
 

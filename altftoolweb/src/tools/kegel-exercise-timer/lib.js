@@ -202,7 +202,7 @@ export function buildKegelPlan({
   const dailySeconds = totalSeconds * wholeSessions;
 
   const meetsGuideline =
-    wholeReps >= GUIDELINE_REPS_PER_SESSION &&
+    repsPerSession >= GUIDELINE_REPS_PER_SESSION &&
     dailyContractions >= GUIDELINE_DAILY_CONTRACTIONS;
 
   const guidelineGap = Math.max(0, GUIDELINE_DAILY_CONTRACTIONS - dailyContractions);

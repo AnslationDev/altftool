@@ -139,6 +139,7 @@ export default function HomePage() {
               );
             })}
           </div>
+          <p className="hs-hero-stats-note">Illustrative example figures, not verified totals.</p>
         </div>
       </section>
 

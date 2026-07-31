@@ -364,7 +364,7 @@ export function assessGift({
   const taxable = exempt ? 0 : computation.taxable;
 
   const cashBreach = Boolean(receivedInCash) && grossValue >= CASH_RECEIPT_LIMIT;
-  const clubbingApplies = relationshipId === "spouse" || relationshipId === "son";
+  const clubbingApplies = relationshipId === "spouse" || relationshipId === "father" || relationshipId === "mother";
 
   let verdict;
   if (exempt) {

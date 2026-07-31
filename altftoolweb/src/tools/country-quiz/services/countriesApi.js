@@ -67,11 +67,8 @@ function buildBorderLookup(countries) {
   return map;
 }
 
-let borderLookup = null;
-
 export function getBorderLookup(countries) {
-  if (!borderLookup) borderLookup = buildBorderLookup(countries);
-  return borderLookup;
+  return buildBorderLookup(countries);
 }
 
 export async function fetchCountries() {

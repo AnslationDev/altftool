@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Edit3,
   Eye,
@@ -336,6 +336,9 @@ function ArticleModal({ mode, article, articles, onClose }) {
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [slugTouched, setSlugTouched] = useState(mode === "edit");
+  // Paths removed from the form but not yet confirmed — actual Storage
+  // cleanup is deferred until save() succeeds, so Cancel never destroys data.
+  const pendingImageDeletes = useRef([]);
 
   function setField(key, value) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -370,14 +373,12 @@ function ArticleModal({ mode, article, articles, onClose }) {
     }
   }
 
-  async function removeImage() {
-    const path = form.imagePath;
+  function removeImage() {
+    // Only clear the form locally — the Storage blob is deleted in save()
+    // once the article update/create actually succeeds, so clicking Cancel
+    // after this never leaves Firestore pointing at a deleted image.
+    if (form.imagePath) pendingImageDeletes.current.push(form.imagePath);
     setForm((prev) => ({ ...prev, image: "", imagePath: "" }));
-    try {
-      await deleteBlogImage(path);
-    } catch {
-      emitAlert({ type: "warning", message: "Image removed from form, but Storage cleanup failed." });
-    }
   }
 
   async function save() {
@@ -395,6 +396,17 @@ function ArticleModal({ mode, article, articles, onClose }) {
       } else {
         await createArticle(form);
         emitAlert({ type: "success", message: "Article added." });
+      }
+      if (pendingImageDeletes.current.length) {
+        const paths = pendingImageDeletes.current;
+        pendingImageDeletes.current = [];
+        await Promise.all(
+          paths.map((path) =>
+            deleteBlogImage(path).catch(() => {
+              emitAlert({ type: "warning", message: "Article saved, but old cover cleanup failed." });
+            }),
+          ),
+        );
       }
       onClose();
     } catch (error) {

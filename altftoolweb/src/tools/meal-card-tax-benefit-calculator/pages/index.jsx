@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Utensils } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import {
   EXEMPT_PER_MEAL_INR,
@@ -56,7 +57,7 @@ export default function ToolHome() {
   const [surcharge, setSurcharge] = useState(DEFAULTS.surcharge);
   const [regime, setRegime] = useState(DEFAULTS.regime);
   const [showRows, setShowRows] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -88,18 +89,18 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, regime, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "meal card tax benefit result" });
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset all inputs back to the defaults?")
+    ) {
+      return;
+    }
     setMonthlyCredit(DEFAULTS.monthlyCredit);
     setWorkingDays(DEFAULTS.workingDays);
     setMeals(DEFAULTS.meals);
@@ -107,7 +108,7 @@ export default function ToolHome() {
     setSlab(DEFAULTS.slab);
     setSurcharge(DEFAULTS.surcharge);
     setRegime(DEFAULTS.regime);
-    setCopied(false);
+    resetCopyState();
   };
 
   const rows = [
@@ -268,7 +269,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Income tax saved in the year
             </p>
@@ -285,21 +286,24 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy meal card tax benefit result"
-              className={GHOST_BTN}
+              aria-label={isCopied("result") ? "Copied meal card tax benefit result to clipboard" : "Copy meal card tax benefit result"}
+              className={PRIMARY_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

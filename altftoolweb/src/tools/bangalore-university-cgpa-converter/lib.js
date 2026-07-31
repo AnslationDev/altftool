@@ -62,6 +62,12 @@ export function classForPercentage(percentage) {
 /**
  * Convert a Bangalore University CGPA or SGPA into an equivalent percentage of marks.
  *
+ * There is deliberately no "marks out of N" figure here: Bangalore University's CBCS
+ * semester mark totals vary by programme and scheme (papers x 100 each, commonly
+ * 500-700 depending on the course), so any single denominator would not match what
+ * actually appears on a given student's marks card and could be copied verbatim onto
+ * a form as if it were a real total.
+ *
  * @param {object} input
  * @param {number|string} input.cgpa Grade point average on the 10 point scale.
  */
@@ -80,7 +86,6 @@ export function buCgpaToPercentage({ cgpa } = {}) {
   return {
     cgpa: round2(value),
     percentage,
-    marksOutOf600: Math.round(percentage * 6),
     degreeClass: classForPercentage(percentage),
     passing: value >= BU_MIN_PASS_POINT,
     clamped: raw < 0,

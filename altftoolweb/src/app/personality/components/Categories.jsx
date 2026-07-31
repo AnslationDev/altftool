@@ -1,46 +1,39 @@
 "use client";
 
 import Image from "next/image";
-import { Users, ArrowRight, BriefcaseBusiness } from "lucide-react";
+import { ArrowRight, BriefcaseBusiness } from "lucide-react";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import PersonalityLoader from "./PersonalityLoader";
 
 const tests = [
   {
     title: "Career Personality Test",
     desc: "Discover careers aligned with your strengths and working style.",
-    people: "1.2k People Took This Test",
     imgSrc: "/personality/categories/Career.png",
   },
   {
     title: "Emotional Intelligence",
     desc: "Discover careers aligned with your strengths and working style.",
-    people: "1.2k People Took This Test",
     imgSrc: "/personality/categories/emotional.png",
   },
   {
     title: "Leadership Style",
     desc: "Discover your leadership approach and how you inspire others.",
-    people: "1.2k People Took This Test",
     imgSrc: "/personality/categories/lead.png",
   },
   {
     title: "Introvert vs Extrovert",
     desc: "Understand your energy style and how you interact with the world.",
-    people: "1.2k People Took This Test",
     imgSrc: "/personality/categories/extrovert.png",
   },
   {
     title: "Relationship Personality",
     desc: "Explore your relationship patterns and build stronger connections.",
-    people: "1.2k People Took This Test",
     imgSrc: "/personality/categories/relationship.png",
   },
   {
     title: "Communication Style",
     desc: "Explore your relationship patterns and build stronger connections.",
-    people: "1.2k People Took This Test",
     imgSrc: "/personality/categories/communication.png",
   },
 ];
@@ -48,21 +41,13 @@ const tests = [
 export default function Categories() {
   const [showAll, setShowAll] = useState(false);
   const visible = showAll ? tests : tests.slice(0, 6);
-  const [loading, setLoading] = useState(false);
   const [mobileIndex, setMobileIndex] = useState(0);
   const router = useRouter();
 
   const scrollRef = useRef(null);
   const handleCardClick = () => {
-    setLoading(true);
-
-    setTimeout(() => {
-      router.push("/personality/question/1");
-    }, 3500);
+    router.push("/personality/question/1");
   };
-  if (loading) {
-    return <PersonalityLoader />;
-  }
   return (
     <section id="personality-tests" className="section">
       <div className="max-w-full mx-auto px-6">
@@ -72,8 +57,9 @@ export default function Categories() {
             Explore Personality Tests Designed For You
           </h2>
           <p className="section-subtitle max-w-[548px] mx-auto">
-            Discover scientifically inspired assessments for career growth,
-            relationships, self-awareness, and communication.
+            One core personality assessment, explored through the lens of
+            career growth, relationships, self-awareness, and communication —
+            pick whichever angle interests you most to begin.
           </p>
         </div>
 
@@ -108,6 +94,7 @@ export default function Categories() {
             {tests.map((test, i) => (
               <div
                 key={i}
+                onClick={handleCardClick}
                 className="
           rounded-[28px]
           overflow-hidden
@@ -150,20 +137,18 @@ export default function Categories() {
                     {test.title}
                   </h3>
 
-                  <div className="flex items-center gap-1.5 mb-3">
-                    <Users className="text-(--primary) fill-(--primary) h-5 w-5" />
-
-                    <span className="font-semibold text-[12px] text-(--muted-foreground)">
-                      {test.people}
-                    </span>
-                  </div>
-
-                  <div className="mt-auto flex items-end justify-between gap-4">
+                  <div className="mt-3 flex items-end justify-between gap-4">
                     <p className="leading-[23px] max-w-xl text-(--muted-foreground)">
                       {test.desc}
                     </p>
 
-                    <button onClick={handleCardClick} className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 bg-(--primary) shadow-[0_10px_20px_rgba(37,99,235,0.18)] hover:scale-105 transition-all">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleCardClick();
+                      }}
+                      className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 bg-(--primary) shadow-[0_10px_20px_rgba(37,99,235,0.18)] hover:scale-105 transition-all"
+                    >
                       <ArrowRight className="text-white h-5 w-5" />
                     </button>
                   </div>
@@ -196,6 +181,7 @@ export default function Categories() {
         {visible.map((test, i) => (
           <div
             key={i}
+            onClick={handleCardClick}
             className="rounded-[28px] overflow-hidden flex flex-col group transition-all border border-(--border) bg-(--card) shadow-[0px_8px_30px_0px_rgba(0,0,0,0.04)] hover:shadow-[0px_18px_40px_0px_rgba(0,0,0,0.08)] hover:-translate-y-1 cursor-pointer"
           >
             {/* Image */}
@@ -231,20 +217,20 @@ export default function Categories() {
 
             {/* Content */}
             <div className="px-5 md:px-5 lg:px-6 pt-5 pb-6 flex-1 flex flex-col">
-              <h3 className="font-bold text-[17px] md:text-[17px] lg:text-[20px] leading-[30px] mb-1">
+              <h3 className="font-bold text-[17px] md:text-[17px] lg:text-[20px] leading-[30px] mb-1 mt-3">
                 {test.title}
               </h3>
-              <div className="flex items-center gap-1.5 py-3">
-                <Users className="text-(--primary) fill-(--primary) h-5 w-5" />
-                <span className="font-semibold text-[12px] text-(--muted-foreground)">
-                  {test.people}
-                </span>
-              </div>
               <div className="mt-auto flex items-end justify-between gap-4">
                 <p className="leading-[23px] max-w-xl text-(--muted-foreground)">
                   {test.desc}
                 </p>
-                <button onClick={handleCardClick} className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 bg-(--primary) shadow-[0_10px_20px_rgba(37,99,235,0.18)] hover:scale-105 transition-all">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleCardClick();
+                  }}
+                  className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 bg-(--primary) shadow-[0_10px_20px_rgba(37,99,235,0.18)] hover:scale-105 transition-all"
+                >
                   <ArrowRight className="text-white h-5 w-5" />
                 </button>
               </div>

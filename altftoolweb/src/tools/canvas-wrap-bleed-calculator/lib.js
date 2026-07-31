@@ -43,6 +43,9 @@ export const MIN_RECOMMENDED_DPI = 150;
 /** Resolution canvas labs normally ask for. */
 export const TARGET_DPI = 300;
 
+/** True for a value that was never actually typed — must be checked before Number(), since Number("") is 0. */
+const isBlank = (value) => value === "" || value === null || typeof value === "undefined";
+
 export function toMillimetres(value, unit) {
   const v = Number(value);
   if (!Number.isFinite(v)) return null;
@@ -85,6 +88,10 @@ export function computeCanvasWrap(input) {
   } = input || {};
 
   if (!UNITS.includes(unit)) return { error: "Choose a valid unit." };
+
+  if (isBlank(barDepth) || isBlank(backTuck) || isBlank(safeMargin)) {
+    return { error: "Enter every measurement as a number." };
+  }
 
   const values = {
     faceW: toMillimetres(faceWidth, unit),

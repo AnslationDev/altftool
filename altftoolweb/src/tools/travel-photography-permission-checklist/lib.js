@@ -339,10 +339,16 @@ export function checkDroneFlight({
         `Height ${height} m exceeds the ${EASA.maxHeightM} m Open-category ceiling above the closest point of the surface.`,
       );
     }
-    const requiredToPeople = lowSpeedMode ? EASA.a2LowSpeedDistanceM : EASA.a2MinDistanceToPeopleM;
-    if (toPeople < requiredToPeople) {
-      breaches.push(
-        `Only ${toPeople} m from uninvolved people; subcategory A2 requires ${EASA.a2MinDistanceToPeopleM} m, or ${EASA.a2LowSpeedDistanceM} m with low-speed mode active.`,
+    if (mass > EASA.c0MaxMassG) {
+      const requiredToPeople = lowSpeedMode ? EASA.a2LowSpeedDistanceM : EASA.a2MinDistanceToPeopleM;
+      if (toPeople < requiredToPeople) {
+        breaches.push(
+          `Only ${toPeople} m from uninvolved people; subcategory A2 requires ${EASA.a2MinDistanceToPeopleM} m, or ${EASA.a2LowSpeedDistanceM} m with low-speed mode active.`,
+        );
+      }
+    } else {
+      notes.push(
+        `At ${mass} g the drone is under the class C0 threshold (${EASA.c0MaxMassG} g), so it qualifies for subcategory A1 and has no minimum horizontal distance from uninvolved people — it just must not be flown over assemblies of people.`,
       );
     }
     if (toBuiltUp < EASA.a3MinDistanceToBuiltUpM) {

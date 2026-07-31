@@ -421,6 +421,14 @@ export default function ToolHome() {
                 salted meal or an electrolyte drink rather than plain water alone.
               </p>
             ) : null}
+            {plan.clamped ? (
+              <p className="rounded-md bg-[var(--warning-soft)] px-3 py-2 font-medium text-[var(--warning-text)]">
+                Your inputs imply a sweat rate outside what is physiologically plausible for a single
+                class, so it was capped to a realistic range before building this plan. Double-check
+                your {plan.sweatSource === "measured" ? "before/after weights and fluid drunk" : "room, duration and body-weight"}{" "}
+                entries.
+              </p>
+            ) : null}
             {plan.sweatSource === "estimated" ? (
               <p className="text-xs leading-5 text-[var(--muted-foreground)]">
                 Sweat rate is modelled, not measured. Weigh yourself before and after one class and

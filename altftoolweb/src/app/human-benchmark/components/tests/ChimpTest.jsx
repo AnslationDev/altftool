@@ -21,8 +21,9 @@ import { useState, useCallback } from "react";
 const COLS = 4, ROWS = 8, TOTAL = COLS * ROWS;
 
 function pickRandom(n, max) {
+  const count = Math.min(n, max);
   const a = [];
-  while (a.length < n) { const r = Math.floor(Math.random() * max); if (!a.includes(r)) a.push(r); }
+  while (a.length < count) { const r = Math.floor(Math.random() * max); if (!a.includes(r)) a.push(r); }
   return a;
 }
 
@@ -59,7 +60,7 @@ export default function ChimpTest({ onComplete, beep }) {
     setNextExpected(ne);
     if (ne > level) {
       setBestN(level);
-      const nl = level + 1;
+      const nl = Math.min(level + 1, TOTAL);
       setLevel(nl);
       setTimeout(() => startLevel(nl), 800);
     }
@@ -92,6 +93,7 @@ export default function ChimpTest({ onComplete, beep }) {
               const clicked = clickedCells.has(i);
               return (
                 <button key={i} onClick={() => handleCellClick(i)}
+                  aria-label={`Cell ${i + 1} of ${TOTAL}${clicked ? ", clicked" : ""}`}
                   className={`aspect-square rounded-lg border flex items-center justify-center font-black text-sm ${
                     clicked ? "bg-[var(--primary)]/30 border-[var(--primary)]/30 text-[var(--primary)]"
                     : num && state === "show" ? "bg-[var(--primary)] border-[var(--primary)] text-[var(--primary-foreground)]"
@@ -110,7 +112,9 @@ export default function ChimpTest({ onComplete, beep }) {
       {state === "gameover" && (
         <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card)] p-10 text-center space-y-4">
           <div className="text-4xl font-black text-[var(--primary)]">N = {bestN}</div>
-          <p className="text-sm text-[var(--secondary-foreground)]">You successfully completed N={bestN}.</p>
+          <p className="text-sm text-[var(--secondary-foreground)]">
+            {bestN > 0 ? `You successfully completed N=${bestN}.` : "No rounds completed — try again."}
+          </p>
           <div className="flex gap-3 justify-center">
             <button onClick={() => onComplete(bestN)} className="rounded-xl bg-[var(--primary)] px-6 py-3 font-black text-[var(--primary-foreground)]">Save Score</button>
             <button onClick={() => { setLevel(4); setBestN(0); setState("idle"); }}

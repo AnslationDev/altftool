@@ -6,7 +6,6 @@ import {
   createPageMetadata,
 } from '@/platform/seo/generateMetadata';
 import Top11 from './components/Top11hero';
-import Meetexpert from './components/MeetExpert';
 import FAQ from './components/Faq';
 import FeaturedCategories from './components/FeaturedCategories';
 import ExploreCategory from './components/ExploreCategory';
@@ -51,7 +50,6 @@ export default function Page() {
    <ExpertRecommendation/>
    <ExploreCategory/>
    <WhyChooseUs/>
-   <Meetexpert/>
    <FAQ/>
    </>
   )

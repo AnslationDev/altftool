@@ -3019,7 +3019,7 @@ export default {
   ]
 },
   "idiom-explorer": {
-  "intro": "Idiom Explorer is a searchable reference of 60 curated English idioms, each with its figurative meaning, literal reading, usage note, origin story, two example sentences, synonyms and related phrases. You can filter by first letter, by difficulty (beginner, intermediate, advanced) or across 43 themed categories such as Social, Courage, Finance and Timing, then test recall in a 10-question multiple-choice quiz. Learners, ESL teachers and writers get the explanation and the example sentence in one card, with favorites and view history saved locally in the browser.",
+  "intro": "Idiom Explorer is a searchable reference of 59 curated English idioms, each with its figurative meaning, literal reading, usage note, origin story, two example sentences, synonyms and related phrases. You can filter by first letter, by difficulty (beginner, intermediate, advanced) or across 45 themed categories such as Social, Courage, Finance and Timing, then test recall in a 10-question multiple-choice quiz. Learners, ESL teachers and writers get the explanation and the example sentence in one card, with favorites and view history saved locally in the browser.",
   "useCases": [
     "An ESL student hears \"bite the bullet\" in a meeting, looks it up, and wants both the meaning and a sample sentence they can copy into their vocabulary notebook.",
     "A teacher is building a worksheet on beginner-level idioms only, and filters the list by difficulty so advanced phrases do not sneak into a first-year class.",
@@ -3031,8 +3031,8 @@ export default {
       "Every entry explains where the phrase came from and what it says literally, which is what makes an idiom stick."
     ],
     [
-      "Three ways to narrow 60 idioms",
-      "Alphabet strip, 43 topical categories and a beginner/intermediate/advanced filter can be combined to reach exactly the set you want."
+      "Three ways to narrow 59 idioms",
+      "Alphabet strip, 45 topical categories and a beginner/intermediate/advanced filter can be combined to reach exactly the set you want."
     ],
     [
       "Recall practice built in",
@@ -3042,7 +3042,7 @@ export default {
   "faqs": [
     [
       "How many idioms are in Idiom Explorer?",
-      "60 curated English idioms, each spread across 43 topical categories and tagged beginner, intermediate or advanced. Every entry carries a meaning, a literal reading, a usage note, an origin, two example sentences, synonyms and related idioms."
+      "59 curated English idioms, each spread across 45 topical categories and tagged beginner, intermediate or advanced. Every entry carries a meaning, a literal reading, a usage note, an origin, two example sentences, synonyms and related idioms."
     ],
     [
       "How does the idiom quiz work?",
@@ -9918,7 +9918,7 @@ export default {
   "faqs": [
     [
       "How early should I reach Jaipur airport?",
-      "Two hours before a domestic departure and three hours before an international one is the standard airline advice, and it is comfortable at JAI because Terminal 2 is small. The figure that actually decides your departure, though, is the check-in close — typically 45 minutes before a domestic flight and 60 minutes before an international one — because no amount of early arrival helps once the counter has shut."
+      "Two hours before a domestic departure and three hours before an international one is the standard airline advice. Counter-intuitively, that arrival-advice window is usually the figure that actually decides your departure here, not the check-in close: 120 or 180 minutes before departure is simply a bigger number than check-in-close-plus-processing-time or gate-close-plus-processing-time comes to at JAI, so the advice window ends up the tighter, binding cutoff in practice. The planner works out all three cutoffs for your specific flight and tells you which one is genuinely binding."
     ],
     [
       "How long does it take to get to Jaipur airport from the city centre?",

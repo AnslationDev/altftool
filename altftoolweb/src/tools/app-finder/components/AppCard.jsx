@@ -4,7 +4,7 @@ import { ExternalLink, Image as ImageIcon } from "lucide-react";
 import { useState } from "react";
 import ManagedImage from "@/components/ui/ManagedImage";
 
-export const AppCard = ({ app, short, onCompare, onTagClick }) => {
+export const AppCard = ({ app, short, onTagClick }) => {
   const [imgError, setImgError] = useState(false);
 
   return (
@@ -34,13 +34,7 @@ export const AppCard = ({ app, short, onCompare, onTagClick }) => {
             </h3>
 
             <div className="flex flex-wrap gap-2 text-[10px] sm:text-xs text-(--muted-foreground)">
-              <span>{app.rating ?? 4.0}</span>
-              <span>{app.popularityScore ?? 80}</span>
-              <span>
-                {app.downloads
-                  ? `${Math.round(app.downloads / 1000000)}M+`
-                  : "1M+"}
-              </span>
+              <span>★ {app.rating ?? 4.0}</span>
             </div>
           </div>
         </div>
@@ -49,26 +43,17 @@ export const AppCard = ({ app, short, onCompare, onTagClick }) => {
           {short(app.snippet)}
         </p>
 
-        <div className="text-xs text-(--muted-foreground) flex flex-col gap-1">
-          <div>Permissions: {app.permissions}</div>
-          <div>Privacy: {app.privacy}</div>
-          <div>Ads: {app.ads}</div>
-
-          <div className="font-medium text-(--foreground)">
-            Safety Score: {app.safetyScore}/100
-          </div>
-        </div>
-
         {/* TAGS */}
         <div className="mt-3 flex flex-wrap gap-2">
           {app.tags?.map((tag, i) => (
-            <span
+            <button
               key={i}
+              type="button"
               onClick={() => onTagClick && onTagClick(tag)}
               className="text-[10px] sm:text-xs px-2 py-1 bg-blue-100 text-blue-700 rounded-full cursor-pointer hover:bg-blue-200 transition"
             >
               {tag}
-            </span>
+            </button>
           ))}
         </div>
 
@@ -95,14 +80,6 @@ export const AppCard = ({ app, short, onCompare, onTagClick }) => {
           </a>
         </div>
       </div>
-
-      {/* BUTTON (ALWAYS BOTTOM) */}
-      <button
-        onClick={() => onCompare && onCompare(app)}
-        className="w-full px-4 py-2 text-xs sm:text-sm bg-(--primary) text-white rounded-md flex items-center justify-center font-medium shadow-md mt-auto transition-all active:scale-95"
-      >
-        Compare
-      </button>
     </div>
   );
 };

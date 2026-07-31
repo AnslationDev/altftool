@@ -1490,7 +1490,7 @@ export default {
   "benefits": [
     [
       "Decodes the status code",
-      "Maps all twelve status characters, flagging the two that are rarely used."
+      "Maps all ten status characters defined by the Income Tax Department."
     ],
     [
       "Surname check",
@@ -1504,7 +1504,7 @@ export default {
   "faqs": [
     [
       "What does the 4th letter of a PAN card mean?",
-      "It is the status of the holder. P means an individual, C a company, H a Hindu Undivided Family, F a firm, A an association of persons, T a trust, B a body of individuals, L a local authority, J an artificial juridical person and G a government body; E is used on newer LLP allotments."
+      "It is the status of the holder. P means an individual, C a company, H a Hindu Undivided Family, F a firm, A an association of persons, T a trust, B a body of individuals, L a local authority, J an artificial juridical person and G a government body. Limited liability partnerships (LLPs) also use the F code — there is no separate LLP status code."
     ],
     [
       "Why does my PAN not match my name?",
@@ -1683,7 +1683,7 @@ export default {
   ]
 },
   "panic-breathing-pacer": {
-  "intro": "The Panic Breathing Pacer is an extended-exhale breathing guide built for the moment anxiety spikes, when breathing is already fast. Rather than asking you to jump straight to a slow rate, it starts near the rate you are breathing at now — often 18 to 25 breaths a minute — and ramps down breath by breath towards about 6 a minute, the rate associated with peak heart-rate variability. The exhale is always longer than the inhale, because heart rate falls during exhalation, and the instructions ask for small, quiet breaths rather than deep ones.",
+  "intro": "The Panic Breathing Pacer is an extended-exhale breathing guide built for the moment anxiety spikes, when breathing is already fast. Rather than asking you to jump straight to a slow rate, it starts near the rate you are breathing at now — often 18 to 25 breaths a minute — and ramps down breath by breath towards about 6 a minute, the rate associated with peak heart-rate variability. Most patterns give the exhale more time than the inhale, because heart rate falls during exhalation, though an even 5:5 pattern is offered for anyone who finds a long exhale uncomfortable; the instructions ask for small, quiet breaths rather than deep ones.",
   "useCases": [
     "Slow a racing breath during a panic attack without being told to 'just breathe deeply'.",
     "Wind down after an adrenaline spike — a near miss in traffic, bad news, a confrontation.",
@@ -1697,7 +1697,7 @@ export default {
     ],
     [
       "Exhale-weighted by design",
-      "Every pattern gives the exhale the larger share of the breath, the part linked to parasympathetic activation."
+      "Three of the four patterns give the exhale more time than the inhale, the part linked to parasympathetic activation, with an even 5:5 option for anyone a long exhale leaves feeling short of air."
     ],
     [
       "Small breaths, not deep ones",
@@ -5683,7 +5683,7 @@ export default {
     ],
     [
       "How is the photo love compatibility score calculated?",
-      "It sums the x and y coordinates of every detected landmark across both photos into one seed, then computes the overall score as (seed mod 28) + 71 — a 71% to 98% range. The three sub-scores use the same seed multiplied by 3, 11 and 7 for chemistry index, expression and mood alignment, and structural harmony, each mapped into a 79–99% band."
+      "It sums the x and y coordinates of every detected landmark across both photos into one seed, then computes the overall score as (seed mod 28) + 71 — a 71% to 98% range. The three sub-scores use the same seed multiplied by 4, 11 and 5 for chemistry index, expression and mood alignment, and structural harmony, each mapped into a 79–99% band."
     ],
     [
       "Are my photos uploaded or stored anywhere?",
@@ -10338,7 +10338,7 @@ export default {
   ]
 },
   "privacy-settings-checklist-android": {
-  "intro": "This checklist scores an Android phone against 27 real privacy settings — deleting the advertising ID, Web & App Activity, Location History, per-app precise versus approximate location, Wi-Fi and Bluetooth scanning, the Permission Manager, accessibility and notification access, Quick Share visibility, backup encryption and screen-lock strength — weighting each by how much exposure it actually closes rather than treating every toggle as equal. Seven controls are marked critical and hold the score at 69% while any is still open, because a precise-location grant or an unnoticed accessibility service outweighs a dozen cosmetic switches. Five risk profiles re-score the same list, so someone minimising what Google collects and someone worried about stalkerware are graded on different things.",
+  "intro": "This checklist scores an Android phone against 27 real privacy settings — deleting the advertising ID, Web & App Activity, Location History, per-app precise versus approximate location, Wi-Fi and Bluetooth scanning, the Permission Manager, accessibility and notification access, Quick Share visibility, backup encryption and screen-lock strength — weighting each by how much exposure it actually closes rather than treating every toggle as equal. Eight controls are marked critical and hold the score at 69% while any is still open, because a precise-location grant or an unnoticed accessibility service outweighs a dozen cosmetic switches. Five risk profiles re-score the same list, so someone minimising what Google collects and someone worried about stalkerware are graded on different things.",
   "useCases": [
     "Do a full privacy pass on a new Android phone before it starts building an account-level history you never agreed to.",
     "Check a phone for stalkerware indicators — accessibility services, device admin apps, notification access and all-the-time location.",
@@ -11306,7 +11306,7 @@ export default {
     ],
     [
       "What does the black-and-white mode actually do?",
-      "It converts each pixel to Rec. 709 luminance (0.2126 red, 0.7152 green, 0.0722 blue) and pushes it to pure white or pure black against a threshold you control, which defaults to 150 of 255. Lower the threshold if faint pencil is disappearing, raise it if a grey shadow is coming through as black."
+      "It converts each pixel to Rec. 709 luminance (0.2126 red, 0.7152 green, 0.0722 blue) and pushes it to pure white or pure black against a threshold you control, which defaults to 155 of 255. Lower the threshold if faint pencil is disappearing, raise it if a grey shadow is coming through as black."
     ],
     [
       "Should I export PNG or JPEG?",
@@ -14116,7 +14116,7 @@ export default {
   "intro": "Quiz App runs a 12-question multiple-choice round in one of five ready-made categories - Web Development, General Knowledge, Science, Aptitude and Digital Marketing - scoring you at the end as correct, wrong and skipped, plus a percentage. Nothing is revealed mid-quiz: you can move back and forth, change an answer or skip, and only after finishing does the review list every question with the right option and a one-line explanation of why. It suits anyone doing quick self-testing before an interview, a class test or an aptitude round.",
   "useCases": [
     "You have a frontend interview tomorrow and want a fast check on semantic HTML, hooks, Grid versus Flexbox and list keys before you revise further.",
-    "A campus placement aptitude round is coming up and you want twelve timed-free practice sums on percentages, averages, speed and sequences with worked explanations.",
+    "A campus placement aptitude round is coming up and you want twelve untimed practice sums on percentages, averages, speed and sequences with worked explanations.",
     "A teacher wants a no-signup warm-up quiz to project in class, switching between the Science and General Knowledge decks between groups."
   ],
   "benefits": [

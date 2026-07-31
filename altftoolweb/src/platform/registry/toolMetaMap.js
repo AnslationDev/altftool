@@ -19921,7 +19921,7 @@ export const toolMetaMap = {
       "Career"
     ],
     "icon": "wrench",
-    "iconColor": "text-blue-500"
+    "iconColor": "text-[var(--primary)]"
   },
   "notice-period-rent-calculator": {
     "name": "Notice Period Rent Liability Calculator",

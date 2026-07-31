@@ -81,14 +81,19 @@ export function splitMessBill({ totalBill, fixedCharges = 0, members }) {
   const perDayRate = totalDays > 0 ? variableTotal / totalDays : null;
 
   // Exact shares, then round with last-member reconciliation so the sum matches the bill.
+  // total is derived from the already-rounded fixedShare/variableShare (not the raw
+  // sum, rounded separately) so fixedShare + variableShare always equals total for
+  // every member, not just the one that gets the final paisa-remainder adjustment.
   const shares = cleaned.map((member) => {
     const variableShare = totalDays > 0 ? variableTotal * (member.daysPresent / totalDays) : 0;
+    const roundedFixedShare = round2(fixedPerMember);
+    const roundedVariableShare = round2(variableShare);
     return {
       name: member.name,
       daysPresent: member.daysPresent,
-      fixedShare: round2(fixedPerMember),
-      variableShare: round2(variableShare),
-      total: round2(fixedPerMember + variableShare),
+      fixedShare: roundedFixedShare,
+      variableShare: roundedVariableShare,
+      total: round2(roundedFixedShare + roundedVariableShare),
     };
   });
 
@@ -96,7 +101,17 @@ export function splitMessBill({ totalBill, fixedCharges = 0, members }) {
   const remainder = round2(bill - roundedSum);
   if (remainder !== 0 && shares.length > 0) {
     const last = shares[shares.length - 1];
-    last.total = round2(last.total + remainder);
+    // Apply the remainder to whichever component it conceptually belongs to:
+    // the variable (food) share if this member actually has a variable
+    // portion, otherwise the fixed share. This keeps fixedShare + variableShare
+    // equal to total for every member, including the reconciled one.
+    const lastHasVariable = variableTotal > 0 && last.daysPresent > 0;
+    if (lastHasVariable) {
+      last.variableShare = round2(last.variableShare + remainder);
+    } else {
+      last.fixedShare = round2(last.fixedShare + remainder);
+    }
+    last.total = round2(last.fixedShare + last.variableShare);
   }
 
   return {

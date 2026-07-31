@@ -6,7 +6,8 @@ import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function ListingCard({ extension, slug }) {
 
-  const usersCount = extension.users || "10K+";
+  const usersCount = extension.users || "";
+  const hasRating = typeof extension.rating === "number" && extension.rating > 0;
 
   return (
     <Link
@@ -41,12 +42,14 @@ export default function ListingCard({ extension, slug }) {
         </h3>
 
         {/* Rating row */}
-        <div className="flex items-center gap-2 text-sm mt-1">
-          <span className="text-(--muted-foreground) font-medium">
-            {extension.rating}
-          </span>
-          <Star className="w-4 h-4 fill-[var(--primary)] text-[var(--primary)]" aria-hidden="true" />
-        </div>
+        {hasRating ? (
+          <div className="flex items-center gap-2 text-sm mt-1">
+            <span className="text-(--muted-foreground) font-medium">
+              {extension.rating}
+            </span>
+            <Star className="w-4 h-4 fill-[var(--primary)] text-[var(--primary)]" aria-hidden="true" />
+          </div>
+        ) : null}
 
         {/* Description */}
         <p className="text-sm text-(--muted-foreground) mt-2 line-clamp-2">
@@ -55,7 +58,7 @@ export default function ListingCard({ extension, slug }) {
 
         {/* Footer (users) */}
         <div className="mt-auto flex items-center justify-between gap-3 pt-3 text-xs text-(--muted-foreground)">
-          <span>{usersCount} users</span>
+          <span>{usersCount ? `${usersCount} users` : ""}</span>
           <span className="extension-listing-action inline-flex items-center gap-1 font-bold">
             Open <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
           </span>

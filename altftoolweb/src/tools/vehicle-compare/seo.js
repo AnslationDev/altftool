@@ -2,9 +2,9 @@ const seo = {
   title: "Car Comparison Tool — Compare Two Vehicles Side by Side",
   h1: "Vehicle Compare — Side-by-Side Car Specification Comparison",
   metaDescription:
-    "Compare two 2024 Indian SUVs side by side — price, ARAI mileage, power and safety — with the better figure bolded. Sample spec data, free, no signup.",
+    "Compare two 2024 Indian SUVs side by side — price, ARAI mileage, power and safety — with the better figure bolded. Sample base-variant spec data, free, no signup.",
   intro:
-    "Vehicle Compare puts two models from a six-car 2024 India shortlist — Hyundai Creta, Kia Seltos, Maruti Brezza, Mahindra Scorpio-N, Tata Nexon and Toyota Innova Hycross — into a single three-column grid across four specs: ex-showroom price, ARAI mileage, maximum power and safety rating. Each row is scored by direction rather than opinion: the lower number wins on price, the higher number wins on mileage, power and safety, and the winning cell is bolded in the accent colour, with ties left unmarked. Above the grid, three proportional bars size each value as value ÷ larger value × 100%, and prices are converted to the Indian lakh/crore scale, so a 21.0 vs 18.5 kmpl or 160 vs 180 HP gap is readable before you parse a digit. Note that the spec figures come from a fixed sample dataset compiled into the page — the tool makes no network request of any kind, so nothing you select is uploaded, but the numbers are a layout demonstration, not a live price feed.",
+    "Vehicle Compare puts two models from a six-car 2024 India shortlist — Hyundai Creta, Kia Seltos, Maruti Brezza, Mahindra Scorpio-N, Tata Nexon and Toyota Innova Hycross — into a single three-column grid across four specs: ex-showroom price, ARAI mileage, maximum power and safety rating. Each row is scored by direction rather than opinion: the lower number wins on price, the higher number wins on mileage, power and safety, and the winning cell is bolded in the accent colour, with ties left unmarked. Above the grid, three proportional bars size each value as value ÷ larger value × 100%, and prices are converted to the Indian lakh/crore scale, so a gap in mileage, power or price is readable before you parse a digit. Each of the six models carries its own reference figures — rounded from published base-variant, ARAI and NCAP data — compiled into the page. The tool makes no network request of any kind, so nothing you select is uploaded, but the numbers are indicative base-trim figures, not a live price feed; confirm current pricing and variant-specific specs with the manufacturer or a dealer.",
   useCases: [
     "Laying two shortlisted SUVs on one screen across price, mileage, power and safety instead of flipping between two brochure PDFs or browser tabs.",
     "Showing a first-time buyer how spec trade-offs actually work — the proportional bars make a price gap or a power gap obvious without reading numbers.",
@@ -31,7 +31,7 @@ const seo = {
   faqs: [
     [
       "are the prices in this car comparison tool live?",
-      "No. The current build renders a fixed sample spec set — ₹12,00,000 / 21.0 kmpl / 160 HP / 5 stars against ₹15,00,000 / 18.5 kmpl / 180 HP / 5 stars — and shows those same figures for every pairing you choose. Use it to see how the side-by-side layout and scoring work, then confirm actual ex-showroom price and mileage with the manufacturer or dealer.",
+      "No. Each of the six models has its own fixed reference record — rounded, base-variant price, ARAI mileage, maximum power and NCAP-style safety rating — built into the page, so the figures do change with which two vehicles you pick, but they are not pulled from a live pricing feed. Use it to see how the side-by-side layout and scoring work, then confirm actual ex-showroom price, variant-specific mileage and current safety rating with the manufacturer or dealer.",
     ],
     [
       "which cars can I compare?",

@@ -108,7 +108,7 @@ The risk and what has changed: {{context}}
 
 {{audienceDirective}}
 
-Keep it under {{wordBudget}} words. Structure: what has changed, the consequence in date, cost or scope terms, what the team has already done, the options with the trade-off of each stated in one line, the recommendation, and the decision date after which the recommendation stops being available. No blame, no adjectives, no more than one option marked as recommended.`,
+Keep it under {{wordBudget}} words. Structure: what has changed, the consequence in date, cost or scope terms, what the team has already done, the options with the trade-off of each stated in one line, the recommendation, and the decision date after which the recommendation stops being available. Use only facts present in my notes; where a date, cost or owner is missing write [TBC] rather than estimating it. No blame, no adjectives, no more than one option marked as recommended.`,
   },
   {
     id: "stakeholder-email",
@@ -124,7 +124,7 @@ What I need to say: {{context}}
 
 {{audienceDirective}}
 
-Write a subject line under 60 characters that states the outcome, not the topic. Body under {{wordBudget}} words, with the ask in the first three lines and any detail below it. End with a single, explicit next step naming who does what by when. Give me one alternative subject line and one sentence explaining which reader each would suit.`,
+Write a subject line under 60 characters that states the outcome, not the topic. Body under {{wordBudget}} words, with the ask in the first three lines and any detail below it. End with a single, explicit next step naming who does what by when. Use only facts present in my notes; where a date, owner or figure is missing write [TBC] rather than estimating it. Give me one alternative subject line and one sentence explaining which reader each would suit.`,
   },
   {
     id: "delay-message",
@@ -185,7 +185,7 @@ Approvers: {{stakeholders}}
 
 {{audienceDirective}}
 
-Under {{wordBudget}} words. Include: the change described in the requester's terms, why it is being asked for, the impact on schedule, cost, quality and risk stated separately, what would have to be dropped to absorb it inside the current plan, and three options — accept, defer to a later phase, decline — each with its consequence. Recommend one. Never present a change as free.`,
+Under {{wordBudget}} words. Include: the change described in the requester's terms, why it is being asked for, the impact on schedule, cost, quality and risk stated separately, what would have to be dropped to absorb it inside the current plan, and three options — accept, defer to a later phase, decline — each with its consequence. Use only facts present in my notes; where a date, cost or owner is missing write [TBC] rather than estimating it. Recommend one. Never present a change as free.`,
   },
   {
     id: "retro-facilitation",
@@ -199,7 +199,7 @@ Delivery method: {{method}}
 Team and stakeholders: {{stakeholders}}
 What happened this period: {{context}}
 
-Give me: a 60-minute agenda with timings, three opening questions that surface what people are avoiding, a technique for separating problems the team owns from problems it can only escalate, and a closing step that converts at most three findings into actions with an owner and a date. Add the four facilitation traps most likely with this team and the specific intervention for each. Do not propose more than three actions.`,
+Give me: a 60-minute agenda with timings, three opening questions that surface what people are avoiding, a technique for separating problems the team owns from problems it can only escalate, and a closing step that converts at most three findings into actions with an owner and a date. Use only facts present in my notes; where an owner or date is missing write [TBC] rather than estimating it. Add the four facilitation traps most likely with this team and the specific intervention for each. Do not propose more than three actions.`,
   },
   {
     id: "meeting-to-actions",
@@ -226,7 +226,7 @@ Objective: {{goal}}
 The dependency: {{context}}
 People involved: {{stakeholders}}
 
-Write ten questions I should ask the owning team that distinguish real readiness from optimism — questions about what is already working, what has been tested, and what has to be true. For each question, state the answer that should reassure me and the answer that means I need a contingency. Then propose two contingency options with the lead time each needs, and the date by which I must trigger them.`,
+Write ten questions I should ask the owning team that distinguish real readiness from optimism — questions about what is already working, what has been tested, and what has to be true. For each question, state the answer that should reassure me and the answer that means I need a contingency. Then propose two contingency options with the lead time each needs, and the date by which I must trigger them. Use only facts present in my notes; where a lead time or trigger date is missing write [TBC] rather than estimating it.`,
   },
   {
     id: "resource-conflict",
@@ -242,21 +242,9 @@ The conflict: {{context}}
 
 {{audienceDirective}}
 
-Produce, in under {{wordBudget}} words: a neutral statement of the conflict with both projects' needs given equal weight, the impact on each if it loses, three splitting options (sequence, share, substitute) with the cost of each, the data I need before the conversation, and the framing sentence I should open with. Do not argue that my project matters more; argue from dates and consequences.`,
+Produce, in under {{wordBudget}} words: a neutral statement of the conflict with both projects' needs given equal weight, the impact on each if it loses, three splitting options (sequence, share, substitute) with the cost of each, the data I need before the conversation, and the framing sentence I should open with. Use only facts present in my notes; where a date, cost or owner is missing write [TBC] rather than estimating it. Do not argue that my project matters more; argue from dates and consequences.`,
   },
 ];
-
-export function extractTokens(template) {
-  if (typeof template !== "string") return [];
-  const found = [];
-  const pattern = new RegExp(TOKEN_PATTERN.source, "g");
-  let match = pattern.exec(template);
-  while (match !== null) {
-    if (!found.includes(match[1])) found.push(match[1]);
-    match = pattern.exec(template);
-  }
-  return found;
-}
 
 function normaliseValues(values) {
   const clean = {};

@@ -61,8 +61,11 @@ export default function ToolHome() {
       buildLocationNote({
         name,
         dateIso,
-        latitude: Number(latitude),
-        longitude: Number(longitude),
+        // Pass the raw field values through so a cleared field ("") reaches
+        // lib.js's own blank-input check instead of being turned into a
+        // literal 0 by Number() before it gets there.
+        latitude,
+        longitude,
         utcOffsetMinutes: utcOffsetMinutesFromHours(utcOffsetHours),
         shootTime,
         ratings,

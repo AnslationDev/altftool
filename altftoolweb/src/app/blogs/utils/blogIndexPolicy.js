@@ -23,20 +23,45 @@
  *
  * These are not thin-content cases and not CTR cases — the intent behind the
  * queries has no answer on a utility-tools domain, so the impressions cannot
- * convert no matter how the snippet is written. Combined they drew 2,696
- * impressions and 2 clicks (0.07%) in the export window.
+ * convert no matter how the snippet is written. Combined they drew 1,711
+ * impressions and 2 clicks (0.12%) in the export window.
+ *
+ * The bar for an entry here is deliberately high: the query must be one no
+ * snippet could win. A post that lost its clicks to a broken title or a
+ * truncated description is NOT an unservable-intent case — it is a snippet
+ * case, and it belongs in ./blogSeoOverrides.js instead.
  */
 const UNSERVABLE_INTENT_SLUGS = {
-  // 985 impressions, 0 clicks, avg position 11.6. Every ranking query is a
-  // literal ferry-route lookup ("ferry routes from uk to europe...", 37 imp
-  // top query, 0 clicks). Nothing on AltFTool books or times a ferry.
-  "ultimate-guide-to-crossing-from-the-uk-to-europe-by-ferry":
-    "Ferry-route intent; no AltFTool tool serves it. 985 imp / 0 clicks / pos 11.6.",
+  // REMOVED 2026-07-30: ultimate-guide-to-crossing-from-the-uk-to-europe-by-ferry
+  // (985 imp / 0 clicks / pos 11.6) was listed here as ferry-route intent that
+  // "no AltFTool tool serves". Re-checked against the live page and the reason
+  // did not hold up:
+  //   - The shipped <title> was "Ultimate Guide to Crossing from the UK to
+  //     Europe | AltFTool". compactBrandedTitle() clipped "by Ferry", so the
+  //     one word present in every ranking query was absent from the title, and
+  //     the description was the body's first sentence cut at "Unlike flying,
+  //     where the journey." Zero clicks cannot be read as unservable intent
+  //     when the snippet never showed the keyword.
+  //   - The body is not thin or off-pillar filler: ~1,460 words with a 5-row
+  //     route table (real crossing times), booking, onboard, vehicle and
+  //     passport sections, sitting in an active Travel category whose sibling
+  //     posts (Kiwi.com, Trainline, TrainPal, Emirates, Etihad…) all stay
+  //     indexed. Removing the best-performing one while keeping the weaker
+  //     siblings was inconsistent, and blog pages carry ads, so the traffic has
+  //     value even though no tool serves the query.
+  // It now has an authored title/description in ./blogSeoOverrides.js. If it
+  // still earns no clicks after that ships and re-ranks, add it back here.
 
   // 747 impressions, 0 clicks, avg position 10.2. Top query is "trivago
   // singapore" (363 imp, 0 clicks, pos 7.01) — a navigational query for
   // trivago's own site. Ranking 7th for someone else's brand name yields
   // nothing and never will.
+  // Re-checked 2026-07-30: this post has the same clipped title ("…Hotel Deals
+  // For | AltFTool") and a description cut mid-word ("…and move to t."), so the
+  // snippet is broken too — but it stays noindexed anyway. Position 7 with 363
+  // impressions and zero clicks on a brand-navigational query means searchers
+  // saw the result and wanted trivago.com; no wording wins that, and
+  // intercepting another company's brand query is not a play worth fixing.
   "trivago-singapore-find-the-best-hotel-deals-for-your-stay":
     "Navigational query for a third-party brand. 747 imp / 0 clicks / pos 10.2.",
 
@@ -46,6 +71,13 @@ const UNSERVABLE_INTENT_SLUGS = {
   // page-one position and is the only one earning any clicks at all. It is
   // included because those 2 clicks cannot become tool usage, and the post
   // spends the domain's topical authority on an unrelated subject.
+  // Re-checked 2026-07-30 against the live page, and unlike the ferry post
+  // there is no snippet defect to blame: the title already opens with the exact
+  // query ("What is IIM? Complete Guide to India's Top MBA | AltFTool"), so a
+  // rewrite has nothing to fix. The 1,150-word body names IIMs and the CAT
+  // stages but carries no fees, cut-offs, NIRF ranks or placement figures, and
+  // it is filed under the "Digital Tools" section rather than any education
+  // category — a one-off, not a content pillar. It stays noindexed.
   "what-is-iim-complete-guide-to-indias-top-mba-colleges":
     "Education-definition intent, unrelated to tools. 964 imp / 2 clicks / pos 10.2.",
 };

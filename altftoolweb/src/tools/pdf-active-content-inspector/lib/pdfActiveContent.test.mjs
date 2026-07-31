@@ -123,17 +123,25 @@ test("warns when encryption and object streams can hide cues", () => {
   );
 });
 
-test("stops cautiously at an unterminated recognizable stream", () => {
-  const bytes = pdfBytes("1 0 obj << /Length 9 >> stream\n/JavaScript /Launch");
+test("keeps scanning past an unterminated stream instead of aborting the file", () => {
+  // Regression test: an unterminated "stream" token must not silently
+  // truncate the scan. Real active-content markers placed after a
+  // malformed/never-closed stream have to still be found.
+  const bytes = pdfBytes(
+    "1 0 obj << /Length 999999 >> stream\nBINARYJUNKNOTERMINATOR\n2 0 obj << /OpenAction 3 0 R >> endobj\n3 0 obj << /S /JavaScript /JS (evil()) >> endobj\n4 0 obj << /Type /Filespec /F (payload.exe) >> endobj",
+  );
   const result = inspectPdfActiveContentBytes(bytes, {
     fileName: "broken.pdf",
     fileSize: bytes.byteLength,
   });
 
   assert.equal(result.ok, true);
-  assert.equal(result.summary.selectedMarkerCount, 0);
+  assert.equal(group(result, "javascript").count, 2);
+  assert.equal(group(result, "automaticActions").count, 1);
+  assert.equal(group(result, "attachments").count, 1);
+  assert.equal(result.summary.selectedMarkerCount, 4);
   assert.equal(
-    result.warnings.some((item) => /scanning stopped early/iu.test(item)),
+    result.warnings.some((item) => /had no bounded endstream marker/iu.test(item)),
     true,
   );
 });

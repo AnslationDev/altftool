@@ -45,12 +45,12 @@ function BrandOffer({ id }) {
   return (
     <div>
       {/* HEADER */}
-      <h1 className="bg-amber-400 py-4 sm:py-5 text-center capitalize text-lg sm:text-xl md:text-2xl font-semibold">
+      <h1 className="bg-(--primary) text-(--primary-foreground) py-4 sm:py-5 text-center capitalize text-lg sm:text-xl md:text-2xl font-semibold">
         {id} Coupon Codes & Deals
       </h1>
 
       {/* BREADCRUMB */}
-      <div className="max-w-7xl mx-auto px-4 text-xs sm:text-sm text-gray-400 my-4">
+      <div className="max-w-7xl mx-auto px-4 text-xs sm:text-sm text-(--muted-foreground) my-4">
         <Link href="/exclusivedeals/store">
           {`Home / Stores / ${id}`}
         </Link>
@@ -64,15 +64,15 @@ function BrandOffer({ id }) {
           
           {/* STORE CARD */}
           {loading ? (
-            <div className="rounded-xl shadow border overflow-hidden p-5 space-y-4">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-gray-200 animate-pulse" />
-              <div className="h-4 w-2/3 mx-auto rounded bg-gray-200 animate-pulse" />
-              <div className="h-16 rounded bg-gray-200 animate-pulse" />
+            <div className="rounded-xl shadow border border-(--border) overflow-hidden p-5 space-y-4">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto rounded-full bg-(--surface-soft) animate-pulse" />
+              <div className="h-4 w-2/3 mx-auto rounded bg-(--surface-soft) animate-pulse" />
+              <div className="h-16 rounded bg-(--surface-soft) animate-pulse" />
             </div>
           ) : (
-            <div className="rounded-xl shadow border overflow-hidden">
-              <div className="bg-black text-white p-5 sm:p-6 text-center">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 flex items-center justify-center rounded-full border bg-white text-black font-bold text-sm sm:text-base">
+            <div className="rounded-xl shadow border border-(--border) overflow-hidden">
+              <div className="bg-(--foreground) text-(--background) p-5 sm:p-6 text-center">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 flex items-center justify-center rounded-full border border-(--border) bg-(--background) text-(--foreground) font-bold text-sm sm:text-base">
                   {brand?.name?.charAt(0)}
                 </div>
                 <h3 className="font-semibold text-sm sm:text-base">
@@ -80,20 +80,20 @@ function BrandOffer({ id }) {
                 </h3>
               </div>
 
-              <div className="p-4 sm:p-5 text-xs sm:text-sm text-gray-600">
+              <div className="p-4 sm:p-5 text-xs sm:text-sm text-(--muted-foreground)">
                 <p className="font-semibold mb-2">More About This Store</p>
-                <div className="border-b mb-3" />
+                <div className="border-b border-(--border) mb-3" />
                 <p>{brand?.about}</p>
               </div>
             </div>
           )}
 
           {/* RELATED STORES */}
-          <div className="rounded-xl shadow border p-4">
+          <div className="rounded-xl shadow border border-(--border) p-4">
             <h4 className="font-semibold mb-3 text-sm sm:text-base">
               Related Stores
             </h4>
-            <div className="text-xs sm:text-sm text-gray-500">
+            <div className="text-xs sm:text-sm text-(--muted-foreground)">
               Coming soon…
             </div>
           </div>
@@ -103,7 +103,7 @@ function BrandOffer({ id }) {
         <div className="w-full lg:w-[70%]">
           
           {/* TABS */}
-          <div className="flex gap-6 sm:gap-8 border-b mb-5 overflow-x-auto no-scrollbar">
+          <div className="flex gap-6 sm:gap-8 border-b border-(--border) mb-5 overflow-x-auto no-scrollbar">
             {[
               { key: "all", label: `All (${totalOffers})` },
               { key: "coupon", label: `Coupons (${coupons.length})` },
@@ -114,8 +114,8 @@ function BrandOffer({ id }) {
                 onClick={() => setActiveTab(tab.key)}
                 className={`pb-2 whitespace-nowrap text-sm sm:text-base ${
                   activeTab === tab.key
-                    ? "border-b-2 border-amber-400 font-semibold"
-                    : "text-gray-500"
+                    ? "border-b-2 border-(--primary) font-semibold"
+                    : "text-(--muted-foreground)"
                 }`}
               >
                 {tab.label}
@@ -127,7 +127,7 @@ function BrandOffer({ id }) {
           <div className="space-y-4">
             {loading ? (
               Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="h-24 rounded-xl bg-gray-200 animate-pulse" />
+                <div key={i} className="h-24 rounded-xl bg-(--surface-soft) animate-pulse" />
               ))
             ) : (
               <>

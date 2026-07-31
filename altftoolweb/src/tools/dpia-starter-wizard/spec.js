@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "dpia-starter-wizard",
   "title": "DPIA Starter Wizard",
-  "description": "New feature ka initial privacy-impact assessment structure kare.",
+  "description": "Score a new feature's privacy risk and outline the structure of a Data Protection Impact Assessment (DPIA).",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Security & Privacy",
@@ -83,7 +83,7 @@ export const spec = {
       const text = (values.data + " " + values.feature).toLowerCase();
       let score = values.scale === "large" ? 4 : values.scale === "medium" ? 2 : 1;
       if (values.sensitive) score += 4;
-      if (/location|biometric|health|children|financial|tracking|profile/.test(text)) score += 3;
+      if (/location|biometric|health|children|financial|tracking|profil/.test(text)) score += 3;
       const mitigations = String(values.mitigations || "").split(/[,;\n]+/).map((item) => item.trim()).filter(Boolean);
       score = Math.max(0, score - Math.min(3, mitigations.length));
       const level = score >= 7 ? "High" : score >= 4 ? "Medium" : "Lower";

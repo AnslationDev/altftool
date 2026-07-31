@@ -24,7 +24,7 @@
   align-items: center;
   justify-content: center;
   padding: 48px 20px 80px;
-  min-height: calc(100vh - 160px);
+  min-height: calc(100dvh - 160px);
 }
 
 /* Stage to hold the card */

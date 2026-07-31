@@ -11,6 +11,15 @@ import { initAdmin } from "@/lib/altflinking/firebaseAdmin";
 import { verifyToken, getUserRole, ok, err } from "@/lib/altflinking/authMiddleware";
 import { FieldValue } from "firebase-admin/firestore";
 
+// A listing price/turnaround must be a finite, non-negative number when
+// provided — downstream (orders route) trusts a listing's stored price
+// verbatim as the buyer's charge amount, with no re-validation at order time.
+function isValidPrice(value) {
+  if (value === undefined || value === null || value === "") return true;
+  const n = Number(value);
+  return Number.isFinite(n) && n >= 0;
+}
+
 export async function PATCH(request, { params }) {
   const limited = enforceRateLimit(NextResponse, request, {
     limit: 30,
@@ -38,6 +47,15 @@ export async function PATCH(request, { params }) {
     if (!isOwner && !isAdmin) return err("Forbidden", 403);
 
     const body = await request.json();
+
+    if (
+      !isValidPrice(body.guestPostPrice) ||
+      !isValidPrice(body.linkInsertionPrice) ||
+      !isValidPrice(body.tatDays)
+    ) {
+      return err("Prices and turnaround days must be non-negative numbers", 400);
+    }
+
     const updates = { updatedAt: FieldValue.serverTimestamp() };
 
     if (body.guestPostPrice !== undefined || body.linkInsertionPrice !== undefined) {

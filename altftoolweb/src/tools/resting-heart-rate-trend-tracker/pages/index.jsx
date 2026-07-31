@@ -2,9 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Activity, Check, Copy, Plus, RotateCcw, Trash2 } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import {
+  ATHLETE_RHR_HIGH,
   BASELINE_WINDOW_DAYS,
+  NORMAL_RHR_HIGH,
+  NORMAL_RHR_LOW,
   ROLLING_WINDOW_DAYS,
   buildChartPoints,
   summariseRestingHr,
@@ -15,6 +19,9 @@ const NUM0 = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 
 const STORAGE_KEY = "altft-rhr-trend-log-v1";
 const DASH = "—";
+
+/** "1 reading" vs "2 readings" — singular/plural for counted nouns in the summary copy. */
+const pluralize = (count, noun) => `${count} ${noun}${count === 1 ? "" : "s"}`;
 
 /** Fixed demo log so a real trend is on screen at first paint. */
 const SEED_ENTRIES = [
@@ -48,12 +55,19 @@ const STATUS_STYLE = {
   steady: "bg-[var(--muted)] text-[var(--muted-foreground)]",
 };
 
+/** Where the latest reading sits against typical adult / trained-athlete ranges. */
+const BAND_LABEL = {
+  athletic: `Athletic range · under ${ATHLETE_RHR_HIGH} bpm`,
+  normal: `Normal range · ${NORMAL_RHR_LOW}–${NORMAL_RHR_HIGH} bpm`,
+  "above-normal": `Above normal range · over ${NORMAL_RHR_HIGH} bpm`,
+};
+
 export default function ToolHome() {
   const [entries, setEntries] = useState(SEED_ENTRIES);
   const [dateInput, setDateInput] = useState("");
   const [bpmInput, setBpmInput] = useState("");
   const [formError, setFormError] = useState("");
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   useEffect(() => {
     const today = new Date();
@@ -66,9 +80,12 @@ export default function ToolHome() {
 
     try {
       const stored = window.localStorage.getItem(STORAGE_KEY);
-      if (stored) {
+      // `stored === null` means the key was never written (a genuine first-ever visit), so the
+      // seed demo data stays. Any other value — including "[]" for an intentionally emptied log —
+      // is the user's own saved state and must be respected as-is.
+      if (stored !== null) {
         const parsed = JSON.parse(stored);
-        if (Array.isArray(parsed) && parsed.length > 0) setEntries(parsed);
+        if (Array.isArray(parsed)) setEntries(parsed);
       }
     } catch {
       /* storage unavailable or corrupt — keep the seed log */
@@ -122,18 +139,22 @@ export default function ToolHome() {
     setEntries(SEED_ENTRIES);
     setBpmInput("");
     setFormError("");
-    setCopied(false);
+    resetCopyState();
   };
 
   const clipboardText = useMemo(() => {
     if (hasError) return "";
     return [
       "Resting Heart Rate Trend",
-      `Readings: ${summary.count} over ${summary.spanDays} days`,
+      `Readings: ${summary.count} over ${pluralize(summary.spanDays, "day")}`,
       `Latest: ${summary.latest.bpm} bpm on ${summary.latest.date}`,
       `${summary.rollingWindowDays}-day rolling average: ${NUM1.format(summary.rollingLatest)} bpm`,
-      `${summary.baselineWindowDays}-day baseline: ${NUM1.format(summary.baseline)} bpm`,
-      `Deviation from baseline: ${summary.deviation >= 0 ? "+" : ""}${NUM1.format(summary.deviation)} bpm`,
+      summary.baseline === null
+        ? `${summary.baselineWindowDays}-day baseline: not enough history yet`
+        : `${summary.baselineWindowDays}-day baseline: ${NUM1.format(summary.baseline)} bpm`,
+      summary.deviation === null
+        ? "Deviation from baseline: not enough history yet"
+        : `Deviation from baseline: ${summary.deviation >= 0 ? "+" : ""}${NUM1.format(summary.deviation)} bpm`,
       summary.slopePerWeek === null
         ? "Trend: not enough readings"
         : `Trend: ${summary.slopePerWeek >= 0 ? "+" : ""}${NUM1.format(summary.slopePerWeek)} bpm per week`,
@@ -142,16 +163,7 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, summary]);
 
-  const copyResult = async () => {
-    if (!clipboardText) return;
-    try {
-      await navigator.clipboard.writeText(clipboardText);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("summary", clipboardText, { label: "Resting heart rate trend summary" });
 
   const sortedForTable = hasError ? [] : [...summary.series].reverse();
 
@@ -251,7 +263,7 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? "Add a reading to build the trend."
-                : `Latest ${summary.latest.bpm} bpm on ${summary.latest.date} · ${summary.count} readings over ${summary.spanDays} days`}
+                : `Latest ${summary.latest.bpm} bpm on ${summary.latest.date} · ${pluralize(summary.count, "reading")} over ${pluralize(summary.spanDays, "day")}`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -259,16 +271,23 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy resting heart rate trend summary"
+              aria-label={
+                isCopied("summary")
+                  ? "Copied resting heart rate trend summary to clipboard"
+                  : "Copy resting heart rate trend summary"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("summary") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("summary") ? "Copied!" : "Copy result"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -280,15 +299,21 @@ export default function ToolHome() {
           </p>
         )}
 
+        {!hasError && (
+          <p className="mt-2 inline-flex items-center rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold text-[var(--muted-foreground)]">
+            {BAND_LABEL[summary.band]}
+          </p>
+        )}
+
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             [
               `${BASELINE_WINDOW_DAYS}-day baseline`,
-              hasError ? DASH : `${NUM1.format(summary.baseline)} bpm`,
+              hasError || summary.baseline === null ? DASH : `${NUM1.format(summary.baseline)} bpm`,
             ],
             [
               "Latest vs baseline",
-              hasError
+              hasError || summary.deviation === null
                 ? DASH
                 : `${summary.deviation >= 0 ? "+" : ""}${NUM1.format(summary.deviation)} bpm`,
             ],

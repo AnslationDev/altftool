@@ -1,122 +1,169 @@
 /**
- * Netlify plan cost model (Free/Starter vs Pro).
+ * Netlify credit-based plan cost model (Free / Personal / Pro).
  *
- * All figures are Netlify's published list prices and included allowances from
- * netlify.com/pricing. Overages bill in fixed blocks (e.g. bandwidth per
- * 100 GB block), so partial blocks round up — exactly as Netlify invoices.
- * Pricing changes over time — treat results as an estimate.
+ * Netlify replaced its old per-seat pricing plus separate bandwidth,
+ * build-minute and function-invocation overage blocks with a unified
+ * credits system, then removed per-seat charges from Pro entirely on
+ * 2026-04-14 ("The end of seats: pricing Netlify for 3 billion builders").
+ * Every plan now includes a monthly credit allowance; bandwidth, function
+ * compute, production deploys and web requests all draw from the same
+ * pool. Going over the included credits tops up via discrete auto-recharge
+ * packs (Personal: 500 credits per $5, Pro: 1,500 credits per $10); Free
+ * has no recharge option and simply pauses projects at the cap instead.
+ *
+ * Figures below reflect netlify.com/pricing and Netlify's credit-based
+ * pricing docs as of 2026-07. Netlify revises pricing periodically —
+ * treat this as an estimate and confirm current rates at netlify.com/pricing
+ * before budgeting.
  */
 
 export const PLANS = [
   {
     id: "free",
-    label: "Free (Starter)",
-    // Free plan: $0, single-member oriented; 100 GB bandwidth and
-    // 300 build minutes included per month (netlify.com/pricing).
-    memberPrice: 0,
-    includedBandwidthGb: 100,
-    includedBuildMinutes: 300,
+    label: "Free",
+    // Free: $0, 300 credits/month, single owner only, no team seats,
+    // no auto-recharge — projects pause once credits run out.
+    basePrice: 0,
+    includedCredits: 300,
+    recharge: null,
+    seats: "Single owner only",
+  },
+  {
+    id: "personal",
+    label: "Personal",
+    // Personal: $9/month, 1,000 credits/month, single owner only.
+    basePrice: 9,
+    includedCredits: 1000,
+    recharge: { credits: 500, price: 5 },
+    seats: "Single owner only",
   },
   {
     id: "pro",
     label: "Pro",
-    // Pro: $19 per member per month; 1 TB bandwidth and 25,000 build
-    // minutes included per month (netlify.com/pricing).
-    memberPrice: 19,
-    includedBandwidthGb: 1024,
-    includedBuildMinutes: 25000,
+    // Pro's base price and included credits depend on the selected
+    // credit tier (see PRO_CREDIT_TIERS) — unlimited team members are
+    // included at every tier with no per-seat charge.
+    basePrice: null,
+    includedCredits: null,
+    recharge: { credits: 1500, price: 10 },
+    seats: "Unlimited team members included",
   },
 ];
 
-/** Extra bandwidth bills at $55 per 100 GB block (netlify.com/pricing). */
-export const BANDWIDTH_BLOCK_GB = 100;
-export const BANDWIDTH_BLOCK_PRICE = 55;
-
-/** Extra build minutes bill at $7 per 500-minute block (netlify.com/pricing). */
-export const BUILD_BLOCK_MINUTES = 500;
-export const BUILD_BLOCK_PRICE = 7;
-
 /**
- * Serverless functions: 125,000 synchronous invocations per site per month
- * included; beyond that the Functions add-on bills $25 per pack covering up
- * to 2 million invocations (Netlify Functions pricing tiers).
+ * Pro plan monthly credit tiers. Rollover of unused credits to the next
+ * billing cycle is only available on tiers of 5,000 credits or more.
  */
-export const INCLUDED_FUNCTION_INVOCATIONS = 125_000;
-export const FUNCTION_PACK_INVOCATIONS = 2_000_000;
-export const FUNCTION_PACK_PRICE = 25;
+export const PRO_CREDIT_TIERS = [
+  { credits: 3000, price: 20, rollover: false },
+  { credits: 5000, price: 33, rollover: true },
+  { credits: 10000, price: 63, rollover: true },
+  { credits: 15000, price: 95, rollover: true },
+  { credits: 20000, price: 126, rollover: true },
+];
+
+export const DEFAULT_PRO_CREDIT_TIER = 3000;
 
 /**
- * Compute the estimated monthly Netlify bill.
+ * Credit rates per unit of usage, shared by every plan
+ * (netlify.com/pricing, "Credit-based pricing plans").
+ * Deploy previews, branch deploys and failed deploys are NOT metered —
+ * only production deploys consume credits.
+ */
+export const CREDIT_RATES = {
+  bandwidthPerGb: 20,
+  computePerGbHour: 10,
+  deployEach: 15,
+  requestsPer10k: 2,
+};
+
+/**
+ * Compute the estimated monthly Netlify bill under the credit-based model.
  *
  * @param {object} input
- * @param {string} input.planId              "free" or "pro".
- * @param {number} input.members             Team members (seats).
- * @param {number} input.bandwidthGb         Bandwidth used, GB/month.
- * @param {number} input.buildMinutes        Build minutes used per month.
- * @param {number} input.functionInvocations Serverless function invocations per month.
+ * @param {string} input.planId          "free", "personal" or "pro".
+ * @param {number} [input.proCreditTier] Pro plan's monthly credit tier (required when planId is "pro").
+ * @param {number} input.bandwidthGb     Bandwidth used, GB/month.
+ * @param {number} input.computeGbHours  Function/edge/background compute used, GB-hours/month.
+ * @param {number} input.deploys         Production deploys per month.
+ * @param {number} input.webRequests     Web requests served per month.
  * @returns {object} cost breakdown, or { error } for invalid input.
  */
 export function computeNetlifyCost({
   planId,
-  members,
+  proCreditTier,
   bandwidthGb,
-  buildMinutes,
-  functionInvocations,
+  computeGbHours,
+  deploys,
+  webRequests,
 }) {
   const plan = PLANS.find((p) => p.id === planId);
   if (!plan) return { error: "Choose a valid Netlify plan." };
 
-  const memberCount = Number(members);
   const bandwidth = Number(bandwidthGb);
-  const builds = Number(buildMinutes);
-  const invocations = Number(functionInvocations);
+  const compute = Number(computeGbHours);
+  const deployCount = Number(deploys);
+  const requests = Number(webRequests);
 
-  if (!Number.isFinite(memberCount) || memberCount < 1 || !Number.isInteger(memberCount)) {
-    return { error: "Team members must be a whole number of at least 1." };
-  }
-  if (plan.id === "free" && memberCount > 1) {
-    return { error: "The Free plan is limited to a single member — switch to Pro for a team." };
-  }
   if (!Number.isFinite(bandwidth) || bandwidth < 0) {
     return { error: "Bandwidth cannot be negative." };
   }
-  if (!Number.isFinite(builds) || builds < 0) {
-    return { error: "Build minutes cannot be negative." };
+  if (!Number.isFinite(compute) || compute < 0) {
+    return { error: "Function compute cannot be negative." };
   }
-  if (!Number.isFinite(invocations) || invocations < 0) {
-    return { error: "Function invocations cannot be negative." };
+  if (!Number.isFinite(deployCount) || deployCount < 0 || !Number.isInteger(deployCount)) {
+    return { error: "Production deploys must be a whole number of at least 0." };
+  }
+  if (!Number.isFinite(requests) || requests < 0) {
+    return { error: "Web requests cannot be negative." };
   }
 
-  const memberCost = memberCount * plan.memberPrice;
+  let basePrice = plan.basePrice;
+  let includedCredits = plan.includedCredits;
 
-  const bandwidthOverGb = Math.max(0, bandwidth - plan.includedBandwidthGb);
-  const bandwidthBlocks = Math.ceil(bandwidthOverGb / BANDWIDTH_BLOCK_GB);
-  const bandwidthCost = bandwidthBlocks * BANDWIDTH_BLOCK_PRICE;
+  if (plan.id === "pro") {
+    const tier = PRO_CREDIT_TIERS.find((t) => t.credits === Number(proCreditTier));
+    if (!tier) return { error: "Choose a valid Pro credit tier." };
+    basePrice = tier.price;
+    includedCredits = tier.credits;
+  }
 
-  const buildOverMinutes = Math.max(0, builds - plan.includedBuildMinutes);
-  const buildBlocks = Math.ceil(buildOverMinutes / BUILD_BLOCK_MINUTES);
-  const buildCost = buildBlocks * BUILD_BLOCK_PRICE;
+  const bandwidthCredits = bandwidth * CREDIT_RATES.bandwidthPerGb;
+  const computeCredits = compute * CREDIT_RATES.computePerGbHour;
+  const deployCredits = deployCount * CREDIT_RATES.deployEach;
+  const requestCredits = (requests / 10_000) * CREDIT_RATES.requestsPer10k;
 
-  const invocationsOver = Math.max(0, invocations - INCLUDED_FUNCTION_INVOCATIONS);
-  const functionPacks = Math.ceil(invocationsOver / FUNCTION_PACK_INVOCATIONS);
-  const functionCost = functionPacks * FUNCTION_PACK_PRICE;
+  const creditsUsed = bandwidthCredits + computeCredits + deployCredits + requestCredits;
+  const creditsOver = Math.max(0, creditsUsed - includedCredits);
 
-  const total = memberCost + bandwidthCost + buildCost + functionCost;
+  let rechargePacks = 0;
+  let rechargeCost = 0;
+  let hardCapped = false;
+
+  if (creditsOver > 0) {
+    if (!plan.recharge) {
+      hardCapped = true;
+    } else {
+      rechargePacks = Math.ceil(creditsOver / plan.recharge.credits);
+      rechargeCost = rechargePacks * plan.recharge.price;
+    }
+  }
+
+  const total = hardCapped ? null : basePrice + rechargeCost;
 
   return {
     planLabel: plan.label,
-    memberCost,
-    bandwidthOverGb,
-    bandwidthBlocks,
-    bandwidthCost,
-    buildOverMinutes,
-    buildBlocks,
-    buildCost,
-    invocationsOver,
-    functionPacks,
-    functionCost,
-    includedBandwidthGb: plan.includedBandwidthGb,
-    includedBuildMinutes: plan.includedBuildMinutes,
+    basePrice,
+    includedCredits,
+    bandwidthCredits,
+    computeCredits,
+    deployCredits,
+    requestCredits,
+    creditsUsed,
+    creditsOver,
+    rechargePacks,
+    rechargeCost,
+    hardCapped,
     total,
   };
 }

@@ -25,8 +25,9 @@
  * additionally requires that minimum to be met by the theory component on its
  * own, separately from the continuous evaluation marks, so a subject total
  * that scrapes past 30% can still be a fail if the theory part did not.
- * This module checks the subject total and, when a theory split is supplied,
- * checks the theory component too.
+ * This module only checks the subject total against the pass mark — it has
+ * no theory/CE split, so it cannot detect a theory-only shortfall. Students
+ * should still confirm the theory-component pass against their grade card.
  */
 
 /** Kerala nine-point grade scale, highest band first. */
@@ -109,7 +110,7 @@ export function gradeForMarks(marks, max) {
  *
  * @param {object} input
  * @param {string} [input.scope="combined"] "combined" or "plusTwo"
- * @param {Array<{name?: string, marks: number|string, max: number|string, theoryMarks?: number|string, theoryMax?: number|string}>} input.subjects
+ * @param {Array<{name?: string, marks: number|string, max: number|string}>} input.subjects
  * @returns {object} result, or { error } when the marksheet cannot be scored
  */
 export function computeKeralaResult({ scope = "combined", subjects }) {
@@ -144,9 +145,9 @@ export function computeKeralaResult({ scope = "combined", subjects }) {
     if (max <= 0) {
       return { error: `${label} has a maximum of ${max}. The maximum must be greater than zero.` };
     }
-    if (max > MAX_SUBJECT_MAX) {
+    if (max > scopeRecord.subjectMax) {
       return {
-        error: `${label} has a maximum of ${max}. A higher secondary subject does not exceed ${MAX_SUBJECT_MAX} marks.`,
+        error: `${label} has a maximum of ${max}. For ${scopeRecord.label}, a subject does not exceed ${scopeRecord.subjectMax} marks.`,
       };
     }
     if (marks < 0) {

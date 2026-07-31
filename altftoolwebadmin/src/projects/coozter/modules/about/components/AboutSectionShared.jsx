@@ -1,10 +1,7 @@
 "use client";
 
-import { Eye, Plus, Trash2 } from "lucide-react";
-import {
-  ABOUT_SECTION_TABS,
-  ROOT_ARRAY_SECTIONS,
-} from "../service/about.service";
+import { Plus, Trash2 } from "lucide-react";
+import { ABOUT_SECTION_TABS } from "../service/about.service";
 
 export const SECTION_FIELDS = {
   heroSection: [
@@ -108,24 +105,22 @@ export function SectionEditor({
 }) {
   return (
     <div className="space-y-6">
-      {!ROOT_ARRAY_SECTIONS.has(sectionKey) ? (
-        <div className="grid gap-4 md:grid-cols-2">
-          {(SECTION_FIELDS[sectionKey] || []).map(([field, label, type]) => (
-            <Field
-              key={field}
-              label={label}
-              error={errors[`${sectionKey}.${field}`]}
-              wide={type === "textarea"}
-            >
-              <ValueInput
-                value={section[field] || ""}
-                type={type}
-                onChange={(value) => onFieldChange(field, value)}
-              />
-            </Field>
-          ))}
-        </div>
-      ) : null}
+      <div className="grid gap-4 md:grid-cols-2">
+        {(SECTION_FIELDS[sectionKey] || []).map(([field, label, type]) => (
+          <Field
+            key={field}
+            label={label}
+            error={errors[`${sectionKey}.${field}`]}
+            wide={type === "textarea"}
+          >
+            <ValueInput
+              value={section[field] || ""}
+              type={type}
+              onChange={(value) => onFieldChange(field, value)}
+            />
+          </Field>
+        ))}
+      </div>
 
       {Object.entries(ARRAY_FIELDS[sectionKey] || {}).map(
         ([arrayKey, config]) => (
@@ -133,11 +128,7 @@ export function SectionEditor({
             key={arrayKey}
             arrayKey={arrayKey}
             config={config}
-            rows={
-              ROOT_ARRAY_SECTIONS.has(sectionKey)
-                ? section || []
-                : section[arrayKey] || []
-            }
+            rows={section[arrayKey] || []}
             errors={errors}
             sectionKey={sectionKey}
             onAdd={() => onArrayAdd(arrayKey)}
@@ -300,58 +291,8 @@ export function Field({ label, error, children, wide = false }) {
   );
 }
 
-export function PreviewPanel({ label, section, errorCount, content }) {
-  const activeSections = ABOUT_SECTION_TABS.filter((tab) =>
-    ROOT_ARRAY_SECTIONS.has(tab.key)
-      ? (content[tab.key] || []).some((row) => row.isActive !== false)
-      : content[tab.key]?.isActive !== false,
-  ).length;
-  const repeatedCount = Array.isArray(section)
-    ? section.length
-    : Object.values(section || {}).reduce(
-        (count, value) => (Array.isArray(value) ? count + value.length : count),
-        0,
-      );
-  return (
-    <aside>
-      {/* <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)]">
-        <div className="flex items-center gap-2">
-          <Eye className="h-4 w-4 text-[var(--primary)]" />
-          <p className="text-sm font-bold text-[var(--foreground)]">
-            Backend Summary
-          </p>
-        </div>
-        <div className="mt-4 grid gap-3">
-          <SummaryRow label="Current section" value={label} />
-          <SummaryRow label="Repeated items" value={repeatedCount} />
-          <SummaryRow
-            label="Active sections"
-            value={`${activeSections} / ${ABOUT_SECTION_TABS.length}`}
-          />
-          <SummaryRow
-            label="Validation issues"
-            value={errorCount}
-            tone={errorCount ? "danger" : "success"}
-          />
-        </div>
-      </section> */}
-    </aside>
-  );
-}
-
-function SummaryRow({ label, value, tone = "default" }) {
-  const toneClass =
-    tone === "danger"
-      ? "text-[var(--danger)]"
-      : tone === "success"
-        ? "text-[var(--success)]"
-        : "text-[var(--foreground)]";
-  return (
-    <div className="flex items-center justify-between gap-3 rounded-md border border-[var(--border)] px-3 py-2">
-      <span className="text-xs font-semibold text-[var(--muted)]">{label}</span>
-      <span className={`text-sm font-bold ${toneClass}`}>{value}</span>
-    </div>
-  );
+export function PreviewPanel() {
+  return <aside />;
 }
 
 export function LoadingFields() {

@@ -288,9 +288,13 @@ export default function ToolHome() {
         <div className="rounded-lg shadow-md p-4 sm:p-6 mb-6 bg-(--background) text-(--foreground) border border-(--border)">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
             <div className="relative">
+              <label htmlFor="corporate-tool-search" className="sr-only">
+                Search tools
+              </label>
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-(--foreground) w-5 h-5" />
               <div className="relative w-full rounded-lg border-2 border-[#e5e7eb]">
                 <input
+                  id="corporate-tool-search"
                   type="text"
                   placeholder="Search tools..."
                   value={searchTerm}
@@ -304,6 +308,9 @@ export default function ToolHome() {
             </div>
 
             <div className="relative">
+              <label htmlFor="corporate-tool-category" className="sr-only">
+                Filter by category
+              </label>
               <Filter className="absolute left-3 top-1/2 -translate-y-1/2 text-(--foreground) w-5 h-5 pointer-events-none" />
               <div className="relative w-full rounded-lg border-2 border-[#e5e7eb]">
                 <ChevronDown
@@ -311,6 +318,7 @@ export default function ToolHome() {
                   className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-(--foreground) opacity-70"
                 />
                 <select
+                  id="corporate-tool-category"
                   value={selectedCategory}
                   onChange={(e) => {
                     setSelectedCategory(e.target.value);
@@ -369,8 +377,8 @@ export default function ToolHome() {
                 onClick={() => setCurrentPage(index + 1)}
                 className={`px-3 sm:px-4 py-1.5 text-xs sm:text-sm rounded-md ${
                   activePage === index + 1
-                    ? "bg-blue-500 text-white"
-                    : "bg-blue-300 hover:bg-gray-300"
+                    ? "bg-(--primary-active) text-(--primary-foreground) shadow-sm"
+                    : "bg-(--muted) text-(--muted-foreground) border border-(--border) hover:bg-(--secondary-hover)"
                 }`}
               >
                 {index + 1}

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Baby, Check, Copy, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   ALPHABET,
   GENDERS,
@@ -42,7 +43,7 @@ export default function ToolHome() {
   const [minLetters, setMinLetters] = useState(String(DEFAULTS.minLetters));
   const [maxLetters, setMaxLetters] = useState(String(DEFAULTS.maxLetters));
   const [meaning, setMeaning] = useState(DEFAULTS.meaning);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () => filterNames({ letter, gender, origin, minLetters, maxLetters, meaning }),
@@ -52,16 +53,10 @@ export default function ToolHome() {
   const hasError = Boolean(result.error);
   const names = hasError ? [] : result.names;
 
-  const copyList = async () => {
+  const copyList = () => {
     if (hasError || names.length === 0) return;
     const text = names.map((n) => `${n.name} (${n.gender}) — ${n.meaning} [${n.origin}]`).join("\n");
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    return copy("list", text, { label: "Matching names" });
   };
 
   const reset = () => {
@@ -71,7 +66,7 @@ export default function ToolHome() {
     setMinLetters(String(DEFAULTS.minLetters));
     setMaxLetters(String(DEFAULTS.maxLetters));
     setMeaning(DEFAULTS.meaning);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -247,18 +242,21 @@ export default function ToolHome() {
           </div>
           <button
             type="button"
-            className={GHOST_BTN}
+            className={`${GHOST_BTN} disabled:cursor-not-allowed disabled:opacity-50`}
             onClick={copyList}
-            aria-label="Copy the matching names with their meanings"
+            aria-label={isCopied("list") ? "Copied" : "Copy the matching names with their meanings"}
             disabled={hasError || names.length === 0}
           >
-            {copied ? (
+            {isCopied("list") ? (
               <Check className="h-4 w-4" aria-hidden="true" />
             ) : (
               <Copy className="h-4 w-4" aria-hidden="true" />
             )}
-            {copied ? "Copied!" : "Copy list"}
+            {isCopied("list") ? "Copied!" : "Copy list"}
           </button>
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">

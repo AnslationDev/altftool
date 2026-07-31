@@ -47,7 +47,7 @@ export function getWeakTopics(answers) {
     .sort((a, b) => a.accuracy - b.accuracy);
 }
 
-export function getPerformanceReport(answers, difficulty) {
+export function getPerformanceReport(answers, difficulty, streak = 0) {
   const correct = answers.filter((a) => a.correct).length;
   const total = answers.length;
   const accuracy = calculateAccuracy(correct, total);
@@ -56,7 +56,7 @@ export function getPerformanceReport(answers, difficulty) {
   const topics = getWeakTopics(answers);
   const weakTopics = topics.filter((t) => t.accuracy < 70);
   const strongTopics = topics.filter((t) => t.accuracy >= 80);
-  const score = calculateScore(correct, 0, difficulty);
+  const score = calculateScore(correct, streak, difficulty);
 
   return {
     totalScore: score,

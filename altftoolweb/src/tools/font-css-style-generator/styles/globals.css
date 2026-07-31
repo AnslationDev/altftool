@@ -1,7 +1,7 @@
 .font-css-studio {
   --font-css-accent: #0891b2;
   --font-css-accent-2: #7c3aed;
-  min-height: 100vh;
+  min-height: 100dvh;
   background:
     radial-gradient(circle at top left, color-mix(in srgb, var(--font-css-accent) 22%, transparent), transparent 28rem),
     linear-gradient(180deg, color-mix(in srgb, var(--section-highlight) 72%, transparent), transparent 34rem),

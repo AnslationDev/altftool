@@ -34,7 +34,7 @@ export const COLLECTIONS = {
       { key: "about", label: "About paragraphs", type: "list", hint: "1–4 paragraphs for 'About this Product'" },
       { key: "category", label: "Category", type: "select", options: "dynamic:categories", required: true },
       { key: "storeId", label: "Store", type: "select", options: "dynamic:stores", required: true },
-      { key: "storeName", label: "Store Display Name", type: "text", required: true, hint: "Shown on cards (auto-fill from store)" },
+      { key: "storeName", label: "Store Display Name", type: "text", required: true, hint: "Shown on cards — enter manually, must match the selected store's name" },
       { key: "price", label: "Price", type: "text", required: true, hint: "₹2,399" },
       { key: "originalPrice", label: "Original Price", type: "text", hint: "₹5,999 (must be higher)" },
       { key: "discountLabel", label: "Discount Label", type: "text", required: true, hint: "60% OFF" },
@@ -56,7 +56,10 @@ export const COLLECTIONS = {
   categories: {
     label: "Categories", icon: "🗂️", collection: "categories",
     listColumns: ["name", "tagline", "icon", "accent"],
-    guards: [{ collection: "deals", field: "category", message: "deals still reference this category" }],
+    guards: [
+      { collection: "deals", field: "category", message: "deals still reference this category" },
+      { collection: "collections", field: "categorySlug", message: "trending collections still reference this category" },
+    ],
     fields: [
       slugField,
       { key: "name", label: "Name", type: "text", required: true, max: 30 },

@@ -23,7 +23,7 @@ export async function checkUrl(url) {
       return { data: null, error: 'Request timed out. Please try again.' };
     }
     if (!err.response) {
-      return { data: null, error: 'Cannot connect to the WhereGoes backend. Please try again.' };
+      return { data: null, error: 'Cannot reach the redirect-tracing service. Please try again.' };
     }
     const message = err.response?.data?.error || 'An unknown error occurred.';
     return { data: null, error: message };

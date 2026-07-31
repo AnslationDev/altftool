@@ -112,6 +112,59 @@ export default function FlashcardMaker() {
     setIsAIPanelOpen(false);
   };
 
+  const sanitizeImportedCard = (card) => {
+    if (!card || typeof card !== "object") return null;
+    return {
+      id: typeof card.id === "string" || typeof card.id === "number"
+        ? card.id
+        : Math.random().toString(36).substr(2, 9),
+      front: typeof card.front === "string" ? card.front : "",
+      back: typeof card.back === "string" ? card.back : "",
+      difficulty: ["easy", "medium", "hard"].includes(card.difficulty) ? card.difficulty : "medium",
+      createdAt: typeof card.createdAt === "string" ? card.createdAt : new Date().toISOString()
+    };
+  };
+
+  const sanitizeImportedDeck = (deck) => {
+    if (!deck || typeof deck !== "object") return null;
+    if (typeof deck.name !== "string" || !Array.isArray(deck.cards)) return null;
+    const validId = typeof deck.id === "string" || typeof deck.id === "number";
+    return {
+      id: validId ? deck.id : Math.random().toString(36).substr(2, 9),
+      name: deck.name,
+      cards: deck.cards.map(sanitizeImportedCard).filter(Boolean),
+      createdAt: typeof deck.createdAt === "string" ? deck.createdAt : new Date().toISOString()
+    };
+  };
+
+  const handleImportDecks = (file) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (re) => {
+      try {
+        const imported = JSON.parse(re.target.result);
+        if (!Array.isArray(imported)) {
+          alert("Invalid file: expected a JSON array of decks.");
+          return;
+        }
+        const validDecks = imported.map(sanitizeImportedDeck).filter(Boolean);
+        if (validDecks.length === 0) {
+          alert("Invalid file: no valid decks found (each deck needs a name and a cards array).");
+          return;
+        }
+        const confirmed = window.confirm(
+          `Import ${validDecks.length} deck(s)? This will replace all ${decks.length} existing deck(s) and cannot be undone.`
+        );
+        if (!confirmed) return;
+        setDecks(validDecks);
+        setActiveDeckId(validDecks[0].id);
+      } catch (err) {
+        alert("Invalid file");
+      }
+    };
+    reader.readAsText(file);
+  };
+
   return (
     <div className="px-4 py-8 bg-(--background) min-h-screen text-(--foreground)">
       {/* Platform Standard Header */}
@@ -153,19 +206,15 @@ export default function FlashcardMaker() {
                   </button>
                   <label className="flex-1 py-2 bg-(--muted) text-(--foreground) rounded-lg text-sm font-bold text-center cursor-pointer border border-(--border) hover:bg-(--card-hover-bg)">
                     Import
-                    <input type="file" className="hidden" accept=".json" onChange={(e) => {
-                      const file = e.target.files[0];
-                      if (file) {
-                        const reader = new FileReader();
-                        reader.onload = (re) => {
-                          try {
-                            const imported = JSON.parse(re.target.result);
-                            if (Array.isArray(imported)) setDecks(imported);
-                          } catch (err) { alert("Invalid file"); }
-                        };
-                        reader.readAsText(file);
-                      }
-                    }} />
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept=".json"
+                      onChange={(e) => {
+                        handleImportDecks(e.target.files[0]);
+                        e.target.value = "";
+                      }}
+                    />
                   </label>
                 </div>
               </div>

@@ -142,7 +142,7 @@ export function computeChatbotCost({
   if (turns < 1) return { error: "A conversation needs at least one turn." };
   if (turns > MAX_TURNS) return { error: `Keep turns per conversation at or below ${MAX_TURNS}.` };
   if (conversationsPerMonth > MAX_CONVERSATIONS_PER_MONTH) {
-    return { error: "Enter a monthly conversation volume below 500 million." };
+    return { error: "Enter a monthly conversation volume at or below 500 million." };
   }
   if (cacheHitPercent > 100) return { error: "Cache hit rate cannot exceed 100%." };
   if (deflectionPercent > 100) return { error: "Deflection rate cannot exceed 100%." };
@@ -207,6 +207,13 @@ export function computeChatbotCost({
     netSaving,
     roiPercent,
     breakEvenDeflectionPercent,
+    // Three cost sources make up costPerConversation: input tokens, output
+    // tokens, and the flat per-conversation retrieval/embedding cost. Each
+    // share is that source's slice of costPerConversation, so the three sum
+    // to 100 — retrieval is its own bucket rather than being folded into
+    // "input" just because it isn't the model's output.
+    inputShare: costPerConversation > 0 ? ((freshInputCost + cachedInputCost) / costPerConversation) * 100 : 0,
     outputShare: costPerConversation > 0 ? (outputCost / costPerConversation) * 100 : 0,
+    retrievalShare: costPerConversation > 0 ? (embeddingCostPerConversation / costPerConversation) * 100 : 0,
   };
 }

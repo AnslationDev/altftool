@@ -7,14 +7,14 @@ const seo = {
     "Screening a pasted list of PANs for structurally impossible entries before an upload rejects the whole file.",
   ],
   benefits: [
-    ["Decodes the status code", "Maps all twelve status characters, flagging the two that are rarely used."],
+    ["Decodes the status code", "Maps all ten status characters defined by the Income Tax Department."],
     ["Surname check", "Compares the fifth character with the surname or entity name you supply."],
     ["Redaction output", "Produces a masked form that keeps the status code readable but hides the identifying digits."],
   ],
   faqs: [
     [
       "What does the 4th letter of a PAN card mean?",
-      "It is the status of the holder. P means an individual, C a company, H a Hindu Undivided Family, F a firm, A an association of persons, T a trust, B a body of individuals, L a local authority, J an artificial juridical person and G a government body; E is used on newer LLP allotments.",
+      "It is the status of the holder. P means an individual, C a company, H a Hindu Undivided Family, F a firm, A an association of persons, T a trust, B a body of individuals, L a local authority, J an artificial juridical person and G a government body. Limited liability partnerships (LLPs) also use the F code — there is no separate LLP status code.",
     ],
     [
       "Why does my PAN not match my name?",

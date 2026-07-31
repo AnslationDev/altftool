@@ -100,7 +100,6 @@ export function normalizeContactFields(fields) {
 const settingsService = createSingletonDocService(CONTACT_SETTINGS_PATH, DEFAULT_CONTACT_SETTINGS);
 
 export const subscribeContactSettings = settingsService.subscribe;
-export const resetContactSettings = settingsService.reset;
 
 export function saveContactSettings(payload) {
   return settingsService.save({

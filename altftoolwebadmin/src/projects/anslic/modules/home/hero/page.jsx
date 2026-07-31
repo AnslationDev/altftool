@@ -23,8 +23,20 @@ export default function AnslicHomeHeroPage() {
     return subscribeHomeSection(
       SECTION_KEY,
       (data) => {
-        setSaved(data);
-        setDraft(data);
+        setSaved((prevSaved) => {
+          setDraft((prevDraft) => {
+            const hasLocalEdits = JSON.stringify(prevDraft) !== JSON.stringify(prevSaved);
+            if (!hasLocalEdits) return data;
+            if (JSON.stringify(prevDraft) !== JSON.stringify(data)) {
+              emitAlert({
+                type: "warning",
+                message: "Hero section was updated elsewhere while you have unsaved changes. Your edits were kept — save to overwrite, or refresh to discard them.",
+              });
+            }
+            return prevDraft;
+          });
+          return data;
+        });
         setLoading(false);
       },
       () => {

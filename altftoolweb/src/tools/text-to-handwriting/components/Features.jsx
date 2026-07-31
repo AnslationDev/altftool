@@ -7,7 +7,7 @@ const faqItems = [
   {
     question: "How does the Text to Handwriting Converter work?",
     answer:
-      "Our converter loads highly-realistic handwriting web fonts from Google Fonts and draws your typed text onto an HTML5 canvas. You can choose different line ruling presets (notebook, blank, grid) and ink colors (blue, black, red) to compile the output.",
+      "Our converter loads highly-realistic handwriting web fonts from Google Fonts and draws your typed text onto an HTML5 canvas. You can choose different line ruling presets (notebook, blank, grid, parchment) and ink colors (blue, dark blue, black, red, green) to compile the output.",
   },
   {
     question: "Are my documents secure?",
@@ -32,7 +32,7 @@ const faqItems = [
   {
     question: "Does it support custom handwriting fonts?",
     answer:
-      "We pre-load five distinct handwriting fonts. You can choose the one that matches your personal handwriting style best from the option settings panel.",
+      "We pre-load 40 distinct handwriting fonts. You can choose the one that matches your personal handwriting style best from the option settings panel.",
   },
 ];
 
@@ -58,7 +58,7 @@ export default function Features() {
             </div>
             <h3 className="text-lg font-semibold text-(--foreground) mb-2">Notebook Presets</h3>
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              Choose classic blue/red lined school notebooks, blank sheets, or blueprint grid lines.
+              Choose classic lined school notebooks, blank sheets, blueprint grid lines, or aged parchment paper.
             </p>
           </div>
 
@@ -68,7 +68,7 @@ export default function Features() {
             </div>
             <h3 className="text-lg font-semibold text-(--foreground) mb-2">Authentic Inks</h3>
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              Select between gel/ballpoint style Blue, Deep Black, or Red inks with precise hex mappings.
+              Select between Royal Blue, Gel Blue, Deep Black, Red, or Green inks with precise hex mappings.
             </p>
           </div>
 

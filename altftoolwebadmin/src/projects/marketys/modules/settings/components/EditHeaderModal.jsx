@@ -138,7 +138,7 @@ export default function EditHeaderModal({ onClose, onSaved }) {
                 </button>
               </div>
               {form.links.map((link, i) => (
-                <div key={i} className="flex items-center gap-2">
+                <div key={i} className="group flex items-center gap-2">
                   <span className="text-[10px] font-bold text-gray-400 uppercase w-6">{i + 1}</span>
                   <input value={link.label} onChange={(e) => {
                     const next = [...form.links];

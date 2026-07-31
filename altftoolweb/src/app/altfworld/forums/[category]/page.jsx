@@ -12,6 +12,8 @@ export async function generateMetadata({ params }) {
     description: `Browse AltfWorld discussions, threads, and resources for ${label.toLowerCase()} builders and tool users.`,
     path: `/altfworld/forums/${category}`,
     keywords: [label, "AltfWorld forums"],
+    // Procedurally generated mock-data listing page — keep it out of search results.
+    noindex: true,
   });
 }
 

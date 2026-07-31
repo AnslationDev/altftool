@@ -169,12 +169,23 @@ export function buildManifests({ name, namespace = "", envText, secretType = "Op
   const warnings = [...parsed.warnings];
 
   let totalBytes = 0;
+  let secretBytes = 0;
   for (const { key, value } of parsed.entries) {
-    totalBytes += utf8Bytes(key).length + utf8Bytes(value).length;
+    const keyBytes = utf8Bytes(key).length;
+    const valueBytes = utf8Bytes(value).length;
+    totalBytes += keyBytes + valueBytes;
+    // Secret `data` values are base64-encoded (RFC 4648 §4, padded): the encoded
+    // length of an n-byte value is always ceil(n / 3) * 4, matching encodeBase64Utf8.
+    secretBytes += keyBytes + Math.ceil(valueBytes / 3) * 4;
   }
   if (totalBytes > MAX_OBJECT_BYTES) {
     return {
       error: `Data is ${totalBytes.toLocaleString()} bytes — ConfigMaps and Secrets are capped at 1 MiB (${MAX_OBJECT_BYTES.toLocaleString()} bytes).`,
+    };
+  }
+  if (secretBytes > MAX_OBJECT_BYTES) {
+    return {
+      error: `Base64-encoded data is ${secretBytes.toLocaleString()} bytes — Secrets are capped at 1 MiB (${MAX_OBJECT_BYTES.toLocaleString()} bytes) once values are base64-encoded.`,
     };
   }
 
@@ -195,7 +206,7 @@ export function buildManifests({ name, namespace = "", envText, secretType = "Op
   secretLines.push("data:");
   const encoded = parsed.entries.map(({ key, value }) => ({ key, b64: encodeBase64Utf8(value) }));
   for (const { key, b64 } of encoded) {
-    secretLines.push(`  ${key}: ${b64}`);
+    secretLines.push(`  ${key}: ${yamlValue(b64)}`);
   }
 
   if (secretType === "kubernetes.io/tls") {

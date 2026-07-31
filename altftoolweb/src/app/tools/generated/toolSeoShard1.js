@@ -4076,7 +4076,7 @@ export default {
     ],
     [
       "What are MICRO and MODIFIER in CalVer?",
-      "MICRO is a plain counter for releases within the same date period — the third fix released in July 2026 under YYYY.MM.MICRO is 2026.7.2 — and it conventionally resets to 0 when the date segment rolls over. MODIFIER is an optional trailing tag such as beta1 or rc2 for pre-releases."
+      "MICRO is a plain counter for releases within the same date period — the third fix released in July 2026 under YYYY.MM.MICRO is 2026.7.3 — and it conventionally resets to 0 when the date segment rolls over. MODIFIER is an optional trailing tag such as beta1 or rc2 for pre-releases."
     ],
     [
       "Which projects use calendar versioning?",
@@ -13690,7 +13690,7 @@ export default {
   "faqs": [
     [
       "How many tools are in the directory?",
-      "39 products across 10 categories. The largest groups are Project Management and Productivity Suite; the rest cover Communication, CRM, Finance, HR, Analytics, Customer Support, Development and File Storage."
+      "39 products across 10 categories. Project Management is the largest with 5 tools; Communication, Productivity Suite, CRM, Finance, HR, Analytics and Development are tied at 4 tools each, and File Storage and Customer Support round out the list with 3 each."
     ],
     [
       "Does this show actual prices?",

@@ -1,4 +1,17 @@
 version: 1
+# HOST CONSOLIDATION — NOT CONFIGURABLE FROM THIS FILE.
+# Measured 2026-07-30:
+#   http://altftool.com/   -> 301 (CloudFront) -> https://altftool.com/
+#   https://altftool.com/  -> 302              -> https://www.altftool.com/
+# The 302 carries none of the security headers that withSecurityHeaders adds to
+# "/:path*", so it is issued above the Next.js origin (Amplify domain
+# management / CloudFront), not by next.config.mjs — there is no middleware and
+# no host-based redirect in code. amplify.yml cannot express redirects, so the
+# fix is a console change: Amplify Console -> Hosting -> Rewrites and redirects
+# -> apex-to-www rule set to "301 (Permanent redirect)" (add an explicit rule if
+# the auto-created domain redirect is not editable). A 302 does not consolidate
+# ranking signals, and Search Console is currently reporting the same pages
+# under both hostnames.
 frontend:
   phases:
     preBuild:

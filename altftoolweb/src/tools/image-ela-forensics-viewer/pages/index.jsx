@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 
 import {
+  applyExifOrientationToDimensions,
   buildPrivacySafeElaSummary,
   buildResidualRegionGrid,
   calculateWorkingDimensions,
@@ -29,8 +30,10 @@ import {
   detectRasterMime,
   ELA_LIMITATIONS,
   ELA_LIMITS,
+  parseJpegExifOrientation,
   parseRasterDimensions,
   summarizeResidualMagnitudes,
+  SUPPORTED_MIME_TYPES,
   validateRasterDimensions,
 } from "../lib/elaAnalysis.mjs";
 
@@ -114,6 +117,36 @@ async function decodeBlobIntoCanvas(blob, width, height) {
   } finally {
     URL.revokeObjectURL(objectUrl);
   }
+}
+
+// Reads a growing prefix of the file until a recognizable raster header
+// yields real dimensions, or the whole file has been read. A large-but-valid
+// chained metadata block (embedded ICC profile, extended XMP, etc.) can push
+// the SOF0/IHDR/VP8X marker past ELA_LIMITS.maxHeaderBytes, so a single fixed
+// slice can under-read a well-formed image. If the very first slice doesn't
+// even carry a recognizable signature, more bytes cannot help, so this stops
+// immediately instead of re-reading the file needlessly.
+async function readRasterHeader(file) {
+  const attemptSizes = [Math.min(file.size, ELA_LIMITS.maxHeaderBytes)];
+  while (attemptSizes[attemptSizes.length - 1] < file.size) {
+    attemptSizes.push(
+      Math.min(file.size, attemptSizes[attemptSizes.length - 1] * 4),
+    );
+  }
+
+  let headerBytes = new Uint8Array();
+  let mimeType = null;
+  let headerDimensions = null;
+  for (const attemptSize of attemptSizes) {
+    headerBytes = new Uint8Array(
+      await file.slice(0, attemptSize).arrayBuffer(),
+    );
+    mimeType = detectRasterMime(headerBytes);
+    if (!mimeType) break;
+    headerDimensions = parseRasterDimensions(headerBytes);
+    if (headerDimensions) break;
+  }
+  return { headerBytes, mimeType, headerDimensions };
 }
 
 function drawCanvas(target, source) {
@@ -289,13 +322,8 @@ export default function ImageElaForensicsViewer() {
     setBusy(true);
     let objectUrl = "";
     try {
-      const headerBytes = new Uint8Array(
-        await file
-          .slice(0, Math.min(file.size, ELA_LIMITS.maxHeaderBytes))
-          .arrayBuffer(),
-      );
-      const mimeType = detectRasterMime(headerBytes);
-      const headerDimensions = parseRasterDimensions(headerBytes);
+      const { headerBytes, mimeType, headerDimensions } =
+        await readRasterHeader(file);
       if (!mimeType || !headerDimensions) {
         throw new Error(
           "The file header is not a supported or complete JPEG, PNG, or WebP raster image. SVG and other formats are excluded.",
@@ -307,22 +335,32 @@ export default function ImageElaForensicsViewer() {
           `The image dimensions exceed the pre-decode safety limit of ${ELA_LIMITS.maxSourceEdge.toLocaleString("en-US")} pixels per edge and ${ELA_LIMITS.maxSourcePixels.toLocaleString("en-US")} total pixels.`,
         );
       }
+      // The browser decodes JPEG pixels already rotated per the file's own
+      // EXIF Orientation tag, so a 90/270-degree rotation (tag 5-8) reports
+      // naturalWidth/naturalHeight with axes swapped relative to the
+      // EXIF-blind header dimensions above. Compare against the
+      // orientation-corrected expectation so a genuinely valid rotated JPEG
+      // isn't rejected, while a real header/pixel mismatch still is.
+      const orientedDimensions = applyExifOrientationToDimensions(
+        headerDimensions,
+        parseJpegExifOrientation(headerBytes),
+      );
 
       objectUrl = URL.createObjectURL(
         file.type === mimeType ? file : file.slice(0, file.size, mimeType),
       );
       const image = await loadImage(objectUrl);
       if (
-        image.naturalWidth !== headerDimensions.width ||
-        image.naturalHeight !== headerDimensions.height
+        image.naturalWidth !== orientedDimensions.width ||
+        image.naturalHeight !== orientedDimensions.height
       ) {
         throw new Error(
           "The decoded dimensions do not match the raster header, so the image was rejected.",
         );
       }
       const dimensions = calculateWorkingDimensions(
-        headerDimensions.width,
-        headerDimensions.height,
+        orientedDimensions.width,
+        orientedDimensions.height,
       );
       const source = makeCanvas(
         dimensions.processedWidth,
@@ -512,7 +550,7 @@ export default function ImageElaForensicsViewer() {
           <input
             ref={fileInputRef}
             type="file"
-            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+            accept={`.jpg,.jpeg,.png,.webp,${SUPPORTED_MIME_TYPES.join(",")}`}
             className="sr-only"
             disabled={busy}
             aria-label="Choose a local JPEG, PNG, or WebP image for ELA analysis"

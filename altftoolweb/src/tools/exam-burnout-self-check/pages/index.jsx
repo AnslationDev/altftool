@@ -94,13 +94,13 @@ export default function ToolHome() {
                           id={inputId}
                           type="radio"
                           name={question.id}
-                          className="sr-only"
+                          className="peer sr-only"
                           checked={selected}
                           onChange={() => setAnswer(index, option.value)}
                         />
                         <label
                           htmlFor={inputId}
-                          className={`inline-flex min-h-11 cursor-pointer items-center rounded-md border px-3 text-sm font-medium transition active:scale-[0.98] motion-reduce:transform-none ${
+                          className={`inline-flex min-h-11 cursor-pointer items-center rounded-md border px-3 text-sm font-medium transition active:scale-[0.98] motion-reduce:transform-none peer-focus-visible:outline-none peer-focus-visible:ring-[3px] peer-focus-visible:ring-[var(--primary)]/35 ${
                             selected
                               ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
                               : "border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)] hover:border-[var(--primary)] hover:text-[var(--foreground)]"

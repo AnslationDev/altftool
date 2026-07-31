@@ -17,15 +17,18 @@ const FEE_HIGH = 5000;
 const FEE_LOW = 1000;
 const FEE_LOW_INCOME_LIMIT = 500000;
 
-const AY_OPTIONS = [
-  { value: "2024", label: "AY 2024-25 (FY 2023-24)" },
-  { value: "2025", label: "AY 2025-26 (FY 2024-25)" },
-  { value: "2026", label: "AY 2026-27 (FY 2025-26)" },
-  { value: "2027", label: "AY 2027-28 (FY 2026-27)" },
-];
+/**
+ * The assessment year always starts in the same calendar year as the Section 139(1) due date
+ * (e.g. a due date of 31 Jul 2025 falls in AY 2025-26 / FY 2024-25). The AY is therefore derived
+ * from the due date rather than picked separately, so the two inputs can never disagree.
+ */
+const ayLabel = (ayStartYear) => {
+  const fyEndShort = String(ayStartYear % 100).padStart(2, "0");
+  const ayEndShort = String((ayStartYear + 1) % 100).padStart(2, "0");
+  return `AY ${ayStartYear}-${ayEndShort} (FY ${ayStartYear - 1}-${fyEndShort})`;
+};
 
 const DEFAULTS = {
-  ayStartYear: "2025",
   dueDate: "2025-07-31",
   filingDate: "2025-11-15",
   totalIncome: "900000",
@@ -75,7 +78,7 @@ function monthsBetween(fromTs, toTs) {
  * Section 139(8A) is possible, which carries additional tax of 25/50/60/70% of tax plus interest.
  */
 function computeLateFiling(input) {
-  const { ayStartYear, dueTs, filingTs, totalIncome, totalTax, taxPaid, notMandatory } = input;
+  const { dueTs, filingTs, totalIncome, totalTax, taxPaid, notMandatory } = input;
 
   const isLate = filingTs > dueTs;
   const months = monthsBetween(dueTs, filingTs);
@@ -89,6 +92,9 @@ function computeLateFiling(input) {
     fee234F = totalIncome <= FEE_LOW_INCOME_LIMIT ? FEE_LOW : FEE_HIGH;
   }
 
+  // The assessment year is derived from the due date's own calendar year (never picked
+  // separately) so it can never disagree with the due date used everywhere else below.
+  const ayStartYear = new Date(dueTs).getUTCFullYear();
   const belatedDeadline = Date.UTC(ayStartYear, 11, 31); // 31 Dec of the assessment year
   const ayEnd = Date.UTC(ayStartYear + 1, 2, 31); // 31 Mar, end of the assessment year
   const belatedWindowOpen = filingTs <= belatedDeadline;
@@ -124,6 +130,7 @@ function computeLateFiling(input) {
     unpaidTax,
     interest234A,
     fee234F,
+    ayStartYear,
     belatedWindowOpen,
     belatedDeadline,
     updatedReturn,
@@ -141,7 +148,6 @@ const formatDate = (ts) =>
   });
 
 export default function ToolHome() {
-  const [ayStartYear, setAyStartYear] = useState(DEFAULTS.ayStartYear);
   const [dueDate, setDueDate] = useState(DEFAULTS.dueDate);
   const [filingDate, setFilingDate] = useState(DEFAULTS.filingDate);
   const [totalIncome, setTotalIncome] = useState(DEFAULTS.totalIncome);
@@ -149,6 +155,11 @@ export default function ToolHome() {
   const [taxPaid, setTaxPaid] = useState(DEFAULTS.taxPaid);
   const [notMandatory, setNotMandatory] = useState(DEFAULTS.notMandatory);
   const [copied, setCopied] = useState(false);
+
+  const derivedAyStartYear = useMemo(() => {
+    const dueTs = parseDate(dueDate);
+    return Number.isNaN(dueTs) ? null : new Date(dueTs).getUTCFullYear();
+  }, [dueDate]);
 
   const result = useMemo(() => {
     const income = toNumber(totalIncome);
@@ -168,7 +179,6 @@ export default function ToolHome() {
     }
 
     return computeLateFiling({
-      ayStartYear: Number(ayStartYear),
       dueTs,
       filingTs,
       totalIncome: income,
@@ -176,7 +186,7 @@ export default function ToolHome() {
       taxPaid: paid,
       notMandatory,
     });
-  }, [totalIncome, totalTax, taxPaid, dueDate, filingDate, ayStartYear, notMandatory]);
+  }, [totalIncome, totalTax, taxPaid, dueDate, filingDate, notMandatory]);
 
   const summary = useMemo(() => {
     if (result.error) return "";
@@ -211,7 +221,6 @@ export default function ToolHome() {
   };
 
   const reset = () => {
-    setAyStartYear(DEFAULTS.ayStartYear);
     setDueDate(DEFAULTS.dueDate);
     setFilingDate(DEFAULTS.filingDate);
     setTotalIncome(DEFAULTS.totalIncome);
@@ -247,23 +256,6 @@ export default function ToolHome() {
       <section className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label className={LABEL_CLASS} htmlFor="late-ay">
-              Assessment year
-            </label>
-            <select
-              id="late-ay"
-              className={`mt-2 ${INPUT_CLASS}`}
-              value={ayStartYear}
-              onChange={(event) => setAyStartYear(event.target.value)}
-            >
-              {AY_OPTIONS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div>
             <label className={LABEL_CLASS} htmlFor="late-due">
               Original due date u/s 139(1)
             </label>
@@ -274,6 +266,20 @@ export default function ToolHome() {
               value={dueDate}
               onChange={(event) => setDueDate(event.target.value)}
             />
+          </div>
+          <div>
+            <p className={LABEL_CLASS} id="late-ay-label">
+              Assessment year
+            </p>
+            <div
+              aria-labelledby="late-ay-label"
+              className="mt-2 flex h-11 w-full items-center rounded-md border border-[var(--border)] bg-[var(--muted)] px-3 font-medium text-[var(--foreground)]"
+            >
+              {derivedAyStartYear === null ? "—" : ayLabel(derivedAyStartYear)}
+            </div>
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+              Derived from the due date on the left, so it always matches.
+            </p>
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="late-filed">
@@ -340,7 +346,10 @@ export default function ToolHome() {
               key={preset.label}
               type="button"
               className={CHIP_BTN}
-              onClick={() => setDueDate(`${ayStartYear}-${preset.month}-${preset.day}`)}
+              onClick={() => {
+                const year = derivedAyStartYear ?? DEFAULTS.dueDate.slice(0, 4);
+                setDueDate(`${year}-${preset.month}-${preset.day}`);
+              }}
             >
               {preset.label}
             </button>

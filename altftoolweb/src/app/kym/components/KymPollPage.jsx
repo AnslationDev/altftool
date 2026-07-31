@@ -6,7 +6,7 @@ import Header from "./Header";
 import KymAdBanner, { kymBanners } from "./KymAdBanner";
 import KymComments from "./KymComments";
 import { contentGroups } from "./KymGenericPage";
-import { pollComments, pollOptions, pollPage } from "../data/pollData";
+import { pollOptions, pollPage } from "../data/pollData";
 import { slugifyTitle } from "../data/slug";
 
 const POLL_ENTRY_TITLE_OVERRIDES = {
@@ -30,7 +30,6 @@ function PollOption({ option, onSelect, selectedId, submitted }) {
       <img src={option.image.src} alt="" />
       <span>
         <strong>{option.title}</strong>
-        <small>{option.votes}% of sample votes</small>
       </span>
     </label>
   );
@@ -56,8 +55,7 @@ function PollSidebar({ currentTitle }) {
         <h2>Poll Info</h2>
         <div className="kym-poll-facts">
           <p>Voting window: May 29 - June 5</p>
-          <p>One vote per user account</p>
-          <p>Results update after moderation review</p>
+          <p>Your vote is saved on this device only</p>
         </div>
       </section>
       <div className="kym-sidebar-banners" aria-label="Sponsored banner">
@@ -83,7 +81,7 @@ export default function KymPollPage() {
       if (saved) {
         setSelectedId(saved);
         setSubmitted(true);
-        setVoteMessage("Your vote has been submitted. Thank you!");
+        setVoteMessage("Your vote is saved on this device. Thank you!");
       }
     } catch {
       // localStorage unavailable; poll still works for the current session
@@ -181,10 +179,7 @@ export default function KymPollPage() {
             </div>
           </section>
 
-          <KymComments
-            initialComments={pollComments}
-            storageKey="kym-comments:meme-of-the-month-may-2026"
-          />
+          <KymComments storageKey="kym-comments:meme-of-the-month-may-2026" />
         </article>
         <PollSidebar currentTitle={pollPage.title} />
       </main>

@@ -39,20 +39,4 @@ export const pollOptions = [
   id: index + 1,
   title,
   image,
-  votes: [18, 13, 11, 10, 9, 8, 7, 6, 5, 5, 4, 4][index],
 }));
-
-export const pollComments = [
-  {
-    name: "MemeArchivist",
-    text: "The image macro formats had a strong month, but the reaction edits were everywhere.",
-  },
-  {
-    name: "InternetResident",
-    text: "Voting for the one I saw quoted outside meme circles. That is usually the signal.",
-  },
-  {
-    name: "PanelEnjoyer",
-    text: "The redraw formats carried May for me. Simple premise, endless remix value.",
-  },
-];

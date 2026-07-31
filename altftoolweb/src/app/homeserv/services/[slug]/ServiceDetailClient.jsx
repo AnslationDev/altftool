@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   Accessibility,
   AirVent,
@@ -199,6 +199,8 @@ export function ServiceDetailClient({ service }) {
   const [flowState, setFlowState] = useState("form");
   const [matchedLocation, setMatchedLocation] = useState("");
   const [callModalPro, setCallModalPro] = useState("");
+  const modalRef = useRef(null);
+  const previousFocusRef = useRef(null);
 
   const ServiceIcon = iconMap[service.icon];
   const heroStepIcons = [LayoutGrid, SlidersHorizontal, MapPin, CheckCircle2];
@@ -234,6 +236,44 @@ export function ServiceDetailClient({ service }) {
     }, 1300);
   }
 
+  useEffect(() => {
+    if (!callModalPro) return undefined;
+
+    previousFocusRef.current = document.activeElement;
+    const modalNode = modalRef.current;
+    const focusableSelector =
+      'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
+    const focusableEls = modalNode ? Array.from(modalNode.querySelectorAll(focusableSelector)) : [];
+    (focusableEls[0] ?? modalNode)?.focus();
+
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setCallModalPro("");
+        return;
+      }
+
+      if (event.key !== "Tab" || focusableEls.length === 0) return;
+
+      const first = focusableEls[0];
+      const last = focusableEls[focusableEls.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      previousFocusRef.current?.focus?.();
+    };
+  }, [callModalPro]);
+
   if (flowState === "loading") {
     return (
       <main className="hs-detail-page hs-match-page">
@@ -241,7 +281,7 @@ export function ServiceDetailClient({ service }) {
         <section className="hs-match-loader" aria-live="polite" aria-busy="true">
           <LoaderCircle size={58} />
           <h1>
-            Finding {service.shortTitle} pros in {matchedLocation}...
+            Loading example {service.shortTitle} results for {matchedLocation}...
           </h1>
         </section>
         <Footer />
@@ -303,6 +343,8 @@ export function ServiceDetailClient({ service }) {
               role="dialog"
               aria-modal="true"
               aria-labelledby="call-modal-title"
+              ref={modalRef}
+              tabIndex={-1}
               onClick={(event) => event.stopPropagation()}
             >
               <button className="hs-modal-close" type="button" aria-label="Close call details" onClick={() => setCallModalPro("")}>
@@ -311,15 +353,14 @@ export function ServiceDetailClient({ service }) {
               <span className="hs-caller-pulse" aria-hidden="true">
                 <PhoneCall size={42} />
               </span>
-              <span className="hs-eyebrow">Call to compare quotes</span>
+              <span className="hs-eyebrow">Example call preview</span>
               <h2 id="call-modal-title">{callModalPro}</h2>
-              <a className="hs-call-number" href="tel:+18884520194">
-                (888) 452-0194
-              </a>
+              <span className="hs-call-number">(888) 452-0194</span>
               <p className="hs-modal-disclaimer">
-                Sample listing for demonstration only — not a real local business or call center.
+                Sample listing for demonstration only — not a real local business or call center. This
+                number isn&rsquo;t connected to a live quote service.
               </p>
-              <p>Speak with a quote specialist to review local availability and next steps.</p>
+              <p>A live version of this page would connect you with a vetted local pro here.</p>
             </div>
           </div>
         ) : null}
@@ -481,9 +522,10 @@ export function ServiceDetailClient({ service }) {
       <section className="hs-section hs-savings-section">
         <div className="hs-heading hs-heading-center">
           <span className="hs-eyebrow">Quote comparison</span>
-          <h2>Real homeowner savings examples</h2>
+          <h2>Example savings comparisons</h2>
+          <p>Illustrative example figures, not real project data.</p>
         </div>
-        <div className="hs-savings-table" role="table" aria-label={`${service.title} savings examples`}>
+        <div className="hs-savings-table" role="table" aria-label={`${service.title} example savings comparisons`}>
           <div className="hs-savings-row hs-savings-head" role="row">
             <span role="columnheader">City</span>
             <span role="columnheader">{service.shortTitle} Job</span>

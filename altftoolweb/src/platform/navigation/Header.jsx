@@ -71,6 +71,8 @@ export default function Header() {
   const [themeReady, setThemeReady] = useState(false);
   const sheetTriggerRef = useRef(null);
   const menuButtonRef = useRef(null);
+  const desktopTriggerRefs = useRef(new Map());
+  const suppressMenuReopenRef = useRef(null);
 
   const prefetchRoute = (href) => {
     if (href?.startsWith("/")) router.prefetch(href);
@@ -103,9 +105,37 @@ export default function Header() {
       setActiveDesktopMenu(null);
       setActiveSheet(null);
       setHeaderHidden(false);
+      suppressMenuReopenRef.current = null;
     }, 0);
     return () => window.clearTimeout(timer);
   }, [pathname]);
+
+  // The desktop menus open on hover and on focus, so Escape has to dismiss them
+  // without moving the pointer (WCAG 1.4.13). Until this existed, an open panel
+  // covering a third of the page could only be closed by mousing away from it.
+  useEffect(() => {
+    if (!activeDesktopMenu) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key !== "Escape") return;
+
+      const label = activeDesktopMenu;
+      const trigger = desktopTriggerRefs.current.get(label);
+
+      // Focus may be sitting on an option that is about to unmount, so pull it
+      // back to the trigger first. That refocus would otherwise re-open the
+      // menu through onFocusCapture below, hence the one-shot suppression flag.
+      if (trigger?.parentElement?.contains(document.activeElement)) {
+        suppressMenuReopenRef.current = label;
+        trigger.focus({ preventScroll: true });
+      }
+
+      setActiveDesktopMenu(null);
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [activeDesktopMenu]);
 
   // App-style auto-hide: the bar slides out of the way while reading and comes
   // back on the first upward scroll. It is a transform on a sticky element, so
@@ -166,11 +196,16 @@ export default function Header() {
         }`}
       >
         <div className="mx-auto grid h-14 max-w-[var(--anslation-ds-container)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 px-4 sm:px-6 lg:h-16 lg:px-8">
+          {/* The mark is only 32px tall, which left the home link short of a
+              thumb target on a phone. `--anslation-ds-control-md` is the shared
+              control height, and tokens.css already raises it to 44px under
+              `pointer: coarse`, so the link grows on touch and keeps mouse
+              density on a desktop — without resizing the logo itself. */}
           <Link
             href="/"
             prefetch={false}
             aria-label="AltFTool home"
-            className="inline-flex min-w-fit items-center rounded-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
+            className="inline-flex h-[var(--anslation-ds-control-md)] min-w-fit items-center rounded-md focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
             {...routePreviewProps("/")}
           >
             <BrandLogo size="sm" />
@@ -202,6 +237,10 @@ export default function Header() {
                   }}
                   onFocusCapture={() => {
                     prefetchRoute(item.href);
+                    if (suppressMenuReopenRef.current === item.label) {
+                      suppressMenuReopenRef.current = null;
+                      return;
+                    }
                     if (hasOptions) setActiveDesktopMenu(item.label);
                   }}
                   onMouseEnter={() => {
@@ -213,6 +252,11 @@ export default function Header() {
                   <Link
                     href={item.href}
                     prefetch={false}
+                    ref={(node) => {
+                      const refs = desktopTriggerRefs.current;
+                      if (node) refs.set(item.label, node);
+                      else refs.delete(item.label);
+                    }}
                     aria-current={itemIsActive ? "page" : undefined}
                     aria-expanded={hasOptions ? menuIsOpen : undefined}
                     aria-haspopup={hasOptions ? "true" : undefined}
@@ -301,7 +345,7 @@ export default function Header() {
               prefetch={false}
               aria-label="Search AltFTool"
               title="Search"
-              className="hidden h-10 w-10 items-center justify-center rounded-md border border-border bg-card text-foreground transition hover:bg-muted active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none md:inline-flex"
+              className="hidden h-[var(--anslation-ds-control-md)] w-[var(--anslation-ds-control-md)] items-center justify-center rounded-md border border-border bg-card text-foreground transition hover:bg-muted active:scale-[0.98] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35 motion-reduce:transform-none md:inline-flex"
               {...routePreviewProps("/search")}
             >
               <Search className="h-5 w-5" aria-hidden="true" />

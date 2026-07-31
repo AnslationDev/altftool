@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ImageIcon, UploadCloud } from "lucide-react";
 
 const tagNames = {
@@ -9,6 +9,7 @@ const tagNames = {
   0x0112: "Orientation",
   0x0131: "Software",
   0x0132: "Modified date",
+  0x8769: "Exif SubIFD pointer",
   0x829a: "Exposure time",
   0x829d: "F-number",
   0x8827: "ISO speed",
@@ -91,6 +92,10 @@ function readIfd(view, tiffStart, offset, littleEndian, names = tagNames) {
     if (tag === 0x8825 && Number.isFinite(Number(value))) {
       rows.push(...readIfd(view, tiffStart, Number(value), littleEndian, gpsTagNames));
     }
+
+    if (tag === 0x8769 && Number.isFinite(Number(value))) {
+      rows.push(...readIfd(view, tiffStart, Number(value), littleEndian, tagNames));
+    }
   }
 
   return rows;
@@ -132,18 +137,29 @@ export default function ToolHome() {
   const [rows, setRows] = useState([]);
   const [error, setError] = useState("");
   const [preview, setPreview] = useState("");
+  const previewUrlRef = useRef("");
 
   const importantRows = useMemo(
     () => rows.filter((row) => ["Camera make", "Camera model", "Original date", "ISO speed", "F-number", "Focal length"].includes(row.name)),
     [rows],
   );
 
+  useEffect(() => {
+    return () => {
+      if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
+    };
+  }, []);
+
   const handleFile = async (file) => {
     if (!file) return;
     setFileInfo({ name: file.name, size: file.size, type: file.type || "Unknown" });
     setRows([]);
     setError("");
-    setPreview(URL.createObjectURL(file));
+
+    if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
+    const nextPreviewUrl = URL.createObjectURL(file);
+    previewUrlRef.current = nextPreviewUrl;
+    setPreview(nextPreviewUrl);
 
     try {
       const buffer = await file.arrayBuffer();

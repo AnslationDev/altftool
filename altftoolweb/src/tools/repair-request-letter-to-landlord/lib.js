@@ -182,6 +182,12 @@ export function computeRepairRequest(input) {
 
   const landlordItems = rows.filter((row) => row.party === "landlord");
   const tenantItems = rows.filter((row) => row.party === "tenant");
+  if (landlordItems.length === 0) {
+    return {
+      error:
+        "This letter requests repairs from the landlord — log at least one issue marked as the landlord's responsibility.",
+    };
+  }
   const urgentCount = landlordItems.filter((row) => row.severityId === "urgent").length;
   const oldest = landlordItems.reduce(
     (max, row) => (row.outstandingDays !== null && row.outstandingDays > max ? row.outstandingDays : max),

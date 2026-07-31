@@ -158,6 +158,35 @@ function EffectBadge({ effectKey }) {
   );
 }
 
+function EffectCountRow({ effectKey, count, total }) {
+  const Icon = EFFECT_ICONS[effectKey];
+  const isPresent = count > 0;
+  return (
+    <li
+      className={`flex items-center justify-between gap-3 rounded-lg border px-3 py-2 text-sm ${
+        isPresent ? "border-border bg-surface-soft" : "border-border/60 bg-background"
+      }`}
+    >
+      <span
+        className={`flex min-w-0 items-center gap-2 font-semibold ${
+          isPresent ? "text-foreground" : "text-muted-foreground"
+        }`}
+      >
+        <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+        <span className="truncate">{EFFECT_META[effectKey].label}</span>
+      </span>
+      <span
+        className={`shrink-0 rounded-pill px-2.5 py-1 text-xs font-bold ${
+          isPresent ? EFFECT_STYLE[effectKey] : "bg-surface-soft text-muted-foreground"
+        }`}
+        aria-label={`${count} of ${total} calls`}
+      >
+        {count}/{total}
+      </span>
+    </li>
+  );
+}
+
 function ActionCard({ action }) {
   return (
     <article className="rounded-xl border border-border bg-surface p-5 shadow-sm">
@@ -492,6 +521,26 @@ export default function AgentActionDryRunSimulator() {
               detail="Safeguards worth checking before approval."
               tone={result.missingSafeguardCount ? "warning" : "success"}
             />
+          </section>
+
+          <section aria-labelledby="effect-breakdown-heading" className="mt-6 tool-card p-5 sm:p-6">
+            <h2 id="effect-breakdown-heading" className="text-sm font-bold text-foreground">
+              Effect type breakdown
+            </h2>
+            <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+              How many of the {result.actions.length} parsed call
+              {result.actions.length === 1 ? "" : "s"} matched each effect type.
+            </p>
+            <ul className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+              {Object.entries(result.counts).map(([effectKey, count]) => (
+                <EffectCountRow
+                  key={effectKey}
+                  effectKey={effectKey}
+                  count={count}
+                  total={result.actions.length}
+                />
+              ))}
+            </ul>
           </section>
 
           <section className="mt-6" aria-labelledby="preview-heading">

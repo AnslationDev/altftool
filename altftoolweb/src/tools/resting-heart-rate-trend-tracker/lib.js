@@ -171,7 +171,7 @@ export function summariseRestingHr(entries, options = {}) {
 
   const latest = series[series.length - 1];
   const baselineValues = list
-    .filter((item) => latest.day - item.day < baselineWindowDays)
+    .filter((item) => item.day !== latest.day && latest.day - item.day < baselineWindowDays)
     .map((item) => item.bpm);
   const baseline = mean(baselineValues);
   const deviation = baseline === null ? null : latest.bpm - baseline;
@@ -185,10 +185,12 @@ export function summariseRestingHr(entries, options = {}) {
 
   let status = "steady";
   let statusText = "Latest reading is within normal day-to-day variation of your baseline.";
-  if (deviation !== null && deviation >= ELEVATED_DELTA) {
+  if (deviation === null) {
+    statusText = `Log more mornings within the ${baselineWindowDays}-day window to build a personal baseline to compare against.`;
+  } else if (deviation >= ELEVATED_DELTA) {
     status = "elevated";
     statusText = `Latest reading is ${deviation.toFixed(1)} bpm above your ${baselineWindowDays}-day baseline. A rise of ${ELEVATED_DELTA} bpm or more often follows poor sleep, alcohol, heat, illness or an unusually hard training block.`;
-  } else if (deviation !== null && deviation <= SUPPRESSED_DELTA) {
+  } else if (deviation <= SUPPRESSED_DELTA) {
     status = "low";
     statusText = `Latest reading is ${Math.abs(deviation).toFixed(1)} bpm below your ${baselineWindowDays}-day baseline, which usually reflects good recovery or improving aerobic fitness.`;
   }

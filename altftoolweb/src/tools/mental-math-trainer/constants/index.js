@@ -48,28 +48,3 @@ export const SKILL_THRESHOLDS = {
   hard: 85,
   expert: 95,
 };
-
-export const DEFAULT_GAME_STATE = {
-  status: "setup",
-  questionType: "addition",
-  difficulty: "easy",
-  gameMode: "practice",
-  questionCount: 20,
-  timerDuration: 60,
-  currentQuestion: null,
-  questionIndex: 0,
-  totalQuestions: 20,
-  score: 0,
-  correctCount: 0,
-  incorrectCount: 0,
-  streak: 0,
-  bestStreak: 0,
-  answers: [],
-  startTime: null,
-  timeRemaining: 0,
-  questionStartTime: 0,
-  isAnswered: false,
-  userAnswer: "",
-  showCorrect: false,
-  questions: [],
-};

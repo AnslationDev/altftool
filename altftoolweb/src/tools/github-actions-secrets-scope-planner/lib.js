@@ -93,12 +93,22 @@ export function validateSecretName(name) {
  * @param {string} [input.org]          Organization slug for gh commands.
  * @returns {object} { plans, counts, checklist, warnings } or { error }
  */
+/**
+ * The most secrets a single plan could ever legitimately need to classify:
+ * every documented per-scope ceiling added together. This only bounds the
+ * size of the input list itself — each scope is still checked against its
+ * own limit below (see `warnings`), so a batch that is all-repository or
+ * all-environment secrets can still exceed 100 and trigger the matching
+ * warning instead of being rejected outright before it is ever classified.
+ */
+const MAX_PLANNABLE_SECRETS = LIMITS.organization + LIMITS.repository + LIMITS.environmentPerEnv;
+
 export function planSecretScopes({ secrets, environments = "staging, production", org = "" }) {
   if (!Array.isArray(secrets) || secrets.length === 0) {
     return { error: "Add at least one secret." };
   }
-  if (secrets.length > 100) {
-    return { error: "More than 100 secrets — plan them in batches." };
+  if (secrets.length > MAX_PLANNABLE_SECRETS) {
+    return { error: `More than ${MAX_PLANNABLE_SECRETS} secrets — plan them in batches.` };
   }
 
   const envList = String(environments)

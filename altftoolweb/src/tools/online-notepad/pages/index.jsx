@@ -39,6 +39,12 @@ export default function ToolHome() {
     URL.revokeObjectURL(url);
   };
 
+  const clearNote = () => {
+    if (!note) return;
+    if (!window.confirm("Clear the note body? This cannot be undone once autosaved.")) return;
+    setDraft((current) => ({ ...current, note: "" }));
+  };
+
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-7xl space-y-6">
@@ -55,12 +61,12 @@ export default function ToolHome() {
 
         <section className="relative z-0 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <input value={title} onChange={(event) => setDraft((current) => ({ ...current, title: event.target.value }))} className="min-w-[14rem] flex-1 rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-lg font-semibold outline-none focus:border-[var(--primary)] sm:text-xl" />
+            <input value={title} onChange={(event) => setDraft((current) => ({ ...current, title: event.target.value }))} aria-label="Note title" placeholder="Untitled note" className="min-w-[14rem] flex-1 rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-lg font-semibold outline-none focus:border-[var(--primary)] sm:text-xl" />
             <button type="button" onClick={downloadNote} className="btn-primary">
               <Download className="h-4 w-4" />
               Export
             </button>
-            <button type="button" onClick={() => setDraft((current) => ({ ...current, note: "" }))} className="btn-secondary">
+            <button type="button" onClick={clearNote} className="btn-secondary">
               <Trash2 className="h-4 w-4" />
               Clear
             </button>

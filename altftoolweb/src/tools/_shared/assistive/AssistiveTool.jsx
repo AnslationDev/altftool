@@ -500,7 +500,9 @@ function LiveCaptions() {
 function useCamera() {
   const videoRef = useRef(null);
   const streamRef = useRef(null);
+  const startingRef = useRef(false);
   const [active, setActive] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const stop = useCallback(() => {
@@ -511,10 +513,18 @@ function useCamera() {
   }, []);
 
   const start = useCallback(async () => {
+    // Guard against a rapid double-click re-entering start() while the
+    // previous getUserMedia() call is still in flight. Without this, two
+    // overlapping calls can each resolve with their own MediaStream; the
+    // second assignment to streamRef.current orphans the first stream and
+    // its camera track keeps running even after stop() is later pressed.
+    if (startingRef.current) return;
     if (!navigator.mediaDevices?.getUserMedia) {
       setError("Camera capture is not supported in this browser.");
       return;
     }
+    startingRef.current = true;
+    setLoading(true);
     try {
       stop();
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -530,15 +540,18 @@ function useCamera() {
       setActive(true);
     } catch (cameraError) {
       setError(cameraError?.message || "Camera permission was not available.");
+    } finally {
+      startingRef.current = false;
+      setLoading(false);
     }
   }, [stop]);
 
   useEffect(() => stop, [stop]);
-  return { videoRef, streamRef, active, error, start, stop };
+  return { videoRef, streamRef, active, loading, error, start, stop };
 }
 
 function CameraMagnifier() {
-  const { videoRef, active, error, start, stop } = useCamera();
+  const { videoRef, active, loading, error, start, stop } = useCamera();
   const [zoom, setZoom] = useState(1.5);
   const [contrast, setContrast] = useState(1.2);
   const [invert, setInvert] = useState(false);
@@ -552,9 +565,10 @@ function CameraMagnifier() {
             type="button"
             className={active ? secondaryButton : primaryButton}
             onClick={active ? stop : start}
+            disabled={loading}
           >
             <Camera className="h-4 w-4" />
-            {active ? "Stop camera" : "Start camera"}
+            {active ? "Stop camera" : loading ? "Starting camera…" : "Start camera"}
           </button>
           <RangeControl
             label={`Zoom · ${zoom.toFixed(1)}×`}
@@ -1035,6 +1049,7 @@ function LipReadMirror() {
     videoRef,
     streamRef,
     active,
+    loading,
     error,
     start,
     stop,
@@ -1084,9 +1099,10 @@ function LipReadMirror() {
             type="button"
             className={active ? secondaryButton : primaryButton}
             onClick={active ? stop : start}
+            disabled={loading}
           >
             <Camera className="h-4 w-4" />
-            {active ? "Stop camera" : "Start camera"}
+            {active ? "Stop camera" : loading ? "Starting camera…" : "Start camera"}
           </button>
           <RangeControl
             label={`Mouth-area zoom · ${zoom.toFixed(1)}×`}

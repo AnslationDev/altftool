@@ -154,14 +154,14 @@ export function estimateSweatRate({ bodyMassKg, roomTempC, humidityPct, style })
  * @param {number} input.postMassKg mass after class, towelled dry
  * @param {number} input.drankMl fluid drunk during class, in millilitres
  * @param {number} input.durationMin
- * @returns {{ sweatLossL: number, sweatRateLPerH: number } | { error: string }}
+ * @returns {{ sweatLossL: number, sweatRateLPerH: number, clamped: boolean } | { error: string }}
  */
 export function sweatRateFromWeighIn({ preMassKg, postMassKg, drankMl, durationMin }) {
   if (!isNum(preMassKg) || preMassKg < MIN_MASS_KG || preMassKg > MAX_MASS_KG) {
     return { error: `Pre-class weight should be between ${MIN_MASS_KG} and ${MAX_MASS_KG} kg.` };
   }
-  if (!isNum(postMassKg) || postMassKg <= 0 || postMassKg > MAX_MASS_KG) {
-    return { error: "Enter a valid post-class weight in kilograms." };
+  if (!isNum(postMassKg) || postMassKg < MIN_MASS_KG || postMassKg > MAX_MASS_KG) {
+    return { error: `Post-class weight should be between ${MIN_MASS_KG} and ${MAX_MASS_KG} kg.` };
   }
   if (!isNum(drankMl) || drankMl < 0) return { error: "Fluid drunk cannot be negative." };
   if (!isNum(durationMin) || durationMin < MIN_DURATION_MIN || durationMin > MAX_DURATION_MIN) {
@@ -175,7 +175,13 @@ export function sweatRateFromWeighIn({ preMassKg, postMassKg, drankMl, durationM
         "You finished heavier than you started once the drink is counted, so no sweat loss can be measured. Re-check the two weights.",
     };
   }
-  return { sweatLossL, sweatRateLPerH: sweatLossL / (durationMin / 60) };
+  // Even with both weights individually in range, a mistyped digit on either
+  // one can still produce a loss that is not physiologically plausible for a
+  // single class. Clamp the same way estimateSweatRate does rather than
+  // feeding an absurd "measured" rate straight into the hydration plan.
+  const raw = sweatLossL / (durationMin / 60);
+  const sweatRateLPerH = clamp(raw, MIN_SWEAT_RATE_L_PER_H, MAX_SWEAT_RATE_L_PER_H);
+  return { sweatLossL, sweatRateLPerH, clamped: sweatRateLPerH !== raw };
 }
 
 /**
@@ -268,7 +274,12 @@ export function computeHotYogaPlan(input) {
       darkUrine,
     });
     if (plan.error) return plan;
-    return { ...plan, sweatSource: "measured", measuredLossL: measured.sweatLossL };
+    return {
+      ...plan,
+      sweatSource: "measured",
+      measuredLossL: measured.sweatLossL,
+      clamped: measured.clamped,
+    };
   }
 
   const modelled = estimateSweatRate({

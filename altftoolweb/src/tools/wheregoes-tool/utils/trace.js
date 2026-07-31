@@ -132,7 +132,7 @@ export function downloadBlob(content, filename, type) {
 }
 
 export function exportJson(result) {
-  downloadBlob(JSON.stringify(result, null, 2), "wheregoes-trace.json", "application/json");
+  downloadBlob(JSON.stringify(result, null, 2), "redirect-trace.json", "application/json");
 }
 
 export function exportCsv(result) {
@@ -150,7 +150,7 @@ export function exportCsv(result) {
   const csv = rows
     .map((row) => row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(","))
     .join("\n");
-  downloadBlob(csv, "wheregoes-trace.csv", "text/csv");
+  downloadBlob(csv, "redirect-trace.csv", "text/csv");
 }
 
 /* --------------------------------- demo mode -------------------------------- */

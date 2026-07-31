@@ -174,7 +174,6 @@ function calculateRefinance(values) {
   const current = simulateLoan(balance, currentRate, currentMonths, 0);
   const refinance = simulateLoan(balance, newRate, newMonths, extraPayment);
   const interestSavedBeforeCost = current.totalInterest - refinance.totalInterest;
-  const grossSavings = current.totalPaid - refinance.totalPaid;
   const netSavings = interestSavedBeforeCost - switchCost;
   const emiDifference = current.emi - refinance.emi;
   const taxBenefitRate = clampNumber(values.taxBenefitRate, 0, 60) / 100;
@@ -219,7 +218,6 @@ function calculateRefinance(values) {
     switchCost,
     penalty,
     interestSavedBeforeCost,
-    grossSavings,
     netSavings,
     netAfterTaxSavings,
     emiDifference,

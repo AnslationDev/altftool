@@ -6,7 +6,10 @@ import { Check, Copy, RotateCcw, SquareDashed } from "lucide-react";
 import {
   barDepthPresets,
   computeCanvasWrap,
+  DEFAULT_BACK_TUCK_IN,
+  DEFAULT_SAFE_MARGIN_IN,
   fromMillimetres,
+  MM_PER_INCH,
   TARGET_DPI,
   UNITS,
   wrapPreview,
@@ -18,13 +21,21 @@ const NUM0 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 
 const UNIT_LABELS = { mm: "Millimetres", cm: "Centimetres", in: "Inches" };
 
+const DEFAULT_UNIT = "cm";
+
+/** Render a lib.js inch constant in DEFAULT_UNIT, same rounding barDepthPresets uses. */
+const formatInchesAsDefaultUnit = (inches) => {
+  const converted = fromMillimetres(inches * MM_PER_INCH, DEFAULT_UNIT);
+  return converted === null ? "" : String(Math.round(converted * 100) / 100);
+};
+
 const DEFAULTS = {
   faceWidth: "40",
   faceHeight: "50",
-  unit: "cm",
+  unit: DEFAULT_UNIT,
   barDepth: "3.81",
-  backTuck: "3.81",
-  safeMargin: "1.27",
+  backTuck: formatInchesAsDefaultUnit(DEFAULT_BACK_TUCK_IN),
+  safeMargin: formatInchesAsDefaultUnit(DEFAULT_SAFE_MARGIN_IN),
   pixels: "6000",
 };
 

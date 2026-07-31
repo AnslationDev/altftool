@@ -16,14 +16,14 @@ import ChimpTest from "./tests/ChimpTest";
 import SequenceMemory from "./tests/SequenceMemory";
 
 const TESTS = [
-  { id:"reaction_time",  name:"Reaction Time",   Icon:Zap,          color:"text-yellow-400",  bg:"bg-yellow-400/10",  desc:"Click when the screen turns green.",                  unit:"ms",  lowerBetter:true  },
-  { id:"visual_memory",  name:"Visual Memory",   Icon:Eye,          color:"text-blue-400",    bg:"bg-blue-400/10",    desc:"Memorize and recall flashing squares.",               unit:"lvl", lowerBetter:false },
-  { id:"number_memory",  name:"Number Memory",   Icon:Hash,         color:"text-purple-400",  bg:"bg-purple-400/10",  desc:"Remember increasingly long numbers.",                 unit:"lvl", lowerBetter:false },
-  { id:"verbal_memory",  name:"Verbal Memory",   Icon:MessageSquare,color:"text-green-400",   bg:"bg-green-400/10",   desc:"Identify words you have seen before.",                unit:"pts", lowerBetter:false },
-  { id:"typing_test",    name:"Typing Test",     Icon:Keyboard,     color:"text-cyan-400",    bg:"bg-cyan-400/10",    desc:"Type a paragraph as fast and accurately as you can.", unit:"WPM", lowerBetter:false },
-  { id:"aim_trainer",    name:"Aim Trainer",     Icon:Crosshair,    color:"text-red-400",     bg:"bg-red-400/10",     desc:"Click targets as quickly as possible.",               unit:"ms",  lowerBetter:true  },
-  { id:"chimp_test",     name:"Chimp Test",      Icon:Grid2x2,      color:"text-orange-400",  bg:"bg-orange-400/10",  desc:"Click numbers in order before they vanish.",          unit:"N",   lowerBetter:false },
-  { id:"sequence_memory",name:"Sequence Memory", Icon:LayoutGrid,   color:"text-pink-400",    bg:"bg-pink-400/10",    desc:"Repeat the flashing square sequence.",                unit:"seq", lowerBetter:false },
+  { id:"reaction_time",  name:"Reaction Time",   Icon:Zap,          color:"text-[var(--warning-text)]", bg:"bg-yellow-400/10",  desc:"Click when the screen turns green.",                  unit:"ms",  lowerBetter:true  },
+  { id:"visual_memory",  name:"Visual Memory",   Icon:Eye,          color:"text-[var(--info-text)]",    bg:"bg-blue-400/10",    desc:"Memorize and recall flashing squares.",               unit:"lvl", lowerBetter:false },
+  { id:"number_memory",  name:"Number Memory",   Icon:Hash,         color:"text-[var(--accent)]",       bg:"bg-purple-400/10",  desc:"Remember increasingly long numbers.",                 unit:"lvl", lowerBetter:false },
+  { id:"verbal_memory",  name:"Verbal Memory",   Icon:MessageSquare,color:"text-[var(--success-text)]", bg:"bg-green-400/10",   desc:"Identify words you have seen before.",                unit:"pts", lowerBetter:false },
+  { id:"typing_test",    name:"Typing Test",     Icon:Keyboard,     color:"text-[var(--primary-text)]", bg:"bg-cyan-400/10",    desc:"Type a paragraph as fast and accurately as you can.", unit:"WPM", lowerBetter:false },
+  { id:"aim_trainer",    name:"Aim Trainer",     Icon:Crosshair,    color:"text-[var(--danger-text)]",  bg:"bg-red-400/10",     desc:"Click targets as quickly as possible.",               unit:"ms",  lowerBetter:true  },
+  { id:"chimp_test",     name:"Chimp Test",      Icon:Grid2x2,      color:"text-[var(--warning-text)]", bg:"bg-orange-400/10",  desc:"Click numbers in order before they vanish.",          unit:"N",   lowerBetter:false },
+  { id:"sequence_memory",name:"Sequence Memory", Icon:LayoutGrid,   color:"text-[var(--accent)]",       bg:"bg-pink-400/10",    desc:"Repeat the flashing square sequence.",                unit:"seq", lowerBetter:false },
 ];
 
 const FEATURE_STEPS = [

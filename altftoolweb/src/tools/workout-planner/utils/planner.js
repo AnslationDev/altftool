@@ -14,8 +14,51 @@ const SUBSTITUTE_MAP = {
 
 const DAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
+// Warm-up/main/cooldown each have a minimum floor, but those floors must never let the
+// blocks add up to more than the user's configured session Duration. When the floors
+// would overflow the budget, scale the blocks down proportionally (keeping a 1-minute
+// floor per block) so the three segments always reconcile to the total duration.
+function splitSessionMinutes(duration) {
+  const total = Math.max(1, Number(duration) || 0);
+  const rawWarmup = Math.max(5, Math.round(total * 0.2));
+  const rawMain = Math.max(15, Math.round(total * 0.65));
+  const rawCooldown = Math.max(5, Math.round(total * 0.15));
+  const rawTotal = rawWarmup + rawMain + rawCooldown;
+
+  if (rawTotal <= total) {
+    return { warmup: rawWarmup, main: rawMain, cooldown: total - rawWarmup - rawMain };
+  }
+
+  const scale = total / rawTotal;
+  let warmup = Math.max(1, Math.round(rawWarmup * scale));
+  let main = Math.max(1, Math.round(rawMain * scale));
+  let cooldown = Math.max(1, total - warmup - main);
+
+  let overflow = warmup + main + cooldown - total;
+  while (overflow > 0 && main > 1) {
+    main -= 1;
+    overflow -= 1;
+  }
+  while (overflow > 0 && warmup > 1) {
+    warmup -= 1;
+    overflow -= 1;
+  }
+  while (overflow > 0 && cooldown > 1) {
+    cooldown -= 1;
+    overflow -= 1;
+  }
+
+  return { warmup, main, cooldown };
+}
+
+// Stable identity for a timeline session, used to keep completion/RPE logs correctly
+// attached to the same day+exercise pairing even after the timeline regenerates.
+export function sessionKey(session) {
+  return `${session.day}::${session.exercise}`;
+}
+
 export function calcNutrition(goal, weight) {
-  const w = Number(weight) || 70;
+  const w = Math.max(1, Number(weight) || 70);
   const factor = goal === "fat-loss" ? 29 : goal === "muscle-gain" ? 35 : 32;
   const calories = Math.round(w * factor);
   const proteinG = Math.round(w * 1.8);
@@ -37,9 +80,7 @@ export function buildTimeline(input) {
     const exercise = SUBSTITUTE_MAP[primary]?.[equipment] || primary;
     const setsBase = goal === "endurance" ? 3 : 4;
     const repsBase = goal === "strength" ? "4-6" : goal === "muscle-gain" ? "8-12" : "12-20";
-    const warmup = Math.max(5, Math.round(duration * 0.2));
-    const main = Math.max(15, Math.round(duration * 0.65));
-    const cooldown = Math.max(5, duration - warmup - main);
+    const { warmup, main, cooldown } = splitSessionMinutes(duration);
     const weekPlan = Array.from({ length: blockWeeks }, (_, w) => {
       const week = w + 1;
       const isDeload = deloadWeek && week === deloadWeek;
@@ -73,8 +114,14 @@ export function buildTimeline(input) {
 
 export function completionStats(logs, timeline) {
   const totalSessions = timeline.length;
-  const completed = logs.filter((log) => log.completed).length;
-  const avgRpe = logs.length ? (logs.reduce((acc, cur) => acc + Number(cur.rpe || 0), 0) / logs.length).toFixed(1) : "0.0";
+  // Only count logs that still match a session in the current timeline (keyed by
+  // day+exercise) so stale entries left over from a prior input configuration can
+  // never inflate adherence above 100% or get misattributed to a different session.
+  const currentLogs = timeline.map((session) => logs[sessionKey(session)]).filter(Boolean);
+  const completed = currentLogs.filter((log) => log.completed).length;
+  const avgRpe = currentLogs.length
+    ? (currentLogs.reduce((acc, cur) => acc + Number(cur.rpe || 0), 0) / currentLogs.length).toFixed(1)
+    : "0.0";
   const adherence = totalSessions ? Math.round((completed / totalSessions) * 100) : 0;
   const coach =
     avgRpe >= 8.5

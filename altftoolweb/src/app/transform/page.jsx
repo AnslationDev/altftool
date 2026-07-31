@@ -73,14 +73,14 @@ export default function TransformIndexPage() {
       />
     <div className="[font-family:var(--font-ibm-plex-sans,inherit)]">
       {/* hero */}
-      <header className="rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm sm:p-9 dark:border-slate-800 dark:bg-slate-900">
-        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-blue-600 dark:text-blue-400">
+      <header className="rounded-[28px] border border-border bg-surface p-6 shadow-sm sm:p-9">
+        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-primary">
           <Wand2 className="h-4 w-4" /> Transform
         </div>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
+        <h1 className="mt-3 text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
           Format &amp; code converters
         </h1>
-        <p className="mt-3 max-w-2xl text-base leading-relaxed text-slate-500 dark:text-slate-400">
+        <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted-foreground">
           {SECTION.description} {total} converters across {groups.length} categories — most run entirely in your
           browser.
         </p>
@@ -89,10 +89,10 @@ export default function TransformIndexPage() {
             <a
               key={group.name}
               href={`#${slugifyCategory(group.name)}`}
-              className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-slate-50 px-3 py-1.5 text-xs font-semibold text-slate-600 transition hover:border-blue-300 hover:text-blue-700 dark:border-slate-700 dark:bg-slate-800/70 dark:text-slate-300 dark:hover:border-blue-500/50"
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-surface-soft px-3 py-1.5 text-xs font-semibold text-muted-foreground transition hover:border-primary/40 hover:text-primary"
             >
               {group.name}
-              <span className="rounded-full bg-slate-200 px-1.5 text-[10px] text-slate-600 dark:bg-slate-700 dark:text-slate-300">
+              <span className="rounded-full bg-muted px-1.5 text-[10px] text-muted-foreground">
                 {group.count}
               </span>
             </a>
@@ -105,8 +105,8 @@ export default function TransformIndexPage() {
         {groups.map((group) => (
           <section key={group.name} id={slugifyCategory(group.name)} className="scroll-mt-24">
             <div className="flex items-baseline justify-between">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white">{group.name}</h2>
-              <span className="text-sm font-medium text-slate-400 dark:text-slate-500">
+              <h2 className="text-xl font-bold text-foreground">{group.name}</h2>
+              <span className="text-sm font-medium text-muted-foreground">
                 {group.count} {group.count === 1 ? "tool" : "tools"}
               </span>
             </div>
@@ -119,8 +119,8 @@ export default function TransformIndexPage() {
         ))}
       </div>
 
-      <footer className="mt-12 flex items-center justify-center gap-2 text-sm text-slate-400 dark:text-slate-500">
-        <Link href="/tools/all" className="inline-flex items-center gap-1 font-semibold text-blue-600 hover:underline dark:text-blue-400">
+      <footer className="mt-12 flex items-center justify-center gap-2 text-sm text-muted-foreground">
+        <Link href="/tools/all" className="inline-flex items-center gap-1 font-semibold text-primary hover:underline">
           Explore all AltFTool tools <ArrowRight className="h-4 w-4" />
         </Link>
       </footer>

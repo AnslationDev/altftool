@@ -610,6 +610,10 @@ export function validate(fields, values) {
     }
     if (f.url && typeof v === "string" && !(v.startsWith("/") || v.startsWith("https://")))
       errors[f.key] = "Must start with / or https://";
+    // Quiz-question schemas (questions, khokho_questions) document that
+    // correctAnswer must exactly match one of the doc's own options — enforce it.
+    if (f.key === "correctAnswer" && typeof v === "string" && Array.isArray(values.options) && values.options.length
+      && !values.options.includes(v)) errors[f.key] = "Must exactly match one option";
   }
   return errors;
 }
@@ -641,6 +645,23 @@ export function validateVideoList(rows = []) {
       const url = String(row.externalVideoUrl || "").trim();
       if (!url) errors[i] = "Video URL is required";
       else if (!VIDEO_URL_RE.test(url)) errors[i] = "Enter a valid URL starting with http:// or https://";
+    }
+  });
+  return errors;
+}
+
+/**
+ * Cross-field validation for nested quiz-question objectlist rows (Arenas'
+ * Questions) — flags any row whose correctAnswer doesn't exactly match one
+ * of its own options, keyed by row index. Mirrors validateVideoList; the
+ * flat-field equivalent (questions, khokho_questions) is handled in validate().
+ */
+export function validateQuestionRows(rows = []) {
+  const errors = {};
+  rows.forEach((row, i) => {
+    const options = Array.isArray(row.options) ? row.options : [];
+    if (row.correctAnswer && options.length && !options.includes(row.correctAnswer)) {
+      errors[i] = "Correct Answer must exactly match one option";
     }
   });
   return errors;

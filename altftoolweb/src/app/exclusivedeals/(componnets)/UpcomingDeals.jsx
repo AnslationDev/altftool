@@ -235,7 +235,7 @@ useEffect(() => {
                 >
                   <Link href={item.link} target="_blank" >
                     {/* shine-card class triggers the diagonal sweep, overflow-hidden clips it */}
-                    <div className="shine-card h-48 md:h-56 rounded-2xl overflow-hidden relative cursor-pointer  ${!isMobileOrTablet ? 'shine-card' : ''}`">
+                    <div className={`h-48 md:h-56 rounded-2xl overflow-hidden relative cursor-pointer ${!isMobileOrTablet ? 'shine-card' : ''}`}>
                       <Image
                         src={item.bannerImg}
                         fill

@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, ScrollText } from "lucide-react";
 
-import { recommendEnvironmentLevels, recommendLevel } from "../lib";
+import { QUESTIONS, recommendEnvironmentLevels, recommendLevel } from "../lib";
 
 const LABEL_CLASS = "block text-sm font-semibold text-[var(--foreground)]";
 const PRIMARY_BTN =
@@ -65,6 +65,18 @@ export default function ToolHome() {
   );
   const hasError = Boolean(result.error);
 
+  const questionState = {
+    isFailure: { checked: isFailure, onChange: setIsFailure, disabled: false },
+    isServiceWide: { checked: isServiceWide, onChange: setIsServiceWide, disabled: !isFailure },
+    wasRecovered: {
+      checked: wasRecovered,
+      onChange: setWasRecovered,
+      disabled: !isFailure || isServiceWide,
+    },
+    isSignificant: { checked: isSignificant, onChange: setIsSignificant, disabled: isFailure },
+    isHighVolume: { checked: isHighVolume, onChange: setIsHighVolume, disabled: isFailure },
+  };
+
   const envPlan = useMemo(
     () => recommendEnvironmentLevels({ costSensitive, highTraffic }),
     [costSensitive, highTraffic],
@@ -123,40 +135,19 @@ export default function ToolHome() {
       <section className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <h2 className="text-base font-semibold">Describe the event</h2>
         <div className="mt-2 space-y-1">
-          <Toggle
-            id="llp-failure"
-            label="It is a failure — something did not work"
-            checked={isFailure}
-            onChange={setIsFailure}
-          />
-          <Toggle
-            id="llp-servicewide"
-            label="It stops the whole process or service (unrecoverable)"
-            checked={isServiceWide}
-            onChange={setIsServiceWide}
-            disabled={!isFailure}
-          />
-          <Toggle
-            id="llp-recovered"
-            label="It was recovered automatically (retry succeeded, fallback used)"
-            checked={wasRecovered}
-            onChange={setWasRecovered}
-            disabled={!isFailure || isServiceWide}
-          />
-          <Toggle
-            id="llp-significant"
-            label="It is a significant lifecycle or business event (startup, order placed)"
-            checked={isSignificant}
-            onChange={setIsSignificant}
-            disabled={isFailure}
-          />
-          <Toggle
-            id="llp-volume"
-            label="It would fire on every iteration, packet or row (very high volume)"
-            checked={isHighVolume}
-            onChange={setIsHighVolume}
-            disabled={isFailure}
-          />
+          {QUESTIONS.map((question) => {
+            const state = questionState[question.id];
+            return (
+              <Toggle
+                key={question.id}
+                id={`llp-${question.id}`}
+                label={question.label}
+                checked={state.checked}
+                onChange={state.onChange}
+                disabled={state.disabled}
+              />
+            );
+          })}
         </div>
       </section>
 
@@ -169,7 +160,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        role="status"
+        aria-live="polite"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

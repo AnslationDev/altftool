@@ -1,18 +1,24 @@
 "use client";
 
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Sparkles, Shuffle, Wand2 } from "lucide-react";
 
 export default function EmptyState({ onQuickFill }) {
+  const reduce = useReducedMotion();
+
   return (
     <div className="flex flex-col items-center justify-center p-10 sm:p-14 text-center rounded-3xl bg-card/60 border border-dashed border-border/80 backdrop-blur-md shadow-inner space-y-5 my-4">
       {/* Animated Icon Illustration */}
       <motion.div
-        animate={{
-          scale: [1, 1.06, 1],
-          rotate: [0, 5, -5, 0],
-        }}
+        animate={
+          reduce
+            ? undefined
+            : {
+                scale: [1, 1.06, 1],
+                rotate: [0, 5, -5, 0],
+              }
+        }
         transition={{
           duration: 4,
           repeat: Infinity,

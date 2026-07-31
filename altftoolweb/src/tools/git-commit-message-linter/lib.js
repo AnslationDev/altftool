@@ -177,12 +177,41 @@ export function lintCommitMessage({ message, headerMax = HEADER_MAX_DEFAULT, req
     if (/^[A-Z][a-z]/.test(fixedSubject)) {
       fixedSubject = fixedSubject[0].toLowerCase() + fixedSubject.slice(1);
     }
-    let fixedHeader = `${fixedType}${cleanScope}${bang ? "!" : ""}: ${fixedSubject}`;
-    if (fixedHeader.length > max) fixedHeader = fixedHeader.slice(0, max).trimEnd();
-    const bodyPart = hasBody
-      ? `\n\n${lines.slice(1).join("\n").replace(/^\n+/, "")}`
-      : "";
-    fixed = `${fixedHeader}${bodyPart}`;
+
+    // A subject made up of nothing but trailing period(s) (e.g. "...")
+    // strips down to an empty description, which would still fail
+    // subject-empty. There's no honest text to fill in on the user's
+    // behalf, so skip the suggestion rather than emit a still-broken fix.
+    if (fixedSubject !== "") {
+      const prefix = `${fixedType}${cleanScope}${bang ? "!" : ""}: `;
+      let fixedHeader = `${prefix}${fixedSubject}`;
+
+      if (fixedHeader.length > max) {
+        // Truncate ONLY the description so type(scope)!: stays intact —
+        // slicing the whole header can chop the closing paren, the colon,
+        // or the description entirely, producing an invalid header.
+        const ellipsis = "…";
+        const budget = max - prefix.length - ellipsis.length;
+        if (budget < 1) {
+          // type(scope)!: alone already meets or exceeds the limit — no
+          // truncation of the description keeps the header valid.
+          fixedHeader = null;
+        } else {
+          let truncated = fixedSubject.slice(0, budget);
+          const lastSpace = truncated.lastIndexOf(" ");
+          if (lastSpace > 0) truncated = truncated.slice(0, lastSpace).trimEnd();
+          if (truncated === "") truncated = fixedSubject.slice(0, budget).trimEnd();
+          fixedHeader = `${prefix}${truncated}${ellipsis}`;
+        }
+      }
+
+      if (fixedHeader) {
+        const bodyPart = hasBody
+          ? `\n\n${lines.slice(1).join("\n").replace(/^\n+/, "")}`
+          : "";
+        fixed = `${fixedHeader}${bodyPart}`;
+      }
+    }
   }
 
   return {

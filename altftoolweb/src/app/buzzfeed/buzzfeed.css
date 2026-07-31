@@ -263,7 +263,7 @@
 
 .bf-header-icon-btn.active {
   color: var(--bf-red);
-  background-color: rgba(238, 51, 34, 0.08);
+  background-color: color-mix(in srgb, var(--bf-red) 8%, transparent);
 }
 
 .bf-badge {
@@ -477,7 +477,7 @@
 
 .bf-bookmark-remove-btn:hover {
   color: var(--bf-red);
-  background-color: rgba(238, 51, 34, 0.08);
+  background-color: color-mix(in srgb, var(--bf-red) 8%, transparent);
 }
 
 /* Category Badge and Tag styles */
@@ -546,10 +546,6 @@
   z-index: 5;
 }
 
-.bf-trending-icon {
-  animation: pulse 1.5s infinite;
-}
-
 .bf-ticker-items-container {
   overflow-x: auto;
   white-space: nowrap;
@@ -587,11 +583,6 @@
 
 .bf-ticker-item:hover {
   opacity: 0.7;
-}
-
-.bf-ticker-number {
-  font-weight: 900;
-  color: rgba(0, 0, 0, 0.4);
 }
 
 /* Hero Section Styles */
@@ -727,7 +718,7 @@
 .bf-sidebar-number {
   font-size: 28px;
   font-weight: 900;
-  color: rgba(238, 51, 34, 0.2);
+  color: color-mix(in srgb, var(--bf-red) 20%, transparent);
   line-height: 1;
   transition: color 0.2s ease;
 }
@@ -887,7 +878,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(140, 82, 255, 0.4);
+  background-color: color-mix(in srgb, var(--bf-quizzes) 40%, transparent);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1187,22 +1178,22 @@
 /* Select states styling */
 .bf-option-card.selected {
   border-color: var(--bf-quizzes);
-  background-color: rgba(140, 82, 255, 0.05);
+  background-color: color-mix(in srgb, var(--bf-quizzes) 5%, transparent);
 }
 
 .bf-option-card.chosen-personality {
   border-color: var(--bf-quizzes);
-  background-color: rgba(140, 82, 255, 0.08);
+  background-color: color-mix(in srgb, var(--bf-quizzes) 8%, transparent);
 }
 
 .bf-option-card.correct {
-  border-color: #00C853;
-  background-color: rgba(0, 200, 83, 0.08);
+  border-color: var(--bf-tasty);
+  background-color: color-mix(in srgb, var(--bf-tasty) 8%, transparent);
 }
 
 .bf-option-card.incorrect {
   border-color: var(--bf-red);
-  background-color: rgba(238, 51, 34, 0.08);
+  background-color: color-mix(in srgb, var(--bf-red) 8%, transparent);
 }
 
 .bf-option-feedback-icon {
@@ -1216,7 +1207,7 @@
 }
 
 .bf-option-feedback-icon.correct {
-  background-color: #00C853;
+  background-color: var(--bf-tasty);
 }
 
 .bf-option-feedback-icon.incorrect {
@@ -1303,10 +1294,10 @@
 }
 
 .bf-quiz-btn-primary:hover {
-  background-color: #743BE8;
-  border-color: #743BE8;
+  background-color: color-mix(in srgb, var(--bf-quizzes) 85%, black);
+  border-color: color-mix(in srgb, var(--bf-quizzes) 85%, black);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(140, 82, 255, 0.3);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--bf-quizzes) 30%, transparent);
 }
 
 .bf-quiz-btn-secondary {
@@ -1393,7 +1384,7 @@
 .bf-reader-action-btn.active {
   color: var(--bf-red);
   border-color: var(--bf-red);
-  background-color: rgba(238, 51, 34, 0.05);
+  background-color: color-mix(in srgb, var(--bf-red) 5%, transparent);
 }
 
 .bf-reader-action-btn.bf-close:hover {
@@ -1605,7 +1596,7 @@
 
 .bf-reaction-btn.selected {
   border-color: var(--bf-red);
-  background-color: rgba(238, 51, 34, 0.05);
+  background-color: color-mix(in srgb, var(--bf-red) 5%, transparent);
   box-shadow: inset 0 0 0 1px var(--bf-red);
 }
 
@@ -1727,7 +1718,7 @@
 }
 
 .bf-comment-submit-btn:hover {
-  background-color: #CC2B1C;
+  background-color: var(--primary-hover);
   transform: translateY(-1px);
 }
 
@@ -1805,7 +1796,7 @@
 
 .bf-comment-vote-btn:hover {
   color: var(--bf-red);
-  background-color: rgba(238, 51, 34, 0.05);
+  background-color: color-mix(in srgb, var(--bf-red) 5%, transparent);
 }
 
 .bf-vote-icon {
@@ -1906,7 +1897,7 @@
 
 .bf-newsletter-input.error {
   border-color: var(--bf-red);
-  background-color: rgba(238, 51, 34, 0.03);
+  background-color: color-mix(in srgb, var(--bf-red) 3%, transparent);
 }
 
 .bf-newsletter-error {
@@ -1934,9 +1925,9 @@
 }
 
 .bf-newsletter-submit-btn:hover {
-  background-color: #CC2B1C;
+  background-color: var(--primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(238, 51, 34, 0.25);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--bf-red) 25%, transparent);
 }
 
 /* Newsletter Success View */
@@ -1948,7 +1939,7 @@
 }
 
 .bf-success-check-icon {
-  color: #00C853;
+  color: var(--bf-tasty);
   flex-shrink: 0;
   animation: scaleUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
@@ -2053,11 +2044,6 @@
     transform: translateY(-180px) scale(1.3);
     opacity: 0;
   }
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.8; }
 }
 
 @keyframes loadingPulse {

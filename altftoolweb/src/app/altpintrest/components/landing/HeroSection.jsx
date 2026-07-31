@@ -385,7 +385,7 @@ export default function HeroSection({ onExplore }) {
                       Spotlight Collection
                     </span>
                     <h3 className="text-xl font-bold text-white">Generative Art & Visual Prompts</h3>
-                    <p className="text-xs text-gray-200 mt-1">Curated by top global creators on AltPinterest.</p>
+                    <p className="text-xs text-gray-200 mt-1">A curated collection on AltPinterest.</p>
                   </div>
                 </div>
               </motion.div>
@@ -418,7 +418,7 @@ export default function HeroSection({ onExplore }) {
                     onClick={() => onExplore('')}
                     className="px-8 py-4 rounded-full bg-[#E60023] hover:bg-red-700 text-white font-extrabold text-base shadow-xl shadow-red-500/20 hover:scale-105 transition-all flex items-center gap-3"
                   >
-                    <span>Browse All Live Pins</span>
+                    <span>Browse All Pins</span>
                     <ArrowRight size={20} />
                   </button>
 

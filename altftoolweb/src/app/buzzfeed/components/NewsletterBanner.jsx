@@ -7,8 +7,9 @@ export default function NewsletterBanner() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
@@ -17,6 +18,23 @@ export default function NewsletterBanner() {
     if (!emailRegex.test(email)) {
       setError("Please enter a valid email address.");
       return;
+    }
+
+    setSubmitting(true);
+    try {
+      const [{ db }, { addDoc, collection, serverTimestamp }] = await Promise.all([
+        import("@/lib/firebase"),
+        import("firebase/firestore"),
+      ]);
+      await addDoc(collection(db, "newsletter_subscribers"), {
+        email,
+        source: "buzzfeed-banner",
+        createdAt: serverTimestamp(),
+      });
+    } catch {
+      // Storage failing shouldn't trap the user on the form.
+    } finally {
+      setSubmitting(false);
     }
 
     setSubmitted(true);
@@ -50,8 +68,8 @@ export default function NewsletterBanner() {
                 />
                 {error && <span className="bf-newsletter-error">{error}</span>}
               </div>
-              <button type="submit" className="bf-newsletter-submit-btn">
-                SUBSCRIBE
+              <button type="submit" className="bf-newsletter-submit-btn" disabled={submitting}>
+                {submitting ? "SUBSCRIBING..." : "SUBSCRIBE"}
               </button>
             </form>
           </>

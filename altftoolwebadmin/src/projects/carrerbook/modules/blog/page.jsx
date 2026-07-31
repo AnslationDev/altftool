@@ -5,11 +5,14 @@ import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import {
   Ban,
+  Columns3,
   Edit3,
   Eye,
   FileText,
   Heart,
+  Maximize2,
   MessageCircle,
+  Minimize2,
   PencilLine,
   PlusCircle,
   Search,
@@ -32,6 +35,17 @@ import {
 const teal = "bg-[#079684] hover:bg-[#087e70]";
 const inputClass = "w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-[#079684] focus:ring-2 focus:ring-[#079684]/10";
 
+const COLUMN_DEFS = [
+  { key: "title", label: "Heading" },
+  { key: "author", label: "Author" },
+  { key: "category", label: "Category" },
+  { key: "date", label: "Publish Date" },
+  { key: "created", label: "Created" },
+  { key: "status", label: "Status" },
+  { key: "likes", label: "Likes" },
+  { key: "comments", label: "Comments" },
+];
+
 export default function BlogPage() {
   const router = useRouter();
   const [categories, setCategories] = useState([]);
@@ -40,6 +54,12 @@ export default function BlogPage() {
   const [query, setQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
   const [categoryModalOpen, setCategoryModalOpen] = useState(false);
+  const [visibleColumns, setVisibleColumns] = useState(() =>
+    Object.fromEntries(COLUMN_DEFS.map((col) => [col.key, true])),
+  );
+  const [columnsMenuOpen, setColumnsMenuOpen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [selectedIds, setSelectedIds] = useState([]);
 
   useEffect(() => {
     const unsubCategories = subscribeBlogCategories(
@@ -91,6 +111,95 @@ export default function BlogPage() {
         return bCreated - aCreated;
       });
   }, [activeTab, articles, query]);
+
+  // Fullscreen: lock body scroll and let Escape exit, matching the pattern
+  // used by the richer table components elsewhere in the admin (e.g. leadtree).
+  useEffect(() => {
+    if (!isFullscreen) return undefined;
+    const handleKey = (event) => {
+      if (event.key === "Escape") setIsFullscreen(false);
+    };
+    window.addEventListener("keydown", handleKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = "";
+    };
+  }, [isFullscreen]);
+
+  // Drop selections that fall out of the current filtered/search view so a
+  // stale id never lingers after a tab switch, search, or delete.
+  useEffect(() => {
+    setSelectedIds((prev) => prev.filter((id) => filteredArticles.some((article) => article.id === id)));
+  }, [filteredArticles]);
+
+  const visibleColumnDefs = COLUMN_DEFS.filter((col) => visibleColumns[col.key]);
+  const allVisibleSelected = filteredArticles.length > 0 && filteredArticles.every((article) => selectedIds.includes(article.id));
+
+  function toggleSelectAll() {
+    setSelectedIds(allVisibleSelected ? [] : filteredArticles.map((article) => article.id));
+  }
+
+  function toggleSelectOne(id) {
+    setSelectedIds((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
+  }
+
+  async function deleteSelected() {
+    if (!selectedIds.length) return;
+    if (!window.confirm(`Delete ${selectedIds.length} selected blog${selectedIds.length > 1 ? "s" : ""}?`)) return;
+    const targets = filteredArticles.filter((article) => selectedIds.includes(article.id));
+    let failures = 0;
+    for (const article of targets) {
+      try {
+        await deleteBlogArticle(article.id, article._collection);
+        if (article.imagePath) {
+          try {
+            await deleteBlogImage(article.imagePath);
+          } catch {
+            // Image cleanup failure is non-fatal for a bulk delete.
+          }
+        }
+      } catch {
+        failures += 1;
+      }
+    }
+    setSelectedIds([]);
+    if (failures) {
+      emitAlert({ type: "error", message: `${targets.length - failures} of ${targets.length} blogs deleted; ${failures} failed.` });
+    } else {
+      emitAlert({ type: "success", message: `${targets.length} blog${targets.length > 1 ? "s" : ""} deleted.` });
+    }
+  }
+
+  function renderCell(article, key) {
+    switch (key) {
+      case "title":
+        return <td key={key} className="max-w-[330px] px-5 py-4 font-semibold text-slate-900">{article.title}</td>;
+      case "author":
+        return <td key={key} className="px-5 py-4">{article.author || "-"}</td>;
+      case "category":
+        return <td key={key} className="px-5 py-4">{article.categoryName || "Uncategorized"}</td>;
+      case "date":
+        return <td key={key} className="px-5 py-4">{article.date || "-"}</td>;
+      case "created":
+        return <td key={key} className="px-5 py-4">{formatDate(article.createdAt)}</td>;
+      case "status":
+        return (
+          <td key={key} className="px-5 py-4">
+            <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold ${article.status === "published" && article.active !== false ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-500"}`}>
+              <span className="h-1.5 w-1.5 rounded-full bg-current" />
+              {article.status === "published" && article.active !== false ? "Published" : "Draft"}
+            </span>
+          </td>
+        );
+      case "likes":
+        return <td key={key} className="px-5 py-4">{Number(article.likes) || 0}</td>;
+      case "comments":
+        return <td key={key} className="px-5 py-4">{Number(article.commentsCount) || 0}</td>;
+      default:
+        return null;
+    }
+  }
 
   async function toggleArticle(article) {
     try {
@@ -150,7 +259,7 @@ export default function BlogPage() {
           </div>
         </section>
 
-        <section className="mt-7 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+        <section className={isFullscreen ? "fixed inset-0 z-40 flex flex-col overflow-hidden rounded-none border-0 bg-white" : "mt-7 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"}>
           <div className="flex flex-wrap items-start justify-between gap-4 border-b border-slate-200 p-5">
             <div className="space-y-4">
               <div className="flex flex-wrap gap-2">
@@ -165,48 +274,85 @@ export default function BlogPage() {
             </div>
             <div className="flex flex-col items-end gap-4">
               <div className="flex gap-2">
-                <button className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600">Columns</button>
-                <button className="rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600">Fullscreen</button>
+                <div className="relative">
+                  <button type="button" onClick={() => setColumnsMenuOpen((value) => !value)} className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50">
+                    <Columns3 className="h-4 w-4" /> Columns
+                  </button>
+                  {columnsMenuOpen ? (
+                    <>
+                      <div className="fixed inset-0 z-10" onClick={() => setColumnsMenuOpen(false)} />
+                      <div className="absolute right-0 top-full z-20 mt-2 w-52 rounded-xl border border-slate-200 bg-white p-3 shadow-lg">
+                        <p className="mb-2 text-[11px] font-black uppercase tracking-wide text-slate-400">Show Columns</p>
+                        <div className="space-y-1.5">
+                          {COLUMN_DEFS.map((col) => (
+                            <label key={col.key} className="flex items-center gap-2 text-sm text-slate-700">
+                              <input
+                                type="checkbox"
+                                checked={visibleColumns[col.key]}
+                                onChange={() => setVisibleColumns((prev) => ({ ...prev, [col.key]: !prev[col.key] }))}
+                                className="h-3.5 w-3.5 rounded border-slate-300"
+                              />
+                              {col.label}
+                            </label>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  ) : null}
+                </div>
+                <button type="button" onClick={() => setIsFullscreen((value) => !value)} className="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 px-4 py-2.5 text-sm font-semibold text-slate-600 hover:bg-slate-50">
+                  {isFullscreen ? <Minimize2 className="h-4 w-4" /> : <Maximize2 className="h-4 w-4" />}
+                  {isFullscreen ? "Exit Fullscreen" : "Fullscreen"}
+                </button>
               </div>
               <span className="text-xs font-semibold text-slate-500">{filteredArticles.length} blogs</span>
             </div>
           </div>
 
-          <div className="overflow-x-auto">
+          {selectedIds.length > 0 ? (
+            <div className="flex items-center justify-between border-b border-slate-200 bg-red-50 px-5 py-3">
+              <span className="text-sm font-semibold text-red-700">{selectedIds.length} selected</span>
+              <div className="flex items-center gap-3">
+                <button type="button" onClick={() => setSelectedIds([])} className="text-sm font-semibold text-slate-600 hover:text-slate-800">Clear</button>
+                <button type="button" onClick={deleteSelected} className="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-1.5 text-sm font-bold text-white hover:bg-red-700">
+                  <Trash2 className="h-3.5 w-3.5" /> Delete Selected
+                </button>
+              </div>
+            </div>
+          ) : null}
+
+          <div className={`overflow-x-auto ${isFullscreen ? "flex-1 overflow-y-auto" : ""}`}>
             <table className="min-w-[1180px] w-full border-collapse text-left text-sm">
               <thead className="bg-slate-50 text-[11px] uppercase tracking-wide text-slate-500">
                 <tr>
-                  <th className="w-12 px-5 py-3"><input type="checkbox" className="h-4 w-4 rounded border-slate-300" /></th>
-                  <Th>Heading</Th>
-                  <Th>Author</Th>
-                  <Th>Category</Th>
-                  <Th>Publish Date</Th>
-                  <Th>Created</Th>
-                  <Th>Status</Th>
-                  <Th>Likes</Th>
-                  <Th>Comments</Th>
+                  <th className="w-12 px-5 py-3">
+                    <input
+                      type="checkbox"
+                      checked={allVisibleSelected}
+                      onChange={toggleSelectAll}
+                      aria-label="Select all blogs"
+                      className="h-4 w-4 rounded border-slate-300"
+                    />
+                  </th>
+                  {visibleColumnDefs.map((col) => <Th key={col.key}>{col.label}</Th>)}
                   <Th>Actions</Th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100">
                 {loading ? (
-                  <tr><td colSpan={10} className="px-5 py-12 text-center font-semibold text-slate-500">Loading blogs...</td></tr>
+                  <tr><td colSpan={visibleColumnDefs.length + 2} className="px-5 py-12 text-center font-semibold text-slate-500">Loading blogs...</td></tr>
                 ) : filteredArticles.length ? filteredArticles.map((article) => (
                   <tr key={`${article._collection}-${article.id}`} className="text-slate-600 hover:bg-slate-50/70">
-                    <td className="px-5 py-4"><input type="checkbox" className="h-4 w-4 rounded border-slate-300" /></td>
-                    <td className="max-w-[330px] px-5 py-4 font-semibold text-slate-900">{article.title}</td>
-                    <td className="px-5 py-4">{article.author || "-"}</td>
-                    <td className="px-5 py-4">{article.categoryName || "Uncategorized"}</td>
-                    <td className="px-5 py-4">{article.date || "-"}</td>
-                    <td className="px-5 py-4">{formatDate(article.createdAt)}</td>
                     <td className="px-5 py-4">
-                      <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold ${article.status === "published" && article.active !== false ? "bg-emerald-100 text-emerald-700" : "bg-slate-100 text-slate-500"}`}>
-                        <span className="h-1.5 w-1.5 rounded-full bg-current" />
-                        {article.status === "published" && article.active !== false ? "Published" : "Draft"}
-                      </span>
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.includes(article.id)}
+                        onChange={() => toggleSelectOne(article.id)}
+                        aria-label={`Select ${article.title || "blog"}`}
+                        className="h-4 w-4 rounded border-slate-300"
+                      />
                     </td>
-                    <td className="px-5 py-4">{Number(article.likes) || 0}</td>
-                    <td className="px-5 py-4">{Number(article.commentsCount) || 0}</td>
+                    {visibleColumnDefs.map((col) => renderCell(article, col.key))}
                     <td className="px-5 py-4">
                       <div className="flex items-center gap-3">
                         <button type="button" onClick={() => editArticle(article)} title="Edit" className="text-amber-600 hover:text-amber-700"><Edit3 className="h-4 w-4" /></button>
@@ -216,7 +362,7 @@ export default function BlogPage() {
                     </td>
                   </tr>
                 )) : (
-                  <tr><td colSpan={10} className="px-5 py-12 text-center font-semibold text-slate-500">No blogs found.</td></tr>
+                  <tr><td colSpan={visibleColumnDefs.length + 2} className="px-5 py-12 text-center font-semibold text-slate-500">No blogs found.</td></tr>
                 )}
               </tbody>
             </table>

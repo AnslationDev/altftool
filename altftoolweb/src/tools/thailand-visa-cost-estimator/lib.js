@@ -75,9 +75,6 @@ export const OVERSTAY_FINE_PER_DAY_THB = 500;
 /** Statutory ceiling on the overstay fine, however long the overstay lasts. */
 export const OVERSTAY_FINE_CAP_THB = 20000;
 
-/** The Thailand Digital Arrival Card is free and mandatory before arrival. */
-export const TDAC_FEE_THB = 0;
-
 /** Days before arrival within which the digital arrival card must be filed. */
 export const TDAC_WINDOW_DAYS = 3;
 

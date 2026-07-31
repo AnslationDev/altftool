@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, PlugZap, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   CABLES,
   LOCK_STATES,
@@ -49,7 +50,7 @@ export default function ToolHome() {
   const [lockState, setLockState] = useState(DEFAULTS.lockState);
   const [osState, setOsState] = useState(DEFAULTS.osState);
   const [flags, setFlags] = useState(DEFAULTS.flags);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () => assessJuiceJacking({ powerSource, cable, lockState, osState, flags }),
@@ -62,19 +63,10 @@ export default function ToolHome() {
     setFlags((current) =>
       current.includes(id) ? current.filter((value) => value !== id) : [...current, id],
     );
-    setCopied(false);
+    resetCopyState();
   };
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("summary", summary, { label: "Juice jacking exposure result" });
 
   const reset = () => {
     setPowerSource(DEFAULTS.powerSource);
@@ -82,7 +74,7 @@ export default function ToolHome() {
     setLockState(DEFAULTS.lockState);
     setOsState(DEFAULTS.osState);
     setFlags(DEFAULTS.flags);
-    setCopied(false);
+    resetCopyState();
   };
 
   const selects = [
@@ -120,7 +112,7 @@ export default function ToolHome() {
                 value={value}
                 onChange={(event) => {
                   setValue(event.target.value);
-                  setCopied(false);
+                  resetCopyState();
                 }}
               >
                 {options.map((option) => (
@@ -191,17 +183,28 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the juice jacking exposure result"
+              aria-label={
+                isCopied("summary")
+                  ? "Copied the juice jacking exposure result to clipboard"
+                  : "Copy the juice jacking exposure result"
+              }
               className={GHOST_BTN}
               disabled={failed}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("summary") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("summary") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset the inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

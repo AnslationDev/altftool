@@ -25,11 +25,13 @@ export function buildAltfWorldMetadata({
   description = ALTFWORLD_DESCRIPTION,
   path = "/altfworld",
   keywords = [],
+  noindex = false,
 } = {}) {
   return createPageMetadata({
     title,
     description,
     path,
     keywords: [...ALTFWORLD_KEYWORDS, ...keywords],
+    noindex,
   });
 }

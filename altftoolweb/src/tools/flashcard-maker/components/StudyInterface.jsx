@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { X, ChevronLeft, ChevronRight, RefreshCcw, Check, Timer, BarChart2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { calculateProgress } from "../utils/study-logic";
 
 export default function StudyInterface({ deck, mode, onClose }) {
   const [cards, setCards] = useState([...deck.cards]);
@@ -24,7 +25,8 @@ export default function StudyInterface({ deck, mode, onClose }) {
       const timer = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
       return () => clearInterval(timer);
     } else if (mode === 'rapid' && timeLeft === 0) {
-      handleNext();
+      // Time ran out before the user self-reported — count it as a miss.
+      handleNext(false);
     }
   }, [mode, timeLeft, isFinished]);
 
@@ -124,7 +126,7 @@ export default function StudyInterface({ deck, mode, onClose }) {
           )}
 
           <div className="flex items-center gap-6">
-            {mode === 'review' ? (
+            {(mode === 'review' || mode === 'rapid') ? (
               <>
                 <button onClick={() => handleNext(false)} className="flex flex-col items-center gap-1 group">
                    <div className="w-12 h-12 bg-red-100 text-red-600 rounded-full flex items-center justify-center hover:bg-red-600 hover:text-white transition-all">
@@ -155,7 +157,7 @@ export default function StudyInterface({ deck, mode, onClose }) {
 }
 
 function SessionComplete({ session, total, onClose }) {
-  const accuracy = Math.round((session.correct / total) * 100) || 0;
+  const accuracy = calculateProgress(session);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">

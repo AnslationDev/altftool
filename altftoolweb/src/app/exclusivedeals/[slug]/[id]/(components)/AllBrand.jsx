@@ -73,7 +73,7 @@ function AllBrand({ data }) {
           <div className="flex-1 min-w-0">
             <h3 className="font-semibold lg:text-sm xl:text-base leading-snug mb-1.5 max-w-[550px] break-words">
               {data.title}{" "}
-              <strong className="text-(--primary)">----{data.brandName}</strong>
+              <strong className="text-(--primary)">{data.brandName}</strong>
             </h3>
             {hasFlashSale && (
               <span className="flex items-center gap-1 text-yellow-500 font-medium text-xs mb-1.5">
@@ -98,10 +98,12 @@ function AllBrand({ data }) {
                   Verified
                 </span>
               )}
-              <span className="flex items-center gap-1 text-xs">
-                <Users size={13} />
-                {data?.uses ?? "2969"} Uses Today
-              </span>
+              {data?.uses && (
+                <span className="flex items-center gap-1 text-xs">
+                  <Users size={13} />
+                  {data.uses} Uses Today
+                </span>
+              )}
             </div>
 
             {isCoupon ? (
@@ -178,7 +180,7 @@ function AllBrand({ data }) {
           <div className="flex-1 min-w-0 px-3 py-3">
             <h3 className="font-medium md:text-sm text-xs leading-snug mb-1">
               {data.title}{" "}
-              <strong className="text-(--primary)">----{data.brandName}</strong>
+              <strong className="text-(--primary)">{data.brandName}</strong>
             </h3>
             {hasFlashSale && (
               <span className="flex items-center gap-1 text-yellow-500 font-medium text-xs mb-1">
@@ -197,10 +199,12 @@ function AllBrand({ data }) {
                   Verified
                 </span>
               )}
-              <span className="flex items-center gap-1">
-                <Users size={12} />
-                {data?.uses ?? "2969"} Uses Today
-              </span>
+              {data?.uses && (
+                <span className="flex items-center gap-1">
+                  <Users size={12} />
+                  {data.uses} Uses Today
+                </span>
+              )}
             </div>
           </div>
         </div>

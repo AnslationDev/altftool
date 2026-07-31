@@ -35,7 +35,14 @@ export default function ExploreAiTools() {
           Explore More AI Tools
         </h2>
 
-        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-2 sm:justify-center">
+        {/*
+          Below sm the pill row gets a line of its own (basis-full). Sharing the
+          line with the icon, heading and CTA left it ~61px on a 360px phone —
+          well under a single pill's min-content width — so the pills spilled out
+          of the card and dragged the tool shell sideways. From sm up there is
+          room to sit inline again (grow + basis-0 === the previous flex-1).
+        */}
+        <div className="flex min-w-0 basis-full flex-wrap items-center gap-2 sm:grow sm:basis-0 sm:justify-center">
           {AI_TOOLS.map((tool) => (
             <a
               key={tool.slug}

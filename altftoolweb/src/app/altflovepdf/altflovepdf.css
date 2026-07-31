@@ -4238,3 +4238,176 @@ textarea:focus {
     padding: 0;
   }
 }
+
+/* ============================================================
+   DARK THEME SUPPORT — matches the platform-wide [data-theme]
+   switch (see src/app/globals.css). This vertical previously had
+   zero dark-mode rules and stayed pinned to a fixed light palette
+   no matter what theme the rest of the site was in, in violation
+   of master.md's "support light AND dark on every screen" rule.
+
+   Reuses the same dark-navy values as the platform's shared design
+   tokens (packages/ui/src/tokens.css) so this vertical's dark mode
+   stays visually consistent with the rest of ALTFTool.
+
+   This block is purely additive — it only overrides CSS custom
+   properties already consumed via var(...) above, plus a handful
+   of literal backgrounds/borders/text colors that don't route
+   through those properties. Nothing here changes light-mode output.
+   ============================================================ */
+[data-theme="dark"] .altf-app {
+  --bg: #070d18;
+  --ink: #f8fafc;
+  --surface: #101827;
+  --warm: #142033;
+  --accent: #4d8dff;
+  --accent2: #60a5fa;
+  --accentlt: rgba(77, 141, 255, 0.16);
+  --gold: #fbbf24;
+  --muted: #94a3b8;
+  --border: #1e293b;
+  --ok: #34d399;
+  --ok-bg: rgba(16, 185, 129, 0.16);
+  --ok-bd: rgba(16, 185, 129, 0.35);
+  --err: #f87171;
+  --err-bg: rgba(239, 68, 68, 0.16);
+  --err-bd: rgba(239, 68, 68, 0.35);
+  --tip-bg: rgba(77, 141, 255, 0.14);
+  --tip-bd: #1e293b;
+  --tip-tx: #4d8dff;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* Structural surfaces that hardcode a literal white/near-white
+   background instead of a token — recolor to the dark surface
+   token so cards/panels/inputs don't stay stuck white. */
+[data-theme="dark"] .altf-app .altf-navbar,
+[data-theme="dark"] .altf-app .altf-card,
+[data-theme="dark"] .altf-app .altf-sidebar,
+[data-theme="dark"] .altf-app .altf-tool-card,
+[data-theme="dark"] .altf-app .dropzone,
+[data-theme="dark"] .altf-app .dzone,
+[data-theme="dark"] .altf-app .options-card,
+[data-theme="dark"] .altf-app .textarea-card,
+[data-theme="dark"] .altf-app .info-display-box,
+[data-theme="dark"] .altf-app .panel-card,
+[data-theme="dark"] .altf-app .result-box,
+[data-theme="dark"] .altf-app .file-item,
+[data-theme="dark"] .altf-app .btn-sec,
+[data-theme="dark"] .altf-app .btn.btn-sec,
+[data-theme="dark"] .altf-app .radio-btn,
+[data-theme="dark"] .altf-app .altf-related-card,
+[data-theme="dark"] .altf-app .altf-reference-card,
+[data-theme="dark"] .altf-app .altf-reference-drop,
+[data-theme="dark"] .altf-app .altf-feature-section,
+[data-theme="dark"] .altf-app .altf-search-bar-modern,
+[data-theme="dark"] .altf-app .altf-source-icons button,
+[data-theme="dark"] .altf-app .stat-item,
+[data-theme="dark"] .altf-app .stat-card,
+[data-theme="dark"] .altf-app .info-card,
+[data-theme="dark"] .altf-app .page-thumb,
+[data-theme="dark"] .altf-app .modal-container {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--ink);
+}
+
+/* Rules with light-mode !important need a matching !important dark
+   override, otherwise the light declaration would keep winning. */
+[data-theme="dark"] .altf-app .altf-card:hover {
+  background: var(--surface) !important;
+}
+
+[data-theme="dark"] .altf-app .altf-cookie-banner {
+  background: var(--surface) !important;
+  border-color: var(--border) !important;
+  color: var(--ink) !important;
+}
+
+[data-theme="dark"] .altf-app .altf-navbar-brand span {
+  color: var(--ink) !important;
+}
+
+/* .batch-log intentionally uses var(--ink) as an "inverted terminal"
+   background in light mode (dark bg via the ink token + a fixed light
+   gray for text). --ink flips to a light color in dark mode, which
+   would turn this into a near-white box with light-gray text. Pin it
+   to a fixed dark background so the terminal look survives the flip. */
+[data-theme="dark"] .altf-app .batch-log,
+[data-theme="dark"] .altf-app .batch-log-box {
+  background: #0b1220 !important;
+}
+
+[data-theme="dark"] .altf-app .dropzone:hover,
+[data-theme="dark"] .altf-app .dropzone.dragover,
+[data-theme="dark"] .altf-app .dzone:hover {
+  background: var(--accentlt);
+  border-color: var(--accent);
+}
+
+[data-theme="dark"] .altf-app input[type="text"],
+[data-theme="dark"] .altf-app input[type="number"],
+[data-theme="dark"] .altf-app input[type="password"],
+[data-theme="dark"] .altf-app input[type="color"],
+[data-theme="dark"] .altf-app select,
+[data-theme="dark"] .altf-app textarea,
+[data-theme="dark"] .altf-app .out-ta {
+  background: var(--warm);
+  border-color: var(--border);
+  color: var(--ink);
+}
+
+/* Frosted-glass hero widgets: swap the translucent white tint for a
+   translucent dark tint so they don't render as a washed-out white
+   smear over the new dark hero background. */
+[data-theme="dark"] .altf-app .altf-hero-badge,
+[data-theme="dark"] .altf-app .hero-dashboard-widget,
+[data-theme="dark"] .altf-app .altf-hero-pills-panel {
+  background: rgba(16, 24, 39, 0.75);
+  border-color: var(--border);
+}
+
+/* Body/heading text hardcoded as literal ink or muted grays. */
+[data-theme="dark"] .altf-app .altf-how-step p,
+[data-theme="dark"] .altf-app .altf-cookie-banner p,
+[data-theme="dark"] .altf-app .hero-word-1,
+[data-theme="dark"] .altf-app .hero-word-2,
+[data-theme="dark"] .altf-app .pill-desc,
+[data-theme="dark"] .altf-app .dropzone-sub-title,
+[data-theme="dark"] .altf-app .search-bar-clear,
+[data-theme="dark"] .altf-app .nav-link-item,
+[data-theme="dark"] .altf-app .altf-all-tools-link {
+  color: var(--muted);
+}
+
+[data-theme="dark"] .altf-app .pill-text,
+[data-theme="dark"] .altf-app .dropzone-main-title,
+[data-theme="dark"] .altf-app .search-bar-input,
+[data-theme="dark"] .altf-app .altf-reference-sub,
+[data-theme="dark"] .altf-app .altf-navbar-brand,
+[data-theme="dark"] .altf-app .altf-feature-icon-reference,
+[data-theme="dark"] .altf-app .altf-hamburger {
+  color: var(--ink);
+}
+
+/* Leftover accent-color literals (some from an earlier blue theme
+   iteration) — track the live accent token instead so hover/focus
+   states stay legible and on-brand in dark mode too. */
+[data-theme="dark"] .altf-app .altf-brand-heart {
+  color: var(--accent) !important;
+}
+
+[data-theme="dark"] .altf-app .text-blue-accent,
+[data-theme="dark"] .altf-app .pill-icon,
+[data-theme="dark"] .altf-app .dropzone-cloud-box,
+[data-theme="dark"] .altf-app .nav-link-item:hover,
+[data-theme="dark"] .altf-app .nav-link-item.active {
+  color: var(--accent);
+}
+
+[data-theme="dark"] .altf-app .hero-pill-item:hover,
+[data-theme="dark"] .altf-app .altf-dropzone-centered:hover,
+[data-theme="dark"] .altf-app .altf-search-bar-modern:focus-within {
+  border-color: var(--accent);
+}

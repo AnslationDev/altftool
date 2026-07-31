@@ -67,7 +67,7 @@ export default function Sidebar({ collapsed, onToggle }) {
         {!collapsed && (
           <>
             <div className="pt-4 pb-1 px-3 flex items-center gap-1.5 tdn-eyebrow text-[0.6rem]">
-              <Star size={11} /> Favorites
+              <Star size={11} /> Sample favorites
             </div>
             {favorites.map((s) => (
               <Link href={assetHref(s)} key={s} className="w-full flex items-center gap-3 rounded-lg px-3 py-1.5 text-sm hover:bg-[color-mix(in_srgb,var(--tdn-iris)_7%,transparent)]" style={{ color: "var(--tdn-fg)" }}>
@@ -76,7 +76,7 @@ export default function Sidebar({ collapsed, onToggle }) {
               </Link>
             ))}
             <div className="pt-3 pb-1 px-3 flex items-center gap-1.5 tdn-eyebrow text-[0.6rem]">
-              <Clock size={11} /> Recently viewed
+              <Clock size={11} /> Sample recently viewed
             </div>
             {recent.map((s) => (
               <Link href={assetHref(s)} key={s} className="w-full flex items-center gap-3 rounded-lg px-3 py-1.5 text-sm hover:bg-[color-mix(in_srgb,var(--tdn-iris)_7%,transparent)]" style={{ color: "var(--tdn-muted)" }}>

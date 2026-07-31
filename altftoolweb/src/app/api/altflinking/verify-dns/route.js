@@ -13,8 +13,17 @@ import dns from "node:dns/promises";
 import { verifyToken, err, ok } from "@/lib/altflinking/authMiddleware";
 
 export async function POST(request) {
+  // Tightened from the typical 20/min to 5/min because this route triggers
+  // an attacker-directed DNS lookup against a caller-supplied domain —
+  // a stricter per-instance cap is defense-in-depth against using it to
+  // probe or amplify DNS traffic against arbitrary hosts. NOTE: this
+  // limiter (packages/core/src/http.js -> createTtlCache) is a per-process
+  // in-memory Map, so on a horizontally-scaled/serverless deployment (this
+  // app runs on AWS Amplify/Lambda) each warm instance enforces its own
+  // independent counter — the real aggregate ceiling across instances is
+  // higher than 5/min, not a hard global cap.
   const limited = enforceRateLimit(NextResponse, request, {
-    limit: 20,
+    limit: 5,
     scope: "altflinking:verify-dns",
     windowMs: 60000,
   });

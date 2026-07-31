@@ -532,6 +532,8 @@ const CricketGame = () => {
                 width={800}
                 height={600}
                 className="max-w-full max-h-full object-contain"
+                role="application"
+                aria-label="Cricket game canvas. Click, tap, or press Space to swing exactly when the ball arrives. Perfect timing sends it to the boundary."
                 style={{ width: '100%', height: '100%' }}
             />
 

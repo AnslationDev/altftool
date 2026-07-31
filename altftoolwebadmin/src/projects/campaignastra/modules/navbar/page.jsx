@@ -82,12 +82,12 @@ function NavbarPreview({ settings, items }) {
           {settings.logoType === "image" && settings.logoImageUrl ? (
             <img
               src={settings.logoImageUrl}
-              alt={settings.logoText || "ANSLIC logo"}
+              alt={settings.logoText || "Campaignastra logo"}
               className="h-10 max-w-48 rounded-md object-contain"
             />
           ) : (
             <span className="truncate text-2xl font-bold tracking-normal">
-              {settings.logoText || "ANSLIC"}
+              {settings.logoText || "Campaignastra"}
             </span>
           )}
         </div>
@@ -530,7 +530,7 @@ export default function CampaignastraNavbarPage() {
                   value={settingsDraft.logoText}
                   onChange={(event) => updateSettingsDraft("logoText", event.target.value)}
                   className="w-full rounded-xl border border-gray-200 px-3 py-2.5 text-sm outline-none transition focus:border-gray-900 focus:ring-2 focus:ring-gray-900/10"
-                  placeholder="ANSLIC"
+                  placeholder="Campaignastra"
                 />
               </Field>
 

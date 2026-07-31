@@ -149,6 +149,7 @@ export default function ToolHome() {
   const elapsedRef = useRef(0);
   const winHandledRef = useRef(null);
   const flashTimerRef = useRef(null);
+  const cellRefs = useRef([]);
 
   useEffect(() => {
     elapsedRef.current = elapsed;
@@ -243,6 +244,10 @@ export default function ToolHome() {
     []
   );
 
+  useEffect(() => {
+    if (selected != null) cellRefs.current[selected]?.focus();
+  }, [selected]);
+
   const flash = useCallback((text) => {
     setMessage(text);
     if (flashTimerRef.current) window.clearTimeout(flashTimerRef.current);
@@ -275,7 +280,7 @@ export default function ToolHome() {
             notes[peers[k]] &= ~(1 << (value - 1));
             if (board[peers[k]] === value) conflictHit = true;
           }
-          if (conflictHit && assists.conflicts) mistakes += 1;
+          if (conflictHit) mistakes += 1;
         }
 
         let status = prev.status;
@@ -286,7 +291,7 @@ export default function ToolHome() {
       });
       setCheckedWrong((prev) => (prev.includes(index) ? prev.filter((i) => i !== index) : prev));
     },
-    [notesMode, assists.conflicts]
+    [notesMode]
   );
 
   useEffect(() => {
@@ -379,7 +384,26 @@ export default function ToolHome() {
 
   const restartGame = () => {
     if (!game) return;
-    startGame(game.mode, game.difficulty);
+    setGame((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        id: `${prev.mode}-${prev.difficulty}-${prev.seed}-${Date.now()}`,
+        board: prev.puzzle.slice(),
+        notes: new Array(81).fill(0),
+        hinted: [],
+        mistakes: 0,
+        hintsUsed: 0,
+        status: "playing",
+      };
+    });
+    setElapsed(0);
+    setPaused(false);
+    setSelected(null);
+    setNotesMode(false);
+    setCheckedWrong([]);
+    setMessage("");
+    setPendingResume(null);
     if (game.mode === "daily") setTab("daily");
   };
 
@@ -551,8 +575,11 @@ export default function ToolHome() {
     return (
       <button
         key={index}
+        ref={(el) => {
+          cellRefs.current[index] = el;
+        }}
         type="button"
-        tabIndex={isSelected ? 0 : -1}
+        tabIndex={isSelected || (selected == null && index === 40) ? 0 : -1}
         aria-label={`Row ${row + 1}, column ${col + 1}${
           value ? `, ${value}` : ", empty"
         }${isGiven ? ", given" : ""}`}

@@ -130,11 +130,20 @@ export function readability({ wordCount, sentenceCount, syllableCount }) {
 /** Compression target, bullet count and words per bullet. */
 export function bulletBudget({ wordCount, compressionPct, wordsPerBullet }) {
   const targetWords = Math.max(1, Math.round((wordCount * compressionPct) / 100));
-  const bulletCount = Math.min(MAX_BULLETS, Math.max(1, Math.ceil(targetWords / wordsPerBullet)));
+  const uncappedBulletCount = Math.max(1, Math.ceil(targetWords / wordsPerBullet));
+  const bulletCount = Math.min(MAX_BULLETS, uncappedBulletCount);
+  const actualWordsPerBullet = Math.round((targetWords / bulletCount) * 10) / 10;
+  // The MAX_BULLETS cap can force more words into each bullet than the tool's
+  // own MIN/MAX_WORDS_PER_BULLET input range allows — flag that so callers can
+  // warn rather than silently hand out an out-of-range figure.
+  const bulletCountCapped = uncappedBulletCount > MAX_BULLETS;
+  const wordsPerBulletOverMax = actualWordsPerBullet > MAX_WORDS_PER_BULLET;
   return {
     targetWords,
     bulletCount,
-    actualWordsPerBullet: Math.round((targetWords / bulletCount) * 10) / 10,
+    actualWordsPerBullet,
+    bulletCountCapped,
+    wordsPerBulletOverMax,
   };
 }
 
@@ -175,7 +184,10 @@ export function buildProseToBulletPrompt({
     wordsPerBullet: perBullet,
   });
 
-  const needsGrouping = budget.bulletCount > GROUPING_THRESHOLD;
+  // Grouping under headings re-orders points into clusters, which directly
+  // contradicts an explicit "keep the original order" choice. Only offer the
+  // grouping instruction when the user hasn't asked for source order.
+  const needsGrouping = budget.bulletCount > GROUPING_THRESHOLD && ordering !== "source";
   const styleText = BULLET_STYLES[style] ?? BULLET_STYLES["noun-phrase"];
   const orderText = ORDERINGS[ordering] ?? ORDERINGS.source;
 
@@ -190,6 +202,11 @@ export function buildProseToBulletPrompt({
   lines.push("TARGET");
   lines.push(`- About ${budget.bulletCount} bullets`);
   lines.push(`- About ${budget.targetWords} words in total (${compression}% of the original), averaging ${budget.actualWordsPerBullet} words a bullet`);
+  if (budget.wordsPerBulletOverMax) {
+    lines.push(
+      `- Note: hitting ${MAX_BULLETS} bullets forced the average above the usual ${MAX_WORDS_PER_BULLET}-word guideline — favor a lower compression % or a higher words-per-bullet setting next time.`,
+    );
+  }
   lines.push(`- Style: ${styleText}`);
   lines.push(`- Order: ${orderText}`);
   if (clean(audience)) lines.push(`- Audience: ${clean(audience)}`);
@@ -223,6 +240,8 @@ export function buildProseToBulletPrompt({
     targetWords: budget.targetWords,
     bulletCount: budget.bulletCount,
     actualWordsPerBullet: budget.actualWordsPerBullet,
+    bulletCountCapped: budget.bulletCountCapped,
+    wordsPerBulletOverMax: budget.wordsPerBulletOverMax,
     needsGrouping,
     promptWordCount: prompt.split(/\s+/).filter(Boolean).length,
     tokenEstimate: Math.ceil(prompt.length / CHARS_PER_TOKEN),

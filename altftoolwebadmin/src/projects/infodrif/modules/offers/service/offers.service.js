@@ -96,7 +96,6 @@ export async function getOffer(id) {
 
 export const subscribeOffersSettings = settingsService.subscribe;
 export const saveOffersSettings = settingsService.save;
-export const resetOffersSettings = settingsService.reset;
 
 export const subscribeOffers = offersService.subscribe;
 export const createOffer = offersService.create;

@@ -115,8 +115,6 @@ export const PROFILES = [
   {
     scoreRange: [0, 25],
     name: "Conservative",
-    badgeColor: "#10b981",
-    bgColor: "rgba(16,185,129,0.1)",
     description: "Your priority is preserving your initial capital and avoiding downside. You favor stable yields, cash equivalents, and highly secure stablecoins over market speculation.",
     allocation: [
       { name: "Cash / Stablecoins", pct: 70, color: "#10b981" },
@@ -132,8 +130,6 @@ export const PROFILES = [
   {
     scoreRange: [26, 50],
     name: "Moderate / Balanced",
-    badgeColor: "#3b82f6",
-    bgColor: "rgba(59,130,246,0.1)",
     description: "You seek a balance between steady capital appreciation and capital preservation. You can tolerate mild daily price fluctuations in exchange for better rewards.",
     allocation: [
       { name: "Stablecoins & Cash", pct: 40, color: "#10b981" },
@@ -149,8 +145,6 @@ export const PROFILES = [
   {
     scoreRange: [51, 75],
     name: "Active Growth",
-    badgeColor: "#f59e0b",
-    bgColor: "rgba(245,158,11,0.1)",
     description: "Your objective is long-term capital growth. You are comfortable with substantial price swings and volatile drawdowns as long as the upward trend remains intact.",
     allocation: [
       { name: "Blue-Chip Cryptos (BTC/ETH)", pct: 50, color: "#3b82f6" },
@@ -167,8 +161,6 @@ export const PROFILES = [
   {
     scoreRange: [76, 100],
     name: "Aggressive Speculator",
-    badgeColor: "#ef4444",
-    bgColor: "rgba(239,68,68,0.1)",
     description: "You are chasing high-impact, exponential wealth expansion. You have high volatility tolerance, deep knowledge of market cycles, and are willing to take extreme risks with a significant part of your capital.",
     allocation: [
       { name: "High-Growth Altcoins / L2s", pct: 45, color: "#a78bfa" },

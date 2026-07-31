@@ -224,7 +224,7 @@ export function analyseEngine(spec = {}) {
   if (required.some((value) => !isNum(value))) {
     return { error: `${name}: fill in displacement, power, torque, their rpm and kerb weight.` };
   }
-  if (displacementCc <= 0 || displacementCc > MAX_CC) {
+  if (displacementCc < 1 || displacementCc > MAX_CC) {
     return { error: `${name}: displacement must be between 1 and ${MAX_CC} cc.` };
   }
   if (powerPs <= 0 || powerPs > MAX_PS) {
@@ -233,13 +233,13 @@ export function analyseEngine(spec = {}) {
   if (torqueNm <= 0 || torqueNm > MAX_NM) {
     return { error: `${name}: torque must be between 0 and ${MAX_NM} Nm.` };
   }
-  if (powerRpm <= 0 || powerRpm > MAX_RPM || torqueRpm <= 0 || torqueRpm > MAX_RPM) {
+  if (powerRpm < 1 || powerRpm > MAX_RPM || torqueRpm < 1 || torqueRpm > MAX_RPM) {
     return { error: `${name}: engine speeds must be between 1 and ${MAX_RPM} rpm.` };
   }
   if (torqueRpm > powerRpm) {
     return { error: `${name}: peak torque cannot come after peak power in the rev range.` };
   }
-  if (kerbWeightKg <= 0 || kerbWeightKg > MAX_WEIGHT_KG) {
+  if (kerbWeightKg < 1 || kerbWeightKg > MAX_WEIGHT_KG) {
     return { error: `${name}: kerb weight must be between 1 and ${MAX_WEIGHT_KG} kg.` };
   }
   const cyl = isNum(cylinders) && cylinders >= 1 ? Math.round(cylinders) : 1;

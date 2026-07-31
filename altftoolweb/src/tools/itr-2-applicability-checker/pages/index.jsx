@@ -175,6 +175,10 @@ export default function ToolHome() {
         !form.unlisted &&
         !form.losses &&
         !form.dtaa &&
+        !form.lottery &&
+        !form.clubbing &&
+        !form.esop &&
+        !form.tds194n &&
         ltcgAmount <= LTCG_112A_CAP;
       recommended = sugamOk ? "ITR-4 Sugam" : "ITR-3";
       headline = `ITR-2 does not apply — ${recommended} does`;
@@ -186,9 +190,10 @@ export default function ToolHome() {
       headline = "ITR-2 is not needed — ITR-1 Sahaj is enough";
     }
 
-    const businessNote = form.business
-      ? "ITR-2 is only for individuals and HUFs without income from business or profession. Because you reported business or professional income, you fall out of ITR-2 even though the triggers below would otherwise apply."
-      : null;
+    const businessNote =
+      form.business && triggers.length
+        ? "ITR-2 is only for individuals and HUFs without income from business or profession. Because you reported business or professional income, you fall out of ITR-2 even though the triggers below would otherwise apply."
+        : null;
 
     return { triggers, recommended, headline, businessNote };
   }, [agriIncome, errors.length, form, ltcgAmount, totalIncome]);

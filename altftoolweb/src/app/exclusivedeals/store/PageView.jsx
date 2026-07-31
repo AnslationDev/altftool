@@ -67,7 +67,7 @@ export default function Page() {
       {/* Mobile Toggle */}
       <button
         onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="lg:hidden mb-4 flex items-center gap-2 px-4 py-2 bg-white border rounded-lg shadow-sm"
+        className="lg:hidden mb-4 flex items-center gap-2 px-4 py-2 bg-(--card) border border-(--border) rounded-lg shadow-sm"
       >
         {sidebarOpen ? <X size={20} /> : <Menu size={20} />}
         <span className="text-sm font-medium">
@@ -83,7 +83,7 @@ export default function Page() {
             ${sidebarOpen ? "block" : "hidden"} lg:block
             relative z-50
             w-full lg:w-[22%]
-            bg-white border rounded-xl shadow-sm
+            bg-(--card) border border-(--border) rounded-xl shadow-sm
             p-4 sm:p-5
           `}
         >
@@ -97,8 +97,8 @@ export default function Page() {
               className={`w-full text-left p-2 rounded-md text-sm transition
                 ${
                   activeCategory === "all"
-                    ? "bg-yellow-50 font-semibold text-black"
-                    : "text-gray-600 hover:bg-gray-50"
+                    ? "bg-(--primary-soft) font-semibold text-(--foreground)"
+                    : "text-(--muted-foreground) hover:bg-(--surface-soft)"
                 }
               `}
             >
@@ -112,8 +112,8 @@ export default function Page() {
                 className={`w-full text-left p-2 rounded-md text-sm transition
                   ${
                     activeCategory === cat
-                      ? "bg-yellow-50 font-semibold text-black"
-                      : "text-gray-600 hover:bg-gray-50"
+                      ? "bg-(--primary-soft) font-semibold text-(--foreground)"
+                      : "text-(--muted-foreground) hover:bg-(--surface-soft)"
                   }
                 `}
               >
@@ -145,12 +145,12 @@ export default function Page() {
                     bg-(--background) rounded-2xl sm:rounded-3xl
                     h-28 sm:h-32 md:h-32
                     w-72 max-w-sm sm:w-64
-                    border border-gray-100 drop-shadow-2xl
+                    border border-(--border) drop-shadow-2xl
                     px-4 sm:px-5 md:px-6
                     py-4 sm:py-4.5 md:py-5
                                   ">
-                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border
-                                    flex items-center justify-center bg-gray-50">
+                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full border border-(--border)
+                                    flex items-center justify-center bg-(--card)">
                       <ManagedImage
                         src={brand.brandLogo}
                         alt={brand.brandName}
@@ -162,7 +162,7 @@ export default function Page() {
                       <h4 className="font-semibold text-sm sm:text-base">
                         {brand.brandName}
                       </h4>
-                      <p className="text-xs sm:text-sm text-gray-500">
+                      <p className="text-xs sm:text-sm text-(--muted-foreground)">
                         {offerCount} Offers
                       </p>
                     </div>
@@ -180,7 +180,7 @@ export default function Page() {
                   setCurrentPage((p) => Math.max(p - 1, 1))
                 }
                 disabled={currentPage === 1}
-                className="px-4 py-2 border rounded-lg disabled:opacity-50"
+                className="px-4 py-2 border border-(--border) rounded-lg disabled:opacity-50"
               >
                 Previous
               </button>
@@ -192,8 +192,8 @@ export default function Page() {
                   className={`w-9 h-9 rounded-lg text-sm
                     ${
                       currentPage === i + 1
-                        ? "bg-yellow-400 text-black font-semibold"
-                        : "border hover:bg-gray-50"
+                        ? "bg-(--primary) text-(--primary-foreground) font-semibold"
+                        : "border border-(--border) hover:bg-(--surface-soft)"
                     }
                   `}
                 >
@@ -206,7 +206,7 @@ export default function Page() {
                   setCurrentPage((p) => Math.min(p + 1, totalPages))
                 }
                 disabled={currentPage === totalPages}
-                className="px-4 py-2 border rounded-lg disabled:opacity-50"
+                className="px-4 py-2 border border-(--border) rounded-lg disabled:opacity-50"
               >
                 Next
               </button>

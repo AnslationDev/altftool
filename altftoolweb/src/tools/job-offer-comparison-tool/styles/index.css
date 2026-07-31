@@ -41,7 +41,7 @@
 }
 
 .job-tool-shell {
-    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     background-color: var(--job-bg);
     transition: background-color 0.3s ease;
@@ -54,7 +54,7 @@
     padding: 24px 0;
     position: sticky;
     top: 0;
-    height: 100vh;
+    height: 100dvh;
     overflow-y: auto;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;

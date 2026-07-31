@@ -1,10 +1,10 @@
 export const DEFAULT_CHANNELS = [
-  { id: "paid_search", name: "Paid Search (Google Ads)", budget: 3000, cpc: 1.5, ctr: 3.5, convRate: 2.2, color: "rgba(37, 99, 235, 1.0)" },
-  { id: "paid_social", name: "Paid Social (Meta/TikTok)", budget: 4000, cpc: 0.8, ctr: 2.0, convRate: 1.8, color: "rgba(37, 99, 235, 0.85)" },
-  { id: "influencer", name: "Influencer Marketing", budget: 1500, cpc: 2.5, ctr: 1.5, convRate: 3.0, color: "rgba(37, 99, 235, 0.70)" },
-  { id: "email", name: "Email Marketing", budget: 500, cpc: 0.2, ctr: 6.0, convRate: 4.5, color: "rgba(37, 99, 235, 0.55)" },
-  { id: "seo_content", name: "SEO & Content Creation", budget: 800, cpc: 0.5, ctr: 4.0, convRate: 2.5, color: "rgba(37, 99, 235, 0.40)" },
-  { id: "events", name: "Offline & Events", budget: 200, cpc: 5.0, ctr: 1.0, convRate: 5.0, color: "rgba(37, 99, 235, 0.25)" }
+  { id: "paid_search", name: "Paid Search (Google Ads)", budget: 3000, cpc: 1.5, ctr: 3.5, convRate: 2.2, color: "rgba(13, 148, 136, 1.0)" },
+  { id: "paid_social", name: "Paid Social (Meta/TikTok)", budget: 4000, cpc: 0.8, ctr: 2.0, convRate: 1.8, color: "rgba(20, 184, 166, 1.0)" },
+  { id: "influencer", name: "Influencer Marketing", budget: 1500, cpc: 2.5, ctr: 1.5, convRate: 3.0, color: "rgba(6, 182, 212, 1.0)" },
+  { id: "email", name: "Email Marketing", budget: 500, cpc: 0.2, ctr: 6.0, convRate: 4.5, color: "rgba(34, 211, 238, 1.0)" },
+  { id: "seo_content", name: "SEO & Content Creation", budget: 800, cpc: 0.5, ctr: 4.0, convRate: 2.5, color: "rgba(45, 212, 191, 1.0)" },
+  { id: "events", name: "Offline & Events", budget: 200, cpc: 5.0, ctr: 1.0, convRate: 5.0, color: "rgba(94, 234, 212, 1.0)" }
 ];
 
 export const PRESETS = [

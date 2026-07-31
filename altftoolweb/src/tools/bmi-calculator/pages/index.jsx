@@ -292,7 +292,7 @@ Stay Healthy, Stay Fit!
                   <input id="bmi-height-cm" type="number" value={heightCm} onChange={(e) => setHeightCm(e.target.value)} placeholder="175" className={`w-full px-4 py-3 rounded-xl border bg-[var(--background)] text-[var(--muted-foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25 ${errors.height ? 'border-[var(--danger)]' : 'border-[var(--border)]'}`} />
                 ) : (
                   <div className="flex gap-2">
-                    <input id="bmi-height-cm" type="number" value={heightFt} onChange={(e) => setHeightFt(e.target.value)} placeholder="Ft" aria-label="Height in feet" className="w-1/2 px-4 py-3 rounded-xl border bg-[var(--background)] border-[var(--border)] text-[var(--muted-foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25" />
+                    <input id="bmi-height-ft" type="number" value={heightFt} onChange={(e) => setHeightFt(e.target.value)} placeholder="Ft" aria-label="Height in feet" className="w-1/2 px-4 py-3 rounded-xl border bg-[var(--background)] border-[var(--border)] text-[var(--muted-foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25" />
                     <input type="number" value={heightIn} onChange={(e) => setHeightIn(e.target.value)} placeholder="In" aria-label="Height in inches" className="w-1/2 px-4 py-3 rounded-xl border bg-[var(--background)] border-[var(--border)] text-[var(--muted-foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/25" />
                   </div>
                 )}

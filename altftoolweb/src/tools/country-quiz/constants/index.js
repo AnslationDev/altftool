@@ -28,14 +28,3 @@ export const TIME_OPTIONS = [
   { id: 45, label: "45s" },
   { id: 60, label: "60s" },
 ];
-
-export const ACHIEVEMENTS = [
-  { id: "first_quiz", label: "First Steps", description: "Complete your first quiz", icon: "🎯" },
-  { id: "perfect_score", label: "Perfect Score", description: "Score 100% on a quiz", icon: "🏆" },
-  { id: "speed_demon", label: "Speed Demon", description: "Complete a quiz with average time under 5s", icon: "⚡" },
-  { id: "streak_5", label: "Hot Streak", description: "Get 5 correct answers in a row", icon: "🔥" },
-  { id: "world_traveler", label: "World Traveler", description: "Answer 500 questions correctly", icon: "✈️" },
-  { id: "capital_master", label: "Capital Master", description: "Score 100% on a capitals quiz", icon: "🏛️" },
-  { id: "daily_player", label: "Daily Player", description: "Play quizzes 7 days in a row", icon: "📅" },
-  { id: "quiz_veteran", label: "Quiz Veteran", description: "Complete 50 quizzes", icon: "🎖️" },
-];

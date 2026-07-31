@@ -1,7 +1,6 @@
 "use client";
 
-import { Eye, Image as ImageIcon, Plus, Trash2, Upload } from "lucide-react";
-import { ROOT_ARRAY_SECTIONS, SERVICES_SECTION_TABS } from "../service/services.service";
+import { Image as ImageIcon, Plus, Trash2, Upload } from "lucide-react";
 
 export const SECTION_FIELDS = {
   heroSection: [
@@ -97,7 +96,7 @@ export function SectionEditor({
           key={arrayKey}
           arrayKey={arrayKey}
           config={config}
-          rows={ROOT_ARRAY_SECTIONS.has(sectionKey) ? section || [] : section[arrayKey] || []}
+          rows={section[arrayKey] || []}
           errors={errors}
           sectionKey={sectionKey}
           uploadKey={uploadKey}
@@ -257,53 +256,8 @@ export function Field({ label, error, children, wide = false }) {
   );
 }
 
-export function PreviewPanel({ label, section, errorCount, content }) {
-  const activeSections = SERVICES_SECTION_TABS.filter((item) => {
-    if (ROOT_ARRAY_SECTIONS.has(item.key)) return (content[item.key] || []).some((row) => row.isActive !== false);
-    return content[item.key]?.isActive !== false;
-  }).length;
-  const repeatedCount = Array.isArray(section)
-    ? section.length
-    : Object.values(section || {}).reduce((count, value) => (Array.isArray(value) ? count + value.length : count), 0);
-
-  return (
-    <aside className="space-y-4">
-      {/* <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)]">
-        <div className="flex items-center gap-2">
-          <Eye className="h-4 w-4 text-[var(--primary)]" />
-          <p className="text-sm font-bold text-[var(--foreground)]">Backend Summary</p>
-        </div>
-        <div className="mt-4 grid gap-3">
-          <SummaryRow label="Current section" value={label} />
-          <SummaryRow label="Repeated items" value={repeatedCount} />
-          <SummaryRow label="Active sections" value={`${activeSections} / ${SERVICES_SECTION_TABS.length}`} />
-          <SummaryRow label="Validation issues" value={errorCount} tone={errorCount ? "danger" : "success"} />
-        </div>
-      </section> */}
-
-      {/* <section className="rounded-lg border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--shadow-sm)]">
-        <p className="text-sm font-bold text-[var(--foreground)]">Storage Path</p>
-        <p className="mt-2 break-all rounded-md bg-[var(--surface-soft)] p-3 font-mono text-xs text-[var(--muted)]">
-          projects/coozter/services/servicesPageContent
-        </p>
-      </section> */}
-    </aside>
-  );
-}
-
-export function SummaryRow({ label, value, tone = "default" }) {
-  const toneClass =
-    tone === "danger"
-      ? "text-[var(--danger)]"
-      : tone === "success"
-        ? "text-[var(--success)]"
-        : "text-[var(--foreground)]";
-  return (
-    <div className="flex items-center justify-between gap-3 rounded-md border border-[var(--border)] px-3 py-2">
-      <span className="text-xs font-semibold text-[var(--muted)]">{label}</span>
-      <span className={`text-sm font-bold ${toneClass}`}>{value}</span>
-    </div>
-  );
+export function PreviewPanel() {
+  return <aside className="space-y-4" />;
 }
 
 export function LoadingFields() {

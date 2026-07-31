@@ -14,8 +14,8 @@ const steps = [
   },
   {
     num: "02",
-    title: "AI-Powered Analysis",
-    desc: "Our advanced system analyzes your responses, behavioral patterns and emotional traits.",
+    title: "Instant Scoring",
+    desc: "Your responses are scored against each trait dimension using our structured assessment framework.",
     imgSrc: "/personality/how-it-works/Ai.png",
     icon: <Brain />,
   },
@@ -38,7 +38,7 @@ export default function HowItWorks() {
             Discover Your Personality In Just Easy 3 Steps
           </h2>
           <p className="section-subtitle max-w-xl  text-center" >
-            Our science-backed assessments and advanced AI deliver deep insights in just a few simple steps.
+            Our science-backed assessments deliver clear insights in just a few simple steps.
           </p>
         </div>
 

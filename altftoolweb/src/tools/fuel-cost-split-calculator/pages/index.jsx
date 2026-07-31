@@ -70,7 +70,7 @@ export default function ToolHome() {
   const addPerson = () =>
     setPeople((previous) => {
       const nextId = previous.reduce((max, person) => Math.max(max, person.id), 0) + 1;
-      return [...previous, { id: nextId, name: `Rider ${previous.length + 1}`, km: trip.distanceKm }];
+      return [...previous, { id: nextId, name: `Rider ${nextId}`, km: trip.distanceKm }];
     });
 
   const removePerson = (id) =>
@@ -278,7 +278,7 @@ export default function ToolHome() {
       {error && (
         <p
           role="alert"
-          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
         >
           {error}
         </p>
@@ -356,8 +356,11 @@ export default function ToolHome() {
             </thead>
             <tbody>
               {view ? (
-                view.shares.map((share) => (
-                  <tr key={share.name + share.km} className="border-b border-[var(--border)] last:border-0">
+                view.shares.map((share, index) => (
+                  <tr
+                    key={people[index]?.id ?? index}
+                    className="border-b border-[var(--border)] last:border-0"
+                  >
                     <td className="py-2 pr-3 font-semibold">
                       {share.name}
                       <span className="ml-2 font-normal text-[var(--muted-foreground)]">
@@ -371,8 +374,8 @@ export default function ToolHome() {
                     <td
                       className={`py-2 text-right ${
                         share.differenceVsEqual > 0
-                          ? "text-[var(--danger)]"
-                          : "text-[var(--success)]"
+                          ? "text-[var(--danger-text)]"
+                          : "text-[var(--success-text)]"
                       }`}
                     >
                       {share.differenceVsEqual >= 0 ? "+" : "−"}

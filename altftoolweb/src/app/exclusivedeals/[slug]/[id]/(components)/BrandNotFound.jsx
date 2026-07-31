@@ -10,13 +10,15 @@ const slugify = (text) =>
   text?.toLowerCase().replace(/[^\w\s-]/g, "").trim().replace(/\s+/g, "-");
 
 // ─── Pick accent color per card index ────────────────────────────────────────
+// Uses the semantic accent/primary/secondary/danger/warning/success tokens so
+// each card still reads with distinct hues while staying theme-aware.
 const ACCENTS = [
-  { header: "#b5547a", button: "#b5547a", buttonText: "#fff" },  // pink/mauve
-  { header: "#c0444a", button: "#c0444a", buttonText: "#fff" },  // red
-  { header: "#e07b30", button: "#e07b30", buttonText: "#fff" },  // orange
-  { header: "#3a8c4e", button: "#3a8c4e", buttonText: "#fff" },  // green
-  { header: "#2e7db5", button: "#2e7db5", buttonText: "#fff" },  // blue
-  { header: "#7b4ea0", button: "#7b4ea0", buttonText: "#fff" },  // purple
+  { header: "var(--danger)", button: "var(--danger)", buttonText: "var(--primary-foreground)" },
+  { header: "var(--warning)", button: "var(--warning)", buttonText: "var(--primary-foreground)" },
+  { header: "var(--accent)", button: "var(--accent)", buttonText: "var(--primary-foreground)" },
+  { header: "var(--success)", button: "var(--success)", buttonText: "var(--primary-foreground)" },
+  { header: "var(--primary)", button: "var(--primary)", buttonText: "var(--primary-foreground)" },
+  { header: "var(--secondary)", button: "var(--secondary)", buttonText: "var(--secondary-foreground)" },
 ];
 
 // ─── Single Card ──────────────────────────────────────────────────────────────
@@ -38,7 +40,7 @@ function DealCard({ item, index }) {
       {/* Logo section — white background */}
       <div className=" flex items-center justify-center p-4 pb-0" style={{ height: "170px" }}>
         {item.logo ? (
-          <div className="relative w-[500px] h-[150px] bg-white rounded-md flex items-center justify-center">
+          <div className="relative w-[500px] h-[150px] bg-(--card) rounded-md flex items-center justify-center">
             <Image
               src={item.logo}
               alt={item.brandName || "Brand"}
@@ -49,8 +51,8 @@ function DealCard({ item, index }) {
           </div>
         ) : (
           <div
-            className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-xl"
-            style={{ background: accent.header }}
+            className="w-14 h-14 rounded-full flex items-center justify-center font-bold text-xl"
+            style={{ background: accent.header, color: accent.buttonText }}
           >
             {item.brandName?.slice(0, 2).toUpperCase() || "??"}
           </div>
@@ -63,19 +65,22 @@ function DealCard({ item, index }) {
         className="px-4 flex items-center justify-center text-center"
         style={{ background: accent.header , minHeight: "100px" }}
       >
-        <p className="text-white text-lg font-bold leading-snug line-clamp-3">
+        <p
+          className="text-lg font-bold leading-snug line-clamp-3"
+          style={{ color: accent.buttonText }}
+        >
           {item.title || item.description || `${item.brandName} Offer`}
         </p>
       </div></div>
 
       {/* Cashback + CTA — white */}
-      <div className="bg-white flex flex-col items-center justify-center p-4 pb-0 gap-10"
+      <div className="bg-(--card) flex flex-col items-center justify-center p-4 pb-0 gap-10"
         style={{
             border: `2px solid ${accent.button}`,
           }}>
         <div className="text-center">
           {hasUpTo && (
-            <p className="text-sm text-gray-500 font-medium mb-0.5">Up to</p>
+            <p className="text-sm text-(--muted-foreground) font-medium mb-0.5">Up to</p>
           )}
           {cashback ? (
             <>
@@ -86,10 +91,10 @@ function DealCard({ item, index }) {
                 {cashback}
                 {!String(cashback).includes("%") ? "%" : ""}
               </p>
-              <p className="text-2xl text-gray-700 font-medium mt-2">Cash Back</p>
+              <p className="text-2xl text-(--foreground) font-medium mt-2">Cash Back</p>
             </>
           ) : (
-            <p className="text-sm text-gray-500 font-medium">Special Offer</p>
+            <p className="text-sm text-(--muted-foreground) font-medium">Special Offer</p>
           )}
         </div>
 
@@ -97,7 +102,7 @@ function DealCard({ item, index }) {
         <button
           className="w-40 py-2.5 rounded-full text-sm font-semibold transition-opacity hover:opacity-90 "
           style={{
-            background: "white",
+            background: "var(--card)",
             color: accent.button,
             border: `2px solid ${accent.button}`,
           }}
@@ -113,14 +118,14 @@ function DealCard({ item, index }) {
 function SkeletonCard() {
   return (
     <div
-      className="flex-shrink-0 rounded-2xl overflow-hidden bg-white animate-pulse border border-gray-200"
+      className="flex-shrink-0 rounded-2xl overflow-hidden bg-(--card) animate-pulse border border-(--border)"
       style={{ width: "220px" }}
     >
-      <div className="bg-gray-100 h-[120px]" />
-      <div className="bg-gray-300 h-[72px]" />
-      <div className="bg-white px-4 py-5 flex flex-col items-center gap-4">
-        <div className="w-16 h-10 bg-gray-100 rounded" />
-        <div className="w-full h-9 bg-gray-100 rounded-full" />
+      <div className="bg-(--muted) h-[120px]" />
+      <div className="bg-(--surface-soft) h-[72px]" />
+      <div className="bg-(--card) px-4 py-5 flex flex-col items-center gap-4">
+        <div className="w-16 h-10 bg-(--muted) rounded" />
+        <div className="w-full h-9 bg-(--muted) rounded-full" />
       </div>
     </div>
   );
@@ -184,9 +189,9 @@ function BrandNotFound({ urlBrand }) {
         {/* Left arrow */}
         <button
           onClick={() => scroll("left")}
-          className="hidden sm:flex absolute -left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white shadow-md border border-gray-200 items-center justify-center hover:bg-gray-50 transition"
+          className="hidden sm:flex absolute -left-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-(--card) shadow-md border border-(--border) items-center justify-center hover:bg-(--surface-soft) transition"
         >
-          <ChevronLeft className="w-5 h-5 text-gray-600" />
+          <ChevronLeft className="w-5 h-5 text-(--muted-foreground)" />
         </button>
 
         {/* Scrollable container */}
@@ -208,9 +213,9 @@ function BrandNotFound({ urlBrand }) {
         {/* Right arrow */}
         <button
           onClick={() => scroll("right")}
-          className="hidden sm:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-white shadow-md border border-gray-200 items-center justify-center hover:bg-gray-50 transition"
+          className="hidden sm:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 w-9 h-9 rounded-full bg-(--card) shadow-md border border-(--border) items-center justify-center hover:bg-(--surface-soft) transition"
         >
-          <ChevronRight className="w-5 h-5 text-gray-600" />
+          <ChevronRight className="w-5 h-5 text-(--muted-foreground)" />
         </button>
       </div>
     </div>

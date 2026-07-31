@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import {
   CheckCircle2,
   ArrowUpRight,
@@ -189,8 +188,10 @@ const [showAll, setShowAll] = useState(false);
 
               {/* BUTTON */}
               <div className="min-w-50 flex flex-col items-center">
-                <Link
-                  href={item.cta.link}
+                <button
+                  type="button"
+                  disabled
+                  title="Direct links are coming soon"
                   className={`
                     w-full
                     h-13.5
@@ -199,13 +200,14 @@ const [showAll, setShowAll] = useState(false);
                     text-[15px]
                     font-semibold
                     transition-all duration-300
-                    border border-(--primary) text-(--primary) hover:bg-(--primary) bg-(--section-highlight) hover:text-white                
+                    border border-(--primary) text-(--primary) bg-(--section-highlight)
+                    opacity-60 cursor-not-allowed
                   `}
                 >
-                  {item.cta.text}
+                  {item.cta.text} (Coming Soon)
 
                   <ArrowUpRight className="w-4 h-4" />
-                </Link>
+                </button>
 
                 <p className="mt-4 text-xs text-center font-semibold text-(--muted-foreground)">
                   {item.note}

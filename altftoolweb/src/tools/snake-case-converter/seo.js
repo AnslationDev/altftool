@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     ["One rule for every separator", "Hyphens, dots, slashes, punctuation and any run of spaces all collapse to a single underscore, so double separators never produce a double underscore."],
     ["No leading or trailing underscores", "Empty pieces are dropped before joining, so input that starts or ends with punctuation still returns a valid identifier."],
-    ["Predictable digit handling", "Numbers are kept as their own segment, so \"HTTP Response Code 404\" becomes http_response_code_404 rather than losing the number."],
+    ["Predictable digit handling", "Numbers already set off by a space or punctuation become their own segment, so \"HTTP Response Code 404\" becomes http_response_code_404 rather than losing the number. Digits already touching a letter stay fused instead of being split out — \"item2Value\" becomes item2value, not item_2_value."],
   ],
   faqs: [
     [

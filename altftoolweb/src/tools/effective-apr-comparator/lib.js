@@ -24,7 +24,8 @@
  * cash-flow series (net disbursed amount received at t=0, instalments paid thereafter, plus
  * any foreclosure payoff), then multiply by 12. That nominal annualisation is what reproduces
  * the RBI's own Annex B illustration (20,000 sanctioned, 24 EMIs of 970, 400 of fees,
- * net disbursed 19,600 -> APR 17.07%), and that case is used as a regression test.
+ * net disbursed 19,600 -> APR 17.10%), and that case is covered by the regression test in
+ * lib.test.mjs.
  *
  * The annually-compounded equivalent, ((1 + monthly IRR) ^ 12) - 1, is reported alongside it.
  * That is the form used by EU Directive 2008/48/EC (Consumer Credit Directive) Annex I, whose
@@ -182,15 +183,24 @@ export function emiForReducingRate(principal, annualRatePct, tenureMonths) {
 }
 
 /**
- * Flat-rate EMI. Interest is charged on the ORIGINAL principal for the whole tenure and never
- * reduces as the loan is repaid:
+ * Flat-rate total interest and EMI, in one place. Interest is charged on the ORIGINAL principal
+ * for the whole tenure and never reduces as the loan is repaid:
  *   total interest = P * flat rate * (months / 12);  EMI = (P + total interest) / months.
+ *
+ * This is the single source of truth for that formula: emiForFlatRate, buildSchedule (for
+ * rateType "flat") and flatToReducing all derive their EMI and total-interest figures from it,
+ * rather than each re-deriving the arithmetic inline.
  */
+function flatRateInterestAndEmi(principal, annualFlatRatePct, tenureMonths) {
+  const totalInterest = (principal * annualFlatRatePct * tenureMonths) / (100 * MONTHS_PER_YEAR);
+  const emi = (principal + totalInterest) / tenureMonths;
+  return { totalInterest, emi };
+}
+
 export function emiForFlatRate(principal, annualFlatRatePct, tenureMonths) {
   if (!isNum(principal) || !isNum(annualFlatRatePct) || !isNum(tenureMonths)) return NaN;
   if (principal <= 0 || tenureMonths <= 0) return NaN;
-  const totalInterest = (principal * annualFlatRatePct * tenureMonths) / (100 * MONTHS_PER_YEAR);
-  return (principal + totalInterest) / tenureMonths;
+  return flatRateInterestAndEmi(principal, annualFlatRatePct, tenureMonths).emi;
 }
 
 /**
@@ -216,8 +226,7 @@ export function flatToReducing(principal, annualFlatRatePct, tenureMonths) {
   if (!isNum(tenureMonths) || tenureMonths < 1) return { error: "Tenure must be at least one month." };
 
   const n = Math.round(tenureMonths);
-  const totalInterest = (principal * annualFlatRatePct * n) / (100 * MONTHS_PER_YEAR);
-  const emi = (principal + totalInterest) / n;
+  const { totalInterest, emi } = flatRateInterestAndEmi(principal, annualFlatRatePct, n);
   const flows = [principal];
   for (let k = 0; k < n; k += 1) flows.push(-emi);
   const monthlyIrr = solveIrr(flows);
@@ -233,16 +242,6 @@ export function flatToReducing(principal, annualFlatRatePct, tenureMonths) {
     multiple: annualFlatRatePct > 0 ? round6(reducingNominalAnnualPct / annualFlatRatePct) : null,
     ruleOfThumbMultiple: round6((2 * n) / (n + 1)),
   };
-}
-
-/**
- * The reverse restatement: the flat rate that would produce the same total interest.
- *   f = (total interest * 12 * 100) / (P * n)
- */
-export function reducingToFlat(principal, totalInterest, tenureMonths) {
-  if (!isNum(principal) || principal <= 0) return NaN;
-  if (!isNum(totalInterest) || !isNum(tenureMonths) || tenureMonths <= 0) return NaN;
-  return (totalInterest * MONTHS_PER_YEAR * 100) / (principal * tenureMonths);
 }
 
 /**
@@ -278,8 +277,7 @@ export function buildSchedule({
   const rows = [];
 
   if (rateType === "flat") {
-    const totalInterest = (financedPrincipal * nominalRatePct * n) / (100 * MONTHS_PER_YEAR);
-    const emi = (financedPrincipal + totalInterest) / n;
+    const { totalInterest, emi } = flatRateInterestAndEmi(financedPrincipal, nominalRatePct, n);
     const digitSum = (n * (n + 1)) / 2;
     let balance = financedPrincipal;
     for (let month = 1; month <= n; month += 1) {
@@ -509,9 +507,6 @@ export function analyseOffer(rawOffer, options = {}) {
   // Flat-versus-reducing restatement, ignoring fees so it isolates the rate itself.
   const flatGap =
     offer.rateType === "flat" ? flatToReducing(financedPrincipal, offer.nominalRatePct, offer.tenureMonths) : null;
-  const equivalentFlatRatePct = round6(
-    reducingToFlat(financedPrincipal, totalInterestFullTerm, offer.tenureMonths),
-  );
 
   const notes = [];
   if (offer.rateBasis === "floating" && offer.foreclosurePenaltyPct > 0) {
@@ -550,7 +545,6 @@ export function analyseOffer(rawOffer, options = {}) {
     fullTerm,
     horizon,
     flatGap,
-    equivalentFlatRatePct,
     notes,
     schedule: schedule.map((row) => ({
       month: row.month,

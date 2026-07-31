@@ -2,7 +2,7 @@
 
 import React from "react";
 import { motion } from "framer-motion";
-import { Sparkles, CheckCircle2, Star, Zap, ShieldCheck, Shuffle } from "lucide-react";
+import { Sparkles, CheckCircle2, Star, Zap, Shuffle } from "lucide-react";
 
 export default function HeroHeader() {
   return (
@@ -72,14 +72,6 @@ export default function HeroHeader() {
           >
             <Zap className="w-4 h-4 text-amber-300" />
             <span>Fast Permutation</span>
-          </motion.div>
-
-          <motion.div
-            whileHover={{ y: -3, scale: 1.04 }}
-            className="flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white/20 backdrop-blur-2xl border border-white/30 text-xs font-bold text-white shadow-lg hover:bg-white/30 transition-all duration-300"
-          >
-            <ShieldCheck className="w-4 h-4 text-white" />
-            <span>Accurate Dictionary</span>
           </motion.div>
 
           <motion.div

@@ -53,7 +53,7 @@ export const VOICE_DIMENSIONS = [
     highPole: "Casual",
     content: {
       low: {
-        summary: "formal",
+        summary: "polished and precise",
         dos: [
           "Write complete sentences and spell every term out in full on first use.",
           "Address the reader as \"you\", but keep the register professional throughout.",
@@ -83,7 +83,7 @@ export const VOICE_DIMENSIONS = [
         avoid: ["leverage", "utilise", "synergy", "kindly do the needful"],
       },
       high: {
-        summary: "casual",
+        summary: "relaxed and conversational",
         dos: [
           "Use contractions everywhere — you're, we'll, it's.",
           "Write it the way you would explain it to a colleague at the next desk.",
@@ -106,7 +106,7 @@ export const VOICE_DIMENSIONS = [
     highPole: "Funny",
     content: {
       low: {
-        summary: "serious",
+        summary: "clear and no-nonsense",
         dos: [
           "Let clarity carry the copy; the reward for the reader is understanding, not a joke.",
           "Keep error, payment and security messages entirely straight.",
@@ -136,7 +136,7 @@ export const VOICE_DIMENSIONS = [
         avoid: ["hilarious", "epic", "legendary"],
       },
       high: {
-        summary: "funny",
+        summary: "playful and witty",
         dos: [
           "Let personality show in microcopy, empty states and 404 pages.",
           "Use specific, observational humour rooted in what the reader is actually doing.",
@@ -159,7 +159,7 @@ export const VOICE_DIMENSIONS = [
     highPole: "Irreverent",
     content: {
       low: {
-        summary: "respectful",
+        summary: "courteous and humble",
         dos: [
           "Thank people for actions that cost them time or money.",
           "Apologise plainly and once when something goes wrong on your side.",
@@ -189,7 +189,7 @@ export const VOICE_DIMENSIONS = [
         avoid: ["obviously", "everyone knows", "duh"],
       },
       high: {
-        summary: "irreverent",
+        summary: "blunt and unapologetic",
         dos: [
           "Take a clear position and say what the category gets wrong.",
           "Use blunt, unhedged sentences in campaign copy.",
@@ -212,7 +212,7 @@ export const VOICE_DIMENSIONS = [
     highPole: "Enthusiastic",
     content: {
       low: {
-        summary: "matter-of-fact",
+        summary: "calm and fact-led",
         dos: [
           "State the benefit as a fact with a number attached wherever one exists.",
           "End sentences with a full stop, not an exclamation mark.",
@@ -242,7 +242,7 @@ export const VOICE_DIMENSIONS = [
         avoid: ["insanely", "mind-blowing", "next-level"],
       },
       high: {
-        summary: "enthusiastic",
+        summary: "upbeat and celebratory",
         dos: [
           "Open with the win the reader gets, not the mechanism behind it.",
           "Use active verbs and second person throughout.",
@@ -356,8 +356,10 @@ export function buildVoiceGuide({ brandName, audience = "", dials = {}, bannedWo
   }
 
   const bannedList = parseBannedWords(bannedWords);
-  const avoidList = Array.from(new Set([...avoid.map((w) => w.toLowerCase()), ...bannedList]));
   const preferList = Array.from(new Set(prefer.map((w) => w.toLowerCase())));
+  const avoidList = Array.from(
+    new Set([...avoid.map((w) => w.toLowerCase()), ...bannedList]),
+  ).filter((word) => !preferList.includes(word));
 
   const sentenceWords = Math.round(
     SENTENCE_WORDS_FORMAL + (casualness / DIAL_MAX) * (SENTENCE_WORDS_CASUAL - SENTENCE_WORDS_FORMAL),

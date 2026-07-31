@@ -48,7 +48,7 @@ export const BASE_IMAGES = [
     libc: LIBC.MUSL,
     hasShell: true,
     hasPackageManager: true, // apk
-    hasCaCertsByDefault: true,
+    hasCaCertsByDefault: false, // install via `apk add --no-cache ca-certificates`
     debugTooling: "busybox shell + apk to install anything on demand.",
     notes: "musl libc, not glibc: DNS resolution and some prebuilt binaries (older Node, glibc wheels for Python) behave differently or need workarounds.",
   },
@@ -138,8 +138,12 @@ export function rankBaseImages({ binaryType, needsShell = false, needsPackageMan
           : "Ships no libc at all — a dynamically linked binary cannot start.",
       );
     }
-    if (binaryType === "dynamic-musl" && image.libc === LIBC.NONE) {
-      reasons.push("Ships no libc — a dynamically linked musl binary cannot start.");
+    if (binaryType === "dynamic-musl" && image.libc !== LIBC.MUSL) {
+      reasons.push(
+        image.libc === LIBC.GLIBC
+          ? "Ships glibc, not musl — a musl-linked binary needs the musl dynamic loader (ld-musl-*.so.1), which this image does not provide."
+          : "Ships no libc — a dynamically linked musl binary cannot start.",
+      );
     }
     if (binaryType === "interpreted" && !image.hasPackageManager) {
       reasons.push("No package manager to install the interpreter — use the official runtime image instead.");

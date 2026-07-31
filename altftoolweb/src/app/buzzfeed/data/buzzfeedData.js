@@ -8,7 +8,7 @@ export const ARTICLES_DATA = [
     title: "9 Grindr Profiles Every Desi Queer Person Has Come Across",
     excerpt: "Take a shot of water every time you feel this is relatable, so you’re hydrated.",
     content: "<p>As a queer man who's lived in Mumbai, Delhi, and Kolkata, I can confidently say since the first time I discovered and downloaded Grindr, the people I've come across have given me enough data to write a thesis and earn a PhD in sociology. The characters you meet range from protein-shake guzzling gym bros to full-time trolls running their toxicity startups. Some want a hookup, some (very rarely) want a partner, but most of them seem like unofficial census officers who want you to summarize your existence in the form of age, location, preference, sexual position, and your residential status. And while queer life in India is slowly moving forward, being on Grindr feels less like Heartstopper and more like being on an episode of Bigg Boss. So whether you're dodging bizarre checklists or deciphering messages, here's a rundown of Grindr profiles you're guaranteed to see if you're queer and swiping in India.</p>",
-    image: "https://img.buzzfeed.com/buzzfeed-static/static/2025-07/16/11/thumb/WIMUZN22w.jpg?crop=1245:830;3,0&resize=1250:830",
+    image: "https://images.unsplash.com/photo-1513829096999-4978602294fc?w=800&auto=format&fit=crop&q=60",
     author: "Md Aqib Khan",
     date: "May 21, 2026",
     category: "LGBTQ+",

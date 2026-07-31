@@ -718,6 +718,8 @@ export default function BalloonArchery() {
         <div className="corner corner-bl" /><div className="corner corner-br" />
 
         <canvas ref={canvasRef} width={CW} height={CH}
+          role="application"
+          aria-label="Air Shot game canvas. Aim with the mouse, then click or hold to shoot. Pop as many targets as possible before you run out of shots."
           // Mouse events
           onMouseMove={handleMouseMove}
           onMouseDown={handleStartCharging}

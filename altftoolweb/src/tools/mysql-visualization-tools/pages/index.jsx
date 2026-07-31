@@ -11,6 +11,7 @@ import HistorySection from "../components/HistorySection";
 import ExportPanel from "../components/ExportPanel";
 import ParserStatus from "../components/ParserStatus";
 import DatasetUpload from "../components/DatasetUpload";
+import SqlInput from "../components/SqlInput";
 import SqlPracticeWorkspace from "../components/SqlPracticeWorkspace";
 import ChallengeMode from "../components/ChallengeMode";
 import {
@@ -19,6 +20,7 @@ import {
   loadHistory,
   loadState,
   parseMySqlSchema,
+  removeTablesFromSql,
   saveHistoryItem,
   saveState,
 } from "../utils/schemaUtils";
@@ -110,7 +112,8 @@ export default function ToolHome() {
   const mergeDatasets = (incoming) => {
     const next = [...datasets.filter((table) => !incoming.some((item) => item.name === table.name)), ...incoming];
     setDatasets(next);
-    setSql([tablesToCreateSql(next), sql].filter(Boolean).join("\n\n"));
+    const nextNames = next.map((table) => table.name);
+    setSql([tablesToCreateSql(next), removeTablesFromSql(sql, nextNames)].filter(Boolean).join("\n\n"));
     flash("Dataset parsed into live tables.");
   };
 
@@ -119,7 +122,8 @@ export default function ToolHome() {
       const parsed = await readDatasetFiles(files);
       const next = [...datasets.filter((table) => !parsed.tables.some((item) => item.name === table.name)), ...parsed.tables];
       setDatasets(next);
-      setSql([tablesToCreateSql(next), parsed.sql].filter(Boolean).join("\n\n"));
+      const nextNames = next.map((table) => table.name);
+      setSql([tablesToCreateSql(next), removeTablesFromSql(parsed.sql, nextNames)].filter(Boolean).join("\n\n"));
       setActiveTab("practice");
       flash("Upload parsed and schema generated.");
     } catch (error) {
@@ -164,6 +168,11 @@ export default function ToolHome() {
     flash("Saved to history.");
   };
 
+  const updateQuery = (value) => {
+    setQuery(value);
+    setPage(0);
+  };
+
   const tabs = ["practice", "upload", "diagram", "schema", "challenges", "history"];
 
   return (
@@ -203,10 +212,7 @@ export default function ToolHome() {
           <div className="space-y-4">
             <SqlPracticeWorkspace
               query={query}
-              setQuery={(value) => {
-                setQuery(value);
-                setPage(0);
-              }}
+              setQuery={updateQuery}
               onFormat={() => setQuery(formatSql(query))}
               result={queryResult}
               challenge={activeChallenge}
@@ -230,11 +236,20 @@ export default function ToolHome() {
         )}
 
         {activeTab === "schema" && (
-          <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
-            <SchemaExplorer tables={schema.tables} queryAnalysis={queryAnalysis} />
-            <div className="space-y-4">
-              <ParserStatus schema={schema} warnings={schema.warnings} />
-              <ExportPanel canExport={schema.tables.length} onCopySchema={handleCopySchema} onDownloadJson={handleDownloadJson} onDownloadPng={handleDownloadPng} onSaveHistory={handleSaveHistory} />
+          <div className="space-y-4">
+            <SqlInput
+              sql={sql}
+              setSql={setSql}
+              query={query}
+              setQuery={updateQuery}
+              status={schema.tables.length ? `${schema.tables.length} table${schema.tables.length === 1 ? "" : "s"} parsed` : "Waiting for SQL"}
+            />
+            <div className="grid gap-4 lg:grid-cols-[minmax(0,1fr)_320px]">
+              <SchemaExplorer tables={schema.tables} queryAnalysis={queryAnalysis} />
+              <div className="space-y-4">
+                <ParserStatus schema={schema} warnings={schema.warnings} />
+                <ExportPanel canExport={schema.tables.length} onCopySchema={handleCopySchema} onDownloadJson={handleDownloadJson} onDownloadPng={handleDownloadPng} onSaveHistory={handleSaveHistory} />
+              </div>
             </div>
           </div>
         )}

@@ -75,7 +75,7 @@ const PREMIUM_CABIN = {
 /** No published weight for the personal item — it is judged on size and fit. */
 const PERSONAL_ITEM = { kg: null, dimRule: PERSONAL_DIM_RULE };
 /** The second cabin piece in premium cabins is measured on the cabin bag rule. */
-const SECOND_CABIN_PIECE = { kg: CABIN_BAG_KG, dimRule: CABIN_DIM_RULE };
+export const SECOND_CABIN_PIECE = { kg: CABIN_BAG_KG, dimRule: CABIN_DIM_RULE };
 
 /** Fare and route options, named by the allowance so you can match your ticket. */
 export const FARE_OPTIONS = [
@@ -424,10 +424,15 @@ export function checkBaggage({
     if ((!needRate || rate > 0) && (!needPieceFee || pieceFee > 0)) {
       estimatedFee = r2(excessKg * rate + extraPieces * pieceFee);
     }
-  } else if (extraPieces === 0 && overweightPieces === 0) {
-    estimatedFee = 0;
-  } else if (pieceFee > 0 || heavyFee > 0) {
-    estimatedFee = r2(extraPieces * pieceFee + overweightPieces * heavyFee);
+  } else {
+    // Same rule as the weight-fare branch above: only quote a figure once every
+    // fee component that is actually owed has been priced, otherwise a missing
+    // (default-zero) fee silently reads as "free" instead of "unpriced".
+    const needPieceFee = extraPieces > 0;
+    const needHeavyFee = overweightPieces > 0;
+    if ((!needPieceFee || pieceFee > 0) && (!needHeavyFee || heavyFee > 0)) {
+      estimatedFee = r2(extraPieces * pieceFee + overweightPieces * heavyFee);
+    }
   }
 
   /* ------------------------------------------------------------------ issues */

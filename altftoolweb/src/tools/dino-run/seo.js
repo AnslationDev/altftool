@@ -8,7 +8,7 @@ const seo = {
   ],
   benefits: [
     ["Real difficulty curve, not a flat loop", "Scroll speed climbs in fixed steps with your score and the gap between obstacles shrinks, so the run changes character rather than just lasting longer."],
-    ["Ducking actually matters", "Birds fly at three heights — 60, 110 and 165 pixels above the ground — so the low ones must be jumped and the middle ones ducked."],
+    ["Ducking actually matters", "Birds fly at three heights — 60, 110 and 140 pixels above the ground — so the lowest ones must be ducked, while the two higher tiers already clear a standing or ducking dino and only become a threat if you jump into their path."],
     ["Live speed and score readout", "Score, high score and the current speed multiplier are shown outside the canvas, so you can see exactly when the game stepped up."],
   ],
   faqs: [

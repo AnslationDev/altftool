@@ -6,36 +6,77 @@ import React, { useState, useCallback } from "react";
    Helper Functions (converted to JS)
 -------------------------------------------------- */
 
+// Reference specs for the base/entry trim of each model, rounded from
+// publicly published manufacturer and ARAI/NCAP figures. These are NOT a
+// live price feed — this tool makes no network request — so treat them as
+// indicative figures and confirm current price, variant-specific mileage
+// and power with the manufacturer or a dealer before buying.
 const VEHICLE_LIST = [
   {
     id: 1,
     name: "Hyundai Creta (2024)",
     query: "Hyundai Creta 2024 latest ex-showroom price and mileage",
+    specs: {
+      price: "1099000",
+      mileage: "17.7 kmpl",
+      maxPower: "115 HP",
+      safetyRating: "3 Stars",
+    },
   },
   {
     id: 2,
     name: "Kia Seltos (2024)",
     query: "Kia Seltos 2024 latest ex-showroom price and features",
+    specs: {
+      price: "1099900",
+      mileage: "16.5 kmpl",
+      maxPower: "115 HP",
+      safetyRating: "3 Stars",
+    },
   },
   {
     id: 3,
     name: "Maruti Brezza (2024)",
     query: "Maruti Brezza 2024 specs and safety rating",
+    specs: {
+      price: "799000",
+      mileage: "20.5 kmpl",
+      maxPower: "103 HP",
+      safetyRating: "4 Stars",
+    },
   },
   {
     id: 4,
     name: "Mahindra Scorpio-N (2024)",
     query: "Mahindra Scorpio-N 2024 specs and price",
+    specs: {
+      price: "1349000",
+      mileage: "15.4 kmpl",
+      maxPower: "200 HP",
+      safetyRating: "5 Stars",
+    },
   },
   {
     id: 5,
     name: "Tata Nexon (2024)",
     query: "Tata Nexon 2024 features and price",
+    specs: {
+      price: "849000",
+      mileage: "24.1 kmpl",
+      maxPower: "118 HP",
+      safetyRating: "5 Stars",
+    },
   },
   {
     id: 6,
     name: "Toyota Innova Hycross",
     query: "Toyota Innova Hycross hybrid mileage and power",
+    specs: {
+      price: "2470000",
+      mileage: "23.2 kmpl",
+      maxPower: "184 HP",
+      safetyRating: "5 Stars",
+    },
   },
 ];
 
@@ -146,7 +187,7 @@ const ComparisonResult = ({ vehicle1, vehicle2, loading }) => {
       <div className="text-center py-10">
         <div className="animate-spin h-8 w-8 rounded-full border-2 border-t-(--primary) mx-auto mb-4"></div>
         <h2 className="text-xl font-bold text-(--foreground)">
-          Fetching real-time data…
+          Loading comparison…
         </h2>
       </div>
     );
@@ -249,18 +290,8 @@ const VehicleCompare = () => {
 
     setTimeout(() => {
       setData({
-        v1: {
-          price: "1200000",
-          mileage: "21.0 kmpl",
-          maxPower: "160 HP",
-          safetyRating: "5 Stars",
-        },
-        v2: {
-          price: "1500000",
-          mileage: "18.5 kmpl",
-          maxPower: "180 HP",
-          safetyRating: "5 Stars",
-        },
+        v1: v1Info.specs,
+        v2: v2Info.specs,
       });
       setLoading(false);
     }, 1300);
@@ -278,7 +309,7 @@ const VehicleCompare = () => {
         <h1 className="heading text-center mb-4">Vehicle Comparison Tool</h1>
 
         <p className="text-center description mb-8">
-          Select any two vehicles to compare real-time specs.
+          Select any two vehicles to compare sample base-variant specs.
         </p>
 
         {/* Selectors */}
@@ -286,10 +317,14 @@ const VehicleCompare = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
             {/* Vehicle 1 */}
             <div>
-              <label className="text-sm text-(--foreground)">
+              <label
+                htmlFor="vehicle-compare-select-1"
+                className="text-sm text-(--foreground)"
+              >
                 Select Vehicle 1
               </label>
               <select
+                id="vehicle-compare-select-1"
                 className="w-full p-3 rounded-md bg-(--background) border border-(--border) cursor-pointer"
                 value={vehicle1Id || ""}
                 onChange={(e) => {
@@ -314,10 +349,14 @@ const VehicleCompare = () => {
 
             {/* Vehicle 2 */}
             <div>
-              <label className="text-sm text-(--foreground)">
+              <label
+                htmlFor="vehicle-compare-select-2"
+                className="text-sm text-(--foreground)"
+              >
                 Select Vehicle 2
               </label>
               <select
+                id="vehicle-compare-select-2"
                 className="w-full p-3 rounded-md bg-(--background) border border-(--border) cursor-pointer"
                 value={vehicle2Id || ""}
                 onChange={(e) => {

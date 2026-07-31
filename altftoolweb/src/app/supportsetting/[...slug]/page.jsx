@@ -20,12 +20,25 @@ import { resolveSlug, describeSlug } from "../data/routes";
  */
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const { title, description } = describeSlug(slug || []);
+  const segments = slug || [];
+  // Any string under /supportsetting/ used to answer 200, `index, follow`, with
+  // a self-referencing canonical and an empty <main> — /supportsetting/foo and
+  // /supportsetting/asdkjh-not-real were both indexable, so the family was an
+  // unbounded soft-404 farm.
+  //
+  // describeSlug already calls resolveSlug internally and knows whether the path
+  // matched anything, so it reports that rather than this file resolving twice.
+  // Calling resolveSlug here directly cost 2.6 MiB of artifact — it pulled the
+  // 700+ settings dataset into the metadata bundle as well as the page's, and
+  // the build failed the size gate at 182.64 MiB against a 181.00 ceiling.
+  const { title, description, resolved } = describeSlug(segments);
+
   return createPageMetadata({
     title,
     description,
-    path: `/supportsetting/${(slug || []).join("/")}`,
+    path: `/supportsetting/${segments.join("/")}`,
     keywords: ["AltFTool support", "settings", "help center", "troubleshooting"],
+    noindex: !resolved,
   });
 }
 

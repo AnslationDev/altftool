@@ -2,7 +2,7 @@
 import React, { useState, useMemo, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import AllBrand from "./AllBrand";
-import { Star, X, SlidersHorizontal } from "lucide-react";
+import { X, SlidersHorizontal } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import EmptyState from "./EmptyState";
@@ -357,21 +357,15 @@ function BrandDetail() {
                 <h1 className="text-xl sm:text-3xl font-bold text-(--foreground)">
                   {loading
                     ? <span className="inline-block w-64 h-8 bg-gray-200 animate-pulse rounded" />
-                    : <>{selectedBrand} Coupons &amp; Promo Codes - April 2026</>
+                    : <>{selectedBrand} Coupons &amp; Promo Codes</>
                   }
                 </h1>
                 <p className="text-sm text-(--foreground) mt-2 font-normal">
                   {loading
                     ? <span className="inline-block w-48 h-4 bg-gray-200 animate-pulse rounded" />
-                    : <>Best {totalOffers} Coupons &amp; Offers last validated on April 20th, 2026</>
+                    : <>Best {totalOffers} Coupons &amp; Offers</>
                   }
                 </p>
-              </div>
-              <div className="flex flex-col items-end gap-2">
-                <div className="hidden lg:flex gap-3">
-                  {[1, 2, 3, 4, 5].map((i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}
-                </div>
-                <span className="text-xs text-(--foreground) font-medium">5 / 5 · (2,000 Rating)</span>
               </div>
             </div>
           </div>

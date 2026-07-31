@@ -96,9 +96,21 @@ const DEFAULT_OFFERS = [
   },
 ];
 
-const blankOffer = (index) => ({
+/** Next unused "Offer X" label, scanning A, B, C... so it never collides with a label already
+ * in use — offers can be removed and re-added in any order, so array length alone (the previous
+ * approach) is not a safe source for the next letter. */
+const nextOfferLabel = (existingOffers) => {
+  const used = new Set(existingOffers.map((offer) => offer.label));
+  for (let i = 0; i < 26; i += 1) {
+    const candidate = `Offer ${String.fromCharCode(65 + i)}`;
+    if (!used.has(candidate)) return candidate;
+  }
+  return `Offer ${existingOffers.length + 1}`;
+};
+
+const blankOffer = (existingOffers) => ({
   ...DEFAULT_OFFERS[1],
-  label: `Offer ${String.fromCharCode(65 + index)}`,
+  label: nextOfferLabel(existingOffers),
   otherChargesAmount: "0",
   foreclosurePenaltyPct: "0",
 });
@@ -122,13 +134,18 @@ export default function ToolHome() {
   const active = rows[activeIndex] ?? null;
   const flatOffers = rows.filter((offer) => offer.rateType === "flat");
   const allNotes = rows.flatMap((offer) => offer.notes.map((note) => ({ label: offer.label, note })));
+  // The offer that is cheapest AT THE HORIZON — used to describe its own fate accurately: the
+  // global result.horizonMonths is clamped to the longest offer's tenure (see compareOffers in
+  // ../lib), so a shorter-tenure winning offer may finish naturally well before that month with
+  // no foreclosure at all, which result.anyForecloses alone can't tell us.
+  const winningOffer = rows.find((offer) => offer.label === result.lowestHorizonAprLabel) ?? null;
 
   const updateOffer = (index, key, value) => {
     setOffers((current) => current.map((offer, i) => (i === index ? { ...offer, [key]: value } : offer)));
   };
 
   const addOffer = () => {
-    setOffers((current) => (current.length >= MAX_OFFERS ? current : [...current, blankOffer(current.length)]));
+    setOffers((current) => (current.length >= MAX_OFFERS ? current : [...current, blankOffer(current)]));
   };
 
   const removeOffer = (index) => {
@@ -137,6 +154,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your offers with the demo/default values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setOffers(DEFAULT_OFFERS);
     setHorizonMonths("36");
     setIncludeInsuranceInApr(true);
@@ -149,9 +173,9 @@ export default function ToolHome() {
     if (failed) return "";
     const lines = [
       "Effective APR Comparator",
-      result.anyForecloses
-        ? `Repayment horizon: cleared in month ${result.horizonMonths}`
-        : `Repayment horizon: full term (${result.horizonMonths} months)`,
+      winningOffer?.forecloses
+        ? `Repayment horizon: ${winningOffer.label} cleared in month ${winningOffer.horizon.months}`
+        : `Repayment horizon: ${winningOffer?.label ?? DASH} finishes naturally at month ${winningOffer?.tenureMonths ?? result.horizonMonths}`,
       "",
     ];
     result.offers.forEach((offer) => {
@@ -179,7 +203,7 @@ export default function ToolHome() {
       "APR method: IRR of the actual cash flows on the net disbursed amount, reducing balance, annualised x12 — RBI/2024-25/18 dated 15 April 2024, Annex B footnote 10.",
     );
     return lines.join("\n");
-  }, [failed, result]);
+  }, [failed, result, winningOffer]);
 
   const copyResult = async () => {
     if (!summary) return;
@@ -536,14 +560,19 @@ export default function ToolHome() {
       {failed && (
         <p
           role="alert"
-          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
         >
           {result.error}
         </p>
       )}
 
       {/* ---------- headline ---------- */}
-      <section className={`mt-6 ${CARD}`} aria-labelledby="apr-result-heading">
+      <section
+        className={`mt-6 ${CARD}`}
+        aria-labelledby="apr-result-heading"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2
@@ -560,9 +589,9 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {failed
                 ? DASH
-                : result.anyForecloses
-                  ? `${result.lowestHorizonAprLabel}, if the loan is cleared in month ${result.horizonMonths}`
-                  : `${result.lowestHorizonAprLabel}, run to the full ${result.horizonMonths} months`}
+                : winningOffer?.forecloses
+                  ? `${result.lowestHorizonAprLabel}, if the loan is cleared in month ${winningOffer.horizon.months}`
+                  : `${result.lowestHorizonAprLabel}, which finishes naturally at month ${winningOffer?.tenureMonths ?? result.horizonMonths}`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -611,7 +640,7 @@ export default function ToolHome() {
         </dl>
 
         {!failed && result.rankingFlipped && (
-          <div className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning)]">
+          <div className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning-text)]">
             <p className="flex items-center gap-2 font-semibold">
               <ArrowRightLeft className="h-4 w-4 shrink-0" aria-hidden="true" />
               The ranking inverts at month {result.horizonMonths}
@@ -769,7 +798,7 @@ export default function ToolHome() {
                   <tr key={offer.label} className="border-b border-[var(--border)] last:border-0">
                     <td className={`${TD} font-semibold`}>{offer.label}</td>
                     <td className={TD}>{pct(offer.quotedRatePct)}</td>
-                    <td className={`${TD} font-semibold text-[var(--danger)]`}>
+                    <td className={`${TD} font-semibold text-[var(--danger-text)]`}>
                       {pct(offer.flatGap?.reducingNominalAnnualPct)}
                     </td>
                     <td className={TD}>
@@ -895,7 +924,7 @@ export default function ToolHome() {
             by 12. RBI/2024-25/18, DOR.STR.REC.13/13.03.00/2024-25 dated 15 April 2024, Annex B
             footnote 10: computed on net disbursed amount using the IRR approach and reducing
             balance method. Running the RBI&apos;s own Annex B illustration through it returns
-            17.07%, the figure the circular prints.
+            17.10%.
           </li>
           <li>
             <span className="font-semibold text-[var(--foreground)]">Net disbursed amount: </span>

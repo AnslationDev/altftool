@@ -36,6 +36,39 @@ function validateFile(file) {
   return { extension, format };
 }
 
+/**
+ * Collect PDF text-content items into a single normalized string, stopping
+ * once `maxChars` is reached rather than materializing an item's full
+ * `str` (or visiting further items) unconditionally — a single pathological
+ * page can otherwise hold an unbounded amount of text.
+ *
+ * `truncated` reports whether any item's real `str` content was cut short;
+ * losing only the item-separator character we append (a space, or a
+ * newline for `hasEOL` items) at the very end of the budget doesn't count,
+ * since nothing of the extracted text itself was lost.
+ */
+export function collectBoundedPdfTextItems(items, maxChars) {
+  let text = "";
+  let truncated = false;
+  for (const item of items) {
+    const str = typeof item?.str === "string" ? item.str : "";
+    const piece = `${str}${item?.hasEOL ? "\n" : " "}`;
+    const remaining = maxChars - text.length;
+    if (piece.length <= remaining) {
+      text += piece;
+      continue;
+    }
+    const kept = piece.slice(0, Math.max(0, remaining));
+    text += kept;
+    truncated = kept.length < str.length;
+    break;
+  }
+  if (!truncated) {
+    text = text.replace(/[ \t]+\n/gu, "\n").replace(/[ \t]{2,}/gu, " ").trim();
+  }
+  return { text, truncated };
+}
+
 // Bounded PDF text extraction using pdfjs-dist
 async function extractPdfDocument(file) {
   const pdfjs = await import("pdfjs-dist");
@@ -55,16 +88,30 @@ async function extractPdfDocument(file) {
 
   let fullText = "";
   let fontList = new Set();
+  let extractedPages = 0;
+  let textTruncated = false;
 
   for (let p = 1; p <= eligiblePages; p++) {
+    if (fullText.length >= MAX_SOURCE_CHARACTERS) {
+      textTruncated = true;
+      break;
+    }
     const page = await pdfDoc.getPage(p);
     const content = await page.getTextContent();
-    const pageStrings = content.items.map((item) => {
+    content.items.forEach((item) => {
       if (item.fontName) fontList.add(item.fontName);
-      return item.str;
     });
-    fullText += `--- Page ${p} ---\n` + pageStrings.join(" ") + "\n\n";
+    const { text: pageText, truncated: pageTruncated } = collectBoundedPdfTextItems(
+      content.items,
+      MAX_SOURCE_CHARACTERS - fullText.length,
+    );
+    fullText += `--- Page ${p} ---\n` + pageText + "\n\n";
+    extractedPages = p;
     page.cleanup();
+    if (pageTruncated) {
+      textTruncated = true;
+      break;
+    }
   }
 
   // Extract PDF Metadata if available
@@ -96,7 +143,7 @@ async function extractPdfDocument(file) {
     text: fullText,
     sourceType: "PDF Document",
     pageCount,
-    extractedPages: eligiblePages,
+    extractedPages,
     metadata: {
       filename: file.name,
       extension: "pdf",
@@ -115,7 +162,12 @@ async function extractPdfDocument(file) {
       tableCount: 0,
       fonts: Array.from(fontList).slice(0, 10),
     },
-    warnings: pageCount > MAX_PDF_PAGES ? [`Reading limited to first ${MAX_PDF_PAGES} pages.`] : [],
+    warnings: [
+      ...(pageCount > MAX_PDF_PAGES ? [`Reading limited to first ${MAX_PDF_PAGES} pages.`] : []),
+      ...(textTruncated
+        ? [`Extracted text truncated at ${MAX_SOURCE_CHARACTERS.toLocaleString("en-US")} characters.`]
+        : []),
+    ],
   };
 }
 

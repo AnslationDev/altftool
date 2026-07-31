@@ -145,6 +145,7 @@ export function computeDownsizingSavings({
   const afterUnits = replacementCost.fuelUnits;
   const unitsSaved = beforeUnits - afterUnits;
   const co2SavedKg = unitsSaved * fuel.co2PerUnit;
+  const unitsIncreased = unitsSaved < 0;
 
   const netSwitchCost = replacementPrice - saleProceeds;
   let paybackMonths = null;
@@ -174,6 +175,11 @@ export function computeDownsizingSavings({
       "The remaining vehicle is set to cover noticeably fewer kilometres than the household drives today. If those trips still have to happen, add them here or to the cab spend.",
     );
   }
+  if (unitsSaved < 0) {
+    notes.push(
+      "The replacement uses more fuel per year than what it is replacing, so fuel use and CO2 go up even though money is saved. The figures below show that increase, not a reduction.",
+    );
+  }
   if (netSwitchCost < 0) {
     notes.push(
       "Selling raises more cash than the replacement costs, so the switch pays for itself on day one — the payback period does not apply.",
@@ -201,6 +207,7 @@ export function computeDownsizingSavings({
     afterUnits,
     unitsSaved,
     co2SavedKg,
+    unitsIncreased,
     netSwitchCost,
     paybackMonths,
     projectionYears: PROJECTION_YEARS,

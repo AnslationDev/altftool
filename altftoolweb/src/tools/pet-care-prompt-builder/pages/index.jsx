@@ -76,14 +76,13 @@ export default function ToolHome() {
         : DASH,
     ],
     ["Spare minutes for enrichment", ok ? `${result.leftoverMinutes} min` : DASH],
-    [
-      "Toilet-break interval",
-      ok && result.bladderHours !== null ? `about every ${NUM.format(result.bladderHours)} h` : DASH,
-    ],
+    ok && result.bladderGuidanceIncluded
+      ? ["Toilet-break interval", `about every ${NUM.format(result.bladderHours)} h`]
+      : null,
     ["Prompt goal", ok ? result.goalLabel : DASH],
     ["Characters", ok ? NUM.format(result.charCount) : DASH],
     ["Estimated tokens", ok ? `~${NUM.format(result.tokenEstimate)}` : DASH],
-  ];
+  ].filter(Boolean);
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">

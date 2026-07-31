@@ -152,19 +152,28 @@ export default function ToolHome() {
 
     // Fractional tail of a compounding period — growth only, no fresh deposit.
     if (partialPeriod > 1e-9) {
+      const openingForTail = balance;
       const tailInterest =
         balance * (Math.pow(1 + periodRate, partialPeriod) - 1);
       balance += tailInterest;
-      if (rows.length) {
-        const last = rows[rows.length - 1];
+
+      // The tail belongs to the calendar year it falls in (same convention
+      // as the continuous-compounding branch above: a partial final year is
+      // labelled with Math.ceil(years)). Only fold it into the previous row
+      // when that row is itself still mid-way through that same year —
+      // otherwise the previous row is a *complete* prior year and merging
+      // would mislabel this year's growth as belonging to the last one.
+      const tailYear = Math.ceil(years);
+      const last = rows[rows.length - 1];
+      if (last && last.year === tailYear) {
         last.interest += tailInterest;
         last.closing = balance;
       } else {
         rows.push({
-          year: 1,
-          opening: principal,
-          deposits: totalDeposits,
-          interest: balance - principal - totalDeposits,
+          year: tailYear,
+          opening: openingForTail,
+          deposits: 0,
+          interest: tailInterest,
           closing: balance,
         });
       }
@@ -343,7 +352,11 @@ export default function ToolHome() {
             </div>
           </section>
 
-          <section className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section
+            aria-live="polite"
+            aria-atomic="true"
+            className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          >
             {result.error ? (
               <div
                 role="alert"

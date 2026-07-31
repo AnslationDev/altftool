@@ -58,8 +58,8 @@ export const spec = {
   compute: (values) => {
       const capacity = Math.max(0, Number(values.capacity) || 0), perInterval = Math.max(0, Number(values.power) || 0), efficiency = Math.max(0.01, Math.min(1, Number(values.efficiency) / 100));
       const rows = String(values.intervals || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean).map((line) => { const [time, load, price] = line.split("|").map((cell) => cell.trim()); return { time, load: Math.max(0, Number(load) || 0), price: Math.max(0, Number(price) || 0) }; });
-      const baseline = rows.reduce((sum, row) => sum + row.load * row.price, 0), cheapest = [...rows].sort((a, b) => a.price - b.price)[0], expensive = [...rows].sort((a, b) => b.price - a.price);
-      let stored = Math.min(capacity, perInterval * efficiency), chargeInput = stored / efficiency, simulated = baseline + (cheapest ? chargeInput * cheapest.price : 0), discharged = 0;
+      const baseline = rows.reduce((sum, row) => sum + row.load * row.price, 0), cheapest = [...rows].sort((a, b) => a.price - b.price)[0], expensive = rows.filter((row) => row !== cheapest).sort((a, b) => b.price - a.price);
+      let stored = Math.min(capacity, perInterval * efficiency), chargeInput = cheapest ? stored / efficiency : 0, simulated = baseline + (cheapest ? chargeInput * cheapest.price : 0), discharged = 0;
       const plan = expensive.map((row) => { const use = Math.min(stored, perInterval, row.load); stored -= use; discharged += use; simulated -= use * row.price; return [row.time, row.price, use.toFixed(3), (use * row.price).toFixed(2)]; }).filter((row) => Number(row[2]) > 0);
       return { result: Math.max(0, baseline - simulated).toFixed(2) + " estimated savings", caption: "Baseline " + baseline.toFixed(2) + " · simulated " + simulated.toFixed(2), rows: [["Charge interval", cheapest?.time || "—"], ["Grid energy charged", chargeInput.toFixed(3) + " kWh"], ["Energy discharged", discharged.toFixed(3) + " kWh"], ["Capacity", capacity + " kWh"]], table: { headers: ["Discharge time", "Price", "Battery kWh", "Avoided cost"], rows: plan } };
     },

@@ -18,10 +18,10 @@ export default function CTASection({ onExplore }) {
             <span>Unleash Your Creativity</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight">
-            Ready to discover thousands of live Pinterest ideas?
+            Ready to discover more Pinterest-style ideas?
           </h2>
           <p className="text-white/90 text-base sm:text-lg font-normal max-w-xl">
-            Jump into our real-time Pinterest feed powered by live community data. Save your favorite pins, share with friends, and start building your boards today.
+            Jump into our curated Pinterest-style feed. Save your favorite pins, share with friends, and start building your boards today.
           </p>
         </div>
 
@@ -31,7 +31,7 @@ export default function CTASection({ onExplore }) {
             className="px-8 py-4 rounded-full bg-white text-gray-900 hover:bg-gray-100 font-extrabold text-base sm:text-lg shadow-xl hover:scale-105 transition-all flex items-center gap-3"
           >
             <Compass size={22} className="text-[#E60023]" />
-            <span>Enter Live Feed</span>
+            <span>Enter Feed</span>
             <ArrowRight size={20} />
           </button>
         </div>

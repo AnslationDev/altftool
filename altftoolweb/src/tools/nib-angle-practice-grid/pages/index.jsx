@@ -342,10 +342,47 @@ export default function ToolHome() {
           <p className="mt-1 text-sm text-[var(--muted-foreground)] print:hidden">
             Print at 100% scale (no “fit to page”) or the nib widths will be wrong.
           </p>
-          <div className="mt-3 overflow-x-auto">
+          {/*
+            Print sizing: the SVG below carries its own explicit width/height in
+            millimetres (matching grid.page), and this block pins it flush at the
+            physical page's top-left corner and forces @page to that exact size
+            with zero margin, so the printed sheet is the real mm dimensions the
+            tool calculates rather than whatever the browser's print viewport
+            happens to give it. It also locks the guide's ink to fixed
+            light-appropriate colors so it stays legible on paper no matter which
+            UI theme (light or dark) was active when it was printed.
+          */}
+          <style>{`
+            @media print {
+              body * { visibility: hidden !important; }
+              #nib-print-area, #nib-print-area * { visibility: visible !important; }
+              #nib-print-area {
+                position: absolute;
+                inset: 0 auto auto 0;
+                width: ${grid.page.width}mm;
+                overflow: visible !important;
+              }
+              #nib-print-area svg {
+                width: ${grid.page.width}mm !important;
+                height: ${grid.page.height}mm !important;
+              }
+              #nib-print-area .nib-page-bg { fill: #ffffff !important; }
+              #nib-print-area .nib-ln-outer { stroke: #e2e8f0 !important; }
+              #nib-print-area .nib-ln-waist { stroke: #607083 !important; }
+              #nib-print-area .nib-ln-baseline { stroke: #111827 !important; }
+              #nib-print-area .nib-ln-slant { stroke: #e2e8f0 !important; }
+              #nib-print-area .nib-ln-mark { stroke: #0d9488 !important; }
+              @page {
+                size: ${grid.page.width}mm ${grid.page.height}mm;
+                margin: 0;
+              }
+            }
+          `}</style>
+          <div id="nib-print-area" className="mt-3 overflow-x-auto">
             <svg
               viewBox={`0 0 ${grid.page.width} ${grid.page.height}`}
-              width="100%"
+              width={`${grid.page.width}mm`}
+              height={`${grid.page.height}mm`}
               role="img"
               aria-label={`${grid.hand.name} guide sheet with ${grid.rowCount} line sets and pen angle marks at ${grid.penAngleDeg} degrees`}
               className="mx-auto block h-auto w-full max-w-full bg-[var(--background)]"
@@ -356,6 +393,7 @@ export default function ToolHome() {
                 width={grid.page.width}
                 height={grid.page.height}
                 fill="var(--background)"
+                className="nib-page-bg"
               />
               {grid.rows.map((row) => (
                 <g key={row.index}>
@@ -366,6 +404,7 @@ export default function ToolHome() {
                     y2={row.ascenderY}
                     stroke="var(--border)"
                     strokeWidth="0.2"
+                    className="nib-ln-outer"
                   />
                   <line
                     x1={grid.contentLeftMm}
@@ -374,6 +413,23 @@ export default function ToolHome() {
                     y2={row.waistY}
                     stroke="var(--muted-foreground)"
                     strokeWidth="0.25"
+                    className="nib-ln-waist"
+                  />
+                  {/*
+                    Descender is drawn before baseline (not after, as the visual
+                    stacking order might suggest) so that on hands with no
+                    descender zone (e.g. Roman capitals, where descenderY ===
+                    baselineY) the heavier baseline rule paints on top of the
+                    lighter descender rule instead of being overwritten by it.
+                  */}
+                  <line
+                    x1={grid.contentLeftMm}
+                    y1={row.descenderY}
+                    x2={grid.contentRightMm}
+                    y2={row.descenderY}
+                    stroke="var(--border)"
+                    strokeWidth="0.2"
+                    className="nib-ln-outer"
                   />
                   <line
                     x1={grid.contentLeftMm}
@@ -382,14 +438,7 @@ export default function ToolHome() {
                     y2={row.baselineY}
                     stroke="var(--foreground)"
                     strokeWidth="0.35"
-                  />
-                  <line
-                    x1={grid.contentLeftMm}
-                    y1={row.descenderY}
-                    x2={grid.contentRightMm}
-                    y2={row.descenderY}
-                    stroke="var(--border)"
-                    strokeWidth="0.2"
+                    className="nib-ln-baseline"
                   />
                   {showSlant
                     ? row.slants.map((slant) => (
@@ -402,6 +451,7 @@ export default function ToolHome() {
                           stroke="var(--border)"
                           strokeWidth="0.18"
                           strokeDasharray="1.5 1.5"
+                          className="nib-ln-slant"
                         />
                       ))
                     : null}
@@ -414,6 +464,7 @@ export default function ToolHome() {
                       y2={mark.y2}
                       stroke="var(--primary)"
                       strokeWidth="0.3"
+                      className="nib-ln-mark"
                     />
                   ))}
                 </g>

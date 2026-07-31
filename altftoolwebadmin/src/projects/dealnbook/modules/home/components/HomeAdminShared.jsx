@@ -446,7 +446,12 @@ export function CollectionManager({
         <div className="min-w-[560px]">
           <div className={`grid ${gridCols} bg-gray-50 px-3 py-2 text-[10px] font-bold uppercase tracking-widest text-gray-400`}>
             {hasImageColumn ? <span>Logo</span> : null}
-            <span>{columns.find((col) => !col.image)?.label}</span>
+            <span>
+              {columns
+                .filter((col) => !col.image)
+                .map((col) => col.label)
+                .join(" / ")}
+            </span>
             <span>Status</span>
             <span>Actions</span>
           </div>

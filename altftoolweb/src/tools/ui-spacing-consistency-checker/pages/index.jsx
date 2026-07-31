@@ -10,11 +10,11 @@ const sampleCode = `<section className="p-5 md:p-8 gap-4">
 </section>`;
 
 function extractSpacing(value) {
-  const tailwindMatches = [...value.matchAll(/\b(?:p|m|gap|space-[xy]|px|py|pt|pr|pb|pl|mt|mr|mb|ml)-(\d+(?:\.\d+)?)\b/g)].map((match) => ({
+  const tailwindMatches = [...value.matchAll(/-?\b(?:p|m|gap(?:-[xy])?|space-[xy]|px|py|pt|pr|pb|pl|mt|mr|mb|ml)-(\d+(?:\.\d+)?)\b/g)].map((match) => ({
     source: match[0],
     pixels: Number(match[1]) * 4,
   }));
-  const pixelMatches = [...value.matchAll(/(\d+)px/g)].map((match) => ({
+  const pixelMatches = [...value.matchAll(/(\d+(?:\.\d+)?)px/g)].map((match) => ({
     source: match[0],
     pixels: Number(match[1]),
   }));

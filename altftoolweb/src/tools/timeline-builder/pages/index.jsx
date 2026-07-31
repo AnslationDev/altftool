@@ -6,18 +6,18 @@ import {
   Plus,
   Trash2,
   Copy,
+  Check,
   Download,
   RefreshCw,
   Calendar,
   Flag,
   ArrowUp,
   ArrowDown,
-  GripVertical,
   AlertCircle,
   CheckCircle2,
   Edit3,
 } from "lucide-react";
-import { safeCopyText } from "@/shared/utils/clipboard";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const PRESET_COLORS = [
   { label: "Teal", value: "#14B8A6" },
@@ -79,11 +79,27 @@ function formatDate(dateStr) {
   return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 }
 
+// WCAG relative-luminance helper for picking legible text over an arbitrary
+// swatch background. The badge background is a fixed brand color (one of
+// PRESET_COLORS) independent of light/dark theme, so this is a local
+// luminance check rather than a theme token.
+function getContrastTextColor(hexColor) {
+  if (!hexColor) return "#000000";
+  const hex = hexColor.replace("#", "");
+  const r = parseInt(hex.substring(0, 2), 16) / 255;
+  const g = parseInt(hex.substring(2, 4), 16) / 255;
+  const b = parseInt(hex.substring(4, 6), 16) / 255;
+  const linearize = (c) => (c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4));
+  const luminance = 0.2126 * linearize(r) + 0.7152 * linearize(g) + 0.0722 * linearize(b);
+  return luminance > 0.179 ? "#000000" : "#FFFFFF";
+}
+
 export default function TimelineBuilder() {
   const [events, setEvents] = useState(SAMPLE_EVENTS);
   const [editingId, setEditingId] = useState(null);
   const [form, setForm] = useState({ date: "", title: "", description: "", color: "#14B8A6" });
   const [error, setError] = useState("");
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const resetForm = useCallback(() => {
     setForm({ date: "", title: "", description: "", color: "#14B8A6" });
@@ -137,18 +153,26 @@ export default function TimelineBuilder() {
   }, []);
 
   const clearAll = useCallback(() => {
+    if (
+      events.length > 0 &&
+      !window.confirm("Clear all events? This will permanently delete every event on the timeline and cannot be undone.")
+    ) {
+      return;
+    }
     setEvents([]);
     resetForm();
-  }, [resetForm]);
+  }, [events.length, resetForm]);
 
   const copyAsText = useCallback(async () => {
     if (!events.length) return;
-    const lines = events.map(
-      (e, i) => `${i + 1}. [${formatDate(e.date)}] ${e.title}\n   ${e.description}`
+    const lines = events.map((e, i) =>
+      e.description
+        ? `${i + 1}. [${formatDate(e.date)}] ${e.title}\n   ${e.description}`
+        : `${i + 1}. [${formatDate(e.date)}] ${e.title}`
     );
     const text = `Timeline\n${"=".repeat(40)}\n\n${lines.join("\n\n")}`;
-    await safeCopyText(text);
-  }, [events]);
+    await copy("timeline-text", text, { label: "Timeline" });
+  }, [events, copy]);
 
   const downloadJson = useCallback(() => {
     if (!events.length) return;
@@ -303,10 +327,18 @@ export default function TimelineBuilder() {
                   onClick={copyAsText}
                   disabled={!events.length}
                   className="btn-secondary flex items-center gap-1 rounded-md px-3 py-1.5 text-xs font-semibold disabled:opacity-50"
-                  aria-label="Copy timeline as text"
+                  aria-label={isCopied("timeline-text") ? "Copied" : "Copy timeline as text"}
                 >
-                  <Copy className="h-3.5 w-3.5" /> Copy
+                  {isCopied("timeline-text") ? (
+                    <Check className="h-3.5 w-3.5" />
+                  ) : (
+                    <Copy className="h-3.5 w-3.5" />
+                  )}{" "}
+                  {isCopied("timeline-text") ? "Copied!" : "Copy"}
                 </button>
+                <span className="sr-only" role="status" aria-live="polite">
+                  {announcement}
+                </span>
                 <button
                   type="button"
                   onClick={downloadJson}
@@ -442,7 +474,10 @@ export default function TimelineBuilder() {
                           }`}
                         >
                           <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 shadow-[var(--anslation-ds-shadow-sm)] transition-shadow hover:shadow-md">
-                            <div className="mb-2 inline-block rounded-md px-2.5 py-1 text-xs font-semibold text-white" style={{ backgroundColor: evt.color }}>
+                            <div
+                              className="mb-2 inline-block rounded-md px-2.5 py-1 text-xs font-semibold"
+                              style={{ backgroundColor: evt.color, color: getContrastTextColor(evt.color) }}
+                            >
                               <Calendar className="mr-1 inline h-3 w-3" aria-hidden="true" />
                               {formatDate(evt.date)}
                             </div>

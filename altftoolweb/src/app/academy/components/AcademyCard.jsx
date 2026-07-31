@@ -88,7 +88,9 @@ export default function AcademyCard({ academy }) {
 
           <span className="flex items-center gap-1 text-base font-extrabold text-(--foreground)">
 
-            ₹{academy.price}
+            {String(academy.price).trim().toLowerCase() === "free"
+              ? "Free"
+              : `₹${academy.price}`}
           </span>
         </div>
 

@@ -4,10 +4,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import GameThumb from "./GameThumb";
-import StarRating from "./StarRating";
-import { formatPlays } from "@/app/altfgame/_data/games";
 
-// Game card: thumbnail, title, rating, category tag, and a hover Play action.
+// Game card: thumbnail, title, category tag, and a hover Play action.
 export default function GameCard({ game, className = "" }) {
   return (
     <Link href={`/altfgame/${game.slug}`} className={`group block ${className}`}>
@@ -40,8 +38,7 @@ export default function GameCard({ game, className = "" }) {
 
         <div className="flex flex-1 flex-col gap-1.5 p-3">
           <h3 className="truncate text-sm font-semibold text-foreground">{game.title}</h3>
-          <div className="mt-auto flex items-center justify-between gap-2 text-xs text-foreground/60">
-            <StarRating value={game.rating} className="shrink-0" />
+          <div className="mt-auto flex items-center text-xs text-foreground/60">
             <span className="min-w-0 truncate rounded-full bg-muted px-2 py-0.5 font-medium text-foreground">
               {game.category}
             </span>

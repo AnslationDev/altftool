@@ -1,11 +1,11 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Droplet, RotateCcw, Info, Copy, Download, CheckCircle2 } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
 const LDL_CATEGORIES = [
-  { max: 100, label: "Optimal", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200", description: "Ideal LDL cholesterol level. Lower is better for cardiovascular health." },
+  { max: 99, label: "Optimal", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200", description: "Ideal LDL cholesterol level. Lower is better for cardiovascular health." },
   { max: 129, label: "Near Optimal", color: "text-teal-600", bg: "bg-teal-50", border: "border-teal-200", description: "Acceptable but approaching borderline. Maintain healthy lifestyle." },
   { max: 159, label: "Borderline High", color: "text-amber-600", bg: "bg-amber-50", border: "border-amber-200", description: "Lifestyle modifications recommended. Consider dietary changes and exercise." },
   { max: 189, label: "High", color: "text-orange-600", bg: "bg-orange-50", border: "border-orange-200", description: "Elevated LDL. Medication may be needed along with lifestyle changes." },
@@ -13,20 +13,20 @@ const LDL_CATEGORIES = [
 ];
 
 const HDL_CATEGORIES = [
-  { max: 40, label: "Low (High Risk)", color: "text-red-600", bg: "bg-red-50", border: "border-red-200", description: "Low HDL increases cardiovascular risk. Major risk factor for heart disease." },
+  { max: 39, label: "Low (High Risk)", color: "text-red-600", bg: "bg-red-50", border: "border-red-200", description: "Low HDL increases cardiovascular risk. Major risk factor for heart disease." },
   { max: 59, label: "Borderline", color: "text-amber-600", bg: "bg-amber-50", border: "border-amber-200", description: "Not cardioprotective. Lifestyle changes can raise HDL." },
   { max: Infinity, label: "Optimal (Protective)", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200", description: "High HDL is cardioprotective. ≥ 60 mg/dL removes one risk factor." },
 ];
 
 const TRIGLYCERIDE_CATEGORIES = [
-  { max: 150, label: "Normal", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200", description: "Healthy triglyceride level." },
+  { max: 149, label: "Normal", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200", description: "Healthy triglyceride level." },
   { max: 199, label: "Borderline High", color: "text-amber-600", bg: "bg-amber-50", border: "border-amber-200", description: "Borderline elevated. Reduce sugar and refined carbohydrate intake." },
   { max: 499, label: "High", color: "text-orange-600", bg: "bg-orange-50", border: "border-orange-200", description: "Elevated. Increases cardiovascular and pancreatitis risk." },
   { max: Infinity, label: "Very High", color: "text-red-600", bg: "bg-red-50", border: "border-red-200", description: "Severely elevated. High pancreatitis risk. Requires aggressive treatment." },
 ];
 
 const TC_CATEGORIES = [
-  { max: 200, label: "Desirable", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200", description: "Desirable total cholesterol level." },
+  { max: 199, label: "Desirable", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200", description: "Desirable total cholesterol level." },
   { max: 239, label: "Borderline High", color: "text-amber-600", bg: "bg-amber-50", border: "border-amber-200", description: "Borderline elevated. Monitor and modify diet." },
   { max: Infinity, label: "High", color: "text-red-600", bg: "bg-red-50", border: "border-red-200", description: "Elevated total cholesterol. Increased cardiovascular risk." },
 ];
@@ -115,6 +115,7 @@ export default function ToolHome() {
   const [tg, setTg] = useState("");
   const [result, setResult] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [error, setError] = useState("");
 
   const calculate = () => {
     const tcVal = parseFloat(tc);
@@ -122,6 +123,15 @@ export default function ToolHome() {
     const hdlVal = parseFloat(hdl);
     const tgVal = parseFloat(tg);
     if ([tcVal, ldlVal, hdlVal, tgVal].some(isNaN) || [tcVal, ldlVal, hdlVal, tgVal].some((v) => v < 0)) return;
+    if (hdlVal > tcVal) {
+      // HDL is one component of total cholesterol, so it can never exceed TC —
+      // otherwise getNonHdl (TC − HDL) goes negative and gets silently
+      // mislabeled as "Optimal".
+      setResult(null);
+      setError("HDL cholesterol can't be higher than total cholesterol — please recheck these two values.");
+      return;
+    }
+    setError("");
 
     const tcCat = classifyTc(tcVal);
     const ldlCat = classifyLdl(ldlVal);
@@ -146,7 +156,7 @@ export default function ToolHome() {
     });
   };
 
-  const reset = () => { setTc(""); setLdl(""); setHdl(""); setTg(""); setResult(null); };
+  const reset = () => { setTc(""); setLdl(""); setHdl(""); setTg(""); setResult(null); setError(""); };
 
   const buildReportText = () => {
     if (!result) return "";
@@ -244,6 +254,12 @@ Clinical decisions should always be made by qualified healthcare professionals.
               <input type="number" min="20" max="2000" value={tg} onChange={(e) => setTg(e.target.value)} placeholder="150" className="mt-2 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all" />
               <span className="text-xs text-[var(--muted)]">Normal: &lt; 150 mg/dL</span>
             </label>
+
+            {error && (
+              <p role="alert" className="mt-5 rounded-lg border border-red-200 bg-red-50 px-3 py-2.5 text-sm font-medium text-red-700 dark:border-red-800 dark:bg-red-950 dark:text-red-300">
+                {error}
+              </p>
+            )}
 
             <div className="mt-6 flex gap-3">
               <button onClick={calculate} disabled={!tc || !ldl || !hdl || !tg} className="flex-1 rounded-lg bg-[var(--primary)] px-4 py-3 text-sm font-semibold text-white shadow-[var(--anslation-ds-shadow-sm)] transition-all hover:shadow-[var(--anslation-ds-shadow-md)] hover:brightness-110 disabled:opacity-40 disabled:cursor-not-allowed active:scale-[0.98]">Analyze Lipids</button>

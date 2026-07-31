@@ -1,32 +1,32 @@
 const seo = {
   intro:
-    "This estimator computes a monthly Netlify bill from team members, bandwidth, build minutes and serverless function invocations, using Netlify's published block pricing — $19 per Pro member with 1 TB bandwidth and 25,000 build minutes included, then $55 per extra 100 GB of bandwidth and $7 per extra 500 build minutes, with partial blocks rounded up. It shows Jamstack teams exactly which meter tips them from the Free plan into real spend.",
+    "This estimator computes a monthly Netlify bill from bandwidth, function compute, production deploys and web requests, using Netlify's current credit-based pricing — Free at 300 credits/month, Personal at $9 for 1,000 credits, and Pro starting at $20 for 3,000 credits with unlimited team members. Usage beyond the plan's included credits tops up in $10 (Pro) or $5 (Personal) recharge packs, or pauses the project on Free. It shows Jamstack teams exactly which meter tips them from Free into real spend.",
   useCases: [
-    "Checking whether a side project's traffic still fits the Free plan's 100 GB bandwidth allowance",
-    "Forecasting a three-person agency's Pro bill in a month with a 1.2 TB traffic spike",
-    "Seeing how a chatty preview-deploy workflow that burns 26,000 build minutes converts into overage blocks",
+    "Checking whether a side project's traffic still fits the Free plan's 300 credit/month allowance",
+    "Forecasting a Pro team's bill in a month with a 500 GB bandwidth spike and heavier function compute",
+    "Seeing how frequent production deploys and web request volume convert into recharge packs on Pro",
   ],
   benefits: [
-    ["Block-rounded overages", "Bandwidth and build overages round up to whole $55 and $7 blocks, matching real invoices."],
-    ["Free vs Pro side by side", "Switch plans to see when the 100 GB / 300 minute Free allowances stop being enough."],
-    ["Functions included", "Models the 125,000 included invocations and the $25 pack covering up to 2 million beyond."],
+    ["Real credit model", "Bandwidth, compute, deploys and requests all draw from one credit pool, matching Netlify's current billing exactly."],
+    ["Free vs Personal vs Pro side by side", "Switch plans to see when the 300 or 1,000 credit allowances stop being enough."],
+    ["Recharge-pack overages", "Overage tops up in whole $10 (Pro) or $5 (Personal) packs, matching how Netlify actually bills recharges."],
   ],
   faqs: [
     [
       "How much does Netlify Pro cost?",
-      "$19 per team member per month, which includes 1 TB of bandwidth and 25,000 build minutes for the team. Usage past those allowances bills in blocks: $55 per additional 100 GB of bandwidth and $7 per additional 500 build minutes, with partial blocks charged in full.",
+      "Pro starts at $20 per month for 3,000 credits, with unlimited team members included at no extra charge — Netlify removed per-seat pricing on 2026-04-14. Higher credit tiers are available: 5,000 credits for $33, 10,000 for $63, 15,000 for $95, and 20,000 for $126 per month, with credit rollover on tiers of 5,000 or more.",
     ],
     [
       "What do I get on Netlify's free plan?",
-      "The Free (Starter) plan includes 100 GB of bandwidth, 300 build minutes and 125,000 serverless function invocations per month for a single member at $0. Exceeding an allowance moves you onto paid blocks — one extra gigabyte of bandwidth triggers a full $55 100 GB block.",
+      "The Free plan includes 300 credits per month for a single owner, at $0. Credits cover bandwidth, function compute, production deploys and web requests. There's no overage billing on Free — once the 300 credits run out mid-cycle, the project pauses until the next billing cycle or an upgrade.",
     ],
     [
-      "How are Netlify build minutes calculated?",
-      "Every minute a build runs on Netlify's build machines counts against the monthly allowance — 300 minutes on Free, 25,000 on Pro — including builds for deploy previews and branch deploys. Overage bills at $7 per 500-minute block, so trimming unnecessary preview builds is the usual first saving.",
+      "How does Netlify's credit-based pricing work?",
+      "Every plan gets a monthly credit allowance that a shared pool of usage draws from: bandwidth costs 20 credits per GB, function/edge/background compute costs 10 credits per GB-hour, each production deploy costs 15 credits, and web requests cost 2 credits per 10,000 requests. Deploy previews, branch deploys and failed deploys are not metered. Going over the allowance tops up via auto-recharge packs on Personal and Pro (500 credits for $5, or 1,500 credits for $10), rounded up to the next whole pack.",
     ],
     [
-      "How much do Netlify Functions cost?",
-      "The first 125,000 synchronous function invocations per month are included. Beyond that, Netlify's Functions pricing adds a $25 pack covering up to 2 million invocations, so 500,000 invocations in a month costs one $25 pack on top of your plan.",
+      "How much do Netlify function invocations cost?",
+      "Netlify no longer bills function invocations directly — as of the 2026-04-14 pricing update, serverless, edge and background function usage is metered as compute at 10 credits per GB-hour, drawn from the same credit pool as bandwidth and deploys. There's no separate per-invocation charge or invocation pack.",
     ],
   ],
 };

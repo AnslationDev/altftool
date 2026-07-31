@@ -18,6 +18,11 @@ const EM_DASH = "—";
 
 const whole = (value) => (Number.isFinite(value) ? WHOLE.format(value) : EM_DASH);
 
+// An emptied number input's state is "" — Number("") is 0, which would silently
+// pass lib.js's numeric validation as a real value. Map "" (and other blanks) to
+// NaN so lib.js's isNum()/empty checks correctly flag the field as unset.
+const toNumericInput = (value) => (typeof value === "string" && value.trim() === "" ? NaN : Number(value));
+
 const DEFAULTS = {
   scheme: "schengen",
   age: "30",
@@ -63,7 +68,7 @@ export default function ToolHome() {
     () =>
       buildChecklist({
         scheme,
-        age: Number(age),
+        age: toNumericInput(age),
         biometricsRequired,
         payingByCash,
         courierReturn,
@@ -75,8 +80,8 @@ export default function ToolHome() {
     () =>
       computeTiming({
         appointmentTime,
-        travelMinutes: Number(travelMinutes),
-        contingencyMinutes: Number(contingencyMinutes),
+        travelMinutes: toNumericInput(travelMinutes),
+        contingencyMinutes: toNumericInput(contingencyMinutes),
       }),
     [appointmentTime, travelMinutes, contingencyMinutes],
   );
@@ -96,7 +101,7 @@ export default function ToolHome() {
       checklist.schemeLabel,
       timingFailed
         ? ""
-        : `Appointment ${timing.appointment} · reach the centre by ${timing.arriveBy} · leave home by ${timing.leaveHomeBy}`,
+        : `Appointment ${timing.appointment} · reach the centre by ${timing.arriveBy}${timing.arriveByPreviousDay ? " (previous day)" : ""} · leave home by ${timing.leaveHomeBy}${timing.previousDay ? " (previous day)" : ""}`,
       "",
     ];
     for (const key of ["carry", "wear", "leave"]) {
@@ -346,7 +351,11 @@ export default function ToolHome() {
           </div>
           <div className="flex items-center justify-between gap-4 py-2.5">
             <dt className="text-[var(--muted-foreground)]">Reach the centre by</dt>
-            <dd className="text-right font-semibold">{timingFailed ? EM_DASH : timing.arriveBy}</dd>
+            <dd className="text-right font-semibold">
+              {timingFailed
+                ? EM_DASH
+                : `${timing.arriveBy}${timing.arriveByPreviousDay ? " (previous day)" : ""}`}
+            </dd>
           </div>
           <div className="flex items-center justify-between gap-4 py-2.5">
             <dt className="text-[var(--muted-foreground)]">Leave home by</dt>

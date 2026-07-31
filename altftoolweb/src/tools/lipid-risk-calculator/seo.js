@@ -3,7 +3,7 @@ const seo = {
     "Lipid Risk Calculator converts four lab values — total cholesterol, LDL, HDL and triglycerides in mg/dL — into the derived figures a lipid panel is usually judged on: the TC/HDL ratio (desirable under 5.0), the LDL/HDL ratio (desirable under 3.0), non-HDL cholesterol, and a 0–10 composite score that adds points for each value outside its NCEP ATP III band. It is for anyone holding a printout of numbers with no interpretation attached and wanting to see where each one falls. The output is educational; what to do about it is a conversation with your doctor.",
   useCases: [
     "Working out your cholesterol ratio from a printout that lists only the raw values, without hand-dividing total by HDL",
-    "Checking whether a total cholesterol of 210 is actually a concern once you see that it is paired with an HDL of 70 and a TC/HDL ratio under 3.0",
+    "Checking whether a total cholesterol of 210 is actually a concern once you see that it is paired with an HDL of 70 and a TC/HDL ratio under 5.0",
     "Recording a before-and-after comparison after six months of diet or medication changes, using the same four inputs and the same 0–10 score both times",
   ],
   benefits: [

@@ -27,7 +27,10 @@
  *  SSC. The Commission's standard tie-break, used across CGL, CHSL and MTS, is:
  *  total marks in the final stage, then marks in the earlier tier, then date of
  *  birth with the older candidate placed higher, then alphabetical order of the
- *  candidate's first name.
+ *  candidate's first name. Two candidates can still share an identical first
+ *  name, so this explainer adds each candidate's roll or registration number —
+ *  guaranteed unique by the Commission — as a final differentiator after that,
+ *  so the tool's own "no shared rank" claim always holds.
  *
  *  IBPS and SBI. The recruitment advertisements provide that candidates with
  *  equal final merit marks are ranked by age in descending order, so the older
@@ -89,6 +92,12 @@ export const TIE_BREAK_RULES = [
       { key: "physics", label: "Physics marks", kind: "number", step: 1 },
       { key: "correct", label: "Correct answers, all subjects", kind: "number", step: 1 },
       { key: "wrong", label: "Incorrect answers, all subjects", kind: "number", step: 1 },
+      { key: "biologyCorrect", label: "Correct answers in Biology", kind: "number", step: 1 },
+      { key: "biologyWrong", label: "Incorrect answers in Biology", kind: "number", step: 1 },
+      { key: "chemistryCorrect", label: "Correct answers in Chemistry", kind: "number", step: 1 },
+      { key: "chemistryWrong", label: "Incorrect answers in Chemistry", kind: "number", step: 1 },
+      { key: "physicsCorrect", label: "Correct answers in Physics", kind: "number", step: 1 },
+      { key: "physicsWrong", label: "Incorrect answers in Physics", kind: "number", step: 1 },
     ],
     criteria: [
       { key: "biology", label: "Higher marks in Biology", mode: HIGHER_WINS, field: "biology" },
@@ -101,10 +110,57 @@ export const TIE_BREAK_RULES = [
         derive: (candidate) => wrongToCorrectRatio(candidate.wrong, candidate.correct),
         format: (value) => (value === null ? "no correct answers" : value.toFixed(3)),
       },
+      {
+        key: "biologyRatio",
+        label: "Lower ratio of incorrect to correct answers in Biology",
+        mode: LOWER_WINS,
+        derive: (candidate) => wrongToCorrectRatio(candidate.biologyWrong, candidate.biologyCorrect),
+        format: (value) => (value === null ? "no correct answers" : value.toFixed(3)),
+      },
+      {
+        key: "chemistryRatio",
+        label: "Lower ratio of incorrect to correct answers in Chemistry",
+        mode: LOWER_WINS,
+        derive: (candidate) => wrongToCorrectRatio(candidate.chemistryWrong, candidate.chemistryCorrect),
+        format: (value) => (value === null ? "no correct answers" : value.toFixed(3)),
+      },
+      {
+        key: "physicsRatio",
+        label: "Lower ratio of incorrect to correct answers in Physics",
+        mode: LOWER_WINS,
+        derive: (candidate) => wrongToCorrectRatio(candidate.physicsWrong, candidate.physicsCorrect),
+        format: (value) => (value === null ? "no correct answers" : value.toFixed(3)),
+      },
     ],
     example: {
-      a: { name: "Candidate A", biology: 340, chemistry: 160, physics: 140, correct: 165, wrong: 15 },
-      b: { name: "Candidate B", biology: 336, chemistry: 164, physics: 140, correct: 164, wrong: 14 },
+      a: {
+        name: "Candidate A",
+        biology: 340,
+        chemistry: 160,
+        physics: 140,
+        correct: 163,
+        wrong: 12,
+        biologyCorrect: 86,
+        biologyWrong: 4,
+        chemistryCorrect: 41,
+        chemistryWrong: 4,
+        physicsCorrect: 36,
+        physicsWrong: 4,
+      },
+      b: {
+        name: "Candidate B",
+        biology: 336,
+        chemistry: 164,
+        physics: 140,
+        correct: 161,
+        wrong: 4,
+        biologyCorrect: 85,
+        biologyWrong: 4,
+        chemistryCorrect: 41,
+        chemistryWrong: 0,
+        physicsCorrect: 35,
+        physicsWrong: 0,
+      },
       story:
         "Both score 640. Biology is checked first, so the candidate with 340 in Biology takes the better rank even though the other has the cleaner answer ratio.",
     },
@@ -168,24 +224,45 @@ export const TIE_BREAK_RULES = [
     label: "SSC (CGL, CHSL, MTS)",
     authority: "Staff Selection Commission",
     note: "SSC applies the same sequence across its recruitments: final stage total, then the earlier tier, then age, then name.",
-    tail: "Alphabetical order of the first name is the last resort, so no two candidates can end on the same rank.",
+    tail: "Alphabetical order of the first name is SSC's published last resort. Two candidates can still share an identical first name, so this tool adds each candidate's roll or registration number — always unique per candidate — as a final differentiator, so no two candidates can end on the same rank here.",
     fields: [
       { key: "aggregate", label: "Final stage total marks", kind: "number", step: 0.25 },
       { key: "tier1", label: "Marks in the earlier tier", kind: "number", step: 0.25 },
       { key: "dob", label: "Date of birth", kind: "date" },
       { key: "firstName", label: "First name", kind: "text" },
+      { key: "rollNumber", label: "Roll / registration number", kind: "text" },
     ],
     criteria: [
       { key: "aggregate", label: "Higher total in the final stage", mode: HIGHER_WINS, field: "aggregate" },
       { key: "tier1", label: "Higher marks in the earlier tier", mode: HIGHER_WINS, field: "tier1" },
       { key: "dob", label: "Older in age", mode: OLDER_WINS, field: "dob" },
       { key: "firstName", label: "Alphabetical order of the first name", mode: EARLIER_ALPHABET_WINS, field: "firstName" },
+      {
+        key: "rollNumber",
+        label: "Roll / registration number (unique per candidate; final differentiator)",
+        mode: EARLIER_ALPHABET_WINS,
+        field: "rollNumber",
+      },
     ],
     example: {
-      a: { name: "Candidate A", aggregate: 372.5, tier1: 148.5, dob: "1998-06-09", firstName: "Anita" },
-      b: { name: "Candidate B", aggregate: 372.5, tier1: 152.25, dob: "1996-01-30", firstName: "Bilal" },
+      a: {
+        name: "Candidate A",
+        aggregate: 372.5,
+        tier1: 148.5,
+        dob: "1998-06-09",
+        firstName: "Anita",
+        rollNumber: "3211045820456",
+      },
+      b: {
+        name: "Candidate B",
+        aggregate: 372.5,
+        tier1: 152.25,
+        dob: "1996-01-30",
+        firstName: "Bilal",
+        rollNumber: "3211045820391",
+      },
       story:
-        "Equal final totals, so the earlier tier decides: the 152.25 beats the 148.5 and neither age nor name is reached.",
+        "Equal final totals, so the earlier tier decides: the 152.25 beats the 148.5 and neither age, name nor roll number is reached.",
     },
   },
   {

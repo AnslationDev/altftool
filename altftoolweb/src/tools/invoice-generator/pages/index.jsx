@@ -35,7 +35,12 @@ export default function ToolHome() {
   const [businessName, setBusinessName] = useState("AltFTool Studio");
   const [clientName, setClientName] = useState("Client Name");
   const [invoiceNumber, setInvoiceNumber] = useState("INV-001");
-  const [invoiceDate, setInvoiceDate] = useState(() => new Date().toISOString().slice(0, 10));
+  const [invoiceDate, setInvoiceDate] = useState(() => {
+    // Use the local calendar date, not toISOString()'s UTC date, so the
+    // default invoice date matches "today" for users ahead of UTC (e.g. IST).
+    const now = new Date();
+    return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+  });
   const [taxRate, setTaxRate] = useState(18);
   const [discount, setDiscount] = useState(0);
   const [notes, setNotes] = useState("Thank you for your business.");
@@ -46,7 +51,7 @@ export default function ToolHome() {
       (sum, item) => sum + (Number(item.quantity) || 0) * (Number(item.rate) || 0),
       0
     );
-    const discountAmount = Math.min(subtotal, Number(discount) || 0);
+    const discountAmount = Math.min(subtotal, Math.max(0, Number(discount) || 0));
     const taxable = subtotal - discountAmount;
     const tax = taxable * ((Number(taxRate) || 0) / 100);
     return {
@@ -139,6 +144,8 @@ export default function ToolHome() {
                     <input
                       value={item.name}
                       onChange={(event) => updateItem(item.id, "name", event.target.value)}
+                      aria-label="Item description"
+                      placeholder="Item description"
                       className="h-10 rounded-md border border-[var(--border)] bg-[var(--card)] px-3 text-sm outline-none focus:border-[var(--primary)]"
                     />
                     <div className="grid gap-2 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto]">
@@ -147,6 +154,8 @@ export default function ToolHome() {
                         min="0"
                         value={item.quantity}
                         onChange={(event) => updateItem(item.id, "quantity", event.target.value)}
+                        aria-label="Quantity"
+                        placeholder="Qty"
                         className="h-10 rounded-md border border-[var(--border)] bg-[var(--card)] px-3 text-sm outline-none focus:border-[var(--primary)]"
                       />
                       <input
@@ -154,6 +163,8 @@ export default function ToolHome() {
                         min="0"
                         value={item.rate}
                         onChange={(event) => updateItem(item.id, "rate", event.target.value)}
+                        aria-label="Rate"
+                        placeholder="Rate"
                         className="h-10 rounded-md border border-[var(--border)] bg-[var(--card)] px-3 text-sm outline-none focus:border-[var(--primary)]"
                       />
                       <button
@@ -230,7 +241,7 @@ export default function ToolHome() {
               {[
                 ["Subtotal", totals.subtotal],
                 ["Discount", -totals.discountAmount],
-                [`Tax (${taxRate}%)`, totals.tax],
+                [`Tax (${Number(taxRate) || 0}%)`, totals.tax],
               ].map(([label, value]) => (
                 <div key={label} className="flex justify-between gap-4 text-sm text-[var(--muted-foreground)]">
                   <span>{label}</span>

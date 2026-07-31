@@ -34,14 +34,16 @@ export async function generateMetadata({ params }) {
   const item = findKymItem(slug);
 
   if (!item) {
-    // 36 of the 44 links on the /kym hub resolve to nothing and land here, so
-    // this branch is not rare. Without noindex each one is an indexable page
-    // titled "KYM Page" carrying the site's default description — a
-    // statically generated notFound() is served with a 200 on this deployment,
-    // so the robots directive is what keeps them out of the index.
+    // findKymItem() (see KymGenericPage.jsx) matches both `item.href === path`
+    // and `slugifyTitle(item.title) === slug`, the same two forms the hub's
+    // link generator produces, so this branch should only be hit by a slug
+    // that matches neither form (e.g. a stale bookmark or external link).
+    // This route has no generateStaticParams/output:export — it renders
+    // dynamically — but the response still needs a noindex here since it's
+    // an indexable page otherwise.
     return createPageMetadata({
       title: "Entry Not Found",
-      description: "This Know Your Meme entry does not exist.",
+      description: "This meme encyclopedia entry does not exist.",
       path,
       noindex: true,
     });

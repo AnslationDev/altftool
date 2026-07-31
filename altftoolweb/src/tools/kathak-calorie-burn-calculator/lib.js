@@ -154,7 +154,10 @@ export function computeKathakBurn({
     };
   });
 
-  const grossKcal = rows.reduce((sum, row) => sum + row.rawKcal, 0);
+  // Sum the already-rounded per-row kcal values (not the raw pre-rounding
+  // sum) so the headline/grand total always matches what a user adding up
+  // the visible "Segment breakdown" rows would get.
+  const grossKcal = rows.reduce((sum, row) => sum + row.kcal, 0);
   const restingKcal = metToKcalPerMinute(RESTING_MET, weightKg) * totalMinutes;
   const netKcal = Math.max(0, grossKcal - restingKcal);
 

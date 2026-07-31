@@ -77,6 +77,30 @@ test("ignores hidden inputs and aria-hidden control subtrees", () => {
   assert.equal(result.controls[0].accessibleName, "Continue");
 });
 
+test("does not truncate a tag at a '>' inside a quoted attribute value", () => {
+  const result = auditFormLabels(
+    '<input type="submit" value="Continue >" id="next-step">',
+  );
+  assert.equal(result.controls.length, 1);
+  const control = result.controls[0];
+  assert.equal(control.id, "next-step");
+  assert.equal(control.accessibleName, "Continue >");
+  assert.equal(control.nameSource, "native text/value");
+  assert.equal(control.cueIds.includes("missing-accessible-name"), false);
+});
+
+test("keeps parsing attributes that follow a quoted '>' earlier in the tag", () => {
+  const result = auditFormLabels(
+    '<input title="Must be > 0" id="qty" aria-label="Quantity" required type="number">',
+  );
+  assert.equal(result.controls.length, 1);
+  const control = result.controls[0];
+  assert.equal(control.id, "qty");
+  assert.equal(control.accessibleName, "Quantity");
+  assert.equal(control.type, "number");
+  assert.equal(control.required, true);
+});
+
 test("counts-only report excludes labels, names, and source values", () => {
   const result = auditFormLabels(
     '<label for="private">PRIVATE LABEL</label><input id="private">',

@@ -9,11 +9,11 @@ import {
 } from "@/platform/seo/generateMetadata";
 
 const DESCRIPTION =
-  "Browse a curated library of Seedream 5 Pro prompt examples. Copy natural-language, production-ready prompts for photorealistic AI image generation and editing — one click to your clipboard.";
+  "Browse a curated library of AI image prompt examples spanning Seedream 5 Pro, OpenAI, Flux, Krea, and more. Copy natural-language, production-ready prompts for photorealistic AI image generation and editing — one click to your clipboard.";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Seedream 5 Pro Prompts – Copy-Ready Library",
+    title: "AI Image Prompts – Copy-Ready Library",
     description: DESCRIPTION,
     path: "/prompts/seedream-5-pro",
   });
@@ -30,13 +30,13 @@ export default function Page() {
         data={[
           createCollectionPageJsonLd({
             path: "/prompts/seedream-5-pro",
-            name: "Seedream 5 Pro Prompt Collections",
+            name: "AI Image Prompt Collections",
             description: DESCRIPTION,
           }),
           createBreadcrumbJsonLd([
             { name: "Home", path: "/" },
             { name: "Prompts", path: "/prompts/seedream-5-pro" },
-            { name: "Seedream 5 Pro", path: "/prompts/seedream-5-pro" },
+            { name: "AI Image Prompts", path: "/prompts/seedream-5-pro" },
           ]),
         ]}
       />

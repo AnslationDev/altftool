@@ -51,24 +51,6 @@ export function invalidateBlogsCache() {
   _allBlogsPromise = null;
 }
 
-export async function fetchAllBlogsCached({ force = false } = {}) {
-  if (!force && _allBlogsCache) return _allBlogsCache;
-  if (!force && _allBlogsPromise) return _allBlogsPromise;
-
-  _allBlogsPromise = fetchAllBlogs()
-    .then((blogs) => {
-      _allBlogsCache = blogs;
-      _allBlogsPromise = null;
-      return blogs;
-    })
-    .catch((err) => {
-      _allBlogsPromise = null;
-      throw err;
-    });
-
-  return _allBlogsPromise;
-}
-
 export async function fetchBlogBySlug(slug) {
   const lower = slugify(slug);
   if (!lower) return null;
@@ -104,12 +86,6 @@ export async function updateBlog(id, payload) {
   });
   invalidateBlogsCache();
   invalidateAllBlogsCache();
-}
-
-export async function updateBlogImage(id, imageUrl) {
-  await updateDoc(blogDocRef(id), {
-    image: imageUrl,
-  });
 }
 
 export async function updateBlogStatus(id, status) {

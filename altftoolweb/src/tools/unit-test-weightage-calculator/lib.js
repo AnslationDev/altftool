@@ -77,7 +77,7 @@ export function computeWeightedScore({ tests, finalMax }) {
 
     weightSum += weight;
     weightedFractionSum += weight * (scored / max);
-    rows.push({ name, scored, max, weight, fraction: scored / max });
+    rows.push({ id: test.id ?? index, name, scored, max, weight, fraction: scored / max });
   }
 
   if (weightSum <= MIN_TOTAL_WEIGHT) {
@@ -85,8 +85,15 @@ export function computeWeightedScore({ tests, finalMax }) {
   }
 
   const finalFraction = weightedFractionSum / weightSum;
+  // finalScore (out of finalMax) and finalPercent (out of 100) are the same
+  // underlying fraction expressed on two scales — when finalMax is 100 they are
+  // literally the same expression. Round both to the same precision so a
+  // coincidental match at finalMax=100 can never render as two different
+  // numbers purely because of differing decimal places.
+  const finalScore = Number((finalFraction * scale).toFixed(2));
 
   const breakdown = rows.map((row) => ({
+    id: row.id,
     name: row.name,
     scored: row.scored,
     max: row.max,
@@ -98,12 +105,26 @@ export function computeWeightedScore({ tests, finalMax }) {
     contribution: Number((row.fraction * (row.weight / weightSum) * scale).toFixed(2)),
   }));
 
+  // Reconciliation: each row's contribution is rounded independently, so their
+  // sum can land a cent away from finalScore (which is rounded once from the
+  // raw weighted total). Apply the rounding remainder to the last row so the
+  // displayed breakdown always sums exactly to the displayed final score,
+  // without changing finalScore's own value.
+  if (breakdown.length > 0) {
+    const contributionSum = breakdown.reduce((sum, row) => sum + row.contribution, 0);
+    const remainder = Number((finalScore - contributionSum).toFixed(2));
+    if (remainder !== 0) {
+      const last = breakdown[breakdown.length - 1];
+      last.contribution = Number((last.contribution + remainder).toFixed(2));
+    }
+  }
+
   return {
     finalMax: scale,
     breakdown,
     totalWeight: Number(weightSum.toFixed(2)),
-    finalScore: Number((finalFraction * scale).toFixed(2)),
-    finalPercent: Number((finalFraction * 100).toFixed(1)),
+    finalScore,
+    finalPercent: Number((finalFraction * 100).toFixed(2)),
     roundedFinalScore: Math.round(finalFraction * scale),
   };
 }

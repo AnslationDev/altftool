@@ -5,8 +5,6 @@ import { db } from "@/lib/firebaseFirestore";
 
 const ABOUT_DOC_PATH = ["projects", "coozter", "about", "aboutPageContent"];
 
-export const ROOT_ARRAY_SECTIONS = new Set();
-
 export const ABOUT_SECTION_TABS = [
   { key: "heroSection", label: "Hero Section" },
   { key: "whyChooseSection", label: "Why Choose" },

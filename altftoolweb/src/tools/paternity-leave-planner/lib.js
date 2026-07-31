@@ -37,9 +37,10 @@ export const PATERNITY_POLICIES = [
     windowUnit: "weeks",
     earliestBeforeBirthDays: 0,
     minBlockDays: 7,
+    blockStepDays: 7,
     maxBlocks: 2,
     note:
-      "Two weeks, taken as one block of two weeks or two separate blocks of one week, within 52 weeks of the birth.",
+      "Two weeks, taken as one block of two weeks or two separate blocks of one week, within 52 weeks of the birth. Each block must be a whole week.",
   },
   {
     id: "singapore-gppl",
@@ -135,7 +136,7 @@ export function leaveWindow(birthTs, policy) {
  *
  * @param {object} input
  * @param {string} input.birthDate ISO date of birth / expected delivery
- * @param {object} input.policy    { totalDays, windowLength, windowUnit, earliestBeforeBirthDays, minBlockDays, maxBlocks }
+ * @param {object} input.policy    { totalDays, windowLength, windowUnit, earliestBeforeBirthDays, minBlockDays, blockStepDays, maxBlocks }
  * @param {Array}  input.blocks    [{ id, start: ISO date, days: number }]
  * @returns {object} plan, or { error } when the inputs cannot be evaluated
  */
@@ -148,12 +149,20 @@ export function planPaternityLeave({ birthDate, policy, blocks = [] } = {}) {
   const minBlockDays = Number(policy.minBlockDays);
   const maxBlocks = Number(policy.maxBlocks);
   const windowLength = Number(policy.windowLength);
+  const blockStepRaw = policy.blockStepDays;
+  const blockStepDays =
+    blockStepRaw === undefined || blockStepRaw === null || blockStepRaw === ""
+      ? 1
+      : Number(blockStepRaw);
 
   if (!Number.isFinite(totalDays) || totalDays <= 0 || totalDays > 365) {
     return { error: "Total paternity leave allowance must be between 1 and 365 days." };
   }
   if (!Number.isFinite(minBlockDays) || minBlockDays < 1 || minBlockDays > totalDays) {
     return { error: "Minimum block length must be at least 1 day and no more than the allowance." };
+  }
+  if (!Number.isFinite(blockStepDays) || blockStepDays < 1 || blockStepDays > totalDays) {
+    return { error: "Block length step must be at least 1 day and no more than the allowance." };
   }
   if (!Number.isFinite(maxBlocks) || maxBlocks < 1 || maxBlocks > 20) {
     return { error: "Number of separate blocks allowed must be between 1 and 20." };
@@ -202,6 +211,9 @@ export function planPaternityLeave({ birthDate, policy, blocks = [] } = {}) {
     }
     if (days < minBlockDays) {
       issues.push(`Shorter than the ${minBlockDays}-day minimum block.`);
+    }
+    if (blockStepDays > 1 && days % blockStepDays !== 0) {
+      issues.push(`Must be a whole number of ${blockStepDays}-day blocks (not ${days} days).`);
     }
 
     const endTs = addDays(startTs, days - 1);
@@ -266,7 +278,6 @@ export function planPaternityLeave({ birthDate, policy, blocks = [] } = {}) {
     maxBlocks,
     usedDays,
     remainingDays,
-    usedPercent: (usedDays / totalDays) * 100,
     blocks: evaluated.map(({ startTs, endTs, ...rest }) => rest),
     orderedBlocks: ordered.map((item) => ({
       id: item.id,
@@ -276,6 +287,5 @@ export function planPaternityLeave({ birthDate, policy, blocks = [] } = {}) {
     })),
     planIssues,
     compliant: planIssues.length === 0 && blockIssueCount === 0 && evaluated.length > 0,
-    hasBlocks: evaluated.length > 0,
   };
 }

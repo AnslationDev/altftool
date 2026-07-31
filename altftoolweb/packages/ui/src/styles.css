@@ -169,18 +169,6 @@
   width: 1.125rem;
 }
 
-/* iOS Safari zooms into any input it focuses whose text is under 16px, and it
-   does not zoom back out — the visitor is left on a horizontally displaced
-   page with no obvious way back. Scoped to coarse pointers so desktop keeps
-   the denser 14px. */
-@media (pointer: coarse) {
-  .alt-ui-input,
-  .alt-ui-textarea,
-  .alt-ui-select {
-    font-size: 1rem;
-  }
-}
-
 .alt-ui-input {
   background: var(--anslation-ds-surface);
   border: 1px solid var(--anslation-ds-border);
@@ -1173,6 +1161,24 @@
   min-height: 96px;
   padding: 10px 12px;
   resize: vertical;
+}
+
+/* iOS Safari zooms into any input it focuses whose text is under 16px, and it
+   does not zoom back out — the visitor is left on a horizontally displaced
+   page with no obvious way back. Scoped to coarse pointers so desktop keeps
+   the denser 14px.
+
+   KEEP THIS BLOCK AFTER the `.alt-ui-input` / `.alt-ui-select` /
+   `.alt-ui-textarea` base rules. It carries the same (0,1,0) specificity they
+   do, so the cascade settles it on source order alone: sitting above the base
+   `font-size: 0.875rem` — where this block used to live — silently made it a
+   no-op. Any new `font-size` for these three belongs above here, not below. */
+@media (pointer: coarse) {
+  .alt-ui-input,
+  .alt-ui-textarea,
+  .alt-ui-select {
+    font-size: 1rem;
+  }
 }
 
 .alt-ui-search {

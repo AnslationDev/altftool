@@ -1,23 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Card, Button, Input, Select, Field, StatCard } from "@altftool/ui";
-
-const ACTIVITY_MULTIPLIERS = {
-  sedentary: 1.2,
-  light: 1.375,
-  moderate: 1.55,
-  active: 1.725,
-  very_active: 1.9,
-};
-
-const GOAL_ADJUSTMENTS = {
-  lose_fast: -500,
-  lose_slow: -250,
-  maintain: 0,
-  gain_slow: 250,
-  gain_fast: 500,
-};
+import { Card, Button, Input, Select, Field } from "@altftool/ui";
+import { calculateCalorieResult } from "../lib";
 
 export default function CalorieCalculatorHome() {
   const [formData, setFormData] = useState({
@@ -41,30 +26,7 @@ export default function CalorieCalculatorHome() {
 
     if (!age || !height || !weight) return;
 
-    // Mifflin-St Jeor Equation
-    let bmr = 10 * Number(weight) + 6.25 * Number(height) - 5 * Number(age);
-    bmr += gender === "male" ? 5 : -161;
-
-    const tdee = bmr * ACTIVITY_MULTIPLIERS[activity];
-    const targetCalories = Math.round(tdee + GOAL_ADJUSTMENTS[goal]);
-
-    // Macros: 40% Carbs, 30% Protein, 30% Fats (General Split)
-    const proteinCals = targetCalories * 0.3;
-    const fatCals = targetCalories * 0.3;
-    const carbCals = targetCalories * 0.4;
-
-    const macros = {
-      protein: Math.round(proteinCals / 4), // 4 cals per gram
-      fats: Math.round(fatCals / 9),        // 9 cals per gram
-      carbs: Math.round(carbCals / 4),      // 4 cals per gram
-    };
-
-    setResult({
-      bmr: Math.round(bmr),
-      tdee: Math.round(tdee),
-      targetCalories,
-      macros
-    });
+    setResult(calculateCalorieResult({ age, gender, height, weight, activity, goal }));
   };
 
   return (
@@ -134,6 +96,20 @@ export default function CalorieCalculatorHome() {
                 <span className="text-5xl font-black text-(--foreground)">{result.targetCalories} <span className="text-xl font-normal text-(--muted-foreground)">kcal</span></span>
                 <p className="mt-4 text-sm text-(--muted-foreground)">Your BMR is {result.bmr} kcal and TDEE is {result.tdee} kcal.</p>
               </Card>
+
+              {result.belowSafeMinimum ? (
+                <p
+                  role="alert"
+                  className="rounded-xl border border-(--warning) bg-(--warning-soft) px-4 py-3 text-sm font-medium text-(--warning-text)"
+                >
+                  Your goal and details work out to {result.rawTargetCalories} kcal/day, below the
+                  widely-cited safe minimum of {result.safeMinCalories} kcal/day for{" "}
+                  {formData.gender === "male" ? "men" : "women"}. We&apos;ve shown{" "}
+                  {result.safeMinCalories} kcal/day instead — going lower isn&apos;t safe without
+                  medical supervision. Consider a slower weight-loss goal or talk to a doctor or
+                  registered dietitian.
+                </p>
+              ) : null}
 
               <div className="grid grid-cols-3 gap-4">
                 <div className="bg-(--card) p-4 rounded-xl border border-(--border) text-center">

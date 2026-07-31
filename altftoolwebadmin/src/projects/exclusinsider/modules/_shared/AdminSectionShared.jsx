@@ -22,7 +22,7 @@
  * URL is written back onto the form value.
  */
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Edit3,
   Eye,
@@ -98,17 +98,6 @@ export function PrimaryBtn({ children }) {
     <span
       className="inline-flex rounded-full px-4 py-2 text-xs font-semibold"
       style={{ background: HEX.accent, color: "#0f1115" }}
-    >
-      {children}
-    </span>
-  );
-}
-
-export function SecondaryBtn({ children }) {
-  return (
-    <span
-      className="inline-flex rounded-full border px-4 py-2 text-xs font-semibold"
-      style={{ borderColor: HEX.border, color: HEX.fg }}
     >
       {children}
     </span>
@@ -304,13 +293,24 @@ export function SettingsCard({ eyebrow, title, defaults, subscribe, save, fields
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [errors, setErrors] = useState({});
+  // Mirrors `dirty` for the onSnapshot callback below, which closes over
+  // stale state from the render it was created in (effect deps are `[]`).
+  const dirtyRef = useRef(false);
 
   useEffect(() => {
     const unsub = subscribe(
       (data) => {
         const next = hydrate(fields, data);
-        setForm(next);
+        // `subscribe` is a live onSnapshot listener, so this also fires for
+        // the echo of this component's own Save call (and any concurrent
+        // writer). Always refresh `saved` so dirty-checking stays accurate,
+        // but only overwrite the live `form` when there are no in-flight
+        // unsaved edits — otherwise a snapshot mid-edit silently discards
+        // whatever the admin is currently typing.
         setSaved(next);
+        if (!dirtyRef.current) {
+          setForm(next);
+        }
         setLoading(false);
       },
       () => {
@@ -329,6 +329,10 @@ export function SettingsCard({ eyebrow, title, defaults, subscribe, save, fields
   }, [form]);
 
   const dirty = useMemo(() => JSON.stringify(form) !== JSON.stringify(saved), [form, saved]);
+
+  useEffect(() => {
+    dirtyRef.current = dirty;
+  }, [dirty]);
 
   function setValue(key, value) {
     setForm((prev) => ({ ...prev, [key]: value }));

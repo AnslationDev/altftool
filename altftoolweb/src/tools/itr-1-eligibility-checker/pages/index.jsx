@@ -212,6 +212,10 @@ export default function ToolHome() {
           !form.unlisted &&
           !form.losses &&
           !form.dtaa &&
+          !form.lottery &&
+          !form.tds194n &&
+          !form.esop &&
+          !form.section5a &&
           ltcg <= LTCG_112A_CAP;
         recommended = presumptiveOk ? "ITR-4 Sugam" : "ITR-3";
       } else {

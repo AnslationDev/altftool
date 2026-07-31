@@ -1,6 +1,6 @@
 import GameGridSection from "@/app/altfgame/_components/GameGrid";
-import { GAMES, CATEGORIES, TRENDING, POPULAR, NEW_RELEASES } from "@/app/altfgame/_data/games";
-import { ArrowRight, Clock, Flame, TrendingUp } from "lucide-react";
+import { GAMES, CATEGORIES, TRENDING, NEW_RELEASES } from "@/app/altfgame/_data/games";
+import { ArrowRight, Clock, Flame } from "lucide-react";
 import Link from "next/link";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
@@ -91,14 +91,6 @@ export default function GamesIndex() {
         subtitle="Hot games"
       >
         <GameGridSection games={TRENDING.slice(0, 5)} variant="rail" />
-      </Section>
-
-      <Section
-        icon={<TrendingUp className="h-5 w-5" />}
-        title="Most Popular"
-        subtitle="Most played games"
-      >
-        <GameGridSection games={POPULAR.slice(0, 6)} />
       </Section>
 
       <Section

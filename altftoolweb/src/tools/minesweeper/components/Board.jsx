@@ -63,10 +63,14 @@ export default function Board({
     };
   }, []);
 
-  // Keep the keyboard cursor visible when a wide board scrolls.
+  // Move real DOM focus to the cursor cell so screen readers announce its
+  // aria-label, and keep it visible when a wide board scrolls. Without this,
+  // arrow-key navigation only repaints a visual highlight ring and assistive
+  // tech never hears which cell is selected.
   useEffect(() => {
     if (!showCursor || !cursor) return;
     const el = cellRefs.current[`${cursor[0]}-${cursor[1]}`];
+    el?.focus({ preventScroll: true });
     el?.scrollIntoView({ block: "nearest", inline: "nearest" });
   }, [cursor, showCursor]);
 

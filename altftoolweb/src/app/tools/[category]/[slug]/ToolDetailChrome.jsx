@@ -128,21 +128,26 @@ export default function ToolDetailChrome({ slug, tool, category = "all", seoCont
             margin — directly between the visitor and the tool. DOM order and
             visual order still match, so focus order stays correct (WCAG 2.4.3);
             no CSS `order` trick is used.
+
+            The pills carry min-h-11 / min-w-11: at px-2.5 py-1 they measured
+            50×24 and 68×24 on a 390px phone, well under the 44px tap target
+            master.md requires. They sit at the very end of the page, so the
+            extra height costs nothing above the fold.
           */}
           <nav
             aria-label="Tool route"
-            className="mx-auto mt-10 flex w-full max-w-6xl flex-wrap items-center gap-1.5 border-t border-(--border) pt-5 text-xs font-medium text-(--muted-foreground)"
+            className="mx-auto mt-10 flex w-full max-w-6xl flex-wrap items-center gap-1.5 border-t border-(--border) pt-5 text-[13px] font-medium text-(--muted-foreground)"
           >
             <Link
               href="/tools/all"
-              className="inline-flex items-center rounded-full bg-(--card) px-2.5 py-1 font-semibold ring-1 ring-(--border) transition-colors duration-150 hover:text-(--primary) hover:ring-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transition-none"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-(--card) px-3.5 py-2 font-semibold ring-1 ring-(--border) transition-colors duration-150 hover:text-(--primary) hover:ring-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transition-none"
             >
               Tools
             </Link>
             <ChevronRight className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
             <Link
               href={categoryHref}
-              className="inline-flex items-center rounded-full bg-(--card) px-2.5 py-1 font-semibold ring-1 ring-(--border) transition-colors duration-150 hover:text-(--primary) hover:ring-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transition-none"
+              className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-(--card) px-3.5 py-2 font-semibold ring-1 ring-(--border) transition-colors duration-150 hover:text-(--primary) hover:ring-(--primary) focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 motion-reduce:transition-none"
             >
               {categoryLabel}
             </Link>

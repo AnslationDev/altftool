@@ -107,7 +107,7 @@ export default function Header({ compact = false }) {
 
       {compact ? (
         <div className="kym-compact-brand">
-          <Link href="/kym">Know Your Meme</Link>
+          <Link href="/kym">Meme Encyclopedia</Link>
         </div>
       ) : null}
 
@@ -119,8 +119,8 @@ export default function Header({ compact = false }) {
           Internet culture encyclopedia
         </p>
         <h1>
-          Know Your{" "}
-          <span className="kym-hero__accent">Meme</span>
+          The Meme{" "}
+          <span className="kym-hero__accent">Encyclopedia</span>
         </h1>
         <form className="kym-search" onSubmit={handleSubmit} role="search">
           <button className="kym-search__submit" type="submit" aria-label="Search KYM">

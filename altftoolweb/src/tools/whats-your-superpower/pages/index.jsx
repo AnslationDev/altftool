@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { RotateCcw, Sparkles } from "lucide-react";
 
 const QUESTIONS = [
@@ -130,9 +130,18 @@ export default function ToolHome() {
   const [answers, setAnswers] = useState({});
   const [calculating, setCalculating] = useState(false);
   const [result, setResult] = useState(null);
+  const calculatingTimeoutRef = useRef(null);
 
   const progress = Object.keys(answers).length;
   const total = QUESTIONS.length;
+
+  useEffect(() => {
+    return () => {
+      if (calculatingTimeoutRef.current) {
+        clearTimeout(calculatingTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const handleAnswer = (qIndex, optIndex) => {
     const updated = { ...answers, [qIndex]: optIndex };
@@ -141,7 +150,7 @@ export default function ToolHome() {
       setStep(qIndex + 1);
     } else {
       setCalculating(true);
-      setTimeout(() => {
+      calculatingTimeoutRef.current = setTimeout(() => {
         const scores = { superStrength: 0, telepathy: 0, invisibility: 0, flight: 0, timeControl: 0, superSpeed: 0, healing: 0, shapeShift: 0 };
         Object.entries(updated).forEach(([qIdx, optIdx]) => {
           const q = QUESTIONS[parseInt(qIdx)];
@@ -152,6 +161,7 @@ export default function ToolHome() {
         const topPower = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
         setResult(SUPERPOWERS[topPower]);
         setCalculating(false);
+        calculatingTimeoutRef.current = null;
       }, 2000);
     }
   };
@@ -166,20 +176,6 @@ export default function ToolHome() {
   if (calculating) {
     return (
       <div className="min-h-screen p-4 sm:p-6 lg:p-8 flex items-center justify-center">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "SoftwareApplication",
-              "name": "What's Your Superpower? Personality Quiz",
-              "description": "Discover your hidden superpower with our free personality quiz. Answer 10 questions to reveal your unique superpower type and strengths.",
-              "applicationCategory": "QuizApplication",
-              "operatingSystem": "Web",
-              "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-            })
-          }}
-        />
         <div className="text-center max-w-md">
           <Sparkles size={64} className="mx-auto mb-6 animate-bounce" style={{ color: "var(--primary)" }} />
           <h2 className="text-2xl font-extrabold mb-3" style={{ color: "var(--foreground)" }}>Discovering Your Superpower...</h2>
@@ -195,20 +191,6 @@ export default function ToolHome() {
   if (result) {
     return (
       <div className="min-h-screen p-4 sm:p-6 lg:p-8">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "SoftwareApplication",
-              "name": "What's Your Superpower? Personality Quiz",
-              "description": "Discover your hidden superpower with our free personality quiz. Answer 10 questions to reveal your unique superpower type and strengths.",
-              "applicationCategory": "QuizApplication",
-              "operatingSystem": "Web",
-              "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-            })
-          }}
-        />
         <div className="max-w-xl mx-auto">
           <div className="text-center mb-8">
             <h1 className="text-3xl sm:text-4xl font-extrabold mb-2" style={{ color: "var(--foreground)" }}>Your Superpower</h1>
@@ -220,18 +202,18 @@ export default function ToolHome() {
             <p className="text-sm text-center mb-5 leading-relaxed" style={{ color: "var(--muted-foreground)" }}>{result.summary}</p>
             <div className="grid grid-cols-2 gap-3 mb-4">
               <div className="p-3 rounded-xl" style={{ background: "var(--background)" }}>
-                <p className="text-[10px] font-black uppercase tracking-wider mb-2" style={{ color: "#10B981" }}>Strengths</p>
+                <p className="text-[10px] font-black uppercase tracking-wider mb-2" style={{ color: "var(--success-text)" }}>Strengths</p>
                 <div className="flex flex-wrap gap-1">
                   {result.strengths.map((s, i) => (
-                    <span key={i} className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: "rgba(16,185,129,0.15)", color: "#10B981" }}>{s}</span>
+                    <span key={i} className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: "var(--success-soft)", color: "var(--success-text)" }}>{s}</span>
                   ))}
                 </div>
               </div>
               <div className="p-3 rounded-xl" style={{ background: "var(--background)" }}>
-                <p className="text-[10px] font-black uppercase tracking-wider mb-2" style={{ color: "#EF4444" }}>Weaknesses</p>
+                <p className="text-[10px] font-black uppercase tracking-wider mb-2" style={{ color: "var(--danger-text)" }}>Weaknesses</p>
                 <div className="flex flex-wrap gap-1">
                   {result.weaknesses.map((w, i) => (
-                    <span key={i} className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: "rgba(239,68,68,0.15)", color: "#EF4444" }}>{w}</span>
+                    <span key={i} className="text-[10px] font-bold px-2 py-0.5 rounded-full" style={{ background: "var(--danger-soft)", color: "var(--danger-text)" }}>{w}</span>
                   ))}
                 </div>
               </div>
@@ -254,20 +236,6 @@ export default function ToolHome() {
 
   return (
       <div className="min-h-screen p-4 sm:p-6 lg:p-8">
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "SoftwareApplication",
-              "name": "What's Your Superpower? Personality Quiz",
-              "description": "Discover your hidden superpower with our free personality quiz. Answer 10 questions to reveal your unique superpower type and strengths.",
-              "applicationCategory": "QuizApplication",
-              "operatingSystem": "Web",
-              "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
-            })
-          }}
-        />
         <div className="max-w-xl mx-auto">
           <div className="text-center mb-8">
             <h1 className="text-3xl sm:text-4xl font-extrabold mb-2" style={{ color: "var(--foreground)" }}>
@@ -299,7 +267,7 @@ export default function ToolHome() {
                 style={{
                   background: answers[step] === i ? "var(--primary)" : "var(--background)",
                   borderColor: answers[step] === i ? "var(--primary)" : "var(--border)",
-                  color: answers[step] === i ? "#fff" : "var(--foreground)",
+                  color: answers[step] === i ? "var(--primary-foreground)" : "var(--foreground)",
                 }}
               >
                 {opt.text}

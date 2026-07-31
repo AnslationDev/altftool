@@ -12,7 +12,7 @@
  */
 
 /** Typical published rotation interval, mid-point of the 8,000-10,000 km range. */
-export const ROTATION_INTERVAL_KM_DEFAULT = 8000;
+export const ROTATION_INTERVAL_KM_DEFAULT = 9000;
 /** Below this a rotation interval is not a real service plan, it is a typo. */
 export const ROTATION_INTERVAL_KM_MIN = 1000;
 /** Above ~20,000 km no mainstream handbook still calls it a rotation interval. */

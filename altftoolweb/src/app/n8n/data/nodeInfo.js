@@ -1,6 +1,6 @@
-// Human-readable descriptions for n8n node types + helpers that derive the
-// "Node Details", "How it Works" and "Who is this best for?" sections of a
-// workflow detail page directly from its workflow JSON. No API/LLM needed.
+// Human-readable descriptions for n8n node types + a helper that derives the
+// "Node Details" section of a workflow detail page directly from its
+// workflow JSON. No API/LLM needed.
 import { stripEmojis } from "./text";
 
 // Keyed by the leaf of the node type (e.g. "n8n-nodes-base.httpRequest" -> "httpRequest").
@@ -150,73 +150,4 @@ export function deriveNodeDetails(wfJson) {
     typeName: prettifyType(n.type),
     description: describeNodeType(n.type),
   }));
-}
-
-// Ordered "How it Works" steps derived by walking the main data-flow connections
-// from the trigger(s). Falls back to authoring order when there are no connections.
-export function deriveSteps(wfJson, limit = 12) {
-  const nodes = (wfJson?.nodes || []).filter((n) => !isSticky(n.type));
-  if (!nodes.length) return [];
-  const byName = new Map(nodes.map((n) => [n.name, n]));
-  const conns = wfJson?.connections || {};
-
-  // Count incoming "main" edges to find start nodes (triggers / roots).
-  const incoming = new Map(nodes.map((n) => [n.name, 0]));
-  for (const src of Object.keys(conns)) {
-    for (const c of conns[src]?.main?.flat?.() || []) {
-      if (c?.node && incoming.has(c.node)) incoming.set(c.node, incoming.get(c.node) + 1);
-    }
-  }
-
-  const rootNodes = nodes
-    .filter((n) => /Trigger$/.test(nodeLeaf(n.type)) || incoming.get(n.name) === 0)
-    // Real triggers lead the flow; other roots (e.g. AI tool sub-nodes) follow.
-    .sort((a, b) => {
-      const at = /Trigger$/.test(nodeLeaf(a.type)) ? 0 : 1;
-      const bt = /Trigger$/.test(nodeLeaf(b.type)) ? 0 : 1;
-      return at - bt;
-    });
-  const queue = rootNodes.length ? [...new Set(rootNodes.map((n) => n.name))] : [nodes[0].name];
-
-  const visited = new Set();
-  const ordered = [];
-  while (queue.length && ordered.length < limit * 2) {
-    const name = queue.shift();
-    if (visited.has(name) || !byName.has(name)) continue;
-    visited.add(name);
-    ordered.push(name);
-    for (const c of conns[name]?.main?.flat?.() || []) {
-      if (c?.node && !visited.has(c.node)) queue.push(c.node);
-    }
-  }
-  // Append any unreached nodes (parallel branches / AI sub-nodes) in authoring order.
-  for (const n of nodes) if (!visited.has(n.name)) ordered.push(n.name);
-
-  return ordered.slice(0, limit).map((name) => {
-    const n = byName.get(name);
-    return { name, description: describeNodeType(n.type) };
-  });
-}
-
-// "Who is this best for?" bullets derived from categories + the nodes in use.
-export function deriveAudience(categories = [], nodeDetails = []) {
-  const bullets = [];
-  const catNames = categories.map((c) => c.name.toLowerCase()).join(" ");
-  const typeNames = nodeDetails.map((n) => n.typeName.toLowerCase()).join(" ");
-
-  if (/\bai\b|agent|llm|chatbot|rag/.test(catNames + " " + typeNames)) {
-    bullets.push("AI developers and builders integrating LLMs into real, production workflows.");
-  }
-  if (/social|content|video|blotato|telegram|whatsapp|slack|gmail/.test(catNames + " " + typeNames)) {
-    bullets.push("Marketers and creators automating content, messaging, and distribution.");
-  }
-  if (/sheet|airtable|nocodb|database|crm|data/.test(catNames + " " + typeNames)) {
-    bullets.push("Operations teams syncing data across spreadsheets, databases, and CRMs.");
-  }
-  if (/scrap|extract|http|firecrawl|web/.test(catNames + " " + typeNames)) {
-    bullets.push("Developers who need to pull, clean, and route data from external APIs and websites.");
-  }
-  bullets.push("Automation builders who want a ready-made n8n template they can import and adapt.");
-
-  return [...new Set(bullets)].slice(0, 4);
 }

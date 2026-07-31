@@ -142,14 +142,15 @@ export function describeSlug(slug) {
       return {
         title: `${device.name} Support — ${base} | AltFTool`,
         description: `Browse support settings and guides for ${device.name}.`,
+        resolved: true,
       };
     }
-    return { title: `${base} – Manage Preferences | AltFTool`, description: baseDescription };
+    return { title: `${base} – Manage Preferences | AltFTool`, description: baseDescription, resolved: false };
   }
 
   if (activeId.startsWith("util-")) {
     const title = UTIL_TITLES[activeId] || "Help & Tools";
-    return { title: `${title} — ${base} | AltFTool`, description: baseDescription };
+    return { title: `${title} — ${base} | AltFTool`, description: baseDescription, resolved: true };
   }
 
   if (activeId.startsWith("ai-")) {
@@ -157,6 +158,7 @@ export function describeSlug(slug) {
     return {
       title: `${tool?.name || "AI Tool"} — ${base} | AltFTool`,
       description: tool?.tagline || baseDescription,
+      resolved: true,
     };
   }
 
@@ -166,6 +168,7 @@ export function describeSlug(slug) {
     return {
       title: `${category?.label || "Settings"} — ${base} | AltFTool`,
       description: category?.description || baseDescription,
+      resolved: true,
     };
   }
 
@@ -174,6 +177,7 @@ export function describeSlug(slug) {
     return {
       title: `${osSetting.title} — ${base} | AltFTool`,
       description: osSetting.description || baseDescription,
+      resolved: true,
     };
   }
 
@@ -183,8 +187,9 @@ export function describeSlug(slug) {
     return {
       title: `${deviceSetting.title} — ${device?.name || ""} ${base} | AltFTool`,
       description: deviceSetting.description || baseDescription,
+      resolved: true,
     };
   }
 
-  return { title: `${base} – Manage Preferences | AltFTool`, description: baseDescription };
+  return { title: `${base} – Manage Preferences | AltFTool`, description: baseDescription, resolved: false };
 }

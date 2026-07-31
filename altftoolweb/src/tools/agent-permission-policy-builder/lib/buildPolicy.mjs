@@ -1,5 +1,6 @@
 const MAX_LIST_ITEMS = 200;
 const MAX_ITEM_CHARACTERS = 500;
+const DNS_LABEL_RE = /^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?$/;
 
 function unique(values) {
   const seen = new Set();
@@ -11,16 +12,48 @@ function unique(values) {
   });
 }
 
-export function parseList(value) {
+function splitEntries(value) {
   const source = Array.isArray(value) ? value.join("\n") : String(value || "");
-  return unique(
-    source
-      .split(/[\r\n,]+/)
-      .map((item) => item.trim())
-      .filter(Boolean)
-      .slice(0, MAX_LIST_ITEMS)
-      .map((item) => item.slice(0, MAX_ITEM_CHARACTERS)),
-  );
+  return source
+    .split(/[\r\n,]+/)
+    .map((item) => item.trim())
+    .filter(Boolean);
+}
+
+// Returns { items, warnings }. Entries beyond MAX_LIST_ITEMS are dropped and
+// entries longer than MAX_ITEM_CHARACTERS are truncated, but neither happens
+// silently: both are reported back as warnings so a caller can surface them
+// instead of shipping a policy that under-enforces what the user typed.
+export function parseList(value, label = "This field") {
+  const entries = splitEntries(value);
+  const warnings = [];
+
+  const overflow = entries.length - MAX_LIST_ITEMS;
+  if (overflow > 0) {
+    warnings.push(
+      `${label}: ${overflow} ${overflow === 1 ? "entry" : "entries"} beyond the ${MAX_LIST_ITEMS}-entry limit ${
+        overflow === 1 ? "was" : "were"
+      } dropped.`,
+    );
+  }
+
+  const limited = entries.slice(0, MAX_LIST_ITEMS);
+  const overLength = limited.filter((item) => item.length > MAX_ITEM_CHARACTERS).length;
+  if (overLength > 0) {
+    warnings.push(
+      `${label}: ${overLength} ${overLength === 1 ? "entry" : "entries"} longer than ${MAX_ITEM_CHARACTERS} characters ${
+        overLength === 1 ? "was" : "were"
+      } truncated.`,
+    );
+  }
+
+  const items = unique(limited.map((item) => item.slice(0, MAX_ITEM_CHARACTERS)));
+  return { items, warnings };
+}
+
+function isValidHostname(hostname) {
+  if (!hostname || hostname.length > 253) return false;
+  return hostname.split(".").every((label) => DNS_LABEL_RE.test(label));
 }
 
 function normalizeDomainRule(value) {
@@ -38,21 +71,23 @@ function normalizeDomainRule(value) {
   try {
     const hostname = new URL(`https://${candidate}`).hostname.toLowerCase().replace(/\.$/, "");
     if (hostname !== candidate) return null;
+    if (!isValidHostname(hostname)) return null;
     return wildcard ? `*.${hostname}` : hostname;
   } catch {
     return null;
   }
 }
 
-export function parseDomainRules(value) {
+export function parseDomainRules(value, label = "Allowed domains") {
+  const parsed = parseList(value, label);
   const accepted = [];
   const invalid = [];
-  for (const item of parseList(value)) {
+  for (const item of parsed.items) {
     const normalized = normalizeDomainRule(item);
     if (normalized) accepted.push(normalized);
     else invalid.push(item);
   }
-  return { accepted: unique(accepted), invalid };
+  return { accepted: unique(accepted), invalid, warnings: parsed.warnings };
 }
 
 export function parseNumericLimits(value) {
@@ -61,28 +96,37 @@ export function parseNumericLimits(value) {
   const errors = [];
   const warnings = [];
 
-  source
+  const lines = source
     .split(/\r?\n/)
     .map((line) => line.trim())
-    .filter(Boolean)
-    .slice(0, MAX_LIST_ITEMS)
-    .forEach((line, index) => {
-      const match = line.match(/^([^=:]{1,160})\s*(?:=|:)\s*(.+)$/u);
-      if (!match) {
-        errors.push(`Numeric limit line ${index + 1} needs field = maximum.`);
-        return;
-      }
-      const key = match[1].trim();
-      const amount = Number(match[2].trim());
-      if (!key || !Number.isFinite(amount) || amount < 0) {
-        errors.push(`Numeric limit line ${index + 1} needs a non-negative number.`);
-        return;
-      }
-      if (Object.hasOwn(limits, key)) {
-        warnings.push(`Numeric limit “${key}” appeared more than once; the last value is used.`);
-      }
-      limits[key] = amount;
-    });
+    .filter(Boolean);
+
+  const overflow = lines.length - MAX_LIST_ITEMS;
+  if (overflow > 0) {
+    warnings.push(
+      `Numeric ceilings: ${overflow} ${overflow === 1 ? "line" : "lines"} beyond the ${MAX_LIST_ITEMS}-entry limit ${
+        overflow === 1 ? "was" : "were"
+      } dropped.`,
+    );
+  }
+
+  lines.slice(0, MAX_LIST_ITEMS).forEach((line, index) => {
+    const match = line.match(/^([^=:]{1,160})\s*(?:=|:)\s*(.+)$/u);
+    if (!match) {
+      errors.push(`Numeric limit line ${index + 1} needs field = maximum.`);
+      return;
+    }
+    const key = match[1].trim();
+    const amount = Number(match[2].trim());
+    if (!key || !Number.isFinite(amount) || amount < 0) {
+      errors.push(`Numeric limit line ${index + 1} needs a non-negative number.`);
+      return;
+    }
+    if (Object.hasOwn(limits, key)) {
+      warnings.push(`Numeric limit “${key}” appeared more than once; the last value is used.`);
+    }
+    limits[key] = amount;
+  });
 
   return { limits, errors, warnings };
 }
@@ -93,45 +137,60 @@ function exactOverlap(left, right) {
 }
 
 export function buildPermissionPolicy(input = {}) {
-  const allowedTools = parseList(input.allowedTools);
-  const deniedTools = parseList(input.deniedTools);
-  const allowedPathPrefixes = parseList(input.allowedPathPrefixes);
-  const allowedRecipients = parseList(input.allowedRecipients);
-  const requiredForTools = parseList(input.requiredConfirmationTools);
-  const acceptedFlags = parseList(input.acceptedConfirmationFlags);
-  const domains = parseDomainRules(input.allowedDomains);
+  const allowedTools = parseList(input.allowedTools, "Allowed tool patterns");
+  const deniedTools = parseList(input.deniedTools, "Denied tool patterns");
+  const allowedPathPrefixes = parseList(input.allowedPathPrefixes, "Allowed path prefixes");
+  const allowedRecipients = parseList(input.allowedRecipients, "Allowed recipients");
+  const requiredForTools = parseList(
+    input.requiredConfirmationTools,
+    "Tools requiring confirmation",
+  );
+  const acceptedFlags = parseList(
+    input.acceptedConfirmationFlags,
+    "Accepted confirmation flags",
+  );
+  const domains = parseDomainRules(input.allowedDomains, "Allowed domains");
   const numeric = parseNumericLimits(input.numericLimits);
   const errors = [...numeric.errors];
-  const warnings = [...numeric.warnings];
+  const warnings = [
+    ...numeric.warnings,
+    ...allowedTools.warnings,
+    ...deniedTools.warnings,
+    ...allowedPathPrefixes.warnings,
+    ...allowedRecipients.warnings,
+    ...requiredForTools.warnings,
+    ...acceptedFlags.warnings,
+    ...domains.warnings,
+  ];
 
   if (domains.invalid.length) {
     errors.push(
       `${domains.invalid.length} domain rule${domains.invalid.length === 1 ? "" : "s"} must contain only a hostname, such as example.com or *.example.com.`,
     );
   }
-  if (requiredForTools.length && !acceptedFlags.length) {
+  if (requiredForTools.items.length && !acceptedFlags.items.length) {
     errors.push("Add at least one accepted confirmation flag when confirmation is required.");
   }
 
-  const overlaps = exactOverlap(allowedTools, deniedTools);
+  const overlaps = exactOverlap(allowedTools.items, deniedTools.items);
   if (overlaps.length) {
     warnings.push(
       `${overlaps.length} exact tool pattern${overlaps.length === 1 ? "" : "s"} appear in both lists; deny rules take precedence.`,
     );
   }
   if (
-    !allowedTools.length &&
-    !deniedTools.length &&
-    !allowedPathPrefixes.length &&
+    !allowedTools.items.length &&
+    !deniedTools.items.length &&
+    !allowedPathPrefixes.items.length &&
     !domains.accepted.length &&
-    !allowedRecipients.length &&
+    !allowedRecipients.items.length &&
     !Object.keys(numeric.limits).length &&
-    !requiredForTools.length
+    !requiredForTools.items.length
   ) {
     warnings.push("This draft has no enforceable rule yet.");
   }
   if (
-    allowedPathPrefixes.some(
+    allowedPathPrefixes.items.some(
       (path) => !path.startsWith("/") && !/^[A-Za-z]:[\\/]/u.test(path),
     )
   ) {
@@ -141,15 +200,15 @@ export function buildPermissionPolicy(input = {}) {
   }
 
   const policy = {
-    allowedTools,
-    deniedTools,
-    allowedPathPrefixes,
+    allowedTools: allowedTools.items,
+    deniedTools: deniedTools.items,
+    allowedPathPrefixes: allowedPathPrefixes.items,
     allowedDomains: domains.accepted,
-    allowedRecipients,
+    allowedRecipients: allowedRecipients.items,
     numericLimits: numeric.limits,
     confirmation: {
-      requiredForTools,
-      acceptedFlags,
+      requiredForTools: requiredForTools.items,
+      acceptedFlags: acceptedFlags.items,
     },
   };
 
@@ -159,14 +218,14 @@ export function buildPermissionPolicy(input = {}) {
     errors,
     warnings,
     summary: {
-      allowedToolRules: allowedTools.length,
-      deniedToolRules: deniedTools.length,
-      pathRules: allowedPathPrefixes.length,
+      allowedToolRules: allowedTools.items.length,
+      deniedToolRules: deniedTools.items.length,
+      pathRules: allowedPathPrefixes.items.length,
       domainRules: domains.accepted.length,
-      recipientRules: allowedRecipients.length,
+      recipientRules: allowedRecipients.items.length,
       numericLimitRules: Object.keys(numeric.limits).length,
-      confirmationToolRules: requiredForTools.length,
-      confirmationFlags: acceptedFlags.length,
+      confirmationToolRules: requiredForTools.items.length,
+      confirmationFlags: acceptedFlags.items.length,
     },
   };
 }
