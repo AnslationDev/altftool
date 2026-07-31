@@ -88,7 +88,7 @@ export default function ToolHome() {
       assessClosure({
         openingDateISO: form.openingDate,
         closureDateISO: form.closureDate,
-        closureCharge: Number(form.closureCharge),
+        closureCharge: form.closureCharge,
         lastTransactionISO: form.lastTransaction,
       }),
     [form.openingDate, form.closureDate, form.closureCharge, form.lastTransaction],
@@ -138,6 +138,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will discard the account, contact and payout details you have entered and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setForm(DEFAULTS);
     setEnclosures(DEFAULT_ENCLOSURES);
     setCopied("");
@@ -201,7 +208,15 @@ export default function ToolHome() {
             <label className={LABEL} htmlFor="bc-last-txn">
               Last customer transaction
             </label>
-            <input id="bc-last-txn" className={INPUT} type="date" value={form.lastTransaction} onChange={set("lastTransaction")} />
+            <input
+              id="bc-last-txn"
+              className={INPUT}
+              type="date"
+              min={form.openingDate || undefined}
+              max={form.closureDate || undefined}
+              value={form.lastTransaction}
+              onChange={set("lastTransaction")}
+            />
           </div>
           <div>
             <label className={LABEL} htmlFor="bc-charge">
@@ -263,7 +278,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Closure charge you should expect
             </p>
@@ -277,7 +292,7 @@ export default function ToolHome() {
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
-              className={GHOST_BTN}
+              className={PRIMARY_BTN}
               aria-label="Copy the account closure summary"
               onClick={() =>
                 copy(
@@ -298,7 +313,7 @@ export default function ToolHome() {
               {copied === "summary" ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
               {copied === "summary" ? "Copied!" : "Copy summary"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all fields" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all fields" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
@@ -422,34 +437,42 @@ export default function ToolHome() {
         </div>
       </section>
 
-      {form.payoutMode === "neft" ? (
+      {form.payoutMode !== "cash" ? (
         <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
-          <h2 className="text-base font-semibold">Where the balance should go</h2>
+          <h2 className="text-base font-semibold">
+            {form.payoutMode === "cheque"
+              ? "Who the cheque or DD should be made out to"
+              : "Where the balance should go"}
+          </h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <div>
+            <div className={form.payoutMode === "cheque" ? "sm:col-span-2" : undefined}>
               <label className={LABEL} htmlFor="bc-dest-holder">
-                Destination account holder
+                {form.payoutMode === "cheque" ? "Payee name on the cheque / DD" : "Destination account holder"}
               </label>
               <input id="bc-dest-holder" className={INPUT} value={form.destinationHolder} onChange={set("destinationHolder")} />
             </div>
-            <div>
-              <label className={LABEL} htmlFor="bc-dest-bank">
-                Destination bank
-              </label>
-              <input id="bc-dest-bank" className={INPUT} value={form.destinationBank} onChange={set("destinationBank")} />
-            </div>
-            <div>
-              <label className={LABEL} htmlFor="bc-dest-account">
-                Destination account number
-              </label>
-              <input id="bc-dest-account" className={INPUT} value={form.destinationAccount} onChange={set("destinationAccount")} />
-            </div>
-            <div>
-              <label className={LABEL} htmlFor="bc-dest-ifsc">
-                Destination IFSC
-              </label>
-              <input id="bc-dest-ifsc" className={INPUT} value={form.destinationIfsc} onChange={set("destinationIfsc")} />
-            </div>
+            {form.payoutMode === "neft" ? (
+              <>
+                <div>
+                  <label className={LABEL} htmlFor="bc-dest-bank">
+                    Destination bank
+                  </label>
+                  <input id="bc-dest-bank" className={INPUT} value={form.destinationBank} onChange={set("destinationBank")} />
+                </div>
+                <div>
+                  <label className={LABEL} htmlFor="bc-dest-account">
+                    Destination account number
+                  </label>
+                  <input id="bc-dest-account" className={INPUT} value={form.destinationAccount} onChange={set("destinationAccount")} />
+                </div>
+                <div>
+                  <label className={LABEL} htmlFor="bc-dest-ifsc">
+                    Destination IFSC
+                  </label>
+                  <input id="bc-dest-ifsc" className={INPUT} value={form.destinationIfsc} onChange={set("destinationIfsc")} />
+                </div>
+              </>
+            ) : null}
           </div>
         </section>
       ) : null}

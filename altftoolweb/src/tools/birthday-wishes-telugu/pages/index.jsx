@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Cake, Check, Copy, RotateCcw, Shuffle } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   LANGUAGE,
   MAX_MESSAGES,
@@ -50,7 +52,7 @@ export default function ToolHome() {
   const [senderName, setSenderName] = useState(DEFAULTS.senderName);
   const [showRoman, setShowRoman] = useState(DEFAULTS.showRoman);
   const [seed, setSeed] = useState(DEFAULTS.seed);
-  const [copiedId, setCopiedId] = useState("");
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -77,17 +79,6 @@ export default function ToolHome() {
       .join("\n\n———\n\n");
   }, [hasError, messages, showRoman]);
 
-  const copy = async (text, key) => {
-    if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedId(key);
-      setTimeout(() => setCopiedId(""), 1500);
-    } catch {
-      setCopiedId("");
-    }
-  };
-
   const reset = () => {
     setName(DEFAULTS.name);
     setRelationshipId(DEFAULTS.relationshipId);
@@ -97,8 +88,11 @@ export default function ToolHome() {
     setSenderName(DEFAULTS.senderName);
     setShowRoman(DEFAULTS.showRoman);
     setSeed(DEFAULTS.seed);
-    setCopiedId("");
+    resetCopyState();
   };
+
+  const selectedRelationship = RELATIONSHIPS.find((item) => item.id === relationshipId);
+  const nameIgnored = Boolean(selectedRelationship && selectedRelationship.usesName === false);
 
   const details = hasError
     ? [
@@ -154,7 +148,14 @@ export default function ToolHome() {
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="కిరణ్"
+              aria-describedby={nameIgnored ? "te-name-hint" : undefined}
             />
+            {nameIgnored ? (
+              <p id="te-name-hint" className="mt-1.5 text-xs text-[var(--muted-foreground)]">
+                Telugu greetings for {selectedRelationship.label.toLowerCase()} don&apos;t use a
+                name — this won&apos;t appear in the message.
+              </p>
+            ) : null}
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="te-relationship">
@@ -276,7 +277,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div className="min-w-0">
+          <div className="min-w-0" aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Your message
             </p>
@@ -289,18 +290,25 @@ export default function ToolHome() {
           </div>
           <button
             type="button"
-            onClick={() => copy(allText, "all")}
-            aria-label="Copy every generated Telugu birthday message"
+            onClick={() => copy("all", allText, { label: "every generated Telugu birthday message" })}
+            aria-label={
+              isCopied("all")
+                ? "Copied every generated Telugu birthday message"
+                : "Copy every generated Telugu birthday message"
+            }
             className={PRIMARY_BTN}
             disabled={hasError}
           >
-            {copiedId === "all" ? (
+            {isCopied("all") ? (
               <Check className="h-4 w-4" aria-hidden="true" />
             ) : (
               <Copy className="h-4 w-4" aria-hidden="true" />
             )}
-            {copiedId === "all" ? "Copied!" : "Copy all"}
+            {isCopied("all") ? "Copied!" : "Copy all"}
           </button>
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
@@ -334,17 +342,21 @@ export default function ToolHome() {
                 <button
                   type="button"
                   onClick={() =>
-                    copy(showRoman ? `${item.full}\n\n(${item.fullRoman})` : item.full, item.id)
+                    copy(
+                      item.id,
+                      showRoman ? `${item.full}\n\n(${item.fullRoman})` : item.full,
+                      { label: "this Telugu birthday message" },
+                    )
                   }
-                  aria-label="Copy this Telugu birthday message"
+                  aria-label={isCopied(item.id) ? "Copied this Telugu birthday message" : "Copy this Telugu birthday message"}
                   className={GHOST_BTN}
                 >
-                  {copiedId === item.id ? (
+                  {isCopied(item.id) ? (
                     <Check className="h-4 w-4" aria-hidden="true" />
                   ) : (
                     <Copy className="h-4 w-4" aria-hidden="true" />
                   )}
-                  {copiedId === item.id ? "Copied!" : "Copy"}
+                  {isCopied(item.id) ? "Copied!" : "Copy"}
                 </button>
               </div>
               <p className="mt-3 whitespace-pre-line text-lg leading-8">{item.full}</p>

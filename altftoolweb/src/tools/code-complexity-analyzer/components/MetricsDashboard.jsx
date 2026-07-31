@@ -97,10 +97,10 @@ export default function MetricsDashboard({ analysis }) {
 
                     </div>
                     <h3 className="text-2xl font-black text-(--foreground) tracking-tight">
-                        Maintainability Index
+                        Overall Quality Score
                     </h3>
                     <p className="mt-2 text-sm text-(--muted-foreground) leading-relaxed font-bold">
-                        Your code scores <span className="font-bold text-(--primary)">{scores.overall}%</span> for maintainability. 
+                        Your code scores <span className="font-bold text-(--primary)">{scores.overall}%</span> overall, blending complexity, readability, and maintainability.
                         It has <span className="font-black text-blue-600">{smells.length}</span> detected issues that could be improved.
                     </p>
                     

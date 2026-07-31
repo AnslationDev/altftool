@@ -28,7 +28,7 @@ export const MS_PER_DAY = 86400000;
 export const PRESETS = [
   {
     id: "cdc",
-    label: "2 months since dose · 3 months after infection",
+    label: "56 days (~2 months) since dose · 90 days (~3 months) after infection",
     doseDays: 56,
     infectionDays: 90,
     note: "Matches the commonly published US-style minimum interval and post-infection deferral.",
@@ -49,7 +49,7 @@ export const PRESETS = [
   },
   {
     id: "immunocompromised",
-    label: "2 months since dose · no infection deferral",
+    label: "56 days (~2 months) since dose · no infection deferral",
     doseDays: 56,
     infectionDays: 0,
     note: "Additional doses for immunocompromised people are often given without a post-infection wait — follow your specialist's advice.",
@@ -157,7 +157,7 @@ export function computeBoosterEligibility({
     earliestDate = infectionEligibleDate;
     drivenBy = "recent infection";
   } else if (infectionEligibleDate !== null && infectionEligibleDate === doseEligibleDate) {
-    drivenBy = "both rules together";
+    drivenBy = "combined rules";
   }
 
   let status = null;
@@ -170,8 +170,8 @@ export function computeBoosterEligibility({
       asOf,
       daysUntil: daysUntil > 0 ? daysUntil : 0,
       eligibleNow: daysUntil <= 0,
-      daysSinceDose: daysBetween(lastDose, asOf),
-      daysSinceInfection: infection === null ? null : daysBetween(infection, asOf),
+      daysSinceDose: Math.max(0, daysBetween(lastDose, asOf)),
+      daysSinceInfection: infection === null ? null : Math.max(0, daysBetween(infection, asOf)),
       daysSinceEligible: daysUntil <= 0 ? -daysUntil : 0,
     };
   }

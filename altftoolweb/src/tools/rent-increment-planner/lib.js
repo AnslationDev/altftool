@@ -68,7 +68,6 @@ export function projectScenario({
       monthlyRent,
       cycleTotal,
       cumulative,
-      increaseOverStart: monthlyRent - startingRent,
     });
   }
 
@@ -117,14 +116,13 @@ export function planRentIncrements({
   if (!Number.isInteger(cycleMonths) || cycleMonths < 1 || cycleMonths > 120) {
     return { error: "Renewal cycle should be a whole number of months between 1 and 120." };
   }
-  if (horizonYears <= 0 || horizonYears > MAX_HORIZON_YEARS) {
+  const horizonMonths = Math.round(horizonYears * 12);
+  if (horizonYears <= 0 || horizonYears > MAX_HORIZON_YEARS || horizonMonths < 1) {
     return { error: `Projection horizon should be between 1 and ${MAX_HORIZON_YEARS} years.` };
   }
   if (inflationPercent < -20 || inflationPercent > 50) {
     return { error: "Inflation should be between -20% and 50% per year." };
   }
-
-  const horizonMonths = Math.round(horizonYears * 12);
 
   const main = projectScenario({
     startingRent,
@@ -160,14 +158,12 @@ export function planRentIncrements({
 
   return {
     rows: main.rows,
-    altRows: alt.rows,
     horizonMonths,
     nominalTotal: main.nominalTotal,
     realTotal: main.realTotal,
     inflationDrag: main.nominalTotal - main.realTotal,
     altNominalTotal: alt.nominalTotal,
     difference,
-    cheaperScenario: difference > 0 ? "main" : difference < 0 ? "alt" : "tie",
     crossoverCycle,
     finalMonthlyRent,
     finalIncreasePercent: startingRent > 0 ? (finalMonthlyRent / startingRent - 1) * 100 : 0,

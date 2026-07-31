@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, ShieldAlert } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   INCIDENT_TYPE_OPTIONS,
   SEVERITY_OPTIONS,
@@ -34,23 +35,39 @@ const DEFAULTS = {
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [doneIds, setDoneIds] = useState([]);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const set = (key) => (event) => {
     setForm((prev) => ({ ...prev, [key]: event.target.value }));
-    setDoneIds([]);
   };
   const setBool = (key) => (event) => {
     setForm((prev) => ({ ...prev, [key]: event.target.checked }));
-    setDoneIds([]);
   };
 
   const result = useMemo(() => buildIncidentChecklist(form), [form]);
   const hasError = Boolean(result.error);
 
+  // Item ids are stable across unrelated form changes (see lib.js). Rather
+  // than wiping every checked box whenever the form changes, only stop
+  // counting the ids that no longer correspond to an item in the *current*
+  // checklist (e.g. the incident type changed and those analysis/containment
+  // items no longer exist) — derived here so a stale id left in `doneIds`
+  // never inflates the progress percentage, without needing an effect to
+  // prune the array in place.
+  const validItemIds = useMemo(() => {
+    if (hasError) return new Set();
+    return new Set(result.phases.flatMap((phase) => phase.items.map((item) => item.id)));
+  }, [result, hasError]);
+
+  const doneCount = useMemo(
+    () => doneIds.filter((id) => validItemIds.has(id)).length,
+    [doneIds, validItemIds],
+  );
+
   const progress = hasError
     ? 0
-    : computeProgress({ total: result.totalItems, done: doneIds.length });
+    : computeProgress({ total: result.totalItems, done: doneCount });
 
   const toggleItem = (itemId) => {
     setDoneIds((prev) =>
@@ -58,21 +75,17 @@ export default function ToolHome() {
     );
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(checklistToMarkdown(result, doneIds));
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("checklist", checklistToMarkdown(result, doneIds), {
+      label: "checklist",
+    });
   };
 
   const reset = () => {
     setForm(DEFAULTS);
     setDoneIds([]);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -179,13 +192,16 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Checklist progress
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p
+              className="mt-1 text-4xl font-semibold text-[var(--primary)]"
+              aria-live="polite"
+            >
               {hasError ? DASH : `${NUM.format(progress)}%`}
             </p>
             <p className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? "Fix the input above to generate the checklist."
-                : `${NUM.format(doneIds.length)} of ${NUM.format(result.totalItems)} steps done · ${result.severityLabel}`}
+                : `${NUM.format(doneCount)} of ${NUM.format(result.totalItems)} steps done · ${result.severityLabel}`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -193,15 +209,19 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the checklist as Markdown"
+              aria-label={
+                isCopied("checklist")
+                  ? "Copied the checklist as Markdown"
+                  : "Copy the checklist as Markdown"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("checklist") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy as Markdown"}
+              {isCopied("checklist") ? "Copied!" : "Copy as Markdown"}
             </button>
             <button
               type="button"
@@ -214,6 +234,9 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
 
         {hasError ? (
           <p className="mt-5 text-sm text-[var(--muted-foreground)]">{DASH}</p>

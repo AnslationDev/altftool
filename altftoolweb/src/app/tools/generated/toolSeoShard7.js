@@ -1667,7 +1667,7 @@ export default {
     ],
     [
       "How much will my rent be after 5 years at 10% a year?",
-      "Rent grows by (1.10)^5, which is 1.61, so Rs 25,000 becomes about Rs 40,263 a month in the fifth renewal. Across those five years you pay roughly Rs 18.3 lakh in total, about 10% more than the Rs 16.6 lakh a 5% escalation would cost on the same flat."
+      "Rent grows by (1.10)^4 by the fifth renewal cycle — the first cycle still carries no increase, so five renewals mean four completed escalations — which is about 1.46, so Rs 25,000 becomes about Rs 36,603 a month in that fifth cycle. Across those five years you pay roughly Rs 18.3 lakh in total, about 10% more than the Rs 16.6 lakh a 5% escalation would cost on the same flat."
     ],
     [
       "Does the rent go up every 11 months or every 12?",

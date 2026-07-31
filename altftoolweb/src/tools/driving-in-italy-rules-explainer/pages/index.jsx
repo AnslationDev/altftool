@@ -3,7 +3,16 @@
 import { useMemo, useState } from "react";
 import { CarFront, Check, Copy, RotateCcw, TriangleAlert, Wine } from "lucide-react";
 
-import { COUNTRY, LICENCE_ORIGINS, assessTrip, estimateBac, hoursUntilLegal } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
+import {
+  COUNTRY,
+  LICENCE_ORIGINS,
+  assessTrip,
+  convertSpeed,
+  estimateBac,
+  hoursUntilLegal,
+} from "../lib";
 
 const NUM = new Intl.NumberFormat("en-GB", { maximumFractionDigits: 1 });
 const BAC = new Intl.NumberFormat("en-GB", { minimumFractionDigits: 2, maximumFractionDigits: 3 });
@@ -18,6 +27,8 @@ const DEFAULTS = {
   towingTrailer: false,
   rain: false,
   professionalDriver: false,
+  speedValue: "130",
+  speedUnit: "kmh",
   drinks: "3",
   drinkVolumeMl: "150",
   abvPercent: "13",
@@ -46,6 +57,8 @@ export default function ToolHome() {
   const [towingTrailer, setTowingTrailer] = useState(DEFAULTS.towingTrailer);
   const [rain, setRain] = useState(DEFAULTS.rain);
   const [professionalDriver, setProfessionalDriver] = useState(DEFAULTS.professionalDriver);
+  const [speedValue, setSpeedValue] = useState(DEFAULTS.speedValue);
+  const [speedUnit, setSpeedUnit] = useState(DEFAULTS.speedUnit);
 
   const [drinks, setDrinks] = useState(DEFAULTS.drinks);
   const [drinkVolumeMl, setDrinkVolumeMl] = useState(DEFAULTS.drinkVolumeMl);
@@ -54,7 +67,7 @@ export default function ToolHome() {
   const [sex, setSex] = useState(DEFAULTS.sex);
   const [hoursSinceFirstDrink, setHoursSinceFirstDrink] = useState(DEFAULTS.hoursSinceFirstDrink);
 
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const trip = useMemo(
     () =>
@@ -70,6 +83,8 @@ export default function ToolHome() {
     [ageYears, licenceHeldYears, licenceOrigin, stayDays, towingTrailer, rain, professionalDriver],
   );
 
+  const conversion = useMemo(() => convertSpeed(speedValue, speedUnit), [speedValue, speedUnit]);
+
   const bac = useMemo(
     () =>
       estimateBac({ drinks, drinkVolumeMl, abvPercent, bodyWeightKg, sex, hoursSinceFirstDrink }),
@@ -77,7 +92,7 @@ export default function ToolHome() {
   );
 
   const legal = useMemo(() => {
-    if (trip.error || bac.error) return null;
+    if (trip.alcohol?.error || bac.error) return null;
     return hoursUntilLegal(bac.bacPercent, trip.alcohol.limitBacPercent);
   }, [trip, bac]);
 
@@ -97,15 +112,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [trip]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: `${COUNTRY.name} driving rules summary` });
   };
 
   const reset = () => {
@@ -116,16 +125,19 @@ export default function ToolHome() {
     setTowingTrailer(DEFAULTS.towingTrailer);
     setRain(DEFAULTS.rain);
     setProfessionalDriver(DEFAULTS.professionalDriver);
+    setSpeedValue(DEFAULTS.speedValue);
+    setSpeedUnit(DEFAULTS.speedUnit);
     setDrinks(DEFAULTS.drinks);
     setDrinkVolumeMl(DEFAULTS.drinkVolumeMl);
     setAbvPercent(DEFAULTS.abvPercent);
     setBodyWeightKg(DEFAULTS.bodyWeightKg);
     setSex(DEFAULTS.sex);
     setHoursSinceFirstDrink(DEFAULTS.hoursSinceFirstDrink);
-    setCopied(false);
   };
 
   const ok = !trip.error;
+  const alcoholOk = !trip.alcohol?.error;
+  const permitOk = !trip.permit?.error;
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -269,10 +281,10 @@ export default function ToolHome() {
               Your legal blood-alcohol limit in {COUNTRY.name}
             </p>
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
-              {ok ? `${BAC.format(trip.alcohol.limitBacPercent)} %` : DASH}
+              {alcoholOk ? `${BAC.format(trip.alcohol.limitBacPercent)} %` : DASH}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-              {ok
+              {alcoholOk
                 ? `${trip.alcohol.category} · ${trip.alcohol.breathMgPerL} mg per litre of breath`
                 : "Fix the highlighted input to see your limit."}
             </p>
@@ -285,18 +297,21 @@ export default function ToolHome() {
               className={GHOST_BTN}
               disabled={!ok}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
@@ -305,11 +320,20 @@ export default function ToolHome() {
             ["Speeds are posted in", COUNTRY.speedUnit],
             ["Minimum age to drive a car", `${COUNTRY.minimumDrivingAgeYears} years`],
             ["Typical car-hire minimum age", `${COUNTRY.typicalRentalMinimumAgeYears} years`],
-            ["Neopatentato restrictions", ok ? (trip.novice ? "Yes — reduced motorway limits and a zero alcohol limit" : "No — licence held three years or more") : DASH],
-            ["International Driving Permit", ok ? (trip.permit.needsIdp ? "Required with your national licence" : "Not needed") : DASH],
-            ["Foreign licence recognised for", ok ? (trip.permit.recognitionDays ? `${trip.permit.recognitionDays} days of residence` : "As long as it stays valid") : DASH],
-            ["Why this alcohol limit", ok ? trip.alcohol.reason : DASH],
-            ["Penalty for exceeding it", ok ? trip.alcohol.penalty : DASH],
+            [
+              "Neopatentato restrictions",
+              alcoholOk
+                ? trip.novice
+                  ? "Yes — reduced motorway limits and a zero alcohol limit"
+                  : trip.alcohol.limitBacPercent === 0
+                    ? "No — but a zero alcohol limit still applies to you for another reason (see below)"
+                    : "No — licence held three years or more"
+                : DASH,
+            ],
+            ["International Driving Permit", permitOk ? (trip.permit.needsIdp ? "Required with your national licence" : "Not needed") : DASH],
+            ["Foreign licence recognised for", permitOk ? (trip.permit.recognitionDays ? `${trip.permit.recognitionDays} days of residence` : "As long as it stays valid") : DASH],
+            ["Why this alcohol limit", alcoholOk ? trip.alcohol.reason : DASH],
+            ["Penalty for exceeding it", alcoholOk ? trip.alcohol.penalty : DASH],
             ["Emergency numbers", COUNTRY.emergencyNumbers.map(([number, use]) => `${number} — ${use}`).join(" · ")],
             ["Tolls and city access", COUNTRY.tolls],
             ["Fuel", COUNTRY.fuelNote],
@@ -321,7 +345,7 @@ export default function ToolHome() {
           ))}
         </dl>
 
-        {ok && trip.permit.blockers.length > 0 ? (
+        {permitOk && trip.permit.blockers.length > 0 ? (
           <ul className="mt-4 space-y-2">
             {trip.permit.blockers.map((item) => (
               <li
@@ -336,7 +360,7 @@ export default function ToolHome() {
           </ul>
         ) : null}
 
-        {ok && trip.permit.warnings.length > 0 ? (
+        {permitOk && trip.permit.warnings.length > 0 ? (
           <ul className="mt-4 space-y-2">
             {trip.permit.warnings.map((item) => (
               <li key={item} className="rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning-text)]">
@@ -367,7 +391,7 @@ export default function ToolHome() {
               </tr>
             </thead>
             <tbody>
-              {ok
+              {alcoholOk
                 ? trip.speeds.map((row) => (
                     <tr key={row.id} className="border-b border-[var(--border)] align-top last:border-0">
                       <td className="py-2.5 pr-3">
@@ -382,6 +406,56 @@ export default function ToolHome() {
             </tbody>
           </table>
         </div>
+      </section>
+
+      <section className={`mt-6 ${CARD}`} aria-labelledby="it-convert">
+        <h2 id="it-convert" className="text-base font-semibold">
+          Convert a speed
+        </h2>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className={LABEL_CLASS} htmlFor="it-speed-value">
+              Speed
+            </label>
+            <input
+              id="it-speed-value"
+              className={`mt-2 ${INPUT_CLASS}`}
+              type="number"
+              inputMode="decimal"
+              min="0"
+              max="1000"
+              step="1"
+              value={speedValue}
+              onChange={(event) => setSpeedValue(event.target.value)}
+            />
+          </div>
+          <div>
+            <label className={LABEL_CLASS} htmlFor="it-speed-unit">
+              Entered in
+            </label>
+            <select
+              id="it-speed-unit"
+              className={`mt-2 ${INPUT_CLASS}`}
+              value={speedUnit}
+              onChange={(event) => setSpeedUnit(event.target.value)}
+            >
+              <option value="kmh">km/h (Italian signs)</option>
+              <option value="mph">mph (UK and US)</option>
+            </select>
+          </div>
+        </div>
+        {conversion.error ? (
+          <p
+            role="alert"
+            className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          >
+            {conversion.error}
+          </p>
+        ) : (
+          <p className="mt-4 text-2xl font-semibold">
+            {NUM.format(conversion.kmh)} km/h = {NUM.format(conversion.mph)} mph
+          </p>
+        )}
       </section>
 
       <section className={`mt-6 ${CARD}`} aria-labelledby="alcohol-estimator">
@@ -508,7 +582,7 @@ export default function ToolHome() {
             ["Hours until it reaches zero", bac.error ? DASH : `${NUM.format(bac.hoursToZero)} h`],
             [
               "Against your legal limit",
-              !legal || bac.error || trip.error
+              !legal || bac.error || !alcoholOk
                 ? DASH
                 : legal.alreadyUnder
                   ? "Below the limit on this estimate — still not proof of fitness to drive"
@@ -528,14 +602,12 @@ export default function ToolHome() {
           What must be in the car
         </h2>
         <ul className="mt-3 space-y-3 text-sm">
-          {trip.equipment
-            ? trip.equipment.map(([item, detail]) => (
-                <li key={item}>
-                  <span className="font-semibold">{item}</span>
-                  <span className="block text-[var(--muted-foreground)]">{detail}</span>
-                </li>
-              ))
-            : null}
+          {trip.equipment.map(([item, detail]) => (
+            <li key={item}>
+              <span className="font-semibold">{item}</span>
+              <span className="block text-[var(--muted-foreground)]">{detail}</span>
+            </li>
+          ))}
         </ul>
       </section>
 
@@ -544,14 +616,12 @@ export default function ToolHome() {
           Rules that catch visitors out
         </h2>
         <ul className="mt-3 space-y-3 text-sm">
-          {trip.keyRules
-            ? trip.keyRules.map(([title, detail]) => (
-                <li key={title}>
-                  <span className="font-semibold">{title}</span>
-                  <span className="block text-[var(--muted-foreground)]">{detail}</span>
-                </li>
-              ))
-            : null}
+          {trip.keyRules.map(([title, detail]) => (
+            <li key={title}>
+              <span className="font-semibold">{title}</span>
+              <span className="block text-[var(--muted-foreground)]">{detail}</span>
+            </li>
+          ))}
         </ul>
       </section>
 

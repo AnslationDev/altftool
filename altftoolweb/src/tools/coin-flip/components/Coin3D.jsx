@@ -182,7 +182,7 @@ export default function Coin3D({
               />
 
               {/* Authentic Real Coin Art */}
-              <RealCoinArt type={skin.type || skin.id} side="heads" textColor={skin.textColor} />
+              <RealCoinArt skin={skin} side="heads" />
             </div>
 
             {/* TAILS SIDE (Back 3D Layer rotated 180deg at Z +6.5px) */}
@@ -208,7 +208,7 @@ export default function Coin3D({
               />
 
               {/* Authentic Real Coin Art */}
-              <RealCoinArt type={skin.type || skin.id} side="tails" textColor={skin.textColor} />
+              <RealCoinArt skin={skin} side="tails" />
             </div>
           </div>
         </motion.div>

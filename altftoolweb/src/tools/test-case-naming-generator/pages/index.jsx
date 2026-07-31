@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, FlaskConical, Plus, RotateCcw, Trash2 } from "lucide-react";
 
-import { CASINGS, CONVENTIONS, FRAMEWORKS, generateTestNames } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import { CASINGS, CONVENTIONS, FRAMEWORKS, generateTestNames, isScenarioUsable } from "../lib";
 
 const DEFAULT_UNIT = "verifyToken";
 const DEFAULT_SCENARIOS = [
@@ -29,7 +30,7 @@ export default function ToolHome() {
   const [casing, setCasing] = useState("sentence");
   const [scenarios, setScenarios] = useState(DEFAULT_SCENARIOS);
   const [nextId, setNextId] = useState(DEFAULT_SCENARIOS.length + 1);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () => generateTestNames({ unit, scenarios, convention, casing, framework }),
@@ -45,13 +46,7 @@ export default function ToolHome() {
 
   const copyResult = async () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    await copy("test-suite", summary, { label: "Test suite" });
   };
 
   const updateScenario = (id, field, value) => {
@@ -70,13 +65,19 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will discard your scenarios and settings and restore the defaults, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setUnit(DEFAULT_UNIT);
     setConvention("should");
     setFramework("jest");
     setCasing("sentence");
     setScenarios(DEFAULT_SCENARIOS);
     setNextId(DEFAULT_SCENARIOS.length + 1);
-    setCopied(false);
   };
 
   const activeConvention = CONVENTIONS.find((item) => item.id === convention);
@@ -199,6 +200,12 @@ export default function ToolHome() {
                   Remove
                 </button>
               </div>
+              {!isScenarioUsable(row) ? (
+                <p className="mt-1 text-xs font-medium text-[var(--warning-text)]">
+                  Needs both a When and a Then — this scenario will be skipped in the generated
+                  names below.
+                </p>
+              ) : null}
               <div className="grid gap-4">
                 <div>
                   <label className={LABEL} htmlFor={`tcn-given-${row.id}`}>
@@ -256,7 +263,7 @@ export default function ToolHome() {
 
       <section className={`mt-6 ${CARD}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div className="min-w-0">
+          <div className="min-w-0" aria-live="polite" role="status" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Suite file
             </p>
@@ -264,32 +271,45 @@ export default function ToolHome() {
               {ok ? result.fileName : DASH}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-              {ok ? `${result.cases.length} test name${result.cases.length === 1 ? "" : "s"} for ${result.framework.label}` : DASH}
+              {ok
+                ? `${result.cases.length} test name${result.cases.length === 1 ? "" : "s"} for ${result.framework.label}`
+                : DASH}
             </p>
+            {ok && result.droppedScenarios.length > 0 ? (
+              <p className="mt-1 text-sm font-medium text-[var(--warning-text)]">
+                Scenario{result.droppedScenarios.length === 1 ? "" : "s"}{" "}
+                {result.droppedScenarios.join(", ")}{" "}
+                {result.droppedScenarios.length === 1 ? "was" : "were"} skipped — missing a When or
+                a Then.
+              </p>
+            ) : null}
           </div>
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the generated test suite"
+              aria-label={isCopied("test-suite") ? "Copied" : "Copy the generated test suite"}
               className={GHOST_BTN}
               disabled={!ok}
             >
-              {copied ? (
+              {isCopied("test-suite") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("test-suite") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset the generator" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {(ok ? result.cases : []).map((item, index) => (
             <div key={item.identifier + index} className="py-3">
               <dt className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

@@ -61,12 +61,16 @@ export const RELATIONSHIPS = [
     id: "mother",
     label: "Mother",
     register: "respectful",
+    // Telugu greets a parent as "Dear Mom," not by given name — the name field
+    // has no placeholder to fill for this relationship.
+    usesName: false,
     salutation: { native: "ప్రియమైన అమ్మా,", roman: "Priyamaina ammā," },
   },
   {
     id: "father",
     label: "Father",
     register: "respectful",
+    usesName: false,
     salutation: { native: "ప్రియమైన నాన్నా,", roman: "Priyamaina nānnā," },
   },
   {
@@ -97,6 +101,8 @@ export const RELATIONSHIPS = [
     id: "teacher",
     label: "Teacher",
     register: "respectful",
+    // Addressed by the respectful "Teacher" title rather than a given name.
+    usesName: false,
     salutation: { native: "గౌరవనీయులైన గురువుగారూ,", roman: "Gauravanīyulaina guruvugārū," },
   },
 ];

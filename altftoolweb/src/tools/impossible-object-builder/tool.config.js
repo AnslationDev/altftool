@@ -3,7 +3,7 @@ const toolConfig = {
   name: "Impossible Object Builder",
   category: ["Design & Color"],
   description:
-    "An interactive visual editor to create mathematically impossible optical illusion objects and 3D geometric structures.",
+    "Generate a Penrose triangle, impossible rectangle or endless staircase as an SVG, and tune the camera angle to see exactly why the illusion holds — or breaks.",
   icon: "boxes",
   iconColor: "text-[var(--primary)]",
   tags: [

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, UserRound } from "lucide-react";
 
 import { PRONOUNS, VOICES, buildBios } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const INPUT =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -34,7 +35,7 @@ const DEFAULTS = {
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState("");
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const setField = (key) => (event) =>
     setForm((prev) => ({ ...prev, [key]: event.target.value }));
@@ -42,20 +43,16 @@ export default function ToolHome() {
   const result = useMemo(() => buildBios(form), [form]);
   const failed = Boolean(result.error);
 
-  const copy = async (what, text) => {
-    if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(what);
-      setTimeout(() => setCopied(""), 1500);
-    } catch {
-      setCopied("");
-    }
-  };
-
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your name, role and bio details with the demo example and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setForm(DEFAULTS);
-    setCopied("");
+    resetCopyState();
   };
 
   const allBios = failed
@@ -174,7 +171,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Bio checks passed
             </p>
@@ -190,22 +187,25 @@ export default function ToolHome() {
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
-              onClick={() => copy("all", allBios)}
-              aria-label="Copy all three bio versions"
+              onClick={() => copy("all", allBios, { label: "all three bio versions" })}
+              aria-label={isCopied("all") ? "Copied all three bio versions to clipboard" : "Copy all three bio versions"}
               className={GHOST_BTN}
               disabled={failed}
             >
-              {copied === "all" ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied === "all" ? "Copied!" : "Copy result"}
+              {isCopied("all") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+              {isCopied("all") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {(failed
             ? [["50-word version", DASH], ["100-word version", DASH], ["250-word version", DASH]]
             : result.bios.map((bio) => [
@@ -227,7 +227,7 @@ export default function ToolHome() {
 
       {!failed && (
         <>
-          <section className="mt-6 space-y-4">
+          <section className="mt-6 space-y-4" aria-live="polite" aria-atomic="false">
             {result.bios.map((bio) => (
               <article key={bio.target} className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
                 <div className="flex flex-wrap items-start justify-between gap-3">
@@ -240,12 +240,12 @@ export default function ToolHome() {
                   </div>
                   <button
                     type="button"
-                    onClick={() => copy(String(bio.target), bio.text)}
-                    aria-label={`Copy the ${bio.target} word bio`}
+                    onClick={() => copy(String(bio.target), bio.text, { label: `the ${bio.target} word bio` })}
+                    aria-label={isCopied(String(bio.target)) ? `Copied the ${bio.target} word bio to clipboard` : `Copy the ${bio.target} word bio`}
                     className={GHOST_BTN}
                   >
-                    {copied === String(bio.target) ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-                    {copied === String(bio.target) ? "Copied!" : "Copy"}
+                    {isCopied(String(bio.target)) ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+                    {isCopied(String(bio.target)) ? "Copied!" : "Copy"}
                   </button>
                 </div>
                 <p className="mt-3 whitespace-pre-wrap break-words rounded-md border border-[var(--border)] bg-[var(--background)] p-3 text-sm leading-6">

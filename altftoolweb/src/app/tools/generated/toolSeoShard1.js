@@ -7439,7 +7439,7 @@ export default {
   "benefits": [
     [
       "Safety-first ordering",
-      "Self-harm, fraud and complaint topics outrank cost triggers, and the self-harm rule can never be switched off."
+      "Sensitive-topic rules outrank cost triggers, and the self-harm/safety rule can never be switched off; fraud and formal-complaint rules are on by default but stay optional checkboxes."
     ],
     [
       "Grounded defaults",
@@ -7453,7 +7453,7 @@ export default {
   "faqs": [
     [
       "When should a chatbot escalate to a human agent?",
-      "At minimum: immediately when the user explicitly asks for a human, after two consecutive failed attempts to understand the same request, when intent confidence is too low to act safely on a consequential action, and always for sensitive topics like self-harm, fraud or formal complaints. High-value transactions and strongly negative sentiment are common additional triggers — this planner turns each into an ordered rule."
+      "At minimum: immediately when the user explicitly asks for a human, after two consecutive failed attempts to understand the same request, when intent confidence is too low to act safely on a consequential action, and always for self-harm, threats or abuse — that rule can never be turned off. Legal threats, formal complaints, fraud and other sensitive topics are strongly recommended additional triggers, and this planner turns each checked one into an ordered rule, but they stay optional so you can match your own escalation policy."
     ],
     [
       "What is a good confidence threshold for chatbot escalation?",

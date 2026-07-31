@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Flower2, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   NAME_MAX_LENGTH,
   OCCASIONS,
@@ -42,7 +43,8 @@ export default function ToolHome() {
   const [recipientName, setRecipientName] = useState(DEFAULTS.recipientName);
   const [senderName, setSenderName] = useState(DEFAULTS.senderName);
   const [selectedId, setSelectedId] = useState("");
-  const [copiedId, setCopiedId] = useState("");
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -63,15 +65,9 @@ export default function ToolHome() {
 
   const occasionNote = (OCCASIONS.find((item) => item.id === occasionId) || {}).note || "";
 
-  const copyText = async (id, text) => {
+  const copyText = (id, text, label) => {
     if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedId(id);
-      setTimeout(() => setCopiedId(""), 1500);
-    } catch {
-      setCopiedId("");
-    }
+    copyToClipboard(id, text, { label });
   };
 
   const reset = () => {
@@ -82,7 +78,7 @@ export default function ToolHome() {
     setRecipientName(DEFAULTS.recipientName);
     setSenderName(DEFAULTS.senderName);
     setSelectedId("");
-    setCopiedId("");
+    resetCopyState();
   };
 
   return (
@@ -236,16 +232,22 @@ export default function ToolHome() {
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
-              onClick={() => copyText("featured", featured ? featured.message : "")}
-              aria-label="Copy the selected Bengali new year greeting"
+              onClick={() =>
+                copyText("featured", featured ? featured.message : "", "Bengali new year greeting")
+              }
+              aria-label={
+                isCopied("featured")
+                  ? "Copied the selected Bengali new year greeting"
+                  : "Copy the selected Bengali new year greeting"
+              }
               className={GHOST_BTN}
             >
-              {copiedId === "featured" ? (
+              {isCopied("featured") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copiedId === "featured" ? "Copied!" : "Copy greeting"}
+              {isCopied("featured") ? "Copied!" : "Copy greeting"}
             </button>
             <button
               type="button"
@@ -258,6 +260,9 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
 
         <p className="mt-5 whitespace-pre-line rounded-lg bg-[var(--muted)] p-4 text-xl leading-relaxed">
           {featured ? featured.message : DASH}
@@ -317,11 +322,17 @@ export default function ToolHome() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => copyText(item.id, item.message)}
-                    aria-label={`Copy this ${item.toneLabel.toLowerCase()} greeting`}
+                    onClick={() =>
+                      copyText(item.id, item.message, `${item.toneLabel.toLowerCase()} greeting`)
+                    }
+                    aria-label={
+                      isCopied(item.id)
+                        ? `Copied this ${item.toneLabel.toLowerCase()} greeting`
+                        : `Copy this ${item.toneLabel.toLowerCase()} greeting`
+                    }
                     className={CHIP_BTN}
                   >
-                    {copiedId === item.id ? "Copied!" : "Copy"}
+                    {isCopied(item.id) ? "Copied!" : "Copy"}
                   </button>
                 </div>
               </li>
@@ -332,8 +343,11 @@ export default function ToolHome() {
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
         Roman spellings of Bengali words vary by region and habit — adjust them to the spelling your
-        family uses. SMS lengths follow the 3GPP 140-byte payload rule, so Bengali script is billed
-        at 70 characters per part while plain Roman text gets 160.
+        family uses. SMS lengths follow the 3GPP 140-byte payload rule: 70 characters per part in the
+        UCS-2 alphabet, or up to 160 in the 7-bit GSM alphabet. Plain ASCII Roman text without emoji
+        or special punctuation (such as an em dash) fits GSM-7 and gets 160; an added em dash
+        signature or an emoji in the greeting pushes that message to UCS-2 and 70 — check the
+        &quot;SMS alphabet&quot; row above for the greeting you send.
       </p>
     </main>
   );

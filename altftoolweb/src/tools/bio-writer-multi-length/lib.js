@@ -80,6 +80,76 @@ export function stripLeadingSubject(text) {
     : "";
 }
 
+/** Pronouns that pair with the base/plural verb form ("I train", "they train"). */
+const PLURAL_FORM_SUBJECTS = new Set(["i", "they", "we"]);
+
+/**
+ * Split a leading subject pronoun off free text, same as stripLeadingSubject,
+ * but also reports which pronoun was removed (or null) so the caller can tell
+ * whether the sentence was originally written for a singular ("she"/"he") or
+ * plural/base ("I"/"they"/"we") subject.
+ */
+function splitLeadingSubject(text) {
+  if (typeof text !== "string") return { subject: null, rest: "" };
+  const match = /^(i|he|she|they|we)\s+/i.exec(text);
+  if (!match) return { subject: null, rest: text.trim() };
+  return { subject: match[1].toLowerCase(), rest: text.slice(match[0].length).trim() };
+}
+
+const IRREGULAR_VERB_FORMS = [
+  ["is", "are"],
+  ["was", "were"],
+  ["has", "have"],
+  ["does", "do"],
+  ["goes", "go"],
+];
+
+/** "trains" -> "train", "has" -> "have", "carries" -> "carry" (3rd-person-singular -> plural/base). */
+function toBaseVerbForm(word) {
+  const lower = word.toLowerCase();
+  for (const [singular, base] of IRREGULAR_VERB_FORMS) {
+    if (lower === singular) return matchCase(word, base);
+  }
+  if (/ies$/i.test(word)) return matchCase(word, word.slice(0, -3) + "y");
+  if (/(ches|shes|xes|zes|sses)$/i.test(word)) return matchCase(word, word.slice(0, -2));
+  if (/s$/i.test(word) && !/ss$/i.test(word)) return matchCase(word, word.slice(0, -1));
+  return word;
+}
+
+/** "train" -> "trains", "have" -> "has", "carry" -> "carries" (plural/base -> 3rd-person-singular). */
+function toSingularVerbForm(word) {
+  const lower = word.toLowerCase();
+  for (const [singular, base] of IRREGULAR_VERB_FORMS) {
+    if (lower === base) return matchCase(word, singular);
+  }
+  if (/[^aeiou]y$/i.test(word)) return matchCase(word, word.slice(0, -1) + "ies");
+  if (/(s|x|z|ch|sh)$/i.test(word)) return matchCase(word, `${word}es`);
+  return matchCase(word, `${word}s`);
+}
+
+function matchCase(original, replacement) {
+  return original.charAt(0) === original.charAt(0).toUpperCase()
+    ? replacement.charAt(0).toUpperCase() + replacement.slice(1)
+    : replacement;
+}
+
+/**
+ * Re-conjugate the verb leading a free-text clause so it agrees with a new
+ * subject's number, e.g. "trains hard" (written for "she") becomes
+ * "train hard" when the subject becomes "they". Only the first word (the
+ * main verb tied directly to the subject) is touched — arbitrary free text
+ * can't be reliably re-conjugated further without real grammatical parsing,
+ * but the leading verb is the one directly next to the subject pronoun and
+ * is what actually reads as broken ("they trains") when left alone.
+ */
+function reconjugateLeadingVerb(rest, wantPlural) {
+  const match = /^(\S+)(\s*)([\s\S]*)$/.exec(rest);
+  if (!match) return rest;
+  const [, verb, gap, remainder] = match;
+  const fixed = wantPlural ? toBaseVerbForm(verb) : toSingularVerbForm(verb);
+  return `${fixed}${gap}${remainder}`;
+}
+
 export function joinList(items) {
   if (!Array.isArray(items) || items.length === 0) return "";
   if (items.length === 1) return items[0];
@@ -154,9 +224,20 @@ function buildSentences(input) {
         )
       : "";
 
-  const personalSentence = personal
-    ? sentence(`Away from work, ${subject} ${stripStop(lowerFirst(stripLeadingSubject(personal)))}`)
-    : "";
+  // The free-text "personal" field may have been written with its own
+  // subject in mind (e.g. "she trains..."). If that subject's number
+  // (singular "he"/"she" vs. plural/base "I"/"they"/"we") differs from the
+  // subject this bio is actually using, the leading verb is re-conjugated so
+  // the swap doesn't produce "they trains" / "she train".
+  const { subject: personalSubjectWord, rest: personalRest } = splitLeadingSubject(personal);
+  let personalBody = stripStop(lowerFirst(personalRest));
+  if (personalSubjectWord) {
+    const personalWasPlural = PLURAL_FORM_SUBJECTS.has(personalSubjectWord);
+    if (personalWasPlural !== plural) {
+      personalBody = reconjugateLeadingVerb(personalBody, plural);
+    }
+  }
+  const personalSentence = personal ? sentence(`Away from work, ${subject} ${personalBody}`) : "";
 
   const ctaSentence = cta ? sentence(cta) : "";
 
@@ -174,6 +255,44 @@ function buildSentences(input) {
 
 function lowerFirst(text) {
   return text ? text.charAt(0).toLowerCase() + text.slice(1) : "";
+}
+
+/**
+ * Resume-filler adjectives that describe the person rather than naming a
+ * role, e.g. "passionate results-driven visionary" — exactly the pattern
+ * this tool's own FAQ (seo.js) tells writers to avoid. Checked against the
+ * first word of the role field, since that's the word a reader hits first.
+ */
+const FILLER_OPENER_ADJECTIVES = new Set([
+  "passionate",
+  "results-driven",
+  "driven",
+  "dynamic",
+  "innovative",
+  "visionary",
+  "dedicated",
+  "proven",
+  "seasoned",
+  "motivated",
+  "ambitious",
+  "strategic",
+  "creative",
+  "versatile",
+  "accomplished",
+  "skilled",
+  "experienced",
+  "talented",
+  "enthusiastic",
+  "energetic",
+  "detail-oriented",
+  "goal-oriented",
+  "hardworking",
+  "self-motivated",
+]);
+
+function opensWithFillerAdjective(role) {
+  const firstWord = clean(role).toLowerCase().split(/\s+/)[0] || "";
+  return FILLER_OPENER_ADJECTIVES.has(firstWord);
 }
 
 /**
@@ -217,7 +336,12 @@ export function buildBios(input = {}) {
     ],
     250: [
       parts.opener,
-      parts.audienceSentence,
+      // specialismDetail already restates the audience ("...useful to
+      // {audience}") whenever both specialism and audience are set, so
+      // audienceSentence is dropped here to avoid naming the same audience
+      // twice in one paragraph. When there's no specialism, specialismDetail
+      // is empty and audienceSentence is the only mention.
+      parts.specialismDetail ? "" : parts.audienceSentence,
       parts.headline,
       parts.achievementsSentence,
       parts.specialismDetail,
@@ -243,9 +367,10 @@ export function buildBios(input = {}) {
     };
   }).filter((bio) => bio.text.length > 0);
 
-  if (bios.length === 0) {
-    return { error: "Not enough detail to build a bio — add at least one achievement." };
-  }
+  // name and role are already required above, and the 50-word composition
+  // is built from them alone (opener + optional headline/cta), so `bios`
+  // always has at least that entry — this is a defensive check that can't
+  // actually fire, kept out rather than left in with a misleading message.
 
   const shortest = bios[0];
   const platformFit = PLATFORM_LIMITS.map((platform) => ({
@@ -254,13 +379,16 @@ export function buildBios(input = {}) {
     over: Math.max(0, shortest.charCount - platform.limit),
   }));
 
+  const xFits = platformFit.find((platform) => platform.id === "x")?.fits ?? false;
+  const instagramFits = platformFit.find((platform) => platform.id === "instagram")?.fits ?? false;
+
   const checklist = [
-    { label: "Opens with a role, not an adjective", ok: true },
+    { label: "Opens with a role, not an adjective", ok: !opensWithFillerAdjective(role) },
     { label: "Names a specific audience", ok: Boolean(parts.audienceSentence) },
     { label: "Includes at least one achievement", ok: achievements.length > 0 },
     { label: "Includes a second achievement for the long bio", ok: achievements.length > 1 },
     { label: "Ends with a call to action", ok: Boolean(parts.ctaSentence) },
-    { label: "50-word version fits an X or Instagram bio", ok: shortest.charCount <= 160 },
+    { label: "50-word version fits an X or Instagram bio", ok: xFits && instagramFits },
     { label: "Every version fits its word limit", ok: bios.every((bio) => bio.fitsLimit) },
   ];
 

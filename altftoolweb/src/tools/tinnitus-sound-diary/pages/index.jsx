@@ -3,8 +3,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Check, Copy, Ear, RotateCcw, Trash2 } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   EAR_OPTIONS,
+  MIN_DAYS_PER_TRIGGER_GROUP,
   RED_FLAGS,
   SCALE_MAX,
   SCALE_MIN,
@@ -13,6 +16,7 @@ import {
   checkRedFlags,
   diaryToText,
   summariseDiary,
+  todayIso,
   triggerAssociations,
   validateEntry,
 } from "../lib";
@@ -41,6 +45,18 @@ const EXAMPLE_ROWS = [
 
 const EXAMPLE_ENTRIES = EXAMPLE_ROWS.map((row) => validateEntry(row)).filter((entry) => !entry.error);
 
+/** Which count(s) fall short of MIN_DAYS_PER_TRIGGER_GROUP, named accurately either way. */
+function describeInsufficientData(row) {
+  const parts = [];
+  if (row.withCount < MIN_DAYS_PER_TRIGGER_GROUP) {
+    parts.push(`${row.withCount} day${row.withCount === 1 ? "" : "s"} with it noted`);
+  }
+  if (row.withoutCount < MIN_DAYS_PER_TRIGGER_GROUP) {
+    parts.push(`${row.withoutCount} day${row.withoutCount === 1 ? "" : "s"} without it noted`);
+  }
+  return `${parts.join(", ")} — too few to compare`;
+}
+
 const BLANK_DRAFT = {
   date: "",
   loudness: "4",
@@ -53,13 +69,21 @@ const BLANK_DRAFT = {
 };
 
 export default function ToolHome() {
-  const [entries, setEntries] = useState(EXAMPLE_ENTRIES);
+  // `savedEntries` is the one and only source of truth for the user's real
+  // diary. `usingExamples` only controls what is *displayed* (a read-only
+  // preview of demo rows) - it never substitutes for or overwrites
+  // savedEntries, so previewing examples can no longer destroy real data
+  // (see addEntry/clearAll/removeEntry below, which all operate on
+  // savedEntries regardless of what is currently on screen).
+  const [savedEntries, setSavedEntries] = useState([]);
   const [usingExamples, setUsingExamples] = useState(true);
   const [draft, setDraft] = useState(BLANK_DRAFT);
   const [flags, setFlags] = useState({});
   const [formError, setFormError] = useState("");
-  const [copied, setCopied] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
+
+  const entries = usingExamples ? EXAMPLE_ENTRIES : savedEntries;
 
   useEffect(() => {
     let stored = null;
@@ -74,7 +98,7 @@ export default function ToolHome() {
         if (Array.isArray(parsed) && parsed.length > 0) {
           const clean = parsed.map((row) => validateEntry(row)).filter((entry) => !entry.error);
           if (clean.length > 0) {
-            setEntries(clean);
+            setSavedEntries(clean);
             setUsingExamples(false);
           }
         }
@@ -82,20 +106,18 @@ export default function ToolHome() {
         /* corrupted store: keep the examples */
       }
     }
-    const now = new Date();
-    const iso = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
-    setDraft((prev) => ({ ...prev, date: iso }));
+    setDraft((prev) => ({ ...prev, date: todayIso() }));
     setLoaded(true);
   }, []);
 
   useEffect(() => {
-    if (!loaded || usingExamples) return;
+    if (!loaded) return;
     try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(savedEntries));
     } catch {
       /* storage unavailable — the diary still works for this session */
     }
-  }, [entries, usingExamples, loaded]);
+  }, [savedEntries, loaded]);
 
   const summary = useMemo(() => summariseDiary(entries), [entries]);
   const associations = useMemo(() => triggerAssociations(entries), [entries]);
@@ -117,8 +139,10 @@ export default function ToolHome() {
       return;
     }
     setFormError("");
-    setEntries((prev) => {
-      const base = usingExamples ? [] : prev.filter((row) => row.date !== entry.date);
+    // Always builds on the real saved diary — never on whatever example
+    // rows might currently be previewed on screen.
+    setSavedEntries((prev) => {
+      const base = prev.filter((row) => row.date !== entry.date);
       return [...base, entry].sort((a, b) => a.dayNumber - b.dayNumber);
     });
     setUsingExamples(false);
@@ -126,22 +150,31 @@ export default function ToolHome() {
   };
 
   const removeEntry = (date) => {
-    setEntries((prev) => prev.filter((row) => row.date !== date));
+    setSavedEntries((prev) => prev.filter((row) => row.date !== date));
     setUsingExamples(false);
   };
 
   const clearAll = () => {
-    setEntries([]);
-    setUsingExamples(false);
-    try {
-      window.localStorage.removeItem(STORAGE_KEY);
-    } catch {
-      /* nothing to clear */
+    if (savedEntries.length === 0) {
+      // Nothing real to lose — either already empty or only the example
+      // preview is showing. No confirmation needed.
+      setUsingExamples(false);
+      return;
     }
+    if (
+      !window.confirm(
+        usingExamples
+          ? `You are previewing example data, but you still have ${savedEntries.length} real saved ${savedEntries.length === 1 ? "entry" : "entries"} underneath it. Delete them permanently? This cannot be undone.`
+          : "Delete every entry in your diary? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
+    setSavedEntries([]);
+    setUsingExamples(false);
   };
 
   const restoreExamples = () => {
-    setEntries(EXAMPLE_ENTRIES);
     setUsingExamples(true);
     setFormError("");
   };
@@ -155,15 +188,9 @@ export default function ToolHome() {
     }));
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (summary.error) return;
-    try {
-      await navigator.clipboard.writeText(diaryToText(entries, summary));
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("diary", diaryToText(entries, summary), { label: "Diary" });
   };
 
   const sorted = summary.error ? [] : summary.sorted.slice().reverse();
@@ -194,6 +221,7 @@ export default function ToolHome() {
               id="tsd-date"
               className={`mt-2 ${INPUT_CLASS}`}
               type="date"
+              max={todayIso()}
               value={draft.date}
               onChange={(event) => setDraft((prev) => ({ ...prev, date: event.target.value }))}
             />
@@ -329,28 +357,37 @@ export default function ToolHome() {
           <button type="button" onClick={addEntry} className={PRIMARY_BTN}>
             Save entry
           </button>
-          <button type="button" onClick={clearAll} className={GHOST_BTN} aria-label="Delete every entry">
+          <button type="button" onClick={clearAll} className={GHOST_BTN}>
             <Trash2 className="h-4 w-4" aria-hidden="true" />
             Clear diary
           </button>
-          {!usingExamples ? (
+          {usingExamples ? (
+            savedEntries.length > 0 ? (
+              <button type="button" onClick={() => setUsingExamples(false)} className={GHOST_BTN}>
+                <RotateCcw className="h-4 w-4" aria-hidden="true" />
+                Back to my diary
+              </button>
+            ) : null
+          ) : (
             <button type="button" onClick={restoreExamples} className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Show example data
             </button>
-          ) : null}
+          )}
         </div>
 
         {usingExamples ? (
           <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-xs leading-5 text-[var(--muted-foreground)]">
-            You are looking at example data so the summary has something to show. Saving your first
-            entry replaces it.
+            {savedEntries.length > 0
+              ? `You are previewing example data. Your ${savedEntries.length} saved ${savedEntries.length === 1 ? "entry is" : "entries are"} untouched — use "Back to my diary" to return to them.`
+              : "You are looking at example data so the summary has something to show. Saving your first entry switches to your own diary."}
           </p>
         ) : null}
       </section>
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
-        <div className="flex flex-wrap items-start justify-between gap-3">
+        <h2 className="text-base font-semibold">Diary summary</h2>
+        <div className="mt-4 flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Last 7 days, average loudness
@@ -368,13 +405,16 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the diary as text"
+              aria-label={isCopied("diary") ? "Copied diary as text" : "Copy diary as text"}
               className={GHOST_BTN}
               disabled={Boolean(summary.error)}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy diary"}
+              {isCopied("diary") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+              {isCopied("diary") ? "Copied!" : "Copy diary"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -455,7 +495,7 @@ export default function ToolHome() {
                       </>
                     ) : (
                       <td className="py-2 text-right text-[var(--muted-foreground)]" colSpan={3}>
-                        logged on {row.withCount} day{row.withCount === 1 ? "" : "s"} — too few to compare
+                        {describeInsufficientData(row)}
                       </td>
                     )}
                   </tr>

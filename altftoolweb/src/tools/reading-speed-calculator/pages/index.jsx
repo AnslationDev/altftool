@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useCallback, useRef, useEffect } from "react";
-import { BookOpen, Play, Pause, RotateCcw, TrendingUp, ChevronRight } from "lucide-react";
+import { BookOpen, Play, RotateCcw, TrendingUp, ChevronRight } from "lucide-react";
 
 const PASSAGES = [
   {
@@ -25,20 +25,34 @@ export default function ToolHome() {
   const [elapsed, setElapsed] = useState(0);
   const [wpm, setWpm] = useState(null);
   const [history, setHistory] = useState([]);
+  const [announcement, setAnnouncement] = useState("");
   const intervalRef = useRef(null);
   const passage = PASSAGES[passageIdx];
   const wordCount = passage.text.split(/\s+/).length;
 
+  const getLevel = (w) => {
+    if (w >= 500) return { label: "Speed Reader", color: "text-info" };
+    if (w >= 350) return { label: "Advanced", color: "text-success-text" };
+    if (w >= 250) return { label: "Average", color: "text-primary" };
+    if (w >= 150) return { label: "Below Average", color: "text-warning-text" };
+    return { label: "Beginner", color: "text-muted-foreground" };
+  };
+
   const startTest = useCallback(() => {
     setPhase("countdown");
     setCountdown(3);
+    setAnnouncement("Get ready. Reading starts in 3 seconds.");
     let c = 3;
-    const cdInt = setInterval(() => {
+    // Stored on intervalRef (not a local variable) from the moment it is
+    // created so reset()/unmount can always cancel whichever timer -
+    // countdown or reading - is currently running.
+    intervalRef.current = setInterval(() => {
       c--;
       if (c <= 0) {
-        clearInterval(cdInt);
+        clearInterval(intervalRef.current);
         setPhase("reading");
         setElapsed(0);
+        setAnnouncement('Reading started. Press "I Finished Reading" when you reach the end.');
         intervalRef.current = setInterval(() => setElapsed(e => e + 100), 100);
       } else {
         setCountdown(c);
@@ -47,12 +61,17 @@ export default function ToolHome() {
   }, []);
 
   const finish = useCallback(() => {
+    // Guard against a zero-elapsed click (e.g. the instant the "reading"
+    // phase begins, before the first 100ms tick lands) - dividing by zero
+    // would otherwise produce an "Infinity WPM" result saved into history.
+    if (elapsed <= 0) return;
     clearInterval(intervalRef.current);
     const mins = elapsed / 60000;
     const calculated = Math.round(wordCount / mins);
     setWpm(calculated);
     setHistory(h => [{ wpm: calculated, passage: passage.title, words: wordCount }, ...h].slice(0, 8));
     setPhase("result");
+    setAnnouncement(`Result ready: ${calculated} words per minute, ${getLevel(calculated).label}.`);
   }, [elapsed, wordCount, passage.title]);
 
   const reset = useCallback(() => {
@@ -61,17 +80,10 @@ export default function ToolHome() {
     setElapsed(0);
     setWpm(null);
     setCountdown(3);
+    setAnnouncement("");
   }, []);
 
   useEffect(() => () => clearInterval(intervalRef.current), []);
-
-  const getLevel = (w) => {
-    if (w >= 500) return { label: "Speed Reader", color: "text-purple-500" };
-    if (w >= 350) return { label: "Advanced", color: "text-emerald-500" };
-    if (w >= 250) return { label: "Average", color: "text-primary" };
-    if (w >= 150) return { label: "Below Average", color: "text-amber-500" };
-    return { label: "Beginner", color: "text-muted-foreground" };
-  };
 
   return (
     <div className="min-h-screen bg-background p-4 sm:p-6 lg:p-8">
@@ -92,6 +104,8 @@ export default function ToolHome() {
             </div>
           </div>
         </section>
+
+        <div className="sr-only" role="status" aria-live="polite">{announcement}</div>
 
         {/* Passage Selector */}
         {phase === "idle" && (
@@ -117,7 +131,7 @@ export default function ToolHome() {
           {phase === "idle" && (
             <div className="p-6">
               <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground mb-3">{passage.title}</p>
-              <p className="text-sm leading-relaxed text-muted-foreground blur-sm select-none">{passage.text}</p>
+              <p className="text-sm leading-relaxed text-muted-foreground blur-sm select-none" aria-hidden="true">{passage.text}</p>
               <p className="text-xs text-center text-primary font-semibold mt-4">Text will reveal when the test starts</p>
             </div>
           )}
@@ -154,7 +168,7 @@ export default function ToolHome() {
             </button>
           )}
           {phase === "reading" && (
-            <button onClick={finish} className="flex-1 rounded-xl bg-emerald-500 text-white py-3 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-emerald-600 transition-colors">
+            <button onClick={finish} disabled={elapsed <= 0} className="flex-1 rounded-xl bg-emerald-500 text-white py-3 font-semibold text-sm flex items-center justify-center gap-2 hover:bg-emerald-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
               <TrendingUp className="h-4 w-4" /> I Finished Reading
             </button>
           )}
@@ -191,7 +205,7 @@ export default function ToolHome() {
         <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
           <p className="text-xs font-bold uppercase tracking-widest text-primary mb-3 flex items-center gap-2"><BookOpen className="h-3.5 w-3.5" /> WPM Scale</p>
           <div className="space-y-2">
-            {[["< 150", "Beginner", "text-muted-foreground"], ["150–250", "Below Average", "text-amber-500"], ["250–350", "Average", "text-primary"], ["350–500", "Advanced", "text-emerald-500"], ["> 500", "Speed Reader", "text-purple-500"]].map(([r, l, c]) => (
+            {[["< 150", "Beginner", "text-muted-foreground"], ["150–250", "Below Average", "text-warning-text"], ["250–350", "Average", "text-primary"], ["350–500", "Advanced", "text-success-text"], ["> 500", "Speed Reader", "text-info"]].map(([r, l, c]) => (
               <div key={r} className="flex items-center justify-between text-xs">
                 <span className="font-mono text-muted-foreground">{r} WPM</span>
                 <span className={`font-semibold ${c}`}>{l}</span>

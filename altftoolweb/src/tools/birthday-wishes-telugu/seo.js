@@ -15,7 +15,7 @@ const seo = {
   faqs: [
     [
       "How do you say happy birthday in Telugu?",
-      "పుట్టినరోజు శుభాకాంక్షలు (puṭṭinarōju śubhākāṅkṣalu) is the everyday phrase — literally 'birthday good wishes'. జన్మదిన శుభాకాంక్షలు is the more formal Sanskrit-derived version used on cards and in printed messages.",
+      "పుట్టినరోజు శుభాకాంక్షలు (puṭṭinarōju śubhākāṅkṣalu) is the everyday phrase — literally 'birthday good wishes'. జన్మదిన శుభాకాంక్షలు is a Sanskrit-derived alternative also seen on cards and in printed messages; in this tool it appears in a couple of the 'Warm and personal' wordings, while the 'Formal and respectful' tone sticks with పుట్టినరోజు.",
     ],
     [
       "Should I use నువ్వు or మీరు in a Telugu birthday message?",

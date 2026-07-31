@@ -59,6 +59,13 @@ export default function App() {
         }
     }, [updateCode, runAnalysis]);
 
+    const handleReset = useCallback(() => {
+        if (!window.confirm('Reset the editor back to the default sample code? Anything you typed will be replaced.')) {
+            return;
+        }
+        updateCode(SAMPLES[1].code);
+    }, [updateCode]);
+
     const handleExport = useCallback(async (format) => {
         setIsExporting(true);
         try {
@@ -108,7 +115,7 @@ export default function App() {
                         Analyze your code structure and complexity in real-time with our full-screen studio editor.
                     </motion.p>
 
-                    <Button variant="secondary" icon={RotateCcw} onClick={() => runAnalysis()} pill>
+                    <Button variant="secondary" icon={RotateCcw} onClick={handleReset} pill>
                         Reset
                     </Button>
                 </div>
@@ -122,6 +129,15 @@ export default function App() {
 
 
                             <div className="flex h-[700px]"> {/* Increased height */}
+                                {/* Complexity Heatmap - per-line complexity at a glance */}
+                                <div className="hidden sm:block w-6 shrink-0 border-r border-(--border)">
+                                    <HeatmapOverlay
+                                        lineCount={lineCount}
+                                        lineComplexityMap={analysis?.lineMap}
+                                        activeLine={activeLine}
+                                        onLineClick={handleLineClick}
+                                    />
+                                </div>
                                 {/* Main Editor */}
                                 <div className="flex-1 overflow-hidden">
                                     <CodeEditor

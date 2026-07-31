@@ -286,7 +286,10 @@ export function buildArrow(options = {}) {
   }
 
   const dashArray = dashed ? `${round(stroke * 3)} ${round(stroke * 2.5)}` : null;
-  const peak = quadPoint(p0, control, p2, 0.5);
+  // The length of the actual drawn/copied shaft path (shaftD), after head
+  // trimming — distinct from arcLength, which is the full chord-to-chord
+  // curve length before any trimming.
+  const shaftLength = Math.max(0, arcLength - endTrim - startTrim);
 
   return {
     width: w,
@@ -298,10 +301,10 @@ export function buildArrow(options = {}) {
     dashArray,
     strokeWidth: round(stroke),
     control: { x: round(control.x), y: round(control.y) },
-    peak: { x: round(peak.x), y: round(peak.y) },
     bowHeight: round(Math.abs(bow)),
     chordLength: round(chord),
     arcLength: round(arcLength),
+    shaftLength: round(shaftLength),
     endAngleDeg: round(endAngleDeg, 1),
     startAngleDeg: round(startAngleDeg, 1),
     headStyle: style,

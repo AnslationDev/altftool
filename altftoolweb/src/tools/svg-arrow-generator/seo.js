@@ -10,7 +10,7 @@ const seo = {
   benefits: [
     ["Tangent-accurate heads", "The arrowhead follows the curve's derivative at the tip, so it never looks glued on at the wrong angle."],
     ["Theme-safe output", "currentColor lets one arrow inherit the surrounding text colour instead of shipping a baked-in hex value."],
-    ["Editable by hand", "Output is a plain path plus one head element — easy to tweak in any text editor or paste into JSX."],
+    ["Editable by hand", "Output is a plain path plus a head element per end (one, or two if you turn on double-headed) — easy to tweak in any text editor or paste into JSX."],
   ],
   faqs: [
     [

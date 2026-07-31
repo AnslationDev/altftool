@@ -149,52 +149,66 @@ export function buildIncidentChecklist({
     return { error: "Choose a severity level so the checklist can scale its escalation steps." };
   }
 
-  const detection = [...severity.escalation, ...DETECTION_BASE, ...incidentType.analysis];
-  const containment = [...incidentType.containment];
-  const postIncident = [...POST_INCIDENT_BASE];
+  // Item ids are derived from what the item *is* (its source and position
+  // within that fixed source), not from a running counter over the merged
+  // list. That keeps an item's id — and therefore its checked state — stable
+  // across unrelated form changes: toggling `piiInvolved` only adds/removes
+  // the `pii-*` items instead of renumbering every item that happens to sit
+  // after it.
+  const withIds = (prefix, texts) => texts.map((text, index) => ({ id: `${prefix}-${index}`, text }));
+
+  const detection = [
+    ...withIds(`sev-${severityId}-esc`, severity.escalation),
+    ...withIds("det-base", DETECTION_BASE),
+    ...withIds(`${incidentTypeId}-analysis`, incidentType.analysis),
+  ];
+  const containment = [...withIds(`${incidentTypeId}-containment`, incidentType.containment)];
+  const postIncident = [...withIds("post-base", POST_INCIDENT_BASE)];
 
   if (userFacing) {
-    containment.push(
-      "Prepare user-facing communication: what happened, what you did, and what users should do — reviewed by legal before sending.",
-    );
+    containment.push({
+      id: "userfacing-comms",
+      text: "Prepare user-facing communication: what happened, what you did, and what users should do — reviewed by legal before sending.",
+    });
   }
   if (piiInvolved) {
-    detection.push(
-      "Treat this as a potential personal data breach: involve your DPO/privacy lead now and start the breach assessment record.",
-    );
-    containment.push(
-      `Assess notification duties: under GDPR Article 33, notifiable breaches must reach the supervisory authority within ${GDPR_BREACH_NOTIFICATION_HOURS} hours of awareness; other regimes (US state laws, sector rules) have their own clocks.`,
-    );
+    detection.push({
+      id: "pii-detection",
+      text: "Treat this as a potential personal data breach: involve your DPO/privacy lead now and start the breach assessment record.",
+    });
+    containment.push({
+      id: "pii-containment",
+      text: `Assess notification duties: under GDPR Article 33, notifiable breaches must reach the supervisory authority within ${GDPR_BREACH_NOTIFICATION_HOURS} hours of awareness; other regimes (US state laws, sector rules) have their own clocks.`,
+    });
   }
   if (thirdPartyModel) {
-    detection.push(
-      "Notify the model/API vendor through their security contact; request their logs for the affected window and any known-issue advisories.",
-    );
-    postIncident.push(
-      "Review the vendor contract for incident-notification and liability clauses; log a formal vendor issue if their control failed.",
-    );
+    detection.push({
+      id: "vendor-detection",
+      text: "Notify the model/API vendor through their security contact; request their logs for the affected window and any known-issue advisories.",
+    });
+    postIncident.push({
+      id: "vendor-post",
+      text: "Review the vendor contract for incident-notification and liability clauses; log a formal vendor issue if their control failed.",
+    });
   }
 
-  const phaseItemTexts = {
-    preparation: PREPARATION_BASE,
+  const phaseItems = {
+    preparation: withIds("prep", PREPARATION_BASE),
     detection,
     containment,
     "post-incident": postIncident,
   };
 
-  let counter = 0;
-  const phases = PHASE_ORDER.map((phase) => ({
-    id: phase.id,
-    label: phase.label,
-    items: phaseItemTexts[phase.id].map((text) => {
-      counter += 1;
-      return { id: `item-${counter}`, text };
-    }),
-  }));
+  let totalItems = 0;
+  const phases = PHASE_ORDER.map((phase) => {
+    const items = phaseItems[phase.id];
+    totalItems += items.length;
+    return { id: phase.id, label: phase.label, items };
+  });
 
   return {
     phases,
-    totalItems: counter,
+    totalItems,
     incidentTypeLabel: incidentType.label,
     severityLabel: severity.label,
   };

@@ -14600,7 +14600,7 @@ export const toolMetaMap = {
   },
   "impossible-object-builder": {
     "name": "Impossible Object Builder",
-    "description": "An interactive visual editor to create mathematically impossible optical illusion objects and 3D geometric structures.",
+    "description": "Generate a Penrose triangle, impossible rectangle or endless staircase as an SVG, and tune the camera angle to see exactly why the illusion holds — or breaks.",
     "category": "Design & Color",
     "icon": "boxes",
     "iconColor": "text-[var(--primary)]"
@@ -23676,7 +23676,7 @@ export const toolMetaMap = {
   },
   "reading-speed-calculator": {
     "name": "Reading Speed Calculator",
-    "description": "Calculate reading speed, reading time, and words per minute from pasted text or a timed reading test.",
+    "description": "Measure your reading speed and words per minute with a timed reading test using built-in passages.",
     "category": "Education & Science",
     "topics": [
       "Education"

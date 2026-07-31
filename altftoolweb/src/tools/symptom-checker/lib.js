@@ -222,10 +222,6 @@ export const SYMPTOMS = [
 
 const SYMPTOM_BY_ID = new Map(SYMPTOMS.map((item) => [item.id, item]));
 
-export function getSymptom(id) {
-  return SYMPTOM_BY_ID.get(id) || null;
-}
-
 export function symptomsInGroup(groupId) {
   return SYMPTOMS.filter((item) => item.group === groupId);
 }
@@ -241,7 +237,9 @@ export function symptomsInGroup(groupId) {
  *   risk            every listed risk factor is ticked
  *   minSeverity     overall severity is at least this band
  *   minDurationDays / maxDurationDays   inclusive bounds on how long it has run
- *   minAgeYears / maxAgeYears           inclusive bounds on age
+ *   minAgeYears     inclusive lower bound on age (age === minAgeYears matches)
+ *   maxAgeYears     exclusive upper bound on age (age === maxAgeYears does NOT
+ *                   match — e.g. maxAgeYears: 5 means "under the age of five")
  */
 export const RED_FLAG_RULES = [
   {

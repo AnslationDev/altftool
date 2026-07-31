@@ -372,7 +372,14 @@ export function buildWishes({
 
     let message = nativeBlock;
     if (script === "roman") message = romanBlock;
-    if (script === "both") message = `${nativeBlock}\n\n${romanBlock}`;
+    // "Bengali + Roman" shows both wish bodies, but the salutation and
+    // signature should each appear once — concatenating the two complete
+    // blocks (as before) greeted and signed off twice in the same message.
+    if (script === "both") {
+      const openingBlock = joinLines([nativeSalutation, wish.native]);
+      const closingLines = joinLines([wish.roman, signature]);
+      message = closingLines ? `${openingBlock}\n\n${closingLines}` : openingBlock;
+    }
 
     return {
       id: wish.id,

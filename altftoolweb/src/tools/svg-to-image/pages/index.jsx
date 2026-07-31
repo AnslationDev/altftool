@@ -115,6 +115,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset to the sample SVG? This will replace your pasted markup and settings and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setMarkup(SAMPLE);
     setScale("2");
     setFormat("image/png");

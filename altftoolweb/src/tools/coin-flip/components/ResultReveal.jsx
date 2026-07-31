@@ -4,36 +4,19 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sparkles, Trophy, CheckCircle2, ShieldCheck, Coins } from "lucide-react";
 import confetti from "canvas-confetti";
+import { getSkin } from "../utils/coinSkins";
+import RealCoinArt from "./RealCoinArt";
 
+// Delegates to RealCoinArt (the same component the big 3D coin uses) so the
+// result badge always shows the currently selected skin's own art/symbol
+// instead of duplicating — and drifting from — that logic with its own
+// hardcoded ruble fallback.
 function MiniResultCoinImage({ isHeads, skinId }) {
-  const isUSD = skinId === "usdollar" || skinId === "usd";
-
-  let imgSrc = isHeads ? "/images/coin/ruble_heads.png" : "/images/coin/ruble_tails.png";
-  let altText = isHeads ? "Heads (Eagle)" : "Tails (5 РУБЛЕЙ)";
-  let imgScale = "scale-100";
-
-  if (isUSD) {
-    imgSrc = isHeads ? "/images/coin/usdollar_heads.jpg" : "/images/coin/usdollar_tails.jpg";
-    altText = isHeads ? "US Dollar Heads (1888 Liberty)" : "US Dollar Tails (Statue of Liberty $1)";
-    imgScale = isHeads ? "scale-[1.05]" : "scale-[1.18]";
-  }
-
-  const [hasError, setHasError] = useState(false);
+  const skin = getSkin(skinId);
 
   return (
     <div className="relative flex h-16 w-16 sm:h-20 sm:w-20 shrink-0 items-center justify-center rounded-full overflow-hidden shadow-xl ring-2 ring-[var(--primary)]/30 bg-gradient-to-br from-amber-200 via-amber-400 to-amber-700 transition-transform hover:scale-105">
-      {!hasError ? (
-        <img
-          src={imgSrc}
-          alt={altText}
-          onError={() => setHasError(true)}
-          className={`h-full w-full object-cover rounded-full ${imgScale}`}
-        />
-      ) : (
-        <div className="flex h-full w-full items-center justify-center font-black text-xl text-white">
-          {isHeads ? "H" : "T"}
-        </div>
-      )}
+      <RealCoinArt skin={skin} side={isHeads ? "heads" : "tails"} />
       <div className="pointer-events-none absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/25 to-transparent" />
     </div>
   );
@@ -82,16 +65,46 @@ export default function ResultReveal({
 
   const isHeads = face === "heads";
   const isUSD = skinId === "usdollar" || skinId === "usd";
+  const skin = getSkin(skinId);
+  const isRuble = skinId === "rupee" || skin.type === "ruble";
 
   // Multi-coin stats calculation
   const headsCount = multiResults.filter((r) => r.face === "heads").length;
   const tailsCount = multiResults.length - headsCount;
 
-  const headsLabel = isUSD ? "Obverse • 1888 Liberty Head & 13 Stars" : "Obverse • Double-Headed Eagle & ПЯТЬ РУБЛЕЙ";
-  const tailsLabel = isUSD ? "Reverse • Statue of Liberty & $1 UNITED STATES" : "Reverse • 5 РУБЛЕЙ & Floral Motif";
+  // The two currency skins with real photographic art get their accurate,
+  // fully-descriptive labels; every other skin uses its own symbol/sub-text
+  // from coinSkins.js instead of defaulting to these ruble-specific strings.
+  const headsLabel = isUSD
+    ? "Obverse • 1888 Liberty Head & 13 Stars"
+    : isRuble
+      ? "Obverse • Double-Headed Eagle & ПЯТЬ РУБЛЕЙ"
+      : `Heads • ${skin.headsSymbol} ${skin.headsSub}`;
+  const tailsLabel = isUSD
+    ? "Reverse • Statue of Liberty & $1 UNITED STATES"
+    : isRuble
+      ? "Reverse • 5 РУБЛЕЙ & Floral Motif"
+      : `Tails • ${skin.tailsSymbol} ${skin.tailsSub}`;
+
+  const seriesWinnerText = series?.winner
+    ? ` ${series.winner === "heads" ? "Heads" : "Tails"} wins the series ${series.heads}-${series.tails}!`
+    : "";
+  const announcement = flipping
+    ? `Flipping ${coinCount > 1 ? `${coinCount} coins` : "the coin"}...`
+    : flippedThisSession
+      ? coinCount > 1
+        ? `Result: ${headsCount} heads, ${tailsCount} tails out of ${coinCount} coins.${seriesWinnerText}`
+        : `Result: ${isHeads ? "Heads" : "Tails"}.${seriesWinnerText}`
+      : "";
 
   return (
     <div className="relative my-4 flex flex-col items-center justify-center min-h-[100px] w-full max-w-xl">
+      {/* Screen-reader-only status announcement — the flip result and series
+          outcome are otherwise conveyed purely through the visual card
+          below, with no other feedback for assistive technology. */}
+      <span className="sr-only" role="status" aria-live="polite">
+        {announcement}
+      </span>
       {/* Dynamic Light Flash Background Glow */}
       <AnimatePresence>
         {showFlash && !reducedMotion && (

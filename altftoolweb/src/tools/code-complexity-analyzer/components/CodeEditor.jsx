@@ -111,6 +111,7 @@ export default function CodeEditor({
     const lineNumberRef = useRef(null);
     const [cursorLine, setCursorLine] = useState(1);
     const [isCopied, setIsCopied] = useState(false);
+    const [isFullscreen, setIsFullscreen] = useState(false);
 
     const lines = useMemo(() => code.split('\n'), [code]);
 
@@ -155,6 +156,19 @@ export default function CodeEditor({
         setTimeout(() => setIsCopied(false), 2000);
     }, [code]);
 
+    const toggleFullscreen = useCallback(() => {
+        setIsFullscreen((prev) => !prev);
+    }, []);
+
+    useEffect(() => {
+        if (!isFullscreen) return;
+        const handleKeyDown = (e) => {
+            if (e.key === 'Escape') setIsFullscreen(false);
+        };
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isFullscreen]);
+
     useEffect(() => {
         if (activeLine && textareaRef.current) {
             const lineHeight = 24;
@@ -167,8 +181,14 @@ export default function CodeEditor({
     }, [activeLine]);
 
     return (
-        <div className="relative flex flex-col h-full bg-(--card) rounded-2xl overflow-hidden border border-(--border) shadow-md">
-            
+        <div
+            className={
+                isFullscreen
+                    ? "fixed inset-0 z-50 flex flex-col h-screen w-screen bg-(--card) overflow-hidden border border-(--border) shadow-2xl"
+                    : "relative flex flex-col h-full bg-(--card) rounded-2xl overflow-hidden border border-(--border) shadow-md"
+            }
+        >
+
             {/* Editor Top Bar - Professional Minimalist */}
             <div className="flex items-center justify-between px-5 py-2.5 bg-(--muted) border-b border-(--border)">
                 <div className="flex items-center gap-4 flex-1">
@@ -221,8 +241,18 @@ export default function CodeEditor({
                         <span className="text-(--foreground)">{isCopied ? 'Copied' : 'Copy'}</span>
                     </button>
                     
-                    <button className="p-2 hover:bg-(--background) border border-transparent hover:border-(--border) rounded-xl transition-all group shadow-none hover:shadow-sm">
-                        <Maximize2 className="w-3.5 h-3.5 text-(--muted-foreground) group-hover:text-(--foreground)" />
+                    <button
+                        type="button"
+                        onClick={toggleFullscreen}
+                        aria-label={isFullscreen ? "Exit full-screen editor" : "Enter full-screen editor"}
+                        aria-pressed={isFullscreen}
+                        className="p-2 hover:bg-(--background) border border-transparent hover:border-(--border) rounded-xl transition-all group shadow-none hover:shadow-sm"
+                    >
+                        {isFullscreen ? (
+                            <Minimize2 className="w-3.5 h-3.5 text-(--muted-foreground) group-hover:text-(--foreground)" />
+                        ) : (
+                            <Maximize2 className="w-3.5 h-3.5 text-(--muted-foreground) group-hover:text-(--foreground)" />
+                        )}
                     </button>
                 </div>
             </div>

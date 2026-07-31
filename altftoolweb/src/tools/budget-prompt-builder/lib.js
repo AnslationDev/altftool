@@ -109,7 +109,7 @@ export function planBudget({
   if (goal > 0 && months === 0) {
     return { error: "Give the goal a deadline in months so a monthly saving can be computed." };
   }
-  if (months > LIMITS.goalMonths.max) {
+  if (goal > 0 && months > LIMITS.goalMonths.max) {
     return { error: `Goal deadlines beyond ${LIMITS.goalMonths.max} months are outside this tool's range.` };
   }
 
@@ -129,8 +129,12 @@ export function planBudget({
       "Essential expenses exceed income — the budget must start by cutting or restructuring needs, not by trimming wants.",
     );
   } else if (essentials > needsBudget) {
+    // Math.ceil (not Math.round) so the displayed percentage can never round
+    // back down to "50%" while the message asserts it is above 50% — the
+    // branch only fires when the true share is strictly > 50, so ceiling it
+    // always reads as strictly above the threshold too.
     warnings.push(
-      `Essentials take ${Math.round(essentialsShare * 100)}% of income, above the 50% needs share — the prompt asks the model to find reductions in needs first.`,
+      `Essentials take ${Math.ceil(essentialsShare * 100)}% of income, above the 50% needs share — the prompt asks the model to find reductions in needs first.`,
     );
   }
   if (requiredMonthlySaving > savingsBudget) {
@@ -199,9 +203,18 @@ export function buildBudgetPrompt({
     `- Needs cap: ${rupees(plan.needsBudget)} (50%)`,
     `- Wants cap: ${rupees(plan.wantsBudget)} (30%)`,
     `- Savings and debt repayment: ${rupees(plan.savingsBudget)} (20%)`,
+  ];
+
+  if (plan.essentials > plan.needsBudget && plan.essentials <= plan.income) {
+    lines.push(
+      "That is more than the 50% needs cap. Look for reductions in needs first — do not close the gap by cutting wants or savings instead.",
+    );
+  }
+
+  lines.push(
     "",
     `EMERGENCY FUND TARGET: ${rupees(plan.emergencyFundMin)} to ${rupees(plan.emergencyFundMax)} (3 to 6 months of essential spending).`,
-  ];
+  );
 
   if (plan.goal > 0) {
     lines.push(

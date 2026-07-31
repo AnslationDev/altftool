@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Spline } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   CURVE_MAX,
   CURVE_MIN,
@@ -49,7 +50,7 @@ const DASH = "—";
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState("");
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const setField = (key, value) => setForm((prev) => ({ ...prev, [key]: value }));
 
@@ -75,20 +76,8 @@ export default function ToolHome() {
   const markup = useMemo(() => arrowToSvg(arrow), [arrow]);
   const failed = Boolean(arrow.error);
 
-  const copy = async (text, key) => {
-    if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(key);
-      setTimeout(() => setCopied(""), 1500);
-    } catch {
-      setCopied("");
-    }
-  };
-
   const reset = () => {
     setForm(DEFAULTS);
-    setCopied("");
   };
 
   const numberField = (id, label, key, step, min, max) => (
@@ -226,12 +215,12 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Shaft length along the curve
             </p>
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
-              {failed ? DASH : `${NUM.format(arrow.arcLength)} px`}
+              {failed ? DASH : `${NUM.format(arrow.shaftLength)} px`}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {failed
@@ -243,21 +232,24 @@ export default function ToolHome() {
             <button
               type="button"
               className={GHOST_BTN}
-              aria-label="Copy the generated SVG markup"
-              onClick={() => copy(markup, "svg")}
+              aria-label={isCopied("svg") ? "Copied the generated SVG markup" : "Copy the generated SVG markup"}
+              onClick={() => copy("svg", markup, { label: "SVG markup" })}
               disabled={failed}
             >
-              {copied === "svg" ? (
+              {isCopied("svg") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied === "svg" ? "Copied!" : "Copy SVG"}
+              {isCopied("svg") ? "Copied!" : "Copy SVG"}
             </button>
             <button type="button" className={PRIMARY_BTN} aria-label="Reset all inputs" onClick={reset}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -271,7 +263,7 @@ export default function ToolHome() {
               fill="none"
               stroke="currentColor"
               role="img"
-              aria-label={`Preview of the generated arrow, ${NUM.format(arrow.arcLength)} pixels long`}
+              aria-label={`Preview of the generated arrow, ${NUM.format(arrow.shaftLength)} pixels long`}
             >
               <path
                 d={arrow.shaftD}
@@ -296,7 +288,7 @@ export default function ToolHome() {
           )}
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
           {[
             ["Bezier control point", failed ? DASH : `${arrow.control.x}, ${arrow.control.y}`],
             ["Bow height at the midpoint", failed ? DASH : `${NUM.format(arrow.bowHeight)} px`],
@@ -322,16 +314,16 @@ export default function ToolHome() {
           <button
             type="button"
             className={GHOST_BTN}
-            aria-label="Copy only the path data of the arrow shaft"
-            onClick={() => copy(arrow.fullPathD || "", "path")}
+            aria-label={isCopied("path") ? "Copied the path data of the arrow shaft" : "Copy only the path data of the arrow shaft"}
+            onClick={() => copy("path", arrow.fullPathD || "", { label: "Path data" })}
             disabled={failed}
           >
-            {copied === "path" ? (
+            {isCopied("path") ? (
               <Check className="h-4 w-4" aria-hidden="true" />
             ) : (
               <Copy className="h-4 w-4" aria-hidden="true" />
             )}
-            {copied === "path" ? "Copied!" : "Copy path only"}
+            {isCopied("path") ? "Copied!" : "Copy path only"}
           </button>
         </div>
         <div className="mt-3 overflow-x-auto">

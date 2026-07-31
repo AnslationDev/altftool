@@ -55,6 +55,28 @@ export function addYearsISO(isoDate, years) {
   return toISO(new Date(Date.UTC(y, m, Math.min(d, lastDay))));
 }
 
+/**
+ * Add whole months to a date without clamping back into a short month: when
+ * the target month has no such day (e.g. 12 months after 29 February in a
+ * non-leap year), roll over to the 1st of the following month instead of
+ * landing a day early. This matches monthsBetweenISO's own day-of-month
+ * comparison rule, so a computed "N months from now" date never disagrees
+ * with monthsBetweenISO's verdict on whether N months have actually passed.
+ */
+export function addMonthsISO(isoDate, months) {
+  const date = parseISODate(isoDate);
+  if (!date || !Number.isFinite(months)) return null;
+  const day = date.getUTCDate();
+  const totalMonths = date.getUTCMonth() + Math.round(months);
+  const year = date.getUTCFullYear() + Math.floor(totalMonths / 12);
+  const month = ((totalMonths % 12) + 12) % 12;
+  const lastDay = new Date(Date.UTC(year, month + 1, 0)).getUTCDate();
+  if (day > lastDay) {
+    return toISO(new Date(Date.UTC(year, month + 1, 1)));
+  }
+  return toISO(new Date(Date.UTC(year, month, day)));
+}
+
 export function daysBetweenISO(fromISO, toISODate) {
   const from = parseISODate(fromISO);
   const to = parseISODate(toISODate);
@@ -154,6 +176,14 @@ export function assessClosure({ openingDateISO, closureDateISO, closureCharge, l
   const ageDays = daysBetweenISO(openingDateISO, closureDateISO);
   if (ageDays < 0) return { error: "The closure request date is before the account was opened." };
 
+  const chargeIsBlank =
+    closureCharge === "" ||
+    closureCharge === null ||
+    closureCharge === undefined ||
+    (typeof closureCharge === "string" && closureCharge.trim() === "");
+  if (chargeIsBlank) {
+    return { error: "Enter the bank's closure charge — 0 if your bank does not levy one." };
+  }
   const charge = Number(closureCharge);
   if (!Number.isFinite(charge) || charge < 0 || charge > MAX_CLOSURE_CHARGE) {
     return { error: `The closure charge must be between 0 and ${MAX_CLOSURE_CHARGE}.` };
@@ -167,7 +197,16 @@ export function assessClosure({ openingDateISO, closureDateISO, closureCharge, l
 
   const expectedCharge = band === FEE_BAND.CHARGEABLE ? charge : 0;
 
-  const anchorISO = parseISODate(lastTransactionISO) ? lastTransactionISO : openingDateISO;
+  const lastTransactionIsValid = Boolean(parseISODate(lastTransactionISO));
+  if (
+    lastTransactionIsValid &&
+    (lastTransactionISO < openingDateISO || lastTransactionISO > closureDateISO)
+  ) {
+    return {
+      error: "The last customer transaction date must fall between the account opening date and the closure date.",
+    };
+  }
+  const anchorISO = lastTransactionIsValid ? lastTransactionISO : openingDateISO;
   const inoperativeOnISO = addYearsISO(anchorISO, INOPERATIVE_AFTER_YEARS);
   const deaFundOnISO = addYearsISO(anchorISO, DEA_FUND_TRANSFER_YEARS);
   const daysSinceActivity = daysBetweenISO(anchorISO, closureDateISO);
@@ -178,7 +217,7 @@ export function assessClosure({ openingDateISO, closureDateISO, closureCharge, l
     band,
     expectedCharge,
     freeUntilISO: addDaysISO(openingDateISO, FREE_CLOSURE_COOLING_DAYS),
-    chargeEndsISO: addYearsISO(openingDateISO, 1),
+    chargeEndsISO: addMonthsISO(openingDateISO, FREE_CLOSURE_AFTER_MONTHS),
     inoperativeOnISO,
     deaFundOnISO,
     daysSinceActivity,
@@ -263,6 +302,10 @@ export function buildClosureLetter({
   const detail = clean(reasonDetail);
   const joint = clean(jointHolderNames);
 
+  if (reason.id === "other" && !detail) {
+    return { error: "Describe the reason for closing the account, or choose one of the listed reasons." };
+  }
+
   const reasonText = reason.id === "other" && detail ? detail : reason.line;
 
   const payoutLine =
@@ -273,10 +316,7 @@ export function buildClosureLetter({
         : `Please transfer the closing balance of ${formatINR(balance)} by NEFT to the account below:\n  Account holder: ${or(destinationHolder, name)}\n  Bank: ${or(destinationBank, "[destination bank]")}\n  Account number: ${or(destinationAccount, "[destination account number]")}\n  IFSC: ${or(destinationIfsc, "[IFSC code]")}`;
 
   const enclosures = ENCLOSURE_ITEMS.filter((item) => enclosureIds.includes(item.id));
-  const enclosureLines =
-    enclosures.length > 0
-      ? enclosures.map((item, index) => `${index + 1}. ${item.label}`)
-      : ["1. Self-attested KYC copies"];
+  const enclosureLines = enclosures.map((item, index) => `${index + 1}. ${item.label}`);
 
   const chargeLine =
     assessment.band === FEE_BAND.COOLING
@@ -308,8 +348,9 @@ export function buildClosureLetter({
     "",
     chargeLine,
     "",
-    "Enclosed with this letter:",
-    ...enclosureLines,
+    ...(enclosureLines.length > 0
+      ? ["Enclosed with this letter:", ...enclosureLines]
+      : ["No documents are enclosed with this letter."]),
     "",
     "I confirm that no cheque issued by me on this account is pending presentation, that there is no lien, loan, overdraft or standing instruction outstanding against it, and that I have moved every ECS mandate, SIP and auto-debit to my other account. I also confirm that no credit is expected into this account.",
     "",
