@@ -37,6 +37,21 @@ export const MINOR_WORDS = new Set([
 
 const collapse = (text) => String(text ?? "").replace(/\s+/g, " ").trim();
 
+const REGEXP_SPECIAL = /[.*+?^${}()|[\]\\]/g;
+
+/**
+ * Find where `key` appears in `value` as a whole word (or phrase), not merely as a
+ * substring — a naive indexOf would report a short keyword like "art" as present and
+ * well-placed just because it occurs inside an unrelated word like "started".
+ * Falls back to -1 (not found) rather than a misleading interior match.
+ */
+function findKeywordIndex(value, key) {
+  if (!key) return -1;
+  const escaped = key.replace(REGEXP_SPECIAL, "\\$&");
+  const match = new RegExp(`\\b${escaped}\\b`, "i").exec(value);
+  return match ? match.index : -1;
+}
+
 /** Title case using the minor-word list, always capitalising first and last word. */
 export function toTitleCase(text) {
   const words = collapse(text).split(" ");
@@ -70,7 +85,7 @@ export function scoreTitle(title, keyword = "") {
   const chars = value.length;
   const words = value ? value.split(" ").length : 0;
   const key = collapse(keyword).toLowerCase();
-  const keywordAt = key ? value.toLowerCase().indexOf(key) : -1;
+  const keywordAt = findKeywordIndex(value.toLowerCase(), key);
   const notes = [];
   let score = 100;
 
@@ -96,7 +111,7 @@ export function scoreTitle(title, keyword = "") {
     if (keywordAt < 0) {
       score -= 25;
       notes.push(`The keyword "${keyword}" does not appear in the title.`);
-    } else if (keywordAt > FRONT_LOAD_WINDOW) {
+    } else if (keywordAt >= FRONT_LOAD_WINDOW) {
       score -= 12;
       notes.push(`The keyword starts at character ${keywordAt + 1} — move it into the first ${FRONT_LOAD_WINDOW}.`);
     } else if (keywordAt + key.length > LIST_TRUNCATION) {
@@ -230,16 +245,18 @@ export function generateTitles({
 
   const format = caseStyle === "title" ? toTitleCase : toSentenceCase;
 
+  // Every candidate is dropped only when its pattern.build() returns "". The
+  // "listicle", "guestOn", "how", "colon" and "contrarian" patterns need extra
+  // fields, but "mistake", "question" and "guide" each build successfully from
+  // `keyword` alone (with optional fields as fallbacks), and `keyword` is guaranteed
+  // non-empty by the `!key` check above — so at least those three always survive and
+  // `candidates` can never come out empty here.
   const candidates = TITLE_PATTERNS.map((pattern) => {
     const raw = pattern.build(parts);
     if (!raw) return null;
     const title = format(raw);
     return { pattern: pattern.key, patternLabel: pattern.label, hint: pattern.hint, title, ...scoreTitle(title, key) };
   }).filter(Boolean);
-
-  if (candidates.length === 0) {
-    return { error: "Add an angle, a guest or an audience so there is something to build a title from." };
-  }
 
   candidates.sort((a, b) => b.score - a.score || a.chars - b.chars);
 

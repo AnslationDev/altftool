@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, IdCard, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import {
   LANDLORD_PAN_ANNUAL_THRESHOLD,
@@ -56,7 +57,8 @@ export default function ToolHome() {
     DEFAULTS.landlordIsNonResident,
   );
   const [rateChoice, setRateChoice] = useState(DEFAULTS.rateChoice);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -96,15 +98,9 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "landlord PAN requirement result" });
   };
 
   const reset = () => {
@@ -114,7 +110,7 @@ export default function ToolHome() {
     setLandlordHasPan(DEFAULTS.landlordHasPan);
     setLandlordIsNonResident(DEFAULTS.landlordIsNonResident);
     setRateChoice(DEFAULTS.rateChoice);
-    setCopied(false);
+    resetCopyState();
   };
 
   const breakdown = hasError
@@ -273,7 +269,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -298,16 +294,16 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the landlord PAN requirement result"
+              aria-label={isCopied("result") ? "Copied the landlord PAN requirement result" : "Copy the landlord PAN requirement result"}
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
@@ -319,6 +315,9 @@ export default function ToolHome() {
               Reset
             </button>
           </div>
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
@@ -332,7 +331,7 @@ export default function ToolHome() {
       </section>
 
       {!hasError && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite">
           <h2 className="text-base font-semibold">What you have to produce</h2>
           <ul className="mt-3 space-y-3">
             {result.requirements.map((item) => (

@@ -29,6 +29,16 @@ export const TRAVEL_SAFETY_MARGIN_MIN = 20;
 /** Longest plausible one-way exam-centre journey the planner accepts. */
 export const MAX_TRAVEL_MINUTES = 300;
 
+/**
+ * A wake-up at or after this clock time is an ordinary morning. Earlier than this is
+ * treated as a genuine early-morning shift, independent of travel time. This must be
+ * an absolute clock-time check rather than a comparison between two report-derived
+ * offsets: `wake` (report - travel - 110) and `mainMeal` (report - 180) both move with
+ * `report`, so comparing them directly cancels the reporting time out of the condition
+ * algebraically and leaves it depending only on travel time.
+ */
+export const EARLY_WAKE_THRESHOLD_MIN = 5 * 60;
+
 /** Steady-energy choices — familiar, lower-GI staples that avoid a sugar spike-crash. */
 export const EAT_SUGGESTIONS = [
   "Oats / dalia porridge with milk",
@@ -63,7 +73,11 @@ const MINUTES_PER_DAY = 24 * 60;
 
 /** Format minutes-after-midnight as "HH:MM", wrapping across midnight. */
 export function formatTime(totalMinutes) {
-  const wrapped = ((totalMinutes % MINUTES_PER_DAY) + MINUTES_PER_DAY) % MINUTES_PER_DAY;
+  // Round to the nearest whole minute first: a non-integer input (e.g. a fractional
+  // travel time flowing through unchanged) would otherwise leave a fractional
+  // remainder in `wrapped % 60`, producing an invalid string like "08:2.75".
+  const rounded = Math.round(Number(totalMinutes) || 0);
+  const wrapped = ((rounded % MINUTES_PER_DAY) + MINUTES_PER_DAY) % MINUTES_PER_DAY;
   const hours = String(Math.floor(wrapped / 60)).padStart(2, "0");
   const minutes = String(wrapped % 60).padStart(2, "0");
   return `${hours}:${minutes}`;
@@ -91,16 +105,31 @@ export function planExamDayMeals({ reportingTime, travelMinutes }) {
   }
 
   const leaveHome = report - travel - TRAVEL_SAFETY_MARGIN_MIN;
-  const wake = leaveHome - WAKE_TO_LEAVE_MIN;
-  const mainMeal = report - MAIN_MEAL_LEAD_MIN;
+  const idealMainMeal = report - MAIN_MEAL_LEAD_MIN;
+  // The main meal has to finish before the candidate leaves home. A long journey can
+  // force departure earlier than the ideal 3-hour-out slot, so cap the meal at
+  // leaveHome instead of letting "Finish your main meal" sort after "Leave home".
+  const mainMeal = Math.min(idealMainMeal, leaveHome);
+  const mealPushedByTravel = mainMeal < idealMainMeal;
+  // Wake up early enough both for the standard freshen-up-and-travel window before
+  // leaving AND to already be up in time for the main meal -- otherwise a short
+  // journey (which pushes the travel-only wake time later) can leave "Wake up"
+  // sorting after "Finish your main meal", the same impossible-itinerary shape as the
+  // travel case above.
+  const wake = Math.min(leaveHome - WAKE_TO_LEAVE_MIN, mainMeal);
   const snack = report - SNACK_LEAD_MIN;
   // The last big drink must happen while still at home, so it is pulled
   // earlier whenever the journey (travel + margin) is longer than 45 min.
   const lastBigDrink = Math.min(report - LAST_BIG_DRINK_LEAD_MIN, leaveHome);
 
-  // Early-morning shift: the 3-hour meal slot lands before wake-up, so the
-  // full meal moves to the previous night's dinner and breakfast stays light.
-  const earlyStart = mainMeal < wake;
+  // Early-morning shift: waking before a sensible hour to fit the standard
+  // wake -> freshen up -> travel sequence means a full meal will not realistically
+  // happen the same morning, so the previous night's dinner becomes the real fuel and
+  // the morning meal stays light. This is checked against an absolute clock time
+  // rather than against `mainMeal`: both `wake` and `mainMeal` are offsets from
+  // `report`, so comparing them directly cancels `report` out of the condition and
+  // leaves it depending only on travel time, firing for ordinary daytime exams too.
+  const earlyStart = wake < EARLY_WAKE_THRESHOLD_MIN;
 
   const mkEvent = (minutes, label, detail) => ({
     time: formatTime(minutes),
@@ -114,7 +143,11 @@ export function planExamDayMeals({ reportingTime, travelMinutes }) {
     mkEvent(
       wake,
       "Wake up",
-      `Leaves ${WAKE_TO_LEAVE_MIN} minutes to freshen up and eat without hurrying.`,
+      // leaveHome - wake is usually WAKE_TO_LEAVE_MIN, but the main meal's deadline
+      // can pull wake earlier than that, so report the actual gap rather than the
+      // constant. Rounded for the same reason formatTime rounds: a fractional travel
+      // input would otherwise print a fractional minute count here.
+      `Leaves ${Math.round(leaveHome - wake)} minutes to freshen up and eat without hurrying.`,
     ),
     earlyStart
       ? mkEvent(
@@ -125,7 +158,9 @@ export function planExamDayMeals({ reportingTime, travelMinutes }) {
       : mkEvent(
           mainMeal,
           "Finish your main meal",
-          "A familiar, lower-GI plate finished 3 hours out clears the stomach before the paper starts.",
+          mealPushedByTravel
+            ? "Your travel time pushes departure earlier than the usual 3-hour-out slot, so finish eating by the time you leave home."
+            : "A familiar, lower-GI plate finished 3 hours out clears the stomach before the paper starts.",
         ),
     mkEvent(
       snack,
@@ -142,7 +177,7 @@ export function planExamDayMeals({ reportingTime, travelMinutes }) {
     mkEvent(
       leaveHome,
       "Leave home",
-      `Travel ${travel} min plus a ${TRAVEL_SAFETY_MARGIN_MIN}-minute margin for delays and gate queues.`,
+      `Travel ${Math.round(travel)} min plus a ${TRAVEL_SAFETY_MARGIN_MIN}-minute margin for delays and gate queues.`,
     ),
     mkEvent(report, "Reporting time", "The time printed on your admit card. Gates often close after it."),
   ];

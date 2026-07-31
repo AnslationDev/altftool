@@ -615,7 +615,7 @@ export const toolContentOverrides = {
     ]
   },
   "lucky-color-picker": {
-    "intro": "Lucky Color Picker reveals a lucky color for the day based on your mood, zodiac sign, or pure chance — with the color psychology meaning behind each pick.",
+    "intro": "Lucky Color Picker reveals a lucky color based on your mood, zodiac sign, or pure chance — with the color psychology meaning behind each pick.",
     "useCases": [
       "Pick a lucky color to wear or use in a design.",
       "Discover what a color says about your current energy.",

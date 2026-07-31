@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
-import { Palette, RefreshCw, Copy, Sparkles, Heart, Sun, Moon, Star, Zap } from "lucide-react";
+import { Palette, RefreshCw, Copy, Sparkles, Heart, Star, Zap } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const MOODS = [
   { id: "happy", label: "Happy", icon: "😊" },
@@ -52,8 +53,8 @@ export default function ToolHome() {
   const [selectedMood, setSelectedMood] = useState(null);
   const [selectedZodiac, setSelectedZodiac] = useState(null);
   const [color, setColor] = useState(null);
-  const [copied, setCopied] = useState(false);
   const [history, setHistory] = useState([]);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard();
 
   const pickColor = useCallback(() => {
     let picked;
@@ -70,18 +71,17 @@ export default function ToolHome() {
     setHistory((prev) => [picked, ...prev].slice(0, 10));
   }, [mode, selectedMood, selectedZodiac]);
 
-  const copyColor = async () => {
+  const copyColor = () => {
     if (!color) return;
-    try {
-      await navigator.clipboard.writeText(color.hex);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {}
+    copyToClipboard("hex", color.hex, { label: `${color.name} hex code` });
   };
 
   return (
     <div className="min-h-screen bg-(--background) p-4 sm:p-6 lg:p-8">
       <div className="mx-auto max-w-4xl space-y-8">
+        <span role="status" aria-live="polite" className="sr-only">
+          {color ? `Your lucky color is ${color.name}, ${color.hex}. ${color.meaning}.` : ""}
+        </span>
         <div className="text-center">
           <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-(--muted) px-3 py-1 text-xs font-semibold uppercase text-(--primary)">
             <Palette className="h-4 w-4" /> Fun Discovery
@@ -142,15 +142,20 @@ export default function ToolHome() {
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-6">
             <div className="overflow-hidden rounded-2xl border border-(--border) bg-(--card) shadow-lg">
               <div className="flex h-48 items-center justify-center transition-all" style={{ backgroundColor: color.hex }}>
-                <span className="rounded-xl bg-black/20 px-6 py-3 text-4xl font-bold text-white backdrop-blur-sm">{color.hex}</span>
+                <span className="rounded-xl bg-black/55 px-6 py-3 text-4xl font-bold text-white backdrop-blur-sm">{color.hex}</span>
               </div>
               <div className="p-6">
                 <h3 className="text-2xl font-bold text-(--foreground)">{color.name}</h3>
                 <p className="mt-2 flex items-center gap-2 text-(--muted-foreground)"><Zap className="h-4 w-4 text-(--primary)" /> {color.meaning}</p>
-                <div className="mt-4 flex gap-3">
-                  <button onClick={copyColor} className="inline-flex items-center gap-2 rounded-lg border border-(--border) bg-(--background) px-4 py-2 text-sm font-semibold text-(--foreground) transition-all hover:border-(--primary)">
-                    <Copy className="h-4 w-4" /> {copied ? "Copied!" : "Copy Hex"}
+                <div className="mt-4 flex items-center gap-3">
+                  <button
+                    onClick={copyColor}
+                    aria-label={isCopied("hex") ? "Copied the hex code to clipboard" : "Copy the hex code"}
+                    className="inline-flex items-center gap-2 rounded-lg border border-(--border) bg-(--background) px-4 py-2 text-sm font-semibold text-(--foreground) transition-all hover:border-(--primary)"
+                  >
+                    <Copy className="h-4 w-4" /> {isCopied("hex") ? "Copied!" : "Copy Hex"}
                   </button>
+                  <span className="sr-only" role="status" aria-live="polite">{announcement}</span>
                 </div>
               </div>
             </div>
@@ -161,8 +166,15 @@ export default function ToolHome() {
                 <div className="flex flex-wrap gap-3">
                   {history.map((c, i) => (
                     <div key={i} className="group relative">
-                      <div className="h-10 w-10 rounded-lg shadow-sm transition-transform hover:scale-110" style={{ backgroundColor: c.hex }} title={`${c.name} - ${c.hex}`} />
-                      <span className="absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-(--foreground) px-2 py-1 text-xs text-(--background) opacity-0 transition-opacity group-hover:opacity-100">{c.name}</span>
+                      <button
+                        type="button"
+                        onClick={() => setColor(c)}
+                        aria-label={`${c.name}, ${c.hex}. View this color again.`}
+                        title={`${c.name} - ${c.hex}`}
+                        className="h-10 w-10 rounded-lg shadow-sm transition-transform hover:scale-110 focus-visible:scale-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--primary)"
+                        style={{ backgroundColor: c.hex }}
+                      />
+                      <span className="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded bg-(--foreground) px-2 py-1 text-xs text-(--background) opacity-0 transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">{c.name}</span>
                     </div>
                   ))}
                 </div>

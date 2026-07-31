@@ -83,7 +83,7 @@ export const CATALOGUE = Object.freeze([
     carrier: "fileprops",
     severity: "high",
     label: "Author, Last modified by and Company",
-    formats: ["docx", "xlsx", "pptx", "pdf"],
+    formats: ["docx", "xlsx", "pptx"],
     reveals:
       "Office writes the licensed user's name into Author and stamps every save into 'Last modified by', so a document reused across clients names everyone who touched it and the company its copy of Office is registered to.",
     fix: "Clear the properties, or turn on 'Remove personal information from file properties on save'.",
@@ -380,7 +380,12 @@ export function assessAttachmentRisk({
     (total, item) => total + SEVERITY_WEIGHT[item.severity],
     0,
   );
-  const score = maxWeight > 0 ? Math.round((survivingWeight / maxWeight) * 100) : 0;
+  // The headline score measures how much of what the user actually flagged is still
+  // exposed, so it is weighed against what they ticked (selectedWeight), not against
+  // every signal that could apply to the file type (maxWeight) — ticking a true subset
+  // of the applicable risks should not dilute the score toward a falsely reassuring
+  // "Moderate" band when 100% of the flagged risk survives untouched.
+  const score = selectedWeight > 0 ? Math.round((survivingWeight / selectedWeight) * 100) : 0;
   const removedShare =
     selectedWeight > 0
       ? Math.round(((selectedWeight - survivingWeight) / selectedWeight) * 100)

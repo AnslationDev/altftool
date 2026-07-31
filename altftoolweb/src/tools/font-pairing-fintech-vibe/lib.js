@@ -80,6 +80,13 @@ export const GROUPING = [
   { id: "none", label: "No separators (1234567)" },
 ];
 
+/** Currency symbol modelled by each grouping option's preview sample. */
+export const GROUPING_SYMBOL = {
+  international: "$",
+  indian: "₹",
+  none: "$",
+};
+
 const isPositive = (value) => Number.isFinite(value) && value > 0;
 
 /**
@@ -222,11 +229,18 @@ export function buildFintechReport({ pairId, integerDigits, decimals, grouping, 
 
   const sample = groupDigits({ digits: integerDigits, grouping });
   if (sample.error) return sample;
-  const sampleText = `${showSymbol ? "₹" : ""}${sample.text}${
+  const currencySymbol = GROUPING_SYMBOL[grouping] || "$";
+  const sampleText = `${showSymbol ? currencySymbol : ""}${sample.text}${
     decimals > 0 ? `.${"0".repeat(Math.floor(decimals))}` : ""
   }`;
 
-  const css = `:root {
+  const fontUrlResult = buildFontUrl(pair);
+  if (fontUrlResult.error) return fontUrlResult;
+  const fontUrl = fontUrlResult.url;
+
+  const css = `@import url('${fontUrl}');
+
+:root {
   --font-heading: ${pair.heading.stack};
   --font-body: ${pair.body.stack};
   --font-figures: ${pair.figures.family === pair.body.family ? pair.body.stack : `"${pair.figures.family}", ${MONO_FALLBACK}`};
@@ -252,7 +266,5 @@ body {
   font-size: ${Math.round((fontSizePx / ROOT_FONT_SIZE_PX) * 1000) / 1000}rem;
 }`;
 
-  const fontUrl = buildFontUrl(pair);
-
-  return { pair, column, jitter, sampleText, css, fontUrl: fontUrl.url };
+  return { pair, column, jitter, sampleText, css, fontUrl };
 }

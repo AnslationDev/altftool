@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, ScanText } from "lucide-react";
 import { CATEGORIES, scanForTells } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 const DEC = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
@@ -29,7 +30,7 @@ const GHOST_BTN =
 export default function ToolHome() {
   const [text, setText] = useState(DEFAULTS.text);
   const [categories, setCategories] = useState(DEFAULTS.categories);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const report = useMemo(() => scanForTells(text, { categories }), [text, categories]);
   const failed = Boolean(report.error);
@@ -50,16 +51,7 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [failed, report]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("report", summary, { label: "Filler report" });
 
   const toggleCategory = (key) => {
     setCategories((current) =>
@@ -68,9 +60,11 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset the draft and category filters back to the example text? This can't be undone.")) {
+      return;
+    }
     setText(DEFAULTS.text);
     setCategories(DEFAULTS.categories);
-    setCopied(false);
   };
 
   return (
@@ -136,7 +130,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Filler score
             </p>
@@ -151,17 +145,20 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the phrase report"
+              aria-label={isCopied("report") ? "Copied" : "Copy the phrase report"}
               className={GHOST_BTN}
               disabled={failed}
             >
-              {copied ? (
+              {isCopied("report") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy report"}
+              {isCopied("report") ? "Copied!" : "Copy report"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button
               type="button"
               onClick={reset}

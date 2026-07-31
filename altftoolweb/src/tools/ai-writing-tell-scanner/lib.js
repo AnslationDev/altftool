@@ -130,29 +130,45 @@ export const DENSITY_AT_MAX_SCORE = 25;
 /** Escapes regex metacharacters and lets a straight apostrophe match a curly one. */
 const escapeRe = (value) =>
   value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/'/g, "['’]");
-const LETTER_RE = /[\p{L}\p{N}]/u;
+/** Character class shared by the word-boundary lookaround below and countWords(). */
+const BOUNDARY_CLASS = "\\p{L}\\p{N}";
 
 export function countWords(text) {
   const matches = String(text).match(/[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu);
   return matches ? matches.length : 0;
 }
 
-/** Finds non-overlapping, whole-word matches for every bank entry. */
+/**
+ * Finds non-overlapping, whole-word matches for every bank entry.
+ *
+ * The word-boundary check is embedded directly in the regex as lookaround
+ * assertions rather than applied after the fact. That matters: with a plain
+ * `source.matchAll(pattern)` and a post-hoc boundary check, `matchAll` still
+ * advances its internal cursor to the end of a raw match even when that match
+ * gets rejected for failing the boundary test, so the engine can never go back
+ * and try a shorter alternative (or a later phrase) whose start falls inside
+ * the span the rejected match already consumed — e.g. "let's dive in" (which
+ * fails the boundary check when followed by "into") would silently swallow
+ * the scan position and prevent "dive into" from ever being tried. Putting the
+ * boundary check inside the pattern lets the regex engine itself backtrack to
+ * the next alternative (or the next starting position) whenever a candidate
+ * match fails its boundary, so it can never "consume" a span it didn't
+ * actually accept.
+ */
 export function findMatches(text, bank = PHRASE_BANK) {
   const source = String(text);
   const ordered = [...bank].sort((a, b) => b.phrase.length - a.phrase.length);
-  const pattern = new RegExp(ordered.map((item) => escapeRe(item.phrase)).join("|"), "giu");
+  const alternation = ordered.map((item) => escapeRe(item.phrase)).join("|");
+  const pattern = new RegExp(
+    `(?<![${BOUNDARY_CLASS}])(?:${alternation})(?![${BOUNDARY_CLASS}])`,
+    "giu",
+  );
   const byPhrase = new Map(bank.map((item) => [item.phrase.toLowerCase(), item]));
 
   const ranges = [];
   for (const match of source.matchAll(pattern)) {
     const start = match.index;
     const end = start + match[0].length;
-    const before = start > 0 ? source[start - 1] : "";
-    const after = end < source.length ? source[end] : "";
-    // Reject partial-word hits: "vitality" must not match "vital".
-    if (before && LETTER_RE.test(before)) continue;
-    if (after && LETTER_RE.test(after)) continue;
     const entry = byPhrase.get(match[0].toLowerCase().replace(/’/g, "'"));
     if (!entry) continue;
     // Longest-first alternation already prevents overlap, but guard anyway.
@@ -194,13 +210,16 @@ export function scanForTells(text, options = {}) {
   if (typeof text !== "string" || text.trim() === "") {
     return { error: "Paste a draft to scan." };
   }
-  const active =
-    Array.isArray(options.categories) && options.categories.length > 0
-      ? options.categories
-      : Object.keys(CATEGORIES);
+  // An explicit empty array (the caller passed `categories: []`, e.g. every checkbox
+  // unchecked) must mean "scan nothing", not fall back to scanning everything — only
+  // an omitted/non-array `categories` option defaults to the full set.
+  const active = Array.isArray(options.categories) ? options.categories : Object.keys(CATEGORIES);
   const unknown = active.filter((key) => !CATEGORIES[key]);
   if (unknown.length > 0) {
     return { error: `Unknown category: ${unknown.join(", ")}.` };
+  }
+  if (active.length === 0) {
+    return { error: "Select at least one category to scan." };
   }
 
   const words = countWords(text);
@@ -235,6 +254,10 @@ export function scanForTells(text, options = {}) {
   const weightedHits = ranges.reduce((sum, range) => sum + range.entry.weight, 0);
   const density = (weightedHits / words) * 1000;
   const score = Math.max(0, Math.min(100, Math.round((density / DENSITY_AT_MAX_SCORE) * 100)));
+  // Words actually covered by a flagged phrase — not the same as totalHits, since a
+  // single matched phrase (e.g. "in today's fast-paced world") can span several words.
+  // Ranges never overlap, so summing per-range word counts double-counts nothing.
+  const flaggedWords = ranges.reduce((sum, range) => sum + countWords(range.text), 0);
 
   let band = "Clean";
   let bandNote = "Barely any stock phrasing. Leave it alone.";
@@ -270,6 +293,6 @@ export function scanForTells(text, options = {}) {
     byCategory,
     segments,
     distinctPhrases: matches.length,
-    cleanWordShare: words > 0 ? Math.max(0, 1 - totalHits / words) : 0,
+    cleanWordShare: words > 0 ? Math.max(0, 1 - flaggedWords / words) : 0,
   };
 }

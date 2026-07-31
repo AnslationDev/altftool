@@ -7254,7 +7254,7 @@ export default {
     ],
     [
       "Front-loading checked",
-      "Tells you the exact character position of your keyword, not just whether it is present."
+      "When your keyword lands too late to front-load, the note names the exact character it starts at, not just that it is present somewhere in the title."
     ],
     [
       "Eight patterns, one input set",

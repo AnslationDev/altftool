@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
-  RotateCcw, Shuffle, Undo2, Trophy, Star, Settings, Gem,
+  RotateCcw, Shuffle, Undo2, Trophy, Star, Gem,
   Lock, Hammer, Target, ChevronRight, Sparkles,
 } from "lucide-react";
 
@@ -125,6 +125,23 @@ export default function MergeBlocksGame() {
   const [hoverCol, setHoverCol] = useState(null);
   const idRef = useRef(0);
   const toastTimer = useRef(null);
+  const timersRef = useRef([]);
+
+  useEffect(() => {
+    return () => {
+      timersRef.current.forEach((id) => clearTimeout(id));
+      timersRef.current = [];
+    };
+  }, []);
+
+  const trackedTimeout = (fn, ms) => {
+    const id = setTimeout(() => {
+      timersRef.current = timersRef.current.filter((t) => t !== id);
+      fn();
+    }, ms);
+    timersRef.current.push(id);
+    return id;
+  };
 
   const boardWidthPx = COLS * CELL + (COLS - 1) * GAP;
   const boardHeightPx = ROWS * CELL + (ROWS - 1) * GAP;
@@ -132,7 +149,7 @@ export default function MergeBlocksGame() {
   const showToast = (msg) => {
     setToast(msg);
     clearTimeout(toastTimer.current);
-    toastTimer.current = setTimeout(() => setToast(null), 1000);
+    toastTimer.current = trackedTimeout(() => setToast(null), 1000);
   };
 
   const spawnEffects = (col, row, gained, chain) => {
@@ -144,13 +161,13 @@ export default function MergeBlocksGame() {
       return { id: ++idRef.current, x, y, dx: Math.cos(angle) * dist, dy: Math.sin(angle) * dist, color: PARTICLE_COLORS[Math.floor(Math.random() * PARTICLE_COLORS.length)] };
     });
     setParticles((p) => [...p, ...burst]);
-    setTimeout(() => setParticles((p) => p.filter((pt) => !burst.some((b) => b.id === pt.id))), 650);
+    trackedTimeout(() => setParticles((p) => p.filter((pt) => !burst.some((b) => b.id === pt.id))), 650);
     const popupId = ++idRef.current;
     setPopups((p) => [...p, { id: popupId, x, y, text: `+${gained}` }]);
-    setTimeout(() => setPopups((p) => p.filter((pp) => pp.id !== popupId)), 850);
+    trackedTimeout(() => setPopups((p) => p.filter((pp) => pp.id !== popupId)), 850);
     if (chain > 1) {
       setShake(true);
-      setTimeout(() => setShake(false), 300);
+      trackedTimeout(() => setShake(false), 300);
     }
   };
 
@@ -168,19 +185,21 @@ export default function MergeBlocksGame() {
       };
     });
     setParticles((p) => [...p, ...burst]);
-    setTimeout(() => setParticles((p) => p.filter((pt) => !burst.some((b) => b.id === pt.id))), 1100);
+    trackedTimeout(() => setParticles((p) => p.filter((pt) => !burst.some((b) => b.id === pt.id))), 1100);
   };
 
   const applyHammer = (col) => {
     setHammerMode(false);
+    const idx = board[col].lastIndexOf(LOCK);
+    if (idx === -1) {
+      showToast("No locked block there");
+      return;
+    }
     setBoard((prev) => {
-      const idx = prev[col].lastIndexOf(LOCK);
-      if (idx === -1) {
-        showToast("No locked block there");
-        return prev;
-      }
       const nb = prev.map((c) => [...c]);
-      nb[col].splice(idx, 1);
+      const targetIdx = nb[col].lastIndexOf(LOCK);
+      if (targetIdx === -1) return prev;
+      nb[col].splice(targetIdx, 1);
       return nb;
     });
     setHammers((h) => h - 1);
@@ -203,7 +222,7 @@ export default function MergeBlocksGame() {
     const id = ++idRef.current;
     setFalling({ col, value: current, id, landingRow });
 
-    setTimeout(() => {
+    trackedTimeout(() => {
       let didWin = false;
       setBoard((prev) => {
         const nb = prev.map((c) => [...c]);
@@ -234,7 +253,7 @@ export default function MergeBlocksGame() {
           if (chain > 1) {
             setCombo(chain);
             showToast(`${chain}x CHAIN COMBO!`);
-            setTimeout(() => setCombo(0), 750);
+            trackedTimeout(() => setCombo(0), 750);
           }
         }
         // maybe drop in an obstacle block into a random open column
@@ -259,12 +278,12 @@ export default function MergeBlocksGame() {
         if (didWin) {
           const ratio = nm / cfg.moves;
           const stars = ratio >= 0.5 ? 3 : ratio >= 0.2 ? 2 : 1;
-          setTimeout(() => {
+          trackedTimeout(() => {
             confettiBurst();
             setLevelResult({ win: true, stars });
           }, 120);
         } else if (nm <= 0) {
-          setTimeout(() => setLevelResult({ win: false, stars: 0 }), 120);
+          trackedTimeout(() => setLevelResult({ win: false, stars: 0 }), 120);
         }
         return nm;
       });
@@ -286,6 +305,13 @@ export default function MergeBlocksGame() {
   };
 
   const restart = () => {
+    if (
+      !window.confirm(
+        "Restart the game? This resets your level, score, and all remaining boosters back to the start and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setLevel(1);
     setScore(0);
     setMaxVal(2);
@@ -322,7 +348,7 @@ export default function MergeBlocksGame() {
   };
 
   const doShuffle = () => {
-    if (shuffles <= 0 || levelResult) return;
+    if (shuffles <= 0 || levelResult || gameOver) return;
     setBoard((prev) => {
       const values = prev.flat();
       if (values.length === 0) return prev;
@@ -385,11 +411,14 @@ export default function MergeBlocksGame() {
           <div style={{ fontFamily: "'Fredoka', system-ui, sans-serif", fontWeight: 700, fontSize: 24, letterSpacing: 0.5, background: "linear-gradient(90deg,#38bdf8,#a78bfa,#f472b6,#fde047)", backgroundSize: "200% auto", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", display: "inline-block" }}>
             MERGE FUSION
           </div>
-          <button className="icon-btn" style={{ ...iconBtnStyle, position: "absolute", right: 0, top: 2 }} onClick={restart}>
+          <button
+            className="icon-btn"
+            style={{ ...iconBtnStyle, position: "absolute", right: 0, top: 2 }}
+            onClick={restart}
+            aria-label="Restart game"
+            title="Restart game"
+          >
             <RotateCcw size={14} color="#cbd5e1" />
-          </button>
-          <button className="icon-btn" style={{ ...iconBtnStyle, position: "absolute", left: 0, top: 2 }}>
-            <Settings size={14} color="#cbd5e1" />
           </button>
         </div>
 
@@ -404,7 +433,7 @@ export default function MergeBlocksGame() {
                 <Target size={11} color="#fbbf24" /> {cfg.target}
               </div>
             </div>
-            <div style={{ color: movesLeft <= 3 ? "#fb7171" : "#94a3b8", fontSize: 10, fontWeight: 700 }}>
+            <div role="status" aria-live="polite" style={{ color: movesLeft <= 3 ? "#fb7171" : "#94a3b8", fontSize: 10, fontWeight: 700 }}>
               {movesLeft} moves left
             </div>
           </div>
@@ -459,24 +488,33 @@ export default function MergeBlocksGame() {
 
           <div style={{ position: "absolute", inset: 0, display: "flex" }}>
             {Array.from({ length: COLS }).map((_, c) => (
-              <button key={c} className="col-zone" onClick={() => dropInColumn(c)} onMouseEnter={() => setHoverCol(c)} onMouseLeave={() => setHoverCol(null)} disabled={gameOver || !!levelResult} style={{ flex: 1, background: "transparent", border: "none", cursor: gameOver || levelResult ? "default" : "pointer" }} />
+              <button
+                key={c}
+                className="col-zone"
+                onClick={() => dropInColumn(c)}
+                onMouseEnter={() => setHoverCol(c)}
+                onMouseLeave={() => setHoverCol(null)}
+                disabled={gameOver || !!levelResult}
+                aria-label={hammerMode ? `Smash locked block in column ${c + 1}` : `Drop block in column ${c + 1}`}
+                style={{ flex: 1, background: "transparent", border: "none", cursor: gameOver || levelResult ? "default" : "pointer" }}
+              />
             ))}
           </div>
 
           {combo > 0 && (
-            <div style={{ position: "absolute", top: 8, left: "50%", transform: "translateX(-50%)", background: "linear-gradient(90deg,#f59e0b,#ef4444)", color: "#fff", fontFamily: "'Fredoka', sans-serif", fontWeight: 700, fontSize: 12, padding: "4px 12px", borderRadius: 20, boxShadow: "0 0 16px rgba(239,68,68,.6)", animation: "tilePop 240ms cubic-bezier(.34,1.56,.64,1)", zIndex: 5 }}>
+            <div role="status" aria-live="polite" style={{ position: "absolute", top: 8, left: "50%", transform: "translateX(-50%)", background: "linear-gradient(90deg,#f59e0b,#ef4444)", color: "#fff", fontFamily: "'Fredoka', sans-serif", fontWeight: 700, fontSize: 12, padding: "4px 12px", borderRadius: 20, boxShadow: "0 0 16px rgba(239,68,68,.6)", animation: "tilePop 240ms cubic-bezier(.34,1.56,.64,1)", zIndex: 5 }}>
               ⚡ {combo}x CHAIN
             </div>
           )}
 
           {toast && (
-            <div style={{ position: "absolute", left: "50%", top: "45%", background: "rgba(15,15,30,.92)", border: "1px solid rgba(255,255,255,.1)", color: "#fde047", fontWeight: 700, fontSize: 13, padding: "7px 16px", borderRadius: 12, animation: "toastFloat 1000ms ease-out forwards", zIndex: 6, whiteSpace: "nowrap", transform: "translateX(-50%)" }}>
+            <div role="status" aria-live="polite" style={{ position: "absolute", left: "50%", top: "45%", background: "rgba(15,15,30,.92)", border: "1px solid rgba(255,255,255,.1)", color: "#fde047", fontWeight: 700, fontSize: 13, padding: "7px 16px", borderRadius: 12, animation: "toastFloat 1000ms ease-out forwards", zIndex: 6, whiteSpace: "nowrap", transform: "translateX(-50%)" }}>
               {toast}
             </div>
           )}
 
           {gameOver && (
-            <div style={overlayStyle}>
+            <div style={overlayStyle} role="status" aria-live="polite">
               <div style={{ fontFamily: "'Fredoka', sans-serif", color: "#fb7185", fontWeight: 700, fontSize: 22, textShadow: "0 0 20px rgba(251,113,133,.6)" }}>BOARD FULL</div>
               <div style={{ color: "#e2e8f0", fontSize: 13 }}>Score: <b style={{ color: "#fde047" }}>{score}</b></div>
               <button onClick={retryLevel} style={primaryBtn}>Retry Level</button>
@@ -484,7 +522,7 @@ export default function MergeBlocksGame() {
           )}
 
           {levelResult && (
-            <div style={overlayStyle}>
+            <div style={overlayStyle} role="status" aria-live="polite">
               {levelResult.win ? (
                 <>
                   <Sparkles size={28} color="#fde047" style={{ animation: "popIn 400ms ease-out" }} />
@@ -511,23 +549,23 @@ export default function MergeBlocksGame() {
         </div>
 
         <div style={{ width: boardWidthPx, margin: "10px auto 0", display: "flex", alignItems: "center", justifyContent: "space-between", padding: "8px 12px", borderRadius: 16, background: "rgba(255,255,255,0.03)", border: `1px solid ${glow}40`, boxShadow: `0 0 18px ${glow}22` }}>
-          <span style={{ color: "#64748b", fontSize: 9, fontWeight: 700, letterSpacing: 1 }}>▲ LAUNCH</span>
+          <span style={{ color: "#94a3b8", fontSize: 9, fontWeight: 700, letterSpacing: 1 }}>▲ LAUNCH</span>
           <div style={{ "--glowc": `${glow}aa`, animation: "launcherPulse 1.8s ease-in-out infinite", borderRadius: 12 }}>
             <Tile value={current} size={36} />
           </div>
           <div style={{ textAlign: "right" }}>
-            <div style={{ color: "#64748b", fontSize: 8, fontWeight: 700, letterSpacing: 1 }}>NEXT</div>
+            <div style={{ color: "#94a3b8", fontSize: 8, fontWeight: 700, letterSpacing: 1 }}>NEXT</div>
             <Tile value={next} size={22} />
           </div>
         </div>
-        <div style={{ textAlign: "center", color: hammerMode ? "#fb7185" : "#475569", fontSize: 10, fontWeight: 700, letterSpacing: 1, margin: "8px 0 0" }}>
+        <div style={{ textAlign: "center", color: hammerMode ? "#fb7185" : "#94a3b8", fontSize: 10, fontWeight: 700, letterSpacing: 1, margin: "8px 0 0" }}>
           {hammerMode ? "TAP A COLUMN WITH A LOCK" : "TAP A COLUMN TO LAUNCH"}
         </div>
 
         {/* BOOSTERS */}
         <div style={{ display: "flex", gap: 8, justifyContent: "center", padding: "10px 0 0" }}>
           <BoosterButton icon={<Undo2 size={15} />} label="Undo" count={undos} onClick={doUndo} colorFrom="#38bdf8" colorTo="#0284c7" />
-          <BoosterButton icon={<Shuffle size={15} />} label="Shuffle" count={shuffles} onClick={doShuffle} colorFrom="#a78bfa" colorTo="#7c3aed" />
+          <BoosterButton icon={<Shuffle size={15} />} label="Shuffle" count={shuffles} onClick={doShuffle} colorFrom="#a78bfa" colorTo="#7c3aed" forceDisabled={gameOver} />
           <BoosterButton icon={<Hammer size={15} />} label="Hammer" count={hammers} onClick={toggleHammer} colorFrom="#fb7185" colorTo="#e11d48" active={hammerMode} />
         </div>
       </div>
@@ -541,15 +579,15 @@ function StatPill({ icon, label, value, color }) {
     <div style={{ flex: 1, background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 14, padding: "7px 6px", textAlign: "center" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 4, marginBottom: 2 }}>
         {icon}
-        <span style={{ color: "#64748b", fontSize: 9, fontWeight: 700, letterSpacing: 0.6 }}>{label}</span>
+        <span style={{ color: "#94a3b8", fontSize: 9, fontWeight: 700, letterSpacing: 0.6 }}>{label}</span>
       </div>
       <div style={{ color, fontWeight: 800, fontSize: 16, fontFamily: "'Fredoka', sans-serif" }}>{value}</div>
     </div>
   );
 }
 
-function BoosterButton({ icon, label, count, onClick, colorFrom, colorTo, active }) {
-  const disabled = count <= 0;
+function BoosterButton({ icon, label, count, onClick, colorFrom, colorTo, active, forceDisabled }) {
+  const disabled = forceDisabled || count <= 0;
   return (
     <button className="boost-btn" onClick={onClick} disabled={disabled} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4, background: disabled ? "rgba(255,255,255,0.03)" : `linear-gradient(160deg, ${colorFrom}${active ? "44" : "22"}, ${colorTo}${active ? "44" : "22"})`, border: `1px solid ${disabled ? "rgba(255,255,255,0.06)" : colorFrom + (active ? "aa" : "55")}`, borderRadius: 16, padding: "8px 14px", color: disabled ? "#475569" : "#e2e8f0", cursor: disabled ? "default" : "pointer", minWidth: 72, boxShadow: disabled ? "none" : `0 0 14px ${colorFrom}${active ? "55" : "33"}` }}>
       <div style={{ color: disabled ? "#475569" : colorFrom }}>{icon}</div>

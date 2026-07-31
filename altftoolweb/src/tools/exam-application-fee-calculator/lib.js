@@ -227,7 +227,10 @@ export function computeExamFeeRow({
   if (count > MAX_QUANTITY) {
     return { error: `This calculator totals up to ${MAX_QUANTITY} applications of one exam.` };
   }
-  const whole = Math.floor(count);
+  if (!Number.isInteger(count)) {
+    return { error: `Enter a whole number of ${exam.label} applications.` };
+  }
+  const whole = count;
 
   const { concession, grounds } = concessionGrounds(exam, profile);
   const scheduleFee = concession ? exam.concession : exam.standard;
@@ -243,11 +246,17 @@ export function computeExamFeeRow({
     overridden = true;
   }
 
+  // Round the per-application fee first and treat that rounded figure as the one actually
+  // charged, so every downstream total (paid, refunded) stays an exact multiple of the unit
+  // fee shown to the user — a "quantity x fee" line built from the returned fields will
+  // always check out instead of drifting from independently-rounded raw values.
+  const roundedUnitFee = round0(unitFee);
+
   const refundUnitScheduled = concession ? exam.refundConcession : exam.refundStandard;
   // A refund can never exceed what was actually paid for that application.
-  const refundUnit = appearsInExam ? Math.min(refundUnitScheduled, unitFee) : 0;
+  const refundUnit = appearsInExam ? Math.min(refundUnitScheduled, roundedUnitFee) : 0;
 
-  const paid = unitFee * whole;
+  const paid = roundedUnitFee * whole;
   const refunded = refundUnit * whole;
 
   return {
@@ -255,7 +264,7 @@ export function computeExamFeeRow({
     quantity: whole,
     concession,
     grounds,
-    unitFee: round0(unitFee),
+    unitFee: roundedUnitFee,
     scheduleFee: round0(scheduleFee),
     overridden,
     refundUnit: round0(refundUnit),

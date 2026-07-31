@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "At what rent is the landlord's PAN compulsory for HRA?",
-      "The landlord's PAN is compulsory once the rent you pay in a financial year exceeds ₹1,00,000, which works out to about ₹8,334 a month for a full twelve months. Below that, CBDT Circular 8/2013 lets the employer accept the claim on receipts alone.",
+      "The landlord's PAN is compulsory once the rent you pay in a financial year exceeds ₹1,00,000, which works out to about ₹8,333 a month for a full twelve months. Below that, CBDT Circular 8/2013 lets the employer accept the claim on receipts alone.",
     ],
     [
       "What if my landlord does not have a PAN?",

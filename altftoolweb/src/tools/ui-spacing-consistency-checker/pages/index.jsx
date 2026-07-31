@@ -9,15 +9,46 @@ const sampleCode = `<section className="p-5 md:p-8 gap-4">
   <button style={{ marginTop: "18px", padding: "12px 20px" }}>Save</button>
 </section>`;
 
+const TAILWIND_SPACING_REGEX = /-?\b(?:p|m|gap(?:-[xy])?|space-[xy]|px|py|pt|pr|pb|pl|mt|mr|mb|ml)-(\d+(?:\.\d+)?)\b/g;
+// Only property names that are actually spacing (margin/padding/gap and their
+// directional variants, in either kebab-case or camelCase) — font-size,
+// border-radius, box-shadow, line-height, width/height etc. are deliberately
+// excluded so a raw "Npx" inside those declarations is never mistaken for spacing.
+const SPACING_PROPERTY_REGEX = /\b(margin(?:-?(?:top|right|bottom|left))?|padding(?:-?(?:top|right|bottom|left))?|(?:row|column)-?gap|gap)\b\s*[:=]\s*["']?([^"';}]*)/gi;
+const PIXEL_VALUE_REGEX = /(-?\d+(?:\.\d+)?)px/g;
+
+function lineAt(text, index) {
+  let line = 1;
+  for (let i = 0; i < index; i += 1) {
+    if (text.charCodeAt(i) === 10) line += 1;
+  }
+  return line;
+}
+
 function extractSpacing(value) {
-  const tailwindMatches = [...value.matchAll(/-?\b(?:p|m|gap(?:-[xy])?|space-[xy]|px|py|pt|pr|pb|pl|mt|mr|mb|ml)-(\d+(?:\.\d+)?)\b/g)].map((match) => ({
-    source: match[0],
-    pixels: Number(match[1]) * 4,
-  }));
-  const pixelMatches = [...value.matchAll(/(\d+(?:\.\d+)?)px/g)].map((match) => ({
-    source: match[0],
-    pixels: Number(match[1]),
-  }));
+  const tailwindMatches = [...value.matchAll(TAILWIND_SPACING_REGEX)].map((match) => {
+    const negative = match[0].startsWith("-");
+    const magnitude = Number(match[1]) * 4;
+    return {
+      source: match[0],
+      pixels: negative ? -magnitude : magnitude,
+      line: lineAt(value, match.index),
+    };
+  });
+
+  const pixelMatches = [];
+  for (const propertyMatch of value.matchAll(SPACING_PROPERTY_REGEX)) {
+    const valuePart = propertyMatch[2] || "";
+    const valueStart = propertyMatch.index + propertyMatch[0].length - valuePart.length;
+    for (const pxMatch of valuePart.matchAll(PIXEL_VALUE_REGEX)) {
+      pixelMatches.push({
+        source: `${pxMatch[1]}px`,
+        pixels: Number(pxMatch[1]),
+        line: lineAt(value, valueStart + pxMatch.index),
+      });
+    }
+  }
+
   return [...tailwindMatches, ...pixelMatches];
 }
 
@@ -45,7 +76,7 @@ export default function UiSpacingConsistencyCheckerPage() {
         </Card>
 
         <div className="grid gap-4">
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid gap-3 sm:grid-cols-3" aria-live="polite">
             <Card className="p-4"><p className="text-xs font-semibold uppercase text-(--muted-foreground)">Values</p><p className="mt-2 text-3xl font-bold">{values.length}</p></Card>
             <Card className="p-4"><p className="text-xs font-semibold uppercase text-(--muted-foreground)">Off scale</p><p className="mt-2 text-3xl font-bold">{offScale.length}</p></Card>
             <Card className="p-4"><p className="text-xs font-semibold uppercase text-(--muted-foreground)">Unique sizes</p><p className="mt-2 text-3xl font-bold">{duplicates.size}</p></Card>
@@ -55,15 +86,15 @@ export default function UiSpacingConsistencyCheckerPage() {
             <h2 className="flex items-center gap-2 text-lg font-semibold"><Ruler className="h-5 w-5 text-(--primary)" /> Spacing inventory</h2>
             <div className="mt-4 grid gap-2 sm:grid-cols-2">
               {values.map((item, index) => (
-                <div key={`${item.source}-${index}`} className="rounded-lg border border-(--border) bg-(--background) p-3">
+                <div key={`${item.source}-${item.line}-${index}`} className="rounded-lg border border-(--border) bg-(--background) p-3">
                   <p className="font-mono text-sm">{item.source}</p>
-                  <p className="mt-1 text-xs text-(--muted-foreground)">{item.pixels}px · {item.pixels % 4 === 0 ? "on 4px scale" : "off scale"}</p>
+                  <p className="mt-1 text-xs text-(--muted-foreground)">{item.pixels}px · Line {item.line} · {item.pixels % 4 === 0 ? "on 4px scale" : "off scale"}</p>
                 </div>
               ))}
             </div>
           </Card>
 
-          <Card className="p-4">
+          <Card className="p-4" aria-live="polite">
             <h2 className="flex items-center gap-2 text-lg font-semibold"><ScanLine className="h-5 w-5 text-(--primary)" /> Recommendation</h2>
             <p className="mt-2 text-sm leading-6 text-(--muted-foreground)">
               {offScale.length ? "Round off-scale values to the nearest 4px step and prefer shared Tailwind spacing utilities." : "Spacing looks consistent with the 4px scale."}

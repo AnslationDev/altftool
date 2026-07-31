@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Plus, ReceiptIndianRupee, RotateCcw, Trash2 } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   CATEGORIES,
   EXAMS,
@@ -48,7 +49,7 @@ export default function ToolHome() {
   const [rows, setRows] = useState(DEFAULT_ROWS);
   const [nextId, setNextId] = useState(3);
   const [charge, setCharge] = useState("0");
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -69,12 +70,12 @@ export default function ToolHome() {
   const hasError = Boolean(result.error);
 
   const setProfileField = (field, value) => {
-    setCopied(false);
+    resetCopyState();
     setProfile((prev) => ({ ...prev, [field]: value }));
   };
 
   const setRowField = (id, field, value) => {
-    setCopied(false);
+    resetCopyState();
     setRows((prev) =>
       prev.map((row) => (row.id === id ? { ...row, [field]: value } : row)),
     );
@@ -82,7 +83,7 @@ export default function ToolHome() {
 
   const addRow = () => {
     if (rows.length >= MAX_ROWS) return;
-    setCopied(false);
+    resetCopyState();
     setRows((prev) => [
       ...prev,
       { id: nextId, examId: "ssc", quantity: "1", overrideFee: "", appearsInExam: true },
@@ -91,7 +92,7 @@ export default function ToolHome() {
   };
 
   const removeRow = (id) => {
-    setCopied(false);
+    resetCopyState();
     setRows((prev) => (prev.length > 1 ? prev.filter((row) => row.id !== id) : prev));
   };
 
@@ -110,23 +111,24 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "fee breakdown" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will discard all exam rows, overrides and profile settings you have entered and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setProfile(DEFAULT_PROFILE);
     setRows(DEFAULT_ROWS);
     setNextId(3);
     setCharge("0");
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -304,7 +306,7 @@ export default function ToolHome() {
             step="1"
             value={charge}
             onChange={(event) => {
-              setCopied(false);
+              resetCopyState();
               setCharge(event.target.value);
             }}
           />
@@ -322,7 +324,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Net cost after refunds
             </p>
@@ -340,15 +342,15 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the fee breakdown"
+              aria-label={isCopied("result") ? "Copied the fee breakdown to clipboard" : "Copy the fee breakdown"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
@@ -359,6 +361,9 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

@@ -154,6 +154,13 @@ export default function ToolHome() {
             {result.step.note}
           </p>
         )}
+        {!hasError && result.ignoredCount > 0 && (
+          <p className="mt-2 text-xs leading-5 text-[var(--warning)]">
+            {result.ignoredCount} previously ticked signal{result.ignoredCount === 1 ? "" : "s"} do
+            not apply to this attachment type and {result.ignoredCount === 1 ? "is" : "are"} being
+            ignored — untick and retick below if you switch back.
+          </p>
+        )}
       </section>
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
@@ -210,7 +217,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Leaving with the email
             </p>
@@ -248,7 +255,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             ["Signals ticked", hasError ? "—" : String(result.selectedCount)],
             [
@@ -282,6 +289,8 @@ export default function ToolHome() {
           <div
             className="h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
             role="img"
+            aria-live="polite"
+            aria-atomic="true"
             aria-label={hasError ? "No score available" : `Exposure ${result.score} of 100`}
           >
             <span
@@ -293,7 +302,11 @@ export default function ToolHome() {
       </section>
 
       {!hasError && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <h2 className="text-base font-semibold">Clear these before you press Send</h2>
           {result.actions.length === 0 ? (
             <p className="mt-3 text-sm text-[var(--success)]">

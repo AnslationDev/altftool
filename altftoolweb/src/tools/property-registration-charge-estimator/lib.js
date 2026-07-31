@@ -314,8 +314,14 @@ export function estimateRegistrationCost({
     tdsApplies,
     tds194ia,
     tdsThreshold: TDS_194IA_THRESHOLD,
-    /** Amount actually paid to the seller after the buyer withholds TDS. */
-    netToSeller: considerationValue - tds194ia,
+    /**
+     * Amount actually paid to the seller after the buyer withholds TDS.
+     * TDS is computed on the chargeable value (the higher of consideration
+     * and circle rate), which can exceed the consideration itself when the
+     * circle rate is far above the agreement value — floor at zero so a
+     * buyer is never shown as owing the seller a negative amount.
+     */
+    netToSeller: Math.max(0, considerationValue - tds194ia),
 
     lineItems: [
       { label: "Stamp duty", amount: stampDuty },

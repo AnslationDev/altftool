@@ -99,7 +99,7 @@ export default function ToolHome() {
       `Current: ${result.currentMarks} of ${result.maxMarks} (${pct(result.currentPercent)}); target ${result.targetMarks}`,
       `Fee: ${money(result.feePerSubject)} × ${result.subjects} subject(s) = ${money(result.totalFee)}`,
       `Chance of a rise ${result.chanceOfIncrease}% (+${result.gainIfIncreased}), of a fall ${result.chanceOfDecrease}% (-${result.lossIfDecreased}), no change ${result.chanceUnchanged}%`,
-      `Expected change: ${result.expectedChange} marks → ${result.expectedMarks}`,
+      `Expected change: ${result.expectedChange} marks (${result.expectedPercentPoints >= 0 ? "+" : ""}${result.expectedPercentPoints}% of max) → ${result.expectedMarks}`,
       `Break-even chance of a rise: ${result.breakEvenChance === null ? "n/a" : `${result.breakEvenChance}%`}`,
       `Cost per expected mark: ${result.costPerExpectedMark === null ? "no expected gain" : money(result.costPerExpectedMark)}`,
       `Range: ${result.worstCaseMarks} to ${result.bestCaseMarks}`,
@@ -122,6 +122,12 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset every field back to the demo example values? This cannot be undone.")
+    ) {
+      return;
+    }
     setValues(BASE_DEFAULTS);
     setDeadline(isoPlusDays(today, 9));
     setCopied(false);
@@ -207,7 +213,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-live="polite">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -254,6 +260,12 @@ export default function ToolHome() {
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Total fee", hasError ? DASH : money(result.totalFee)],
+            [
+              "Expected change (% of max marks)",
+              hasError
+                ? DASH
+                : `${result.expectedPercentPoints >= 0 ? "+" : ""}${pct(result.expectedPercentPoints)}`,
+            ],
             [
               "Cost per expected mark",
               hasError

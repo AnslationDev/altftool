@@ -4250,7 +4250,7 @@ export default {
   "useCases": [
     "Costing a super visa application for parents where one applicant is over 79 and pays no biometrics fee",
     "Checking how much a family of six saves by applying for visitor visas together rather than separately",
-    "Budgeting a study permit alongside a spouse's open work permit, including the open work permit holder fee"
+    "Budgeting an open work permit application for the whole family, including the CAD 100 open work permit holder fee for each applicant"
   ],
   "benefits": [
     [
@@ -13059,7 +13059,7 @@ export default {
     ],
     [
       "How fast should I speak in a short-form video?",
-      "Short-form delivery usually lands between 160 and 200 words per minute, versus 130 to 150 for an explainer or a podcast. Faster delivery buys you more content per second but reduces comprehension, so slow down for anything with numbers or instructions in it."
+      "Short-form delivery usually lands between 160 and 200 words per minute, versus 120 to 150 for an explainer or a podcast. Faster delivery buys you more content per second but reduces comprehension, so slow down for anything with numbers or instructions in it."
     ]
   ]
 },

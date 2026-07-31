@@ -61,9 +61,6 @@ export const REVALUATION_STAGES = [
   },
 ];
 
-/** Boards treat the post-revaluation marks as final, higher or lower. */
-export const REVISED_MARKS_ARE_FINAL = true;
-
 /** Sanity ceilings. */
 export const MAX_SUBJECTS = 20;
 export const MAX_MARKS_CAP = 1000;
@@ -75,6 +72,13 @@ function round(value, places = 2) {
   const factor = 10 ** places;
   return Math.round((value + Number.EPSILON) * factor) / factor;
 }
+
+const INR_FORMAT = new Intl.NumberFormat("en-IN", {
+  style: "currency",
+  currency: "INR",
+  maximumFractionDigits: 0,
+});
+const formatINR = (value) => INR_FORMAT.format(value);
 
 function isNonNegative(value) {
   return Number.isFinite(value) && value >= 0;
@@ -190,8 +194,11 @@ export function weighRevaluation({
   const expectedMarks = round(current + expectedChange, 2);
   const expectedPercentPoints = round((expectedChange / max) * 100, 2);
 
-  // Break-even chance of a rise, given the downside you have priced in.
-  const breakEvenChance = gain > 0 ? round(((pDown / 100) * loss * 100) / gain, 2) : null;
+  // Break-even chance of a rise, given the downside you have priced in. Like
+  // every other probability here it cannot exceed 100% - when the downside
+  // math alone would already need more than a 100% chance of a rise to break
+  // even, the honest answer is "impossible on these numbers", capped at 100.
+  const breakEvenChance = gain > 0 ? Math.min(100, round(((pDown / 100) * loss * 100) / gain, 2)) : null;
 
   // Cost of each mark you can expect to gain. Meaningless when the expected
   // change is zero or negative, so it is reported as null rather than Infinity.
@@ -255,7 +262,7 @@ export function weighRevaluation({
   const verdict =
     reasons.length > 0
       ? reasons.join(" ")
-      : `On your estimates the application is worth ${totalFee} for an expected ${expectedChange} marks, about ${costPerExpectedMark} per mark. Start with verification or the photocopy: seeing the marked script turns a guess about the chance of a rise into evidence.`;
+      : `On your estimates the application is worth ${formatINR(totalFee)} for an expected ${expectedChange} marks, about ${formatINR(costPerExpectedMark)} per mark. Start with verification or the photocopy: seeing the marked script turns a guess about the chance of a rise into evidence.`;
 
   return {
     currentMarks: current,

@@ -91,7 +91,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Ground flaxseed + water",
         ratio: 1,
-        preparation: "1 tbsp ground flaxseed whisked with 3 tbsp water per egg, left 5 minutes to gel",
+        preparation: (quantity) =>
+          `${scaleAmt(1, quantity)} tbsp ground flaxseed whisked with ${scaleAmt(3, quantity)} tbsp water per egg, left 5 minutes to gel`,
         tags: ["vegan", "dairy-free", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Cookies", "Brownies", "Pancakes"],
         note: "Works as a binder, not as a leavener. Adds a faint nutty colour, so it suits darker bakes.",
@@ -99,7 +100,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Aquafaba (chickpea tin liquid)",
         ratio: 1,
-        preparation: "3 tbsp aquafaba per whole egg, or 2 tbsp per egg white",
+        preparation: (quantity) =>
+          `${scaleAmt(3, quantity)} tbsp aquafaba per whole egg, or ${scaleAmt(2, quantity)} tbsp per egg white`,
         tags: ["vegan", "dairy-free", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Meringue", "Mousse", "Macarons"],
         note: "The only common vegan swap that whips to stiff peaks, because the chickpea proteins and starches foam like albumen.",
@@ -107,7 +109,7 @@ export const SUBSTITUTIONS = [
       {
         name: "Unsweetened applesauce",
         ratio: 1,
-        preparation: "1/4 cup applesauce per egg",
+        preparation: (quantity) => `${scaleAmt(0.25, quantity)} cup applesauce per egg`,
         tags: ["vegan", "dairy-free", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Cakes", "Muffins"],
         note: "Adds moisture but no structure — do not use for more than two eggs in one recipe.",
@@ -123,7 +125,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Milk soured with lemon juice",
         ratio: 1,
-        preparation: "1 tbsp lemon juice or white vinegar topped up to 1 cup with milk, left 5 minutes to curdle",
+        preparation: (quantity) =>
+          `${scaleAmt(1, quantity)} tbsp lemon juice or white vinegar topped up to ${scaleAmt(1, quantity)} cup with milk, left 5 minutes to curdle`,
         tags: ["vegetarian", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Pancakes", "Scones", "Soda bread"],
         note: "The acid is the point: it reacts with baking soda for lift and tenderises gluten.",
@@ -131,7 +134,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Plain yogurt thinned with milk",
         ratio: 1,
-        preparation: "3/4 cup yogurt whisked with 1/4 cup milk per cup",
+        preparation: (quantity) =>
+          `${scaleAmt(0.75, quantity)} cup yogurt whisked with ${scaleAmt(0.25, quantity)} cup milk per cup`,
         tags: ["vegetarian", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Cakes", "Marinades"],
         note: "Similar acidity and thicker body, so batters hold air a little better.",
@@ -139,7 +143,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Soy milk soured with vinegar",
         ratio: 1,
-        preparation: "1 tbsp cider vinegar topped up to 1 cup with unsweetened soy milk",
+        preparation: (quantity) =>
+          `${scaleAmt(1, quantity)} tbsp cider vinegar topped up to ${scaleAmt(1, quantity)} cup with unsweetened soy milk`,
         tags: ["vegan", "dairy-free", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Pancakes", "Vegan cakes"],
         note: "Soy curdles more convincingly than oat or almond because of its protein content.",
@@ -155,7 +160,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Baking soda + cream of tartar",
         ratio: 1,
-        preparation: "1/4 tsp baking soda plus 1/2 tsp cream of tartar per teaspoon",
+        preparation: (quantity) =>
+          `${scaleAmt(0.25, quantity)} tsp baking soda plus ${scaleAmt(0.5, quantity)} tsp cream of tartar per teaspoon`,
         tags: ["vegan", "dairy-free", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Any bake"],
         note: "Baking powder is exactly this — an alkali plus a dry acid. Mix it in at the last moment because it is single acting and starts working on contact with liquid.",
@@ -163,7 +169,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Baking soda + buttermilk",
         ratio: 1,
-        preparation: "1/4 tsp baking soda per teaspoon, replacing 1/2 cup of the recipe's liquid with buttermilk",
+        preparation: (quantity) =>
+          `${scaleAmt(0.25, quantity)} tsp baking soda per teaspoon, replacing ${scaleAmt(0.5, quantity)} cup of the recipe's liquid with buttermilk`,
         tags: ["vegetarian", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Pancakes", "Muffins"],
         note: "You must reduce the other liquid by the same amount or the batter will be too loose.",
@@ -179,7 +186,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Plain flour + baking powder + salt",
         ratio: 1,
-        preparation: "1 cup plain flour plus 1 1/2 tsp baking powder plus 1/4 tsp salt",
+        preparation: (quantity) =>
+          `${scaleAmt(1, quantity)} cup plain flour plus ${scaleAmt(1.5, quantity)} tsp baking powder plus ${scaleAmt(0.25, quantity)} tsp salt`,
         tags: ["vegan", "dairy-free", "egg-free", "nut-free"],
         bestFor: ["Scones", "Victoria sponge", "Pancakes"],
         note: "This is the commercial formula. Whisk it thoroughly or you will get bitter pockets of powder.",
@@ -195,7 +203,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Plain flour + cornflour",
         ratio: 1,
-        preparation: "Take 1 cup plain flour, remove 2 tbsp, add 2 tbsp cornflour, then sift twice",
+        preparation: (quantity) =>
+          `Take ${scaleAmt(1, quantity)} cup plain flour, remove ${scaleAmt(2, quantity)} tbsp, add ${scaleAmt(2, quantity)} tbsp cornflour, then sift twice`,
         tags: ["vegan", "dairy-free", "egg-free", "nut-free"],
         bestFor: ["Sponge", "Chiffon cake", "Cupcakes"],
         note: "Cornflour is pure starch, so swapping 2 tbsp of it in drops the protein from about 11% to roughly 9%, which is what makes cake flour tender.",
@@ -211,7 +220,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Milk + melted butter",
         ratio: 1,
-        preparation: "3/4 cup whole milk whisked into 1/3 cup melted butter",
+        preparation: (quantity) =>
+          `${scaleAmt(0.75, quantity)} cup whole milk whisked into ${scaleAmt(1 / 3, quantity)} cup melted butter`,
         tags: ["vegetarian", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Sauces", "Soups", "Ganache"],
         note: "Matches the fat for cooking, but it will not whip — there is no intact fat globule structure to trap air.",
@@ -248,7 +258,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Blended cottage cheese + lemon juice",
         ratio: 1,
-        preparation: "1 cup cottage cheese blended smooth with 1 tbsp lemon juice",
+        preparation: (quantity) =>
+          `${scaleAmt(1, quantity)} cup cottage cheese blended smooth with ${scaleAmt(1, quantity)} tbsp lemon juice`,
         tags: ["vegetarian", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Dips", "Cheesecake"],
         note: "Far higher in protein and lower in fat, so it browns faster.",
@@ -293,7 +304,8 @@ export const SUBSTITUTIONS = [
       {
         name: "White sugar + molasses",
         ratio: 1,
-        preparation: "1 cup granulated sugar mixed with 1 tbsp molasses for light, 2 tbsp for dark",
+        preparation: (quantity) =>
+          `${scaleAmt(1, quantity)} cup granulated sugar mixed with ${scaleAmt(1, quantity)} tbsp molasses for light, ${scaleAmt(2, quantity)} tbsp for dark`,
         tags: ["vegan", "dairy-free", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Cookies", "Sauces", "Marinades"],
         note: "This is literally how brown sugar is made commercially — refined sugar with molasses added back.",
@@ -323,7 +335,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Granulated sugar + water",
         ratio: 1.25,
-        preparation: "1 1/4 cup sugar dissolved in 1/4 cup extra liquid per cup of honey",
+        preparation: (quantity) =>
+          `${scaleAmt(1.25, quantity)} cup sugar dissolved in ${scaleAmt(0.25, quantity)} cup extra liquid per cup of honey`,
         tags: ["vegan", "dairy-free", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Baking"],
         note: "Honey is about 17% water and sweeter than sucrose, so you add sugar and put the water back. Raise the oven temperature by about 15°C compared with a honey bake, which browns fast.",
@@ -338,7 +351,12 @@ export const SUBSTITUTIONS = [
     substitutes: [
       {
         name: "Dried herbs",
-        ratio: 1 / 3,
+        // 1 tbsp fresh herbs = 1 tsp dried (the standard 3:1 rule), so with a
+        // resultUnit of "tsp" the ratio is 1 (quantity is in tbsp of fresh herbs,
+        // 1-for-1 replaced by that many tsp of dried) rather than 1/3, which would
+        // display as an unmeasurable "1/3 tbsp" instead of a clean "1 tsp".
+        ratio: 1,
+        resultUnit: "tsp",
         tags: ["vegan", "dairy-free", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Stews", "Braises", "Rubs"],
         note: "Drying concentrates the volatile oils about threefold, so use a third as much and add it early so it can rehydrate.",
@@ -465,7 +483,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Evaporated milk + water",
         ratio: 1,
-        preparation: "1/2 cup evaporated milk plus 1/2 cup water per cup",
+        preparation: (quantity) =>
+          `${scaleAmt(0.5, quantity)} cup evaporated milk plus ${scaleAmt(0.5, quantity)} cup water per cup`,
         tags: ["vegetarian", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Baking", "Sauces"],
         note: "Evaporated milk is milk with about 60% of the water removed, so diluting it half and half rebuilds ordinary milk.",
@@ -503,7 +522,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Stock + vinegar",
         ratio: 1,
-        preparation: "1 cup stock plus 1 tbsp wine vinegar or lemon juice",
+        preparation: (quantity) =>
+          `${scaleAmt(1, quantity)} cup stock plus ${scaleAmt(1, quantity)} tbsp wine vinegar or lemon juice`,
         tags: ["egg-free", "gluten-free", "nut-free"],
         bestFor: ["Deglazing", "Braises", "Risotto"],
         note: "Wine contributes acid and savoury depth, not alcohol flavour, so acid plus stock covers both.",
@@ -511,7 +531,8 @@ export const SUBSTITUTIONS = [
       {
         name: "White grape juice + vinegar",
         ratio: 1,
-        preparation: "1 cup unsweetened white grape juice plus 1 tbsp cider vinegar",
+        preparation: (quantity) =>
+          `${scaleAmt(1, quantity)} cup unsweetened white grape juice plus ${scaleAmt(1, quantity)} tbsp cider vinegar`,
         tags: ["vegan", "dairy-free", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Pan sauces", "Poaching fruit"],
         note: "Sweeter than wine, so cut any other sugar in the recipe.",
@@ -549,7 +570,8 @@ export const SUBSTITUTIONS = [
       {
         name: "Tomato paste + water",
         ratio: 1,
-        preparation: "1/2 cup tomato paste whisked with 1/2 cup water per cup",
+        preparation: (quantity) =>
+          `${scaleAmt(0.5, quantity)} cup tomato paste whisked with ${scaleAmt(0.5, quantity)} cup water per cup`,
         tags: ["vegan", "dairy-free", "egg-free", "gluten-free", "nut-free"],
         bestFor: ["Pasta sauce", "Stews", "Pizza base"],
         note: "Tomato paste is roughly double-strength sauce, so half paste and half water rebuilds it. Season it — paste has no salt or aromatics.",
@@ -641,7 +663,6 @@ const isBadNumber = (value) => typeof value !== "number" || !Number.isFinite(val
 export function toKitchenAmount(value) {
   if (isBadNumber(value) || value < 0) return "—";
   if (value === 0) return "0";
-  if (value >= 10) return String(Math.round(value));
 
   const whole = Math.floor(value);
   const remainder = value - whole;
@@ -665,6 +686,23 @@ export function toKitchenAmount(value) {
   return `${wholePart} ${fractionLabel}`;
 }
 
+/**
+ * Scales a preparation-step quantity to the amount the recipe actually calls for.
+ *
+ * Every `preparation` string below is written for quantity = 1 of the ingredient's
+ * own default unit (e.g. "per egg", "per teaspoon", "per cup"). `base` is the
+ * number that appears in that string at quantity = 1; multiplying by the quantity
+ * actually entered and re-snapping to a measurable fraction keeps the preparation
+ * text in agreement with the headline amount instead of staying frozen at the 1x
+ * figure regardless of what the user asked for.
+ * @param {number} base the quantity at 1x, as written in the preparation text
+ * @param {number} quantity the amount actually requested
+ * @returns {string}
+ */
+function scaleAmt(base, quantity) {
+  return toKitchenAmount(base * quantity);
+}
+
 /** Find ingredients whose name or an alias contains the query. Empty query returns everything. */
 export function searchIngredients(query) {
   const needle = String(query || "").trim().toLowerCase();
@@ -679,15 +717,25 @@ export function searchIngredients(query) {
 /**
  * Look up substitutes for one ingredient and scale them to the amount asked for.
  *
+ * The display/quantity unit is always the ingredient's own `defaultUnit`
+ * (e.g. buttermilk is always in cups, baking powder always in teaspoons).
+ * There is no cross-unit conversion table in this module, so letting a caller
+ * pick an arbitrary unrelated unit (say, cups for baking powder) would make
+ * `quantity * ratio` numerically nonsensical against the ratios and
+ * preparation text below, which are all calibrated to `defaultUnit`. A
+ * substitute can still convert to a *different* unit than the original via
+ * its own `resultUnit` (e.g. garlic cloves -> teaspoons of powder) — that is
+ * a deliberate, per-substitute conversion, not a free-form user choice.
+ *
  * @param {object} input
  * @param {string} input.ingredientId  An id from SUBSTITUTIONS.
- * @param {number} input.quantity      How much the recipe calls for.
- * @param {string} [input.unit]        Display unit; defaults to the entry's own unit.
+ * @param {number} input.quantity      How much the recipe calls for, in the
+ *   ingredient's own default unit.
  * @param {string} [input.diet]        A DIET_FILTERS id, or "any".
  * @returns {object} matches and metadata, or { error }.
  */
 export function findSubstitutes(input = {}) {
-  const { ingredientId, quantity, unit, diet = "any" } = input;
+  const { ingredientId, quantity, diet = "any" } = input;
 
   const entry = SUBSTITUTIONS.find((item) => item.id === ingredientId);
   if (!entry) {
@@ -703,7 +751,7 @@ export function findSubstitutes(input = {}) {
     return { error: "That amount is beyond household scale — enter 1000 or less." };
   }
 
-  const displayUnit = unit || entry.defaultUnit;
+  const displayUnit = entry.defaultUnit;
   const filtered =
     diet === "any"
       ? entry.substitutes
@@ -728,7 +776,10 @@ export function findSubstitutes(input = {}) {
       unit: substituteUnit,
       amount: Math.round((amount + Number.EPSILON) * 1000) / 1000,
       amountLabel: `${toKitchenAmount(amount)} ${substituteUnit}${plural}`.trim(),
-      preparation: substitute.preparation || "",
+      preparation:
+        typeof substitute.preparation === "function"
+          ? substitute.preparation(quantity)
+          : substitute.preparation || "",
       bestFor: substitute.bestFor,
       note: substitute.note,
       tags: substitute.tags,

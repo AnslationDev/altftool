@@ -435,7 +435,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -447,7 +451,11 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? "Fix the highlighted input to see a total."
-                : `${cad(result.totalCad)} to IRCC plus ${money(result.indianChargesInr)} paid in India`}
+                : result.cardMarkupInr + result.gstOnMarkupInr > 0
+                  ? `${cad(result.totalCad)} to IRCC plus ${money(
+                      result.cardMarkupInr + result.gstOnMarkupInr,
+                    )} card markup and GST plus ${money(result.indianChargesInr)} paid in India`
+                  : `${cad(result.totalCad)} to IRCC plus ${money(result.indianChargesInr)} paid in India`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

@@ -360,12 +360,30 @@ export function assessExposure({ typeId, factorIds = [] } = {}) {
   }
 
   const delta = applied.reduce((sum, entry) => sum + entry.delta, 0);
-  const score = Math.min(MAX_SCORE, Math.max(MIN_SCORE, type.base + delta));
+  const rawSum = type.base + delta; // unclamped — can run past 0-100 in either direction
+  const clampScore = (value) => Math.min(MAX_SCORE, Math.max(MIN_SCORE, value));
+  const score = clampScore(rawSum);
   const band = EXPOSURE_BANDS.find((entry) => score >= entry.min) || EXPOSURE_BANDS[EXPOSURE_BANDS.length - 1];
 
-  const raising = applied.filter((entry) => entry.delta > 0).sort((a, b) => b.delta - a.delta);
-  const lowering = applied.filter((entry) => entry.delta < 0).sort((a, b) => a.delta - b.delta);
-  const available = RISK_FACTORS.filter((entry) => entry.delta < 0 && !seen.has(entry.id));
+  // A factor's raw `delta` is its nominal weight, not its real marginal effect
+  // once the 0-100 clamp has already absorbed part of the total: e.g. if the
+  // raw sum is 110 and the score is clamped to 100, removing a +25 factor
+  // only actually drops the visible score by however far the sum falls below
+  // 100 — not the full 25. `actualImpact` is that real, clamp-aware swing in
+  // score points for taking the described action (removing an applied risk
+  // factor, or adding an available control).
+  const raising = applied
+    .filter((entry) => entry.delta > 0)
+    .map((entry) => ({ ...entry, actualImpact: score - clampScore(rawSum - entry.delta) }))
+    .sort((a, b) => b.actualImpact - a.actualImpact);
+  const lowering = applied
+    .filter((entry) => entry.delta < 0)
+    .map((entry) => ({ ...entry, actualImpact: clampScore(rawSum - entry.delta) - score }))
+    .sort((a, b) => b.actualImpact - a.actualImpact);
+  const available = RISK_FACTORS.filter((entry) => entry.delta < 0 && !seen.has(entry.id)).map((entry) => ({
+    ...entry,
+    actualImpact: score - clampScore(rawSum + entry.delta),
+  }));
 
   return {
     typeLabel: type.label,
@@ -373,13 +391,16 @@ export function assessExposure({ typeId, factorIds = [] } = {}) {
     reach: type.reach,
     note: type.note,
     delta,
+    rawSum,
     score,
     band: band.id,
     bandLabel: band.label,
     bandHint: band.hint,
     raising,
     lowering,
-    // Fixing the biggest positive delta first is always the fastest drop.
+    // Fixing the factor with the biggest real (clamp-aware) impact first is
+    // always the fastest drop — not necessarily the factor with the largest
+    // nominal delta.
     biggestFix: raising[0] || null,
     availableControls: available,
   };
