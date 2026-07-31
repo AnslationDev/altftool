@@ -121,7 +121,7 @@ export default function ToolHome() {
       </header>
 
       <div
-        className="mb-6 flex items-start gap-3 rounded-xl bg-[var(--danger-soft)] p-4 text-sm leading-6 text-[var(--danger)] ring-1 ring-[var(--danger)]/35"
+        className="mb-6 flex items-start gap-3 rounded-xl bg-[var(--danger-soft)] p-4 text-sm leading-6 text-[var(--danger-text)] ring-1 ring-[var(--danger)]/35"
         role="note"
       >
         <PhoneCall className="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true" />
