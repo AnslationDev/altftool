@@ -283,11 +283,9 @@ function getUrlLink(value) {
                   </span>
 
                   <span className="text-(--muted-foreground) text-sm">
-                    {brand?.visits
-                      ? `${brand.visits} People Visited This Week`
-                      : clampRating(brand?.rating) > 0
-                        ? `${getRatingLabel(brand.rating)} · ${formatRating(brand.rating)}/5 rating`
-                        : "Recently added"}
+                    {clampRating(brand?.rating) > 0
+                      ? `${getRatingLabel(brand.rating)} · ${formatRating(brand.rating)}/5 rating`
+                      : "Recently added"}
                   </span>
                 </div>
                 <Link href={`/brandrating/${getUrlLink(activeCategory)}/pdetail/${getUrlLink(brand?.name)}`} className="w-full sm:w-auto"> 

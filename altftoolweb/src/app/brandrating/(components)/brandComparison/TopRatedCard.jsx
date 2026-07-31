@@ -128,7 +128,7 @@ export default function TopRated({
         <div className="text-center animate-slide-right">
           <h2 className="section-title">Top rated picks</h2>
           <p className="section-subtitle">
-            Based on thousands of verified buyer reviews and performance tests.
+            Ranked by rating and key features to help you compare and decide faster.
           </p>
         </div>
 
