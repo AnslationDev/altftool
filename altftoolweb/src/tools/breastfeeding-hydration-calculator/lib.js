@@ -192,7 +192,13 @@ export function computeLactationHydration({
 
   let milkMlPerDay = estimate.milkMlPerDay;
   let milkSource = "estimated";
-  if (isNum(measuredMilkMlPerDay) && measuredMilkMlPerDay > 0) {
+  if (isNum(measuredMilkMlPerDay)) {
+    if (measuredMilkMlPerDay <= 0) {
+      return {
+        error:
+          "Measured milk output must be greater than 0 ml — leave the field blank to use the stage-based estimate instead.",
+      };
+    }
     if (measuredMilkMlPerDay > MAX_MILK_ML_PER_DAY) {
       return {
         error: `A daily milk output above ${MAX_MILK_ML_PER_DAY} ml is outside the reported range — re-check the figure.`,

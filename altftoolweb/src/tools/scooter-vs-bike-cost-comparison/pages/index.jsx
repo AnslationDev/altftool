@@ -112,15 +112,21 @@ export default function ToolHome() {
     if (hasError) return "";
     const line = (v) =>
       `${v.name}: ${INR.format(v.total)} total — depreciation ${INR.format(v.depreciation)}, fuel ${INR.format(v.fuel)}, service ${INR.format(v.servicing)} (${v.services}), tyres ${INR.format(v.tyres)} (${v.tyreSets} sets), insurance ${INR.format(v.insurance)}; ${INR2.format(v.perKm)}/km`;
+    const sameVariableCost =
+      Math.abs(result.scooter.variablePerKm - result.bike.variablePerKm) <= 1e-9;
     return [
       "Scooter vs Motorcycle — cost of ownership",
       `${result.years} years at ${NUM.format(result.annualKm)} km a year`,
       line(result.scooter),
       line(result.bike),
-      `Cheaper: ${result.cheaperName} by ${INR.format(result.difference)} (${INR.format(result.differencePerMonth)} a month)`,
+      result.isTie
+        ? `Both cost the same: ${INR.format(result.cheaperTotal)} over ${result.years} year${result.years === 1 ? "" : "s"}`
+        : `Cheaper: ${result.cheaperName} by ${INR.format(result.difference)} (${INR.format(result.differencePerMonth)} a month)`,
       result.breakEven
         ? `They break even near ${NUM.format(result.breakEven.annualKm)} km a year`
-        : "Both cost the same per kilometre to run",
+        : sameVariableCost
+          ? "Both cost the same per kilometre to run"
+          : `${result.scooter.variablePerKm <= result.bike.variablePerKm ? result.scooter.name : result.bike.name} is cheaper per kilometre at every distance here`,
     ].join("\n");
   }, [hasError, result]);
 
@@ -136,6 +142,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will discard both vehicles' names, on-road prices, mileage, service and tyre intervals, insurance and resale figures, and your trip assumptions, and restore the defaults. This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setTrip(DEFAULT_TRIP);
     setScooterForm(DEFAULT_SCOOTER);
     setBikeForm(DEFAULT_BIKE);
@@ -309,17 +322,19 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Cheaper to own
             </p>
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
-              {hasError ? DASH : result.cheaperName}
+              {hasError ? DASH : result.isTie ? "Tie" : result.cheaperName}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? "Fix the input above to compare."
-                : `${INR.format(result.difference)} less over ${result.years} year${result.years === 1 ? "" : "s"} — about ${INR.format(result.differencePerMonth)} a month`}
+                : result.isTie
+                  ? `Both cost the same over ${result.years} year${result.years === 1 ? "" : "s"} — ${INR.format(result.cheaperTotal)} each.`
+                  : `${INR.format(result.difference)} less over ${result.years} year${result.years === 1 ? "" : "s"} — about ${INR.format(result.differencePerMonth)} a month`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -351,7 +366,11 @@ export default function ToolHome() {
           </p>
         )}
 
-        <dl className="mt-3 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-3 divide-y divide-[var(--border)] text-sm"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

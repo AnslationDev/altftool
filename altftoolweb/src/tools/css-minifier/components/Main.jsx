@@ -9,17 +9,15 @@ import {
   Copy,
   Download,
   Check,
-  Sliders,
   Settings,
-  ArrowRight,
 } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
 function formatBytes(bytes) {
   if (bytes === 0) return "0 Bytes";
   const k = 1024;
-  const sizes = ["Bytes", "KB", "MB"];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  const sizes = ["Bytes", "KB", "MB", "GB", "TB"];
+  const i = Math.min(sizes.length - 1, Math.floor(Math.log(bytes) / Math.log(k)));
   return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 }
 
@@ -27,6 +25,17 @@ function compressCSS(css, preserveImportantComments = true) {
   if (!css || !css.trim()) return "";
 
   let minified = css;
+
+  // Protect quoted string literals (content values, url(), attr selectors,
+  // etc.) before anything else touches the text, so comment-stripping and
+  // whitespace-collapse can never reach inside them and corrupt the literal
+  // value the author wrote (e.g. content: "/* not a comment */" or a
+  // comma/space-sensitive string like content: "Hello,  World").
+  const strings = [];
+  minified = minified.replace(/"(?:[^"\\]|\\.)*"|'(?:[^'\\]|\\.)*'/g, (match) => {
+    strings.push(match);
+    return `___STRING_PLACEHOLDER_${strings.length - 1}___`;
+  });
 
   if (preserveImportantComments) {
     // Temporarily replace important comments starting with /*! with placeholders
@@ -45,20 +54,29 @@ function compressCSS(css, preserveImportantComments = true) {
       .replace(/\s*([\{\};,])\s*/g, "$1")
       .replace(/;\}/g, "}");
 
-    // Restore placeholders
+    // Restore placeholders. The surrounding whitespace-collapse pass above
+    // already normalised whatever separator (if any) originally followed the
+    // comment, so the comment text itself is restored verbatim — no forced
+    // newline, which previously made output larger than the input and left
+    // a stray extra space before the next token.
     placeholders.forEach((comment, index) => {
-      minified = minified.replace(`___COMMENT_PLACEHOLDER_${index}___`, comment + "\n");
+      minified = minified.replace(`___COMMENT_PLACEHOLDER_${index}___`, () => comment);
     });
   } else {
     // Strip all comments
     minified = minified.replace(/\/\*[\s\S]*?\*\//g, "");
-    
+
     // Compress whitespace rules
     minified = minified
       .replace(/\s+/g, " ")
       .replace(/\s*([\{\};,])\s*/g, "$1")
       .replace(/;\}/g, "}");
   }
+
+  // Restore quoted string literals verbatim, exactly as written.
+  strings.forEach((str, index) => {
+    minified = minified.replace(`___STRING_PLACEHOLDER_${index}___`, () => str);
+  });
 
   return minified.trim();
 }
@@ -74,6 +92,12 @@ export default function MainComponent() {
   const [error, setError] = useState("");
 
   const loadSample = () => {
+    if (
+      input.trim() &&
+      !window.confirm("Load the sample CSS? This will replace your current input and cannot be undone.")
+    ) {
+      return;
+    }
     const sample = `/*!
  * Custom CSS Framework License
  * (c) 2026 Developer Team
@@ -154,6 +178,12 @@ body {
   };
 
   const handleClear = () => {
+    if (
+      (input.trim() || output.trim()) &&
+      !window.confirm("Clear the input and output? This cannot be undone.")
+    ) {
+      return;
+    }
     setInput("");
     setOutput("");
     setStats(null);
@@ -176,12 +206,19 @@ body {
 
       {/* Notifications */}
       {success && (
-        <div className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-sm">
+        <div
+          role="status"
+          aria-live="polite"
+          className="mb-6 p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-sm"
+        >
           {success}
         </div>
       )}
       {error && (
-        <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-600 text-sm">
+        <div
+          role="alert"
+          className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-600 text-sm"
+        >
           {error}
         </div>
       )}
@@ -305,7 +342,7 @@ body {
             <textarea
               readOnly
               value={output}
-              className="w-full h-40 bg-slate-900 border border-slate-800 text-slate-300 text-xs rounded-lg p-4 outline-none font-mono resize-y"
+              className="w-full h-40 bg-(--page) border border-(--border) text-(--foreground) text-xs rounded-lg p-4 outline-none font-mono resize-y shadow-inner"
             />
           </div>
         )}

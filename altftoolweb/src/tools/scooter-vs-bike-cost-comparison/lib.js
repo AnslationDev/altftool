@@ -152,15 +152,23 @@ export function compareTwoWheelers({ scooter, bike, annualKm, years, fuelPrice }
   const a = vehicleCost(scooter, annualKm, years, fuelPrice);
   const b = vehicleCost(bike, annualKm, years, fuelPrice);
 
+  const isTie = a.total === b.total;
   const cheaper = a.total <= b.total ? a : b;
   const dearer = a.total <= b.total ? b : a;
   const difference = dearer.total - cheaper.total;
   const differencePerMonth = difference / (years * 12);
 
-  // Where the two total-cost lines cross, in total kilometres.
+  // Where the two total-cost lines cross, in total kilometres. `breakEven`
+  // stays null both when the per-km rates are essentially equal (true
+  // parity) and when the crossing point falls at a negative distance (one
+  // machine is cheaper on both fixed AND variable cost, so there is no
+  // break-even within the positive range) — those two cases are tracked
+  // separately below so the notes below can tell them apart.
+  const VARIABLE_PARITY_EPSILON = 1e-9;
   const varGap = a.variablePerKm - b.variablePerKm;
+  const sameVariableCost = Math.abs(varGap) <= VARIABLE_PARITY_EPSILON;
   let breakEven = null;
-  if (Math.abs(varGap) > 1e-9) {
+  if (!sameVariableCost) {
     const km = (b.fixed - a.fixed) / varGap;
     if (km > 0) {
       breakEven = {
@@ -173,22 +181,33 @@ export function compareTwoWheelers({ scooter, bike, annualKm, years, fuelPrice }
   }
 
   const notes = [];
-  notes.push(
-    `Over ${years} year${years === 1 ? "" : "s"} and ${Math.round(a.totalKm).toLocaleString("en-IN")} km, "${cheaper.name}" costs ${Math.round(difference).toLocaleString("en-IN")} rupees less — about ${Math.round(differencePerMonth).toLocaleString("en-IN")} a month.`,
-  );
+  if (isTie) {
+    notes.push(
+      `Over ${years} year${years === 1 ? "" : "s"} and ${Math.round(a.totalKm).toLocaleString("en-IN")} km, "${a.name}" and "${b.name}" cost exactly the same to own — ${Math.round(a.total).toLocaleString("en-IN")} rupees each.`,
+    );
+  } else {
+    notes.push(
+      `Over ${years} year${years === 1 ? "" : "s"} and ${Math.round(a.totalKm).toLocaleString("en-IN")} km, "${cheaper.name}" costs ${Math.round(difference).toLocaleString("en-IN")} rupees less — about ${Math.round(differencePerMonth).toLocaleString("en-IN")} a month.`,
+    );
+  }
   if (breakEven) {
     notes.push(
       `The two even out at roughly ${Math.round(breakEven.annualKm).toLocaleString("en-IN")} km a year. Below that "${breakEven.cheaperBelow}" is cheaper overall; above it "${breakEven.cheaperAbove}" pulls ahead, because the cheaper running cost has more distance to work on.`,
     );
-  } else {
+  } else if (sameVariableCost) {
     notes.push(
       "Both machines cost the same per kilometre to run, so the purchase price and resale decide it at any distance.",
     );
+  } else {
+    const cheaperPerKm = a.variablePerKm <= b.variablePerKm ? a : b;
+    const dearerPerKm = cheaperPerKm === a ? b : a;
+    notes.push(
+      `"${cheaperPerKm.name}" is cheaper to run per kilometre than "${dearerPerKm.name}" at every distance here, so there is no break-even point — it stays ahead whether you ride a little or a lot.`,
+    );
   }
-  const deprShareA = (a.depreciation / a.total) * 100;
-  const deprShareB = (b.depreciation / b.total) * 100;
+  const deprShareOfDearer = (dearer.depreciation / dearer.total) * 100;
   notes.push(
-    `Depreciation is ${Math.round(Math.max(deprShareA, deprShareB))}% of the bigger bill here. Resale assumptions move the answer more than fuel does, so check real listings for the models you are choosing between.`,
+    `Depreciation is ${Math.round(deprShareOfDearer)}% of the bigger bill here. Resale assumptions move the answer more than fuel does, so check real listings for the models you are choosing between.`,
   );
   notes.push(
     "Not everything here is money: a scooter's step-through frame, underseat storage and automatic gearbox suit short urban trips, while a motorcycle's gearing, wheels and seating suit long highway runs. Price it, then ride both.",
@@ -201,6 +220,7 @@ export function compareTwoWheelers({ scooter, bike, annualKm, years, fuelPrice }
     cheaperTotal: cheaper.total,
     difference,
     differencePerMonth,
+    isTie,
     breakEven,
     years,
     annualKm,

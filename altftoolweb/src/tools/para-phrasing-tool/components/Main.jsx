@@ -1,21 +1,14 @@
 "use client";
 import { useState } from "react";
-import {
-  RefreshCw,
-  Copy,
-  Check,
-  Wand2,
-  FileText,
-  ArrowRight,
-} from "lucide-react";
+import { Copy, Check, Wand2 } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import Features from "./Features";
 
 export default function Main() {
   const [inputText, setInputText] = useState("");
   const [paraphrasedText, setParaphrasedText] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [mode, setMode] = useState("standard");
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const paraphrase = () => {
     if (!inputText.trim()) {
@@ -23,15 +16,11 @@ export default function Main() {
       return;
     }
 
-    setLoading(true);
-    setParaphrasedText("");
-
-    // Simulate AI paraphrasing with timeout
-    setTimeout(() => {
-      const result = generateParaphrase(inputText, mode);
-      setParaphrasedText(result);
-      setLoading(false);
-    }, 1500);
+    // The synonym/rule substitution below is plain synchronous string work —
+    // no model call, no network request — so the result is computed and
+    // shown immediately, matching this tool's own "instant" copy.
+    const result = generateParaphrase(inputText, mode);
+    setParaphrasedText(result);
   };
 
   const generateParaphrase = (text, mode) => {
@@ -89,7 +78,14 @@ export default function Main() {
       let words = sentence.split(/\s+/);
 
       words = words.map((word) => {
-        const lowerWord = word.toLowerCase().replace(/[^\w]/g, "");
+        // Strip only the leading/trailing punctuation (comma, quote,
+        // parenthesis, colon, etc.) so it can be reattached after
+        // substitution — a bare `replace(/[^\w]/g, "")` used to discard it
+        // entirely, turning "good," into "excellent" with the comma gone.
+        const leadingPunct = (word.match(/^[^\w]*/) || [""])[0];
+        const trailingPunct = (word.match(/[^\w]*$/) || [""])[0];
+        const core = word.slice(leadingPunct.length, word.length - trailingPunct.length);
+        const lowerWord = core.toLowerCase();
 
         if (synonymMap[lowerWord]) {
           const synonyms = synonymMap[lowerWord];
@@ -97,12 +93,11 @@ export default function Main() {
             synonyms[Math.floor(Math.random() * synonyms.length)];
 
           // Preserve original capitalization
-          if (word[0] === word[0].toUpperCase()) {
-            return (
-              randomSynonym.charAt(0).toUpperCase() + randomSynonym.slice(1)
-            );
-          }
-          return randomSynonym;
+          const cased =
+            core[0] === core[0].toUpperCase()
+              ? randomSynonym.charAt(0).toUpperCase() + randomSynonym.slice(1)
+              : randomSynonym;
+          return leadingPunct + cased + trailingPunct;
         }
         return word;
       });
@@ -136,14 +131,20 @@ export default function Main() {
   };
 
   const copyToClipboard = () => {
-    navigator.clipboard.writeText(paraphrasedText);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    if (!paraphrasedText) return;
+    copy("result", paraphrasedText, { label: "paraphrased text" });
   };
 
   const clearAll = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Clear the original and paraphrased text? This cannot be undone.")
+    ) {
+      return;
+    }
     setInputText("");
     setParaphrasedText("");
+    resetCopyState();
   };
 
   const loadSample = () => {
@@ -178,7 +179,9 @@ export default function Main() {
           {["standard", "formal", "simple", "creative"].map((m) => (
             <button
               key={m}
+              type="button"
               onClick={() => setMode(m)}
+              aria-pressed={mode === m}
               className={`px-4 py-3 rounded-lg text-sm font-medium transition-all duration-200 border cursor-pointer
               ${
                 mode === m
@@ -225,6 +228,7 @@ export default function Main() {
 
             <div className="flex gap-2">
               <button
+                type="button"
                 onClick={clearAll}
                 className="bg-(--muted) text-(--foreground) hover:bg-(--card) border border-(--border)
               font-medium px-4 py-2 rounded-lg text-sm transition-all cursor-pointer"
@@ -233,22 +237,13 @@ export default function Main() {
               </button>
 
               <button
+                type="button"
                 onClick={paraphrase}
-                disabled={loading}
                 className="bg-(--primary) text-(--primary-foreground) font-semibold px-5 py-2 rounded-lg cursor-pointer
               shadow-sm hover:opacity-90 transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-sm"
               >
-                {loading ? (
-                  <>
-                    <RefreshCw className="w-4 h-4 animate-spin" />
-                    Processing...
-                  </>
-                ) : (
-                  <>
-                    <Wand2 className="w-4 h-4" />
-                    Paraphrase
-                  </>
-                )}
+                <Wand2 className="w-4 h-4" />
+                Paraphrase
               </button>
             </div>
           </div>
@@ -263,13 +258,15 @@ export default function Main() {
 
             {paraphrasedText && (
               <button
+                type="button"
                 onClick={copyToClipboard}
+                aria-label={isCopied("result") ? "Copied the paraphrased text to clipboard" : "Copy the paraphrased text"}
                 className="bg-(--muted) hover:bg-(--card) border border-(--border) cursor-pointer
               text-(--foreground) font-medium px-4 py-2 rounded-lg transition-all text-sm flex items-center gap-2"
               >
-                {copied ? (
+                {isCopied("result") ? (
                   <>
-                    <Check className="w-4 h-4 text-green-500" />
+                    <Check className="w-4 h-4 text-success" />
                     Copied!
                   </>
                 ) : (
@@ -280,21 +277,18 @@ export default function Main() {
                 )}
               </button>
             )}
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
 
           <div
-            className="flex-1 min-h-70 sm:min-h-80 lg:min-h-96 
-        bg-(--muted) border border-(--border) text-(--foreground) 
+            aria-live="polite"
+            className="flex-1 min-h-70 sm:min-h-80 lg:min-h-96
+        bg-(--muted) border border-(--border) text-(--foreground)
         rounded-lg px-4 py-3 overflow-y-auto"
           >
-            {loading ? (
-              <div className="flex flex-col items-center justify-center h-full">
-                <RefreshCw className="w-10 h-10 text-(--primary) animate-spin mb-4" />
-                <p className="text-(--primary) font-medium">
-                  Generating paraphrase...
-                </p>
-              </div>
-            ) : paraphrasedText ? (
+            {paraphrasedText ? (
               <p className="leading-relaxed whitespace-pre-wrap">
                 {paraphrasedText}
               </p>

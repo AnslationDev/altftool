@@ -24,11 +24,6 @@ const DEFAULTS = {
   roundUnit: "10",
 };
 
-const money = new Intl.NumberFormat("en-IN", {
-  style: "currency",
-  currency: "INR",
-  maximumFractionDigits: 0,
-});
 const moneyExact = new Intl.NumberFormat("en-IN", {
   style: "currency",
   currency: "INR",
@@ -37,7 +32,6 @@ const moneyExact = new Intl.NumberFormat("en-IN", {
 });
 const pct = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 });
 
-const fmtMoney = (value) => (Number.isFinite(value) ? money.format(value) : "—");
 const fmtMoneyExact = (value) => (Number.isFinite(value) ? moneyExact.format(value) : "—");
 const fmtPct = (value) => (Number.isFinite(value) ? `${pct.format(value)}%` : "—");
 
@@ -127,6 +121,17 @@ export default function ToolHome() {
     if (!ok) return;
     setCopied(true);
     setTimeout(() => setCopied(false), 1400);
+  };
+
+  const reset = () => {
+    if (
+      !window.confirm(
+        "Reset all fields? This will clear your entered bill, tax, tip, and rounding choices.",
+      )
+    ) {
+      return;
+    }
+    setForm(DEFAULTS);
   };
 
   const inputClass =
@@ -302,7 +307,7 @@ export default function ToolHome() {
               </button>
               <button
                 type="button"
-                onClick={() => setForm(DEFAULTS)}
+                onClick={reset}
                 aria-label="Reset all inputs"
                 className="inline-flex min-h-11 items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
               >
@@ -321,12 +326,12 @@ export default function ToolHome() {
                 {result.error}
               </div>
             ) : (
-              <>
+              <div aria-live="polite" role="status">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                   Each person pays
                 </p>
                 <p className="mt-1 text-4xl font-semibold text-[var(--primary)] sm:text-5xl">
-                  {fmtMoney(result.perPerson)}
+                  {fmtMoneyExact(result.perPerson)}
                 </p>
                 <p className="mt-2 text-sm text-[var(--muted-foreground)]">
                   {fmtMoneyExact(result.perPerson)} × {result.people}{" "}
@@ -386,7 +391,7 @@ export default function ToolHome() {
                   Some restaurants already add a service charge to the bill — in India it is voluntary, so
                   check the receipt before tipping on top.
                 </p>
-              </>
+              </div>
             )}
           </section>
         </div>

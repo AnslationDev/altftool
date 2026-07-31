@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, IdCard, RotateCcw, X } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   LANDLORD_PAN_RENT_LIMIT,
   PAN_HOLDER_TYPES,
@@ -41,7 +42,7 @@ export default function ToolHome() {
   const [name, setName] = useState(DEFAULTS.name);
   const [bulkMode, setBulkMode] = useState(false);
   const [bulk, setBulk] = useState(DEFAULTS.bulk);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const single = useMemo(() => decodePanWithName({ pan, name }), [pan, name]);
   const batch = useMemo(() => (bulkMode ? decodePanList(bulk) : null), [bulkMode, bulk]);
@@ -75,23 +76,26 @@ export default function ToolHome() {
     ].join("\n");
   }, [bulkMode, batch, single]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "PAN decoding result" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        bulkMode
+          ? "Reset the decoder? This clears the pasted PAN list and cannot be undone."
+          : "Reset the decoder? This clears the PAN and name you entered.",
+      )
+    ) {
+      return;
+    }
     setPan(DEFAULTS.pan);
     setName(DEFAULTS.name);
     setBulk(DEFAULTS.bulk);
     setBulkMode(false);
-    setCopied(false);
+    resetCopyState();
   };
 
   const singleError = !single.valid;
@@ -186,7 +190,7 @@ export default function ToolHome() {
       {!bulkMode && singleError ? (
         <div
           role="alert"
-          className="mt-6 space-y-2 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 space-y-2 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
         >
           {single.errors.map((message) => (
             <p key={message}>{message}</p>
@@ -198,7 +202,7 @@ export default function ToolHome() {
       {!bulkMode && (
         <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
           <div className="flex flex-wrap items-start justify-between gap-3">
-            <div>
+            <div aria-live="polite" role="status">
               <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                 Holder type
               </p>
@@ -219,21 +223,28 @@ export default function ToolHome() {
               <button
                 type="button"
                 onClick={copyResult}
-                aria-label="Copy PAN decoding result"
+                aria-label={isCopied("result") ? "Copied the PAN decoding result to clipboard" : "Copy PAN decoding result"}
                 className={GHOST_BTN}
                 disabled={!summary}
               >
-                {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-                {copied ? "Copied!" : "Copy result"}
+                {isCopied("result") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+                {isCopied("result") ? "Copied!" : "Copy result"}
               </button>
               <button type="button" onClick={reset} aria-label="Reset the decoder" className={PRIMARY_BTN}>
                 <RotateCcw className="h-4 w-4" aria-hidden="true" />
                 Reset
               </button>
+              <span className="sr-only" role="status" aria-live="polite">
+                {announcement}
+              </span>
             </div>
           </div>
 
-          <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+          <dl
+            className="mt-5 divide-y divide-[var(--border)] text-sm"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             {[
               ["Split into parts", singleError ? "—" : single.parts.grouped],
               ["Series (positions 1-3)", singleError ? "—" : single.parts.series],
@@ -257,10 +268,12 @@ export default function ToolHome() {
 
           {!singleError && single.nameCheck ? (
             <p
+              role="status"
+              aria-live="polite"
               className={`mt-4 flex items-start gap-2 rounded-md px-3 py-2 text-sm font-medium ${
                 single.nameCheck.matches
-                  ? "bg-[var(--success)]/12 text-[var(--success)]"
-                  : "bg-[var(--danger-soft)] text-[var(--danger)]"
+                  ? "bg-[var(--success)]/12 text-[var(--success-text)]"
+                  : "bg-[var(--danger-soft)] text-[var(--danger-text)]"
               }`}
             >
               {single.nameCheck.matches ? (
@@ -292,14 +305,14 @@ export default function ToolHome() {
           {batch?.error ? (
             <p
               role="alert"
-              className="rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+              className="rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
             >
               {batch.error}
             </p>
           ) : (
             <>
               <div className="flex flex-wrap items-start justify-between gap-3">
-                <div>
+                <div aria-live="polite" role="status">
                   <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                     Valid structures
                   </p>
@@ -315,20 +328,27 @@ export default function ToolHome() {
                   <button
                     type="button"
                     onClick={copyResult}
-                    aria-label="Copy bulk PAN decoding result"
+                    aria-label={
+                      isCopied("result")
+                        ? "Copied the bulk PAN decoding result to clipboard"
+                        : "Copy bulk PAN decoding result"
+                    }
                     className={GHOST_BTN}
                   >
-                    {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-                    {copied ? "Copied!" : "Copy result"}
+                    {isCopied("result") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+                    {isCopied("result") ? "Copied!" : "Copy result"}
                   </button>
                   <button type="button" onClick={reset} aria-label="Reset the decoder" className={PRIMARY_BTN}>
                     <RotateCcw className="h-4 w-4" aria-hidden="true" />
                     Reset
                   </button>
+                  <span className="sr-only" role="status" aria-live="polite">
+                    {announcement}
+                  </span>
                 </div>
               </div>
 
-              <div className="mt-4 overflow-x-auto">
+              <div className="mt-4 overflow-x-auto" aria-live="polite" aria-atomic="true">
                 <table className="w-full min-w-[320px] text-left text-sm">
                   <thead>
                     <tr className="border-b border-[var(--border)] text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -346,7 +366,7 @@ export default function ToolHome() {
                         <td className="py-2">
                           <span
                             className={`font-semibold ${
-                              result.valid ? "text-[var(--success)]" : "text-[var(--danger)]"
+                              result.valid ? "text-[var(--success-text)]" : "text-[var(--danger-text)]"
                             }`}
                           >
                             {result.valid ? result.parts.holderType.label : "Invalid"}

@@ -139,21 +139,6 @@ export function decodePan(raw) {
     errors.push(`A PAN is exactly ${PAN_LENGTH} characters; you entered ${normalized.length}.`);
   }
 
-  // A well-formed TAN is never a mistyped PAN, so say so and stop before guessing a fix.
-  if (TAN_REGEX.test(normalized)) {
-    return {
-      input,
-      normalized,
-      valid: false,
-      errors: [
-        "That is a TAN (four letters, five digits, one letter), not a PAN. A deductor holds both, but they are different numbers.",
-      ],
-      warnings,
-      suggestion: null,
-      parts: null,
-    };
-  }
-
   // Position checks only once the length is right, otherwise positions shift and mislead.
   const suggestionChars = normalized.split("");
   for (let index = 0; normalized.length === PAN_LENGTH && index < PAN_LENGTH; index += 1) {
@@ -186,6 +171,23 @@ export function decodePan(raw) {
   const candidate = suggestionChars.join("");
   const suggestion =
     !shapeOk && candidate !== normalized && PAN_REGEX.test(candidate) ? candidate : null;
+
+  // A well-formed TAN is never a mistyped PAN, so say so and stop — but only once we know
+  // there isn't a more useful single-character fix back to a valid PAN (e.g. a digit typoed
+  // in the name-initial position, which is also TAN-shaped by coincidence).
+  if (!shapeOk && suggestion === null && TAN_REGEX.test(normalized)) {
+    return {
+      input,
+      normalized,
+      valid: false,
+      errors: [
+        "That is a TAN (four letters, five digits, one letter), not a PAN. A deductor holds both, but they are different numbers.",
+      ],
+      warnings,
+      suggestion: null,
+      parts: null,
+    };
+  }
 
   if (!shapeOk) {
     return { input, normalized, valid: false, errors, warnings, suggestion, parts: null };

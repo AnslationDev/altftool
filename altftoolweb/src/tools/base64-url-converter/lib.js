@@ -61,7 +61,10 @@ export function toStandardBase64(value) {
   if (!compact) return { error: "There is nothing to convert." };
   if (!/^[A-Za-z0-9+/\-_]*={0,2}$/.test(compact)) {
     const bad = compact.split("").find((ch) => !/[A-Za-z0-9+/\-_=]/.test(ch));
-    return { error: `"${bad}" is not a Base64 character in either alphabet.` };
+    if (bad) {
+      return { error: `"${bad}" is not a Base64 character in either alphabet.` };
+    }
+    return { error: "\"=\" padding must appear only at the very end, and no more than two characters." };
   }
   const folded = compact.replace(/-/g, "+").replace(/_/g, "/").replace(/=+$/, "");
   const remainder = folded.length % BASE64_CHARS_PER_GROUP;

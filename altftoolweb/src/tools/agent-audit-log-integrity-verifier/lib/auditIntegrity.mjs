@@ -313,7 +313,10 @@ export function verifyAuditStructure(entries, config = {}) {
   }
   const idIssues =
     idResult.missingCount + idResult.invalidCount + idResult.duplicateEntryCount;
-  idResult.state = resultState({ checkable: Boolean(config.idPath), issueCount: idIssues });
+  idResult.state = resultState({
+    checkable: Boolean(config.idPath) && idResult.checkedCount > 0,
+    issueCount: idIssues,
+  });
 
   const sequenceResult = {
     checkedCount: 0,
@@ -480,7 +483,7 @@ export async function verifySha256Chain(
   if (
     !config.hashRecipe ||
     !config.hashPath ||
-    !config.previousHashPath ||
+    (config.hashRecipe === "previous-plus-entry" && !config.previousHashPath) ||
     !entries.length
   ) {
     return {
@@ -500,7 +503,7 @@ export async function verifySha256Chain(
     const entry = entries[index];
     const storedHash = normalizeComparableHash(getPath(entry, config.hashPath));
     const previousHash = getPath(entry, config.previousHashPath);
-    const previousRequired = index > 0 || config.hashRecipe === "previous-plus-entry";
+    const previousRequired = config.hashRecipe === "previous-plus-entry";
     const invalidPreviousType =
       config.hashRecipe === "previous-plus-entry" && typeof previousHash !== "string";
 

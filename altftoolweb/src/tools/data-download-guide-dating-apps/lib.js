@@ -281,8 +281,13 @@ export function sensitivityBand(score) {
  * Size model per category: baseMb + mbPerYear * years, plus each per-record term
  * multiplied by its record count and converted from bytes to megabytes.
  *
- * Sensitivity score = 20 * (0.6 * highest + 0.4 * mean) of the 1-5 ratings, bounded
- * to 20-100 by construction.
+ * Sensitivity score = 20 * (0.6 * highest + 0.4 * mean) of the 1-5 ratings. The
+ * formula is mathematically bounded to 20-100, but every category in
+ * EXPORT_CATEGORIES currently carries a rating of 3 or higher (dating-app
+ * exports are inherently sensitive), so any non-empty real selection scores
+ * 60-100 in practice. The "Low" band in sensitivityBand() stays defined for
+ * forward-compatibility with a future lower-rated category, but is not
+ * reachable with today's category list.
  *
  * @returns {{error: string} | object} plain object; never NaN or Infinity.
  */

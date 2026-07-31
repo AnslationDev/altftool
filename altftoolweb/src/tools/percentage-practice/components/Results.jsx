@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { PieChart, Pie, Cell, BarChart, Bar, XAxis, YAxis, Tooltip } from "recharts";
 import SafeResponsiveContainer from "@/components/charts/SafeResponsiveContainer";
+import { formatAnswer } from "../utils/percentUtils";
 
 function MetricCard({ icon: Icon, label, value, detail, tone = "default" }) {
   const toneClass =
@@ -55,7 +56,13 @@ function SectionCard({ title, icon: Icon, children }) {
   );
 }
 
-const PIE_COLORS = ["#14B8A6", "#EF4444"];
+// Match the Tailwind emerald-500 / amber-500 / rose-500 swatches used by the legend and
+// stat tiles right next to these charts, instead of unrelated hardcoded hexes (master.md
+// also flags #14B8A6 specifically as a value that must not be reintroduced outside --primary).
+const PIE_COLORS = ["#10B981", "#F43F5E"];
+const BAR_COLOR_GOOD = "#10B981";
+const BAR_COLOR_WATCH = "#F59E0B";
+const BAR_COLOR_WARN = "#F43F5E";
 
 export default function Results({ answers, onRestart, onReset }) {
   const correct = answers.filter((a) => a.correct).length;
@@ -166,7 +173,16 @@ export default function Results({ answers, onRestart, onReset }) {
                   />
                   <Bar dataKey="accuracy" radius={[4, 4, 0, 0]}>
                     {topicData.map((entry, i) => (
-                      <Cell key={i} fill={entry.accuracy >= 70 ? "#14B8A6" : entry.accuracy >= 50 ? "#F59E0B" : "#EF4444"} />
+                      <Cell
+                        key={i}
+                        fill={
+                          entry.accuracy >= 70
+                            ? BAR_COLOR_GOOD
+                            : entry.accuracy >= 50
+                              ? BAR_COLOR_WATCH
+                              : BAR_COLOR_WARN
+                        }
+                      />
                     ))}
                   </Bar>
                 </BarChart>
@@ -225,7 +241,7 @@ export default function Results({ answers, onRestart, onReset }) {
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-semibold text-[var(--foreground)]">{a.question}</p>
                 <p className="text-xs text-[var(--muted-foreground)]">
-                  Your answer: {a.userAnswer} | Correct: {a.answer}{a.unit || ""}
+                  Your answer: {a.userAnswer} | Correct: {formatAnswer(a.answer, a.unit)}
                 </p>
               </div>
               <span className="shrink-0 text-xs text-[var(--muted-foreground)]">{a.timeTaken?.toFixed(1)}s</span>

@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { ArrowRightLeft, Check, Copy, Link2, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { convertBase64, FORMATS, MAX_INPUT_CHARS } from "../lib";
 
 const CONTROL_CLASS =
@@ -39,26 +40,13 @@ export default function ToolHome() {
   const [from, setFrom] = useState(DEFAULTS.from);
   const [to, setTo] = useState(DEFAULTS.to);
   const [keepPadding, setKeepPadding] = useState(DEFAULTS.keepPadding);
-  const [copied, setCopied] = useState("");
-  const copyTimer = useRef(null);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () => convertBase64({ input, from, to, keepPadding }),
     [input, from, to, keepPadding],
   );
   const failed = Boolean(result.error);
-
-  const copy = async (key, text) => {
-    if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(key);
-      if (copyTimer.current) clearTimeout(copyTimer.current);
-      copyTimer.current = setTimeout(() => setCopied(""), 1800);
-    } catch {
-      setCopied("");
-    }
-  };
 
   const swap = () => {
     setFrom(to);
@@ -67,11 +55,15 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    const isDefault =
+      input === DEFAULTS.input && from === DEFAULTS.from && to === DEFAULTS.to && keepPadding === DEFAULTS.keepPadding;
+    if (!isDefault && !window.confirm("Reset to the default example? This will replace your current input and cannot be undone.")) {
+      return;
+    }
     setInput(DEFAULTS.input);
     setFrom(DEFAULTS.from);
     setTo(DEFAULTS.to);
     setKeepPadding(DEFAULTS.keepPadding);
-    setCopied("");
   };
 
   return (
@@ -101,7 +93,7 @@ export default function ToolHome() {
             onChange={(event) => setInput(event.target.value)}
             placeholder="Paste text, standard Base64 or base64url"
           />
-          <p className="mt-1.5 text-xs text-[var(--muted-foreground)]">
+          <p className="mt-1.5 text-xs text-[var(--muted-foreground)]" role="status" aria-live="polite">
             Detected as {failed ? DASH : DETECTED_LABEL[result.detected] || result.detected}. Limit{" "}
             {integer.format(MAX_INPUT_CHARS)} characters.
           </p>
@@ -282,31 +274,35 @@ export default function ToolHome() {
             </p>
           ) : null}
           {!failed && (result.to !== "text" || result.validUtf8) ? (
-            <p className="mt-3 text-xs text-[var(--success)]">
+            <p className="mt-3 text-xs text-[var(--success)]" role="status" aria-live="polite">
               Round-trips exactly: converting the result back returns the same {integer.format(result.bytes)} bytes.
             </p>
           ) : null}
+
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
 
           <div className="mt-5 flex flex-wrap gap-2">
             <button
               type="button"
               className={PRIMARY_BTN}
-              onClick={() => copy("output", failed ? "" : result.output)}
+              onClick={() => copy("output", failed ? "" : result.output, { label: "Converted result" })}
               disabled={failed}
               aria-label="Copy the converted result to the clipboard"
             >
-              {copied === "output" ? <Check aria-hidden="true" className="h-4 w-4" /> : <Copy aria-hidden="true" className="h-4 w-4" />}
-              {copied === "output" ? "Copied!" : "Copy result"}
+              {isCopied("output") ? <Check aria-hidden="true" className="h-4 w-4" /> : <Copy aria-hidden="true" className="h-4 w-4" />}
+              {isCopied("output") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
               className={GHOST_BTN}
-              onClick={() => copy("urlsafe", failed ? "" : result.urlSafe)}
+              onClick={() => copy("urlsafe", failed ? "" : result.urlSafe, { label: "URL-safe Base64 value" })}
               disabled={failed}
               aria-label="Copy the URL-safe Base64 value to the clipboard"
             >
-              {copied === "urlsafe" ? <Check aria-hidden="true" className="h-4 w-4" /> : <Copy aria-hidden="true" className="h-4 w-4" />}
-              {copied === "urlsafe" ? "Copied!" : "Copy URL-safe"}
+              {isCopied("urlsafe") ? <Check aria-hidden="true" className="h-4 w-4" /> : <Copy aria-hidden="true" className="h-4 w-4" />}
+              {isCopied("urlsafe") ? "Copied!" : "Copy URL-safe"}
             </button>
             <button type="button" className={GHOST_BTN} onClick={reset} aria-label="Reset to the default example">
               <RotateCcw aria-hidden="true" className="h-4 w-4" />

@@ -69,10 +69,16 @@ export function computeWorkersCost({
   const lists = Number(kvListsM);
   const storage = Number(kvStorageGb);
 
-  if (!Number.isFinite(requests) || requests < 0) {
+  if (!Number.isFinite(requests)) {
+    return { error: "Enter worker requests per month as a number." };
+  }
+  if (requests < 0) {
     return { error: "Requests per month must be zero or more." };
   }
-  if (!Number.isFinite(cpuMs) || cpuMs < 0) {
+  if (!Number.isFinite(cpuMs)) {
+    return { error: "Enter the average CPU time per request as a number." };
+  }
+  if (cpuMs < 0) {
     return { error: "Average CPU time cannot be negative." };
   }
   if (cpuMs > 300000) {

@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "How does the SHA-256 chain verification work?",
-      "It recomputes each entry's digest and compares it to the stored one. The canonical-entry recipe hashes the entry with its own hash field removed and all object keys sorted; the previous-plus-entry recipe hashes the previous hash, a newline, then the canonical entry with both the hash and previousHash fields removed. A stored value must be exactly 64 lowercase hexadecimal characters to be checkable at all, since that is the length of a SHA-256 digest.",
+      "It recomputes each entry's digest and compares it to the stored one. The canonical-entry recipe hashes the entry with its own hash field removed and all object keys sorted; the previous-plus-entry recipe hashes the previous hash, a newline, then the canonical entry with both the hash and previousHash fields removed. A stored value must be exactly 64 hexadecimal characters (case-insensitive) to be checkable at all, since that is the length of a SHA-256 digest.",
     ],
     [
       "Does a verified chain prove the log was not tampered with?",

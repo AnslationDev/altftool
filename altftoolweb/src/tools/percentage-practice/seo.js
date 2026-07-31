@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "How is the score calculated?",
-      "A correct answer is worth 10 points multiplied by a streak bonus of 1 + 0.5 per consecutive correct answer, capped at a streak of 10 — so a 10-question streak makes each answer worth 60 points. Accuracy is tracked separately as correct answers ÷ total attempted.",
+      "A correct answer is worth 10 points multiplied by a streak bonus of 1 + 0.5 per consecutive correct answer already banked before that question, capped at a bonus streak of 10. That means the 10th answer in a fresh streak is still worth 55 points, and each answer is worth the full 60 points only once you are 11 or more answers into an unbroken run. Accuracy is tracked separately as correct answers ÷ total attempted.",
     ],
   ],
 };

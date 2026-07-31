@@ -102,7 +102,7 @@ export default function GameSetup({ onStart }) {
 
       {/* Options */}
       <div className="grid gap-4 sm:grid-cols-2">
-        {gameMode === "practice" && (
+        {(gameMode === "practice" || gameMode === "timed") && (
           <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
             <span className="mb-2 flex items-center gap-2 text-sm font-semibold text-[var(--foreground)]">
               <Hash className="h-4 w-4 shrink-0 text-[var(--primary)]" />

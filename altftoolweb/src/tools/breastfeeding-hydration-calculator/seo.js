@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This calculator works out how much extra fluid breastfeeding adds to your day by rebuilding the figure from milk output rather than quoting a flat number. EFSA adds 700 ml of total water a day for lactation because average exclusive-breastfeeding output is about 800 ml of milk a day and human milk is roughly 87% water — 800 x 0.87 = 696 ml. Enter your stage, feeds per day and number of babies (or a measured pumped volume) and the increment scales with your actual production, on top of the 2.0 L/day adequate intake for adult women.",
+    "This calculator works out how much extra fluid breastfeeding adds to your day by rebuilding the figure from milk output rather than quoting a flat number. EFSA adds 700 ml of total water a day for lactation because average exclusive-breastfeeding output is about 800 ml of milk a day and human milk is roughly 87% water — 800 x 0.87 = 696 ml. Enter your stage, feeds per day and number of babies (or a measured pumped volume) and the increment scales with your actual production, on top of your chosen baseline — the 2.0 L/day adequate intake for adult women by default, or 35 ml per kg of body weight if you switch to the weight-based method.",
   useCases: [
     "See how much less fluid you need at 9 months on solids and three feeds a day than during exclusive newborn feeding.",
     "Work out the target while tandem feeding twins, where the flat +700 ml figure clearly under-counts.",

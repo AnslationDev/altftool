@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Code2, Copy, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   analyseJavaScript,
   formatJavaScript,
@@ -59,7 +60,7 @@ export default function ToolHome() {
   const [source, setSource] = useState(DEFAULTS.source);
   const [mode, setMode] = useState(DEFAULTS.mode);
   const [indentId, setIndentId] = useState(DEFAULTS.indent);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const indent = useMemo(
     () => INDENT_PRESETS.find((preset) => preset.id === indentId)?.value ?? "  ",
@@ -100,22 +101,23 @@ export default function ToolHome() {
     return output;
   }, [hasError, mode, stats, output]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "result" });
   };
 
   const reset = () => {
+    const hasContentToLose = source.trim() !== "" && source !== DEFAULTS.source;
+    if (
+      hasContentToLose &&
+      !window.confirm("Reset will replace your JavaScript input with the sample code. Continue?")
+    ) {
+      return;
+    }
     setSource(DEFAULTS.source);
     setMode(DEFAULTS.mode);
     setIndentId(DEFAULTS.indent);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -273,13 +275,20 @@ export default function ToolHome() {
             aria-label="Copy the result to the clipboard"
             disabled={hasError}
           >
-            {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-            {copied ? "Copied!" : "Copy result"}
+            {isCopied("result") ? (
+              <Check className="h-4 w-4" aria-hidden="true" />
+            ) : (
+              <Copy className="h-4 w-4" aria-hidden="true" />
+            )}
+            {isCopied("result") ? "Copied!" : "Copy result"}
           </button>
           <button type="button" className={GHOST_BTN} onClick={reset}>
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Reset
           </button>
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
       </section>
 

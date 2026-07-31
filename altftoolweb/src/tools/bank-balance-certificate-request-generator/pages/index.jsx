@@ -108,6 +108,12 @@ export default function ToolHome() {
   );
 
   const hasError = Boolean(result.error);
+  // `inr` rounds to the nearest whole rupee, so a positive shortfall under
+  // half a rupee (e.g. ₹0.40) would otherwise render as a self-contradictory
+  // "₹0" styled as a shortfall. Treat anything that rounds down to zero as
+  // covered — a fraction of a rupee is not an actionable shortfall for a
+  // funds-sufficiency check before a visa appointment.
+  const hasMeaningfulShortfall = !hasError && Math.round(result.shortfallInr) > 0;
 
   const foreign = useMemo(
     () =>
@@ -137,6 +143,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will discard the applicant, account, branch, destination, dates and amounts you have entered and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setTripStart(DEFAULTS.tripStart);
     setTripEnd(DEFAULTS.tripEnd);
     setAppointmentDate(DEFAULTS.appointmentDate);
@@ -426,13 +439,17 @@ export default function ToolHome() {
       {hasError ? (
         <p
           role="alert"
-          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
         >
           {result.error}
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -483,14 +500,12 @@ export default function ToolHome() {
             <dt className="font-semibold text-[var(--muted-foreground)]">Shortfall</dt>
             <dd
               className={`mt-1 text-lg font-semibold ${
-                !hasError && result.shortfallInr > 0
-                  ? "text-[var(--danger)]"
-                  : "text-[var(--success)]"
+                hasMeaningfulShortfall ? "text-[var(--danger-text)]" : "text-[var(--success-text)]"
               }`}
             >
               {hasError
                 ? DASH
-                : result.shortfallInr > 0
+                : hasMeaningfulShortfall
                   ? inr.format(result.shortfallInr)
                   : "None — balance covers it"}
             </dd>
@@ -514,7 +529,7 @@ export default function ToolHome() {
             {result.warnings.map((warning) => (
               <li
                 key={warning}
-                className="rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning)]"
+                className="rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning-text)]"
               >
                 {warning}
               </li>

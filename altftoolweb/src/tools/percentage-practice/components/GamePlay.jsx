@@ -79,10 +79,20 @@ export default function GamePlay({ config, onFinish }) {
   }, [timeRemaining]);
 
   useEffect(() => {
-    if (gameMode === "timed" || gameMode === "survival") {
+    // Timed Challenge runs a single clock for the whole round — "answer as many as
+    // you can in time" — so it is only (re)armed once, when the round starts.
+    if (gameMode === "timed" && questions.length > 0) {
       setTimeRemaining(timerDuration);
     }
   }, [gameMode, timerDuration, questions.length > 0]);
+
+  useEffect(() => {
+    // Survival resets the clock every question — running out of time there costs a
+    // life instead of ending the round outright, so each question gets a fresh timer.
+    if (gameMode === "survival" && questions.length > 0) {
+      setTimeRemaining(timerDuration);
+    }
+  }, [gameMode, timerDuration, questions.length > 0, currentIndex]);
 
   useEffect(() => {
     elapsedRef.current = setInterval(() => {
@@ -95,15 +105,22 @@ export default function GamePlay({ config, onFinish }) {
     if (isAnswered) return;
     const q = questions[currentIndex];
     const timeTaken = (Date.now() - questionStartTime) / 1000;
-    setAnswers((prev) => [
-      ...prev,
+    const updatedAnswers = [
+      ...answers,
       { ...q, userAnswer: "Time's up", correct: false, timeTaken },
-    ]);
+    ];
+    setAnswers(updatedAnswers);
     setIsAnswered(true);
     setShowFeedback("wrong");
     setStreak(0);
-    if (gameMode === "survival") setLives((prev) => prev - 1);
-  }, [isAnswered, questions, currentIndex, questionStartTime, gameMode]);
+    if (gameMode === "survival") {
+      setLives((prev) => prev - 1);
+    } else if (gameMode === "timed") {
+      // The whole point of Timed Challenge is that the round ends when the clock
+      // hits zero — otherwise the player could keep answering with no time pressure.
+      onFinish(updatedAnswers);
+    }
+  }, [isAnswered, questions, currentIndex, questionStartTime, gameMode, answers, onFinish]);
 
   const handleSubmit = () => {
     if (isAnswered || userAnswer.trim() === "") return;
@@ -307,7 +324,10 @@ export default function GamePlay({ config, onFinish }) {
           </div>
 
           {isAnswered && showFeedback && (
-            <div className={`mt-4 flex items-center justify-center gap-2 rounded-xl p-3 text-sm font-bold ${
+            <div
+              role="status"
+              aria-live="polite"
+              className={`mt-4 flex items-center justify-center gap-2 rounded-xl p-3 text-sm font-bold ${
               showFeedback === "correct"
                 ? "bg-emerald-500/10 text-emerald-600"
                 : showFeedback === "skipped"

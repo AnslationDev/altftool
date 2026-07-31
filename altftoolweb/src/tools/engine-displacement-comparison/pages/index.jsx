@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Gauge, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { PRESETS, TRACTABILITY_WEIGHTS, TUNE_BANDS, compareEngines } from "../lib";
 
 const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 });
@@ -9,9 +10,9 @@ const NUM0 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 
 const fmt = (value, decimals) => {
   if (!Number.isFinite(value)) return "—";
-  return (decimals === 0 ? NUM0 : NUM).format(
-    decimals === 0 ? Math.round(value) : Number(value.toFixed(decimals)),
-  );
+  const rounded = decimals === 0 ? Math.round(value) : Number(value.toFixed(decimals));
+  // Normalise negative zero (e.g. -0.037 rounded to 1dp) so it never prints "-0".
+  return (decimals === 0 ? NUM0 : NUM).format(rounded === 0 ? 0 : rounded);
 };
 
 const INPUT_CLASS =
@@ -137,7 +138,7 @@ export default function ToolHome() {
   const [formB, setFormB] = useState(() => specToForm(DEFAULT_B));
   const [cycleA, setCycleA] = useState("four");
   const [cycleB, setCycleB] = useState("four");
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const applyPreset = (id, setPreset, setName, setForm) => {
     setPreset(id);
@@ -172,18 +173,18 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [ok, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "engine comparison" });
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset both engines back to the demo defaults? Any custom specs you entered will be lost.")
+    ) {
+      return;
+    }
     setPresetA(DEFAULT_A.id);
     setPresetB(DEFAULT_B.id);
     setNameA(DEFAULT_A.name);
@@ -192,7 +193,7 @@ export default function ToolHome() {
     setFormB(specToForm(DEFAULT_B));
     setCycleA("four");
     setCycleB("four");
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -254,7 +255,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Specific power
             </p>
@@ -273,20 +274,27 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={!ok}
-              aria-label="Copy engine comparison"
+              aria-label={isCopied("result") ? "Copied the engine comparison to clipboard" : "Copy engine comparison"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset both engines" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
-        <div className="mt-5 overflow-x-auto">
+        <div className="mt-5 overflow-x-auto" aria-live="polite">
           <table className="w-full min-w-[340px] text-left text-sm">
             <thead>
               <tr className="border-b border-[var(--border)] text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -381,9 +389,16 @@ export default function ToolHome() {
           </li>
           <li>
             <strong className="text-[var(--foreground)]">Tuning bands</strong> (PS per litre):{" "}
-            {TUNE_BANDS.map((band) =>
-              band.max === Infinity ? `above 160 ${band.label}` : `under ${band.max} ${band.label}`,
-            ).join("; ")}
+            {TUNE_BANDS.map((band, index) => {
+              const prevMax = index === 0 ? 0 : TUNE_BANDS[index - 1].max;
+              const range =
+                band.max === Infinity
+                  ? `above ${prevMax}`
+                  : index === 0
+                    ? `under ${band.max}`
+                    : `${prevMax}-${band.max}`;
+              return `${range} ${band.label}`;
+            }).join("; ")}
             .
           </li>
         </ul>

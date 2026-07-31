@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Milk, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   BASELINE_METHODS,
   CLIMATES,
@@ -55,7 +56,7 @@ export default function ToolHome() {
   const [climate, setClimate] = useState(DEFAULTS.climate);
   const [activeMinutes, setActiveMinutes] = useState(DEFAULTS.activeMinutes);
   const [measuredMilk, setMeasuredMilk] = useState(DEFAULTS.measuredMilk);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -84,19 +85,13 @@ export default function ToolHome() {
       `Water leaving as milk: ${ml(plan.milkWaterMl)} a day`,
       `Total water target: ${ml(plan.totalWaterMl)} a day (food + drinks)`,
       `Drinks target: ${ml(plan.drinksMl)} a day`,
-      `That is about ${ml(plan.perFeedMl)} at each of ${NUM0.format(toNumber(feedsPerDay))} feeds`,
+      `That is about ${ml(plan.perFeedMl)} to drink at each of ${NUM0.format(toNumber(feedsPerDay))} feeds`,
     ].join("\n");
   }, [plan, feedsPerDay]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "breastfeeding hydration target" });
   };
 
   const reset = () => {
@@ -108,7 +103,7 @@ export default function ToolHome() {
     setClimate(DEFAULTS.climate);
     setActiveMinutes(DEFAULTS.activeMinutes);
     setMeasuredMilk(DEFAULTS.measuredMilk);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -282,7 +277,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Drink each day
             </p>
@@ -291,7 +286,7 @@ export default function ToolHome() {
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {plan
-                ? `About ${ml(plan.perFeedMl)} at every feed`
+                ? `About ${ml(plan.perFeedMl)} to drink at every feed`
                 : "Fix the input above to see your target"}
             </p>
           </div>
@@ -300,31 +295,38 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={!plan}
-              aria-label="Copy breastfeeding hydration target"
+              aria-label={
+                isCopied("result")
+                  ? "Copied the breastfeeding hydration target to clipboard"
+                  : "Copy breastfeeding hydration target"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             ["Baseline total water", plan ? ml(plan.baseTotalMl) : DASH],
             [
               "Milk produced a day",
               plan ? `${ml(plan.milkMlPerDay)} (${plan.milkSource})` : DASH,
             ],
-            ["Average per feed", plan ? ml(plan.mlPerFeed) : DASH],
+            ["Milk produced per feed", plan ? ml(plan.mlPerFeed) : DASH],
             ["Water leaving as milk", plan ? ml(plan.milkWaterMl) : DASH],
             ["EFSA flat lactation increment", plan ? ml(plan.efsaFlatIncrementMl) : DASH],
             ["Climate allowance", plan ? ml(plan.climateMl) : DASH],
@@ -344,18 +346,20 @@ export default function ToolHome() {
           ))}
         </dl>
 
-        {plan?.aboveCeiling ? (
-          <p className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
-            This works out above {ml(plan.ceilingMl)} of drinks a day, which is beyond routine
-            hydration. Check the inputs and discuss the target with a health professional before
-            following it.
-          </p>
-        ) : (
-          <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm text-[var(--muted-foreground)]">
-            Drinking beyond thirst does not increase milk supply — the evidence is clear on that.
-            Treat this as a floor to hit, not a quota to exceed.
-          </p>
-        )}
+        <div aria-live="polite" role="status">
+          {plan?.aboveCeiling ? (
+            <p className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+              This works out above {ml(plan.ceilingMl)} of drinks a day, which is beyond routine
+              hydration. Check the inputs and discuss the target with a health professional before
+              following it.
+            </p>
+          ) : (
+            <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm text-[var(--muted-foreground)]">
+              Drinking beyond thirst does not increase milk supply — the evidence is clear on that.
+              Treat this as a floor to hit, not a quota to exceed.
+            </p>
+          )}
+        </div>
       </section>
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
