@@ -7,7 +7,7 @@
 
 export function Footer() {
   return (
-    <footer className="border-t border-[(--border)] mt-5 py-8">
+    <footer className="border-t border-[var(--border)] mt-5 py-8">
       <div className="section-container">
         <div className="text-center space-y-2">
           {/* Disclaimer */}
@@ -24,7 +24,7 @@ export function Footer() {
             This tool runs entirely in your browser. No fingerprint data is stored or transmitted.
           </div>
 
-          <p className="text-xs text-[(--muted-foreground)] font-secondary">
+          <p className="text-xs text-[var(--muted-foreground)] font-secondary">
             Built for privacy education · All processing is local · No tracking, no storage
           </p>
         </div>

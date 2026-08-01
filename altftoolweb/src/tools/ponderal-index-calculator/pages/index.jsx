@@ -57,6 +57,7 @@ const toNum = (raw) => {
 const toneClass = (tone) => {
   if (tone === "good") return "text-[var(--success)]";
   if (tone === "bad") return "text-[var(--danger)]";
+  if (tone === "warn") return "text-[var(--warning-text)]";
   return "text-[var(--foreground)]";
 };
 
@@ -326,7 +327,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className={`mt-6 ${CARD}`}>
+      <section className={`mt-6 ${CARD}`} aria-live="polite">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

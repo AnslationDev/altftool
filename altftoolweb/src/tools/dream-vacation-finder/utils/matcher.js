@@ -25,8 +25,15 @@ function scoreDestination(dest, preferences) {
     maxScore += 3;
     if (dest.climate.includes(preferences.climate)) {
       score += 3;
-    } else if (dest.climate.length > 0) {
-      score += 1;
+    } else {
+      const relatedClimate = dest.climate.some(
+        (c) =>
+          (preferences.climate === "tropical" && c === "arid") ||
+          (preferences.climate === "arid" && (c === "tropical" || c === "temperate")) ||
+          (preferences.climate === "temperate" && (c === "arid" || c === "cold")) ||
+          (preferences.climate === "cold" && c === "temperate")
+      );
+      if (relatedClimate) score += 1;
     }
   }
 
@@ -107,20 +114,4 @@ export function getRandomDestination(usedIds = []) {
   const available = DESTINATIONS.filter((d) => !usedIds.includes(d.name));
   if (available.length === 0) return DESTINATIONS[Math.floor(Math.random() * DESTINATIONS.length)];
   return available[Math.floor(Math.random() * available.length)];
-}
-
-export function getDestinationByName(name) {
-  return DESTINATIONS.find((d) => d.name === name) || null;
-}
-
-export function getDestinationsByContinent(continent) {
-  return DESTINATIONS.filter((d) => d.continent === continent);
-}
-
-export function getDestinationsByActivity(activity) {
-  return DESTINATIONS.filter((d) => d.activity.includes(activity));
-}
-
-export function getAllDestinations() {
-  return DESTINATIONS;
 }

@@ -135,8 +135,13 @@ export default function ToolHome() {
             </p>
             {ok && result.wasReformatted && (
               <p className="mt-1 text-xs text-[var(--muted-foreground)]">
-                We removed spaces/separators and adjusted case to get{" "}
-                <span className="font-mono font-semibold">{result.normalised}</span>.
+                We{" "}
+                {result.hadSeparators && result.hadCaseChange
+                  ? "removed spaces/separators and adjusted case"
+                  : result.hadSeparators
+                    ? "removed spaces/separators"
+                    : "adjusted case"}{" "}
+                to get <span className="font-mono font-semibold">{result.normalised}</span>.
               </p>
             )}
           </div>

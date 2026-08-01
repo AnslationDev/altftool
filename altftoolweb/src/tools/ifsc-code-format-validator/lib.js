@@ -161,6 +161,11 @@ export function validateIfsc(raw) {
     characters.push({ position: index + 1, character, expected, ok });
   }
 
+  // Track the two reformatting steps separately so the UI can describe exactly
+  // what changed instead of always claiming both happened (see normaliseIfsc()).
+  const stripped = input.replace(/[^0-9A-Za-z]/g, "");
+  const hadSeparators = stripped !== input;
+  const hadCaseChange = stripped !== stripped.toUpperCase();
   const wasReformatted = normalised !== input;
 
   return {
@@ -174,6 +179,8 @@ export function validateIfsc(raw) {
     branchCode: normalised.length > RESERVED_POSITION ? branchCode : "",
     characters,
     wasReformatted,
+    hadSeparators,
+    hadCaseChange,
     suggestion: valid ? null : suggestFix(normalised),
   };
 }

@@ -334,7 +334,12 @@ export const MAX_NAME_LENGTH = 40;
 
 function cleanName(value) {
   if (typeof value !== "string") return "";
-  return value.replace(/\s+/g, " ").trim().slice(0, MAX_NAME_LENGTH);
+  const collapsed = value.replace(/\s+/g, " ").trim();
+  // Slice by code point, not UTF-16 code unit: a plain .slice() can cut a
+  // surrogate pair in half when a 2-unit character (e.g. an emoji outside the
+  // BMP) straddles the length limit, leaving a corrupt lone surrogate in the
+  // generated greeting.
+  return [...collapsed].slice(0, MAX_NAME_LENGTH).join("");
 }
 
 /**
@@ -397,7 +402,12 @@ export function buildEidWish({
     occasionLabel: occasionEntry.label,
     occasionNote: occasionEntry.note,
     roman,
-    characters: [...text].length,
+    // Count UTF-16 code units (not code points) so this figure agrees with
+    // sms.units, which analyzeSms() also derives from UTF-16 length for UCS-2
+    // text — otherwise a message containing an astral-plane character (e.g.
+    // the crescent-moon emoji) shows a "characters" count one less than what
+    // the SMS segment/remaining math is actually based on.
+    characters: text.length,
     words,
     sms,
   };

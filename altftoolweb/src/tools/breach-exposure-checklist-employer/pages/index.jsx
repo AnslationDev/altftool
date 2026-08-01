@@ -135,7 +135,7 @@ export default function ToolHome() {
         aria-labelledby="score-heading"
       >
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p
               id="score-heading"
               className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]"
@@ -217,7 +217,11 @@ export default function ToolHome() {
         ) : null}
 
         {hasResult && result.capped ? (
-          <p className="mt-4 flex items-start gap-2 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning)]">
+          <p
+            role="status"
+            aria-live="polite"
+            className="mt-4 flex items-start gap-2 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning)]"
+          >
             <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
             <span>
               Held at {CRITICAL_CAP_PERCENT}% while a critical step is open. An unverified payroll

@@ -1,6 +1,7 @@
 "use client";
 
 
+import { RotateCcw } from "lucide-react";
 import { Card } from "../ui/Card";
 import { SectionHeader } from "../ui/SectionHeader";
 import { InfoRow } from "../ui/InfoRow";
@@ -43,12 +44,36 @@ export function StabilityTest({ stability, loading }) {
 
   const config = statusConfig[stability?.status] || statusConfig.pending;
 
+  const canReset = !loading && typeof stability?.resetTest === "function" && stability.totalChecks > 0;
+
+  const handleReset = () => {
+    if (
+      window.confirm(
+        "Reset the stability test? This clears the saved fingerprint hash and reload history for this session.",
+      )
+    ) {
+      stability.resetTest();
+    }
+  };
+
   return (
     <Card>
       <SectionHeader
         icon="🔄"
         title="Fingerprint Stability"
-        description="Does your fingerprint stay the same across page reloads?"
+        subtitle="Does your fingerprint stay the same across page reloads?"
+        action={
+          canReset ? (
+            <button
+              type="button"
+              onClick={handleReset}
+              className="flex items-center gap-1.5 rounded-lg border border-[var(--border)] px-2.5 py-1.5 text-xs font-medium text-[var(--muted-foreground)] transition-colors duration-150 hover:border-[var(--primary)] hover:text-[var(--primary)]"
+            >
+              <RotateCcw className="h-3.5 w-3.5" />
+              Reset test
+            </button>
+          ) : null
+        }
       />
 
       {/* Loading skeleton */}

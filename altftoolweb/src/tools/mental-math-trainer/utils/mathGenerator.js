@@ -104,7 +104,7 @@ function generateSquares(difficulty, rng = Math.random) {
   };
   const [min, max] = ranges[difficulty] || ranges.easy;
   const n = randInt(min, max, rng);
-  return { question: `${n}² = ?`, answer: n * n, operands: [n], meta: `${n} × ${n}` };
+  return { question: `${n}² = ?`, answer: n * n, operands: [n] };
 }
 
 function generateSquareRoots(difficulty, rng = Math.random) {
@@ -118,7 +118,7 @@ function generateSquareRoots(difficulty, rng = Math.random) {
   const [min, max] = ranges[difficulty] || ranges.easy;
   const n = randInt(min, max, rng);
   const square = n * n;
-  return { question: `√${square} = ?`, answer: n, operands: [square], meta: `√(${n}²)` };
+  return { question: `√${square} = ?`, answer: n, operands: [square] };
 }
 
 function generateCubes(difficulty, rng = Math.random) {
@@ -131,7 +131,7 @@ function generateCubes(difficulty, rng = Math.random) {
   };
   const [min, max] = ranges[difficulty] || ranges.easy;
   const n = randInt(min, max, rng);
-  return { question: `${n}³ = ?`, answer: n * n * n, operands: [n], meta: `${n} × ${n} × ${n}` };
+  return { question: `${n}³ = ?`, answer: n * n * n, operands: [n] };
 }
 
 function generatePercentages(difficulty, rng = Math.random) {
@@ -215,7 +215,6 @@ function generateRatios(difficulty, rng = Math.random) {
   return {
     question: `Simplify ${a}:${b}`,
     answer: `${a / g}:${b / g}`,
-    numericAnswer: a / b,
     operands: [a, b],
   };
 }

@@ -15,7 +15,7 @@ const Sidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen }) => {
 
     return (
         <>
-            <div className="job-sidebar" style={{ display: isOpen ? 'block' : 'none' }}>
+            <div className={`job-sidebar${isOpen ? ' open' : ''}`}>
                 <button
                     onClick={() => setIsOpen(false)}
                     style={{

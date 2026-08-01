@@ -1,17 +1,12 @@
 "use client";
 
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import ImageUploader from '../../_shared/components/ImageUploader';
 import SkeletonLoader from '../../_shared/components/SkeletonLoader';
 import ErrorCard from '../../_shared/components/ErrorCard';
-import { compressImage, loadImage, getCanvasBlob } from '../../_shared/utils/imageProcessing';
-import { downloadCanvas, downloadBlob } from '../../_shared/utils/download';
-import {
-  computeOverallQuality, analyzeSharpness, analyzeBrightness, analyzeContrast,
-  analyzeNoise, analyzeExposure, analyzeWhiteBalance, analyzeSaturation,
-  analyzeDynamicRange, analyzeResolution, generateHistogram, generateRGBHistogram,
-} from '../../_shared/utils/imageAnalysis';
+import { downloadBlob } from '../../_shared/utils/download';
+import { computeOverallQuality, generateHistogram, generateRGBHistogram } from '../../_shared/utils/imageAnalysis';
 
 function ScoreGauge({ value, label, color = 'var(--primary)', size = 80 }) {
   const r = (size - 12) / 2;
@@ -48,7 +43,16 @@ export default function ImageQualityChecker() {
   const [analyzing, setAnalyzing] = useState(false);
   const [error, setError] = useState(null);
   const [showHistogram, setShowHistogram] = useState(false);
-  const canvasRef = useRef(null);
+
+  // ImageUploader hands us ownership of a blob URL (src). Revoke the
+  // previous one whenever it is replaced by a new image or "New Image" sets
+  // it back to null, and revoke the last one on unmount, so repeated
+  // upload -> New Image -> upload cycles don't leak a blob URL per image.
+  useEffect(() => {
+    return () => {
+      if (image?.src) URL.revokeObjectURL(image.src);
+    };
+  }, [image]);
 
   const handleImage = useCallback(async ({ src, file, img }) => {
     setImage({ src, file, img });
@@ -60,7 +64,6 @@ export default function ImageQualityChecker() {
       canvas.width = img.width;
       canvas.height = img.height;
       canvas.getContext('2d').drawImage(img, 0, 0);
-      canvasRef.current = canvas;
 
       await new Promise(r => setTimeout(r, 100));
       const imageData = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);
@@ -124,6 +127,9 @@ export default function ImageQualityChecker() {
       '=== Strengths ===',
       ...analysis.strengths.map(s => `- ${s}`),
       '',
+      '=== Weaknesses ===',
+      ...analysis.weaknesses.map(s => `- ${s}`),
+      '',
       '=== Suggestions ===',
       ...analysis.suggestions.map(s => `- ${s}`),
     ].join('\n');
@@ -136,7 +142,7 @@ export default function ImageQualityChecker() {
       <div className="max-w-3xl mx-auto space-y-6">
         <div className="text-center space-y-2">
           <h1 className="text-2xl font-bold text-foreground">Image Quality Checker</h1>
-          <p className="text-sm text-muted-foreground">Upload an image to analyze its quality using 10+ professional metrics</p>
+          <p className="text-sm text-muted-foreground">Upload an image to analyze its quality using nine professional metrics</p>
         </div>
         <ImageUploader onImage={handleImage} />
       </div>
@@ -148,7 +154,16 @@ export default function ImageQualityChecker() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-foreground">Image Quality Checker</h1>
         <div className="flex gap-2">
-          <button onClick={() => { setImage(null); setAnalysis(null); }} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">New Image</button>
+          <button
+            onClick={() => {
+              if (!window.confirm('Discard this image and its analysis? A camera capture has no other copy and this cannot be undone.')) return;
+              setImage(null);
+              setAnalysis(null);
+            }}
+            className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground"
+          >
+            New Image
+          </button>
           {analysis && (
             <button onClick={handleDownloadReport} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">Download Report</button>
           )}
@@ -206,6 +221,18 @@ export default function ImageQualityChecker() {
                 </ul>
               </div>
             )}
+            {analysis.weaknesses.length > 0 && (
+              <div className="rounded-xl border border-rose-200 dark:border-rose-800 p-4 bg-rose-50 dark:bg-rose-900/20">
+                <h3 className="text-sm font-medium text-rose-700 dark:text-rose-300 mb-2">Weaknesses</h3>
+                <ul className="space-y-1">
+                  {analysis.weaknesses.map((s, i) => (
+                    <li key={i} className="flex items-start gap-2 text-xs text-rose-600 dark:text-rose-400">
+                      <span>✗</span> {s}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
             {analysis.suggestions.length > 0 && (
               <div className="rounded-xl border border-amber-200 dark:border-amber-800 p-4 bg-amber-50 dark:bg-amber-900/20">
                 <h3 className="text-sm font-medium text-amber-700 dark:text-amber-300 mb-2">Improvement Suggestions</h3>
@@ -221,11 +248,16 @@ export default function ImageQualityChecker() {
           </div>
 
           <div className="rounded-xl border border-[var(--border)] p-4">
-            <button onClick={() => setShowHistogram(!showHistogram)} className="flex items-center gap-2 text-sm font-medium text-foreground mb-3">
-              <span>{showHistogram ? '▼' : '▶'}</span> Histogram Analysis
+            <button
+              onClick={() => setShowHistogram(!showHistogram)}
+              aria-expanded={showHistogram}
+              aria-controls="iqc-histogram-panel"
+              className="flex items-center gap-2 text-sm font-medium text-foreground mb-3"
+            >
+              <span aria-hidden="true">{showHistogram ? '▼' : '▶'}</span> Histogram Analysis
             </button>
             {showHistogram && (
-              <div className="space-y-4">
+              <div id="iqc-histogram-panel" className="space-y-4">
                 <div>
                   <h4 className="text-xs text-muted-foreground mb-2">Luminosity Histogram</h4>
                   <div className="flex items-end gap-px h-24">

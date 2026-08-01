@@ -12,7 +12,7 @@ import PreferencesPanel from '../components/PreferencesPanel';
 import RecommendationBox from '../components/RecommendationBox';
 import FinancialBreakdown from '../components/FinancialBreakdown';
 import ExportPanel from '../components/ExportPanel';
-import { Menu, Briefcase } from 'lucide-react';
+import { Briefcase } from 'lucide-react';
 
 const emptyOffer = {
     companyName: '',
@@ -38,7 +38,6 @@ const defaultPreferences = {
     growthWeight: 25,
     stabilityWeight: 15,
     learningWeight: 10,
-    brandWeight: 0,
 };
 
 const Index = () => {
@@ -137,26 +136,14 @@ const Index = () => {
                     setTheme={setTheme}
                     onAddOffer={handleAddOffer}
                     onExport={handleExport}
+                    sidebarOpen={sidebarOpen}
+                    onToggleSidebar={() => setSidebarOpen(!sidebarOpen)}
                 />
 
                 {/* Dashboard Tab */}
                 {activeTab === 'dashboard' && (
                     <>
-                        <div
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '8px',
-                                marginBottom: '24px',
-                            }}
-                        >
-                            <Menu
-                                size={24}
-                                style={{ cursor: 'pointer', color: 'var(--job-text-sub)' }}
-                                onClick={() => setSidebarOpen(!sidebarOpen)}
-                            />
-                            <h2 style={{ fontSize: '20px', fontWeight: 700, margin: 0 }}>Dashboard Overview</h2>
-                        </div>
+                        <h2 style={{ fontSize: '20px', fontWeight: 700, marginBottom: '24px' }}>Dashboard Overview</h2>
 
                         {offers.length === 0 ? (
                             <div className="job-empty-state">

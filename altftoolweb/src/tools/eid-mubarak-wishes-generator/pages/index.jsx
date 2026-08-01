@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, MoonStar, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   HIJRI_DRIFT_DAYS_PER_YEAR,
   LANGUAGES,
@@ -36,7 +37,7 @@ const DASH = "—";
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copiedId, setCopiedId] = useState("");
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const update = (key, value) => setForm((previous) => ({ ...previous, [key]: value }));
 
@@ -48,20 +49,19 @@ export default function ToolHome() {
 
   const hasError = Boolean(wish.error);
 
-  const copyText = async (text, id) => {
-    if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedId(id);
-      setTimeout(() => setCopiedId(""), 1500);
-    } catch {
-      setCopiedId("");
-    }
+  const copyText = (text, id) => {
+    copy(id, text, { label: "Eid greeting" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace the recipient and sender names with the demo defaults and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setForm(DEFAULTS);
-    setCopiedId("");
   };
 
   return (
@@ -203,7 +203,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Message length
             </p>
@@ -220,16 +220,16 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={() => copyText(wish.text, "main")}
-              aria-label="Copy the Eid greeting"
+              aria-label={isCopied("main") ? "Copied the Eid greeting" : "Copy the Eid greeting"}
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copiedId === "main" ? (
+              {isCopied("main") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copiedId === "main" ? "Copied!" : "Copy greeting"}
+              {isCopied("main") ? "Copied!" : "Copy greeting"}
             </button>
             <button
               type="button"
@@ -240,6 +240,9 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -253,7 +256,7 @@ export default function ToolHome() {
           </div>
         )}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
           {[
             ["Language", hasError ? DASH : `${wish.languageLabel} (${wish.languageNative})`],
             ["Tone", hasError ? DASH : wish.toneLabel],
@@ -295,15 +298,19 @@ export default function ToolHome() {
                 <button
                   type="button"
                   onClick={() => copyText(item.text, item.tone)}
-                  aria-label={`Copy the ${item.tone} Eid greeting`}
+                  aria-label={
+                    isCopied(item.tone)
+                      ? `Copied the ${item.tone} Eid greeting`
+                      : `Copy the ${item.tone} Eid greeting`
+                  }
                   className={`mt-3 ${GHOST_BTN}`}
                 >
-                  {copiedId === item.tone ? (
+                  {isCopied(item.tone) ? (
                     <Check className="h-4 w-4" aria-hidden="true" />
                   ) : (
                     <Copy className="h-4 w-4" aria-hidden="true" />
                   )}
-                  {copiedId === item.tone ? "Copied!" : "Copy"}
+                  {isCopied(item.tone) ? "Copied!" : "Copy"}
                 </button>
               </li>
             ))}

@@ -44,7 +44,7 @@ export function MediaDevices({ media, loading }) {
       <SectionHeader
         icon="📡"
         title="Media Devices"
-        description="Hardware presence detected without requesting any permissions"
+        subtitle="Hardware presence detected without requesting any permissions"
       />
 
       {/* Loading skeleton */}
@@ -83,7 +83,7 @@ export function MediaDevices({ media, loading }) {
 
           {/* Privacy note */}
           <div className="p-3 rounded-xl bg-green-500/8 border border-green-500/15">
-            <p className="text-[11px] text-green-800 font-secondary leading-relaxed">
+            <p className="text-[11px] text-green-400 font-secondary leading-relaxed">
               ✅ Privacy safe: We only detected device presence using enumerateDevices().
               No audio or video was accessed. No permissions were requested.
             </p>

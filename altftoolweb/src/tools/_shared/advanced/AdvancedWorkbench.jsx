@@ -830,13 +830,12 @@ function ResultTable({ rows, mostRecent = false }) {
   );
 }
 
-const screenPatterns = [
-  "bg-[var(--foreground)]",
-  "bg-[var(--destructive)]",
-  "bg-[var(--success)]",
-  "bg-[var(--info)]",
-  "bg-[var(--background)]",
-];
+// Dead-pixel test fields must be true black/red/green/blue/white regardless
+// of the site's light/dark theme: the whole point of the final "light" field
+// is that a dead (unpowered) pixel stays black against it, so if these were
+// theme tokens they'd invert in dark mode and hide the exact defect the tool
+// exists to reveal. Intentionally NOT semantic tokens — see wave-18 audit.
+const screenPatterns = ["bg-black", "bg-red-600", "bg-green-600", "bg-blue-600", "bg-white"];
 
 function SensorLab({ slug }) {
   const [active, setActive] = useState(false);
@@ -848,6 +847,7 @@ function SensorLab({ slug }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
+  const overlayRef = useRef(null);
   const cleanupRef = useRef(() => {});
 
   const append = useCallback((row) => {
@@ -858,6 +858,16 @@ function SensorLab({ slug }) {
     cleanupRef.current?.();
     camera?.getTracks().forEach((track) => track.stop());
   }, [camera]);
+
+  // Move focus into the full-screen overlay as soon as it mounts so a
+  // keyboard-only user (no working pointer yet, e.g. testing a fresh
+  // monitor) can immediately use Enter/Space to cycle patterns and Tab to
+  // reach the Exit test button, instead of having no focused element at all.
+  useEffect(() => {
+    if (slug === "dead-pixel-screen-test" && active) {
+      overlayRef.current?.focus();
+    }
+  }, [slug, active]);
 
   const stop = () => {
     cleanupRef.current?.();
@@ -1077,7 +1087,22 @@ function SensorLab({ slug }) {
 
   if (slug === "dead-pixel-screen-test" && active) {
     return (
-      <div className={`fixed inset-0 z-50 ${screenPatterns[pattern]} cursor-pointer`} onClick={() => setPattern((value) => (value + 1) % screenPatterns.length)}>
+      <div
+        ref={overlayRef}
+        tabIndex={0}
+        aria-label={`Dead pixel test pattern ${pattern + 1} of ${screenPatterns.length}. Press Enter or Space for the next pattern, or Escape to exit.`}
+        className={`fixed inset-0 z-50 ${screenPatterns[pattern]} cursor-pointer focus-visible:outline-none focus-visible:ring-[4px] focus-visible:ring-[var(--primary)]`}
+        onClick={() => setPattern((value) => (value + 1) % screenPatterns.length)}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") {
+            event.preventDefault();
+            stop();
+          } else if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+            event.preventDefault();
+            setPattern((value) => (value + 1) % screenPatterns.length);
+          }
+        }}
+      >
         <button type="button" className="absolute right-4 top-4 rounded-md border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-[var(--foreground)]" onClick={(event) => { event.stopPropagation(); stop(); }}>
           Exit test
         </button>
@@ -1090,13 +1115,13 @@ function SensorLab({ slug }) {
       <Section>
         <div className="grid gap-4">
           <Notice>
-            Sensor readings depend on secure-context browser support, device
-            hardware, permission, calibration, mounting, and sampling rate.
-            They are approximate and are not safety-certified measurements.
+            {slug === "dead-pixel-screen-test"
+              ? "This test requests no camera, location, or motion permission and records nothing. It just cycles a full-screen colour sequence so you can look for pixels that don't change."
+              : "Sensor readings depend on secure-context browser support, device hardware, permission, calibration, mounting, and sampling rate. They are approximate and are not safety-certified measurements."}
           </Notice>
           <button type="button" className={active ? secondary : primary} onClick={active ? stop : start}>
             {active ? <Square className="h-4 w-4" aria-hidden="true" /> : <Activity className="h-4 w-4" aria-hidden="true" />}
-            {active ? "Stop sensor" : "Start with permission"}
+            {active ? "Stop sensor" : slug === "dead-pixel-screen-test" ? "Start test" : "Start with permission"}
           </button>
           {["camera-color-eyedropper", "calibrated-camera-ruler", "led-pwm-flicker-detector"].includes(slug) && active && (
             <button type="button" className={secondary} onClick={sampleCamera}>
@@ -1108,7 +1133,9 @@ function SensorLab({ slug }) {
         </div>
       </Section>
       <Section>
-        <h2 className="text-lg font-semibold">Live local readings</h2>
+        <h2 className="text-lg font-semibold">
+          {slug === "dead-pixel-screen-test" ? "How this test works" : "Live local readings"}
+        </h2>
         {camera && (
           <div className="relative mt-4 overflow-hidden rounded-md bg-[var(--muted)]">
             <video ref={videoRef} autoPlay muted playsInline className="w-full" />
@@ -1134,11 +1161,21 @@ function SensorLab({ slug }) {
             ))}
           </div>
         )}
-        <ResultTable rows={readings} mostRecent={slug === "chromatic-instrument-tuner"} />
-        {!readings.length && !camera && slug !== "multi-touch-tester" && (
-          <p className="mt-2 text-sm text-[var(--muted-foreground)]">
-            Start the tool to collect local readings.
-          </p>
+        {slug === "dead-pixel-screen-test" ? (
+          <Notice>
+            This test doesn&apos;t collect or log any readings. Starting it opens a
+            full-screen colour cycle — dark, red, green, blue, then light — so
+            you can look for a pixel that stays the wrong colour on every field.
+          </Notice>
+        ) : (
+          <>
+            <ResultTable rows={readings} mostRecent={slug === "chromatic-instrument-tuner"} />
+            {!readings.length && !camera && slug !== "multi-touch-tester" && (
+              <p className="mt-2 text-sm text-[var(--muted-foreground)]">
+                Start the tool to collect local readings.
+              </p>
+            )}
+          </>
         )}
       </Section>
     </div>

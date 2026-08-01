@@ -80,6 +80,20 @@ export default function ToolHome() {
     );
   }, [name, goal, daysPerWeek, duration, level, equipment, focusArea, weight, blockWeeks, injuryFlag, timeCap, restDays, calendarDays, reminderTime, logs, submitted]);
 
+  // Which required fields are currently empty/zero, so a "Generate Pro Plan" click that
+  // can't produce a timeline shows a reason instead of the results section just never
+  // appearing with no feedback at all.
+  const missingFields = useMemo(() => {
+    const parsedDays = Number(daysPerWeek);
+    const parsedDuration = Math.min(Number(duration), Number(timeCap) || Number(duration));
+    const parsedBlock = Number(blockWeeks);
+    const missing = [];
+    if (!parsedDays) missing.push("Days");
+    if (!parsedDuration) missing.push("Duration");
+    if (!parsedBlock) missing.push("Weeks");
+    return missing;
+  }, [daysPerWeek, duration, timeCap, blockWeeks]);
+
   const timeline = useMemo(() => {
     const parsedDays = Number(daysPerWeek);
     const parsedDuration = Math.min(Number(duration), Number(timeCap) || Number(duration));
@@ -139,7 +153,13 @@ export default function ToolHome() {
   const updateRpe = (key, value) => {
     setLogs((prev) => {
       const current = prev[key] || { completed: false, rpe: 7 };
-      return { ...prev, [key]: { ...current, rpe: Number(value) } };
+      const parsed = Number(value);
+      // The RPE input's min=1/max=10 attributes are never enforced (no <form> to
+      // trigger HTML5 validation), so clamp here -- the one place RPE is written --
+      // to keep the stored value inside the documented 1-10 scale that the Avg RPE
+      // analytics tile and the coach's fatigue-trend threshold both assume.
+      const rpe = Number.isFinite(parsed) ? Math.min(10, Math.max(1, parsed)) : current.rpe;
+      return { ...prev, [key]: { ...current, rpe } };
     });
   };
 
@@ -182,6 +202,14 @@ export default function ToolHome() {
               onExport={downloadJSON}
               onPrint={() => window.print()}
             />
+
+            {submitted && timeline.length === 0 && (
+              <p role="alert" className="text-sm font-medium text-(--danger)">
+                {missingFields.length > 0
+                  ? `Enter a value for ${missingFields.join(", ")} before generating a plan.`
+                  : "Enter valid Days, Duration and Weeks values before generating a plan."}
+              </p>
+            )}
 
             {submitted && timeline.length > 0 && (
               <div className="mt-4 pt-6 border-t border-(--border) space-y-6 animate-fade-up">

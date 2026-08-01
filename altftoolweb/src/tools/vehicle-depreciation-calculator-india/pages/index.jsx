@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, TrendingDown } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   BEYOND_FIVE_DEFAULT_PERCENT_PA,
   HALF_YEAR_DAYS,
@@ -52,7 +53,7 @@ export default function ToolHome() {
   const [blockId, setBlockId] = useState(DEFAULTS.blockId);
   const [halfFirstYear, setHalfFirstYear] = useState(DEFAULTS.halfFirstYear);
   const [condition, setCondition] = useState(DEFAULTS.condition);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -82,15 +83,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [ok, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "Vehicle depreciation result" });
   };
 
   const reset = () => {
@@ -100,8 +95,11 @@ export default function ToolHome() {
     setBlockId(DEFAULTS.blockId);
     setHalfFirstYear(DEFAULTS.halfFirstYear);
     setCondition(DEFAULTS.condition);
-    setCopied(false);
   };
+
+  const highlightRow = ok
+    ? result.yearRows.find((row) => row.tariffPercent >= result.tariffPercent - 1e-9)
+    : null;
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -237,7 +235,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Value on the motor tariff schedule
             </p>
@@ -254,21 +252,24 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy vehicle depreciation result"
+              aria-label={isCopied("result") ? "Copied vehicle depreciation result to clipboard" : "Copy vehicle depreciation result"}
               className={GHOST_BTN}
               disabled={!ok}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -279,7 +280,7 @@ export default function ToolHome() {
           </p>
         ) : null}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
           {[
             ["Age", ok ? `${NUM.format(result.ageYears)} years (${result.months} months)` : DASH],
             ["Depreciation applied", ok ? pct(result.tariffPercent) : DASH],
@@ -317,7 +318,7 @@ export default function ToolHome() {
                     <tr
                       key={row.year}
                       className={`border-b border-[var(--border)] last:border-0 ${
-                        row.year === Math.floor(result.ageYears) ? "font-semibold text-[var(--primary)]" : ""
+                        row.year === highlightRow?.year ? "font-semibold text-[var(--primary)]" : ""
                       }`}
                     >
                       <td className="py-2 pr-3">{row.year === 0 ? "New" : `${row.year} year${row.year > 1 ? "s" : ""}`}</td>

@@ -21,7 +21,7 @@ export const VAT_RATES = [
     id: "reduced",
     label: "Ermäßigter Satz (reduced)",
     rate: 7,
-    note: "Groceries, books, newspapers, cut flowers, local public transport, cultural admissions.",
+    note: "Groceries, books, newspapers, cut flowers, local public transport, cultural admissions, and restaurant/takeaway food (drinks stay at 19%).",
   },
   {
     id: "zero",
@@ -89,7 +89,7 @@ export function vatFraction(ratePercent) {
 export function calculateVat({ amount, ratePercent, mode = "add" } = {}) {
   if (!isNum(amount)) return { error: "Enter an amount as a number." };
   if (amount < 0) return { error: "The amount cannot be negative." };
-  if (amount > MAX_AMOUNT) return { error: "Enter an amount below 1,000,000,000,000." };
+  if (amount >= MAX_AMOUNT) return { error: "Enter an amount below 1,000,000,000,000." };
   if (!isNum(ratePercent)) return { error: "Enter a VAT rate as a number." };
   if (ratePercent < 0) return { error: "The VAT rate cannot be negative." };
   if (ratePercent > MAX_RATE) return { error: `Enter a VAT rate of ${MAX_RATE}% or less.` };
@@ -157,6 +157,5 @@ export function checkKleinunternehmer({ previousYear, currentYear } = {}) {
     previousOk,
     currentOk,
     eligible: previousOk && currentOk,
-    headroom: roundMoney(KU_PREVIOUS_YEAR_LIMIT - previousYear),
   };
 }

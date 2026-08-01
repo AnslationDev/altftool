@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "How is GST calculated on a trade?",
-      "GST is 18 percent, and it is charged only on brokerage plus exchange transaction charges plus SEBI turnover fees. It is never levied on STT or on stamp duty, which is why GST stays small even on large delivery trades that pay heavy STT.",
+      "GST is 18 percent, charged on brokerage plus exchange transaction charges plus SEBI turnover fees — plus the flat DP charge on an equity delivery sell, which the calculator already shows GST-inclusive. It is never levied on STT or on stamp duty, which is why GST stays small even on large delivery trades that pay heavy STT.",
     ],
     [
       "What are DP charges and when do they apply?",

@@ -1,14 +1,10 @@
 "use client";
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Sparkles, RotateCcw, Heart, Star, Trophy, RefreshCw,
-  Smile, Brain, Coffee, Music, Globe, Briefcase, 
+  Sparkles, RotateCcw, Heart, Star, Trophy,
+  Smile, Brain, Coffee, Globe, Briefcase,
 } from "lucide-react";
-
-function generateId() {
-  return Math.random().toString(36).substring(2, 9);
-}
 
 const CATEGORIES = [
   { id: "romance", label: "Romance", icon: Heart, color: "text-rose-500", desc: "Love and relationship compatibility" },
@@ -185,25 +181,35 @@ export default function ToolHome() {
   const [currentQ, setCurrentQ] = useState(0);
   const [score, setScore] = useState(null);
   const [animating, setAnimating] = useState(false);
+  const resultTimeoutRef = useRef(null);
 
   const currentQuiz = QUIZ_DATA[category] || QUIZ_DATA.romance;
   const questions = currentQuiz.questions;
 
-  const calculateScore = useCallback(() => {
-    const selectedKeys = Object.keys(answers);
+  useEffect(() => {
+    return () => {
+      if (resultTimeoutRef.current) clearTimeout(resultTimeoutRef.current);
+    };
+  }, []);
+
+  // Takes the answers map explicitly rather than reading it from state, so a
+  // score computed for the just-submitted final answer can't be based on a
+  // stale closure that predates that answer being recorded.
+  const calculateScore = useCallback((answersMap) => {
+    const selectedKeys = Object.keys(answersMap);
     if (selectedKeys.length < questions.length) return 0;
-    const total = selectedKeys.reduce((sum, key, idx) => {
+    const total = selectedKeys.reduce((sum, key) => {
       const qIdx = questions.findIndex((q) => q.q === key);
       if (qIdx === -1) return sum;
       const scoring = currentQuiz.scoring;
-      const optIdx = answers[key];
+      const optIdx = answersMap[key];
       if (scoring[qIdx] && scoring[qIdx].weight[optIdx] !== undefined) {
         return sum + scoring[qIdx].weight[optIdx];
       }
       return sum + 5;
     }, 0);
     return Math.round((total / (questions.length * 10)) * 100);
-  }, [answers, questions, currentQuiz]);
+  }, [questions, currentQuiz]);
 
   const startQuiz = useCallback(() => {
     setAnswers({});
@@ -213,19 +219,21 @@ export default function ToolHome() {
   }, []);
 
   const selectAnswer = useCallback((optionIdx) => {
-    setAnswers((prev) => ({ ...prev, [questions[currentQ].q]: optionIdx }));
+    if (animating) return;
+    const nextAnswers = { ...answers, [questions[currentQ].q]: optionIdx };
+    setAnswers(nextAnswers);
     if (currentQ < questions.length - 1) {
       setCurrentQ((prev) => prev + 1);
     } else {
       setAnimating(true);
-      setTimeout(() => {
-        const finalScore = calculateScore();
-        setScore(finalScore);
+      resultTimeoutRef.current = setTimeout(() => {
+        setScore(calculateScore(nextAnswers));
         setPhase("result");
         setAnimating(false);
+        resultTimeoutRef.current = null;
       }, 1500);
     }
-  }, [currentQ, questions, calculateScore]);
+  }, [animating, currentQ, questions, answers, calculateScore]);
 
   const goBack = useCallback(() => {
     if (currentQ > 0) setCurrentQ((prev) => prev - 1);
@@ -242,13 +250,16 @@ export default function ToolHome() {
     setScore(null);
   }, []);
 
-  const progress = questions.length > 0 ? ((Object.keys(answers).length) / questions.length) * 100 : 0;
+  // Driven by currentQ (position in the quiz), not by how many answers have ever
+  // been recorded — using answers.length here disagreed with the "Question X of Y"
+  // caption after the user hit Back, since Back doesn't erase prior answers.
+  const progress = questions.length > 0 ? (currentQ / questions.length) * 100 : 0;
   const currentQuestion = questions[currentQ];
   const currentCat = CATEGORIES.find((c) => c.id === category);
 
   const getResultData = (s) => {
-    if (s >= 90) return { label: "Perfect Match!", desc: "You are incredibly compatible! This is a match made in heaven.", color: "text-amber-500", bg: "bg-amber-50 dark:bg-amber-900/20", icon: Trophy };
-    if (s >= 75) return { label: "Strong Connection", desc: "You have a strong natural connection with great potential.", color: "text-emerald-500", bg: "bg-emerald-50 dark:bg-emerald-900/20", icon: Star };
+    if (s >= 90) return { label: "Perfect Match!", desc: "You are incredibly compatible! This is a match made in heaven.", color: "text-(--warning-text)", bg: "bg-amber-50 dark:bg-amber-900/20", icon: Trophy };
+    if (s >= 75) return { label: "Strong Connection", desc: "You have a strong natural connection with great potential.", color: "text-(--success-text)", bg: "bg-emerald-50 dark:bg-emerald-900/20", icon: Star };
     if (s >= 60) return { label: "Good Potential", desc: "You have a solid foundation to build something great.", color: "text-blue-500", bg: "bg-blue-50 dark:bg-blue-900/20", icon: Heart };
     if (s >= 40) return { label: "Room to Grow", desc: "There's some alignment but also areas to explore together.", color: "text-purple-500", bg: "bg-purple-50 dark:bg-purple-900/20", icon: Smile };
     return { label: "Different Paths", desc: "You have different approaches — but opposites can attract!", color: "text-(--muted-foreground)", bg: "bg-(--muted)", icon: Sparkles };
@@ -349,7 +360,7 @@ export default function ToolHome() {
               </p>
             </div>
             <span className="text-sm text-(--muted-foreground) bg-(--muted) px-3 py-1 rounded-full">
-              {Object.keys(answers).length + 1}/{questions.length}
+              {currentQ + 1}/{questions.length}
             </span>
           </div>
 
@@ -374,12 +385,16 @@ export default function ToolHome() {
                 {currentQuestion?.q}
               </p>
 
-              <div className="space-y-2">
+              <div className="space-y-2" role="radiogroup" aria-label={currentQuestion?.q}>
                 {currentQuestion?.options.map((opt, idx) => (
                   <button
                     key={idx}
+                    type="button"
+                    role="radio"
+                    aria-checked={answers[currentQuestion?.q] === idx}
                     onClick={() => selectAnswer(idx)}
-                    className={`w-full py-3.5 px-4 rounded-xl text-left text-sm font-medium border transition-all hover:border-(--primary) hover:bg-(--primary)/5 ${
+                    disabled={animating}
+                    className={`w-full py-3.5 px-4 rounded-xl text-left text-sm font-medium border transition-all hover:border-(--primary) hover:bg-(--primary)/5 disabled:cursor-not-allowed disabled:opacity-60 ${
                       answers[currentQuestion?.q] === idx
                         ? "bg-(--primary)/10 border-(--primary) text-(--primary)"
                         : "bg-(--card) text-(--foreground) border-(--border)"

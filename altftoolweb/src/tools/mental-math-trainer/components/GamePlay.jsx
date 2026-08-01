@@ -15,7 +15,7 @@ import {
   Hash,
 } from "lucide-react";
 import { generateQuestion, generateDailyChallenge, checkAnswer } from "../utils/mathGenerator";
-import { formatTime } from "../utils/scoring";
+import { formatTime, scoreForAnswer } from "../utils/scoring";
 
 export default function GamePlay({ config, onFinish }) {
   const { questionType, difficulty, gameMode, questionCount, timerDuration } = config;
@@ -114,12 +114,22 @@ export default function GamePlay({ config, onFinish }) {
       type: q.type,
       difficulty: q.difficulty,
     };
-    setAnswers((prev) => [...prev, newAnswer]);
+    const nextAnswers = [...answers, newAnswer];
+    setAnswers(nextAnswers);
+    setStreak(0);
+
+    // Timed Challenge and Daily Challenge share one session-level countdown
+    // (unlike Speed Mode's per-question 15s timer): once it reaches zero the
+    // whole session is over, not just the current question.
+    if (gameMode === "timed" || gameMode === "daily") {
+      onFinish(nextAnswers, bestStreak);
+      return;
+    }
+
     setIsAnswered(true);
     setShowFeedback("wrong");
-    setStreak(0);
     setLives((prev) => prev - 1);
-  }, [isAnswered, questions, currentIndex, questionStartTime]);
+  }, [isAnswered, questions, currentIndex, questionStartTime, answers, gameMode, bestStreak, onFinish]);
 
   const handleSubmit = () => {
     if (isAnswered || userAnswer.trim() === "") return;
@@ -144,7 +154,10 @@ export default function GamePlay({ config, onFinish }) {
     setShowFeedback(isCorrect ? "correct" : "wrong");
 
     if (isCorrect) {
-      setScore((prev) => prev + Math.round(10 * (1 + Math.min(streak, 10) * 0.5)));
+      // Same scoreForAnswer() the final report replays from `answers`, using this
+      // question's own difficulty and the streak going into it, so the live score
+      // shown throughout play always matches the Results screen's Total Score.
+      setScore((prev) => prev + scoreForAnswer(q.difficulty, streak));
       const nextStreak = streak + 1;
       setStreak(nextStreak);
       setBestStreak((best) => Math.max(best, nextStreak));
@@ -190,14 +203,17 @@ export default function GamePlay({ config, onFinish }) {
       return;
     }
 
-    const effectiveMax = Math.min(questionCount, questions.length);
+    // Endless Mode has no limit at all (ended only via "End Session"), and
+    // Timed Challenge is bounded by its clock, not by the selected question
+    // count (that's handled in handleTimeUp) — so neither is capped here.
+    const isUnbounded = gameMode === "endless" || gameMode === "timed";
 
-    if (nextIndex >= effectiveMax || (gameMode !== "endless" && nextIndex >= questionCount)) {
+    if (!isUnbounded && nextIndex >= Math.min(questionCount, questions.length)) {
       onFinish(answers, bestStreak);
       return;
     }
 
-    if (gameMode === "endless" && nextIndex >= questions.length) {
+    if (isUnbounded && nextIndex >= questions.length) {
       const newQ = generateQuestion(questionType, difficulty);
       setQuestions((prev) => [...prev, { ...newQ, type: questionType, difficulty }]);
     }
@@ -222,7 +238,8 @@ export default function GamePlay({ config, onFinish }) {
   };
 
   const currentQuestion = questions[currentIndex];
-  const effectiveTotal = gameMode === "survival" ? questions.length : Math.min(questionCount, questions.length);
+  const isUnboundedMode = gameMode === "survival" || gameMode === "endless" || gameMode === "timed";
+  const effectiveTotal = isUnboundedMode ? questions.length : Math.min(questionCount, questions.length);
   const correctCount = answers.filter((a) => a.correct).length;
   const incorrectCount = answers.filter((a) => !a.correct).length;
   const accuracy = answers.length > 0 ? Math.round((correctCount / answers.length) * 1000) / 10 : 0;
@@ -322,7 +339,7 @@ export default function GamePlay({ config, onFinish }) {
             {currentQuestion.type || questionType}
           </span>
           <span className="rounded-full bg-[var(--section-highlight)] px-3 py-0.5 text-xs font-bold text-[var(--foreground)]">
-            {difficulty}
+            {currentQuestion.difficulty || difficulty}
           </span>
         </div>
         <p className="my-6 text-center text-3xl font-extrabold tracking-tight text-[var(--foreground)] sm:text-4xl">
@@ -359,7 +376,10 @@ export default function GamePlay({ config, onFinish }) {
 
           {/* Feedback */}
           {isAnswered && showFeedback && (
-            <div className={`mt-4 flex items-center justify-center gap-2 rounded-xl p-3 text-sm font-bold ${
+            <div
+              role="status"
+              aria-live="polite"
+              className={`mt-4 flex items-center justify-center gap-2 rounded-xl p-3 text-sm font-bold ${
               showFeedback === "correct"
                 ? "bg-emerald-500/10 text-emerald-600"
                 : showFeedback === "skipped"
@@ -378,7 +398,7 @@ export default function GamePlay({ config, onFinish }) {
           )}
 
           {/* Action Buttons */}
-          <div className="mt-4 flex justify-center gap-3">
+          <div className="mt-4 flex flex-wrap justify-center gap-3">
             {!isAnswered ? (
               <>
                 <button
@@ -404,6 +424,14 @@ export default function GamePlay({ config, onFinish }) {
               >
                 Next Question
                 <ArrowRight className="h-4 w-4" />
+              </button>
+            )}
+            {gameMode === "endless" && (
+              <button
+                onClick={() => onFinish(answers, bestStreak)}
+                className="flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2.5 text-sm font-bold text-[var(--muted-foreground)] transition-all hover:bg-[var(--section-highlight)]"
+              >
+                End Session
               </button>
             )}
           </div>

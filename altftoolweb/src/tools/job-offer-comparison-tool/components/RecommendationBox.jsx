@@ -19,13 +19,12 @@ const RecommendationBox = ({ offers, preferences }) => {
             preferences.learningWeight;
 
         const weightedScore =
-            ((salaryScore * preferences.salaryWeight +
+            (salaryScore * preferences.salaryWeight +
                 remoteScore * preferences.remoteWeight +
                 growthScore * preferences.growthWeight +
                 stabilityScore * preferences.stabilityWeight +
                 learningScore * preferences.learningWeight) /
-                totalWeight) *
-            0.8;
+            totalWeight;
 
         return Math.round(weightedScore);
     };

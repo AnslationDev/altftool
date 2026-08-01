@@ -140,7 +140,10 @@ export default function ToolHome() {
       totalLiability: oi + oc + os,
       totalCredit: ci + cc + cs,
       sequentialCash: sequential.totalCash,
-      cashSaved: Math.max(0, sequential.totalCash - result.totalCash),
+      // Round to paise before diffing: chained subtraction across settleItc's several
+      // floating-point steps can leave a ~1e-13 residue even when both allocations are
+      // truly identical, which would otherwise render as a false "saves ₹0.00" claim.
+      cashSaved: Math.max(0, Math.round((sequential.totalCash - result.totalCash) * 100) / 100),
     };
   }, [outIgst, outCgst, outSgst, itcIgst, itcCgst, itcSgst, optimise]);
 

@@ -1,28 +1,9 @@
 import React from 'react';
 import { TrendingUp } from 'lucide-react';
+import { calculateScore } from '../utils/scoring';
 
 const ComparisonTable = ({ offers }) => {
     if (offers.length === 0) return null;
-
-    const calculateScore = (o) => {
-        const salaryScore = Math.min(o.baseSalary / 200000, 1) * 20;
-        const bonusScore = (o.bonus / o.baseSalary) * 20;
-        const esopScore = (o.esop / o.baseSalary) * 15;
-        const workLifeScore = o.workLifeBalance * 15;
-        const growthScore = o.growthOpportunities * 15;
-        const stabilityScore = o.companyStability * 10;
-        const learningScore = o.learningOpportunities * 5;
-
-        return Math.round(
-            salaryScore +
-            bonusScore +
-            esopScore +
-            workLifeScore +
-            growthScore +
-            stabilityScore +
-            learningScore
-        );
-    };
 
     const getMaxValue = (key) => {
         return Math.max(...offers.map((o) => o[key] || 0));

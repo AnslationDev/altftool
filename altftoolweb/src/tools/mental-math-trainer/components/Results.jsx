@@ -62,8 +62,8 @@ function SectionCard({ title, icon: Icon, children, action }) {
 
 const PIE_COLORS = ["#14B8A6", "#EF4444"];
 
-export default function Results({ answers, difficulty = "easy", bestStreak = 0, onRestart, onReset }) {
-  const report = getPerformanceReport(answers, difficulty, bestStreak);
+export default function Results({ answers, onRestart, onReset }) {
+  const report = getPerformanceReport(answers);
 
   const pieData = [
     { name: "Correct", value: report.correctCount },

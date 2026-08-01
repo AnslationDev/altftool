@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "Dream Vacation Finder asks seven questions — budget, climate, trip type, travel style, season, duration and continent — then scores 57 curated destinations across six continents against your answers and ranks them by match percentage. Budget, climate, activity and continent each carry the heaviest weight, so the top pick reflects what you said matters most rather than a generic bucket-list order. Each result comes with the best months to visit, a daily cost estimate, highlights, local dishes and a fun fact.",
+    "Dream Vacation Finder asks seven questions — budget, climate, trip type, travel style, season, duration and continent — then scores 55 curated destinations across six continents against your answers and ranks them by match percentage. Budget, climate, activity and continent each carry the heaviest weight, so the top pick reflects what you said matters most rather than a generic bucket-list order. Each result comes with the best months to visit, a daily cost estimate, highlights, local dishes and a fun fact.",
   useCases: [
     "You and a partner have a week off in November and cannot agree where to go, so you both take the quiz and compare which destinations rank highest for each of you.",
     "You know you want somewhere warm on a modest budget but have no shortlist, and need a starting set of six or seven candidates to research properly.",
@@ -23,7 +23,7 @@ const seo = {
   faqs: [
     [
       "How many destinations does it choose from?",
-      "57, spread across Asia, Europe, Africa, North America, South America and Oceania. You get the single best match plus the next six ranked options after each quiz.",
+      "55, spread across Asia, Europe, Africa, North America, South America and Oceania. You get the single best match plus the next six ranked options after each quiz.",
     ],
     [
       "How is the match percentage calculated?",

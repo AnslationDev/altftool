@@ -11,7 +11,7 @@ export default function Description() {
           <p>
             Answer a few quick questions about your budget, preferred climate, activities, travel
             style, and more. Our matching engine searches through dozens of hand-picked destinations
-            across all seven continents to find your perfect match.
+            across all six inhabited continents to find your perfect match.
           </p>
           <p>
             Each destination includes estimated costs, best time to visit, top attractions, local

@@ -22,8 +22,8 @@
  * and reports the reciprocal as "1 in N".
  */
 
-export { calculateRiskScore } from "./lib/riskScore";
-export { estimateUniqueness } from "./lib/uniquenessScore";
+export { calculateRiskScore, RISK_LOW_MAX, RISK_MEDIUM_MAX } from "./lib/riskScore";
+export { estimateUniqueness, UNIQUE_THRESHOLD } from "./lib/uniquenessScore";
 export {
   PRIVACY_TIPS,
   CATEGORY_META,
@@ -32,10 +32,3 @@ export {
 } from "./lib/privacyTips";
 export { hashString, generateFingerprintHash } from "./lib/hashFingerprint";
 export { FONT_LIST } from "./constants/font";
-
-/** Score below which the tracking risk reads "Low". */
-export const RISK_LOW_MAX = 30;
-/** Score below which the tracking risk reads "Medium"; at or above it is High. */
-export const RISK_MEDIUM_MAX = 70;
-/** A fingerprint rarer than 1 in this many browsers is treated as identifying. */
-export const UNIQUE_THRESHOLD = 100_000;

@@ -7,7 +7,12 @@ const FinancialBreakdown = ({ offers }) => {
 
     const calculateFinancials = (offer) => {
         const inHandMonthly = (offer.baseSalary + offer.baseSalary * (offer.bonus / 100)) / 12;
-        const esopValue = (offer.baseSalary * (offer.esop / 100)) / 4;
+        // The ESOP grant vests over 4 years, so dividing by 4 alone yields an
+        // ANNUAL vested amount. It must also be divided by 12 to line up with
+        // the other two figures here, which are true monthly amounts —
+        // otherwise it overstates "Total Monthly Value" by 12x and can flip
+        // which offer looks financially best.
+        const esopValue = (offer.baseSalary * (offer.esop / 100)) / 4 / 12;
         const joiningMonthly = offer.joiningBonus / 12;
         const totalMonthly = inHandMonthly + esopValue + joiningMonthly;
         const annualSavings = totalMonthly * 12 * 0.15;
@@ -16,10 +21,10 @@ const FinancialBreakdown = ({ offers }) => {
         return {
             inHandMonthly: Math.round(inHandMonthly),
             esopValue: Math.round(esopValue),
+            joiningMonthly: Math.round(joiningMonthly),
             totalMonthly: Math.round(totalMonthly),
             annualSavings: Math.round(annualSavings),
             estimatedTax: Math.round(estimatedTax),
-            netIncome: Math.round((totalMonthly * 12 - estimatedTax) * 12),
         };
     };
 

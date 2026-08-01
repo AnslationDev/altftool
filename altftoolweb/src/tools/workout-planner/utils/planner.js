@@ -16,8 +16,10 @@ const DAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 
 // Warm-up/main/cooldown each have a minimum floor, but those floors must never let the
 // blocks add up to more than the user's configured session Duration. When the floors
-// would overflow the budget, scale the blocks down proportionally (keeping a 1-minute
-// floor per block) so the three segments always reconcile to the total duration.
+// would overflow the budget, scale the blocks down proportionally. The three segments
+// must always reconcile to the total duration -- that invariant takes priority over the
+// per-block floor, so a block can shrink all the way to 0 minutes (never negative) for a
+// very short total (e.g. a 1 or 2 minute session) rather than the sum overshooting total.
 function splitSessionMinutes(duration) {
   const total = Math.max(1, Number(duration) || 0);
   const rawWarmup = Math.max(5, Math.round(total * 0.2));
@@ -35,15 +37,15 @@ function splitSessionMinutes(duration) {
   let cooldown = Math.max(1, total - warmup - main);
 
   let overflow = warmup + main + cooldown - total;
-  while (overflow > 0 && main > 1) {
+  while (overflow > 0 && main > 0) {
     main -= 1;
     overflow -= 1;
   }
-  while (overflow > 0 && warmup > 1) {
+  while (overflow > 0 && warmup > 0) {
     warmup -= 1;
     overflow -= 1;
   }
-  while (overflow > 0 && cooldown > 1) {
+  while (overflow > 0 && cooldown > 0) {
     cooldown -= 1;
     overflow -= 1;
   }
@@ -71,7 +73,13 @@ export function buildTimeline(input) {
   const { daysPerWeek, duration, goal, level, equipment, focusArea, blockWeeks, injuryFlag } = input;
   const base = GOAL_EXERCISES[goal] || GOAL_EXERCISES.strength;
   const sessions = [];
-  const total = Number(daysPerWeek);
+  // Days is meant to be a day-of-week count and DAY_NAMES only has 7 entries. The
+  // "Days" input's min/max attributes (1-7) are never enforced (there is no <form> to
+  // trigger HTML5 validation), so a typed value like 9 must still be clamped here --
+  // otherwise DAY_NAMES[i] goes out of bounds for i >= 7, producing sessions with
+  // day: undefined, which then collide on the same sessionKey (day+exercise) once the
+  // exercise list wraps back around, entangling two different sessions' completion/RPE.
+  const total = Math.min(DAY_NAMES.length, Math.max(1, Math.round(Number(daysPerWeek)) || 1));
   const deloadWeek = blockWeeks >= 4 ? 4 : null;
   const weeklyIncrease = level === "beginner" ? "2.5%" : "5%";
 
@@ -119,8 +127,13 @@ export function completionStats(logs, timeline) {
   // never inflate adherence above 100% or get misattributed to a different session.
   const currentLogs = timeline.map((session) => logs[sessionKey(session)]).filter(Boolean);
   const completed = currentLogs.filter((log) => log.completed).length;
+  // RPE is documented (and now enforced on write, see updateRpe) as a 1-10 scale, but
+  // clamp defensively here too so a log entry saved before that fix -- or edited outside
+  // the UI -- can never drag the average, or the >= 8.5 fatigue-trend coaching threshold
+  // below, outside that documented range.
+  const clampRpe = (value) => Math.min(10, Math.max(0, Number(value) || 0));
   const avgRpe = currentLogs.length
-    ? (currentLogs.reduce((acc, cur) => acc + Number(cur.rpe || 0), 0) / currentLogs.length).toFixed(1)
+    ? (currentLogs.reduce((acc, cur) => acc + clampRpe(cur.rpe), 0) / currentLogs.length).toFixed(1)
     : "0.0";
   const adherence = totalSessions ? Math.round((completed / totalSessions) * 100) : 0;
   const coach =

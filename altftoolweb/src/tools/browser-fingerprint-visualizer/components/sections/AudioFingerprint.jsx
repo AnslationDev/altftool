@@ -34,12 +34,12 @@ export function AudioFingerprint({ audio, loading }) {
       <SectionHeader
         icon="🔊"
         title="Audio Fingerprint"
-        description="Audio hardware differences detected silently via Web Audio API"
-        badge={
+        subtitle="Audio hardware differences detected silently via Web Audio API"
+        action={
           isBlocked ? (
-            <Badge variant="success" size="xs">Protected ✓</Badge>
+            <Badge variant="green" size="xs" label="Protected ✓" />
           ) : (
-            <Badge variant="high" size="xs">Detected</Badge>
+            <Badge variant="red" size="xs" label="Detected" />
           )
         }
       />

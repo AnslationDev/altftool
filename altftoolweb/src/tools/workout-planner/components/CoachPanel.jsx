@@ -1,7 +1,7 @@
 export default function CoachPanel({ coach, nextSteps }) {
   return (
     <>
-      <div className="p-4 rounded-lg border border-(--border) bg-(--card)">
+      <div className="p-4 rounded-lg border border-(--border) bg-(--card)" role="status" aria-live="polite">
         <h3 className="text-xl font-bold mb-2">Coach Feedback</h3>
         <p className="text-sm">{coach}</p>
       </div>

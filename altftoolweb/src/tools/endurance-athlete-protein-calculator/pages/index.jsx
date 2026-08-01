@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Bike, Check, Copy, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   AMDR_MAX_PCT,
   AMDR_MIN_PCT,
@@ -52,7 +53,7 @@ export default function ToolHome() {
   const [energyDeficit, setEnergyDeficit] = useState(DEFAULTS.energyDeficit);
   const [meals, setMeals] = useState(DEFAULTS.meals);
   const [dailyKcal, setDailyKcal] = useState(DEFAULTS.dailyKcal);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -84,15 +85,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "endurance protein result" });
   };
 
   const reset = () => {
@@ -103,7 +98,7 @@ export default function ToolHome() {
     setEnergyDeficit(DEFAULTS.energyDeficit);
     setMeals(DEFAULTS.meals);
     setDailyKcal(DEFAULTS.dailyKcal);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -283,15 +278,19 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy endurance protein result"
+              aria-label={
+                isCopied("result")
+                  ? "Copied the endurance protein result to clipboard"
+                  : "Copy endurance protein result"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
@@ -302,6 +301,9 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

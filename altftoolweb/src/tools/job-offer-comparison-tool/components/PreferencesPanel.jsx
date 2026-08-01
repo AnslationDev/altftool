@@ -92,20 +92,6 @@ const PreferencesPanel = ({ preferences, setPreferences }) => {
                 />
             </div>
 
-            <div className="job-preference-item">
-                <div className="job-preference-label">
-                    <span className="job-preference-label-text">Brand Value</span>
-                    <span className="job-preference-value">{preferences.brandWeight}%</span>
-                </div>
-                <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={preferences.brandWeight}
-                    onChange={(e) => handleChange('brandWeight', parseInt(e.target.value))}
-                    className="job-slider"
-                />
-            </div>
         </div>
     );
 };

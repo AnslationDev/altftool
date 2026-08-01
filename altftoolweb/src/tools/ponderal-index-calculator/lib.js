@@ -65,6 +65,23 @@ const round = (value, dp) => {
   return Math.round(value * factor) / factor;
 };
 
+const floorTo = (value, dp) => {
+  const factor = 10 ** dp;
+  return Math.floor(value * factor) / factor;
+};
+
+const ceilTo = (value, dp) => {
+  const factor = 10 ** dp;
+  return Math.ceil(value * factor) / factor;
+};
+
+// classify() is fed a pi value already rounded to 2dp, so a raw pi within
+// 0.005 of a band threshold crosses it once rounded. Any "usual range"
+// weight window shown alongside the band label has to be widened by this
+// same tolerance (and rounded outward, not to nearest) so it can never
+// exclude a weight whose rounded pi was just classified as inside it.
+const PI_ROUND_TOLERANCE = 0.005;
+
 const classify = (value, bands) =>
   bands.find((band) => value >= band.min && value < band.max) ?? bands[bands.length - 1];
 
@@ -105,8 +122,8 @@ export function adultPonderalIndex({ heightCm, weightKg }) {
     bmi: round(bmi, 1),
     band,
     heightM: round(heightM, 3),
-    piWeightMin: round(ADULT_USUAL_PI.min * cube, 1),
-    piWeightMax: round(ADULT_USUAL_PI.max * cube, 1),
+    piWeightMin: floorTo((ADULT_USUAL_PI.min - PI_ROUND_TOLERANCE) * cube, 1),
+    piWeightMax: ceilTo((ADULT_USUAL_PI.max - PI_ROUND_TOLERANCE) * cube, 1),
     bmiWeightMin: round(HEALTHY_BMI.min * square, 1),
     bmiWeightMax: round(HEALTHY_BMI.max * square, 1),
     weightAtReferenceHeight: round(weightAtReferenceHeight, 1),
@@ -145,8 +162,8 @@ export function newbornPonderalIndex({ birthWeightG, lengthCm }) {
     pi: round(pi, 2),
     piExact: pi,
     band,
-    weightMinG: Math.round((NEWBORN_BANDS[1].min * cube) / 100),
-    weightMaxG: Math.round((NEWBORN_BANDS[1].max * cube) / 100),
+    weightMinG: Math.floor(((NEWBORN_BANDS[1].min - PI_ROUND_TOLERANCE) * cube) / 100),
+    weightMaxG: Math.ceil(((NEWBORN_BANDS[1].max - PI_ROUND_TOLERANCE) * cube) / 100),
   };
 }
 

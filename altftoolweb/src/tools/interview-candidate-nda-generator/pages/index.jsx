@@ -82,8 +82,15 @@ export default function ToolHome() {
   );
 
   const failed = Boolean(doc.error);
+  const currentJurisdiction = useMemo(() => findJurisdiction(form.jurisdictionKey), [form.jurisdictionKey]);
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset all fields back to the demo example values? This clears everything you've entered and cannot be undone.")
+    ) {
+      return;
+    }
     setForm({ ...DEFAULTS, materials: [...DEFAULTS.materials] });
     setCopied(false);
   };
@@ -182,7 +189,18 @@ export default function ToolHome() {
             <label className={LABEL_CLASS} htmlFor="ic-city">
               Forum city
             </label>
-            <input id="ic-city" className={`mt-2 ${INPUT_CLASS}`} value={form.city} onChange={set("city")} />
+            <input
+              id="ic-city"
+              className={`mt-2 ${INPUT_CLASS} disabled:opacity-50`}
+              value={form.city}
+              onChange={set("city")}
+              disabled={!currentJurisdiction.cityMatters}
+            />
+            {!currentJurisdiction.cityMatters ? (
+              <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                Singapore&rsquo;s courts aren&rsquo;t split by city, so this doesn&rsquo;t change the jurisdiction clause.
+              </p>
+            ) : null}
           </div>
         </div>
 

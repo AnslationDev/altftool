@@ -1,12 +1,21 @@
 "use client";
 
 import React from 'react';
-import { Moon, Sun, Download, Plus } from 'lucide-react';
+import { Moon, Sun, Download, Plus, Menu } from 'lucide-react';
 
-const Header = ({ theme, setTheme, onAddOffer, onExport }) => {
+const Header = ({ theme, setTheme, onAddOffer, onExport, sidebarOpen, onToggleSidebar }) => {
     return (
         <div className="job-header">
             <div className="job-header-left">
+                <button
+                    type="button"
+                    className="job-theme-toggle job-menu-toggle"
+                    onClick={onToggleSidebar}
+                    aria-label={sidebarOpen ? 'Close navigation menu' : 'Open navigation menu'}
+                    aria-expanded={sidebarOpen}
+                >
+                    <Menu size={20} />
+                </button>
                 <div>
                     <h1 className="job-header-title">Job Offer Comparison</h1>
                     <p className="job-header-subtitle">

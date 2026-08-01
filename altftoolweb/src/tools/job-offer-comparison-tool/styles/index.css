@@ -185,6 +185,11 @@
     transition: all 0.2s ease;
 }
 
+.job-menu-toggle {
+    display: none;
+    flex-shrink: 0;
+}
+
 .job-theme-toggle:hover {
     background: var(--job-surface);
     border-color: var(--job-primary);
@@ -670,6 +675,10 @@
 
     .job-sidebar.open {
         display: block;
+    }
+
+    .job-menu-toggle {
+        display: flex;
     }
 
     .job-main-content {

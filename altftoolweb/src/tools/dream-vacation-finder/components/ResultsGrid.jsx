@@ -31,7 +31,7 @@ export default function ResultsGrid({
           destination={topResult}
           rank={0}
           onSave={onSave}
-          isSaved={saved.includes(topResult.name)}
+          isSaved={saved.some((d) => d.name === topResult.name)}
         />
       </div>
 
@@ -47,7 +47,7 @@ export default function ResultsGrid({
                 destination={dest}
                 rank={i + 1}
                 onSave={onSave}
-                isSaved={saved.includes(dest.name)}
+                isSaved={saved.some((d) => d.name === dest.name)}
               />
             ))}
           </div>

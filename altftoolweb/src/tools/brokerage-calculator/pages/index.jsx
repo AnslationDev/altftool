@@ -11,7 +11,7 @@ import {
   TrendingDown,
   TrendingUp,
 } from "lucide-react";
-import { safeCopyText } from "@/shared/utils/clipboard";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const GST_RATE = 0.18;
 const SEBI_RATE = 0.000001;
@@ -208,7 +208,7 @@ export default function ToolHome() {
   const [model, setModel] = useState("zerodha");
   const [customPct, setCustomPct] = useState(0.25);
   const [customCap, setCustomCap] = useState(0);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const activeSegment = segments.find((item) => item.id === segment) || segments[0];
   const effectiveQty = activeSegment.lots
@@ -218,8 +218,13 @@ export default function ToolHome() {
   const params = useMemo(
     () => ({
       segment,
-      buyPrice: Number(buyPrice) || 0,
-      sellPrice: Number(sellPrice) || 0,
+      // Clamp negative prices to zero here (not just inside computeCharges'
+      // turnover math) so the headline Gross/Net P&L figures below stay
+      // consistent with the charges actually computed on this trade — a
+      // stray minus sign should not both zero out turnover-based charges
+      // and simultaneously inflate the raw price-difference P&L.
+      buyPrice: Math.max(0, Number(buyPrice) || 0),
+      sellPrice: Math.max(0, Number(sellPrice) || 0),
       quantity: effectiveQty,
       model,
       customPct: Number(customPct) || 0,
@@ -389,11 +394,8 @@ export default function ToolHome() {
     setCustomCap(0);
   };
 
-  const copyBreakdown = async () => {
-    const success = await safeCopyText(report);
-    if (!success) return;
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1200);
+  const copyBreakdown = () => {
+    copy("breakdown", report, { label: "Brokerage breakdown" });
   };
 
   const toneColor = {
@@ -433,13 +435,20 @@ export default function ToolHome() {
 
         <section className="mt-6 grid gap-6 2xl:grid-cols-[390px_1fr]">
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
-            <span className="text-sm font-semibold">Segment</span>
-            <div className="mt-2 grid grid-cols-2 gap-2">
+            <span className="text-sm font-semibold" id="segment-group-label">
+              Segment
+            </span>
+            <div
+              className="mt-2 grid grid-cols-2 gap-2"
+              role="group"
+              aria-labelledby="segment-group-label"
+            >
               {segments.map((item) => (
                 <button
                   key={item.id}
                   type="button"
                   onClick={() => setSegment(item.id)}
+                  aria-pressed={segment === item.id}
                   className={`rounded-md border px-3 py-3 text-left text-sm font-semibold transition ${
                     segment === item.id
                       ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
@@ -447,6 +456,7 @@ export default function ToolHome() {
                   }`}
                 >
                   {item.label}
+                  <span className="ml-1.5 text-xs font-normal opacity-75">({item.short})</span>
                 </button>
               ))}
             </div>
@@ -528,11 +538,14 @@ export default function ToolHome() {
             )}
 
             <div className="mt-5">
-              <span className="text-sm font-semibold">Brokerage model</span>
-              <div className="mt-2 grid gap-2">
+              <span className="text-sm font-semibold" id="broker-model-group-label">
+                Brokerage model
+              </span>
+              <div className="mt-2 grid gap-2" role="group" aria-labelledby="broker-model-group-label">
                 <button
                   type="button"
                   onClick={() => setModel("zerodha")}
+                  aria-pressed={model === "zerodha"}
                   className={`rounded-md border px-3 py-3 text-left text-sm font-semibold transition ${
                     model === "zerodha"
                       ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
@@ -544,6 +557,7 @@ export default function ToolHome() {
                 <button
                   type="button"
                   onClick={() => setModel("custom")}
+                  aria-pressed={model === "custom"}
                   className={`rounded-md border px-3 py-3 text-left text-sm font-semibold transition ${
                     model === "custom"
                       ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
@@ -623,11 +637,15 @@ export default function ToolHome() {
                 <button
                   type="button"
                   onClick={copyBreakdown}
+                  aria-label={isCopied("breakdown") ? "Copied the brokerage breakdown" : "Copy the brokerage breakdown"}
                   className="btn-secondary min-h-9 px-3 py-1.5 text-sm"
                 >
                   <Copy className="h-4 w-4" />
-                  {copied ? "Copied" : "Copy breakdown"}
+                  {isCopied("breakdown") ? "Copied" : "Copy breakdown"}
                 </button>
+                <span className="sr-only" role="status" aria-live="polite">
+                  {announcement}
+                </span>
               </div>
 
               <div className="mt-4 flex flex-wrap items-center gap-4" aria-live="polite">

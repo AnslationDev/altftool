@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "How is the tracking risk score calculated?",
-      "Twelve signals are scored and summed, then capped at 100: canvas 20, WebGL/GPU 15, audio 10, installed fonts 10, timezone 8, screen resolution 8, CPU cores plus device memory 7, languages 5, storage profile 4, media devices 4, touch points 3, and 3 for sending a Do-Not-Track header. Under 30 is Low, under 70 is Medium, 70 and above is High. Blocked or unavailable probes score zero, so a hardened browser genuinely scores lower.",
+      "Twelve signals are scored and summed, then capped at 100: canvas 20, WebGL/GPU 15, audio 10, installed fonts 10, timezone 8, screen resolution 8, CPU cores plus device memory 7, languages 5, storage profile 4, media devices 4, touch points 3, and 3 for sending a Do-Not-Track header. Under 30 is Low, under 70 is Medium, 70 and above is High. Blocked or unavailable probes score zero, so a hardened browser genuinely scores lower — the one exception is languages, which floors at 2 points because every browser discloses at least one language even when reduced to a single generic value.",
     ],
     [
       "Does blocking cookies stop fingerprinting?",

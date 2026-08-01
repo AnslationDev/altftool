@@ -21,7 +21,9 @@ export function analyzeSharpness(imageData) {
       count++;
     }
   }
-  const avg = total / count;
+  // count stays 0 for images 2px or narrower in either dimension, since the
+  // interior loop bounds (1..w-2 / 1..h-2) never run — avoid a 0/0 NaN.
+  const avg = count > 0 ? total / count : 0;
   const score = Math.min(100, Math.round((avg / 30) * 100));
   return { score, raw: avg };
 }
@@ -35,7 +37,10 @@ export function analyzeBrightness(imageData) {
   }
   const avg = total / len;
   let score = 50;
-  if (avg < 40) score = Math.round((avg / 40) * 30);
+  // The <40 and >=40 branches must agree at avg=40 (score 50) so the
+  // piecewise function is continuous — it previously jumped from a max of
+  // 30 to a min of 50 right at the boundary, making scores 31-49 unreachable.
+  if (avg < 40) score = Math.round((avg / 40) * 50);
   else if (avg > 200) score = Math.round(100 - ((avg - 200) / 55) * 30);
   else score = 50 + Math.round(((avg - 40) / 160) * 50);
   return { score: Math.max(0, Math.min(100, score)), avg: Math.round(avg) };
@@ -49,8 +54,11 @@ export function analyzeContrast(imageData) {
     grays[i] = 0.299 * data[i * 4] + 0.587 * data[i * 4 + 1] + 0.114 * data[i * 4 + 2];
   }
   grays.sort();
-  const low = grays[Math.round(len * 0.05)];
-  const high = grays[Math.round(len * 0.95)];
+  // Clamp the percentile indices into [0, len-1] — for len <= 10 or so,
+  // Math.round(len * 0.95) can land one past the last valid index and read
+  // undefined, turning range into NaN.
+  const low = grays[Math.min(len - 1, Math.max(0, Math.round(len * 0.05)))];
+  const high = grays[Math.min(len - 1, Math.max(0, Math.round(len * 0.95)))];
   const range = high - low;
   const score = Math.min(100, Math.max(0, Math.round((range / 200) * 100)));
   return { score, range: Math.round(range), low: Math.round(low), high: Math.round(high) };
@@ -77,7 +85,9 @@ export function analyzeNoise(imageData) {
       count++;
     }
   }
-  const avgNoise = noise / count;
+  // count stays 0 for images 4px or narrower in either dimension, since the
+  // interior loop bounds (2..w-3 / 2..h-3) never run — avoid a 0/0 NaN.
+  const avgNoise = count > 0 ? noise / count : 0;
   const score = Math.max(0, Math.min(100, Math.round(100 - (avgNoise / 20) * 100)));
   return { score, raw: avgNoise };
 }
@@ -118,7 +128,10 @@ export function analyzeWhiteBalance(imageData) {
   const dr = Math.abs(r - avg);
   const dg = Math.abs(g - avg);
   const db = Math.abs(b - avg);
-  const deviation = (dr + dg + db) / avg;
+  // avg is 0 only when r=g=b=0 (a solid-black image), which also forces
+  // dr=dg=db=0 — perfectly neutral, no measurable color cast — so treat it
+  // as zero deviation instead of dividing 0/0 into NaN.
+  const deviation = avg === 0 ? 0 : (dr + dg + db) / avg;
   const score = Math.max(0, Math.min(100, Math.round(100 - deviation * 100)));
   return { score, r: Math.round(r), g: Math.round(g), b: Math.round(b) };
 }

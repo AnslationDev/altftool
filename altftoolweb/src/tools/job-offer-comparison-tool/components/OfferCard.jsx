@@ -2,32 +2,13 @@
 
 import React, { useState } from 'react';
 import { Trash2, ChevronDown, ChevronUp } from 'lucide-react';
+import { calculateScore } from '../utils/scoring';
 
 const OfferCard = ({ offer, index, onUpdate, onDelete }) => {
     const [expanded, setExpanded] = useState(false);
 
     const handleChange = (field, value) => {
         onUpdate(index, { ...offer, [field]: value });
-    };
-
-    const calculateScore = (o) => {
-        const salaryScore = Math.min(o.baseSalary / 200000, 1) * 20;
-        const bonusScore = (o.bonus / o.baseSalary) * 20;
-        const esopScore = (o.esop / o.baseSalary) * 15;
-        const workLifeScore = o.workLifeBalance * 15;
-        const growthScore = o.growthOpportunities * 15;
-        const stabilityScore = o.companyStability * 10;
-        const learningScore = o.learningOpportunities * 5;
-
-        return Math.round(
-            salaryScore +
-            bonusScore +
-            esopScore +
-            workLifeScore +
-            growthScore +
-            stabilityScore +
-            learningScore
-        );
     };
 
     const score = calculateScore(offer);
@@ -211,7 +192,7 @@ const OfferCard = ({ offer, index, onUpdate, onDelete }) => {
                     <div className="job-slider-group">
                         <div className="job-slider-label">
                             <span className="job-slider-label-text">Work-life Balance</span>
-                            <span className="job-slider-value">{Math.round(offer.workLifeBalance * 10)}/10</span>
+                            <span className="job-slider-value">{offer.workLifeBalance}/10</span>
                         </div>
                         <input
                             type="range"
@@ -227,7 +208,7 @@ const OfferCard = ({ offer, index, onUpdate, onDelete }) => {
                     <div className="job-slider-group">
                         <div className="job-slider-label">
                             <span className="job-slider-label-text">Growth Opportunities</span>
-                            <span className="job-slider-value">{Math.round(offer.growthOpportunities * 10)}/10</span>
+                            <span className="job-slider-value">{offer.growthOpportunities}/10</span>
                         </div>
                         <input
                             type="range"
@@ -243,7 +224,7 @@ const OfferCard = ({ offer, index, onUpdate, onDelete }) => {
                     <div className="job-slider-group">
                         <div className="job-slider-label">
                             <span className="job-slider-label-text">Learning Opportunities</span>
-                            <span className="job-slider-value">{Math.round(offer.learningOpportunities * 10)}/10</span>
+                            <span className="job-slider-value">{offer.learningOpportunities}/10</span>
                         </div>
                         <input
                             type="range"
@@ -259,7 +240,7 @@ const OfferCard = ({ offer, index, onUpdate, onDelete }) => {
                     <div className="job-slider-group">
                         <div className="job-slider-label">
                             <span className="job-slider-label-text">Company Stability</span>
-                            <span className="job-slider-value">{Math.round(offer.companyStability * 10)}/10</span>
+                            <span className="job-slider-value">{offer.companyStability}/10</span>
                         </div>
                         <input
                             type="range"
@@ -379,7 +360,13 @@ const OfferCard = ({ offer, index, onUpdate, onDelete }) => {
             <div className="job-offer-actions">
                 <button
                     className="job-offer-btn delete"
-                    onClick={() => onDelete(index)}
+                    onClick={() => {
+                        const label = offer.companyName ? `the offer from ${offer.companyName}` : 'this offer';
+                        if (typeof window !== 'undefined' && !window.confirm(`Delete ${label}? This cannot be undone.`)) {
+                            return;
+                        }
+                        onDelete(index);
+                    }}
                     title="Delete this offer"
                 >
                     <Trash2 size={14} style={{ marginRight: '4px' }} />

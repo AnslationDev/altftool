@@ -436,7 +436,7 @@ export const advancedCatalog = {
     "slug": "dead-pixel-screen-test",
     "name": "Dead-Pixel Screen Test",
     "description": "Full-screen patterns se dead ya stuck pixels locate kare.",
-    "category": "Device Sensors & Hardware Diagnostics",
+    "category": "Developer",
     "priority": "P2"
   },
   "multi-touch-tester": {
