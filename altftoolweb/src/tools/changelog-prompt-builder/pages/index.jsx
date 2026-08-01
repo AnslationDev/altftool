@@ -67,6 +67,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your pasted commit titles with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setProductName(DEFAULTS.productName);
     setCurrentVersion(DEFAULTS.currentVersion);
     setReleaseDate(DEFAULTS.releaseDate);
@@ -96,7 +103,16 @@ export default function ToolHome() {
         ],
         [
           "Commits parsed",
-          `${NUM.format(result.commitCount)}${result.unparsed > 0 ? ` (${NUM.format(result.unparsed)} not Conventional Commits)` : ""}`,
+          `${NUM.format(result.commitCount)}${
+            result.unparsed > 0 || result.unknownType > 0
+              ? ` (${[
+                  result.unparsed > 0 ? `${NUM.format(result.unparsed)} not Conventional Commits` : null,
+                  result.unknownType > 0 ? `${NUM.format(result.unknownType)} unrecognized type` : null,
+                ]
+                  .filter(Boolean)
+                  .join(", ")})`
+              : ""
+          }`,
         ],
         [
           "Sections in use",

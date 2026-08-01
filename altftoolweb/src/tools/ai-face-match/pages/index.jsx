@@ -4,6 +4,54 @@ import { useState, useRef } from "react";
 import { Upload, X, RefreshCw, Copy, Download, Info, Check, Sparkles, Eye, UserCheck } from "lucide-react";
 import { getFaceApi } from "../../emotion-detector/services/faceApiClient";
 
+// face-api's 68-point landmark model uses the same index layout as the
+// classic dlib scheme: jaw 0-16, eyebrows 17-26, nose 27-35, eyes 36-47,
+// mouth 48-67. Grouping those into the three bands the UI shows lets the
+// per-feature percentages be a real comparison between the two uploaded
+// photos instead of a number derived from photo 1 alone.
+const range = (start, end) => Array.from({ length: end - start + 1 }, (_, i) => start + i);
+const EYES_BROWS_INDICES = [...range(17, 26), ...range(36, 47)];
+const NOSE_INDICES = range(27, 35);
+const JAW_LIPS_INDICES = [...range(0, 16), ...range(48, 67)];
+
+/**
+ * Translate landmarks to be centred on their own centroid and scale them by
+ * inter-eye distance, so two faces photographed at different sizes/crops can
+ * be compared point-for-point on a common scale.
+ */
+function normalizeLandmarks(points) {
+  const leftEye = range(36, 41).reduce(
+    (acc, i) => ({ x: acc.x + points[i].x / 6, y: acc.y + points[i].y / 6 }),
+    { x: 0, y: 0 },
+  );
+  const rightEye = range(42, 47).reduce(
+    (acc, i) => ({ x: acc.x + points[i].x / 6, y: acc.y + points[i].y / 6 }),
+    { x: 0, y: 0 },
+  );
+  const eyeDistance = Math.hypot(rightEye.x - leftEye.x, rightEye.y - leftEye.y) || 1;
+  const centroid = points.reduce(
+    (acc, p) => ({ x: acc.x + p.x / points.length, y: acc.y + p.y / points.length }),
+    { x: 0, y: 0 },
+  );
+  return points.map((p) => ({
+    x: (p.x - centroid.x) / eyeDistance,
+    y: (p.y - centroid.y) / eyeDistance,
+  }));
+}
+
+/** How closely two normalized landmark sets agree over a given set of point indices, as a percentage. */
+function regionSimilarity(norm1, norm2, indices) {
+  const sumSquares = indices.reduce((acc, i) => {
+    const dx = norm1[i].x - norm2[i].x;
+    const dy = norm1[i].y - norm2[i].y;
+    return acc + dx * dx + dy * dy;
+  }, 0);
+  const rmse = Math.sqrt(sumSquares / indices.length);
+  // rmse is in inter-eye-distance units: ~0 for near-identical geometry,
+  // growing as the shapes diverge. Map it onto a 1-99% similarity scale.
+  return Math.max(1, Math.min(99, Math.round(100 - rmse * 140)));
+}
+
 export default function ToolHome() {
   const [photo1, setPhoto1] = useState(null);
   const [photo2, setPhoto2] = useState(null);
@@ -44,10 +92,11 @@ export default function ToolHome() {
     try {
       const faceapi = await getFaceApi();
 
-      const loadImg = (src) => new Promise((resolve) => {
+      const loadImg = (src) => new Promise((resolve, reject) => {
         const img = new Image();
-        img.src = src;
         img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error("That photo could not be decoded by the browser."));
+        img.src = src;
       });
 
       const [img1, img2] = await Promise.all([
@@ -73,17 +122,25 @@ export default function ToolHome() {
         faceapi.detectSingleFace(img2, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor()
       ]);
 
-      let seed = 0;
       let score = 0;
       let matchedByAI = false;
+      let eyesSim;
+      let noseSim;
+      let jawSim;
 
       if (det1 && det2) {
         const distance = faceapi.euclideanDistance(det1.descriptor, det2.descriptor);
         // Distance generally ranges between 0.0 (identical) and 1.5 (extremely different)
         score = Math.max(12, Math.min(99, Math.round((1 - distance / 1.4) * 100)));
-        const pts1 = det1.landmarks.positions;
-        seed = pts1.reduce((acc, p) => acc + p.x + p.y, 0);
         matchedByAI = true;
+
+        // Compare the two faces' own landmark geometry per feature band,
+        // instead of deriving a number from photo 1 alone.
+        const norm1 = normalizeLandmarks(det1.landmarks.positions);
+        const norm2 = normalizeLandmarks(det2.landmarks.positions);
+        eyesSim = regionSimilarity(norm1, norm2, EYES_BROWS_INDICES);
+        noseSim = regionSimilarity(norm1, norm2, NOSE_INDICES);
+        jawSim = regionSimilarity(norm1, norm2, JAW_LIPS_INDICES);
       } else {
         // Fallback matching logic
         let hash = 0;
@@ -92,13 +149,12 @@ export default function ToolHome() {
           hash = (hash << 5) - hash + combined.charCodeAt(i);
           hash |= 0;
         }
-        seed = Math.abs(hash + photo1.size + photo2.size);
-        score = Math.round((seed % 31) + 54); // similarity between 54% and 85%
+        const seed = Math.abs(hash + photo1.size + photo2.size);
+        score = Math.round((seed % 31) + 54); // similarity between 54% and 84%
+        eyesSim = Math.min(99, Math.round(((seed * 3) % 21) + 79));
+        noseSim = Math.min(99, Math.round(((seed * 7) % 21) + 79));
+        jawSim = Math.min(99, Math.round(((seed * 11) % 21) + 79));
       }
-
-      const eyesSim = Math.min(99, Math.round(((seed * 3) % 21) + 79));
-      const noseSim = Math.min(99, Math.round(((seed * 7) % 21) + 79));
-      const jawSim = Math.min(99, Math.round(((seed * 11) % 21) + 79));
 
       setResult({
         score,
@@ -119,14 +175,14 @@ export default function ToolHome() {
     if (score >= 90) {
       return {
         label: "Identical Twins / Same Person!",
-        color: "text-teal-500",
+        color: "text-[var(--success-text)]",
         text: "The facial descriptors show an extremely high similarity index. The structural geometry of jaw contours, eye spacing, and nose width ratios align almost perfectly. Suggests identical twins or the same individual."
       };
     }
     if (score >= 75) {
       return {
         label: "Look-alike / Twin Strangers!",
-        color: "text-cyan-500",
+        color: "text-[var(--primary-text)]",
         text: "You share remarkably similar facial traits and structural layouts. Your brow structures, cheekbones, and lip alignments correspond closely. You could easily pass as look-alikes!"
       };
     }
@@ -139,7 +195,7 @@ export default function ToolHome() {
     }
     return {
       label: "Completely Different Faces!",
-      color: "text-amber-500",
+      color: "text-[var(--danger-text)]",
       text: "The facial landmark coordinates and descriptors represent highly distinct structures. Very minor to no resemblance detected. Your features are completely unique compared to each other."
     };
   };
@@ -217,7 +273,10 @@ ${verdict.text}
         <div className="bg-card border border-border rounded-3xl shadow-xl overflow-hidden p-6 sm:p-8">
           
           {error && (
-            <div className="mb-6 p-4 border border-red-200 bg-red-50/50 dark:bg-red-950/20 dark:border-red-900 rounded-2xl text-sm text-red-800 dark:text-red-400">
+            <div
+              role="alert"
+              className="mb-6 p-4 border border-red-200 bg-red-50/50 dark:bg-red-950/20 dark:border-red-900 rounded-2xl text-sm text-red-800 dark:text-red-400"
+            >
               {error}
             </div>
           )}
@@ -255,6 +314,7 @@ ${verdict.text}
                       <button
                         type="button"
                         onClick={() => setPhoto1(null)}
+                        aria-label="Remove photo 1"
                         className="absolute top-3 right-3 w-8 h-8 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center transition"
                       >
                         <X size={14} className="text-white" />
@@ -262,8 +322,17 @@ ${verdict.text}
                     </div>
                   ) : (
                     <div
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Select photo 1: click or press Enter to browse for a file"
                       onClick={() => fileInputRef1.current?.click()}
-                      className="w-full aspect-square rounded-2xl border-2 border-dashed border-border hover:border-primary hover:bg-[var(--anslation-ds-soft)] cursor-pointer flex flex-col items-center justify-center p-6 transition"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          fileInputRef1.current?.click();
+                        }
+                      }}
+                      className="w-full aspect-square rounded-2xl border-2 border-dashed border-border hover:border-primary hover:bg-[var(--anslation-ds-soft)] cursor-pointer flex flex-col items-center justify-center p-6 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--primary)] focus-visible:outline-offset-2"
                     >
                       <Upload className="text-muted-foreground mb-3" size={24} />
                       <span className="text-xs font-semibold text-foreground">Select Photo 1</span>
@@ -271,6 +340,7 @@ ${verdict.text}
                         ref={fileInputRef1}
                         type="file"
                         accept="image/*"
+                        tabIndex={-1}
                         className="hidden"
                         onChange={(e) => {
                           if (e.target.files && e.target.files[0]) {
@@ -291,6 +361,7 @@ ${verdict.text}
                       <button
                         type="button"
                         onClick={() => setPhoto2(null)}
+                        aria-label="Remove photo 2"
                         className="absolute top-3 right-3 w-8 h-8 bg-black/60 hover:bg-black/80 rounded-full flex items-center justify-center transition"
                       >
                         <X size={14} className="text-white" />
@@ -298,8 +369,17 @@ ${verdict.text}
                     </div>
                   ) : (
                     <div
+                      role="button"
+                      tabIndex={0}
+                      aria-label="Select photo 2: click or press Enter to browse for a file"
                       onClick={() => fileInputRef2.current?.click()}
-                      className="w-full aspect-square rounded-2xl border-2 border-dashed border-border hover:border-primary hover:bg-[var(--anslation-ds-soft)] cursor-pointer flex flex-col items-center justify-center p-6 transition"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          fileInputRef2.current?.click();
+                        }
+                      }}
+                      className="w-full aspect-square rounded-2xl border-2 border-dashed border-border hover:border-primary hover:bg-[var(--anslation-ds-soft)] cursor-pointer flex flex-col items-center justify-center p-6 transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--primary)] focus-visible:outline-offset-2"
                     >
                       <Upload className="text-muted-foreground mb-3" size={24} />
                       <span className="text-xs font-semibold text-foreground">Select Photo 2</span>
@@ -307,6 +387,7 @@ ${verdict.text}
                         ref={fileInputRef2}
                         type="file"
                         accept="image/*"
+                        tabIndex={-1}
                         className="hidden"
                         onChange={(e) => {
                           if (e.target.files && e.target.files[0]) {
@@ -330,7 +411,7 @@ ${verdict.text}
 
             </div>
           ) : analyzing ? (
-            <div className="flex flex-col items-center justify-center py-12 text-center">
+            <div role="status" aria-live="polite" className="flex flex-col items-center justify-center py-12 text-center">
               <div className="alt-ui-spinner alt-ui-spinner--lg mb-6 border-t-teal-500" />
               <h4 className="font-semibold text-lg text-foreground animate-pulse">Running Neural Feature Matching...</h4>
               <p className="text-sm text-muted-foreground mt-2">Computing facial landmarks Euclidean distance and geometry.</p>
@@ -355,7 +436,7 @@ ${verdict.text}
                       cx="64"
                       cy="64"
                       r="56"
-                      stroke="#14B8A6"
+                      stroke="var(--primary)"
                       strokeWidth="8"
                       fill="transparent"
                       strokeDasharray={2 * Math.PI * 56}

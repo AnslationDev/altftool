@@ -44,6 +44,12 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the checklist? This clears every ticked control and cannot be undone.")
+    ) {
+      return;
+    }
     setDone(DEFAULT_DONE.slice());
     setTarget("90");
     setCopied(false);
@@ -95,7 +101,12 @@ export default function ToolHome() {
         </p>
       </header>
 
-      <section className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-labelledby="score-heading">
+      <section
+        className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-labelledby="score-heading"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p id="score-heading" className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -114,7 +125,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               aria-label="Copy the security checklist result"
-              className={GHOST_BTN}
+              className={PRIMARY_BTN}
             >
               {copied ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
@@ -123,7 +134,7 @@ export default function ToolHome() {
               )}
               {copied ? "Copied!" : "Copy result"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset the checklist" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset the checklist" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>

@@ -154,10 +154,14 @@ export function splitSeconds(totalSeconds, segments) {
   return Array.from({ length: segments }, (_, index) => base + (index < remainder ? 1 : 0));
 }
 
-/** Fluoride guidance row for an age in whole years. */
+/** Fluoride guidance row for an age in years (fractional ages are rounded down to completed years). */
 export function fluorideFor(ageYears) {
   if (!Number.isFinite(ageYears) || ageYears < 0) return null;
-  return FLUORIDE_GUIDANCE.find((row) => ageYears <= row.maxAge) || FLUORIDE_GUIDANCE[FLUORIDE_GUIDANCE.length - 1];
+  const completedYears = Math.floor(ageYears);
+  return (
+    FLUORIDE_GUIDANCE.find((row) => completedYears <= row.maxAge) ||
+    FLUORIDE_GUIDANCE[FLUORIDE_GUIDANCE.length - 1]
+  );
 }
 
 /**
@@ -230,7 +234,7 @@ export function buildBrushingPlan(input = {}) {
   if (sessionsPerDay > 3) {
     warnings.push("More than three brushings a day adds abrasion without much extra benefit. Cleaning between the teeth is the bigger win.");
   }
-  if (ageYears <= 6) {
+  if (Math.floor(ageYears) <= 6) {
     warnings.push("Children up to about seven need an adult to brush for them or to go over it afterwards — their coordination is not there yet.");
   }
   if (!brushStartDate) {
@@ -242,7 +246,6 @@ export function buildBrushingPlan(input = {}) {
     segments,
     schedule,
     secondsPerZone: lengths,
-    evenSplit: lengths.every((value) => value === lengths[0]),
     fluoride,
     ageYears,
     sessionsPerDay,

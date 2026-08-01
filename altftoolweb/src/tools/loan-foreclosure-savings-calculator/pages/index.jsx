@@ -446,13 +446,17 @@ export default function ToolHome() {
           </div>
 
           <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm text-[var(--foreground)]">
-            {result.investEdge >= 0
-              ? `Foreclosing leaves you ${inr(result.investEdge)} better off, because your loan rate of ${num(
+            {Math.round(result.investEdge) === 0
+              ? `Foreclosing and investing come out about the same here — your loan rate of ${num(
                   parsed.rate
-                )}% beats the ${num(parsed.altReturn)}% you would earn.`
-              : `Investing leaves you ${inr(Math.abs(result.investEdge))} better off at a ${num(
-                  parsed.altReturn
-                )}% return — the loan is cheaper than the returns you can earn.`}
+                )}% is essentially equal to the ${num(parsed.altReturn)}% you would earn, so neither choice clearly beats the other.`
+              : result.investEdge > 0
+                ? `Foreclosing leaves you ${inr(result.investEdge)} better off, because your loan rate of ${num(
+                    parsed.rate
+                  )}% beats the ${num(parsed.altReturn)}% you would earn.`
+                : `Investing leaves you ${inr(Math.abs(result.investEdge))} better off at a ${num(
+                    parsed.altReturn
+                  )}% return — the loan is cheaper than the returns you can earn.`}
           </p>
 
           <p className="mt-4 text-xs leading-5 text-[var(--muted-foreground)]">

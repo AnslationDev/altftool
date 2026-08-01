@@ -52,7 +52,6 @@ export function estimateActionsCost({ plan, publicRepo = false, workload }) {
   if (!workload || typeof workload !== "object") return { error: "Enter your monthly workload." };
 
   const perOs = {};
-  let rawTotal = 0;
   let multipliedTotal = 0;
 
   for (const os of OS_KEYS) {
@@ -61,14 +60,17 @@ export function estimateActionsCost({ plan, publicRepo = false, workload }) {
     if (!Number.isFinite(jobs) || jobs < 0 || !Number.isInteger(jobs)) {
       return { error: `${OS_LABELS[os]}: jobs per month must be a whole number of 0 or more.` };
     }
-    if (!Number.isFinite(minutes) || minutes < 0) {
+    if (!Number.isFinite(minutes)) {
+      return { error: `${OS_LABELS[os]}: average minutes per job must be a finite number.` };
+    }
+    if (minutes < 0) {
       return { error: `${OS_LABELS[os]}: average minutes per job cannot be negative.` };
     }
     if (jobs > 10000000) {
       return { error: `${OS_LABELS[os]}: more than 10 million jobs a month — check the number.` };
     }
-    if (minutes > 2160) {
-      // GitHub-hosted jobs are killed after 6 hours = 360 min; 2160 allows self-hosted-ish inputs but catches typos.
+    if (minutes > 360) {
+      // GitHub-hosted jobs are killed after 6 hours = 360 min (docs.github.com billing docs).
       return { error: `${OS_LABELS[os]}: GitHub-hosted jobs are cancelled after 360 minutes — ${minutes} is not billable.` };
     }
     // Each job rounds UP to the next whole minute (GitHub billing docs).
@@ -76,15 +78,10 @@ export function estimateActionsCost({ plan, publicRepo = false, workload }) {
     const raw = jobs * billedPerJob;
     const multiplied = raw * OS_MULTIPLIERS[os];
     perOs[os] = {
-      jobs,
-      billedMinutesPerJob: billedPerJob,
       rawMinutes: raw,
       multiplier: OS_MULTIPLIERS[os],
       multipliedMinutes: multiplied,
-      rate: OS_RATES_USD[os],
-      fullPriceCost: raw * OS_RATES_USD[os],
     };
-    rawTotal += raw;
     multipliedTotal += multiplied;
   }
 
@@ -92,7 +89,6 @@ export function estimateActionsCost({ plan, publicRepo = false, workload }) {
     return {
       publicRepo: true,
       perOs,
-      rawTotal,
       multipliedTotal,
       included: 0,
       overageMinutes: 0,
@@ -112,7 +108,6 @@ export function estimateActionsCost({ plan, publicRepo = false, workload }) {
   return {
     publicRepo: false,
     perOs,
-    rawTotal,
     multipliedTotal,
     included,
     includedUsedPercent: included === 0 ? 100 : Math.min(100, (multipliedTotal / included) * 100),

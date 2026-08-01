@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Activity,
   ArrowLeft,
@@ -26,18 +26,18 @@ const METHODS = [
 ];
 
 const MALE_BANDS = [
-  { id: "essential", label: "Essential fat", range: "2-5%", from: 2, to: 6, tone: "info" },
-  { id: "athlete", label: "Athlete", range: "6-13%", from: 6, to: 14, tone: "success" },
-  { id: "fitness", label: "Fitness", range: "14-17%", from: 14, to: 18, tone: "primary" },
-  { id: "average", label: "Average", range: "18-24%", from: 18, to: 25, tone: "warning" },
+  { id: "essential", label: "Essential fat", range: "2-5.9%", from: 2, to: 6, tone: "info" },
+  { id: "athlete", label: "Athlete", range: "6-13.9%", from: 6, to: 14, tone: "success" },
+  { id: "fitness", label: "Fitness", range: "14-17.9%", from: 14, to: 18, tone: "primary" },
+  { id: "average", label: "Average", range: "18-24.9%", from: 18, to: 25, tone: "warning" },
   { id: "obese", label: "Obese", range: "25%+", from: 25, to: 45, tone: "danger" },
 ];
 
 const FEMALE_BANDS = [
-  { id: "essential", label: "Essential fat", range: "10-13%", from: 10, to: 14, tone: "info" },
-  { id: "athlete", label: "Athlete", range: "14-20%", from: 14, to: 21, tone: "success" },
-  { id: "fitness", label: "Fitness", range: "21-24%", from: 21, to: 25, tone: "primary" },
-  { id: "average", label: "Average", range: "25-31%", from: 25, to: 32, tone: "warning" },
+  { id: "essential", label: "Essential fat", range: "10-13.9%", from: 10, to: 14, tone: "info" },
+  { id: "athlete", label: "Athlete", range: "14-20.9%", from: 14, to: 21, tone: "success" },
+  { id: "fitness", label: "Fitness", range: "21-24.9%", from: 21, to: 25, tone: "primary" },
+  { id: "average", label: "Average", range: "25-31.9%", from: 25, to: 32, tone: "warning" },
   { id: "obese", label: "Obese", range: "32%+", from: 32, to: 50, tone: "danger" },
 ];
 
@@ -175,6 +175,26 @@ export default function ToolHome() {
   const [showAddEntryModal, setShowAddEntryModal] = useState(false);
   const [newEntryVal, setNewEntryVal] = useState("");
 
+  const calculateTimerRef = useRef(null);
+  const scrollTimerRef = useRef(null);
+
+  useEffect(
+    () => () => {
+      if (calculateTimerRef.current) clearTimeout(calculateTimerRef.current);
+      if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
+    },
+    []
+  );
+
+  useEffect(() => {
+    if (!showAddEntryModal) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setShowAddEntryModal(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [showAddEntryModal]);
+
   const bands = gender === "male" ? MALE_BANDS : FEMALE_BANDS;
   const scaleMin = bands[0].from;
   const scaleMax = bands[bands.length - 1].to;
@@ -210,6 +230,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset all your entered measurements? This restores the default profile and clears anything you typed."
+      )
+    ) {
+      return;
+    }
     setMethod("navy");
     setLengthUnit("cm");
     setMassUnit("kg");
@@ -273,13 +300,11 @@ export default function ToolHome() {
   }, [active, measures.weightKg]);
 
   const band = active === null ? null : bandFor(bands, active);
-  const belowEssential = active !== null && active < scaleMin;
-  const markerPercent =
-    active === null ? 0 : clamp(((active - scaleMin) / (scaleMax - scaleMin)) * 100, 0, 100);
+  const clampedTarget = clamp(toNum(targetBodyFat), 3, 60);
 
   const goal = useMemo(() => {
     if (active === null || !composition || measures.weightKg <= 0) return null;
-    const target = clamp(toNum(targetBodyFat), 3, 60);
+    const target = clampedTarget;
     if (target >= active) {
       return { reached: true, target };
     }
@@ -294,9 +319,18 @@ export default function ToolHome() {
       fatLossKg,
       fastWeeks,
       slowWeeks,
-      targetBand: bandFor(bands, target),
     };
-  }, [active, bands, composition, measures.weightKg, targetBodyFat]);
+  }, [active, composition, measures.weightKg, clampedTarget]);
+
+  // Share of the distance from the tracker's starting entry to the goal target
+  // that has been closed so far — a distinct measure from the raw point change
+  // shown in the "Change" stat above it.
+  const progressToGoalPercent = useMemo(() => {
+    const start = entries[0].bodyFat;
+    const current = active !== null ? active : entries[entries.length - 1].bodyFat;
+    if (start === clampedTarget) return 100;
+    return clamp(((start - current) / (start - clampedTarget)) * 100, 0, 100);
+  }, [entries, active, clampedTarget]);
 
   const toMass = (kg) => toMassUnit(kg, massUnit);
 
@@ -357,10 +391,12 @@ export default function ToolHome() {
   const handleCalculateClick = () => {
     setIsLoading(true);
     setShowResult(false);
-    setTimeout(() => {
+    if (calculateTimerRef.current) clearTimeout(calculateTimerRef.current);
+    if (scrollTimerRef.current) clearTimeout(scrollTimerRef.current);
+    calculateTimerRef.current = setTimeout(() => {
       setIsLoading(false);
       setShowResult(true);
-      setTimeout(() => {
+      scrollTimerRef.current = setTimeout(() => {
         document.getElementById("results-section")?.scrollIntoView({ behavior: "smooth" });
       }, 100);
     }, 750);
@@ -409,7 +445,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
             <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-800">
               Body Fat Percentage Calculator
             </h1>
-            <p className="text-slate-650 text-sm md:text-base leading-relaxed max-w-xl">
+            <p className="text-slate-600 text-sm md:text-base leading-relaxed max-w-xl">
               Get accurate body fat % using proven methods. See where you stand, track progress, and hit your goal.
             </p>
           </div>
@@ -490,7 +526,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
             {/* Header info */}
             <div className="flex items-center justify-between border-b border-slate-100 pb-4">
               <div className="flex items-center gap-2.5">
-                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-650 text-white font-bold text-xs">
+                <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs">
                   1
                 </span>
                 <h2 className="text-base font-bold text-slate-700">Enter Your Details</h2>
@@ -629,9 +665,10 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                 <div className="grid grid-cols-3 gap-3">
                   {/* Age */}
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Age</label>
+                    <label htmlFor="bf-age" className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Age</label>
                     <div className="relative flex items-center">
                       <input
+                        id="bf-age"
                         type="number"
                         min="1"
                         max="120"
@@ -645,9 +682,10 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
                   {/* Height */}
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Height</label>
+                    <label htmlFor="bf-height" className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Height</label>
                     <div className="relative flex items-center">
                       <input
+                        id="bf-height"
                         type="number"
                         step="0.1"
                         value={height}
@@ -660,9 +698,10 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
                   {/* Weight */}
                   <div className="space-y-1.5">
-                    <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Weight</label>
+                    <label htmlFor="bf-weight" className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Weight</label>
                     <div className="relative flex items-center">
                       <input
+                        id="bf-weight"
                         type="number"
                         step="0.1"
                         value={weight}
@@ -679,8 +718,9 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                   <div className={`grid grid-cols-1 gap-3 ${gender === "female" ? "grid-cols-3" : "grid-cols-2"}`}>
                     {/* Neck */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Neck ({lengthUnit})</label>
+                      <label htmlFor="bf-neck" className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Neck ({lengthUnit})</label>
                       <input
+                        id="bf-neck"
                         type="number"
                         step="0.1"
                         value={neck}
@@ -691,8 +731,9 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
                     {/* Waist */}
                     <div className="space-y-1.5">
-                      <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Waist ({lengthUnit})</label>
+                      <label htmlFor="bf-waist" className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Waist ({lengthUnit})</label>
                       <input
+                        id="bf-waist"
                         type="number"
                         step="0.1"
                         value={waist}
@@ -704,8 +745,9 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                     {/* Hips (Female Only) */}
                     {gender === "female" && (
                       <div className="space-y-1.5">
-                        <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Hips ({lengthUnit})</label>
+                        <label htmlFor="bf-hip" className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">Hips ({lengthUnit})</label>
                         <input
+                          id="bf-hip"
                           type="number"
                           step="0.1"
                           value={hip}
@@ -731,7 +773,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                         key={preset.label}
                         type="button"
                         onClick={() => applyPreset(preset)}
-                        className="px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-[10px] font-bold text-slate-650 hover:bg-slate-50 hover:border-emerald-500/30 transition-all"
+                        className="px-3 py-1.5 rounded-xl border border-slate-200 bg-white text-[10px] font-bold text-slate-600 hover:bg-slate-50 hover:border-emerald-500/30 transition-all"
                       >
                         {preset.label}
                       </button>
@@ -781,7 +823,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                   {/* Header row */}
                   <div className="flex items-center justify-between border-b border-slate-100 pb-3">
                     <div className="flex items-center gap-2.5">
-                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-650 text-white font-bold text-xs animate-bounce">
+                      <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs animate-bounce">
                         2
                       </span>
                       <h2 className="text-base font-bold text-slate-700">Your Results</h2>
@@ -790,7 +832,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                       <button
                         type="button"
                         onClick={() => setShowResult(false)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-650 hover:bg-slate-50 transition-all hover:scale-105 active:scale-95"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-all hover:scale-105 active:scale-95"
                       >
                         <ArrowLeft className="w-3.5 h-3.5" />
                         Back
@@ -798,7 +840,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                       <button
                         type="button"
                         onClick={copyReport}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-650 hover:bg-slate-50 transition-all hover:scale-105 active:scale-95"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-all hover:scale-105 active:scale-95"
                       >
                         <Copy className="w-3.5 h-3.5" />
                         {copied ? "Copied" : "Copy"}
@@ -806,7 +848,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                       <button
                         type="button"
                         onClick={downloadReport}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-650 hover:bg-slate-50 transition-all hover:scale-105 active:scale-95"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-50 transition-all hover:scale-105 active:scale-95"
                       >
                         <Download className="w-3.5 h-3.5" />
                         Download
@@ -816,8 +858,14 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
                   {active === null ? (
                     <div className="mt-4 rounded-md border border-[var(--border)] bg-[var(--muted)] p-5 text-sm leading-6 text-[var(--muted-foreground)]">
-                      Check your measurements. The tape formula needs a waist larger than your neck
-                      {gender === "female" ? " once hips are added" : ""}, and a height above zero.
+                      {method === "navy" ? (
+                        <>
+                          Check your measurements. The tape formula needs a waist larger than your neck
+                          {gender === "female" ? " once hips are added" : ""}, and a height above zero.
+                        </>
+                      ) : (
+                        "Check your measurements. The BMI method needs your height and weight both above zero."
+                      )}
                     </div>
                   ) : (
                     <>
@@ -988,7 +1036,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                     {/* Header row */}
                     <div className="border-b border-slate-100 pb-3">
                       <div className="flex items-center gap-2.5">
-                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-650 text-white font-bold text-xs">
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs">
                           3
                         </span>
                         <h2 className="text-base font-bold text-slate-700">Body Composition Overview</h2>
@@ -1081,7 +1129,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                         </div>
                         <div>
                           <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider leading-none">Ideal Fat</span>
-                          <span className="text-xs font-black text-slate-700 block mt-1">{targetBodyFat}%</span>
+                          <span className="text-xs font-black text-slate-700 block mt-1">{clampedTarget}%</span>
                           <span className="text-[8px] text-slate-400 font-semibold block leading-none mt-0.5">Your target</span>
                         </div>
                       </div>
@@ -1108,7 +1156,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                         <div>
                           <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider leading-none">Goal Weight</span>
                           <span className="text-xs font-black text-slate-700 block mt-1">
-                            {goal ? `${formatNumber(toMassUnit(goal.targetWeightKg, massUnit), 1)} ${massUnit}` : "—"}
+                            {goal && !goal.reached ? `${formatNumber(toMassUnit(goal.targetWeightKg, massUnit), 1)} ${massUnit}` : "—"}
                           </span>
                           <span className="text-[8px] text-slate-400 font-semibold block leading-none mt-0.5">At target fat</span>
                         </div>
@@ -1116,7 +1164,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
                       {/* Muscle to Gain */}
                       <div className="bg-slate-50/40 border border-slate-200/40 p-3 rounded-xl flex items-center gap-2">
-                        <div className="p-2 rounded-lg bg-white border border-slate-200/20 text-slate-450 shrink-0">
+                        <div className="p-2 rounded-lg bg-white border border-slate-200/20 text-slate-400 shrink-0">
                           💪
                         </div>
                         <div>
@@ -1154,7 +1202,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                   <div className="bg-white border border-slate-200/60 rounded-3xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
                     <div className="space-y-3">
                       <div className="flex items-center gap-2.5">
-                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-650 text-white font-bold text-xs">
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs">
                           4
                         </span>
                         <h2 className="text-base font-bold text-slate-700">Method Comparison</h2>
@@ -1192,7 +1240,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                     </div>
                     <div className="bg-slate-50/50 border border-slate-100 rounded-xl p-3 flex items-center gap-2 mt-2">
                       <span className="text-xs">💡</span>
-                      <span className="text-[10px] text-slate-550 font-semibold leading-relaxed">
+                      <span className="text-[10px] text-slate-500 font-semibold leading-relaxed">
                         Both methods are accurate. Small differences are normal.
                       </span>
                     </div>
@@ -1203,7 +1251,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                     <div>
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2.5">
-                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-650 text-white font-bold text-xs">
+                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs">
                             5
                           </span>
                           <h2 className="text-base font-bold text-slate-700">Progress Tracker</h2>
@@ -1275,7 +1323,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                           <div className="bg-slate-50/50 border border-slate-100/50 p-1.5 rounded-lg flex items-center justify-between text-[9px] font-bold text-slate-500">
                             <span>Progress</span>
                             <span className="text-emerald-600 font-extrabold">
-                              {active !== null ? `${formatNumber(active - entries[0].bodyFat, 1)}%` : `${formatNumber(entries[entries.length - 1].bodyFat - entries[0].bodyFat, 1)}%`}
+                              {formatNumber(progressToGoalPercent, 0)}%
                             </span>
                           </div>
                         </div>
@@ -1299,7 +1347,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                 {/* Card #6: Goal Planner */}
                 <div className="bg-white border border-slate-200/60 rounded-3xl p-5 shadow-sm space-y-4">
                   <div className="flex items-center gap-2.5">
-                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-650 text-white font-bold text-xs">
+                    <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs">
                       6
                     </span>
                     <h2 className="text-base font-bold text-slate-700">Goal Planner</h2>
@@ -1311,12 +1359,13 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                     {/* Target Inputs & Slider */}
                     <div className="lg:col-span-1 space-y-3">
                       <div className="flex items-center justify-between">
-                        <label className="text-[11px] font-black text-slate-500 uppercase tracking-wider">Target Body Fat %</label>
+                        <label htmlFor="bf-target" className="text-[11px] font-black text-slate-500 uppercase tracking-wider">Target Body Fat %</label>
                         <div className="relative w-20 flex items-center">
                           <input
+                            id="bf-target"
                             type="number"
-                            min="3"
-                            max="50"
+                            min="5"
+                            max="30"
                             value={targetBodyFat}
                             onChange={(e) => setTargetBodyFat(e.target.value)}
                             className="w-full bg-slate-50/60 border border-slate-200/60 rounded-xl px-2.5 py-1.5 text-xs font-black text-center focus:outline-none focus:border-emerald-500 focus:bg-white"
@@ -1326,11 +1375,12 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                       </div>
                       <input
                         type="range"
+                        aria-label="Target body fat percent"
                         min="5"
                         max="30"
                         value={targetBodyFat}
                         onChange={(e) => setTargetBodyFat(e.target.value)}
-                        className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-emerald-550"
+                        className="w-full h-1.5 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-emerald-600"
                       />
                       <div className="flex justify-between text-[8px] font-bold text-slate-400">
                         <span>5%</span>
@@ -1356,7 +1406,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                       <div className="bg-slate-50/50 border border-slate-100/80 p-3 rounded-xl">
                         <span className="text-[9px] text-slate-400 font-bold block uppercase tracking-wider">Weight at Goal</span>
                         <span className="text-sm font-black text-slate-700 block mt-1.5">
-                          {goal ? `${formatNumber(toMassUnit(goal.targetWeightKg, massUnit), 1)} ${massUnit}` : "—"}
+                          {goal && !goal.reached ? `${formatNumber(toMassUnit(goal.targetWeightKg, massUnit), 1)} ${massUnit}` : "—"}
                         </span>
                       </div>
 
@@ -1389,12 +1439,12 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                   <div className="bg-white border border-slate-200/60 rounded-3xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
                     <div className="space-y-3">
                       <div className="flex items-center gap-2.5">
-                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-650 text-white font-bold text-xs">
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs">
                           7
                         </span>
                         <h2 className="text-base font-bold text-slate-700">How to Take Measurements</h2>
                       </div>
-                      <p className="text-[10px] text-slate-450 font-bold">Get accurate results with these tips</p>
+                      <p className="text-[10px] text-slate-400 font-bold">Get accurate results with these tips</p>
 
                       <div className="grid grid-cols-2 gap-2.5">
                         <div className="bg-slate-50/50 border border-slate-100/80 p-3 rounded-xl space-y-1">
@@ -1429,7 +1479,7 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                     </div>
                     <div className="bg-slate-50/50 border border-slate-100 rounded-xl p-3 flex items-center gap-2 mt-2">
                       <span className="text-xs">💡</span>
-                      <span className="text-[10px] text-slate-550 font-semibold leading-relaxed">
+                      <span className="text-[10px] text-slate-500 font-semibold leading-relaxed">
                         Measure in the morning, before eating or drinking, for best results.
                       </span>
                     </div>
@@ -1439,12 +1489,12 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
                   <div className="bg-white border border-slate-200/60 rounded-3xl p-5 shadow-sm space-y-4 flex flex-col justify-between">
                     <div className="space-y-3">
                       <div className="flex items-center gap-2.5">
-                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-650 text-white font-bold text-xs">
+                        <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-emerald-600 text-white font-bold text-xs">
                           8
                         </span>
                         <h2 className="text-base font-bold text-slate-700">Why It Matters</h2>
                       </div>
-                      <p className="text-[10px] text-slate-450 font-bold">Benefits of knowing your body fat %</p>
+                      <p className="text-[10px] text-slate-400 font-bold">Benefits of knowing your body fat %</p>
 
                       <div className="flex gap-4 items-center">
                         <div className="flex-1 space-y-2 text-[10px] font-bold text-slate-500">
@@ -1503,22 +1553,33 @@ Healthy range for ${gender}: ${gender === "male" ? "6% - 24%" : "14% - 31%"}`;
 
       {/* Premium Inline Modal for Adding New Entry */}
       {showAddEntryModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-fadeIn">
-          <div className="bg-white border border-slate-200/80 rounded-3xl p-6 w-full max-w-sm shadow-2xl space-y-4 animate-scaleUp">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm animate-fadeIn"
+          onClick={() => setShowAddEntryModal(false)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="bf-add-entry-title"
+            onClick={(event) => event.stopPropagation()}
+            className="bg-white border border-slate-200/80 rounded-3xl p-6 w-full max-w-sm shadow-2xl space-y-4 animate-scaleUp"
+          >
             <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-              <h3 className="text-sm font-bold text-slate-700">Add Progress Entry</h3>
+              <h3 id="bf-add-entry-title" className="text-sm font-bold text-slate-700">Add Progress Entry</h3>
               <button
                 type="button"
                 onClick={() => setShowAddEntryModal(false)}
-                className="text-slate-400 hover:text-slate-650 text-xl font-bold transition-colors"
+                aria-label="Close"
+                className="text-slate-400 hover:text-slate-600 text-xl font-bold transition-colors"
               >
-                ×
+                <span aria-hidden="true">×</span>
               </button>
             </div>
             <div className="space-y-2">
-              <label className="text-[11px] font-black text-slate-500 uppercase tracking-wider block">Body Fat %</label>
+              <label htmlFor="bf-new-entry" className="text-[11px] font-black text-slate-500 uppercase tracking-wider block">Body Fat %</label>
               <div className="relative flex items-center">
                 <input
+                  id="bf-new-entry"
                   type="number"
                   step="0.1"
                   min="3"

@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, FileDiff, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   ACCESS_VALUES,
   CHANGELOG_TYPES,
@@ -38,7 +39,8 @@ const DEFAULTS = {
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(() => buildChangesetsConfig(form), [form]);
   const hasError = Boolean(result.error);
@@ -49,20 +51,14 @@ export default function ToolHome() {
     setForm((prev) => ({ ...prev, [key]: value }));
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.json);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("config", result.json, { label: "changesets config" });
   };
 
   const reset = () => {
     setForm(DEFAULTS);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -255,15 +251,19 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the generated changesets config"
+              aria-label={
+                isCopied("config")
+                  ? "Copied the generated changesets config to clipboard"
+                  : "Copy the generated changesets config"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("config") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy JSON"}
+              {isCopied("config") ? "Copied!" : "Copy JSON"}
             </button>
             <button
               type="button"
@@ -276,6 +276,9 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
 
         <div className="mt-4 overflow-x-auto rounded-md border border-[var(--border)] bg-[var(--background)]">
           <pre className="min-w-[320px] p-4 text-xs leading-5">

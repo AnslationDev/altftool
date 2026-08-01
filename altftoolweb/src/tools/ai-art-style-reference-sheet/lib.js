@@ -10,7 +10,7 @@
  * 75 tokens of prompt text are actually read in a single chunk.
  */
 export const CLIP_CONTEXT_TOKENS = 77;
-export const CLIP_USABLE_TOKENS = 75;
+export const CLIP_USABLE_TOKENS = CLIP_CONTEXT_TOKENS - 2;
 
 /**
  * Attention-weight syntax used by AUTOMATIC1111 and ComfyUI is written as
@@ -172,10 +172,6 @@ export const ASPECT_RATIOS = [
   { id: "4:5", label: "4:5 social portrait" },
 ];
 
-export function getAxis(axisId) {
-  return STYLE_AXES.find((axis) => axis.id === axisId) || null;
-}
-
 /**
  * Approximate CLIP token count: one token per word-like run, plus one for each
  * comma separator. Real BPE splits long or rare words into several tokens, so
@@ -251,18 +247,21 @@ export function buildStyleSheet({
   const subjectText = String(subject || "").trim();
   if (!subjectText) return { error: "Describe the subject in a few words." };
 
+  const emphasisAxisId = String(emphasisAxis || "").trim();
   const weight = Number(emphasisWeight);
-  if (!Number.isFinite(weight)) return { error: "Emphasis weight must be a number." };
-  if (weight < MIN_WEIGHT || weight > MAX_WEIGHT) {
-    return {
-      error: `Emphasis weight must be between ${MIN_WEIGHT.toFixed(1)} and ${MAX_WEIGHT.toFixed(1)}.`,
-    };
+  if (emphasisAxisId) {
+    if (!Number.isFinite(weight)) return { error: "Emphasis weight must be a number." };
+    if (weight < MIN_WEIGHT || weight > MAX_WEIGHT) {
+      return {
+        error: `Emphasis weight must be between ${MIN_WEIGHT.toFixed(1)} and ${MAX_WEIGHT.toFixed(1)}.`,
+      };
+    }
   }
 
   const perAxis = STYLE_AXES.map((axis) => {
     const chosen = dedupePhrases(Array.isArray(selections[axis.id]) ? selections[axis.id] : []);
     const weighted =
-      emphasisAxis === axis.id && weight !== 1 ? chosen.map((phrase) => applyWeight(phrase, weight)) : chosen;
+      emphasisAxisId === axis.id && weight !== 1 ? chosen.map((phrase) => applyWeight(phrase, weight)) : chosen;
     return { id: axis.id, label: axis.label, phrases: chosen, rendered: weighted };
   });
 

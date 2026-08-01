@@ -10,7 +10,7 @@ const seo = {
   benefits: [
     ["Any test length", "A 30- or 120-second count is normalised to the 60-second standard before scoring."],
     ["Seven-band scale", "Finer than a pass/fail: Excellent, Good, Above average, Average, Below average, Poor, Very poor."],
-    ["Age-fair scoring", "Cut-offs fall with age, so a 55-year-old is not judged by a 22-year-old's table."],
+    ["Age-fair scoring", "Cut-offs are set per age band and generally ease as age increases, so a 55-year-old is not judged by a 22-year-old's table."],
   ],
   faqs: [
     [

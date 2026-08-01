@@ -60,6 +60,13 @@ export const SITUP_NORMS = {
     "26-35": [40, 33, 29, 25, 21, 13],
     "36-45": [34, 27, 23, 19, 15, 7],
     "46-55": [28, 22, 18, 14, 10, 5],
+    // NOTE: the "Above average"/"Average" cut-offs (indices 2-3) rise slightly
+    // from 56-65 (13/10) to 66+ (14/11) instead of falling like every other
+    // band transition. This has been verified against the published Golding
+    // et al. table (cross-checked against independent reproductions of the
+    // same source) — it is a genuine quirk of the source data, not a
+    // transcription error, so do not "correct" it to be monotonic without
+    // re-verifying against the primary source first.
     "56-65": [25, 18, 13, 10, 7, 3],
     "66+": [24, 17, 14, 11, 5, 2],
   },
@@ -108,7 +115,11 @@ export function classifySitups({ age, sex, reps, durationSeconds = STANDARD_DURA
   const rawReps = Math.floor(reps);
   const scaled = (rawReps * STANDARD_DURATION_SECONDS) / durationSeconds;
   const perMinute = Math.round(scaled);
-  const groupLabel = ageGroupFor(age);
+  // Age bands are defined in whole years; floor a fractional age (e.g. 25.5)
+  // to the completed-years convention so it always lands inside a band
+  // instead of falling in the gap between two integer boundaries (which
+  // would otherwise return a null label and crash the lookup below).
+  const groupLabel = ageGroupFor(Math.floor(age));
   const cutoffs = SITUP_NORMS[sex][groupLabel];
 
   let bandIndex = cutoffs.findIndex((cutoff) => perMinute >= cutoff);

@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Download, RotateCcw, ScanLine } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   ALIASING_PERIOD_PX,
   CRT_STANDARDS,
@@ -41,12 +42,13 @@ const DASH = "—";
 
 export default function ToolHome() {
   const [fields, setFields] = useState(DEFAULTS);
-  const [copied, setCopied] = useState("");
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const set = (key) => (event) => {
     const { value } = event.target;
     setFields((prev) => ({ ...prev, [key]: value }));
-    setCopied("");
+    resetCopyState();
   };
 
   const spec = useMemo(
@@ -76,18 +78,7 @@ export default function ToolHome() {
       period: String(result.period),
       thickness: String(Math.max(0.5, Math.round((result.period / 2) * 100) / 100)),
     }));
-    setCopied("");
-  };
-
-  const copy = async (kind, text) => {
-    if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(kind);
-      setTimeout(() => setCopied(""), 1500);
-    } catch {
-      setCopied("");
-    }
+    resetCopyState();
   };
 
   const downloadFile = (contents, type, extension) => {
@@ -132,7 +123,7 @@ export default function ToolHome() {
 
   const reset = () => {
     setFields(DEFAULTS);
-    setCopied("");
+    resetCopyState();
   };
 
   return (
@@ -310,31 +301,33 @@ export default function ToolHome() {
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
-              onClick={() => copy("css", css)}
+              onClick={() => copyToClipboard("css", css, { label: "CSS overlay" })}
               disabled={hasError}
-              aria-label="Copy the CSS overlay"
+              aria-label={isCopied("css") ? "Copied the CSS overlay to clipboard" : "Copy the CSS overlay"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied === "css" ? (
+              {isCopied("css") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied === "css" ? "Copied!" : "Copy CSS"}
+              {isCopied("css") ? "Copied!" : "Copy CSS"}
             </button>
             <button
               type="button"
-              onClick={() => copy("text", summary)}
+              onClick={() => copyToClipboard("text", summary, { label: "overlay settings" })}
               disabled={hasError}
-              aria-label="Copy the overlay settings"
+              aria-label={
+                isCopied("text") ? "Copied the overlay settings to clipboard" : "Copy the overlay settings"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied === "text" ? (
+              {isCopied("text") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied === "text" ? "Copied!" : "Copy result"}
+              {isCopied("text") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
@@ -362,6 +355,9 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[

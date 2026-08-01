@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useMemo, useState } from "react";
-import { safeCopyText } from "@/shared/utils/clipboard";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const inr = new Intl.NumberFormat("en-IN", {
   style: "currency",
@@ -47,12 +47,16 @@ const toNumber = (value) => {
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULT_STATE);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
-  const setField = useCallback((key, value) => {
-    setForm((prev) => ({ ...prev, [key]: value }));
-    setCopied(false);
-  }, []);
+  const setField = useCallback(
+    (key, value) => {
+      setForm((prev) => ({ ...prev, [key]: value }));
+      resetCopyState();
+    },
+    [resetCopyState],
+  );
 
   const calc = useMemo(() => {
     const errors = [];
@@ -170,12 +174,9 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [calc, form.employer, form.event]);
 
-  const copyReport = async () => {
+  const copyReport = () => {
     if (!report) return;
-    const ok = await safeCopyText(report);
-    if (!ok) return;
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1400);
+    copyToClipboard("result", report, { label: "Leave encashment tax calculation" });
   };
 
   const inputClass =
@@ -350,8 +351,15 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={() => {
+                if (
+                  !window.confirm(
+                    "Reset every field? This will clear all your entered values and cannot be undone.",
+                  )
+                ) {
+                  return;
+                }
                 setForm(DEFAULT_STATE);
-                setCopied(false);
+                resetCopyState();
               }}
               className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
             >
@@ -419,11 +427,18 @@ export default function ToolHome() {
                 <button
                   type="button"
                   onClick={copyReport}
-                  aria-label="Copy the leave encashment tax calculation"
+                  aria-label={
+                    isCopied("result")
+                      ? "Copied the leave encashment tax calculation to clipboard"
+                      : "Copy the leave encashment tax calculation"
+                  }
                   className="mt-5 inline-flex min-h-11 items-center justify-center rounded-md bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                 >
-                  {copied ? "Copied!" : "Copy result"}
+                  {isCopied("result") ? "Copied!" : "Copy result"}
                 </button>
+                <span className="sr-only" role="status" aria-live="polite">
+                  {announcement}
+                </span>
 
                 <div className="mt-5 grid gap-2 text-xs leading-6 text-[var(--muted-foreground)]">
                   <p>

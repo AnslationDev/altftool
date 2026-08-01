@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "three-phase-power-calculator",
   "title": "Three-Phase Power Calculator",
-  "description": "kW, kVA, amps aur power factor convert kare.",
+  "description": "Convert three-phase voltage, current and power factor into kW, kVA and output power.",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Electronics",
@@ -32,7 +32,8 @@ export const spec = {
       "type": "number",
       "default": 0.9,
       "min": 0,
-      "max": 1
+      "max": 1,
+      "step": 0.01
     },
     {
       "key": "efficiency",

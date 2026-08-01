@@ -18,7 +18,7 @@ export const COMMIT_TYPES = [
   { type: "feat", label: "Feature", section: "Added", release: "minor" },
   { type: "fix", label: "Bug fix", section: "Fixed", release: "patch" },
   { type: "perf", label: "Performance", section: "Changed", release: "patch" },
-  { type: "refactor", label: "Refactor", section: "Changed", release: "patch" },
+  { type: "refactor", label: "Refactor", section: "Changed", release: "none" },
   { type: "revert", label: "Revert", section: "Changed", release: "patch" },
   { type: "docs", label: "Documentation", section: "Changed", release: "none" },
   { type: "style", label: "Formatting", section: "Changed", release: "none" },
@@ -138,8 +138,12 @@ export function bumpVersion(currentText, release) {
 
 /**
  * Parse commit subject lines.
- * Unrecognised lines are kept as "other" so nothing silently disappears.
- * @returns {{error:string}|{commits:Array,byType:object,bySection:object,breaking:Array,unparsed:number,release:string}}
+ * Unrecognised lines are kept as "other" so nothing silently disappears, and
+ * lines that match the Conventional Commits shape but use a type word this
+ * tool does not recognise (e.g. "feature" instead of "feat") are counted in
+ * `unknownType` so callers can flag them for human re-classification instead
+ * of silently trusting the patch-level default release they were given.
+ * @returns {{error:string}|{commits:Array,bySection:object,breaking:Array,unparsed:number,unknownType:number,release:string}}
  */
 export function parseCommits(text) {
   if (typeof text !== "string" || text.trim().length === 0) {
@@ -160,10 +164,10 @@ export function parseCommits(text) {
   }
 
   const commits = [];
-  const byType = {};
   const bySection = {};
   const breaking = [];
   let unparsed = 0;
+  let unknownType = 0;
   let release = "none";
 
   for (const line of lines) {
@@ -205,15 +209,15 @@ export function parseCommits(text) {
     };
     commits.push(commit);
     if (commit.breaking) breaking.push(commit);
+    if (!commit.known) unknownType += 1;
 
-    byType[commit.type] = (byType[commit.type] || 0) + 1;
     bySection[section] = (bySection[section] || 0) + 1;
 
     const commitRelease = isBreaking ? "major" : known ? known.release : "patch";
     if (RELEASE_RANK[commitRelease] > RELEASE_RANK[release]) release = commitRelease;
   }
 
-  return { commits, byType, bySection, breaking, unparsed, release };
+  return { commits, bySection, breaking, unparsed, unknownType, release };
 }
 
 export function measureText(text) {
@@ -285,7 +289,8 @@ export function buildChangelogPrompt({
   for (const commit of parsed.commits) {
     const scope = commit.scope ? ` [${commit.scope}]` : "";
     const flag = commit.breaking ? " (BREAKING)" : "";
-    lines.push(`- ${commit.section}${scope}${flag}: ${commit.subject}`);
+    const typeFlag = commit.type && !commit.known ? " (type not recognized — verify classification)" : "";
+    lines.push(`- ${commit.section}${scope}${flag}${typeFlag}: ${commit.subject}`);
   }
 
   lines.push(
@@ -299,7 +304,7 @@ export function buildChangelogPrompt({
     "RULES:",
     "- One line per change, written for a human reading the release notes — not the commit message copied across.",
     "- Say what changed and what it means for the reader. \"Fixed a crash when importing a CSV with no header row\" beats \"fix csv import\".",
-    "- Merge duplicate or follow-up commits into a single line. Drop pure chore, style, CI and test commits unless they change behaviour.",
+    "- Merge duplicate or follow-up commits into a single line. Drop pure chore, style, refactor, CI and test commits unless they change behaviour.",
     "- Never invent a change that is not in the list above.",
     "- Link each line to its issue or PR number if one appears in the commit; otherwise leave no link.",
   );
@@ -317,6 +322,12 @@ export function buildChangelogPrompt({
       `${parsed.unparsed} line${parsed.unparsed === 1 ? " was" : "s were"} not in Conventional Commits format and defaulted to Changed. Re-classify ${parsed.unparsed === 1 ? "it" : "them"} from the wording and flag anything ambiguous as TODO(verify).`,
     );
   }
+  if (parsed.unknownType > 0) {
+    lines.push(
+      "",
+      `${parsed.unknownType} commit${parsed.unknownType === 1 ? " uses" : "s use"} a type word this tool does not recognize and ${parsed.unknownType === 1 ? "was" : "were"} defaulted to Changed with a patch-level version contribution, marked "(type not recognized)" above. Re-classify ${parsed.unknownType === 1 ? "it" : "them"} from the wording — for example a synonym for "feat" such as "feature" is a MINOR change, not patch — and raise VERSION above if a higher bump is warranted.`,
+    );
+  }
   if (extra) lines.push("", `EXTRA INSTRUCTION: ${extra}`);
 
   const text = lines.join("\n");
@@ -328,6 +339,7 @@ export function buildChangelogPrompt({
     breakingCount: parsed.breaking.length,
     commitCount: parsed.commits.length,
     unparsed: parsed.unparsed,
+    unknownType: parsed.unknownType,
     usedSections,
     preRelease,
     audience,

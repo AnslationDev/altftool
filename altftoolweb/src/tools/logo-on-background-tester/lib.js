@@ -92,12 +92,6 @@ export function rgbToHex(rgb) {
   return String.fromCharCode(35) + hex;
 }
 
-/** Format an RGB triple as a CSS colour function string. */
-export function rgbToCss(rgb) {
-  if (!Array.isArray(rgb) || rgb.length < 3) return "";
-  return rgbToHex(rgb);
-}
-
 /** Composite an opaque scrim colour over a background at a given alpha. */
 export function compositeOver(backgroundRgb, scrimRgb, alpha) {
   const a = Math.min(1, Math.max(0, Number(alpha) || 0));
@@ -181,15 +175,39 @@ export function testLogoOnBackgrounds({
   const rows = list.map((bg) => {
     const ratio = contrastRatio(logoRgb, bg.rgb);
     const passes = ratio >= target;
-    const scrim = passes
-      ? { opacity: 0, achievable: true, ratio }
-      : requiredScrimOpacity({
-          logoRgb,
-          backgroundRgb: bg.rgb,
-          // Darken a background that is lighter than the logo, lighten one that is darker.
-          scrimRgb: relativeLuminance(bg.rgb) > logoLuminance ? SCRIM_BLACK : SCRIM_WHITE,
-          targetRatio: target,
-        });
+    let scrim;
+    let scrimIsDark;
+    if (passes) {
+      scrim = { opacity: 0, achievable: true, ratio };
+      scrimIsDark = relativeLuminance(bg.rgb) > logoLuminance;
+    } else {
+      // The ceiling a scrim can ever reach against this logo is set by how far
+      // the logo sits from each extreme (black vs white) — not by which side of
+      // the logo the untouched background happens to be on. Try both and keep
+      // whichever one actually gets there (or gets closest, if neither does).
+      const black = requiredScrimOpacity({
+        logoRgb,
+        backgroundRgb: bg.rgb,
+        scrimRgb: SCRIM_BLACK,
+        targetRatio: target,
+      });
+      const white = requiredScrimOpacity({
+        logoRgb,
+        backgroundRgb: bg.rgb,
+        scrimRgb: SCRIM_WHITE,
+        targetRatio: target,
+      });
+      if (black.achievable && white.achievable) {
+        scrimIsDark = black.opacity <= white.opacity;
+      } else if (black.achievable) {
+        scrimIsDark = true;
+      } else if (white.achievable) {
+        scrimIsDark = false;
+      } else {
+        scrimIsDark = black.ratio >= white.ratio;
+      }
+      scrim = scrimIsDark ? black : white;
+    }
     return {
       id: bg.id,
       name: bg.name,
@@ -201,7 +219,7 @@ export function testLogoOnBackgrounds({
       grade: gradeRatio(ratio),
       scrimOpacity: scrim.opacity,
       scrimAchievable: scrim.achievable,
-      scrimIsDark: relativeLuminance(bg.rgb) > logoLuminance,
+      scrimIsDark,
       ratioWithScrim: scrim.ratio,
     };
   });

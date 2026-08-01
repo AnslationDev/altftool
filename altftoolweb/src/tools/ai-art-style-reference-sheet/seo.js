@@ -19,7 +19,7 @@ const seo = {
     ],
     [
       "What does (phrase:1.3) mean in an image prompt?",
-      "It is attention weighting in AUTOMATIC1111 and ComfyUI: the number multiplies how strongly that phrase pulls the image. Values between 0.5 and 1.5 are the useful range — past about 1.6 the phrase starts dominating and distorting everything else.",
+      "It is attention weighting in AUTOMATIC1111 and ComfyUI: the number multiplies how strongly that phrase pulls the image. This tool allows 0.5 to 2.0. Most useful results stay between 0.5 and 1.5 — past about 1.6 the phrase starts dominating and distorting everything else, so save the top of the range for a phrase that genuinely needs to win.",
     ],
     [
       "Why do my AI images look inconsistent between prompts?",

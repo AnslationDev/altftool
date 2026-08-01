@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Check, Copy, MegaphoneOff, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { CHANNELS, REGIMES, buildWithdrawal } from "../lib";
 
 const DASH = "—";
@@ -26,7 +27,11 @@ const DEFAULTS = {
   alsoErase: false,
 };
 
-const FALLBACK_DATE = "2026-01-01";
+function todayIso() {
+  const now = new Date();
+  const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 10);
+}
 
 export default function ToolHome() {
   const [channel, setChannel] = useState(DEFAULTS.channel);
@@ -39,12 +44,11 @@ export default function ToolHome() {
   const [requestConfirmation, setRequestConfirmation] = useState(DEFAULTS.requestConfirmation);
   const [alsoErase, setAlsoErase] = useState(DEFAULTS.alsoErase);
   const [sentOn, setSentOn] = useState("");
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   useEffect(() => {
-    const now = new Date();
-    const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
-    setSentOn(local.toISOString().slice(0, 10));
+    setSentOn(todayIso());
   }, []);
 
   const result = useMemo(
@@ -56,7 +60,7 @@ export default function ToolHome() {
         contact,
         company,
         accountRef,
-        sentOn: sentOn || FALLBACK_DATE,
+        sentOn,
         includeThirdParties,
         requestConfirmation,
         alsoErase,
@@ -81,18 +85,19 @@ export default function ToolHome() {
     return result.subject ? `Subject: ${result.subject}\n\n${result.body}` : result.body;
   }, [ok, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!clipboardText) return;
-    try {
-      await navigator.clipboard.writeText(clipboardText);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("withdrawal", clipboardText, { label: "Withdrawal message" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your name, contact, company and reference with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setChannel(DEFAULTS.channel);
     setRegime(DEFAULTS.regime);
     setFullName(DEFAULTS.fullName);
@@ -102,7 +107,8 @@ export default function ToolHome() {
     setIncludeThirdParties(DEFAULTS.includeThirdParties);
     setRequestConfirmation(DEFAULTS.requestConfirmation);
     setAlsoErase(DEFAULTS.alsoErase);
-    setCopied(false);
+    setSentOn(todayIso());
+    resetCopyState();
   };
 
   const toggles = [
@@ -150,7 +156,7 @@ export default function ToolHome() {
               value={channel}
               onChange={(event) => {
                 setChannel(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             >
               {CHANNELS.map((option) => (
@@ -170,7 +176,7 @@ export default function ToolHome() {
               value={regime}
               onChange={(event) => {
                 setRegime(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             >
               {REGIMES.map((option) => (
@@ -191,7 +197,7 @@ export default function ToolHome() {
               value={fullName}
               onChange={(event) => {
                 setFullName(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             />
           </div>
@@ -206,7 +212,7 @@ export default function ToolHome() {
               value={contact}
               onChange={(event) => {
                 setContact(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             />
           </div>
@@ -221,7 +227,7 @@ export default function ToolHome() {
               value={company}
               onChange={(event) => {
                 setCompany(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             />
           </div>
@@ -236,7 +242,7 @@ export default function ToolHome() {
               value={accountRef}
               onChange={(event) => {
                 setAccountRef(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             />
           </div>
@@ -251,7 +257,7 @@ export default function ToolHome() {
               value={sentOn}
               onChange={(event) => {
                 setSentOn(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             />
           </div>
@@ -266,7 +272,7 @@ export default function ToolHome() {
                 checked={value}
                 onChange={() => {
                   setter(!value);
-                  setCopied(false);
+                  resetCopyState();
                 }}
                 className="mt-0.5 h-5 w-5 shrink-0 rounded border-[var(--border)] accent-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none"
               />
@@ -306,30 +312,43 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the withdrawal message"
+              aria-label={
+                isCopied("withdrawal")
+                  ? "Copied the withdrawal message to clipboard"
+                  : "Copy the withdrawal message"
+              }
               className={GHOST_BTN}
               disabled={!ok}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy message"}
+              {isCopied("withdrawal") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("withdrawal") ? "Copied!" : "Copy message"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset the form" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Channel", ok ? result.channelLabel : DASH],
-            ["Message length", ok ? `${result.characters} characters` : DASH],
-            [
-              "SMS cost if sent as a text",
-              ok
-                ? `${result.smsSegments} segment${result.smsSegments === 1 ? "" : "s"} (${result.smsUnits} ${result.smsEncoding} units)`
-                : DASH,
-            ],
+            ["Message length", ok ? `${clipboardText.length} characters` : DASH],
+            ...(ok && result.channel === "sms"
+              ? [
+                  [
+                    "SMS cost if sent as a text",
+                    `${result.smsSegments} segment${result.smsSegments === 1 ? "" : "s"} (${result.smsUnits} ${result.smsEncoding} units)`,
+                  ],
+                ]
+              : []),
             ["Escalate to", ok ? result.escalation : DASH],
           ].map(([label, value]) => (
             <div key={label} className="flex items-start justify-between gap-4 py-2.5">
@@ -343,7 +362,7 @@ export default function ToolHome() {
           <p className="mt-4 rounded-md border border-[var(--border)] px-3 py-2 text-sm text-[var(--muted-foreground)]">
             This text is over the {result.smsSingleLimit}-character single-message limit for{" "}
             {result.smsEncoding}, so it will be sent as {result.smsSegments} joined parts. Shorten
-            the name or drop the reference if you want it to fit in one.
+            the name or company name if you want it to fit in one.
           </p>
         )}
 

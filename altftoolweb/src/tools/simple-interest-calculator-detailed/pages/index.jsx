@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Copy, Percent, RotateCcw } from "lucide-react";
-import { safeCopyText } from "@/shared/utils/clipboard";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const SOLVE_OPTIONS = [
   { id: "interest", label: "Interest" },
@@ -12,10 +12,10 @@ const SOLVE_OPTIONS = [
 ];
 
 const TIME_UNITS = [
-  { id: "years", label: "Years", inYears: 1 },
-  { id: "months", label: "Months", inYears: 1 / 12 },
-  { id: "days365", label: "Days (365-day year)", inYears: 1 / 365 },
-  { id: "days360", label: "Days (360-day year)", inYears: 1 / 360 },
+  { id: "years", label: "Years", short: "years", inYears: 1 },
+  { id: "months", label: "Months", short: "months", inYears: 1 / 12 },
+  { id: "days365", label: "Days (365-day year)", short: "days", inYears: 1 / 365 },
+  { id: "days360", label: "Days (360-day year)", short: "days", inYears: 1 / 360 },
 ];
 
 const DEFAULTS = {
@@ -46,7 +46,7 @@ const fmtNum = (value) => (Number.isFinite(value) ? plain.format(value) : "—")
 export default function ToolHome() {
   const [solveFor, setSolveFor] = useState("interest");
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard();
 
   const setField = (key, value) => setForm((prev) => ({ ...prev, [key]: value }));
 
@@ -116,14 +116,17 @@ export default function ToolHome() {
     const rows = [];
     const wholeYears = Math.min(Math.ceil(timeYears), 60);
     for (let year = 1; year <= wholeYears; year += 1) {
+      const periodStart = Math.min(year - 1, timeYears);
       const elapsed = Math.min(year, timeYears);
       const cumulative = (principal * rate * elapsed) / 100;
-      const previous = (principal * rate * Math.min(year - 1, timeYears)) / 100;
+      const previous = (principal * rate * periodStart) / 100;
       rows.push({
         year,
         accrued: cumulative - previous,
         cumulative,
         balance: principal + cumulative,
+        // A row covers less than 12 months when the loan term ends mid-year.
+        partial: elapsed - periodStart < 0.999999,
       });
     }
 
@@ -156,7 +159,7 @@ export default function ToolHome() {
     if (solveFor === "principal") return { label: "Principal required", value: fmtMoney(result.principal) };
     if (solveFor === "rate") return { label: "Annual rate", value: `${fmtNum(result.rate)}%` };
     return {
-      label: `Time needed (${unit.label.toLowerCase()})`,
+      label: `Time needed (${unit.short})`,
       value: fmtNum(result.timeInput),
     };
   }, [result, solveFor, unit]);
@@ -168,19 +171,16 @@ export default function ToolHome() {
       `Solving for: ${SOLVE_OPTIONS.find((item) => item.id === solveFor)?.label}`,
       `Principal: ${fmtMoneyExact(result.principal)}`,
       `Annual rate: ${fmtNum(result.rate)}%`,
-      `Time: ${fmtNum(result.timeInput)} ${unit.label.toLowerCase()} (${fmtNum(result.timeYears)} years)`,
+      `Time: ${fmtNum(result.timeInput)} ${unit.short} (${fmtNum(result.timeYears)} years)`,
       `Simple interest: ${fmtMoneyExact(result.interest)}`,
       `Total amount due: ${fmtMoneyExact(result.total)}`,
       `Formula: ${result.formula}`,
     ].join("\n");
   }, [result, solveFor, unit]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!report) return;
-    const ok = await safeCopyText(report);
-    if (!ok) return;
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1400);
+    copyToClipboard("result", report, { label: "Simple interest summary" });
   };
 
   const reset = () => {
@@ -194,7 +194,7 @@ export default function ToolHome() {
   const fieldConfig = [
     { key: "principal", label: "Principal (₹)", id: "si-principal" },
     { key: "rate", label: "Annual rate (%)", id: "si-rate" },
-    { key: "time", label: `Time (${unit.label.toLowerCase()})`, id: "si-time" },
+    { key: "time", label: `Time (${unit.short})`, id: "si-time" },
     { key: "interest", label: "Simple interest (₹)", id: "si-interest" },
   ];
 
@@ -280,11 +280,11 @@ export default function ToolHome() {
                 type="button"
                 onClick={copyResult}
                 disabled={Boolean(result.error)}
-                aria-label="Copy simple interest summary"
+                aria-label={isCopied("result") ? "Copied the simple interest summary to clipboard" : "Copy simple interest summary"}
                 className="inline-flex min-h-11 items-center gap-2 rounded-md bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 disabled:opacity-50"
               >
                 <Copy className="h-4 w-4" aria-hidden="true" />
-                {copied ? "Copied!" : "Copy result"}
+                {isCopied("result") ? "Copied!" : "Copy result"}
               </button>
               <button
                 type="button"
@@ -295,6 +295,9 @@ export default function ToolHome() {
                 <RotateCcw className="h-4 w-4" aria-hidden="true" />
                 Reset
               </button>
+              <span className="sr-only" role="status" aria-live="polite">
+                {announcement}
+              </span>
             </div>
           </section>
 
@@ -307,7 +310,7 @@ export default function ToolHome() {
                 {result.error}
               </div>
             ) : (
-              <>
+              <div aria-live="polite">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                   {primary.label}
                 </p>
@@ -375,7 +378,10 @@ export default function ToolHome() {
                         <tbody>
                           {result.rows.map((row) => (
                             <tr key={row.year} className="border-b border-[var(--border)]">
-                              <td className="px-2 py-2 font-semibold">{row.year}</td>
+                              <td className="px-2 py-2 font-semibold">
+                                Year {row.year}
+                                {row.partial ? " (partial)" : ""}
+                              </td>
                               <td className="px-2 py-2 text-right text-[var(--success)]">
                                 {fmtMoney(row.accrued)}
                               </td>
@@ -393,6 +399,12 @@ export default function ToolHome() {
                         Table capped at the first 60 years.
                       </p>
                     )}
+                    {result.rows.some((row) => row.partial) && (
+                      <p className="mt-2 text-xs text-[var(--muted-foreground)]">
+                        Rows marked &ldquo;(partial)&rdquo; cover less than a full 12 months because the loan
+                        term ends partway through that year, so their interest is proportionally lower.
+                      </p>
+                    )}
                   </>
                 )}
 
@@ -400,7 +412,7 @@ export default function ToolHome() {
                   Simple interest never earns interest on interest. Informational only — your lender may use a
                   different day-count basis or add fees.
                 </p>
-              </>
+              </div>
             )}
           </section>
         </div>
