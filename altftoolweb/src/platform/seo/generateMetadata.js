@@ -546,21 +546,18 @@ export function createToolJsonLd({ slug, tool, category = "all", path, offers } 
     keywords: [...new Set([...categories, ...topics])]
       .filter(Boolean)
       .join(", "),
-    // The Offer belongs to the application, and on a tool page that reads
-    // exactly right. On a page whose NAME is a tradeable instrument —
-    // "Bitcoin (BTC) Chart & Analysis" — a zero-price Offer in the same
-    // node is one careless read from looking like a quote for BTC. Those
-    // callers pass offers: false; every existing caller is unchanged and
-    // keeps its free-to-use signal. isAccessibleForFree above still says
-    // the tool is free, which is the part that is actually true.
+    // This Offer describes free access to the software application. It never
+    // represents an item, asset or other subject that the application handles.
+    // Keep the explicit opt-out for backward compatibility with existing API
+    // consumers; application routes should normally retain the default Offer.
     ...(offers === false
       ? {}
       : {
           offers: {
-          "@type": "Offer",
-          price: "0",
-          priceCurrency: "USD",
-          availability: "https://schema.org/InStock",
+            "@type": "Offer",
+            price: "0",
+            priceCurrency: "USD",
+            availability: "https://schema.org/InStock",
           },
         }),
     publisher: {

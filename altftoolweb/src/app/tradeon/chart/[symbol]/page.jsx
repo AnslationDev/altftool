@@ -62,21 +62,17 @@ export default async function TradeonFullChartPage({ params }) {
       {/* The entity describes the free charting workspace itself — timeframes,
           chart types, indicators and the drawing rail that FullChartClient
           actually renders — not the instrument being charted. No price, volume
-          or market cap is published, and unknown symbols get no entity. */}
+          or market cap is published. Its USD 0 Offer describes free access to
+          this software workspace, and unknown symbols get no entity. */}
       {instrument ? (
         <JsonLd
           id={`tradeon-chart-schema-${symbolToSlug(symbol)}`}
           data={[
             createToolJsonLd({
-            // This node names a tradeable instrument, so the helper's
-            // zero-price Offer is one careless read from looking like a
-            // quote for the asset. isAccessibleForFree still marks the
-            // workspace free, which is the true part.
-            offers: false,
               slug: symbolToSlug(symbol),
               path,
               tool: {
-                name: `${name} (${symbol}) Interactive Chart`,
+                name: `Tradeon ${name} (${symbol}) Chart Workspace`,
                 description: `Full-screen ${name} (${symbol}) chart workspace with multiple timeframes, candlestick, line, area and bar chart types, technical indicators and drawing tools. ${dataProvenance(instrument)}`,
                 category: ["FinanceApplication", assetClassLabel(instrument.assetClass)].filter(Boolean),
                 topics: [symbol, name, `${symbol} chart`],

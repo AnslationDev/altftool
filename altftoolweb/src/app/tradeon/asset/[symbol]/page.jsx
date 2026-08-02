@@ -68,22 +68,19 @@ export default async function TradeonAssetPage({ params }) {
           WebSite nodes — nothing describing the page itself. The entity below
           describes the free browser workspace (the thing AltFTool actually
           owns), not the traded instrument: no Product, no FinancialProduct, no
-          offer for the asset, no rating. Unknown symbols get no entity at all,
-          because there is nothing in instruments.js to describe truthfully. */}
+          offer for the asset and no rating. Its USD 0 Offer describes free
+          access to the software workspace. Unknown symbols get no entity at
+          all, because there is nothing in instruments.js to describe
+          truthfully. */}
       {instrument ? (
         <JsonLd
           id={`tradeon-asset-schema-${symbolToSlug(symbol)}`}
           data={[
             createToolJsonLd({
-            // This node names a tradeable instrument, so the helper's
-            // zero-price Offer is one careless read from looking like a
-            // quote for the asset. isAccessibleForFree still marks the
-            // workspace free, which is the true part.
-            offers: false,
               slug: symbolToSlug(symbol),
               path,
               tool: {
-                name: `${name} (${symbol}) Chart & Analysis`,
+                name: `Tradeon ${name} (${symbol}) Analysis Workspace`,
                 description: `Interactive ${name} (${symbol}) chart with multiple timeframes, indicators and an explainable, deterministic signal model. ${dataProvenance(instrument)}`,
                 category: ["FinanceApplication", assetClassLabel(instrument.assetClass)].filter(Boolean),
                 topics: [symbol, name, `${symbol} chart`],

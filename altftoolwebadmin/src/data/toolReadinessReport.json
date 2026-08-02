@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-02T21:19:57.422Z",
+  "generatedAt": "2026-08-02T22:50:23.925Z",
   "summary": {
     "methodology": "static-readiness-v2",
     "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
@@ -44987,7 +44987,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 4,
-        "sourceBytes": 15303,
+        "sourceBytes": 15795,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -117798,7 +117798,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 8,
-        "sourceBytes": 26745,
+        "sourceBytes": 26843,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
