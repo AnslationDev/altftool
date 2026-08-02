@@ -138,10 +138,16 @@ export default function HomeSafeCoverPage() {
 
         <section className="homesafe-stats" aria-label="HomeSafe Cover highlights">
           <div className="homesafe-stats-inner">
-            <div className="homesafe-stat"><strong>4.7/5</strong><span>average customer rating</span></div>
+            {/*
+              Was "4.7/5 average customer rating" — HomeSafe Cover is a sample
+              provider with no customers and no rating mechanism. "A-rated
+              underwriting partners" below is left for the same review: it is a
+              financial-strength claim about third parties that do not exist.
+            */}
+            <div className="homesafe-stat"><strong>Template</strong><span>sample provider page</span></div>
             <div className="homesafe-stat"><strong>1 handler</strong><span>named contact per claim</span></div>
             <div className="homesafe-stat"><strong>24/7</strong><span>claims line, every day</span></div>
-            <div className="homesafe-stat"><strong>A-rated</strong><span>underwriting partners</span></div>
+            <div className="homesafe-stat"><strong>No cover</strong><span>nothing is underwritten here</span></div>
           </div>
         </section>
 

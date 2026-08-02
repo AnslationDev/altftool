@@ -16,7 +16,7 @@ const DEFAULT_PERKS = [
 const TRUST_BADGES = [
   { Icon: ShieldCheck, label: "Secure & encrypted" },
   { Icon: BadgeCheck, label: "No spam, ever" },
-  { Icon: Star, label: "4.9/5 rated" },
+  // Was "4.9/5 rated" — no rating mechanism exists behind it.
 ];
 
 /**
@@ -152,19 +152,13 @@ export default function HnEmailCapture({
 
       {!compact && (
         <div className="hn-email-proof">
-          <span className="hn-email-avatars" aria-hidden="true">
-            {["ER", "MJ", "DS", "AL"].map((initials) => (
-              <span key={initials}>{initials}</span>
-            ))}
-          </span>
-          <span className="hn-email-proof-text">
-            <span className="hn-email-stars" aria-hidden="true">
-              {Array.from({ length: 5 }, (_, i) => (
-                <Star key={i} size={12} strokeWidth={0} fill="currentColor" />
-              ))}
-            </span>
-            Rated <strong>4.9/5</strong> by <strong>14,000+</strong> U.S. homeowners
-          </span>
+          {/*
+            The social-proof block is gone. It showed four initialled avatars —
+            "ER", "MJ", "DS", "AL" — five filled stars, and "Rated 4.9/5 by
+            14,000+ U.S. homeowners". There are no homeowners, no ratings and no
+            people behind those initials. It sat directly above an email field,
+            which is exactly where an invented endorsement does its work.
+          */}
         </div>
       )}
     </form>

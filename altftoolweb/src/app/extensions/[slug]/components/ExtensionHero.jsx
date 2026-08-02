@@ -89,8 +89,14 @@ export default function ExtensionHero({ extension }) {
 
             <div className="inline-flex items-center gap-1 bg-[var(--card)] border border-[var(--border)] px-3 py-1 rounded-full text-xs font-medium text-[var(--foreground)] shadow-xs">
               <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" aria-hidden="true" />
+              {/*
+                ratingText is the extension's own value from the catalog and
+                stays. The "(4.9/5 overall)" that sat beside it was hardcoded on
+                every extension page — an invented site-wide average printed next
+                to a real per-extension number, which made the real one look
+                invented too.
+              */}
               <span className="font-semibold">{ratingText}</span>
-              <span className="text-[var(--muted-foreground)]">(4.9/5 overall)</span>
             </div>
 
             {versionText ? (
