@@ -814,7 +814,7 @@ test.describe("microtool functional flows", () => {
       "Beauty Score Calculator",
     );
     await page
-      .locator('input[type="file"][accept="image/*"]')
+      .getByLabel("Photo file to analyze", { exact: true })
       .setInputFiles(portraitFixturePath);
     await expect(
       page.getByText("Final Beauty Score", { exact: true }),
