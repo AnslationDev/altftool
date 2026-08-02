@@ -9,6 +9,8 @@ const failures = [];
 const paths = {
   tokens: "packages/ui/src/tokens.css",
   styles: "packages/ui/src/styles.css",
+  webTokens: "altftoolweb/packages/ui/src/tokens.css",
+  webStyles: "altftoolweb/packages/ui/src/styles.css",
   exports: "packages/ui/src/index.jsx",
   webGlobals: "altftoolweb/src/app/globals.css",
   adminGlobals: "altftoolwebadmin/src/app/globals.css",
@@ -30,6 +32,8 @@ function check(condition, message) {
 const [
   tokens,
   styles,
+  webTokens,
+  webStyles,
   uiExports,
   webGlobals,
   adminGlobals,
@@ -66,6 +70,14 @@ check(
 check(
   tokens.includes("@media (prefers-reduced-motion: reduce)"),
   "Shared tokens must honor reduced motion.",
+);
+check(
+  tokens === webTokens,
+  "Web and root token sources drifted; keep packages/ui/src/tokens.css synchronized.",
+);
+check(
+  styles === webStyles,
+  "Web and root shared styles drifted; keep packages/ui/src/styles.css synchronized.",
 );
 
 const rawColorPattern = /#[0-9a-f]{3,8}\b|(?:rgb|hsl)a?\(/gi;

@@ -2,7 +2,7 @@ const seo = {
   title: "Car Comparison — Compare Two Cars Side by Side",
   h1: "Vehicle Compare — Side-by-Side Car Specification Comparison",
   metaDescription:
-    "Compare two 2024 Indian SUVs side by side — price, ARAI mileage, power and safety — with the better figure bolded. Sample base-variant spec data, free, no signup.",
+    "Compare two 2024 Indian SUVs side by side—price, ARAI mileage, power and safety—with the better figure bolded. Sample base-variant data, free, no signup.",
   intro:
     "Vehicle Compare puts two models from a six-car 2024 India shortlist — Hyundai Creta, Kia Seltos, Maruti Brezza, Mahindra Scorpio-N, Tata Nexon and Toyota Innova Hycross — into a single three-column grid across four specs: ex-showroom price, ARAI mileage, maximum power and safety rating. Each row is scored by direction rather than opinion: the lower number wins on price, the higher number wins on mileage, power and safety, and the winning cell is bolded in the accent colour, with ties left unmarked. Above the grid, three proportional bars size each value as value ÷ larger value × 100%, and prices are converted to the Indian lakh/crore scale, so a gap in mileage, power or price is readable before you parse a digit. Each of the six models carries its own reference figures — rounded from published base-variant, ARAI and NCAP data — compiled into the page. The tool makes no network request of any kind, so nothing you select is uploaded, but the numbers are indicative base-trim figures, not a live price feed; confirm current pricing and variant-specific specs with the manufacturer or a dealer.",
   useCases: [

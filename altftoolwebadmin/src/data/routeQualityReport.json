@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-07-30T16:15:09.452Z",
-  "buildId": "OXMnteN1cp5OrP2Oii3Mm",
+  "generatedAt": "2026-08-02T21:30:39.526Z",
+  "buildId": "iwUol5AEfgR8T7f1A-haZ",
   "ok": true,
   "indexControlOk": true,
   "qualityOk": true,
   "score": 100,
   "totals": {
-    "routes": 1069,
-    "indexable": 869,
+    "routes": 1070,
+    "indexable": 870,
     "noindex": 200,
-    "sitemapUrls": 5782,
-    "sitemapCovered": 869,
+    "sitemapUrls": 5786,
+    "sitemapCovered": 870,
     "sitemapCoverage": 100,
     "indexConflicts": 0,
     "missingCanonicalTargets": 0,
@@ -341,6 +341,17 @@
       "sitemapCoverage": 100
     },
     {
+      "group": "Prompts",
+      "routes": 2,
+      "indexable": 2,
+      "noindex": 0,
+      "sitemapCovered": 2,
+      "issues": 0,
+      "advisories": 0,
+      "score": 100,
+      "sitemapCoverage": 100
+    },
+    {
       "group": "Academy",
       "routes": 1,
       "indexable": 1,
@@ -584,17 +595,6 @@
     },
     {
       "group": "Press",
-      "routes": 1,
-      "indexable": 1,
-      "noindex": 0,
-      "sitemapCovered": 1,
-      "issues": 0,
-      "advisories": 0,
-      "score": 100,
-      "sitemapCoverage": 100
-    },
-    {
-      "group": "Prompts",
       "routes": 1,
       "indexable": 1,
       "noindex": 0,

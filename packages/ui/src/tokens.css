@@ -199,3 +199,12 @@ html[data-theme="dark"] {
     --anslation-ds-motion-drawer: 0ms;
   }
 }
+
+/* A 40px control is under the 44px minimum a finger needs. The system already
+   carries the correct figure as --anslation-ds-target-min; raise the medium
+   control to it where the pointer is a finger, and leave mouse density alone. */
+@media (pointer: coarse) {
+  :root {
+    --anslation-ds-control-md: var(--anslation-ds-target-min);
+  }
+}

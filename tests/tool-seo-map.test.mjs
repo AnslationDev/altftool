@@ -59,9 +59,9 @@ test("compressed tool SEO lookup covers every authored SEO module", async () => 
   assert.equal(typeof generatedSeo["wcag-quick-auditor"]?.intro, "string");
 });
 
-test("generated SEO stays packed into one deployable server module", async () => {
+test("generated tool lookups stay limited to deployable server modules", async () => {
   const generatedFiles = await readdir(generatedDirectory);
-  assert.deepEqual(generatedFiles, ["toolSeoMap.js"]);
+  assert.deepEqual(generatedFiles.sort(), ["toolNetworkMap.js", "toolSeoMap.js"]);
 
   const generatedMapSize = (await stat(generatedMapPath)).size;
   assert.ok(

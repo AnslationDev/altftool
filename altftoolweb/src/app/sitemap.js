@@ -166,6 +166,7 @@ const staticRoutes = [
   { path: "/tradeon", priority: 0.76 },
   { path: "/tradeon/dashboard", priority: 0.66 },
   { path: "/tradeon/workspace", priority: 0.66 },
+  { path: "/prompts", priority: 0.76 },
   { path: "/prompts/seedream-5-pro", priority: 0.7 },
   { path: "/policypages/about", priority: 0.35 },
   { path: "/policypages/affiliate", priority: 0.35 },
@@ -1067,7 +1068,7 @@ async function buildSitemapEntries({
 
 export const getSitemapEntries = unstable_cache(
   buildSitemapEntries,
-  ["altftool-sitemap-entries-v3"],
+  ["altftool-sitemap-entries-v4"],
   {
     revalidate: 3600,
     tags: ["altftool-sitemap-entries"],
@@ -1080,7 +1081,7 @@ export const getStaticSearchSitemapEntries = unstable_cache(
       includeLiveCollections: false,
       includeSeoConfig: false,
     }),
-  ["altftool-static-search-sitemap-entries-v3"],
+  ["altftool-static-search-sitemap-entries-v4"],
   {
     revalidate: 86400,
     tags: ["altftool-static-search-sitemap-entries"],
