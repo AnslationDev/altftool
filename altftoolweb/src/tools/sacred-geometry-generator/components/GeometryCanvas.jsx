@@ -24,7 +24,8 @@ const GeometryCanvas = forwardRef(function GeometryCanvas({ settings }, ref) {
       className="h-full w-full"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <rect x="-500" y="-500" width="1000" height="1000" fill="var(--background)" />
+      {/* Exported SVGs render outside the page, so their background must be self-contained. */}
+      <rect x="-500" y="-500" width="1000" height="1000" fill={palette.background} />
       <g transform={`rotate(${settings.rotation}) scale(${scale})`} opacity={opacity}>
         {settings.pattern === "flower" && (
           <FlowerOfLife settings={settings} palette={palette} strokeWidth={strokeWidth} />

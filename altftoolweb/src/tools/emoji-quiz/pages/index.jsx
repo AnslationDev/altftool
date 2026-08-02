@@ -26,6 +26,23 @@ const QUESTIONS = [
   { emoji: "🐶🦴😋", answer: "dog treat", category: "Animal", hint: "Puppy snack" },
 ];
 
+let graphemeSegmenter = null;
+
+function splitGraphemes(text) {
+  if (!text) return [];
+
+  try {
+    if (typeof Intl !== "undefined" && typeof Intl.Segmenter === "function") {
+      graphemeSegmenter ??= new Intl.Segmenter("en", { granularity: "grapheme" });
+      return [...graphemeSegmenter.segment(text)].map(({ segment }) => segment);
+    }
+  } catch {
+    // Array.from still preserves complete Unicode code points on older browsers.
+  }
+
+  return Array.from(text);
+}
+
 export default function ToolHome() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
@@ -59,7 +76,7 @@ export default function ToolHome() {
 
   React.useEffect(() => {
     nextQuestion();
-  }, []);
+  }, [nextQuestion]);
 
   const normalize = (str) => str.toLowerCase().trim().replace(/[^a-z0-9\s]/g, "");
 
@@ -139,7 +156,7 @@ export default function ToolHome() {
         <div className="rounded-2xl border border-(--border) bg-(--card) p-6 shadow-lg">
           <p className="mb-4 text-center text-sm font-semibold text-(--muted-foreground)">What does this mean?</p>
           <div className="mb-6 flex justify-center gap-2 text-5xl">
-            {current.emoji.split("").map((e, i) => (
+            {splitGraphemes(current.emoji).map((e, i) => (
               <span key={i} className="animate-in zoom-in-50">{e}</span>
             ))}
           </div>
