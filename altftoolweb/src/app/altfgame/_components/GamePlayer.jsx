@@ -58,6 +58,12 @@ export default function GamePlayer({ game, children }) {
         <div className="flex min-w-0 items-center gap-3">
           <GameThumb game={game} className="hidden h-12 w-12 shrink-0 sm:flex" rounded="rounded-xl" />
           <div className="min-w-0">
+            {/*
+              This is the one H1 on an /altfgame/<slug> page. The game
+              components used to render their own splash/HUD H1s on top of it —
+              /altfgame/chess served three ("Chess", "CHESS.MASTER", "CHESS")
+              and /altfgame/2048 served two — so those are all H2s now.
+            */}
             <h1 className="truncate text-xl font-bold tracking-tight sm:text-3xl">{game.title}</h1>
             <div className="mt-1 flex items-center gap-3 text-sm text-foreground/60">
               <span className="rounded-full bg-card px-2.5 py-0.5">{game.category}</span>

@@ -201,7 +201,11 @@ function parseFeed(xml, source) {
     const rawDescription =
       readTag(block, ["description", "summary", "content:encoded", "content"]) ||
       `${title} from ${source.sourceName}.`;
-    const description = truncateText(stripHtml(rawDescription), 180);
+    // 155 rather than 180: trimMetaDescription() hard-caps meta descriptions at
+    // 160 and re-cuts anything longer at a sentence boundary, so a 180-char
+    // summary reached the SERP clipped mid-phrase. truncateText appends "...",
+    // so this lands at <=158 and round-trips through the SEO helper unchanged.
+    const description = truncateText(stripHtml(rawDescription), 155);
     const dateISO = parseDate(readTag(block, ["pubDate", "published", "updated", "dc:date"]));
     const category = categorize(`${title} ${description}`, source.defaultCategory);
     const author = stripHtml(readTag(block, ["dc:creator", "author", "name"])) || source.sourceName;
@@ -326,6 +330,33 @@ function stripHtml(value) {
     .trim();
 }
 
+// Feeds routinely double-escape their entities, so an item arrives carrying
+// "&amp;#8217;". The &amp; pass below turns that into "&#8217;", and with no
+// numeric rule the entity survived as literal text all the way into the meta
+// description — production served
+//   content="Hello from Spain, as I just flew Riyadh Air&amp;#8217;s Boeing 787-9"
+// which renders as a visible "&#8217;" in the SERP snippet. Decode the numeric
+// and remaining named forms after the &amp; pass so the text is real characters.
+const NAMED_ENTITIES = {
+  nbsp: " ",
+  hellip: "…",
+  mdash: "—",
+  ndash: "–",
+  lsquo: "‘",
+  rsquo: "’",
+  ldquo: "“",
+  rdquo: "”",
+};
+
+function fromCodePoint(code, original) {
+  if (!Number.isFinite(code) || code < 0x20 || code > 0x10ffff) return original;
+  try {
+    return String.fromCodePoint(code);
+  } catch {
+    return original;
+  }
+}
+
 function decodeXml(value) {
   return value
     .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
@@ -335,6 +366,9 @@ function decodeXml(value) {
     .replace(/&apos;/g, "'")
     .replace(/&lt;/g, "<")
     .replace(/&gt;/g, ">")
+    .replace(/&#(\d+);/g, (match, code) => fromCodePoint(Number(code), match))
+    .replace(/&#x([0-9a-f]+);/gi, (match, code) => fromCodePoint(parseInt(code, 16), match))
+    .replace(/&([a-z]+);/gi, (match, name) => NAMED_ENTITIES[name.toLowerCase()] ?? match)
     .trim();
 }
 

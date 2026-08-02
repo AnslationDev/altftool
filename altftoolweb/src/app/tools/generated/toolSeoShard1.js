@@ -1577,7 +1577,7 @@ export default {
   ]
 },
   "breastfeeding-hydration-calculator": {
-  "intro": "This calculator works out how much extra fluid breastfeeding adds to your day by rebuilding the figure from milk output rather than quoting a flat number. EFSA adds 700 ml of total water a day for lactation because average exclusive-breastfeeding output is about 800 ml of milk a day and human milk is roughly 87% water — 800 x 0.87 = 696 ml. Enter your stage, feeds per day and number of babies (or a measured pumped volume) and the increment scales with your actual production, on top of the 2.0 L/day adequate intake for adult women.",
+  "intro": "This calculator works out how much extra fluid breastfeeding adds to your day by rebuilding the figure from milk output rather than quoting a flat number. EFSA adds 700 ml of total water a day for lactation because average exclusive-breastfeeding output is about 800 ml of milk a day and human milk is roughly 87% water — 800 x 0.87 = 696 ml. Enter your stage, feeds per day and number of babies (or a measured pumped volume) and the increment scales with your actual production, on top of your chosen baseline — the 2.0 L/day adequate intake for adult women by default, or 35 ml per kg of body weight if you switch to the weight-based method.",
   "useCases": [
     "See how much less fluid you need at 9 months on solids and three feeds a day than during exclusive newborn feeding.",
     "Work out the target while tandem feeding twins, where the flat +700 ml figure clearly under-counts.",
@@ -1926,7 +1926,7 @@ export default {
     ],
     [
       "How is GST calculated on a trade?",
-      "GST is 18 percent, and it is charged only on brokerage plus exchange transaction charges plus SEBI turnover fees. It is never levied on STT or on stamp duty, which is why GST stays small even on large delivery trades that pay heavy STT."
+      "GST is 18 percent, charged on brokerage plus exchange transaction charges plus SEBI turnover fees — plus the flat DP charge on an equity delivery sell, which the calculator already shows GST-inclusive. It is never levied on STT or on stamp duty, which is why GST stays small even on large delivery trades that pay heavy STT."
     ],
     [
       "What are DP charges and when do they apply?",
@@ -2046,7 +2046,7 @@ export default {
     ],
     [
       "How is the tracking risk score calculated?",
-      "Twelve signals are scored and summed, then capped at 100: canvas 20, WebGL/GPU 15, audio 10, installed fonts 10, timezone 8, screen resolution 8, CPU cores plus device memory 7, languages 5, storage profile 4, media devices 4, touch points 3, and 3 for sending a Do-Not-Track header. Under 30 is Low, under 70 is Medium, 70 and above is High. Blocked or unavailable probes score zero, so a hardened browser genuinely scores lower."
+      "Twelve signals are scored and summed, then capped at 100: canvas 20, WebGL/GPU 15, audio 10, installed fonts 10, timezone 8, screen resolution 8, CPU cores plus device memory 7, languages 5, storage profile 4, media devices 4, touch points 3, and 3 for sending a Do-Not-Track header. Under 30 is Low, under 70 is Medium, 70 and above is High. Blocked or unavailable probes score zero, so a hardened browser genuinely scores lower — the one exception is languages, which floors at 2 points because every browser discloses at least one language even when reduced to a single generic value."
     ],
     [
       "Does blocking cookies stop fingerprinting?",
@@ -2220,24 +2220,24 @@ export default {
   ]
 },
   "bubble-text-generator": {
-  "intro": "The Bubble Text Generator maps ordinary letters and digits onto Unicode's Enclosed Alphanumerics characters — Ⓐ at U+24B6, ⓐ at U+24D0, ① at U+2460 — so \"hello\" becomes ⓗⓔⓛⓛⓞ as real text you can copy and paste anywhere. It offers 22 styles across circled, filled, squared, parenthesised, tiny, fullwidth, double-struck, cursive, fraktur, strikethrough and emoji-framed variants, and can also render your text as a transparent PNG or SVG in one of 11 rounded display fonts. Because the output is characters and not an image, it survives a paste into a bio, username or chat message.",
+  "intro": "The Bubble Text Generator maps ordinary letters and digits onto Unicode's Enclosed Alphanumerics characters — Ⓐ at U+24B6, ⓐ at U+24D0, ① at U+2460 — so \"hello\" becomes ⓗⓔⓛⓛⓞ as real text you can copy and paste anywhere. Type or paste in any text and every letter and digit is converted to its circled equivalent; punctuation and other symbols pass through unchanged. Because the output is characters and not an image, it survives a paste into a bio, username or chat message.",
   "useCases": [
     "You want your Instagram bio name to stand out from every other account on the page without adding an image or a special font file.",
-    "You are setting up Discord channel names and want each one prefixed with squared or circled letters that still read cleanly in the sidebar.",
-    "You need a bubble-lettering headline for a thumbnail or sticker and want it as a transparent PNG rather than pasteable text."
+    "You are setting up Discord channel names and want each one prefixed with circled letters that still read cleanly in the sidebar.",
+    "You need a quick bubble-lettering headline for a caption or comment and want plain, pasteable text rather than an image."
   ],
   "benefits": [
     [
       "Output is text, not a screenshot",
-      "Every style is real Unicode, so it pastes into usernames, bios, captions and search fields that reject images or custom fonts."
+      "The circled letters are real Unicode, so they paste into usernames, bios, captions and search fields that reject images or custom fonts."
     ],
     [
-      "22 styles from one input",
-      "Type once and compare classic circles, filled circles, squares, negative squares, parentheses, subscripts, fullwidth, fraktur and more side by side."
+      "Converts letters and digits in one pass",
+      "Type once and every A-Z, a-z and 0-9 character in your input is swapped for its circled equivalent — everything else is left as-is."
     ],
     [
-      "Text and image output in the same tool",
-      "When a platform strips unusual characters you can fall back to the PNG or SVG export rendered in a rounded display font."
+      "Copy, download or revisit past results",
+      "Copy the circled text straight to your clipboard, download it as a .txt file, or reopen it from the tool's built-in recent-results history."
     ]
   ],
   "faqs": [
@@ -2247,7 +2247,7 @@ export default {
     ],
     [
       "Will bubble letters show up on iPhone, Android and Discord?",
-      "Yes, because Enclosed Alphanumerics has been in Unicode since version 1.1 and is covered by the system fonts on iOS, Android, Windows, macOS and Linux. The filled and squared styles use Enclosed Alphanumeric Supplement characters, which are newer and occasionally render as boxes on very old devices."
+      "Yes, because Enclosed Alphanumerics has been in Unicode since version 1.1 and is covered by the system fonts on iOS, Android, Windows, macOS and Linux, so the circled letters this tool produces render correctly almost everywhere."
     ],
     [
       "Can I use bubble text in an Instagram or TikTok username?",
@@ -4174,7 +4174,7 @@ export default {
   "benefits": [
     [
       "Channel economics, not just a pie chart",
-      "Each row carries its own CPC, CTR and conversion rate, so the projection reflects that email converting at 4.5% behaves nothing like display traffic."
+      "Each row carries its own CPC and conversion rate feeding the projection (CTR is tracked per channel as reference context), so the projection reflects that email converting at 4.5% behaves nothing like display traffic."
     ],
     [
       "Target CPA is a live threshold",
@@ -11581,7 +11581,7 @@ export default {
   "faqs": [
     [
       "how is the compatibility percentage calculated",
-      "Each of the 10 answers scores between 3 and 10 points, the points are added up, and the total is divided by 100 — the maximum of 10 questions at 10 points each — then rounded to a whole percentage. Picking the highest-weighted option on every question is the only way to reach 100%."
+      "Each of the 10 answers scores between 3 and 10 points, the points are added up, and the total is divided by 100 — the maximum of 10 questions at 10 points each — then rounded to a whole percentage. Picking the highest-weighted option on every question gets you as close to 100% as that category allows, though in the romance, lifestyle, travel and career sets no single option is worth the full 10 points on every question, so the highest reachable total there is 98-99%; only the friendship and intellectual sets can reach a full 100%."
     ],
     [
       "what does my compatibility score mean",

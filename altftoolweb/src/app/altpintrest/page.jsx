@@ -11,5 +11,17 @@ export async function generateMetadata() {
 }
 
 export default function Page(props) {
-  return <PageView {...props} />;
+  return (
+    <>
+      {/*
+        /altpintrest served zero <h1>. PageView's two H1s are both behind client
+        state — the pin-detail modal and the "Your saved Ideas" view — and the
+        landing it renders by default starts at <h2>, so the document had no
+        top-level heading at all. Both of those are now H2s, and the route
+        supplies the single H1 server-side.
+      */}
+      <h1 className="sr-only">Visual inspiration feed — browse and save ideas</h1>
+      <PageView {...props} />
+    </>
+  );
 }

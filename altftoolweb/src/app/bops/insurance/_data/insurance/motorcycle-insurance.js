@@ -199,7 +199,7 @@ export const motorcycleInsurance = {
   },
 
   seo: {
-    title: "Motorcycle Insurance — Compare Rider Quotes | AltFTool",
+    title: "Motorcycle Insurance — Rider Quotes | AltFTool",
     description:
       "Compare motorcycle insurance quotes from highly rated insurers in minutes. Protect your bike, gear and liability — free to compare, with no obligation.",
   },

@@ -650,7 +650,7 @@ export default function BalloonArchery() {
 
       {/* ── Title ─────────────────────────────── */}
       <div style={{ textAlign: "center", marginBottom: 14, position: "relative", zIndex: 1 }}>
-        <h1 className="game-title">🎈 BALLOON ARCHERY</h1>
+        <h2 className="game-title">🎈 BALLOON ARCHERY</h2>
         <p className="subtitle">Aim · Charge · Release — Don't let them escape</p>
       </div>
 

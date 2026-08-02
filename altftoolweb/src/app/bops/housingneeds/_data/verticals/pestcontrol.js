@@ -38,7 +38,7 @@ const pestcontrol = {
   "quoteLabel": "Request a pest control quote",
   "quoteUrl": quoteUrlFor("pestcontrol"),
   "seo": {
-    "title": "Pest Control Explained: Inspection, Exclusion and Treatment Options",
+    "title": "Pest Control Guide: Inspection and Treatment",
     "description": "How residential pest control actually works: IPM inspection, exclusion, termite, rodent and bed bug treatment options, service intervals and what drives cost."
   },
   "services": [

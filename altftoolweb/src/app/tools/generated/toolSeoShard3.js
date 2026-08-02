@@ -10281,8 +10281,8 @@ export default {
       "Linux $0.008, Windows $0.016 and macOS $0.08 per minute, with the 1x/2x/10x allowance multipliers applied."
     ],
     [
-      "Per-job rounding included",
-      "A 90-second job bills as 2 minutes — the estimate rounds up exactly as GitHub's metering does."
+      "Rounding-aware estimate",
+      "Your average minutes per job is rounded up to a whole minute, the same direction GitHub rounds each job — note this uses one averaged duration, so it approximates workloads where individual job lengths vary a lot."
     ],
     [
       "Plan-aware",
@@ -15553,7 +15553,7 @@ export default {
   ]
 },
   "hero-bike-service-schedule-planner": {
-  "intro": "This planner turns a Hero motorcycle's maintenance chart into a dated schedule: it works out the kilometre and month at which each free and paid service falls due, dates it at whichever comes first, and adds up the consumables that land at each visit. Hero two-wheelers follow a running-in service at roughly 750 km or 1 month, a second visit near 3,000 km or 3 months, and a repeating cycle after that. Every interval is editable because Hero varies the chart by model and warranty package.",
+  "intro": "This planner turns a Hero motorcycle's maintenance chart into a dated schedule: it works out the kilometre and month at which each free and paid service falls due, dates it at whichever comes first, and adds up the consumables that land at each visit. Hero two-wheelers follow a running-in service at roughly 750 km or 1 month, a second visit near 3,000 km or 3 months, and a repeating cycle after that. Every service milestone — km and months — is editable because Hero varies the chart by model and warranty package. Consumable replacement intervals shown (engine oil, filters, and so on) are typical published reference values.",
   "useCases": [
     "Working out when a new Splendor or HF Deluxe will hit its next free service if it runs about 800 km a month",
     "Budgeting the first three paid services after the free-service entitlement runs out",

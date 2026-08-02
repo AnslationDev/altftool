@@ -199,7 +199,7 @@ export const mortgageRefinance = {
   },
 
   seo: {
-    title: "Mortgage Refinance — Compare Rates & Savings | AltFTool",
+    title: "Mortgage Refinance — Compare Rates | AltFTool",
     description:
       "Refinance your mortgage to lower your rate, cut your monthly payment, shorten your term, or take cash out. Compare estimated offers and savings in minutes.",
   },

@@ -761,7 +761,14 @@ export function getBlogAuthors(posts = blogPosts) {
   const authors = new Map();
 
   posts.forEach((post) => {
-    const name = post.author || DEFAULT_AUTHOR;
+    // Trim: the Firestore `author` field carries trailing whitespace on at
+    // least one contributor ("Victoria "), and the name is interpolated
+    // straight into the <title> as `${author.name} - AltFTool Blog Author`.
+    // That shipped "Victoria  - AltFTool Blog Author" with a double space —
+    // visible in the SERP, since only the description path runs through
+    // stripHtml() and collapses whitespace. The slug is unaffected either way:
+    // blogTaxonomySlug() already normalizes.
+    const name = String(post.author || DEFAULT_AUTHOR).replace(/\s+/g, " ").trim() || DEFAULT_AUTHOR;
     const slug = blogTaxonomySlug(name || DEFAULT_AUTHOR);
     if (!slug) return;
 

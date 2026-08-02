@@ -36,7 +36,7 @@ const cleaning = {
   "quoteLabel": "Get a Free Quote",
   "quoteUrl": "https://example.com/quote/cleaning",
   "seo": {
-    "title": "House Cleaning Guide: Services, Costs & What to Expect",
+    "title": "House Cleaning Guide: Services and Real Costs",
     "description": "Compare standard, deep, and move-out cleaning, learn what drives house cleaning costs, and know what to expect from background-checked, bonded cleaning crews."
   },
   "services": [

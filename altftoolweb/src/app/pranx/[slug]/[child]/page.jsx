@@ -1,5 +1,6 @@
 import PranxApp from "../../PranxApp";
-import { getPrankMetadataArgs } from "../../prankSeo";
+import { getPrankJsonLd, getPrankMetadataArgs } from "../../prankSeo";
+import JsonLd from "@/platform/seo/JsonLd";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateMetadata({ params }) {
@@ -11,5 +12,14 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { slug, child } = await params;
-  return <PranxApp slug={`${slug}/${child}`} />;
+  const jsonLd = getPrankJsonLd(`${slug}/${child}`);
+
+  return (
+    <>
+      {jsonLd ? (
+        <JsonLd id={`pranx-schema-${slug}-${child}`} data={jsonLd} />
+      ) : null}
+      <PranxApp slug={`${slug}/${child}`} />
+    </>
+  );
 }

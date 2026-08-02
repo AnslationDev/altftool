@@ -735,7 +735,7 @@ export default function CarromProFinal() {
         <div className="bg-[#1c1c1c] rounded-2xl border border-[#3e2723] overflow-hidden shadow-2xl">
           {/* header */}
           <div className="flex flex-col sm:flex-row items-center justify-between p-4 bg-[#2a1b12] gap-3">
-            <h1 className="text-white text-lg font-bold tracking-wide">CARROM MASTER PRO</h1>
+            <h2 className="text-white text-lg font-bold tracking-wide">CARROM MASTER PRO</h2>
             <div className="flex bg-white rounded-lg overflow-hidden text-sm font-semibold">
               <button
                 onClick={() => { setGameMode("pvp"); initBoard(); }}

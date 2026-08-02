@@ -57,7 +57,13 @@ export const DEFAULT_HOME_CONTENT = {
     ],
   },
   seo: {
-    metaTitle: "SketchFlow - Free Online Whiteboard and Hand-Drawn Diagram Maker",
+    // The old value rendered 75 characters with the layout's " | AltFTool"
+    // suffix — that is what /sketchflow serves today, and mobile SERPs (84% of
+    // this site's clicks) cut it well before "Diagram Maker". 57 rendered now.
+    // NOTE: fetchHomeContent merges the Firestore home doc over this default,
+    // so if an admin has saved a seo.metaTitle it still wins; that override
+    // has to be shortened in the admin app, not here.
+    metaTitle: "SketchFlow - Free Online Whiteboard & Diagrams",
     metaDescription:
       "Use SketchFlow by AltFTool to draw diagrams, flowcharts, notes, arrows, shapes, text, and images on an infinite hand-drawn whiteboard. Export your work as PNG, SVG, or SketchFlow JSON.",
     keywords:

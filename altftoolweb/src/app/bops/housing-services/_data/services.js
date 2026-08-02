@@ -13,7 +13,7 @@ export const HS_CATEGORIES = [
     pages: [
       { slug: "roofers", name: "Roofers", tagline: "Full-service roofing contractor", description: "Cedar, metal and shingle roofing — replacement, storm-damage repair and free inspections." },
       { slug: "peakshield-roofing", name: "PeakShield Roofing", tagline: "Storm-ready roof replacement", description: "Storm-damage specialists — free inspections, insurance-claim help and premium shingle, metal and tile installs." },
-      { slug: "topnotch-roofing", name: "TopNotch Roofing Co.", tagline: "Old-school craft, modern roofs", description: "A third-generation roofing crew — honest inspections, tidy job sites and roofs that outlive their warranty." },
+      { slug: "topnotch-roofing", name: "TopNotch Roofing Co.", tagline: "Old-school roofing craft", description: "A third-generation roofing crew — honest inspections, tidy job sites and roofs that outlive their warranty." },
     ],
   },
   {
@@ -114,7 +114,7 @@ export const HS_CATEGORIES = [
       { slug: "sentinel-secure", name: "SentinelSecure", tagline: "Smart home security systems", description: "24/7 monitored security — cameras, sensors and smart locks installed and managed from one app." },
       { slug: "guardnest", name: "GuardNest", tagline: "Family-first home protection", description: "Friendly, no-contract home security built around families — doorbell cams, alarms and child-safe automations." },
       { slug: "irongate-security", name: "IronGate Security", tagline: "Pro-grade security installs", description: "Commercial-grade cameras, access control and monitored alarms installed by licensed technicians." },
-      { slug: "nightwatch-security", name: "NightWatch Security", tagline: "Overnight monitoring specialists", description: "Night-vision cameras and overnight response teams for when your home needs watching most." },
+      { slug: "nightwatch-security", name: "NightWatch Security", tagline: "Overnight alarm monitoring", description: "Night-vision cameras and overnight response teams for when your home needs watching most." },
     ],
   },
   {
@@ -122,7 +122,7 @@ export const HS_CATEGORIES = [
     name: "Packers & Movers",
     icon: "truck",
     pages: [
-      { slug: "swiftshift-movers", name: "SwiftShift Movers", tagline: "Fast local & long-distance moving", description: "Same-week moves with trained crews, flat quotes and real-time truck tracking — local or cross-country." },
+      { slug: "swiftshift-movers", name: "SwiftShift Movers", tagline: "Local & long-distance moving", description: "Same-week moves with trained crews, flat quotes and real-time truck tracking — local or cross-country." },
       { slug: "packngo", name: "PackNGo", tagline: "Packing & moving, done for you", description: "Full-service packing, eco-friendly materials and careful transport — from boxes to unpacked home." },
       { slug: "movemint", name: "MoveMint", tagline: "Modern moving, minus stress", description: "App-tracked crews, upfront pricing and reusable crates — moving that feels effortless." },
       { slug: "cityhop-movers", name: "CityHop Movers", tagline: "Apartment & city moves", description: "Stairs, elevators, parking permits — city moving solved by crews who do it daily." },

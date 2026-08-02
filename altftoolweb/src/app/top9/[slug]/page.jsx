@@ -5,6 +5,7 @@ import {
   absoluteUrl,
   createBreadcrumbJsonLd,
   createPageMetadata,
+  getSiteUrl,
 } from "@/platform/seo/generateMetadata";
 import {
   getTop9Category,
@@ -70,6 +71,10 @@ export default async function Page({ params }) {
     },
     "editorial"
   );
+  // ListItem.position mirrors what a reader sees: the markup below renders
+  // item.top in array order with a visible rank badge ({index + 1}) beside
+  // each entry, so asserting an ordered list here is a description of the
+  // page rather than a claim invented for the schema.
   const rankedItems = Array.isArray(item.top)
     ? item.top.filter(Boolean).map((name, index) => ({
         "@type": "ListItem",
@@ -77,39 +82,61 @@ export default async function Page({ params }) {
         name: String(name),
       }))
     : [];
-  const primarySchema = publishedDate
+  // Only stored copy counts as a description. getTop9Description() synthesises
+  // "…a concise ranked list, highlights, and quick context" for the three
+  // entries that ship without one; that sentence describes a page template,
+  // not the subject, so it stays in the meta description and out of the graph.
+  const storedDescription = item.desc || item.description || "";
+  const pageUrl = absoluteUrl(`/top9/${slug}`);
+  // The visible pill (item.cat / item.prefix) mixes real topics ("Gaming",
+  // "Movies") with list flavour ("Best", "Greatest", "Top Ten"), so it is not
+  // emitted as about/genre — half the values would be a false topic claim.
+  const baseSchema = {
+    "@context": "https://schema.org",
+    name: title,
+    url: pageUrl,
+    image: absoluteUrl(image),
+    inLanguage: "en",
+    isPartOf: { "@id": `${getSiteUrl()}/#website` },
+    publisher: { "@id": `${getSiteUrl()}/#organization` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+    ...(storedDescription ? { description: storedDescription } : {}),
+  };
+  // Type follows what the page actually renders. Only entries carrying a real
+  // `top` array collect anything, so only those are a CollectionPage; the rest
+  // are a heading, a hero image and one paragraph, which is a WebPage. An
+  // Article claim needs the stored publication date to back it.
+  const primarySchema = rankedItems.length
     ? {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        headline: title,
-        description,
-        image: absoluteUrl(image),
-        mainEntityOfPage: absoluteUrl(`/top9/${slug}`),
-        datePublished: publishedDate,
-        dateModified: publishedDate,
-        author: {
-          "@type": "Organization",
-          name: "AltFTool",
+        ...baseSchema,
+        "@type": "CollectionPage",
+        "@id": `${pageUrl}#collection`,
+        mainEntity: {
+          "@type": "ItemList",
+          name: `${title} ranked picks`,
+          numberOfItems: rankedItems.length,
+          itemListElement: rankedItems,
         },
       }
-    : {
-        "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        name: title,
-        description,
-        image: absoluteUrl(image),
-        url: absoluteUrl(`/top9/${slug}`),
-        ...(rankedItems.length
-          ? {
-              mainEntity: {
-                "@type": "ItemList",
-                name: `${title} ranked picks`,
-                numberOfItems: rankedItems.length,
-                itemListElement: rankedItems,
-              },
-            }
-          : {}),
-      };
+    : publishedDate
+      ? {
+          ...baseSchema,
+          "@type": "Article",
+          "@id": `${pageUrl}#article`,
+          headline: title,
+          datePublished: publishedDate,
+          // No dateModified: the record carries one date, and repeating it as
+          // dateModified would assert "never revised since publication", which
+          // nothing in the data establishes.
+          // No byline exists in the data either; the site itself published
+          // these, so the organisation node is the honest author, never a Person.
+          author: { "@id": `${getSiteUrl()}/#organization` },
+        }
+      : {
+          ...baseSchema,
+          "@type": "WebPage",
+          "@id": `${pageUrl}#webpage`,
+        };
 
   return (
     <section className="top9-page px-4 md:px-6 py-10">

@@ -19,6 +19,43 @@
  */
 
 /**
+ * CORPUS NOTE — 2026-07-31. READ THIS BEFORE TRUSTING ANY WORD COUNT BELOW.
+ *
+ * The per-slug reasoning in this file was written against article bodies that
+ * are no longer what Firestore serves. Every live post was re-read through the
+ * public feed (`/api/blogs?offset=N&limit=100`) on 2026-07-31: 548 posts came
+ * back, and all 548 have the same shape — one truncated opening sentence, then
+ * four generated headings ("Who should use <Category>", "How to get a better
+ * result", "Quality checks before you trust the output", "Continue your
+ * workflow") — running 299-321 words. Not one post in the corpus exceeded 400
+ * words.
+ *
+ * That contradicts, directly, two claims this file uses to justify live
+ * decisions:
+ *   - The removed ferry entry below says the body is "~1,460 words with a 5-row
+ *     route table (real crossing times), booking, onboard, vehicle and passport
+ *     sections". Measured 2026-07-31: 308 words, no table, no crossing times.
+ *   - The IIM entry below says "The 1,150-word body names IIMs and the CAT
+ *     stages". Measured 2026-07-31: 313 words of the scaffold above.
+ * (For reference, the other noindexed slug, trivago-singapore, measures 312.)
+ *
+ * Both entries' *conclusions* are left standing — this note does not flip any
+ * page's indexability, because deindexing on a corpus scale is a call for a
+ * human, not a side effect of an audit. But the stated reasons are stale, and
+ * the distinction the file draws between "thin content" and "unservable
+ * intent" no longer separates anything: on current bodies every post is thin.
+ *
+ * The open question this raises is deliberately NOT answered here: 548 posts
+ * are indexable and none of them delivers what its title promises. The
+ * standing rule is that thin posts get noindex rather than machine-written
+ * padding, and applying that rule honestly would deindex most of /blogs. That
+ * needs an explicit decision, not a quiet commit.
+ *
+ * Re-measure before editing an entry. Do not copy a word count out of a
+ * comment.
+ */
+
+/**
  * Posts whose ranking queries this site structurally cannot satisfy.
  *
  * These are not thin-content cases and not CTR cases — the intent behind the

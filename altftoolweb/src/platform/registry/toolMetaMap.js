@@ -3833,7 +3833,7 @@ export const toolMetaMap = {
     "name": "Breastfeeding Hydration Calculator",
     "description": "Daily fluid target while nursing, derived from milk output and feeding frequency rather than a flat one-size figure.",
     "category": "Health & Fitness",
-    "icon": "milk",
+    "icon": "droplets",
     "iconColor": "text-[var(--primary)]"
   },
   "breastfeeding-session-log": {
@@ -4004,7 +4004,7 @@ export const toolMetaMap = {
   },
   "buffer-ph-calculator": {
     "name": "Buffer pH Calculator",
-    "description": "Henderson-Hasselbalch equation se buffer pH calculate kare.",
+    "description": "Calculate buffer pH using the Henderson-Hasselbalch equation.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -14513,7 +14513,7 @@ export const toolMetaMap = {
   },
   "image-quality-checker": {
     "name": "Image Quality Checker",
-    "description": "Analyze image quality with 10+ professional metrics including sharpness, brightness, contrast, noise, exposure, and histogram analysis.",
+    "description": "Analyze image quality with nine professional metrics including sharpness, brightness, contrast, noise, exposure, and histogram analysis.",
     "category": [
       "AI Tools",
       "Image & Photo",
@@ -29459,7 +29459,7 @@ export const toolMetaMap = {
   },
   "three-phase-power-calculator": {
     "name": "Three-Phase Power Calculator",
-    "description": "kW, kVA, amps aur power factor convert kare.",
+    "description": "Convert three-phase voltage, current and power factor into kW, kVA and output power.",
     "category": "Calculators",
     "topics": [
       "Electronics",

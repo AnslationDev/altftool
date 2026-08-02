@@ -22,7 +22,12 @@ export const metadata = {
   title: "Business Ops",
   description:
     "Compare travel deals, connect with home-improvement pros and find better insurance — the everyday services worth getting right, in one place.",
-  robots: { index: false, follow: false },
+  // noindex keeps the hub itself out of the index, but follow:true is what the
+  // rest of the family already uses (buildHousingServiceMetadata, every
+  // legal-services layout). This hub is the entry point to the 60 indexable
+  // /bops pages — housingneeds, insurance, loans, senior-care and the rest —
+  // and follow:false told crawlers to discard every one of those links.
+  robots: { index: false, follow: true },
 };
 
 // Product icon keys -> lucide components (matches businessOps.js).

@@ -110,9 +110,16 @@ export default function ExtensionHero({ extension }) {
           </div>
 
           <div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[var(--foreground)] leading-[1.15]">
+            {/*
+              H2, not H1. This heading only exists after the client Firestore
+              read resolves, so page.jsx server-renders the document's single
+              H1 from the same record. Classes are unchanged — Tailwind's
+              preflight gives headings no intrinsic size, so this is a purely
+              semantic change with no visual effect.
+            */}
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[var(--foreground)] leading-[1.15]">
               {formatRenderableValue(extension?.name, "Extension")}
-            </h1>
+            </h2>
             <p className="mt-4 text-lg md:text-xl text-[var(--muted-foreground)] leading-relaxed max-w-3xl font-normal mx-auto lg:mx-0">
               {formatRenderableValue(extension?.description)}
             </p>

@@ -35,7 +35,7 @@ const plumbing = {
   "quoteLabel": "Get a plumbing quote",
   "quoteUrl": quoteUrlFor("plumbing"),
   "seo": {
-    "title": "Plumbing Services Explained: Leaks, Drains, Repiping & Water Heaters",
+    "title": "Plumbing Guide: Leaks, Drains and Repiping",
     "description": "How home plumbing works: leak detection, drain cleaning, hydro jetting, sewer camera inspection, PEX and copper repiping, and water heater choices explained."
   },
   "services": [

@@ -1,8 +1,19 @@
 // src/app/tradeon/chart/[symbol]/page.jsx
-import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createPageMetadata,
+  createToolJsonLd,
+} from "@/platform/seo/generateMetadata";
 import FullChartClient from "../../components/chart/FullChartClient";
-import { chartHref } from "../../lib/format";
-import { INSTRUMENTS, instrumentBySymbol, symbolFromSlug, symbolToSlug } from "../../lib/instruments";
+import { assetHref, chartHref } from "../../lib/format";
+import {
+  ASSET_CLASSES,
+  INSTRUMENTS,
+  instrumentBySymbol,
+  symbolFromSlug,
+  symbolToSlug,
+} from "../../lib/instruments";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
 export const dynamic = "force-static";
@@ -10,6 +21,19 @@ export const dynamic = "force-static";
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
   return INSTRUMENTS.map(({ symbol }) => ({ symbol: symbolToSlug(symbol) }));
+}
+
+function assetClassLabel(assetClass) {
+  return ASSET_CLASSES.find((item) => item.id === assetClass)?.label || "";
+}
+
+// See the matching note in ../../asset/[symbol]/page.jsx: crypto is anchored to
+// Binance's public feed, every other asset class is simulated, so the schema
+// states the data source and asserts no price or market value of its own.
+function dataProvenance(instrument) {
+  return instrument.binance
+    ? "Prices are anchored to Binance's public market feed and update live in the browser."
+    : "Prices for this market are simulated for education and are not real market data.";
 }
 
 export async function generateMetadata({ params }) {
@@ -31,9 +55,37 @@ export default async function TradeonFullChartPage({ params }) {
   const symbol = symbolFromSlug(raw);
   const instrument = instrumentBySymbol(symbol);
   const name = instrument?.name || symbol;
+  const path = chartHref(symbol);
 
   return (
     <>
+      {/* The entity describes the free charting workspace itself — timeframes,
+          chart types, indicators and the drawing rail that FullChartClient
+          actually renders — not the instrument being charted. No price, volume
+          or market cap is published, and unknown symbols get no entity. */}
+      {instrument ? (
+        <JsonLd
+          id={`tradeon-chart-schema-${symbolToSlug(symbol)}`}
+          data={[
+            createToolJsonLd({
+              slug: symbolToSlug(symbol),
+              path,
+              tool: {
+                name: `${name} (${symbol}) Interactive Chart`,
+                description: `Full-screen ${name} (${symbol}) chart workspace with multiple timeframes, candlestick, line, area and bar chart types, technical indicators and drawing tools. ${dataProvenance(instrument)}`,
+                category: ["FinanceApplication", assetClassLabel(instrument.assetClass)].filter(Boolean),
+                topics: [symbol, name, `${symbol} chart`],
+              },
+            }),
+            createBreadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Tradeon", path: "/tradeon" },
+              { name: `${name} (${symbol})`, path: assetHref(symbol) },
+              { name: "Full Chart", path },
+            ]),
+          ]}
+        />
+      ) : null}
       <h1 className="sr-only">
         {name} ({symbol}) interactive market chart
       </h1>

@@ -19,6 +19,7 @@ import {
   getToolCategorySlugs,
   slugifyRouteSegment,
 } from "../toolRouteUtils";
+import { getCanonicalCategoryBySlug } from "@/platform/registry/categoryTaxonomy";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 
 export const dynamic = "force-static";
@@ -52,17 +53,24 @@ export async function generateMetadata({ params }) {
     });
   }
 
-  const label = formatCategoryLabel(category);
   const isAll = category === "all";
+  const count = getToolCatalogCount(category);
 
   // Games is a search vertical of its own ("free online games") — generic
   // "<label> Tools" metadata undersells it badly. /games 301s here, so this
   // page carries the games-hub SEO.
+  //
+  // The description used to run to 176 characters and trimMetaDescription cut
+  // it at the sentence boundary after "board games." — every named game
+  // ("2048, sudoku, minesweeper, solitaire, typing test") was dropped before it
+  // ever reached the HTML, so the tag served 87 characters. This one is 134 and
+  // round-trips unchanged. Every game named here is a real slug in the
+  // registry: 2048-game, sudoku, minesweeper, klondike-solitaire,
+  // typing-speed-game.
   if (category === "games") {
-    const gameCount = getCategoryToolItems("games").length;
     return createPageMetadata({
-      title: `Free Online Games – Play ${gameCount}+ Browser Games`,
-      description: `Play ${gameCount}+ free games right in your browser — puzzle, arcade, word, card and board games. No downloads, no sign-up: 2048, sudoku, minesweeper, solitaire, typing test and more.`,
+      title: `${count} Free Online Games — Play in Your Browser`,
+      description: `Play ${count} free browser games — 2048, sudoku, minesweeper, solitaire, typing tests, word, card and arcade games. No download, no sign-up.`,
       path: "/tools/games",
       keywords: [
         "free online games",
@@ -75,15 +83,92 @@ export async function generateMetadata({ params }) {
     });
   }
 
+  if (isAll) {
+    return createPageMetadata({
+      // Description is 140 characters. The previous string measured exactly 160
+      // — the hard cap in trimMetaDescription — so it round-tripped only by
+      // touching the cap, and any edit to it would have been silently clipped.
+      //
+      // No "AltFTool" in the title: the root layout appends " | AltFTool", and
+      // resolveDocumentTitle only treats a title as absolute when the brand
+      // follows a separator, so "…AltFTool Tools" would have rendered the brand
+      // twice.
+      title: `All ${count.toLocaleString("en-US")} Free Online Tools in One Directory`,
+      description: `Every AltFTool tool in one directory: ${count.toLocaleString("en-US")} free converters, calculators, PDF and image tools, developer helpers and productivity utilities.`,
+      path: "/tools/all",
+    });
+  }
+
+  const noun = getCategoryNoun(category);
+  const blurb = getCanonicalCategoryBySlug(category)?.description || "";
+
+  // A category holding one or two tools is a thinner page than the tool pages
+  // it links to, and it duplicates them. Keep it crawlable (follow) so the
+  // links still carry, but keep it out of the index until it has enough on it
+  // to be worth a result. /tools/other holds exactly 1 tool today.
+  if (count < 3) {
+    return createPageMetadata({
+      title: noun.title,
+      description: `${blurb} This category currently holds ${count === 1 ? "a single tool" : `${count} tools`} — browse the full AltFTool directory to find what you need.`,
+      path: `/tools/${category}`,
+      noindex: true,
+    });
+  }
+
   return createPageMetadata({
-    title: isAll
-      ? "All Online Tools - Free Browser Microtools"
-      : `${label} Tools - Free Online Utilities`,
-    description: isAll
-      ? "Browse every AltFTool microtool in one fast directory, including converters, developer helpers, PDF tools, calculators, media tools, and productivity utilities."
-      : `Browse free ${label.toLowerCase()} tools on AltFTool with quick browser-based workflows, copy-ready results, and mobile-friendly utility pages.`,
+    // `${label} Tools` shipped "AI Tools Tools - Free Online Utilities" live,
+    // and the lowercased label shipped "Browse free ai tools tools on
+    // AltFTool" — formatCategoryLabel returns "AI Tools", so appending "Tools"
+    // doubles the noun. The noun table below carries the plural phrase each
+    // title and description reads naturally with instead.
+    //
+    // The count is the same number getToolCategoryCounts() renders in the H1,
+    // read from the same registry, so the two can't drift.
+    title: `${count} Free Online ${noun.title}`,
+    description: `${blurb} Browse all ${count} free ${noun.lower} on AltFTool — no install, no sign-up.`,
     path: `/tools/${category}`,
   });
+}
+
+/**
+ * Plural noun phrase per canonical category, in Title Case for the <title> and
+ * lowercase for the description. The taxonomy owns the label and the one-line
+ * blurb; it does not own a phrase that reads correctly after a count, which is
+ * what "63 Free Online ___" and "63 free ___" both need.
+ *
+ * Unknown slugs fall back to the label, so a category added to the taxonomy
+ * without a row here degrades to the old wording rather than breaking.
+ */
+const CATEGORY_NOUNS = {
+  "ai-tools": ["AI Tools", "AI tools"],
+  "pdf-documents": ["PDF & Document Tools", "PDF & document tools"],
+  "image-photo": ["Image & Photo Tools", "image & photo tools"],
+  "video-audio": ["Video & Audio Tools", "video & audio tools"],
+  "text-writing": ["Text & Writing Tools", "text & writing tools"],
+  converters: ["Converters", "converters"],
+  generators: ["Generators", "generators"],
+  calculators: ["Calculators", "calculators"],
+  "finance-calculators": ["Finance Calculators", "finance calculators"],
+  "health-calculators": ["Health Calculators", "health calculators"],
+  "health-fitness": ["Health & Fitness Tools", "health & fitness tools"],
+  developer: ["Developer Tools", "developer tools"],
+  "design-color": ["Design & Color Tools", "design & color tools"],
+  "marketing-social": ["Marketing & Social Tools", "marketing & social tools"],
+  "security-privacy": ["Security & Privacy Tools", "security & privacy tools"],
+  "education-science": ["Education & Science Tools", "education & science tools"],
+  productivity: ["Productivity Tools", "productivity tools"],
+  business: ["Business Tools", "business tools"],
+  lifestyle: ["Lifestyle Tools", "lifestyle tools"],
+  fun: ["Fun Tools", "fun tools"],
+  games: ["Games", "games"],
+  other: ["Other Tools", "tools"],
+};
+
+function getCategoryNoun(category) {
+  const row = CATEGORY_NOUNS[category];
+  if (row) return { title: row[0], lower: row[1] };
+  const label = formatCategoryLabel(category);
+  return { title: `${label} Tools`, lower: `${label.toLowerCase()} tools` };
 }
 
 /** Tools belonging to this module (category), as ItemList entries. */
@@ -173,10 +258,10 @@ export default async function Page({ params }) {
         data={[
           createCollectionPageJsonLd({
             path,
-            name: isAll ? "All Online Tools" : `${label} Tools`,
+            name: isAll ? "All Online Tools" : getCategoryNoun(category).title,
             description: isAll
               ? "Directory of every free AltFTool browser tool."
-              : `Free ${label.toLowerCase()} tools that run entirely in your browser.`,
+              : `Free ${getCategoryNoun(category).lower} that run entirely in your browser.`,
           }),
           createItemListJsonLd({
             path,
@@ -209,7 +294,7 @@ export default async function Page({ params }) {
           className="mx-auto w-full max-w-7xl px-4 pb-12 sm:px-6"
         >
           <h2 className="mb-4 text-base font-semibold text-[var(--foreground)]">
-            All {toolIndex.length} {label.toLowerCase()} tools
+            All {toolIndex.length} {getCategoryNoun(category).lower}
           </h2>
           <ul className="columns-1 gap-x-8 sm:columns-2 lg:columns-3 xl:columns-4">
             {toolIndex.map((tool) => (

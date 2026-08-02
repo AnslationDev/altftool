@@ -74,7 +74,7 @@ const CategoryHubPage = ({ category, settings, platform, onSelectSetting }) => {
         <span className="support-device-landing-icon" aria-hidden="true">
           <Icon className="h-7 w-7" />
         </span>
-        <h1 className="support-hero-title">{category.label}</h1>
+        <h2 className="support-hero-title">{category.label}</h2>
         <p className="support-hero-description">{category.description}</p>
         <div className="support-device-landing-meta">
           <span className="support-device-landing-meta-item">

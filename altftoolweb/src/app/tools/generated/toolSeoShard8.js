@@ -6445,7 +6445,7 @@ export default {
     ],
     [
       "Editable by hand",
-      "Output is a plain path plus one head element — easy to tweak in any text editor or paste into JSX."
+      "Output is a plain path plus a head element per end (one, or two if you turn on double-headed) — easy to tweak in any text editor or paste into JSX."
     ]
   ],
   "faqs": [
@@ -8863,7 +8863,7 @@ export default {
   ]
 },
   "teacher-prompt-pack": {
-  "intro": "The Teacher Prompt Pack is a library of 10 fill-in-the-blank AI prompts for the recurring jobs of classroom teaching: lesson and unit planning, rubrics, written feedback, retrieval questions, differentiation, parent emails, report comments and routine resets. Each prompt fixes the year level, the constraints and the output format up front, and the sensitive ones carry built-in guardrails — no student names, observed behaviour instead of diagnoses, facts instead of speculation. You fill the blanks in your browser, the tool substitutes them into the template and shows the estimated size, then you copy the finished prompt into whichever assistant your school allows.",
+  "intro": "The Teacher Prompt Pack is a library of 10 fill-in-the-blank AI prompts for the recurring jobs of classroom teaching: lesson and unit planning, rubrics, written feedback, retrieval questions, differentiation, parent emails, report comments and routine resets. Each prompt fixes the constraints and the output format up front, pins down the year level for the ones that need it, and the sensitive ones carry built-in guardrails — no student names, observed behaviour instead of diagnoses, facts instead of speculation. You fill the blanks in your browser, the tool substitutes them into the template and shows the estimated size, then you copy the finished prompt into whichever assistant your school allows.",
   "useCases": [
     "Turning shorthand marking notes like 'great dialogue, paragraphs run on' into a specific 120-word student comment with one improvement focus and a ten-minute next step.",
     "Building a four-level rubric for a persuasive letter where every descriptor is observable and the words 'good' and 'excellent' are banned.",
@@ -12656,13 +12656,13 @@ export default {
     ],
     [
       "Two export shapes",
-      "Copy gives numbered plain text with long-form dates for pasting into a doc; JSON download gives the raw event array for feeding another tool or reloading later."
+      "Copy gives numbered plain text with long-form dates for pasting into a doc; JSON download gives the raw event array as a one-way export for feeding another tool, a spreadsheet, or a backup."
     ]
   ],
   "faqs": [
     [
       "Does the timeline save if I close the tab?",
-      "No. Events live in the page's memory only, so a refresh or a closed tab clears them back to the sample timeline. Download the JSON before you leave if you want to keep the work."
+      "No. Events live in the page's memory only, so a refresh or a closed tab clears them back to the sample timeline. Download the JSON before you leave if you want a copy of the work — note that the JSON is a one-way export and cannot be re-imported into Timeline Builder."
     ],
     [
       "How does it decide what counts as a milestone?",

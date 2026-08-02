@@ -29,7 +29,14 @@ export default function HeroSection({ articles, onOpenArticle }) {
           </span>
         </div>
         <div className="bf-hero-lead-content">
-          <h1 className="bf-hero-lead-title">{leadArticle.title}</h1>
+          {/*
+            H2, not H1. page.jsx already renders the page's own H1 ("AltF
+            Pulse"); this is the headline of one card in the feed, so leaving it
+            as an H1 gave /buzzfeed two H1s live — the second being whichever
+            article happened to lead that render. Styling comes from
+            .bf-hero-lead-title, so the element change is semantic only.
+          */}
+          <h2 className="bf-hero-lead-title">{leadArticle.title}</h2>
           <p className="bf-hero-lead-excerpt">{leadArticle.excerpt}</p>
           <div className="bf-article-meta">
             <span className="bf-meta-item">

@@ -197,7 +197,7 @@ export const businessLoan = {
   },
 
   seo: {
-    title: "Business Loans — Compare Funding Offers | AltFTool",
+    title: "Business Loans — Compare Funding | AltFTool",
     description:
       "Compare business loan offers in one place — term loans, lines of credit, equipment and working-capital funding matched to your revenue. Decisions in days.",
   },

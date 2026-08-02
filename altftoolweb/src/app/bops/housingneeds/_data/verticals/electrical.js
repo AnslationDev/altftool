@@ -37,7 +37,7 @@ const electrical = {
   "quoteLabel": "Get a Free Quote",
   "quoteUrl": "https://example.com/quote/electrical",
   "seo": {
-    "title": "Electrical Guide: Panel Upgrades, Wiring, EV Chargers & Costs",
+    "title": "Electrical Guide: Panels, Wiring & EV Chargers",
     "description": "Understand home electrical work: 100A vs 200A panel upgrades, rewiring, EV chargers, generator hookups, NEC code compliance, permits, and what drives cost."
   },
   "services": [

@@ -56,6 +56,14 @@ export default async function AncestoryMeaningRoute({ searchParams }) {
     return (
         <div className="ancestory-root min-h-screen bg-slate-50 dark:bg-slate-950">
             <AncestorHeader />
+            {/*
+                /ancestory/meaning served no <h1> — AncestorMeaningPage starts
+                its heading tree at <h3>, so the document had no top-level
+                heading and the outline skipped two levels. sr-only because the
+                result view already displays the name being looked up, and a
+                second visible title above it would just repeat it.
+            */}
+            <h1 className="sr-only">Name meaning, origin and history</h1>
             <AncestorMeaningPage
                 type={type}
                 firstNameParam={firstName}

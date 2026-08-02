@@ -632,6 +632,14 @@ export default function ToolsClient({
   // actually been loaded.
   const isDefaultView = viewMode === "all" && !deferredSearch.trim();
   const activeCategoryTotal = categoryStatsBySlug.get(categoryname)?.count ?? 0;
+  // H1 copy, route-derived rather than filter-derived: `categoryname` is seeded
+  // from the route segment (getInitialCategory) so the heading is already in
+  // the server-rendered HTML, and it matches the <title> the route generated.
+  const heroHeading =
+    categoryname === "all"
+      ? "Every AltFTool tool"
+      : categoryStatsBySlug.get(categoryname)?.label || formatLabel(categoryname);
+  const heroCount = activeCategoryTotal;
   const catalogCanGrow = !catalogReady && !catalogFailed;
   const resultTotal =
     isDefaultView && catalogCanGrow
@@ -897,11 +905,31 @@ export default function ToolsClient({
       <div className="tools-shell">
         <section className="tools-hero">
           <div className="tools-hero-copy">
+            {/* One component renders /tools and all 22 /tools/[category]
+                routes, so a fixed headline gives 23 URLs the same H1 —
+                production still serves the per-route form ("Other — 1 free
+                online tools", "Every AltFTool tool — 3,947 free online tools")
+                and this tree had replaced it with "Ready to find your perfect
+                tool?" everywhere. The heading names the page again; the old
+                line moves into the paragraph, where it costs nothing. The
+                singular branch also fixes "1 free online tools".
+
+                heroCount comes from categoryCounts, which the server sends, so
+                it is in the SSR HTML rather than appearing after hydration. */}
             <h1 className="route-title">
-              Ready to find your perfect <span className="tp-accent-word">tool?</span>
+              {heroHeading}
+              {heroCount > 0 ? (
+                <>
+                  {" "}
+                  <span className="tp-accent-word">
+                    — {heroCount.toLocaleString("en-US")} free online{" "}
+                    {heroCount === 1 ? "tool" : "tools"}
+                  </span>
+                </>
+              ) : null}
             </h1>
             <p className="route-description">
-              Search {Math.floor(catalogTotal / 50) * 50}+ trusted tools, utilities, and games built to help you work faster.
+              Ready to find your perfect tool? Search {Math.floor(catalogTotal / 50) * 50}+ trusted tools, utilities, and games built to help you work faster.
             </p>
             <div className="tools-search-row">
               <Search className="pointer-events-none absolute right-5 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--tp-primary)]" />

@@ -8135,7 +8135,7 @@ export default {
   "faqs": [
     [
       "How many scan lines should a CRT overlay have?",
-      "Match the standard you are imitating: NTSC 525-line systems show 486 active lines, PAL and SECAM 625-line systems show 576, VGA shows 480 and CGA shows 200. On a 1080-pixel-tall canvas that works out to a period of roughly 2.2 px for NTSC and 1.9 px for PAL."
+      "Match the standard you are imitating: NTSC 525-line systems show 486 active lines, PAL and SECAM 625-line systems show 576, VGA shows 480 and CGA shows 200. On a 1080-pixel-tall canvas that works out to a period of roughly 2.2 px for NTSC; PAL's raw ratio is about 1.9 px, which falls under the tool's 2 px minimum period, so it is rounded up to 2 px — the smallest stripe the overlay can draw without failing validation."
     ],
     [
       "Why do my scan lines shimmer or produce moiré?",
@@ -10854,7 +10854,7 @@ export default {
     "Working out a realistic bedtime for a 70-year-old who wants 7.5 hours and wakes at 6:30 without an alarm anyway.",
     "Finding the actual caffeine cut-off time when the afternoon tea habit is keeping someone awake.",
     "Fixing a nap that has crept to 90 minutes and is now eating into night-time sleep.",
-    "Seeing that 8 hours in bed for 5.5 hours of sleep is 69% efficiency, and what a sleep-restriction bedtime would look like."
+    "Seeing that 8 hours in bed for 5.5 hours of sleep is 68.8% efficiency, and what a sleep-restriction bedtime would look like."
   ],
   "benefits": [
     [
@@ -11845,7 +11845,7 @@ export default {
   "short-modern-indian-baby-names": {
   "intro": "This tool lists modern Indian baby names of two to six letters — Sanskrit, Hindi, Tamil, Punjabi, Arabic and Persian in origin — each with its meaning and a spelling-ease score out of 100. The score starts at 100 and deducts 12 points per optional doubled vowel (Aarav / Arav), 8 per aspirated digraph whose h gets dropped (Bhavya / Bavya), 8 per doubled consonant, 6 for a y standing in for a vowel and 6 per letter beyond five. It is built for parents who want a name that survives forms, boarding passes and roll calls intact.",
   "useCases": [
-    "Shortlist four-letter names that no one will misspell — Ira, Anvi, Neha, Zara all score a clean 100.",
+    "Shortlist four-letter names that no one will misspell — Anvi, Neha, Zara all score a clean 100.",
     "Compare two spellings of the same name, such as Mira against Meera or Arav against Aarav, before filling in the birth certificate.",
     "Filter to a single origin when you want the name to sit alongside existing family names from the same tradition.",
     "Find a short unisex name such as Kiran, Arya, Noor or Aman when you do not yet know the baby's gender."
@@ -11867,7 +11867,7 @@ export default {
   "faqs": [
     [
       "What are the shortest Indian baby names?",
-      "Two- and three-letter names such as Om, Ira, Ved, Dev, Ram, Jay, Ila and Dia are the shortest in common modern use. All of them score 100 for spelling ease because they contain no doubled vowels, no aspirated digraphs and no vowel y."
+      "Two- and three-letter names such as Om, Ira, Ved, Dev, Ram, Jay, Ila and Dia are the shortest in common modern use. Most of them score 100 for spelling ease because they contain no doubled vowels, no aspirated digraphs and no vowel y — the one exception is Jay, which scores 94 because its ay ending is a y standing in for a vowel."
     ],
     [
       "Is it better to spell a name Aarav or Arav?",
@@ -13339,7 +13339,7 @@ export default {
     ],
     [
       "Age-fair scoring",
-      "Cut-offs fall with age, so a 55-year-old is not judged by a 22-year-old's table."
+      "Cut-offs are set per age band and generally ease as age increases, so a 55-year-old is not judged by a 22-year-old's table."
     ]
   ],
   "faqs": [
@@ -16162,7 +16162,7 @@ export default {
   "faqs": [
     [
       "Which devtool should I use in development?",
-      "eval-cheap-module-source-map is the usual dev answer: rebuilds stay fast, and stack traces point at your original files with correct line numbers. Use eval-source-map instead when you need column-accurate positions, for example when debugging minified vendor code or async stack traces, and accept the slower first build."
+      "eval-cheap-module-source-map is the classic manual pick for webpack dev builds: rebuilds stay fast, and stack traces point at your original files with correct line numbers, without eval-source-map's slower first build. This tool weighs build speed, rebuild speed and mapping quality together, so its automatic top pick tends toward whichever extreme your chosen priority favours — for example the default Balanced priority favours eval-source-map, for the column-accurate positions useful when debugging minified vendor code or async stack traces. Pick eval-cheap-module-source-map directly from the ranked list whenever fast rebuilds and line-accurate original files matter more to you than the automatic score."
     ],
     [
       "Is it safe to ship source maps to production?",

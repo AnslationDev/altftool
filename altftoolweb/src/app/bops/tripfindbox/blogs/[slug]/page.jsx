@@ -11,6 +11,26 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export const dynamic = "force-dynamic";
 
+// tripfindbox/layout.jsx sets a plain `title`, which consumes the root layout's
+// "%s | AltFTool" template for this subtree — nothing is appended below it, so
+// whatever generateMetadata returns IS the rendered <title>. Feed headlines run
+// to 110 characters and the old `${title} | TripFindBox Blog` shipped titles of
+// 74-116 chars (measured live). Clamp to 60 on a word boundary, and keep the
+// brand suffix only when it still fits.
+function blogDocumentTitle(headline) {
+  const base = String(headline || "").trim();
+  const withBrand = `${base} | TripFindBox`;
+
+  if (withBrand.length <= 60) return withBrand;
+  if (base.length <= 60) return base;
+
+  const clipped = base.slice(0, 61);
+  const boundary = clipped.lastIndexOf(" ");
+  const compact = boundary >= 40 ? clipped.slice(0, boundary) : base.slice(0, 60);
+
+  return compact.replace(/[\s,:;|\-–—]+$/g, "").trim();
+}
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const post = await getBlogPost(slug);
@@ -28,7 +48,7 @@ export async function generateMetadata({ params }) {
   }
 
   return createPageMetadata({
-    title: `${post.title} | TripFindBox Blog`,
+    title: blogDocumentTitle(post.title),
     description: post.description,
     path: `/bops/tripfindbox/blogs/${slug}`,
   });

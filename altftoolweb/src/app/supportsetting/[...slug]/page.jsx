@@ -44,7 +44,19 @@ export async function generateMetadata({ params }) {
 
 export default async function SupportSettingSlugPage({ params }) {
   const { slug } = await params;
-  const { activeId, platformOverride } = resolveSlug(slug || []);
+  const segments = slug || [];
+  const { activeId, platformOverride } = resolveSlug(segments);
+  // SupportClient returns a skeleton until `pageReady` flips on the client, and
+  // every heading in this family lives inside that gate — so the served HTML of
+  // each of these URLs had no <h1>. /supportsetting itself already renders an
+  // sr-only <h1> for exactly this reason; this is the same fix for the ~700
+  // deep-link URLs, naming the destination the URL actually opens.
+  const { heading } = describeSlug(segments);
 
-  return <SupportClient initialActiveId={activeId} initialPlatformOverride={platformOverride} />;
+  return (
+    <>
+      <h1 className="sr-only">{heading}</h1>
+      <SupportClient initialActiveId={activeId} initialPlatformOverride={platformOverride} />
+    </>
+  );
 }

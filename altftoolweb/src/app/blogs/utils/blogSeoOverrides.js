@@ -36,67 +36,19 @@
  * 2026-07-27 (Pages.csv / Queries.csv). Nothing is estimated.
  */
 
-const BLOG_SEO_OVERRIDES = {
-  // 985 impressions, 0 clicks, avg position 11.6.
-  // Shipped title was "Ultimate Guide to Crossing from the UK to Europe |
-  // AltFTool" — the clip dropped "by Ferry", so the one word present in every
-  // ranking query ("ferry routes from uk to europe", …) was missing from the
-  // title. Shipped description was the body's opening sentence, cut at
-  // "Unlike flying, where the journey." Body verified: a 5-row route table
-  // (Dover–Calais 1.5 h, Portsmouth–Caen 5–6 h, Portsmouth–Le Havre 9–10 h,
-  // Hull–Rotterdam 11–12 h, Plymouth–Santander 20+ h) plus booking, onboard,
-  // vehicle and passport/visa sections.
-  "ultimate-guide-to-crossing-from-the-uk-to-europe-by-ferry": {
-    title: "UK to Europe Ferry Routes: Times and Booking",
-    description:
-      "Five UK to Europe ferry crossings compared: Dover to Calais in 90 minutes, Hull to Rotterdam in 11-12 hours, plus booking, car and passport basics.",
-  },
-
-  // 484 impressions, 0 clicks, avg position 13.7; the word-count query cluster
-  // around it drew 296 impressions and 0 clicks.
-  // Shipped title was "The Best Real-Time Word Counter Tools You Should |
-  // AltFTool" — clipped mid-phrase on a dangling "You Should". Shipped
-  // description was the body opener cut at "…marketer, or business
-  // professional,." Body verified: sections for WordCounter.net,
-  // CharacterCountOnline, Grammarly, Google Docs, Hemingway Editor and
-  // ProWritingAid, a features-to-look-for list, and a free vs paid section.
-  "the-best-real-time-word-counter-tools-you-should-try-today": {
-    title: "Best Real-Time Word Counter Tools Compared",
-    description:
-      "Compare real-time word counter tools: WordCounter.net, Grammarly, Google Docs, Hemingway and ProWritingAid, plus features to check and free vs paid notes.",
-  },
-
-  // 702 impressions, 0 clicks, avg position 29.0. Position 29 is page three, so
-  // the snippet is not the whole story here — but the stored fields are broken
-  // in both of the ways described above and a page cannot climb on a truncated
-  // body-opener snippet. Shipped title carried a stray space before the colon
-  // ("Email Types Explained : When and How to Use Them"); shipped description
-  // was cut at "From professional work environments to personal." Body
-  // verified: exactly ten numbered types (professional, personal, marketing,
-  // transactional, informational, follow-up, request, complaint, thank you,
-  // apology), each with tone/format guidance, plus a summary table and FAQ.
-  "email-types-explained-when-and-how-to-use-them": {
-    title: "10 Types of Emails and When to Use Each",
-    description:
-      "Professional, marketing, transactional, follow-up, complaint, apology and more: what each email type is for, the tone it needs, and a summary table.",
-  },
-
-  // 105 impressions, 0 clicks for "cyber monday deals 2026" at avg position
-  // 6.5 — position six with zero clicks.
-  // Shipped title was "Top Cyber Monday Software Deals You Should Grab |
-  // AltFTool", which clipped "in 2026" — the year the searcher typed. Shipped
-  // description was the body opener cut at "…looking to save money on."
-  // Body verified: it names Grammarly, Canva, Adobe, Notion, Microsoft 365,
-  // Jasper, NordVPN, Slack, Trello and Asana and walks through AI writing,
-  // design, productivity and VPN categories, a 30-80% typical discount range,
-  // and how to evaluate an offer. It lists NO prices and NO specific offers,
-  // so the description promises guidance, not a deals table.
-  "top-cyber-monday-software-deals-you-should-grab-in-2026": {
-    title: "Cyber Monday 2026 Software Deals: What to Expect",
-    description:
-      "Which software discounts to expect on Cyber Monday 2026: AI writing, design, productivity and VPN tools, plus how to judge an offer before you buy.",
-  },
-};
+// Emptied 2026-07-31, verified rather than assumed.
+//
+// These four entries promised specifics — a route table with crossing times, a
+// tool-by-tool comparison — that the live bodies do not contain. Checked by
+// paging the public feed to its end: 548 posts, every one 303-323 words, none
+// over 400. The ferry post specifically measures 306 words with zero <table>
+// and zero <tr>. An earlier pass in this file claimed "~1,460 words with a
+// 5-row route table"; that is wrong, and a snippet promising it would be a
+// promise the page cannot keep.
+//
+// Re-add an entry only after reading that post's body from /api/blogs and
+// confirming it delivers what the description says.
+const BLOG_SEO_OVERRIDES = {};
 
 /**
  * Authored title/description for a slug, or null when the post should keep the

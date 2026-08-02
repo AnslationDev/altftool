@@ -545,9 +545,9 @@ export default function KnifeHitGame() {
                         <span className="text-2xl">🔪</span>
                     </div>
                     <div>
-                        <h1 className="orbitron text-xl sm:text-2xl md:text-3xl font-black text-white neon-text tracking-widest leading-none">
+                        <h2 className="orbitron text-xl sm:text-2xl md:text-3xl font-black text-white neon-text tracking-widest leading-none">
                             KNIFE HIT
-                        </h1>
+                        </h2>
                         <div className="flex items-center gap-2 text-pink-300/80 text-xs sm:text-sm font-bold tracking-wider">
                             <span>LEVEL {level}</span>
                             <span className="w-1 h-1 bg-pink-500 rounded-full"></span>

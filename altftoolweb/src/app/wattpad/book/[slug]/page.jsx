@@ -33,16 +33,27 @@ export async function generateMetadata({ params }) {
   const book = books.find((item) => item.slug === slug);
 
   if (!book) {
-    return {
+    // Was a bare metadata object: no description and, more importantly, no
+    // canonical, because only createPageMetadata() sets alternates.canonical.
+    return createPageMetadata({
       title: "Story Not Found",
-      robots: { index: false, follow: true },
-    };
+      description:
+        "This story is not in the AltFTool reading library. Browse the available stories and categories to find something else to read.",
+      path: `/wattpad/book/${slug}`,
+      noindex: true,
+      follow: true,
+    });
   }
 
   const storyDescription = book.description || book.summary || "";
+  // The old tail ("...browse its available chapters, and discover related
+  // stories in AltFTool's browser reading library.") pushed 6 of the 8 books
+  // past the 160-character cut in trimMetaDescription(), so they shipped ending
+  // on "in AltFTool's." — a possessive with nothing after it. The shorter tail
+  // keeps every book between 112 and 131 characters, so none is clipped.
   return createPageMetadata({
     title: `${book.title} - Wattpad-Style Story`,
-    description: `${storyDescription} Read ${book.title} online, browse its available chapters, and discover related stories in AltFTool's browser reading library.`,
+    description: `${storyDescription} Read ${book.title} online and browse the chapters published so far on AltFTool.`,
     path: `/wattpad/book/${book.slug}`,
     image: book.coverImage || book.bannerImage,
     type: "book",

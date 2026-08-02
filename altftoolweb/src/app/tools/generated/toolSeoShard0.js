@@ -981,7 +981,7 @@ export default {
   ]
 },
   "account-security-guide-paytm": {
-  "intro": "This guide is a weighted, 15-control checklist for a Paytm account: app lock, UPI PIN rules, automatic payments, wallet auto top-up, Postpaid limits and the scam patterns behind most UPI losses. The rule that matters most is an NPCI rule rather than a Paytm setting: the UPI PIN authorises money leaving your account and is never required to receive a payment. Five controls are marked critical and the score stays at 69% until all five are done. This is general security information, not financial advice; contact your bank and the 1930 helpline about any actual loss.",
+  "intro": "This guide is a weighted, 15-control checklist for a Paytm account: app lock, UPI PIN rules, automatic payments, wallet auto top-up, Postpaid limits and the scam patterns behind most UPI losses. The rule that matters most is an NPCI rule rather than a Paytm setting: the UPI PIN authorises money leaving your account and is never required to receive a payment. Five controls are marked critical, and the score is capped at 69% while any of them is missing, even if every other box is ticked. This is general security information, not financial advice; contact your bank and the 1930 helpline about any actual loss.",
   "useCases": [
     "Locking down the app after losing a phone, or before handing an old handset on.",
     "Explaining to a first-time UPI user why nobody ever needs their PIN to send them money.",
@@ -2228,7 +2228,7 @@ export default {
     ],
     [
       "How does the SHA-256 chain verification work?",
-      "It recomputes each entry's digest and compares it to the stored one. The canonical-entry recipe hashes the entry with its own hash field removed and all object keys sorted; the previous-plus-entry recipe hashes the previous hash, a newline, then the canonical entry with both the hash and previousHash fields removed. A stored value must be exactly 64 lowercase hexadecimal characters to be checkable at all, since that is the length of a SHA-256 digest."
+      "It recomputes each entry's digest and compares it to the stored one. The canonical-entry recipe hashes the entry with its own hash field removed and all object keys sorted; the previous-plus-entry recipe hashes the previous hash, a newline, then the canonical entry with both the hash and previousHash fields removed. A stored value must be exactly 64 hexadecimal characters (case-insensitive) to be checkable at all, since that is the length of a SHA-256 digest."
     ],
     [
       "Does a verified chain prove the log was not tampered with?",
@@ -2590,7 +2590,7 @@ export default {
     ],
     [
       "What does (phrase:1.3) mean in an image prompt?",
-      "It is attention weighting in AUTOMATIC1111 and ComfyUI: the number multiplies how strongly that phrase pulls the image. Values between 0.5 and 1.5 are the useful range — past about 1.6 the phrase starts dominating and distorting everything else."
+      "It is attention weighting in AUTOMATIC1111 and ComfyUI: the number multiplies how strongly that phrase pulls the image. This tool allows 0.5 to 2.0. Most useful results stay between 0.5 and 1.5 — past about 1.6 the phrase starts dominating and distorting everything else, so save the top of the range for a phrase that genuinely needs to win."
     ],
     [
       "Why do my AI images look inconsistent between prompts?",
@@ -3106,7 +3106,7 @@ export default {
     ],
     [
       "What happens if no face is detected in one of the photos?",
-      "The tool falls back to a deterministic signature derived from the two file names and sizes, which produces a placeholder score in the 54–85% range rather than a real facial comparison. If the result looks arbitrary, re-upload with clearer, forward-facing photos so the recognition network can actually run."
+      "The tool falls back to a deterministic signature derived from the two file names and sizes, which produces a placeholder score in the 54–84% range rather than a real facial comparison. If the result looks arbitrary, re-upload with clearer, forward-facing photos so the recognition network can actually run."
     ],
     [
       "Can I use this to verify someone's identity?",
@@ -5121,7 +5121,7 @@ export default {
   ]
 },
   "allen-key-size-finder": {
-  "intro": "Matches hex key sizes across the metric and imperial systems and grades every swap by clearance, the number that decides whether a substitution works or destroys the fastener. A key that leaves under 1% slack in the socket is the same tool with a different name; 1 to 3% turns a lightly torqued screw; over 3% loads the corners of the socket instead of the flats and rounds it out. Fastener sizes come from the published standards — ISO 4762, 7380, 10642 and 4026, and ASME B18.3 for the imperial series.",
+  "intro": "Matches hex key sizes across the metric and imperial systems and grades every swap by clearance, the number that decides whether a substitution works or destroys the fastener. A key that is nominally larger than the socket does not enter at all; among keys that do fit, one that leaves under 1% slack is the same tool with a different name, 1 to 3% turns a lightly torqued screw, and over 3% loads the corners of the socket instead of the flats and rounds it out. Fastener sizes come from the published standards — ISO 4762, 7380, 10642 and 4026, and ASME B18.3 for the imperial series.",
   "useCases": [
     "Assembling flat-pack or bicycle parts with a mixed set of keys and needing to know if 5/16 inch will do for 8 mm",
     "Working on imperial machinery with a metric set and wanting to know which sizes are genuinely safe",
@@ -5130,7 +5130,7 @@ export default {
   "benefits": [
     [
       "Graded by clearance",
-      "Every pair is rated as interchangeable, usable with care, or a socket-rounder."
+      "Every pair is rated as interchangeable, usable with care, a socket-rounder, or simply too large to enter the socket at all."
     ],
     [
       "Both directions",
@@ -5144,7 +5144,7 @@ export default {
   "faqs": [
     [
       "Is a 5/16 inch Allen key the same as 8 mm?",
-      "Effectively yes. 5/16 inch is 7.9375 mm, so it sits 0.0625 mm inside an 8 mm socket — under 1% clearance, which is within the tolerance the two parts are made to anyway. It is one of only three pairs that genuinely interchange, the others being 5/32 inch with 4 mm and 5/64 inch with 2 mm."
+      "Only in one direction. 5/16 inch is 7.9375 mm, so a 5/16 inch key drops into an 8 mm socket with just 0.0625 mm of play — under 1% clearance, effectively the same size. Going the other way is a different question: an 8 mm key is nominally 0.0625 mm wider than a 5/16 inch (7.9375 mm) socket, so treat it as the tighter fit and reach for the inch key when you have the choice. The same one-way relationship holds for 5/32 inch with 4 mm and 5/64 inch with 2 mm — the inch key is the safe one to put in the metric socket, not the reverse."
     ],
     [
       "Can I use a 1/4 inch Allen key on a 6 mm socket?",
@@ -8659,7 +8659,7 @@ export default {
   ]
 },
   "atrial-fibrillation-risk-calculator": {
-  "intro": "The Atrial Fibrillation Risk Calculator turns the risk factors used in CHARGE-AF style community models — age, sex, race, BMI, height, hypertension, diabetes, heart failure, ECG left ventricular hypertrophy, vascular disease and current smoking — into a simplified score out of 12 and places it in one of four bands. Age carries the most weight (+2 for 65-74 and +4 for 75 and over), most other factors add 1 point, and female sex subtracts 1. It also lets you tick the modifiable factors you intend to work on and exports the whole assessment as a text report to bring to an appointment.",
+  "intro": "The Atrial Fibrillation Risk Calculator turns the risk factors used in CHARGE-AF style community models — age, sex, race, BMI, height, hypertension, diabetes, heart failure, ECG left ventricular hypertrophy, vascular disease and current smoking — into a simplified score out of 14 and places it in one of four bands. Age carries the most weight (+2 for 65-74 and +4 for 75 and over), most other factors add 1 point, and female sex subtracts 1. It also lets you tick the modifiable factors you intend to work on and exports the whole assessment as a text report to bring to an appointment.",
   "useCases": [
     "You are 68 with treated hypertension and a BMI over 30, and want a structured sense of how those stack up before a routine cardiology appointment.",
     "A relative was diagnosed with AF and you want to see which of your own risk factors are the modifiable ones — blood pressure, weight, alcohol, smoking, sleep apnoea — rather than the fixed ones.",
@@ -8682,11 +8682,11 @@ export default {
   "faqs": [
     [
       "What score means high risk of atrial fibrillation?",
-      "In this simplified 12-point scheme, 0-2 is Low, 3-4 Moderate, 5-7 High and 8-12 Very High, with indicative annual AF incidence of under 1%, 1-3%, 3-5% and over 5% respectively. These are broad bands from population data, not a prediction for any individual."
+      "In this simplified 14-point scheme, 0-2 is Low, 3-4 Moderate, 5-7 High and 8-14 Very High, with indicative annual AF incidence of under 1%, 1-3%, 3-5% and over 5% respectively. These are broad bands from population data, not a prediction for any individual."
     ],
     [
       "Why does age count for so much more than the other factors?",
-      "Because age is the strongest single predictor of atrial fibrillation in every major cohort study. Here age 65-74 adds 2 points and age 75 or over adds 4, out of a 12-point maximum — a person over 75 starts a third of the way up the scale before any other factor is counted."
+      "Because age is the strongest single predictor of atrial fibrillation in every major cohort study. Here age 65-74 adds 2 points and age 75 or over adds 4, out of a 14-point maximum — a person over 75 starts more than a quarter of the way up the scale before any other factor is counted."
     ],
     [
       "Which risk factors can I actually change?",
@@ -12104,7 +12104,7 @@ export default {
     ],
     [
       "How much shorter is base64url in a URL?",
-      "It saves 2 characters for every `+`, `/` or `=` in the standard form, because each of those becomes a 3-character percent escape (`%2B`, `%2F`, `%3D`). Roughly 1 in 32 Base64 characters is a `+` or `/`, so a 1,000-character token typically saves 60–70 characters, plus 4 for the dropped padding."
+      "It saves 2 characters for every `+` or `/` in the standard form, because each of those becomes a 3-character percent escape (`%2B`, `%2F`) but only a 1-character swap (`-`, `_`) in base64url. Roughly 1 in 32 Base64 characters is a `+` or `/`, so a 1,000-character token typically saves 60–70 characters from that alone. Padding is dropped entirely by default rather than swapped, so each `=` saves the full 3 characters its percent escape (`%3D`) would have cost — up to 6 more for the maximum of two padding characters."
     ],
     [
       "Is base64url safe to put in a filename or a path segment?",
@@ -15028,7 +15028,7 @@ export default {
   "faqs": [
     [
       "How do you say happy birthday in Telugu?",
-      "పుట్టినరోజు శుభాకాంక్షలు (puṭṭinarōju śubhākāṅkṣalu) is the everyday phrase — literally 'birthday good wishes'. జన్మదిన శుభాకాంక్షలు is the more formal Sanskrit-derived version used on cards and in printed messages."
+      "పుట్టినరోజు శుభాకాంక్షలు (puṭṭinarōju śubhākāṅkṣalu) is the everyday phrase — literally 'birthday good wishes'. జన్మదిన శుభాకాంక్షలు is a Sanskrit-derived alternative also seen on cards and in printed messages; in this tool it appears in a couple of the 'Warm and personal' wordings, while the 'Formal and respectful' tone sticks with పుట్టినరోజు."
     ],
     [
       "Should I use నువ్వు or మీరు in a Telugu birthday message?",

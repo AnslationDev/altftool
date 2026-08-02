@@ -179,9 +179,9 @@ export default function BubbleShooterGame({ isPreview = false }) {
                 {gameState === "START" && (
                     <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/90 backdrop-blur-md z-40 pointer-events-auto">
                         <div className="text-center animate-in zoom-in duration-300">
-                            <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-500 mb-4 tracking-tighter drop-shadow-[0_0_25px_rgba(99,102,241,0.5)]">
+                            <h2 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-500 mb-4 tracking-tighter drop-shadow-[0_0_25px_rgba(99,102,241,0.5)]">
                                 BUBBLE<br /><span className="text-white">SHOOTER</span>
-                            </h1>
+                            </h2>
 
                             <div className="flex gap-4 items-center justify-center mb-8">
                                 <div className="px-4 py-2 border border-indigo-500/30 rounded bg-indigo-500/5 text-indigo-400 text-xs tracking-widest font-bold">

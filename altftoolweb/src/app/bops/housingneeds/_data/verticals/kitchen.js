@@ -37,7 +37,7 @@ const kitchen = {
   "quoteLabel": "Get a Free Quote",
   "quoteUrl": "https://example.com/quote/kitchen",
   "seo": {
-    "title": "Kitchen Remodeling Guide: Cabinets, Countertops & Costs",
+    "title": "Kitchen Remodel Guide: Cabinets & Countertops",
     "description": "Learn how a kitchen remodel fits together: cabinet reface vs replace, quartz vs granite countertops, islands, backsplash, permits, and what drives cost."
   },
   "services": [

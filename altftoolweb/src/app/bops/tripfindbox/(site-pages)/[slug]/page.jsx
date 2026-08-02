@@ -1198,7 +1198,11 @@ function MobileDealSupportHero({ title, contact }) {
     <section className="mobile-deal-support-hero" aria-label={`${title} phone support`}>
       <div className="mobile-deal-support-bg" aria-hidden="true" />
       <div className="mobile-deal-support-inner">
-        <h1>Book Airlines Tickets With Us</h1>
+        {/* h2, not h1: this support hero renders above the page's real <h1>
+            ({page.title}) on deal routes, which shipped two <h1>s per page —
+            measured live on /top-airline-deals, /last-minute-flight-deals and
+            /international-flight-deals. */}
+        <h2>Book Airlines Tickets With Us</h2>
         <p className="mobile-deal-support-subtitle">24/7 Airlines Booking Support</p>
         <img
           className="mobile-deal-support-agent"
@@ -1235,7 +1239,24 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const page = getSitemapPage(slug);
 
-  if (!page) notFound();
+  if (!page) {
+    // notFound() thrown from *generateMetadata* aborts metadata generation
+    // entirely, so the not-found response fell back to the layout's metadata.
+    // Measured live on /bops/tripfindbox/this-slug-does-not-exist-xyz: HTTP 200,
+    // no robots meta (indexable), and canonical="https://www.altftool.com" —
+    // every unknown slug under this route was an indexable soft 404 pointing at
+    // the homepage. Amplify serves these as 200, so the status cannot be fixed
+    // here; returning noindex metadata with a self-referencing canonical can.
+    // Same handling as /bops/tripfindbox/blogs/[slug], which already does this.
+    return createPageMetadata({
+      title: "Route not found | TripFindBox",
+      description:
+        "This TripFindBox route page is not available. Browse the TripFindBox site map for airline, city and deal pages that are.",
+      path: `/bops/tripfindbox/${slug}`,
+      noindex: true,
+      follow: true,
+    });
+  }
 
   const title = page.title;
 

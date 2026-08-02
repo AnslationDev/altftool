@@ -199,7 +199,7 @@ export const autoLoan = {
   },
 
   seo: {
-    title: "Auto Loans — Compare New & Used Car Financing | AltFTool",
+    title: "Auto Loans — Compare Car Financing | AltFTool",
     description:
       "Get pre-approved for a new or used car loan and negotiate like a cash buyer. Compare personalised auto financing offers, no credit impact to check your rate.",
   },

@@ -3798,7 +3798,7 @@ export default {
     ],
     [
       "How is the score calculated?",
-      "A correct answer is worth 10 points multiplied by a streak bonus of 1 + 0.5 per consecutive correct answer, capped at a streak of 10 — so a 10-question streak makes each answer worth 60 points. Accuracy is tracked separately as correct answers ÷ total attempted."
+      "A correct answer is worth 10 points multiplied by a streak bonus of 1 + 0.5 per consecutive correct answer already banked before that question, capped at a bonus streak of 10. That means the 10th answer in a fresh streak is still worth 55 points, and each answer is worth the full 60 points only once you are 11 or more answers into an unbroken run. Accuracy is tracked separately as correct answers ÷ total attempted."
     ]
   ]
 },
@@ -7894,7 +7894,7 @@ export default {
   "faqs": [
     [
       "How do you calculate the ponderal index?",
-      "Divide weight in kilograms by height in metres cubed. An adult of 80 kg and 1.80 m has a ponderal index of 80 ÷ 5.832, which is 13.7 kg/m³. For newborns the convention is different: multiply birth weight in grams by 100 and divide by length in centimetres cubed."
+      "Divide weight in kilograms by height in metres cubed. An adult of 80 kg and 1.80 m has a ponderal index of 80 ÷ 5.832, which is 13.72 kg/m³. For newborns the convention is different: multiply birth weight in grams by 100 and divide by length in centimetres cubed."
     ],
     [
       "What is a normal ponderal index for adults?",

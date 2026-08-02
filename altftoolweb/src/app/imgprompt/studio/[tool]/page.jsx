@@ -1,90 +1,78 @@
-"use client";
-
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import { History, Star, Bookmark, TrendingUp, Users, FolderOpen, Frown } from "lucide-react";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createToolJsonLd,
+} from "@/platform/seo/generateMetadata";
+import { getCategory } from "../../data/categories";
 import { NAV_ITEMS_BY_SLUG } from "../../data/navigation";
-import { TRENDING_PROMPTS } from "../../data/prompts";
-import { COLLECTIONS } from "../../data/packs";
-import { CREATORS } from "../../data/creators";
-import { Workspace } from "../../components/studio/workspace";
-import { Dashboard } from "../../components/studio/dashboard";
-import { HistoryView } from "../../components/studio/history-view";
-import { SettingsView } from "../../components/studio/settings-view";
-import { PromptCard } from "../../components/shared/prompt-card";
-import { CollectionCard } from "../../components/shared/collection-card";
-import { CreatorCard } from "../../components/shared/creator-card";
-import { Button } from "../../components/ui/button";
+import StudioToolClient from "./studio-tool-client";
 
-function GridHeader({ icon: Icon, title, subtitle }) {
-  return (
-    <div className="mb-6 flex items-center gap-3">
-      <span className="grid h-11 w-11 place-items-center rounded-2xl bg-brand-gradient shadow-glow">
-        <Icon className="h-5 w-5 text-white" />
-      </span>
-      <div>
-        <h1 className="font-display text-xl font-bold tracking-tight sm:text-2xl">{title}</h1>
-        <p className="text-sm text-muted-foreground">{subtitle}</p>
-      </div>
-    </div>
-  );
+// Same set the sibling layout uses to decide `noindex`: exactly these 52 studio
+// tools are indexable and in the sitemap. The library/utility views (history,
+// favorites, settings, …) are per-user surfaces that ship noindex, so they get
+// no structured data — describing a private view to an answer engine would be
+// describing something it can never see.
+const INDEXABLE_KINDS = new Set(["core", "model", "category"]);
+
+function getPromptSubject(item) {
+  // "Anime Prompt" → "Anime", so the copy below reads "Anime prompts" instead
+  // of "Anime Prompt prompts". Labels that aren't already prompt-suffixed
+  // ("Midjourney", "Prompt Generator") are left alone.
+  return item.label.replace(/\s+prompts?$/i, "");
 }
 
-export default function StudioToolPage() {
-  const params = useParams();
-  const slug = String(params.tool);
+// Every field is read from the studio's own registry: `item.description` is the
+// hand-written subtitle, and category tools fall back to the category
+// description the workspace header actually renders. Nothing here publishes a
+// rating, a user count or a price — data/reviews.js testimonials and the seeded
+// `category.count` are placeholder values, so they stay out of the markup.
+function getStudioDescription(item) {
+  if (item.description) return item.description;
+
+  const category = getCategory(item.categorySlug);
+  if (category?.description) return category.description;
+
+  return `Create and refine ${getPromptSubject(item).toLowerCase()} prompts in the AltF AI Prompt Studio.`;
+}
+
+export default async function StudioToolPage({ params }) {
+  const { tool } = await params;
+  const slug = String(tool);
   const item = NAV_ITEMS_BY_SLUG[slug];
+  const path = `/imgprompt/studio/${slug}`;
+  const describable = Boolean(item) && INDEXABLE_KINDS.has(item.kind);
 
-  if (!item) {
-    return (
-      <div className="mx-auto flex max-w-md flex-col items-center px-4 py-24 text-center">
-        <Frown className="h-12 w-12 text-muted-foreground/50" />
-        <h1 className="mt-4 font-display text-xl font-bold">Tool not found</h1>
-        <p className="mt-2 text-sm text-muted-foreground">The studio tool "{slug}" doesn&apos;t exist.</p>
-        <Button className="mt-6" asChild><Link href="/imgprompt/studio">Back to dashboard</Link></Button>
-      </div>
-    );
-  }
-
-  switch (slug) {
-    case "dashboard":
-      return <Dashboard />;
-    case "settings":
-      return <SettingsView />;
-    case "history":
-      return <HistoryView filter="all" title="Prompt History" subtitle="Every prompt you've generated, saved on your device." icon={History} />;
-    case "favorites":
-      return <HistoryView filter="favorites" title="Favorites" subtitle="Your starred, best-performing prompts." icon={Star} />;
-    case "saved":
-      return <HistoryView filter="favorites" title="Saved Prompts" subtitle="Prompts you've bookmarked for later." icon={Bookmark} />;
-    case "trending":
-      return (
-        <div className="mx-auto max-w-[1500px] px-4 py-8 sm:px-6 lg:px-8">
-          <GridHeader icon={TrendingUp} title="Trending Prompts" subtitle="What creators are rendering most right now." />
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            {TRENDING_PROMPTS.map((p, i) => <PromptCard key={p.id} prompt={p} index={i} />)}
-          </div>
-        </div>
-      );
-    case "collections":
-      return (
-        <div className="mx-auto max-w-[1500px] px-4 py-8 sm:px-6 lg:px-8">
-          <GridHeader icon={FolderOpen} title="Collections" subtitle="Curated prompt drops from editors & top creators." />
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {COLLECTIONS.map((c, i) => <CollectionCard key={c.id} collection={c} index={i} />)}
-          </div>
-        </div>
-      );
-    case "community":
-      return (
-        <div className="mx-auto max-w-[1500px] px-4 py-8 sm:px-6 lg:px-8">
-          <GridHeader icon={Users} title="Community" subtitle="Follow and remix prompts from verified creators." />
-          <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-            {CREATORS.map((c, i) => <CreatorCard key={c.id} creator={c} index={i} />)}
-          </div>
-        </div>
-      );
-    default:
-      return <Workspace tool={item} />;
-  }
+  return (
+    <>
+      {/* These 52 studio URLs shipped only the root layout's Organization and
+          WebSite nodes. Each one is a free, browser-based prompt tool, so they
+          get the same SoftwareApplication + BreadcrumbList shape as
+          /altflovepdf/[toolSlug] — built from the registry's own label,
+          description and slug. Rendered at request time, so it costs no
+          prerendered-artifact bytes. */}
+      {describable ? (
+        <JsonLd
+          id={`imgprompt-studio-schema-${slug}`}
+          data={[
+            createToolJsonLd({
+              slug,
+              path,
+              tool: {
+                name: `${item.label} - AI Prompt Studio`,
+                description: getStudioDescription(item),
+                category: "DesignApplication",
+                topics: [item.label, `${getPromptSubject(item)} prompts`, "AI prompt generator"],
+              },
+            }),
+            createBreadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "AI Prompt Studio", path: "/imgprompt/studio" },
+              { name: item.label, path },
+            ]),
+          ]}
+        />
+      ) : null}
+      <StudioToolClient slug={slug} />
+    </>
+  );
 }

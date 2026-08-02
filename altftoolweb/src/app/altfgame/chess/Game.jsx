@@ -267,7 +267,7 @@ export default function ChessGame({ isPreview = false }) {
                         <Swords className="w-5 h-5 text-emerald-400" />
                     </div>
                     <div>
-                        <h1 className="text-lg font-bold text-slate-100 tracking-tight">CHESS<span className="text-emerald-500">.MASTER</span></h1>
+                        <h2 className="text-lg font-bold text-slate-100 tracking-tight">CHESS<span className="text-emerald-500">.MASTER</span></h2>
                         <div className="text-[10px] text-slate-500 font-mono uppercase tracking-widest">Grandmaster Engine</div>
                     </div>
                 </div>
@@ -412,9 +412,9 @@ export default function ChessGame({ isPreview = false }) {
             {gameState === "START" && (
                 <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm p-6 animate-in fade-in duration-300">
 
-                    <h1 className="text-5xl md:text-6xl font-black text-white mb-2 tracking-tighter drop-shadow-2xl">
+                    <h2 className="text-5xl md:text-6xl font-black text-white mb-2 tracking-tighter drop-shadow-2xl">
                         CHESS
-                    </h1>
+                    </h2>
                     <p className="text-slate-300 mb-8 text-lg font-medium drop-shadow-md">
                         Master the board. Defeat the AI.
                     </p>

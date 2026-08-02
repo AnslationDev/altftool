@@ -68,6 +68,18 @@ export default function Page(props) {
           ]),
         ]}
       />
+      {/* PageView's highest heading is the sidebar's <h3>, so this URL shipped
+          with no <h1>. Rendered on the server from the same db.json the
+          ItemList above is built from. */}
+      <header className="max-w-7xl mx-auto px-4 sm:px-6 pt-8 sm:pt-10 md:pt-12">
+        <h1 className="text-2xl sm:text-3xl font-bold text-(--foreground)">
+          Store Coupons by Category
+        </h1>
+        <p className="mt-2 max-w-2xl text-sm sm:text-base text-(--muted-foreground)">
+          Browse {storeItems.length} stores across {(dealData.store || []).length} categories
+          and open any store for its current coupons and deals.
+        </p>
+      </header>
       <PageView {...props} />
     </>
   );

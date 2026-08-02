@@ -199,7 +199,7 @@ export const heloc = {
   },
 
   seo: {
-    title: "HELOC — Compare Home Equity Line of Credit Offers | AltFTool",
+    title: "HELOC — Compare Home Equity Credit Lines | AltFTool",
     description:
       "Compare HELOC offers and put your home equity to work with a flexible, reusable credit line. Draw only what you need and pay interest only on what you use.",
   },

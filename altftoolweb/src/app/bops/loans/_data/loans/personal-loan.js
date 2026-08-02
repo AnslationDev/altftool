@@ -224,9 +224,9 @@ export const personalLoan = {
   },
 
   seo: {
-    title: "Personal Loans — Compare Fixed-Rate Offers | AltFTool",
+    title: "Personal Loans — Compare Fixed Rates | AltFTool",
     description:
-      "Compare personalised personal-loan offers from top lenders. Borrow $1,000–$100,000 at fixed rates, with no impact to your credit to check your rate. See offers in minutes.",
+      "Compare personalised personal-loan offers from top lenders. Borrow $1,000–$100,000 at fixed rates, with no impact to your credit to check your rate.",
   },
 };
 

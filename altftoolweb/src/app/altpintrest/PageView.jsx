@@ -813,9 +813,11 @@ export default function AltPinterest({ defaultView }) {
                 )}
                 {/* Info & Comments */}
                 <div className="px-8 py-8 flex flex-col gap-6">
-                  <h1 className="text-[20px] font-bold leading-tight text-[var(--foreground)] font-[#Segoe_UI]">
+                  {/* H2: this is one pin's title inside the detail panel, not
+                      the page heading. The route now renders the single H1. */}
+                  <h2 className="text-[20px] font-bold leading-tight text-[var(--foreground)] font-[#Segoe_UI]">
                     {selectedItem.title || "AI Generated Inspiration"}
-                  </h1>
+                  </h2>
 
                   <div className="flex items-center gap-3 mt-1">
                     <div className="w-10 h-10 rounded-full bg-[#E60023] flex items-center justify-center text-white font-extrabold text-lg shrink-0" aria-hidden="true">
@@ -902,9 +904,11 @@ export default function AltPinterest({ defaultView }) {
               </button>
 
               <div className="flex items-end gap-[6px]">
-                <h1 className={`text-[40px] leading-[40px] font-bold tracking-[-0.5px] text-[#000000] dark:text-[var(--foreground)] ${manrope.className}`}>
+                {/* H2: a client-state view inside the route, not the document
+                    heading. The route now renders the single H1. */}
+                <h2 className={`text-[40px] leading-[40px] font-bold tracking-[-0.5px] text-[#000000] dark:text-[var(--foreground)] ${manrope.className}`}>
                   Your saved Ideas
-                </h1>
+                </h2>
                 <Heart size={30} strokeWidth={2.5} className="text-[#000000] dark:text-[var(--foreground)] mb-1" />
               </div>
             </div>

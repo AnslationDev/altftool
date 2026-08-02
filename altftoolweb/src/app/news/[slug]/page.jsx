@@ -22,6 +22,72 @@ const ALL_CATEGORIES = [
 // we do not know who wrote a syndicated item.
 const ORGANIZATION_ATTRIBUTION = "AltFTool News";
 
+/**
+ * Build a <title> for a feed article that survives a mobile SERP.
+ *
+ * The title used to be `${article.headline} | AltFTool News` with no length
+ * control. Headlines are written for the page, not for a result listing: the
+ * ten items in public/data/newsdata.json run 50-100 characters, so with the
+ * 16-character section suffix every single one shipped over the ~60 characters
+ * Google renders (measured range 66-116). 84% of this site's search clicks are
+ * mobile, where the cut is harshest, so the tail of the headline was being
+ * thrown away by Google rather than chosen by us.
+ *
+ * The suffix cannot simply be dropped to buy room: resolveDocumentTitle() in
+ * src/platform/seo/generateMetadata.js only treats a title as absolute when it
+ * carries the brand, so a bare headline would have " | AltFTool" appended by
+ * the root layout and end up longer than it started.
+ */
+const NEWS_TITLE_MAX = 60;
+
+// Words that must never be the last thing in a title — clipping mid-phrase
+// leaves a dangling "... after" or "... in", which reads as broken markup.
+const TRAILING_STOPWORDS = new Set([
+  "a", "an", "the", "and", "or", "but", "of", "in", "on", "at", "to", "for",
+  "from", "by", "with", "as", "into", "onto", "over", "under", "after",
+  "before", "during", "that", "which", "who", "when", "while", "about", "its",
+  "their", "his", "her", "was", "were", "is", "are", "be", "been", "has",
+  "have", "had", "up", "out", "off", "than", "then", "so", "if", "it", "he",
+  "she", "they", "we", "you", "this", "these", "those", "there",
+]);
+
+function trimDanglingWords(text = "") {
+  let out = text.replace(/[,:;\-–—\s]+$/g, "").trim();
+  for (;;) {
+    const match = out.match(/\s([\w.’'-]+)$/);
+    if (!match) break;
+    const word = match[1].toLowerCase().replace(/[.’'"]+$/g, "");
+    if (!TRAILING_STOPWORDS.has(word)) break;
+    out = out.slice(0, match.index).replace(/[,:;\-–—\s]+$/g, "").trim();
+  }
+  return out;
+}
+
+export function buildNewsTitle(headline = "") {
+  const clean = String(headline).replace(/\s+/g, " ").trim();
+  if (!clean) return ORGANIZATION_ATTRIBUTION;
+
+  // Preferred form: the section brand, whenever the headline leaves room.
+  const sectionSuffix = ` | ${ORGANIZATION_ATTRIBUTION}`;
+  if (clean.length + sectionSuffix.length <= NEWS_TITLE_MAX) {
+    return `${clean}${sectionSuffix}`;
+  }
+
+  // Otherwise fall back to the shorter site brand, which buys 5 characters.
+  const siteSuffix = " | AltFTool";
+  const budget = NEWS_TITLE_MAX - siteSuffix.length;
+  if (clean.length <= budget) return `${clean}${siteSuffix}`;
+
+  const clipped = clean.slice(0, budget + 1);
+  const lastSpace = clipped.lastIndexOf(" ");
+  const raw =
+    lastSpace >= Math.floor(budget * 0.6)
+      ? clipped.slice(0, lastSpace)
+      : clean.slice(0, budget);
+  const base = trimDanglingWords(raw) || clean.slice(0, budget).trim();
+  return `${base}${siteSuffix}`;
+}
+
 function getSourceAttribution(article) {
   const source = typeof article.source === "string" ? article.source.trim() : "";
   if (!source || source.toLowerCase() === "unknown") return null;
@@ -110,7 +176,7 @@ export async function generateMetadata({ params }) {
   }
 
   return createPageMetadata({
-    title: `${article.headline} | AltFTool News`,
+    title: buildNewsTitle(article.headline),
     description: article.summary || "Read the latest news update on AltFTool News.",
     path: `/news/${article.slug}`,
     image: article.image_url,

@@ -37,7 +37,7 @@ const bathroom = {
   "quoteLabel": "Get a Free Quote",
   "quoteUrl": "https://example.com/quote/bathroom",
   "seo": {
-    "title": "Bathroom Remodeling Guide: Showers, Tubs, Costs & Layout",
+    "title": "Bathroom Remodel Guide: Showers, Tubs & Cost",
     "description": "Learn how bathroom remodels work: walk-in showers, tub-to-shower conversions, tile and waterproofing, accessibility upgrades, and what drives the cost."
   },
   "services": [

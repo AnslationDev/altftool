@@ -33,9 +33,18 @@ export async function generateMetadata({ params }) {
       follow: false,
     });
   }
+  // Concatenating the two unconditionally overflowed trimMetaDescription's 160
+  // cap on 3 of the 25 games, and its sentence-boundary cut then landed inside
+  // the tail: /altfgame/who-is serves a description ending "Play Who Is?" with
+  // the rest of the sentence gone. Dropping the tail when it does not fit
+  // leaves the game's own description, which is 102-120 characters on those
+  // three — inside the window, and a whole sentence either way.
+  const tail = `Play ${game.title} free in your browser and discover more ${game.category.toLowerCase()} games on AltFTool.`;
+  const combined = `${game.description} ${tail}`;
+
   return createPageMetadata({
     title: `${game.title} - Play Online`,
-    description: `${game.description} Play ${game.title} free in your browser and discover more ${game.category.toLowerCase()} games on AltFTool.`,
+    description: combined.length <= 158 ? combined : game.description,
     path: `/altfgame/${slug}`,
     image: game.image,
     keywords: [game.title, `${game.category} game`, "free browser game"],

@@ -199,9 +199,9 @@ export const travelInsurance = {
   },
 
   seo: {
-    title: "Travel Insurance — Compare Trip Protection Plans | AltFTool",
+    title: "Travel Insurance — Trip Protection | AltFTool",
     description:
-      "Compare travel insurance plans from trusted providers in minutes. Cover trip cancellation, emergency medical care abroad, lost baggage and delays — free to compare.",
+      "Compare travel insurance plans from trusted providers in minutes. Cover trip cancellation, emergency medical care abroad, lost baggage and delays.",
   },
 };
 

@@ -108,9 +108,14 @@ export default function SendGiftPage() {
                 </svg>
               </div>
 
-              <h2 className="font-serif text-3xl font-bold leading-tight mb-4 text-white">
+              {/*
+                Promoted from H2 to H1: /windowswap/sendGift served no H1 at
+                all, and this is the page's own title, not a section within it.
+                The classes carry the size, so nothing changes visually.
+              */}
+              <h1 className="font-serif text-3xl font-bold leading-tight mb-4 text-white">
                 Gift WindowSwap
-              </h2>
+              </h1>
               <p className="text-sm text-white/90 font-light leading-relaxed max-w-xs">
                 Share infinite travel, slow rain over Tokyo, snowy mountains in Oslo, and beautiful gardens in Edinburgh with someone special.
               </p>

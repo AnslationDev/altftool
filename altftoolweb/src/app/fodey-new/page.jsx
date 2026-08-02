@@ -50,9 +50,17 @@ export default function MakerStudioPage() {
                         <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-primary text-primary-foreground shadow-sm">
                             <Sparkles className="h-3.5 w-3.5" />
                         </div>
-                        <h1 className="font-mono text-xs font-black uppercase text-foreground">
+                        {/*
+                            This is the app-chrome wordmark, not the page
+                            heading — it was an H1, which gave /fodey-new two
+                            H1s live alongside LandingInfo's "Transform Ideas
+                            Into Retro Visual Assets". A <span> keeps the exact
+                            same text and classes without claiming to be the
+                            document's heading.
+                        */}
+                        <span className="font-mono text-xs font-black uppercase text-foreground">
                             ALTF Maker Studio<span className="font-normal text-muted"> / Creative Lab</span>
-                        </h1>
+                        </span>
                     </div>
 
                     <div className="flex items-center gap-1.5 rounded-full border border-success bg-success-soft px-2 py-0.5 font-mono text-[9px] font-black text-success shadow-sm">

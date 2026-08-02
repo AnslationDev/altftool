@@ -639,9 +639,9 @@ const FlappyBirdGame = () => {
                     </div>
 
                     <div className="bg-white/90 backdrop-blur-sm p-8 rounded-3xl shadow-[0_10px_40px_rgba(0,0,0,0.3)] flex flex-col items-center text-center animate-in zoom-in duration-500 pointer-events-auto border-4 border-white">
-                        <h1 className="text-5xl font-black text-[#55a049] mb-4 tracking-tight drop-shadow-sm" style={{ WebkitTextStroke: "1px white" }}>
+                        <h2 className="text-5xl font-black text-[#55a049] mb-4 tracking-tight drop-shadow-sm" style={{ WebkitTextStroke: "1px white" }}>
                             FLAPPY BIRD
-                        </h1>
+                        </h2>
                         <p className="text-gray-500 mb-8 font-bold text-lg">Tap, Click, or Space to Flap!</p>
                         <button
                             onClick={(e) => { e.stopPropagation(); startGame(); }}

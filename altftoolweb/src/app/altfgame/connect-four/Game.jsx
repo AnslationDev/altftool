@@ -185,9 +185,9 @@ export default function ConnectFourGame({ isPreview = false }) {
       {/* START SCREEN */}
       {gameState === "START" && (
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-zinc-950/90 backdrop-blur-md z-50">
-            <h1 className="text-5xl md:text-7xl font-black text-white mb-2 tracking-tighter drop-shadow-xl">
+            <h2 className="text-5xl md:text-7xl font-black text-white mb-2 tracking-tighter drop-shadow-xl">
                 CONNECT <span className="text-blue-500">4</span>
-            </h1>
+            </h2>
             <p className="text-zinc-400 font-medium mb-8 tracking-widest uppercase text-sm">Classic Strategy Game</p>
             <button
                 onClick={startGame}

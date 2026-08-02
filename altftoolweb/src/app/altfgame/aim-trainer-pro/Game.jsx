@@ -109,7 +109,7 @@ export default function AimTrainerGame() {
       <div className="h-16 flex items-center justify-between px-8 border-b border-slate-800 bg-slate-900/50 z-10">
         <div className="flex items-center gap-2">
           <Target className="text-cyan-400" size={24} />
-          <h1 className="font-bold text-lg tracking-wider">AIM TRAINER PRO</h1>
+          <h2 className="font-bold text-lg tracking-wider">AIM TRAINER PRO</h2>
         </div>
 
         {gameState === 'playing' && (

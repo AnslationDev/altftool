@@ -98,7 +98,7 @@ const SupportLandingPage = ({
   return (
     <div className="support-landing" aria-label="Support Settings home">
       <header className="support-landing-hero">
-        <h1 className="support-hero-title">Home</h1>
+        <h2 className="support-hero-title">Home</h2>
       </header>
 
       {/* Premium platform/device picker — was buried as an icon row in the

@@ -37,7 +37,7 @@ const landscaping = {
   "quoteLabel": "Get a Free Quote",
   "quoteUrl": "https://example.com/quote/landscaping",
   "seo": {
-    "title": "Landscaping Guide: Design, Lawns, Hardscaping & Costs",
+    "title": "Landscaping Guide: Lawns, Hardscape and Cost",
     "description": "Learn how landscaping projects come together: sod vs seed vs turf, hardscape materials, irrigation zones, xeriscaping, seasonal timing, and what drives cost."
   },
   "services": [

@@ -38,7 +38,7 @@ const roofing = {
   "quoteLabel": "Get a roofing quote",
   "quoteUrl": quoteUrlFor("roofing"),
   "seo": {
-    "title": "Roofing Guide: Materials, Costs, Repairs & Replacement",
+    "title": "Roofing Guide: Materials, Repairs and Costs",
     "description": "Learn how roof systems work: asphalt vs metal, tear-off vs overlay, underlayment, flashing, ventilation, storm damage, and what really drives roofing costs."
   },
   "services": [

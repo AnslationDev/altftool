@@ -4607,7 +4607,7 @@ export default {
   "intro": "This calculator converts between netto and brutto prices under German Umsatzsteuer law: it multiplies a net figure by 1.19 at the 19% Regelsteuersatz, or divides a gross figure by 1.19 to strip the tax back out. The 7% ermäßigter Satz under § 12 Abs. 2 UStG is one click away, as is the tax fraction of the gross price — 19/119 at the standard rate. It is aimed at freelancers, Kleinunternehmer and anyone reconciling a German invoice.",
   "useCases": [
     "Turning a 1,000 EUR net freelance fee into the 1,190 EUR brutto figure that goes on the Rechnung and into the customer's bank transfer.",
-    "Splitting a 53.50 EUR restaurant or grocery receipt at 7% into 50.00 EUR netto and 3.50 EUR Umsatzsteuer for expense bookkeeping.",
+    "Splitting the food portion of a 53.50 EUR restaurant receipt at 7% (drinks stay at 19%) into 50.00 EUR netto and 3.50 EUR Umsatzsteuer for expense bookkeeping.",
     "Checking whether last year's turnover stayed under 25,000 EUR so the Kleinunternehmerregelung still applies and no VAT has to be shown on invoices."
   ],
   "benefits": [
@@ -4627,7 +4627,7 @@ export default {
   "faqs": [
     [
       "What is the VAT rate in Germany?",
-      "The standard rate (Regelsteuersatz) is 19% and has been since 1 January 2007. A reduced rate of 7% applies to groceries, books, newspapers, cut flowers, local public transport and cultural admissions. Exports and intra-EU supplies are zero-rated, and residential photovoltaic systems have been taxed at 0% since 1 January 2023."
+      "The standard rate (Regelsteuersatz) is 19% and has been since 1 January 2007. A reduced rate of 7% applies to groceries, books, newspapers, cut flowers, local public transport, cultural admissions, and (permanently since 1 January 2026) restaurant and takeaway food — though drinks served with the meal stay at 19%. Exports and intra-EU supplies are zero-rated, and residential photovoltaic systems have been taxed at 0% since 1 January 2023."
     ],
     [
       "How do I calculate netto from brutto in Germany?",
@@ -12667,7 +12667,7 @@ export default {
   ]
 },
   "workout-planner": {
-  "intro": "The Workout Planner turns a goal, a training level, the days you can train and the equipment you own into a week-by-week block: each session gets an exercise, a set and rep prescription, and a time split of 20% warm-up, 65% main work and the remainder as cooldown. Choose a 4, 8 or 12-week block and every week carries a progression rule — add 2.5% for beginners or 5% otherwise while RPE stays at 8 or below — with week 4 written as a deload at 35% less volume. It also sizes daily calories, protein, water and sleep from your body weight, and tracks adherence and average RPE as you log sessions.",
+  "intro": "The Workout Planner turns a goal, a training level, the days you can train and the equipment you own into a week-by-week block: each session gets an exercise, a set and rep prescription, and a time split that targets roughly 20% warm-up and 65% main work, with cooldown taking whatever's left — scaled down proportionally, and never letting a block go negative, so all three still fit inside a short session. Choose a 4, 8 or 12-week block and every week carries a progression rule — add 2.5% for beginners or 5% otherwise while RPE stays at 8 or below — with week 4 written as a deload at 35% less volume. It also sizes daily calories, protein, water and sleep from your body weight, and tracks adherence and average RPE as you log sessions.",
   "useCases": [
     "You have four evenings a week and 45 minutes each, and want those constraints turned into an actual schedule instead of copying a plan built for six days",
     "You are training at home with only dumbbells, so you need the barbell work swapped for goblet squats, floor presses and dumbbell RDLs rather than skipped",

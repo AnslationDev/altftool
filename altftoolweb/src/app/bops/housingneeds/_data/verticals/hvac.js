@@ -37,7 +37,7 @@ const hvac = {
   "quoteLabel": "Get a Free Quote",
   "quoteUrl": "https://example.com/quote/hvac",
   "seo": {
-    "title": "HVAC Guide: AC, Furnaces, Heat Pumps, Costs & Efficiency",
+    "title": "HVAC Guide: AC, Furnaces, Heat Pumps & Cost",
     "description": "Learn how HVAC systems work: central AC, furnaces, heat pumps, and mini-splits, plus SEER2 efficiency, proper sizing, rebates, and what drives install costs."
   },
   "services": [

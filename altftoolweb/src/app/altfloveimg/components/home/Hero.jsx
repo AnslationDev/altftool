@@ -46,7 +46,11 @@ export default function Hero() {
           </motion.span>
 
           <motion.h1 variants={item} className="mt-5 text-[2.5rem] font-extrabold leading-[1.05] tracking-tight sm:text-6xl">
-            Edit images like a pro,{" "}
+            {/* Was "Edit images like a pro, without the cloud" — a slogan, not
+                a name for the page, while the <title> reads "AltFLoveImg —
+                Free In-Browser Image Tools". Same two-part shape and the same
+                gradient span; the first half now matches the title. */}
+            Free image tools,{" "}
             <span className="ali-gradient-text">without the cloud</span>
           </motion.h1>
 

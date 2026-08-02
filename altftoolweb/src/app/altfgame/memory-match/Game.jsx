@@ -134,9 +134,9 @@ const MemoryMatchGame = () => {
             {/* Header / HUD */}
             <div className="w-full max-w-4xl flex flex-col md:flex-row items-center justify-between mb-4 gap-4 shrink-0">
                 <div className="flex flex-col items-center md:items-start">
-                    <h1 className="text-2xl md:text-3xl font-black bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
+                    <h2 className="text-2xl md:text-3xl font-black bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent tracking-tight">
                         MEMORY MATCH
-                    </h1>
+                    </h2>
                     <div className="text-gray-400 text-xs font-medium tracking-widest">ARCADE EDITION</div>
                 </div>
 

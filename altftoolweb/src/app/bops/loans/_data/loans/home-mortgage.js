@@ -199,7 +199,7 @@ export const homeMortgage = {
   },
 
   seo: {
-    title: "Home Mortgage Loans — Compare Rates & Get Pre-Approved | AltFTool",
+    title: "Home Mortgage — Rates & Pre-Approval | AltFTool",
     description:
       "Compare home mortgage options and get pre-approved before you house-hunt. Fixed and adjustable rates, plus low-down-payment and first-time buyer programs.",
   },

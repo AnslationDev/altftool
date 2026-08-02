@@ -7,8 +7,19 @@ import JsonLd from "@/platform/seo/JsonLd";
 import LabsClient from "./LabsClient";
 import { GRID_EXPERIMENTS, LAB_GRADUATES } from "./data/experiments";
 
-const PAGE_DESCRIPTION =
-  "Explore every AltFTool interactive experiment from one organized hub, including SketchFlow, KeyCanvas, OpenAir Garden, Mockly, Pixel Thought, games, and discovery projects.";
+// 172 characters, which trimMetaDescription cut to 153 ending "...games,
+// and." — a dangling conjunction in the SERP. It also hardcoded six experiment
+// names, so it would go stale the moment the catalog changed, and one of those
+// names ("Pixel Thought") is still another product's brand.
+//
+// Both counts are read from the arrays LabsClient actually renders, so the
+// sentence cannot drift from the page. The named capabilities each map to a
+// real entry in the catalog: drawing → SketchFlow, ambient audio → Ambient
+// Mixer, world radio → OpenAir Garden, quizzes → Quiz Studio and Personality
+// Lab, arcade games → Games Arcade and AltF Games, reaction tests → Reflex Lab.
+// No claim about accounts or pricing, because that is not verifiable per entry
+// from here. 155 characters at the current 20 + 4, under the 158 ceiling.
+const PAGE_DESCRIPTION = `Open ${GRID_EXPERIMENTS.length} AltFTool experiments from one hub — drawing, ambient audio, world radio, quizzes, arcade games and reaction tests — plus ${LAB_GRADUATES.length} that grew into products.`;
 
 export async function generateMetadata() {
   return createPageMetadata({

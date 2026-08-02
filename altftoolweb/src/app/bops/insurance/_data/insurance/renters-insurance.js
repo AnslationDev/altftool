@@ -199,7 +199,7 @@ export const rentersInsurance = {
   },
 
   seo: {
-    title: "Renters Insurance — Compare Quotes for Tenants | AltFTool",
+    title: "Renters Insurance — Compare Quotes | AltFTool",
     description:
       "Compare renters insurance quotes in minutes. Protect your belongings and liability for often $10-20 a month — your landlord's policy won't cover your stuff.",
   },

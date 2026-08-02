@@ -38,7 +38,7 @@ const solar = {
   "quoteLabel": "Get a solar quote",
   "quoteUrl": quoteUrlFor("solar"),
   "seo": {
-    "title": "Residential Solar Panel Installation: Systems, Costs and How It Works",
+    "title": "Home Solar Guide: Panels, Batteries & Cost",
     "description": "How residential solar works: monocrystalline panels, string inverters vs microinverters, batteries, net metering, shading, and what drives system cost."
   },
   "services": [

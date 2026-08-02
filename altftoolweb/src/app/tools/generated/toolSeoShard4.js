@@ -10568,8 +10568,8 @@ export default {
       "It spreads the equity component across a standard four-year vesting schedule, so the monthly figure reflects one quarter of the grant per year rather than the full paper value. Real equity is worth what you can eventually sell it for, so treat it as the most uncertain line in the comparison."
     ],
     [
-      "Is the take-home figure accurate for my tax situation?",
-      "No — the breakdown applies a flat 20% estimate to arrive at a net figure, which is a placeholder, not your actual liability. Real tax depends on your country, regime, slab, deductions and existing income, so use the number for rough ranking only and check a payroll or tax professional before you decide."
+      "Is the Estimated Annual Tax figure accurate for my tax situation?",
+      "No — the Financial Analysis panel applies a flat 20% estimate against your total monthly value to arrive at Estimated Annual Tax and Estimated Annual Savings, which are placeholders, not your actual liability. Real tax depends on your country, regime, slab, deductions and existing income, so use the numbers for rough ranking only and check a payroll or tax professional before you decide."
     ],
     [
       "Where is my offer data stored?",
@@ -14482,7 +14482,7 @@ export default {
   "faqs": [
     [
       "At what rent is the landlord's PAN compulsory for HRA?",
-      "The landlord's PAN is compulsory once the rent you pay in a financial year exceeds ₹1,00,000, which works out to about ₹8,334 a month for a full twelve months. Below that, CBDT Circular 8/2013 lets the employer accept the claim on receipts alone."
+      "The landlord's PAN is compulsory once the rent you pay in a financial year exceeds ₹1,00,000, which works out to about ₹8,333 a month for a full twelve months. Below that, CBDT Circular 8/2013 lets the employer accept the claim on receipts alone."
     ],
     [
       "What if my landlord does not have a PAN?",

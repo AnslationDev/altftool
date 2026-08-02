@@ -37,7 +37,7 @@ const UtilityPage = ({ id, platform, detectedPlatform }) => {
     <div className="support-utility-page" aria-label={title}>
       <header className="support-utility-page-hero">
         <p className="support-hero-eyebrow">Help &amp; Tools</p>
-        <h1 className="support-hero-title">{title}</h1>
+        <h2 className="support-hero-title">{title}</h2>
       </header>
 
       {id === "util-troubleshooting" && <TroubleshootingSection platform={platform} />}

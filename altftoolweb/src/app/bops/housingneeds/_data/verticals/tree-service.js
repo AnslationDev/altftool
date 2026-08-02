@@ -37,7 +37,7 @@ const treeService = {
   "quoteLabel": "Get a Free Quote",
   "quoteUrl": "https://example.com/quote/tree-service",
   "seo": {
-    "title": "Tree Service Guide: Removal, Trimming, Stumps & Costs",
+    "title": "Tree Service Guide: Removal, Trimming, Cost",
     "description": "Learn how tree service works: removal vs trimming, stump grinding, storm and hazard removal, ISA-certified arborists, permits, and what drives the cost."
   },
   "services": [

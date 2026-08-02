@@ -103,6 +103,13 @@ export default function ResultsPage() {
 
   return (
     <main className="results-found-page">
+      {/* This view had no <h1> in any render state — the only headings were the
+          "Filters" h2 and its h3s, so the document had no top-level heading for
+          screen readers or outline tools. Visually hidden: the route summary is
+          already shown by the topbar, so a visible h1 would duplicate it. */}
+      <h1 className="results-page-title">
+        Flight search results: {criteria.from.city} to {criteria.to.city}
+      </h1>
       <ResultsHeader />
 
       <section className="mobile-results-topbar" aria-label="Current search">

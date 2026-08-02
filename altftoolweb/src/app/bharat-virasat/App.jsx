@@ -217,7 +217,14 @@ export default function App() {
               data-reveal-delay="1"
               className="serif text-[clamp(3.5rem,12vw,9.5rem)] leading-[0.85] tracking-[-0.03em]"
             >
-              India&#39;s
+              {/*
+                The {" "} is load-bearing. JSX drops the newline between the
+                text node and <br />, and <br /> contributes nothing to
+                textContent, so this H1 extracted as "India'sLiving Heritage" —
+                that is the string served on /bharat-virasat today. The space is
+                collapsed at the line break, so nothing moves on screen.
+              */}
+              India&#39;s{" "}
               <br />
               <span className="italic opacity-80">Living Heritage</span>
             </h1>
