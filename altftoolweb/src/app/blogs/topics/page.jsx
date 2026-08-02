@@ -17,8 +17,13 @@ import {
 
 export const revalidate = 3600;
 
+// 161 characters, so trimMetaDescription() cut it at 160 and the page shipped
+// "...shopping, productivity, and document." — ending on a bare noun. The
+// replacement is 153 and names the seven clusters this hub actually links to
+// (ai-tools, image-video-tools, pdf-document-tools, travel-guides,
+// deals-buying-guides, student-productivity, games-word-puzzles).
 const pageDescription =
-  "Explore AltFTool topic clusters that connect related blog guides across AI tools, media utilities, games, travel, shopping, productivity, and document workflows.";
+  "Explore AltFTool topic clusters linking related blog guides: AI tools, image and video, PDF and documents, travel, deals, student productivity and games.";
 
 async function getMergedPosts() {
   const firebaseCatalog = await getFirebaseBlogCatalog().catch(() => ({

@@ -1,5 +1,5 @@
 .fractal-tool-shell {
-  min-height: 100vh;
+  min-height: 100dvh;
   background: var(--background);
   color: var(--foreground);
   padding-bottom: 3.5rem;

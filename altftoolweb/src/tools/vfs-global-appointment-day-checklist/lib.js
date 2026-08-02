@@ -408,7 +408,12 @@ export function buildChecklist(input) {
   const scheme = input?.scheme;
   if (!SCHEMES[scheme]) return { error: "Choose which country's VFS centre you are visiting." };
 
-  const age = Number(input?.age);
+  const rawAge = input?.age;
+  const trimmedAge = typeof rawAge === "string" ? rawAge.trim() : rawAge;
+  if (trimmedAge === "" || trimmedAge === null || trimmedAge === undefined) {
+    return { error: "Enter the applicant's age in whole years." };
+  }
+  const age = Number(trimmedAge);
   if (!isNum(age)) return { error: "Enter the applicant's age in whole years." };
   if (age < 0) return { error: "Age cannot be negative." };
   if (age > 120) return { error: "Enter an age of 120 or under." };
@@ -513,7 +518,7 @@ export function computeTiming({ appointmentTime, travelMinutes, contingencyMinut
   const travel = Number(travelMinutes);
   if (!isNum(travel)) return { error: "Enter your travel time in minutes." };
   if (travel < 0) return { error: "Travel time cannot be negative." };
-  if (travel > MINUTES_PER_DAY) return { error: "Enter a travel time under 24 hours." };
+  if (travel >= MINUTES_PER_DAY) return { error: "Enter a travel time under 24 hours." };
 
   const contingency =
     contingencyMinutes === undefined || contingencyMinutes === null
@@ -531,6 +536,7 @@ export function computeTiming({ appointmentTime, travelMinutes, contingencyMinut
     arriveBy: formatClock(arriveByMinutes),
     leaveHomeBy: formatClock(leaveHomeMinutes),
     // Negative means the plan reaches back past midnight into the previous day.
+    arriveByPreviousDay: arriveByMinutes < 0,
     previousDay: leaveHomeMinutes < 0,
     totalLeadMinutes: ARRIVE_BEFORE_MINUTES + travel + contingency,
   };

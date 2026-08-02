@@ -159,7 +159,10 @@ export function generateSuggestions(smells) {
 }
 
 export function getSuggestionsByFunction(suggestions) {
-    const byFunction = {};
+    // Object.create(null) has no prototype, so a function literally named
+    // "constructor" (every ES6 class has one) can't shadow an inherited
+    // property like Object.prototype.constructor and crash the .push() call.
+    const byFunction = Object.create(null);
     for (const sug of suggestions) {
         if (!byFunction[sug.functionName]) {
             byFunction[sug.functionName] = [];

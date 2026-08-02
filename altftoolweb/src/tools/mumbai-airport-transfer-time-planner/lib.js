@@ -228,7 +228,7 @@ export function journeyMinutes({ distanceKm, mode, factor }) {
 }
 
 /**
- * Plan a Delhi airport transfer.
+ * Plan a Mumbai airport transfer.
  *
  * @param {object} input
  * @param {string} input.departureTime      scheduled departure, "HH:MM" 24-hour

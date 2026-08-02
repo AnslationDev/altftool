@@ -33,7 +33,7 @@ export  function Card({
     <div
       className={`
         group relative overflow-hidden
-        bg-[(--card)] border border-[(--border)] border-l-4
+        bg-[var(--card)] border border-[var(--border)] border-l-4
         ${borderClass}
         rounded-2xl cursor-pointer
         shadow-sm hover:shadow-xl
@@ -59,17 +59,17 @@ export  function Card({
           className="
             w-full flex items-center justify-between
             px-5 py-4 text-left
-            hover:bg-[(--muted)]/60
+            hover:bg-[var(--muted)]/60
             transition-colors duration-200 rounded-t-2xl
           "
         >
-          <span className="flex items-center gap-2.5 font-semibold text-[(--card-foreground)] font-primary text-sm">
+          <span className="flex items-center gap-2.5 font-semibold text-[var(--card-foreground)] font-primary text-sm">
             {icon && <span className="text-sm">{icon}</span>}
             {title}
           </span>
           {/* Animated chevron */}
           <svg
-className={`w-6 h-6 text-[(--muted-foreground)] transition-transform duration-300 ${
+className={`w-6 h-6 text-[var(--muted-foreground)] transition-transform duration-300 ${
               isOpen ? "rotate-180" : "rotate-0"
             }`}
             fill="none" viewBox="0 0 24 24" stroke="currentColor"
@@ -102,10 +102,10 @@ className={`w-6 h-6 text-[(--muted-foreground)] transition-transform duration-30
 function CardSkeleton() {
   return (
     <div className="space-y-3 animate-pulse pt-1">
-      <div className="h-3 bg-[(--muted)] rounded-full w-3/4" />
-      <div className="h-3 bg-[(--muted)] rounded-full w-1/2" />
-      <div className="h-3 bg-[(--muted)] rounded-full w-2/3" />
-      <div className="h-3 bg-[(--muted)] rounded-full w-1/3" />
+      <div className="h-3 bg-[var(--muted)] rounded-full w-3/4" />
+      <div className="h-3 bg-[var(--muted)] rounded-full w-1/2" />
+      <div className="h-3 bg-[var(--muted)] rounded-full w-2/3" />
+      <div className="h-3 bg-[var(--muted)] rounded-full w-1/3" />
     </div>
   );
 }

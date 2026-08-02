@@ -262,11 +262,6 @@ export function similarity(a, b) {
   return 1 - editDistance(a, b) / longest;
 }
 
-/** Distinct origins present in the library. */
-export function availableOrigins() {
-  return Array.from(new Set(NAME_LIBRARY.map((entry) => entry.origin))).sort();
-}
-
 /** Look a name up in the library, ignoring case and punctuation. */
 export function findInLibrary(rawName) {
   const key = normaliseName(rawName);
@@ -301,7 +296,12 @@ export function scoreAgainstSibling(sibling, candidate) {
   if (sameEnding) reasons.push(`both end in "${b.slice(-1)}"`);
   if (sameInitial) reasons.push(`both start with "${b[0].toUpperCase()}"`);
   if (lengthBalanced) reasons.push(`${a.length} and ${b.length} letters`);
-  if (distinctPoints === 0) reasons.push("too close in spelling to tell apart");
+  // Disclose the distinctness factor too, so the score always reconciles with this list — it is
+  // worth 10 or 20 of the 100 points on every result that reaches the UI. A distinctPoints of 0
+  // ("too close in spelling to tell apart") never appears here: suggestSiblingNames() filters out
+  // every `confusing` entry before slicing into `matches`, so that case needs no reason string.
+  if (distinctPoints === POINTS_DISTINCT) reasons.push(`clearly distinct in spelling (+${distinctPoints})`);
+  else if (distinctPoints > 0) reasons.push(`distinct enough to avoid confusion (+${distinctPoints})`);
 
   const score =
     (sameOrigin ? POINTS_SAME_ORIGIN : 0) +

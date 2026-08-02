@@ -68,6 +68,14 @@ export default function EstimateForm() {
           <h2 className="font-display font-extrabold text-4xl lg:text-5xl text-primary leading-tight">
             Get a Custom Quote in Under 60 Seconds
           </h2>
+          {/*
+            This form is not wired to anything: onSubmit runs a setTimeout and
+            shows a success screen. It used to promise that "a senior design
+            specialist will reach out within one business day", which meant the
+            page collected a homeowner's name, phone number and email against a
+            callback that could never happen. That is the part of this page that
+            could actually hurt someone, so it says what is true instead.
+          */}
           <p className="mt-5 text-lg text-foreground/75 leading-relaxed">
             Tell us about your project below. This is a demo template — your answers are
             saved only in this browser&rsquo;s local storage, and no one will contact you.

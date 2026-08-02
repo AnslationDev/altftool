@@ -5,7 +5,7 @@ const seo = {
     "Working out a realistic bedtime for a 70-year-old who wants 7.5 hours and wakes at 6:30 without an alarm anyway.",
     "Finding the actual caffeine cut-off time when the afternoon tea habit is keeping someone awake.",
     "Fixing a nap that has crept to 90 minutes and is now eating into night-time sleep.",
-    "Seeing that 8 hours in bed for 5.5 hours of sleep is 69% efficiency, and what a sleep-restriction bedtime would look like.",
+    "Seeing that 8 hours in bed for 5.5 hours of sleep is 68.8% efficiency, and what a sleep-restriction bedtime would look like.",
   ],
   benefits: [
     ["Anchored on wake time", "The schedule is derived from the wake time rather than the bedtime, which is the order sleep medicine recommends."],

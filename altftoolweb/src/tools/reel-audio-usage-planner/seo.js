@@ -27,7 +27,7 @@ const seo = {
     ],
     [
       "How often can I reuse the same audio track?",
-      "There is no platform rule against reusing a track, but repeating the same audio every few posts makes a feed monotonous and gives the algorithm less signal to work with. A gap of four or more posts is a reasonable default, and this planner flags anything closer.",
+      "There is no platform rule against reusing a track, but repeating the same audio every few posts makes a feed monotonous and gives the algorithm less signal to work with. A gap of five or more posts is a reasonable default, and this planner flags anything closer, including a gap of exactly four.",
     ],
   ],
 };

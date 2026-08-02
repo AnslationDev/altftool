@@ -67,9 +67,15 @@ export const BAND_ABOVE = "Above average for age";
 
 /** Published age band label, clamped onto the ends of the table. */
 export function ageGroupFor(age) {
-  const found = AGE_GROUPS.find((group) => age >= group.min && age <= group.max);
+  // Age brackets are whole-year buckets (60-64, 65-69, ...). Floor first so a
+  // fractional age (e.g. 64.5, however it was entered or computed) still
+  // lands in the bracket for its actual age in whole years, instead of
+  // falling through the gap between one bracket's max and the next
+  // bracket's min and silently defaulting to 60-64.
+  const years = Math.floor(age);
+  const found = AGE_GROUPS.find((group) => years >= group.min && years <= group.max);
   if (found) return found.label;
-  if (age > 94) return "90-94";
+  if (years > 94) return "90-94";
   return "60-64";
 }
 
@@ -137,7 +143,6 @@ export function classifyChairStand({
       previous,
       delta: score - previous,
       improved: score > previous,
-      percent: previous > 0 ? ((score - previous) / previous) * 100 : null,
     };
   }
 

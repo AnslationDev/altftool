@@ -72,11 +72,12 @@ export function analyzeSubject(subject, preview) {
   const weakHits = weakWords.filter((word) => trimmedSubject.toLowerCase().includes(word));
 
   let score = 100;
-  if (subjectLength < 20) score -= 10;
-  if (subjectLength > 60) score -= 18;
+  if (subjectLength < 30) score -= 10;
+  if (subjectLength > 55) score -= 18;
   if (wordCount > 10) score -= 8;
   if (!trimmedPreview) score -= 12;
-  if (previewLength > 110) score -= 8;
+  else if (previewLength < 40) score -= 8;
+  if (previewLength > 95) score -= 8;
   score -= spamHits.length * 9;
   score -= weakHits.length * 3;
   if (hasNumber) score += 5;

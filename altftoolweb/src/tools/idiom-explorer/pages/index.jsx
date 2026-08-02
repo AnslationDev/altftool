@@ -1,13 +1,11 @@
 "use client";
 
-import { useState, useMemo, useEffect, useCallback } from "react";
+import { useState, useMemo, useEffect, useCallback, useRef } from "react";
 import {
   BookOpenText,
   Search,
   Star,
   Shuffle,
-  ChevronDown,
-  ChevronUp,
   Copy,
   Check,
   X,
@@ -16,7 +14,6 @@ import {
   Sparkles,
   Clock,
   GraduationCap,
-  Zap,
   Trophy,
 } from "lucide-react";
 import { IDIOMS, CATEGORIES, DIFFICULTIES, ALPHABETS } from "../constants/idioms";
@@ -65,14 +62,58 @@ function DiffBadge({ level }) {
 // ────────────────────────────────────────────────────────────────
 // Idiom Card (expanded detail)
 // ────────────────────────────────────────────────────────────────
+function getFocusableElements(container) {
+  return container?.querySelectorAll(
+    'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  );
+}
+
 function IdiomCard({ idiom, isFav, onToggleFav, onClose }) {
   const [copied, setCopied] = useState(false);
+  const dialogRef = useRef(null);
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  });
 
   const copy = useCallback(() => {
     navigator.clipboard.writeText(`${idiom.idiom}: ${idiom.meaning}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }, [idiom]);
+
+  // Move focus into the dialog on open, trap Tab within it, and close on Escape.
+  useEffect(() => {
+    const previouslyFocused = document.activeElement;
+    const focusable = getFocusableElements(dialogRef.current);
+    (focusable?.[0] || dialogRef.current)?.focus();
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onCloseRef.current?.();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusableEls = getFocusableElements(dialogRef.current);
+      if (!focusableEls?.length) return;
+      const first = focusableEls[0];
+      const last = focusableEls[focusableEls.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      previouslyFocused?.focus?.({ preventScroll: true });
+    };
+  }, []);
 
   return (
     <div
@@ -89,6 +130,8 @@ function IdiomCard({ idiom, isFav, onToggleFav, onClose }) {
       />
       {/* Panel */}
       <div
+        ref={dialogRef}
+        tabIndex={-1}
         className="relative z-10 w-full max-w-2xl max-h-[90vh] overflow-y-auto rounded-2xl border border-[var(--border)] bg-[var(--card)] shadow-2xl"
         style={{ boxShadow: "0 24px 56px rgba(0,0,0,0.18)" }}
       >
@@ -482,7 +525,7 @@ export default function IdiomExplorerPage() {
             Idiom Explorer
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-base text-[var(--muted-foreground)]">
-            Explore 60 curated English idioms with meanings, origins, examples, and an
+            Explore 59 curated English idioms with meanings, origins, examples, and an
             interactive quiz. Bookmark your favorites and track your learning history.
           </p>
         </div>
@@ -746,6 +789,9 @@ export default function IdiomExplorerPage() {
                   </p>
                   <button
                     onClick={() => {
+                      if (!window.confirm("Clear your entire idiom view history? This cannot be undone.")) {
+                        return;
+                      }
                       setHistory([]);
                       saveLS(LS_HIST, []);
                     }}

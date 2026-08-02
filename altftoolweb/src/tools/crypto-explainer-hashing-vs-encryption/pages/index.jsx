@@ -63,6 +63,10 @@ export default function ToolHome() {
 
   const avalanche = useMemo(() => avalancheTest(text), [text]);
   const hasError = Boolean(avalanche.error);
+  // demoEncrypt() only returns null when the key is empty (its ciphertext is
+  // otherwise a valid, possibly empty, string) — so whether a key was
+  // entered must be read from the key field itself, not from the ciphertext.
+  const hasKey = key.length > 0;
 
   const outputs = useMemo(() => {
     const digest = sha256Hex(text);
@@ -184,7 +188,7 @@ export default function ToolHome() {
           {[
             ["Input size", `${NUM.format(outputs.inputBytes)} bytes`],
             ["Hash size", hasError ? "—" : `${NUM.format(SHA256_DIGEST_BITS)} bits, always`],
-            ["Ciphertext size", outputs.cipher ? `${NUM.format(outputs.cipher.length / 2)} bytes` : "—"],
+            ["Ciphertext size", hasKey ? `${NUM.format(outputs.cipher.length / 2)} bytes` : "—"],
             ["Base64 size", `${NUM.format(outputs.encoded.length)} characters`],
             ["Hex digits that differ after the edit", hasError ? "—" : `${NUM.format(avalanche.hexDigitsChanged)} of 64`],
           ].map(([label, value]) => (
@@ -235,7 +239,7 @@ export default function ToolHome() {
             Same text, same key, ciphertext out; feed the key back in and the original returns. Try
             changing one character of the key and watch the recovered text break.
           </p>
-          {outputs.cipher ? (
+          {hasKey ? (
             <>
               <div className={CODE_BOX}>
                 <code className="block whitespace-pre-wrap break-all text-sm">{outputs.cipher}</code>

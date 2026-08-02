@@ -79,18 +79,40 @@ export default function DeckSidebar({ decks, activeDeckId, onSelect, onAdd, onDe
               }`}
               onClick={() => onSelect(deck.id)}
             >
-              <div className="flex items-center gap-3 overflow-hidden">
+              <div className="flex items-center gap-3 overflow-hidden flex-1">
                 <Folder className={`w-4 h-4 flex-shrink-0 ${activeDeckId === deck.id ? 'text-white' : 'text-blue-500'}`} />
                 {editingId === deck.id ? (
-                  <input
-                    autoFocus
-                    className="bg-transparent border-b border-white outline-none text-sm font-medium w-full"
-                    value={editingName}
-                    onChange={(e) => setEditingName(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleUpdate()}
-                    onClick={(e) => e.stopPropagation()}
-                    onBlur={() => setEditingId(null)}
-                  />
+                  <div className="flex items-center gap-1 w-full" onClick={(e) => e.stopPropagation()}>
+                    <input
+                      autoFocus
+                      className="bg-transparent border-b border-white outline-none text-sm font-medium w-full min-w-0"
+                      value={editingName}
+                      onChange={(e) => setEditingName(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') handleUpdate();
+                        if (e.key === 'Escape') setEditingId(null);
+                      }}
+                      onBlur={() => setEditingId(null)}
+                    />
+                    <button
+                      type="button"
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={handleUpdate}
+                      className={`p-1 rounded hover:bg-black/10 transition-colors flex-shrink-0 ${activeDeckId === deck.id ? 'text-white' : 'text-green-600'}`}
+                      title="Save name"
+                    >
+                      <Check className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      type="button"
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => setEditingId(null)}
+                      className={`p-1 rounded hover:bg-black/10 transition-colors flex-shrink-0 ${activeDeckId === deck.id ? 'text-white' : 'text-gray-400'}`}
+                      title="Cancel"
+                    >
+                      <X className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 ) : (
                   <div className="flex flex-col">
                     <span className="text-sm font-medium truncate">{deck.name}</span>

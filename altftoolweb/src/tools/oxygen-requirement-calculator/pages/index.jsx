@@ -5,7 +5,7 @@ import { Wind, RotateCcw, Info, Copy, Download, CheckCircle2, AlertTriangle, Shi
 import { safeCopyText } from "@/shared/utils/clipboard";
 
 const DEVICES = [
-  { id: "nasal-cannula", name: "Nasal Cannula", minFlow: 1, maxFlow: 6, baseFio2: 0.24, fio2PerL: 0.04, desc: "Most common low-flow device. Comfortable for prolonged use. Delivers 24-44% FiO2.", bestFor: "Mild hypoxemia (SpO2 90-94%), stable patients" },
+  { id: "nasal-cannula", name: "Nasal Cannula", minFlow: 1, maxFlow: 6, baseFio2: 0.24, fio2PerL: 0.04, desc: "Most common low-flow device. Comfortable for prolonged use. Delivers 24-44% FiO2.", bestFor: "Mild to moderate hypoxemia (SpO2 90-95%), stable patients" },
   { id: "simple-mask", name: "Simple Face Mask", minFlow: 5, maxFlow: 10, baseFio2: 0.40, fio2PerL: 0.04, desc: "Covers nose and mouth. Requires minimum 5 L/min to prevent CO2 rebreathing. Delivers 40-60% FiO2.", bestFor: "Moderate hypoxemia, short-term oxygen therapy" },
   { id: "partial-rebreather", name: "Partial Rebreather Mask", minFlow: 6, maxFlow: 10, baseFio2: 0.50, fio2PerL: 0.05, desc: "Has reservoir bag. Allows partial rebreathing of expired air. Delivers 50-70% FiO2.", bestFor: "Moderate to severe hypoxemia requiring higher FiO2" },
   { id: "non-rebreather", name: "Non-Rebreather Mask", minFlow: 10, maxFlow: 15, baseFio2: 0.60, fio2PerL: 0.04, desc: "Full reservoir bag with one-way valves. Delivers highest FiO2 of low-flow devices (60-90%).", bestFor: "Severe hypoxemia, emergency situations, pre-intubation" },
@@ -24,12 +24,14 @@ const VENTURI_FIO2 = [
 
 function calculateFio2(device, flow) {
   if (device.id === "venturi") return null;
-  return Math.min(100, Math.round((device.baseFio2 + device.fio2PerL * flow) * 100));
+  const flowAboveMin = Math.max(0, flow - device.minFlow);
+  return Math.min(100, Math.round((device.baseFio2 + device.fio2PerL * flowAboveMin) * 100));
 }
 
 function calculateFlowForFio2(device, targetFio2) {
   if (device.id === "venturi") return null;
-  const needed = (targetFio2 / 100 - device.baseFio2) / device.fio2PerL;
+  const flowAboveMin = (targetFio2 / 100 - device.baseFio2) / device.fio2PerL;
+  const needed = device.minFlow + flowAboveMin;
   return Math.max(device.minFlow, Math.min(device.maxFlow, Math.round(needed * 10) / 10));
 }
 
@@ -125,6 +127,14 @@ export default function ToolHome() {
 
   const buildReportText = useCallback(() => {
     if (!result) return "";
+    const deviceComparisonLines = result.allDevices
+      .map((d) => {
+        if (d.suggestedFlow === null || d.suggestedFlow === undefined) {
+          return `- ${d.name}: See colour-coded adapter chart for precise FiO2`;
+        }
+        return `- ${d.name}: ${d.suggestedFlow} L/min (${d.suggestedFio2 ? d.suggestedFio2 + "%" : "Precise"})`;
+      })
+      .join("\n");
     return `
 OXYGEN REQUIREMENT REPORT
 Generated: ${result.date}
@@ -145,7 +155,7 @@ CURRENT DEVICE:
 - Estimated FiO2: ${result.fio2 ? result.fio2 + "%" : "Precise (Venturi)"}
 
 DEVICE COMPARISON:
-${result.allDevices.map((d) => `- ${d.name}: ${d.suggestedFlow} L/min (${d.suggestedFio2 ? d.suggestedFio2 + "%" : "Precise"})`).join("\n")}
+${deviceComparisonLines}
 
 RECOMMENDATIONS:
 ${result.recs.map((r) => `- ${r.title}: ${r.text}`).join("\n")}
@@ -170,7 +180,7 @@ Clinical decisions should always be made by qualified healthcare professionals.
     link.click();
   }, [result, buildReportText]);
 
-  const canAnalyze = spo2 && weight;
+  const canAnalyze = spo2;
 
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -233,6 +243,32 @@ Clinical decisions should always be made by qualified healthcare professionals.
                 <input type="number" min="1" max="60" value={flowRate} onChange={(e) => setFlowRate(e.target.value)} placeholder="2" className="mt-2 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-[var(--foreground)] outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all" />
                 <span className="text-xs text-[var(--muted-foreground)]">{DEVICES.find((d) => d.id === selectedDevice)?.minFlow}-{DEVICES.find((d) => d.id === selectedDevice)?.maxFlow} L/min for {DEVICES.find((d) => d.id === selectedDevice)?.name}</span>
               </label>
+
+              {selectedDevice === "venturi" && (
+                <div className="mt-4 rounded-lg border border-[var(--border)] bg-[var(--background)] p-3">
+                  <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted-foreground)] mb-2">Venturi Colour-Coded Adapters</p>
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-xs">
+                      <thead>
+                        <tr className="text-left text-[var(--muted-foreground)]">
+                          <th className="py-1 pr-2 font-semibold">Adapter Colour</th>
+                          <th className="py-1 pr-2 font-semibold">FiO2</th>
+                          <th className="py-1 font-semibold">Flow Needed</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {VENTURI_FIO2.map((v) => (
+                          <tr key={`${v.color}-${v.fio2}`} className="border-t border-[var(--border)]">
+                            <td className="py-1.5 pr-2 capitalize text-[var(--foreground)]">{v.color}</td>
+                            <td className="py-1.5 pr-2 font-semibold text-[var(--foreground)]">{v.fio2}%</td>
+                            <td className="py-1.5 text-[var(--foreground)]">{v.flow} L/min</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="flex gap-3">
@@ -320,7 +356,7 @@ Clinical decisions should always be made by qualified healthcare professionals.
               <div className="flex flex-col items-center justify-center py-20 text-center">
                 <Wind className="h-12 w-12 text-[var(--muted-foreground)] mb-4" />
                 <p className="text-lg font-semibold text-[var(--muted-foreground)]">Enter patient parameters to calculate oxygen requirements</p>
-                <p className="text-sm text-[var(--muted-foreground)] mt-2">Weight, SpO2, and age group are needed for accurate assessment.</p>
+                <p className="text-sm text-[var(--muted-foreground)] mt-2">Current SpO2 is required. Age group refines the target range; weight is optional and shown in the report for reference only.</p>
               </div>
             )}
           </div>

@@ -1,8 +1,8 @@
 const seo = {
   intro:
-    "This explainer decodes the numbered tick-boxes on a Schengen visa refusal form and turns each one into a checklist of the evidence that normally answers it. Every Schengen consulate refuses on the same standard form set out in Annex VI of the Visa Code, Regulation (EC) No 810/2009 as amended by Regulation (EU) 2019/1155, so box 2, box 3 and box 11 mean exactly the same thing whether the decision came from Paris, Warsaw or Lisbon. Select the grounds that were ticked on your notice to see what the officer was actually saying, how serious it is, and what to fix before you reapply.",
+    "This explainer decodes the numbered tick-boxes on a Schengen visa refusal form and turns each one into a checklist of the evidence that normally answers it. Every Schengen consulate refuses on the same standard form set out in Annex VI of the Visa Code, Regulation (EC) No 810/2009 as amended by Regulation (EU) 2019/1155, so box 2, box 3 and box 9 mean exactly the same thing whether the decision came from Paris, Warsaw or Lisbon. Select the grounds that were ticked on your notice to see what the officer was actually saying, how serious it is, and what to fix before you reapply.",
   useCases: [
-    "You received a refusal form with box 11 ticked and want to know what evidence of ties would have changed the outcome.",
+    "You received a refusal form with box 9 ticked and want to know what evidence of ties would have changed the outcome.",
     "You are deciding between appealing under Article 32(3) and simply reapplying with a stronger file.",
     "A travel agent filed your application, the file came back refused on document authenticity, and you need to work out what to verify yourself before trying again.",
   ],
@@ -13,8 +13,8 @@ const seo = {
   ],
   faqs: [
     [
-      "What does it mean when box 11 is ticked on a Schengen refusal?",
-      "Box 11 means the consulate had reasonable doubts about your intention to leave the Schengen area before the visa expired, under Article 32(1)(b) of the Visa Code. It is a judgement on the strength of your home ties as shown in the file - employment, income, dependants, property, prior travel - and not an accusation of dishonesty, so it is answered with more evidence of what you are returning to rather than with an apology.",
+      "What does it mean when box 9 is ticked on a Schengen refusal?",
+      "Box 9 means the consulate had reasonable doubts about your intention to leave the Schengen area before the visa expired, under Article 32(1)(b) of the Visa Code. It is a judgement on the strength of your home ties as shown in the file - employment, income, dependants, property, prior travel - and not an accusation of dishonesty, so it is answered with more evidence of what you are returning to rather than with an apology.",
     ],
     [
       "Can I appeal a Schengen visa refusal, and how long do I have?",

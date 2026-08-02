@@ -37,8 +37,8 @@ const moving = {
   "quoteLabel": "Get a Free Quote",
   "quoteUrl": "https://example.com/quote/moving",
   "seo": {
-    "title": "Moving & Storage Guide: Movers, Costs, Estimates & Options",
-    "description": "Learn how moving works: local vs long-distance pricing, full-service vs labor-only vs pods vs DIY, packing, storage, licensed movers, and the real cost drivers."
+    "title": "Moving & Storage Guide: Movers, Costs & Tips",
+    "description": "Learn how moving works: local vs long-distance pricing, full-service vs labor-only vs pods vs DIY, packing, storage, and the real cost drivers."
   },
   "services": [
     {

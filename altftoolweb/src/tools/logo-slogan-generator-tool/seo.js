@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "Logo & Slogan Generator turns a brand name plus a short description of your style, industry and audience into 5 to 7 concise, distinct taglines you can put under a logo. The request goes to a Gemini model briefed to answer as a branding specialist and return nothing but the list — no preamble, no explanation — so you get usable lines rather than an essay about your brand. It is built for founders, freelance designers and marketers who need a batch of directions to react to before committing to one.",
+    "Logo & Slogan Generator turns a brand name plus a short description of your style, industry and audience into 5 to 7 concise, distinct taglines you can put under a logo. The request goes to a Gemini model briefed to answer as a branding specialist and return nothing but the list — no preamble, no explanation — so you get usable lines rather than an essay about your brand. It is built for founders, freelance designers and marketers who need a batch of directions to react to before committing to one. Generating a batch sends your brand details to AltFTool's own server, which produces the lines, so this tool needs a connection.",
   useCases: [
     "You are designing a logo lockup and need three or four candidate taglines of the right length to test under the wordmark before the client presentation.",
     "You have registered a business name but the tagline field on your website, invoices and Instagram bio is still empty, and you want options that match a 'premium, sustainable, friendly' positioning.",

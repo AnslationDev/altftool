@@ -50,6 +50,13 @@ export const SECTION_195_EFFECTIVE_RATE_PERCENT =
 
 const round2 = (value) => Math.round(value * 100) / 100;
 
+const INR_FORMAT = new Intl.NumberFormat("en-IN", {
+  style: "currency",
+  currency: "INR",
+  maximumFractionDigits: 0,
+});
+const formatINR = (value) => INR_FORMAT.format(value);
+
 /**
  * @param {object} input
  * @param {number} input.monthlyRent        Total rent for the whole house, per month, in INR.
@@ -88,7 +95,7 @@ export function checkLandlordPanRequirement({
     return { error: "TDS rate should be between 0% and 40%." };
   }
 
-  const monthsPaid = Math.round(monthCount);
+  const monthsPaid = Math.max(1, Math.round(monthCount));
   const monthlyShare = round2((rent * share) / 100);
   const annualRent = round2(monthlyShare * monthsPaid);
 
@@ -140,18 +147,18 @@ export function checkLandlordPanRequirement({
       title: "Rent receipts",
       required: rentReceiptsRequired,
       detail: rentReceiptsRequired
-        ? `Your share is ${monthlyShare} a month, above the ₹${RENT_RECEIPT_MONTHLY_LIMIT} relaxation, so keep signed receipts for every month.`
-        : `At ₹${RENT_RECEIPT_MONTHLY_LIMIT} a month or less an employer may accept the HRA claim without receipts, but keep them anyway as proof.`,
+        ? `Your share is ${formatINR(monthlyShare)} a month, above the ${formatINR(RENT_RECEIPT_MONTHLY_LIMIT)} relaxation, so keep signed receipts for every month.`
+        : `At ${formatINR(RENT_RECEIPT_MONTHLY_LIMIT)} a month or less an employer may accept the HRA claim without receipts, but keep them anyway as proof.`,
     },
     {
       id: "pan",
       title: "Landlord's PAN",
       required: landlordPanRequired,
       detail: panRequiredByRent
-        ? `Annual rent of ${annualRent} exceeds ₹${LANDLORD_PAN_ANNUAL_THRESHOLD}, so the landlord's PAN must be reported to your employer with Form 12BB.`
+        ? `Annual rent of ${formatINR(annualRent)} exceeds ${formatINR(LANDLORD_PAN_ANNUAL_THRESHOLD)}, so the landlord's PAN must be reported to your employer with Form 12BB.`
         : section194ibApplies || section195Applies
           ? "TDS applies on this rent, so you need the landlord's PAN to credit the tax correctly."
-          : `Annual rent of ${annualRent} is within the ₹${LANDLORD_PAN_ANNUAL_THRESHOLD} limit, so PAN disclosure is not mandatory.`,
+          : `Annual rent of ${formatINR(annualRent)} is within the ${formatINR(LANDLORD_PAN_ANNUAL_THRESHOLD)} limit, so PAN disclosure is not mandatory.`,
     },
     {
       id: "declaration",
@@ -168,7 +175,7 @@ export function checkLandlordPanRequirement({
       required: Boolean(tds),
       detail: tds
         ? `${tds.ratePercent}% applies. ${tds.timing}`
-        : `Monthly rent of ${monthlyShare} is within the ₹${SECTION_194IB_MONTHLY_THRESHOLD} limit, so no rent TDS is due from you.`,
+        : `Monthly rent of ${formatINR(monthlyShare)} is within the ${formatINR(SECTION_194IB_MONTHLY_THRESHOLD)} limit, so no rent TDS is due from you.`,
     },
   ];
 

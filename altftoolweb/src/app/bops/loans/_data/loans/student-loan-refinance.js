@@ -199,7 +199,7 @@ export const studentLoanRefinance = {
   },
 
   seo: {
-    title: "Student Loan Refinance — Compare Lower-Rate Offers | AltFTool",
+    title: "Student Loan Refinance — Compare Offers | AltFTool",
     description:
       "Refinance your student loans into one payment at a potentially lower rate. Compare personalised offers with a soft credit check — no impact to see your rate.",
   },

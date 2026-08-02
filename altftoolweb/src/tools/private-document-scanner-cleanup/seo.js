@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "What does the black-and-white mode actually do?",
-      "It converts each pixel to Rec. 709 luminance (0.2126 red, 0.7152 green, 0.0722 blue) and pushes it to pure white or pure black against a threshold you control, which defaults to 150 of 255. Lower the threshold if faint pencil is disappearing, raise it if a grey shadow is coming through as black.",
+      "It converts each pixel to Rec. 709 luminance (0.2126 red, 0.7152 green, 0.0722 blue) and pushes it to pure white or pure black against a threshold you control, which defaults to 155 of 255. Lower the threshold if faint pencil is disappearing, raise it if a grey shadow is coming through as black.",
     ],
     [
       "Should I export PNG or JPEG?",

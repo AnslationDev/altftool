@@ -65,9 +65,17 @@ export function countUtf8Bytes(text) {
 }
 
 const EMOJI_RE = /\p{Extended_Pictographic}/u;
+// Flag emoji: a pair of Regional_Indicator code points (e.g. US flag). The
+// grapheme segmenter already groups these into one cluster per UAX #29
+// GB12/GB13, but Extended_Pictographic does not cover Regional_Indicator, so
+// they need their own check.
+const REGIONAL_INDICATOR_RE = /^\p{Regional_Indicator}+$/u;
+// Keycap sequences: a digit/#/* optionally followed by U+FE0F (variation
+// selector-16) then U+20E3 (combining enclosing keycap), e.g. 1️⃣.
+const KEYCAP_RE = /^[0-9#*]\uFE0F?\u20E3$/;
 
 export function isEmojiCluster(grapheme) {
-  return EMOJI_RE.test(grapheme);
+  return EMOJI_RE.test(grapheme) || REGIONAL_INDICATOR_RE.test(grapheme) || KEYCAP_RE.test(grapheme);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -369,15 +377,11 @@ export const PLATFORMS = [
 
 const PLATFORM_BY_ID = new Map(PLATFORMS.map((item) => [item.id, item]));
 
-export function getPlatform(id) {
-  return PLATFORM_BY_ID.get(id) || null;
-}
-
 /* -------------------------------------------------------------------------- */
 /* Counting per platform                                                      */
 /* -------------------------------------------------------------------------- */
 
-const REMOTE_MENTION_RE = /@([A-Za-z0-9_.-]+)@([A-Za-z0-9.-]+\.[A-Za-z]{2,})/g;
+const REMOTE_MENTION_RE = /(^|[\s(\[{])@([A-Za-z0-9_.-]+)@([A-Za-z0-9.-]+\.[A-Za-z]{2,})/g;
 
 function countForPlatform(platform, text) {
   if (platform.counting === "weighted") {
@@ -389,7 +393,7 @@ function countForPlatform(platform, text) {
   }
   if (platform.counting === "mastodon") {
     // Links are charged 23; remote mentions lose their @server portion.
-    let working = String(text == null ? "" : text).replace(REMOTE_MENTION_RE, "@$1");
+    let working = String(text == null ? "" : text).replace(REMOTE_MENTION_RE, "$1@$2");
     const urls = extractEntities(working).urls;
     let bare = working;
     for (let i = urls.length - 1; i >= 0; i -= 1) {
@@ -575,6 +579,9 @@ export function analyseAllPlatforms(text) {
       limit: result.limit,
       remaining: result.remaining,
       over: result.over,
+      bytes: result.bytes,
+      byteLimit: result.byteLimit,
+      overBytes: result.overBytes,
       truncated: result.preview.truncated,
       hiddenCount: result.preview.hiddenCount,
     });

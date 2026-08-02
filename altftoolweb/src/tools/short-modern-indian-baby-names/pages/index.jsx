@@ -85,7 +85,6 @@ export default function ToolHome() {
     setLetters(DEFAULTS.letters);
     setStartsWith(DEFAULTS.startsWith);
     setMinEase(DEFAULTS.minEase);
-    setCheck(DEFAULTS.check);
     setCopied(false);
   };
 
@@ -220,7 +219,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -295,7 +298,7 @@ export default function ToolHome() {
             {checked.error}
           </p>
         ) : (
-          <div className="mt-3">
+          <div aria-live="polite" role="status" className="mt-3">
             <p className="text-3xl font-semibold text-[var(--primary)]">{checked.score}/100</p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {checked.band} · {checked.letters} letters

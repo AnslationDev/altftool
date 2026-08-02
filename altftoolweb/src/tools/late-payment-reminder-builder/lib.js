@@ -119,6 +119,15 @@ export const ESCALATION_LEVELS = [
 ];
 
 /**
+ * Tiers whose letter body actually names the computed deadline date (see the
+ * `bodies` map in buildReminder, where only these three interpolate
+ * `deadlineText`). The pre-due and first-reminder tiers are deliberately
+ * softer and deadline-free, so callers must not claim a deadline was "set in
+ * the letter" for them.
+ */
+const LEVELS_WITH_DEADLINE_IN_BODY = new Set(["second", "firm", "final"]);
+
+/**
  * Which rung suits an invoice this many days overdue.
  *
  * @param {number} daysOverdue negative when the invoice is not yet due
@@ -200,6 +209,56 @@ export function overdueInterest({ amount, annualRatePercent, days }) {
   return { interest, total: amount + interest };
 }
 
+/**
+ * Compound interest with monthly rests at three times the supplied bank
+ * rate — the methodology MSMED Act 2006 s.16 actually specifies for a
+ * registered MSME supplier, as opposed to the simple actual/365 interest
+ * used for every other jurisdiction in this tool. `bankRatePercent` is the
+ * RBI notified bank rate the user enters; the statutory entitlement compounds
+ * three times that rate monthly. Partial months accrue proportionally so an
+ * arbitrary day count still produces a defined figure.
+ *
+ * @param {object} input
+ * @param {number} input.amount outstanding principal
+ * @param {number} input.bankRatePercent RBI notified bank rate, annual %
+ * @param {number} input.days whole days overdue
+ * @returns {{ interest: number, total: number, effectiveAnnualRatePercent: number } | { error: string }}
+ */
+export function msmeCompoundInterest({ amount, bankRatePercent, days }) {
+  if (!isNum(amount) || amount <= 0) return { error: "The outstanding amount must be greater than zero." };
+  if (!isNum(bankRatePercent) || bankRatePercent < 0) return { error: "The interest rate cannot be negative." };
+  const effectiveAnnualRatePercent = bankRatePercent * 3;
+  if (!isNum(days) || days <= 0) return { interest: 0, total: amount, effectiveAnnualRatePercent };
+  const monthlyRate = effectiveAnnualRatePercent / 100 / 12;
+  const months = days / (DAYS_IN_YEAR / 12);
+  const total = amount * (1 + monthlyRate) ** months;
+  const interest = total - amount;
+  if (!Number.isFinite(interest)) return { error: "Those figures are too large to compute." };
+  return { interest, total, effectiveAnnualRatePercent };
+}
+
+/**
+ * Interest to quote in the letter for the selected jurisdiction. Every
+ * jurisdiction other than the Indian MSME regime is quoted as simple
+ * actual/365 interest. The MSME regime is different in kind, not just in
+ * rate, so its quoted figure must be computed with the same compound
+ * monthly / 3x bank rate method the jurisdiction note asserts is the legal
+ * entitlement — otherwise the letter states two incompatible methodologies
+ * back to back.
+ *
+ * @param {object} input
+ * @param {string} input.jurisdictionId key of JURISDICTIONS
+ * @param {number} input.amount outstanding principal
+ * @param {number} input.annualRatePercent agreed rate, or the RBI bank rate for india_msme
+ * @param {number} input.days whole days overdue
+ */
+export function reminderInterest({ jurisdictionId, amount, annualRatePercent, days }) {
+  if (jurisdictionId === "india_msme") {
+    return msmeCompoundInterest({ amount, bankRatePercent: annualRatePercent, days });
+  }
+  return overdueInterest({ amount, annualRatePercent, days });
+}
+
 const clean = (value) => String(value ?? "").trim();
 
 /**
@@ -219,7 +278,7 @@ const clean = (value) => String(value ?? "").trim();
  * @param {string} [input.interestLabel] already-formatted interest, if quoted
  * @param {string} input.jurisdictionId key of JURISDICTIONS
  * @param {string} [input.paymentLink]
- * @returns {{ subject: string, body: string, level: object, daysOverdue: number } | { error: string }}
+ * @returns {{ subject: string, body: string, level: object, daysOverdue: number, deadlineISO: string, deadlineStatedInBody: boolean } | { error: string }}
  */
 export function buildReminder({
   levelId,
@@ -328,6 +387,7 @@ export function buildReminder({
     level,
     daysOverdue,
     deadlineISO: deadline.iso ?? todayISO,
+    deadlineStatedInBody: LEVELS_WITH_DEADLINE_IN_BODY.has(level.id),
     jurisdiction,
   };
 }

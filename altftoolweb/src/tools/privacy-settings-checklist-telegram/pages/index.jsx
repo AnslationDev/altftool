@@ -59,11 +59,19 @@ export default function ToolHome() {
   };
 
   const clearAll = () => {
+    if (!window.confirm("Clear every ticked setting? This cannot be undone.")) return;
     setDone([]);
     setCopied(false);
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the checklist? This clears every ticked setting and restores the default profile and target."
+      )
+    ) {
+      return;
+    }
     setDone(DEFAULT_DONE.slice());
     setProfileId(PROFILES[0].id);
     setTarget("90");
@@ -167,7 +175,12 @@ export default function ToolHome() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-labelledby="tg-score">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-labelledby="tg-score"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p id="tg-score" className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -211,7 +224,7 @@ export default function ToolHome() {
         </div>
 
         {score.error ? (
-          <p role="alert" className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+          <p role="alert" className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]">
             {score.error}
           </p>
         ) : null}
@@ -242,7 +255,7 @@ export default function ToolHome() {
         </dl>
 
         {hasScore && score.capped ? (
-          <p className="mt-4 flex items-start gap-2 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning)]">
+          <p className="mt-4 flex items-start gap-2 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning-text)]">
             <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
             <span>
               Score held at {CRITICAL_CAP_PERCENT}% while a critical setting is open. Those are the
@@ -300,11 +313,11 @@ export default function ToolHome() {
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <h2 className="text-base font-semibold">Shortest route to your target</h2>
         {plan.error ? (
-          <p role="alert" className="mt-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+          <p role="alert" className="mt-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]">
             {plan.error}
           </p>
         ) : plan.steps.length === 0 ? (
-          <p className="mt-3 flex items-center gap-2 rounded-md bg-[var(--success-soft)] px-3 py-2 text-sm font-medium text-[var(--success)]">
+          <p className="mt-3 flex items-center gap-2 rounded-md bg-[var(--success-soft)] px-3 py-2 text-sm font-medium text-[var(--success-text)]">
             <ShieldCheck className="h-4 w-4 shrink-0" aria-hidden="true" />
             Target already met.
           </p>
@@ -369,7 +382,7 @@ export default function ToolHome() {
                         <span className="flex flex-wrap items-center gap-2">
                           <span className="text-sm font-semibold">{item.title}</span>
                           {item.critical ? (
-                            <span className="rounded-full bg-[var(--danger-soft)] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--danger)]">
+                            <span className="rounded-full bg-[var(--danger-soft)] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--danger-text)]">
                               Critical
                             </span>
                           ) : null}

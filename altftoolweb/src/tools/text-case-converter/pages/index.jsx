@@ -103,6 +103,14 @@ export default function ToolHome() {
     downloadTextFile("altftool-text-cases.txt", allFormats);
   };
 
+  const resetText = () => {
+    const hasContentToLose = text.trim() !== "" && text !== sampleText;
+    if (hasContentToLose && !window.confirm("Reset will replace your current text with the sample text. Continue?")) {
+      return;
+    }
+    setText(sampleText);
+  };
+
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-7xl space-y-6">
@@ -120,7 +128,7 @@ export default function ToolHome() {
         <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
           <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
             <h2 className="text-lg font-semibold">Source text</h2>
-            <button type="button" onClick={() => setText(sampleText)} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-semibold hover:bg-[var(--muted)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 sm:min-h-10">
+            <button type="button" onClick={resetText} className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-[var(--border)] px-3 py-2 text-sm font-semibold hover:bg-[var(--muted)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 sm:min-h-10">
               <RotateCcw className="h-4 w-4" />
               Reset
             </button>
@@ -136,7 +144,11 @@ export default function ToolHome() {
               Download formats
             </button>
           </div>
-          {copied && <p className="mt-3 text-sm font-semibold text-green-600">{copied} copied</p>}
+          {copied && (
+            <p role="status" aria-live="polite" className="mt-3 text-sm font-semibold text-green-600">
+              {copied} copied
+            </p>
+          )}
         </section>
 
         <section className="tool-card-grid">

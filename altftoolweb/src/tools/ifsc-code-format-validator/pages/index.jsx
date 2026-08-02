@@ -60,6 +60,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the code and the batch list back to the example values? This can't be undone.",
+      )
+    ) {
+      return;
+    }
     setCode(DEFAULT_CODE);
     setBatchText(DEFAULT_BATCH);
     setShowBatch(false);
@@ -91,7 +98,6 @@ export default function ToolHome() {
           type="text"
           autoComplete="off"
           spellCheck="false"
-          maxLength={20}
           value={code}
           onChange={(event) => setCode(event.target.value)}
         />
@@ -111,7 +117,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Structure
             </p>
@@ -127,6 +133,17 @@ export default function ToolHome() {
                   : "The code does not match the RBI structure"
                 : "Enter a code above"}
             </p>
+            {ok && result.wasReformatted && (
+              <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                We{" "}
+                {result.hadSeparators && result.hadCaseChange
+                  ? "removed spaces/separators and adjusted case"
+                  : result.hadSeparators
+                    ? "removed spaces/separators"
+                    : "adjusted case"}{" "}
+                to get <span className="font-mono font-semibold">{result.normalised}</span>.
+              </p>
+            )}
           </div>
           <div className="flex flex-wrap gap-2">
             <button
@@ -248,7 +265,7 @@ export default function ToolHome() {
               value={batchText}
               onChange={(event) => setBatchText(event.target.value)}
             />
-            <p className="mt-2 text-sm text-[var(--muted-foreground)]">
+            <p className="mt-2 text-sm text-[var(--muted-foreground)]" aria-live="polite" role="status">
               {batch ? `${batch.validCount} valid, ${batch.invalidCount} invalid of ${batch.total}` : "—"}
             </p>
             <div className="mt-3 overflow-x-auto">

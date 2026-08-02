@@ -99,10 +99,28 @@ export default function ResultsPage() {
     return () => window.clearTimeout(timer);
   }, [criteria, results.length]);
 
-  if (!hasLoadedSession || !criteria) return null;
+  // Returning bare null here is why this route served no <h1> at all: the
+  // search criteria live in session storage, so the server render — and every
+  // crawler fetch — always took this branch. The wrapper carries no page class,
+  // so it paints nothing and the loading state looks exactly as it did.
+  if (!hasLoadedSession || !criteria) {
+    return (
+      <main aria-busy="true">
+        <h1 className="sr-only">Flight search results</h1>
+      </main>
+    );
+  }
 
   return (
     <main className="results-found-page">
+      {/*
+        The design has no visible title block — the route is shown in the mobile
+        topbar and the filter rail — so the page's one heading is visually
+        hidden rather than added to the layout.
+      */}
+      <h1 className="sr-only">
+        Flight search results from {criteria.from.city} to {criteria.to.city}
+      </h1>
       <ResultsHeader />
 
       <section className="mobile-results-topbar" aria-label="Current search">

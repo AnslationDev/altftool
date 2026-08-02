@@ -148,7 +148,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -203,9 +207,9 @@ export default function ToolHome() {
               <div
                 className="h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
                 role="img"
-                aria-label={`Protection score ${result.score} out of 100`}
+                aria-label={`Protection score ${result.effectiveScore} out of 100${result.bandCapped ? " (capped by endpoint exposure)" : ""}`}
               >
-                <span className="block h-full bg-[var(--primary)]" style={{ width: `${result.score}%` }} />
+                <span className="block h-full bg-[var(--primary)]" style={{ width: `${result.effectiveScore}%` }} />
               </div>
               <p className="mt-2 text-sm text-[var(--muted-foreground)]">{result.band.advice}</p>
             </div>

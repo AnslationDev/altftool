@@ -331,7 +331,7 @@ export default function PdfActiveContentInspector() {
                 }
               >
                 <div className="flex items-start gap-3">
-                  {hasCues ? (
+                  {hasCues || hasWarnings ? (
                     <AlertTriangle
                       className="mt-0.5 h-5 w-5 shrink-0"
                       aria-hidden="true"

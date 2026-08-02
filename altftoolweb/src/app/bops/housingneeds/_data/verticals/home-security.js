@@ -37,8 +37,8 @@ const homeSecurity = {
   "quoteLabel": "Get a Free Quote",
   "quoteUrl": "https://example.com/quote/home-security",
   "seo": {
-    "title": "Home Security Guide: Cameras, Alarms, Monitoring & Costs",
-    "description": "How home security systems work: cameras, video doorbells, smart locks, sensors, DIY vs professional 24/7 monitoring, insurance discounts, and what drives cost."
+    "title": "Home Security Guide: Cameras & Monitoring",
+    "description": "How home security systems work: cameras, video doorbells, smart locks, sensors, DIY vs professional monitoring, and what really drives the cost."
   },
   "services": [
     {

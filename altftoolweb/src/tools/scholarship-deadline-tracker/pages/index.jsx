@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { CalendarClock, Check, Copy, Plus, RotateCcw, Trash2 } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { DEFAULT_WARN_DAYS, trackDeadlines } from "../lib";
 
 const INPUT_CLASS =
@@ -43,7 +44,7 @@ export default function ToolHome() {
   const [warnDays, setWarnDays] = useState(String(DEFAULT_WARN_DAYS));
   const [rows, setRows] = useState(() => makeDefaultRows(initialToday));
   const [nextId, setNextId] = useState(3);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -86,23 +87,24 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [hasError, result, today]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "Deadline summary" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the tracker? This will discard every deadline you entered and restore the two sample rows. This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setToday(initialToday);
     setWarnDays(String(DEFAULT_WARN_DAYS));
     setRows(makeDefaultRows(initialToday));
     setNextId(3);
-    setCopied(false);
+    resetCopyState();
   };
 
   const next = hasError ? null : result.nextDeadline;
@@ -263,16 +265,19 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the deadline summary"
+              aria-label={isCopied("result") ? "Copied the deadline summary to clipboard" : "Copy the deadline summary"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button
               type="button"
               onClick={reset}

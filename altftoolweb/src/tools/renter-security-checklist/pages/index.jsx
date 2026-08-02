@@ -33,7 +33,7 @@ const SEVERITY_LABEL = {
 };
 
 /** Items ticked by default: the paperwork most renters already have on day one. */
-const DEFAULT_DONE = ["condition-photos", "deposit-receipt", "emergency-contacts", "lighting"];
+const DEFAULT_DONE = ["condition-photos", "deposit-receipt", "emergency-contacts"];
 
 const todayIso = () => new Date().toISOString().slice(0, 10);
 

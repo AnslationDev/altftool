@@ -201,7 +201,7 @@ export const lifeInsurance = {
   seo: {
     title: "Life Insurance — Compare Term & Whole Life Quotes | AltFTool",
     description:
-      "Compare life insurance quotes from trusted insurers in minutes. Protect your family's income, mortgage and future with term or whole life — free, no obligation.",
+      "Compare life insurance quotes from trusted insurers in minutes. Protect your family's income, mortgage and future with term or whole life cover.",
   },
 };
 

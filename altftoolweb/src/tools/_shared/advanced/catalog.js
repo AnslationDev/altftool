@@ -436,7 +436,7 @@ export const advancedCatalog = {
     "slug": "dead-pixel-screen-test",
     "name": "Dead-Pixel Screen Test",
     "description": "Full-screen patterns se dead ya stuck pixels locate kare.",
-    "category": "Device Sensors & Hardware Diagnostics",
+    "category": "Developer",
     "priority": "P2"
   },
   "multi-touch-tester": {
@@ -451,7 +451,7 @@ export const advancedCatalog = {
     "id": 212,
     "slug": "headphone-balance-test",
     "name": "Headphone Balance Test",
-    "description": "Left/right, stereo placement aur polarity test tones play kare.",
+    "description": "Left/right stereo placement aur channel balance check karne ke liye hard-panned tone alternate kare.",
     "category": "Device Sensors & Hardware Diagnostics",
     "priority": "P2"
   },

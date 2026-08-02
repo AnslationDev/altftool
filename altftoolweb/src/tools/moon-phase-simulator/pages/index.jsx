@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Moon, RotateCcw, Play, Pause, Sliders, Info, Sun } from "lucide-react";
+import { RotateCcw, Play, Pause, Sliders, Info } from "lucide-react";
 
 const PHASES = [
   { name: "New Moon", dayMin: 0, dayMax: 1.8, illum: 0 },
@@ -18,6 +18,7 @@ export default function MoonPhaseSimulator() {
   const [day, setDay] = useState(14.8); // Default Full Moon
   const [isPlaying, setIsPlaying] = useState(false);
   const [speed, setSpeed] = useState(1);
+  const [themeTick, setThemeTick] = useState(0);
 
   const canvasSpaceRef = useRef(null);
   const canvasEarthViewRef = useRef(null);
@@ -38,15 +39,14 @@ export default function MoonPhaseSimulator() {
   // Illumination %: 0% at angle 0, 100% at angle PI, 0% at 2PI
   const illuminationPct = Math.round((1 - Math.cos(phaseAngle)) * 50);
 
-  let currentPhaseName = "New Moon";
-  if (normDay >= 0 && normDay < 1.8) currentPhaseName = "New Moon";
-  else if (normDay >= 1.8 && normDay < 5.5) currentPhaseName = "Waxing Crescent";
-  else if (normDay >= 5.5 && normDay < 9.2) currentPhaseName = "First Quarter";
-  else if (normDay >= 9.2 && normDay < 12.9) currentPhaseName = "Waxing Gibbous";
-  else if (normDay >= 12.9 && normDay < 16.6) currentPhaseName = "Full Moon";
-  else if (normDay >= 16.6 && normDay < 20.3) currentPhaseName = "Waning Gibbous";
-  else if (normDay >= 20.3 && normDay < 24.0) currentPhaseName = "Third Quarter";
-  else currentPhaseName = "Waning Crescent";
+  // PHASES is the single source of truth for phase-name thresholds (see const above).
+  let currentPhaseName = PHASES[PHASES.length - 1].name;
+  for (const phase of PHASES) {
+    if (normDay >= phase.dayMin && normDay < phase.dayMax) {
+      currentPhaseName = phase.name;
+      break;
+    }
+  }
 
   // Animation ticker
   useEffect(() => {
@@ -56,6 +56,17 @@ export default function MoonPhaseSimulator() {
     }, 50);
     return () => clearInterval(interval);
   }, [isPlaying, speed]);
+
+  // Redraw the canvases when the site theme flips, so labels keep using live tokens.
+  useEffect(() => {
+    if (typeof MutationObserver === "undefined") return undefined;
+    const observer = new MutationObserver(() => setThemeTick((tick) => tick + 1));
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class", "data-theme", "style"],
+    });
+    return () => observer.disconnect();
+  }, []);
 
   // Space View Canvas (Top Down Orbit)
   useEffect(() => {
@@ -75,6 +86,14 @@ export default function MoonPhaseSimulator() {
     const cy = h / 2;
     const rOrbit = Math.min(w, h) * 0.35;
 
+    // Theme-aware label colors: raw canvas fills can't use CSS custom properties
+    // directly, so read the live tokens off the canvas element (same pattern as
+    // decision-wheel / conways-game-of-life canvases) instead of hardcoding a
+    // color tuned only for the dark backdrop.
+    const styles = getComputedStyle(canvas);
+    const sunLabelColor = styles.getPropertyValue("--warning-text").trim() || "#b45309";
+    const earthLabelColor = styles.getPropertyValue("--card-foreground").trim() || "#0f172a";
+
     ctx.clearRect(0, 0, w, h);
 
     // Sun Rays from Right side
@@ -86,7 +105,7 @@ export default function MoonPhaseSimulator() {
       ctx.lineTo(w - 60, y);
       ctx.stroke();
     }
-    ctx.fillStyle = "#FDE047";
+    ctx.fillStyle = sunLabelColor;
     ctx.font = "bold 11px sans-serif";
     ctx.fillText("Sunlight Rays ➔", w - 100, 20);
 
@@ -107,7 +126,7 @@ export default function MoonPhaseSimulator() {
     ctx.arc(cx, cy, 18, Math.PI / 2, (Math.PI * 3) / 2);
     ctx.fill();
 
-    ctx.fillStyle = "#ffffff";
+    ctx.fillStyle = earthLabelColor;
     ctx.font = "10px sans-serif";
     ctx.fillText("Earth", cx - 12, cy + 32);
 
@@ -137,7 +156,7 @@ export default function MoonPhaseSimulator() {
 
     ctx.restore();
 
-  }, [phaseAngle]);
+  }, [phaseAngle, themeTick]);
 
   // As Seen From Earth View Canvas
   useEffect(() => {
@@ -173,7 +192,7 @@ export default function MoonPhaseSimulator() {
       // Waxing (Lit on Right side)
       ctx.beginPath();
       ctx.arc(cx, cy, rMoon, -Math.PI / 2, Math.PI / 2);
-      ctx.ellipse(cx, cy, rMoon, Math.abs(cosAngle) * rMoon, 0, Math.PI / 2, -Math.PI / 2, cosAngle < 0);
+      ctx.ellipse(cx, cy, rMoon, Math.abs(cosAngle) * rMoon, 0, Math.PI / 2, -Math.PI / 2, cosAngle > 0);
       ctx.fill();
     } else {
       // Waning (Lit on Left side)
@@ -242,16 +261,19 @@ export default function MoonPhaseSimulator() {
               {/* Day Slider */}
               <div>
                 <div className="flex justify-between text-xs font-semibold mb-1">
-                  <span>Synodic Month Day</span>
+                  <label htmlFor="synodic-month-day">Synodic Month Day</label>
                   <span className="text-primary font-mono">{normDay.toFixed(1)} / 29.5 Days</span>
                 </div>
                 <input
+                  id="synodic-month-day"
                   type="range"
                   min="0"
                   max="29.53"
                   step="0.1"
                   value={normDay}
                   onChange={(e) => setDay(Number(e.target.value))}
+                  aria-label={`Synodic month day, ${normDay.toFixed(1)} of 29.5 days`}
+                  aria-valuetext={`Day ${normDay.toFixed(1)} of 29.5, ${currentPhaseName}, ${illuminationPct}% lit`}
                   className="w-full accent-primary"
                 />
               </div>
@@ -260,10 +282,32 @@ export default function MoonPhaseSimulator() {
               <div>
                 <label className="text-xs font-semibold mb-1.5 block">Phase Fast Jump</label>
                 <div className="grid grid-cols-2 gap-2 text-xs">
-                  <button onClick={() => setDay(0)} className="px-2.5 py-1.5 rounded border border-border hover:bg-surface-soft">New Moon (0d)</button>
-                  <button onClick={() => setDay(7.4)} className="px-2.5 py-1.5 rounded border border-border hover:bg-surface-soft">1st Quarter (7.4d)</button>
-                  <button onClick={() => setDay(14.8)} className="px-2.5 py-1.5 rounded border border-border hover:bg-surface-soft">Full Moon (14.8d)</button>
-                  <button onClick={() => setDay(22.1)} className="px-2.5 py-1.5 rounded border border-border hover:bg-surface-soft">3rd Quarter (22.1d)</button>
+                  <button onClick={() => setDay(0)} className="min-h-11 flex items-center justify-center px-2.5 py-1.5 rounded border border-border hover:bg-surface-soft">New Moon (0d)</button>
+                  <button onClick={() => setDay(7.4)} className="min-h-11 flex items-center justify-center px-2.5 py-1.5 rounded border border-border hover:bg-surface-soft">1st Quarter (7.4d)</button>
+                  <button onClick={() => setDay(14.8)} className="min-h-11 flex items-center justify-center px-2.5 py-1.5 rounded border border-border hover:bg-surface-soft">Full Moon (14.8d)</button>
+                  <button onClick={() => setDay(22.1)} className="min-h-11 flex items-center justify-center px-2.5 py-1.5 rounded border border-border hover:bg-surface-soft">3rd Quarter (22.1d)</button>
+                </div>
+              </div>
+
+              {/* Playback Speed */}
+              <div>
+                <label className="text-xs font-semibold mb-1.5 block" id="playback-speed-label">Playback Speed</label>
+                <div className="grid grid-cols-4 gap-2 text-xs" role="group" aria-labelledby="playback-speed-label">
+                  {[0.5, 1, 2, 4].map((rate) => (
+                    <button
+                      key={rate}
+                      type="button"
+                      onClick={() => setSpeed(rate)}
+                      aria-pressed={speed === rate}
+                      className={`min-h-11 flex items-center justify-center px-2 py-1.5 rounded border font-mono transition ${
+                        speed === rate
+                          ? "border-primary bg-primary/10 text-primary font-semibold"
+                          : "border-border hover:bg-surface-soft"
+                      }`}
+                    >
+                      {rate}x
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -298,7 +342,14 @@ export default function MoonPhaseSimulator() {
             <div className="rounded-2xl border border-border bg-card p-4 shadow-sm flex flex-col items-center min-h-[360px]">
               <div className="text-xs font-bold uppercase tracking-wider text-primary mb-2">Space Orbit View (Top-Down)</div>
               <div className="relative w-full flex-1">
-                <canvas ref={canvasSpaceRef} className="w-full h-full block" />
+                <canvas
+                  ref={canvasSpaceRef}
+                  className="w-full h-full block"
+                  role="img"
+                  aria-label={`Top-down diagram of the Moon orbiting Earth, lit by the Sun from the right. The Moon is currently at a phase angle of ${Math.round((phaseAngle * 180) / Math.PI)} degrees, day ${normDay.toFixed(1)} of the 29.5-day cycle (${currentPhaseName}).`}
+                >
+                  Top-down diagram of the Moon&apos;s orbital position around Earth relative to the Sun.
+                </canvas>
               </div>
             </div>
 
@@ -306,7 +357,14 @@ export default function MoonPhaseSimulator() {
             <div className="rounded-2xl border border-border bg-card p-4 shadow-sm flex flex-col items-center min-h-[360px]">
               <div className="text-xs font-bold uppercase tracking-wider text-primary mb-2">As Seen From Earth</div>
               <div className="relative w-full flex-1">
-                <canvas ref={canvasEarthViewRef} className="w-full h-full block" />
+                <canvas
+                  ref={canvasEarthViewRef}
+                  className="w-full h-full block"
+                  role="img"
+                  aria-label={`Illustration of the Moon as seen from Earth: ${currentPhaseName}, ${illuminationPct}% illuminated.`}
+                >
+                  Illustration of the Moon&apos;s illuminated shape as seen from Earth for the current phase.
+                </canvas>
               </div>
             </div>
 

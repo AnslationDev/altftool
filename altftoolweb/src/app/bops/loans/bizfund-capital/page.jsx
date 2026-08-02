@@ -140,10 +140,16 @@ export default function BizFundCapitalPage() {
 
         <section className="bizfund-stats" aria-label="BizFund Capital at a glance">
           <div className="bizfund-wrap bizfund-stats-grid">
-            <div className="bizfund-stat"><strong>$310M+</strong><small>funded to small businesses</small></div>
-            <div className="bizfund-stat"><strong>4 hrs</strong><small>typical decision time</small></div>
-            <div className="bizfund-stat"><strong>6,200+</strong><small>makers &amp; merchants served</small></div>
-            <div className="bizfund-stat"><strong>4.8/5</strong><small>average client rating</small></div>
+            {/*
+              BizFund Capital is a sample provider, not a lender. The stats here
+              claimed "$310M+ funded to small businesses", "6,200+ makers &
+              merchants served", a four-hour decision time and a 4.8/5 client
+              rating. Lending figures are a regulated claim in most places and
+              none of these had anything behind them.
+            */}
+            <div className="bizfund-stat"><strong>Template</strong><small>sample provider page</small></div>
+            <div className="bizfund-stat"><strong>No lending</strong><small>nothing is offered here</small></div>
+            <div className="bizfund-stat"><strong>No data sent</strong><small>the form is display-only</small></div>
           </div>
         </section>
 

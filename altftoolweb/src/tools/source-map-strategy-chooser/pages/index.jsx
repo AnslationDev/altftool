@@ -220,7 +220,7 @@ export default function ToolHome() {
 
       <section className={`mt-6 ${CARD}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div className="min-w-0">
+          <div className="min-w-0" role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Recommended devtool
             </p>
@@ -258,41 +258,43 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
-          {[
-            ["Mapping quality", best ? QUALITY_SCALE[best.quality] : DASH],
-            ["First build speed", best ? SPEED_SCALE[best.buildSpeed] : DASH],
-            ["Rebuild speed (watch mode)", best ? SPEED_SCALE[best.rebuildSpeed] : DASH],
-            ["Separate .map file", best ? (best.emitsFile ? "Yes" : "No") : DASH],
-            [
-              "Referenced from the bundle",
-              best ? (best.referenced ? "Yes, browsers fetch it" : "No") : DASH,
-            ],
-            [
-              "Readable source for visitors",
-              best ? (best.exposesSource ? "Yes" : "No") : DASH,
-            ],
-          ].map(([label, value]) => (
-            <div key={label} className="flex items-center justify-between gap-4 py-2.5">
-              <dt className="text-[var(--muted-foreground)]">{label}</dt>
-              <dd className="text-right font-semibold">{value}</dd>
-            </div>
-          ))}
-        </dl>
-
-        {best ? (
-          <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm leading-6 text-[var(--muted-foreground)]">
-            {best.note}
-          </p>
-        ) : null}
-
-        {best && best.reasons.length > 0 ? (
-          <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-[var(--muted-foreground)]">
-            {best.reasons.map((reason) => (
-              <li key={reason}>{reason}</li>
+        <div role="status" aria-live="polite">
+          <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+            {[
+              ["Mapping quality", best ? QUALITY_SCALE[best.quality] : DASH],
+              ["First build speed", best ? SPEED_SCALE[best.buildSpeed] : DASH],
+              ["Rebuild speed (watch mode)", best ? SPEED_SCALE[best.rebuildSpeed] : DASH],
+              ["Separate .map file", best ? (best.emitsFile ? "Yes" : "No") : DASH],
+              [
+                "Referenced from the bundle",
+                best ? (best.referenced ? "Yes, browsers fetch it" : "No") : DASH,
+              ],
+              [
+                "Readable source for visitors",
+                best ? (best.exposesSource ? "Yes" : "No") : DASH,
+              ],
+            ].map(([label, value]) => (
+              <div key={label} className="flex items-center justify-between gap-4 py-2.5">
+                <dt className="text-[var(--muted-foreground)]">{label}</dt>
+                <dd className="text-right font-semibold">{value}</dd>
+              </div>
             ))}
-          </ul>
-        ) : null}
+          </dl>
+
+          {best ? (
+            <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm leading-6 text-[var(--muted-foreground)]">
+              {best.note}
+            </p>
+          ) : null}
+
+          {best && best.reasons.length > 0 ? (
+            <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-[var(--muted-foreground)]">
+              {best.reasons.map((reason) => (
+                <li key={reason}>{reason}</li>
+              ))}
+            </ul>
+          ) : null}
+        </div>
       </section>
 
       {configs ? (

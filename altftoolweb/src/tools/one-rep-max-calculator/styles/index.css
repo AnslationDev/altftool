@@ -46,7 +46,7 @@ body {
 }
 
 .orm-tool-shell {
-    min-height: 100vh;
+    min-height: 100dvh;
     background: var(--orm-bg);
     transition: background-color 0.3s ease;
     padding: 24px;

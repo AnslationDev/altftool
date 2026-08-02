@@ -300,8 +300,12 @@ export function buildFreeLookRequest({
   }
 
   const linkedLine = kind.linked
-    ? `As this is a unit-linked policy, I understand the units will be repurchased at the unit price prevailing on the date of cancellation. The fund value as per my latest statement is ${Math.round(fund)} rupees.`
+    ? `As this is a unit-linked policy, I understand the units will be repurchased at the unit price prevailing on the date of cancellation, so this refund follows the fund value and not the premium paid. The fund value as per my latest statement is ${Math.round(fund)} rupees, and the charges recovered on repurchase of the units are ${Math.round(charges)} rupees.`
     : "";
+
+  const refundRequestLine = kind.linked
+    ? `I request a refund of the fund value plus the charges recovered on repurchase of the units, ${Math.round(grossBase)} rupees, after deducting only the proportionate risk premium for the ${daysOnCover} day${daysOnCover === 1 ? "" : "s"} of cover, the actual expenses incurred on the medical examination and the stamp duty charges, as permitted.`
+    : `I request a refund of the premium paid, ${Math.round(premium)} rupees, after deducting only the proportionate risk premium for the ${daysOnCover} day${daysOnCover === 1 ? "" : "s"} of cover, the actual expenses incurred on the medical examination and the stamp duty charges, as permitted.`;
 
   const letter = [
     `Date: ${formatStamp(request)}`,
@@ -318,7 +322,7 @@ export function buildFreeLookRequest({
     "",
     `On reviewing the policy I find that ${reason.text}. I therefore exercise the free look option and request cancellation of the policy with effect from the date of this letter. The free look period of ${FREE_LOOK_DAYS} days from receipt of the policy document runs to ${formatStamp(deadline)}, and this request is made ${withinWindow ? `within that period, on day ${daysUsed}` : `after that period, on day ${daysUsed}, for the reasons explained separately`}.`,
     "",
-    `I request a refund of the premium paid, ${Math.round(premium)} rupees, after deducting only the proportionate risk premium for the ${daysOnCover} day${daysOnCover === 1 ? "" : "s"} of cover, the actual expenses incurred on the medical examination and the stamp duty charges, as permitted. ${linkedLine}`.trim(),
+    `${refundRequestLine} ${linkedLine}`.trim(),
     "",
     "Kindly credit the refund to the account below by NEFT and send me the cancellation endorsement and the refund advice by email:",
     `Account number: ${account}`,

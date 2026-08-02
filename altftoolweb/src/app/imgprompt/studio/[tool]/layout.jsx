@@ -1,5 +1,6 @@
 import { NAV_ITEMS_BY_SLUG } from "../../data/navigation";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import { getStudioToolDescription } from "../toolDescriptions";
 
 const INDEXABLE_KINDS = new Set(["core", "model", "category"]);
 
@@ -18,9 +19,13 @@ export async function generateMetadata({ params }) {
   }
 
   const isIndexable = INDEXABLE_KINDS.has(item.kind);
-  const description =
-    item.description ||
-    `Create and refine ${item.label.toLowerCase()} prompts in the AltF AI Prompt Studio.`;
+  // Was `item.description || \`Create and refine ${item.label.toLowerCase()}
+  // prompts…\``, which had two faults. The subtitles in navigation.js are
+  // 28-34 characters, and the fallback was 59-69 — 35 of these 52 indexable
+  // URLs shipped a description under the 70-character floor. And lowercasing
+  // the label produced "midjourney", "dall·e" and, for the nine labels that
+  // already end in "Prompt", "anime prompt prompts".
+  const description = getStudioToolDescription(item);
 
   return createPageMetadata({
     title: `${item.label} - AI Prompt Studio`,

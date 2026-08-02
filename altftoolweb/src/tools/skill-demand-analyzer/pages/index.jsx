@@ -45,8 +45,10 @@ const FACTOR_LABELS = {
   remote: "Remote share",
 };
 
-export default function ToolHome() {
-  const [form, setForm] = useState(DEFAULTS);
+export default function ToolHome({ initialSearch } = {}) {
+  const [form, setForm] = useState(() =>
+    initialSearch ? { ...DEFAULTS, skill: initialSearch } : DEFAULTS,
+  );
   const [copied, setCopied] = useState(false);
 
   const setField = (key) => (event) =>

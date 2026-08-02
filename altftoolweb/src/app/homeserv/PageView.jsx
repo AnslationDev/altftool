@@ -8,7 +8,6 @@ import {
   MapPin,
   MousePointerClick,
   ShieldCheck,
-  Star,
   Users,
 } from "lucide-react";
 import Footer from "@/platform/navigation/Footer";
@@ -42,31 +41,14 @@ const steps = [
   },
 ];
 
-const testimonials = [
-  {
-    name: "Maya Bennett",
-    role: "Kitchen Remodel",
-    quote:
-      "QuoteNest gave us three clear estimates by lunch. The contractor we chose finished ahead of schedule and the kitchen feels completely new.",
-  },
-  {
-    name: "Andre Wilson",
-    role: "HVAC Repair",
-    quote:
-      "Our AC quit during a heat wave. I had a licensed tech booked within the hour, with the price range shown before anyone arrived.",
-  },
-  {
-    name: "Nora Patel",
-    role: "Bathroom Upgrade",
-    quote:
-      "The quote comparison made it easy to spot the best fit. Clean work, fair pricing, and no awkward phone tag.",
-  },
-];
-
+/**
+ * "50K+ Homeowners" and "4.9/5 Rating" are gone: nothing in this app counts a
+ * homeowner or collects a rating, so neither figure had a source. What is left
+ * describes the service instead of inventing an audience for it.
+ */
 const heroStats = [
-  { label: "50K+ Homeowners", icon: Users },
-  { label: "4.9/5 Rating", icon: Star },
-  { label: "Trusted Pros", icon: ShieldCheck },
+  { label: "Compare local pros", icon: Users },
+  { label: "Free to use", icon: ShieldCheck },
 ];
 
 const homeServiceTitles = {
@@ -205,36 +187,16 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Reviews */}
-      <section className="hs-section" id="reviews">
-        <div className="hs-heading hs-heading-center">
-          <span className="hs-eyebrow">Example homeowner notes</span>
-          <h2 style={{ fontSize: "clamp(26px, 2.8vw, 38px)" }}>What Homeowners Might Say</h2>
-          <p style={{ fontSize: 16 }}>Illustrative example quotes, not real customer feedback.</p>
-        </div>
-        <div className="hs-testimonial-grid">
-          {testimonials.map((item) => (
-            <article className="hs-testimonial-card" key={item.name}>
-              <span className="hs-testimonial-avatar">
-                <img
-                  src={`https://i.pravatar.cc/160?u=${item.name}`}
-                  alt={`${item.name}, ${item.role}`}
-                />
-              </span>
-              <span className="hs-stars" aria-label="Five star rating">
-                {Array.from({ length: 5 }).map((_, starIndex) => (
-                  <Star key={starIndex} size={17} fill="currentColor" />
-                ))}
-              </span>
-              <span className="hs-testimonial-quote">{item.quote}</span>
-              <span className="hs-testimonial-person">
-                <strong>{item.name}</strong>
-                <small>{item.role}</small>
-              </span>
-            </article>
-          ))}
-        </div>
-      </section>
+      {/*
+        The Reviews section is gone. It carried three testimonials from
+        "Maya Bennett", "Andre Wilson" and "Nora Patel", each stamped five stars,
+        each with an avatar generated from pravatar.cc — and the section header
+        called it "Real feedback from people who compared local quotes". Nobody
+        wrote those quotes and none of those people exist, so the header was the
+        most direct false statement on the page.
+
+        It goes back when there are real reviews, given with permission.
+      */}
 
       <Footer />
     </main>

@@ -139,13 +139,15 @@ export function estimateGraniteCost({
     ((sinkLengthInches / INCHES_PER_FOOT) * (sinkWidthInches / INCHES_PER_FOOT));
 
   const notes = [];
-  notes.push(
-    `A cutout does not reduce the stone you buy — the slab is purchased whole and the hole is cut from it. ${
-      sinkOffcutSqft > 0
-        ? `The sink offcut alone is about ${sinkOffcutSqft.toFixed(2)} sq ft of usable granite; ask for it back.`
-        : "Ask the fabricator to leave the cut-out piece with you."
-    }`,
-  );
+  if (sinkCutouts > 0 || hobCutouts > 0) {
+    notes.push(
+      `A cutout does not reduce the stone you buy — the slab is purchased whole and the hole is cut from it. ${
+        sinkOffcutSqft > 0
+          ? `The sink offcut alone is about ${sinkOffcutSqft.toFixed(2)} sq ft of usable granite; ask for it back.`
+          : "Ask the fabricator to leave the cut-out piece with you."
+      }`,
+    );
+  }
   if (platformDepthFt !== DEFAULT_PLATFORM_DEPTH_FT) {
     notes.push(
       `Depth is set to ${platformDepthFt} ft. Standard Indian base units give a ${DEFAULT_PLATFORM_DEPTH_FT} ft counter, and going deeper often forces a wider slab and a higher rate per square foot.`,

@@ -57,17 +57,17 @@ export const ASL_LETTERS = [
   { char: "E", fingers: "cccc", thumb: "t", group: "round", label: "Curled tips on thumb", description: "All four fingertips curl down onto the thumb, which is tucked in beneath them.", confusedWith: ["S", "O"] },
   { char: "F", fingers: "ceee", thumb: "r", group: "round", label: "Thumb-and-index circle", description: "Thumb and index fingertip touch to form a circle; middle, ring and little finger stay straight up.", confusedWith: ["9"] },
   { char: "G", fingers: "exxx", thumb: "s", group: "fingers", label: "Index and thumb parallel", description: "Index finger and thumb held parallel and pointing sideways, the rest of the hand closed.", confusedWith: ["Q"] },
-  { char: "H", fingers: "eexx", thumb: "a", group: "fingers", label: "Two fingers sideways", description: "Index and middle finger together, pointing sideways rather than up.", confusedWith: ["U"] },
+  { char: "H", fingers: "eexx", thumb: "a", group: "fingers", label: "Two fingers sideways", description: "Index and middle finger together, pointing sideways rather than up.", confusedWith: ["U", "R"] },
   { char: "I", fingers: "xxxe", thumb: "a", group: "fist", label: "Little finger up", description: "Little finger straight up from a closed fist, thumb across the folded fingers.", confusedWith: ["J", "Y"] },
   { char: "J", fingers: "xxxe", thumb: "a", group: "moving", label: "I, then trace a J", motion: "Trace the hook of a J downward and around with the little finger.", description: "Start in the I shape, then draw the curve of a J in the air with the little finger.", confusedWith: ["I"] },
   { char: "K", fingers: "eexx", thumb: "b", spread: true, group: "fingers", label: "V with thumb between", description: "Index and middle finger up in a V with the thumb pressed between them at the base.", confusedWith: ["P", "V"] },
-  { char: "L", fingers: "exxx", thumb: "o", group: "fingers", label: "Right-angled L", description: "Index finger straight up and thumb straight out to the side, forming a right angle.", confusedWith: [] },
+  { char: "L", fingers: "exxx", thumb: "o", group: "fingers", label: "Right-angled L", description: "Index finger straight up and thumb straight out to the side, forming a right angle.", confusedWith: ["Q"] },
   { char: "M", fingers: "bbbx", thumb: "t", group: "fist", label: "Three fingers over thumb", description: "Thumb tucked under three folded fingers — index, middle and ring lie over it.", confusedWith: ["N", "T"] },
   { char: "N", fingers: "bbxx", thumb: "t", group: "fist", label: "Two fingers over thumb", description: "Thumb tucked under two folded fingers — index and middle lie over it.", confusedWith: ["M", "T"] },
   { char: "O", fingers: "cccc", thumb: "r", group: "round", label: "Closed O ring", description: "Fingers and thumb curve until the tips meet, leaving a clear round hole.", confusedWith: ["C", "0"] },
   { char: "P", fingers: "eexx", thumb: "b", spread: true, group: "fingers", label: "K pointed down", description: "The K handshape rotated so the fingers point downward and the palm faces down.", confusedWith: ["K"] },
-  { char: "Q", fingers: "exxx", thumb: "o", group: "fingers", label: "G pointed down", description: "The G handshape rotated so index finger and thumb point downward.", confusedWith: ["G"] },
-  { char: "R", fingers: "eexx", thumb: "a", group: "fingers", label: "Crossed fingers", description: "Index and middle finger crossed over one another and held up.", confusedWith: ["U", "V"] },
+  { char: "Q", fingers: "exxx", thumb: "o", group: "fingers", label: "G pointed down", description: "The G handshape rotated so index finger and thumb point downward.", confusedWith: ["G", "L"] },
+  { char: "R", fingers: "eexx", thumb: "a", group: "fingers", label: "Crossed fingers", description: "Index and middle finger crossed over one another and held up.", confusedWith: ["U", "V", "H"] },
   { char: "S", fingers: "xxxx", thumb: "a", group: "fist", label: "Fist, thumb across front", description: "Closed fist with the thumb wrapped across the front of the folded fingers.", confusedWith: ["A", "T", "E"] },
   { char: "T", fingers: "bxxx", thumb: "b", group: "fist", label: "One finger over thumb", description: "Fist with the thumb poking up between the index and middle finger.", confusedWith: ["A", "M", "N"] },
   { char: "U", fingers: "eexx", thumb: "a", group: "fingers", label: "Two fingers together, up", description: "Index and middle finger straight up and held tightly together.", confusedWith: ["V", "R", "H"] },
@@ -75,7 +75,7 @@ export const ASL_LETTERS = [
   { char: "W", fingers: "eeex", thumb: "a", spread: true, group: "fingers", label: "Three fingers spread", description: "Index, middle and ring finger up and spread, with the thumb holding the little finger down.", confusedWith: ["6"] },
   { char: "X", fingers: "cxxx", thumb: "a", group: "fist", label: "Hooked index", description: "Index finger bent into a hook from a closed fist, like a crooked beckoning finger.", confusedWith: [] },
   { char: "Y", fingers: "xxxe", thumb: "o", group: "fist", label: "Thumb and little finger out", description: "Thumb and little finger extended in opposite directions, the three middle fingers folded down.", confusedWith: ["I"] },
-  { char: "Z", fingers: "exxx", thumb: "a", group: "moving", label: "Index draws a Z", motion: "Draw a Z in the air: across, diagonally down, then across again.", description: "Index finger extended and used to trace the three strokes of a Z.", confusedWith: [] },
+  { char: "Z", fingers: "exxx", thumb: "a", group: "moving", label: "Index draws a Z", motion: "Draw a Z in the air: across, diagonally down, then across again.", description: "Index finger extended and used to trace the three strokes of a Z.", confusedWith: ["1"] },
 ];
 
 /**
@@ -85,7 +85,7 @@ export const ASL_LETTERS = [
  */
 export const ASL_NUMBERS = [
   { char: "0", fingers: "cccc", thumb: "r", group: "round", label: "O ring", description: "Fingers and thumb form a closed round shape — the same handshape as the letter O.", confusedWith: ["O"] },
-  { char: "1", fingers: "exxx", thumb: "a", group: "fingers", label: "Index up", description: "Index finger straight up from a closed fist.", confusedWith: ["D"] },
+  { char: "1", fingers: "exxx", thumb: "a", group: "fingers", label: "Index up", description: "Index finger straight up from a closed fist.", confusedWith: ["D", "Z"] },
   { char: "2", fingers: "eexx", thumb: "a", spread: true, group: "fingers", label: "V shape", description: "Index and middle finger up and spread — the same handshape as the letter V.", confusedWith: ["V"] },
   { char: "3", fingers: "eexx", thumb: "o", group: "fingers", label: "Thumb, index, middle", description: "Thumb, index and middle finger extended; ring and little finger folded down.", confusedWith: ["6"] },
   { char: "4", fingers: "eeee", thumb: "a", spread: true, group: "fingers", label: "Four fingers up", description: "Four fingers up and slightly spread with the thumb across the palm.", confusedWith: ["B"] },

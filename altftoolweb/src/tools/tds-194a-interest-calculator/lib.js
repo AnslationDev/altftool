@@ -146,14 +146,14 @@ export function computeTds194A({
     declarationFiled,
   };
 
-  const nil = (reason) => ({
+  const nil = (reason, headroom = 0) => ({
     ...shared,
     appliedRate: 0,
     thresholdCrossed: interestAmount > threshold,
     deductionRequired: false,
     tds: 0,
     netInterest: round2(interestAmount),
-    headroom: round2(Math.max(0, threshold - interestAmount)),
+    headroom,
     reason,
   });
 
@@ -163,7 +163,11 @@ export function computeTds194A({
     );
   }
 
-  if (declarationFiled) {
+  // Section 206AA(2): a Form 15G/15H declaration is valid only if the payee's
+  // PAN is furnished with it. Without PAN the declaration cannot stop the
+  // deduction, so this falls through to the normal threshold/rate logic below
+  // (which will apply the 20% no-PAN rate once the threshold is crossed).
+  if (declarationFiled && panFurnished) {
     return nil(
       `A valid Form ${seniorCitizen ? "15H" : "15G"} under section 197A stops the deduction. The declaration is valid only if the conditions in section 197A are met, and it does not make the interest tax-free.`,
     );
@@ -172,6 +176,7 @@ export function computeTds194A({
   if (interestAmount <= threshold) {
     return nil(
       `Interest of ${inr(round2(interestAmount))} for the year is within the ${inr(threshold)} limit for this payer, so no tax is deducted.`,
+      round2(Math.max(0, threshold - interestAmount)),
     );
   }
 
@@ -180,6 +185,9 @@ export function computeTds194A({
   let reason = `Interest of ${inr(round2(interestAmount))} exceeds the ${inr(threshold)} limit, so ${rate}% is deducted on the whole interest, not just on the excess.`;
   if (!panFurnished) {
     reason += ` No PAN is on record, so section 206AA raises the rate from ${STANDARD_RATE}% to ${NO_PAN_RATE}%.`;
+    if (declarationFiled) {
+      reason += ` The Form ${seniorCitizen ? "15H" : "15G"} on file is not valid without a PAN under section 206AA(2), so it does not stop the deduction.`;
+    }
   }
 
   return {

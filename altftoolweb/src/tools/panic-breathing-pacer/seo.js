@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The Panic Breathing Pacer is an extended-exhale breathing guide built for the moment anxiety spikes, when breathing is already fast. Rather than asking you to jump straight to a slow rate, it starts near the rate you are breathing at now — often 18 to 25 breaths a minute — and ramps down breath by breath towards about 6 a minute, the rate associated with peak heart-rate variability. The exhale is always longer than the inhale, because heart rate falls during exhalation, and the instructions ask for small, quiet breaths rather than deep ones.",
+    "The Panic Breathing Pacer is an extended-exhale breathing guide built for the moment anxiety spikes, when breathing is already fast. Rather than asking you to jump straight to a slow rate, it starts near the rate you are breathing at now — often 18 to 25 breaths a minute — and ramps down breath by breath towards about 6 a minute, the rate associated with peak heart-rate variability. Most patterns give the exhale more time than the inhale, because heart rate falls during exhalation, though an even 5:5 pattern is offered for anyone who finds a long exhale uncomfortable; the instructions ask for small, quiet breaths rather than deep ones.",
   useCases: [
     "Slow a racing breath during a panic attack without being told to 'just breathe deeply'.",
     "Wind down after an adrenaline spike — a near miss in traffic, bad news, a confrontation.",
@@ -14,7 +14,7 @@ const seo = {
     ],
     [
       "Exhale-weighted by design",
-      "Every pattern gives the exhale the larger share of the breath, the part linked to parasympathetic activation.",
+      "Three of the four patterns give the exhale more time than the inhale, the part linked to parasympathetic activation, with an even 5:5 option for anyone a long exhale leaves feeling short of air.",
     ],
     [
       "Small breaths, not deep ones",

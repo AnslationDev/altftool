@@ -217,7 +217,7 @@ export function planSeniorSleep({
       `The recommended range for ${age >= OLDER_ADULT_AGE ? "adults 65 and over" : "adults under 65"} is ${band.min} to ${band.max} hours a night; you have set ${target}.`,
     );
   }
-  if (nap > NAP_RULES.maxMinutes) {
+  if (napPlan?.overLong) {
     notes.push(
       `A ${Math.round(nap)}-minute nap is long enough to enter deep sleep, which causes grogginess and eats into night-time sleep pressure. Cap naps at ${NAP_RULES.maxMinutes} minutes.`,
     );
@@ -245,7 +245,11 @@ export function planSeniorSleep({
     lightsOutMinutes: lightsOut,
     lightsOut24: minutesToTime(lightsOut),
     lightsOut12: minutesToClock12(lightsOut),
-    totalSleepWithNapMinutes: targetMinutes + Math.round(nap),
+    // Uses the capped/recommended nap length (napPlan.minutes), not the raw input,
+    // so this stays consistent with the "Nap window" figure and the 30-minute-cap
+    // note shown alongside it — a nap longer than the cap does not add extra sleep
+    // to the routine this planner actually recommends.
+    totalSleepWithNapMinutes: targetMinutes + (napPlan ? napPlan.minutes : 0),
     schedule,
     napPlan,
     efficiency,

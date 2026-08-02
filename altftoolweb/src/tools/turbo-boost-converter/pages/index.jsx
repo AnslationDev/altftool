@@ -34,6 +34,14 @@ const GHOST_BTN =
 
 const DASH = "—";
 
+/** extraAirPercent can be negative (charge ends up thinner than atmospheric even
+ * after the intercooler), so the wording has to track the sign instead of
+ * always claiming "more" air. */
+const chargeAirNote = (percent) =>
+  percent < 0
+    ? `${ONE.format(Math.abs(percent))}% less air than atmospheric`
+    : `${ONE.format(percent)}% more air than atmospheric`;
+
 export default function ToolHome() {
   const [value, setValue] = useState(DEFAULTS.value);
   const [unit, setUnit] = useState(DEFAULTS.unit);
@@ -102,7 +110,7 @@ export default function ToolHome() {
         `Intake air: ${ONE.format(result.charge.tInC)} °C`,
         `Compressor outlet: ${ONE.format(result.charge.tOutC)} °C (rise of ${ONE.format(result.charge.compressorRiseC)} °C)`,
         `After intercooler: ${ONE.format(result.charge.tAfterC)} °C`,
-        `Charge density ratio: ${THREE.format(result.charge.densityRatio)} (${ONE.format(result.charge.extraAirPercent)}% more air than atmospheric)`,
+        `Charge density ratio: ${THREE.format(result.charge.densityRatio)} (${chargeAirNote(result.charge.extraAirPercent)})`,
         `Without an intercooler it would be: ${THREE.format(result.charge.densityRatioNoIc)}`,
       );
     } else {
@@ -363,7 +371,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Pressure ratio
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">
               {failed ? DASH : THREE.format(result.pressureRatio)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -394,7 +402,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <div className="mt-5 overflow-x-auto">
+        <div className="mt-5 overflow-x-auto" aria-live="polite">
           <table className="w-full min-w-[360px] text-left text-sm">
             <thead>
               <tr className="border-b border-[var(--border)] text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -446,7 +454,7 @@ export default function ToolHome() {
             Compressing air heats it, and hot air is less dense — which is why boost pressure alone
             does not tell you how much air the engine receives.
           </p>
-          <dl className="mt-4 divide-y divide-[var(--border)] text-sm">
+          <dl className="mt-4 divide-y divide-[var(--border)] text-sm" aria-live="polite">
             {[
               [
                 "Intake air",
@@ -464,8 +472,8 @@ export default function ToolHome() {
               ["Intercooler removes", `${ONE.format(result.charge.intercoolerDropC)} °C`],
               ["Charge density ratio", THREE.format(result.charge.densityRatio)],
               [
-                "Extra air over atmospheric",
-                `${ONE.format(result.charge.extraAirPercent)}%`,
+                "Charge air vs atmospheric",
+                chargeAirNote(result.charge.extraAirPercent),
               ],
               [
                 "Density ratio without an intercooler",

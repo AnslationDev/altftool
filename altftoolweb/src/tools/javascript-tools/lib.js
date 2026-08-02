@@ -78,7 +78,136 @@ const REGEX_PRECEDING_WORDS = new Set([
  */
 export const SAFE_TO_HUG = "{}()[];,:";
 
+/**
+ * The minifier's actual punctuation-hugging pattern, derived from
+ * `SAFE_TO_HUG` so the two can never drift apart. Only `]`, `\`, `^` and `-`
+ * are meaningful inside a `[...]` character class and need escaping — none
+ * of the other `SAFE_TO_HUG` characters do.
+ */
+const HUGGABLE_PUNCTUATION = new RegExp(` ?([${SAFE_TO_HUG.replace(/[\]\\^-]/g, "\\$&")}]) ?`, "g");
+
 const isIdentChar = (char) => /[A-Za-z0-9_$]/.test(char);
+
+/**
+ * Scan a single- or double-quoted string literal starting at `start` (the
+ * opening quote). Mirrors the string-literal branch of `scanRegions` exactly,
+ * so a string nested inside a template-literal `${...}` substitution is
+ * skipped identically to one found at the top level.
+ *
+ * @returns {number} index just past the closing quote (or the end of the
+ *   line/source, if the string is never closed).
+ */
+function scanStringLiteralAt(source, start) {
+  const quote = source[start];
+  const length = source.length;
+  let end = start + 1;
+  while (end < length) {
+    if (source[end] === "\\") {
+      end += 2;
+      continue;
+    }
+    if (source[end] === quote) {
+      end += 1;
+      break;
+    }
+    if (source[end] === "\n") break;
+    end += 1;
+  }
+  return end;
+}
+
+/**
+ * Scan the code inside a `${ ... }` template substitution, starting right
+ * after the `${`. A plain depth counter tracks `{`/`}` nesting so a braced
+ * block that lives inside the substitution — an arrow-function body, an
+ * `if` block, an object literal, and so on — is never confused with the
+ * brace that actually closes the substitution. Strings, line/block comments
+ * and — recursively, via `scanTemplateLiteral` — nested template literals
+ * (which may contain their own `${...}` substitutions) are skipped
+ * wholesale, so a `}` or a backtick that lives inside one of those can never
+ * be mistaken for substitution syntax.
+ *
+ * @returns {number} index just past the substitution's closing `}` (or the
+ *   end of the source, if the substitution is never closed).
+ */
+function scanTemplateSubstitution(source, start) {
+  const length = source.length;
+  let index = start;
+  let depth = 0;
+
+  while (index < length) {
+    const char = source[index];
+
+    if (char === "`") {
+      index = scanTemplateLiteral(source, index).end;
+      continue;
+    }
+    if (char === '"' || char === "'") {
+      index = scanStringLiteralAt(source, index);
+      continue;
+    }
+    if (char === "/" && source[index + 1] === "/") {
+      while (index < length && source[index] !== "\n") index += 1;
+      continue;
+    }
+    if (char === "/" && source[index + 1] === "*") {
+      index += 2;
+      while (index < length && !(source[index] === "*" && source[index + 1] === "/")) index += 1;
+      index = index < length ? index + 2 : length;
+      continue;
+    }
+    if (char === "{") {
+      depth += 1;
+      index += 1;
+      continue;
+    }
+    if (char === "}") {
+      if (depth === 0) return index + 1;
+      depth -= 1;
+      index += 1;
+      continue;
+    }
+    index += 1;
+  }
+
+  return length;
+}
+
+/**
+ * Scan a template literal starting at `start` (its opening backtick).
+ * Recurses into `scanTemplateSubstitution` for every `${ ... }`, which in
+ * turn recurses back here for any template literal nested inside it. That
+ * mutual recursion is what lets arbitrarily deep nesting — a substitution
+ * containing a braced block that itself contains another template literal,
+ * and so on — resolve correctly, instead of the flat brace counter this
+ * replaces (which could be driven back to zero by a nested block's closing
+ * `}`, causing the next backtick to be misread as the outer template's own
+ * terminator).
+ *
+ * @returns {{ end: number, terminated: boolean }}
+ */
+function scanTemplateLiteral(source, start) {
+  const length = source.length;
+  let index = start + 1;
+
+  while (index < length) {
+    const char = source[index];
+    if (char === "\\") {
+      index += 2;
+      continue;
+    }
+    if (char === "`") {
+      return { end: index + 1, terminated: true };
+    }
+    if (char === "$" && source[index + 1] === "{") {
+      index = scanTemplateSubstitution(source, index + 2);
+      continue;
+    }
+    index += 1;
+  }
+
+  return { end: length, terminated: false };
+}
 
 /**
  * Split source into lexical regions.
@@ -153,32 +282,7 @@ export function scanRegions(source) {
 
     if (char === "`") {
       flushCode(index);
-      let end = index + 1;
-      let braceDepth = 0;
-      let terminated = false;
-      while (end < length) {
-        const current = source[end];
-        if (current === "\\") {
-          end += 2;
-          continue;
-        }
-        if (current === "$" && source[end + 1] === "{") {
-          braceDepth += 1;
-          end += 2;
-          continue;
-        }
-        if (current === "}" && braceDepth > 0) {
-          braceDepth -= 1;
-          end += 1;
-          continue;
-        }
-        if (current === "`" && braceDepth === 0) {
-          end += 1;
-          terminated = true;
-          break;
-        }
-        end += 1;
-      }
+      const { end, terminated } = scanTemplateLiteral(source, index);
       regions.push({ type: "template", value: source.slice(index, end), terminated });
       index = end;
       codeStart = index;
@@ -302,7 +406,7 @@ export function minifyJavaScript(source, options = {}) {
       .replace(/\n{2,}/g, "\n");
 
     // Hug punctuation that cannot merge with a neighbouring token.
-    chunk = chunk.replace(/ ?([{}()[\];,:]) ?/g, "$1");
+    chunk = chunk.replace(HUGGABLE_PUNCTUATION, "$1");
     out += chunk;
   }
 
@@ -362,6 +466,9 @@ export function formatJavaScript(source, options = {}) {
   };
   const BRACE_CONTINUATION_CHARS = new Set([")", "]", "}", ",", ";", ".", ":", "="]);
   const BRACE_CONTINUATION_WORDS = ["else", "catch", "finally", "while"];
+  // Match the keyword itself, not merely an identifier that starts with the
+  // same letters (e.g. `catchAllErrors()` must not be treated as `catch`).
+  const BRACE_CONTINUATION_PATTERN = new RegExp(`^(?:${BRACE_CONTINUATION_WORDS.join("|")})(?![\\w$])`);
 
   for (const region of regions) {
     if (region.type !== "code") {
@@ -392,10 +499,9 @@ export function formatJavaScript(source, options = {}) {
         justClosedBrace = false;
         const rest = body.slice(position);
         const continues =
-          BRACE_CONTINUATION_CHARS.has(char) ||
-          BRACE_CONTINUATION_WORDS.some((word) => rest.startsWith(word));
+          BRACE_CONTINUATION_CHARS.has(char) || BRACE_CONTINUATION_PATTERN.test(rest);
         if (!continues && !atLineStart) newline();
-        else if (continues && BRACE_CONTINUATION_WORDS.some((word) => rest.startsWith(word))) {
+        else if (continues && BRACE_CONTINUATION_PATTERN.test(rest)) {
           if (!atLineStart && !out.endsWith(" ")) out += " ";
         }
       }
@@ -522,10 +628,43 @@ export function analyseJavaScript(source) {
     .join("");
 
   const lines = source.split("\n");
-  const commentLines = regions
-    .filter((region) => region.type === "line-comment" || region.type === "block-comment")
-    .reduce((total, region) => total + region.value.split("\n").length, 0);
-  const blankLines = lines.filter((line) => line.trim() === "").length;
+
+  // Classify every physical line as exactly one of blank / comment / code, so
+  // the three counts always add up to `lines.length` and `commentRatio` can
+  // never exceed 100%. A line counts as "comment" only when every
+  // non-whitespace character on it belongs to a comment region — a line that
+  // mixes code and a trailing comment (`const x = 1; // legacy`) is real code
+  // and must be counted as such, not as a comment line.
+  const isCommentChar = new Uint8Array(source.length);
+  {
+    let offset = 0;
+    for (const region of regions) {
+      if (region.type === "line-comment" || region.type === "block-comment") {
+        isCommentChar.fill(1, offset, offset + region.value.length);
+      }
+      offset += region.value.length;
+    }
+  }
+
+  let blankLines = 0;
+  let commentLines = 0;
+  let cursor = 0;
+  for (const line of lines) {
+    const lineEnd = cursor + line.length;
+    if (line.trim() === "") {
+      blankLines += 1;
+    } else {
+      let hasCode = false;
+      for (let position = cursor; position < lineEnd; position += 1) {
+        if (isCommentChar[position] === 1) continue;
+        if (/\s/.test(source[position])) continue;
+        hasCode = true;
+        break;
+      }
+      if (!hasCode) commentLines += 1;
+    }
+    cursor = lineEnd + 1; // skip the "\n" separator
+  }
 
   const count = (pattern) => (codeOnly.match(pattern) || []).length;
   const decisionPoints = DECISION_PATTERNS.reduce(

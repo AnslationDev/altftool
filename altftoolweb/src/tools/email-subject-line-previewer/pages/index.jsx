@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useMemo, useState } from 'react';
-import { Mail, Eye, BarChart2, Wand2 } from 'lucide-react';
+import { Mail, Eye } from 'lucide-react';
 import EditorPanel from '../components/EditorPanel';
 import PreviewGrid from '../components/PreviewGrid';
 import ScoreCards from '../components/ScoreCards';

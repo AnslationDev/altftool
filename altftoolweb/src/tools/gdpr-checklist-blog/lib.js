@@ -48,9 +48,6 @@ export const BLOG_FEATURES = [
   { id: "nonEuHosting", label: "Hosting or vendors outside the EU/UK", defaultOn: true },
 ];
 
-/** Severity drives the risk score: "critical" items are the ones regulators act on first. */
-export const SEVERITIES = ["critical", "important", "good-practice"];
-
 export const CHECKLIST_GROUPS = [
   { id: "foundations", label: "Foundations" },
   { id: "consent", label: "Cookies and consent" },
@@ -322,13 +319,12 @@ export function evaluateGdprChecklist(input) {
   const featureSet = new Set(features);
   const doneSet = new Set(doneIds);
 
+  // Note: 11 of the CHECKLIST_ITEMS have appliesTo: null, so they always apply
+  // regardless of `features` — `applicable` can never be empty here, even
+  // when every feature checkbox is unchecked.
   const applicable = CHECKLIST_ITEMS.filter(
     (item) => item.appliesTo === null || item.appliesTo.some((feature) => featureSet.has(feature)),
   ).map((item) => ({ ...item, done: doneSet.has(item.id) }));
-
-  if (applicable.length === 0) {
-    return { error: "No checklist items apply — switch on at least one feature your blog uses." };
-  }
 
   const doneItems = applicable.filter((item) => item.done);
   const outstanding = applicable.filter((item) => !item.done);

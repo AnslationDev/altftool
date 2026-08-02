@@ -8,7 +8,7 @@ const seo = {
   ],
   benefits: [
     ["Real GitHub rates", "Linux $0.008, Windows $0.016 and macOS $0.08 per minute, with the 1x/2x/10x allowance multipliers applied."],
-    ["Per-job rounding included", "A 90-second job bills as 2 minutes — the estimate rounds up exactly as GitHub's metering does."],
+    ["Rounding-aware estimate", "Your average minutes per job is rounded up to a whole minute, the same direction GitHub rounds each job — note this uses one averaged duration, so it approximates workloads where individual job lengths vary a lot."],
     ["Plan-aware", "Included allowances for Free (2,000), Pro and Team (3,000) and Enterprise Cloud (50,000) private-repo minutes."],
   ],
   faqs: [

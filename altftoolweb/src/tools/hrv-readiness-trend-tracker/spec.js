@@ -48,7 +48,7 @@ export const spec = {
 },
   compute: (values) => {
       const readings = String(values.data || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean).map((line) => { const [date, value] = line.split("|").map((cell) => cell.trim()); return [date, Number(value)]; }).filter((row) => Number.isFinite(row[1]));
-      const window = Math.max(3, Math.round(Number(values.window) || 7)), threshold = Math.max(0, Number(values.threshold) || 0);
+      const windowRaw = values.window, windowInput = Number(windowRaw); const window = Math.max(3, Math.round(windowRaw === "" || windowRaw === undefined || windowRaw === null || !Number.isFinite(windowInput) ? 7 : windowInput)), threshold = Math.max(0, Number(values.threshold) || 0);
       const table = readings.map((row, index) => { const start = Math.max(0, index - window), previous = readings.slice(start, index), baseline = previous.length ? previous.reduce((sum, item) => sum + item[1], 0) / previous.length : row[1], deviation = baseline ? (row[1] - baseline) / baseline * 100 : 0; return [row[0], row[1], baseline.toFixed(2), deviation.toFixed(2) + "%", Math.abs(deviation) >= threshold && previous.length >= 3 ? "Review context" : "Within entered band"]; });
       const last = table.at(-1);
       return { result: last ? last[3] + " latest baseline deviation" : "No readings", caption: window + "-reading window · ±" + threshold + "% flag", rows: [["Readings", readings.length], ["Latest HRV", last ? last[1] : "—"], ["Latest baseline", last ? last[2] : "—"]], table: { headers: ["Date", "HRV", "Prior baseline", "Deviation", "Context flag"], rows: table } };

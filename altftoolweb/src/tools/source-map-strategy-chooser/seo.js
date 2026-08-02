@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "Which devtool should I use in development?",
-      "eval-cheap-module-source-map is the usual dev answer: rebuilds stay fast, and stack traces point at your original files with correct line numbers. Use eval-source-map instead when you need column-accurate positions, for example when debugging minified vendor code or async stack traces, and accept the slower first build.",
+      "eval-cheap-module-source-map is the classic manual pick for webpack dev builds: rebuilds stay fast, and stack traces point at your original files with correct line numbers, without eval-source-map's slower first build. This tool weighs build speed, rebuild speed and mapping quality together, so its automatic top pick tends toward whichever extreme your chosen priority favours — for example the default Balanced priority favours eval-source-map, for the column-accurate positions useful when debugging minified vendor code or async stack traces. Pick eval-cheap-module-source-map directly from the ranked list whenever fast rebuilds and line-accurate original files matter more to you than the automatic score.",
     ],
     [
       "Is it safe to ship source maps to production?",

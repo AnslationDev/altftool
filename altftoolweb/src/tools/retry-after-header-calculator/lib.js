@@ -18,7 +18,7 @@
  *    day-of-month is two digits, zero padded. rfc850-date and asctime-date are
  *    accepted by recipients for legacy reasons but must never be generated.
  *
- *  - RFC 9110 section 15.5.21 (503 Service Unavailable) and section 15.4
+ *  - RFC 9110 section 15.6.4 (503 Service Unavailable) and section 15.4
  *    (redirection) allow Retry-After. RFC 6585 section 4 defines 429 Too Many
  *    Requests and states the response "can" include Retry-After.
  *
@@ -70,7 +70,6 @@ export const RETRY_AFTER_STATUSES = [
     spec: "RFC 6585 section 4",
     guidance:
       "Rate limit hit. Send the number of seconds until the client's quota window refills. Pair it with your own rate-limit headers so the client can see the budget as well as the wait.",
-    prefer: "seconds",
   },
   {
     code: 503,
@@ -78,7 +77,6 @@ export const RETRY_AFTER_STATUSES = [
     spec: "RFC 9110 section 15.6.4",
     guidance:
       "Overload or planned maintenance. Use delay-seconds for transient overload and an HTTP-date when you know the exact time the maintenance window ends.",
-    prefer: "either",
   },
   {
     code: 301,
@@ -86,7 +84,6 @@ export const RETRY_AFTER_STATUSES = [
     spec: "RFC 9110 section 15.4.2",
     guidance:
       "Rarely useful. Retry-After on a redirect tells the client how long to wait before following the Location header.",
-    prefer: "seconds",
   },
   {
     code: 307,
@@ -94,7 +91,6 @@ export const RETRY_AFTER_STATUSES = [
     spec: "RFC 9110 section 15.4.8",
     guidance:
       "Used when traffic is being parked on a holding page and you want clients to pause before coming back.",
-    prefer: "seconds",
   },
   {
     code: 202,
@@ -102,7 +98,6 @@ export const RETRY_AFTER_STATUSES = [
     spec: "RFC 9110 section 15.3.3",
     guidance:
       "Not defined by the spec for 202, but widely used by long-running job APIs to pace polling of the status URL. Clients must be told to expect it.",
-    prefer: "seconds",
   },
 ];
 

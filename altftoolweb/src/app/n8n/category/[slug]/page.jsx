@@ -7,7 +7,7 @@ import {
   getCategories,
   getWorkflowsByCategory,
 } from "../../data/service";
-import { stripEmojis } from "../../data/text";
+import { fitMetaDescription, stripEmojis } from "../../data/text";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
@@ -20,8 +20,10 @@ import {
 export const dynamic = "force-static";
 export const revalidate = 3600;
 
-const description = (name) =>
-  `Browse the best free n8n ${name} workflows. Copy JSON and import into your n8n instance.`;
+const description = (name, count) =>
+  fitMetaDescription(
+    `Browse ${count} free n8n ${name} workflow template${count === 1 ? "" : "s"} on AltFTool.`,
+  );
 
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
@@ -32,16 +34,21 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const cat = getCategoryBySlug(slug);
   if (!cat) {
+    // Reached by real crawled URLs — /n8n/category/ai looks plausible next to
+    // ai-chatbot, ai-rag and ai-summarization, but is not a category. This
+    // branch used to answer with a 42-character line, too thin to earn a click
+    // even on the internal-search surfaces that still render it.
     return createPageMetadata({
-      title: "Category Not Found",
-      description: "The requested n8n category does not exist.",
+      title: "n8n Category Not Found",
+      description:
+        "That n8n category does not exist. Browse the full AltFTool workflow library instead to find free, importable n8n workflow templates by category or by node.",
       path: `/n8n/category/${slug}`,
       noindex: true,
     });
   }
   return createPageMetadata({
     title: `Best ${cat.name} n8n Workflows`,
-    description: description(cat.name),
+    description: description(cat.name, getWorkflowsByCategory(slug).length),
     path: `/n8n/category/${slug}`,
   });
 }
@@ -63,7 +70,7 @@ export default async function Page({ params }) {
           createCollectionPageJsonLd({
             path,
             name: `Best ${cat.name} n8n Workflows`,
-            description: description(cat.name),
+            description: description(cat.name, items.length),
           }),
           createItemListJsonLd({
             path,

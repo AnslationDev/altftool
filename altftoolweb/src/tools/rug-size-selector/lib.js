@@ -230,31 +230,45 @@ export function recommendRug({
   const candidates = STANDARD_RUG_SIZES.filter((size) => size.runner === wantRunner).map((size) => {
     const shortCm = Math.min(size.widthFt, size.lengthFt) * CM_PER_FOOT;
     const longCm = Math.max(size.widthFt, size.lengthFt) * CM_PER_FOOT;
+
+    // Runners flank the bed rather than sitting alone in the room: the
+    // footprint that has to clear the walls is one runner's width on each
+    // side of the bed, not a single runner measured against the whole room.
+    const footprintWidthCm = wantRunner ? furnitureWidthCm + 2 * shortCm : shortCm;
+    const footprintShortCm = wantRunner ? Math.min(footprintWidthCm, longCm) : shortCm;
+    const footprintLongCm = wantRunner ? Math.max(footprintWidthCm, longCm) : longCm;
+
     return {
       label: size.label,
       shortCm,
       longCm,
       areaSqft: size.widthFt * size.lengthFt,
       meetsRequirement: shortCm >= requiredShort && longCm >= requiredLong,
-      borderShortCm: (roomShort - shortCm) / 2,
-      borderLongCm: (roomLong - longCm) / 2,
-      fitsRoom: roomShort - shortCm >= 2 * MIN_WALL_BORDER_CM && roomLong - longCm >= 2 * MIN_WALL_BORDER_CM,
+      borderShortCm: (roomShort - footprintShortCm) / 2,
+      borderLongCm: (roomLong - footprintLongCm) / 2,
+      fitsRoom:
+        roomShort - footprintShortCm >= 2 * MIN_WALL_BORDER_CM &&
+        roomLong - footprintLongCm >= 2 * MIN_WALL_BORDER_CM,
       idealBorder:
-        roomShort - shortCm >= 2 * IDEAL_WALL_BORDER_CM && roomLong - longCm >= 2 * IDEAL_WALL_BORDER_CM,
+        roomShort - footprintShortCm >= 2 * IDEAL_WALL_BORDER_CM &&
+        roomLong - footprintLongCm >= 2 * IDEAL_WALL_BORDER_CM,
     };
   });
 
   const meeting = candidates.filter((item) => item.meetsRequirement);
   const pick = meeting.length > 0 ? meeting.reduce((a, b) => (a.areaSqft <= b.areaSqft ? a : b)) : null;
 
-  const roomFitting = candidates.filter((item) => item.fitsRoom);
-  const largestThatFits =
-    roomFitting.length > 0 ? roomFitting.reduce((a, b) => (a.areaSqft >= b.areaSqft ? a : b)) : null;
-
+  // Anything offered as a size the room "could take" has to remain a valid
+  // rug for this placement — it must still satisfy the same clearance rule
+  // as every other recommendation, not merely leave a decent wall border.
   const meetingAndFitting = candidates.filter((item) => item.meetsRequirement && item.fitsRoom);
   const bestBoth =
     meetingAndFitting.length > 0
       ? meetingAndFitting.reduce((a, b) => (a.areaSqft <= b.areaSqft ? a : b))
+      : null;
+  const largestThatFits =
+    meetingAndFitting.length > 0
+      ? meetingAndFitting.reduce((a, b) => (a.areaSqft >= b.areaSqft ? a : b))
       : null;
 
   const borderVerdict = !pick

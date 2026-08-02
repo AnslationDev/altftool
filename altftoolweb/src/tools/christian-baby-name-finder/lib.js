@@ -158,7 +158,6 @@ export const NAMES = ROWS.map(([name, gender, origin, meaning, figure, source]) 
   source,
   sourceLabel: SOURCES.find((s) => s.id === source)?.label ?? source,
   initial: name.charAt(0).toUpperCase(),
-  letters: name.length,
 }));
 
 /** Every origin language present in the list, sorted. */

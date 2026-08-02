@@ -9,7 +9,7 @@ import {
   buildReminder,
   daysBetween,
   formatLongDate,
-  overdueInterest,
+  reminderInterest,
   suggestLevel,
 } from "../lib";
 
@@ -98,12 +98,13 @@ export default function ToolHome() {
   const interest = useMemo(() => {
     if (!showInterest) return null;
     if (overdue.error) return null;
-    return overdueInterest({
+    return reminderInterest({
+      jurisdictionId: jurisdiction,
       amount: toNumber(amount),
       annualRatePercent: toNumber(rate),
       days: overdue.days,
     });
-  }, [showInterest, overdue, amount, rate]);
+  }, [showInterest, overdue, amount, rate, jurisdiction]);
 
   const letter = useMemo(() => {
     const amountValue = toNumber(amount);
@@ -270,8 +271,15 @@ export default function ToolHome() {
             </select>
           </div>
           <div>
-            <label className={LABEL_CLASS} htmlFor="lp-rate">Late payment interest (% a year)</label>
+            <label className={LABEL_CLASS} htmlFor="lp-rate">
+              {jurisdiction === "india_msme" ? "RBI notified bank rate (% a year)" : "Late payment interest (% a year)"}
+            </label>
             <input id="lp-rate" className={`mt-2 ${INPUT_CLASS}`} type="number" inputMode="decimal" min="0" step="0.25" value={rate} onChange={(e) => setRate(e.target.value)} />
+            {jurisdiction === "india_msme" && (
+              <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                The letter quotes interest compounded monthly at three times this rate, matching the MSMED Act 2006 s.16 entitlement.
+              </p>
+            )}
           </div>
           <div className="flex items-end">
             <label className="inline-flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-sm font-semibold" htmlFor="lp-showint">
@@ -325,7 +333,12 @@ export default function ToolHome() {
             ["Outstanding", Number.isFinite(toNumber(amount)) ? money(toNumber(amount)) : DASH],
             ["Interest accrued", interest && !interest.error ? money(interest.interest) : DASH],
             ["Amount plus interest", interest && !interest.error ? money(interest.total) : DASH],
-            ["Payment deadline set in the letter", letter.error ? DASH : formatLongDate(letter.deadlineISO)],
+            [
+              letter.error || !letter.deadlineStatedInBody
+                ? "Suggested target date"
+                : "Payment deadline set in the letter",
+              letter.error ? DASH : formatLongDate(letter.deadlineISO),
+            ],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

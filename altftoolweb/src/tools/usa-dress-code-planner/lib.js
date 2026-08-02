@@ -333,7 +333,10 @@ export function planWardrobe({
     return { error: "Trip length must be at least 1 day." };
   }
   if (days > 90) {
-    return { error: "Plan trips of 90 days or fewer — the Visa Waiver Program caps a stay at 90 days." };
+    return {
+      error:
+        "This planner covers trips of 90 days or fewer (the common Visa Waiver Program limit). For longer stays, check your specific visa's rules.",
+    };
   }
   if (!Number.isFinite(laundry) || laundry < 1) {
     return { error: "Laundry interval must be at least 1 day." };
@@ -368,6 +371,21 @@ export function planWardrobe({
   const needsLayer = HAS(flags, "layer") || coolNights;
   const needsSwim = HAS(flags, "noBeachwear");
 
+  // "smart" is only carried by these two venues, and travellers reasonably want to
+  // know WHICH one is driving a garment onto the list rather than a lumped guess.
+  const selectedIds = selected.map((v) => v.id);
+  const hasVegas = HAS(selectedIds, "vegas-club");
+  const hasBroadway = HAS(selectedIds, "broadway");
+
+  /** Join reason phrases into one readable clause: "a", "a and b", "a, b, and c". */
+  const joinReasons = (parts) => {
+    if (parts.length === 0) return "";
+    if (parts.length === 1) return parts[0];
+    if (parts.length === 2) return `${parts[0]} and ${parts[1]}`;
+    return `${parts.slice(0, -1).join(", ")}, and ${parts[parts.length - 1]}`;
+  };
+  const capitalize = (s) => (s ? s.charAt(0).toUpperCase() + s.slice(1) : s);
+
   const totalTops = Math.ceil(cycleDays * topsPerDay);
   const longTops = coldDays
     ? totalTops
@@ -394,9 +412,13 @@ export function planWardrobe({
     longTops,
     coldDays
       ? `Mean daily maximum is only ${climate.avgHighC}°C`
-      : extremeHeat
-        ? "Loose long sleeves beat bare arms in desert sun"
-        : "Covered shoulders and cold indoor air-conditioning",
+      : needsShoulders && extremeHeat
+        ? "Covered shoulders for cathedral visits, and loose long sleeves beat bare arms in desert sun"
+        : extremeHeat
+          ? "Loose long sleeves beat bare arms in desert sun"
+          : needsShoulders
+            ? "Covered shoulders for cathedral visits, and cold indoor air-conditioning"
+            : "Evenings turn cool enough for long sleeves",
   );
   add("Trousers or jeans", longBottoms, "Everyday wear, and required at courthouses and clubs");
   add("Shorts or skirt", shortBottoms, `Warm enough at a ${climate.avgHighC}°C mean maximum`);
@@ -415,8 +437,25 @@ export function planWardrobe({
   add("Brimmed sun hat", needsSun ? 1 : 0, extremeHeat ? `Mean daily maximum ${climate.avgHighC}°C` : "Parks, beaches and stadium days");
   add("Sunglasses", 1, "Useful in every region and every season here");
   add("Blazer or smart jacket", needsFormal ? 1 : 0, "Jacket-required rooms and business meetings");
-  add("Smart trousers", needsFormal || needsSmart ? 1 : 0, "Club doors and theatre nights");
-  add("Dress shoes", needsFormal || needsSmart ? 1 : 0, "No trainers past a Vegas door");
+  const trousersReasons = [];
+  if (needsFormal) trousersReasons.push("jacket-required dining rooms and business meetings");
+  if (hasVegas) trousersReasons.push("Las Vegas and big-city club doors");
+  if (hasBroadway) trousersReasons.push("Broadway and theatre nights");
+  add(
+    "Smart trousers",
+    needsFormal || needsSmart ? 1 : 0,
+    capitalize(joinReasons(trousersReasons)),
+  );
+
+  const shoesReasons = [];
+  if (needsFormal) shoesReasons.push("required alongside a jacket at formal dining and business meetings");
+  if (hasVegas) shoesReasons.push("no trainers past a Vegas or big-city club door");
+  if (hasBroadway) shoesReasons.push("smarter than trainers for Broadway and theatre nights");
+  add(
+    "Dress shoes",
+    needsFormal || needsSmart ? 1 : 0,
+    capitalize(joinReasons(shoesReasons)),
+  );
   add("Walking shoes or trainers", 1, "US cities and parks are walked in kilometres, not blocks");
   add("Hiking boots", needsSturdy ? 1 : 0, "Trail days and long asphalt days both punish thin soles");
   add("Swimwear", needsSwim ? 1 : 0, "Beach and hotel pool");

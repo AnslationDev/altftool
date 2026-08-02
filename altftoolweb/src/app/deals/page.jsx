@@ -63,9 +63,21 @@ const HUB_FAQS = [
 export async function generateMetadata() {
   const { to } = getCheckedOnRange();
   const count = getComparisonRows().length;
+  const jobCount = getDeals().length;
   return createPageMetadata({
-    title: "Paid Tool Prices vs Free Alternatives — Checked & Dated",
-    description: `What ${count} paid design, PDF, video, data and developer tools charge to start, what their free tiers cap, and the free AltFTool page that covers the same job. Every price dated and sourced, last checked ${to}.`,
+    // Sized against the real pipeline, not by eye. The root layout appends
+    // " | AltFTool" (11 chars) because this string carries no brand token, so
+    // the authored title must stay <= 49 to render inside 60 — 84% of this
+    // site's search clicks are mobile and mobile SERPs cut titles hardest.
+    // "Paid Tool Prices vs Free Alternatives — Checked & Dated" was 55, which
+    // rendered at 66 and lost its tail. 47 here renders at 58.
+    title: "Paid Tool Prices vs Free Alternatives, Verified",
+    // 158 chars with the current corpus, so trimMetaDescription passes it
+    // through verbatim instead of clipping. The previous string was 210 and
+    // got cut at the sentence boundary to 154 — which silently dropped the
+    // "last checked <date>" clause, i.e. the one claim that makes this page
+    // citable. Every number here is counted from the corpus on this render.
+    description: `What ${count} paid tools across ${jobCount} jobs charge to start, what their free tiers cap, and the free AltFTool page that covers each job. Every price checked ${to}.`,
     path: "/deals",
     canonical: "/deals",
     keywords: [

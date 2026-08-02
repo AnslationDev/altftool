@@ -54,10 +54,10 @@ function annotationSubtype(annotation, AnnotationType) {
 
 export async function inspectPdf(file) {
   const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
-  pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-    "pdfjs-dist/legacy/build/pdf.worker.min.mjs",
-    import.meta.url,
-  ).toString();
+  // The shared worker is version-locked with pdfjs-dist by the PDF asset
+  // parity test, so the legacy API can reuse it without emitting another
+  // worker copy into the production bundle.
+  pdfjs.GlobalWorkerOptions.workerSrc = "/altflovepdf/pdf.worker.min.mjs";
 
   const bytes = new Uint8Array(await file.arrayBuffer());
   const loadingTask = pdfjs.getDocument({

@@ -7,7 +7,10 @@ const workspaceRoot = path.resolve(webRoot, "..");
 const testRoots = [
   path.join(workspaceRoot, "packages/core/src/seo"),
   path.join(webRoot, "src/app/(marketing)/components"),
+  path.join(webRoot, "src/app/altflovepdf/lib"),
   path.join(webRoot, "src/app/blogs/utils"),
+  path.join(webRoot, "src/app/kym/data"),
+  path.join(webRoot, "src/app/n8n/data"),
   path.join(webRoot, "src/app/tools"),
   path.join(webRoot, "src/app/transform"),
   path.join(webRoot, "src/platform/linking"),

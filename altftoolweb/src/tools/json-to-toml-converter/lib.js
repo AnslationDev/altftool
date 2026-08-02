@@ -96,20 +96,24 @@ class NullValueError extends Error {}
 /** Format any value inline (used inside arrays and inline tables). */
 function formatInline(value, stats, nullMode, keyPath) {
   if (value === null) {
-    if (nullMode === "fail") {
-      throw new NullValueError(`"${keyPath}" is null — TOML has no null value.`);
-    }
-    // Inside an array a null cannot simply be omitted without shifting positions,
-    // so nulls in arrays always fail regardless of mode.
-    throw new NullValueError(
-      `"${keyPath}" contains null inside an array — TOML has no null, and dropping it would shift the other elements.`,
-    );
+    // Reached only for "fail" mode: array elements and inline-table properties both
+    // resolve "omit" mode nulls (dropping them, below) before ever calling back in here.
+    throw new NullValueError(`"${keyPath}" is null — TOML has no null value.`);
   }
   if (typeof value === "string") return `"${escapeTomlString(value)}"`;
   if (typeof value === "number") return formatNumber(value, stats);
   if (typeof value === "boolean") return value ? "true" : "false";
   if (Array.isArray(value)) {
-    return `[ ${value.map((entry, index) => formatInline(entry, stats, nullMode, `${keyPath}[${index}]`)).join(", ")} ]`;
+    const parts = [];
+    value.forEach((entry, index) => {
+      const entryPath = `${keyPath}[${index}]`;
+      if (entry === null && nullMode === "omit") {
+        stats.nullsOmitted += 1;
+        return;
+      }
+      parts.push(formatInline(entry, stats, nullMode, entryPath));
+    });
+    return `[ ${parts.join(", ")} ]`;
   }
   if (isPlainObject(value)) {
     stats.inlineTables += 1;

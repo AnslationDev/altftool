@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Left/right, stereo placement aur polarity test tones play kare.",
+  "description": "Left/right stereo placement aur channel balance check karne ke liye hard-panned tone alternate kare.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

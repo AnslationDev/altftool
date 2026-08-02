@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Armchair, Check, Copy, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   BAND_BELOW,
   CHAIR_HEIGHT_CM,
@@ -50,7 +52,7 @@ export default function ToolHome() {
   const [stands, setStands] = useState(DEFAULTS.stands);
   const [duration, setDuration] = useState(DEFAULTS.duration);
   const [previous, setPrevious] = useState(DEFAULTS.previous);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(() => {
     const prevRaw = String(previous).trim();
@@ -81,15 +83,9 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [hasError, result, age, sex]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "Result" });
   };
 
   const reset = () => {
@@ -98,7 +94,6 @@ export default function ToolHome() {
     setStands(DEFAULTS.stands);
     setDuration(DEFAULTS.duration);
     setPrevious(DEFAULTS.previous);
-    setCopied(false);
   };
 
   return (
@@ -227,17 +222,20 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy chair stand test result"
+              aria-label={isCopied("result") ? "Copied chair stand test result" : "Copy chair stand test result"}
               disabled={hasError}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
@@ -323,6 +321,14 @@ export default function ToolHome() {
             The Senior Fitness Test norms begin at age {MIN_TABLE_AGE}. The {result.ageGroup} range is
             shown as the closest published reference — a healthy adult under {MIN_TABLE_AGE} would
             normally score above it.
+          </p>
+        )}
+
+        {!hasError && result.aboveTableAge && (
+          <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm text-[var(--muted-foreground)]">
+            The Senior Fitness Test norms end at age 94. The {result.ageGroup} range is shown as the
+            closest published reference — it is a floor for someone older, not a table match for your
+            exact age.
           </p>
         )}
       </section>

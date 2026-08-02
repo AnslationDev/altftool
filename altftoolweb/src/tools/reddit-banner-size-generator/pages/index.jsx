@@ -37,6 +37,8 @@ const toNumber = (raw) => {
   return Number.isFinite(value) ? value : NaN;
 };
 
+const CUSTOM_PRESET_ID = "custom";
+
 export default function ToolHome() {
   const [presetId, setPresetId] = useState("banner-384");
   const [bannerH, setBannerH] = useState("384");
@@ -45,6 +47,7 @@ export default function ToolHome() {
   const [manualH, setManualH] = useState("600");
   const [showSafe, setShowSafe] = useState(true);
   const [copied, setCopied] = useState(false);
+  const [fileError, setFileError] = useState("");
   const canvasRef = useRef(null);
 
   const bannerW = 1920;
@@ -90,12 +93,17 @@ export default function ToolHome() {
   const onFile = (event) => {
     const file = event.target.files && event.target.files[0];
     if (!file) return;
+    setFileError("");
     const url = URL.createObjectURL(file);
     const el = new Image();
     el.onload = () => {
       setImage({ element: el, width: el.naturalWidth, height: el.naturalHeight, name: file.name, url });
       setManualW(String(el.naturalWidth));
       setManualH(String(el.naturalHeight));
+    };
+    el.onerror = () => {
+      URL.revokeObjectURL(url);
+      setFileError(`"${file.name}" could not be read as an image. Choose a JPG, PNG, WEBP, GIF, or SVG file.`);
     };
     el.src = url;
   };
@@ -149,6 +157,7 @@ export default function ToolHome() {
     setManualH("600");
     setShowSafe(true);
     setCopied(false);
+    setFileError("");
   };
 
   const safeStyle = report.error
@@ -192,6 +201,14 @@ export default function ToolHome() {
                 ? `${image.name} — ${image.width} x ${image.height} px`
                 : "No file yet — the measurements below still apply to your design."}
             </p>
+            {fileError ? (
+              <p
+                role="alert"
+                className="mt-2 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+              >
+                {fileError}
+              </p>
+            ) : null}
           </div>
 
           <div>
@@ -204,6 +221,9 @@ export default function ToolHome() {
               value={presetId}
               onChange={(event) => applyPreset(event.target.value)}
             >
+              {presetId === CUSTOM_PRESET_ID ? (
+                <option value={CUSTOM_PRESET_ID}>Custom height — {bannerW} x {bannerH || "?"}</option>
+              ) : null}
               {BANNER_PRESETS.map((item) => (
                 <option key={item.id} value={item.id}>
                   {item.label} — {item.width} x {item.height}
@@ -224,7 +244,10 @@ export default function ToolHome() {
               max="2000"
               step="16"
               value={bannerH}
-              onChange={(event) => setBannerH(event.target.value)}
+              onChange={(event) => {
+                setBannerH(event.target.value);
+                setPresetId(CUSTOM_PRESET_ID);
+              }}
             />
           </div>
           <div>

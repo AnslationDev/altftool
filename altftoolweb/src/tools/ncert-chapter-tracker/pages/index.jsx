@@ -50,6 +50,11 @@ export default function ToolHome() {
   const [books, setBooks] = useState(DEFAULT_BOOKS);
   const [presetId, setPresetId] = useState(NCERT_PRESETS[1].id);
   const [copied, setCopied] = useState(false);
+  // Raw, uncommitted text for the "Chapters" count field, keyed by book id.
+  // Keeping this separate from `books` means an in-progress multi-digit edit
+  // (e.g. typing "24" fires onChange with "2", then "24") never triggers the
+  // destructive array resize until the value is committed on blur/Enter.
+  const [countDrafts, setCountDrafts] = useState({});
 
   useEffect(() => {
     try {
@@ -92,18 +97,42 @@ export default function ToolHome() {
   };
 
   const removeBook = (id) => {
-    setBooks((previous) => previous.filter((book) => book.id !== id));
+    const book = books.find((entry) => entry.id === id);
+    const label = book?.name?.trim() || "this book";
+    if (!window.confirm(`Remove "${label}"? Its chapter progress will be permanently deleted.`)) {
+      return;
+    }
+    setBooks((previous) => previous.filter((entry) => entry.id !== id));
+    setCountDrafts((previous) => {
+      if (!(id in previous)) return previous;
+      const next = { ...previous };
+      delete next[id];
+      return next;
+    });
   };
 
   const renameBook = (id, name) => {
     setBooks((previous) => previous.map((book) => (book.id === id ? { ...book, name } : book)));
   };
 
-  const resizeBook = (id, count) => {
+  // Called only when the "Chapters" count is committed (blur or Enter), never
+  // on individual keystrokes — see `countDrafts` above. An incomplete or
+  // out-of-range value is discarded (the book keeps its previous statuses)
+  // instead of being treated as a truncation target.
+  const commitBookCount = (id, rawValue) => {
+    setCountDrafts((previous) => {
+      if (!(id in previous)) return previous;
+      const next = { ...previous };
+      delete next[id];
+      return next;
+    });
     setBooks((previous) =>
-      previous.map((book) =>
-        book.id === id ? { ...book, statuses: resizeStatuses(book.statuses, count) } : book,
-      ),
+      previous.map((book) => {
+        if (book.id !== id) return book;
+        const count = Number(rawValue);
+        if (!Number.isInteger(count) || count < MIN_CHAPTERS || count > MAX_CHAPTERS) return book;
+        return { ...book, statuses: resizeStatuses(book.statuses, count) };
+      }),
     );
   };
 
@@ -146,7 +175,11 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset the tracker? This deletes every tracked book and all chapter progress saved in this browser.")) {
+      return;
+    }
     setBooks(DEFAULT_BOOKS);
+    setCountDrafts({});
     setCopied(false);
     try {
       window.localStorage.removeItem(STORAGE_KEY);
@@ -231,8 +264,15 @@ export default function ToolHome() {
                       min={MIN_CHAPTERS}
                       max={MAX_CHAPTERS}
                       step="1"
-                      value={book.statuses.length}
-                      onChange={(event) => resizeBook(book.id, event.target.value)}
+                      value={countDrafts[book.id] ?? book.statuses.length}
+                      onChange={(event) => {
+                        const { value } = event.target;
+                        setCountDrafts((previous) => ({ ...previous, [book.id]: value }));
+                      }}
+                      onBlur={(event) => commitBookCount(book.id, event.target.value)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter") event.currentTarget.blur();
+                      }}
                     />
                   </div>
                   <button

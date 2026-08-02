@@ -29,7 +29,17 @@ export default function HeroSection({ articles, onOpenArticle }) {
           </span>
         </div>
         <div className="bf-hero-lead-content">
-          <h1 className="bf-hero-lead-title">{leadArticle.title}</h1>
+          {/*
+            The lead card's headline, not the page's. /buzzfeed is a feed: its
+            subject is the AltF Pulse edition, which the H1 in page.jsx names.
+            This card is the first item of that feed — its siblings in
+            ArticleCard/QuizCard are already h3 — so as an <h1> it gave the
+            route a second, article-specific heading that changed with the
+            data. Level only: the class carries every box and type property
+            (see .bf-hero-lead-title in buzzfeed.css) and no rule here selects
+            by tag, so the render is unchanged.
+          */}
+          <h2 className="bf-hero-lead-title">{leadArticle.title}</h2>
           <p className="bf-hero-lead-excerpt">{leadArticle.excerpt}</p>
           <div className="bf-article-meta">
             <span className="bf-meta-item">

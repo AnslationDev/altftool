@@ -70,6 +70,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your project context with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setValues(DEFAULT_VALUES);
     setLengthId("standard");
     setAudienceId("sponsor");

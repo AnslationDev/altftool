@@ -35,7 +35,7 @@ export default function Features() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {features.map((feature) => (
-          <div key={feature.title} className={`p-5 wp-soft-panel`}>
+          <div key={feature.title} className="p-5 rounded-lg border border-(--border) bg-(--card)">
             <h3 className="text-lg font-semibold text-(--foreground) mb-2">{feature.title}</h3>
             <p className="text-sm text-(--muted-foreground) leading-relaxed">{feature.description}</p>
           </div>

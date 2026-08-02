@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "buffer-ph-calculator",
   "title": "Buffer pH Calculator",
-  "description": "Henderson-Hasselbalch equation se buffer pH calculate kare.",
+  "description": "Calculate buffer pH using the Henderson-Hasselbalch equation.",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Education & Science",
@@ -36,7 +36,8 @@ export const spec = {
       "key": "temperature",
       "label": "Temperature note (°C)",
       "type": "number",
-      "default": 25
+      "default": 25,
+      "required": false
     }
   ],
   "presets": [
@@ -56,8 +57,7 @@ export const spec = {
       const pKa = Number(values.pka), acid = Number(values.acid), base = Number(values.base), temperature = Number(values.temperature);
       if (!(acid > 0 && base > 0)) return { result: "—", caption: "Acid and base quantities must be positive" };
       const ratio = base / acid, pH = pKa + Math.log10(ratio);
+      if (!Number.isFinite(ratio) || !Number.isFinite(pH)) return { result: "—", caption: "Acid and base quantities are too extreme to compute a finite pH — use values within a realistic concentration range" };
       return { result: pH.toFixed(6) + " estimated pH", caption: "Henderson–Hasselbalch at entered pKa", rows: [["pKa", pKa], ["Base / acid ratio", ratio.toFixed(8)], ["Acid fraction", (acid / (acid + base)).toFixed(6)], ["Base fraction", (base / (acid + base)).toFixed(6)], ["Temperature note", temperature + " °C"]] };
     },
 };
-
-export default spec;

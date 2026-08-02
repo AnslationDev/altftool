@@ -22,12 +22,6 @@
 /** Ordinal of the Sunday in May that most countries observe (second Sunday). */
 export const MOTHERS_DAY_SUNDAY_OF_MAY = 2;
 
-/** Fixed date used in much of the Arab world, as "MM-DD". */
-export const MOTHERS_DAY_ARAB_WORLD = "03-21";
-
-/** Fixed date of Hari Ibu in Indonesia, as "MM-DD". */
-export const MOTHERS_DAY_INDONESIA = "12-22";
-
 /** Single-segment SMS length for plain Latin (GSM-7) text. */
 export const SMS_GSM7_LIMIT = 160;
 
@@ -340,6 +334,18 @@ export const LANGUAGES = [
   },
 ];
 
+// GSM 03.38 / 3GPP TS 23.038 7-bit default alphabet (basic table) plus the
+// extension table reached with the escape character. Every character below
+// fits a GSM-7 SMS; anything outside this set is what actually forces UCS-2.
+// This includes accented Latin letters that are natively part of GSM-7 - such
+// as u-umlaut, a-umlaut, o-umlaut, sharp s, a-grave, e-acute, e-grave and the
+// rest of the accented set used by French, German, Spanish and Portuguese.
+const GSM_7BIT_BASIC_CHARS =
+  "@£$¥èéùìòÇ\nØø\rÅåΔ_ΦΓΛΩΠΨΣΘΞÆæßÉ !\"#¤%&'()*+,-./0123456789:;<=>?¡" +
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÑÜ§¿abcdefghijklmnopqrstuvwxyzäöñüà";
+const GSM_7BIT_EXTENDED_CHARS = "\f^{}\\[~]|€";
+const GSM_7BIT_CHARS = new Set([...GSM_7BIT_BASIC_CHARS, ...GSM_7BIT_EXTENDED_CHARS]);
+
 const byId = (list, id) => list.find((item) => item.id === id) || null;
 
 const clean = (value) => String(value == null ? "" : value).trim().replace(/\s+/g, " ");
@@ -356,7 +362,7 @@ function mix(seed, salt) {
 export function measureMessage(text) {
   const characters = Array.from(String(text || ""));
   const length = characters.length;
-  const isUnicode = characters.some((ch) => ch.codePointAt(0) > 0x7f);
+  const isUnicode = characters.some((ch) => !GSM_7BIT_CHARS.has(ch));
   const smsLimit = isUnicode ? SMS_UNICODE_LIMIT : SMS_GSM7_LIMIT;
   return {
     length,
@@ -466,7 +472,11 @@ export function generateMothersDayMessages(input) {
 
     let text;
     if (tone.id === "oneliner") {
-      text = `${greetingWithAddress}${punct.joiner || " "}${body[0]}`;
+      // punct.joiner is always a defined string here (DEFAULT_PUNCT sets it,
+      // and PUNCT_OVERRIDES only ever replaces it with another string) - an
+      // "|| ' '" fallback would silently override Japanese's deliberate ""
+      // joiner, since an empty string is falsy in JS.
+      text = `${greetingWithAddress}${punct.joiner}${body[0]}`;
     } else if (tone.id === "card") {
       text = [`${address}${punct.salutationSuffix}`, greetingAlone, ...body, closer].join("\n\n");
     } else if (tone.id === "understated") {

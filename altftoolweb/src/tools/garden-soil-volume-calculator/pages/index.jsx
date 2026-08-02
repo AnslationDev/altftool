@@ -322,7 +322,13 @@ export default function ToolHome() {
             {DEPTH_PRESETS.map((preset) => {
               const value = isMetric ? preset.cm : preset.inches;
               return (
-                <button key={preset.id} type="button" className={toNumber(depth) === value ? CHIP_ON : CHIP_BTN} onClick={() => setDepth(String(value))}>
+                <button
+                  key={preset.id}
+                  type="button"
+                  className={toNumber(depth) === value ? CHIP_ON : CHIP_BTN}
+                  aria-pressed={toNumber(depth) === value}
+                  onClick={() => setDepth(String(value))}
+                >
                   {preset.label} · {value} {depthUnit}
                 </button>
               );

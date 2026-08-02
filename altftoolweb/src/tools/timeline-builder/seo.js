@@ -17,13 +17,13 @@ const seo = {
     ],
     [
       "Two export shapes",
-      "Copy gives numbered plain text with long-form dates for pasting into a doc; JSON download gives the raw event array for feeding another tool or reloading later.",
+      "Copy gives numbered plain text with long-form dates for pasting into a doc; JSON download gives the raw event array as a one-way export for feeding another tool, a spreadsheet, or a backup.",
     ],
   ],
   faqs: [
     [
       "Does the timeline save if I close the tab?",
-      "No. Events live in the page's memory only, so a refresh or a closed tab clears them back to the sample timeline. Download the JSON before you leave if you want to keep the work.",
+      "No. Events live in the page's memory only, so a refresh or a closed tab clears them back to the sample timeline. Download the JSON before you leave if you want a copy of the work — note that the JSON is a one-way export and cannot be re-imported into Timeline Builder.",
     ],
     [
       "How does it decide what counts as a milestone?",

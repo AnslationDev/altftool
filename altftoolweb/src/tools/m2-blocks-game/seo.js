@@ -35,7 +35,7 @@ const seo = {
     ],
     [
       "How is the score calculated?",
-      "Every merge adds the value of the block it produces, so combining two 16s adds 32 and a chain adds each step separately. A three-step chain from 2+2 up to 8 therefore scores 4 plus 8 plus 16, which is why chains are worth far more than isolated merges.",
+      "Every merge adds the value of the block it produces, so combining two 16s adds 32 and a chain adds each step separately. A three-step chain starting from 2+2 and climbing to 16 therefore scores 4 plus 8 plus 16, which is why chains are worth far more than isolated merges.",
     ],
   ],
 };

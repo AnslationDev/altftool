@@ -9,7 +9,7 @@ export const spec = {
     "Calculator"
   ],
   "icon": "calendar-range",
-  "iconColor": "text-indigo-600",
+  "iconColor": "text-[var(--primary)]",
   "fields": [
     {
       "key": "start",
@@ -34,7 +34,7 @@ export const spec = {
     }
   ]
 },
-  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+  compute: (values) => {
       const a = new Date(values.start), b = new Date(values.end);
       if (isNaN(a) || isNaN(b)) return { result: "—", caption: "Pick both dates" };
       const days = Math.round((b - a) / 86400000);

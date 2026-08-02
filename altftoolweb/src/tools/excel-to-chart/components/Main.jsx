@@ -74,7 +74,13 @@ const formatExcelDate = (val, headerName = "") => {
     try {
       const utc_days = Math.floor(val - 25569);
       const utc_value = utc_days * 86400;
-      const date = new Date(utc_value * 1000);
+      const utcDate = new Date(utc_value * 1000);
+      // Rebuild as a LOCAL date from the UTC calendar components (rather than
+      // formatting the UTC instant directly) so the displayed day matches the
+      // Excel serial date regardless of the viewer's timezone. Formatting the
+      // UTC instant with toLocaleDateString's default (local) zone shifts the
+      // date back a day for any timezone west of UTC.
+      const date = new Date(utcDate.getUTCFullYear(), utcDate.getUTCMonth(), utcDate.getUTCDate());
       return date.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
     } catch (_) {
       return val;
@@ -392,8 +398,10 @@ export default function MainComponent() {
     if (!parsedData) return;
     try {
       const dataStr = JSON.stringify(parsedData, null, 2);
-      navigator.clipboard.writeText(dataStr);
-      setSuccessMsg("Copied parsed JSON array to clipboard!");
+      navigator.clipboard
+        .writeText(dataStr)
+        .then(() => setSuccessMsg("Copied parsed JSON array to clipboard!"))
+        .catch(() => setError("Clipboard copy failed."));
     } catch (_) {
       setError("Clipboard copy failed.");
     }
@@ -530,8 +538,9 @@ export default function MainComponent() {
                     
                     {sheets.length > 1 && (
                       <div className="space-y-1">
-                        <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Worksheet</span>
+                        <label htmlFor="excel-to-chart-worksheet" className="text-[10px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Worksheet</label>
                         <select
+                          id="excel-to-chart-worksheet"
                           value={currentSheetIndex}
                           onChange={(e) => handleSheetChange(Number(e.target.value))}
                           className="w-full bg-(--page) border border-(--border) text-(--foreground) text-xs rounded-lg p-2.5 outline-none focus:border-teal-500 cursor-pointer"
@@ -546,10 +555,15 @@ export default function MainComponent() {
                     )}
                     
                     <div className="space-y-1">
-                      <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">X-Axis Column</span>
+                      <label htmlFor="excel-to-chart-x-axis" className="text-[10px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">X-Axis Column</label>
                       <select
+                        id="excel-to-chart-x-axis"
                         value={xAxisCol}
-                        onChange={(e) => setXAxisCol(e.target.value)}
+                        onChange={(e) => {
+                          const newX = e.target.value;
+                          setXAxisCol(newX);
+                          setYAxisCols((prev) => prev.filter((c) => c !== newX));
+                        }}
                         className="w-full bg-(--page) border border-(--border) text-(--foreground) text-xs rounded-lg p-2.5 outline-none focus:border-teal-500 cursor-pointer"
                       >
                         {visibleHeaders.map((h) => (
@@ -593,8 +607,9 @@ export default function MainComponent() {
                     
                     <div className="space-y-3">
                       <div className="space-y-1">
-                        <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Title</span>
+                        <label htmlFor="excel-to-chart-title" className="text-[10px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Title</label>
                         <input
+                          id="excel-to-chart-title"
                           type="text"
                           value={chartTitle}
                           onChange={(e) => setChartTitle(e.target.value)}
@@ -602,8 +617,9 @@ export default function MainComponent() {
                         />
                       </div>
                       <div className="space-y-1">
-                        <span className="text-[10px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Palette</span>
+                        <label htmlFor="excel-to-chart-palette" className="text-[10px] text-slate-500 dark:text-slate-400 font-medium uppercase tracking-wider">Palette</label>
                         <select
+                          id="excel-to-chart-palette"
                           value={colorPalette}
                           onChange={(e) => setColorPalette(e.target.value)}
                           className="w-full bg-(--page) border border-(--border) text-(--foreground) text-xs rounded-lg p-2.5 outline-none focus:border-teal-500 cursor-pointer"

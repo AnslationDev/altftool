@@ -53,12 +53,12 @@ export function ProgressBar({
       {(showLabel || showPercent) && (
         <div className="flex items-center justify-between mb-2">
           {showLabel && label && (
-            <span className="text-xs text-[(--muted-foreground)] font-secondary">
+            <span className="text-xs text-[var(--muted-foreground)] font-secondary">
               {label}
             </span>
           )}
           {showPercent && (
-            <span className="text-xs font-semibold text-[(--foreground)] tabular-nums ml-auto">
+            <span className="text-xs font-semibold text-[var(--foreground)] tabular-nums ml-auto">
               {Math.round(currentValue)}/{max}
             </span>
           )}
@@ -69,7 +69,7 @@ export function ProgressBar({
       <div
         className={`
           w-full ${heightClasses[height] || heightClasses.md}
-          bg-[(--muted)] rounded-full overflow-hidden
+          bg-[var(--muted)] rounded-full overflow-hidden
         `}
       >
         {/* Fill */}
@@ -92,18 +92,18 @@ export function SegmentedBar({ segments = [] }) {
     <div className="space-y-2.5">
       {segments.map((seg, i) => (
         <div key={i} className="flex items-center gap-3">
-          <span className="text-md text-[(--muted-foreground)] w-36 shrink-0 truncate">
+          <span className="text-md text-[var(--muted-foreground)] w-36 shrink-0 truncate">
             {seg.label}
           </span>
-          <div className="flex-1 h-1.5 bg-[(--muted)] rounded-full overflow-hidden">
+          <div className="flex-1 h-1.5 bg-[var(--muted)] rounded-full overflow-hidden">
             <div
-              className={`h-full rounded-full transition-all duration-700 ease-out ${seg.color || "bg-[(--primary)]"}`}
+              className={`h-full rounded-full transition-all duration-700 ease-out ${seg.color || "bg-[var(--primary)]"}`}
               style={{
                 width: `${Math.min((seg.value / seg.max) * 100, 100)}%`,
               }}
             />
           </div>
-          <span className="text-xs text-[(--foreground)] tabular-nums w-10 text-right">
+          <span className="text-xs text-[var(--foreground)] tabular-nums w-10 text-right">
             {seg.value}/{seg.max}
           </span>
         </div>

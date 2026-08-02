@@ -3,24 +3,24 @@ import React from "react";
 const Features = () => {
   const features = [
     {
-      title: "Check Latest Package Versions",
+      title: "Check Latest npm Package Versions",
       description:
-        "Instantly find the latest available versions of popular npm, PyPI, and other ecosystem packages.",
+        "Instantly find the latest published version of any npm package, including scoped packages like @angular/core.",
     },
     {
-      title: "Multiple Registry Support",
+      title: "Scoped Package Support",
       description:
-        "Search packages across different registries and ecosystems in one convenient place.",
+        "Enter scoped names like @angular/core or @types/node and they resolve exactly like unscoped packages.",
     },
     {
-      title: "Version History Overview",
+      title: "Latest Version Details",
       description:
-        "View previous versions and release information to manage updates confidently.",
+        "See the current latest published version along with its description, last-updated date, author, and homepage link.",
     },
     {
-      title: "Dependency Update Insights",
+      title: "Always Live, Never Cached",
       description:
-        "Quickly verify if your current dependency version is outdated and needs an upgrade.",
+        "Every check queries the npm registry directly, so you always get the current dist-tags.latest version — never a stale or cached number.",
     },
     {
       title: "Fast & Lightweight",

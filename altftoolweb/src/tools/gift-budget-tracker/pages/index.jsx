@@ -13,6 +13,17 @@ import toast, { Toaster } from "react-hot-toast";
 
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
+// Parses a "YYYY-MM-DD" string (as produced by <input type="date">) into a
+// local-midnight Date instead of letting `new Date(string)` treat it as UTC
+// midnight, which silently shifts the calendar date by a day in timezones
+// west of UTC and skews day-diff math in timezones east of UTC.
+const parseLocalDate = (value) => {
+  if (!value) return null;
+  const [year, month, day] = value.split("-").map(Number);
+  if (!year || !month || !day) return null;
+  return new Date(year, month - 1, day);
+};
+
 const STATUSES = ["Planned", "Purchased", "Wrapped", "Shipped", "Delivered", "Cancelled"];
 const PRIORITIES = ["High", "Medium", "Low"];
 const CATEGORIES = ["Electronics", "Clothing", "Toys", "Books", "Gift Card", "Experience", "Other"];
@@ -108,7 +119,7 @@ export default function GiftBudgetTracker() {
         pending++;
 
         if (g.deliveryDate) {
-          const dDate = new Date(g.deliveryDate);
+          const dDate = parseLocalDate(g.deliveryDate);
           const diffTime = dDate - today;
           const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
           if (diffDays >= 0 && diffDays <= 7) {
@@ -161,7 +172,7 @@ export default function GiftBudgetTracker() {
       if (sortBy === "upcomingDelivery") {
         if (!a.deliveryDate) return 1;
         if (!b.deliveryDate) return -1;
-        return new Date(a.deliveryDate) - new Date(b.deliveryDate);
+        return parseLocalDate(a.deliveryDate) - parseLocalDate(b.deliveryDate);
       }
       if (sortBy === "alphabetical") return (a.recipientName || "").localeCompare(b.recipientName || "");
       // recentlyAdded (assuming id generation implies order roughly, or just order in array which is natural, we'll just reverse)
@@ -207,6 +218,10 @@ export default function GiftBudgetTracker() {
     toast.success("Budget updated");
   };
 
+  const handleCloseBudgetModal = () => {
+    setIsEditingBudget(false);
+  };
+
   const handleOpenModal = (gift = null) => {
     if (gift) {
       setEditingGift(gift);
@@ -214,8 +229,8 @@ export default function GiftBudgetTracker() {
         giftName: gift.giftName || "",
         recipientName: gift.recipientName || "",
         occasion: gift.occasion || "",
-        budgetAmount: gift.budgetAmount ? gift.budgetAmount.toString() : "",
-        actualSpendingAmount: gift.actualSpendingAmount ? gift.actualSpendingAmount.toString() : "",
+        budgetAmount: gift.budgetAmount == null ? "" : String(gift.budgetAmount),
+        actualSpendingAmount: gift.actualSpendingAmount == null ? "" : String(gift.actualSpendingAmount),
         purchaseDate: gift.purchaseDate || "",
         deliveryDate: gift.deliveryDate || "",
         category: gift.category || "Other",
@@ -298,7 +313,16 @@ export default function GiftBudgetTracker() {
       return;
     }
     const headers = ["Recipient", "Gift Name", "Occasion", "Category", "Priority", "Status", "Budget ($)", "Actual Spent ($)", "Purchase Date", "Delivery Date"];
-    const escapeCSVValue = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+    const escapeCSVValue = (value) => {
+      let str = String(value ?? "");
+      // Neutralize formula-trigger characters so a name/notes value like
+      // `=HYPERLINK(...)` doesn't execute as a live formula when the CSV
+      // is opened in Excel/Sheets (CSV/Formula Injection, CWE-1236).
+      if (/^[=+\-@]/.test(str)) {
+        str = `'${str}`;
+      }
+      return `"${str.replace(/"/g, '""')}"`;
+    };
     const rows = gifts.map(g => [
       escapeCSVValue(g.recipientName),
       escapeCSVValue(g.giftName),
@@ -371,7 +395,10 @@ export default function GiftBudgetTracker() {
                 </p>
               </div>
               <button
-                onClick={() => setIsEditingBudget(true)}
+                onClick={() => {
+                  setTempBudget(totalBudget);
+                  setIsEditingBudget(true);
+                }}
                 className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--card)] text-[var(--muted-foreground)] transition-all hover:border-[var(--primary)] hover:text-[var(--primary)] hover:shadow-md"
                 aria-label="Edit Budget"
               >
@@ -401,6 +428,9 @@ export default function GiftBudgetTracker() {
               <div className="mt-3 flex items-center justify-between text-sm text-[var(--muted-foreground)]">
                 <span>${totalActual.toLocaleString()} spent</span>
                 <span>${remainingBudget.toLocaleString()} remaining</span>
+              </div>
+              <div className="mt-1 flex items-center justify-between text-xs text-[var(--muted-foreground)]">
+                <span>${totalPlanned.toLocaleString()} planned across all gifts</span>
               </div>
             </div>
           </div>
@@ -661,6 +691,7 @@ export default function GiftBudgetTracker() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
+                aria-label="Filter by status"
                 className="h-11 w-full appearance-none rounded-xl border border-[var(--border)] bg-[var(--card)] pl-4 pr-9 text-sm text-[var(--card-foreground)] outline-none transition-all focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]"
               >
                 <option value="All">All Statuses</option>
@@ -673,6 +704,7 @@ export default function GiftBudgetTracker() {
               <select
                 value={occasionFilter}
                 onChange={(e) => setOccasionFilter(e.target.value)}
+                aria-label="Filter by occasion"
                 className="h-11 w-full appearance-none rounded-xl border border-[var(--border)] bg-[var(--card)] pl-4 pr-9 text-sm text-[var(--card-foreground)] outline-none transition-all focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]"
               >
                 {occasionsList.map(o => <option key={o} value={o}>{o === 'All' ? 'All Occasions' : o}</option>)}
@@ -684,6 +716,7 @@ export default function GiftBudgetTracker() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
+                aria-label="Sort gifts by"
                 className="h-11 w-full appearance-none rounded-xl border border-[var(--border)] bg-[var(--card)] pl-4 pr-9 text-sm text-[var(--card-foreground)] outline-none transition-all focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]"
               >
                 <option value="recentlyAdded">Recently Added</option>
@@ -755,12 +788,12 @@ export default function GiftBudgetTracker() {
                         </div>
                         {gift.deliveryDate && (
                           <div className="text-xs text-[var(--muted-foreground)] flex items-center gap-1">
-                            <Truck className="w-3 h-3" /> {new Date(gift.deliveryDate).toLocaleDateString()}
+                            <Truck className="w-3 h-3" /> {parseLocalDate(gift.deliveryDate).toLocaleDateString()}
                           </div>
                         )}
                         {!gift.deliveryDate && gift.purchaseDate && (
                            <div className="text-xs text-[var(--muted-foreground)] flex items-center gap-1">
-                            <Calendar className="w-3 h-3" /> {new Date(gift.purchaseDate).toLocaleDateString()}
+                            <Calendar className="w-3 h-3" /> {parseLocalDate(gift.purchaseDate).toLocaleDateString()}
                           </div>
                         )}
                       </td>
@@ -830,10 +863,11 @@ export default function GiftBudgetTracker() {
                   <h4 className="subheading border-b border-[var(--border)] pb-3 text-[var(--card-foreground)]">General Info</h4>
 
                   <div>
-                    <label className="block text-sm font-medium text-[var(--card-foreground)] mb-1">
+                    <label htmlFor="gift-recipientName" className="block text-sm font-medium text-[var(--card-foreground)] mb-1">
                       Recipient Name *
                     </label>
                     <input
+                      id="gift-recipientName"
                       type="text"
                       name="recipientName"
                       value={formData.recipientName}
@@ -845,10 +879,11 @@ export default function GiftBudgetTracker() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-[var(--card-foreground)] mb-1">
+                    <label htmlFor="gift-giftName" className="block text-sm font-medium text-[var(--card-foreground)] mb-1">
                       Gift Name *
                     </label>
                     <input
+                      id="gift-giftName"
                       type="text"
                       name="giftName"
                       value={formData.giftName}
@@ -861,10 +896,11 @@ export default function GiftBudgetTracker() {
 
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <div>
-                      <label className="block text-sm font-medium text-[var(--card-foreground)] mb-1">
+                      <label htmlFor="gift-budgetAmount" className="block text-sm font-medium text-[var(--card-foreground)] mb-1">
                         Budget ($) *
                       </label>
                       <input
+                        id="gift-budgetAmount"
                         type="number"
                         name="budgetAmount"
                         value={formData.budgetAmount}
@@ -876,10 +912,11 @@ export default function GiftBudgetTracker() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[var(--card-foreground)] mb-1">
+                      <label htmlFor="gift-actualSpendingAmount" className="block text-sm font-medium text-[var(--card-foreground)] mb-1">
                         Actual ($)
                       </label>
                       <input
+                        id="gift-actualSpendingAmount"
                         type="number"
                         name="actualSpendingAmount"
                         value={formData.actualSpendingAmount}
@@ -893,8 +930,9 @@ export default function GiftBudgetTracker() {
 
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                      <div>
-                      <label className="block text-sm font-medium text-[var(--card-foreground)] mb-1">Occasion</label>
+                      <label htmlFor="gift-occasion" className="block text-sm font-medium text-[var(--card-foreground)] mb-1">Occasion</label>
                       <input
+                        id="gift-occasion"
                         type="text"
                         name="occasion"
                         value={formData.occasion}
@@ -904,8 +942,9 @@ export default function GiftBudgetTracker() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[var(--card-foreground)] mb-1">Category</label>
+                      <label htmlFor="gift-category" className="block text-sm font-medium text-[var(--card-foreground)] mb-1">Category</label>
                       <select
+                        id="gift-category"
                         name="category"
                         value={formData.category}
                         onChange={handleFormChange}
@@ -923,8 +962,9 @@ export default function GiftBudgetTracker() {
 
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <div>
-                      <label className="block text-sm font-medium text-[var(--card-foreground)] mb-1">Status</label>
+                      <label htmlFor="gift-status" className="block text-sm font-medium text-[var(--card-foreground)] mb-1">Status</label>
                       <select
+                        id="gift-status"
                         name="status"
                         value={formData.status}
                         onChange={handleFormChange}
@@ -934,8 +974,9 @@ export default function GiftBudgetTracker() {
                       </select>
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[var(--card-foreground)] mb-1">Priority</label>
+                      <label htmlFor="gift-priority" className="block text-sm font-medium text-[var(--card-foreground)] mb-1">Priority</label>
                       <select
+                        id="gift-priority"
                         name="priority"
                         value={formData.priority}
                         onChange={handleFormChange}
@@ -948,8 +989,9 @@ export default function GiftBudgetTracker() {
 
                   <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     <div>
-                      <label className="block text-sm font-medium text-[var(--card-foreground)] mb-1">Purchase Date</label>
+                      <label htmlFor="gift-purchaseDate" className="block text-sm font-medium text-[var(--card-foreground)] mb-1">Purchase Date</label>
                       <input
+                        id="gift-purchaseDate"
                         type="date"
                         name="purchaseDate"
                         value={formData.purchaseDate}
@@ -958,8 +1000,9 @@ export default function GiftBudgetTracker() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-[var(--card-foreground)] mb-1">Delivery Date</label>
+                      <label htmlFor="gift-deliveryDate" className="block text-sm font-medium text-[var(--card-foreground)] mb-1">Delivery Date</label>
                       <input
+                        id="gift-deliveryDate"
                         type="date"
                         name="deliveryDate"
                         value={formData.deliveryDate}
@@ -970,8 +1013,9 @@ export default function GiftBudgetTracker() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-[var(--card-foreground)] mb-1">General Notes</label>
+                    <label htmlFor="gift-notes" className="block text-sm font-medium text-[var(--card-foreground)] mb-1">General Notes</label>
                     <textarea
+                      id="gift-notes"
                       name="notes"
                       value={formData.notes}
                       onChange={handleFormChange}
@@ -1037,6 +1081,65 @@ export default function GiftBudgetTracker() {
                 >
                   <Check className="w-4 h-4" />
                   {editingGift ? "Save Changes" : "Add Gift"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Edit Budget Modal */}
+      {isEditingBudget && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/50 p-3 backdrop-blur-sm animate-fade-up sm:p-6 print:hidden">
+          <div className="w-full max-w-md overflow-y-auto rounded-3xl border border-[var(--border)] bg-[var(--card)] shadow-2xl" onClick={(e) => e.stopPropagation()}>
+            <div className="sticky top-0 z-10 flex items-center justify-between gap-4 rounded-t-3xl border-b border-[var(--border)] bg-[var(--card)] px-5 py-4 sm:px-6">
+              <h3 className="subheading text-[var(--card-foreground)]">
+                Edit Total Budget
+              </h3>
+              <button
+                onClick={handleCloseBudgetModal}
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)] transition-all hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                aria-label="Close budget modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <form onSubmit={handleBudgetSubmit} className="space-y-6 p-5 sm:p-6 lg:p-8">
+              <div>
+                <label htmlFor="gift-totalBudget" className="block text-sm font-medium text-[var(--card-foreground)] mb-1">
+                  Total Budget ($) *
+                </label>
+                <input
+                  id="gift-totalBudget"
+                  type="number"
+                  name="totalBudget"
+                  value={tempBudget}
+                  onChange={(e) => setTempBudget(e.target.value)}
+                  min="0"
+                  step="0.01"
+                  className="h-11 w-full rounded-xl border border-[var(--border)] bg-[var(--background)] px-3 text-sm text-[var(--card-foreground)] outline-none transition-all focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]"
+                  required
+                />
+                <p className="description mt-2 text-[var(--muted-foreground)]">
+                  Update your total gift fund any time so the dashboard reflects the latest spending plan.
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-3 border-t border-[var(--border)] pt-4 sm:flex-row sm:justify-end">
+                <button
+                  type="button"
+                  onClick={handleCloseBudgetModal}
+                  className="h-11 rounded-xl border border-[var(--border)] bg-[var(--background)] px-5 text-sm font-medium text-[var(--card-foreground)] transition-all hover:border-[var(--primary)] hover:text-[var(--primary)]"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-[var(--primary)] px-6 text-sm font-semibold text-[var(--primary-foreground)] shadow-lg shadow-[var(--primary)]/20 transition-all hover:-translate-y-0.5 hover:bg-[var(--primary-hover)]"
+                >
+                  <Check className="w-4 h-4" />
+                  Save Budget
                 </button>
               </div>
             </form>

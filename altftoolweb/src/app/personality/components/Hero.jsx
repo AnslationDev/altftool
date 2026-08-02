@@ -72,9 +72,17 @@ export default function Hero() {
         </div>
         <div className="section-header px-4 sm:px-6 lg:px-0 ">
           <h1 className="section-title font-bold text-[32px] sm:text-[40px] md:text-[52px] lg:text-[60px] leading-[38px] sm:leading-[46px] md:leading-[58px] lg:leading-[66px]">
-            Understand Yourself Better
+            {/*
+              The {" "} entries are load-bearing. <br /> adds nothing to
+              textContent and JSX drops the surrounding newlines, so this H1
+              extracted as "Understand Yourself BetterWith Scientifically
+              InspiredPersonality Tests" — the exact string /personality serves
+              today. Whitespace before a line break collapses, so the three
+              rendered lines are unchanged.
+            */}
+            Understand Yourself Better{" "}
             <br />
-            With Scientifically Inspired
+            With Scientifically Inspired{" "}
             <br />
             <span className="personality-gradient-text">Personality Tests</span>
           </h1>

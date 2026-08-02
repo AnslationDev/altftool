@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The Atrial Fibrillation Risk Calculator turns the risk factors used in CHARGE-AF style community models — age, sex, race, BMI, height, hypertension, diabetes, heart failure, ECG left ventricular hypertrophy, vascular disease and current smoking — into a simplified score out of 12 and places it in one of four bands. Age carries the most weight (+2 for 65-74 and +4 for 75 and over), most other factors add 1 point, and female sex subtracts 1. It also lets you tick the modifiable factors you intend to work on and exports the whole assessment as a text report to bring to an appointment.",
+    "The Atrial Fibrillation Risk Calculator turns the risk factors used in CHARGE-AF style community models — age, sex, race, BMI, height, hypertension, diabetes, heart failure, ECG left ventricular hypertrophy, vascular disease and current smoking — into a simplified score out of 14 and places it in one of four bands. Age carries the most weight (+2 for 65-74 and +4 for 75 and over), most other factors add 1 point, and female sex subtracts 1. It also lets you tick the modifiable factors you intend to work on and exports the whole assessment as a text report to bring to an appointment.",
   useCases: [
     "You are 68 with treated hypertension and a BMI over 30, and want a structured sense of how those stack up before a routine cardiology appointment.",
     "A relative was diagnosed with AF and you want to see which of your own risk factors are the modifiable ones — blood pressure, weight, alcohol, smoking, sleep apnoea — rather than the fixed ones.",
@@ -14,11 +14,11 @@ const seo = {
   faqs: [
     [
       "What score means high risk of atrial fibrillation?",
-      "In this simplified 12-point scheme, 0-2 is Low, 3-4 Moderate, 5-7 High and 8-12 Very High, with indicative annual AF incidence of under 1%, 1-3%, 3-5% and over 5% respectively. These are broad bands from population data, not a prediction for any individual.",
+      "In this simplified 14-point scheme, 0-2 is Low, 3-4 Moderate, 5-7 High and 8-14 Very High, with indicative annual AF incidence of under 1%, 1-3%, 3-5% and over 5% respectively. These are broad bands from population data, not a prediction for any individual.",
     ],
     [
       "Why does age count for so much more than the other factors?",
-      "Because age is the strongest single predictor of atrial fibrillation in every major cohort study. Here age 65-74 adds 2 points and age 75 or over adds 4, out of a 12-point maximum — a person over 75 starts a third of the way up the scale before any other factor is counted.",
+      "Because age is the strongest single predictor of atrial fibrillation in every major cohort study. Here age 65-74 adds 2 points and age 75 or over adds 4, out of a 14-point maximum — a person over 75 starts more than a quarter of the way up the scale before any other factor is counted.",
     ],
     [
       "Which risk factors can I actually change?",

@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Layers, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { CARD_FORMATS, MAX_CARDS, MIN_CARDS, buildFlashcardPrompt } from "../lib";
 
 const INPUT_CLASS =
@@ -34,7 +35,7 @@ export default function ToolHome() {
   const [formatId, setFormatId] = useState(DEFAULTS.formatId);
   const [tsvOutput, setTsvOutput] = useState(DEFAULTS.tsvOutput);
   const [addTags, setAddTags] = useState(DEFAULTS.addTags);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -51,25 +52,25 @@ export default function ToolHome() {
 
   const hasError = Boolean(result.error);
 
-  const copyPrompt = async () => {
+  const copyPrompt = () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.prompt);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("prompt", result.prompt, { label: "Flashcard prompt" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your topic and pasted source notes with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setTopic(DEFAULTS.topic);
     setSource(DEFAULTS.source);
     setCardCount(DEFAULTS.cardCount);
     setFormatId(DEFAULTS.formatId);
     setTsvOutput(DEFAULTS.tsvOutput);
     setAddTags(DEFAULTS.addTags);
-    setCopied(false);
   };
 
   const rows = hasError
@@ -223,25 +224,28 @@ export default function ToolHome() {
               type="button"
               onClick={copyPrompt}
               disabled={hasError}
-              aria-label="Copy the generated flashcard prompt"
-              className={`${GHOST_BTN} disabled:opacity-50`}
+              aria-label={isCopied("prompt") ? "Copied the generated flashcard prompt" : "Copy the generated flashcard prompt"}
+              className={`${PRIMARY_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("prompt") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy prompt"}
+              {isCopied("prompt") ? "Copied!" : "Copy prompt"}
             </button>
             <button
               type="button"
               onClick={reset}
               aria-label="Reset all inputs to defaults"
-              className={PRIMARY_BTN}
+              className={GHOST_BTN}
             >
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

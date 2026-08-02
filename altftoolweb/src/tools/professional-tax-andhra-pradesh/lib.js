@@ -83,7 +83,7 @@ export function computeAndhraPradeshPt({ monthlySalary, monthsEmployed = 12 }) {
     slabLabel: slab.label,
     monthlyTax,
     annualTax: monthlyTax * months,
-    fullYearTax: monthlyTax * 12,
+    fullYearTax: annualTaxFor(monthlyTax),
     liable: monthlyTax > 0,
     /** PT paid is deductible from salary income under Section 16(iii), old regime only. */
     section16Deduction: monthlyTax * months,

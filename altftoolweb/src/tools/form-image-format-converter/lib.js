@@ -115,6 +115,24 @@ export function bytesToKB(bytes) {
   return Math.round((value / BYTES_PER_KB) * 10) / 10;
 }
 
+/**
+ * Validate a JPEG quality typed by the user.
+ * The <input type="number"> min/max attributes only constrain the spinner
+ * arrows, not typed or pasted values, so out-of-range input must be rejected
+ * here before it reaches canvas.toBlob (which silently ignores an
+ * out-of-range value and falls back to the browser default instead).
+ */
+export function validateQuality(quality) {
+  const value = Number(quality);
+  if (!Number.isFinite(value)) {
+    return { error: "JPEG quality must be a number." };
+  }
+  if (value < MIN_JPEG_QUALITY || value > MAX_JPEG_QUALITY) {
+    return { error: `JPEG quality must be between ${MIN_JPEG_QUALITY} and ${MAX_JPEG_QUALITY}.` };
+  }
+  return { quality: value };
+}
+
 /** Validate a target size in KB typed by the user (blank means no target). */
 export function validateTargetKB(targetKB) {
   if (targetKB === "" || targetKB === null || targetKB === undefined) return { targetBytes: null };

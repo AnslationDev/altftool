@@ -104,6 +104,12 @@ test("unconfigured checks are explicitly not checkable", () => {
   assert.equal(result.checks.previousLinks.state, "not-checkable");
 });
 
+test("id check is not-checkable (not an inferred verified) when zero entries were examined", () => {
+  const result = verifyAuditStructure([], { idPath: "id" });
+  assert.equal(result.checks.ids.checkedCount, 0);
+  assert.equal(result.checks.ids.state, "not-checkable");
+});
+
 test("recomputes the documented canonical-entry SHA-256 recipe", async () => {
   const config = {
     hashPath: "hash",
@@ -133,6 +139,32 @@ test("recomputes the documented canonical-entry SHA-256 recipe", async () => {
   const mismatch = await verifySha256Chain([first, second], config);
   assert.equal(mismatch.state, "mismatch");
   assert.equal(mismatch.mismatchCount, 1);
+});
+
+test("canonical-entry recipe verifies entries that have no previousHash field at all", async () => {
+  const config = {
+    hashPath: "hash",
+    previousHashPath: "previousHash",
+    hashRecipe: "canonical-entry",
+  };
+  const first = { id: "a", sequence: 1, action: { tool: "search", ok: true } };
+  first.hash = await sha256Hex(buildCanonicalHashInput(first, config));
+  const second = { id: "b", sequence: 2, action: { ok: true, tool: "write" } };
+  second.hash = await sha256Hex(buildCanonicalHashInput(second, config));
+
+  const result = await verifySha256Chain([first, second], config);
+  assert.equal(result.state, "verified");
+  assert.equal(result.verifiedCount, 2);
+  assert.equal(result.rowResults[0].state, "verified");
+  assert.equal(result.rowResults[1].state, "verified");
+});
+
+test("previous-plus-entry recipe still requires previousHashPath to be configured", async () => {
+  const result = await verifySha256Chain([{ hash: "a".repeat(64) }], {
+    hashPath: "hash",
+    hashRecipe: "previous-plus-entry",
+  });
+  assert.equal(result.state, "not-checkable");
 });
 
 test("recomputes the previous-hash plus canonical-payload recipe", async () => {

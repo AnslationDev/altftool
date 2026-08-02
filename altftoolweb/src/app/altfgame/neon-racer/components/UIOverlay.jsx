@@ -33,9 +33,9 @@ export const UIOverlay = ({ gameState, score, isGameOver, onStart, onRestart }) 
             {/* Start Screen */}
             {gameState === 'START' && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/60 backdrop-blur-sm pointer-events-auto">
-                    <h1 className="text-6xl font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 drop-shadow-[0_0_20px_rgba(0,243,255,0.5)] mb-8">
+                    <h2 className="text-6xl font-black italic tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 drop-shadow-[0_0_20px_rgba(0,243,255,0.5)] mb-8">
                         NEON RACER
-                    </h1>
+                    </h2>
                     <button
                         onClick={onStart}
                         className="px-8 py-4 bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xl rounded-none skew-x-[-10deg] transition-all hover:scale-110 active:scale-95 shadow-[0_0_20px_rgba(0,243,255,0.6)]"

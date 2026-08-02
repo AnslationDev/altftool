@@ -1299,7 +1299,7 @@ export const toolMetaMap = {
     "wideWorkspace": true
   },
   "animation-generator": {
-    "name": "Animation Generator",
+    "name": "CSS Keyframes Animation Builder",
     "description": "Generate animations for your projects in easy way",
     "category": "Design & Color",
     "topics": [
@@ -1309,7 +1309,7 @@ export const toolMetaMap = {
     "iconColor": "text-teal-500"
   },
   "animation-generator-tool": {
-    "name": "Animation Generator",
+    "name": "CSS Animation Presets",
     "description": "Create advanced CSS animations easily.",
     "category": "Design & Color",
     "topics": [
@@ -3833,7 +3833,7 @@ export const toolMetaMap = {
     "name": "Breastfeeding Hydration Calculator",
     "description": "Daily fluid target while nursing, derived from milk output and feeding frequency rather than a flat one-size figure.",
     "category": "Health & Fitness",
-    "icon": "milk",
+    "icon": "droplets",
     "iconColor": "text-[var(--primary)]"
   },
   "breastfeeding-session-log": {
@@ -4004,7 +4004,7 @@ export const toolMetaMap = {
   },
   "buffer-ph-calculator": {
     "name": "Buffer pH Calculator",
-    "description": "Henderson-Hasselbalch equation se buffer pH calculate kare.",
+    "description": "Calculate buffer pH using the Henderson-Hasselbalch equation.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -7553,7 +7553,7 @@ export const toolMetaMap = {
       "Calculator"
     ],
     "icon": "calendar-range",
-    "iconColor": "text-indigo-600"
+    "iconColor": "text-[var(--primary)]"
   },
   "db-to-percentage-converter": {
     "name": "dB To Percentage Converter",
@@ -8780,7 +8780,7 @@ export const toolMetaMap = {
   },
   "dpia-starter-wizard": {
     "name": "DPIA Starter Wizard",
-    "description": "New feature ka initial privacy-impact assessment structure kare.",
+    "description": "Score a new feature's privacy risk and outline the structure of a Data Protection Impact Assessment (DPIA).",
     "category": [
       "Security & Privacy",
       "Business"
@@ -8933,7 +8933,7 @@ export const toolMetaMap = {
   },
   "driving-licence-number-decoder": {
     "name": "Driving Licence Number Decoder",
-    "description": "Licence number se state, RTO aur year fields parse kare.",
+    "description": "Parse an Indian driving licence number into its state, RTO, issue-year and serial fields, and identify the state it was issued in.",
     "category": [
       "Lifestyle",
       "Productivity"
@@ -9229,7 +9229,7 @@ export const toolMetaMap = {
   },
   "eid-mubarak-wishes-generator": {
     "name": "Eid Mubarak Wishes Generator",
-    "description": "Write Eid greetings in Urdu, Hindi, Arabic, English and nine Indian languages, with transliteration and SMS length check.",
+    "description": "Write Eid greetings in Urdu, Hindi, Arabic, English and eight Indian languages, with transliteration and SMS length check.",
     "category": "Generators",
     "icon": "moon-star",
     "iconColor": "text-[var(--primary)]"
@@ -10686,7 +10686,7 @@ export const toolMetaMap = {
   },
   "fantasy-character-name-generator": {
     "name": "Fantasy Character Name Generator",
-    "description": "Generate fresh fantasy character names from a keyword.",
+    "description": "Generate six random two-part fantasy character names in one click.",
     "category": "Fun",
     "icon": "shuffle",
     "iconColor": "text-violet-600"
@@ -11826,7 +11826,7 @@ export const toolMetaMap = {
   },
   "fuel-cost-split-calculator": {
     "name": "Fuel Cost Split Calculator",
-    "description": "Split road trip fuel, toll and parking costs fairly by the kilometres each person actually rode, with penny-exact rounding.",
+    "description": "Split road trip fuel, toll and parking costs fairly by the kilometres each person actually rode, with paisa-exact rounding.",
     "category": "Calculators",
     "icon": "users",
     "iconColor": "text-[var(--primary)]"
@@ -13041,8 +13041,8 @@ export const toolMetaMap = {
     "iconColor": "text-[var(--primary)]"
   },
   "gzip-encryption": {
-    "name": "Gzip Encryption & Decryption",
-    "description": "Gzip encryption and decryption. Quickly and easily encrypt and decrypt gzip strings!",
+    "name": "Gzip Compression & Decompression",
+    "description": "Gzip compression and decompression. Quickly and easily compress and decompress gzip strings (this is compression, not encryption).",
     "category": "Developer",
     "topics": [
       "Developer Tools"
@@ -13258,7 +13258,7 @@ export const toolMetaMap = {
   },
   "headphone-balance-test": {
     "name": "Headphone Balance Test",
-    "description": "Left/right, stereo placement aur polarity test tones play kare.",
+    "description": "Left/right stereo placement aur channel balance check karne ke liye hard-panned tone alternate kare.",
     "category": [
       "Developer",
       "Productivity"
@@ -14513,7 +14513,7 @@ export const toolMetaMap = {
   },
   "image-quality-checker": {
     "name": "Image Quality Checker",
-    "description": "Analyze image quality with 10+ professional metrics including sharpness, brightness, contrast, noise, exposure, and histogram analysis.",
+    "description": "Analyze image quality with nine professional metrics including sharpness, brightness, contrast, noise, exposure, and histogram analysis.",
     "category": [
       "AI Tools",
       "Image & Photo",
@@ -14600,7 +14600,7 @@ export const toolMetaMap = {
   },
   "impossible-object-builder": {
     "name": "Impossible Object Builder",
-    "description": "An interactive visual editor to create mathematically impossible optical illusion objects and 3D geometric structures.",
+    "description": "Generate a Penrose triangle, impossible rectangle or endless staircase as an SVG, and tune the camera angle to see exactly why the illusion holds — or breaks.",
     "category": "Design & Color",
     "icon": "boxes",
     "iconColor": "text-[var(--primary)]"
@@ -17520,7 +17520,7 @@ export const toolMetaMap = {
   },
   "low-vision-camera-magnifier": {
     "name": "Low-Vision Camera Magnifier",
-    "description": "Zoom, invert, contrast aur edge-enhancement modes provide kare.",
+    "description": "Zoom, invert, contrast aur grayscale modes provide kare.",
     "category": [
       "Developer",
       "Productivity"
@@ -17548,7 +17548,7 @@ export const toolMetaMap = {
   },
   "lucky-color-picker": {
     "name": "Lucky Color Picker",
-    "description": "Discover your lucky color for today based on your mood, zodiac sign, or random selection with color psychology insights.",
+    "description": "Discover your lucky color based on your mood, zodiac sign, or random selection with color psychology insights.",
     "category": [
       "Fun",
       "Lifestyle"
@@ -19565,7 +19565,7 @@ export const toolMetaMap = {
   },
   "netlify-cost-estimator": {
     "name": "Netlify Cost Estimator",
-    "description": "Estimate your Netlify bill from team members, bandwidth, build minutes and function invocations on Free or Pro.",
+    "description": "Estimate your Netlify bill from bandwidth, function compute, production deploys and web requests on Free, Personal or Pro's credit-based pricing.",
     "category": "Calculators",
     "icon": "rocket",
     "iconColor": "text-[var(--primary)]"
@@ -19921,7 +19921,7 @@ export const toolMetaMap = {
       "Career"
     ],
     "icon": "wrench",
-    "iconColor": "text-blue-500"
+    "iconColor": "text-[var(--primary)]"
   },
   "notice-period-rent-calculator": {
     "name": "Notice Period Rent Liability Calculator",
@@ -21610,7 +21610,7 @@ export const toolMetaMap = {
   },
   "photo-love-compatibility": {
     "name": "Love Compatibility by Photos",
-    "description": "Upload two photos to run face alignment scans and compute an AI-based compatibility rating.",
+    "description": "Upload two photos to run real face landmark detection and get a fun, deterministic compatibility score — not an AI-based prediction.",
     "category": "Image & Photo",
     "topics": [
       "AI & Image Tools"
@@ -23676,7 +23676,7 @@ export const toolMetaMap = {
   },
   "reading-speed-calculator": {
     "name": "Reading Speed Calculator",
-    "description": "Calculate reading speed, reading time, and words per minute from pasted text or a timed reading test.",
+    "description": "Measure your reading speed and words per minute with a timed reading test using built-in passages.",
     "category": "Education & Science",
     "topics": [
       "Education"
@@ -24198,7 +24198,7 @@ export const toolMetaMap = {
   },
   "renter-security-checklist": {
     "name": "Renter Security Checklist",
-    "description": "Futuristic property verification and safety management tool for renters.",
+    "description": "Score a rental move-in against a weighted, code-referenced security and safety checklist.",
     "category": "Lifestyle",
     "icon": "shield-check",
     "iconColor": "text-blue-500"
@@ -29459,7 +29459,7 @@ export const toolMetaMap = {
   },
   "three-phase-power-calculator": {
     "name": "Three-Phase Power Calculator",
-    "description": "kW, kVA, amps aur power factor convert kare.",
+    "description": "Convert three-phase voltage, current and power factor into kW, kVA and output power.",
     "category": "Calculators",
     "topics": [
       "Electronics",

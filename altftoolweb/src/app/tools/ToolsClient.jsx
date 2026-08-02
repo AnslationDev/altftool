@@ -638,6 +638,19 @@ export default function ToolsClient({
       ? Math.max(filteredSlugs.length, activeCategoryTotal)
       : filteredSlugs.length;
   const hasMore = visibleCount < resultTotal;
+  // The sidebar already resolves the display label and the true category size
+  // server-side, so the heading can state both without any extra work or fetch.
+  const activeCategoryLabel = categoryStatsBySlug.get(categoryname)?.label;
+  const headingLabel =
+    categoryname && categoryname !== "all" && activeCategoryLabel
+      ? activeCategoryLabel
+      : "Every AltFTool tool";
+  const headingTotal =
+    categoryname && categoryname !== "all" ? activeCategoryTotal : catalogTotal;
+  const headingCountLabel = headingTotal
+    ? `— ${headingTotal.toLocaleString()} free online tools`
+    : "— free online tools";
+
   const isSearchMode = Boolean(search.trim());
   const searchResultSlugs = useMemo(() => filteredSlugs.filter((slug) => meta[slug]).slice(0, 12), [filteredSlugs, meta]);
   const isFiltering = search !== deferredSearch;
@@ -897,11 +910,22 @@ export default function ToolsClient({
       <div className="tools-shell">
         <section className="tools-hero">
           <div className="tools-hero-copy">
+            {/*
+              All 23 of these URLs — /tools, /tools/all and the 21 category
+              routes — used to render the same H1: "Ready to find your perfect
+              tool?". It names no category, no product noun and no count, on the
+              site's highest-priority pages (sitemap 0.72-0.95), which now also
+              carry the crawlable anchor for every tool in their category. The
+              heading names the page now; the invitation moved to the line below,
+              where it still reads as a call to action without being the one
+              thing a search engine sees as the page's subject.
+            */}
             <h1 className="route-title">
-              Ready to find your perfect <span className="tp-accent-word">tool?</span>
+              {headingLabel}{" "}
+              <span className="tp-accent-word">{headingCountLabel}</span>
             </h1>
             <p className="route-description">
-              Search {Math.floor(catalogTotal / 50) * 50}+ trusted tools, utilities, and games built to help you work faster.
+              Ready to find your perfect tool? Search {Math.floor(catalogTotal / 50) * 50}+ trusted tools, utilities, and games built to help you work faster.
             </p>
             <div className="tools-search-row">
               <Search className="pointer-events-none absolute right-5 top-1/2 h-5 w-5 -translate-y-1/2 text-[var(--tp-primary)]" />

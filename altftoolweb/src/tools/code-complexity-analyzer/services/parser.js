@@ -254,15 +254,34 @@ function calculateNestingDepth(bodyLines) {
     let currentDepth = 0;
     let inString = false;
     let stringChar = '';
+    let inSingleComment = false;
+    let inMultiComment = false;
 
     for (const line of bodyLines) {
+        inSingleComment = false;
+
         for (let i = 0; i < line.length; i++) {
             const ch = line[i];
+            const next = line[i + 1] || '';
+
+            if (inSingleComment) break;
+
+            if (inMultiComment) {
+                if (ch === '*' && next === '/') {
+                    inMultiComment = false;
+                    i++;
+                }
+                continue;
+            }
+
             if (inString) {
                 if (ch === '\\') { i++; continue; }
                 if (ch === stringChar) inString = false;
                 continue;
             }
+
+            if (ch === '/' && next === '/') { inSingleComment = true; break; }
+            if (ch === '/' && next === '*') { inMultiComment = true; i++; continue; }
             if (ch === '"' || ch === "'" || ch === '`') { inString = true; stringChar = ch; continue; }
             if (ch === '{') { currentDepth++; maxDepth = Math.max(maxDepth, currentDepth); }
             if (ch === '}') { currentDepth = Math.max(0, currentDepth - 1); }
@@ -273,12 +292,27 @@ function calculateNestingDepth(bodyLines) {
 
 function calculateNestingDepthPython(bodyLines) {
     if (bodyLines.length === 0) return 0;
+    // baseIndent is the indent of the `def ...:` line itself (0 for a
+    // top-level function). The indent unit is detected from the body rather
+    // than assumed, so both 2-space and conventional 4-space (PEP8)
+    // indentation report the correct depth instead of dividing by a fixed
+    // constant that only matches one convention.
     const baseIndent = bodyLines[0].length - bodyLines[0].trimStart().length;
+    const indentedAmounts = bodyLines
+        .slice(1)
+        .filter(line => line.trim())
+        .map(line => line.length - line.trimStart().length - baseIndent)
+        .filter(amount => amount > 0);
+    const indentUnit = indentedAmounts.length > 0 ? Math.min(...indentedAmounts) : 4;
+
     let maxDepth = 0;
     for (const line of bodyLines) {
         if (!line.trim()) continue;
         const indent = line.length - line.trimStart().length;
-        const depth = Math.floor((indent - baseIndent) / 2) || Math.floor((indent - baseIndent) / 4);
+        if (indent <= baseIndent) continue;
+        // The function's own direct body (the first indent level) is the
+        // baseline, not a nesting level, so it subtracts 1.
+        const depth = Math.max(0, Math.round((indent - baseIndent) / indentUnit) - 1);
         maxDepth = Math.max(maxDepth, depth);
     }
     return maxDepth;
@@ -384,7 +418,7 @@ function extractControlStructures(body, baseLineNum) {
             if (pattern.regex.test(trimmed)) {
                 structures.push({
                     name: pattern.type,
-                    type: 'control',
+                    type: pattern.type,
                     startLine: lineNum,
                     children: [],
                 });

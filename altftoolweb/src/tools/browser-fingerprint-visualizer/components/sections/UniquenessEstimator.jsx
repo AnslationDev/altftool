@@ -13,7 +13,7 @@ export function UniquenessEstimator({ uniqueness, loading }) {
       <SectionHeader
         icon="🌍"
         title="Global Uniqueness"
-        description="How rare is your browser fingerprint among all web users?"
+        subtitle="How rare is your browser fingerprint among all web users?"
       />
 
       {/* Loading skeleton */}
@@ -43,12 +43,10 @@ export function UniquenessEstimator({ uniqueness, loading }) {
 
           {/* Uniqueness label badge */}
           <Badge
-            variant={uniqueness.isUnique ? "high" : "medium"}
+            variant={uniqueness.isUnique ? "red" : "yellow"}
             size="md"
-            className="mb-4"
-          >
-            {uniqueness.label}
-          </Badge>
+            label={uniqueness.label}
+          />
 
           {/* Percentile bar */}
           <div className="text-left mt-2">

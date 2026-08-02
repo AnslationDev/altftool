@@ -18,9 +18,9 @@ export const GENDERS = [
 
 export const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
-/** Bounds for the letter-count filter. */
-export const MIN_LETTERS = 2;
-export const MAX_LETTERS = 12;
+/** Bounds for the letter-count filter — matches the shortest (3) and longest (9) names in NAMES below. */
+export const MIN_LETTERS = 3;
+export const MAX_LETTERS = 9;
 
 const ROWS = [
   ["Aarav", "boy", "Sanskrit", "Peaceful, wise"],

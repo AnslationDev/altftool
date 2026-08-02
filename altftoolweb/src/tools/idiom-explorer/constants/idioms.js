@@ -1,6 +1,6 @@
 "use client";
 
-// Idiom data — 60 curated English idioms across categories and difficulty levels
+// Idiom data — 59 curated English idioms across categories and difficulty levels
 export const IDIOMS = [
   {
     id: 1,
@@ -69,7 +69,7 @@ export const IDIOMS = [
   {
     id: 5,
     idiom: "hit the nail on the head",
-    meaning: "To describe exactly what is causing a situation or problem.",
+    meaning: "To identify or describe exactly what is causing a situation or problem.",
     literalMeaning: "To strike a nail precisely on its head with a hammer.",
     usage: "Used when someone identifies or describes something accurately.",
     origin: "From carpentry — hitting a nail precisely on its head is the most effective technique.",
@@ -79,8 +79,8 @@ export const IDIOMS = [
       "You hit the nail on the head with your analysis.",
       "Her feedback really hit the nail on the head.",
     ],
-    synonyms: ["be spot on", "get it right", "nail it"],
-    related: ["get to the point", "cut to the chase"],
+    synonyms: ["spot on", "exactly right", "nail it"],
+    related: ["right on the money", "on point"],
   },
   {
     id: 6,
@@ -531,22 +531,6 @@ export const IDIOMS = [
     related: ["pinch of salt", "question the source"],
   },
   {
-    id: 34,
-    idiom: "hit the nail on the head",
-    meaning: "To identify or describe something exactly.",
-    literalMeaning: "Striking a nail squarely on the head.",
-    usage: "Used when someone explains something perfectly.",
-    origin: "From carpentry — hitting a nail on the head is the most effective way to drive it.",
-    category: "Accuracy",
-    difficulty: "beginner",
-    examples: [
-      "Your summary really hit the nail on the head.",
-      "The analyst hit the nail on the head with her prediction.",
-    ],
-    synonyms: ["spot on", "exactly right", "bulls-eye"],
-    related: ["right on the money", "on point"],
-  },
-  {
     id: 35,
     idiom: "actions speak louder than words",
     meaning: "What you do is more important than what you say.",
@@ -969,7 +953,9 @@ export const CATEGORIES = [
   "Social",
   "Courage",
   "Communication",
+  "Agreement",
   "Accuracy",
+  "Difficulty",
   "Health",
   "Finance",
   "Perspective",

@@ -147,7 +147,8 @@ export function trackSchoolAttendance({
 
   // Total absences the session can carry and still finish at the target.
   const leaveBudget = Math.floor((sessionDays * (100 - target)) / 100 + EPSILON);
-  const leaveBudgetLeft = leaveBudget - absencesSoFar;
+  // Cannot exceed the working days actually remaining in the session.
+  const leaveBudgetLeft = Math.min(leaveBudget - absencesSoFar, remainingDays);
 
   // Days still to attend out of those remaining.
   const presentDaysNeeded = Math.ceil((target * sessionDays) / 100 - EPSILON);

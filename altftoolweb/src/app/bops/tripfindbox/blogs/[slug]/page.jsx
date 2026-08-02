@@ -4,7 +4,14 @@ import { notFound } from "next/navigation";
 import { Footer } from "@/app/bops/tripfindbox/components/HeroSection";
 import ResultsHeader from "@/app/bops/tripfindbox/components/ResultsHeader";
 import MobileResultsCallBar from "@/app/bops/tripfindbox/components/MobileResultsCallBar";
-import { buildBlogSections, fetchBlogPosts, getBlogPost, getRelatedBlogs } from "@/app/bops/tripfindbox/lib/blogData";
+import {
+  buildBlogSeoDescription,
+  buildBlogSeoTitle,
+  buildBlogSections,
+  fetchBlogPosts,
+  getBlogPost,
+  getRelatedBlogs,
+} from "@/app/bops/tripfindbox/lib/blogData";
 import { getTripFindBoxContactInfo } from "@/app/bops/tripfindbox/lib/contactInfo";
 import { tfbPath } from "@/app/bops/tripfindbox/lib/tfbLink";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
@@ -27,9 +34,14 @@ export async function generateMetadata({ params }) {
     });
   }
 
+  // Feed headlines run 55-110 characters, so "<headline> | TripFindBox Blog"
+  // rendered 78-114 and every one of the live posts was truncated in mobile
+  // SERPs. buildBlogSeoTitle keeps the branded form when it fits inside 60 and
+  // otherwise clamps the headline on a phrase boundary; buildBlogSeoDescription
+  // produces a string that survives trimMetaDescription byte-for-byte.
   return createPageMetadata({
-    title: `${post.title} | TripFindBox Blog`,
-    description: post.description,
+    title: buildBlogSeoTitle(post.title),
+    description: buildBlogSeoDescription(post.description),
     path: `/bops/tripfindbox/blogs/${slug}`,
   });
 }

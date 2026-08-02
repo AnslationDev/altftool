@@ -7,10 +7,17 @@ import useBeautyScore from "../hooks/useBeautyScore";
 import ScannerOverlay from "../components/ScannerOverlay";
 import ScoreResult from "../components/ScoreResult";
 
+const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024;
+const ACCEPTED_MIME_TYPES = ["image/jpeg", "image/png"];
+
 export default function BeautyScoreHome() {
   const [imageSrc, setImageSrc] = useState(null);
   const [isWebcamActive, setIsWebcamActive] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
+  // Matches the img's own natural aspect ratio once it loads, so the "Face Detected"
+  // overlay box (positioned as a percentage of this container) lines up with the
+  // photo even when it isn't 16:9 — see the <img onLoad> handler below.
+  const [mediaAspect, setMediaAspect] = useState(16 / 9);
   const videoRef = useRef(null);
   const fileInputRef = useRef(null);
 
@@ -18,17 +25,24 @@ export default function BeautyScoreHome() {
 
   const handleFileUpload = (e) => {
     const file = e.target.files?.[0] || e.dataTransfer?.files?.[0];
-    if (file && file.type.startsWith("image/")) {
-      stopWebcam();
-      reset();
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const src = event.target.result;
-        setImageSrc(src);
-        analyzeImage(src);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+    if (!ACCEPTED_MIME_TYPES.includes(file.type)) {
+      alert("Please upload a JPG or PNG photo.");
+      return;
     }
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      alert("That photo is larger than 5MB. Please upload a smaller image.");
+      return;
+    }
+    stopWebcam();
+    reset();
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const src = event.target.result;
+      setImageSrc(src);
+      analyzeImage(src);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleDragOver = (e) => {
@@ -159,7 +173,7 @@ export default function BeautyScoreHome() {
 
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="image/jpeg,image/png"
                   ref={fileInputRef}
                   onChange={handleFileUpload}
                   className="hidden"
@@ -197,8 +211,10 @@ export default function BeautyScoreHome() {
           {/* Media Container */}
           {(imageSrc || isWebcamActive) && (
             <div className="w-full max-w-2xl">
-              <div className="relative rounded-2xl border-4 border-[var(--border)] overflow-hidden bg-black aspect-video flex items-center justify-center shadow-2xl">
-                
+              <div
+                className="relative mx-auto flex items-center justify-center overflow-hidden rounded-2xl border-4 border-[var(--border)] bg-black shadow-2xl"
+                style={{ aspectRatio: mediaAspect, maxHeight: "70vh" }}
+              >
                 {isWebcamActive && (
                   <video
                     ref={videoRef}
@@ -212,16 +228,21 @@ export default function BeautyScoreHome() {
                   <img
                     src={imageSrc}
                     alt="Face to analyze"
-                    className="max-w-full max-h-[60vh] object-contain"
+                    className="w-full h-full object-contain"
+                    onLoad={(e) => setMediaAspect(e.target.naturalWidth / e.target.naturalHeight)}
                   />
                 )}
 
                 {/* Overlays */}
                 <ScannerOverlay isScanning={analyzing} />
 
-                {/* Box drawn from detection result */}
+                {/* Box drawn from detection result. Positioned as a percentage of
+                    this container, which is why the container's aspect-ratio is
+                    kept in sync with the photo's own natural size above — without
+                    that, the img would letterbox inside the container and this
+                    percentage math would no longer line up with the real face. */}
                 {result && result.box && (
-                  <div 
+                  <div
                     className="absolute border-2 border-purple-500 shadow-[0_0_10px_#a855f7] rounded-md transition-all duration-500"
                     style={{
                       left: `${(result.box.x / result.box.imageWidth) * 100}%`,
@@ -230,7 +251,7 @@ export default function BeautyScoreHome() {
                       height: `${(result.box.height / result.box.imageHeight) * 100}%`,
                     }}
                   >
-                    <div className="absolute -top-6 left-0 bg-purple-500 text-white text-xs px-2 py-1 rounded font-mono">
+                    <div className="absolute -top-6 left-0 rounded bg-primary px-2 py-1 font-mono text-xs text-primary-foreground">
                       Face Detected
                     </div>
                   </div>
@@ -259,7 +280,7 @@ export default function BeautyScoreHome() {
 
           {/* Result Section */}
           {!analyzing && result && (
-            <div className="w-full max-w-2xl">
+            <div className="w-full max-w-2xl" role="status" aria-live="polite">
               <ScoreResult result={result} />
             </div>
           )}

@@ -203,9 +203,6 @@ export function convertBoost({
     const densityRatioNoIc = pressureRatio * (tIn / tOut);
 
     charge = {
-      tInK: tIn,
-      tOutK: tOut,
-      tAfterK: tAfter,
       tInC: kelvinToCelsius(tIn),
       tOutC: kelvinToCelsius(tOut),
       tAfterC: kelvinToCelsius(tAfter),
@@ -226,7 +223,6 @@ export function convertBoost({
     ambientNote,
     ambientPsi: ambientPa / UNIT_MAP.psi.pa,
     ambientBar: ambientPa / UNIT_MAP.bar.pa,
-    ambientKpa: ambientPa / UNIT_MAP.kpa.pa,
     gaugePa,
     absolutePa,
     pressureRatio,

@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Check, Copy, Plus, RotateCcw, Stethoscope, Trash2 } from "lucide-react";
 
 import {
+  DEFAULT_APPOINTMENT_MINUTES,
   PRIORITIES,
   RED_FLAGS,
   SOCRATES_FIELDS,
@@ -45,7 +46,7 @@ const DEFAULT_QUESTIONS = [
 
 const DEFAULTS = {
   reason: "Burning pain in the upper abdomen for about three weeks",
-  appointmentMinutes: "10",
+  appointmentMinutes: String(DEFAULT_APPOINTMENT_MINUTES),
   medicines: "Metformin 500 mg twice daily; antacid as needed",
   allergies: "None known",
   desiredOutcome: "Understand whether I need a test, and what to change in the meantime",
@@ -126,6 +127,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset the entire form? Everything you've entered will be cleared.")) {
+      return;
+    }
     setReason(DEFAULTS.reason);
     setAppointmentMinutes(DEFAULTS.appointmentMinutes);
     setAppointmentDate(todayIso());

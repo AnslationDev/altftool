@@ -60,8 +60,8 @@ const toNumber = (raw) => {
 
 /** Payment history — the heaviest bureau factor (about 35% of the score). */
 export function paymentSubScore(missed, worst) {
-  if (missed <= 0) return 100;
   const base = WORST_PENALTY[worst] ?? WORST_PENALTY.dpd30;
+  if (missed <= 0) return clamp(100 - base, 0, 100);
   const extra = Math.max(0, missed - 1) * 6;
   return clamp(100 - base - extra, 0, 100);
 }

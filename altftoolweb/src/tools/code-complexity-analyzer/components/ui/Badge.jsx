@@ -2,10 +2,10 @@ export default function Badge({ children, variant = 'neutral', className = '' })
     const variants = {
         neutral: "bg-(--muted) text-(--muted-foreground)",
         primary: "bg-(--primary)/10 text-(--primary)",
-        success: "bg-(--primary)/10 text-(--primary)",
-        warning: "bg-(--primary)/10 text-(--primary)",
-        danger: "bg-(--primary)/10 text-(--primary)",
-        info: "bg-(--primary)/10 text-(--primary)"
+        success: "bg-(--success-soft) text-(--success-text)",
+        warning: "bg-(--warning-soft) text-(--warning-text)",
+        danger: "bg-(--danger-soft) text-(--danger-text)",
+        info: "bg-(--info-soft) text-(--info)"
     };
 
     return (

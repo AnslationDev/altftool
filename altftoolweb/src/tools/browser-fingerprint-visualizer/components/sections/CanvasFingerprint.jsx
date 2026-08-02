@@ -26,12 +26,12 @@ export function CanvasFingerprint({ canvas, loading }) {
       <SectionHeader
         icon="🎨"
         title="Canvas Fingerprint"
-        description="GPU renders shapes & text differently per device"
-        badge={
+        subtitle="GPU renders shapes & text differently per device"
+        action={
           isBlocked ? (
-            <Badge variant="success" size="xs">Blocked ✓</Badge>
+            <Badge variant="green" size="xs" label="Blocked ✓" />
           ) : (
-            <Badge variant="high" size="xs">High Entropy</Badge>
+            <Badge variant="red" size="xs" label="High Entropy" />
           )
         }
       />

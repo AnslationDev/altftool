@@ -20,6 +20,7 @@ import {
 import Coin3D from "../components/Coin3D";
 import ResultReveal from "../components/ResultReveal";
 import HistorySection from "../components/HistorySection";
+import StatsSection from "../components/StatsSection";
 
 import { soundEngine } from "../utils/audio";
 import { COIN_SKINS, getSkin } from "../utils/coinSkins";
@@ -313,6 +314,14 @@ export default function ToolHome() {
   };
 
   const resetStats = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset all coin flip stats? This clears your total flips, heads/tails tally, current and best streaks, and the recent toss history. This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     soundEngine.playClick();
     setStats(emptyStats);
     try {
@@ -428,6 +437,31 @@ export default function ToolHome() {
               {autoFlip ? <Pause className="h-4 w-4 text-[var(--anslation-ds-success)]" /> : <Play className="h-4 w-4" />}
               <span>Auto Flip</span>
             </button>
+          </div>
+
+          {/* COINS-TO-FLIP SELECTOR */}
+          <div className="mt-4 flex flex-wrap items-center justify-center gap-2">
+            <span className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
+              Coins to flip
+            </span>
+            <div className="flex flex-wrap items-center justify-center gap-1.5" role="group" aria-label="Number of coins to flip at once">
+              {[1, 2, 3, 4, 5, 6].map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  onClick={() => changeCoinCount(n)}
+                  disabled={flipping}
+                  aria-pressed={coinCount === n}
+                  className={`inline-flex h-8 w-8 items-center justify-center rounded-lg text-xs font-bold transition border ${
+                    coinCount === n
+                      ? "border-[var(--primary)] bg-[var(--anslation-ds-primary-soft)] text-[var(--primary)]"
+                      : "border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)] hover:border-[var(--primary)]/60"
+                  } disabled:cursor-not-allowed disabled:opacity-50`}
+                >
+                  {n}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* MODE SEGMENTED CONTROL BAR */}
@@ -607,6 +641,7 @@ export default function ToolHome() {
 
         {/* DASHBOARD SECTIONS */}
         <section className="mt-8 grid gap-6">
+          <StatsSection stats={stats} onResetStats={resetStats} />
           <HistorySection history={stats.history} onClearHistory={resetStats} />
         </section>
 

@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "What is the daily challenge?",
-      "A fixed 20-question set seeded from today's date, so everyone gets the same questions on the same day and you can compare one day against the next. It ramps in difficulty: the first 5 questions are easy, the next 7 medium and the last 8 hard, drawn from addition, subtraction, multiplication, division, squares and percentages.",
+      "A fixed 20-question set seeded from today's date, so everyone who takes it gets the exact same questions on the same day — useful for comparing your score against a friend or classmate taking it today. Nothing is saved between visits (this trainer keeps no data at all — see the note at the bottom of the page), so there is no built-in history to compare across your own past days. It ramps in difficulty: the first 5 questions are easy, the next 7 medium and the last 8 hard, drawn from addition, subtraction, multiplication, division, squares and percentages.",
     ],
     [
       "How long do I get per question in speed mode?",

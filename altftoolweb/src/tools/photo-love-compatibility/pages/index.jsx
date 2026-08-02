@@ -43,10 +43,11 @@ export default function ToolHome() {
     try {
       const faceapi = await getFaceApi();
 
-      const loadImg = (src) => new Promise((resolve) => {
+      const loadImg = (src) => new Promise((resolve, reject) => {
         const img = new Image();
-        img.src = src;
         img.onload = () => resolve(img);
+        img.onerror = () => reject(new Error("Could not read this image — try a different file."));
+        img.src = src;
       });
 
       const [img1, img2] = await Promise.all([
@@ -72,7 +73,6 @@ export default function ToolHome() {
       ]);
 
       let seed = 0;
-      let ageDiffText = "Similar age group alignment";
 
       if (det1 && det2) {
         // Calculate deterministic seed based on coordinate sums
@@ -93,8 +93,11 @@ export default function ToolHome() {
       }
 
       const score = Math.round((seed % 28) + 71); // Score between 71% and 98%
-      const chemistry = Math.min(99, Math.round(((seed * 3) % 21) + 79));
-      const trust = Math.min(99, Math.round(((seed * 7) % 21) + 79));
+      // Multipliers must be coprime with the 21 modulus (79-99% band) so the
+      // sub-score genuinely spans all 21 values instead of collapsing into a
+      // handful of buckets sharing a common factor with 21 (e.g. 3 or 7).
+      const chemistry = Math.min(99, Math.round(((seed * 4) % 21) + 79));
+      const trust = Math.min(99, Math.round(((seed * 5) % 21) + 79));
       const alignment = Math.min(99, Math.round(((seed * 11) % 21) + 79));
 
       setResult({
@@ -107,15 +110,17 @@ export default function ToolHome() {
       setAnalyzing(false);
     } catch (err) {
       console.error(err);
-      setError("An error occurred while analyzing photos. Please try again.");
+      setError(err?.message || "An error occurred while analyzing photos. Please try again.");
       setAnalyzing(false);
     }
   };
 
+  // The overall score formula ((seed % 28) + 71, mirrored in seo.js) always
+  // produces a value between 71 and 98 by design, so a "score < 70" tier can
+  // never be reached — only two tiers exist here on purpose.
   const getMatchVerdict = (score) => {
     if (score >= 85) return { label: "Perfect Symmetry! 💖", color: "text-rose-500", text: "Your facial structures share excellent proportions and visual harmony. The facial alignment metrics show outstanding compatibility and a natural sub-conscious bond." };
-    if (score >= 70) return { label: "Strong Complementary Match! 💕", color: "text-pink-500", text: "Your facial features complement each other beautifully. There is high structural compatibility indicating a balanced, supportive dynamic." };
-    return { label: "Unique & Distinct Spark! ✨", color: "text-teal-500", text: "You share a fascinating contrast of features! While your facial metrics are distinct, this often represents complementary traits and an intriguing attraction." };
+    return { label: "Strong Complementary Match! 💕", color: "text-pink-500", text: "Your facial features complement each other beautifully. There is high structural compatibility indicating a balanced, supportive dynamic." };
   };
 
   const formatReportText = () => {
@@ -161,6 +166,9 @@ ${verdict.text}
   };
 
   const handleReset = () => {
+    if (!window.confirm("Reset will discard both photos, names, and your result. Continue?")) {
+      return;
+    }
     setPhoto1(null);
     setPhoto2(null);
     setName1("");
@@ -199,20 +207,28 @@ ${verdict.text}
             <div className="space-y-6">
               {/* Names input */}
               <div className="grid sm:grid-cols-2 gap-4">
-                <input
-                  type="text"
-                  value={name1}
-                  onChange={(e) => setName1(e.target.value)}
-                  placeholder="Enter First Partner Name"
-                  className="w-full h-10 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition text-sm"
-                />
-                <input
-                  type="text"
-                  value={name2}
-                  onChange={(e) => setName2(e.target.value)}
-                  placeholder="Enter Second Partner Name"
-                  className="w-full h-10 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition text-sm"
-                />
+                <div>
+                  <label htmlFor="partner1-name" className="sr-only">First partner name</label>
+                  <input
+                    id="partner1-name"
+                    type="text"
+                    value={name1}
+                    onChange={(e) => setName1(e.target.value)}
+                    placeholder="Enter First Partner Name"
+                    className="w-full h-10 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition text-sm"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="partner2-name" className="sr-only">Second partner name</label>
+                  <input
+                    id="partner2-name"
+                    type="text"
+                    value={name2}
+                    onChange={(e) => setName2(e.target.value)}
+                    placeholder="Enter Second Partner Name"
+                    className="w-full h-10 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary transition text-sm"
+                  />
+                </div>
               </div>
 
               {/* Upload targets */}
@@ -238,12 +254,13 @@ ${verdict.text}
                       className="w-full aspect-square rounded-2xl border-2 border-dashed border-border hover:border-primary hover:bg-[var(--anslation-ds-soft)] cursor-pointer flex flex-col items-center justify-center p-6 transition"
                     >
                       <Upload className="text-muted-foreground mb-3" size={24} />
-                      <span className="text-xs font-semibold text-foreground">Select Partner 1 Photo</span>
+                      <span id="partner1-photo-label" className="text-xs font-semibold text-foreground">Select Partner 1 Photo</span>
                       <input
                         ref={fileInputRef1}
                         type="file"
                         accept="image/*"
                         className="hidden"
+                        aria-labelledby="partner1-photo-label"
                         onChange={(e) => {
                           if (e.target.files && e.target.files[0]) {
                             processFile(e.target.files[0], 1);
@@ -274,12 +291,13 @@ ${verdict.text}
                       className="w-full aspect-square rounded-2xl border-2 border-dashed border-border hover:border-primary hover:bg-[var(--anslation-ds-soft)] cursor-pointer flex flex-col items-center justify-center p-6 transition"
                     >
                       <Upload className="text-muted-foreground mb-3" size={24} />
-                      <span className="text-xs font-semibold text-foreground">Select Partner 2 Photo</span>
+                      <span id="partner2-photo-label" className="text-xs font-semibold text-foreground">Select Partner 2 Photo</span>
                       <input
                         ref={fileInputRef2}
                         type="file"
                         accept="image/*"
                         className="hidden"
+                        aria-labelledby="partner2-photo-label"
                         onChange={(e) => {
                           if (e.target.files && e.target.files[0]) {
                             processFile(e.target.files[0], 2);
@@ -346,6 +364,15 @@ ${verdict.text}
                   <p className="text-sm text-muted-foreground font-medium">
                     Photo compatibility for {name1 || "Partner 1"} & {name2 || "Partner 2"}
                   </p>
+                  {result.hasFaces ? (
+                    <p className="text-xs text-muted-foreground/80">
+                      Based on real facial landmark detection in both photos.
+                    </p>
+                  ) : (
+                    <p className="text-xs text-amber-600 dark:text-amber-400">
+                      ⚠️ No face was detected in one or both photos, so this result uses a fallback based on file details rather than facial analysis. Try clearer, front-facing photos for a genuine face-based score.
+                    </p>
+                  )}
                 </div>
               </div>
 

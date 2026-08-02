@@ -89,6 +89,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every selection? This will replace your categories, usage inputs and checklist progress with the defaults and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setSelected(DEFAULT_SELECTED);
     setYears(DEFAULT_YEARS);
     setSwipes(DEFAULT_SWIPES);
@@ -247,7 +254,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        role="status"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -314,9 +325,11 @@ export default function ToolHome() {
 
         {!hasError && result.hasSpecialCategory ? (
           <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-xs leading-5 text-[var(--muted-foreground)]">
-            Special-category data in this selection: {result.specialCategoryLabels.join(", ")}.
-            Sexual orientation carries extra protection under GDPR Art. 9 and India&rsquo;s SPDI
-            Rules 2011.
+            Special-category data in this selection: {result.specialCategoryLabels.join(", ")}.{" "}
+            {result.rows
+              .filter((row) => row.special)
+              .map((row) => row.note)
+              .join(" ")}
           </p>
         ) : null}
 

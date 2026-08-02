@@ -101,8 +101,6 @@ export const RTI_LIFE_LIBERTY_HOURS = 48;
 export const RTI_FIRST_APPEAL_DAYS = 30;
 /** MGNREGA, 2005 — employment to be given within fifteen days of application. */
 export const MGNREGA_WORK_DAYS = 15;
-/** MGNREGA, 2005 — wages payable within a fortnight of the work being done. */
-export const MGNREGA_WAGE_DAYS = 15;
 /** Registration of Births and Deaths Act, 1969 — report within twenty-one days. */
 export const REGISTRATION_NORMAL_DAYS = 21;
 /** s.13(1) — late fee band. */
@@ -348,8 +346,6 @@ export function assessApplication({ typeId, applicationDateISO, eventDateISO, li
       band,
       bandText: REGISTRATION_BAND_TEXT[band],
       freeUntilISO: addDaysISO(eventDateISO, REGISTRATION_NORMAL_DAYS),
-      lateFeeUntilISO: addDaysISO(eventDateISO, REGISTRATION_LATE_FEE_DAYS),
-      affidavitUntilISO: oneYearISO,
       needsAffidavit: band === REGISTRATION_BANDS.AFFIDAVIT,
       needsMagistrateOrder: band === REGISTRATION_BANDS.MAGISTRATE,
     };
@@ -439,7 +435,9 @@ export function buildPanchayatApplication({
     `District: ${district}${state ? `, ${state}` : ""}`,
     clean(phone) ? `Mobile: ${clean(phone)}` : "",
     clean(aadhaarLastFour) ? `Aadhaar (last four digits): ${clean(aadhaarLastFour).slice(-4)}` : "",
-    clean(jobCardNumber) ? `Job card number: ${clean(jobCardNumber)}` : "",
+    (type.id === "mgnrega-work" || type.id === "mgnrega-job-card") && clean(jobCardNumber)
+      ? `Job card number: ${clean(jobCardNumber)}`
+      : "",
   ].filter(Boolean);
 
   const subject = `${type.subject}${clean(subjectDetail) ? ` — ${clean(subjectDetail)}` : ""}`;

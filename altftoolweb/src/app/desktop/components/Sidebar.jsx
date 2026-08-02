@@ -121,9 +121,9 @@ export default function SidebarApp() {
 
       {/* Apps */}
       <div className="flex-1">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6">
+        <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6">
           Top free apps
-        </h1>
+        </h2>
 
         {/* Mobile */}
         <div className="lg:hidden overflow-x-auto">

@@ -35,8 +35,8 @@ const windows = {
   "quoteLabel": "Get a window quote",
   "quoteUrl": quoteUrlFor("windows"),
   "seo": {
-    "title": "Window Replacement Guide: Glass, Frames, U-Factor and Installation",
-    "description": "Learn how double vs triple pane, low-E coatings, argon fill, U-factor, SHGC and frame material affect window performance, plus full-frame vs insert replacement."
+    "title": "Window Replacement Guide: Glass & U-Factor",
+    "description": "How double vs triple pane, low-E coatings, argon fill, U-factor, SHGC and frame material affect windows, plus full-frame vs insert replacement."
   },
   "services": [
     {

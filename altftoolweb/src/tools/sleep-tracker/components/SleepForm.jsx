@@ -41,6 +41,10 @@ export default function SleepForm({ onSave }) {
       setError("Bedtime and wake time are required.");
       return;
     }
+    if (formData.sleepGoal === "" || Number.isNaN(Number(formData.sleepGoal)) || Number(formData.sleepGoal) <= 0) {
+      setError("Sleep goal is required and must be a positive number of hours.");
+      return;
+    }
     setError(null);
     onSave(formData);
   };

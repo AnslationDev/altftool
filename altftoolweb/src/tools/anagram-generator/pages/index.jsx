@@ -12,15 +12,25 @@ import ResultsGrid from "../components/ResultsGrid";
 import EmptyState from "../components/EmptyState";
 import ExportToolbar from "../components/ExportToolbar";
 import EducationalCards from "../components/EducationalCards";
+import { combinationsEstimate as computeCombinationsEstimate } from "../utils/combinations";
 
-// Original exact shuffle algorithm (LOGIC PRESERVED 100%)
-function shuffleString(str) {
-  const arr = str.split("");
+// Shuffles the letters within a single word (Fisher-Yates).
+function shuffleWord(word) {
+  const arr = word.split("");
   for (let i = arr.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
   return arr.join("");
+}
+
+// Shuffles each word independently so multi-word phrases keep their word
+// boundaries intact instead of relocating spaces into the middle of a word.
+function shuffleString(str) {
+  return str
+    .split(/(\s+)/)
+    .map((token) => (/^\s+$/.test(token) ? token : shuffleWord(token)))
+    .join("");
 }
 
 export default function ToolHome() {
@@ -32,9 +42,9 @@ export default function ToolHome() {
   const [favorites, setFavorites] = useState([]);
   const [isGenerating, setIsGenerating] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
+  const [lastGenerationMs, setLastGenerationMs] = useState(null);
 
   // Settings states (LOGIC PRESERVED 100%)
-  const [realWordsOnly, setRealWordsOnly] = useState(false);
   const [sortMode, setSortMode] = useState("random");
   const [allowDuplicates, setAllowDuplicates] = useState(true);
 
@@ -43,7 +53,6 @@ export default function ToolHome() {
   const [endsWith, setEndsWith] = useState("");
   const [contains, setContains] = useState("");
   const [excludeLetters, setExcludeLetters] = useState("");
-  const [dictionaryMode, setDictionaryMode] = useState("general");
 
   // Toast Helper
   const showToast = (msg) => {
@@ -56,9 +65,21 @@ export default function ToolHome() {
     const text = input.trim();
     if (!text) return;
 
+    // "Allow Duplicate Letters" gates whether an input whose letters repeat
+    // (e.g. "conversation") is accepted, matching its "maintain exact
+    // character frequencies" description.
+    if (!allowDuplicates) {
+      const letters = text.toLowerCase().replace(/[^a-z]/g, "").split("");
+      if (new Set(letters).size !== letters.length) {
+        showToast('Input has duplicate letters — enable "Allow Duplicate Letters" or use a word with all unique letters.');
+        return;
+      }
+    }
+
     setIsGenerating(true);
 
     setTimeout(() => {
+      const startedAt = typeof performance !== "undefined" ? performance.now() : Date.now();
       const result = new Set();
       result.add(text);
 
@@ -77,10 +98,13 @@ export default function ToolHome() {
         arr.sort((a, b) => a.length - b.length);
       }
 
+      const elapsedMs = (typeof performance !== "undefined" ? performance.now() : Date.now()) - startedAt;
+
       setAnagrams(arr);
+      setLastGenerationMs(elapsedMs);
       setIsGenerating(false);
     }, 200);
-  }, [input, count, sortMode]);
+  }, [input, count, sortMode, allowDuplicates]);
 
   // Apply visual frontend filters
   const filteredAnagrams = useMemo(() => {
@@ -101,21 +125,29 @@ export default function ToolHome() {
   }, [anagrams, startsWith, endsWith, contains, excludeLetters]);
 
   // Copy Anagram
-  const copyAnagram = (text, index) => {
-    navigator.clipboard.writeText(text);
-    setCopiedIndex(index);
-    setCopiedTotal((prev) => prev + 1);
-    showToast(`Copied "${text}" to clipboard!`);
-    setTimeout(() => setCopiedIndex(null), 1400);
+  const copyAnagram = async (text, index) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedIndex(index);
+      setCopiedTotal((prev) => prev + 1);
+      showToast(`Copied "${text}" to clipboard!`);
+      setTimeout(() => setCopiedIndex(null), 1400);
+    } catch {
+      showToast("Couldn't copy to clipboard — check your browser permissions.");
+    }
   };
 
   // Copy All Anagrams
-  const handleCopyAll = () => {
+  const handleCopyAll = async () => {
     if (!filteredAnagrams.length) return;
     const fullText = filteredAnagrams.join("\n");
-    navigator.clipboard.writeText(fullText);
-    setCopiedTotal((prev) => prev + filteredAnagrams.length);
-    showToast(`Copied all ${filteredAnagrams.length} anagrams to clipboard!`);
+    try {
+      await navigator.clipboard.writeText(fullText);
+      setCopiedTotal((prev) => prev + filteredAnagrams.length);
+      showToast(`Copied all ${filteredAnagrams.length} anagrams to clipboard!`);
+    } catch {
+      showToast("Couldn't copy to clipboard — check your browser permissions.");
+    }
   };
 
   // Export File (TXT, CSV, JSON)
@@ -130,7 +162,8 @@ export default function ToolHome() {
       mimeType = "text/plain";
       extension = "txt";
     } else if (format === "csv") {
-      content = `Index,Anagram,Length\n` + filteredAnagrams.map((word, i) => `${i + 1},"${word}",${word.length}`).join("\n");
+      const escapeCsvField = (value) => `"${String(value).replace(/"/g, '""')}"`;
+      content = `Index,Anagram,Length\n` + filteredAnagrams.map((word, i) => `${i + 1},${escapeCsvField(word)},${word.length}`).join("\n");
       mimeType = "text/csv";
       extension = "csv";
     } else if (format === "json") {
@@ -192,22 +225,18 @@ export default function ToolHome() {
   const charCount = input.length;
   const wordCount = input.trim() ? input.trim().split(/\s+/).length : 0;
 
-  // Combination estimate calculation
-  const combinationsEstimate = useMemo(() => {
-    const clean = input.replace(/[^a-zA-Z]/g, "").toLowerCase();
-    if (!clean.length) return "0";
-    if (clean.length > 12) return "10M+";
-    let fact = 1;
-    for (let i = 2; i <= clean.length; i++) fact *= i;
-    return fact.toLocaleString();
-  }, [input]);
+  // Combination estimate calculation — multinomial coefficient so repeated
+  // letters don't overstate the count, with real magnitude past 12 letters.
+  const combinationsEstimate = useMemo(() => computeCombinationsEstimate(input), [input]);
 
   return (
-    <div className="min-h-screen bg-[#F8F8FC] dark:bg-background text-foreground p-4 sm:p-6 lg:p-8 selection:bg-teal-500/30 selection:text-teal-600 dark:selection:text-teal-400">
+    <div className="min-h-screen bg-background text-foreground p-4 sm:p-6 lg:p-8 selection:bg-teal-500/30 selection:text-teal-600 dark:selection:text-teal-400">
       {/* Toast Notification Banner */}
       <AnimatePresence>
         {toastMessage && (
           <motion.div
+            role="status"
+            aria-live="polite"
             initial={{ opacity: 0, y: -20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.95 }}
@@ -233,8 +262,6 @@ export default function ToolHome() {
           isGenerating={isGenerating}
           count={count}
           setCount={setCount}
-          realWordsOnly={realWordsOnly}
-          setRealWordsOnly={setRealWordsOnly}
           sortMode={sortMode}
           setSortMode={setSortMode}
           allowDuplicates={allowDuplicates}
@@ -247,8 +274,8 @@ export default function ToolHome() {
           setContains={setContains}
           excludeLetters={excludeLetters}
           setExcludeLetters={setExcludeLetters}
-          dictionaryMode={dictionaryMode}
-          setDictionaryMode={setDictionaryMode}
+          combinationsEstimate={combinationsEstimate}
+          lastGenerationMs={lastGenerationMs}
           filteredAnagrams={filteredAnagrams}
           copyAnagram={copyAnagram}
           copiedIndex={copiedIndex}
@@ -286,8 +313,6 @@ export default function ToolHome() {
             <SettingsPanel
               count={count}
               setCount={setCount}
-              realWordsOnly={realWordsOnly}
-              setRealWordsOnly={setRealWordsOnly}
               sortMode={sortMode}
               setSortMode={setSortMode}
               allowDuplicates={allowDuplicates}
@@ -300,8 +325,6 @@ export default function ToolHome() {
               setContains={setContains}
               excludeLetters={excludeLetters}
               setExcludeLetters={setExcludeLetters}
-              dictionaryMode={dictionaryMode}
-              setDictionaryMode={setDictionaryMode}
             />
           }
           rightComponent={
@@ -311,8 +334,8 @@ export default function ToolHome() {
               generatedCount={filteredAnagrams.length}
               copiedTotal={copiedTotal}
               favoritesCount={favorites.length}
-              dictionaryMode={dictionaryMode}
               combinationsEstimate={combinationsEstimate}
+              lastGenerationMs={lastGenerationMs}
             />
           }
         />

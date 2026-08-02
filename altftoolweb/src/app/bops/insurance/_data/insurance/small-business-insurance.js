@@ -197,9 +197,9 @@ export const smallBusinessInsurance = {
   },
 
   seo: {
-    title: "Small Business Insurance — Compare Quotes for SMBs | AltFTool",
+    title: "Small Business Insurance — Compare Quotes | AltFTool",
     description:
-      "Compare small business insurance quotes for freelancers, LLCs and startups. Liability, BOP, workers' comp and more — affordable cover, instant certificates, free to compare.",
+      "Compare small business insurance quotes for freelancers, LLCs and startups. Liability, BOP, workers' comp and more, with instant certificates.",
   },
 };
 

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, TrendingUp } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { COMMON_CYCLE_MONTHS, MAX_HORIZON_YEARS, planRentIncrements } from "../lib";
 
 const INR = new Intl.NumberFormat("en-IN", {
@@ -42,12 +43,11 @@ const toNumber = (raw) => {
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const setField = (key) => (event) => {
     const { value } = event.target;
     setForm((prev) => ({ ...prev, [key]: value }));
-    setCopied(false);
   };
 
   const result = useMemo(
@@ -76,24 +76,28 @@ export default function ToolHome() {
       `Total rent over ${form.horizonYears} years: ${money(result.nominalTotal)}`,
       `Same outgo in today's money: ${money(result.realTotal)}`,
       `Comparison scenario total: ${money(result.altNominalTotal)}`,
-      `Difference: ${money(Math.abs(result.difference))} ${result.difference > 0 ? "cheaper on your plan" : "cheaper on the comparison"}`,
+      `Difference: ${
+        result.difference === 0
+          ? "None — both scenarios cost the same"
+          : `${money(Math.abs(result.difference))} ${result.difference > 0 ? "cheaper on your plan" : "cheaper on the comparison"}`
+      }`,
     ].join("\n");
   }, [hasError, result, form.escalationPercent, form.cycleMonths, form.horizonYears]);
 
   const copyResult = async () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    await copy("rent-plan", summary, { label: "Rent plan" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will discard your rent, escalation and comparison figures and restore the defaults, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setForm(DEFAULTS);
-    setCopied(false);
   };
 
   const rows = hasError
@@ -113,7 +117,10 @@ export default function ToolHome() {
         ["Average monthly rent across the horizon", money(result.averageMonthlyRent)],
         ["Total rent (nominal)", money(result.nominalTotal)],
         ["Total rent in today's money", money(result.realTotal)],
-        ["Value lost to inflation", money(result.inflationDrag)],
+        [
+          result.inflationDrag < 0 ? "Real-terms gain from deflation" : "Value lost to inflation",
+          money(Math.abs(result.inflationDrag)),
+        ],
         ["Comparison scenario total", money(result.altNominalTotal)],
         [
           "Difference between the two",
@@ -267,7 +274,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Total rent over the horizon
             </p>
@@ -285,15 +292,15 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the rent escalation projection"
+              aria-label={isCopied("rent-plan") ? "Copied" : "Copy the rent escalation projection"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("rent-plan") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("rent-plan") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
@@ -304,17 +311,23 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
         {!hasError && result.crossoverCycle > 0 && (
-          <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm text-[var(--muted-foreground)]">
+          <p
+            className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm text-[var(--muted-foreground)]"
+            aria-live="polite"
+          >
             The comparison scenario becomes the dearer monthly rent from cycle{" "}
             {result.crossoverCycle} onwards.
           </p>
         )}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

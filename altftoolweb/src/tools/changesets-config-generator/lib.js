@@ -62,6 +62,27 @@ export function parseGroups(text, fieldLabel) {
 }
 
 /**
+ * Find a non-glob package name that appears in more than one group of the
+ * same list (e.g. two different fixed groups, or two different linked
+ * groups). Such a package can't be locked to two unrelated peer sets at once.
+ * @returns {string|null} the first offending package name, or null.
+ */
+function findCrossGroupDuplicate(groups) {
+  const firstGroupOf = new Map();
+  for (let index = 0; index < groups.length; index += 1) {
+    for (const pkg of groups[index]) {
+      if (pkg.includes("*")) continue;
+      if (!firstGroupOf.has(pkg)) {
+        firstGroupOf.set(pkg, index);
+      } else if (firstGroupOf.get(pkg) !== index) {
+        return pkg;
+      }
+    }
+  }
+  return null;
+}
+
+/**
  * Build .changeset/config.json.
  *
  * @param {object} input
@@ -120,6 +141,19 @@ export function buildChangesetsConfig({
   if (fixedParsed.error) return { error: fixedParsed.error };
   const linkedParsed = parseGroups(linked, "Linked groups");
   if (linkedParsed.error) return { error: linkedParsed.error };
+
+  const fixedDuplicate = findCrossGroupDuplicate(fixedParsed.groups);
+  if (fixedDuplicate) {
+    return {
+      error: `"${fixedDuplicate}" appears in more than one fixed group — a package can only be locked in step with one fixed group.`,
+    };
+  }
+  const linkedDuplicate = findCrossGroupDuplicate(linkedParsed.groups);
+  if (linkedDuplicate) {
+    return {
+      error: `"${linkedDuplicate}" appears in more than one linked group — a package can only belong to one linked group.`,
+    };
+  }
 
   const ignoreList = String(ignore)
     .split(/[\n,]/)

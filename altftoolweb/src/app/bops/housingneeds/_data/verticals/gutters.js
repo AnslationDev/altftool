@@ -38,7 +38,7 @@ const gutters = {
   "quoteLabel": "Get a gutter quote",
   "quoteUrl": quoteUrlFor("gutters"),
   "seo": {
-    "title": "Gutter Installation, Guards and Drainage: A Homeowner's Guide",
+    "title": "Gutter Guide: Installation, Guards & Drains",
     "description": "Learn how seamless aluminum gutters, 5-inch vs 6-inch sizing, downspouts and leaf guards protect your home's foundation, fascia and siding from water damage."
   },
   "services": [

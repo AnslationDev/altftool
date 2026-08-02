@@ -29,6 +29,7 @@ export const JURISDICTIONS = [
     law: "the laws of India, including the Indian Contract Act, 1872",
     courts: "the courts at {city}, India",
     defaultCity: "Bengaluru",
+    cityMatters: true,
     dtsa: false,
     noncompeteNote:
       "Section 27 of the Indian Contract Act, 1872 makes agreements in restraint of trade void, so a candidate NDA must not operate as a non-compete.",
@@ -39,6 +40,7 @@ export const JURISDICTIONS = [
     law: "the laws of England and Wales",
     courts: "the courts of England and Wales sitting in {city}",
     defaultCity: "London",
+    cityMatters: true,
     dtsa: false,
     noncompeteNote:
       "Restraints of trade are enforceable in England and Wales only so far as they protect a legitimate interest and go no further than reasonably necessary.",
@@ -47,8 +49,9 @@ export const JURISDICTIONS = [
     key: "delaware",
     label: "Delaware, USA",
     law: "the laws of the State of Delaware, without regard to its conflict of laws principles",
-    courts: "the state and federal courts located in the State of Delaware",
+    courts: "the state and federal courts located in {city}, Delaware",
     defaultCity: "Wilmington",
+    cityMatters: true,
     dtsa: true,
     noncompeteNote: "US state law on restrictive covenants varies widely; several states restrict or ban them outright.",
   },
@@ -56,8 +59,9 @@ export const JURISDICTIONS = [
     key: "california",
     label: "California, USA",
     law: "the laws of the State of California, without regard to its conflict of laws principles",
-    courts: "the state and federal courts located in San Francisco County, California",
+    courts: "the state and federal courts located in {city} County, California",
     defaultCity: "San Francisco",
+    cityMatters: true,
     dtsa: true,
     noncompeteNote:
       "California Business and Professions Code section 16600 voids non-compete agreements, and sections 16600.1 and 16600.5 restrict even offering one to an employee or applicant.",
@@ -68,6 +72,7 @@ export const JURISDICTIONS = [
     law: "the laws of Singapore",
     courts: "the courts of Singapore",
     defaultCity: "Singapore",
+    cityMatters: false,
     dtsa: false,
     noncompeteNote: "Singapore courts enforce restrictive covenants only where they protect a legitimate proprietary interest and are reasonable.",
   },
@@ -183,11 +188,15 @@ export function buildCandidateNda(input) {
   const deletion = Number(deletionDays);
   const hours = Number(takeHomeHours);
 
-  if (!Number.isFinite(term) || term < MIN_TERM_YEARS || term > MAX_TERM_YEARS) {
-    return { error: `The term must be between ${MIN_TERM_YEARS} and ${MAX_TERM_YEARS} years for a hiring-process NDA.` };
+  if (!Number.isInteger(term) || term < MIN_TERM_YEARS || term > MAX_TERM_YEARS) {
+    return {
+      error: `The term must be a whole number of years between ${MIN_TERM_YEARS} and ${MAX_TERM_YEARS} for a hiring-process NDA.`,
+    };
   }
-  if (!Number.isFinite(deletion) || deletion < MIN_DELETION_DAYS || deletion > MAX_DELETION_DAYS) {
-    return { error: `The deletion deadline must be between ${MIN_DELETION_DAYS} and ${MAX_DELETION_DAYS} days.` };
+  if (!Number.isInteger(deletion) || deletion < MIN_DELETION_DAYS || deletion > MAX_DELETION_DAYS) {
+    return {
+      error: `The deletion deadline must be a whole number of days between ${MIN_DELETION_DAYS} and ${MAX_DELETION_DAYS}.`,
+    };
   }
   if (includeTakeHome && (!Number.isFinite(hours) || hours < 1 || hours > 40)) {
     return { error: "The take-home time limit must be between 1 and 40 hours." };
@@ -206,7 +215,7 @@ export function buildCandidateNda(input) {
 
   push(
     "Parties and Purpose",
-    `This Candidate Confidentiality Agreement (the "Agreement") is made on ${formatLongDate(interviewDate)} between ${company}${companyAddress ? `, of ${clean(companyAddress)}` : ""} (the "Company") and ${candidate} (the "Candidate").\n\nThe Candidate is taking part in the Company's hiring process for the role of ${role} (the "Process"). During the Process the Candidate may be shown non-public information about the Company. This Agreement covers only that information. It is not an offer of employment and it does not restrict where the Candidate may work.`,
+    `This Candidate Confidentiality Agreement (the "Agreement") is made on ${formatLongDate(interviewDate)} between ${company}${clean(companyAddress) ? `, of ${clean(companyAddress)}` : ""} (the "Company") and ${candidate} (the "Candidate").\n\nThe Candidate is taking part in the Company's hiring process for the role of ${role} (the "Process"). During the Process the Candidate may be shown non-public information about the Company. This Agreement covers only that information. It is not an offer of employment and it does not restrict where the Candidate may work.`,
   );
 
   push(
@@ -306,6 +315,16 @@ export function buildCandidateNda(input) {
   if (includeTakeHome && hours > 8) {
     warnings.push(
       `A ${hours}-hour take-home exercise is long enough that many candidates will decline, and long unpaid exercises attract criticism and, in some jurisdictions, scrutiny over whether the work is really unpaid labour.`,
+    );
+  }
+  if (includeDtsaNotice && !jurisdiction.dtsa) {
+    warnings.push(
+      "The Defend Trade Secrets Act immunity notice is a United States provision. It is harmless elsewhere but adds nothing outside US law.",
+    );
+  }
+  if (!includeDtsaNotice && jurisdiction.dtsa) {
+    warnings.push(
+      "For US-governed hiring processes, adding the 18 U.S.C. § 1833(b) immunity notice preserves the right to exemplary damages and attorney fees in a later trade secret action.",
     );
   }
   warnings.push(jurisdiction.noncompeteNote);

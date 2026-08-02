@@ -102,12 +102,17 @@ export function formatDateToken(parts, format) {
   return "";
 }
 
-/** Strip anything no filesystem should be asked to store, then split to words. */
+/**
+ * Strip only what a filesystem actually rejects — the Windows-illegal
+ * characters and control characters — then split on whitespace to get words.
+ * Anything else (accented letters, non-Latin scripts, emoji, and filesystem-legal
+ * punctuation such as & % # ( ) @ +) is real, storable filename content and is
+ * left in place, matching the narrow set the tool's own warning describes.
+ */
 export function tokenWords(raw) {
   return String(raw ?? "")
     .replace(CONTROL_CHARS, "")
     .replace(ILLEGAL_FILENAME_CHARS, " ")
-    .replace(/[^0-9A-Za-z]+/g, " ")
     .trim()
     .split(/\s+/)
     .filter(Boolean);

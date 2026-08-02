@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, KeyRound, RotateCcw } from "lucide-react";
 
 import { SECRET_TYPES, buildManifests } from "../lib";
@@ -31,6 +31,7 @@ export default function ToolHome() {
   const [secretType, setSecretType] = useState(DEFAULTS.secretType);
   const [envText, setEnvText] = useState(DEFAULTS.envText);
   const [copiedWhich, setCopiedWhich] = useState("");
+  const copyTimeoutRef = useRef(null);
 
   const result = useMemo(
     () => buildManifests({ name, namespace, envText, secretType }),
@@ -39,18 +40,35 @@ export default function ToolHome() {
 
   const hasError = Boolean(result.error);
 
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
+
   const copyText = async (text, which) => {
     if (hasError) return;
     try {
       await navigator.clipboard.writeText(text);
       setCopiedWhich(which);
-      setTimeout(() => setCopiedWhich(""), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => {
+        setCopiedWhich("");
+        copyTimeoutRef.current = null;
+      }, 1500);
     } catch {
       setCopiedWhich("");
     }
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your object name, namespace, secret type, and .env text with the default values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setName(DEFAULTS.name);
     setNamespace(DEFAULTS.namespace);
     setSecretType(DEFAULTS.secretType);

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Award, Check, Copy, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import {
   BU_OFFSET,
@@ -41,7 +42,7 @@ export default function ToolHome() {
   const [cgpa, setCgpa] = useState("7.42");
   const [percentage, setPercentage] = useState("65");
   const [semesters, setSemesters] = useState(DEFAULT_SEMESTERS);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const forward = useMemo(() => buCgpaToPercentage({ cgpa }), [cgpa]);
   const reverse = useMemo(() => buPercentageToCgpa({ percentage }), [percentage]);
@@ -71,23 +72,23 @@ export default function ToolHome() {
     ].join("\n");
   }, [ok, mode, forward, reverse]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "conversion result" });
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset all inputs, including the semester SGPA table, back to the defaults?")
+    ) {
+      return;
+    }
     setMode("toPercent");
     setCgpa("7.42");
     setPercentage("65");
     setSemesters(DEFAULT_SEMESTERS);
-    setCopied(false);
+    resetCopyState();
   };
 
   const updateSemester = (index, key, value) =>
@@ -186,7 +187,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               {mode === "toPercent" ? "Equivalent percentage" : "Equivalent CGPA"}
             </p>
@@ -202,20 +203,23 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={!ok}
-              aria-label="Copy the conversion result"
-              className={`${GHOST_BTN} disabled:opacity-40`}
+              aria-label={isCopied("result") ? "Copied the conversion result to clipboard" : "Copy the conversion result"}
+              className={`${PRIMARY_BTN} disabled:opacity-40`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -224,7 +228,6 @@ export default function ToolHome() {
             ? [
                 ["CGPA entered", ok ? gp(forward.cgpa) : "—"],
                 ["Equivalent percentage", ok ? pct(forward.percentage) : "—"],
-                ["Equivalent marks out of 600", ok ? NUM1.format(forward.marksOutOf600) : "—"],
                 ["Class (common convention)", ok ? forward.degreeClass : "—"],
                 ["Above the grade point 4 pass line", ok ? (forward.passing ? "Yes" : "No") : "—"],
               ]

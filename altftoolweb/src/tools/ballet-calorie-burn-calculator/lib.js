@@ -121,12 +121,22 @@ export function computeBalletBurn({
   const minutes = {};
   for (const segment of BALLET_SEGMENTS) {
     const value = minutesBySegment[segment.id];
-    const parsed = Number.isFinite(value) ? value : 0;
-    if (parsed < 0) return { error: "Segment minutes cannot be negative." };
-    if (parsed > MAX_SEGMENT_MINUTES) {
+    // A segment left out of the object entirely defaults to 0 minutes, same as
+    // classesPerWeek defaulting when omitted. A value that was supplied but is
+    // not a finite number (e.g. unparsable text) is rejected instead of being
+    // silently treated as 0, matching the weight/classesPerWeek validation above.
+    if (value === undefined) {
+      minutes[segment.id] = 0;
+      continue;
+    }
+    if (!Number.isFinite(value)) {
+      return { error: `Enter ${segment.label.toLowerCase()} minutes as a number.` };
+    }
+    if (value < 0) return { error: "Segment minutes cannot be negative." };
+    if (value > MAX_SEGMENT_MINUTES) {
       return { error: `Each segment should be ${MAX_SEGMENT_MINUTES} minutes or less.` };
     }
-    minutes[segment.id] = parsed;
+    minutes[segment.id] = value;
   }
 
   const totalMinutes = BALLET_SEGMENTS.reduce((sum, s) => sum + minutes[s.id], 0);

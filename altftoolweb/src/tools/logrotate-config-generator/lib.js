@@ -68,10 +68,16 @@ export function buildLogrotateConfig(options = {}) {
 
   const path = String(logPath ?? "").trim();
   if (!path) return { error: "Enter the log file path or glob, e.g. /var/log/myapp/*.log." };
-  if (!path.startsWith("/")) return { error: "logrotate needs an absolute path starting with /." };
-  if (/\s/.test(path) && !path.startsWith('"')) {
+
+  // logrotate.conf(5): a path may be wrapped in double quotes, and must be
+  // when it contains whitespace. Validate the quote-stripped path so a
+  // correctly quoted "/var/log/my app/*.log" is accepted, not rejected.
+  const isQuoted = path.length >= 2 && path.startsWith('"') && path.endsWith('"');
+  const unquotedPath = isQuoted ? path.slice(1, -1) : path;
+  if (/\s/.test(unquotedPath) && !isQuoted) {
     return { error: "A path containing spaces must be wrapped in double quotes." };
   }
+  if (!unquotedPath.startsWith("/")) return { error: "logrotate needs an absolute path starting with /." };
 
   const rotations = Number(rotateCount);
   if (!Number.isFinite(rotations) || !Number.isInteger(rotations) || rotations < 0) {
@@ -96,6 +102,11 @@ export function buildLogrotateConfig(options = {}) {
     if (sizeType === "size" && freq.id !== "none") {
       warnings.push(
         "\"size\" REPLACES the time schedule — rotation happens only when the file exceeds the size. Use \"maxsize\" to combine size with the daily/weekly schedule.",
+      );
+    }
+    if (sizeType === "minsize" && freq.id === "none") {
+      warnings.push(
+        "\"minsize\" needs a time frequency to add its \"but only above this size\" behavior — with frequency set to none, minsize alone rotates purely on size, the same as \"size\". Pick a frequency to get the documented combined behavior.",
       );
     }
   } else if (freq.id === "none") {
@@ -142,9 +153,10 @@ export function buildLogrotateConfig(options = {}) {
 
   const oldDirValue = String(olddir ?? "").trim();
   if (oldDirValue) {
-    if (!oldDirValue.startsWith("/") && !oldDirValue.startsWith(".")) {
-      return { error: "olddir must be an absolute path or a path relative to the log directory." };
-    }
+    // logrotate.conf(5): olddir takes an absolute path OR a path relative to
+    // the log file's own directory — including a bare relative name with no
+    // leading "./" (e.g. "olddir archive" moves rotations into a sibling
+    // "archive" directory). Only an empty value (handled above) is invalid.
     directives.push(`olddir ${oldDirValue}`);
     warnings.push("olddir must already exist and (unless it is on the same device) createolddir may be needed — logrotate will not create it by default.");
   }

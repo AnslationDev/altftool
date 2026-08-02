@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The Driving Licence Number Decoder splits an Indian driving licence number into its four parts — a two-letter state code, a two-digit RTO code, a four-digit issue-year field and a seven-digit serial — and names the state the code belongs to. Enter DL-0420110012345 and it returns Delhi, RTO 04, year field 2011 and serial 0012345, after stripping hyphens and spaces if you leave normalisation on. It is for anyone checking whether a licence number they have been given is even structurally plausible before they act on it.",
+    "The Driving Licence Number Decoder splits an Indian driving licence number into its four parts — a two-letter state code, a two-digit RTO code, a four-digit issue-year field and a seven-digit serial — and names the state the code belongs to. Enter DL-0420110012345 and it returns Delhi, RTO 04, year field 2011 and serial 0012345, after stripping everything that is not a letter or digit and uppercasing the rest if you leave normalisation on. It is for anyone checking whether a licence number they have been given is even structurally plausible before they act on it.",
   useCases: [
     "You are filling in a form that rejects your licence number and want to see whether the 15 characters actually parse or whether a digit is missing.",
     "An HR or fleet team is validating driver records in a spreadsheet and needs to know which entries do not match the standard state-RTO-year-serial layout at all.",
@@ -17,7 +17,7 @@ const seo = {
     ],
     [
       "Normalisation is explicit",
-      "Hyphens and spaces are stripped and letters uppercased only when you leave the toggle on, so you can also test the raw string exactly as it was written.",
+      "Any character that is not a letter or digit is stripped and the remaining letters are uppercased only when you leave the toggle on, so you can also test the raw string exactly as it was written.",
     ],
   ],
   faqs: [

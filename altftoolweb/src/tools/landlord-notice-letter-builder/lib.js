@@ -227,8 +227,6 @@ export function assessVacateNotice({
     depositCap,
     depositOverCap,
     depositMonths: use.depositMonths,
-    depositMonthsHeld: deposit / rent,
-    statutoryFallbackDays: TPA_MONTHLY_NOTICE_DAYS,
     belowStatutoryFallback: requiredDays < TPA_MONTHLY_NOTICE_DAYS,
     overstayFirstMonthly,
     overstayLaterMonthly,
@@ -261,7 +259,6 @@ export function assessRepairRequest({ reportedDateISO, letterDateISO, allowedDay
   }
 
   const deadlineISO = addDaysISO(letterDateISO, Math.round(allowed));
-  const reminderCountEstimate = Math.floor(pendingDays / 15);
 
   let tone = "polite";
   if (pendingDays > 30) tone = "firm";
@@ -272,7 +269,6 @@ export function assessRepairRequest({ reportedDateISO, letterDateISO, allowedDay
     allowedDays: Math.round(allowed),
     deadlineISO,
     tone,
-    reminderCountEstimate,
     dailyRent: rent / PRORATA_DAYS_PER_MONTH,
   };
 }
@@ -394,9 +390,17 @@ export function buildRepairRequest({
   const premises = or(premisesAddress, "[Address of the rented premises]");
 
   const chosen = repairItemsByIds(repairIds);
-  const items = chosen.length > 0 ? chosen : [REPAIR_ITEMS[0]];
-  const landlordItems = items.filter((item) => item.landlordDuty);
-  const tenantItems = items.filter((item) => !item.landlordDuty);
+  if (chosen.length === 0) {
+    return { error: "Select at least one item that needs fixing before generating the letter." };
+  }
+  const landlordItems = chosen.filter((item) => item.landlordDuty);
+  const tenantItems = chosen.filter((item) => !item.landlordDuty);
+  if (landlordItems.length === 0) {
+    return {
+      error:
+        "This letter asks the landlord to carry out repairs, so select at least one item that is the landlord's responsibility (not only items marked as usually the tenant's).",
+    };
+  }
 
   const opening = {
     polite: `I first reported this on ${formatLongDate(reportedDateISO)}, ${plural(assessment.pendingDays, "day")} ago, and am putting the request in writing so that we both have a record of it.`,

@@ -3,7 +3,7 @@ const seo = {
     "This calculator converts between netto and brutto prices under German Umsatzsteuer law: it multiplies a net figure by 1.19 at the 19% Regelsteuersatz, or divides a gross figure by 1.19 to strip the tax back out. The 7% ermäßigter Satz under § 12 Abs. 2 UStG is one click away, as is the tax fraction of the gross price — 19/119 at the standard rate. It is aimed at freelancers, Kleinunternehmer and anyone reconciling a German invoice.",
   useCases: [
     "Turning a 1,000 EUR net freelance fee into the 1,190 EUR brutto figure that goes on the Rechnung and into the customer's bank transfer.",
-    "Splitting a 53.50 EUR restaurant or grocery receipt at 7% into 50.00 EUR netto and 3.50 EUR Umsatzsteuer for expense bookkeeping.",
+    "Splitting the food portion of a 53.50 EUR restaurant receipt at 7% (drinks stay at 19%) into 50.00 EUR netto and 3.50 EUR Umsatzsteuer for expense bookkeeping.",
     "Checking whether last year's turnover stayed under 25,000 EUR so the Kleinunternehmerregelung still applies and no VAT has to be shown on invoices.",
   ],
   benefits: [
@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "What is the VAT rate in Germany?",
-      "The standard rate (Regelsteuersatz) is 19% and has been since 1 January 2007. A reduced rate of 7% applies to groceries, books, newspapers, cut flowers, local public transport and cultural admissions. Exports and intra-EU supplies are zero-rated, and residential photovoltaic systems have been taxed at 0% since 1 January 2023.",
+      "The standard rate (Regelsteuersatz) is 19% and has been since 1 January 2007. A reduced rate of 7% applies to groceries, books, newspapers, cut flowers, local public transport, cultural admissions, and (permanently since 1 January 2026) restaurant and takeaway food — though drinks served with the meal stay at 19%. Exports and intra-EU supplies are zero-rated, and residential photovoltaic systems have been taxed at 0% since 1 January 2023.",
     ],
     [
       "How do I calculate netto from brutto in Germany?",

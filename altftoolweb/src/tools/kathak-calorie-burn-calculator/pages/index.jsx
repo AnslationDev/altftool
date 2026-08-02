@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Footprints, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import { KATHAK_SEGMENTS, computeKathakBurn } from "../lib";
 
 const NUM0 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
@@ -47,7 +49,7 @@ export default function ToolHome() {
   const [weightUnit, setWeightUnit] = useState(DEFAULTS.weightUnit);
   const [ghungroo, setGhungroo] = useState(DEFAULTS.ghungroo);
   const [minutes, setMinutes] = useState(DEFAULT_MINUTES);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(() => {
     const minutesBySegment = {};
@@ -88,15 +90,11 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [hasError, result]);
 
+  const copied = isCopied("result");
+
   const copyResult = async () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    await copy("result", summary, { label: "Kathak calorie result" });
   };
 
   const reset = () => {
@@ -104,7 +102,7 @@ export default function ToolHome() {
     setWeightUnit(DEFAULTS.weightUnit);
     setGhungroo(DEFAULTS.ghungroo);
     setMinutes(DEFAULT_MINUTES);
-    setCopied(false);
+    resetCopyState();
   };
 
   const setSegmentMinutes = (id, value) => {
@@ -249,7 +247,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy Kathak calorie result"
+              aria-label={copied ? "Copied the Kathak calorie result to clipboard" : "Copy Kathak calorie result"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? (
@@ -259,6 +257,9 @@ export default function ToolHome() {
               )}
               {copied ? "Copied!" : "Copy result"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset

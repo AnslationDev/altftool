@@ -10,7 +10,7 @@ const Features = () => {
     {
       title: "Multiple Writing Modes",
       description:
-        "Choose from different tones such as formal, academic, creative, or simplified to match your needs.",
+        "Choose from different tones such as standard, formal, simple, or creative to match your needs.",
     },
     {
       title: "Improved Clarity & Readability",
@@ -18,9 +18,9 @@ const Features = () => {
         "Enhance sentence structure and wording to make your content clearer and more engaging.",
     },
     {
-      title: "Plagiarism Reduction",
+      title: "Wording Variation",
       description:
-        "Generate unique variations of your content to help avoid duplicate phrasing and repetition.",
+        "Generate an alternate version of your content with different word choices — useful for drafting, not a substitute for citing your sources.",
     },
     {
       title: "Secure & Private",

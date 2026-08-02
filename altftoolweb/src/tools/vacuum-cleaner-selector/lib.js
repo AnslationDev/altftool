@@ -121,6 +121,8 @@ const TYPES = {
     key: "cordless",
     label: "Cordless stick with a motorised brush roll",
     why: "Fast to pick up and carry between floors, and its runtime comfortably covers a home this size.",
+    whyMultiBattery:
+      "Fast to pick up and carry between floors, but a single charge does not comfortably cover a home this size — plan on swapping in spare battery packs to get through a full clean.",
   },
   robot: {
     key: "robot",
@@ -197,8 +199,8 @@ export function recommendVacuum({
 
   if (!Number.isFinite(rawArea)) return { error: "Enter the floor area as a number." };
   if (rawArea <= 0) return { error: "Floor area must be greater than zero." };
-  if (!Number.isFinite(levels) || levels < 1 || levels > 4) {
-    return { error: "Number of levels must be between 1 and 4." };
+  if (!Number.isInteger(levels) || levels < 1 || levels > 4) {
+    return { error: "Number of levels must be a whole number between 1 and 4." };
   }
   if (areaUnit !== "sqm" && areaUnit !== "sqft") {
     return { error: "Area unit must be square metres or square feet." };
@@ -240,13 +242,27 @@ export function recommendVacuum({
   const areaPerFloor = areaSqm / levels;
   const reachMetres = round(Math.sqrt(areaPerFloor) * 0.75 + 2, 1);
 
-  const { primary, secondary } = pickTypes({
+  const { primary: primaryType, secondary } = pickTypes({
     areaSqm,
     profile,
     storeys: levels,
     preference,
     pets: pet,
   });
+
+  // The static "comfortably covers" rationale is only true when a single
+  // charge actually gets through the clean; once more than one battery pack
+  // is needed, say so instead of contradicting the runtime/battery figures
+  // shown alongside it.
+  const primary =
+    primaryType.key === "cordless" && batteries > 1
+      ? { ...primaryType, why: primaryType.whyMultiBattery }
+      : primaryType;
+
+  // Runtime per level, used to decide whether "clean one level per charge"
+  // is an honest alternative to buying spare batteries.
+  const runtimeMinutesPerLevel = runtimeMinutes / levels;
+  const oneChargePerLevelFits = runtimeMinutesPerLevel <= MINUTES_PER_BATTERY;
 
   const filtration = allergies
     ? "Sealed system with a washable H13 HEPA filter (H13 traps 99.95% of 0.3 µm particles per EN 1822)"
@@ -269,7 +285,9 @@ export function recommendVacuum({
   }
   if (primary.key === "cordless" && batteries > 1) {
     notes.push(
-      `A single battery gives about ${MINUTES_PER_BATTERY} real minutes on standard power, so budget for ${batteries} batteries or clean one level per charge.`,
+      oneChargePerLevelFits
+        ? `A single battery gives about ${MINUTES_PER_BATTERY} real minutes on standard power, so budget for ${batteries} batteries or clean one level per charge.`
+        : `A single battery gives about ${MINUTES_PER_BATTERY} real minutes on standard power — even one level takes longer than that here, so spare battery packs (not a one-level-per-charge routine) are what actually gets you through a full clean.`,
     );
   }
   if (primary.key === "cordless" && areaSqm > CORDLESS_AREA_LIMIT_SQM) {

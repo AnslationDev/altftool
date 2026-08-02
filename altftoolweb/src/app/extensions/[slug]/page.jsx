@@ -69,6 +69,23 @@ function createExtensionJsonLd(extension, path) {
   };
 }
 
+/**
+ * Route-level name for the heading, used when the Firestore record is absent.
+ *
+ * getExtensionRecord() resolves a 404 to null and the caller below turns a
+ * thrown read into null too, so "record present" is not a safe condition to
+ * hang the page's only H1 on — it would disappear exactly on the requests that
+ * are already degraded. The slug is part of the URL and always available, so it
+ * carries the heading when the record cannot.
+ */
+function extensionNameFromSlug(slug = "") {
+  const words = String(slug)
+    .split("-")
+    .filter(Boolean)
+    .map((word) => (word.length <= 2 ? word.toUpperCase() : word[0].toUpperCase() + word.slice(1)));
+  return words.length ? words.join(" ") : "Chrome";
+}
+
 export default async function Page(props) {
   const { slug } = await props.params;
 
@@ -88,9 +105,18 @@ export default async function Page(props) {
 
   // A missing record means PageView calls notFound(); nothing to describe.
   const path = extension ? `/extensions/${extension.slug || slug}` : null;
+  const headingName =
+    (typeof extension?.name === "string" && extension.name.trim()) || extensionNameFromSlug(slug);
 
   return (
     <>
+      {/* The only H1 on the route, and it is rendered on the server,
+          unconditionally. ExtensionHero's matching heading (now an H2) is a
+          client component behind a post-hydration Firestore read, so before
+          this the server HTML shipped no H1 at all on all 57 URLs. Visually
+          hidden because the hero already displays the same name once the
+          record lands — this is the crawlable and screen-reader copy of it. */}
+      <h1 className="sr-only">{headingName} — Chrome extension</h1>
       {extension ? (
         <JsonLd
           id={`extension-schema-${slug}`}

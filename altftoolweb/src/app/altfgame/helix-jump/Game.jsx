@@ -1183,9 +1183,9 @@ export default function HelixLevels() {
                         {gameState === "MENU" && (
                             <Modal theme={currentTheme}>
                                 <LogoBadge theme={currentTheme} />
-                                <h1 className="m-0 mb-2 text-white text-2xl font-black tracking-[2px]" style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
+                                <h2 className="m-0 mb-2 text-white text-2xl font-black tracking-[2px]" style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
                                     HELIX JOURNEY
-                                </h1>
+                                </h2>
                                 <p className="text-[13px] text-white/45 mb-6 text-center leading-relaxed tracking-[0.3px]">
                                     Navigate through gaps · Combo x3 = Smash!
                                 </p>
@@ -1210,9 +1210,9 @@ export default function HelixLevels() {
                         {gameState === "GAMEOVER" && (
                             <Modal theme={currentTheme} shake>
                                 <EmojiIcon emoji="💥" color="#ff4757" />
-                                <h1 className="m-0 mb-2 text-white text-2xl font-black tracking-[2px]" style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
+                                <h2 className="m-0 mb-2 text-white text-2xl font-black tracking-[2px]" style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
                                     GAME OVER
-                                </h1>
+                                </h2>
                                 <ScoreBadge score={score} theme={currentTheme} />
                                 <ActionButton onClick={retryLevel} theme={currentTheme}>
                                     TRY AGAIN
@@ -1223,9 +1223,9 @@ export default function HelixLevels() {
                         {gameState === "LEVEL_COMPLETE" && (
                             <Modal theme={currentTheme} glow={currentTheme.accent}>
                                 <EmojiIcon emoji="⭐" color="#fbbf24" />
-                                <h1 className="m-0 mb-2 text-white text-2xl font-black tracking-[2px]" style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
+                                <h2 className="m-0 mb-2 text-white text-2xl font-black tracking-[2px]" style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
                                     LEVEL {level} CLEAR
-                                </h1>
+                                </h2>
                                 <ScoreBadge score={score} theme={currentTheme} />
                                 <ActionButton onClick={nextLevel} theme={currentTheme}>
                                     NEXT LEVEL →
@@ -1236,9 +1236,9 @@ export default function HelixLevels() {
                         {gameState === "VICTORY" && (
                             <Modal theme={currentTheme} glow={currentTheme.accent}>
                                 <EmojiIcon emoji="👑" color="#fbbf24" />
-                                <h1 className="m-0 mb-2 text-white text-2xl font-black tracking-[2px]" style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
+                                <h2 className="m-0 mb-2 text-white text-2xl font-black tracking-[2px]" style={{ textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
                                     MASTER!
-                                </h1>
+                                </h2>
                                 <p className="text-[13px] text-white/45 mb-6 text-center leading-relaxed tracking-[0.3px]">
                                     You conquered all 50 levels.
                                 </p>

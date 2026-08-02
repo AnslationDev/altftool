@@ -182,13 +182,28 @@ export function meshMemoryBytes(triangles, duplication = DEFAULT_VERTEX_DUPLICAT
   };
 }
 
-/** LOD chain for one instance budget, using the halving ratios above. */
+/**
+ * LOD chain for one instance budget, using the halving ratios above.
+ * A genuinely-zero instance budget (the per-instance allocation rounded down
+ * to nothing) produces an all-zero chain rather than a fabricated minimum —
+ * only a real, non-zero budget gets floored up to at least 1 triangle per
+ * level so a visible mesh never reports 0 triangles at any LOD.
+ */
 export function buildLodChain(triangles) {
+  const base = Number(triangles) || 0;
+  if (!(base > 0)) {
+    return LOD_RATIOS.map((ratio, level) => ({
+      level,
+      label: `LOD${level}`,
+      ratio,
+      triangles: 0,
+    }));
+  }
   return LOD_RATIOS.map((ratio, level) => ({
     level,
     label: `LOD${level}`,
     ratio,
-    triangles: Math.max(1, Math.round(triangles * ratio)),
+    triangles: Math.max(1, Math.round(base * ratio)),
   }));
 }
 

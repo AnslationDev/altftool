@@ -225,6 +225,31 @@ has deleted, so this tree serves the same or less. The figures are therefore con
 recently, `[toolSlug]/page.jsx:111-129`), but there is no on-page copy for that markup to
 correspond to. 39 sitemap URLs at priority 0.62 with roughly chrome-only server HTML.
 
+
+**Investigated 2026-07-31 — the cause is not what a reader would assume, so this
+is recorded rather than left open.**
+
+The thinness is not markup that fails to render existing copy. It is that the
+copy does not exist. Every one of the 38 records in
+`src/app/altflovepdf/toolsData.js` carries exactly seven fields — `name`, `slug`,
+`panelId`, `desc`, `icon`, `category`, `sidebarCategory` — where `desc` is a
+single sentence ("Combine multiple PDF files into a single document."). There is
+no intro, no steps, no FAQ, no long-form field anywhere in the family, and the
+detail page already renders the one sentence it has (`[toolSlug]/page.jsx:79`,
+`:93`, `:119`).
+
+So there is nothing to surface. The only ways to close this are for someone to
+write real copy for 38 tools, or to accept the pages as thin. Generating the
+copy is explicitly NOT being done: it would be machine-written text making
+unverified claims about how each tool behaves, which is the same failure this
+codebase has already had to undo three times in one day — five invented
+journalist bylines, a fabricated aggregateRating, and a "your data never leaves
+your device" promise that was false on 23 tools. A thin page that is true beats
+a full page that is invented.
+
+Compare `/altfcalculators/loan-emi-calculator` at 8,595 characters: that family
+is not thicker because its markup is better, but because someone wrote its copy.
+
 ### 7. Six indexable routes appear in no sitemap
 
 Checked against `src/app/sitemap.js` in this tree; `grep` finds no entry for any of them

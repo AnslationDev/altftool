@@ -3,8 +3,11 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Scale } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   ANNUAL_MAXIMUM,
+  ANNUAL_PT_CEILING,
   EXEMPTION_LIMIT,
   MONTHLY_DUE_DAY,
   PT_SLABS,
@@ -50,7 +53,8 @@ export default function ToolHome() {
   const [salary, setSalary] = useState(DEFAULT_SALARY);
   const [months, setMonths] = useState(DEFAULT_MONTHS);
   const [counts, setCounts] = useState(DEFAULT_COUNTS);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -81,22 +85,16 @@ export default function ToolHome() {
     ].join("\n");
   }, [failed, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "professional tax result" });
   };
 
   const reset = () => {
     setSalary(DEFAULT_SALARY);
     setMonths(DEFAULT_MONTHS);
     setCounts(DEFAULT_COUNTS);
-    setCopied(false);
+    resetCopyState();
   };
 
   const updateCount = (index, value) => {
@@ -110,6 +108,7 @@ export default function ToolHome() {
     ["Total professional tax", failed ? DASH : money(result.annualTax)],
     ["Full twelve-month liability", failed ? DASH : money(result.fullYearTax)],
     ["Andhra Pradesh annual maximum", money(ANNUAL_MAXIMUM)],
+    ["Constitutional annual ceiling (Article 276(2))", money(ANNUAL_PT_CEILING)],
   ];
 
   return (
@@ -175,7 +174,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -197,21 +200,28 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={failed}
-              aria-label="Copy Andhra Pradesh professional tax result"
+              aria-label={
+                isCopied("result")
+                  ? "Copied the Andhra Pradesh professional tax result"
+                  : "Copy Andhra Pradesh professional tax result"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
@@ -254,7 +264,7 @@ export default function ToolHome() {
             {employer.error}
           </p>
         ) : (
-          <>
+          <div aria-live="polite" role="status">
             <div className="mt-5 overflow-x-auto">
               <table className="w-full min-w-[340px] text-left text-sm">
                 <thead>
@@ -295,7 +305,7 @@ export default function ToolHome() {
                 </div>
               ))}
             </dl>
-          </>
+          </div>
         )}
       </section>
 

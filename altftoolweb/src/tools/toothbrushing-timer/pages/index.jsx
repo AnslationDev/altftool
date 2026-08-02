@@ -78,6 +78,17 @@ export default function ToolHome() {
   const zoneRemaining = current ? current.endSecond - elapsed : 0;
   const progressPct = ok && target > 0 ? Math.min(100, (elapsed / target) * 100) : 0;
 
+  // Announcement text intentionally excludes the per-second countdown (zoneRemaining) so
+  // assistive tech only hears an update when the zone actually changes or the session
+  // finishes, not once a second.
+  const zoneAnnouncement = !ok
+    ? ""
+    : finished
+      ? "Brushing finished. Spit out — do not rinse."
+      : current
+        ? `Now brushing: ${current.zone}. ${current.detail}.`
+        : "Ready to start.";
+
   const restart = () => {
     setElapsed(0);
     setRunning(false);
@@ -150,6 +161,9 @@ export default function ToolHome() {
       )}
 
       <section className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <p className="sr-only" role="status" aria-live="polite" aria-atomic="true">
+          {zoneAnnouncement}
+        </p>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

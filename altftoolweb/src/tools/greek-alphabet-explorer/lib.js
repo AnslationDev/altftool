@@ -201,6 +201,14 @@ export const OBSOLETE_NUMERALS = [
 export const NUMERAL_SIGN = "ʹ";
 export const THOUSANDS_SIGN = "͵";
 
+/**
+ * Unicode NFD-normalising U+0374 (which is exactly what stripDiacritics does)
+ * canonically decomposes it into this modifier letter, U+02B9 — a *letter*,
+ * not a combining mark, so stripDiacritics's `\p{M}` strip never removes it.
+ * A numeral sign has to be recognised in both forms.
+ */
+const NUMERAL_SIGN_NFD = "ʹ";
+
 /** The Milesian system has no zero and runs out at 9,999 with a single thousands mark. */
 export const MIN_NUMERAL = 1;
 export const MAX_NUMERAL = 9999;
@@ -258,8 +266,12 @@ export function fromGreekNumeral(text) {
   if (typeof text !== "string" || text.trim() === "") {
     return { error: "Enter a Greek numeral such as ρκγ." };
   }
-  const cleaned = stripDiacritics(text)
-    .replace(new RegExp(NUMERAL_SIGN, "g"), "")
+  // Strip the numeral sign before the general diacritic strip runs: stripDiacritics
+  // NFD-normalises the text, which turns U+0374 into U+02B9 first, so removing only
+  // U+0374 afterwards would never match. Removing both forms up front sidesteps the
+  // ordering issue entirely and also covers text that already arrives NFD-normalised.
+  const numeralSignPattern = new RegExp(`[${NUMERAL_SIGN}${NUMERAL_SIGN_NFD}]`, "g");
+  const cleaned = stripDiacritics(text.replace(numeralSignPattern, ""))
     .toLowerCase()
     .trim();
 
@@ -291,12 +303,6 @@ export function fromGreekNumeral(text) {
 
   if (matched === 0) return { error: "No Greek numeral letters found." };
   return { value: total, letters: matched };
-}
-
-/** Look up one letter's numeral value by its lowercase form. */
-export function letterValue(lower) {
-  const letter = GREEK_LETTERS.find((item) => item.lower === lower || item.finalLower === lower);
-  return letter ? letter.value : null;
 }
 
 const TRANSLIT_MAP = (() => {

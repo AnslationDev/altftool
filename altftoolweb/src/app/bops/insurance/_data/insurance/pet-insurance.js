@@ -201,7 +201,7 @@ export const petInsurance = {
   seo: {
     title: "Pet Insurance — Compare Dog & Cat Plans | AltFTool",
     description:
-      "Compare pet insurance plans for dogs and cats in minutes. Help cover accidents, illnesses, surgery and vet bills — keep your own vet, free to compare, no obligation.",
+      "Compare pet insurance plans for dogs and cats in minutes. Help cover accidents, illnesses, surgery and vet bills, and keep seeing your own vet.",
   },
 };
 

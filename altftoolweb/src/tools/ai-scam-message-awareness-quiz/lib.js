@@ -95,7 +95,7 @@ export const MESSAGES = [
     isScam: true,
     flags: ["toogood", "payment", "urgency", "secrecy"],
     explanation:
-      "A pig-butchering investment scam: a long, warm relationship, then a private opportunity with impossible returns and a deadline. 6% a week is over 2,000% a year. The 'withdraw any time' promise fails at the moment you try.",
+      "A pig-butchering investment scam: a long, warm relationship, then a private opportunity with impossible returns and a deadline. 6% a week compounds to nearly 2,000% a year. The 'withdraw any time' promise fails at the moment you try.",
   },
   {
     id: "support-callback",

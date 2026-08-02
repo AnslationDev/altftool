@@ -121,7 +121,10 @@ export function computePowerToWeight({
   }
   if (power <= 0) return { error: "Power must be greater than zero." };
   if (kerbWeightKg <= 0) return { error: "Kerb weight must be greater than zero." };
-  const load = isNum(addedLoadKg) && addedLoadKg >= 0 ? addedLoadKg : 0;
+  if (isNum(addedLoadKg) && addedLoadKg < 0) {
+    return { error: "Added load cannot be negative." };
+  }
+  const load = isNum(addedLoadKg) ? addedLoadKg : 0;
   if (kerbWeightKg + load > MAX_MASS_KG) {
     return { error: `Total mass above ${MAX_MASS_KG.toLocaleString("en-IN")} kg is outside this calculator's range.` };
   }

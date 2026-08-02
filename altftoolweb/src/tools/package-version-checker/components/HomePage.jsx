@@ -77,12 +77,16 @@ export default function HomePage() {
       {/* SEARCH BOX */}
       <div className="bg-(--card) border border-(--border) rounded-2xl shadow-lg p-6 sm:p-8 mb-8">
         <form onSubmit={checkPackageVersion} className="space-y-4">
-          <label className="text-sm font-semibold text-(--foreground)">
+          <label
+            htmlFor="package-name-input"
+            className="text-sm font-semibold text-(--foreground)"
+          >
             Package Name
           </label>
 
           <div className="flex flex-col sm:flex-row gap-3">
             <input
+              id="package-name-input"
               type="text"
               value={packageName}
               onChange={(e) => setPackageName(e.target.value)}

@@ -23,7 +23,7 @@ const seo = {
   faqs: [
     [
       "how is the compatibility percentage calculated",
-      "Each of the 10 answers scores between 3 and 10 points, the points are added up, and the total is divided by 100 — the maximum of 10 questions at 10 points each — then rounded to a whole percentage. Picking the highest-weighted option on every question is the only way to reach 100%.",
+      "Each of the 10 answers scores between 3 and 10 points, the points are added up, and the total is divided by 100 — the maximum of 10 questions at 10 points each — then rounded to a whole percentage. Picking the highest-weighted option on every question gets you as close to 100% as that category allows, though in the romance, lifestyle, travel and career sets no single option is worth the full 10 points on every question, so the highest reachable total there is 98-99%; only the friendship and intellectual sets can reach a full 100%.",
     ],
     [
       "what does my compatibility score mean",

@@ -68,16 +68,23 @@ export default function EstimateForm() {
           <h2 className="font-display font-extrabold text-4xl lg:text-5xl text-[#0D3B66] leading-tight">
             Get a Custom Quote in Under 60 Seconds
           </h2>
+          {/*
+            Not wired to anything: onSubmit runs a setTimeout and shows a success
+            screen. It used to promise a callback within one business day, which
+            meant a homeowner handed over their name, phone and email against
+            something that could never happen.
+          */}
           <p className="mt-5 text-lg text-slate-600 leading-relaxed">
-            Tell us about your project and a senior design specialist will reach out within
-            one business day with samples, pricing, and a flexible install schedule.
+            This is a layout demonstration, not a live enquiry form. Nothing you
+            type is sent, saved or seen by anyone — the fields are here to show
+            how the page would be laid out for a real contractor.
           </p>
 
           <ul className="mt-8 space-y-4">
             {[
-              { icon: Shield, t: "No-pressure, no-obligation estimate" },
-              { icon: Clock, t: "Response within 1 business day" },
-              { icon: Award, t: "Lifetime craftsmanship warranty included" },
+              { icon: Shield, t: "Nothing is submitted anywhere" },
+              { icon: Clock, t: "No data is stored or forwarded" },
+              { icon: Award, t: "A template, not a live service" },
             ].map((b, i) => (
               <li key={i} className="flex items-start gap-3">
                 <div className="w-10 h-10 rounded-xl bg-[#00AEEF]/10 text-[#0D3B66] flex items-center justify-center flex-shrink-0">
@@ -106,7 +113,7 @@ export default function EstimateForm() {
                 <div className="w-20 h-20 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto">
                   <CheckCircle2 className="w-10 h-10" />
                 </div>
-                <h3 className="mt-6 font-display font-extrabold text-2xl text-[#0D3B66]">Thank you, {form.name.split(" ")[0]}!</h3>
+                <h3 className="mt-6 font-display font-extrabold text-2xl text-[#0D3B66]">That is as far as the demo goes</h3>
                 <p className="mt-3 text-slate-600 max-w-md mx-auto">
                   Saved on this device only — no specialist was notified. For a real
                   response, please call us directly.
@@ -250,7 +257,7 @@ function CallPopup({
             <p className="mt-3 text-white/85 leading-relaxed">
               {callBooked
                 ? `Saved on this device only — nobody has been notified for ${phone}. For a real callback, please call us directly.`
-                : "Your form was saved on this device only — no specialist was notified. If you'd like a real callback, request one below or call us directly."}
+                : "Your form was saved on this device only — no specialist was notified. You can mark it as high priority below, or call us directly for a real response."}
             </p>
           </div>
         </div>

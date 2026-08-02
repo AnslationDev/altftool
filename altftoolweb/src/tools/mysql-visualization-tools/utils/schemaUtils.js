@@ -6,7 +6,7 @@ const HISTORY_KEY = "mysql-visualization-tools-history";
 const stripIdentifier = (value = "") =>
   value.trim().replace(/^[`"']|[`"']$/g, "");
 
-const splitSqlStatements = (sql) => {
+export const splitSqlStatements = (sql) => {
   const statements = [];
   let current = "";
   let quote = null;
@@ -120,6 +120,30 @@ const parseInlineReference = (definition) => {
   };
 };
 
+const extractCreateTableName = (statement) => {
+  const match = statement.match(
+    /CREATE\s+TABLE\s+(?:IF\s+NOT\s+EXISTS\s+)?`?([A-Za-z_][\w$]*)`?/i
+  );
+  return match ? stripIdentifier(match[1]).toLowerCase() : null;
+};
+
+// Strips any CREATE TABLE statement whose table name is in `tableNames` out of `sql`.
+// Used to de-duplicate the raw SQL text before re-appending freshly generated CREATE TABLE
+// statements for the same tables (see mergeDatasets/handleFiles in pages/index.jsx).
+export const removeTablesFromSql = (sql = "", tableNames = []) => {
+  if (!sql.trim()) return "";
+  const names = new Set(tableNames.map((name) => name.toLowerCase()));
+  if (!names.size) return sql;
+
+  return splitSqlStatements(sql)
+    .filter((statement) => {
+      const name = extractCreateTableName(statement);
+      return !(name && names.has(name));
+    })
+    .map((statement) => (statement.trimEnd().endsWith(";") ? statement : `${statement};`))
+    .join("\n\n");
+};
+
 export const parseMySqlSchema = (sql = "") => {
   const cleaned = normalizeSql(sql);
   const warnings = [];
@@ -153,17 +177,25 @@ export const parseMySqlSchema = (sql = "") => {
         return;
       }
 
-      if (upper.startsWith("UNIQUE") || upper.startsWith("CONSTRAINT")) {
-        const keys = parseKeyList(definition);
-        if (keys.length) table.uniqueKeys.push(...keys);
-      }
-
+      // Table-level FOREIGN KEY / CONSTRAINT ... FOREIGN KEY ... REFERENCES lines must be
+      // routed to the FK path before the generic UNIQUE/CONSTRAINT branch below, otherwise a
+      // named `CONSTRAINT fk_x FOREIGN KEY (col) REFERENCES ...` gets its own column list
+      // (the FK's `(col)`) misread as a unique-key list.
       if (tableReference) {
         table.foreignKeys.push(tableReference);
         return;
       }
 
-      if (upper.startsWith("KEY ") || upper.startsWith("INDEX ") || upper.startsWith("CONSTRAINT ")) {
+      // Table-level UNIQUE KEY / UNIQUE INDEX / bare UNIQUE (...) and non-FK CONSTRAINT (...)
+      // definitions (e.g. CONSTRAINT ... UNIQUE (...)) register unique columns but are not
+      // themselves column definitions, so they must not fall through to createColumn below.
+      if (upper.startsWith("UNIQUE") || upper.startsWith("CONSTRAINT")) {
+        const keys = parseKeyList(definition);
+        if (keys.length) table.uniqueKeys.push(...keys);
+        return;
+      }
+
+      if (upper.startsWith("KEY ") || upper.startsWith("INDEX ")) {
         return;
       }
 
@@ -179,11 +211,17 @@ export const parseMySqlSchema = (sql = "") => {
       table.columns.push(column);
     });
 
-    table.columns = table.columns.map((column) => ({
-      ...column,
-      primary: column.primary || table.primaryKeys.includes(column.name),
-      unique: column.unique || table.uniqueKeys.includes(column.name),
-    }));
+    table.columns = table.columns.map((column) => {
+      const matchedForeignKey =
+        column.references || table.foreignKeys.find((key) => key.columns.includes(column.name)) || null;
+
+      return {
+        ...column,
+        primary: column.primary || table.primaryKeys.includes(column.name),
+        unique: column.unique || table.uniqueKeys.includes(column.name),
+        references: matchedForeignKey,
+      };
+    });
     table.primaryKeys = [
       ...new Set([
         ...table.primaryKeys,

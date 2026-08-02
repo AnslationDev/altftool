@@ -2,7 +2,7 @@ const seo = {
   intro:
     "This tool lists modern Indian baby names of two to six letters — Sanskrit, Hindi, Tamil, Punjabi, Arabic and Persian in origin — each with its meaning and a spelling-ease score out of 100. The score starts at 100 and deducts 12 points per optional doubled vowel (Aarav / Arav), 8 per aspirated digraph whose h gets dropped (Bhavya / Bavya), 8 per doubled consonant, 6 for a y standing in for a vowel and 6 per letter beyond five. It is built for parents who want a name that survives forms, boarding passes and roll calls intact.",
   useCases: [
-    "Shortlist four-letter names that no one will misspell — Ira, Anvi, Neha, Zara all score a clean 100.",
+    "Shortlist four-letter names that no one will misspell — Anvi, Neha, Zara all score a clean 100.",
     "Compare two spellings of the same name, such as Mira against Meera or Arav against Aarav, before filling in the birth certificate.",
     "Filter to a single origin when you want the name to sit alongside existing family names from the same tradition.",
     "Find a short unisex name such as Kiran, Arya, Noor or Aman when you do not yet know the baby's gender.",
@@ -15,7 +15,7 @@ const seo = {
   faqs: [
     [
       "What are the shortest Indian baby names?",
-      "Two- and three-letter names such as Om, Ira, Ved, Dev, Ram, Jay, Ila and Dia are the shortest in common modern use. All of them score 100 for spelling ease because they contain no doubled vowels, no aspirated digraphs and no vowel y.",
+      "Two- and three-letter names such as Om, Ira, Ved, Dev, Ram, Jay, Ila and Dia are the shortest in common modern use. Most of them score 100 for spelling ease because they contain no doubled vowels, no aspirated digraphs and no vowel y — the one exception is Jay, which scores 94 because its ay ending is a y standing in for a vowel.",
     ],
     [
       "Is it better to spell a name Aarav or Arav?",

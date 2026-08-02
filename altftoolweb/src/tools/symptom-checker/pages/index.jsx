@@ -14,6 +14,7 @@ import {
   ShieldAlert,
 } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   DISCLAIMER,
   RISK_FACTORS,
@@ -37,10 +38,10 @@ const CARD = "rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]";
 
 /* Static class maps — Tailwind cannot see interpolated class names. */
 const TONE_PANEL = {
-  danger: "bg-[var(--danger-soft)] text-[var(--danger)] ring-[var(--danger)]/35",
-  warning: "bg-[var(--warning-soft)] text-[var(--warning)] ring-[var(--warning)]/35",
-  info: "bg-[var(--info-soft)] text-[var(--info)] ring-[var(--info)]/35",
-  success: "bg-[var(--success-soft)] text-[var(--success)] ring-[var(--success)]/35",
+  danger: "bg-[var(--danger-soft)] text-[var(--danger-text)] ring-[var(--danger)]/35",
+  warning: "bg-[var(--warning-soft)] text-[var(--warning-text)] ring-[var(--warning)]/35",
+  info: "bg-[var(--info-soft)] text-[var(--info-text)] ring-[var(--info)]/35",
+  success: "bg-[var(--success-soft)] text-[var(--success-text)] ring-[var(--success)]/35",
 };
 
 const LEVEL_TONE = {
@@ -67,7 +68,7 @@ export default function ToolHome() {
   const [durationDays, setDurationDays] = useState(DEFAULTS.durationDays);
   const [severity, setSeverity] = useState(DEFAULTS.severity);
   const [riskFactorIds, setRiskFactorIds] = useState(DEFAULTS.riskFactorIds);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -85,22 +86,22 @@ export default function ToolHome() {
 
   const copyResult = async () => {
     if (!handover) return;
-    try {
-      await navigator.clipboard.writeText(handover);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    await copy("symptom-summary", handover, { label: "Summary" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will discard your selected symptoms, age, duration, severity and risk factors, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setSymptomIds(DEFAULTS.symptomIds);
     setAgeYears(DEFAULTS.ageYears);
     setDurationDays(DEFAULTS.durationDays);
     setSeverity(DEFAULTS.severity);
     setRiskFactorIds(DEFAULTS.riskFactorIds);
-    setCopied(false);
   };
 
   const tone = result.error ? "danger" : LEVEL_TONE[result.level.key];
@@ -121,7 +122,7 @@ export default function ToolHome() {
       </header>
 
       <div
-        className="mb-6 flex items-start gap-3 rounded-xl bg-[var(--danger-soft)] p-4 text-sm leading-6 text-[var(--danger)] ring-1 ring-[var(--danger)]/35"
+        className="mb-6 flex items-start gap-3 rounded-xl bg-[var(--danger-soft)] p-4 text-sm leading-6 text-[var(--danger-text)] ring-1 ring-[var(--danger)]/35"
         role="note"
       >
         <PhoneCall className="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true" />
@@ -285,13 +286,11 @@ export default function ToolHome() {
       ) : (
         <>
           <section className={`mb-6 rounded-xl p-5 ring-1 ${TONE_PANEL[tone]}`} aria-live="polite">
-            <p className="text-xs font-semibold uppercase tracking-wide opacity-80">
-              Suggested urgency
-            </p>
+            <p className="text-xs font-semibold uppercase tracking-wide">Suggested urgency</p>
             <p className="mt-1 text-2xl font-semibold">{result.level.label}</p>
             <p className="mt-2 text-sm font-medium leading-6">{result.level.action}</p>
-            <p className="mt-1 text-sm leading-6 opacity-90">{result.level.timeframe}</p>
-            <p className="mt-3 border-t border-current/20 pt-3 text-xs leading-5 opacity-90">
+            <p className="mt-1 text-sm leading-6">{result.level.timeframe}</p>
+            <p className="mt-3 border-t border-current/20 pt-3 text-xs leading-5">
               {formatAge(result.ageYears)} · {formatDuration(result.durationDays)} ·{" "}
               {result.severity.label} · {result.selected.length} symptom
               {result.selected.length === 1 ? "" : "s"}
@@ -394,18 +393,26 @@ export default function ToolHome() {
                 Summary to read out
               </h2>
               <div className="flex flex-wrap gap-2">
-                <button type="button" className={PRIMARY_BTN} onClick={copyResult}>
-                  {copied ? (
+                <button
+                  type="button"
+                  className={PRIMARY_BTN}
+                  onClick={copyResult}
+                  aria-label={isCopied("symptom-summary") ? "Copied" : "Copy the summary to read out"}
+                >
+                  {isCopied("symptom-summary") ? (
                     <Check className="h-4 w-4" aria-hidden="true" />
                   ) : (
                     <Copy className="h-4 w-4" aria-hidden="true" />
                   )}
-                  {copied ? "Copied" : "Copy summary"}
+                  {isCopied("symptom-summary") ? "Copied" : "Copy summary"}
                 </button>
                 <button type="button" className={GHOST_BTN} onClick={reset}>
                   <RotateCcw className="h-4 w-4" aria-hidden="true" />
                   Reset
                 </button>
+                <span className="sr-only" role="status" aria-live="polite">
+                  {announcement}
+                </span>
               </div>
             </div>
             <pre className="overflow-x-auto rounded-md bg-[var(--muted)] p-4 text-xs leading-6 text-[var(--foreground)]">

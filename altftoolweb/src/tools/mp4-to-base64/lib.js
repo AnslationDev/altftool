@@ -101,17 +101,6 @@ export function bytesToBase64(bytes) {
   return parts.join("");
 }
 
-/** Splits a data URL into its MIME type and payload; returns { error } for anything else. */
-export function parseDataUrl(dataUrl) {
-  if (typeof dataUrl !== "string" || dataUrl.trim() === "") {
-    return { error: "Nothing to read — paste a data URL first." };
-  }
-  const match = /^data:([^;,]*)(;base64)?,([\s\S]*)$/.exec(dataUrl.trim());
-  if (!match) return { error: "That is not a valid data: URL." };
-  if (!match[2]) return { error: "This data URL is not Base64 encoded." };
-  return { mime: match[1] || DEFAULT_MIME, base64: match[3] };
-}
-
 /** Formats a byte count with binary prefixes, e.g. "12.4 MiB". */
 export function formatBytes(bytes) {
   if (!isNum(bytes) || bytes < 0) return "—";

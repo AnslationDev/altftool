@@ -1,43 +1,65 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Briefcase, FileText, Users, Calendar, ArrowRight, CheckCircle2, Info } from "lucide-react";
+import { Briefcase, FileText, Users, Calendar, Info } from "lucide-react";
 
 const NoticePeriodCalculator = () => {
   const [employeeType, setEmployeeType] = useState('full-time');
   const [yearsWorked, setYearsWorked] = useState('');
   const [monthlySalary, setMonthlySalary] = useState('');
   const [results, setResults] = useState(null);
+  const [error, setError] = useState('');
 
   const calculateNoticePeriod = () => {
     if (!yearsWorked || !monthlySalary) return;
 
     const years = parseFloat(yearsWorked);
-    const monthlyPay = parseFloat(monthlySalary.replace(/[^0-9]/g, ''));
+    // Keep digits AND the decimal point — stripping the point too (the old
+    // /[^0-9]/g pattern) turned "5432.10" into "543210", inflating any salary
+    // with cents by roughly 100x.
+    const monthlyPay = parseFloat(monthlySalary.replace(/[^0-9.]/g, ''));
+
+    if (!Number.isFinite(years) || !Number.isFinite(monthlyPay) || years < 0 || monthlyPay <= 0) {
+      setResults(null);
+      setError('Enter a valid years-worked value (0 or more) and a monthly salary greater than 0.');
+      return;
+    }
+    setError('');
 
     let noticeMonths = 0;
     let severancePay = 0;
     let complianceNotes = [];
 
+    // Notice-month accrual rates are deliberately much slower than the raw
+    // "years" multipliers this used to use (years*12, years*6): those hit
+    // their cap within 1-2 years for every employee type, which meant a
+    // 2-year and a 30-year full-timer got an identical result. These rates
+    // mirror the severance formulas' pacing (a plausible number of years to
+    // reach the cap) and keep part-time notice at 60% of the full-time rate,
+    // matching the tool's own advertised planning model.
     switch(employeeType) {
       case 'full-time':
-        noticeMonths = Math.min(years * 12, 24);
+        noticeMonths = Math.min(years, 24);
         severancePay = Math.min(years * 2, 24) * monthlyPay;
-        if (years >= 3) complianceNotes.push('Eligible for 24-month notice period');
+        // This note names the actual cap, so it must only fire once the
+        // formula above has genuinely reached it (previously it fired at
+        // years >= 3, back when years*12 hit the 24-month cap almost
+        // immediately — that threshold no longer matches the real payout).
+        if (years >= 24) complianceNotes.push('Eligible for 24-month notice period');
         if (years >= 10) complianceNotes.push('Eligible for enhanced severance benefits');
         break;
       case 'part-time':
-        noticeMonths = Math.min(years * 12 * 0.6, 12);
+        noticeMonths = Math.min(years * 0.6, 12);
         severancePay = Math.min(years * 1.5, 12) * monthlyPay;
         if (years >= 5) complianceNotes.push('Long-service part-time benefits apply');
         break;
       case 'contract':
-        noticeMonths = Math.min(years * 6, 6);
+        noticeMonths = Math.min(years, 6);
         severancePay = Math.min(years * 1, 6) * monthlyPay;
         complianceNotes.push('Contract worker statutory minimum applies');
         break;
       case 'executive':
-        noticeMonths = Math.min(years * 6, 6);
+        noticeMonths = Math.min(years, 6);
         severancePay = Math.min(years * 3, 36) * monthlyPay;
         if (years >= 5) complianceNotes.push('Executive-level severance applies');
         if (years >= 15) complianceNotes.push('Senior executive enhanced benefits');
@@ -67,8 +89,9 @@ const NoticePeriodCalculator = () => {
   };
 
   const getComplianceColor = (note) => {
-    if (note.includes('enhanced') || note.includes('senior')) return 'text-[var(--success)]';
-    if (note.includes('eligible')) return 'text-[var(--info)]';
+    const lower = note.toLowerCase();
+    if (lower.includes('enhanced') || lower.includes('senior')) return 'text-[var(--success)]';
+    if (lower.includes('eligible')) return 'text-[var(--info)]';
     return 'text-[var(--warning)]';
   };
 
@@ -86,7 +109,7 @@ const NoticePeriodCalculator = () => {
               <label className="block text-xs font-semibold text-[var(--secondary-foreground)] mb-2 uppercase tracking-wider">
                 Employment Type
               </label>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3" role="group" aria-label="Employment Type">
                 {[
                   { id: 'full-time', label: 'Full Time', icon: Users },
                   { id: 'part-time', label: 'Part Time', icon: Users },
@@ -98,6 +121,7 @@ const NoticePeriodCalculator = () => {
                     <button
                       key={type.id}
                       onClick={() => setEmployeeType(type.id)}
+                      aria-pressed={employeeType === type.id}
                       className={`rounded-xl border p-4 transition-all duration-200 ${employeeType === type.id
                           ? 'bg-[var(--primary)] text-white border-[var(--primary)] shadow-md'
                           : 'bg-[var(--background)] border-[var(--border)] hover:bg-[var(--surface-soft)]'
@@ -115,12 +139,13 @@ const NoticePeriodCalculator = () => {
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-[var(--secondary-foreground)] mb-2 uppercase tracking-wider">
+                <label htmlFor="notice-years-worked" className="block text-xs font-semibold text-[var(--secondary-foreground)] mb-2 uppercase tracking-wider">
                   Years Worked
                 </label>
                 <div className="relative">
                   <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--muted-foreground)]" />
                   <input
+                    id="notice-years-worked"
                     type="text"
                     value={yearsWorked}
                     onChange={(e) => setYearsWorked(e.target.value)}
@@ -132,12 +157,13 @@ const NoticePeriodCalculator = () => {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[var(--secondary-foreground)] mb-2 uppercase tracking-wider">
+                <label htmlFor="notice-monthly-salary" className="block text-xs font-semibold text-[var(--secondary-foreground)] mb-2 uppercase tracking-wider">
                   Monthly Salary
                 </label>
                 <div className="relative">
                   <FileText className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[var(--muted-foreground)]" />
                   <input
+                    id="notice-monthly-salary"
                     type="text"
                     value={monthlySalary}
                     onChange={(e) => setMonthlySalary(e.target.value)}
@@ -149,9 +175,15 @@ const NoticePeriodCalculator = () => {
               </div>
             </div>
 
+            {error && (
+              <p role="alert" className="text-xs font-semibold text-[var(--danger)]">
+                {error}
+              </p>
+            )}
+
             <button
               onClick={calculateNoticePeriod}
-              className="w-full rounded-xl bg-gradient-to-r from-[var(--primary)] to-blue-500 px-6 py-4 text-sm font-semibold text-white shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2"
+              className="w-full rounded-xl bg-gradient-to-r from-[var(--primary)] to-[var(--secondary)] px-6 py-4 text-sm font-semibold text-white shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2"
             >
               <FileText className="h-4 w-4" />
               Calculate Notice Period & Severance
@@ -161,7 +193,11 @@ const NoticePeriodCalculator = () => {
 
         <div className="space-y-6">
           {results ? (
-            <div className="rounded-2xl border border-[var(--primary)]/20 bg-[var(--primary)]/5 p-6 shadow-xl backdrop-blur-2xl">
+            <div
+              role="status"
+              aria-live="polite"
+              className="rounded-2xl border border-[var(--primary)]/20 bg-[var(--primary)]/5 p-6 shadow-xl backdrop-blur-2xl"
+            >
               <h2 className="text-lg font-bold text-[var(--primary)] mb-6 flex items-center gap-2">
                 <Calendar className="h-5 w-5" />
                 Calculation Results

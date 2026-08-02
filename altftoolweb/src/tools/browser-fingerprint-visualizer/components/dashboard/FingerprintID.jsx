@@ -29,7 +29,7 @@ export  function FingerprintID({ fingerprintId, loading }) {
   return (
     <div className="
       relative overflow-hidden
-      bg-[(--card)] border border-[(--border)]
+      bg-[var(--card)] border border-[var(--border)]
       rounded-2xl p-6 md:p-8
       shadow-sm
     ">
@@ -37,14 +37,14 @@ export  function FingerprintID({ fingerprintId, loading }) {
       <div className="
         pointer-events-none absolute -top-20 -right-20
         w-64 h-64 rounded-full
-        bg-[(--primary)]/5
+        bg-[var(--primary)]/5
         blur-3xl animate-pulse-soft
       " />
 
       {/* Label */}
       <p className="
         text-xs uppercase tracking-widest
-        text-[(--muted-foreground)] font-secondary mb-3
+        text-[var(--muted-foreground)] font-secondary mb-3
       ">
         Your Browser Fingerprint ID
       </p>
@@ -52,8 +52,8 @@ export  function FingerprintID({ fingerprintId, loading }) {
       {loading ? (
         /* Loading state */
         <div className="space-y-2 animate-pulse">
-          <div className="h-6 bg-[(--muted)] rounded-full w-full" />
-          <div className="h-6 bg-[(--muted)] rounded-full w-3/4" />
+          <div className="h-6 bg-[var(--muted)] rounded-full w-full" />
+          <div className="h-6 bg-[var(--muted)] rounded-full w-3/4" />
         </div>
       ) : (
         <>
@@ -71,7 +71,7 @@ export  function FingerprintID({ fingerprintId, loading }) {
           <div className="flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-2">
               {/* Lock icon */}
-              <svg className="w-3.5 h-3.5 text-[(--muted-foreground)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-3.5 h-3.5 text-[var(--muted-foreground)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
               </svg>
               <span className="text-xs text-[var(--muted-foreground)] font-secondary">
@@ -88,7 +88,7 @@ export  function FingerprintID({ fingerprintId, loading }) {
                 border transition-all duration-200 cursor-pointer
                 ${copied
                   ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-500"
-                  : "bg-[(--muted)] border-[(--border)] text-[(--foreground)] hover:bg-[(--primary)]/10 hover:border-[(--primary)]/30 hover:text-[(--primary)]"
+                  : "bg-[var(--muted)] border-[var(--border)] text-[var(--foreground)] hover:bg-[var(--primary)]/10 hover:border-[var(--primary)]/30 hover:text-[var(--primary)]"
                 }
               `}
             >

@@ -96,7 +96,6 @@ export function buildNightShiftPlan({
   breakIntervalMinutes = EYE_RULE_MINUTES,
   breakSeconds = EYE_BREAK_SECONDS,
   windDownMinutes = 60,
-  sleepAfterShift = true,
 } = {}) {
   const start = parseClock(startTime);
   const end = parseClock(endTime);
@@ -159,7 +158,6 @@ export function buildNightShiftPlan({
     coversCircadianLow: lowWindowMinutes > 0,
     windDownMinutes: windDown,
     windDownStartClock: formatClock(start + windDownStartOffset),
-    sleepAfterShift: Boolean(sleepAfterShift),
     restSharePercent:
       durationMinutes > 0
         ? Math.round((eyeRestSeconds / (durationMinutes * 60)) * 1000) / 10

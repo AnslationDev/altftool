@@ -4,6 +4,7 @@ import { cache } from "react";
 import { brotliDecompressSync } from "node:zlib";
 import { toolContentOverrides } from "./toolContentOverrides";
 import { generatedToolSeoBrotliBase64 } from "./generated/toolSeoMap";
+import { toolNetworkDestinations } from "./generated/toolNetworkMap";
 import { getSeoConfigSnapshot } from "@/platform/seo/seoConfigSource";
 import { resolveContent } from "@altftool/core/seo/resolver";
 import { buildMetaDescription } from "./toolMetaDescription";
@@ -84,13 +85,132 @@ function cleanText(value = "") {
   return String(value).replace(/\s+/g, " ").trim();
 }
 
+// The type nouns the generated intros actually use to refer to themselves,
+// taken from the leading word of every generated intro rather than guessed.
+const SUBJECT_NOUNS = [
+  "analyser", "analyzer", "advisor", "app", "auditor", "board", "builder",
+  "calculator", "checker", "checklist", "chooser", "comparator", "comparer",
+  "comparison", "converter", "counter", "countdown", "dashboard", "debugger",
+  "decoder", "detector", "estimator", "explainer", "explorer", "filter",
+  "finder", "fitter", "formatter", "generator", "guide", "helper", "inspector",
+  "joiner", "library", "linter", "matcher", "optimizer", "organiser",
+  "organizer", "page", "planner", "reader", "redactor", "reference", "scanner",
+  "scheduler", "scorer", "screener", "selector", "simulator", "splitter",
+  "suggester", "tester", "timer", "tool", "tracker", "utility", "validator",
+  "visualizer", "widget", "workbench", "workspace", "worksheet",
+];
+// Nouns that carry no information beyond "this thing", so repeating them after
+// the tool's own name would only pad the sentence.
+const BARE_SUBJECT_NOUNS = new Set([
+  "app", "helper", "page", "tool", "utility", "widget", "workspace",
+]);
+const SUBJECT_NOUN_SET = new Set(SUBJECT_NOUNS);
+// Does the tool's own name already carry a type word anywhere in it? Matching
+// the whole name, not just its last word, is what keeps "Calcium Intake
+// Calculator For Women" from being introduced as "…For Women calculator".
+const NAME_HAS_TYPE = new RegExp(`\\b(?:${SUBJECT_NOUNS.join("|")})\\b`, "i");
+
+/**
+ * AEO: the first sentence of the intro is the one an answer engine lifts as
+ * this page's answer, and 1,471 of the 3,943 generated intros open with a bare
+ * demonstrative — "This calculator runs a two-sided pooled two-proportion
+ * z-test…". Quoted anywhere off the page, that sentence names no subject, so
+ * nothing attributes it back here and the engine learns which page it came
+ * from only by accident. 1,309 of those 1,471 are rewritten below; the other
+ * 162 open with something this cannot safely rewrite and are left alone.
+ *
+ * Binding the referent to the tool's own name asserts nothing new: on
+ * /tools/all/<slug>, "this calculator" IS that tool. Only a leading
+ * "This <type noun>" or "This is a/an/the …" is rewritten — a leading "This"
+ * followed by a verb, an adjective or a proper noun ("This turns…", "This XML
+ * sitemap validator…") is left exactly as written rather than risking a broken
+ * sentence for the sake of a rule.
+ */
+function bindIntroSubject(intro, name) {
+  if (!intro || !name || !/^This\b/.test(intro)) return intro;
+
+  const definition = intro.match(/^This is (an?|the) /);
+  if (definition) {
+    return `${name} is ${definition[1]} ${intro.slice(definition[0].length)}`;
+  }
+
+  // The type phrase can be two words ("This reference tool looks up…"), so the
+  // second word is swallowed too when it is itself a type noun — otherwise the
+  // leftover produced "The Time Complexity Cheat Tool tool looks up…".
+  const opener = intro.match(/^This ([a-z][a-z-]*)(?: ([a-z][a-z-]*))? /);
+  if (!opener || !SUBJECT_NOUN_SET.has(opener[1])) return intro;
+  const compound = opener[2] && SUBJECT_NOUN_SET.has(opener[2]);
+  const noun = compound ? opener[2] : opener[1];
+  const consumed = compound
+    ? `This ${opener[1]} ${opener[2]} `
+    : `This ${opener[1]} `;
+  const keepNoun = !BARE_SUBJECT_NOUNS.has(noun) && !NAME_HAS_TYPE.test(name);
+  const subject = keepNoun ? `The ${name} ${noun}` : `The ${name}`;
+  return `${subject} ${intro.slice(consumed.length)}`;
+}
+
 function getCategories(tool) {
   if (!tool?.category) return [];
   return (Array.isArray(tool.category) ? tool.category : [tool.category]).map((item) => cleanText(item)).filter(Boolean);
 }
 
+// The tool's own primary category is curated, is the taxonomy the rest of the
+// site already routes on, and is the only signal here that cannot be produced
+// by an accident of spelling. Consulting it first is what stops "Audio File
+// Size Calculator" — a Calculators tool with no file anywhere in it — from
+// being told to "Upload or drag in the file you want to work with" and then to
+// "Download the finished file to your device", which is what /tools/all/
+// audio-file-size-calculator serves today. Categories with no single honest
+// workflow (Generators, Security & Privacy, Business, Lifestyle, …) are left
+// to the name heuristic below.
+const CATEGORY_WORKFLOWS = {
+  "Calculators": "calculator",
+  "Finance Calculators": "calculator",
+  "Health Calculators": "calculator",
+  "Converters": "converter",
+  "Developer": "developer",
+  "Text & Writing": "writing",
+  "AI Tools": "ai",
+  "Image & Photo": "media",
+  "Video & Audio": "media",
+  "PDF & Documents": "media",
+};
+
+// A tool named as a generator, checklist, quiz or calculator builds its output
+// from what you type into it. It has nothing to upload and returns nothing to
+// paste back into a codebase, so the `file` and `code` substrings must not be
+// allowed to speak for it.
+const BUILDS_FROM_INPUTS =
+  /generator|maker|creator|builder|checklist|quiz|planner|guide|cheat|calculator|estimator|tracker/;
+
+// Narrower than the above: a checklist, quiz, guide, calculator, estimator,
+// planner or tracker has no file input at all, so the media workflow — which
+// opens with "Upload or drag in the file you want to work with" — is false for
+// one however its name is spelled.
+const NEVER_TAKES_A_FILE = /checklist|quiz|guide|cheat|calculator|estimator|planner|tracker/;
+
+const MEDIA_CATEGORIES = new Set([
+  "Image & Photo",
+  "Video & Audio",
+  "PDF & Documents",
+]);
+
 function chooseTemplate(categories, slug = "", name = "") {
+  const byCategory = CATEGORY_WORKFLOWS[categories[0]];
+  if (byCategory) {
+    // A Developer tool also filed under a media category is one you hand a
+    // file to, not one you paste code into: Accessible Document Checker
+    // (Developer + PDF & Documents) opens a PDF, DOCX, XLSX or PPTX, so
+    // "Copy the polished result straight back into your project" describes
+    // nothing it does.
+    if (byCategory === "developer" && categories.some((c) => MEDIA_CATEGORIES.has(c))) {
+      return workflowTemplates.media;
+    }
+    return workflowTemplates[byCategory];
+  }
+
   const haystack = `${slug} ${name} ${categories.join(" ")}`.toLowerCase();
+  const buildsFromInputs = BUILDS_FROM_INPUTS.test(haystack);
 
   // `ratio`, `api` and `unit` are anchored because inside a longer word they
   // carry no meaning at all and were choosing the copy for 22 tools:
@@ -103,11 +223,24 @@ function chooseTemplate(categories, slug = "", name = "") {
   // tools in media and developer, which is where they belong — anchoring them
   // moved profile-picture-maker out of media and rot13-encoder-decoder into
   // writing. Fix what is meaningless, not what is merely lucky.
-  if (/image|media|video|audio|pdf|file|svg|barcode/.test(haystack)) return workflowTemplates.media;
+  //
+  // What is meaningless here: `image` matched "afterimage-generator" and
+  // `media` matched "social-media-app-permission-audit", so both were told to
+  // upload a file they have no input for — hence the word-start anchors. And
+  // `file`/`code` now only speak for a tool that is not named as one building
+  // its output from typed input, so profile-picture-maker keeps media through
+  // `image` while "CODEOWNERS File Generator" and "Caddyfile Generator" stop
+  // being handed an upload step.
+  const neverTakesAFile = NEVER_TAKES_A_FILE.test(haystack);
+  if (!neverTakesAFile && /\bimage|\bmedia|\bvideo|\baudio|\bpdf|\bsvg/.test(haystack)) {
+    return workflowTemplates.media;
+  }
+  if (!buildsFromInputs && /file|barcode/.test(haystack)) return workflowTemplates.media;
   if (/calculator|calculate|finance|loan|\bratio\b|converter|convert|base64|csv|json|xml|yaml|\bunit|byte|hex|binary/.test(haystack)) {
     return /calculator|calculate|finance|loan|\bratio\b/.test(haystack) ? workflowTemplates.calculator : workflowTemplates.converter;
   }
-  if (/developer|\bapi\b|code|css|html|javascript|sql|regex|cron|nginx|curl/.test(haystack)) return workflowTemplates.developer;
+  if (/developer|\bapi\b|css|html|javascript|sql|regex|cron|nginx|curl/.test(haystack)) return workflowTemplates.developer;
+  if (!buildsFromInputs && /code/.test(haystack)) return workflowTemplates.developer;
   if (/\bai\b|detect|recogni|generat|neural|face|emotion|smart/.test(haystack)) return workflowTemplates.ai;
   if (/text|writing|word|grammar|paraphras|summar|letter|essay|caption|bio\b/.test(haystack)) return workflowTemplates.writing;
   return workflowTemplates.default;
@@ -116,6 +249,22 @@ function chooseTemplate(categories, slug = "", name = "") {
 // Memoised per request. buildToolMetadata, the page body and ToolSeoSection
 // each build the same content for one render, and each call resolves
 // overrides and the generated SEO shard for the slug.
+// The shared copy above promises that a tool needing to contact a service says
+// so on its own page. This is what makes that true. Destinations come from
+// generated/toolNetworkMap.js, derived by scanning each tool's own directory
+// for a literal fetch()/axios() target — evidence, not assumption. Silence is
+// deliberately NOT a local-only claim: a tool absent from the map is one where
+// no direct call was found, and the copy then says nothing either way.
+function networkNote(slug) {
+  const hosts = toolNetworkDestinations(slug);
+  if (!hosts || hosts.length === 0) return "";
+  const external = hosts.filter((h) => h !== "self");
+  if (external.length === 0) {
+    return " To produce a result it sends your input to AltFTool's own server, so it does not work offline.";
+  }
+  return ` To produce a result it sends your input to ${external.slice(0, 2).join(" and ")}, so it does not work offline.`;
+}
+
 export const buildToolSeoContent = cache(function buildToolSeoContent(slug, tool = {}) {
   const name = cleanText(tool.name) || cleanText(slug).replace(/[-_]/g, " ");
   const description = cleanText(tool.description);
@@ -152,13 +301,15 @@ export const buildToolSeoContent = cache(function buildToolSeoContent(slug, tool
   // Keep the intro complementary to the description shown in the section
   // header — never restate the raw description (it used to appear 3× on the
   // page: header, intro and summary).
-  const intro =
+  const intro = bindIntroSubject(
     central.intro ||
-    override?.intro ||
-    // The fallback must not make a local-only promise: some tools call a
-    // remote origin or one of our API routes. A tool that really is local-only
-    // may say so in its reviewed per-tool content.
-      `${name} is a free ${categoryLabel} tool that runs in your browser — nothing to install and no account to create. Open the page, add your input, and get a clean, copy-ready result in seconds.`;
+      override?.intro ||
+      // The fallback must not make a local-only promise: some tools call a
+      // remote origin or one of our API routes. A tool that really is
+      // local-only may say so in its reviewed per-tool content.
+      `${name} is a free ${categoryLabel} tool that runs in your browser — nothing to install and no account to create. Open the page, add your input, and get a clean, copy-ready result in seconds.${networkNote(slug)}`,
+    name,
+  );
 
   // Examples (benefits): central admin override > hand-written code override >
   // category template (with the tool name injected so copy stays unique).

@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import { Brain, Check, Copy, RotateCcw } from "lucide-react";
 import {
   EYE_OPTIONS,
-  GCS_MAX,
   MOTOR_OPTIONS_ADULT,
   MOTOR_OPTIONS_PAEDIATRIC,
   PUPIL_OPTIONS,
@@ -89,7 +88,7 @@ export default function ToolHome() {
   };
 
   const totalDisplay = hasError ? DASH : `${result.totalLabel}`;
-  const barPct = hasError ? 0 : Math.round((result.total / GCS_MAX) * 100);
+  const barPct = hasError ? 0 : Math.round((result.total / result.totalMax) * 100);
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">

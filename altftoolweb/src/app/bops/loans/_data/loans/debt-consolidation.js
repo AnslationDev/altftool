@@ -199,7 +199,7 @@ export const debtConsolidation = {
   seo: {
     title: "Debt Consolidation Loans — One Fixed Payment | AltFTool",
     description:
-      "Combine high-interest credit cards and loans into one fixed-rate payment. Compare personalised debt consolidation offers with no impact to your credit to check.",
+      "Combine high-interest credit cards and loans into one fixed-rate payment. Compare personalised debt consolidation offers without affecting your credit.",
   },
 };
 

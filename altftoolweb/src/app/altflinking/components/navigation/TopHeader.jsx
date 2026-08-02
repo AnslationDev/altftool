@@ -128,13 +128,21 @@ export default function TopHeader({
         {/* Active Route Breadcrumb */}
         <div className="flex items-center gap-1.5 min-w-0">
           <span className="text-xs font-semibold text-slate-500 hidden sm:inline">ALTFTool /</span>
-          <h1 className="text-xs sm:text-sm font-extrabold text-slate-900 tracking-tight truncate flex items-center gap-1.5">
+          {/* Chrome, not a heading. This is the second half of the "ALTFTool /
+              <section>" breadcrumb in the sticky app bar and it re-renders on
+              every tab, so as an h1 it collided with whichever view owned the
+              real page heading (LandingHero on the default landing tab,
+              GuestPostsDirectoryView, the marketplace banner, the dashboards).
+              A div keeps the text and every class — the type carries no
+              styling here, since size/weight/colour are all set by utilities —
+              while leaving each view with exactly one h1. */}
+          <div className="text-xs sm:text-sm font-extrabold text-slate-900 tracking-tight truncate flex items-center gap-1.5">
             {getSectionTitle()}
             <span className="hidden xl:inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[9px] font-bold text-emerald-600 border border-emerald-500/20">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
               LIVE
             </span>
-          </h1>
+          </div>
         </div>
       </div>
 

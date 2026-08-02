@@ -173,21 +173,6 @@ export function estimateStepLengthFromHeight({ heightCm, sex = "male" } = {}) {
   };
 }
 
-/**
- * Cadence needed to hold a given pace at a chosen step length.
- * cadence = speed / step length x 60.
- */
-export function cadenceForStepLength({ paceSecPerKm, stepLengthM } = {}) {
-  if (!isNum(paceSecPerKm) || !isNum(stepLengthM)) {
-    return { error: "Enter both a pace and a step length." };
-  }
-  if (paceSecPerKm <= 0) return { error: "Pace must be greater than zero." };
-  if (stepLengthM <= 0) return { error: "Step length must be greater than zero." };
-
-  const speedMps = METRES_PER_KM / paceSecPerKm;
-  return { cadenceSpm: (speedMps / stepLengthM) * SECONDS_PER_MINUTE };
-}
-
 /** Convert mm:ss pace parts to seconds per kilometre. */
 export function paceToSeconds(minutes, seconds) {
   const m = isNum(minutes) ? minutes : 0;

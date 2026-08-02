@@ -14397,7 +14397,7 @@ html[data-theme="light"] .tripfindbox-root {
     text-transform: uppercase !important;
   }
 
-  .mobile-deal-support-hero h1 {
+  .mobile-deal-support-hero .mobile-deal-support-title {
     max-width: 11ch !important;
     margin: 0 !important;
     color: #11142a !important;
@@ -15133,7 +15133,7 @@ html[data-theme="light"] .tripfindbox-root {
     display: none !important;
   }
 
-  .mobile-deal-support-hero h1 {
+  .mobile-deal-support-hero .mobile-deal-support-title {
     max-width: 100% !important;
     margin: 0 !important;
     color: #ffffff !important;
@@ -15390,7 +15390,7 @@ html[data-theme="light"] .tripfindbox-root {
     text-align: center !important;
   }
 
-  .mobile-deal-support-hero h1 {
+  .mobile-deal-support-hero .mobile-deal-support-title {
     width: 100% !important;
     max-width: 100% !important;
     margin: 0 !important;
@@ -15507,7 +15507,7 @@ html[data-theme="light"] .tripfindbox-root {
     gap: clamp(9px, 1.9svh, 18px) !important;
   }
 
-  .mobile-deal-support-hero h1 {
+  .mobile-deal-support-hero .mobile-deal-support-title {
     font-size: clamp(25px, 7.3vw, 33px) !important;
   }
 
@@ -15998,7 +15998,7 @@ html[data-theme="light"] .tripfindbox-root {
     padding-top: 4px !important;
   }
 
-  .mobile-deal-support-hero h1 {
+  .mobile-deal-support-hero .mobile-deal-support-title {
     font-size: clamp(23px, 7vw, 29px) !important;
     line-height: 1.02 !important;
   }
@@ -16071,7 +16071,7 @@ html[data-theme="light"] .tripfindbox-root {
     padding-top: 4px !important;
   }
 
-  .mobile-deal-support-hero h1 {
+  .mobile-deal-support-hero .mobile-deal-support-title {
     font-size: clamp(24px, min(7.4vw, 4.4svh), 36px) !important;
   }
 
@@ -16139,7 +16139,7 @@ html[data-theme="light"] .tripfindbox-root {
     padding-top: 4px !important;
   }
 
-  .mobile-deal-support-hero h1 {
+  .mobile-deal-support-hero .mobile-deal-support-title {
     font-size: clamp(24px, 7.2vw, 34px) !important;
     line-height: 1.02 !important;
   }
@@ -16217,7 +16217,7 @@ html[data-theme="light"] .tripfindbox-root {
     gap: 6px !important;
   }
 
-  .mobile-deal-support-hero h1 {
+  .mobile-deal-support-hero .mobile-deal-support-title {
     font-size: clamp(21px, 6.2vw, 28px) !important;
   }
 
@@ -16290,7 +16290,7 @@ html[data-theme="light"] .tripfindbox-root {
     align-content: start !important;
   }
 
-  .mobile-deal-support-hero h1 {
+  .mobile-deal-support-hero .mobile-deal-support-title {
     font-size: clamp(23px, min(6.7vw, 4.1svh), 36px) !important;
     line-height: 1.05 !important;
     letter-spacing: -0.015em !important;
@@ -16369,7 +16369,7 @@ html[data-theme="light"] .tripfindbox-root {
     gap: clamp(6px, 1.2svh, 11px) !important;
   }
 
-  .mobile-deal-support-hero h1 {
+  .mobile-deal-support-hero .mobile-deal-support-title {
     font-size: clamp(21px, 6.4vw, 27px) !important;
   }
 
@@ -16417,7 +16417,7 @@ html[data-theme="light"] .tripfindbox-root {
     gap: clamp(10px, 1.8svh, 19px) !important;
   }
 
-  .mobile-deal-support-hero h1 {
+  .mobile-deal-support-hero .mobile-deal-support-title {
     line-height: 1.14 !important;
     margin-bottom: 2px !important;
     white-space: normal !important;
@@ -16438,7 +16438,7 @@ html[data-theme="light"] .tripfindbox-root {
     gap: clamp(8px, 1.45svh, 14px) !important;
   }
 
-  .mobile-deal-support-hero h1 {
+  .mobile-deal-support-hero .mobile-deal-support-title {
     line-height: 1.12 !important;
   }
 }

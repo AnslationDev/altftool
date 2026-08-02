@@ -216,11 +216,22 @@ export function buildPetCarePrompt(input) {
   const experienceEntry =
     EXPERIENCE_LEVELS.find((item) => item.id === experience) || EXPERIENCE_LEVELS[0];
   const stage = classifyLifeStage(species, ageMonths);
-  const sessionMinutes = sessionMinutesFor(ageMonths);
-  const sessionsPerDay = clamp(Math.floor(minutes / sessionMinutes), 1, MAX_SESSIONS_PER_DAY);
+  const ageAppropriateSessionMinutes = sessionMinutesFor(ageMonths);
+  // A full age-appropriate session may not fit inside the owner's stated daily
+  // budget (e.g. 5 minutes/day for a dog whose life stage calls for 15-minute
+  // sessions). Rather than force a session length the owner told us they don't
+  // have time for, shrink the single session to fit and say so in the prompt —
+  // never claim a plan that contradicts the stated available minutes.
+  const canFitFullSession = minutes >= ageAppropriateSessionMinutes;
+  const sessionsPerDay = canFitFullSession
+    ? clamp(Math.floor(minutes / ageAppropriateSessionMinutes), 1, MAX_SESSIONS_PER_DAY)
+    : 1;
+  const sessionMinutes = canFitFullSession ? ageAppropriateSessionMinutes : Math.round(minutes);
+  const sessionsShortened = !canFitFullSession;
   const plannedMinutes = sessionsPerDay * sessionMinutes;
   const leftoverMinutes = Math.max(0, Math.round(minutes - plannedMinutes));
   const bladderHours = bladderIntervalHours(species, ageMonths);
+  const bladderGuidanceIncluded = bladderHours !== null && ageMonths < 12;
 
   const subject = petName.trim() ? petName.trim() : `my ${speciesEntry.label.toLowerCase()}`;
   const breedText = breed.trim() ? `${breed.trim()} ` : "";
@@ -239,10 +250,13 @@ export function buildPetCarePrompt(input) {
 
   const constraints = [
     `Fit the plan into ${sessionsPerDay} session${sessionsPerDay === 1 ? "" : "s"} a day of about ${sessionMinutes} minutes each — short sessions suit a ${stage.label.toLowerCase()}.`,
+    sessionsShortened
+      ? `${Math.round(minutes)} minutes a day is less than the ${ageAppropriateSessionMinutes}-minute session length that usually suits a ${stage.label.toLowerCase()}, so today's session is shortened to fit — increase daily minutes if you want full-length sessions.`
+      : null,
     leftoverMinutes > 0
       ? `I have about ${leftoverMinutes} spare minutes a day; suggest low-effort enrichment for that time rather than another drill.`
       : null,
-    bladderHours !== null && ageMonths < 12
+    bladderGuidanceIncluded
       ? `Assume toilet breaks roughly every ${bladderHours} hours (a puppy can usually hold about age-in-months + 1 hours) and build the day around that.`
       : null,
     "Use reward-based methods only. Do not suggest aversive tools, punishment, alpha or dominance framing.",
@@ -285,9 +299,11 @@ export function buildPetCarePrompt(input) {
     lifeStageNote: stage.note,
     sessionMinutes,
     sessionsPerDay,
+    sessionsShortened,
     plannedMinutes,
     leftoverMinutes,
     bladderHours,
+    bladderGuidanceIncluded,
     weight,
     goalLabel: goalEntry.label,
     wordCount: countWords(prompt),

@@ -210,7 +210,12 @@ export default function LudoMain() {
         onClose={() => ludo.setShowWinner(false)}
       />
 
-      <GameStatistics stats={ludo.stats} open={ludo.showStats} onReset={ludo.resetStats} />
+      <GameStatistics
+        stats={ludo.stats}
+        open={ludo.showStats}
+        onClose={() => ludo.setShowStats(false)}
+        onReset={ludo.resetStats}
+      />
 
       <SettingsModal
         open={ludo.showSettings}

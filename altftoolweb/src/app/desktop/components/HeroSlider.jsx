@@ -85,9 +85,15 @@ export default function HeroSlider() {
 
           {/* Overlay */}
           <div className="absolute inset-0 bg-black/40 flex flex-col justify-center items-start p-6 sm:p-16">
-            <h1 className="section-title text-white ">
+            {/*
+              Carousel captions, not document structure: all nine slides live in
+              the DOM at once (inactive ones are only opacity-0), so heading tags
+              here produced nine competing top-level headings. Kept as text with
+              the identical classes so nothing moves visually.
+            */}
+            <p className="section-title text-white ">
               {slide.title}
-            </h1>
+            </p>
             <p className="subheading text-white">
               {slide.subtitle}
             </p>

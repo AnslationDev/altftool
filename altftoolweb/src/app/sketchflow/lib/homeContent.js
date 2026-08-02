@@ -57,7 +57,9 @@ export const DEFAULT_HOME_CONTENT = {
     ],
   },
   seo: {
-    metaTitle: "SketchFlow - Free Online Whiteboard and Hand-Drawn Diagram Maker",
+    // 44 chars: the layout appends " | AltFTool" (11), so this renders at 56 —
+    // inside the 60 mobile SERPs allow. See SUPERSEDED_META_TITLES below.
+    metaTitle: "SketchFlow: Free Online Whiteboard & Diagrams",
     metaDescription:
       "Use SketchFlow by AltFTool to draw diagrams, flowcharts, notes, arrows, shapes, text, and images on an infinite hand-drawn whiteboard. Export your work as PNG, SVG, or SketchFlow JSON.",
     keywords:
@@ -79,6 +81,26 @@ export const DEFAULT_HOME_CONTENT = {
     customJson: {},
   },
 };
+
+/**
+ * SEO titles this app once shipped as its own default. The Firestore document
+ * was seeded from those defaults, so a stored copy that is byte-identical to
+ * one of them was never typed by an editor — it carries no intent to override.
+ * Treating those as unset lets a title fix ship with the code instead of
+ * waiting on a Firestore edit; a genuinely edited title still wins.
+ */
+const SUPERSEDED_META_TITLES = new Set([
+  // Rendered at 75 characters with the " | AltFTool" suffix — 15 over budget.
+  "SketchFlow - Free Online Whiteboard and Hand-Drawn Diagram Maker",
+]);
+
+export function resolveMetaTitle(seo) {
+  const stored = typeof seo?.metaTitle === "string" ? seo.metaTitle.trim() : "";
+  if (!stored || SUPERSEDED_META_TITLES.has(stored)) {
+    return DEFAULT_HOME_CONTENT.seo.metaTitle;
+  }
+  return stored;
+}
 
 function mergeContent(base, override) {
   if (Array.isArray(base) || Array.isArray(override)) {

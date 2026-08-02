@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "How do I show where one word ends and the next begins?",
-      "Spaces in your input are converted to a forward slash in the output, and playback holds a pause of about 400 milliseconds at each one. That way 'MAYDAY 123' reads as a spelled word, a break, then the digits.",
+      "Spaces in your input are converted to a forward slash in the output, and playback holds a pause there — about 470 milliseconds at the default Reading Speed of 0.85x, scaling with whatever speed you set. That way 'MAYDAY 123' reads as a spelled word, a break, then the digits.",
     ],
     [
       "Is there a limit on how much text I can convert?",

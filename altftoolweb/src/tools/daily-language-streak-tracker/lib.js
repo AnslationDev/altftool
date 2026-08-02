@@ -128,10 +128,11 @@ export function languagesIn(logs) {
 /* Streak maths                                                        */
 /* ------------------------------------------------------------------ */
 
-function dailyTotals(logs, language) {
+function dailyTotals(logs, language, todayStamp) {
   const totals = new Map();
   for (const item of logs) {
-    if (language && language !== "All" && item.language !== language) continue;
+    if (language && language !== "All" && item.language.toLowerCase() !== language.toLowerCase()) continue;
+    if (Number.isFinite(todayStamp) && parseIsoDate(item.date) > todayStamp) continue;
     totals.set(item.date, (totals.get(item.date) || 0) + item.minutes);
   }
   return totals;
@@ -164,7 +165,7 @@ export function summarise({ logs, goalMinutes, today, language = "All", freezes 
     return { error: `Rest days allowed must be between 0 and ${MAX_FREEZES}.` };
   }
 
-  const totals = dailyTotals(list, language);
+  const totals = dailyTotals(list, language, todayStamp);
   const dates = [...totals.keys()].sort();
 
   if (dates.length === 0) {
@@ -244,6 +245,7 @@ export function summarise({ logs, goalMinutes, today, language = "All", freezes 
 
   const perLanguage = new Map();
   for (const item of list) {
+    if (language && language !== "All" && item.language.toLowerCase() !== language.toLowerCase()) continue;
     const entry = perLanguage.get(item.language) || { language: item.language, minutes: 0, days: new Set() };
     entry.minutes += item.minutes;
     entry.days.add(item.date);

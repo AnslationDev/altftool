@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Syringe } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { PRESETS, computeBoosterEligibility, presetById, toISODate } from "../lib";
 
 const DEFAULTS = {
@@ -43,7 +44,7 @@ export default function ToolHome() {
   const [doseDays, setDoseDays] = useState(DEFAULTS.doseDays);
   const [infectionDays, setInfectionDays] = useState(DEFAULTS.infectionDays);
   const [asOfDate, setAsOfDate] = useState("");
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   useEffect(() => {
     setAsOfDate(toISODate(Date.now()));
@@ -92,25 +93,26 @@ export default function ToolHome() {
     return lines.join("\n");
   })();
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "booster eligibility result" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your dates and intervals with the default example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setLastDoseDate(DEFAULTS.lastDoseDate);
     setInfectionDate(DEFAULTS.infectionDate);
     setPreset(DEFAULTS.preset);
     setDoseDays(DEFAULTS.doseDays);
     setInfectionDays(DEFAULTS.infectionDays);
     setAsOfDate(toISODate(Date.now()));
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -141,6 +143,7 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               type="date"
               value={lastDoseDate}
+              max={asOfDate || undefined}
               onChange={(event) => setLastDoseDate(event.target.value)}
             />
           </div>
@@ -153,6 +156,7 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               type="date"
               value={infectionDate}
+              max={asOfDate || undefined}
               onChange={(event) => setInfectionDate(event.target.value)}
             />
             <p className="mt-2 text-xs text-[var(--muted-foreground)]">
@@ -237,7 +241,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Earliest eligible date
             </p>
@@ -254,16 +258,20 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the booster eligibility result"
+              aria-label={
+                isCopied("result")
+                  ? "Copied the booster eligibility result to clipboard"
+                  : "Copy the booster eligibility result"
+              }
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
@@ -274,6 +282,9 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -287,7 +298,7 @@ export default function ToolHome() {
           </p>
         )}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             [
               "Eligible by the dose interval",

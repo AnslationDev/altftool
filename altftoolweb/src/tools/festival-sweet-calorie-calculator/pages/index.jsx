@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { CakeSlice, Check, Copy, RotateCcw } from "lucide-react";
-import { FESTIVAL_SWEETS, summariseSweets, sweetGroups } from "../lib";
+import { DEFAULT_DAILY_KCAL, FESTIVAL_SWEETS, summariseSweets, sweetGroups } from "../lib";
 
 const NUM0 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 const NUM1 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
@@ -12,7 +12,7 @@ const n0 = (v) => (Number.isFinite(v) ? NUM0.format(v) : DASH);
 const n1 = (v) => (Number.isFinite(v) ? NUM1.format(v) : DASH);
 
 const DEFAULT_BOX = { "gulab-jamun": 2, "kaju-katli": 1 };
-const DEFAULT_DAILY = "2000";
+const DEFAULT_DAILY = String(DEFAULT_DAILY_KCAL);
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -82,6 +82,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (hasItems && !window.confirm("Reset the box? Your current sweet selections will be cleared.")) {
+      return;
+    }
     setBox(DEFAULT_BOX);
     setDailyKcal(DEFAULT_DAILY);
     setActiveGroup(GROUPS[0]);

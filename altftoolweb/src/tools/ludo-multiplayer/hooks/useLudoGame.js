@@ -19,7 +19,6 @@ export function useLudoGame() {
   const [settings, setSettings] = useState(loadSettings);
   const [thinkingAI, setThinkingAI] = useState(false);
   const [diceRolling, setDiceRolling] = useState(false);
-  const [animatingToken, setAnimatingToken] = useState(null);
   const aiTimerRef = useRef(null);
   const turnTimerRef = useRef(null);
 
@@ -37,7 +36,6 @@ export function useLudoGame() {
     setShowWinner(false);
     setThinkingAI(false);
     setDiceRolling(false);
-    setAnimatingToken(null);
   }, [playerCount]);
 
   const toggleMode = useCallback((m) => {
@@ -102,6 +100,7 @@ export function useLudoGame() {
     setTimeout(() => {
       const value = rollDice();
       const player = game.players[game.currentPlayer];
+      const updatedGame = { ...game, diceValue: value };
 
       if (value === 6) {
         player.consecutiveSixes++;
@@ -112,7 +111,7 @@ export function useLudoGame() {
             diceValue: value,
             diceRolled: true,
             phase: "roll",
-            canRoll: false,
+            canRoll: true,
             currentPlayer: (prev.currentPlayer + 1) % prev.players.length,
           }));
           setDiceRolling(false);
@@ -123,7 +122,7 @@ export function useLudoGame() {
         player.consecutiveSixes = 0;
       }
 
-      const moves = getValidMoves(game, game.currentPlayer);
+      const moves = getValidMoves(updatedGame, updatedGame.currentPlayer);
 
       setGame((prev) => ({
         ...prev,
@@ -171,6 +170,26 @@ export function useLudoGame() {
     aiTimerRef.current = setTimeout(() => {
       const aiPlayer = g.players[g.currentPlayer];
       if (!aiPlayer.isAI) { setThinkingAI(false); return; }
+
+      const diceVal = rollDice();
+      g.diceValue = diceVal;
+
+      if (diceVal === 6) {
+        aiPlayer.consecutiveSixes++;
+        if (checkThreeConsecutiveSixes(aiPlayer)) {
+          aiPlayer.consecutiveSixes = 0;
+          g.currentPlayer = (g.currentPlayer + 1) % g.players.length;
+          g.phase = "roll";
+          g.canRoll = true;
+          g.validMoves = [];
+          setGame({ ...g });
+          setThinkingAI(false);
+          return;
+        }
+      } else {
+        aiPlayer.consecutiveSixes = 0;
+      }
+
       const move = evaluateMoves(g, g.currentPlayer, difficulty);
       if (!move) {
         g.currentPlayer = (g.currentPlayer + 1) % g.players.length;
@@ -180,8 +199,6 @@ export function useLudoGame() {
         setThinkingAI(false);
         return;
       }
-      const diceVal = rollDice();
-      g.diceValue = diceVal;
       applyMove(g, g.currentPlayer, move);
       if (g.gameOver) {
         setGame(g);
@@ -220,7 +237,6 @@ export function useLudoGame() {
     settings,
     thinkingAI,
     diceRolling,
-    animatingToken,
     setDifficulty,
     setShowSettings,
     setShowStats,

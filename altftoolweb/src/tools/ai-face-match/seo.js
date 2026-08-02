@@ -31,7 +31,7 @@ const seo = {
     ],
     [
       "What happens if no face is detected in one of the photos?",
-      "The tool falls back to a deterministic signature derived from the two file names and sizes, which produces a placeholder score in the 54–85% range rather than a real facial comparison. If the result looks arbitrary, re-upload with clearer, forward-facing photos so the recognition network can actually run.",
+      "The tool falls back to a deterministic signature derived from the two file names and sizes, which produces a placeholder score in the 54–84% range rather than a real facial comparison. If the result looks arbitrary, re-upload with clearer, forward-facing photos so the recognition network can actually run.",
     ],
     [
       "Can I use this to verify someone's identity?",

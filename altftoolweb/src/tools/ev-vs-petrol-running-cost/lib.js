@@ -141,10 +141,10 @@ export function compareEvPetrol({
   let paybackKm = null;
   let paybackYears = null;
   let paybackNote;
-  if (values.premium <= 0) {
-    paybackNote = "No price premium entered, so the EV is cheaper from the first kilometre.";
-  } else if (savingPerKm <= 0) {
+  if (savingPerKm <= 0) {
     paybackNote = "The EV does not run cheaper on these inputs, so the higher purchase price never pays back.";
+  } else if (values.premium <= 0) {
+    paybackNote = "No price premium entered, so the EV is cheaper from the first kilometre.";
   } else {
     paybackKm = values.premium / savingPerKm;
     paybackYears = values.km > 0 ? values.premium / annualSaving : null;

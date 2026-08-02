@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "Idiom Explorer is a searchable reference of 60 curated English idioms, each with its figurative meaning, literal reading, usage note, origin story, two example sentences, synonyms and related phrases. You can filter by first letter, by difficulty (beginner, intermediate, advanced) or across 43 themed categories such as Social, Courage, Finance and Timing, then test recall in a 10-question multiple-choice quiz. Learners, ESL teachers and writers get the explanation and the example sentence in one card, with favorites and view history saved locally in the browser.",
+    "Idiom Explorer is a searchable reference of 59 curated English idioms, each with its figurative meaning, literal reading, usage note, origin story, two example sentences, synonyms and related phrases. You can filter by first letter, by difficulty (beginner, intermediate, advanced) or across 45 themed categories such as Social, Courage, Finance and Timing, then test recall in a 10-question multiple-choice quiz. Learners, ESL teachers and writers get the explanation and the example sentence in one card, with favorites and view history saved locally in the browser.",
   useCases: [
     "An ESL student hears \"bite the bullet\" in a meeting, looks it up, and wants both the meaning and a sample sentence they can copy into their vocabulary notebook.",
     "A teacher is building a worksheet on beginner-level idioms only, and filters the list by difficulty so advanced phrases do not sneak into a first-year class.",
@@ -12,8 +12,8 @@ const seo = {
       "Every entry explains where the phrase came from and what it says literally, which is what makes an idiom stick.",
     ],
     [
-      "Three ways to narrow 60 idioms",
-      "Alphabet strip, 43 topical categories and a beginner/intermediate/advanced filter can be combined to reach exactly the set you want.",
+      "Three ways to narrow 59 idioms",
+      "Alphabet strip, 45 topical categories and a beginner/intermediate/advanced filter can be combined to reach exactly the set you want.",
     ],
     [
       "Recall practice built in",
@@ -23,7 +23,7 @@ const seo = {
   faqs: [
     [
       "How many idioms are in Idiom Explorer?",
-      "60 curated English idioms, each spread across 43 topical categories and tagged beginner, intermediate or advanced. Every entry carries a meaning, a literal reading, a usage note, an origin, two example sentences, synonyms and related idioms.",
+      "59 curated English idioms, each spread across 45 topical categories and tagged beginner, intermediate or advanced. Every entry carries a meaning, a literal reading, a usage note, an origin, two example sentences, synonyms and related idioms.",
     ],
     [
       "How does the idiom quiz work?",

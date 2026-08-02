@@ -2,7 +2,15 @@
 
 import { useMemo, useState } from "react";
 import { AlertTriangle, Check, Copy, Handshake, RotateCcw } from "lucide-react";
-import { COMPONENTS, MAX_FIELD_LENGTH, SOURCE, TONES, composeApology } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import {
+  COMPONENTS,
+  MAX_FIELD_LENGTH,
+  MAX_NAME_LENGTH,
+  SOURCE,
+  TONES,
+  composeApology,
+} from "../lib";
 
 const NUM = new Intl.NumberFormat("en-IN");
 const DASH = "—";
@@ -73,7 +81,8 @@ export default function ToolHome() {
     repair: DEFAULTS.repair,
   });
   const [include, setInclude] = useState(ALL_IDS);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(
     () => composeApology({ recipient, sender, tone, include, ...values }),
@@ -92,18 +101,18 @@ export default function ToolHome() {
     setValues((current) => ({ ...current, [id]: value }));
   };
 
-  const copy = async () => {
+  const copy = () => {
     if (hasError || !result.text) return;
-    try {
-      await navigator.clipboard.writeText(result.text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("apology", result.text, { label: "apology message" });
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset every field back to the demo example values? This cannot be undone.")
+    ) {
+      return;
+    }
     setRecipient(DEFAULTS.recipient);
     setSender(DEFAULTS.sender);
     setTone(DEFAULTS.tone);
@@ -115,7 +124,7 @@ export default function ToolHome() {
       repair: DEFAULTS.repair,
     });
     setInclude(ALL_IDS);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -146,6 +155,7 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               type="text"
               value={recipient}
+              maxLength={MAX_NAME_LENGTH}
               placeholder="Priya"
               onChange={(event) => setRecipient(event.target.value)}
             />
@@ -159,6 +169,7 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               type="text"
               value={sender}
+              maxLength={MAX_NAME_LENGTH}
               placeholder="Rohan"
               onChange={(event) => setSender(event.target.value)}
             />
@@ -235,7 +246,7 @@ export default function ToolHome() {
           >
             Select all parts
           </button>
-          <button type="button" className={PRIMARY_BTN} onClick={reset} aria-label="Reset all fields">
+          <button type="button" className={GHOST_BTN} onClick={reset} aria-label="Reset all fields">
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Reset
           </button>
@@ -268,18 +279,21 @@ export default function ToolHome() {
           </div>
           <button
             type="button"
-            className={GHOST_BTN}
+            className={PRIMARY_BTN}
             onClick={copy}
-            aria-label="Copy the apology message"
+            aria-label={isCopied("apology") ? "Copied the apology message to clipboard" : "Copy the apology message"}
             disabled={hasError}
           >
-            {copied ? (
+            {isCopied("apology") ? (
               <Check className="h-4 w-4" aria-hidden="true" />
             ) : (
               <Copy className="h-4 w-4" aria-hidden="true" />
             )}
-            {copied ? "Copied!" : "Copy apology"}
+            {isCopied("apology") ? "Copied!" : "Copy apology"}
           </button>
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">

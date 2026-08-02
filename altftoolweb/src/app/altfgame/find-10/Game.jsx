@@ -62,9 +62,9 @@ function Loader({ onDone }) {
           <p className="mb-3 text-xs font-black uppercase tracking-[0.28em] text-cyan-200">
             Target lock loading
           </p>
-          <h1 className="m-0 text-[clamp(1.6rem,4.5vw,2.8rem)] font-black leading-none tracking-normal">
+          <h2 className="m-0 text-[clamp(1.6rem,4.5vw,2.8rem)] font-black leading-none tracking-normal">
             Find 10 Arena
-          </h1>
+          </h2>
           <p className="mx-auto mt-4 max-w-xl text-sm font-bold leading-6 text-white/60">
             Counting to 10. Pair the numbers fast, chain combos, and beat the target score.
           </p>
@@ -213,7 +213,7 @@ const Find = () => {
               10
             </div>
             <div className="min-w-0">
-              <h1 className="m-0 text-2xl font-black leading-none">Find 10</h1>
+              <h2 className="m-0 text-2xl font-black leading-none">Find 10</h2>
               <p className="m-0 mt-1 text-xs font-bold uppercase tracking-[0.16em] text-white/40">
                 Number match arena
               </p>
@@ -323,9 +323,9 @@ const Find = () => {
             <p className="m-0 text-xs font-black uppercase tracking-[0.24em] text-cyan-200">
               {result === "win" ? "Winner" : "Loser"}
             </p>
-            <h1 className="m-0 mt-3 text-[clamp(2.5rem,8vw,4.8rem)] font-black leading-none">
+            <h2 className="m-0 mt-3 text-[clamp(2.5rem,8vw,4.8rem)] font-black leading-none">
               {result === "win" ? "You Won" : "Time Up"}
-            </h1>
+            </h2>
             <p className="mx-auto mt-4 max-w-sm text-sm font-bold leading-6 text-white/60">
               {result === "win"
                 ? `Final score ${score}. Rank: ${rankFor(score)}. Combo peak x${multiplier}.`

@@ -10,7 +10,7 @@ const seo = {
   benefits: [
     [
       "IRR on real cash flows, not a rate restatement",
-      "Bisection on a bracketed interval to a monthly-rate tolerance of 1e-12; it reproduces the RBI's own Annex B illustration of 17.07% to the decimal.",
+      "Bisection on a bracketed interval to a monthly-rate tolerance of 1e-12; it reproduces the RBI's own Annex B illustration of 17.10% to the decimal.",
     ],
     [
       "The flat-versus-reducing gap made explicit",
@@ -28,7 +28,7 @@ const seo = {
   faqs: [
     [
       "Why is my APR higher than the interest rate the bank quoted me?",
-      "Because the quoted rate ignores everything you paid to get the money. The RBI's own worked example makes the gap concrete: a 20,000 loan at a quoted 15% over 24 monthly instalments of 970, with 400 of fees, disburses only 19,600 net — and its APR is 17.07%, over two percentage points above the quoted rate. Add 18% GST on the processing fee and a financed insurance premium and the gap widens further, because every one of those rupees is money you never received but are paying interest on.",
+      "Because the quoted rate ignores everything you paid to get the money. The RBI's own worked example makes the gap concrete: a 20,000 loan at a quoted 15% over 24 monthly instalments of 970, with 400 of fees, disburses only 19,600 net — and its APR is 17.10%, over two percentage points above the quoted rate. Add 18% GST on the processing fee and a financed insurance premium and the gap widens further, because every one of those rupees is money you never received but are paying interest on.",
     ],
     [
       "What is a 10% flat rate in reducing-balance terms?",
@@ -36,7 +36,7 @@ const seo = {
     ],
     [
       "Can a cheaper loan become the more expensive one if I repay early?",
-      "Yes, and that is the single most common way a comparison goes wrong. Take a 5,00,000 loan over 60 months: Offer A at 10.25% with a 12,000 financed insurance premium and a 5% foreclosure penalty has an APR of 11.81%, against 12.12% for Offer B at 11.75% with almost no fees — A is cheaper over the full term. Close both in month 36 and A costs 13.07% against B's 12.18%, because the penalty on the outstanding balance plus 18% GST on it lands in a single month and the upfront fees are spread over 36 months instead of 60. The ranking inverts.",
+      "Yes, and that is the single most common way a comparison goes wrong. Take a 5,00,000 loan over 60 months: Offer A at 10.25% with a 12,000 financed insurance premium and a 5% foreclosure penalty has an APR of 11.81%, against 12.11% for Offer B at 11.75% with almost no fees — A is cheaper over the full term. Close both in month 36 and A costs 13.07% against B's 12.18%, because the penalty on the outstanding balance plus 18% GST on it lands in a single month and the upfront fees are spread over 36 months instead of 60. The ranking inverts.",
     ],
     [
       "Are foreclosure charges still allowed in India?",

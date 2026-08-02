@@ -296,7 +296,7 @@ export default function ToolHome() {
             <div
               className="flex h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
               role="img"
-              aria-label={`Attendance is ${result.percent} percent against a requirement of ${result.requiredPercent} percent`}
+              aria-label={`Attendance is ${num(result.percent)} percent against a requirement of ${result.requiredPercent} percent`}
             >
               <span
                 className={`block h-full ${result.status.tone === "danger" ? "bg-[var(--danger)]" : "bg-[var(--primary)]"}`}

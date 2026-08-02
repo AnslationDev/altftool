@@ -1,7 +1,9 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Copy, Ruler, Scissors } from "lucide-react";
+
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const PRESETS = [
   { id: "x-post", group: "Social", label: "X (Twitter) post", limit: 280, note: "Links always count as 23 characters" },
@@ -38,6 +40,11 @@ const GSM_EXTENDED = "^{}\\[~]|€";
 
 const nf = new Intl.NumberFormat("en-IN");
 const URL_PATTERN = /https?:\/\/\S+|www\.\S+/gi;
+
+/** Length as the platform bills it: links collapse to 23 chars when link-weighting applies. */
+function weightedLength(value, applyWeighting) {
+  return applyWeighting ? value.replace(URL_PATTERN, "x".repeat(23)).length : value.length;
+}
 
 function countGraphemes(text) {
   if (!text) return 0;
@@ -94,24 +101,25 @@ export default function ToolHome() {
   const [presetId, setPresetId] = useState("x-post");
   const [customLimit, setCustomLimit] = useState("");
   const [countLinksAs23, setCountLinksAs23] = useState(true);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const preset = PRESETS.find((item) => item.id === presetId) || PRESETS[0];
 
   const customValue = customLimit.trim() === "" ? null : Number(customLimit);
   const customInvalid =
     customValue !== null && (!Number.isFinite(customValue) || customValue < 1 || customValue > 1000000);
-  const limit = customValue !== null && !customInvalid ? Math.floor(customValue) : preset.limit;
-  const limitLabel = customValue !== null && !customInvalid ? "Custom limit" : preset.label;
+  // True whenever the effective limit falls back to the preset — either no custom
+  // value was entered, or the one that was entered is invalid. Both the note and
+  // the SMS breakdown below describe the preset, so they must track this exactly,
+  // not just "customValue === null" (which ignores the invalid, non-empty case).
+  const usingPresetLimit = customValue === null || customInvalid;
+  const limit = usingPresetLimit ? preset.limit : Math.floor(customValue);
+  const limitLabel = usingPresetLimit ? preset.label : "Custom limit";
 
   const applyLinkWeighting = countLinksAs23 && presetId.startsWith("x-");
 
   const counts = useMemo(() => {
-    const weighted = applyLinkWeighting
-      ? text.replace(URL_PATTERN, "x".repeat(23))
-      : text;
-
-    const characters = weighted.length;
+    const characters = weightedLength(text, applyLinkWeighting);
     const rawCharacters = text.length;
     const noSpaces = text.replace(/\s/g, "").length;
     const words = text.trim() ? text.trim().split(/\s+/).filter(Boolean).length : 0;
@@ -135,26 +143,29 @@ export default function ToolHome() {
   const percent = limit > 0 ? Math.min(100, (counts.characters / limit) * 100) : 0;
   const nearLimit = !over && percent >= 90;
 
-  const trimmed = useMemo(() => text.slice(0, Math.max(0, limit)), [limit, text]);
+  const trimmed = useMemo(() => {
+    if (!over) return text;
+    // Trim by weighted length, not raw length: link-weighting can push the
+    // billed count over the limit even while the raw text is still shorter
+    // than it, so slicing raw characters to `limit` alone can be a no-op.
+    let end = text.length;
+    while (end > 0 && weightedLength(text.slice(0, end), applyLinkWeighting) > limit) {
+      end -= 1;
+    }
+    return text.slice(0, Math.max(0, end));
+  }, [over, limit, text, applyLinkWeighting]);
 
-  const copyText = useCallback(
-    async (value) => {
-      try {
-        await navigator.clipboard.writeText(value);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 1400);
-      } catch {
-        setCopied(false);
-      }
-    },
-    []
-  );
+  const copyText = (value) => copy("text", value, { label: "your text" });
 
   const reset = () => {
+    if (!window.confirm("Clear your text and reset the limit checker? This cannot be undone.")) {
+      return;
+    }
     setText("");
     setCustomLimit("");
     setPresetId("x-post");
     setCountLinksAs23(true);
+    resetCopyState();
   };
 
   return (
@@ -193,7 +204,10 @@ export default function ToolHome() {
 
             <div
               className="mt-3 h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
-              role="img"
+              role="progressbar"
+              aria-valuenow={Math.round(percent)}
+              aria-valuemin={0}
+              aria-valuemax={100}
               aria-label={`${Math.round(percent)} percent of the ${limitLabel} limit used`}
             >
               <div
@@ -223,11 +237,11 @@ export default function ToolHome() {
               <button
                 type="button"
                 onClick={() => copyText(text)}
-                aria-label="Copy your text to the clipboard"
+                aria-label={isCopied("text") ? "Copied your text to the clipboard" : "Copy your text to the clipboard"}
                 className="inline-flex min-h-11 items-center gap-2 rounded-md bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
               >
                 <Copy className="h-4 w-4" aria-hidden="true" />
-                {copied ? "Copied!" : "Copy text"}
+                {isCopied("text") ? "Copied!" : "Copy text"}
               </button>
               <button
                 type="button"
@@ -247,6 +261,9 @@ export default function ToolHome() {
               >
                 Reset
               </button>
+              <span className="sr-only" role="status" aria-live="polite">
+                {announcement}
+              </span>
             </div>
 
             <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -284,12 +301,12 @@ export default function ToolHome() {
               <p className="text-sm text-[var(--muted-foreground)]">
                 {over ? "characters over limit" : "characters remaining"}
               </p>
-              {preset.note && customValue === null ? (
+              {preset.note && usingPresetLimit ? (
                 <p className="mt-3 rounded-md bg-[var(--muted)] px-3 py-2 text-xs text-[var(--muted-foreground)]">
                   {preset.note}
                 </p>
               ) : null}
-              {preset.sms && customValue === null ? (
+              {preset.sms && usingPresetLimit ? (
                 <div className="mt-3 rounded-md border border-[var(--border)] bg-[var(--background)] p-3 text-sm">
                   <p className="font-semibold">
                     {nf.format(counts.sms.segments)} SMS segment

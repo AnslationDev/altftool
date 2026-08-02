@@ -1,5 +1,6 @@
 import ArticleDetail from "../../pages/ArticleDetail";
 import { getArticleBySlug } from "../../data/factNetData";
+import { toMetaDescription } from "../../data/metaDescription";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export const dynamic = "force-dynamic";
@@ -19,7 +20,9 @@ export async function generateMetadata({ params }) {
 
   return createPageMetadata({
     title: `${article.title} - Original Facts`,
-    description: article.description.slice(0, 155),
+    // A raw .slice(0, 155) cut every one of these mid-word, and the fragment
+    // then picked up a period from trimMetaDescription.
+    description: toMetaDescription(article.description),
     path: article.href || `/fact-net/articles/${slug}`,
     type: "article",
     image: article.image || undefined,

@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, PhoneForwarded, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   DEFAULT_CONFIDENCE_THRESHOLD,
   DEFAULT_FAILED_ATTEMPTS,
@@ -39,7 +40,7 @@ const DEFAULTS = {
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const set = (key) => (event) =>
     setForm((prev) => ({ ...prev, [key]: event.target.value }));
@@ -72,18 +73,18 @@ export default function ToolHome() {
 
   const copyResult = async () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(planToMarkdown(result));
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    await copy("escalation-plan", planToMarkdown(result), { label: "Escalation rules" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will discard your escalation rule configuration and restore the defaults, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setForm(DEFAULTS);
-    setCopied(false);
   };
 
   return (
@@ -222,7 +223,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Escalation rules
             </p>
@@ -240,15 +241,15 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the escalation rules as Markdown"
+              aria-label={isCopied("escalation-plan") ? "Copied" : "Copy the escalation rules as Markdown"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("escalation-plan") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy as Markdown"}
+              {isCopied("escalation-plan") ? "Copied!" : "Copy as Markdown"}
             </button>
             <button
               type="button"
@@ -259,13 +260,16 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
         {hasError ? (
           <p className="mt-5 text-sm text-[var(--muted-foreground)]">{DASH}</p>
         ) : (
-          <ol className="mt-5 space-y-3">
+          <ol className="mt-5 space-y-3" aria-live="polite" aria-atomic="true">
             {result.rules.map((rule) => (
               <li
                 key={rule.priority}

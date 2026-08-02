@@ -134,6 +134,17 @@ const isIsoDate = (value) => typeof value === "string" && /^\d{4}-\d{2}-\d{2}$/.
 const clean = (value) => (typeof value === "string" ? value.trim() : "");
 const round1 = (value) => Math.round((value + Number.EPSILON) * 10) / 10;
 
+/** Acronym-style initialisms whose spoken name starts with a vowel sound (F, H, L, M, N, R, S, X). */
+const VOWEL_SOUND_INITIALISM = /^(?:F|H|L|M|N|R|S|X)(?:[A-Z]|$)/;
+/** "a"/"an" for a vehicle-type noun phrase, e.g. "a car" vs "an SUV" vs "an electric car". */
+const articleFor = (word) => {
+  const w = clean(word);
+  if (!w) return "a";
+  if (/^[aeiou]/i.test(w)) return "an";
+  if (VOWEL_SOUND_INITIALISM.test(w)) return "an";
+  return "a";
+};
+
 export function addDays(isoDate, days) {
   if (!isIsoDate(isoDate) || !Number.isFinite(days)) return null;
   const [year, month, day] = isoDate.trim().split("-").map(Number);
@@ -251,9 +262,11 @@ export function buildParkingDisputeLetter({
 
   const flatLabel = clean(wing) ? `Flat No. ${flat}, ${clean(wing)}` : `Flat No. ${flat}`;
 
+  const vehicleLabel = clean(vehicleType) || "vehicle";
+
   const facts = [
     clean(vehicleNumber)
-      ? `I own a ${clean(vehicleType) || "vehicle"} bearing registration number ${clean(vehicleNumber)}, registered in my name.`
+      ? `I own ${articleFor(vehicleLabel)} ${vehicleLabel} bearing registration number ${clean(vehicleNumber)}, registered in my name.`
       : "",
     clean(slotNumber) ? `The slot in question is Slot No. ${clean(slotNumber)}.` : "",
     earlierRequestDate

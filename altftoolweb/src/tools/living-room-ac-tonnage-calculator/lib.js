@@ -30,16 +30,23 @@ export const SQFT_TO_SQM = 0.09290304;
  * of Indian construction (230 mm burnt-clay brick wall with plaster, 150 mm RCC
  * slab); insulated values are representative of an ECBC-compliant envelope.
  */
+/**
+ * `solAir: true` marks a wall type that is actually an exterior, sunlit wall
+ * and so should carry the sol-air uplift below. "thin" is explicitly an
+ * interior partition to an unconditioned room — it cannot be sunlit, so it
+ * must not get the same solar penalty as a real exterior wall.
+ */
 export const WALL_TYPES = [
-  { id: "brick", label: "230 mm brick, plastered, no insulation", u: 2.0 },
-  { id: "thin", label: "115 mm brick or block partition to an unconditioned room", u: 2.6 },
-  { id: "insulated", label: "Insulated / cavity wall (ECBC style)", u: 0.8 },
+  { id: "brick", label: "230 mm brick, plastered, no insulation", u: 2.0, solAir: true },
+  { id: "thin", label: "115 mm brick or block partition to an unconditioned room", u: 2.6, solAir: false },
+  { id: "insulated", label: "Insulated / cavity wall (ECBC style)", u: 0.8, solAir: true },
 ];
 
 export const ROOF_TYPES = [
   { id: "exposed", label: "Top floor - RCC roof exposed to the sun", u: 3.0, solAir: true },
   { id: "shaded", label: "Top floor but shaded, china mosaic or roof garden", u: 3.0, solAir: false },
-  { id: "insulated", label: "Top floor with roof insulation or cool roof coating", u: 1.0, solAir: true },
+  { id: "insulated", label: "Top floor with roof insulation (dark, uncoated)", u: 1.0, solAir: true },
+  { id: "cool_coating", label: "Top floor with white or cool roof coating (reflective)", u: 1.0, solAir: false },
   { id: "none", label: "Another floor above - no roof gain", u: 0, solAir: false },
 ];
 
@@ -201,7 +208,8 @@ export function computeLivingRoomLoad({
 
   const netWallM2 = exposedWallM2 - glassM2;
 
-  const wallLoad = wall.u * netWallM2 * (deltaT + WALL_SOL_AIR_UPLIFT_K);
+  const wallDeltaT = wall.solAir ? deltaT + WALL_SOL_AIR_UPLIFT_K : deltaT;
+  const wallLoad = wall.u * netWallM2 * wallDeltaT;
   const roofDeltaT = roof.solAir ? deltaT + ROOF_SOL_AIR_UPLIFT_K : deltaT;
   const roofLoad = roof.u * floorAreaM2 * roofDeltaT;
   const glassConduction = glass.u * glassM2 * deltaT;

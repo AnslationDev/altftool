@@ -7,15 +7,15 @@ import { markSubscribed } from "../_lib/leadState";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const DEFAULT_PERKS = [
-  "Free quotes from licensed, insured pros near you",
-  "Real cost ranges — so you never overpay a contractor",
-  "First dibs on limited-time local-pro deals & offers",
+  "Preview the signup flow without creating an account",
+  "Validate an email address entirely in this browser",
+  "Nothing is submitted to a lead or marketing service",
 ];
 
 // Small reassurance chips shown under the field, at the point of action.
 const TRUST_BADGES = [
-  { Icon: ShieldCheck, label: "Secure & encrypted" },
-  { Icon: BadgeCheck, label: "No spam, ever" },
+  { Icon: ShieldCheck, label: "Browser-only demo" },
+  { Icon: BadgeCheck, label: "Email not stored" },
 ];
 
 /**
@@ -34,8 +34,8 @@ const TRUST_BADGES = [
 export default function HnEmailCapture({
   source = "housingneeds",
   compact = false,
-  heading = "Free quotes + your home savings kit — today",
-  subtext = "Enter your email to unlock free quotes from vetted local pros, our 12-month maintenance calendar, and exclusive limited-time offers.",
+  heading = "Preview the home savings signup",
+  subtext = "Enter an email to test this layout. It is validated in your browser but is not saved or sent.",
   perks = DEFAULT_PERKS,
   onDone,
   // Whether a successful submit broadcasts the subscribe event to the rest of
@@ -65,11 +65,10 @@ export default function HnEmailCapture({
       <div className={`hn-email ${compact ? "hn-email--compact" : ""} hn-email--done`}>
         <CheckCircle2 size={26} strokeWidth={2.2} aria-hidden="true" />
         <div>
-          <p className="hn-email-done-title">Saved on this device</p>
+          <p className="hn-email-done-title">Demo complete</p>
           <p className="hn-email-done-text">
-            We&rsquo;ve saved your email locally so this offer won&rsquo;t show
-            again here — no email or maintenance calendar has actually been
-            sent, since that isn&rsquo;t connected yet.
+            Your email was not saved or sent. This browser only remembers that
+            you completed the demo so the offer does not immediately reappear.
           </p>
         </div>
       </div>
@@ -126,7 +125,7 @@ export default function HnEmailCapture({
           aria-describedby={state === "error" ? `hn-email-err-${source}` : undefined}
         />
         <button type="submit" className="hn-btn hn-btn--primary">
-          {compact ? "Get it free" : "Get Instant Access"}
+          {compact ? "Preview" : "Preview confirmation"}
         </button>
       </div>
 
@@ -147,9 +146,8 @@ export default function HnEmailCapture({
 
       <p className="hn-email-trust">
         <Lock size={13} strokeWidth={2.4} aria-hidden="true" />
-        We never sell your email. Unsubscribe in one click.
+        No email address leaves this page.
       </p>
-
     </form>
   );
 }

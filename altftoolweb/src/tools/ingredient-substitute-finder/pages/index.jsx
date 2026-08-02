@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Check, ChefHat, Copy, RotateCcw, Search } from "lucide-react";
 
 import { DIET_FILTERS, findSubstitutes, searchIngredients } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -14,13 +15,10 @@ const GHOST_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 const DASH = "—";
 
-const UNITS = ["cup", "tbsp", "tsp", "egg", "clove", "g", "ml"];
-
 const DEFAULTS = {
   query: "",
   ingredientId: "butter",
   quantity: "1",
-  unit: "cup",
   diet: "any",
 };
 
@@ -35,23 +33,37 @@ export default function ToolHome() {
   const [query, setQuery] = useState(DEFAULTS.query);
   const [ingredientId, setIngredientId] = useState(DEFAULTS.ingredientId);
   const [quantity, setQuantity] = useState(DEFAULTS.quantity);
-  const [unit, setUnit] = useState(DEFAULTS.unit);
   const [diet, setDiet] = useState(DEFAULTS.diet);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const options = useMemo(() => searchIngredients(query), [query]);
+  const allIngredients = useMemo(() => searchIngredients(""), []);
+
+  // The <select> below only ever lists `options`, so if a search term filters the
+  // currently-selected ingredient out of that list, fall back to the first ingredient
+  // still shown instead of silently computing substitutes for something that no
+  // longer appears anywhere on screen. This is a derived value rather than state
+  // synced via an effect, so it never diverges from what `options` actually renders,
+  // and clearing the search naturally restores the ingredient the user last chose.
+  const effectiveIngredientId =
+    options.length === 0 || options.some((item) => item.id === ingredientId)
+      ? ingredientId
+      : options[0].id;
 
   const result = useMemo(
-    () => findSubstitutes({ ingredientId, quantity: toNumber(quantity), unit, diet }),
-    [ingredientId, quantity, unit, diet],
+    () => findSubstitutes({ ingredientId: effectiveIngredientId, quantity: toNumber(quantity), diet }),
+    [effectiveIngredientId, quantity, diet],
   );
 
   const hasError = Boolean(result.error);
+  // Used only while the search filters out every ingredient, so the disabled
+  // <select> below can still show the currently-selected ingredient's name
+  // instead of rendering with zero <option> elements.
+  const selectedFallback =
+    options.length === 0 ? allIngredients.find((entry) => entry.id === ingredientId) : null;
 
   const chooseIngredient = (nextId) => {
     setIngredientId(nextId);
-    const entry = options.find((item) => item.id === nextId);
-    if (entry) setUnit(entry.defaultUnit);
   };
 
   const summary = useMemo(() => {
@@ -65,24 +77,13 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("list", summary, { label: "Substitution list" });
 
   const reset = () => {
     setQuery(DEFAULTS.query);
     setIngredientId(DEFAULTS.ingredientId);
     setQuantity(DEFAULTS.quantity);
-    setUnit(DEFAULTS.unit);
     setDiet(DEFAULTS.diet);
-    setCopied(false);
   };
 
   return (
@@ -134,21 +135,26 @@ export default function ToolHome() {
             </label>
             <select
               id="ingredient"
-              className={`mt-2 ${INPUT_CLASS}`}
-              value={ingredientId}
+              className={`mt-2 ${INPUT_CLASS} disabled:opacity-60`}
+              value={effectiveIngredientId}
               onChange={(event) => chooseIngredient(event.target.value)}
+              disabled={options.length === 0}
             >
-              {options.map((entry) => (
-                <option key={entry.id} value={entry.id}>
-                  {entry.ingredient}
-                </option>
-              ))}
+              {options.length > 0
+                ? options.map((entry) => (
+                    <option key={entry.id} value={entry.id}>
+                      {entry.ingredient}
+                    </option>
+                  ))
+                : selectedFallback && (
+                    <option value={selectedFallback.id}>{selectedFallback.ingredient}</option>
+                  )}
             </select>
           </div>
 
-          <div>
+          <div className="sm:col-span-2">
             <label className={LABEL_CLASS} htmlFor="quantity">
-              Amount the recipe calls for
+              Amount the recipe calls for ({hasError ? "…" : result.unit})
             </label>
             <input
               id="quantity"
@@ -160,23 +166,10 @@ export default function ToolHome() {
               value={quantity}
               onChange={(event) => setQuantity(event.target.value)}
             />
-          </div>
-          <div>
-            <label className={LABEL_CLASS} htmlFor="unit">
-              Unit
-            </label>
-            <select
-              id="unit"
-              className={`mt-2 ${INPUT_CLASS}`}
-              value={unit}
-              onChange={(event) => setUnit(event.target.value)}
-            >
-              {UNITS.map((value) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
-            </select>
+            <p className="mt-2 text-xs text-[var(--muted-foreground)]">
+              Ratios and quantities here are calibrated to this ingredient&apos;s own unit — there is
+              no cup/tablespoon/teaspoon conversion, so the amount is always in that unit.
+            </p>
           </div>
           <div className="sm:col-span-2">
             <label className={LABEL_CLASS} htmlFor="diet">
@@ -207,7 +200,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -226,17 +223,20 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the substitution list to clipboard"
+              aria-label={isCopied("list") ? "Copied" : "Copy the substitution list to clipboard"}
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("list") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy list"}
+              {isCopied("list") ? "Copied!" : "Copy list"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset

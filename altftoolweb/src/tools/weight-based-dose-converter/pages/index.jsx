@@ -62,7 +62,9 @@ export default function ToolHome() {
       `Daily total: ${NUM2.format(result.dailyDoseMg)} mg`,
       result.singleDoseMl !== null
         ? `Volume per dose: ${NUM2.format(result.singleDoseMl)} mL (${NUM1.format(result.singleDoseMlRounded)} mL on a 0.1 mL syringe)`
-        : "No liquid strength entered.",
+        : result.concentrationError
+          ? `Volume per dose: ${result.concentrationError}`
+          : "No liquid strength entered.",
       "Informational only — confirm every dose against the prescription and the label.",
     ].join("\n");
   }, [ok, result]);
@@ -341,17 +343,21 @@ export default function ToolHome() {
               "Volume per dose",
               ok && result.singleDoseMl !== null
                 ? `${NUM2.format(result.singleDoseMl)} mL (round to ${NUM1.format(result.singleDoseMlRounded)} mL)`
-                : ok
-                  ? "No liquid strength entered"
-                  : DASH,
+                : ok && result.concentrationError
+                  ? result.concentrationError
+                  : ok
+                    ? "No liquid strength entered"
+                    : DASH,
             ],
             [
               "Volume per day",
               ok && result.dailyDoseMl !== null
                 ? `${NUM2.format(result.dailyDoseMl)} mL`
-                : ok
-                  ? "No liquid strength entered"
-                  : DASH,
+                : ok && result.concentrationError
+                  ? result.concentrationError
+                  : ok
+                    ? "No liquid strength entered"
+                    : DASH,
             ],
             [
               "Share of the single-dose maximum",

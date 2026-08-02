@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Stamp } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import { STATE_PRESETS, estimateRegistrationCost, presetById } from "../lib";
 
 const INR = new Intl.NumberFormat("en-IN", {
@@ -62,7 +64,8 @@ export default function ToolHome() {
   const [documentHandlingCharge, setDocumentHandlingCharge] = useState("0");
   const [legalFee, setLegalFee] = useState("0");
   const [agriculturalLand, setAgriculturalLand] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const preset = presetById(stateId);
 
@@ -136,15 +139,9 @@ export default function ToolHome() {
       .join("\n");
   }, [hasError, result, preset]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "registration cost estimate" });
   };
 
   const reset = () => {
@@ -157,7 +154,7 @@ export default function ToolHome() {
     setDocumentHandlingCharge("0");
     setLegalFee("0");
     setAgriculturalLand(false);
-    setCopied(false);
+    resetCopyState();
   };
 
   const rateFields = [
@@ -380,21 +377,28 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the property registration cost estimate"
+              aria-label={
+                isCopied("result")
+                  ? "Copied the property registration cost estimate"
+                  : "Copy the property registration cost estimate"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
 
         {!hasError && result.lineItems.length > 0 && (

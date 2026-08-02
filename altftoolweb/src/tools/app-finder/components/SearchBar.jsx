@@ -40,7 +40,11 @@ export const SearchBar = ({
         {/* FILTER BUTTON */}
         <div className="relative self-end sm:self-auto">
           <button
+            type="button"
             onClick={() => setShowFilter(!showFilter)}
+            aria-label="Filter by category"
+            aria-haspopup="true"
+            aria-expanded={showFilter}
             className="p-3 rounded-xl hover:bg-(--muted) transition"
           >
             <Filter className="w-5 h-5 text-(--foreground)" />
@@ -50,16 +54,17 @@ export const SearchBar = ({
           {showFilter && (
             <div className="absolute right-0 top-12 bg-(--card) border border-(--border) rounded-lg shadow-lg w-44 z-50">
               {categories.map((cat) => (
-                <div
+                <button
                   key={cat}
+                  type="button"
                   onClick={() => {
                     handleCategory(cat);
                     setShowFilter(false);
                   }}
-                  className="px-4 py-2 text-sm text-(--foreground) hover:bg-(--muted) cursor-pointer"
+                  className="w-full text-left px-4 py-2 text-sm text-(--foreground) hover:bg-(--muted) cursor-pointer"
                 >
                   {cat}
-                </div>
+                </button>
               ))}
             </div>
           )}

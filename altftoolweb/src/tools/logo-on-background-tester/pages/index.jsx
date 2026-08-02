@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Check, Contrast, Copy, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import {
   LARGE_TEXT_AA_MIN_RATIO,
@@ -51,7 +52,8 @@ export default function ToolHome() {
   const [fileUrl, setFileUrl] = useState("");
   const [photoPixels, setPhotoPixels] = useState(null);
   const [photoError, setPhotoError] = useState("");
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   useEffect(() => {
     if (!fileUrl) return undefined;
@@ -90,11 +92,13 @@ export default function ToolHome() {
     };
   }, [fileUrl]);
 
+  const customRgb = useMemo(() => hexToRgb(customHex), [customHex]);
+  const customHexInvalid = useCustom && customHex.trim() !== "" && !customRgb;
+
   const backgrounds = useMemo(() => {
-    const custom = hexToRgb(customHex);
-    if (!useCustom || !custom) return STANDARD_BACKGROUNDS;
-    return [...STANDARD_BACKGROUNDS, { id: "custom", name: "Your surface", rgb: custom }];
-  }, [useCustom, customHex]);
+    if (!useCustom || !customRgb) return STANDARD_BACKGROUNDS;
+    return [...STANDARD_BACKGROUNDS, { id: "custom", name: "Your surface", rgb: customRgb }];
+  }, [useCustom, customRgb]);
 
   const report = useMemo(
     () => testLogoOnBackgrounds({ logoHex, backgrounds, targetRatio: Number(target) }),
@@ -118,10 +122,14 @@ export default function ToolHome() {
       "Logo On Background Test",
       `Logo colour: ${report.logoHex}`,
       `Target: ${report.target}:1`,
-      ...report.rows.map(
-        (row) =>
-          `${row.name} (${row.hex}): ${RATIO.format(row.ratio)}:1 ${row.passes ? "pass" : `fail — needs a ${row.scrimIsDark ? "black" : "white"} scrim at ${PCT.format(row.scrimOpacity * 100)}%`}`,
-      ),
+      ...report.rows.map((row) => {
+        const status = row.passes
+          ? "pass"
+          : row.scrimAchievable
+            ? `fail — needs a ${row.scrimIsDark ? "black" : "white"} scrim at ${PCT.format(row.scrimOpacity * 100)}%`
+            : "fail — no scrim of this colour can reach the target";
+        return `${row.name} (${row.hex}): ${RATIO.format(row.ratio)}:1 ${status}`;
+      }),
       `Worst case: ${RATIO.format(report.worstRatio)}:1`,
     ];
     if (photo && !photo.error) {
@@ -133,15 +141,9 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [report, photo]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("report", summary, { label: "Contrast report" });
   };
 
   const reset = () => {
@@ -152,14 +154,14 @@ export default function ToolHome() {
     setFileUrl("");
     setPhotoPixels(null);
     setPhotoError("");
-    setCopied(false);
+    resetCopyState();
   };
 
   const pickFile = (event) => {
     const file = event.target.files?.[0];
     if (!file) return;
     setFileUrl(URL.createObjectURL(file));
-    setCopied(false);
+    resetCopyState();
   };
 
   const swatchHex = report.error ? rgbToHex(DEFAULT_LOGO_RGB) : report.logoHex;
@@ -231,7 +233,7 @@ export default function ToolHome() {
                 type="color"
                 aria-label="Pick your own surface colour"
                 className="h-11 w-14 shrink-0 cursor-pointer rounded-md border border-[var(--border)] bg-[var(--background)] p-1"
-                value={hexToRgb(customHex) ? rgbToHex(hexToRgb(customHex)) : rgbToHex(DEFAULT_CUSTOM_RGB)}
+                value={customRgb ? rgbToHex(customRgb) : rgbToHex(DEFAULT_CUSTOM_RGB)}
                 onChange={(event) => setCustomHex(event.target.value)}
               />
               <input
@@ -241,8 +243,15 @@ export default function ToolHome() {
                 spellCheck={false}
                 value={customHex}
                 onChange={(event) => setCustomHex(event.target.value)}
+                aria-invalid={customHexInvalid || undefined}
               />
             </div>
+            {customHexInvalid && (
+              <p role="alert" className="mt-1.5 text-xs font-medium text-[var(--danger)]">
+                That isn&rsquo;t a valid hex colour, so your surface has been left out of the test
+                below.
+              </p>
+            )}
           </div>
           <div className="flex min-h-11 items-center gap-3 sm:mt-7">
             <input
@@ -292,7 +301,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Worst contrast across the surfaces
             </p>
@@ -309,78 +318,87 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the contrast report"
+              aria-label={isCopied("report") ? "Copied the contrast report to clipboard" : "Copy the contrast report"}
               className={GHOST_BTN}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("report") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("report") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset the tool" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
-        <div className="mt-5 grid gap-3 sm:grid-cols-2">
-          {report.error
-            ? STANDARD_BACKGROUNDS.map((bg) => (
-                <div
-                  key={bg.id}
-                  className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-3 text-sm"
-                >
-                  <p className="font-semibold">{bg.name}</p>
-                  <p className="mt-1 text-[var(--muted-foreground)]">{DASH}</p>
-                </div>
-              ))
-            : report.rows.map((row) => (
-                <div
-                  key={row.id}
-                  className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-3"
-                >
+        <div aria-live="polite">
+          <div className="mt-5 grid gap-3 sm:grid-cols-2">
+            {report.error
+              ? STANDARD_BACKGROUNDS.map((bg) => (
                   <div
-                    className="flex h-16 items-center justify-center rounded-md border border-[var(--border)]"
-                    style={{ backgroundColor: row.hex }}
+                    key={bg.id}
+                    className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-3 text-sm"
                   >
-                    <span className="text-lg font-bold" style={{ color: report.logoHex }}>
-                      LOGO
-                    </span>
+                    <p className="font-semibold">{bg.name}</p>
+                    <p className="mt-1 text-[var(--muted-foreground)]">{DASH}</p>
                   </div>
-                  <div className="mt-2 flex items-baseline justify-between gap-2">
-                    <p className="text-sm font-semibold">{row.name}</p>
-                    <p
-                      className={`text-sm font-semibold ${row.passes ? "text-[var(--success)]" : "text-[var(--danger)]"}`}
+                ))
+              : report.rows.map((row) => (
+                  <div
+                    key={row.id}
+                    className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-3"
+                  >
+                    <div
+                      className="flex h-16 items-center justify-center rounded-md border border-[var(--border)]"
+                      style={{ backgroundColor: row.hex }}
                     >
-                      {RATIO.format(row.ratio)}:1
+                      <span className="text-lg font-bold" style={{ color: report.logoHex }}>
+                        LOGO
+                      </span>
+                    </div>
+                    <div className="mt-2 flex items-baseline justify-between gap-2">
+                      <p className="text-sm font-semibold">{row.name}</p>
+                      <p
+                        className={`text-sm font-semibold ${row.passes ? "text-[var(--success)]" : "text-[var(--danger)]"}`}
+                      >
+                        {RATIO.format(row.ratio)}:1
+                      </p>
+                    </div>
+                    <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                      {row.hex} · {row.grade}
                     </p>
+                    {!row.passes && (
+                      <p className="mt-1 text-xs font-medium text-[var(--warning)]">
+                        {row.scrimAchievable
+                          ? `Add a ${row.scrimIsDark ? "black" : "white"} scrim at ${PCT.format(row.scrimOpacity * 100)}% opacity`
+                          : "No scrim of this colour can reach the target"}
+                      </p>
+                    )}
                   </div>
-                  <p className="mt-1 text-xs text-[var(--muted-foreground)]">
-                    {row.hex} · {row.grade}
-                  </p>
-                  {!row.passes && (
-                    <p className="mt-1 text-xs font-medium text-[var(--warning)]">
-                      {row.scrimAchievable
-                        ? `Add a ${row.scrimIsDark ? "black" : "white"} scrim at ${PCT.format(row.scrimOpacity * 100)}% opacity`
-                        : "No scrim of this colour can reach the target"}
-                    </p>
-                  )}
-                </div>
-              ))}
-        </div>
+                ))}
+          </div>
 
-        {!report.error && report.issues.length > 0 && (
-          <ul className="mt-5 space-y-2">
-            {report.issues.map((issue) => (
-              <li
-                key={issue.message}
-                role={issue.level === "error" ? "alert" : undefined}
-                className={`rounded-md px-3 py-2 text-sm font-medium ${LEVEL_CLASS[issue.level]}`}
-              >
-                {issue.message}
-              </li>
-            ))}
-          </ul>
-        )}
+          {!report.error && report.issues.length > 0 && (
+            <ul className="mt-5 space-y-2">
+              {report.issues.map((issue) => (
+                <li
+                  key={issue.message}
+                  role={issue.level === "error" ? "alert" : undefined}
+                  className={`rounded-md px-3 py-2 text-sm font-medium ${LEVEL_CLASS[issue.level]}`}
+                >
+                  {issue.message}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </section>
 
       {photoPixels && (

@@ -603,7 +603,7 @@ const CricketGame = () => {
             {status === 'menu' && (
                 <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur z-20">
                     <Activity size={80} className="text-blue-500 mb-6 animate-pulse" />
-                    <h1 className="text-6xl font-black italic mb-2 tracking-tighter">TURBO <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400">CRICKET</span></h1>
+                    <h2 className="text-6xl font-black italic mb-2 tracking-tighter">TURBO <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-green-400">CRICKET</span></h2>
                     <p className="text-gray-400 mb-8 font-medium tracking-widest">ARCADE EDITION</p>
 
                     <div className="flex gap-4 mb-12">

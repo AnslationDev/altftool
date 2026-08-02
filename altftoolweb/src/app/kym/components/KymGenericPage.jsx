@@ -1,35 +1,14 @@
 import Header from "./Header";
 import KymAdBanner, { kymBanners } from "./KymAdBanner";
 import KymComments from "./KymComments";
-import {
-  editorials,
-  episodes,
-  explainers,
-  freshEntries,
-  latest,
-  spotlightCards,
-  topEntries,
-  topMemes,
-} from "../data/kymData";
+import { contentGroups } from "../data/entries";
 import { slugifyTitle } from "../data/slug";
 
-// No `meta` field on any of these. Cards used to carry hardcoded strings such
-// as "Recently updated", "Trending entry" and "Updated 12 hours ago" that never
-// changed, advertising freshness and traction that were never measured.
-export const contentGroups = [
-  ...spotlightCards,
-  ...freshEntries,
-  ...explainers.map((item) => ({ ...item, category: "Explainer" })),
-  ...episodes.map((item) => ({ ...item, category: "Episode" })),
-  ...editorials,
-  ...latest,
-  ...topEntries.map((item) => ({ ...item, category: "Entry" })),
-  ...topMemes.map((item) => ({ ...item, category: "Meme" })),
-];
-
-export function getAllKymRoutes() {
-  return [...new Set(contentGroups.map((item) => item.href || `/kym/${slugifyTitle(item.title)}`))];
-}
+// The catalog moved to ../data/entries.js so plain-JS consumers (src/app/
+// sitemap.js, entryMeta.test.mjs) can read it without parsing this file's JSX.
+// Re-exported here because sitemap.js, KymArticlePage and KymPollPage import
+// these names from this module.
+export { contentGroups, findKymItem, getAllKymRoutes } from "../data/entries";
 
 const CATEGORY_COPY = {
   Explainer: {
@@ -185,13 +164,6 @@ function getArticleProfile(item, category) {
       "The format is most effective when it can be understood quickly without a long explanation.",
     ],
   };
-}
-
-export function findKymItem(slug) {
-  const path = `/kym/${slug}`;
-  return contentGroups.find(
-    (item) => item.href === path || slugifyTitle(item.title) === slug,
-  );
 }
 
 function RelatedRail({ current }) {

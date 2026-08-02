@@ -2,7 +2,14 @@ import React from "react";
 
 export default function LaptopHack() {
   return (
-    <div className="terminal h-full w-full bg-background text-green-400 font-mono overflow-hidden">
+    <div
+      className="terminal h-full w-full bg-[#070D18] text-green-400 font-mono overflow-hidden"
+      // Deliberately themed "hacker terminal" sub-component: fixed dark background
+      // (matches the platform's own dark-navy page token) regardless of the site's
+      // light/dark toggle, so the green terminal text stays legible and the
+      // terminal aesthetic is preserved in both site themes. See master.md section 1
+      // for the token system this intentionally opts out of.
+    >
       <div className="flex flex-col p-5 h-full box-border">
         <div className="line mb-2 animate-typing overflow-hidden whitespace-nowrap border-r-2 border-green-400 w-0">
           Connecting to target laptop...
@@ -37,7 +44,10 @@ export default function LaptopHack() {
           <span className="inline-block w-2 h-5 bg-green-400 animate-blink ml-1"></span>
         </div>
 
-        <div className="mock-code bg-muted p-4 rounded overflow-auto flex-grow">
+        {/* Fixed dark panel (matches the platform's dark --surface-soft token) so the
+            mock shell output stays legible in light mode too — same rationale as the
+            outer terminal background above. */}
+        <div className="mock-code bg-[#142033] p-4 rounded overflow-auto flex-grow">
           <pre className="text-sm">
 {`root@laptop:~$ cat secret.txt
 U2FsdGVkX19abc123def456ghijkl789mnop

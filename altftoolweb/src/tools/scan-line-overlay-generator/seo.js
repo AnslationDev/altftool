@@ -24,7 +24,7 @@ const seo = {
   faqs: [
     [
       "How many scan lines should a CRT overlay have?",
-      "Match the standard you are imitating: NTSC 525-line systems show 486 active lines, PAL and SECAM 625-line systems show 576, VGA shows 480 and CGA shows 200. On a 1080-pixel-tall canvas that works out to a period of roughly 2.2 px for NTSC and 1.9 px for PAL.",
+      "Match the standard you are imitating: NTSC 525-line systems show 486 active lines, PAL and SECAM 625-line systems show 576, VGA shows 480 and CGA shows 200. On a 1080-pixel-tall canvas that works out to a period of roughly 2.2 px for NTSC; PAL's raw ratio is about 1.9 px, which falls under the tool's 2 px minimum period, so it is rounded up to 2 px — the smallest stripe the overlay can draw without failing validation.",
     ],
     [
       "Why do my scan lines shimmer or produce moiré?",

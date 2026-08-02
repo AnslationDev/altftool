@@ -1,6 +1,9 @@
 "use client";
 
-
+/** Score below which the tracking risk reads "Low". */
+export const RISK_LOW_MAX = 30;
+/** Score below which the tracking risk reads "Medium"; at or above it is High. */
+export const RISK_MEDIUM_MAX = 70;
 
 /**
  * Calculates the tracking risk score (0-100)
@@ -74,10 +77,15 @@ export function calculateRiskScore(signals) {
   score += touchScore;
   breakdown.push({ name: "Touch Points", score: touchScore, max: 3 });
 
-  // Storage availability pattern (incognito detection)
+  // Storage availability pattern (incognito detection). Both APIs blocked is
+  // a genuinely hardened browser and should score 0, not the same floor as a
+  // browser that only has one of the two blocked.
   const storageScore =
-    signals.storage?.localStorage &&
-    signals.storage?.indexedDB ? 4 : 2;
+    signals.storage?.localStorage && signals.storage?.indexedDB
+      ? 4
+      : signals.storage?.localStorage || signals.storage?.indexedDB
+        ? 2
+        : 0;
   score += storageScore;
   breakdown.push({ name: "Storage Profile", score: storageScore, max: 4 });
 
@@ -98,11 +106,11 @@ export function calculateRiskScore(signals) {
 
   // Determine risk level
   let level, color, description;
-  if (score < 30) {
+  if (score < RISK_LOW_MAX) {
     level = "Low";
     color = "green";
     description = "Your browser exposes few unique signals. Tracking risk is minimal.";
-  } else if (score < 70) {
+  } else if (score < RISK_MEDIUM_MAX) {
     level = "Medium";
     color = "yellow";
     description = "Your browser exposes several trackable signals. You can be identified with moderate confidence.";

@@ -10,7 +10,11 @@ import {
   Heart,
   ArrowLeft,
   ArrowRight,
-  Scissors
+  Scissors,
+  Sun,
+  Moon,
+  Lightbulb,
+  CheckCircle2
 } from "lucide-react";
 
 const HairCareGuide = () => {
@@ -303,16 +307,85 @@ const HairCareGuide = () => {
           <h2 className="text-2xl sm:text-3xl font-bold text-black mb-2">
             Your Personalized Routine
           </h2>
-          <p className="text-(--muted-foreground) text-sm sm:text-base">Based on your unique hair profile</p>
+          <p className="text-(--muted-foreground) text-sm sm:text-base mb-3">Based on your unique hair profile</p>
+          <span className="inline-flex items-center gap-2 bg-rose-100 border border-rose-200 rounded-full px-4 py-2">
+            <Sparkles className="w-4 h-4 text-rose-600" />
+            <span className="text-rose-700 text-sm sm:text-base font-semibold">{routine.title}</span>
+          </span>
         </div>
 
         {
       /* Routine Cards & Tips */
     }
         <div className="space-y-6">
-          {
-      /* Routine Cards here */
-    }
+          <Card className="bg-(--background) rounded-2xl shadow-lg border border-rose-100">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-amber-100 to-orange-100 rounded-xl flex items-center justify-center shrink-0">
+                  <Sun className="w-5 h-5 text-amber-600" />
+                </div>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-(--foreground)">Morning Routine</h3>
+              </div>
+              <ul className="space-y-3">
+                {routine.morning.map((item, index) => <li
+      key={`morning-${item.step}`}
+      className="flex gap-3 rounded-xl border border-rose-100 bg-rose-50/50 p-3 sm:p-4"
+    >
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-rose-100 text-rose-600 text-sm font-bold">
+                      {index + 1}
+                    </span>
+                    <div>
+                      <p className="font-bold text-sm sm:text-base text-black">{item.step}</p>
+                      <p className="text-xs sm:text-sm text-rose-600 font-medium">{item.product}</p>
+                      <p className="text-xs sm:text-sm md:text-base text-(--muted-foreground) leading-relaxed">{item.desc}</p>
+                    </div>
+                  </li>)}
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-(--background) rounded-2xl shadow-lg border border-rose-100">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-indigo-100 to-purple-100 rounded-xl flex items-center justify-center shrink-0">
+                  <Moon className="w-5 h-5 text-indigo-600" />
+                </div>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-(--foreground)">Night Routine</h3>
+              </div>
+              <ul className="space-y-3">
+                {routine.night.map((item, index) => <li
+      key={`night-${item.step}`}
+      className="flex gap-3 rounded-xl border border-rose-100 bg-rose-50/50 p-3 sm:p-4"
+    >
+                    <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-rose-100 text-rose-600 text-sm font-bold">
+                      {index + 1}
+                    </span>
+                    <div>
+                      <p className="font-bold text-sm sm:text-base text-black">{item.step}</p>
+                      <p className="text-xs sm:text-sm text-rose-600 font-medium">{item.product}</p>
+                      <p className="text-xs sm:text-sm md:text-base text-(--muted-foreground) leading-relaxed">{item.desc}</p>
+                    </div>
+                  </li>)}
+              </ul>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gradient-to-br from-rose-50 via-pink-50 to-purple-50 rounded-2xl shadow-lg border border-rose-100">
+            <CardContent className="p-4 sm:p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-9 h-9 sm:w-10 sm:h-10 bg-gradient-to-br from-rose-100 to-pink-100 rounded-xl flex items-center justify-center shrink-0">
+                  <Lightbulb className="w-5 h-5 text-rose-600" />
+                </div>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-(--foreground)">Pro Tips</h3>
+              </div>
+              <ul className="space-y-2 sm:space-y-3">
+                {routine.tips.map((tip) => <li key={tip} className="flex items-start gap-2 sm:gap-3">
+                    <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 text-rose-500 mt-0.5 shrink-0" />
+                    <span className="text-xs sm:text-sm md:text-base text-(--muted-foreground) leading-relaxed">{tip}</span>
+                  </li>)}
+              </ul>
+            </CardContent>
+          </Card>
         </div>
 
         {

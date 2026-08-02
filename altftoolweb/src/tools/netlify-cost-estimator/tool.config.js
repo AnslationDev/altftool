@@ -3,7 +3,7 @@ const toolConfig = {
   name: "Netlify Cost Estimator",
   category: ["Calculators"],
   description:
-    "Estimate your Netlify bill from team members, bandwidth, build minutes and function invocations on Free or Pro.",
+    "Estimate your Netlify bill from bandwidth, function compute, production deploys and web requests on Free, Personal or Pro's credit-based pricing.",
   icon: "rocket",
   iconColor: "text-[var(--primary)]",
 };

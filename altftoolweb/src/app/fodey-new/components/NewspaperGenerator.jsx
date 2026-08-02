@@ -506,7 +506,14 @@ export default function UltimateVintageNewspaper() {
                             {/* Broadsheet Masthead Header */}
                             <div className="grid grid-cols-12 gap-2 border-b-4 border-black pb-2.5 items-center">
                                 {leftEar && <div className="col-span-3 border border-black p-1 text-[7px] font-black text-center uppercase leading-tight">{leftEar}</div>}
-                                <h1 style={getMastheadStyle()} className={`${leftEar && rightEar ? "col-span-6" : "col-span-12"} text-3xl font-black uppercase text-center leading-none tracking-tighter`}>{newspaperName}</h1>
+                                {/* The masthead of the fake newspaper the user is drawing, not a
+                                    heading of this page: it is whatever they typed, it lives inside
+                                    the export canvas (previewRef -> toPng), and as an <h1> it put a
+                                    second top-level heading on /fodey-new the moment this tab was
+                                    opened. A div is the honest element — the artwork keeps its type
+                                    from the same class list and inline style, and it is one grid
+                                    child among divs, so the render and the PNG are unchanged. */}
+                                <div style={getMastheadStyle()} className={`${leftEar && rightEar ? "col-span-6" : "col-span-12"} text-3xl font-black uppercase text-center leading-none tracking-tighter`}>{newspaperName}</div>
                                 {rightEar && <div className="col-span-3 border border-black p-1 text-[7px] font-black text-center uppercase leading-tight">{rightEar}</div>}
 
                                 <div className="col-span-12 border-t border-black/40 pt-1.5 flex justify-between text-[8px] font-bold uppercase">

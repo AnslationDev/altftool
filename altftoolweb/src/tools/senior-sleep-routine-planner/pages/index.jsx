@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Moon, RotateCcw } from "lucide-react";
 import { EFFICIENCY_TARGET, NAP_RULES, formatDuration, planSeniorSleep } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const DASH = "—";
 
@@ -32,7 +33,7 @@ export default function ToolHome() {
   const [nap, setNap] = useState(DEFAULTS.nap);
   const [avgSleep, setAvgSleep] = useState(DEFAULTS.avgSleep);
   const [timeInBed, setTimeInBed] = useState(DEFAULTS.timeInBed);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -82,18 +83,16 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("routine", summary, { label: "Sleep routine" });
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset all inputs, including any sleep-diary averages you've entered? This can't be undone.",
+      )
+    ) {
+      return;
+    }
     setWake(DEFAULTS.wake);
     setAge(DEFAULTS.age);
     setTarget(DEFAULTS.target);
@@ -101,7 +100,6 @@ export default function ToolHome() {
     setNap(DEFAULTS.nap);
     setAvgSleep(DEFAULTS.avgSleep);
     setTimeInBed(DEFAULTS.timeInBed);
-    setCopied(false);
   };
 
   return (
@@ -271,13 +269,20 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the sleep routine"
+              aria-label={isCopied("routine") ? "Copied" : "Copy the sleep routine"}
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy routine"}
+              {isCopied("routine") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("routine") ? "Copied!" : "Copy routine"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset

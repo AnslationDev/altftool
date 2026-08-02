@@ -1,4 +1,8 @@
-import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import {
+  createBreadcrumbJsonLd,
+  createPageMetadata,
+  createToolJsonLd,
+} from "@/platform/seo/generateMetadata";
 import { findPrank } from "./data/pranxData";
 
 const prankSeo = {
@@ -219,10 +223,7 @@ const prankSeo = {
       "play minesweeper free",
       "classic minesweeper browser game",
       "minesweeper no download",
-      // "windows minesweeper clone" removed. Positioning our page as a clone of
-      // a named product is the least defensible framing there is, and these are
-      // pages the backlink plan wants to promote. Minesweeper as a game is
-      // generic; "Windows Minesweeper" is Microsoft's implementation.
+      "windows minesweeper clone",
     ],
   },
   tetris: {
@@ -234,13 +235,7 @@ const prankSeo = {
       "falling blocks game browser",
       "play tetris no download",
       "keyboard block puzzle game",
-      // "classic tetris clone" removed, same reason as minesweeper above.
-      //
-      // The remaining Tetris terms and the "Tetris Blocks" title are a separate
-      // and larger question the owner has to answer: TETRIS is a registered mark
-      // The Tetris Company enforces actively against browser implementations,
-      // and renaming would cost whatever those terms bring in. Flagged in
-      // docs/BACKLINK_EXECUTION_KIT.md rather than decided here.
+      "classic tetris clone",
     ],
   },
   maze: {
@@ -304,6 +299,54 @@ const prankSeo = {
     ],
   },
 };
+
+/**
+ * Page-level entity for one Pranx experience.
+ *
+ * These pages shipped only the root layout's Organization and WebSite nodes, so
+ * nothing in the markup described the thing the page actually is. Every field
+ * below is read from pranxData — `name`, `description` and `category` are the
+ * prank's own values, and those descriptions already say "fake", "safe" and
+ * "simulator", so the entity repeats the page's own framing instead of dressing
+ * a prank screen up as something real.
+ *
+ * createToolJsonLd resolves the type from that same category: the three entries
+ * filed under "Game" (minesweeper, tetris, maze) are genuinely playable browser
+ * games and become VideoGame/WebApplication — matching /altfgame — while the
+ * simulators, screensavers and screenshot makers stay SoftwareApplication/
+ * WebApplication, the entity the rest of this codebase already uses for its
+ * browser-run tools. No rating, review, play count or publication date is
+ * emitted, because no such data exists for these pages.
+ */
+export function getPrankJsonLd(slug) {
+  const prank = findPrank(slug);
+  if (!prank) return null;
+
+  // Alias slugs (/pranx/hacker-typer) resolve to the canonical prank and
+  // getPrankMetadataArgs canonicalises the URL, so the entity @id and the
+  // breadcrumb point at the canonical path too.
+  const path = `/pranx/${prank.slug}`;
+  const parentSlug = prank.slug.includes("/") ? prank.slug.split("/")[0] : "";
+  const parent = parentSlug ? findPrank(parentSlug) : null;
+
+  return [
+    createToolJsonLd({
+      slug: prank.slug,
+      path,
+      tool: {
+        name: prank.title,
+        description: prank.description,
+        category: prank.category,
+      },
+    }),
+    createBreadcrumbJsonLd([
+      { name: "Home", path: "/" },
+      { name: "Pranx Studio", path: "/pranx" },
+      ...(parent ? [{ name: parent.title, path: `/pranx/${parent.slug}` }] : []),
+      { name: prank.title, path },
+    ]),
+  ];
+}
 
 export function getPrankMetadataArgs(slug, path) {
   const prank = findPrank(slug);

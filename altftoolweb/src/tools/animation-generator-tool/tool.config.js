@@ -1,6 +1,9 @@
 const toolConfig = {
   slug: "animation-generator-tool",
-  name: "Animation Generator",
+  // Renamed off the duplicate. This one is a preset picker — Fade In/Out,
+  // Slide in four directions, Rotate, Bounce, Scale Up/Down — rather than a
+  // freehand keyframes editor, so the name says that.
+  name: "CSS Animation Presets",
   category: ["Design"],
   description: "Create advanced CSS animations easily.",
   icon: "wand-2",

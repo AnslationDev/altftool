@@ -12,13 +12,39 @@ import {
 } from "./buildPolicy.mjs";
 
 test("parses and deduplicates line or comma separated lists", () => {
-  assert.deepEqual(parseList("read.*\nwrite.file, READ.*"), ["read.*", "write.file"]);
+  const result = parseList("read.*\nwrite.file, READ.*");
+  assert.deepEqual(result.items, ["read.*", "write.file"]);
+  assert.deepEqual(result.warnings, []);
+});
+
+test("warns instead of silently dropping entries past the 200-item limit", () => {
+  const entries = Array.from({ length: 250 }, (_, i) => `delete.tool${i}`);
+  const result = parseList(entries.join("\n"), "Denied tool patterns");
+  assert.equal(result.items.length, 200);
+  assert.equal(result.items.at(-1), "delete.tool199");
+  assert.equal(result.items.includes("delete.tool249"), false);
+  assert.equal(result.warnings.length, 1);
+  assert.match(result.warnings[0], /Denied tool patterns.*50 entries.*dropped/);
+});
+
+test("warns instead of silently truncating entries past 500 characters", () => {
+  const longEntry = "a".repeat(525);
+  const result = parseList(longEntry, "Allowed tool patterns");
+  assert.equal(result.items[0].length, 500);
+  assert.equal(result.warnings.length, 1);
+  assert.match(result.warnings[0], /Allowed tool patterns.*1 entry.*truncated/);
 });
 
 test("accepts exact and wildcard hostnames but rejects URLs and paths", () => {
   const result = parseDomainRules("example.com\n*.trusted.example\nhttps://bad.example/x");
   assert.deepEqual(result.accepted, ["example.com", "*.trusted.example"]);
   assert.deepEqual(result.invalid, ["https://bad.example/x"]);
+});
+
+test("rejects hostnames with empty labels or misplaced hyphens", () => {
+  const result = parseDomainRules("example..com\n-example.com\nexample-.com\nexample.com");
+  assert.deepEqual(result.accepted, ["example.com"]);
+  assert.deepEqual(result.invalid, ["example..com", "-example.com", "example-.com"]);
 });
 
 test("parses non-negative numeric limits with actionable errors", () => {

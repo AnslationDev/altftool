@@ -6,6 +6,7 @@ import { Check, Copy, Plus, RotateCcw, Timer, Trash2 } from "lucide-react";
 import {
   BILLING_INCREMENTS,
   ROUNDING_MODES,
+  applyOvertime,
   computeInvoice,
   priceLine,
 } from "../lib";
@@ -45,6 +46,8 @@ const DEFAULTS = {
   discountFlat: "0",
   taxPercent: "20",
   expenses: "0",
+  overtimeThreshold: "0",
+  overtimeMultiplier: "1.5",
 };
 
 const toNumber = (raw) => {
@@ -63,6 +66,8 @@ export default function ToolHome() {
   const [discountFlat, setDiscountFlat] = useState(DEFAULTS.discountFlat);
   const [taxPercent, setTaxPercent] = useState(DEFAULTS.taxPercent);
   const [expenses, setExpenses] = useState(DEFAULTS.expenses);
+  const [overtimeThreshold, setOvertimeThreshold] = useState(DEFAULTS.overtimeThreshold);
+  const [overtimeMultiplier, setOvertimeMultiplier] = useState(DEFAULTS.overtimeMultiplier);
   const [copied, setCopied] = useState(false);
 
   const money = useMemo(() => {
@@ -83,19 +88,34 @@ export default function ToolHome() {
     [increment],
   );
 
+  const overtimeThresholdHours = toNumber(overtimeThreshold);
+  const overtimeMultiplierValue = toNumber(overtimeMultiplier);
+
   const priced = useMemo(
     () =>
-      lines.map((line) =>
-        priceLine({
+      lines.map((line) => {
+        const base = priceLine({
           time: line.time,
           rate: toNumber(line.rate),
           incrementMinutes,
           mode,
           taxable: line.taxable,
           description: line.description,
-        }),
-      ),
-    [lines, incrementMinutes, mode],
+        });
+        if (base.error) return base;
+        // A threshold of 0 means overtime is switched off; applyOvertime()
+        // then returns the same billedHours * rate that priceLine() already
+        // computed, so this is a no-op unless the user sets a real threshold.
+        const overtime = applyOvertime(base.billedHours, overtimeThresholdHours, overtimeMultiplierValue, base.rate);
+        if (overtime.error) return { error: overtime.error };
+        return {
+          ...base,
+          amount: overtime.amount,
+          standardHours: overtime.standardHours,
+          overtimeHours: overtime.overtimeHours,
+        };
+      }),
+    [lines, incrementMinutes, mode, overtimeThresholdHours, overtimeMultiplierValue],
   );
 
   const invoice = useMemo(
@@ -162,6 +182,8 @@ export default function ToolHome() {
     setDiscountFlat(DEFAULTS.discountFlat);
     setTaxPercent(DEFAULTS.taxPercent);
     setExpenses(DEFAULTS.expenses);
+    setOvertimeThreshold(DEFAULTS.overtimeThreshold);
+    setOvertimeMultiplier(DEFAULTS.overtimeMultiplier);
     setCopied(false);
   };
 
@@ -217,6 +239,15 @@ export default function ToolHome() {
           <div>
             <label className={LABEL_CLASS} htmlFor="ts-discflat">Flat discount</label>
             <input id="ts-discflat" className={`mt-2 ${INPUT_CLASS}`} type="number" inputMode="decimal" min="0" step="10" value={discountFlat} onChange={(e) => setDiscountFlat(e.target.value)} />
+          </div>
+          <div>
+            <label className={LABEL_CLASS} htmlFor="ts-ot-threshold">Overtime threshold (hours per line)</label>
+            <input id="ts-ot-threshold" className={`mt-2 ${INPUT_CLASS}`} type="number" inputMode="decimal" min="0" step="0.5" value={overtimeThreshold} onChange={(e) => setOvertimeThreshold(e.target.value)} />
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">0 disables overtime. Otherwise, hours billed beyond this on a single line get the multiplier.</p>
+          </div>
+          <div>
+            <label className={LABEL_CLASS} htmlFor="ts-ot-multiplier">Overtime multiplier</label>
+            <input id="ts-ot-multiplier" className={`mt-2 ${INPUT_CLASS}`} type="number" inputMode="decimal" min="1" step="0.1" value={overtimeMultiplier} onChange={(e) => setOvertimeMultiplier(e.target.value)} />
           </div>
           <div className="sm:col-span-2">
             <label className={LABEL_CLASS} htmlFor="ts-exp">Pass-through expenses (not taxed here)</label>
@@ -306,7 +337,8 @@ export default function ToolHome() {
                     </span>
                   ) : (
                     <span className="text-[var(--muted-foreground)]">
-                      {hoursFmt.format(row.loggedHours)} h logged → billed {hoursFmt.format(row.billedHours)} h ={" "}
+                      {hoursFmt.format(row.loggedHours)} h logged → billed {hoursFmt.format(row.billedHours)} h
+                      {row.overtimeHours > 0 ? ` (${hoursFmt.format(row.overtimeHours)} h overtime)` : ""} ={" "}
                       <strong className="text-[var(--foreground)]">{money(row.amount)}</strong>
                     </span>
                   )}
@@ -352,7 +384,12 @@ export default function ToolHome() {
           {[
             ["Hours logged", ok ? `${hoursFmt.format(invoice.loggedHours)} h` : DASH],
             ["Hours billed after rounding", ok ? `${hoursFmt.format(invoice.billedHours)} h` : DASH],
-            ["Added by the increment", ok ? `${hoursFmt.format(invoice.roundingHours)} h` : DASH],
+            [
+              "Adjusted by rounding",
+              ok
+                ? `${invoice.roundingHours > 0 ? "+" : ""}${hoursFmt.format(invoice.roundingHours)} h`
+                : DASH,
+            ],
             ["Subtotal", ok ? money(invoice.subtotal) : DASH],
             ["Discount", ok ? `-${money(invoice.discount)}` : DASH],
             ["Taxable value after discount", ok ? money(invoice.netTaxable) : DASH],

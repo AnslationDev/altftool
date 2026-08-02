@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Check, Copy, Flower2, RotateCcw, Shuffle } from "lucide-react";
 
 import { AA_LARGE, AA_NORMAL, SEASONS, generateCottagecorePalette } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const DEFAULTS = { seed: "elderflower", season: "spring", softness: "60" };
 
@@ -40,7 +41,7 @@ export default function ToolHome() {
   const [season, setSeason] = useState(DEFAULTS.season);
   const [softness, setSoftness] = useState(DEFAULTS.softness);
   const [exportKind, setExportKind] = useState("css");
-  const [copied, setCopied] = useState("");
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const palette = useMemo(
     () => generateCottagecorePalette({ seed, season, softness: Number(softness) }),
@@ -56,16 +57,14 @@ export default function ToolHome() {
         ? palette.tailwindTheme
         : palette.json;
 
-  const copy = async (key, text) => {
-    if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(key);
-      setTimeout(() => setCopied(""), 1500);
-    } catch {
-      setCopied("");
-    }
-  };
+  const roleLabel = (key) =>
+    key === "summary"
+      ? "All palette hex codes"
+      : key === "export"
+        ? "Export snippet"
+        : `${palette.roles.concat([palette.ink]).find((role) => role.key === key)?.name ?? "Colour"} hex code`;
+
+  const copyKeyed = (key, text) => copy(key, text, { label: roleLabel(key) });
 
   const shuffle = () => {
     const word = SEED_WORDS[Math.floor(Math.random() * SEED_WORDS.length)];
@@ -76,11 +75,14 @@ export default function ToolHome() {
     setSeed(DEFAULTS.seed);
     setSeason(DEFAULTS.season);
     setSoftness(DEFAULTS.softness);
-    setCopied("");
+    resetCopyState();
   };
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
+      <span aria-live="polite" role="status" className="sr-only">
+        {announcement}
+      </span>
       <header className="mb-6">
         <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold tracking-wide uppercase text-[var(--primary)]">
           <Flower2 className="h-4 w-4" aria-hidden="true" />
@@ -176,17 +178,17 @@ export default function ToolHome() {
           </div>
           <button
             type="button"
-            onClick={() => copy("summary", failed ? "" : palette.summary)}
+            onClick={() => copyKeyed("summary", failed ? "" : palette.summary)}
             disabled={failed}
             aria-label="Copy all palette hex codes"
             className={`${PRIMARY_BTN} disabled:opacity-50`}
           >
-            {copied === "summary" ? (
+            {isCopied("summary") ? (
               <Check className="h-4 w-4" aria-hidden="true" />
             ) : (
               <Copy className="h-4 w-4" aria-hidden="true" />
             )}
-            {copied === "summary" ? "Copied!" : "Copy hex codes"}
+            {isCopied("summary") ? "Copied!" : "Copy hex codes"}
           </button>
         </div>
 
@@ -236,11 +238,11 @@ export default function ToolHome() {
                     </div>
                     <button
                       type="button"
-                      onClick={() => copy(role.key, role.hex)}
+                      onClick={() => copyKeyed(role.key, role.hex)}
                       aria-label={`Copy ${role.name} hex code`}
                       className="ml-auto inline-flex h-11 w-11 items-center justify-center rounded-md text-[var(--muted-foreground)] transition hover:text-[var(--primary)] focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                     >
-                      {copied === role.key ? (
+                      {isCopied(role.key) ? (
                         <Check className="h-4 w-4" aria-hidden="true" />
                       ) : (
                         <Copy className="h-4 w-4" aria-hidden="true" />
@@ -377,16 +379,16 @@ export default function ToolHome() {
               <h2 className="text-base font-semibold">Export</h2>
               <button
                 type="button"
-                onClick={() => copy("export", exportText)}
+                onClick={() => copyKeyed("export", exportText)}
                 aria-label="Copy the export snippet"
                 className={GHOST_BTN}
               >
-                {copied === "export" ? (
+                {isCopied("export") ? (
                   <Check className="h-4 w-4" aria-hidden="true" />
                 ) : (
                   <Copy className="h-4 w-4" aria-hidden="true" />
                 )}
-                {copied === "export" ? "Copied!" : "Copy snippet"}
+                {isCopied("export") ? "Copied!" : "Copy snippet"}
               </button>
             </div>
             <div className="mt-3 flex flex-wrap gap-2">

@@ -141,12 +141,12 @@ export const RAMP_STOPS = [92, 82, 68, 54, 40, 26];
 
 const pick = (random, [min, max]) => min + random() * (max - min);
 
-function buildColour(random, pigment, earthBias, lightShift = 0) {
+function buildColour(random, pigment, earthBias) {
   const hue = pick(random, pigment.hue);
   // Earthiness pulls saturation towards the lower edge of the pigment's band.
   const satRange = pigment.sat;
   const saturation = satRange[1] - earthBias * (satRange[1] - satRange[0]);
-  const lightness = clamp(pick(random, pigment.light) + lightShift, 4, 98);
+  const lightness = clamp(pick(random, pigment.light), 4, 98);
   return [hue, saturation, lightness];
 }
 
@@ -243,12 +243,17 @@ export function generateEarthyPalette({ seed = "raw-clay", lead = "clay", earthi
     { name: "Limestone", hex: byKey.limestone.hex, rgb: byKey.limestone.rgb },
     { name: "Chalk white", hex: hslToHex(...chalkHsl), rgb: hslToRgb(...chalkHsl) },
   ];
-  const packaging = [byKey.primary, byKey.secondary, byKey.ochre, byKey.green, byKey.sand, kraft].map((fill) => ({
-    key: fill.key,
-    name: fill.name,
-    fillHex: fill.hex,
-    ...bestLabelOn(fill.rgb, labelCandidates),
-  }));
+  const packaging = [byKey.primary, byKey.secondary, byKey.ochre, byKey.green, byKey.sand, kraft].map((fill) => {
+    const label = bestLabelOn(fill.rgb, labelCandidates);
+    return {
+      key: fill.key,
+      name: fill.name,
+      fillHex: fill.hex,
+      hex: label.hex,
+      ratio: label.ratio,
+      passes: label.passes,
+    };
+  });
 
   const checks = [
     { id: "umber-limestone", label: "Umber text on limestone", fg: byKey.umber, bg: byKey.limestone, min: AA_NORMAL },
@@ -304,6 +309,7 @@ export function generateEarthyPalette({ seed = "raw-clay", lead = "clay", earthi
   const tailwindTheme = [
     "@theme {",
     ...roles.map((role) => `  --color-earth-${role.key}: ${role.hex};`),
+    `  --color-earth-kraft: ${kraft.hex};`,
     ...ramp.map((step) => `  --color-earth-${step.key}: ${step.hex};`),
     "}",
   ].join("\n");

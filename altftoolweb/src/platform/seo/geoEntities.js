@@ -24,13 +24,64 @@ import {
   getSiteUrl,
   siteConfig,
 } from "./generateMetadata.js";
-import { getGeoChain, getGeoLocation } from "./geoLocations.js";
+import { getGeoChain, getGeoChildren, getGeoLocation } from "./geoLocations.js";
 
 const PLACE_TYPE = {
   Country: "Country",
   State: "State",
   City: "City",
 };
+
+/**
+ * Meta-description budget. `trimMetaDescription()` in generateMetadata.js
+ * passes a string through verbatim only when it is UNDER 160 chars AND ends
+ * in terminal punctuation; anything longer is cut mid-clause and a period is
+ * bolted on. The previous single template ran 153-180 chars, so 94 of the 141
+ * registry locations shipped a description whose closing sentence had been
+ * silently amputated. Everything below is composed to land inside this budget
+ * for every row — verify with the real trimMetaDescription after any edit.
+ */
+const DESC_BUDGET = 158;
+const DESC_CORE =
+  ": compress images, convert PDF to Word, make QR codes and run 100+ calculators.";
+const DESC_TAILS = [" Free, no sign-up, no install.", " Free, no sign-up."];
+
+/**
+ * One description builder shared by the page metadata and the WebPage node, so
+ * the <meta> tag and the JSON-LD never drift apart.
+ *
+ * The only honest differentiator this registry actually holds is the
+ * containment hierarchy, so that is all that is used: state pages name the
+ * cities they link to, everything else names its parent. No invented local
+ * facts — the site has none.
+ */
+export function buildGeoDescription(slugOrLocation) {
+  const location =
+    typeof slugOrLocation === "string" ? getGeoLocation(slugOrLocation) : slugOrLocation;
+  if (!location) return "";
+
+  const chain = getGeoChain(location.slug);
+  const root = chain.length > 1 ? chain[chain.length - 1].name : "";
+  const head =
+    location.type === "Country"
+      ? `Free online tools in ${location.name}`
+      : `Free online tools for ${location.name}${root ? `, ${root}` : ""}`;
+
+  let subject = head;
+  if (location.type === "State") {
+    const shortestTail = DESC_TAILS[DESC_TAILS.length - 1];
+    for (const child of getGeoChildren(location.slug)) {
+      const next =
+        subject === head ? `${head} — ${child.name}` : `${subject}, ${child.name}`;
+      if (next.length + DESC_CORE.length + shortestTail.length > DESC_BUDGET) break;
+      subject = next;
+    }
+  }
+
+  const base = `${subject}${DESC_CORE}`;
+  const tail = DESC_TAILS.find((option) => base.length + option.length <= DESC_BUDGET);
+  return tail ? `${base}${tail}` : base;
+}
 
 function geoId(location) {
   return `${getSiteUrl()}/#geo-${location.slug}`;
@@ -104,11 +155,13 @@ export function createGeoServiceJsonLd(slugOrLocation, { path } = {}) {
       serviceUrl: url,
       availableLanguage: ["en"],
     },
+    // The Offer inherits the Service's areaServed; repeating the Place ref
+    // here only duplicated the same geo assertion (and ~150 bytes) on all 141
+    // prerendered pages.
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "USD",
-      areaServed: createAreaServedRef(location),
     },
   };
 }
@@ -129,9 +182,7 @@ export function createGeoWebPageJsonLd(slugOrLocation, { path, title, descriptio
     "@id": `${absoluteUrl(path)}#webpage`,
     url: absoluteUrl(path),
     name: title || `${siteConfig.name} in ${location.name} — Free Online Tools`,
-    description:
-      description ||
-      `Use ${siteConfig.name}'s free online tools from ${location.name}. 100+ browser-based converters, calculators, PDF, image and developer utilities.`,
+    description: description || buildGeoDescription(location),
     inLanguage: "en",
     isPartOf: { "@id": `${getSiteUrl()}/#website` },
     about: { "@id": `${getSiteUrl()}/#organization` },
@@ -139,8 +190,18 @@ export function createGeoWebPageJsonLd(slugOrLocation, { path, title, descriptio
   };
 }
 
-/** BreadcrumbList following the geographic containment chain. */
-export function createGeoBreadcrumbJsonLd(slugOrLocation, { basePath = "/locations" } = {}) {
+/**
+ * BreadcrumbList following the geographic containment chain.
+ *
+ * The hub step (`/locations`) is part of the trail: the geo page renders a
+ * visible breadcrumb of Home / Locations / Country / … / self, and Google
+ * requires the markup to match what the user sees. Omitting it made every one
+ * of the 141 pages ship a BreadcrumbList that disagreed with its own page.
+ */
+export function createGeoBreadcrumbJsonLd(
+  slugOrLocation,
+  { basePath = "/locations", hubName = "Locations" } = {},
+) {
   const location =
     typeof slugOrLocation === "string" ? getGeoLocation(slugOrLocation) : slugOrLocation;
   if (!location) return null;
@@ -148,9 +209,10 @@ export function createGeoBreadcrumbJsonLd(slugOrLocation, { basePath = "/locatio
   const chain = getGeoChain(location.slug).reverse(); // country → … → self
   const items = [
     { "@type": "ListItem", position: 1, name: "Home", item: absoluteUrl("/") },
+    { "@type": "ListItem", position: 2, name: hubName, item: absoluteUrl(basePath) },
     ...chain.map((entry, index) => ({
       "@type": "ListItem",
-      position: index + 2,
+      position: index + 3,
       name: entry.name,
       item: absoluteUrl(`${basePath}/${entry.slug}`),
     })),
@@ -225,15 +287,12 @@ export async function createGeoPageMetadata(slugOrLocation, overrides = {}) {
     typeof slugOrLocation === "string" ? getGeoLocation(slugOrLocation) : slugOrLocation;
   if (!location) return createPageMetadata(overrides);
 
-  const chain = getGeoChain(location.slug);
-  const context =
-    chain.length > 1 ? `${location.name}, ${chain[chain.length - 1].name}` : location.name;
-
   return createPageMetadata({
+    // Starts with the brand, so resolveDocumentTitle() treats it as absolute
+    // and the root layout appends no " | AltFTool" suffix. Rendered length
+    // across the full registry is 32-49 chars.
     title: overrides.title || `${siteConfig.name} ${location.name} — Free Online Tools`,
-    description:
-      overrides.description ||
-      `Use ${siteConfig.name} from ${context}: 100+ free browser-based tools — converters, calculators, PDF, image, developer and AI utilities. No sign-up, works on any device.`,
+    description: overrides.description || buildGeoDescription(location),
     path: overrides.path || `/locations/${location.slug}`,
     keywords: [
       `${siteConfig.name} ${location.name}`,

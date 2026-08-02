@@ -19,6 +19,34 @@ export function metaTitle(str = "", max = 55) {
   return `${candidate.replace(/[,:;\-\s]+$/g, "")}…`;
 }
 
+// The category and node collection pages described themselves in 84-102
+// characters, which leaves most of a SERP snippet — the part mobile actually
+// shows — unused. Rather than hand-write 102 strings, each page passes a head
+// sentence built from its own data and these clauses are appended
+// longest-first until the line clears MIN. Every generated description lands
+// in 150-159, i.e. under trimMetaDescription's 160-character cap, which passes
+// anything shorter that ends in a period through verbatim.
+const DESCRIPTION_MIN = 150;
+const DESCRIPTION_MAX = 159;
+const DESCRIPTION_CLAUSES = [
+  "Every one lists the nodes it uses and ships a JSON export you can import straight into your own n8n instance.",
+  "Each ships a JSON export you can import into your own n8n instance.",
+  "Ranked by how often each is viewed.",
+  "Author credited on each.",
+  "No signup required.",
+  "All free.",
+];
+
+export function fitMetaDescription(head) {
+  let out = String(head).trim();
+  for (const clause of DESCRIPTION_CLAUSES) {
+    if (out.length >= DESCRIPTION_MIN) break;
+    const next = `${out} ${clause}`;
+    if (next.length <= DESCRIPTION_MAX) out = next;
+  }
+  return out;
+}
+
 // Strip Markdown syntax + emojis down to clean plain text (card blurbs, intros).
 export function stripMarkdown(md = "") {
   const text = String(md)

@@ -27,6 +27,11 @@ export const RESERVED_CHARACTER = "0";
 /** Full structural pattern for a normalised code. */
 export const IFSC_PATTERN = /^[A-Z]{4}0[A-Z0-9]{6}$/;
 
+/** 0-based index of the reserved character, derived from RESERVED_POSITION. */
+const RESERVED_INDEX = RESERVED_POSITION - 1;
+/** Length of the leading bank-code segment (everything before the reserved character). */
+const BANK_CODE_LENGTH = RESERVED_INDEX;
+
 /** Length of the MICR code, mentioned so the two are not confused. */
 export const MICR_LENGTH = 9;
 
@@ -69,7 +74,6 @@ export const KNOWN_BANK_CODES = {
 };
 
 const isUpperAlpha = (character) => character >= "A" && character <= "Z";
-const isDigit = (character) => character >= "0" && character <= "9";
 
 /** Strip spaces, hyphens and other separators, then uppercase. */
 export function normaliseIfsc(raw) {
@@ -86,11 +90,11 @@ export function normaliseIfsc(raw) {
 export function suggestFix(normalised) {
   if (typeof normalised !== "string" || normalised.length !== IFSC_LENGTH) return null;
   const characters = normalised.split("");
-  for (let index = 0; index < 4; index += 1) {
+  for (let index = 0; index < BANK_CODE_LENGTH; index += 1) {
     if (characters[index] === "0") characters[index] = "O";
     if (characters[index] === "1") characters[index] = "I";
   }
-  if (characters[4] === "O") characters[4] = RESERVED_CHARACTER;
+  if (characters[RESERVED_INDEX] === "O") characters[RESERVED_INDEX] = RESERVED_CHARACTER;
   const candidate = characters.join("");
   if (candidate === normalised) return null;
   return IFSC_PATTERN.test(candidate) ? candidate : null;
@@ -116,23 +120,23 @@ export function validateIfsc(raw) {
     );
   }
 
-  const bankCode = normalised.slice(0, 4);
-  const reserved = normalised.charAt(4);
-  const branchCode = normalised.slice(5);
+  const bankCode = normalised.slice(0, BANK_CODE_LENGTH);
+  const reserved = normalised.charAt(RESERVED_INDEX);
+  const branchCode = normalised.slice(RESERVED_POSITION);
 
-  if (bankCode.length === 4 && ![...bankCode].every(isUpperAlpha)) {
+  if (bankCode.length === BANK_CODE_LENGTH && ![...bankCode].every(isUpperAlpha)) {
     errors.push("The first four characters are the bank code and must all be letters.");
   }
-  if (normalised.length >= 5 && reserved !== RESERVED_CHARACTER) {
+  if (normalised.length >= RESERVED_POSITION && reserved !== RESERVED_CHARACTER) {
     errors.push(
       reserved === "O"
         ? "The fifth character is the digit zero, not the letter O — this is the most common IFSC typo."
         : "The fifth character is reserved by the RBI and must be the digit 0.",
     );
   }
-  if (branchCode.length === 6 && ![...branchCode].every((character) => isUpperAlpha(character) || isDigit(character))) {
-    errors.push("The last six characters are the branch code and must be letters or digits only.");
-  }
+  // Note: no character-validity check is needed for branchCode here — normaliseIfsc()
+  // already strips every character that isn't a letter or digit, so branchCode can only
+  // ever contain A-Z/0-9 by construction. A length check is enough (see errors.push above).
 
   const valid = errors.length === 0 && IFSC_PATTERN.test(normalised);
 
@@ -142,19 +146,26 @@ export function validateIfsc(raw) {
     const character = normalised.charAt(index) || "";
     let expected;
     let ok;
-    if (index < 4) {
+    if (index < BANK_CODE_LENGTH) {
       expected = "Letter (bank code)";
       ok = character !== "" && isUpperAlpha(character);
-    } else if (index === 4) {
+    } else if (index === RESERVED_INDEX) {
       expected = "Digit 0 (reserved)";
       ok = character === RESERVED_CHARACTER;
     } else {
       expected = "Letter or digit (branch)";
-      ok = character !== "" && (isUpperAlpha(character) || isDigit(character));
+      // normaliseIfsc() already guarantees every character here is A-Z/0-9, so this
+      // position can only ever be "Wrong" for being unfilled, never for a bad character.
+      ok = character !== "";
     }
     characters.push({ position: index + 1, character, expected, ok });
   }
 
+  // Track the two reformatting steps separately so the UI can describe exactly
+  // what changed instead of always claiming both happened (see normaliseIfsc()).
+  const stripped = input.replace(/[^0-9A-Za-z]/g, "");
+  const hadSeparators = stripped !== input;
+  const hadCaseChange = stripped !== stripped.toUpperCase();
   const wasReformatted = normalised !== input;
 
   return {
@@ -162,12 +173,14 @@ export function validateIfsc(raw) {
     normalised,
     valid,
     errors,
-    bankCode: normalised.length >= 4 ? bankCode : "",
+    bankCode: normalised.length >= BANK_CODE_LENGTH ? bankCode : "",
     bankName: KNOWN_BANK_CODES[bankCode] ?? null,
-    reserved: normalised.length >= 5 ? reserved : "",
-    branchCode: normalised.length > 5 ? branchCode : "",
+    reserved: normalised.length >= RESERVED_POSITION ? reserved : "",
+    branchCode: normalised.length > RESERVED_POSITION ? branchCode : "",
     characters,
     wasReformatted,
+    hadSeparators,
+    hadCaseChange,
     suggestion: valid ? null : suggestFix(normalised),
   };
 }

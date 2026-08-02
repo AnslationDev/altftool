@@ -89,9 +89,16 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  // Deliberately NOT brand.about: the sibling /exclusivedeals/[slug]/[id] page
+  // for the same brand already uses that exact string, so both URL shapes were
+  // shipping a byte-identical meta description (24 pairs of them). This page is
+  // the store's offer list, so it describes that instead.
+  const categoryName = category?.categoryName?.toLowerCase();
   return createPageMetadata({
     title: `${brand.brandName} Store Offer & Coupon Details`,
-    description: brand.about || `Review ${brand.brandName} store offers, coupon terms, and savings details on AltFTool.`,
+    description: categoryName
+      ? `Coupon codes and deals for the ${brand.brandName} store on AltFTool. Browse current ${categoryName} offers and open the one you want to use.`
+      : `Coupon codes and deals for the ${brand.brandName} store on AltFTool. Browse the current offers and open the one you want to use.`,
     path: `/exclusivedeals/store/${slug}/${brandSlug(brand.brandName || brand.name)}`,
     image: brand.imagedeal || brand.img || brand.brandLogo,
     keywords: [

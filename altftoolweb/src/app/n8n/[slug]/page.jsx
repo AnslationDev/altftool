@@ -13,8 +13,10 @@ import { deriveNodeDetails } from "../data/nodeInfo";
 import { shortIntro, cleanDescription, metaTitle, stripEmojis } from "../data/text";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
+  absoluteUrl,
   createPageMetadata,
   createBreadcrumbJsonLd,
+  getSiteUrl,
 } from "@/platform/seo/generateMetadata";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import { getRelatedContent, RelatedContentSection } from "@/platform/linking";
@@ -77,15 +79,64 @@ export default async function Page({ params }) {
     ],
   });
 
+  // Subject entity for the workflow itself. The page previously described
+  // nothing but its own breadcrumb, so answer engines had no node for the
+  // thing the URL is about. SoftwareSourceCode is what this actually is: a
+  // downloadable n8n workflow definition (codeSampleType "template"), not an
+  // application a visitor runs here — so no SoftwareApplication/Offer.
+  //
+  // Every field below comes straight from the imported workflow record.
+  // Deliberately NOT emitted: `totalViews` as an interactionStatistic (those
+  // views happened on the upstream template listing, not on this page, so
+  // publishing them here would misattribute them), `nodeCount` (it counts raw
+  // canvas nodes and disagrees with the node list this page renders), and
+  // anything resembling a rating — nothing on this site ever collects one.
+  const workflowUrl = absoluteUrl(`/n8n/${slug}`);
+  const workflowSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareSourceCode",
+    "@id": `${workflowUrl}#workflow`,
+    name: stripEmojis(wf.title),
+    description: shortIntro(wf.description, 300),
+    url: workflowUrl,
+    codeSampleType: "template",
+    runtimePlatform: "n8n",
+    targetProduct: { "@type": "SoftwareApplication", name: "n8n" },
+    // The template's real creator, credited above the intro so the markup and
+    // the graph say the same thing. Omitted entirely if a record ever lands
+    // without one rather than falling back to the site as author.
+    ...(wf.author?.name ? { author: { "@type": "Person", name: wf.author.name } } : {}),
+    ...(wf.createdAt ? { dateCreated: wf.createdAt } : {}),
+    keywords: [
+      ...wf.categories.map((c) => c.name),
+      ...wf.nodes.map((n) => n.name),
+    ].join(", "),
+    isAccessibleForFree: true,
+    inLanguage: "en",
+    associatedMedia: {
+      "@type": "MediaObject",
+      name: `${slug}.json`,
+      contentUrl: absoluteUrl(wf.jsonPath),
+      encodingFormat: "application/json",
+    },
+    publisher: { "@id": `${getSiteUrl()}/#organization` },
+    isPartOf: { "@id": `${getSiteUrl()}/#website` },
+    mainEntityOfPage: { "@type": "WebPage", "@id": workflowUrl },
+  };
+
   return (
     <>
       <JsonLd
         id={`n8n-${slug}-schema`}
-        data={createBreadcrumbJsonLd([
-          { name: "Home", path: "/" },
-          { name: "n8n Workflows", path: "/n8n" },
-          { name: wf.title, path: `/n8n/${slug}` },
-        ])}
+        data={[
+          workflowSchema,
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "n8n Workflows", path: "/n8n" },
+            // Match the visible trail, which renders the title emoji-stripped.
+            { name: stripEmojis(wf.title), path: `/n8n/${slug}` },
+          ]),
+        ]}
       />
       <main className="min-h-screen bg-(--color-background)">
         <div className="mx-auto max-w-4xl px-4 py-8">
@@ -113,6 +164,16 @@ export default async function Page({ params }) {
               </Link>
             ))}
           </div>
+
+          {/* Creator credit. These templates are third-party work and the hub
+              cards already name the author, but the detail page credited nobody
+              — which also left the schema's author invisible to readers. */}
+          {wf.author?.name ? (
+            <p className="mt-4 text-sm text-(--color-muted-foreground)">
+              Template by{" "}
+              <span className="font-medium text-(--color-foreground)">{wf.author.name}</span>
+            </p>
+          ) : null}
 
           {/* Short intro */}
           <p className="mt-5 text-base leading-relaxed text-(--color-foreground)">

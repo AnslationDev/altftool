@@ -197,7 +197,7 @@ export const finalExpenseInsurance = {
   },
 
   seo: {
-    title: "Final Expense Insurance — Compare Burial & Funeral Plans | AltFTool",
+    title: "Final Expense Insurance — Compare Burial Plans | AltFTool",
     description:
       "Compare final expense insurance plans that help cover funeral, burial and end-of-life costs. Simplified and guaranteed-issue options, often no medical exam.",
   },

@@ -359,7 +359,7 @@ export default function ToolHome() {
     }
   }, [now, cravingEndsAt, soundOn, playChime]);
 
-  const costPerCig = (Number(packCost) || 0) / Math.max(1, Number(cigsPerPack) || 1);
+  const costPerCig = Math.max(0, Number(packCost) || 0) / Math.max(1, Number(cigsPerPack) || 1);
   const perDay = Math.max(0, Number(cigsPerDay) || 0);
   const dailySpend = perDay * costPerCig;
 
@@ -580,7 +580,7 @@ export default function ToolHome() {
                       <div className="flex flex-wrap items-center justify-between gap-2">
                         <p className="text-sm font-semibold">Next up: {next.title}</p>
                         <p className="text-xs font-semibold text-[var(--primary)]">
-                          {humanRemaining(next.at * 60000 - elapsedMs)}
+                          {humanRemaining(quitAt + next.at * 60000 - now)}
                         </p>
                       </div>
                       <div className="mt-3">
@@ -666,7 +666,7 @@ export default function ToolHome() {
                                 </p>
                               ) : (
                                 <p className="text-xs font-semibold text-[var(--muted-foreground)]">
-                                  {humanRemaining(milestone.at * 60000 - elapsedMs)}
+                                  {humanRemaining(quitAt + milestone.at * 60000 - now)}
                                 </p>
                               )}
                             </div>

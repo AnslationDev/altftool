@@ -8,6 +8,7 @@ import DestinationCard from "../components/DestinationCard";
 import History from "../components/History";
 import Description from "../components/Description";
 import { findDestinations, getRandomDestination } from "../utils/matcher";
+import DESTINATIONS from "../utils/destinations";
 
 export default function ToolHome() {
   const [results, setResults] = useState(null);
@@ -16,12 +17,40 @@ export default function ToolHome() {
   const [isLoading, setIsLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("finder");
   const [surpriseDest, setSurpriseDest] = useState(null);
+  const [surprisedNames, setSurprisedNames] = useState([]);
+  const [viewedDestination, setViewedDestination] = useState(null);
 
   useEffect(() => {
-    const storedSaved = localStorage.getItem("dreamVacation_saved");
-    const storedHistory = localStorage.getItem("dreamVacation_history");
-    if (storedSaved) setSaved(JSON.parse(storedSaved));
-    if (storedHistory) setHistory(JSON.parse(storedHistory));
+    try {
+      const storedSaved = localStorage.getItem("dreamVacation_saved");
+      if (storedSaved) {
+        const parsed = JSON.parse(storedSaved);
+        // Older versions stored just destination names — upgrade them to
+        // full destination records so Saved entries can be viewed and
+        // removed correctly. Names that no longer match any destination
+        // are dropped rather than shown as broken entries.
+        const migrated = parsed
+          .map((entry) =>
+            typeof entry === "string" ? DESTINATIONS.find((d) => d.name === entry) : entry
+          )
+          .filter(Boolean);
+        setSaved(migrated);
+      }
+    } catch {
+      /* corrupted or legacy data — ignore and start fresh */
+    }
+    try {
+      const storedHistory = localStorage.getItem("dreamVacation_history");
+      if (storedHistory) setHistory(JSON.parse(storedHistory));
+    } catch {
+      /* corrupted or legacy data — ignore and start fresh */
+    }
+    try {
+      const storedSurprised = localStorage.getItem("dreamVacation_surprised");
+      if (storedSurprised) setSurprisedNames(JSON.parse(storedSurprised));
+    } catch {
+      /* corrupted or legacy data — ignore and start fresh */
+    }
   }, []);
 
   const persist = useCallback((key, data) => {
@@ -34,13 +63,13 @@ export default function ToolHome() {
       const scored = findDestinations(answers);
       setResults(scored);
       setSurpriseDest(null);
+      setViewedDestination(null);
 
       const entry = {
         id: Date.now(),
         answers,
         topResult: scored[0]?.name,
         timestamp: new Date().toISOString(),
-        saved: false,
       };
       setHistory((prev) => {
         const updated = [entry, ...prev].slice(0, 30);
@@ -51,46 +80,62 @@ export default function ToolHome() {
     }, 600);
   }, [persist]);
 
+  const shuffleResults = useCallback(() => {
+    setResults((prev) => {
+      if (!prev || prev.length <= 2) return prev;
+      const [top, ...rest] = prev;
+      const poolSize = Math.min(20, rest.length);
+      const pool = rest.slice(0, poolSize);
+      // Fisher-Yates shuffle of the strongest remaining matches, so
+      // "Shuffle Results" surfaces a genuinely different set of secondary
+      // destinations each time instead of recomputing the same order.
+      for (let i = pool.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [pool[i], pool[j]] = [pool[j], pool[i]];
+      }
+      return [top, ...pool, ...rest.slice(poolSize)];
+    });
+  }, []);
+
   const handleSurprise = useCallback(() => {
-    const used = history.map((h) => h.topResult).filter(Boolean);
+    const used = [...history.map((h) => h.topResult).filter(Boolean), ...surprisedNames];
     const dest = getRandomDestination(used);
     setSurpriseDest(dest);
     setResults(null);
-  }, [history]);
+    setViewedDestination(null);
+    setSurprisedNames((prev) => {
+      if (prev.includes(dest.name)) return prev;
+      const updated = [...prev, dest.name];
+      persist("dreamVacation_surprised", updated);
+      return updated;
+    });
+  }, [history, surprisedNames, persist]);
 
   const handleSave = useCallback(
     (destination) => {
       setSaved((prev) => {
-        const exists = prev.includes(destination.name);
+        const exists = prev.some((d) => d.name === destination.name);
         const updated = exists
-          ? prev.filter((n) => n !== destination.name)
-          : [destination.name, ...prev].slice(0, 20);
+          ? prev.filter((d) => d.name !== destination.name)
+          : [destination, ...prev].slice(0, 20);
         persist("dreamVacation_saved", updated);
-        return updated;
-      });
-
-      setHistory((prev) => {
-        const updated = prev.map((h) =>
-          h.topResult === destination.name ? { ...h, saved: !h.saved } : h
-        );
-        persist("dreamVacation_history", updated);
         return updated;
       });
     },
     [persist]
   );
 
+  const isSaved = useCallback((name) => saved.some((d) => d.name === name), [saved]);
+
   const handleRemove = useCallback(
     (idOrName) => {
       setHistory((prev) => {
-        const updated = prev.filter(
-          (h) => h.id !== idOrName && h.name !== idOrName
-        );
+        const updated = prev.filter((h) => h.id !== idOrName);
         persist("dreamVacation_history", updated);
         return updated;
       });
       setSaved((prev) => {
-        const updated = prev.filter((n) => n !== idOrName);
+        const updated = prev.filter((d) => d.name !== idOrName);
         persist("dreamVacation_saved", updated);
         return updated;
       });
@@ -99,18 +144,36 @@ export default function ToolHome() {
   );
 
   const handleClear = useCallback(() => {
+    if (
+      !window.confirm(
+        "Clear all saved destinations and search history? This cannot be undone."
+      )
+    ) {
+      return;
+    }
     setHistory([]);
     setSaved([]);
     persist("dreamVacation_history", []);
     persist("dreamVacation_saved", []);
   }, [persist]);
 
-  const handleUse = useCallback((entry) => {
-    if (entry.answers) {
-      handleSubmit(entry.answers);
-    }
-    setActiveTab("finder");
-  }, [handleSubmit]);
+  const handleUse = useCallback(
+    (entry) => {
+      setActiveTab("finder");
+      if (entry.answers) {
+        setViewedDestination(null);
+        handleSubmit(entry.answers);
+        return;
+      }
+      // Saved entries carry their own destination data — show it directly
+      // instead of trying to replay a quiz submission that may not exist
+      // (a saved destination might never have been anyone's top result).
+      setResults(null);
+      setSurpriseDest(null);
+      setViewedDestination(entry);
+    },
+    [handleSubmit]
+  );
 
   const tabs = [
     { key: "finder", label: "Finder", icon: "search" },
@@ -161,7 +224,7 @@ export default function ToolHome() {
 
         {activeTab === "finder" && (
           <div className="space-y-6">
-            {!results && !surpriseDest ? (
+            {!results && !surpriseDest && !viewedDestination ? (
               <PreferenceQuiz
                 onSubmit={handleSubmit}
                 onSurprise={handleSurprise}
@@ -172,7 +235,7 @@ export default function ToolHome() {
                 {surpriseDest && (
                   <div className="space-y-6">
                     <div className="text-center">
-                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 text-sm font-medium mb-2">
+                      <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[var(--warning)]/10 text-[var(--warning)] text-sm font-medium mb-2">
                         🎲 Surprise Destination
                       </div>
                       <p className="text-sm text-(--muted-foreground)">
@@ -184,7 +247,7 @@ export default function ToolHome() {
                         destination={{ ...surpriseDest, score: 0.5 }}
                         rank={0}
                         onSave={handleSave}
-                        isSaved={saved.includes(surpriseDest.name)}
+                        isSaved={isSaved(surpriseDest.name)}
                       />
                     </div>
                     <div className="flex justify-center gap-3">
@@ -203,15 +266,33 @@ export default function ToolHome() {
                     </div>
                   </div>
                 )}
+                {viewedDestination && (
+                  <div className="space-y-6">
+                    <div className="max-w-md mx-auto">
+                      <DestinationCard
+                        destination={{ ...viewedDestination, score: viewedDestination.score ?? 0.5 }}
+                        rank={0}
+                        onSave={handleSave}
+                        isSaved={isSaved(viewedDestination.name)}
+                      />
+                    </div>
+                    <div className="flex justify-center">
+                      <button
+                        onClick={() => setViewedDestination(null)}
+                        className="px-5 py-2.5 rounded-xl border border-(--border) text-sm font-medium hover:bg-(--page) transition"
+                      >
+                        Back to Finder
+                      </button>
+                    </div>
+                  </div>
+                )}
                 {results && (
                   <ResultsGrid
                     results={results}
                     saved={saved}
                     onSave={handleSave}
-                    onReset={() => { setResults(null); setSurpriseDest(null); }}
-                    onRegenerate={() => handleSubmit(
-                      history[0]?.answers || {}
-                    )}
+                    onReset={() => { setResults(null); setSurpriseDest(null); setViewedDestination(null); }}
+                    onRegenerate={shuffleResults}
                   />
                 )}
               </>
@@ -222,8 +303,8 @@ export default function ToolHome() {
         {activeTab === "saved" && (
           <History
             history={[
-              ...saved.map((name) => ({ name, saved: true, id: name })),
-              ...history.filter((h) => !h.saved).map((h) => ({
+              ...saved.map((d) => ({ ...d, saved: true, id: d.name })),
+              ...history.map((h) => ({
                 ...h,
                 name: h.topResult || "Search",
               })),

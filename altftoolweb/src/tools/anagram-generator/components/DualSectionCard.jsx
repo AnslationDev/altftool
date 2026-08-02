@@ -22,7 +22,7 @@ export default function DualSectionCard({
         <motion.div
           whileHover={{ scale: 1.003 }}
           transition={{ duration: 0.3 }}
-          className={`w-full ${leftWidth} rounded-[24px] bg-[#FAFAFA] dark:bg-surface-soft/90 p-6 sm:p-7 flex flex-col justify-between border border-black/5 dark:border-border/60`}
+          className={`w-full ${leftWidth} rounded-[24px] bg-surface-soft/90 p-6 sm:p-7 flex flex-col justify-between border border-black/5 dark:border-border/60`}
         >
           {leftComponent}
         </motion.div>

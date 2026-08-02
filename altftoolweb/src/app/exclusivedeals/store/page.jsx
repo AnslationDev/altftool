@@ -68,6 +68,10 @@ export default function Page(props) {
           ]),
         ]}
       />
+      {/* This URL shipped no H1: PageView's highest heading is the sidebar's
+          "STORE CATEGORIES" H3. Visually hidden — the grid has no title slot —
+          but server-rendered and in the accessibility tree. */}
+      <h1 className="sr-only">Store coupons and deals by category</h1>
       <PageView {...props} />
     </>
   );

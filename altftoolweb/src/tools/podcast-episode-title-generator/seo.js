@@ -9,7 +9,7 @@ const seo = {
   ],
   benefits: [
     ["Scored against real limits", "Uses the published YouTube 100-character cap and the practical 60-character search cut."],
-    ["Front-loading checked", "Tells you the exact character position of your keyword, not just whether it is present."],
+    ["Front-loading checked", "When your keyword lands too late to front-load, the note names the exact character it starts at, not just that it is present somewhere in the title."],
     ["Eight patterns, one input set", "Fill in the topic once and compare structures side by side."],
   ],
   faqs: [

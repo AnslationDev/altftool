@@ -8,6 +8,17 @@ import PrankFrame from "./components/PrankFrame";
 import RenderPrank from "./pranks/RenderPrank";
 
 const wideComponents = new Set(["matrix", "pipes", "dvd", "static"]);
+const immersivePranksWithoutVisibleHeading = new Set([
+  "hacker",
+  "matrix-code-rain",
+  "google-terminal",
+  "fake-dos",
+  "bios",
+  "norton-commander",
+  "jurassic-park",
+  "jurassic-park/console",
+  "static-tv",
+]);
 
 export default function PranxApp({ slug }) {
   const prank = findPrank(slug);
@@ -24,7 +35,14 @@ export default function PranxApp({ slug }) {
     }
 
     if (isImmersivePrank) {
-      return <RenderPrank prank={prank} />;
+      return (
+        <>
+          {immersivePranksWithoutVisibleHeading.has(prank.slug) ? (
+            <h1 className="sr-only">{prank.title}</h1>
+          ) : null}
+          <RenderPrank prank={prank} />
+        </>
+      );
     }
 
     return (

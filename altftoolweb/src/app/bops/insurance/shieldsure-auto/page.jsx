@@ -177,8 +177,13 @@ export default function ShieldSureAutoPage() {
                 </a>
               </div>
               <div className="shieldsure-hero-trust">
-                <span><Star size={15} aria-hidden="true" /> 4.8/5 from surveyed drivers</span>
-                <span><ShieldCheck size={15} aria-hidden="true" /> Licensed agents</span>
+                {/*
+                  Was "4.8/5 from surveyed drivers" and "Licensed agents". No
+                  drivers were surveyed and no agent holds a licence — insurance
+                  licensing is a regulated claim, so it is the one that mattered
+                  most here.
+                */}
+                <span><ShieldCheck size={15} aria-hidden="true" /> Sample provider page</span>
                 <span><Clock size={15} aria-hidden="true" /> 24/7 claims line</span>
               </div>
             </div>

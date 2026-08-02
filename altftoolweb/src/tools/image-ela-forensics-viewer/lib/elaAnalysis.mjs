@@ -194,6 +194,125 @@ function parseJpegDimensions(bytes) {
   return null;
 }
 
+const JPEG_APP1_MARKER = 0xe1;
+const EXIF_ORIENTATION_TAG = 0x0112;
+const EXIF_ORIENTATIONS_THAT_SWAP_AXES = new Set([5, 6, 7, 8]);
+
+function readUint16(bytes, offset, littleEndian) {
+  if (offset < 0 || offset + 2 > bytes.length) return null;
+  return littleEndian
+    ? bytes[offset] + bytes[offset + 1] * 256
+    : bytes[offset] * 256 + bytes[offset + 1];
+}
+
+function readUint32(bytes, offset, littleEndian) {
+  if (offset < 0 || offset + 4 > bytes.length) return null;
+  return littleEndian
+    ? bytes[offset] +
+        bytes[offset + 1] * 256 +
+        bytes[offset + 2] * 65_536 +
+        bytes[offset + 3] * 16_777_216
+    : bytes[offset] * 16_777_216 +
+        bytes[offset + 1] * 65_536 +
+        bytes[offset + 2] * 256 +
+        bytes[offset + 3];
+}
+
+// Reads the Orientation tag (0x0112) out of a TIFF IFD0, as embedded in a
+// JPEG APP1 "Exif\0\0" segment. Returns 1-8 on a valid SHORT tag, otherwise
+// null.
+function readTiffOrientation(bytes, tiffStart) {
+  if (tiffStart + 8 > bytes.length) return null;
+  const isLittleEndian =
+    bytes[tiffStart] === 0x49 && bytes[tiffStart + 1] === 0x49;
+  const isBigEndian =
+    bytes[tiffStart] === 0x4d && bytes[tiffStart + 1] === 0x4d;
+  if (!isLittleEndian && !isBigEndian) return null;
+  if (readUint16(bytes, tiffStart + 2, isLittleEndian) !== 42) return null;
+  const ifd0Offset = readUint32(bytes, tiffStart + 4, isLittleEndian);
+  if (ifd0Offset === null || ifd0Offset < 8) return null;
+  const ifd0Start = tiffStart + ifd0Offset;
+  const entryCount = readUint16(bytes, ifd0Start, isLittleEndian);
+  if (!entryCount) return null;
+  for (let index = 0; index < entryCount; index += 1) {
+    const entryOffset = ifd0Start + 2 + index * 12;
+    const tag = readUint16(bytes, entryOffset, isLittleEndian);
+    if (tag === null) return null;
+    if (tag === EXIF_ORIENTATION_TAG) {
+      const type = readUint16(bytes, entryOffset + 2, isLittleEndian);
+      const value = readUint16(bytes, entryOffset + 8, isLittleEndian);
+      return type === 3 && value >= 1 && value <= 8 ? value : null;
+    }
+  }
+  return null;
+}
+
+// Scans JPEG marker segments for an APP1 "Exif\0\0" block and returns its
+// TIFF Orientation tag (1-8). Returns 1 (identity, no rotation) for non-JPEG
+// input or when no valid orientation tag is present, matching the default a
+// browser decoder assumes.
+export function parseJpegExifOrientation(value) {
+  const bytes = bytesFrom(value);
+  if (!bytes || detectRasterMime(bytes) !== "image/jpeg") return 1;
+
+  let offset = 2;
+  while (offset + 1 < bytes.length) {
+    while (offset < bytes.length && bytes[offset] !== 0xff) offset += 1;
+    while (offset < bytes.length && bytes[offset] === 0xff) offset += 1;
+    if (offset >= bytes.length) break;
+    const marker = bytes[offset];
+    offset += 1;
+    if (marker === 0x00) continue;
+    if (
+      marker === 0x01 ||
+      marker === 0xd8 ||
+      marker === 0xd9 ||
+      (marker >= 0xd0 && marker <= 0xd7)
+    ) {
+      continue;
+    }
+    if (marker === 0xda) break;
+    const segmentLength = readUint16BigEndian(bytes, offset);
+    if (segmentLength === null || segmentLength < 2) break;
+    const payloadOffset = offset + 2;
+    if (
+      marker === JPEG_APP1_MARKER &&
+      payloadOffset + 6 <= bytes.length &&
+      bytes[payloadOffset] === 0x45 &&
+      bytes[payloadOffset + 1] === 0x78 &&
+      bytes[payloadOffset + 2] === 0x69 &&
+      bytes[payloadOffset + 3] === 0x66 &&
+      bytes[payloadOffset + 4] === 0x00 &&
+      bytes[payloadOffset + 5] === 0x00
+    ) {
+      const orientation = readTiffOrientation(bytes, payloadOffset + 6);
+      if (orientation) return orientation;
+    }
+    if (offset + segmentLength > bytes.length) break;
+    offset += segmentLength;
+  }
+  return 1;
+}
+
+// A browser decodes a JPEG's pixels already rotated per its EXIF Orientation
+// tag (image-orientation: from-image is the modern default), so the
+// dimensions naturally reported by that decode are the raw header
+// width/height with axes swapped for a 90/270-degree orientation (5-8).
+// This projects the EXIF-blind header dimensions onto what a compliant
+// decoder should report, so callers can validate against the correct
+// expectation instead of always assuming an unrotated decode.
+export function applyExifOrientationToDimensions(rawDimensions, orientation) {
+  if (!rawDimensions) return rawDimensions;
+  if (!EXIF_ORIENTATIONS_THAT_SWAP_AXES.has(Number(orientation))) {
+    return rawDimensions;
+  }
+  return {
+    ...rawDimensions,
+    width: rawDimensions.height,
+    height: rawDimensions.width,
+  };
+}
+
 function parseWebpDimensions(bytes) {
   let offset = 12;
   while (offset + 8 <= bytes.length) {

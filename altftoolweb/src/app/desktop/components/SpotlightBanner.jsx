@@ -48,9 +48,9 @@ export default function SpotlightBanner() {
             Spotlight
           </span>
 
-          <h1 className="heading text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight">
+          <h2 className="heading text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-tight">
             Watch &apos;Forever After, Never Again&apos;
-          </h1>
+          </h2>
 
           <p className="text-gray-300 mt-3 text-sm sm:text-base description">
             Catch this trending short drama

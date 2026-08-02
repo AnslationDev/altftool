@@ -18,7 +18,7 @@ const BTN =
 const PRIMARY_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 const GROUPS = Array.from(new Set(HARDENING_STEPS.map((step) => step.group)));
-const DEFAULT_DONE = ["wifi-passphrase", "wpa2-aes"];
+const DEFAULT_DONE = ["wifi-passphrase", "wpa2-wpa3"];
 const BAND_TEXT = {
   hardened: "text-[var(--success)]",
   good: "text-[var(--primary)]",
@@ -88,7 +88,14 @@ export default function ToolHome() {
           </p>
 
           <div className="mt-4 flex flex-wrap gap-2">
-            <button type="button" className={BTN} onClick={() => setCompleted(HARDENING_STEPS.map((step) => step.id))}>
+            <button
+              type="button"
+              className={BTN}
+              onClick={() => {
+                setCompleted(HARDENING_STEPS.map((step) => step.id));
+                setNotApplicable([]);
+              }}
+            >
               Mark all done
             </button>
             <button type="button" className={BTN} onClick={() => setCompleted([])}>

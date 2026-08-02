@@ -1,5 +1,5 @@
 .css-formatter-tool {
-  min-height: 100vh;
+  min-height: 100dvh;
   --cf-surface: color-mix(in srgb, var(--card), transparent 18%);
   --cf-surface-strong: color-mix(in srgb, var(--card), transparent 5%);
   --cf-line: color-mix(in srgb, var(--primary), var(--border) 70%);

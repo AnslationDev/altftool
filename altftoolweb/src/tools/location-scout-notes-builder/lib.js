@@ -51,8 +51,12 @@ export function parseIsoDate(value) {
   return { year, month, day, stamp };
 }
 
+/** True for a value that was never actually typed — must be checked before Number(), since Number("") is 0. */
+const isBlank = (value) => value === "" || value === null || typeof value === "undefined";
+
 /** Convert a UTC offset in hours (for example -4.5) to whole minutes. */
 export function utcOffsetMinutesFromHours(hours) {
+  if (isBlank(hours)) return NaN;
   const value = Number(hours);
   if (!Number.isFinite(value)) return NaN;
   return Math.round(value * 60);
@@ -219,6 +223,11 @@ export function compassPoint(azimuth) {
 export function sunTimes({ dateIso, latitude, longitude, utcOffsetMinutes }) {
   const date = parseIsoDate(dateIso);
   if (!date) return { error: "Enter the shoot date as YYYY-MM-DD." };
+
+  // Check for a cleared field before Number() converts "" to 0 and hides it.
+  if (isBlank(latitude) || isBlank(longitude) || isBlank(utcOffsetMinutes)) {
+    return { error: "Enter valid numbers for latitude, longitude and UTC offset." };
+  }
 
   const lat = Number(latitude);
   const lon = Number(longitude);

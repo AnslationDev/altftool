@@ -199,8 +199,6 @@ export function speedLimitFor(roadId, conditions = {}) {
     label: entry.label,
     kmh,
     mph: round(kmh / KMH_PER_MPH, 0),
-    advisoryKmh: null,
-    advisoryMph: null,
     note: entry.note,
   };
 }
@@ -340,12 +338,10 @@ export function permitCheck({ licenceOrigin, ageYears, stayDays } = {}) {
 /** Everything the UI needs in one pure call. */
 export function assessTrip(input = {}) {
   const alcohol = alcoholLimitFor(input);
-  if (alcohol.error) return { error: alcohol.error };
   const permit = permitCheck(input);
-  if (permit.error) return { error: permit.error };
 
   const held = toNumber(input.licenceHeldYears);
-  const novice = held < NOVICE_YEARS;
+  const novice = Number.isFinite(held) ? held < NOVICE_YEARS : false;
 
   return {
     country: COUNTRY,
@@ -359,5 +355,6 @@ export function assessTrip(input = {}) {
     }),
     equipment: EQUIPMENT,
     keyRules: KEY_RULES,
+    error: alcohol.error || permit.error || null,
   };
 }

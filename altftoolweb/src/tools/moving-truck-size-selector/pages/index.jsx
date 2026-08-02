@@ -234,7 +234,7 @@ export default function ToolHome() {
             ["Furniture and appliances", hasError ? DASH : `${DEC.format(result.itemCuft)} cu ft`],
             ["Cartons", hasError ? DASH : `${DEC.format(result.cartonCuft)} cu ft`],
             ["Other / unlisted", hasError ? DASH : `${DEC.format(result.extraCuft)} cu ft`],
-            ["Estimated weight (7 lb/cu ft)", hasError ? DASH : `${NUM.format(result.weightKg)} kg`],
+            ["Estimated weight", hasError ? DASH : `${NUM.format(result.weightKg)} kg`],
             ["Usable body volume", hasError ? DASH : `${NUM.format(result.recommended.usableCuft)} cu ft per load`],
             ["Body fill", hasError ? DASH : `${NUM.format(result.fillPercent)}%`],
             ["Spare capacity", hasError ? DASH : `${NUM.format(result.spareCuft)} cu ft`],

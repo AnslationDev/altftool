@@ -105,8 +105,13 @@ export function computeEnduranceProtein({
   }
 
   const sessions = Number(sessionsPerWeek);
-  if (!Number.isFinite(sessions) || sessions < 0 || sessions > MAX_SESSIONS_PER_WEEK) {
-    return { error: `Sessions per week should be between 0 and ${MAX_SESSIONS_PER_WEEK}.` };
+  if (
+    !Number.isFinite(sessions) ||
+    !Number.isInteger(sessions) ||
+    sessions < 0 ||
+    sessions > MAX_SESSIONS_PER_WEEK
+  ) {
+    return { error: `Sessions per week should be a whole number between 0 and ${MAX_SESSIONS_PER_WEEK}.` };
   }
 
   const age = Number(ageYears);
@@ -134,8 +139,20 @@ export function computeEnduranceProtein({
 
   let gPerKg = band.gPerKg;
   if (energyDeficit) gPerKg += ENERGY_DEFICIT_BONUS_G_PER_KG;
-  if (isMasters && gPerKg < MASTERS_FLOOR_G_PER_KG) gPerKg = MASTERS_FLOOR_G_PER_KG;
+  // Track whether the masters floor actually raised the running value (as
+  // opposed to a no-op because the energy-deficit bonus already reached it),
+  // so the note below can attribute the change to the right cause.
+  const mastersFloorFired = isMasters && gPerKg < MASTERS_FLOOR_G_PER_KG;
+  if (mastersFloorFired) gPerKg = MASTERS_FLOOR_G_PER_KG;
   gPerKg = Math.min(ATHLETE_MAX_G_PER_KG, Math.max(ATHLETE_MIN_G_PER_KG, gPerKg));
+
+  // Baseline: what the rate would be with neither the deficit bonus nor the
+  // masters floor applied, just the volume band clamped to the position-stand
+  // range. Comparing the final rate against this tells us whether the
+  // deficit bonus actually moved the displayed number, or was fully absorbed
+  // by the elite-volume ceiling clamp.
+  const baselineGPerKg = Math.min(ATHLETE_MAX_G_PER_KG, Math.max(ATHLETE_MIN_G_PER_KG, band.gPerKg));
+  const deficitChangedRate = energyDeficit && round(gPerKg, 2) !== round(baselineGPerKg, 2);
 
   const dailyTarget = gPerKg * weight;
   const dailyMin = ATHLETE_MIN_G_PER_KG * weight;
@@ -163,12 +180,12 @@ export function computeEnduranceProtein({
   );
 
   const notes = [];
-  if (energyDeficit) {
+  if (deficitChangedRate) {
     notes.push(
       `Energy deficit adds ${ENERGY_DEFICIT_BONUS_G_PER_KG} g/kg, because protein needs rise when calories are restricted.`,
     );
   }
-  if (isMasters && band.gPerKg < MASTERS_FLOOR_G_PER_KG) {
+  if (mastersFloorFired) {
     notes.push(
       `Age ${round(age)} applies the masters floor of ${MASTERS_FLOOR_G_PER_KG} g/kg — older athletes respond less to small protein doses.`,
     );

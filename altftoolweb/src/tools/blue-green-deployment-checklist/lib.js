@@ -331,7 +331,11 @@ export function buildCutoverPlan(input) {
 
   // The last ramp entry is 100 %, which is covered by the final soak instead.
   const rampMinutes = (ramp.length - 1) * perStepSoakMinutes;
-  const drainMinutes = mechanism === "dns" ? 0 : connectionDrainSeconds / 60;
+  // Only load-balancer/ingress mechanisms get a drain-wait checklist item (see
+  // phaseItems' `cutover` block below) — keep this in sync with that condition
+  // so the window total matches the steps actually listed.
+  const drainMinutes =
+    mechanism === "load-balancer" || mechanism === "ingress" ? connectionDrainSeconds / 60 : 0;
   const windowMinutes = Math.round(
     PRECHECK_MINUTES + rampMinutes + VERIFY_MINUTES + drainMinutes + soakMinutes + dnsWaitSeconds / 60,
   );

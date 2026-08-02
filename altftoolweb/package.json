@@ -8,7 +8,7 @@
     "npm": ">=11"
   },
   "scripts": {
-    "generate:registry": "node scripts/generate-tool-meta.mjs && node scripts/generate-tool-runtime-map.mjs && node scripts/generate-tool-seo-map.mjs",
+    "generate:registry": "node scripts/generate-tool-meta.mjs && node scripts/generate-tool-runtime-map.mjs && node scripts/generate-tool-seo-map.mjs && node scripts/generate-tool-network-map.mjs",
     "predev": "npm run generate:registry",
     "dev": "next dev --webpack",
     "prebuild": "npm run generate:registry",
@@ -165,7 +165,7 @@
     "pako": "^2.2.0",
     "papaparse": "^5.5.3",
     "pdf-lib": "^1.17.1",
-    "pdfjs-dist": "^5.3.93",
+    "pdfjs-dist": "5.7.284",
     "perfect-freehand": "^1.2.3",
     "prettier": "^3.9.5",
     "prop-types": "^15.8.1",

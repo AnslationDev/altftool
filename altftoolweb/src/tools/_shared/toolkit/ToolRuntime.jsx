@@ -10,8 +10,8 @@ import {
   RotateCcw,
   Sparkles,
   Upload,
-  Wand2,
 } from "lucide-react";
+import Icon from "@/shared/ui/Icon";
 import { safeCopyText } from "@/shared/utils/clipboard";
 import {
   coerceValues,
@@ -113,15 +113,13 @@ export default function ToolRuntime({ spec }) {
     pushHistory();
   };
 
-  const Ico = spec.icon ? Wand2 : Sparkles;
-
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-5xl">
         {/* Header */}
         <section className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)]">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase text-[var(--primary)]">
-            <Ico className="h-4 w-4" />
+            <Icon name={spec.icon || "sparkles"} className="h-4 w-4" />
             {spec.badge || "Tool"}
           </div>
           <h1 className="text-3xl font-semibold leading-tight">{spec.title}</h1>

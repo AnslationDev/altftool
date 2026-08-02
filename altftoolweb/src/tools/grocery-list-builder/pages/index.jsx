@@ -357,6 +357,7 @@ export default function ToolHome() {
   };
 
   const clearAll = () => {
+    if (!window.confirm("Empty this list? All items will be removed.")) return;
     updateActiveList((list) => ({ ...list, items: [] }));
   };
 
@@ -372,6 +373,7 @@ export default function ToolHome() {
 
   const deleteList = () => {
     if (lists.length <= 1) return;
+    if (!window.confirm(`Delete "${activeList.name}" and all its items?`)) return;
     const remaining = lists.filter((list) => list.id !== activeListId);
     setLists(remaining);
     setActiveListId(remaining[0].id);

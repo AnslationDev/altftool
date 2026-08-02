@@ -110,7 +110,7 @@ export const LETTER_TYPES = [
     kind: "aupcharik",
     label: "संपादक के नाम पत्र",
     english: "Letter to the editor",
-    defaultRecipient: "सेवा में, संपादक महोदय",
+    defaultRecipient: "संपादक महोदय",
     defaultOffice: "दैनिक जागरण",
     vishay: "बढ़ते वायु प्रदूषण की ओर ध्यान आकर्षित करने हेतु",
     guidance:

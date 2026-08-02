@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   ArrowLeft,
   ArrowRight,
@@ -168,6 +168,9 @@ export default function ToolHome() {
   const [answers, setAnswers] = useState(() => emptyAnswers(questions.length));
   const [isFinished, setIsFinished] = useState(false);
   const [showReview, setShowReview] = useState(false);
+  const resultsHeadingRef = useRef(null);
+  const questionHeadingRef = useRef(null);
+  const isFirstRender = useRef(true);
 
   const totalQuestions = questions.length;
   const currentQuestion = questions[currentIndex] || questions[0];
@@ -193,6 +196,18 @@ export default function ToolHome() {
     };
   }, [answers, questions, totalQuestions]);
 
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    if (isFinished) {
+      resultsHeadingRef.current?.focus();
+    } else {
+      questionHeadingRef.current?.focus();
+    }
+  }, [isFinished]);
+
   function resetQuiz(nextCategoryId = categoryId) {
     const nextQuestions = buildQuestions(nextCategoryId);
     setAnswers(emptyAnswers(nextQuestions.length));
@@ -202,6 +217,13 @@ export default function ToolHome() {
   }
 
   function changeCategory(nextCategoryId) {
+    const hasProgress = !isFinished && (currentIndex > 0 || answers.some((answer) => answer !== null));
+    if (hasProgress) {
+      const confirmed = window.confirm(
+        "Switching category will clear your current quiz progress and answers. Continue?",
+      );
+      if (!confirmed) return;
+    }
     setCategoryId(nextCategoryId);
     resetQuiz(nextCategoryId);
   }
@@ -257,7 +279,11 @@ export default function ToolHome() {
                 explanation.
               </p>
             </div>
-            <div className="grid min-w-0 grid-cols-3 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)]">
+            <div
+              className="grid min-w-0 grid-cols-3 overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)]"
+              role="status"
+              aria-live="polite"
+            >
               <HeaderMetric label="Questions" value={totalQuestions} />
               <HeaderMetric label="Score" value={result.correct} />
               <HeaderMetric label="Progress" value={`${progress}%`} />
@@ -304,19 +330,21 @@ export default function ToolHome() {
         {!isFinished ? (
           <section className="mt-6 grid gap-6 2xl:grid-cols-[320px_1fr]">
             <aside className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-sm font-semibold">Progress</p>
-                <span className="text-sm font-semibold text-[var(--primary)]">{progress}%</span>
-              </div>
-              <div
-                className="mt-3 h-3 overflow-hidden rounded-full bg-[var(--muted)]"
-                role="progressbar"
-                aria-label="Quiz progress"
-                aria-valuemin={0}
-                aria-valuemax={100}
-                aria-valuenow={progress}
-              >
-                <div className="h-full rounded-full bg-[var(--primary)] transition-all" style={{ width: `${progress}%` }} />
+              <div role="status" aria-live="polite">
+                <div className="flex items-center justify-between gap-3">
+                  <p className="text-sm font-semibold">Progress</p>
+                  <span className="text-sm font-semibold text-[var(--primary)]">{progress}%</span>
+                </div>
+                <div
+                  className="mt-3 h-3 overflow-hidden rounded-full bg-[var(--muted)]"
+                  role="progressbar"
+                  aria-label="Quiz progress"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={progress}
+                >
+                  <div className="h-full rounded-full bg-[var(--primary)] transition-all" style={{ width: `${progress}%` }} />
+                </div>
               </div>
 
               <div className="tool-compact-grid mt-5">
@@ -353,7 +381,13 @@ export default function ToolHome() {
               <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">
                 {activeCategory.label} - Single correct answer
               </p>
-              <h2 className="mt-3 text-2xl font-semibold leading-snug">{currentQuestion.question}</h2>
+              <h2
+                ref={questionHeadingRef}
+                tabIndex={-1}
+                className="mt-3 text-2xl font-semibold leading-snug focus:outline-none focus:shadow-[var(--anslation-ds-focus-ring)]"
+              >
+                {currentQuestion.question}
+              </h2>
 
               <fieldset className="mt-6 space-y-3">
                 <legend className="sr-only">Choose one answer</legend>
@@ -406,7 +440,13 @@ export default function ToolHome() {
                 </div>
                 <div>
                   <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">Final result</p>
-                  <h2 className="text-2xl font-semibold">{result.percentage}% Score</h2>
+                  <h2
+                    ref={resultsHeadingRef}
+                    tabIndex={-1}
+                    className="text-2xl font-semibold focus:outline-none focus:shadow-[var(--anslation-ds-focus-ring)]"
+                  >
+                    {result.percentage}% Score
+                  </h2>
                 </div>
               </div>
 

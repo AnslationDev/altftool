@@ -40,7 +40,7 @@ const foundation = {
   "quoteLabel": "Get a Free Quote",
   "quoteUrl": "https://example.com/quote/foundation",
   "seo": {
-    "title": "Foundation Repair Guide: Cracks, Settling, Piers & Waterproofing",
+    "title": "Foundation Repair Guide: Cracks and Piers",
     "description": "Learn how foundation problems really start, when cracks and settling turn serious, and how piering, slab jacking, wall anchors, and waterproofing fix them."
   },
   "services": [

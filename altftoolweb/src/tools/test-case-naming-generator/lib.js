@@ -108,6 +108,16 @@ export function toCasing(words, casing) {
 const clean = (text) => String(text ?? "").trim().replace(/\s+/g, " ").replace(/[.;]+$/, "");
 
 /**
+ * True when a scenario row has the minimum a test name needs (a trigger and
+ * an expected outcome). Rows that fail this are silently excluded from
+ * `generateTestNames`' output — exported so the UI can flag those rows
+ * inline instead of only dropping them without explanation.
+ */
+export function isScenarioUsable(row) {
+  return Boolean(clean(row && row.when) && clean(row && row.then));
+}
+
+/**
  * Compose the human-readable sentence for one scenario.
  * `given` is optional; the other two are the minimum a name needs.
  */
@@ -169,9 +179,10 @@ export function toIdentifier(sentence, { framework, casing }) {
   if (framework === "go" && !/^Test[^a-z]/.test(identifier)) {
     warnings.push("Go only runs functions matching TestXxx where the character after Test is not lower case.");
   }
-  if (identifier.length > READABLE_NAME_LIMIT) {
-    warnings.push(`${identifier.length} characters is hard to read in a CI failure list — trim the scenario.`);
-  }
+  // The readable-length check is applied by the caller against whichever
+  // string is actually emitted for this framework (the identifier for
+  // runners that need one, the display sentence otherwise) — see
+  // generateTestNames, which knows which one that is.
   return { identifier, warnings };
 }
 
@@ -220,8 +231,12 @@ function renderSnippet({ unit, framework, cases }) {
         ),
       ].join("\n\n");
 
-    case "go":
-      return cases
+    case "go": {
+      // Go package names are lower-case with no separators; fall back to a
+      // generic name so the file always has a valid, compiling package clause.
+      let packageName = toWords(unit).join("") || "main";
+      if (/^[0-9]/.test(packageName)) packageName = `pkg${packageName}`;
+      const body = cases
         .map((item) =>
           [
             `// ${item.humanSentence}`,
@@ -231,9 +246,17 @@ function renderSnippet({ unit, framework, cases }) {
           ].join("\n"),
         )
         .join("\n\n");
+      return [`package ${packageName}`, "", 'import "testing"', "", body].join("\n");
+    }
 
-    case "junit5":
-      return [
+    case "junit5": {
+      const header = [
+        "import org.junit.jupiter.api.DisplayName;",
+        "import org.junit.jupiter.api.Test;",
+        "",
+        "import static org.junit.jupiter.api.Assertions.fail;",
+      ].join("\n");
+      const classBody = [
         `class ${pascal}Test {`,
         ...cases.map((item) =>
           indent(
@@ -243,9 +266,11 @@ function renderSnippet({ unit, framework, cases }) {
         ),
         "}",
       ].join("\n\n");
+      return [header, classBody].join("\n\n");
+    }
 
-    case "xunit":
-      return [
+    case "xunit": {
+      const classBody = [
         `public class ${pascal}Tests`,
         "{",
         ...cases.map((item) =>
@@ -253,6 +278,8 @@ function renderSnippet({ unit, framework, cases }) {
         ),
         "}",
       ].join("\n\n");
+      return ["using Xunit;", classBody].join("\n\n");
+    }
 
     case "rspec":
       return [
@@ -331,25 +358,45 @@ export function generateTestNames({
     return { error: "Name what is under test — a function, class or feature — so the suite has a subject." };
   }
 
-  const usable = (Array.isArray(scenarios) ? scenarios : []).filter(
-    (row) => clean(row && row.when) && clean(row && row.then),
-  );
-  if (usable.length === 0) {
+  const scenarioList = Array.isArray(scenarios) ? scenarios : [];
+  const usableEntries = scenarioList
+    .map((row, index) => ({ row, scenarioNumber: index + 1 }))
+    .filter(({ row }) => isScenarioUsable(row));
+  if (usableEntries.length === 0) {
     return { error: "Every test needs at least a trigger and an expected outcome. Fill in one when and one then." };
   }
+  const droppedScenarios = scenarioList
+    .map((row, index) => ({ row, scenarioNumber: index + 1 }))
+    .filter(({ row }) => !isScenarioUsable(row))
+    .map(({ scenarioNumber }) => scenarioNumber);
 
-  const cases = usable.map((row) => {
+  const cases = usableEntries.map(({ row, scenarioNumber }) => {
     const sentence = buildSentence({ unit: unitClean, ...row, convention });
     const { identifier, warnings } = toIdentifier(sentence, { framework, casing });
     const displayName = convention === "unit-state-result" ? identifier : sentence;
     // Always keep a plain-English phrasing for docstrings and comments, even
     // when the chosen convention renders the visible name as an identifier.
     const humanSentence = buildSentence({ unit: unitClean, ...row, convention: "given-when-then" });
+    // The name actually emitted into the generated file/snippet: the
+    // identifier for frameworks whose runner requires one (pytest/go/junit5/
+    // xunit — see FRAMEWORKS' identifierNames flag and renderSnippet), or the
+    // display sentence embedded as a string title for the rest (jest/vitest/
+    // mocha/rspec). Duplicate and length checks must key off this, not the
+    // decorative `identifier` field those frameworks never actually emit.
+    const emittedName = frameworkMeta.identifierNames ? identifier : displayName;
+    const caseWarnings = [...warnings];
+    if (emittedName.length > READABLE_NAME_LIMIT) {
+      caseWarnings.push(
+        `${emittedName.length} characters is hard to read in a CI failure list — trim the scenario.`,
+      );
+    }
     return {
       sentence: displayName,
       humanSentence,
       identifier,
-      warnings,
+      emittedName,
+      warnings: caseWarnings,
+      scenarioNumber,
       given: clean(row.given),
       when: clean(row.when),
       then: clean(row.then),
@@ -358,8 +405,8 @@ export function generateTestNames({
 
   const seen = new Map();
   for (const item of cases) {
-    const count = (seen.get(item.identifier) || 0) + 1;
-    seen.set(item.identifier, count);
+    const count = (seen.get(item.emittedName) || 0) + 1;
+    seen.set(item.emittedName, count);
     if (count > 1) {
       item.warnings = [
         ...item.warnings,
@@ -375,5 +422,6 @@ export function generateTestNames({
     cases,
     snippet: renderSnippet({ unit: unitClean, framework, cases }),
     warnings: cases.flatMap((item) => item.warnings),
+    droppedScenarios,
   };
 }

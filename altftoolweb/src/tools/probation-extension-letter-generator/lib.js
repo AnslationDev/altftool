@@ -17,9 +17,6 @@
  * All date maths here is pure — the caller supplies every date as a yyyy-mm-dd string.
  */
 
-/** Model Standing Orders, Schedule I clause 2 — the classic three-month probation reference. */
-export const MODEL_STANDING_ORDERS_PROBATION_MONTHS = 3;
-
 /** Service threshold after which most state Shops Acts require notice before termination. */
 export const NOTICE_THRESHOLD_MONTHS = 6;
 
@@ -133,6 +130,13 @@ export function computeProbationExtension(input = {}) {
   const totalDays = daysBetween(joining, newEndDate);
   const totalMonths = totalDays / 30.4375; // mean calendar month length (365.25 / 12)
   const daysAfterOriginalEnd = daysBetween(originalEnd, letterDate);
+  const reviewGapFromLetter = daysBetween(letterDate, reviewDate);
+
+  if (reviewGapFromLetter !== null && reviewGapFromLetter <= 0) {
+    return {
+      error: `With this extension length and review lead time, the review meeting would fall on ${formatLongDate(reviewDate)}, on or before the letter date of ${formatLongDate(letterDate)}. Shorten the review lead time or lengthen the extension so the review happens after this letter is issued.`,
+    };
+  }
 
   const warnings = [];
   if (daysAfterOriginalEnd > 0) {
@@ -150,7 +154,7 @@ export function computeProbationExtension(input = {}) {
       `The employee will have crossed ${NOTICE_THRESHOLD_MONTHS} months of continuous service. Most state Shops and Establishments Acts require notice or wages in lieu once that threshold is passed, whether or not the person is still on probation.`,
     );
   }
-  if (reviewDate && daysBetween(letterDate, reviewDate) !== null && daysBetween(letterDate, reviewDate) < 7) {
+  if (reviewGapFromLetter !== null && reviewGapFromLetter < 7) {
     warnings.push("The review date falls within a week of the letter — leave the employee real time to improve.");
   }
 

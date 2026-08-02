@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Terminal } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { COMMON_FLAGS, buildGrepCommand } from "../lib";
 
 const INPUT_CLASS =
@@ -53,7 +54,7 @@ export default function ToolHome() {
   const [contextAfter, setContextAfter] = useState(DEFAULTS.contextAfter);
   const [includeGlobs, setIncludeGlobs] = useState(DEFAULTS.includeGlobs);
   const [excludeGlobs, setExcludeGlobs] = useState(DEFAULTS.excludeGlobs);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -93,13 +94,7 @@ export default function ToolHome() {
 
   const copyResult = async () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.command);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    await copy("grep-command", result.command, { label: "Command" });
   };
 
   const reset = () => {
@@ -115,7 +110,6 @@ export default function ToolHome() {
     setContextAfter(DEFAULTS.contextAfter);
     setIncludeGlobs(DEFAULTS.includeGlobs);
     setExcludeGlobs(DEFAULTS.excludeGlobs);
-    setCopied(false);
   };
 
   return (
@@ -340,15 +334,15 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the generated command"
+              aria-label={isCopied("grep-command") ? "Copied" : "Copy the generated command"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("grep-command") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy command"}
+              {isCopied("grep-command") ? "Copied!" : "Copy command"}
             </button>
             <button
               type="button"
@@ -359,6 +353,9 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

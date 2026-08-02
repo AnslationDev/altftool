@@ -1,6 +1,6 @@
 "use client";
 
-import { ShieldAlert, TrendingUp, CheckCircle2 } from 'lucide-react';
+import { ShieldAlert, CheckCircle2 } from 'lucide-react';
 import InvestorRiskQuiz from "../components/InvestorRiskQuiz";
 
 export default function ToolHome() {

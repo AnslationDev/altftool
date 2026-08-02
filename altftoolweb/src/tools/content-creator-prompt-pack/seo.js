@@ -27,7 +27,7 @@ const seo = {
     ],
     [
       "How fast should I speak in a short-form video?",
-      "Short-form delivery usually lands between 160 and 200 words per minute, versus 130 to 150 for an explainer or a podcast. Faster delivery buys you more content per second but reduces comprehension, so slow down for anything with numbers or instructions in it.",
+      "Short-form delivery usually lands between 160 and 200 words per minute, versus 120 to 150 for an explainer or a podcast. Faster delivery buys you more content per second but reduces comprehension, so slow down for anything with numbers or instructions in it.",
     ],
   ],
 };

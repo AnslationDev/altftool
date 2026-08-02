@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, CloudCog, Copy, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   BASE_PLAN_PRICE,
   CPU_OVERAGE_PER_M_MS,
@@ -52,7 +53,7 @@ export default function ToolHome() {
   const [kvDeletesM, setKvDeletesM] = useState(DEFAULTS.kvDeletesM);
   const [kvListsM, setKvListsM] = useState(DEFAULTS.kvListsM);
   const [kvStorageGb, setKvStorageGb] = useState(DEFAULTS.kvStorageGb);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -82,15 +83,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "Workers cost estimate" });
   };
 
   const reset = () => {
@@ -101,7 +96,7 @@ export default function ToolHome() {
     setKvDeletesM(DEFAULTS.kvDeletesM);
     setKvListsM(DEFAULTS.kvListsM);
     setKvStorageGb(DEFAULTS.kvStorageGb);
-    setCopied(false);
+    resetCopyState();
   };
 
   const rows = hasError
@@ -275,7 +270,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Estimated monthly Workers bill
             </p>
@@ -293,15 +288,19 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the Workers cost estimate"
+              aria-label={
+                isCopied("result")
+                  ? "Copied the Workers cost estimate to clipboard"
+                  : "Copy the Workers cost estimate"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
@@ -312,10 +311,17 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

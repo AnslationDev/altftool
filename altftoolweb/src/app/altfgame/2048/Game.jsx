@@ -300,7 +300,7 @@ export default function Game2048({ isPreview = false }) {
             {/* Header / Score */}
             <div className={`w-full max-w-sm flex justify-between items-end mb-6 ${isPreview ? 'scale-75 origin-top' : ''}`}>
                 <div>
-                    <h1 className="text-4xl md:text-5xl font-black text-yellow-700 leading-none">2048</h1>
+                    <h2 className="text-4xl md:text-5xl font-black text-yellow-700 leading-none">2048</h2>
                     <p className="text-yellow-600 font-bold text-sm tracking-widest opacity-70">PUZZLE</p>
                 </div>
                 <div className="flex gap-2 text-center">

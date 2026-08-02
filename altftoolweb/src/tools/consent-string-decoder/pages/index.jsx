@@ -25,12 +25,12 @@ const DEFAULT_STRING = "CP1TeJAP5UWFQAHADBENB7EoAOAAAAMAAAYgH0QAgAEQBkAMgABVAAQk
 const WARNING_STYLES = {
   error: {
     wrap: "border-[var(--danger)]/40 bg-[var(--danger-soft)]",
-    text: "text-[var(--danger)]",
+    text: "text-[var(--anslation-ds-danger-text)]",
     Icon: XCircle,
   },
   warn: {
     wrap: "border-[var(--warning)]/40 bg-[var(--warning-soft)]",
-    text: "text-[var(--warning)]",
+    text: "text-[var(--anslation-ds-warning-text)]",
     Icon: AlertTriangle,
   },
   info: {
@@ -45,7 +45,7 @@ function Flag({ on, onLabel, offLabel }) {
     <span
       className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${
         on
-          ? "bg-[var(--success-soft)] text-[var(--success)]"
+          ? "bg-[var(--success-soft)] text-[var(--anslation-ds-success-text)]"
           : "bg-[var(--muted)] text-[var(--muted-foreground)]"
       }`}
     >
@@ -156,7 +156,7 @@ export default function ToolHome() {
       {failed ? (
         <div
           role="alert"
-          className="mt-6 rounded-xl border border-[var(--danger)]/40 bg-[var(--danger-soft)] p-4 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 rounded-xl border border-[var(--danger)]/40 bg-[var(--danger-soft)] p-4 text-sm font-medium text-[var(--anslation-ds-danger-text)]"
         >
           {result.error}
         </div>
@@ -296,7 +296,7 @@ export default function ToolHome() {
                       Segment {segment.index + 1}: {segment.name || `type ${segment.type}`}
                     </div>
                     {segment.error ? (
-                      <p className="mt-1 text-[var(--danger)]">{segment.error}</p>
+                      <p className="mt-1 text-[var(--anslation-ds-danger-text)]">{segment.error}</p>
                     ) : segment.vendors ? (
                       <p className="mt-1 break-words font-mono text-xs text-[var(--muted-foreground)]">
                         {segment.vendors.count} vendor{segment.vendors.count === 1 ? "" : "s"}:{" "}

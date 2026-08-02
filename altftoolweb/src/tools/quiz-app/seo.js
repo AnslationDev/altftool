@@ -3,7 +3,7 @@ const seo = {
     "Quiz App runs a 12-question multiple-choice round in one of five ready-made categories - Web Development, General Knowledge, Science, Aptitude and Digital Marketing - scoring you at the end as correct, wrong and skipped, plus a percentage. Nothing is revealed mid-quiz: you can move back and forth, change an answer or skip, and only after finishing does the review list every question with the right option and a one-line explanation of why. It suits anyone doing quick self-testing before an interview, a class test or an aptitude round.",
   useCases: [
     "You have a frontend interview tomorrow and want a fast check on semantic HTML, hooks, Grid versus Flexbox and list keys before you revise further.",
-    "A campus placement aptitude round is coming up and you want twelve timed-free practice sums on percentages, averages, speed and sequences with worked explanations.",
+    "A campus placement aptitude round is coming up and you want twelve untimed practice sums on percentages, averages, speed and sequences with worked explanations.",
     "A teacher wants a no-signup warm-up quiz to project in class, switching between the Science and General Knowledge decks between groups.",
   ],
   benefits: [

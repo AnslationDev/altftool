@@ -277,19 +277,24 @@ export default function ToolHome() {
             <div
               className="flex h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
               role="img"
-              aria-label={`Output tokens are ${Math.round(result.outputShare)} percent of conversation cost`}
+              aria-label={`Cost per conversation is ${Math.round(result.inputShare)} percent input tokens, ${Math.round(result.outputShare)} percent output tokens, and ${Math.round(result.retrievalShare)} percent retrieval and embedding cost`}
             >
               <span
                 className="block h-full bg-[var(--primary)]"
-                style={{ width: `${Math.max(0, Math.min(100, 100 - result.outputShare))}%` }}
+                style={{ width: `${Math.max(0, Math.min(100, result.inputShare))}%` }}
               />
               <span
                 className="block h-full bg-[var(--success)]"
                 style={{ width: `${Math.max(0, Math.min(100, result.outputShare))}%` }}
               />
+              <span
+                className="block h-full bg-[var(--info)]"
+                style={{ width: `${Math.max(0, Math.min(100, result.retrievalShare))}%` }}
+              />
             </div>
             <p className="mt-2 text-xs text-[var(--muted-foreground)]">
-              Input {Math.round(100 - result.outputShare)}% · Output {Math.round(result.outputShare)}%
+              Input {Math.round(result.inputShare)}% · Output {Math.round(result.outputShare)}% · Retrieval{" "}
+              {Math.round(result.retrievalShare)}%
             </p>
           </div>
         ) : null}

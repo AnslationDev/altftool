@@ -437,9 +437,9 @@ export default function BreakoutGame({ isPreview = false }) {
         {/* Overlays */}
         {gameState === "START" && (
             <div className="absolute inset-0 z-30 flex flex-col items-center justify-center bg-black/70 backdrop-blur-sm">
-                <h1 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 mb-2 drop-shadow-2xl">
+                <h2 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-600 mb-2 drop-shadow-2xl">
                     BREAKOUT
-                </h1>
+                </h2>
                 <p className="text-zinc-400 mb-8 text-sm uppercase tracking-widest">Smash the bricks</p>
                 <button
                     onClick={startGame}

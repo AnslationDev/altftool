@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Utensils } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { planExamDayMeals } from "../lib";
 
 const INPUT_CLASS =
@@ -23,7 +24,7 @@ const DEFAULTS = {
 export default function ToolHome() {
   const [reportingTime, setReportingTime] = useState(DEFAULTS.reportingTime);
   const [travelMinutes, setTravelMinutes] = useState(DEFAULTS.travelMinutes);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -47,21 +48,15 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result, reportingTime]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "exam day meal timeline" });
   };
 
   const reset = () => {
     setReportingTime(DEFAULTS.reportingTime);
     setTravelMinutes(DEFAULTS.travelMinutes);
-    setCopied(false);
+    resetCopyState();
   };
 
   const firstEvent = hasError ? null : result.events[0];
@@ -125,7 +120,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Your day starts at
             </p>
@@ -145,15 +140,15 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the exam day meal timeline"
+              aria-label={isCopied("result") ? "Copied the exam day meal timeline to clipboard" : "Copy the exam day meal timeline"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy timeline"}
+              {isCopied("result") ? "Copied!" : "Copy timeline"}
             </button>
             <button
               type="button"
@@ -164,11 +159,18 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
         {!hasError ? (
-          <ol className="mt-5 space-y-0 divide-y divide-[var(--border)]">
+          <ol
+            className="mt-5 space-y-0 divide-y divide-[var(--border)]"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             {result.events.map((event) => (
               <li key={`${event.time}-${event.label}`} className="flex items-start gap-4 py-3">
                 <span className="w-24 shrink-0 font-mono text-sm font-semibold text-[var(--primary)]">

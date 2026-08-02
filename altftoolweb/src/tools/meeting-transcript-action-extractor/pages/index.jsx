@@ -55,15 +55,18 @@ Attendees: @alice, @bob, @carol
 
 Meeting adjourned at 10:45 AM.`;
 
+// Tried in priority order per line; `group` is the capture group holding the
+// action-item message text (patterns that also capture a leading @mention or
+// assignee name use group 2, everything else uses group 1).
 const ACTION_PATTERNS = [
-  /action\s*item[:\s]+(.+)/gi,
-  /todo[:\s]+(.+)/gi,
-  /(?:will|need to|must|should)\s+(.+)/gi,
-  /assign(?:ed)?\s+(?:to\s+)?(\w+)\s+(.+)/gi,
-  /follow\s*up[:\s]+(.+)/gi,
-  /responsible\s*:?\s*(.+)/gi,
-  /\[x\]\s*(.+)/gi,
-  /@(\w+)\s+(.+)/gi,
+  { regex: /action\s*item[:\s]+(.+)/gi, group: 1 },
+  { regex: /todo[:\s]+(.+)/gi, group: 1 },
+  { regex: /(?:will|need to|must|should)\s+(.+)/gi, group: 1 },
+  { regex: /assign(?:ed)?\s+(?:to\s+)?(\w+)\s+(.+)/gi, group: 2 },
+  { regex: /follow\s*up[:\s]+(.+)/gi, group: 1 },
+  { regex: /responsible\s*:?\s*(.+)/gi, group: 1 },
+  { regex: /\[x\]\s*(.+)/gi, group: 1 },
+  { regex: /@(\w+)\s+(.+)/gi, group: 2 },
 ];
 
 const DECISION_PATTERNS = [
@@ -90,19 +93,36 @@ const DEADLINE_PATTERNS = [
   /(?:by\s+)?(next\s+\w+|this\s+\w+|tomorrow|friday|monday|tuesday|wednesday|thursday|saturday|sunday)/gi,
 ];
 
-function extractMatches(text, patterns) {
+// `patterns` may be plain /regex/ literals (group 1 holds the text) or
+// `{ regex, group }` configs for patterns whose message text lives in a
+// different capture group. When `firstMatchOnly` is set, only the first
+// match from the first pattern (in priority order) that matches is kept —
+// this is what keeps a single line from producing multiple action items.
+export function extractMatches(text, patterns, { firstMatchOnly = false } = {}) {
   const results = [];
-  for (const pattern of patterns) {
+  for (const config of patterns) {
+    const regex = config.regex || config;
+    const group = config.group ?? 1;
+    regex.lastIndex = 0;
     let match;
-    while ((match = pattern.exec(text)) !== null) {
-      const content = (match[1] || match[0]).trim();
-      if (content) results.push({ text: content, source: match[0] });
+    while ((match = regex.exec(text)) !== null) {
+      const content = (match[group] || match[0]).trim();
+      if (content) {
+        results.push({ text: content, source: match[0] });
+        if (firstMatchOnly) return results;
+      }
     }
   }
   return results;
 }
 
-function extractOwners(text) {
+// Strips a leading "@speaker:" prefix so owner-extraction only scans the
+// task/message portion of the line, not the person announcing it.
+export function stripSpeakerPrefix(text) {
+  return text.replace(/^@\w+:\s*/, "");
+}
+
+export function extractOwners(text) {
   const owners = [];
   let match;
   while ((match = OWNER_PATTERN.exec(text)) !== null) {
@@ -111,19 +131,19 @@ function extractOwners(text) {
   return owners;
 }
 
-function extractDeadlines(text, actionItems) {
+export function extractDeadlines(text) {
   const deadlines = [];
   for (const pattern of DEADLINE_PATTERNS) {
     let match;
     while ((match = pattern.exec(text)) !== null) {
       const dateText = (match[1] || match[0]).trim();
-      if (dateText) deadlines.push(dateText);
+      if (dateText && !deadlines.includes(dateText)) deadlines.push(dateText);
     }
   }
   return deadlines;
 }
 
-function assignContext(allLines) {
+export function assignContext(allLines) {
   const actions = [];
   const decisions = [];
   const keyPoints = [];
@@ -132,10 +152,10 @@ function assignContext(allLines) {
     const trimmed = line.trim();
     if (!trimmed) continue;
 
-    const matchedActions = extractMatches(trimmed, ACTION_PATTERNS);
+    const matchedActions = extractMatches(trimmed, ACTION_PATTERNS, { firstMatchOnly: true });
     if (matchedActions.length > 0) {
       for (const match of matchedActions) {
-        const owners = extractOwners(trimmed);
+        const owners = extractOwners(stripSpeakerPrefix(trimmed));
         const deadlines = extractDeadlines(trimmed);
         actions.push({ text: match.text, source: trimmed, owners, deadlines });
       }

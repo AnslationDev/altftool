@@ -151,6 +151,7 @@ export default function AppsListingClient({ apps, searchQuery = "" }) {
           <div className="home-hero-inner relative mx-auto max-w-[1320px] px-[var(--anslation-ds-gutter)] lg:!min-h-[calc(100svh-64px)]">
             <div className="grid items-center gap-8 lg:grid-cols-[0.86fr_0.88fr] xl:grid-cols-[0.9fr_0.84fr]">
               <div className="z-10 lg:-translate-y-10">
+                {/* The catalogue length is computed from the current app data. */}
                 <div className="home-reference-badge w-fit">
                   <Grid2X2 size={15} aria-hidden="true" />
                   {apps.length} Apps in the Catalogue

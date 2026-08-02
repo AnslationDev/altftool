@@ -10,7 +10,7 @@ import CTASection from './CTASection';
 import ExploreFooter from './ExploreFooter';
 import { Search, Compass } from 'lucide-react';
 
-export default function ExploreLanding({ onStartExploring, onNavigateHome, onNavigateExplore }) {
+export default function ExploreLanding({ heading, onStartExploring, onNavigateHome, onNavigateExplore }) {
   const [headerSearch, setHeaderSearch] = useState("");
 
   const handleExplore = (searchTerm) => {
@@ -101,6 +101,17 @@ export default function ExploreLanding({ onStartExploring, onNavigateHome, onNav
 
         </div>
       </header>
+
+      {/* 1b. Page heading. Rendered on the server and passed down from
+          app/altpintrest/page.jsx — everything else in this subtree is a client
+          component and the sections below only go as high as h2, so before this
+          the route shipped no h1 at all. It sits above the hero because the
+          hero is a full-viewport image collage with no text of its own. */}
+      {heading ? (
+        <div className="mx-auto w-full max-w-7xl px-4 pt-10 pb-4 sm:px-6 lg:px-8">
+          {heading}
+        </div>
+      ) : null}
 
       {/* 2. Hero Section */}
       <HeroSection onExplore={handleExplore} onSearchSubmit={handleExplore} />

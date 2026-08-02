@@ -118,6 +118,10 @@ export default function ToolHome() {
   };
 
   const clearStreak = () => {
+    const confirmed = window.confirm(
+      "Clear your saved streak? This permanently deletes your current streak, longest streak and last-studied date from this browser. This cannot be undone.",
+    );
+    if (!confirmed) return;
     setStreakError("");
     setStreakMessage("Streak cleared.");
     persist(EMPTY_STREAK);

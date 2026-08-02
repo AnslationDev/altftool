@@ -86,6 +86,24 @@ const sora = Sora({
 // site is reconciled; until then the duplicate costs more than the preload.
 // Geist stays preloaded regardless: it is what the 109 above-the-fold elements
 // on a mobile tool page actually paint in.
+//
+// Re-verified against the LIVE site at 390x844 on /tools/all/step-counter:
+// still true, so the preload stays. Of 411 text-bearing elements, Geist paints
+// 353 — including all 21 of the above-the-fold ones, first at y=-53.7 in the
+// header — and Inter paints 58, the first at y=10,144.8 of an 11,721 px page,
+// 12.0 viewports down and still entirely footer. document.fonts confirms only
+// two faces load at all: Geist (1 of 5) and Inter (1 of 7); Geist Mono (6),
+// Sora (2) and IBM Plex Sans (12) all report `unloaded`, so their preload:false
+// is correct and costs this route nothing.
+// The blocker survives too: src/app/altpintrest/PageView.jsx:8 still calls
+// Inter() with the default preload. next/font puts the preload marker in the
+// FILENAME, so today the two call sites agree and share ONE physical file —
+// e4af272ccee01ff0-s.p.woff2, 48,432 B, referenced from both
+// /_next/static/css/3a48d74d2874.css and /_next/static/css/6fd04d11f255.css.
+// Setting preload:false here alone would rename this layout's latin subset to a
+// non-".p." file while altpintrest kept the ".p." one: same bytes, two names,
+// two copies in the artifact. Reconcile altpintrest first, then drop this
+// preload and the critical path loses 48,432 B on every route.
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -242,21 +260,34 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" data-theme-mode="system" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${sora.variable} ${inter.variable} ${ibmPlexSans.variable}`}>
       <head>
-        {/* All four audited against PerformanceResourceTiming on /, /blogs and
-            /tools/all/step-counter; none removed, but they are not equal:
-              - googletagmanager: 1-2 requests on every route measured. Used.
-              - firebasestorage: 4 image requests on /blogs, none on / or a
-                tool page. Used on the routes that earn the traffic.
-              - clarity.ms: injected by clarity-init below, which is gated on
-                hostname !== localhost, so it cannot be observed here. Used in
-                production by code path, not by measurement.
-              - firestore: no request within 46 s on any of the three, with
-                sessionStorage cleared. Not proven unused either — AdsProvider
-                wraps every page and reads Firestore behind
-                requestIdleCallback, and blog/extensions/academy providers read
-                it on interaction. Later-in-session, so it stays. */}
-        <link rel="preconnect" href="https://firestore.googleapis.com" />
-        <link rel="preconnect" href="https://firebasestorage.googleapis.com" />
+        {/* Re-measured against PerformanceResourceTiming on the live site
+            (www.altftool.com, production build), /tools/all/step-counter at
+            390x844, 68.8 s after load with ads and analytics fully settled:
+
+              - googletagmanager: 3 requests, first at 148 ms. Used, early.
+              - clarity.ms:       1 request at 311 ms (then scripts.clarity.ms
+                                  and n.clarity.ms follow). Used.
+              - firestore:        0 requests in 68.8 s.
+              - firebasestorage:  0 requests in 68.8 s.
+
+            The two that fire keep their preconnect. The two that never open a
+            socket on this route are downgraded to dns-prefetch rather than
+            dropped, because they are not dead site-wide — firebasestorage
+            still serves /blogs images and AdsProvider still reads Firestore
+            behind requestIdleCallback. What they were spending is the part
+            preconnect adds on top of DNS: measured full TLS handshake 86 ms
+            (firestore) and 77 ms (firebasestorage) from this machine on wired
+            fibre, against 3 ms and 6 ms for the DNS lookup alone — and a
+            phone on radio pays considerably more than a wired host does.
+
+            This layout is the root, so both hints fire on all ~3,950 routes
+            while the 145 KB render-blocking stylesheet is still downloading.
+            Keeping DNS warm preserves most of the benefit for the routes that
+            do use these origins; only the unused handshake is given up.
+            (x-dns-prefetch-control: on is already set, so the hint is
+            honoured.) */}
+        <link rel="dns-prefetch" href="https://firestore.googleapis.com" />
+        <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="preconnect" href="https://www.clarity.ms" />
         <ProductionAdSenseScript enabled={shouldLoadGoogleAds} />

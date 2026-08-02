@@ -152,8 +152,14 @@ export default function ToolHome() {
         ["After — added cab and transit", money(result.extraTransportPerYear)],
         ["After — total per year", money(result.afterTotal)],
         ["Saving per month", money(result.monthlySavings)],
-        ["Fuel avoided per year", `${num1(result.unitsSaved)} ${result.fuelUnitLabel}`],
-        ["CO2 avoided per year", `${num1(result.co2SavedKg)} kg`],
+        [
+          result.unitsIncreased ? "Fuel added per year" : "Fuel avoided per year",
+          `${num1(Math.abs(result.unitsSaved))} ${result.fuelUnitLabel}`,
+        ],
+        [
+          result.unitsIncreased ? "CO2 added per year" : "CO2 avoided per year",
+          `${num1(Math.abs(result.co2SavedKg))} kg`,
+        ],
         ["One-time cost to switch", money(result.netSwitchCost)],
         [
           "Payback period",

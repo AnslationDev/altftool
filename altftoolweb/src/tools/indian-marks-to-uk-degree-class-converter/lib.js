@@ -39,17 +39,6 @@ export const INSTITUTION_TIERS = [
   },
 ];
 
-/** UK universities' own domestic classification boundaries, for comparison display. */
-export const UK_DOMESTIC_BOUNDARIES = [
-  { min: 70, short: "First (1st)" },
-  { min: 60, short: "2:1" },
-  { min: 50, short: "2:2" },
-  { min: 40, short: "Third (3rd)" },
-];
-
-/** Typical Indian pass mark — below this no honours equivalence exists. */
-export const INDIAN_PASS_MARK = 40;
-
 const round1 = (value) => Math.round(value * 10) / 10;
 
 /**
@@ -76,7 +65,12 @@ export function convertToUkClass({ percentage, tierId }) {
       className: "Below pass — no UK class equivalent",
       short: "Fail",
       nextBand: tier.thresholds[tier.thresholds.length - 1],
-      marksToNext: round1(tier.thresholds[tier.thresholds.length - 1].min - pct),
+      // Deliberately unrounded: callers gate on `marksToNext > 0` to decide
+      // whether a "next class" message applies. Rounding here first can
+      // collapse a genuinely positive gap (e.g. 0.02) down to 0 near a
+      // boundary and make that gate misfire. Callers should round only when
+      // formatting the value for display.
+      marksToNext: tier.thresholds[tier.thresholds.length - 1].min - pct,
     };
   }
 
@@ -90,6 +84,7 @@ export function convertToUkClass({ percentage, tierId }) {
     className: band.className,
     short: band.short,
     nextBand,
-    marksToNext: nextBand ? round1(nextBand.min - pct) : 0,
+    // Unrounded — see the comment in the "below pass" branch above.
+    marksToNext: nextBand ? nextBand.min - pct : 0,
   };
 }

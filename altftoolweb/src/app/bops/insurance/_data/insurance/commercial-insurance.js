@@ -201,7 +201,7 @@ export const commercialInsurance = {
   seo: {
     title: "Commercial Insurance — Compare Business Quotes | AltFTool",
     description:
-      "Compare commercial insurance quotes from multiple insurers in minutes. Protect your property, liability and revenue with coverage tailored to your industry — free to compare.",
+      "Compare commercial insurance quotes from multiple insurers in minutes. Protect your property, liability and revenue with cover built for your industry.",
   },
 };
 

@@ -166,11 +166,11 @@ export default function ToolHome() {
   const progressPercent = hasError ? 0 : Math.round(current.overallProgress * 100);
 
   const fields = [
-    { id: "kegel-hold", label: "Hold (seconds)", value: hold, onSet: setHold, min: 1, max: 30, step: 1 },
-    { id: "kegel-release", label: "Release (seconds)", value: release, onSet: setRelease, min: 0, max: 60, step: 1 },
-    { id: "kegel-reps", label: "Repetitions per set", value: reps, onSet: setReps, min: 1, max: 50, step: 1 },
-    { id: "kegel-sets", label: "Sets per session", value: sets, onSet: setSets, min: 1, max: 10, step: 1 },
-    { id: "kegel-setbreak", label: "Rest between sets (seconds)", value: setBreak, onSet: setSetBreak, min: 0, max: 300, step: 5 },
+    { id: "kegel-hold", label: "Hold (seconds)", value: hold, onSet: setHold, min: 1, max: 30, step: 1, preset: true },
+    { id: "kegel-release", label: "Release (seconds)", value: release, onSet: setRelease, min: 0, max: 60, step: 1, preset: true },
+    { id: "kegel-reps", label: "Repetitions per set", value: reps, onSet: setReps, min: 1, max: 50, step: 1, preset: true },
+    { id: "kegel-sets", label: "Sets per session", value: sets, onSet: setSets, min: 1, max: 10, step: 1, preset: true },
+    { id: "kegel-setbreak", label: "Rest between sets (seconds)", value: setBreak, onSet: setSetBreak, min: 0, max: 300, step: 5, preset: true },
     { id: "kegel-prep", label: "Get-ready countdown (seconds)", value: prep, onSet: setPrep, min: 0, max: 60, step: 1 },
     { id: "kegel-sessions", label: "Sessions per day", value: sessions, onSet: setSessions, min: 1, max: 6, step: 1 },
   ];
@@ -237,7 +237,10 @@ export default function ToolHome() {
                 max={field.max}
                 step={field.step}
                 value={field.value}
-                onChange={(event) => field.onSet(event.target.value)}
+                onChange={(event) => {
+                  field.onSet(event.target.value);
+                  if (field.preset) setLevelId(null);
+                }}
               />
             </div>
           ))}

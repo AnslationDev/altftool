@@ -1,12 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Download, FileImage, RotateCcw } from "lucide-react";
 
 import {
   DEFAULT_JPEG_QUALITY,
   FORMATS,
   JPEG_EXTENSION_STYLES,
+  MAX_JPEG_QUALITY,
   MIN_JPEG_QUALITY,
   bytesToKB,
   detectFormat,
@@ -14,6 +15,7 @@ import {
   nextQualityStep,
   outputFileName,
   validateInputFile,
+  validateQuality,
   validateTargetKB,
 } from "../lib";
 
@@ -75,6 +77,21 @@ export default function ToolHome() {
     [file],
   );
 
+  // Keep a ref to the latest result so the unmount effect below can revoke
+  // its object URL without re-subscribing on every render.
+  const resultRef = useRef(result);
+  useEffect(() => {
+    resultRef.current = result;
+  }, [result]);
+
+  // Release the blob URL if the user navigates away without pressing
+  // Reset, Download, or converting again.
+  useEffect(() => {
+    return () => {
+      if (resultRef.current?.url) URL.revokeObjectURL(resultRef.current.url);
+    };
+  }, []);
+
   const onPickFile = (event) => {
     const picked = event.target.files?.[0] ?? null;
     setFile(picked);
@@ -98,6 +115,11 @@ export default function ToolHome() {
     const target = validateTargetKB(outputFormat === "jpeg" ? targetKB : "");
     if (target.error) {
       setError(target.error);
+      return;
+    }
+    const qualityCheck = outputFormat === "jpeg" ? validateQuality(quality) : { quality: null };
+    if (qualityCheck.error) {
+      setError(qualityCheck.error);
       return;
     }
     const named = outputFileName({ originalName: file.name, formatId: outputFormat, extensionStyle });
@@ -128,13 +150,13 @@ export default function ToolHome() {
       if (format.id === "png") {
         blob = await encodeCanvas(canvas, format.mime);
       } else if (target.targetBytes === null) {
-        usedQuality = Number(quality);
+        usedQuality = qualityCheck.quality;
         blob = await encodeCanvas(canvas, format.mime, usedQuality);
       } else {
         // Binary-search the JPEG quality to fit under the target size; the
         // search bounds and stop rule come from lib.nextQualityStep.
         let state = { low: MIN_JPEG_QUALITY, high: 1, bestQuality: null };
-        let currentQuality = Number(quality);
+        let currentQuality = qualityCheck.quality;
         let bestBlob = null;
         for (let step = 1; ; step += 1) {
           const attempt = await encodeCanvas(canvas, format.mime, currentQuality);
@@ -246,6 +268,7 @@ export default function ToolHome() {
               type="file"
               accept="image/jpeg,image/png,.jpg,.jpeg,.png"
               onChange={onPickFile}
+              disabled={busy}
             />
             {file ? (
               <p className="mt-1 text-xs text-[var(--muted-foreground)]">
@@ -263,6 +286,7 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               value={outputFormat}
               onChange={(event) => setOutputFormat(event.target.value)}
+              disabled={busy}
             >
               {FORMATS.map((format) => (
                 <option key={format.id} value={format.id}>
@@ -282,6 +306,7 @@ export default function ToolHome() {
                   className={`mt-2 ${INPUT_CLASS}`}
                   value={extensionStyle}
                   onChange={(event) => setExtensionStyle(event.target.value)}
+                  disabled={busy}
                 >
                   {JPEG_EXTENSION_STYLES.map((style) => (
                     <option key={style.id} value={style.id}>
@@ -300,10 +325,11 @@ export default function ToolHome() {
                   type="number"
                   inputMode="decimal"
                   min={MIN_JPEG_QUALITY}
-                  max="1"
+                  max={MAX_JPEG_QUALITY}
                   step="0.01"
                   value={quality}
                   onChange={(event) => setQuality(event.target.value)}
+                  disabled={busy}
                 />
               </div>
               <div>
@@ -320,6 +346,7 @@ export default function ToolHome() {
                   placeholder="e.g. 50"
                   value={targetKB}
                   onChange={(event) => setTargetKB(event.target.value)}
+                  disabled={busy}
                 />
               </div>
               <div>
@@ -331,6 +358,7 @@ export default function ToolHome() {
                   className={`mt-2 ${INPUT_CLASS}`}
                   value={background}
                   onChange={(event) => setBackground(event.target.value)}
+                  disabled={busy}
                 >
                   {BACKGROUNDS.map((option) => (
                     <option key={option.id} value={option.id}>
@@ -358,7 +386,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

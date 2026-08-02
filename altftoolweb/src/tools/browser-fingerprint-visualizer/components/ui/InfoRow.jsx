@@ -31,7 +31,7 @@ export function InfoRow({
 
   const displayValue =
     value === null || value === undefined || value === "" ? (
-      <span className="text-[(--muted-foreground)] italic text-sm">N/A</span>
+      <span className="text-[var(--muted-foreground)] italic text-sm">N/A</span>
     ) : (
       String(value)
     );
@@ -42,10 +42,10 @@ export function InfoRow({
         // Base row styles
         "flex items-center justify-between gap-3 py-2.5",
         // Bottom border except last child
-        "border-b border-[(--border)] last:border-0",
+        "border-b border-[var(--border)] last:border-0",
         // Hover styles when copyable
         copyable
-          ? "cursor-pointer hover:bg-[(--primary)]/5 rounded-lg px-2 -mx-2 transition-colors duration-150"
+          ? "cursor-pointer hover:bg-[var(--primary)]/5 rounded-lg px-2 -mx-2 transition-colors duration-150"
           : "",
         className,
       ].join(" ")}
@@ -53,7 +53,7 @@ export function InfoRow({
       title={copyable ? "Click to copy" : undefined}
     >
       {/* Left: label */}
-      <span className="text-sm text-[(--muted-foreground)] font-secondary flex-shrink-0 min-w-[100px]">
+      <span className="text-sm text-[var(--muted-foreground)] font-secondary flex-shrink-0 min-w-[100px]">
         {label}
       </span>
 
@@ -70,8 +70,8 @@ export function InfoRow({
             mono ? "font-mono" : "font-secondary",
             truncate ? "truncate max-w-[160px]" : "",
             highlight
-              ? "text-[(--primary)]"
-              : "text-[(--card-foreground)]",
+              ? "text-[var(--primary)]"
+              : "text-[var(--card-foreground)]",
           ].join(" ")}
         >
           {copied ? (
@@ -84,7 +84,7 @@ export function InfoRow({
    
         {copyable && !copied && (
           <svg
-            className="w-3 h-3 text-[(--muted-foreground)] flex-shrink-0 opacity-50"
+            className="w-3 h-3 text-[var(--muted-foreground)] flex-shrink-0 opacity-50"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"

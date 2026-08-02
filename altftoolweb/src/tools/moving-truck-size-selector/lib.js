@@ -9,7 +9,10 @@
  *    footprint. These are the survey volumes removal firms use on a cube sheet.
  * 2. Estimate weight from volume using the household-goods density the moving
  *    industry has used for decades for constructive weight: 7 lb per cubic foot
- *    (about 112 kg per cubic metre).
+ *    (about 112 kg per cubic metre) for furniture, appliances and unlisted
+ *    extras. Packed cartons are rated at double that (see CARTON_LB_PER_CUFT)
+ *    since boxed books, kitchenware and tools run far denser than bulky,
+ *    mostly-air furniture.
  * 3. Compare against each vehicle's *usable* cube, which is the deck cube
  *    multiplied by a stacking efficiency. Household goods are irregular, so a
  *    body never fills to 100%; 85% is the practical ceiling for a professional
@@ -25,6 +28,14 @@
 /** Household-goods constructive density used by movers: 7 lb per cubic foot. */
 export const LB_PER_CUFT = 7;
 export const KG_PER_LB = 0.45359237;
+
+/**
+ * Packed cartons run denser than the whole-shipment average: books,
+ * kitchenware and tools boxed tightly weigh far more per cubic foot than
+ * bulky, mostly-air furniture. Movers commonly rate cartons at roughly
+ * double the household-wide constructive-weight figure.
+ */
+export const CARTON_LB_PER_CUFT = LB_PER_CUFT * 2;
 
 /** Cubic feet to cubic metres (1 ft = 0.3048 m). */
 export const CUFT_TO_M3 = 0.028316846592;
@@ -197,7 +208,12 @@ export function selectVehicle({ counts = {}, cartons = 0, extraCuft = 0 } = {}) 
     return { error: "Add at least one item, carton or extra volume to size a vehicle." };
   }
 
-  const weightKg = estimateWeightKg(totalCuft);
+  // Cartons are weighted on their own, denser rate (see CARTON_LB_PER_CUFT) —
+  // items and unlisted extras use the whole-shipment average.
+  const weightKg =
+    estimateWeightKg(itemCuft) +
+    cartonCuft * CARTON_LB_PER_CUFT * KG_PER_LB +
+    estimateWeightKg(extra);
 
   const fits = (vehicle) => vehicle.usableCuft >= totalCuft && vehicle.payloadKg >= weightKg;
   const recommended = VEHICLES.find(fits) ?? null;
@@ -221,7 +237,13 @@ export function selectVehicle({ counts = {}, cartons = 0, extraCuft = 0 } = {}) 
   const index = VEHICLES.findIndex((vehicle) => vehicle.id === chosen.id);
   const smaller = index > 0 && trips === 1 ? VEHICLES[index - 1] : null;
   const shedCuft = smaller ? Math.max(0, Math.round(totalCuft - smaller.usableCuft)) : 0;
-  const shedBlockedByWeight = Boolean(smaller && smaller.payloadKg < estimateWeightKg(smaller.usableCuft));
+  // Use this load's own blended density (its actual mix of items, cartons and
+  // extras), not a generic flat rate, so the check reflects what is really
+  // being moved rather than a hypothetical average shipment.
+  const loadDensityKgPerCuft = weightKg / totalCuft;
+  const shedBlockedByWeight = Boolean(
+    smaller && smaller.payloadKg < loadDensityKgPerCuft * smaller.usableCuft
+  );
 
   return {
     totalCuft: Math.round(totalCuft * 10) / 10,

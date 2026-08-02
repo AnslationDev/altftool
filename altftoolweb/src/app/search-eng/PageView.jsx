@@ -161,6 +161,7 @@ function SearchEngineContent() {
 
   return (
     <div className="se-root">
+      <h1 className="sr-only">AltFTool Search</h1>
       <AnimatePresence mode="wait">
 
         {/* ══ RESULTS PAGE ════════════════════════════════════════════════════ */}

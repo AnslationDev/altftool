@@ -91,7 +91,7 @@ export const CHANNELS = [
     keyVerification: true,
     encryptedBackup: false,
     metadataMinimisation: false,
-    note: "End-to-end between Apple devices. If iCloud Backup is on without Advanced Data Protection, Apple holds a key that can open the message database. Green-bubble conversations fall back to SMS with no encryption at all.",
+    note: "End-to-end between Apple devices. If iCloud Backup is on without Advanced Data Protection, Apple holds a key that can open the message database. Green-bubble conversations use RCS (with its own, weaker protections) on iOS 18 and later when the other side supports it, or fall back to plain SMS with no encryption otherwise.",
   },
   {
     id: "messenger",
@@ -294,7 +294,7 @@ export function analyseChannel(input = {}) {
         contentReadable = !channel.encryptedBackup;
         break;
       case "legal":
-        contentReadable = !channel.e2ee || (cloudBackup && !channel.encryptedBackup);
+        contentReadable = !channel.e2ee;
         break;
       default:
         contentReadable = false;
@@ -331,10 +331,13 @@ export function analyseChannel(input = {}) {
   const missing = PROTECTIONS.filter((item) => !flags[item.id]);
   const score = Math.min(100, earned.reduce((sum, item) => sum + item.weight, 0));
 
+  const effectiveScore = endpointExposed ? Math.min(score, ENDPOINT_EXPOSED_BAND_CAP) : score;
+
   return {
     channel,
     hops,
     score,
+    effectiveScore,
     band: bandFor(score, endpointExposed),
     bandCapped: endpointExposed && score > ENDPOINT_EXPOSED_BAND_CAP,
     earned,

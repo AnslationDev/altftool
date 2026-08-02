@@ -55,7 +55,13 @@ export const TRIAD_COLORS = ["red", "lime", "blue"];
 const round2 = (n) => Math.round(n * 100) / 100;
 const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
-/** Period in pixels that reproduces a CRT standard at a given output height. */
+/**
+ * Period in pixels that reproduces a CRT standard at a given output height.
+ * The raw height/activeLines ratio is clamped to the period range computeOverlay
+ * actually accepts (MIN_PERIOD-MAX_PERIOD): below MIN_PERIOD the stripes would be
+ * thinner than the overlay engine can draw without moiré/validation failure, so
+ * the period is floored there instead of producing a value the tool would reject.
+ */
 export function periodForStandard(height, standardId) {
   const h = Number(height);
   const standard = CRT_STANDARDS[standardId];
@@ -63,7 +69,9 @@ export function periodForStandard(height, standardId) {
   if (!Number.isFinite(h) || h < MIN_SIZE) {
     return { error: `Output height must be at least ${MIN_SIZE} pixels.` };
   }
-  return { period: round2(h / standard.activeLines), activeLines: standard.activeLines };
+  const rawPeriod = h / standard.activeLines;
+  const period = clamp(round2(rawPeriod), MIN_PERIOD, MAX_PERIOD);
+  return { period, rawPeriod: round2(rawPeriod), activeLines: standard.activeLines };
 }
 
 /**

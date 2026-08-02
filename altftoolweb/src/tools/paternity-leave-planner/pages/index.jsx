@@ -32,6 +32,7 @@ const policyFields = (preset) => ({
   windowUnit: preset.windowUnit,
   earliestBeforeBirthDays: String(preset.earliestBeforeBirthDays),
   minBlockDays: String(preset.minBlockDays),
+  blockStepDays: preset.blockStepDays ? String(preset.blockStepDays) : "1",
   maxBlocks: String(preset.maxBlocks),
 });
 
@@ -54,6 +55,7 @@ export default function ToolHome() {
           windowUnit: fields.windowUnit,
           earliestBeforeBirthDays: Number(fields.earliestBeforeBirthDays),
           minBlockDays: Number(fields.minBlockDays),
+          blockStepDays: Number(fields.blockStepDays),
           maxBlocks: Number(fields.maxBlocks),
         },
         blocks: blocks.map((block) => ({

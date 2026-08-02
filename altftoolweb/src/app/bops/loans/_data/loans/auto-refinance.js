@@ -199,7 +199,7 @@ export const autoRefinance = {
   },
 
   seo: {
-    title: "Auto Loan Refinancing — Compare Rates & Lower Your Payment | AltFTool",
+    title: "Auto Loan Refinancing — Compare Rates | AltFTool",
     description:
       "Refinance your car loan for a lower rate or a smaller monthly payment. Compare personalised auto refinance offers in minutes, with no credit impact to check.",
   },

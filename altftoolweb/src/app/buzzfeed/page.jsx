@@ -122,8 +122,15 @@ export default function AltFPulsePage() {
 
   return (
     <div className={`buzzfeed-app ${resolvedTheme === "dark" ? "bf-dark" : ""}`}>
-      {/* Dynamic SEO Tags */}
-      <h1 className="sr-only">AltF Pulse</h1>
+      {/*
+        The one H1 for this route. The masthead is a wordmark and the feed has
+        no visible page heading to promote, so it stays screen-reader-only —
+        but it now names what the page is rather than just repeating the
+        wordmark, and it is the only H1 here: the hero lead and the reader
+        overlay were both demoted to h2. Rendered on the server (no state
+        gate), so a crawler that runs no JS still sees it.
+      */}
+      <h1 className="sr-only">AltF Pulse: stories, quizzes and culture</h1>
 
       {/* Header */}
       <Header

@@ -19,6 +19,21 @@
  */
 
 /**
+ * CORPUS NOTE — 2026-07-31. READ THIS BEFORE TRUSTING ANY WORD COUNT BELOW.
+ *
+ * The per-slug reasoning in this file was written against article bodies that
+ * are no longer what Firestore serves. A complete pass through the public feed
+ * returned 548 posts, all with the same roughly 300-word generated shape; none
+ * exceeded 400 words. In particular, the ferry post has no route table or
+ * crossing times, and the IIM post no longer contains the long-form material
+ * described by older comments below.
+ *
+ * This audit deliberately did not turn a corpus-wide indexing decision into a
+ * side effect of a code cleanup. Re-measure the live body before changing an
+ * entry, and review the whole blog corpus before applying a broad noindex rule.
+ */
+
+/**
  * Posts whose ranking queries this site structurally cannot satisfy.
  *
  * These are not thin-content cases and not CTR cases — the intent behind the
@@ -42,15 +57,12 @@ const UNSERVABLE_INTENT_SLUGS = {
   //     the description was the body's first sentence cut at "Unlike flying,
   //     where the journey." Zero clicks cannot be read as unservable intent
   //     when the snippet never showed the keyword.
-  //   - The body is not thin or off-pillar filler: ~1,460 words with a 5-row
-  //     route table (real crossing times), booking, onboard, vehicle and
-  //     passport sections, sitting in an active Travel category whose sibling
-  //     posts (Kiwi.com, Trainline, TrainPal, Emirates, Etihad…) all stay
-  //     indexed. Removing the best-performing one while keeping the weaker
-  //     siblings was inconsistent, and blog pages carry ads, so the traffic has
-  //     value even though no tool serves the query.
-  // It now has an authored title/description in ./blogSeoOverrides.js. If it
-  // still earns no clicks after that ships and re-ranks, add it back here.
+  //   - A later corpus audit found that the live body no longer contains the
+  //     route table or long-form details previously cited here. The matching
+  //     metadata override was therefore removed rather than shipping claims
+  //     the page cannot support.
+  // The slug remains out of this per-post list only to preserve the existing
+  // visibility decision until the thin blog corpus is reviewed as a whole.
 
   // 747 impressions, 0 clicks, avg position 10.2. Top query is "trivago
   // singapore" (363 imp, 0 clicks, pos 7.01) — a navigational query for

@@ -122,7 +122,7 @@ export function buildFlashcardPrompt({
   if (batches > 1) {
     lines.push("");
     lines.push(
-      `Deliver the deck in ${batches} batches of about ${CARDS_PER_BATCH} cards so nothing is truncated: output batch 1 of ${batches} (${batchSizes[0]} cards) now, then wait for me to say "next" before each following batch. Batch sizes: ${batchSizes.join(", ")}.`,
+      `Deliver the deck in ${batches} batches of about ${Math.round(total / batches)} cards so nothing is truncated: output batch 1 of ${batches} (${batchSizes[0]} cards) now, then wait for me to say "next" before each following batch. Batch sizes: ${batchSizes.join(", ")}.`,
     );
   }
 

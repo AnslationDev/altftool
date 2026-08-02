@@ -9,10 +9,14 @@ export default function ScannerOverlay({ isScanning }) {
       <div className="relative flex flex-col items-center">
         {/* Scanning Line Animation */}
         <div className="absolute top-0 w-full h-1 bg-purple-500 shadow-[0_0_15px_#a855f7] animate-scan-line z-10" />
-        
+
         <ScanFace size={64} className="text-purple-400 animate-pulse motion-reduce:animate-none mb-4" />
-        
-        <div className="text-purple-300 font-semibold tracking-wider animate-pulse motion-reduce:animate-none flex flex-col items-center">
+
+        <div
+          role="status"
+          aria-live="polite"
+          className="text-purple-300 font-semibold tracking-wider animate-pulse motion-reduce:animate-none flex flex-col items-center"
+        >
           <span>ANALYZING FACIAL STRUCTURE</span>
           <span className="text-xs text-purple-400/70 mt-1">Calculating Golden Ratio & Symmetry...</span>
         </div>

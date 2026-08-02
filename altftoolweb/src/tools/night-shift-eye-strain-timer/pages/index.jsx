@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Moon, RotateCcw } from "lucide-react";
 
 import {
@@ -49,6 +49,13 @@ export default function ToolHome() {
   const [windDownMinutes, setWindDownMinutes] = useState("60");
   const [sleepAfterShift, setSleepAfterShift] = useState(true);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    };
+  }, []);
 
   const plan = useMemo(() => {
     const values = {
@@ -59,8 +66,8 @@ export default function ToolHome() {
     if (Object.values(values).some((value) => Number.isNaN(value))) {
       return { error: "Enter a number in every field." };
     }
-    return buildNightShiftPlan({ startTime, endTime, sleepAfterShift, ...values });
-  }, [startTime, endTime, breakIntervalMinutes, breakSeconds, windDownMinutes, sleepAfterShift]);
+    return buildNightShiftPlan({ startTime, endTime, ...values });
+  }, [startTime, endTime, breakIntervalMinutes, breakSeconds, windDownMinutes]);
 
   const hasError = Boolean(plan.error);
 
@@ -93,7 +100,11 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => {
+        setCopied(false);
+        copiedTimeoutRef.current = null;
+      }, 1500);
     } catch {
       setCopied(false);
     }
@@ -227,7 +238,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        role="status"
+        aria-live="polite"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -279,6 +294,10 @@ export default function ToolHome() {
               "Screen wind-down starts",
               hasError ? DASH : plan.windDownMinutes > 0 ? plan.windDownStartClock : "Not set",
             ],
+            [
+              "Breaks in the wind-down window",
+              hasError ? DASH : plan.windDownMinutes > 0 ? WHOLE.format(plan.windDownBreaks) : "Not set",
+            ],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -303,7 +322,11 @@ export default function ToolHome() {
       </section>
 
       {!hasError && plan.breaks.length > 0 && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          role="status"
+          aria-live="polite"
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        >
           <h2 className="text-base font-semibold">Break times</h2>
           <div className="mt-3 overflow-x-auto">
             <table className="w-full min-w-[320px] text-left text-sm">

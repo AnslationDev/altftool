@@ -6,11 +6,11 @@ import {
   BookOpen,
   GraduationCap,
   Landmark,
-  Star,
   ChevronLeft,
   ChevronRight,
 } from "lucide-react";
 import { AcademyHeroSkeleton } from "@/components/ui/skeleton";
+import { academies } from "../data/academies";
 
 const heroImages = [
   {
@@ -23,11 +23,22 @@ const heroImages = [
   },
 ];
 
+/**
+ * Only figures this page can stand behind.
+ *
+ * It used to print "50,000+ Active Learners", "1,200+ Courses Compared",
+ * "100+ Top Platform Partners" and "4.8/5 Average Learner Rating". There is no
+ * learner account, no course index, no partnership and no rating mechanism
+ * anywhere in this app that could produce any of them — and the catalog holds
+ * 17 platforms, so "100+ partners" was not merely unsourced but wrong.
+ *
+ * The count is read from the catalog at render time; the rest describe what the
+ * page is rather than how popular it is.
+ */
 const stats = [
-  { icon: GraduationCap, value: "50,000+", label: "Active Learners" },
-  { icon: BookOpen, value: "1,200+", label: "Courses Compared" },
-  { icon: Landmark, value: "100+", label: "Top Platform Partners" },
-  { icon: Star, value: "4.8/5", label: "Average Learner Rating" },
+  { icon: Landmark, value: String(academies.length), label: "Platforms compared" },
+  { icon: BookOpen, value: "Side by side", label: "On one page" },
+  { icon: GraduationCap, value: "No sign-up", label: "To read any of it" },
 ];
 
 export default function Hero({ loading = false }) {

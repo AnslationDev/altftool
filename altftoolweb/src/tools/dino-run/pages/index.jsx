@@ -134,7 +134,16 @@ export default function DinoRun() {
   const spawnObst = useCallback(() => {
     const g = gs.current;
     if (g.speed > 800 && Math.random() < 0.28) {
-      const ys = [GY - 60, GY - 110, GY - 165];
+      // Spawn heights (px above ground). The low tier (60) sits inside the
+      // standing dino's hitbox, so it must be ducked. The higher two tiers
+      // (110, 140) fly above both the standing and ducking dino, but a full
+      // jump arc passes through their hitbox near its apex, so jumping into
+      // them is what causes a hit — verified against dinoBox()/birdHitbox().
+      // 165 was previously used for the top tier but sat ~10px above the
+      // maximum reachable jump-apex hitbox, making it an unhittable,
+      // purely decorative obstacle; 140 keeps it visually the highest tier
+      // while staying inside the reachable jump-arc range.
+      const ys = [GY - 60, GY - 110, GY - 140];
       g.obstacles.push({ type: 'bird', x: VW + 40, y: ys[Math.floor(Math.random() * 3)], wingT: 0, wingUp: true });
       return;
     }
@@ -445,7 +454,14 @@ export default function DinoRun() {
               ref={canvasRef}
               className="block w-full h-auto touch-none cursor-pointer"
               style={{ aspectRatio: `${VW} / ${VH}` }}
-            />
+              role="img"
+              aria-label="Dino Run game canvas. Press space or the up arrow to jump over cacti and low birds, and hold the down arrow to duck under head-height birds."
+            >
+              Your browser does not support the canvas element needed to play Dino Run,
+              a dinosaur endless-runner game. Jump cacti and low birds with space or the
+              up arrow, and duck under head-height birds by holding the down arrow, or
+              use the on-screen JUMP and DUCK buttons on a touch device.
+            </canvas>
             {phase !== 'running' && (
               <div
                 className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-center px-6"

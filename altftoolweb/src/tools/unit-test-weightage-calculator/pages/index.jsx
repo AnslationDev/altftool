@@ -248,7 +248,7 @@ export default function ToolHome() {
             </div>
           ) : (
             result.breakdown.map((row) => (
-              <div key={row.name} className="flex items-center justify-between gap-4 py-2.5">
+              <div key={row.id} className="flex items-center justify-between gap-4 py-2.5">
                 <dt className="text-[var(--muted-foreground)]">
                   {row.name} — {row.scored}/{row.max} ({row.percent}%), counts{" "}
                   {row.effectiveWeightPercent}% of the final

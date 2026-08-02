@@ -10,6 +10,7 @@ import {
   FARE_OPTIONS,
   MAX_CHECKED_BAGS,
   MAX_SINGLE_PIECE_KG,
+  SECOND_CABIN_PIECE,
   checkBaggage,
   describeDimRule,
   getCurrency,
@@ -138,6 +139,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the fare, cabin bag, personal item, all checked bags and pricing fields back to their defaults? This can't be undone.",
+      )
+    ) {
+      return;
+    }
     setFareKey(DEFAULTS.fareKey);
     setCarryCabinBag(DEFAULTS.carryCabinBag);
     setCabinKg(DEFAULTS.cabinKg);
@@ -182,8 +190,21 @@ export default function ToolHome() {
       ),
     );
 
+  // Royal Silk Business and Royal First carry two full-size cabin bags rather than
+  // a cabin bag plus a small under-seat item — the "personal item" section below
+  // is actually tracking that second cabin bag for those fares.
+  const isSecondCabinBag = fare.personal === SECOND_CABIN_PIECE;
+  const personalSectionTitle = isSecondCabinBag ? "Second cabin bag" : "Personal item";
+  const personalCheckboxLabel = isSecondCabinBag ? "I am carrying a second cabin bag" : "I am carrying one";
+
   const cabinLimitText = fare.cabin
-    ? `${fare.cabin.combinedKg != null ? `${fare.cabin.pieces} pieces, ${fare.cabin.combinedKg} kg combined` : `${fare.cabin.kg} kg`} and ${describeDimRule(fare.cabin.dimRule)}`
+    ? `${
+        fare.cabin.combinedKg != null
+          ? `${fare.cabin.pieces} pieces, ${fare.cabin.combinedKg} kg combined`
+          : fare.cabin.pieces > 1
+            ? `${fare.cabin.pieces} pieces of ${fare.cabin.kg} kg each`
+            : `${fare.cabin.kg} kg`
+      } and ${describeDimRule(fare.cabin.dimRule)}`
     : "Not included on this fare";
   const personalLimitText = fare.personal
     ? `${fare.personal.kg != null && fare.cabin && fare.cabin.combinedKg == null ? `${fare.personal.kg} kg and ` : ""}${describeDimRule(fare.personal.dimRule)}`
@@ -207,7 +228,7 @@ export default function ToolHome() {
         ...(result.personal
           ? [
               [
-                "Personal item",
+                personalSectionTitle,
                 `${KG.format(result.personal.weightKg)} kg${result.personal.limitKg != null ? ` of ${result.personal.limitKg} kg` : ""}`,
               ],
             ]
@@ -326,7 +347,7 @@ export default function ToolHome() {
 
       <section className={`mt-4 ${CARD}`}>
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="text-base font-semibold">Personal item</h2>
+          <h2 className="text-base font-semibold">{personalSectionTitle}</h2>
           <label className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold" htmlFor="carry-personal">
             <input
               id="carry-personal"
@@ -335,10 +356,14 @@ export default function ToolHome() {
               checked={carryPersonal}
               onChange={(event) => setCarryPersonal(event.target.checked)}
             />
-            I am carrying one
+            {personalCheckboxLabel}
           </label>
         </div>
-        <p className="mt-1 text-xs text-[var(--muted-foreground)]">Limit: {personalLimitText}.</p>
+        <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+          {isSecondCabinBag
+            ? `This fare includes 2 cabin bags — this is the second one, sized the same as your main cabin bag. Limit: ${personalLimitText}.`
+            : `Limit: ${personalLimitText}.`}
+        </p>
         {carryPersonal && (
           <div className="mt-3 grid gap-4 sm:grid-cols-2">
             <div>
@@ -534,7 +559,7 @@ export default function ToolHome() {
         <section className={`mt-6 ${CARD}`}>
           <p
             role="alert"
-            className="rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+            className="rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
           >
             {result.error}
           </p>
@@ -561,12 +586,12 @@ export default function ToolHome() {
         <>
           <section className={`mt-6 ${CARD}`}>
             <div className="flex flex-wrap items-start justify-between gap-3">
-              <div>
+              <div aria-live="polite" role="status">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                   Excess checked weight
                 </p>
                 <p
-                  className={`mt-1 text-4xl font-semibold ${result.checked.excessKg > 0 ? "text-[var(--danger)]" : "text-[var(--primary)]"}`}
+                  className={`mt-1 text-4xl font-semibold ${result.checked.excessKg > 0 ? "text-[var(--danger-text)]" : "text-[var(--primary)]"}`}
                 >
                   {KG.format(result.checked.excessKg)} kg
                 </p>
@@ -574,12 +599,12 @@ export default function ToolHome() {
                   {result.ok ? (
                     <>
                       <CircleCheck className="h-4 w-4 text-[var(--success)]" aria-hidden="true" />
-                      <span className="text-[var(--success)]">Everything is within the published allowance</span>
+                      <span className="text-[var(--success-text)]">Everything is within the published allowance</span>
                     </>
                   ) : (
                     <>
                       <CircleAlert className="h-4 w-4 text-[var(--danger)]" aria-hidden="true" />
-                      <span className="text-[var(--danger)]">
+                      <span className="text-[var(--danger-text)]">
                         {result.issues.length} thing{result.issues.length === 1 ? "" : "s"} to fix before you fly
                       </span>
                     </>
@@ -591,7 +616,7 @@ export default function ToolHome() {
                   type="button"
                   onClick={copyResult}
                   aria-label={`Copy ${AIRLINE.name} baggage check result`}
-                  className={GHOST_BTN}
+                  className={PRIMARY_BTN}
                 >
                   {copied ? (
                     <Check className="h-4 w-4" aria-hidden="true" />
@@ -600,7 +625,7 @@ export default function ToolHome() {
                   )}
                   {copied ? "Copied!" : "Copy result"}
                 </button>
-                <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
+                <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
                   <RotateCcw className="h-4 w-4" aria-hidden="true" />
                   Reset
                 </button>
@@ -621,7 +646,7 @@ export default function ToolHome() {
                 {result.issues.map((issue) => (
                   <li
                     key={issue}
-                    className="rounded-md bg-[var(--danger-soft)] px-3 py-2 font-medium text-[var(--danger)]"
+                    className="rounded-md bg-[var(--danger-soft)] px-3 py-2 font-medium text-[var(--danger-text)]"
                   >
                     {issue}
                   </li>
@@ -656,13 +681,13 @@ export default function ToolHome() {
                       <td className="py-2 pr-3 font-semibold">Cabin bag</td>
                       <td className="py-2 pr-3 text-right">
                         {KG.format(result.cabin.weightKg)} kg
-                        {!result.cabin.weightOk && <span className="text-[var(--danger)]"> ▲</span>}
+                        {!result.cabin.weightOk && <span className="text-[var(--danger-text)]"> ▲</span>}
                       </td>
                       <td className="py-2 pr-3 text-right text-[var(--muted-foreground)]">
                         {result.cabin.dimsCm.map((d) => CM.format(d)).join(" × ")} cm
                       </td>
                       <td
-                        className={`py-2 text-right font-semibold ${result.cabin.dimsOk ? "text-[var(--success)]" : "text-[var(--danger)]"}`}
+                        className={`py-2 text-right font-semibold ${result.cabin.dimsOk ? "text-[var(--success-text)]" : "text-[var(--danger-text)]"}`}
                       >
                         {result.cabin.dimsOk ? "Fits" : "Too big"}
                       </td>
@@ -670,16 +695,16 @@ export default function ToolHome() {
                   )}
                   {result.personal && (
                     <tr className="border-b border-[var(--border)]">
-                      <td className="py-2 pr-3 font-semibold">Personal item</td>
+                      <td className="py-2 pr-3 font-semibold">{personalSectionTitle}</td>
                       <td className="py-2 pr-3 text-right">
                         {KG.format(result.personal.weightKg)} kg
-                        {!result.personal.weightOk && <span className="text-[var(--danger)]"> ▲</span>}
+                        {!result.personal.weightOk && <span className="text-[var(--danger-text)]"> ▲</span>}
                       </td>
                       <td className="py-2 pr-3 text-right text-[var(--muted-foreground)]">
                         {result.personal.dimsCm.map((d) => CM.format(d)).join(" × ")} cm
                       </td>
                       <td
-                        className={`py-2 text-right font-semibold ${result.personal.dimsOk ? "text-[var(--success)]" : "text-[var(--danger)]"}`}
+                        className={`py-2 text-right font-semibold ${result.personal.dimsOk ? "text-[var(--success-text)]" : "text-[var(--danger-text)]"}`}
                       >
                         {result.personal.dimsOk ? "Fits" : "Too big"}
                       </td>
@@ -690,13 +715,13 @@ export default function ToolHome() {
                       <td className="py-2 pr-3 font-semibold">Checked {bag.index}</td>
                       <td className="py-2 pr-3 text-right">
                         {KG.format(bag.weightKg)} kg
-                        {bag.overSinglePieceLimit && <span className="text-[var(--danger)]"> ▲</span>}
+                        {bag.overSinglePieceLimit && <span className="text-[var(--danger-text)]"> ▲</span>}
                       </td>
                       <td className="py-2 pr-3 text-right text-[var(--muted-foreground)]">
                         {bag.dimsCm.map((d) => CM.format(d)).join(" × ")} cm ({CM.format(bag.sumCm)} cm)
                       </td>
                       <td
-                        className={`py-2 text-right font-semibold ${bag.dimsOk ? "text-[var(--success)]" : "text-[var(--danger)]"}`}
+                        className={`py-2 text-right font-semibold ${bag.dimsOk ? "text-[var(--success-text)]" : "text-[var(--danger-text)]"}`}
                       >
                         {bag.dimsOk ? "Fits" : "Oversize"}
                       </td>

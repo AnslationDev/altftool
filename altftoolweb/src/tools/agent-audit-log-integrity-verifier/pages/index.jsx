@@ -158,7 +158,7 @@ function CheckCard({ title, description, icon: Icon, state, metrics }) {
   );
 }
 
-function FieldPathInput({ label, value, onChange, helper, listId }) {
+function FieldPathInput({ label, value, onChange, helper, listId, disabled = false }) {
   return (
     <label className="block">
       <span className="mb-2 block text-xs font-bold text-muted-foreground">{label}</span>
@@ -168,6 +168,7 @@ function FieldPathInput({ label, value, onChange, helper, listId }) {
         list={listId}
         placeholder="Leave blank = not checkable"
         onChange={(event) => onChange(event.target.value)}
+        disabled={disabled}
         className={CONTROL_CLASS}
       />
       <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">{helper}</span>
@@ -206,6 +207,13 @@ export default function AgentAuditLogIntegrityVerifier() {
   };
 
   const resetAll = () => {
+    if (
+      !window.confirm(
+        "Clear memory? This will erase your pasted audit log, field-path configuration, and results. This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setSource("");
     setSourceName("Pasted log");
     setArrayPath("");
@@ -541,6 +549,7 @@ export default function AgentAuditLogIntegrityVerifier() {
                   listId="audit-field-paths"
                   onChange={(value) => updateConfig("idPath", value)}
                   helper="Checks missing and exactly repeated typed values."
+                  disabled={isVerifying}
                 />
                 <FieldPathInput
                   label="Sequence field"
@@ -548,6 +557,7 @@ export default function AgentAuditLogIntegrityVerifier() {
                   listId="audit-field-paths"
                   onChange={(value) => updateConfig("sequencePath", value)}
                   helper="Checks consecutive safe integers in supplied order."
+                  disabled={isVerifying}
                 />
                 <FieldPathInput
                   label="Timestamp field"
@@ -555,6 +565,7 @@ export default function AgentAuditLogIntegrityVerifier() {
                   listId="audit-field-paths"
                   onChange={(value) => updateConfig("timestampPath", value)}
                   helper="Checks parseability and backward movement."
+                  disabled={isVerifying}
                 />
                 <FieldPathInput
                   label="Previous-hash field"
@@ -562,6 +573,7 @@ export default function AgentAuditLogIntegrityVerifier() {
                   listId="audit-field-paths"
                   onChange={(value) => updateConfig("previousHashPath", value)}
                   helper="Compared with the prior entry’s stored hash."
+                  disabled={isVerifying}
                 />
                 <FieldPathInput
                   label="Stored-hash field"
@@ -569,6 +581,7 @@ export default function AgentAuditLogIntegrityVerifier() {
                   listId="audit-field-paths"
                   onChange={(value) => updateConfig("hashPath", value)}
                   helper="Used for links and optional SHA-256 recomputation."
+                  disabled={isVerifying}
                 />
               </div>
 
@@ -584,6 +597,7 @@ export default function AgentAuditLogIntegrityVerifier() {
                     onChange={(event) =>
                       updateConfig("expectedGenesisHash", event.target.value)
                     }
+                    disabled={isVerifying}
                     className={CONTROL_CLASS}
                   />
                   <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
@@ -597,6 +611,7 @@ export default function AgentAuditLogIntegrityVerifier() {
                   <select
                     value={config.hashRecipe}
                     onChange={(event) => updateConfig("hashRecipe", event.target.value)}
+                    disabled={isVerifying}
                     className={CONTROL_CLASS}
                   >
                     <option value="disabled">Not documented / structural checks only</option>

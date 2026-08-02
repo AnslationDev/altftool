@@ -84,6 +84,16 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    const isDefault =
+      price === DEFAULTS.price &&
+      accessories === DEFAULTS.accessories &&
+      registration === DEFAULTS.registration &&
+      valuation === DEFAULTS.valuation &&
+      odRate === DEFAULTS.odRate &&
+      agreed === DEFAULTS.agreed;
+    if (!isDefault && !window.confirm("Reset all inputs to the default example? This cannot be undone.")) {
+      return;
+    }
     setPrice(DEFAULTS.price);
     setAccessories(DEFAULTS.accessories);
     setRegistration(DEFAULTS.registration);
@@ -213,7 +223,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        role="status"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">

@@ -35,7 +35,7 @@ const interiors = {
   "quoteLabel": "Get an interiors quote",
   "quoteUrl": quoteUrlFor("interiors"),
   "seo": {
-    "title": "Interior Remodeling Guide: Drywall, Paint, Flooring, Trim and Lighting",
+    "title": "Interior Remodeling Guide: Paint & Flooring",
     "description": "How interior finishes actually work: drywall texture matching, primer and sheen selection, LVP vs hardwood vs tile, trim, cabinet refacing and lighting."
   },
   "services": [

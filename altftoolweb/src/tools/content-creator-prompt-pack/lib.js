@@ -150,19 +150,6 @@ export function wordsForDuration(seconds, wordsPerMinute) {
   return { words: Math.round((s / SECONDS_PER_MINUTE) * w) };
 }
 
-/**
- * Runtime in seconds that `words` will occupy at `wordsPerMinute`.
- * seconds = words / wpm * 60
- */
-export function durationForWords(words, wordsPerMinute) {
-  const n = Number(words);
-  const w = Number(wordsPerMinute);
-  if (!Number.isFinite(n) || !Number.isFinite(w) || w <= 0 || n < 0) {
-    return { error: "Word count and pace must be positive numbers." };
-  }
-  return { seconds: (n / w) * SECONDS_PER_MINUTE };
-}
-
 /** Format a duration as m:ss. Negative or non-finite input becomes 0:00. */
 export function formatDuration(totalSeconds) {
   const s = Number(totalSeconds);

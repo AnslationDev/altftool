@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Heart, RotateCcw, Shuffle } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import {
   LANGUAGES,
@@ -35,12 +36,12 @@ const EM_DASH = "—";
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copiedId, setCopiedId] = useState("");
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const setField = (key) => (event) => {
     const { value } = event.target;
     setForm((current) => ({ ...current, [key]: value }));
-    setCopiedId("");
   };
 
   const result = useMemo(() => generateMothersDayMessages(form), [form]);
@@ -50,27 +51,28 @@ export default function ToolHome() {
 
   const shuffle = () => {
     setForm((current) => ({ ...current, seed: (Number(current.seed) || 0) + 1 }));
-    setCopiedId("");
   };
 
   const reset = () => {
-    setForm(DEFAULTS);
-    setCopiedId("");
-  };
-
-  const copy = async (id, text) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedId(id);
-      setTimeout(() => setCopiedId(""), 1500);
-    } catch {
-      setCopiedId("");
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset every field, including your typed form of address and sign-off name, back to the demo example values? This cannot be undone.",
+      )
+    ) {
+      return;
     }
+    setForm(DEFAULTS);
+    resetCopyState();
   };
 
-  const copyAll = async () => {
+  const copy = (id, text) => {
+    copyToClipboard(id, text, { label: id === "all" ? "all messages" : "message" });
+  };
+
+  const copyAll = () => {
     if (failed) return;
-    await copy("all", result.messages.map((item) => item.text).join("\n\n---\n\n"));
+    copy("all", result.messages.map((item) => item.text).join("\n\n---\n\n"));
   };
 
   return (
@@ -203,14 +205,17 @@ export default function ToolHome() {
             aria-label="Copy every generated message"
             className={`${GHOST_BTN} disabled:opacity-50`}
           >
-            {copiedId === "all" ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-            {copiedId === "all" ? "Copied!" : "Copy all"}
+            {isCopied("all") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+            {isCopied("all") ? "Copied!" : "Copy all"}
           </button>
           <button type="button" onClick={reset} aria-label="Reset all options" className={GHOST_BTN}>
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Reset
           </button>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
       </section>
 
       {failed ? (
@@ -259,12 +264,12 @@ export default function ToolHome() {
                   aria-label={`Copy message ${index + 1}`}
                   className={GHOST_BTN}
                 >
-                  {copiedId === item.id ? (
+                  {isCopied(item.id) ? (
                     <Check className="h-4 w-4" aria-hidden="true" />
                   ) : (
                     <Copy className="h-4 w-4" aria-hidden="true" />
                   )}
-                  {copiedId === item.id ? "Copied!" : "Copy"}
+                  {isCopied(item.id) ? "Copied!" : "Copy"}
                 </button>
               </div>
               <p className="mt-3 whitespace-pre-wrap break-words text-base leading-7">{item.text}</p>

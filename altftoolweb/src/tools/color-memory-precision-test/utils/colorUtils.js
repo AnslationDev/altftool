@@ -129,6 +129,28 @@ export const generateRandomColor = (difficulty, rng = Math.random) => {
   return rgbToHex(r, g, b);
 };
 
+/** Weights blended into the final accuracy percentage. */
+export const RGB_WEIGHT = 0.4;
+export const HSL_WEIGHT = 0.6;
+
+/** Within HSL accuracy: hue matters twice as much as saturation or lightness. */
+export const HUE_WEIGHT = 0.5;
+export const SATURATION_WEIGHT = 0.25;
+export const LIGHTNESS_WEIGHT = 0.25;
+
+/**
+ * Greatest possible euclidean distance in RGB space — black to white,
+ * √(255² × 3) ≈ 441.67. Used to normalise the RGB half of the score.
+ */
+export const MAX_RGB_DISTANCE = Math.sqrt(255 * 255 * 3);
+
+/**
+ * Score bands shown after each round.
+ * Perfect 99+, Elite 95+, Master 90+, Expert 80+, Adept 60+, Novice 40+,
+ * Amateur below 40.
+ */
+export const RATING_BANDS = [99, 95, 90, 80, 60, 40];
+
 /**
  * Calculates accuracy percentage between two colors
  */
@@ -146,8 +168,7 @@ export const calculateAccuracy = (hex1, hex2) => {
     Math.pow(rgb1.b - rgb2.b, 2)
   );
 
-  const maxDistance = Math.sqrt(Math.pow(255, 2) * 3);
-  const rgbAccuracy = Math.max(0, 100 - (distance / maxDistance) * 100);
+  const rgbAccuracy = Math.max(0, 100 - (distance / MAX_RGB_DISTANCE) * 100);
 
   // Also consider HSL for better perception matching
   const hsl1 = rgbToHsl(rgb1.r, rgb1.g, rgb1.b);
@@ -157,10 +178,10 @@ export const calculateAccuracy = (hex1, hex2) => {
   const sDiff = Math.abs(hsl1.s - hsl2.s) / 100;
   const lDiff = Math.abs(hsl1.l - hsl2.l) / 100;
 
-  const hslAccuracy = 100 - (hDiff * 0.5 + sDiff * 0.25 + lDiff * 0.25) * 100;
+  const hslAccuracy = 100 - (hDiff * HUE_WEIGHT + sDiff * SATURATION_WEIGHT + lDiff * LIGHTNESS_WEIGHT) * 100;
 
   // Average them for a more "fair" score
-  const finalAccuracy = (rgbAccuracy * 0.4 + hslAccuracy * 0.6);
+  const finalAccuracy = (rgbAccuracy * RGB_WEIGHT + hslAccuracy * HSL_WEIGHT);
 
   return {
     percentage: Math.round(finalAccuracy * 10) / 10,
@@ -181,12 +202,13 @@ export const calculateAccuracy = (hex1, hex2) => {
  * Get precision rating based on score
  */
 export const getPrecisionRating = (score) => {
-  if (score >= 99) return { label: "Perfect", color: "text-emerald-400" };
-  if (score >= 95) return { label: "Elite", color: "text-emerald-400" };
-  if (score >= 90) return { label: "Master", color: "text-green-400" };
-  if (score >= 80) return { label: "Expert", color: "text-blue-400" };
-  if (score >= 60) return { label: "Adept", color: "text-yellow-400" };
-  if (score >= 40) return { label: "Novice", color: "text-orange-400" };
+  const [perfect, elite, master, expert, adept, novice] = RATING_BANDS;
+  if (score >= perfect) return { label: "Perfect", color: "text-emerald-400" };
+  if (score >= elite) return { label: "Elite", color: "text-emerald-400" };
+  if (score >= master) return { label: "Master", color: "text-green-400" };
+  if (score >= expert) return { label: "Expert", color: "text-blue-400" };
+  if (score >= adept) return { label: "Adept", color: "text-yellow-400" };
+  if (score >= novice) return { label: "Novice", color: "text-orange-400" };
   return { label: "Amateur", color: "text-red-400" };
 };
 /**

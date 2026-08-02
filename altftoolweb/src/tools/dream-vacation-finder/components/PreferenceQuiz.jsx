@@ -7,7 +7,6 @@ import { QUESTIONS } from "../utils/destinations";
 export default function PreferenceQuiz({ onSubmit, onSurprise, isLoading }) {
   const [answers, setAnswers] = useState({});
   const [currentStep, setCurrentStep] = useState(0);
-  const [showResults, setShowResults] = useState(false);
 
   const handleAnswer = (questionId, value) => {
     setAnswers((prev) => ({ ...prev, [questionId]: value }));
@@ -23,22 +22,16 @@ export default function PreferenceQuiz({ onSubmit, onSurprise, isLoading }) {
   const handleSubmit = () => {
     if (Object.keys(answers).length < QUESTIONS.length - 1) return;
     onSubmit(answers);
-    setShowResults(true);
   };
 
   const handleReset = () => {
     setAnswers({});
     setCurrentStep(0);
-    setShowResults(false);
   };
 
   const question = QUESTIONS[currentStep];
   const progress = ((currentStep + 1) / QUESTIONS.length) * 100;
   const isComplete = Object.keys(answers).length >= QUESTIONS.length - 1;
-
-  if (showResults) {
-    return null;
-  }
 
   return (
     <div className="rounded-2xl border border-(--border) bg-(--surface) p-6 shadow-md">

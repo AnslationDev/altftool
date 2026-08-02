@@ -105,7 +105,7 @@ export const REFUSAL_GROUNDS = [
   },
   {
     id: "return-intent",
-    code: "Annex VI box 11",
+    code: "Annex VI box 9",
     title: "Doubts about your intention to leave before the visa expires",
     legalBasis: "Visa Code art. 32(1)(b)",
     severity: "high",
@@ -130,7 +130,7 @@ export const REFUSAL_GROUNDS = [
       "intention to leave the territory",
       "before the expiry of the visa",
       "reasonable doubts as to your intention",
-      "box 11",
+      "box 9",
     ],
   },
   {
@@ -162,7 +162,7 @@ export const REFUSAL_GROUNDS = [
   },
   {
     id: "documents",
-    code: "Annex VI box 10",
+    code: "Annex VI form (no dedicated box)",
     title: "Doubts about the authenticity of your supporting documents",
     legalBasis: "Visa Code art. 32(1)(b)",
     severity: "high",
@@ -187,8 +187,6 @@ export const REFUSAL_GROUNDS = [
       "veracity of their contents",
       "reliability of the statements",
       "supporting documents submitted",
-      "box 10",
-      "box 9",
     ],
   },
   {

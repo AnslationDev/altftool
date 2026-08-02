@@ -118,6 +118,24 @@ const staticRoutes = [
   { path: "/pixel-thought/meditation", priority: 0.54 },
   { path: "/prank-socialmedia/templates", priority: 0.58 },
   { path: "/windowswap/pricing", priority: 0.45 },
+  // Four routes were indexable, self-canonical and substantial, yet published
+  // nowhere — checked live on 2026-07-31, each 200 with `index, follow` and its
+  // own canonical. Three had their PARENT in this file but not themselves,
+  // which is the tell that they were missed rather than withheld:
+  // /altpintrest is here and /altpintrest/explore was not, /playbuzz is here
+  // and /playbuzz/quiz-play was not, /windowswap/pricing is here and
+  // /windowswap/sendGift was not. /altflinking had no entry at all despite
+  // being a hub that carries its own SoftwareApplication JSON-LD.
+  //
+  // Priorities follow the neighbours: a hub at 0.7, a secondary page under an
+  // existing hub at 0.45, matching /windowswap/pricing directly above.
+  //
+  // /smartlink is deliberately still absent — it is noindex, nofollow (verified
+  // live), and a noindexed URL must not be submitted.
+  { path: "/altflinking", priority: 0.7 },
+  { path: "/altpintrest/explore", priority: 0.45 },
+  { path: "/playbuzz/quiz-play", priority: 0.45 },
+  { path: "/windowswap/sendGift", priority: 0.45 },
   { path: "/trendingvids", priority: 0.7 },
   { path: "/news", priority: 0.7 },
   { path: "/news/headlines", priority: 0.6 },
@@ -202,7 +220,9 @@ const staticRoutes = [
   // Legacy /housingneeds/* URLs redirect permanently in next.config.mjs. The
   // canonical guides are added from HN_CATEGORIES below, excluding redirects.
   { path: "/bops/housingneeds", priority: 0.72 },
-  { path: "/siding", priority: 0.55 },
+  // /siding is absent: it duplicates the /bops/housing-services/siding-pros
+  // lander, which is noindex like all 39 of its siblings, and this copy is
+  // now noindex too. A noindexed URL must not be submitted.
 ];
 
 const FIREBASE_API_KEY =

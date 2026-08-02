@@ -53,19 +53,36 @@ const T = {
 };
 const CARD = { backgroundColor: T.card, boxShadow: T.shadow };
 
+/**
+ * Curated shortlist for the "Popular tools" grid. EVERY slug must resolve in
+ * toolMetaMap — see getPopularTools(), which no longer backfills from the
+ * registry's own key order. It used to, and because `qr-code-generator`,
+ * `pdf-to-word` and `word-counter` never existed (the real slugs are
+ * `qr-generator`, `pdf-to-word-converter`, `word-character-counter`), all 141
+ * location pages advertised "2 Images Swap", "2048 Game" and "2FA
+ * Authenticator" as popular tools — in the visible grid and in the ItemList
+ * JSON-LD. More entries than the display limit are listed on purpose so a
+ * future registry rename degrades to a shorter real list, never to junk.
+ */
 const POPULAR_TOOL_SLUGS = [
-  "qr-code-generator",
+  "qr-generator",
   "image-compressor",
-  "pdf-to-word",
-  "word-counter",
+  "pdf-to-word-converter",
+  "word-character-counter",
   "age-calculator",
   "bmi-calculator",
   "password-generator",
   "unit-converter",
-  "step-counter",
-  "base64-to-file",
-  "barcode-generator",
+  "pdf-merger",
+  "img-to-pdf",
+  "percentage-calculator",
   "aspect-ratio-calculator",
+  "pdf-compressor",
+  "split-pdf",
+  "barcode-generator",
+  "base64-to-file",
+  "step-counter",
+  "text-to-qr-code",
 ];
 
 export function generateStaticParams() {
@@ -80,18 +97,11 @@ export async function generateMetadata({ params }) {
 
 function getPopularTools(limit = 12) {
   const picked = [];
-  const seen = new Set();
   for (const slug of POPULAR_TOOL_SLUGS) {
-    if (toolMetaMap[slug]) {
-      picked.push([slug, toolMetaMap[slug]]);
-      seen.add(slug);
-    }
-  }
-  for (const [slug, tool] of Object.entries(toolMetaMap)) {
     if (picked.length >= limit) break;
-    if (!seen.has(slug)) picked.push([slug, tool]);
+    if (toolMetaMap[slug]) picked.push([slug, toolMetaMap[slug]]);
   }
-  return picked.slice(0, limit);
+  return picked;
 }
 
 function buildIntro(location, chain) {
@@ -104,9 +114,26 @@ function buildIntro(location, chain) {
         ? `across ${location.name} — from its biggest cities to the smallest towns`
         : `in ${where}`;
 
-  return `${siteConfig.name} is a free online toolkit that works instantly ${scope}. Every tool runs directly in your browser — no downloads, no sign-up, and your files never leave your device. Whether you need to compress an image, convert a PDF, generate a QR code, or run a quick calculation, the full ${siteConfig.name} directory is available to everyone in ${location.name} on any phone, tablet, or computer.`;
+  // Accuracy note: "every tool runs in your browser / your files never leave
+  // your device" was not true of the whole catalogue — the AI and lookup tools
+  // call server APIs. The claim is scoped to the tools it actually holds for.
+  return `${siteConfig.name} is a free online toolkit that works instantly ${scope}. No downloads, no sign-up — and the everyday tools do their work inside your browser, so those files stay on your device. Whether you need to compress an image, convert a PDF to Word, generate a QR code, or run a quick calculation, the full ${siteConfig.name} directory is available to everyone in ${location.name} on any phone, tablet, or computer.`;
 }
 
+/**
+ * These answers ship as FAQPage structured data, so every sentence is a claim
+ * Google may surface verbatim. Three of the four originals were not true:
+ *
+ *  - "most keep working offline once loaded" — the site has no offline mode.
+ *    /sw.js is a tombstone worker that unregisters itself and deletes every
+ *    cache, and the root layout actively removes stale registrations.
+ *  - "nothing is uploaded to a server" — the AI and lookup tools post to
+ *    /api/* routes; the claim is now scoped to the tools it holds for.
+ *  - "Which tools are most used in {place}?" — the site has no per-location
+ *    usage data, so the answer invented a local popularity ranking and then
+ *    quietly admitted it was worldwide. Replaced with a question the page can
+ *    genuinely answer from its own shortlist.
+ */
 function buildFaqs(location) {
   return [
     {
@@ -115,15 +142,15 @@ function buildFaqs(location) {
     },
     {
       question: `Does ${siteConfig.name} work on mobile networks in ${location.name}?`,
-      answer: `Yes. The tools are lightweight, browser-based pages that load quickly even on slower mobile connections, and most keep working offline once loaded.`,
+      answer: `Yes. The tools are lightweight, browser-based pages that load quickly even on slower mobile connections, and there is no app to install.`,
     },
     {
       question: `Is my data safe when I use ${siteConfig.name} from ${location.name}?`,
-      answer: `Yes. Tools process your files and inputs inside your own browser wherever possible — nothing is uploaded to a server, which also makes the tools fast regardless of where you are.`,
+      answer: `Mostly yes. The everyday tools — image compression, PDF conversion, QR codes, calculators — process your files inside your own browser and upload nothing. A few, such as the AI utilities, do send your input to a server.`,
     },
     {
-      question: `Which ${siteConfig.name} tools are most used in ${location.name}?`,
-      answer: `Image compression, PDF conversion, QR code generation, calculators, and text utilities are the most popular tools worldwide, including in ${location.name}. Browse the full directory to see all 100+ tools.`,
+      question: `Which ${siteConfig.name} tools should I start with from ${location.name}?`,
+      answer: `The shortlist on this page is a good starting point: image compression, PDF to Word, QR codes and calculators cover most everyday jobs. Browse the directory for 100+ more.`,
     },
   ];
 }

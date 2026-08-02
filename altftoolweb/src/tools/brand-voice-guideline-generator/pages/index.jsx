@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Megaphone, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import { VOICE_DIMENSIONS, buildVoiceGuide } from "../lib";
 
 const DEFAULTS = {
@@ -35,7 +37,7 @@ export default function ToolHome() {
     enthusiasm: DEFAULTS.enthusiasm,
   });
   const [bannedWords, setBannedWords] = useState(DEFAULTS.bannedWords);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const guide = useMemo(
     () => buildVoiceGuide({ brandName, audience, dials, bannedWords }),
@@ -44,19 +46,21 @@ export default function ToolHome() {
 
   const hasError = Boolean(guide.error);
   const dash = "—";
+  const copied = isCopied("guide");
 
   const copyResult = async () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(guide.markdown);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    await copy("guide", guide.markdown, { label: "brand voice guide" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the brand name, audience, all four tone dials and the banned-words list back to their defaults? This can't be undone.",
+      )
+    ) {
+      return;
+    }
     setBrandName(DEFAULTS.brandName);
     setAudience(DEFAULTS.audience);
     setDials({
@@ -66,7 +70,7 @@ export default function ToolHome() {
       enthusiasm: DEFAULTS.enthusiasm,
     });
     setBannedWords(DEFAULTS.bannedWords);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -154,7 +158,7 @@ export default function ToolHome() {
       {hasError && (
         <p
           role="alert"
-          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
         >
           {guide.error}
         </p>
@@ -177,13 +181,16 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the brand voice guide as Markdown"
+              aria-label={copied ? "Copied the brand voice guide to clipboard" : "Copy the brand voice guide as Markdown"}
               className={GHOST_BTN}
               disabled={hasError}
             >
               {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
               {copied ? "Copied!" : "Copy guide"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
@@ -251,7 +258,7 @@ export default function ToolHome() {
 
           <div className="mt-6 grid gap-6 sm:grid-cols-2">
             <section className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
-              <h2 className="text-base font-semibold text-[var(--success)]">Do</h2>
+              <h2 className="text-base font-semibold text-[var(--success-text)]">Do</h2>
               <ul className="mt-3 space-y-2 text-sm leading-6">
                 {guide.dos.map((item) => (
                   <li key={`${item.axis}-${item.text}`} className="flex gap-2">
@@ -262,7 +269,7 @@ export default function ToolHome() {
               </ul>
             </section>
             <section className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
-              <h2 className="text-base font-semibold text-[var(--danger)]">Don&apos;t</h2>
+              <h2 className="text-base font-semibold text-[var(--danger-text)]">Don&apos;t</h2>
               <ul className="mt-3 space-y-2 text-sm leading-6">
                 {guide.donts.map((item) => (
                   <li key={`${item.axis}-${item.text}`} className="flex gap-2">
@@ -292,7 +299,7 @@ export default function ToolHome() {
               {guide.avoid.map((word) => (
                 <span
                   key={`a-${word}`}
-                  className="rounded-md bg-[var(--danger-soft)] px-2 py-1 text-sm text-[var(--danger)]"
+                  className="rounded-md bg-[var(--danger-soft)] px-2 py-1 text-sm text-[var(--danger-text)]"
                 >
                   {word}
                 </span>

@@ -222,10 +222,6 @@ export const SYMPTOMS = [
 
 const SYMPTOM_BY_ID = new Map(SYMPTOMS.map((item) => [item.id, item]));
 
-export function getSymptom(id) {
-  return SYMPTOM_BY_ID.get(id) || null;
-}
-
 export function symptomsInGroup(groupId) {
   return SYMPTOMS.filter((item) => item.group === groupId);
 }
@@ -241,7 +237,9 @@ export function symptomsInGroup(groupId) {
  *   risk            every listed risk factor is ticked
  *   minSeverity     overall severity is at least this band
  *   minDurationDays / maxDurationDays   inclusive bounds on how long it has run
- *   minAgeYears / maxAgeYears           inclusive bounds on age
+ *   minAgeYears     inclusive lower bound on age (age === minAgeYears matches)
+ *   maxAgeYears     exclusive upper bound on age (age === maxAgeYears does NOT
+ *                   match — e.g. maxAgeYears: 5 means "under the age of five")
  */
 export const RED_FLAG_RULES = [
   {
@@ -779,8 +777,6 @@ export function assessSymptoms(input) {
     if (!watchSet.includes(item)) watchSet.push(item);
   }
 
-  const redFlagsSelected = selected.filter((item) => item.redFlag === true).map((item) => item.label);
-
   const risks = rawRisks.map((id) => RISK_BY_ID.get(id).label);
 
   return {
@@ -800,7 +796,6 @@ export function assessSymptoms(input) {
     firedRules,
     escalations,
     selected: selected.map((item) => ({ id: item.id, label: item.label, group: item.group })),
-    redFlagsSelected,
     riskFactors: risks,
     ageYears,
     durationDays,
@@ -872,8 +867,10 @@ export function buildHandover(assessment) {
 export function formatAge(ageYears) {
   if (!Number.isFinite(ageYears) || ageYears < 0) return "unknown";
   if (ageYears < 1) {
-    const months = Math.round(ageYears * 12);
-    return months <= 1 ? "under 1 month" : `about ${months} months`;
+    const monthsExact = ageYears * 12;
+    if (monthsExact < 1) return "under 1 month";
+    const months = Math.round(monthsExact);
+    return `about ${months} month${months === 1 ? "" : "s"}`;
   }
   const whole = Math.floor(ageYears);
   return `${whole} year${whole === 1 ? "" : "s"}`;

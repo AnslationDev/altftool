@@ -5,10 +5,13 @@ import { Bike, Check, Copy, RotateCcw } from "lucide-react";
 
 import {
   FIRST_SERVICE_KM,
+  FIRST_SERVICE_MONTHS,
   FREE_SERVICE_COUNT,
   MAX_SERVICES,
   SECOND_SERVICE_KM,
+  SECOND_SERVICE_MONTHS,
   SERVICE_INTERVAL_KM,
+  SERVICE_INTERVAL_MONTHS,
   planServiceSchedule,
 } from "../lib";
 
@@ -41,8 +44,11 @@ const DEFAULTS = {
   services: "8",
   free: String(FREE_SERVICE_COUNT),
   firstKm: String(FIRST_SERVICE_KM),
+  firstMonths: String(FIRST_SERVICE_MONTHS),
   secondKm: String(SECOND_SERVICE_KM),
+  secondMonths: String(SECOND_SERVICE_MONTHS),
   intervalKm: String(SERVICE_INTERVAL_KM),
+  intervalMonths: String(SERVICE_INTERVAL_MONTHS),
   labour: "350",
   priceIndex: "100",
 };
@@ -69,8 +75,11 @@ export default function ToolHome() {
   const [services, setServices] = useState(DEFAULTS.services);
   const [free, setFree] = useState(DEFAULTS.free);
   const [firstKm, setFirstKm] = useState(DEFAULTS.firstKm);
+  const [firstMonths, setFirstMonths] = useState(DEFAULTS.firstMonths);
   const [secondKm, setSecondKm] = useState(DEFAULTS.secondKm);
+  const [secondMonths, setSecondMonths] = useState(DEFAULTS.secondMonths);
   const [intervalKm, setIntervalKm] = useState(DEFAULTS.intervalKm);
+  const [intervalMonths, setIntervalMonths] = useState(DEFAULTS.intervalMonths);
   const [labour, setLabour] = useState(DEFAULTS.labour);
   const [priceIndex, setPriceIndex] = useState(DEFAULTS.priceIndex);
   const [copied, setCopied] = useState(false);
@@ -84,12 +93,29 @@ export default function ToolHome() {
         servicesToPlan: toNumber(services),
         freeServices: toNumber(free),
         firstKm: toNumber(firstKm),
+        firstMonths: toNumber(firstMonths),
         secondKm: toNumber(secondKm),
+        secondMonths: toNumber(secondMonths),
         intervalKm: toNumber(intervalKm),
+        intervalMonths: toNumber(intervalMonths),
         labourPerPaidService: toNumber(labour),
         partsPriceIndex: toNumber(priceIndex),
       }),
-    [purchaseDate, odometer, monthlyKm, services, free, firstKm, secondKm, intervalKm, labour, priceIndex],
+    [
+      purchaseDate,
+      odometer,
+      monthlyKm,
+      services,
+      free,
+      firstKm,
+      firstMonths,
+      secondKm,
+      secondMonths,
+      intervalKm,
+      intervalMonths,
+      labour,
+      priceIndex,
+    ],
   );
 
   const hasError = Boolean(result.error);
@@ -133,8 +159,11 @@ export default function ToolHome() {
     setServices(DEFAULTS.services);
     setFree(DEFAULTS.free);
     setFirstKm(DEFAULTS.firstKm);
+    setFirstMonths(DEFAULTS.firstMonths);
     setSecondKm(DEFAULTS.secondKm);
+    setSecondMonths(DEFAULTS.secondMonths);
     setIntervalKm(DEFAULTS.intervalKm);
+    setIntervalMonths(DEFAULTS.intervalMonths);
     setLabour(DEFAULTS.labour);
     setPriceIndex(DEFAULTS.priceIndex);
     setCopied(false);
@@ -249,6 +278,21 @@ export default function ToolHome() {
             />
           </div>
           <div>
+            <label className={LABEL_CLASS} htmlFor="hero-first-months">
+              First service due at (months)
+            </label>
+            <input
+              id="hero-first-months"
+              className={`mt-2 ${INPUT_CLASS}`}
+              type="number"
+              inputMode="numeric"
+              min="1"
+              step="1"
+              value={firstMonths}
+              onChange={(event) => setFirstMonths(event.target.value)}
+            />
+          </div>
+          <div>
             <label className={LABEL_CLASS} htmlFor="hero-second">
               Second service due at (km)
             </label>
@@ -264,6 +308,21 @@ export default function ToolHome() {
             />
           </div>
           <div>
+            <label className={LABEL_CLASS} htmlFor="hero-second-months">
+              Second service due at (months)
+            </label>
+            <input
+              id="hero-second-months"
+              className={`mt-2 ${INPUT_CLASS}`}
+              type="number"
+              inputMode="numeric"
+              min="1"
+              step="1"
+              value={secondMonths}
+              onChange={(event) => setSecondMonths(event.target.value)}
+            />
+          </div>
+          <div>
             <label className={LABEL_CLASS} htmlFor="hero-interval">
               Periodic interval after that (km)
             </label>
@@ -276,6 +335,21 @@ export default function ToolHome() {
               step="500"
               value={intervalKm}
               onChange={(event) => setIntervalKm(event.target.value)}
+            />
+          </div>
+          <div>
+            <label className={LABEL_CLASS} htmlFor="hero-interval-months">
+              Periodic interval after that (months)
+            </label>
+            <input
+              id="hero-interval-months"
+              className={`mt-2 ${INPUT_CLASS}`}
+              type="number"
+              inputMode="numeric"
+              min="1"
+              step="1"
+              value={intervalMonths}
+              onChange={(event) => setIntervalMonths(event.target.value)}
             />
           </div>
           <div>
@@ -323,7 +397,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Next service due at
             </p>
@@ -360,7 +434,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             ["Distance still to run", hasError || !next ? DASH : km(result.kmToNext)],
             ["Services already past", hasError ? DASH : String(result.completed)],
@@ -417,7 +491,7 @@ export default function ToolHome() {
                       <span
                         className={
                           service.isFree
-                            ? "rounded-full bg-[var(--muted)] px-2 py-0.5 text-xs font-semibold text-[var(--success)]"
+                            ? "rounded-full bg-[var(--muted)] px-2 py-0.5 text-xs font-semibold text-[var(--success-text)]"
                             : "rounded-full bg-[var(--muted)] px-2 py-0.5 text-xs font-semibold text-[var(--muted-foreground)]"
                         }
                       >
@@ -458,10 +532,10 @@ export default function ToolHome() {
       )}
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
-        Intervals and part prices shown are typical published values and are editable, because Hero
-        varies them by model and warranty package. Confirm the maintenance chart in your own
-        owner&apos;s manual, and remember that missing a free service window can end the free-service
-        entitlement.
+        Every service milestone — km and months — is editable, because Hero varies them by model and
+        warranty package. Consumable replacement intervals shown (engine oil, filters, and so on) are
+        typical published reference values. Confirm the maintenance chart in your own owner&apos;s
+        manual, and remember that missing a free service window can end the free-service entitlement.
       </p>
     </main>
   );

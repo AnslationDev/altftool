@@ -87,6 +87,49 @@ function clearVideoElement(video) {
   video.load();
 }
 
+// Chromium-family browsers commonly report video.duration as Infinity right after
+// "loadedmetadata" for blob URLs created from MediaRecorder output, because streamed
+// WebM/Matroska containers omit the Segment Duration element. The documented recovery
+// is to seek far past the end of the media and back to the start, which forces the
+// browser to resolve and cache the real duration from the container's cues.
+function recoverInfiniteDuration(video) {
+  return new Promise((resolve) => {
+    if (Number.isFinite(video.duration)) {
+      resolve();
+      return;
+    }
+    let settled = false;
+    let timer;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timer);
+      video.removeEventListener("durationchange", handleDurationChange);
+      const restoreToStart = () => {
+        video.removeEventListener("seeked", restoreToStart);
+        resolve();
+      };
+      video.addEventListener("seeked", restoreToStart, { once: true });
+      try {
+        video.currentTime = 0;
+      } catch {
+        video.removeEventListener("seeked", restoreToStart);
+        resolve();
+      }
+    };
+    const handleDurationChange = () => {
+      if (Number.isFinite(video.duration)) finish();
+    };
+    video.addEventListener("durationchange", handleDurationChange);
+    timer = window.setTimeout(finish, 2_000);
+    try {
+      video.currentTime = 1e101;
+    } catch {
+      finish();
+    }
+  });
+}
+
 function waitForVideoMetadata(video, sourceUrl) {
   return new Promise((resolve, reject) => {
     let timer;
@@ -95,8 +138,11 @@ function waitForVideoMetadata(video, sourceUrl) {
       video.removeEventListener("loadedmetadata", handleLoadedMetadata);
       video.removeEventListener("error", handleError);
     };
-    const handleLoadedMetadata = () => {
+    const handleLoadedMetadata = async () => {
       cleanUp();
+      if (!Number.isFinite(video.duration)) {
+        await recoverInfiniteDuration(video);
+      }
       resolve();
     };
     const handleError = () => {
@@ -623,7 +669,12 @@ export default function VideoFrameContinuityInspector() {
                   ({media.workingPixels.toLocaleString()} pixels)
                 </p>
               </div>
-              <button type="button" className="btn-secondary" onClick={reset}>
+              <button
+                type="button"
+                className="btn-secondary disabled:cursor-not-allowed disabled:opacity-60"
+                disabled={busy}
+                onClick={reset}
+              >
                 <RefreshCw className="h-4 w-4" aria-hidden="true" />
                 Clear video
               </button>
@@ -855,6 +906,10 @@ export default function VideoFrameContinuityInspector() {
                     <p className="mt-1 text-xs text-muted-foreground">
                       {range.pairCount} adjacent sampled pair
                       {range.pairCount === 1 ? "" : "s"}
+                    </p>
+                    <p className="mt-1 text-xs text-muted-foreground">
+                      Peak pixel difference: {formatPercent(range.peakPixelDifference)} • Peak
+                      histogram distance: {formatPercent(range.peakHistogramDistance)}
                     </p>
                   </li>
                 ))}

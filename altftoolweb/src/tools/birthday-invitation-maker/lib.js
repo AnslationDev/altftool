@@ -167,16 +167,6 @@ export const MAX_MESSAGE_LENGTH = 220;
  * Pure text utilities
  * ------------------------------------------------------------------------ */
 
-/** XML-escape a value so it is safe inside serialised SVG markup. */
-export function escapeXml(value) {
-  return String(value ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&apos;");
-}
-
 /** English ordinal suffix: 1st, 2nd, 3rd, 4th, with the 11-13 exception. */
 export function ordinal(n) {
   const value = Math.trunc(Number(n));
@@ -201,14 +191,18 @@ export function wrapText(text, fontSize, maxWidth) {
     const candidate = current ? `${current} ${word}` : word;
     if (candidate.length <= perLine) {
       current = candidate;
-    } else {
-      if (current) lines.push(current);
-      current = word.length > perLine ? `${word.slice(0, perLine - 1)}-` : word;
-      if (word.length > perLine) {
-        lines.push(current);
-        current = word.slice(perLine - 1);
-      }
+      continue;
     }
+    if (current) lines.push(current);
+    current = "";
+    // Hyphen-split words longer than a full line as many times as needed —
+    // not just once — so a long remainder never overflows the panel.
+    let rest = word;
+    while (rest.length > perLine) {
+      lines.push(`${rest.slice(0, perLine - 1)}-`);
+      rest = rest.slice(perLine - 1);
+    }
+    current = rest;
   }
   if (current) lines.push(current);
   return lines;

@@ -34,8 +34,8 @@ const garageDriveway = {
   "quoteLabel": "Get a Free Quote",
   "quoteUrl": "https://example.com/quote/garage-driveway",
   "seo": {
-    "title": "Garage & Driveway Guide: Doors, Paving, Costs & Repairs",
-    "description": "How garage doors, openers, and driveways really work: repair vs replacement, concrete vs asphalt vs pavers, freeze-thaw base prep, and what drives project cost."
+    "title": "Garage and Driveway Guide: Doors & Paving",
+    "description": "How garage doors, openers and driveways really work: repair vs replacement, concrete vs asphalt vs pavers, base prep, and what drives project cost."
   },
   "services": [
     {

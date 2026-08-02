@@ -38,7 +38,7 @@ const siding = {
   "quoteLabel": "Get a siding quote",
   "quoteUrl": quoteUrlFor("siding"),
   "seo": {
-    "title": "Siding Materials, Installation and Cost Factors | Homeowner Guide",
+    "title": "Siding Guide: Materials, Costs & Installation",
     "description": "Compare vinyl, insulated vinyl, fiber cement and engineered wood siding: typical lifespans, R-value, fade and impact resistance, and what drives siding cost."
   },
   "services": [

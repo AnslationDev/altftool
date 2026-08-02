@@ -246,10 +246,10 @@ export default function ToolHome() {
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Projection gap
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">
               {hasError ? DASH : `${NUM.format(scene.projectionGap)} px`}
             </p>
-            <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+            <p className="mt-1 text-sm text-[var(--muted-foreground)]" aria-live="polite">
               {hasError
                 ? "Fix the settings above to build the figure."
                 : scene.isImpossible
@@ -289,10 +289,20 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
           {[
             ["Cubes drawn", hasError ? DASH : NUM.format(scene.cellCount)],
             ["Faces painted", hasError ? DASH : NUM.format(scene.faceCount)],
+            ...(form.kind === "impossible-staircase"
+              ? [
+                  [
+                    "Long side",
+                    hasError || typeof scene.longSide !== "number"
+                      ? DASH
+                      : `${NUM.format(scene.longSide)} cells`,
+                  ],
+                ]
+              : []),
             [
               "Net 3D displacement",
               hasError

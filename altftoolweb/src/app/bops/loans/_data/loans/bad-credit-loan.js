@@ -205,7 +205,7 @@ export const badCreditLoan = {
   },
 
   seo: {
-    title: "Bad Credit Loans — Compare Real Options Responsibly | AltFTool",
+    title: "Bad Credit Loans — Compare Real Options | AltFTool",
     description:
       "Have fair, poor or limited credit? Compare bad-credit loan options with a soft check that won't affect your score. See offers, compare APRs and borrow wisely.",
   },

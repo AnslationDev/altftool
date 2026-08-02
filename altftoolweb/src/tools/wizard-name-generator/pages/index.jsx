@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
-import { Shuffle, Copy, Check, Sparkles, Wand2, BookOpen, Star, Moon } from "lucide-react";
+import { useState, useCallback } from "react";
+import { Shuffle, Copy, Check, Sparkles, Wand2 } from "lucide-react";
 
 const WIZARDS = [
   { name: "Eldrin Stormcloak", school: "Evocation", staff: "Oak Dragon Staff", spell: "Lightning Bolt", level: 9, familiar: "Phoenix", quote: "The storm answers my call!" },

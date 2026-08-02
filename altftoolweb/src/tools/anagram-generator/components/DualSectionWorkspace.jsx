@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import {
   Sparkles,
@@ -13,7 +13,6 @@ import {
   RefreshCw,
   Zap,
   ShieldCheck,
-  Star,
   Download,
   Copy,
   FileText,
@@ -25,7 +24,6 @@ import {
 const FEATURE_CHIPS = [
   { label: "Performance", icon: Zap },
   { label: "Accuracy", icon: ShieldCheck },
-  { label: "Scrabble Match", icon: Star },
   { label: "Permutations", icon: Flame },
 ];
 
@@ -45,8 +43,6 @@ export default function DualSectionWorkspace({
   isGenerating,
   count,
   setCount,
-  realWordsOnly,
-  setRealWordsOnly,
   sortMode,
   setSortMode,
   allowDuplicates,
@@ -59,8 +55,8 @@ export default function DualSectionWorkspace({
   setContains,
   excludeLetters,
   setExcludeLetters,
-  dictionaryMode,
-  setDictionaryMode,
+  combinationsEstimate,
+  lastGenerationMs,
   filteredAnagrams,
   copyAnagram,
   copiedIndex,
@@ -76,15 +72,6 @@ export default function DualSectionWorkspace({
 }) {
   const charCount = input.length;
   const wordCount = input.trim() ? input.trim().split(/\s+/).length : 0;
-
-  const combinationsEstimate = useMemo(() => {
-    const clean = input.replace(/[^a-zA-Z]/g, "").toLowerCase();
-    if (!clean.length) return "0";
-    if (clean.length > 12) return "10M+";
-    let fact = 1;
-    for (let i = 2; i <= clean.length; i++) fact *= i;
-    return fact.toLocaleString();
-  }, [input]);
 
   const handleClear = () => {
     setInput("");
@@ -114,26 +101,26 @@ export default function DualSectionWorkspace({
         <motion.div
           whileHover={{ scale: 1.005 }}
           transition={{ duration: 0.3 }}
-          className="w-full lg:w-[40%] rounded-[24px] bg-[#FAFAFA] dark:bg-surface-soft/90 p-6 sm:p-7 flex flex-col justify-between space-y-6 border border-black/5 dark:border-border/60"
+          className="w-full lg:w-[40%] rounded-[24px] bg-surface-soft/90 p-6 sm:p-7 flex flex-col justify-between space-y-6 border border-black/5 dark:border-border/60"
         >
           {/* Eyebrow */}
           <div className="space-y-2">
-            <div className="text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-teal-400 flex items-center gap-2">
+            <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground dark:text-teal-400 flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
               <span>Input &amp; Generation Controls</span>
             </div>
 
             {/* Split Heading (32px Bold) */}
             <h2 className="text-2xl sm:text-3xl lg:text-[32px] font-extrabold tracking-tight leading-tight">
-              <span className="text-gray-500 dark:text-muted-foreground block">
+              <span className="text-muted-foreground block">
                 Rearrange Any Letters,
               </span>
-              <span className="text-gray-900 dark:text-foreground block">
+              <span className="text-foreground block">
                 Unleash Wordplay Magic
               </span>
             </h2>
 
-            <p className="text-sm text-gray-600 dark:text-muted-foreground leading-[170%] max-w-[90%]">
+            <p className="text-sm text-muted-foreground leading-[170%] max-w-[90%]">
               Enter any word or phrase below to instantly calculate all possible anagram variations and combinations.
             </p>
           </div>
@@ -145,7 +132,7 @@ export default function DualSectionWorkspace({
               return (
                 <div
                   key={chip.label}
-                  className="h-[36px] px-3.5 rounded-full border border-[#E5E7EB] dark:border-border bg-white dark:bg-card hover:bg-slate-100 dark:hover:bg-border text-xs font-medium text-gray-700 dark:text-foreground flex items-center gap-1.5 transition-colors shadow-sm cursor-default"
+                  className="h-[36px] px-3.5 rounded-full border border-border bg-white dark:bg-card hover:bg-slate-100 dark:hover:bg-border text-xs font-medium text-foreground flex items-center gap-1.5 transition-colors shadow-sm cursor-default"
                 >
                   <Icon size={14} className="text-teal-500" />
                   <span>{chip.label}</span>
@@ -157,7 +144,7 @@ export default function DualSectionWorkspace({
           {/* Input Textarea & Toolbar */}
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold text-gray-700 dark:text-foreground uppercase tracking-wider flex items-center gap-1.5">
+              <label className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
                 <Type size={14} className="text-teal-500" />
                 <span>Input Workspace</span>
               </label>
@@ -166,7 +153,7 @@ export default function DualSectionWorkspace({
                 {input && (
                   <button
                     onClick={handleShuffleInput}
-                    className="text-xs font-medium text-gray-500 hover:text-teal-600 flex items-center gap-1 transition px-2 py-1 rounded-md bg-white dark:bg-card border border-gray-200 dark:border-border"
+                    className="text-xs font-medium text-muted-foreground hover:text-teal-600 flex items-center gap-1 transition px-2 py-1 rounded-md bg-white dark:bg-card border border-border"
                     title="Shuffle letters"
                   >
                     <Shuffle size={12} /> Shuffle
@@ -175,7 +162,7 @@ export default function DualSectionWorkspace({
                 {input && (
                   <button
                     onClick={handleClear}
-                    className="text-xs font-medium text-gray-400 hover:text-rose-500 flex items-center gap-1 transition px-1.5 py-0.5"
+                    className="text-xs font-medium text-muted-foreground hover:text-rose-500 flex items-center gap-1 transition px-1.5 py-0.5"
                     title="Clear text"
                   >
                     <X size={13} /> Clear
@@ -189,19 +176,19 @@ export default function DualSectionWorkspace({
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type or paste any word or phrase (e.g. listen, triangle)..."
               rows={3}
-              className="w-full bg-white dark:bg-card border border-gray-200 dark:border-border rounded-2xl p-4 text-base font-medium text-gray-900 dark:text-foreground placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-teal-500/50 transition-all shadow-inner resize-none"
+              className="w-full bg-white dark:bg-card border border-border rounded-2xl p-4 text-base font-medium text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-teal-500/50 transition-all shadow-inner resize-none"
             />
 
             {/* Counters */}
-            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-muted-foreground font-mono">
+            <div className="flex items-center justify-between text-xs text-muted-foreground font-mono">
               <span>{charCount} Chars &bull; {wordCount} Words</span>
               <span>Est. Permutations: <strong className="text-teal-600 dark:text-teal-400">{combinationsEstimate}</strong></span>
             </div>
           </div>
 
           {/* Quick Examples */}
-          <div className="space-y-2 pt-1 border-t border-gray-200 dark:border-border/60">
-            <span className="text-xs font-semibold text-gray-500 dark:text-muted-foreground">
+          <div className="space-y-2 pt-1 border-t border-border/60">
+            <span className="text-xs font-semibold text-muted-foreground">
               Quick Examples:
             </span>
             <div className="flex flex-wrap gap-1.5">
@@ -212,7 +199,7 @@ export default function DualSectionWorkspace({
                   className={`px-3 py-1 rounded-xl text-xs font-medium border transition-all ${
                     input.toLowerCase() === chip
                       ? "bg-teal-500 text-white border-teal-500 font-bold"
-                      : "bg-white dark:bg-card hover:bg-teal-500/10 text-gray-700 dark:text-foreground border-gray-200 dark:border-border"
+                      : "bg-white dark:bg-card hover:bg-teal-500/10 text-foreground border-border"
                   }`}
                 >
                   {chip}
@@ -270,13 +257,7 @@ export default function DualSectionWorkspace({
           </div>
 
           {/* Analytics Floating Badges */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 relative z-10">
-            <div className="px-3.5 py-2.5 rounded-2xl bg-card border border-border/80 text-center space-y-0.5 shadow-sm">
-              <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider block">
-                Accuracy
-              </span>
-              <span className="text-sm font-mono font-bold text-teal-600 dark:text-teal-400">100% Match</span>
-            </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 relative z-10">
             <div className="px-3.5 py-2.5 rounded-2xl bg-card border border-border/80 text-center space-y-0.5 shadow-sm">
               <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider block">
                 Words Count
@@ -285,9 +266,11 @@ export default function DualSectionWorkspace({
             </div>
             <div className="px-3.5 py-2.5 rounded-2xl bg-card border border-border/80 text-center space-y-0.5 shadow-sm">
               <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider block">
-                Search Speed
+                Generation Time
               </span>
-              <span className="text-sm font-mono font-bold text-emerald-600 dark:text-emerald-400">&lt; 5ms</span>
+              <span className="text-sm font-mono font-bold text-emerald-600 dark:text-emerald-400">
+                {lastGenerationMs != null ? `${lastGenerationMs.toFixed(1)}ms` : "—"}
+              </span>
             </div>
             <div className="px-3.5 py-2.5 rounded-2xl bg-card border border-border/80 text-center space-y-0.5 shadow-sm">
               <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-wider block">

@@ -13,9 +13,6 @@
 /** SMPTE timecode wraps back to zero after 24 hours. */
 export const MAX_HOURS = 23;
 
-/** The NTSC pulldown factor: colour NTSC runs at 1000/1001 of the nominal rate. */
-export const NTSC_FACTOR = 1000 / 1001;
-
 /**
  * Supported timecode rates.
  *  nominal   = frames labelled per second (what the FF field counts up to)
@@ -74,7 +71,7 @@ export function parseTimecode(text) {
   while (parts.length < 4) parts.unshift(0);
   const [hours, minutes, seconds, frames] = parts;
 
-  return { hours, minutes, seconds, frames, usedDropSeparator: trimmed.includes(";") };
+  return { hours, minutes, seconds, frames };
 }
 
 /**
@@ -205,12 +202,20 @@ export function secondsToTimecode({ seconds, rateKey } = {}) {
   if (!Number.isFinite(value)) return { error: "Enter the duration in seconds as a number." };
   if (value < 0) return { error: "Duration cannot be negative." };
 
-  const maxSeconds = framesPerDay(rate) / rate.exact;
+  const perDay = framesPerDay(rate);
+  const maxSeconds = perDay / rate.exact;
   if (value > maxSeconds) {
     return { error: "That is longer than the 24-hour timecode day — split it into shorter clips." };
   }
 
   const frameNumber = Math.round(value * rate.exact);
+  // Values at or within half a frame of the 24-hour boundary round up to
+  // exactly framesPerDay, one past the valid 0..framesPerDay-1 range. Treat
+  // that the same as the explicit over-24h case above instead of returning a
+  // frameNumber/realClock pair that disagrees with the wrapped timecode.
+  if (frameNumber >= perDay) {
+    return { error: "That is longer than the 24-hour timecode day — split it into shorter clips." };
+  }
   const converted = framesToTimecode(frameNumber, rate.key);
   if (converted.error) return { error: converted.error };
 

@@ -4,14 +4,10 @@ import { useMemo, useState } from "react";
 import { Check, Copy, Rocket, RotateCcw } from "lucide-react";
 
 import {
-  BANDWIDTH_BLOCK_GB,
-  BANDWIDTH_BLOCK_PRICE,
-  BUILD_BLOCK_MINUTES,
-  BUILD_BLOCK_PRICE,
-  FUNCTION_PACK_INVOCATIONS,
-  FUNCTION_PACK_PRICE,
-  INCLUDED_FUNCTION_INVOCATIONS,
+  CREDIT_RATES,
+  DEFAULT_PRO_CREDIT_TIER,
   PLANS,
+  PRO_CREDIT_TIERS,
   computeNetlifyCost,
 } from "../lib";
 
@@ -21,6 +17,7 @@ const USD = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 2,
 });
 const NUM = new Intl.NumberFormat("en-US");
+const CREDITS = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 
 const money = (value) => USD.format(Number.isFinite(value) ? value : 0);
 
@@ -34,33 +31,37 @@ const GHOST_BTN =
 
 const DEFAULTS = {
   planId: "pro",
-  members: "3",
-  bandwidthGb: "1200",
-  buildMinutes: "26000",
-  functionInvocations: "500000",
+  proCreditTier: String(DEFAULT_PRO_CREDIT_TIER),
+  bandwidthGb: "500",
+  computeGbHours: "25",
+  deploys: "40",
+  webRequests: "1500000",
 };
 
 const DASH = "—";
 
 export default function ToolHome() {
   const [planId, setPlanId] = useState(DEFAULTS.planId);
-  const [members, setMembers] = useState(DEFAULTS.members);
+  const [proCreditTier, setProCreditTier] = useState(DEFAULTS.proCreditTier);
   const [bandwidthGb, setBandwidthGb] = useState(DEFAULTS.bandwidthGb);
-  const [buildMinutes, setBuildMinutes] = useState(DEFAULTS.buildMinutes);
-  const [functionInvocations, setFunctionInvocations] = useState(DEFAULTS.functionInvocations);
+  const [computeGbHours, setComputeGbHours] = useState(DEFAULTS.computeGbHours);
+  const [deploys, setDeploys] = useState(DEFAULTS.deploys);
+  const [webRequests, setWebRequests] = useState(DEFAULTS.webRequests);
   const [copied, setCopied] = useState(false);
+
+  const plan = PLANS.find((p) => p.id === planId) ?? PLANS[0];
 
   const result = useMemo(
     () =>
       computeNetlifyCost({
         planId,
-        members: members.trim() === "" ? Number.NaN : Number(members),
+        proCreditTier: planId === "pro" ? Number(proCreditTier) : undefined,
         bandwidthGb: bandwidthGb.trim() === "" ? 0 : Number(bandwidthGb),
-        buildMinutes: buildMinutes.trim() === "" ? 0 : Number(buildMinutes),
-        functionInvocations:
-          functionInvocations.trim() === "" ? 0 : Number(functionInvocations),
+        computeGbHours: computeGbHours.trim() === "" ? 0 : Number(computeGbHours),
+        deploys: deploys.trim() === "" ? 0 : Number(deploys),
+        webRequests: webRequests.trim() === "" ? 0 : Number(webRequests),
       }),
-    [planId, members, bandwidthGb, buildMinutes, functionInvocations],
+    [planId, proCreditTier, bandwidthGb, computeGbHours, deploys, webRequests],
   );
 
   const hasError = Boolean(result.error);
@@ -68,12 +69,17 @@ export default function ToolHome() {
   const summary = useMemo(() => {
     if (hasError) return "";
     return [
-      `Netlify ${result.planLabel} monthly cost estimate (list prices)`,
-      `Members: ${money(result.memberCost)}`,
-      `Bandwidth overage (${result.bandwidthBlocks} × ${BANDWIDTH_BLOCK_GB} GB blocks): ${money(result.bandwidthCost)}`,
-      `Build minutes overage (${result.buildBlocks} × ${BUILD_BLOCK_MINUTES} min blocks): ${money(result.buildCost)}`,
-      `Function packs: ${money(result.functionCost)}`,
-      `Total per month: ${money(result.total)}`,
+      `Netlify ${result.planLabel} monthly cost estimate (credit-based pricing)`,
+      `Base plan: ${money(result.basePrice)} for ${CREDITS.format(result.includedCredits)} credits`,
+      `Bandwidth: ${CREDITS.format(result.bandwidthCredits)} credits`,
+      `Function compute: ${CREDITS.format(result.computeCredits)} credits`,
+      `Production deploys: ${CREDITS.format(result.deployCredits)} credits`,
+      `Web requests: ${CREDITS.format(result.requestCredits)} credits`,
+      `Credits used: ${CREDITS.format(result.creditsUsed)} of ${CREDITS.format(result.includedCredits)} included`,
+      result.hardCapped
+        ? "Over the Free plan's cap — no paid overage available, project pauses until upgrade or next cycle."
+        : `Recharge packs: ${result.rechargePacks} (${money(result.rechargeCost)})`,
+      `Total per month: ${result.hardCapped ? "N/A (hard cap reached)" : money(result.total)}`,
     ].join("\n");
   }, [hasError, result]);
 
@@ -90,33 +96,49 @@ export default function ToolHome() {
 
   const reset = () => {
     setPlanId(DEFAULTS.planId);
-    setMembers(DEFAULTS.members);
+    setProCreditTier(DEFAULTS.proCreditTier);
     setBandwidthGb(DEFAULTS.bandwidthGb);
-    setBuildMinutes(DEFAULTS.buildMinutes);
-    setFunctionInvocations(DEFAULTS.functionInvocations);
+    setComputeGbHours(DEFAULTS.computeGbHours);
+    setDeploys(DEFAULTS.deploys);
+    setWebRequests(DEFAULTS.webRequests);
     setCopied(false);
   };
 
   const rows = hasError
     ? [
-        ["Members", DASH],
-        ["Bandwidth overage", DASH],
-        ["Build minutes overage", DASH],
-        ["Function invocation packs", DASH],
+        ["Base plan", DASH],
+        ["Bandwidth", DASH],
+        ["Function compute", DASH],
+        ["Production deploys", DASH],
+        ["Web requests", DASH],
+        ["Recharge packs", DASH],
       ]
     : [
-        ["Members", money(result.memberCost)],
         [
-          `Bandwidth over ${NUM.format(result.includedBandwidthGb)} GB (${NUM.format(result.bandwidthOverGb)} GB → ${result.bandwidthBlocks} block${result.bandwidthBlocks === 1 ? "" : "s"} @ $${BANDWIDTH_BLOCK_PRICE})`,
-          money(result.bandwidthCost),
+          `Base plan (${CREDITS.format(result.includedCredits)} credits included)`,
+          money(result.basePrice),
         ],
         [
-          `Build minutes over ${NUM.format(result.includedBuildMinutes)} (${NUM.format(result.buildOverMinutes)} min → ${result.buildBlocks} block${result.buildBlocks === 1 ? "" : "s"} @ $${BUILD_BLOCK_PRICE})`,
-          money(result.buildCost),
+          `Bandwidth (${NUM.format(Number(bandwidthGb) || 0)} GB @ ${CREDIT_RATES.bandwidthPerGb} credits/GB)`,
+          `${CREDITS.format(result.bandwidthCredits)} credits`,
         ],
         [
-          `Function packs over ${NUM.format(INCLUDED_FUNCTION_INVOCATIONS)} invocations (${result.functionPacks} pack${result.functionPacks === 1 ? "" : "s"} @ $${FUNCTION_PACK_PRICE})`,
-          money(result.functionCost),
+          `Function compute (${NUM.format(Number(computeGbHours) || 0)} GB-hr @ ${CREDIT_RATES.computePerGbHour} credits/GB-hr)`,
+          `${CREDITS.format(result.computeCredits)} credits`,
+        ],
+        [
+          `Production deploys (${NUM.format(Number(deploys) || 0)} @ ${CREDIT_RATES.deployEach} credits each)`,
+          `${CREDITS.format(result.deployCredits)} credits`,
+        ],
+        [
+          `Web requests (${NUM.format(Number(webRequests) || 0)} @ ${CREDIT_RATES.requestsPer10k} credits/10k)`,
+          `${CREDITS.format(result.requestCredits)} credits`,
+        ],
+        [
+          result.hardCapped
+            ? "Over Free plan cap"
+            : `Recharge packs (${result.rechargePacks} × ${planId === "personal" ? "$5/500 credits" : "$10/1,500 credits"})`,
+          result.hardCapped ? "Project pauses" : money(result.rechargeCost),
         ],
       ];
 
@@ -131,10 +153,11 @@ export default function ToolHome() {
           Netlify Cost Estimator
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-          Netlify Pro is $19 per member with 1 TB bandwidth and 25,000 build minutes included; the
-          Free plan gives 100 GB and 300 minutes. Overages bill in blocks — ${BANDWIDTH_BLOCK_PRICE}{" "}
-          per {BANDWIDTH_BLOCK_GB} GB of bandwidth and ${BUILD_BLOCK_PRICE} per{" "}
-          {BUILD_BLOCK_MINUTES} build minutes — and partial blocks round up.
+          Netlify bills on a shared monthly credit pool: Free gets 300 credits, Personal is
+          $9 for 1,000, and Pro starts at $20 for 3,000 credits with unlimited team members
+          included. Bandwidth, function compute, production deploys and web requests all draw
+          from that pool — going over tops up in $5 (Personal) or $10 (Pro) recharge packs, or
+          pauses the project on Free.
         </p>
       </header>
 
@@ -150,28 +173,35 @@ export default function ToolHome() {
               value={planId}
               onChange={(event) => setPlanId(event.target.value)}
             >
-              {PLANS.map((plan) => (
-                <option key={plan.id} value={plan.id}>
-                  {plan.label} — ${plan.memberPrice}/member
+              {PLANS.map((p) => (
+                <option key={p.id} value={p.id}>
+                  {p.label}
+                  {p.id === "pro" ? " — from $20/mo" : ` — $${p.basePrice}/mo`}
                 </option>
               ))}
             </select>
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">{plan.seats}</p>
           </div>
-          <div>
-            <label className={LABEL_CLASS} htmlFor="nl-members">
-              Team members
-            </label>
-            <input
-              id="nl-members"
-              className={`mt-2 ${INPUT_CLASS}`}
-              type="number"
-              inputMode="numeric"
-              min="1"
-              step="1"
-              value={members}
-              onChange={(event) => setMembers(event.target.value)}
-            />
-          </div>
+          {planId === "pro" ? (
+            <div>
+              <label className={LABEL_CLASS} htmlFor="nl-tier">
+                Pro credit tier
+              </label>
+              <select
+                id="nl-tier"
+                className={`mt-2 ${INPUT_CLASS}`}
+                value={proCreditTier}
+                onChange={(event) => setProCreditTier(event.target.value)}
+              >
+                {PRO_CREDIT_TIERS.map((tier) => (
+                  <option key={tier.credits} value={tier.credits}>
+                    {CREDITS.format(tier.credits)} credits — ${tier.price}/mo
+                    {tier.rollover ? " (rollover eligible)" : ""}
+                  </option>
+                ))}
+              </select>
+            </div>
+          ) : null}
           <div>
             <label className={LABEL_CLASS} htmlFor="nl-bandwidth">
               Bandwidth (GB/month)
@@ -188,39 +218,56 @@ export default function ToolHome() {
             />
           </div>
           <div>
-            <label className={LABEL_CLASS} htmlFor="nl-builds">
-              Build minutes per month
+            <label className={LABEL_CLASS} htmlFor="nl-compute">
+              Function compute (GB-hours/month)
             </label>
             <input
-              id="nl-builds"
+              id="nl-compute"
               className={`mt-2 ${INPUT_CLASS}`}
               type="number"
-              inputMode="numeric"
+              inputMode="decimal"
               min="0"
-              step="100"
-              value={buildMinutes}
-              onChange={(event) => setBuildMinutes(event.target.value)}
-            />
-          </div>
-          <div className="sm:col-span-2">
-            <label className={LABEL_CLASS} htmlFor="nl-functions">
-              Serverless function invocations per month
-            </label>
-            <input
-              id="nl-functions"
-              className={`mt-2 ${INPUT_CLASS}`}
-              type="number"
-              inputMode="numeric"
-              min="0"
-              step="25000"
-              value={functionInvocations}
-              onChange={(event) => setFunctionInvocations(event.target.value)}
+              step="5"
+              value={computeGbHours}
+              onChange={(event) => setComputeGbHours(event.target.value)}
             />
             <p className="mt-1 text-xs text-[var(--muted-foreground)]">
-              First {NUM.format(INCLUDED_FUNCTION_INVOCATIONS)} invocations are included; beyond
-              that each ${FUNCTION_PACK_PRICE} pack covers up to{" "}
-              {NUM.format(FUNCTION_PACK_INVOCATIONS)}.
+              Combined serverless, edge and background function execution time × memory — see
+              your Netlify usage dashboard for this figure.
             </p>
+          </div>
+          <div>
+            <label className={LABEL_CLASS} htmlFor="nl-deploys">
+              Production deploys per month
+            </label>
+            <input
+              id="nl-deploys"
+              className={`mt-2 ${INPUT_CLASS}`}
+              type="number"
+              inputMode="numeric"
+              min="0"
+              step="5"
+              value={deploys}
+              onChange={(event) => setDeploys(event.target.value)}
+            />
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+              Deploy previews, branch deploys and failed deploys are not metered.
+            </p>
+          </div>
+          <div>
+            <label className={LABEL_CLASS} htmlFor="nl-requests">
+              Web requests per month
+            </label>
+            <input
+              id="nl-requests"
+              className={`mt-2 ${INPUT_CLASS}`}
+              type="number"
+              inputMode="numeric"
+              min="0"
+              step="50000"
+              value={webRequests}
+              onChange={(event) => setWebRequests(event.target.value)}
+            />
           </div>
         </div>
       </section>
@@ -241,12 +288,14 @@ export default function ToolHome() {
               Estimated monthly Netlify bill
             </p>
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
-              {hasError ? DASH : money(result.total)}
+              {hasError || result.hardCapped ? DASH : money(result.total)}
             </p>
             <p className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? "Fix the input above to see a result."
-                : `${result.planLabel} plan, published list prices with block-rounded overages.`}
+                : result.hardCapped
+                  ? `${result.planLabel} plan: usage exceeds the ${CREDITS.format(result.includedCredits)} credit cap — Netlify pauses the project until the next billing cycle or an upgrade.`
+                  : `${result.planLabel} plan, credit-based pricing with recharge packs rounded up.`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -283,12 +332,20 @@ export default function ToolHome() {
               <dd className="text-right font-semibold">{value}</dd>
             </div>
           ))}
+          {!hasError ? (
+            <div className="flex items-center justify-between gap-4 py-2.5">
+              <dt className="text-[var(--muted-foreground)]">Credits used</dt>
+              <dd className="text-right font-semibold">
+                {CREDITS.format(result.creditsUsed)} / {CREDITS.format(result.includedCredits)}
+              </dd>
+            </div>
+          ) : null}
         </dl>
       </section>
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
-        Informational estimate based on Netlify's published pricing. Background functions, edge
-        functions, Identity, forms, large media and Enterprise agreements are not modelled, and
+        Informational estimate based on Netlify's credit-based pricing. Rollover credits,
+        Identity, forms (unmetered), large media and Enterprise agreements are not modelled, and
         Netlify revises plans periodically — confirm on netlify.com/pricing and your usage
         dashboard.
       </p>

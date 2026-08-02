@@ -1198,7 +1198,15 @@ function MobileDealSupportHero({ title, contact }) {
     <section className="mobile-deal-support-hero" aria-label={`${title} phone support`}>
       <div className="mobile-deal-support-bg" aria-hidden="true" />
       <div className="mobile-deal-support-inner">
-        <h1>Book Airlines Tickets With Us</h1>
+        {/*
+          Not an <h1>: this promotional banner renders above the route hero on
+          every "Top Deals" page, so the six deal routes each served two h1
+          elements — and this one is the same boilerplate on all of them, while
+          the hero's h1 carries the page's actual subject. Styling moved to
+          .mobile-deal-support-title, which the stylesheet targets in place of
+          the old element selector, so the rendering is unchanged.
+        */}
+        <div className="mobile-deal-support-title">Book Airlines Tickets With Us</div>
         <p className="mobile-deal-support-subtitle">24/7 Airlines Booking Support</p>
         <img
           className="mobile-deal-support-agent"
@@ -1235,7 +1243,22 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const page = getSitemapPage(slug);
 
-  if (!page) notFound();
+  if (!page) {
+    // notFound() inside generateMetadata aborts metadata generation, so the
+    // response fell back to the tripfindbox layout's: title "TripFindBox",
+    // canonical the site homepage, and robots "index, follow". Every one of the
+    // unbounded unknown slugs under this template was therefore an indexable
+    // soft 404 pointing at the homepage. The sibling blogs/[slug] route already
+    // returns metadata instead of throwing; this mirrors it. The page component
+    // below still calls notFound() and still renders the 404 UI.
+    return createPageMetadata({
+      title: "Page Not Found | TripFindBox",
+      description:
+        "This TripFindBox page is not available. Browse flights, routes and travel planning guides from the TripFindBox hub.",
+      path: `/bops/tripfindbox/${slug}`,
+      noindex: true,
+    });
+  }
 
   const title = page.title;
 

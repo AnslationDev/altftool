@@ -13,8 +13,6 @@ export const NEET_TOTAL_QUESTIONS = 180;
 export const NEET_MARKS_PER_CORRECT = 4;
 /** NTA NEET (UG): marks deducted for each incorrect response (negative marking). */
 export const NEET_PENALTY_PER_WRONG = 1;
-/** NTA NEET (UG): maximum marks = 180 x 4. */
-export const NEET_TOTAL_MARKS = NEET_TOTAL_QUESTIONS * NEET_MARKS_PER_CORRECT;
 /** NTA NEET (UG): paper duration in minutes (3 hours 20 minutes). */
 export const NEET_DURATION_MINUTES = 200;
 
@@ -203,7 +201,15 @@ export function neetDrillMetrics({ questionCount, timeMinutes }) {
     secondsPerQuestion: round(secondsPerQuestion, 1),
     neetPaceSeconds: round(neetPaceSeconds, 1),
     paceRatio: round(secondsPerQuestion / neetPaceSeconds, 2),
-    fasterThanNeetPace: secondsPerQuestion < neetPaceSeconds,
+    // Three-way comparison against the real NEET pace: a strict "<" here would
+    // mislabel an exactly-matching pace (e.g. 90 items in 100 minutes, same
+    // 200:180 ratio as the real paper) as "easier" rather than identical.
+    paceComparison:
+      secondsPerQuestion < neetPaceSeconds
+        ? "tighter"
+        : secondsPerQuestion > neetPaceSeconds
+          ? "easier"
+          : "same",
     breakEvenAccuracyPct: round(breakEvenAccuracyPct, 1),
   };
 }

@@ -28,13 +28,13 @@ export function SectionHeader({
 
         <div>
           <h3 className="
-            font-semibold text-lg text-[(--card-foreground)]
+            font-semibold text-lg text-[var(--card-foreground)]
             font-primary leading-tight
           ">
             {title}
           </h3>
           {subtitle && (
-            <p className="text-md text-[(--muted-foreground)] mt-0.5 font-secondary">
+            <p className="text-md text-[var(--muted-foreground)] mt-0.5 font-secondary">
               {subtitle}
             </p>
           )}
@@ -52,18 +52,18 @@ export function DataRow({ label, value, mono = false, highlight = false }) {
   return (
     <div className="
       flex items-center justify-between
-      py-2 border-b border-[(--border)]/50 last:border-0
+      py-2 border-b border-[var(--border)]/50 last:border-0
       gap-4
     ">
-      <span className="text-sm text-[(--muted-foreground)] font-secondary shrink-0">
+      <span className="text-sm text-[var(--muted-foreground)] font-secondary shrink-0">
         {label}
       </span>
       <span className={`
         text-sm text-right break-all font-medium
         ${mono ? "font-mono" : "font-secondary"}
         ${highlight
-          ? "text-[(--primary)] font-medium"
-          : "text-[(--card-foreground)]"
+          ? "text-[var(--primary)] font-medium"
+          : "text-[var(--card-foreground)]"
         }
       `}>
         {value ?? "—"}
@@ -77,11 +77,11 @@ export function SectionDivider({ label = "" }) {
   return (
     <div className="flex items-center gap-3 my-4">
       {label && (
-        <span className="text-[15px] uppercase tracking-widest text-[(--muted-foreground)] whitespace-nowrap">
+        <span className="text-[15px] uppercase tracking-widest text-[var(--muted-foreground)] whitespace-nowrap">
           {label}
         </span>
       )}
-      <div className="flex-1 h-px bg-[(--border)]" />
+      <div className="flex-1 h-px bg-[var(--border)]" />
     </div>
   );
 }

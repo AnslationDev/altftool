@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, FileClock, RotateCcw } from "lucide-react";
 
-import { FREQUENCIES, buildLogrotateConfig } from "../lib";
+import { FREQUENCIES, RETENTION_HINTS, buildLogrotateConfig } from "../lib";
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -64,6 +64,7 @@ export default function ToolHome() {
     [form],
   );
   const hasError = Boolean(result.error);
+  const retentionHint = RETENTION_HINTS.find((hint) => hint.frequency === form.frequency);
 
   const copyResult = async () => {
     if (hasError) return;
@@ -137,6 +138,9 @@ export default function ToolHome() {
               value={form.rotateCount}
               onChange={set("rotateCount")}
             />
+            {retentionHint ? (
+              <p className="mt-1 text-xs text-[var(--muted-foreground)]">Typical: {retentionHint.label}</p>
+            ) : null}
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="lr-sizetype">
@@ -248,7 +252,7 @@ export default function ToolHome() {
       {hasError ? (
         <p
           role="alert"
-          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
         >
           {result.error}
         </p>
@@ -300,7 +304,7 @@ export default function ToolHome() {
         </dl>
 
         {!hasError && result.warnings.length > 0 ? (
-          <ul className="mt-4 space-y-2 text-sm text-[var(--danger)]">
+          <ul className="mt-4 space-y-2 text-sm text-[var(--danger-text)]">
             {result.warnings.map((warning) => (
               <li key={warning} className="flex gap-2">
                 <span aria-hidden="true">•</span>

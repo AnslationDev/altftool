@@ -42,9 +42,6 @@ export const HEAD_RESTRAINT_BACKSET_MAX_CM = 7;
 /** Sitting height, vertex above the seat / stature. Pheasant, Bodyspace, 50th pct. */
 export const SITTING_HEIGHT_RATIO = 0.52;
 
-/** Sitting eye height above the seat / stature. Pheasant, Bodyspace, 50th pct. */
-export const SITTING_EYE_RATIO = 0.454;
-
 /** Recommended seat-back angle range, in degrees from vertical-upright. */
 export const SEAT_BACK_ANGLE_DEG = [100, 110];
 
@@ -152,7 +149,6 @@ export function planDrivingDay({ driveHours, heightCm, professional = false }) {
   const overExtendedLimit = professional && totalDriveMin > PROFESSIONAL_DAILY_EXTENDED_MIN;
 
   const headRestraintTopCm = height * SITTING_HEIGHT_RATIO;
-  const eyeAboveSeatCm = height * SITTING_EYE_RATIO;
 
   return {
     professional,
@@ -173,7 +169,6 @@ export function planDrivingDay({ driveHours, heightCm, professional = false }) {
     totalRoutineSeconds: breakCount * BREAK_ROUTINE_SECONDS,
     seat: {
       headRestraintTopCm: round1(headRestraintTopCm),
-      eyeAboveSeatCm: round1(eyeAboveSeatCm),
       backsetMaxCm: HEAD_RESTRAINT_BACKSET_MAX_CM,
       sternumToAirbagMinCm: STERNUM_TO_AIRBAG_MIN_CM,
       seatBackAngleDeg: SEAT_BACK_ANGLE_DEG,

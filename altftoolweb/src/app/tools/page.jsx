@@ -32,10 +32,17 @@ export async function generateMetadata() {
 export default function Page() {
   // Module hub entity: the /tools hub links every module (category) as an
   // ItemList so Google reads Website → Tools hub → Module → Tool as one graph.
+  //
+  // Named by the canonical label alone. Appending "Tools" produced "AI Tools
+  // Tools" (formatCategoryLabel already returns "AI Tools") and six more that
+  // simply read wrong: "Converters Tools", "Calculators Tools", "Generators
+  // Tools", "Finance Calculators Tools", "Health Calculators Tools", "Games
+  // Tools". The label is also exactly what the directory sidebar renders, so
+  // the ItemList entity and the visible UI now agree.
   const moduleItems = getToolCategorySlugs()
     .filter((slug) => slug !== "all")
     .map((slug) => ({
-      name: `${formatCategoryLabel(slug)} Tools`,
+      name: formatCategoryLabel(slug),
       path: `/tools/${slug}`,
     }));
 

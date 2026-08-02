@@ -392,7 +392,15 @@ function SectionHeader({ count, onClearAll }) {
       <div className=" ">
         <div className="relative flex flex-col items-center text-center gap-4">
           <div>
-            <h1 className="section-title">Continue Watching</h1>
+            {/* Section heading, not the page heading: /trendingvids already
+                has its h1 in TrendingHero ("Discover Trending Videos
+                Instantly"). This must stay an h2 so the route ships exactly
+                one h1 — it renders in BOTH the populated and the empty-history
+                branch, so an h1 here doubles up on every request. Styling is
+                class-driven (.section-title), so the element name carries no
+                visual weight; VideoGridSection and CategorySection already use
+                h2 with the same class. */}
+            <h2 className="section-title">Continue Watching</h2>
 
             <p className="section-subtitle animate-slide-up">
               Pick up right where you left off and keep your progress going

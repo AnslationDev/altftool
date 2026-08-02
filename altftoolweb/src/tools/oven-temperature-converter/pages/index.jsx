@@ -50,9 +50,11 @@ const toFahrenheit = (c) => (c * 9) / 5 + 32;
 const nearestGas = (c) =>
   gasMarks.reduce((best, item) => (Math.abs(item.c - c) < Math.abs(best.c - c) ? item : best), gasMarks[0]);
 
-const zoneFor = (c) =>
-  zones.find((zone) => c >= zone.from && c <= zone.to) ||
-  (c > scaleMax ? zones[zones.length - 1] : zones[0]);
+const zoneFor = (c) => {
+  if (c > scaleMax) return zones[zones.length - 1];
+  if (c < scaleMin) return null;
+  return zones.find((zone) => c >= zone.from && c <= zone.to) || null;
+};
 
 export default function ToolHome() {
   const [field, setField] = useState("c");
@@ -91,10 +93,12 @@ export default function ToolHome() {
     celsius == null
       ? "Enter a temperature in any box to convert it everywhere else."
       : gasExact
-        ? `Gas ${gas.mark} = ${gas.label} = ${gas.c}°C conventional = ${gas.f}°F = ${gas.c - 20}°C fan`
+        ? `Gas ${gas.mark} = ${gas.label} = ${Math.round(celsius)}°C conventional = ${Math.round(
+            toFahrenheit(celsius)
+          )}°F = ${Math.round(celsius - 20)}°C fan`
         : `${Math.round(celsius)}°C = ${Math.round(toFahrenheit(celsius))}°F = ${Math.round(
             celsius - 20
-          )}°C fan — ${zone.name}, nearest gas mark ${gas.mark}`;
+          )}°C fan — ${zone ? zone.name : "below the chart range"}, nearest gas mark ${gas.mark}`;
 
   const report = useMemo(() => {
     if (celsius == null) return "Oven Temperature Converter";
@@ -103,7 +107,7 @@ export default function ToolHome() {
       `Conventional: ${Math.round(celsius)}°C / ${Math.round(toFahrenheit(celsius))}°F`,
       `Fan / convection: ${Math.round(celsius - 20)}°C / ${Math.round(toFahrenheit(celsius - 20))}°F`,
       `Gas mark: ${gas.mark}${gasExact ? "" : " (nearest)"}`,
-      `Zone: ${zone.name} — ${zone.note}`,
+      `Zone: ${zone ? `${zone.name} — ${zone.note}` : `Below the chart range (chart starts at ${scaleMin}°C)`}`,
       `Generated: ${new Date().toLocaleString()}`,
     ].join("\n");
   }, [celsius, gas, gasExact, zone]);
@@ -254,27 +258,29 @@ export default function ToolHome() {
                 </button>
               </div>
 
-              <div className="mt-4 grid gap-3 sm:grid-cols-4" aria-live="polite">
-                {[
-                  ["Conventional", celsius == null ? "—" : `${Math.round(celsius)}°C`, true],
-                  ["Fahrenheit", celsius == null ? "—" : `${Math.round(toFahrenheit(celsius))}°F`, false],
-                  ["Fan", celsius == null ? "—" : `${Math.round(celsius - 20)}°C`, false],
-                  ["Gas mark", gas == null ? "—" : `${gasExact ? "" : "≈ "}${gas.mark}`, false],
-                ].map(([label, value, accent]) => (
-                  <div key={label} className="rounded-lg bg-[var(--muted)] p-4">
-                    <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">{label}</p>
-                    <p
-                      className={`mt-1 text-2xl font-semibold ${
-                        accent ? "text-[var(--primary)]" : ""
-                      }`}
-                    >
-                      {value}
-                    </p>
-                  </div>
-                ))}
-              </div>
+              <div aria-live="polite">
+                <div className="mt-4 grid gap-3 sm:grid-cols-4">
+                  {[
+                    ["Conventional", celsius == null ? "—" : `${Math.round(celsius)}°C`, true],
+                    ["Fahrenheit", celsius == null ? "—" : `${Math.round(toFahrenheit(celsius))}°F`, false],
+                    ["Fan", celsius == null ? "—" : `${Math.round(celsius - 20)}°C`, false],
+                    ["Gas mark", gas == null ? "—" : `${gasExact ? "" : "≈ "}${gas.mark}`, false],
+                  ].map(([label, value, accent]) => (
+                    <div key={label} className="rounded-lg bg-[var(--muted)] p-4">
+                      <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">{label}</p>
+                      <p
+                        className={`mt-1 text-2xl font-semibold ${
+                          accent ? "text-[var(--primary)]" : ""
+                        }`}
+                      >
+                        {value}
+                      </p>
+                    </div>
+                  ))}
+                </div>
 
-              <p className="mt-4 text-sm leading-6 text-[var(--muted-foreground)]">{summary}</p>
+                <p className="mt-4 text-sm leading-6 text-[var(--muted-foreground)]">{summary}</p>
+              </div>
 
               <div className="mt-6">
                 <div className="relative h-9">

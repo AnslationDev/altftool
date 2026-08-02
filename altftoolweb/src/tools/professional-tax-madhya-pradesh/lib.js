@@ -116,7 +116,13 @@ export function computeMpProfessionalTax({
   const annualTax = Math.min(slab.annualTax, ANNUAL_PT_CEILING);
   const { regularMonth, finalMonth } = splitMonthly(annualTax);
 
-  const schedule = FY_MONTHS.slice(0, wholeMonths).map((month, index) => {
+  // A part-year count is the remaining months of the FY for a mid-year joiner, not
+  // the opening months of the year, so the schedule always runs up to and includes
+  // March — otherwise a joiner working fewer than 12 months would never reach the
+  // higher final-month instalment that reconciles the annual total.
+  const startIndex = 12 - wholeMonths;
+  const schedule = FY_MONTHS.slice(startIndex).map((month, offset) => {
+    const index = startIndex + offset;
     const isLastMonthOfYear = index === 11;
     const amount = annualTax === 0 ? 0 : isLastMonthOfYear ? finalMonth : regularMonth;
     const nextMonth = FY_MONTHS[(index + 1) % 12];

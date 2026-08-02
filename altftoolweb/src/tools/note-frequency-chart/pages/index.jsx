@@ -262,7 +262,11 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               {selected.error ? "Selected note" : `${selected.name} frequency`}
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p
+              className="mt-1 text-4xl font-semibold text-[var(--primary)]"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {selected.error ? DASH : `${NUM3.format(selected.frequency)} Hz`}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -328,7 +332,11 @@ export default function ToolHome() {
             {lookup.error}
           </p>
         ) : (
-          <p className="mt-4 rounded-md bg-[var(--surface-soft)] px-3 py-2 text-sm text-[var(--muted-foreground)]">
+          <p
+            className="mt-4 rounded-md bg-[var(--surface-soft)] px-3 py-2 text-sm text-[var(--muted-foreground)]"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             {NUM2.format(lookup.frequency)} Hz is{" "}
             <span className="font-semibold text-[var(--foreground)]">{lookup.name}</span>{" "}
             {lookup.inTune

@@ -121,7 +121,7 @@ export default function ToolHome() {
         aria-labelledby="score-heading"
       >
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p
               id="score-heading"
               className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]"
@@ -301,7 +301,11 @@ export default function ToolHome() {
           </p>
         ) : null}
 
-        <div className="mt-5 rounded-xl bg-[var(--background)] p-4 ring-1 ring-[var(--border)]">
+        <div
+          className="mt-5 rounded-xl bg-[var(--background)] p-4 ring-1 ring-[var(--border)]"
+          role="status"
+          aria-live="polite"
+        >
           <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
             Exposure score
           </p>
@@ -326,7 +330,7 @@ export default function ToolHome() {
               [
                 "Biggest single fix",
                 hasExposure && exposure.biggestFix
-                  ? `${exposure.biggestFix.label} (-${exposure.biggestFix.delta})`
+                  ? `${exposure.biggestFix.label} (-${exposure.biggestFix.actualImpact})`
                   : hasExposure
                     ? "Nothing here is raising your exposure"
                     : DASH,
@@ -338,6 +342,17 @@ export default function ToolHome() {
               </div>
             ))}
           </dl>
+
+          {hasExposure && exposure.rawSum !== exposure.score ? (
+            <p className="mt-4 flex items-start gap-2 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning)]">
+              <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
+              <span>
+                Baseline plus your settings adds up to {NUM.format(exposure.rawSum)}, but the score is capped at{" "}
+                {exposure.score}. The fix and control amounts below already account for that cap, so they can be
+                smaller than the raw numbers above.
+              </span>
+            </p>
+          ) : null}
 
           {hasExposure ? (
             <p className="mt-4 text-sm leading-6 text-[var(--muted-foreground)]">{exposure.note}</p>
@@ -351,7 +366,7 @@ export default function ToolHome() {
               <ul className="mt-2 space-y-1 text-sm">
                 {exposure.availableControls.map((entry) => (
                   <li key={entry.id} className="flex gap-2">
-                    <span className="font-semibold text-[var(--success)]">{entry.delta}</span>
+                    <span className="font-semibold text-[var(--success)]">-{entry.actualImpact}</span>
                     <span>{entry.label}</span>
                   </li>
                 ))}

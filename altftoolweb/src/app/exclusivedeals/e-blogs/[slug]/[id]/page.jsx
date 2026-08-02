@@ -57,6 +57,22 @@ export async function generateMetadata({ params }) {
   });
 }
 
+/**
+ * createArticleJsonLd hardcodes `author` as an Organization node. These posts
+ * are bylined to people — the body renders "Written by {author}" over an
+ * initial avatar — so passing a person's name through that helper published
+ * "Riya Sharma" and six others as organizations. The helper is shared by every
+ * article route on the site and is out of this workstream's scope to change,
+ * so the Person node is substituted here, on the one family that has human
+ * bylines. Nothing is invented: the name is the same string the page prints.
+ */
+function withPersonByline(articleNode, author) {
+  if (!articleNode) return articleNode;
+  const name = typeof author === "string" ? author.trim() : "";
+  if (!name) return articleNode;
+  return { ...articleNode, author: { "@type": "Person", name } };
+}
+
 export default async function Page(props) {
   const { slug, id } = await props.params;
   const post = findPost(slug, id);
@@ -71,14 +87,16 @@ export default async function Page(props) {
         <JsonLd
           id={`exclusive-deals-blog-schema-${slug}-${id}`}
           data={[
-            createArticleJsonLd({
-              path,
-              headline: post.heading,
-              description: post.description,
-              image: post.image,
-              author: post.author,
-              type: "BlogPosting",
-            }),
+            withPersonByline(
+              createArticleJsonLd({
+                path,
+                headline: post.heading,
+                description: post.description,
+                image: post.image,
+                type: "BlogPosting",
+              }),
+              post.author,
+            ),
             createBreadcrumbJsonLd([
               { name: "Home", path: "/" },
               { name: "Exclusive Deals", path: "/exclusivedeals" },

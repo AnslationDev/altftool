@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 
 import {
+  applyDocumentTone,
   computeHomography,
   defaultDocumentCorners,
   estimateOutputDimensions,
@@ -163,11 +164,6 @@ function buildCleanDocumentCanvas(image, corners, settings) {
   if (!outputContext) throw new Error("This browser could not create the cleaned output.");
   const outputImage = outputContext.createImageData(dimensions.width, dimensions.height);
   const outputPixels = outputImage.data;
-  const brightnessFactor = settings.brightness / 100;
-  const contrastFactor = settings.contrast / 100;
-  const makeGrayscale =
-    settings.mode === "grayscale" || settings.mode === "black-white";
-  const makeBlackWhite = settings.mode === "black-white";
 
   for (let y = 0; y < dimensions.height; y += 1) {
     for (let x = 0; x < dimensions.width; x += 1) {
@@ -199,42 +195,32 @@ function buildCleanDocumentCanvas(image, corners, settings) {
           sourcePixels[bottomLeftOffset + 3] * bottomLeftWeight +
           sourcePixels[bottomRightOffset + 3] * bottomRightWeight) /
         255;
-      let red =
+      const red =
         (sourcePixels[topLeftOffset] * topLeftWeight +
           sourcePixels[topRightOffset] * topRightWeight +
           sourcePixels[bottomLeftOffset] * bottomLeftWeight +
           sourcePixels[bottomRightOffset] * bottomRightWeight) *
           sourceAlpha +
         255 * (1 - sourceAlpha);
-      let green =
+      const green =
         (sourcePixels[topLeftOffset + 1] * topLeftWeight +
           sourcePixels[topRightOffset + 1] * topRightWeight +
           sourcePixels[bottomLeftOffset + 1] * bottomLeftWeight +
           sourcePixels[bottomRightOffset + 1] * bottomRightWeight) *
           sourceAlpha +
         255 * (1 - sourceAlpha);
-      let blue =
+      const blue =
         (sourcePixels[topLeftOffset + 2] * topLeftWeight +
           sourcePixels[topRightOffset + 2] * topRightWeight +
           sourcePixels[bottomLeftOffset + 2] * bottomLeftWeight +
           sourcePixels[bottomRightOffset + 2] * bottomRightWeight) *
           sourceAlpha +
         255 * (1 - sourceAlpha);
-      red = (red * brightnessFactor - 128) * contrastFactor + 128;
-      green = (green * brightnessFactor - 128) * contrastFactor + 128;
-      blue = (blue * brightnessFactor - 128) * contrastFactor + 128;
+      const [toneRed, toneGreen, toneBlue] = applyDocumentTone(red, green, blue, settings);
 
-      if (makeGrayscale) {
-        let luminance = red * 0.2126 + green * 0.7152 + blue * 0.0722;
-        if (makeBlackWhite) luminance = luminance >= settings.threshold ? 255 : 0;
-        red = luminance;
-        green = luminance;
-        blue = luminance;
-      }
-
-      outputPixels[outputOffset] = Math.max(0, Math.min(255, Math.round(red)));
-      outputPixels[outputOffset + 1] = Math.max(0, Math.min(255, Math.round(green)));
-      outputPixels[outputOffset + 2] = Math.max(0, Math.min(255, Math.round(blue)));
+      outputPixels[outputOffset] = toneRed;
+      outputPixels[outputOffset + 1] = toneGreen;
+      outputPixels[outputOffset + 2] = toneBlue;
       outputPixels[outputOffset + 3] = 255;
     }
   }

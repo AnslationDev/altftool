@@ -66,12 +66,12 @@ export default async function LanderPage({ params }) {
   const path = `/lander/${lander.slug}`;
   const schema = lander.schema || {};
   const jsonLd = [];
-  const hasHeroHeading = (lander.sections || []).some(
-    (section) =>
-      section?.type === "hero" &&
-      !section.hidden &&
-      Boolean(section.props?.heading),
-  );
+  const hasPageHeading = (lander.sections || []).some((section) => {
+    if (!section || section.hidden) return false;
+    if (section.type === "hero") return Boolean(section.props?.heading);
+    if (!["text", "customHtml", "embed"].includes(section.type)) return false;
+    return /<h1(?:\s|>)/i.test(section.props?.html || "");
+  });
 
   if (schema.breadcrumbs !== false) {
     jsonLd.push(createBreadcrumbJsonLd([
@@ -99,7 +99,7 @@ export default async function LanderPage({ params }) {
   return (
     <main className="min-h-screen bg-(--background)">
       <JsonLd data={jsonLd.filter(Boolean)} id="lander-jsonld" />
-      {!hasHeroHeading ? (
+      {!hasPageHeading ? (
         <h1 className="sr-only">{lander.title || "AltFTool landing page"}</h1>
       ) : null}
       <LanderSections sections={lander.sections} theme={lander.theme || {}} />

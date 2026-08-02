@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Check, Copy, Download, RotateCcw, Video } from "lucide-react";
 
 import {
@@ -30,6 +30,7 @@ export default function ToolHome() {
   const [busy, setBusy] = useState(false);
   const [failure, setFailure] = useState("");
   const [copied, setCopied] = useState(false);
+  const requestId = useRef(0);
 
   const report = useMemo(() => (fileMeta ? inspectVideoFile(fileMeta) : null), [fileMeta]);
   const reportError = report ? report.error : "";
@@ -37,6 +38,7 @@ export default function ToolHome() {
   const hasError = Boolean(errorMessage);
 
   const onPick = (event) => {
+    requestId.current += 1;
     const file = event.target.files && event.target.files[0];
     setDataUrl("");
     setFailure("");
@@ -52,17 +54,22 @@ export default function ToolHome() {
 
   const convert = async () => {
     if (!fileHandle || hasError) return;
+    const id = requestId.current;
+    const handle = fileHandle;
+    const mime = report.mime;
     setBusy(true);
     setFailure("");
     try {
-      const buffer = await fileHandle.arrayBuffer();
+      const buffer = await handle.arrayBuffer();
       const base64 = bytesToBase64(new Uint8Array(buffer));
-      setDataUrl(dataUrlPrefix(report.mime) + base64);
+      if (requestId.current !== id) return;
+      setDataUrl(dataUrlPrefix(mime) + base64);
     } catch {
+      if (requestId.current !== id) return;
       setFailure("The file could not be read. It may be too large for this browser tab.");
       setDataUrl("");
     } finally {
-      setBusy(false);
+      if (requestId.current === id) setBusy(false);
     }
   };
 
@@ -89,6 +96,7 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    requestId.current += 1;
     setFileMeta(null);
     setFileHandle(null);
     setDataUrl("");
@@ -121,6 +129,7 @@ export default function ToolHome() {
           type="file"
           accept="video/mp4,video/webm,video/quicktime,video/ogg"
           onChange={onPick}
+          disabled={busy}
         />
         <p className="mt-2 text-sm text-[var(--muted-foreground)]">
           Accepted containers: {VIDEO_MIME_TYPES.map((entry) => entry.mime).join(", ")}

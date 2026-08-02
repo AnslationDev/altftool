@@ -369,7 +369,7 @@ export function chooseSourceMapStrategy({
       score -= INLINE_SIZE_PENALTY;
       reasons.push("Map is base64-embedded, so the shipped bundle grows a lot.");
     }
-    if (isProd && option.exposesSource && option.referenced) {
+    if (isProd && !allowPublicSource && option.exposesSource && option.referenced) {
       score -= PUBLIC_SOURCE_PENALTY;
       reasons.push("Bundle references a map containing your source; anyone can fetch it.");
     }

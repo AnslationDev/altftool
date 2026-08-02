@@ -508,7 +508,7 @@ export function createBreadcrumbJsonLd(items = []) {
 // WebSite — while a /tools page carries SoftwareApplication, WebApplication,
 // FAQPage, BreadcrumbList and two ItemLists. Answer engines cite what is
 // described; those families described nothing.
-export function createToolJsonLd({ slug, tool, category = "all", path } = {}) {
+export function createToolJsonLd({ slug, tool, category = "all", path, offers } = {}) {
   if (!slug || !tool) return null;
 
   const categories = Array.isArray(tool.category)
@@ -546,12 +546,23 @@ export function createToolJsonLd({ slug, tool, category = "all", path } = {}) {
     keywords: [...new Set([...categories, ...topics])]
       .filter(Boolean)
       .join(", "),
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
-    },
+    // The Offer belongs to the application, and on a tool page that reads
+    // exactly right. On a page whose NAME is a tradeable instrument —
+    // "Bitcoin (BTC) Chart & Analysis" — a zero-price Offer in the same
+    // node is one careless read from looking like a quote for BTC. Those
+    // callers pass offers: false; every existing caller is unchanged and
+    // keeps its free-to-use signal. isAccessibleForFree above still says
+    // the tool is free, which is the part that is actually true.
+    ...(offers === false
+      ? {}
+      : {
+          offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+          availability: "https://schema.org/InStock",
+          },
+        }),
     publisher: {
       "@id": `${getSiteUrl()}/#organization`,
     },

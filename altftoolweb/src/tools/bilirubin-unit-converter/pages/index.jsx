@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, TestTube } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import { UMOL_PER_MGDL, UNITS, convertBilirubin } from "../lib";
 
 const TWO_DP = new Intl.NumberFormat("en-IN", {
@@ -28,7 +30,7 @@ const DASH = "—";
 
 export default function ToolHome() {
   const [values, setValues] = useState(DEFAULTS);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const update = (key, value) => setValues((current) => ({ ...current, [key]: value }));
 
@@ -68,21 +70,14 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [hasError, analytes, result]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("result", summary, { label: "bilirubin conversion result" });
 
   const reset = () => {
     setValues(DEFAULTS);
-    setCopied(false);
+    resetCopyState();
   };
+
+  const unitStep = UNITS.find((item) => item.id === values.unit)?.step ?? "0.1";
 
   const rows = [
     [
@@ -157,7 +152,7 @@ export default function ToolHome() {
               type="number"
               inputMode="decimal"
               min="0"
-              step="0.1"
+              step={unitStep}
               value={values.total}
               onChange={(event) => update("total", event.target.value)}
             />
@@ -172,7 +167,7 @@ export default function ToolHome() {
               type="number"
               inputMode="decimal"
               min="0"
-              step="0.1"
+              step={unitStep}
               placeholder="Optional"
               value={values.direct}
               onChange={(event) => update("direct", event.target.value)}
@@ -192,7 +187,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Total bilirubin converted
             </p>
@@ -205,21 +200,24 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the converted bilirubin result"
+              aria-label={isCopied("result") ? "Copied the converted bilirubin result" : "Copy the converted bilirubin result"}
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

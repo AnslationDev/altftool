@@ -20,9 +20,18 @@ export async function generateMetadata({ params }) {
     });
   }
 
+  // Was `Browse ${count} original Fact Hub topics in ${name}.` — 51–55
+  // characters, under the floor, and "1 original Fact Hub topics" on the three
+  // categories that hold a single guide. The authored category blurb already
+  // says what the section covers, so it leads and the live count follows it.
+  const guideWord = category.count === 1 ? "fact guide" : "fact guides";
+  const blurb = String(category.description || "").trim() ||
+    `Original AltFTool fact guides about ${category.name}.`;
+  const withCount = `${blurb} ${formatCount(category.count)} ${guideWord} in the AltFTool Fact Hub.`;
+
   return createPageMetadata({
     title: `${category.name} Fact Hub`,
-    description: `Browse ${formatCount(category.count)} original Fact Hub topics in ${category.name}.`,
+    description: withCount.length <= 158 ? withCount : blurb,
     path: `/fact-net/categories/${category.categoryPath}`,
   });
 }

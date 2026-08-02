@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Type } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { LIST_TRUNCATION, SEARCH_TITLE_LIMIT, generateTitles } from "../lib";
 
 const DEFAULTS = {
@@ -27,7 +28,7 @@ const GHOST_BTN =
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState("");
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -49,33 +50,24 @@ export default function ToolHome() {
 
   const set = (key) => (event) => setForm((current) => ({ ...current, [key]: event.target.value }));
 
-  const copyTitle = async (title) => {
-    try {
-      await navigator.clipboard.writeText(title);
-      setCopied(title);
-      setTimeout(() => setCopied(""), 1500);
-    } catch {
-      setCopied("");
-    }
+  const copyTitle = (pattern, title) => {
+    copy(pattern, title, { label: "title" });
   };
 
-  const copyAll = async () => {
+  const copyAll = () => {
     if (hasError) return;
     const text = result.candidates
       .map((item) => `${item.score}/100 · ${item.chars} chars · ${item.title}`)
       .join("\n");
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied("all");
-      setTimeout(() => setCopied(""), 1500);
-    } catch {
-      setCopied("");
-    }
+    copy("all", text, { label: "every generated title" });
   };
 
   const reset = () => {
+    if (!window.confirm("Reset every field? This will discard everything you have typed and cannot be undone.")) {
+      return;
+    }
     setForm(DEFAULTS);
-    setCopied("");
+    resetCopyState();
   };
 
   const fields = [
@@ -188,21 +180,28 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyAll}
-              aria-label="Copy every generated title with its score"
+              aria-label={
+                isCopied("all")
+                  ? "Copied every generated title with its score"
+                  : "Copy every generated title with its score"
+              }
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied === "all" ? (
+              {isCopied("all") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied === "all" ? "Copied!" : "Copy all"}
+              {isCopied("all") ? "Copied!" : "Copy all"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all fields" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -260,16 +259,16 @@ export default function ToolHome() {
                   </span>
                   <button
                     type="button"
-                    onClick={() => copyTitle(item.title)}
-                    aria-label={`Copy the title ${item.title}`}
+                    onClick={() => copyTitle(item.pattern, item.title)}
+                    aria-label={isCopied(item.pattern) ? `Copied the title ${item.title}` : `Copy the title ${item.title}`}
                     className={GHOST_BTN}
                   >
-                    {copied === item.title ? (
+                    {isCopied(item.pattern) ? (
                       <Check className="h-4 w-4" aria-hidden="true" />
                     ) : (
                       <Copy className="h-4 w-4" aria-hidden="true" />
                     )}
-                    {copied === item.title ? "Copied!" : "Copy"}
+                    {isCopied(item.pattern) ? "Copied!" : "Copy"}
                   </button>
                 </div>
               </div>

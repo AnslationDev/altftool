@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Wallet } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import { BUDGET_STYLES, LIMITS, buildBudgetPrompt, planBudget } from "../lib";
 
 const INR = new Intl.NumberFormat("en-IN", {
@@ -46,7 +48,7 @@ export default function ToolHome() {
   const [focusCategories, setFocusCategories] = useState(DEFAULTS.focusCategories);
   const [styleId, setStyleId] = useState(DEFAULTS.styleId);
   const [notes, setNotes] = useState(DEFAULTS.notes);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(() => {
     const plan = planBudget({
@@ -79,18 +81,19 @@ export default function ToolHome() {
   const hasError = Boolean(result.error);
   const plan = hasError ? null : result.plan;
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("prompt", result.text, { label: "Budgeting prompt" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your income, goal and any notes you typed with the default example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setMonthlyIncome(DEFAULTS.monthlyIncome);
     setEssentialExpenses(DEFAULTS.essentialExpenses);
     setHouseholdSize(DEFAULTS.householdSize);
@@ -100,7 +103,6 @@ export default function ToolHome() {
     setFocusCategories(DEFAULTS.focusCategories);
     setStyleId(DEFAULTS.styleId);
     setNotes(DEFAULTS.notes);
-    setCopied(false);
   };
 
   const rows = hasError
@@ -302,7 +304,7 @@ export default function ToolHome() {
       ) : null}
 
       {!hasError && plan.warnings.length > 0 ? (
-        <ul className="mt-6 space-y-2">
+        <ul className="mt-6 space-y-2" role="status" aria-live="polite">
           {plan.warnings.map((warning) => (
             <li
               key={warning}
@@ -336,25 +338,28 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the generated budgeting prompt"
-              className={`${GHOST_BTN} disabled:opacity-50`}
+              aria-label={isCopied("prompt") ? "Copied the generated budgeting prompt" : "Copy the generated budgeting prompt"}
+              className={`${PRIMARY_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("prompt") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy prompt"}
+              {isCopied("prompt") ? "Copied!" : "Copy prompt"}
             </button>
             <button
               type="button"
               onClick={reset}
               aria-label="Reset all inputs to defaults"
-              className={PRIMARY_BTN}
+              className={GHOST_BTN}
             >
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

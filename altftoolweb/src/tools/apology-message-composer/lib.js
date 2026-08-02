@@ -181,17 +181,17 @@ export function scanForWeakeners(text) {
 
 const OPENERS = {
   sincere: {
-    regret: "{recipient}, I am sorry for {what}.",
+    regret: "{recipient}, I am sorry for {what}",
     responsibility: "That was my responsibility, and I am not going to explain it away.",
     forgiveness: "I hope you can forgive me, and I understand if that takes time.",
   },
   professional: {
-    regret: "{recipient}, I want to apologise for {what}.",
+    regret: "{recipient}, I want to apologise for {what}",
     responsibility: "This was my error and I take full responsibility for it.",
     forgiveness: "I hope we can move past this, and I am happy to discuss it further.",
   },
   brief: {
-    regret: "{recipient}, I'm sorry for {what}.",
+    regret: "{recipient}, I'm sorry for {what}",
     responsibility: "That one is on me.",
     forgiveness: "I hope you can forgive me.",
   },
@@ -271,6 +271,7 @@ export function composeApology({
   const included = [];
   const missing = [];
   const lines = [];
+  const includedFieldTexts = [];
 
   for (const component of COMPONENTS) {
     const chosen = selected.has(component.id);
@@ -287,13 +288,19 @@ export function composeApology({
     }
 
     included.push({ id: component.id, label: component.label, weight: component.weight });
+    if (component.needs) includedFieldTexts.push(values[component.needs]);
 
     switch (component.id) {
       case "regret":
+        // Substitute both placeholders in a single pass so neither
+        // substitution's output can be re-scanned by the other pattern
+        // (e.g. a recipient name that itself contains the text "{what}").
         lines.push(
-          OPENERS[tone].regret
-            .replace(/\{recipient\}/g, who)
-            .replace(/\{what\}/g, fragment(values.what)),
+          endSentence(
+            OPENERS[tone].regret.replace(/\{recipient\}|\{what\}/g, (token) =>
+              token === "{recipient}" ? who : fragment(values.what),
+            ),
+          ),
         );
         break;
       case "responsibility":
@@ -327,9 +334,7 @@ export function composeApology({
   if (from) text = `${text}\n\n— ${from}`;
 
   const score = included.reduce((sum, c) => sum + c.weight, 0);
-  const warnings = scanForWeakeners(
-    [values.what, values.impact, values.cause, values.change, values.repair].join(" "),
-  );
+  const warnings = scanForWeakeners(includedFieldTexts.join(" "));
 
   return {
     text,

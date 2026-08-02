@@ -136,10 +136,17 @@ export function computeIdv({
     overridden = true;
   }
 
-  const vehicleIdv = price * (1 - rate);
-  const accessoriesIdv = accessories * (1 - rate);
+  // Round the two independent leaf figures first, then derive totalIdv and
+  // depreciationAmount FROM those already-rounded values instead of rounding
+  // each raw float separately. Otherwise vehicleIdv + accessoriesIdv can be
+  // ₹1 off from totalIdv (and listedValue - depreciationAmount off from
+  // totalIdv), since Math.round() on independent floats doesn't guarantee
+  // the rounded parts still sum to the rounded whole.
+  const vehicleIdv = round(price * (1 - rate), 0);
+  const accessoriesIdv = round(accessories * (1 - rate), 0);
   const totalIdv = vehicleIdv + accessoriesIdv;
-  const depreciationAmount = price + accessories - totalIdv;
+  const listedValue = round(price + accessories, 0);
+  const depreciationAmount = listedValue - totalIdv;
   const odPremium = (totalIdv * odRate) / 100;
 
   return {
@@ -149,11 +156,11 @@ export function computeIdv({
     mutuallyAgreed: slab.mutuallyAgreed,
     overridden,
     depreciationRate: round(rate * 100, 2),
-    vehicleIdv: round(vehicleIdv, 0),
-    accessoriesIdv: round(accessoriesIdv, 0),
-    totalIdv: round(totalIdv, 0),
-    depreciationAmount: round(depreciationAmount, 0),
-    listedValue: round(price + accessories, 0),
+    vehicleIdv,
+    accessoriesIdv,
+    totalIdv,
+    depreciationAmount,
+    listedValue,
     odPremium: round(odPremium, 0),
     odRatePct: round(odRate, 2),
   };

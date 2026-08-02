@@ -59,8 +59,9 @@ export const spec = {
 },
   compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
       const met = num(values.activity);
-      const cals = (met * 3.5 * num(values.weight)) / 200 * num(values.minutes);
-      return { result: Math.round(cals).toLocaleString() + " kcal", rows: [["Per minute", (cals / num(values.minutes)).toFixed(1) + " kcal"], ["Per hour", Math.round((cals / num(values.minutes)) * 60).toLocaleString() + " kcal"]] };
+      const perMinuteCals = (met * 3.5 * num(values.weight)) / 200;
+      const cals = perMinuteCals * num(values.minutes);
+      return { result: Math.round(cals).toLocaleString() + " kcal", rows: [["Per minute", perMinuteCals.toFixed(1) + " kcal"], ["Per hour", Math.round(perMinuteCals * 60).toLocaleString() + " kcal"]] };
     },
 };
 

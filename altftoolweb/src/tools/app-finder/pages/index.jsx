@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { SearchBar } from "../components/SearchBar";
 import { AppCard } from "../components/AppCard";
 import { truncateText } from "../utils/helper";
@@ -12,11 +12,9 @@ export default function ToolHome() {
   const [results, setResults] = useState([]);
   const [allApps, setAllApps] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [similarApps, setSimilarApps] = useState([]);
-  const [alternatives, setAlternatives] = useState([]);
-  const [compareApps, setCompareApps] = useState([]);
   const [trendingApps, setTrendingApps] = useState([]);
   const [detectedCategory, setDetectedCategory] = useState(null);
+  const latestRequestId = useRef(0);
 
   const categories = [
     "Social","Music","Productivity","Finance","Education","Gaming","Food & Groceries","Entertainment",
@@ -30,49 +28,51 @@ export default function ToolHome() {
   };
 
   const handleCategory = async (category) => {
+    const requestId = ++latestRequestId.current;
     setQuery(category);
+    // Explicit category picks are not "smart" detections, so clear any
+    // stale "Showing smart results for X" banner from a previous search.
+    setDetectedCategory(null);
     setLoading(true);
     try {
       const apps = await fetchApps(category);
+      if (requestId !== latestRequestId.current) return;
       setResults(apps);
       setAllApps(apps);
     } catch (err) {
       console.error(err);
     } finally {
-      setLoading(false);
+      if (requestId === latestRequestId.current) setLoading(false);
     }
   };
 
   useEffect(() => {
     const loadApps = async () => {
+      const requestId = ++latestRequestId.current;
       setLoading(true);
       try {
         const apps = await fetchApps("popular");
-        setResults(apps);
-        setAllApps(apps);
+        if (requestId === latestRequestId.current) {
+          setResults(apps);
+          setAllApps(apps);
+        }
 
         const trending = await fetchApps("trending");
-        setTrendingApps(trending.slice(0, 6));
+        if (requestId === latestRequestId.current) {
+          setTrendingApps(trending.slice(0, 6));
+        }
       } catch (err) {
         console.error(err);
       } finally {
-        setLoading(false);
+        if (requestId === latestRequestId.current) setLoading(false);
       }
     };
     loadApps();
   }, []);
 
-  const handleCompare = (app) => {
-    setCompareApps((prev) => {
-      const exists = prev.find((a) => a.trackId === app.trackId);
-      if (exists) return prev.filter((a) => a.trackId !== app.trackId);
-      if (prev.length === 2) return prev;
-      return [...prev, app];
-    });
-  };
-
   const searchApps = async () => {
     if (!query.trim()) return;
+    const requestId = ++latestRequestId.current;
     setLoading(true);
 
     try {
@@ -92,31 +92,16 @@ export default function ToolHome() {
         }
       });
 
-      setDetectedCategory(detected);
-
       const apps = await fetchApps(detected || query);
+      if (requestId !== latestRequestId.current) return;
+
+      setDetectedCategory(detected);
       setResults(apps);
       setAllApps(apps);
-
-      if (apps.length > 0) {
-        const mainCategory = apps[0].category;
-
-        const similar = apps.filter(
-          (app, index) =>
-            app.category === mainCategory && index !== 0
-        );
-        setSimilarApps(similar.slice(0, 4));
-
-        const alt = apps.filter(
-          (app, index) =>
-            app.category === mainCategory && index !== 0
-        );
-        setAlternatives(alt.slice(0, 4));
-      }
     } catch (error) {
       console.error(error);
     } finally {
-      setLoading(false);
+      if (requestId === latestRequestId.current) setLoading(false);
     }
   };
 
@@ -148,7 +133,7 @@ export default function ToolHome() {
 
         {/* AI MESSAGE */}
         {detectedCategory !== null && query && (
-          <p className="text-center text-xs sm:text-sm text-gray-500 mb-4">
+          <p className="text-center text-xs sm:text-sm text-(--muted-foreground) mb-4">
             Showing smart results for &quot;{detectedCategory}&quot;
           </p>
         )}
@@ -175,7 +160,6 @@ export default function ToolHome() {
                 key={index}
                 app={app}
                 short={truncateText}
-                onCompare={handleCompare}
                 onTagClick={handleTagClick}
               />
             ))}
@@ -186,7 +170,7 @@ export default function ToolHome() {
         {trendingApps.length > 0 && (
           <div className="mb-10 ">
             <h2 className="text-lg font-semibold mb-4 ">
-              🔥 Trending Apps Today
+              🔥 More Apps to Explore
             </h2>
 
             <div className="flex gap-4 overflow-x-auto pb-4 items-stretch ">

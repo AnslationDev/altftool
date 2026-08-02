@@ -79,12 +79,21 @@ export default function LandingInfo({ onTabChange }) {
             </span>
           </div>
 
-          <h1 className="text-3xl font-black uppercase leading-tight text-foreground sm:text-4xl md:text-5xl">
+          {/*
+            This is the Home tab's panel heading, not the page's. It only
+            exists while `activeTab === "landing"`; switch to Newspaper or
+            Wanted and it unmounts, so as an <h1> the studio's top-level
+            heading came and went with client state. The page's own H1 is the
+            masthead in ../page.jsx, which is rendered on every tab. Level
+            only — the type utilities are on this element, so it paints
+            identically.
+          */}
+          <h2 className="text-3xl font-black uppercase leading-tight text-foreground sm:text-4xl md:text-5xl">
             Transform Ideas Into <br />
             <span className="text-primary">
               Retro Visual Assets
             </span>
-          </h1>
+          </h2>
 
           <p className="mx-auto max-w-lg text-xs font-medium leading-relaxed text-muted md:text-sm">
             Your high-fidelity generation pipeline for crafting modular newspapers, bounty posters, responsive slates, interactive scripts, and custom art elements.

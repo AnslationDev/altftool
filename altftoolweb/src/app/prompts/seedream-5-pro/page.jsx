@@ -8,8 +8,11 @@ import {
   createCollectionPageJsonLd,
 } from "@/platform/seo/generateMetadata";
 
-const DESCRIPTION =
-  "Browse a curated library of Seedream 5 Pro prompt examples. Copy natural-language, production-ready prompts for photorealistic AI image generation and editing — one click to your clipboard.";
+// The previous string ran to 189 characters, so trimMetaDescription cut it at
+// the last sentence break and the clipboard promise — the one thing that
+// separates this page from every other prompt gallery — never reached a SERP
+// snippet. 156 characters at today's count, which passes through verbatim.
+const DESCRIPTION = `Browse ${getPromptCards().length} Seedream 5 Pro prompt examples. Copy natural-language, production-ready prompts for photorealistic AI image generation straight to your clipboard.`;
 
 export async function generateMetadata() {
   return createPageMetadata({

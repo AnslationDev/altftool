@@ -39,9 +39,15 @@ const EditorToolbar = ({ editor }) => {
 
   const addImage = useCallback(() => {
     const url = window.prompt("Enter image URL:");
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
-    }
+    if (!url) return;
+    const alt = window.prompt(
+      "Describe this image for screen reader users (alt text). Leave blank only if it's purely decorative:",
+    );
+    editor
+      .chain()
+      .focus()
+      .setImage({ src: url, alt: alt ? alt.trim() : "" })
+      .run();
   }, [editor]);
 
   if (!editor) return null;
@@ -214,21 +220,23 @@ const RichTextEditor = ({
       }),
       Link.configure({
         openOnClick: false,
-        HTMLAttributes: {
-          class: "text-(--primary) underline cursor-pointer",
-        },
       }),
-      Image.configure({
-        HTMLAttributes: {
-          class: "max-w-full h-auto rounded-lg",
-        },
-      }),
+      Image,
     ],
     content: initialContent,
     editable: !readOnly,
     editorProps: {
       attributes: {
-        class: "prose prose-sm sm:prose lg:prose-lg xl:prose-xl max-w-none focus:outline-none min-h-[300px] p-6 text-(--foreground)",
+        // Presentational classes for links/images live here, scoped to the
+        // in-app editing surface, instead of on the Link/Image extensions'
+        // HTMLAttributes — those get baked into every <a>/<img> node and
+        // would ship inside editor.getHTML(), the exact string this tool
+        // hands off for copy/paste into an external CMS or database column.
+        // Arbitrary app-only Tailwind classes (e.g. text-(--primary), which
+        // only resolves against this app's own CSS variable) have no
+        // business in that exported markup.
+        class:
+          "prose prose-sm sm:prose lg:prose-lg xl:prose-xl max-w-none focus:outline-none min-h-[300px] p-6 text-(--foreground) [&_a]:text-(--primary) [&_a]:underline [&_a]:cursor-pointer [&_img]:max-w-full [&_img]:h-auto [&_img]:rounded-lg",
       },
     },
     onUpdate: ({ editor }) => {
@@ -241,6 +249,17 @@ const RichTextEditor = ({
       editor.commands.setContent(initialContent);
     }
   }, [initialContent, editor]);
+
+  // useEditor() is called with no `deps` array, so TipTap never recreates the
+  // editor instance — the `editable: !readOnly` option passed to useEditor()
+  // above only takes effect at the very first mount. Toggling `readOnly`
+  // afterwards must be pushed to the live editor explicitly via
+  // setEditable(), otherwise the ProseMirror view stays editable forever.
+  useEffect(() => {
+    if (editor && editor.isEditable !== !readOnly) {
+      editor.setEditable(!readOnly);
+    }
+  }, [editor, readOnly]);
 
   if (!editor) return null;
 
@@ -308,7 +327,7 @@ export default function RichDataEditor() {
             <p className="text-sm text-(--muted-foreground)">Live preview of the generated HTML</p>
           </div>
           <div className="p-6">
-            <pre className="bg-[#0B1120] text-gray-300 p-6 rounded-xl overflow-x-auto text-sm border border-(--border)">
+            <pre className="bg-(--background) text-(--foreground) p-6 rounded-xl overflow-x-auto text-sm border border-(--border)">
               <code>{content}</code>
             </pre>
           </div>

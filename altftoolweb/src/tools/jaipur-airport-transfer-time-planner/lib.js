@@ -215,7 +215,7 @@ export const TRAFFIC_BY_HOUR = [
   0.85, 0.82, 0.8, // 12:00-14:59 lunch and school pickup
   0.85, 0.85, 0.78, // 15:00-17:59 evening build-up
   0.62, 0.6, 0.65, // 18:00-20:59 evening peak
-  0.82, 0.95, 1.15, 1.25, // 21:00-23:59 clearing
+  0.82, 0.95, 1.25, // 21:00-23:59 clearing
 ];
 
 export const PEAK_WINDOWS = [
@@ -513,16 +513,30 @@ export function planAirportTransfer({
     },
   ].filter(Boolean);
 
-  const bindingDeadline = kerbDeadlines.reduce((tightest, entry) =>
+  // The hard deadline: miss check-in or the gate and you miss the flight, no
+  // matter what the airline's advisory arrival time said.
+  const hardDeadline = kerbDeadlines.reduce((tightest, entry) =>
     entry.kerbMinute < tightest.kerbMinute ? entry : tightest,
   );
 
-  // The plan targets whichever is earlier: the airline's arrival advice, or the
-  // hard deadline. Your own buffer is then taken off the top of that.
-  const targetKerbMinute = Math.min(kerbForAdvice, bindingDeadline.kerbMinute) - contingencyMin;
+  const adviceDeadline = {
+    id: "advice",
+    label: "Airline arrival advice",
+    kerbMinute: kerbForAdvice,
+    deadlineMinute: flightMinute,
+  };
+
+  // The plan targets whichever is tightest overall — the hard deadline or the
+  // airline's arrival advice — and that is what gets reported as the binding
+  // cutoff, instead of always blaming the hard deadline even on the (typical)
+  // occasions when the advice is actually what decided the departure time.
+  // Your own buffer is then taken off the top of that.
+  const bindingDeadline =
+    adviceDeadline.kerbMinute < hardDeadline.kerbMinute ? adviceDeadline : hardDeadline;
+  const targetKerbMinute = bindingDeadline.kerbMinute - contingencyMin;
 
   const drive = latestDeparture(
-    targetKerbMinute,
+    targetKerbMinute - mode.kerbMin,
     zone.km,
     zone.openSpeedKmph,
     mode.speedFactor,
@@ -533,7 +547,7 @@ export function planAirportTransfer({
 
   // The last moment you could set off and still, in theory, make the flight.
   const lastChance = latestDeparture(
-    bindingDeadline.kerbMinute - mode.kerbMin,
+    hardDeadline.kerbMinute - mode.kerbMin,
     zone.km,
     zone.openSpeedKmph,
     mode.speedFactor,

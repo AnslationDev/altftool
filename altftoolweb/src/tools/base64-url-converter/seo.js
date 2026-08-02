@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "How much shorter is base64url in a URL?",
-      "It saves 2 characters for every `+`, `/` or `=` in the standard form, because each of those becomes a 3-character percent escape (`%2B`, `%2F`, `%3D`). Roughly 1 in 32 Base64 characters is a `+` or `/`, so a 1,000-character token typically saves 60–70 characters, plus 4 for the dropped padding.",
+      "It saves 2 characters for every `+` or `/` in the standard form, because each of those becomes a 3-character percent escape (`%2B`, `%2F`) but only a 1-character swap (`-`, `_`) in base64url. Roughly 1 in 32 Base64 characters is a `+` or `/`, so a 1,000-character token typically saves 60–70 characters from that alone. Padding is dropped entirely by default rather than swapped, so each `=` saves the full 3 characters its percent escape (`%3D`) would have cost — up to 6 more for the maximum of two padding characters.",
     ],
     [
       "Is base64url safe to put in a filename or a path segment?",

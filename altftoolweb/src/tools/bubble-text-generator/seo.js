@@ -1,15 +1,15 @@
 const seo = {
   intro:
-    "The Bubble Text Generator maps ordinary letters and digits onto Unicode's Enclosed Alphanumerics characters — Ⓐ at U+24B6, ⓐ at U+24D0, ① at U+2460 — so \"hello\" becomes ⓗⓔⓛⓛⓞ as real text you can copy and paste anywhere. It offers 22 styles across circled, filled, squared, parenthesised, tiny, fullwidth, double-struck, cursive, fraktur, strikethrough and emoji-framed variants, and can also render your text as a transparent PNG or SVG in one of 11 rounded display fonts. Because the output is characters and not an image, it survives a paste into a bio, username or chat message.",
+    "The Bubble Text Generator maps ordinary letters and digits onto Unicode's Enclosed Alphanumerics characters — Ⓐ at U+24B6, ⓐ at U+24D0, ① at U+2460 — so \"hello\" becomes ⓗⓔⓛⓛⓞ as real text you can copy and paste anywhere. Type or paste in any text and every letter and digit is converted to its circled equivalent; punctuation and other symbols pass through unchanged. Because the output is characters and not an image, it survives a paste into a bio, username or chat message.",
   useCases: [
     "You want your Instagram bio name to stand out from every other account on the page without adding an image or a special font file.",
-    "You are setting up Discord channel names and want each one prefixed with squared or circled letters that still read cleanly in the sidebar.",
-    "You need a bubble-lettering headline for a thumbnail or sticker and want it as a transparent PNG rather than pasteable text.",
+    "You are setting up Discord channel names and want each one prefixed with circled letters that still read cleanly in the sidebar.",
+    "You need a quick bubble-lettering headline for a caption or comment and want plain, pasteable text rather than an image.",
   ],
   benefits: [
-    ["Output is text, not a screenshot", "Every style is real Unicode, so it pastes into usernames, bios, captions and search fields that reject images or custom fonts."],
-    ["22 styles from one input", "Type once and compare classic circles, filled circles, squares, negative squares, parentheses, subscripts, fullwidth, fraktur and more side by side."],
-    ["Text and image output in the same tool", "When a platform strips unusual characters you can fall back to the PNG or SVG export rendered in a rounded display font."],
+    ["Output is text, not a screenshot", "The circled letters are real Unicode, so they paste into usernames, bios, captions and search fields that reject images or custom fonts."],
+    ["Converts letters and digits in one pass", "Type once and every A-Z, a-z and 0-9 character in your input is swapped for its circled equivalent — everything else is left as-is."],
+    ["Copy, download or revisit past results", "Copy the circled text straight to your clipboard, download it as a .txt file, or reopen it from the tool's built-in recent-results history."],
   ],
   faqs: [
     [
@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "Will bubble letters show up on iPhone, Android and Discord?",
-      "Yes, because Enclosed Alphanumerics has been in Unicode since version 1.1 and is covered by the system fonts on iOS, Android, Windows, macOS and Linux. The filled and squared styles use Enclosed Alphanumeric Supplement characters, which are newer and occasionally render as boxes on very old devices.",
+      "Yes, because Enclosed Alphanumerics has been in Unicode since version 1.1 and is covered by the system fonts on iOS, Android, Windows, macOS and Linux, so the circled letters this tool produces render correctly almost everywhere.",
     ],
     [
       "Can I use bubble text in an Instagram or TikTok username?",

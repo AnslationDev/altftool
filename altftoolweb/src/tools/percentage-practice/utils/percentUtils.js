@@ -22,11 +22,24 @@ function getConfig(difficulty) {
   return DIFFICULTY_CONFIG[difficulty] || DIFFICULTY_CONFIG.easy;
 }
 
+/** A handful of "nice" price-tag values spread across a difficulty's numeric range. */
+function priceLadder(cfg) {
+  const [lo, hi] = cfg.numRange;
+  const steps = 6;
+  const prices = [];
+  for (let i = 1; i <= steps; i += 1) {
+    const raw = lo + ((hi - lo) * i) / steps;
+    prices.push(Math.max(lo, Math.round(raw) - 1));
+  }
+  return prices;
+}
+
 function generateFindPercent(difficulty) {
   const cfg = getConfig(difficulty);
   const pct = pickRandom(cfg.pctChoices);
   const num = randInt(cfg.numRange[0], cfg.numRange[1]);
   const answer = roundClean((pct / 100) * num);
+  const product = roundClean(pct * num);
 
   return {
     type: "find-percent",
@@ -36,8 +49,8 @@ function generateFindPercent(difficulty) {
     explanation: `${pct}% of ${num} = (${pct}/100) × ${num} = ${answer}`,
     steps: [
       `Write as a fraction: ${pct}/100 × ${num}`,
-      `Calculate: ${pct} × ${num} = ${pct * num}`,
-      `Divide by 100: ${pct * num} / 100 = ${answer}`,
+      `Calculate: ${pct} × ${num} = ${product}`,
+      `Divide by 100: ${product} / 100 = ${answer}`,
     ],
   };
 }
@@ -45,19 +58,22 @@ function generateFindPercent(difficulty) {
 function generateFindNumber(difficulty) {
   const cfg = getConfig(difficulty);
   const pct = pickRandom(cfg.pctChoices);
-  const result = randInt(cfg.numRange[0] / 5, cfg.numRange[1] / 2);
-  const answer = roundClean(result / (pct / 100));
+  // Pick the unknown number X within the difficulty's own range first, then derive the
+  // clue (Y = pct% of X) from it — this keeps X from ballooning far outside numRange
+  // for small percentages, which happened when X was derived from Y instead.
+  const answer = randInt(cfg.numRange[0], cfg.numRange[1]);
+  const result = roundClean((pct / 100) * answer);
 
   return {
     type: "find-number",
     question: `${pct}% of what number is ${result}?`,
-    answer: roundClean(answer),
+    answer,
     unit: "",
-    explanation: `If ${pct}% of X = ${result}, then X = ${result} / (${pct}/100) = ${roundClean(answer)}`,
+    explanation: `If ${pct}% of X = ${result}, then X = ${result} / (${pct}/100) = ${answer}`,
     steps: [
       `Set up equation: ${pct}% × X = ${result}`,
       `Convert: (${pct}/100) × X = ${result}`,
-      `Solve: X = ${result} × 100 / ${pct} = ${roundClean(answer)}`,
+      `Solve: X = ${result} × 100 / ${pct} = ${answer}`,
     ],
   };
 }
@@ -125,9 +141,14 @@ function generateDecrease(difficulty) {
 
 function generateDiscount(difficulty) {
   const cfg = getConfig(difficulty);
-  const prices = difficulty === "beginner" ? [20, 50, 80, 100] : difficulty === "easy" ? [50, 100, 150, 200, 250] : [99, 149, 199, 249, 399, 499, 799, 999];
+  const prices =
+    difficulty === "beginner"
+      ? [20, 50, 80, 100]
+      : difficulty === "easy"
+        ? [50, 100, 150, 200, 250]
+        : priceLadder(cfg);
   const original = pickRandom(prices);
-  const pct = pickRandom([10, 15, 20, 25, 30, 40, 50]);
+  const pct = pickRandom(cfg.pctChoices.filter((p) => p < 100));
   const saving = roundClean((pct / 100) * original);
   const answer = roundClean(original - saving);
 
@@ -146,9 +167,14 @@ function generateDiscount(difficulty) {
 
 function generateOriginal(difficulty) {
   const cfg = getConfig(difficulty);
-  const prices = difficulty === "beginner" ? [50, 80, 100, 120] : difficulty === "easy" ? [80, 120, 150, 200, 250] : [75, 119, 149, 199, 349, 449, 699];
+  const prices =
+    difficulty === "beginner"
+      ? [50, 80, 100, 120]
+      : difficulty === "easy"
+        ? [80, 120, 150, 200, 250]
+        : priceLadder(cfg);
   const original = pickRandom(prices);
-  const pct = pickRandom([10, 15, 20, 25, 30, 40, 50]);
+  const pct = pickRandom(cfg.pctChoices.filter((p) => p < 100));
   const salePrice = roundClean(original - (pct / 100) * original);
 
   return {

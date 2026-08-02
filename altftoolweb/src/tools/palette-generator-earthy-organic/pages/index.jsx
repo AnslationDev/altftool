@@ -47,6 +47,7 @@ export default function ToolHome() {
     [seed, lead, earthiness],
   );
   const failed = Boolean(palette.error);
+  const leadPigment = failed ? null : palette.roles.find((role) => role.key === "primary");
 
   const exportText = failed
     ? ""
@@ -168,10 +169,10 @@ export default function ToolHome() {
               Lead pigment
             </p>
             <p className="mt-1 font-mono text-4xl font-semibold text-[var(--primary)]">
-              {failed ? DASH : palette.roles[2].hex}
+              {failed ? DASH : leadPigment.hex}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-              {failed ? DASH : `${palette.roles[2].name} · ${palette.roles[2].hslText}`}
+              {failed ? DASH : `${leadPigment.name} · ${leadPigment.hslText}`}
             </p>
           </div>
           <button

@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "three-phase-power-calculator",
   name: "Three-Phase Power Calculator",
   category: ["Electronics","Calculator"],
-  description: "kW, kVA, amps aur power factor convert kare.",
+  description: "Convert three-phase voltage, current and power factor into kW, kVA and output power.",
   icon: "zap",
   iconColor: "text-primary",
 };

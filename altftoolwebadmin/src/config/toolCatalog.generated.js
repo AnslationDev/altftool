@@ -1207,7 +1207,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "animation-generator",
-    "name": "Animation Generator",
+    "name": "CSS Keyframes Animation Builder",
     "categories": [
       "Design & Color"
     ],
@@ -1215,7 +1215,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "animation-generator-tool",
-    "name": "Animation Generator",
+    "name": "CSS Animation Presets",
     "categories": [
       "Design & Color"
     ],
@@ -3820,7 +3820,7 @@ export const TOOL_CATALOG = [
       "Education & Science",
       "Calculators"
     ],
-    "description": "Henderson-Hasselbalch equation se buffer pH calculate kare."
+    "description": "Calculate buffer pH using the Henderson-Hasselbalch equation."
   },
   {
     "slug": "bulk-find-replace",
@@ -8420,7 +8420,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Business"
     ],
-    "description": "New feature ka initial privacy-impact assessment structure kare."
+    "description": "Score a new feature's privacy risk and outline the structure of a Data Protection Impact Assessment (DPIA)."
   },
   {
     "slug": "dream-pattern-journal",
@@ -8583,7 +8583,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Productivity"
     ],
-    "description": "Licence number se state, RTO aur year fields parse kare."
+    "description": "Parse an Indian driving licence number into its state, RTO, issue-year and serial fields, and identify the state it was issued in."
   },
   {
     "slug": "driving-licence-renewal-checklist",
@@ -8869,7 +8869,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Generators"
     ],
-    "description": "Write Eid greetings in Urdu, Hindi, Arabic, English and nine Indian languages, with transliteration and SMS length check."
+    "description": "Write Eid greetings in Urdu, Hindi, Arabic, English and eight Indian languages, with transliteration and SMS length check."
   },
   {
     "slug": "eighteen-six-fasting-window-planner",
@@ -10295,7 +10295,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Fun"
     ],
-    "description": "Generate fresh fantasy character names from a keyword."
+    "description": "Generate six random two-part fantasy character names in one click."
   },
   {
     "slug": "faq-generator-prompt-builder",
@@ -11398,7 +11398,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Calculators"
     ],
-    "description": "Split road trip fuel, toll and parking costs fairly by the kilometres each person actually rode, with penny-exact rounding."
+    "description": "Split road trip fuel, toll and parking costs fairly by the kilometres each person actually rode, with paisa-exact rounding."
   },
   {
     "slug": "fuel-cost-trip-calculator",
@@ -12605,11 +12605,11 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "gzip-encryption",
-    "name": "Gzip Encryption & Decryption",
+    "name": "Gzip Compression & Decompression",
     "categories": [
       "Developer"
     ],
-    "description": "Gzip encryption and decryption. Quickly and easily encrypt and decrypt gzip strings!"
+    "description": "Gzip compression and decompression. Quickly and easily compress and decompress gzip strings (this is compression, not encryption)."
   },
   {
     "slug": "habbit_cost_calculator",
@@ -12808,7 +12808,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Left/right, stereo placement aur polarity test tones play kare."
+    "description": "Left/right stereo placement aur channel balance check karne ke liye hard-panned tone alternate kare."
   },
   {
     "slug": "headphone-listening-break-timer",
@@ -14025,7 +14025,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Design & Color"
     ],
-    "description": "Analyze image quality with 10+ professional metrics including sharpness, brightness, contrast, noise, exposure, and histogram analysis."
+    "description": "Analyze image quality with nine professional metrics including sharpness, brightness, contrast, noise, exposure, and histogram analysis."
   },
   {
     "slug": "image-resizer",
@@ -14084,7 +14084,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Design & Color"
     ],
-    "description": "An interactive visual editor to create mathematically impossible optical illusion objects and 3D geometric structures."
+    "description": "Generate a Penrose triangle, impossible rectangle or endless staircase as an SVG, and tune the camera angle to see exactly why the illusion holds — or breaks."
   },
   {
     "slug": "improvement-needed-calculator",
@@ -16965,7 +16965,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Zoom, invert, contrast aur edge-enhancement modes provide kare."
+    "description": "Zoom, invert, contrast aur grayscale modes provide kare."
   },
   {
     "slug": "lpg-cylinder-usage-estimator",
@@ -16990,7 +16990,7 @@ export const TOOL_CATALOG = [
       "Fun",
       "Lifestyle"
     ],
-    "description": "Discover your lucky color for today based on your mood, zodiac sign, or random selection with color psychology insights."
+    "description": "Discover your lucky color based on your mood, zodiac sign, or random selection with color psychology insights."
   },
   {
     "slug": "lucky-day-predictor",
@@ -18931,7 +18931,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Calculators"
     ],
-    "description": "Estimate your Netlify bill from team members, bandwidth, build minutes and function invocations on Free or Pro."
+    "description": "Estimate your Netlify bill from bandwidth, function compute, production deploys and web requests on Free, Personal or Pro's credit-based pricing."
   },
   {
     "slug": "netlify-toml-generator",
@@ -20881,7 +20881,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Image & Photo"
     ],
-    "description": "Upload two photos to run face alignment scans and compute an AI-based compatibility rating."
+    "description": "Upload two photos to run real face landmark detection and get a fun, deterministic compatibility score — not an AI-based prediction."
   },
   {
     "slug": "photo-shoot-planner",
@@ -22931,7 +22931,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Education & Science"
     ],
-    "description": "Calculate reading speed, reading time, and words per minute from pasted text or a timed reading test."
+    "description": "Measure your reading speed and words per minute with a timed reading test using built-in passages."
   },
   {
     "slug": "reading-time-calculator",
@@ -23439,7 +23439,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Lifestyle"
     ],
-    "description": "Futuristic property verification and safety management tool for renters."
+    "description": "Score a rental move-in against a weighted, code-referenced security and safety checklist."
   },
   {
     "slug": "repair-quote-comparator",
@@ -28686,7 +28686,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Calculators"
     ],
-    "description": "kW, kVA, amps aur power factor convert kare."
+    "description": "Convert three-phase voltage, current and power factor into kW, kVA and output power."
   },
   {
     "slug": "thumbnail-image-prompt-builder",

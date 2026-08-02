@@ -202,7 +202,7 @@ export const medicare = {
   },
 
   seo: {
-    title: "Medicare — Compare Advantage, Supplement & Part D Plans | AltFTool",
+    title: "Medicare — Compare Advantage & Part D Plans | AltFTool",
     description:
       "Compare Medicare Advantage, Supplement and Part D plans side by side and review options with a licensed agent. Free to compare, with no obligation to enroll.",
   },

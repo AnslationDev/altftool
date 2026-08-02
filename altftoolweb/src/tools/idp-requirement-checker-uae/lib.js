@@ -198,17 +198,6 @@ export function parseISODate(value) {
   return stamp;
 }
 
-export function toISODate(stamp) {
-  return new Date(stamp).toISOString().slice(0, 10);
-}
-
-export function daysBetweenISO(fromISO, toISO) {
-  const from = parseISODate(fromISO);
-  const to = parseISODate(toISO);
-  if (from === null || to === null) return null;
-  return Math.round((to - from) / MS_PER_DAY);
-}
-
 function holdsIdp(idpHeld) {
   return idpHeld === "both" || ACCEPTED_IDP_FORMATS.includes(idpHeld);
 }

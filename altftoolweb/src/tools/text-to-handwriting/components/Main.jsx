@@ -105,10 +105,15 @@ export default function MainComponent() {
   }, [inputText, fontStyle, fontSize, inkColor, paperStyle, lineSpacing, letterSpacing, jitter, isGenerated]);
 
   const handleGenerate = () => {
-    setIsGenerated(true);
-    setTimeout(() => {
+    if (isGenerated) {
+      // Canvas is already mounted; regenerate directly to reflect any
+      // changed settings (and produce a fresh jitter pass) immediately.
       generateHandwriting();
-    }, 100);
+    } else {
+      // Canvas mounts once isGenerated flips to true; the useEffect above
+      // performs the initial render after the DOM commits.
+      setIsGenerated(true);
+    }
   };
 
   const generateHandwriting = () => {
@@ -441,10 +446,11 @@ export default function MainComponent() {
               {/* Col 1: Handwriting style & color (3/12 cols) */}
               <div className="lg:col-span-3 space-y-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+                  <label htmlFor="font-style-select" className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
                     Handwriting Font Preset (40 Styles)
                   </label>
                   <select
+                    id="font-style-select"
                     value={fontStyle}
                     onChange={(e) => setFontStyle(e.target.value)}
                     className="w-full bg-(--page) border border-(--border) text-(--foreground) text-xs rounded-lg p-2.5 outline-none focus:border-teal-500 cursor-pointer max-h-40 overflow-y-auto"
@@ -457,10 +463,11 @@ export default function MainComponent() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+                  <label htmlFor="ink-color-select" className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
                     Ink Color Options
                   </label>
                   <select
+                    id="ink-color-select"
                     value={inkColor}
                     onChange={(e) => setInkColor(e.target.value)}
                     className="w-full bg-(--page) border border-(--border) text-(--foreground) text-xs rounded-lg p-2.5 outline-none focus:border-teal-500 cursor-pointer"
@@ -477,10 +484,11 @@ export default function MainComponent() {
               {/* Col 2: Paper Style & Size (3/12 cols) */}
               <div className="lg:col-span-3 space-y-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+                  <label htmlFor="paper-style-select" className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
                     Paper Grid / Lines
                   </label>
                   <select
+                    id="paper-style-select"
                     value={paperStyle}
                     onChange={(e) => setPaperStyle(e.target.value)}
                     className="w-full bg-(--page) border border-(--border) text-(--foreground) text-xs rounded-lg p-2.5 outline-none focus:border-teal-500 cursor-pointer"
@@ -499,6 +507,7 @@ export default function MainComponent() {
                   </div>
                   <input
                     type="range"
+                    aria-label="Font Size (px)"
                     min="14"
                     max="40"
                     value={fontSize}
@@ -517,6 +526,7 @@ export default function MainComponent() {
                   </div>
                   <input
                     type="range"
+                    aria-label="Line Spacing"
                     min="20"
                     max="60"
                     value={lineSpacing}
@@ -531,6 +541,7 @@ export default function MainComponent() {
                   </div>
                   <input
                     type="range"
+                    aria-label="Letter Spacing"
                     min="-2"
                     max="8"
                     step="0.5"
@@ -548,6 +559,7 @@ export default function MainComponent() {
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
+                      aria-label="Natural Handwriting Jitter"
                       checked={jitter}
                       onChange={(e) => setJitter(e.target.checked)}
                       className="sr-only peer"
@@ -591,6 +603,8 @@ export default function MainComponent() {
             <div className="border border-(--border) rounded-lg overflow-hidden bg-slate-200 dark:bg-slate-800/80 p-6 max-w-full flex justify-center shadow-inner">
               <canvas
                 ref={canvasRef}
+                role="img"
+                aria-label={`Generated handwritten document preview using the ${FONTS[fontStyle].name} font on ${PAPER_STYLES[paperStyle].name} paper with ${INK_COLORS[inkColor].name} ink`}
                 className="max-h-[500px] max-w-full object-contain border bg-white shadow-md"
               />
             </div>

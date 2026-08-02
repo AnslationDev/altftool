@@ -1,19 +1,15 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { 
-  Volume2, 
-  VolumeX, 
-  Play, 
-  Pause, 
-  Square, 
-  CheckCircle2, 
-  Copy, 
-  FileDown, 
-  RefreshCw, 
-  BookOpen, 
-  Share2, 
-  Sparkles,
+import {
+  Volume2,
+  Play,
+  Pause,
+  Square,
+  CheckCircle2,
+  Copy,
+  FileDown,
+  BookOpen,
   Volume1
 } from "lucide-react";
 
@@ -140,7 +136,7 @@ export default function ToolHome() {
 
     window.speechSynthesis.cancel(); // Cancel any queued voices
 
-    const utterance = new SpeechSynthesisUtterance(item.word);
+    const utterance = new SpeechSynthesisUtterance(item.pronunciation || item.word);
     utterance.rate = rate;
     utterance.pitch = pitch;
 
@@ -276,7 +272,7 @@ export default function ToolHome() {
           <div className="bg-card border border-border rounded-2xl p-6 shadow-sm space-y-6 flex flex-col justify-between">
             <div className="space-y-4">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-foreground uppercase tracking-wider">
+                <label htmlFor="nato-input-text" className="text-xs font-bold text-foreground uppercase tracking-wider">
                   English Input Text
                 </label>
                 <div className="flex items-center gap-2">
@@ -293,6 +289,7 @@ export default function ToolHome() {
               </div>
 
               <textarea
+                id="nato-input-text"
                 value={text}
                 onChange={(e) => setText(e.target.value.slice(0, 500))}
                 placeholder="Type word or sentence to spell phonetically..."
@@ -317,10 +314,11 @@ export default function ToolHome() {
                 {/* Rate (Speed) Slider */}
                 <div className="space-y-1">
                   <div className="flex justify-between text-xs text-foreground font-semibold">
-                    <span>Reading Speed</span>
+                    <label htmlFor="nato-rate-slider">Reading Speed</label>
                     <span className="text-primary font-mono">{rate}x</span>
                   </div>
                   <input
+                    id="nato-rate-slider"
                     type="range"
                     min="0.5"
                     max="1.5"
@@ -328,6 +326,8 @@ export default function ToolHome() {
                     value={rate}
                     onChange={(e) => setRate(parseFloat(e.target.value))}
                     disabled={isPlaying}
+                    aria-label="Reading speed"
+                    aria-valuetext={`${rate}x`}
                     className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                   />
                   <span className="text-[10px] text-muted-foreground block">
@@ -338,10 +338,11 @@ export default function ToolHome() {
                 {/* Pitch Slider */}
                 <div className="space-y-1">
                   <div className="flex justify-between text-xs text-foreground font-semibold">
-                    <span>Voice Pitch</span>
+                    <label htmlFor="nato-pitch-slider">Voice Pitch</label>
                     <span className="text-primary font-mono">{pitch}x</span>
                   </div>
                   <input
+                    id="nato-pitch-slider"
                     type="range"
                     min="0.5"
                     max="1.5"
@@ -349,6 +350,8 @@ export default function ToolHome() {
                     value={pitch}
                     onChange={(e) => setPitch(parseFloat(e.target.value))}
                     disabled={isPlaying}
+                    aria-label="Voice pitch"
+                    aria-valuetext={`${pitch}x`}
                     className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                   />
                   <span className="text-[10px] text-muted-foreground block">
@@ -534,17 +537,19 @@ export default function ToolHome() {
                       </span>
                     </div>
                   </div>
-                  <button 
+                  <button
                     onClick={() => {
                       if (typeof window !== "undefined" && window.speechSynthesis) {
                         window.speechSynthesis.cancel();
                         const wordUtterance = new SpeechSynthesisUtterance(details.word);
-                        wordUtterance.rate = 0.85;
+                        wordUtterance.rate = rate;
                         window.speechSynthesis.speak(wordUtterance);
                       }
                     }}
+                    disabled={isPlaying}
                     title={`Speak ${details.word}`}
-                    className="p-1.5 text-muted-foreground hover:text-primary hover:bg-surface-soft rounded-lg transition"
+                    aria-label={`Speak ${details.word}`}
+                    className="p-1.5 text-muted-foreground hover:text-primary hover:bg-surface-soft rounded-lg transition disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:text-muted-foreground disabled:hover:bg-transparent"
                   >
                     <Volume1 size={14} />
                   </button>

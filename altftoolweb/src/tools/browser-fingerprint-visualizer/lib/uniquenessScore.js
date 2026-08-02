@@ -1,5 +1,8 @@
 
 
+/** A fingerprint rarer than 1 in this many browsers is treated as identifying. */
+export const UNIQUE_THRESHOLD = 100_000;
+
 /**
 
  * @param {Object} signals - all collected fingerprint data
@@ -82,11 +85,11 @@ export function estimateUniqueness(signals) {
     oneIn: rawOneIn,
     oneInFormatted: formatNumber(rawOneIn),
     percentile: percentile.toFixed(4),
-    isUnique: rawOneIn > 100_000,
+    isUnique: rawOneIn > UNIQUE_THRESHOLD,
     label:
       rawOneIn > 1_000_000
         ? "Extremely Unique"
-        : rawOneIn > 100_000
+        : rawOneIn > UNIQUE_THRESHOLD
         ? "Highly Unique"
         : rawOneIn > 10_000
         ? "Very Unique"

@@ -478,6 +478,29 @@ function pick(list, random) {
   return list[Math.floor(random() * list.length) % list.length];
 }
 
+/**
+ * Distinct 32-bit salts for each independently-seeded PRNG channel below.
+ * Every field that can draw a random value (obstacles, settings, twists,
+ * openings, stakes, and the "any" fallback for character/tone) gets its own
+ * stream, seeded from the same base seed mixed with a channel-specific salt.
+ * That keeps the channels independent: how many times one channel's stream
+ * is consumed (e.g. character is only drawn when characterId is "any") can
+ * never shift what any other channel draws.
+ */
+const CHANNEL_SALT = {
+  obstacles: 0x9e3779b1,
+  settings: 0x85ebca77,
+  twists: 0xc2b2ae3d,
+  openings: 0x27d4eb2f,
+  stakes: 0x165667b1,
+  character: 0x2545f491,
+  tone: 0x9e3779b9,
+};
+
+function channelRandom(baseSeed, channel) {
+  return makeRandom((baseSeed + CHANNEL_SALT[channel]) >>> 0);
+}
+
 /** Picks `count` items without repeating until the pool is exhausted. */
 function pickRotating(list, count, random) {
   const pool = list.slice();
@@ -491,7 +514,7 @@ function pickRotating(list, count, random) {
   return out;
 }
 
-export function findGenre(id) {
+function findGenre(id) {
   return GENRES.find((genre) => genre.id === id) || null;
 }
 
@@ -537,8 +560,9 @@ export function generateStoryPrompts(options = {}) {
   if (!genre) return { error: "Pick a genre from the list before generating prompts." };
 
   const requested = Number(count);
-  if (!Number.isFinite(requested)) return { error: "Number of prompts must be a whole number." };
-  const wanted = Math.floor(requested);
+  if (!Number.isFinite(requested)) return { error: "Number of prompts must be a number." };
+  if (!Number.isInteger(requested)) return { error: "Number of prompts must be a whole number." };
+  const wanted = requested;
   if (wanted < MIN_COUNT || wanted > MAX_COUNT) {
     return { error: `Ask for between ${MIN_COUNT} and ${MAX_COUNT} prompts at a time.` };
   }
@@ -550,19 +574,26 @@ export function generateStoryPrompts(options = {}) {
   const character = findCharacter(characterId);
   const target = findLength(lengthId);
 
-  const random = makeRandom(Math.abs(Math.floor(seedValue)) + genre.id.length * 97 + wanted);
+  // Not folded with `wanted`: raising the requested count re-uses the same
+  // stream from the start, so a larger batch extends the existing one
+  // instead of reshuffling every field across the whole batch.
+  const baseSeed = Math.abs(Math.floor(seedValue)) + genre.id.length * 97;
 
-  const obstacles = pickRotating(genre.obstacles, wanted, random);
-  const settings = pickRotating(genre.settings, wanted, random);
-  const twists = pickRotating(genre.twists, wanted, random);
-  const openings = pickRotating(genre.openings, wanted, random);
+  const obstacles = pickRotating(genre.obstacles, wanted, channelRandom(baseSeed, "obstacles"));
+  const settings = pickRotating(genre.settings, wanted, channelRandom(baseSeed, "settings"));
+  const twists = pickRotating(genre.twists, wanted, channelRandom(baseSeed, "twists"));
+  const openings = pickRotating(genre.openings, wanted, channelRandom(baseSeed, "openings"));
+
+  const stakeRandom = channelRandom(baseSeed, "stakes");
+  const characterRandom = channelRandom(baseSeed, "character");
+  const toneRandom = channelRandom(baseSeed, "tone");
 
   const prompts = [];
   for (let i = 0; i < wanted; i += 1) {
-    const stake = pick(genre.stakes, random);
+    const stake = pick(genre.stakes, stakeRandom);
     const person =
-      characterId === "any" ? pick(CHARACTER_TYPES.slice(1), random) : character;
-    const toneChoice = toneId === "any" ? pick(TONES.slice(1), random) : tone;
+      characterId === "any" ? pick(CHARACTER_TYPES.slice(1), characterRandom) : character;
+    const toneChoice = toneId === "any" ? pick(TONES.slice(1), toneRandom) : tone;
 
     const core = `${capitalise(person.who)}, who ${person.want}, ${obstacles[i]} in ${settings[i]} ${stake}`;
     const logline = toneChoice.clause ? `${core}, ${toneChoice.clause}.` : `${core}.`;

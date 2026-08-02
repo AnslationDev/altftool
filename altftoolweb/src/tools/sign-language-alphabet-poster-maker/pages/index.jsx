@@ -31,7 +31,7 @@ function HandDiagram({ geometry, char }) {
       viewBox="0 0 100 120"
       className="mx-auto h-20 w-full"
       role="img"
-      aria-label={`Schematic handshape for ${char}`}
+      aria-label={char ? `Schematic handshape for ${char}` : "Schematic hand shape, hidden for quiz mode"}
     >
       <rect
         x={palm.x}
@@ -264,7 +264,7 @@ export default function ToolHome() {
                   key={cell.char}
                   className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-3 text-center"
                 >
-                  <HandDiagram geometry={cell.geometry} char={cell.char} />
+                  <HandDiagram geometry={cell.geometry} char={cell.hideLabel ? null : cell.char} />
                   <figcaption className="mt-2">
                     <span className="block text-2xl font-semibold text-[var(--primary)]">
                       {cell.hideLabel ? "?" : cell.char}

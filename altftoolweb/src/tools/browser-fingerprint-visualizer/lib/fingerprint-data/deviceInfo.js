@@ -17,9 +17,11 @@ export async function getDeviceInfo() {
   const platform = navigator.platform || "Unknown";
 
   // --- Touch Points ---
-  
-  const touchPoints = navigator.maxTouchPoints ?? 0;
-  const hasTouch = touchPoints > 0;
+  // Same "Unknown when the probe never ran" contract as cpuCores/deviceMemory
+  // above: 0 is a real, disclosed value (a non-touch device), so only a
+  // missing API (not a falsy reading) should fall back to "Unknown".
+  const touchPoints = typeof navigator.maxTouchPoints === "number" ? navigator.maxTouchPoints : "Unknown";
+  const hasTouch = typeof touchPoints === "number" && touchPoints > 0;
 
   // --- Device Pixel Ratio ---
  

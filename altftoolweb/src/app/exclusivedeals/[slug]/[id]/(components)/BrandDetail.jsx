@@ -235,6 +235,21 @@ function BrandDetail() {
 
   const handleLoadMore = useCallback(() => setVisibleCount(7), []);
 
+  // The <h1> used to render a loading skeleton until Firestore answered, so the
+  // served HTML carried an empty heading on every brand URL, and after loading
+  // it printed the raw state value ("all Coupons & Promo Codes") because
+  // selectedBrand only becomes a brand once the visitor clicks the sidebar.
+  // urlBrand is the canonical brand slug from the path and is known during SSR,
+  // so the heading names the brand this URL is for from the first byte.
+  const brandHeading = useMemo(() => {
+    const source = selectedBrand && selectedBrand !== "all" ? selectedBrand : urlBrand;
+    return String(source || "")
+      .split("-")
+      .filter(Boolean)
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+  }, [selectedBrand, urlBrand]);
+
   const offers = useMemo(() => {
     if (selectedBrand === "all") {
       return allData.flatMap((b) =>
@@ -355,10 +370,7 @@ function BrandDetail() {
             <div className="flex items-start justify-between gap-4 flex-wrap">
               <div>
                 <h1 className="text-xl sm:text-3xl font-bold text-(--foreground)">
-                  {loading
-                    ? <span className="inline-block w-64 h-8 bg-gray-200 animate-pulse rounded" />
-                    : <>{selectedBrand} Coupons &amp; Promo Codes - April 2026</>
-                  }
+                  {brandHeading} Coupons &amp; Promo Codes
                 </h1>
                 <p className="text-sm text-(--foreground) mt-2 font-normal">
                   {loading

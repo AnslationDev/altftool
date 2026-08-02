@@ -33,15 +33,10 @@ export const FORMATS = Object.freeze([
  *  - "embeddedMedia"  → tags inside pictures, fonts and objects embedded in the document.
  *  - "filename"       → the attachment's name.
  *  - "transport"      → what the email itself adds; no attachment clean-up touches it.
+ *
+ * These carrier ids are the values used in each CATALOGUE entry's `carrier`
+ * field below, and in each PREP_STEPS entry's `removes` list.
  */
-export const CARRIERS = Object.freeze([
-  "fileprops",
-  "editingHistory",
-  "hiddenContent",
-  "embeddedMedia",
-  "filename",
-  "transport",
-]);
 
 /**
  * Preparation steps and the carriers each one actually clears.
@@ -88,7 +83,7 @@ export const CATALOGUE = Object.freeze([
     carrier: "fileprops",
     severity: "high",
     label: "Author, Last modified by and Company",
-    formats: ["docx", "xlsx", "pptx", "pdf"],
+    formats: ["docx", "xlsx", "pptx"],
     reveals:
       "Office writes the licensed user's name into Author and stamps every save into 'Last modified by', so a document reused across clients names everyone who touched it and the company its copy of Office is registered to.",
     fix: "Clear the properties, or turn on 'Remove personal information from file properties on save'.",
@@ -304,12 +299,19 @@ export const CATALOGUE = Object.freeze([
   },
 ]);
 
+// Note: `min`/`max`/`label` only. There is deliberately no static `advice`
+// string per band — see buildAdvice() below. A fixed per-tier sentence
+// cannot account for which preparation step the user picked or which
+// specific signals survive it, so it used to end up recommending a step the
+// user already applied, or "rebuild or export" for exposure that no
+// attachment-side clean-up (rebuild included) can ever touch, such as
+// transport-carried items like read receipts or mail headers.
 export const RISK_BANDS = Object.freeze([
-  { id: "none", label: "Nothing left from your list", min: 0, max: 0, advice: "Nothing you ticked survives this preparation step for this file type." },
-  { id: "low", label: "Low exposure", min: 1, max: 24, advice: "Mostly incidental detail. Rename the file and send." },
-  { id: "moderate", label: "Moderate exposure", min: 25, max: 49, advice: "Identifying properties still travel with the file. Clear them before attaching." },
-  { id: "high", label: "High exposure", min: 50, max: 74, advice: "Content you did not intend to send is still inside the file. Rebuild or export before attaching." },
-  { id: "severe", label: "Severe exposure", min: 75, max: 100, advice: "Deleted text, hidden data and author details are all going out. Do not attach this file." },
+  { id: "none", label: "Nothing left from your list", min: 0, max: 0 },
+  { id: "low", label: "Low exposure", min: 1, max: 24 },
+  { id: "moderate", label: "Moderate exposure", min: 25, max: 49 },
+  { id: "high", label: "High exposure", min: 50, max: 74 },
+  { id: "severe", label: "Severe exposure", min: 75, max: 100 },
 ]);
 
 export function getFormat(formatId) {
@@ -336,6 +338,36 @@ function bandFor(score) {
     RISK_BANDS.find((band) => score >= band.min && score <= band.max) ||
     RISK_BANDS[RISK_BANDS.length - 1]
   );
+}
+
+/**
+ * Advice grounded in what is actually still exposed, instead of a generic
+ * per-score-tier sentence. Attachment-side preparation — even "rebuild",
+ * the most thorough option — never touches "transport" carried signals
+ * (read receipts, mail headers, the quoted thread), so the wording has to
+ * change when everything left is transport-only, and it should not tell the
+ * user to run a step they already picked.
+ */
+function buildAdvice({ selectedCount, surviving, step }) {
+  if (selectedCount === 0) {
+    return "Tick the signals that apply to your file to see what would still leave with it.";
+  }
+  if (surviving.length === 0) {
+    return "Nothing you ticked survives this preparation step for this file type.";
+  }
+
+  const top = surviving
+    .slice()
+    .sort((a, b) => SEVERITY_WEIGHT[b.severity] - SEVERITY_WEIGHT[a.severity])[0];
+  const nonTransportSurvives = surviving.some((item) => item.carrier !== "transport");
+
+  if (!nonTransportSurvives) {
+    return `"${step.label}" cannot remove this — it is added by email itself, not the file. ${top.fix}`;
+  }
+  if (step.id === "rebuild") {
+    return `You already picked the most thorough attachment clean-up. What is left needs its own fix: ${top.fix}`;
+  }
+  return `"${step.label}" does not clear this. Rebuild the file, or fix it directly: ${top.fix}`;
 }
 
 /**
@@ -385,6 +417,13 @@ export function assessAttachmentRisk({
     (total, item) => total + SEVERITY_WEIGHT[item.severity],
     0,
   );
+  // The headline score measures overall exposure for this file type: how much of
+  // the total possible severity weight (maxWeight) is still leaving with the
+  // attachment. It is weighed against maxWeight, not selectedWeight, so it stays
+  // consistent with the "Weight remaining: X of Y points for this file type" and
+  // "Signals possible for this type" stats shown alongside it — and so ticking
+  // only a subset of the applicable risks cannot mathematically pin the score at
+  // 100 regardless of how much (or little) was actually flagged.
   const score = maxWeight > 0 ? Math.round((survivingWeight / maxWeight) * 100) : 0;
   const removedShare =
     selectedWeight > 0
@@ -401,9 +440,11 @@ export function assessAttachmentRisk({
     .sort((a, b) => SEVERITY_WEIGHT[b.severity] - SEVERITY_WEIGHT[a.severity])
     .map((item) => ({ label: item.label, severity: item.severity, fix: item.fix }));
 
+  const band = bandFor(score);
+
   return {
     score,
-    band: bandFor(score),
+    band: { ...band, advice: buildAdvice({ selectedCount: known.length, surviving, step }) },
     format,
     step,
     applicableCount: applicable.length,

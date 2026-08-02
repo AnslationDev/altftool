@@ -106,16 +106,20 @@ export function midiToName(midi, { useFlats = false } = {}) {
  * @param {number} a4Hz     tuning reference for A4
  */
 export function midiToFrequency({ midi, a4Hz = STANDARD_A4_HZ } = {}) {
-  const n = Number(midi);
+  const raw = Number(midi);
   const reference = Number(a4Hz);
-  if (!Number.isFinite(n)) return { error: "Enter a MIDI note number." };
+  if (!Number.isFinite(raw)) return { error: "Enter a MIDI note number." };
   if (!isValidReference(reference)) {
     return { error: "The A4 reference should be between 380 Hz and 500 Hz." };
   }
-  if (n < MIN_MIDI || n > MAX_MIDI) {
+  if (raw < MIN_MIDI || raw > MAX_MIDI) {
     return { error: `MIDI note numbers run from ${MIN_MIDI} to ${MAX_MIDI}.` };
   }
 
+  // Round once, up front, so the frequency and the note name always describe
+  // the same note — a fractional MIDI number must never yield a frequency
+  // for one note paired with the name of another.
+  const n = Math.round(raw);
   const frequency = reference * 2 ** ((n - A4_MIDI) / SEMITONES_PER_OCTAVE);
   const naming = midiToName(n);
   return {
@@ -205,14 +209,4 @@ export function buildChart({ fromMidi = 21, toMidi = 108, a4Hz = STANDARD_A4_HZ 
   }
 
   return { rows, count: rows.length, a4Hz: reference };
-}
-
-/** Interval between two frequencies, in cents. Never returns NaN. */
-export function centsBetween(lowerHz, upperHz) {
-  const a = Number(lowerHz);
-  const b = Number(upperHz);
-  if (!Number.isFinite(a) || !Number.isFinite(b) || a <= 0 || b <= 0) {
-    return { error: "Both frequencies must be greater than zero." };
-  }
-  return { cents: 1200 * Math.log2(b / a) };
 }

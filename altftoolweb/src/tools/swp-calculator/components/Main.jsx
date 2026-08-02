@@ -5,19 +5,17 @@ import {
   AlertTriangle,
   BarChart3,
   CalendarClock,
-  CheckCircle,
   Clipboard,
   Download,
-  Gauge,
   IndianRupee,
   Loader2,
-  Percent,
   RefreshCw,
   ShieldCheck,
   TrendingDown,
   TrendingUp,
   Wallet,
 } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const DEFAULT_FORM = {
   corpus: 5000000,
@@ -159,7 +157,6 @@ function simulateSWP(input, override = {}) {
   }
 
   const finalCorpus = Math.max(0, corpus);
-  const plannedWithdrawal = rows.reduce((sum, row) => sum + row.openingWithdrawal * 12, 0);
   const monthsCovered = depletedMonth || months;
 
   return {
@@ -171,7 +168,6 @@ function simulateSWP(input, override = {}) {
     totalReturns,
     depletedMonth,
     monthsCovered,
-    plannedWithdrawal,
     survived: depletedMonth === null,
   };
 }
@@ -268,6 +264,7 @@ function Field({ label, value, min, max, step, prefix, suffix, onChange }) {
       />
       <input
         type="range"
+        aria-label={`${label} slider`}
         value={value}
         min={min}
         max={max}
@@ -321,7 +318,7 @@ export default function MainComponent() {
   const [form, setForm] = useState(DEFAULT_FORM);
   const [displayForm, setDisplayForm] = useState(DEFAULT_FORM);
   const [isCalculating, setIsCalculating] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
   const calculationTimerRef = useRef(null);
 
   const result = useMemo(() => simulateSWP(displayForm), [displayForm]);
@@ -386,11 +383,10 @@ export default function MainComponent() {
     applyForm(next);
   };
 
-  const copySummary = async () => {
-    await navigator.clipboard?.writeText(buildSummary(displayForm, result, safeWithdrawal));
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1400);
-  };
+  const copySummary = () =>
+    copy("summary", buildSummary(displayForm, result, safeWithdrawal), {
+      label: "SWP calculator summary",
+    });
 
   return (
     <main className="mx-auto max-w-[1180px] px-4 py-8 text-(--foreground)">
@@ -535,10 +531,18 @@ export default function MainComponent() {
               <RefreshCw className="h-4 w-4" />
               Load Sample
             </button>
-            <button type="button" onClick={copySummary} className="btn-secondary">
+            <button
+              type="button"
+              onClick={copySummary}
+              aria-label={isCopied("summary") ? "Copied SWP calculator summary" : "Copy SWP calculator summary"}
+              className="btn-secondary"
+            >
               <Clipboard className="h-4 w-4" />
-              {copied ? "Copied" : "Copy Summary"}
+              {isCopied("summary") ? "Copied" : "Copy Summary"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button
               type="button"
               onClick={() => exportCsv(result.rows)}

@@ -805,13 +805,17 @@ function LiveLab({ slug }) {
   );
 }
 
-function ResultTable({ rows }) {
+function ResultTable({ rows, mostRecent = false }) {
   if (!rows.length) return <Notice>No matching records were returned.</Notice>;
+  // Live/rolling logs (mostRecent) keep the newest entries appended at the end,
+  // so the visible window must be the tail of the array, not the head — otherwise
+  // a growing log freezes on its oldest captured rows and never shows new ones.
+  const visibleRows = mostRecent ? rows.slice(-100) : rows.slice(0, 100);
   return (
     <div className="overflow-auto rounded-md border border-[var(--border)]">
       <table className="w-full min-w-max text-left text-sm">
         <tbody>
-          {rows.slice(0, 100).map((row, index) => (
+          {visibleRows.map((row, index) => (
             <tr key={`${index}-${row[0]}`} className="border-b border-[var(--border)] last:border-0">
               {(Array.isArray(row) ? row : Object.values(row)).map((cell, cellIndex) => (
                 <td key={cellIndex} className="max-w-lg px-3 py-2 align-top">
@@ -826,13 +830,12 @@ function ResultTable({ rows }) {
   );
 }
 
-const screenPatterns = [
-  "bg-[var(--foreground)]",
-  "bg-[var(--destructive)]",
-  "bg-[var(--success)]",
-  "bg-[var(--info)]",
-  "bg-[var(--background)]",
-];
+// Dead-pixel test fields must be true black/red/green/blue/white regardless
+// of the site's light/dark theme: the whole point of the final "light" field
+// is that a dead (unpowered) pixel stays black against it, so if these were
+// theme tokens they'd invert in dark mode and hide the exact defect the tool
+// exists to reveal. Intentionally NOT semantic tokens — see wave-18 audit.
+const screenPatterns = ["bg-black", "bg-red-600", "bg-green-600", "bg-blue-600", "bg-white"];
 
 function SensorLab({ slug }) {
   const [active, setActive] = useState(false);
@@ -844,6 +847,7 @@ function SensorLab({ slug }) {
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
+  const overlayRef = useRef(null);
   const cleanupRef = useRef(() => {});
 
   const append = useCallback((row) => {
@@ -855,6 +859,16 @@ function SensorLab({ slug }) {
     camera?.getTracks().forEach((track) => track.stop());
   }, [camera]);
 
+  // Move focus into the full-screen overlay as soon as it mounts so a
+  // keyboard-only user (no working pointer yet, e.g. testing a fresh
+  // monitor) can immediately use Enter/Space to cycle patterns and Tab to
+  // reach the Exit test button, instead of having no focused element at all.
+  useEffect(() => {
+    if (slug === "dead-pixel-screen-test" && active) {
+      overlayRef.current?.focus();
+    }
+  }, [slug, active]);
+
   const stop = () => {
     cleanupRef.current?.();
     cleanupRef.current = () => {};
@@ -864,6 +878,12 @@ function SensorLab({ slug }) {
   };
 
   const start = async () => {
+    if (slug === "chromatic-instrument-tuner" && readings.length > 0) {
+      const shouldReset = window.confirm(
+        "Starting again will clear the current reading log. Continue?",
+      );
+      if (!shouldReset) return;
+    }
     stop();
     setMessage("");
     setReadings([]);
@@ -877,6 +897,7 @@ function SensorLab({ slug }) {
         oscillator.connect(panner).connect(context.destination);
         oscillator.start();
         let side = -1;
+        append([new Date().toISOString(), side < 0 ? "Left" : "Right", "440 Hz"]);
         const timer = setInterval(() => {
           side *= -1;
           panner.pan.setValueAtTime(side, context.currentTime);
@@ -904,17 +925,55 @@ function SensorLab({ slug }) {
           const rms = Math.sqrt(samples.reduce((sum, value) => sum + value * value, 0) / samples.length);
           let bestOffset = 0;
           let best = 0;
-          for (let offset = 20; offset < 1000; offset += 1) {
-            let correlation = 0;
-            for (let index = 0; index < samples.length - offset; index += 1)
-              correlation += samples[index] * samples[index + offset];
-            if (correlation > best) {
-              best = correlation;
-              bestOffset = offset;
+          if (slug === "chromatic-instrument-tuner") {
+            // Raw (unnormalized) correlation always favours short lags, because a
+            // shorter lag sums over more overlapping sample pairs regardless of fit
+            // — so it used to lock onto the 20-sample floor (~2205 Hz) for any real
+            // note below ~132 Hz instead of finding the note's true, longer period.
+            // Normalizing by each window's energy, extending the max lag down to
+            // 40 Hz (covering a bass guitar's low E at 41.2 Hz), and requiring the
+            // correlation to dip below the match threshold before it rises again
+            // finds the fundamental period instead of the trivially high
+            // correlation near lag 0 or a shorter-period alias.
+            const minOffset = 20;
+            const maxOffset = Math.min(samples.length - 1, Math.ceil(context.sampleRate / 40));
+            const sumOfSquares = new Float64Array(samples.length + 1);
+            for (let index = 0; index < samples.length; index += 1)
+              sumOfSquares[index + 1] = sumOfSquares[index] + samples[index] * samples[index];
+            let hasDipped = false;
+            let tracking = false;
+            for (let offset = 1; offset < maxOffset; offset += 1) {
+              let correlation = 0;
+              for (let index = 0; index < samples.length - offset; index += 1)
+                correlation += samples[index] * samples[index + offset];
+              const energyA = sumOfSquares[samples.length - offset];
+              const energyB = sumOfSquares[samples.length] - sumOfSquares[offset];
+              const normalized = correlation / (Math.sqrt(energyA * energyB) || 1);
+              if (normalized < 0.9) {
+                hasDipped = true;
+                if (tracking && offset >= minOffset) break;
+                tracking = false;
+              } else if (hasDipped) {
+                tracking = true;
+                if (offset >= minOffset && normalized > best) {
+                  best = normalized;
+                  bestOffset = offset;
+                }
+              }
+            }
+          } else {
+            for (let offset = 20; offset < 1000; offset += 1) {
+              let correlation = 0;
+              for (let index = 0; index < samples.length - offset; index += 1)
+                correlation += samples[index] * samples[index + offset];
+              if (correlation > best) {
+                best = correlation;
+                bestOffset = offset;
+              }
             }
           }
           const frequency = bestOffset ? context.sampleRate / bestOffset : 0;
-          if (frame++ % 12 === 0 && (slug !== "local-sound-event-logger" || rms > 0.08))
+          if (frame++ % 12 === 0 && rms > 0.08)
             append([new Date().toISOString(), rms.toFixed(4), frequency.toFixed(1), noteName(frequency)]);
           audioRef.current = requestAnimationFrame(loop);
         };
@@ -1028,7 +1087,22 @@ function SensorLab({ slug }) {
 
   if (slug === "dead-pixel-screen-test" && active) {
     return (
-      <div className={`fixed inset-0 z-50 ${screenPatterns[pattern]} cursor-pointer`} onClick={() => setPattern((value) => (value + 1) % screenPatterns.length)}>
+      <div
+        ref={overlayRef}
+        tabIndex={0}
+        aria-label={`Dead pixel test pattern ${pattern + 1} of ${screenPatterns.length}. Press Enter or Space for the next pattern, or Escape to exit.`}
+        className={`fixed inset-0 z-50 ${screenPatterns[pattern]} cursor-pointer focus-visible:outline-none focus-visible:ring-[4px] focus-visible:ring-[var(--primary)]`}
+        onClick={() => setPattern((value) => (value + 1) % screenPatterns.length)}
+        onKeyDown={(event) => {
+          if (event.key === "Escape") {
+            event.preventDefault();
+            stop();
+          } else if (event.key === "Enter" || event.key === " " || event.key === "Spacebar") {
+            event.preventDefault();
+            setPattern((value) => (value + 1) % screenPatterns.length);
+          }
+        }}
+      >
         <button type="button" className="absolute right-4 top-4 rounded-md border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-[var(--foreground)]" onClick={(event) => { event.stopPropagation(); stop(); }}>
           Exit test
         </button>
@@ -1041,13 +1115,13 @@ function SensorLab({ slug }) {
       <Section>
         <div className="grid gap-4">
           <Notice>
-            Sensor readings depend on secure-context browser support, device
-            hardware, permission, calibration, mounting, and sampling rate.
-            They are approximate and are not safety-certified measurements.
+            {slug === "dead-pixel-screen-test"
+              ? "This test requests no camera, location, or motion permission and records nothing. It just cycles a full-screen colour sequence so you can look for pixels that don't change."
+              : "Sensor readings depend on secure-context browser support, device hardware, permission, calibration, mounting, and sampling rate. They are approximate and are not safety-certified measurements."}
           </Notice>
           <button type="button" className={active ? secondary : primary} onClick={active ? stop : start}>
             {active ? <Square className="h-4 w-4" aria-hidden="true" /> : <Activity className="h-4 w-4" aria-hidden="true" />}
-            {active ? "Stop sensor" : "Start with permission"}
+            {active ? "Stop sensor" : slug === "dead-pixel-screen-test" ? "Start test" : "Start with permission"}
           </button>
           {["camera-color-eyedropper", "calibrated-camera-ruler", "led-pwm-flicker-detector"].includes(slug) && active && (
             <button type="button" className={secondary} onClick={sampleCamera}>
@@ -1059,7 +1133,9 @@ function SensorLab({ slug }) {
         </div>
       </Section>
       <Section>
-        <h2 className="text-lg font-semibold">Live local readings</h2>
+        <h2 className="text-lg font-semibold">
+          {slug === "dead-pixel-screen-test" ? "How this test works" : "Live local readings"}
+        </h2>
         {camera && (
           <div className="relative mt-4 overflow-hidden rounded-md bg-[var(--muted)]">
             <video ref={videoRef} autoPlay muted playsInline className="w-full" />
@@ -1085,11 +1161,21 @@ function SensorLab({ slug }) {
             ))}
           </div>
         )}
-        <ResultTable rows={readings} />
-        {!readings.length && !camera && slug !== "multi-touch-tester" && (
-          <p className="mt-2 text-sm text-[var(--muted-foreground)]">
-            Start the tool to collect local readings.
-          </p>
+        {slug === "dead-pixel-screen-test" ? (
+          <Notice>
+            This test doesn&apos;t collect or log any readings. Starting it opens a
+            full-screen colour cycle — dark, red, green, blue, then light — so
+            you can look for a pixel that stays the wrong colour on every field.
+          </Notice>
+        ) : (
+          <>
+            <ResultTable rows={readings} mostRecent={slug === "chromatic-instrument-tuner"} />
+            {!readings.length && !camera && slug !== "multi-touch-tester" && (
+              <p className="mt-2 text-sm text-[var(--muted-foreground)]">
+                Start the tool to collect local readings.
+              </p>
+            )}
+          </>
         )}
       </Section>
     </div>
@@ -1111,10 +1197,20 @@ function CreatorLab({ slug }) {
       ? "Creator: Alex\nAudience: 125,000\nAverage views: 48,000\nEngagement: 4.8%\nTopics: technology, privacy, productivity\nContact: creator@example.com"
       : slug === "short-video-hook-marker"
         ? "00:00.000 | Hook | Opening claim\n00:02.500 | Beat | Visual change\n00:07.000 | Review | Evidence on screen"
-        : "Sponsored partnership with Example Brand",
+        : slug === "vertical-video-safe-zone-previewer"
+          ? "Top safe-zone: clear of platform UI\nBottom safe-zone: caption/controls not obstructed\nObstructions found: none"
+          : "Sponsored partnership with Example Brand",
   );
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState("");
+  const previewUrl = useMemo(
+    () =>
+      file && (file.type.startsWith("image/") || file.type.startsWith("video/"))
+        ? URL.createObjectURL(file)
+        : "",
+    [file],
+  );
+  useEffect(() => () => previewUrl && URL.revokeObjectURL(previewUrl), [previewUrl]);
 
   const exportResult = async () => {
     if (slug === "influencer-media-kit-builder") {
@@ -1165,13 +1261,24 @@ function CreatorLab({ slug }) {
       </Section>
       <Section>
         <h2 className="text-lg font-semibold">Preview</h2>
-        {file && file.type.startsWith("image/") && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img src={URL.createObjectURL(file)} alt="Uploaded creator preview" className="mt-4 max-h-[32rem] w-full rounded-md object-contain" />
-        )}
         <div className="relative mt-4 aspect-[9/16] max-h-[36rem] overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--muted)]">
-          <div className="absolute inset-x-4 top-16 border border-dashed border-[var(--primary)] p-2 text-center text-xs">Top safe-zone boundary</div>
-          <div className="absolute inset-x-4 bottom-28 border border-dashed border-[var(--primary)] p-2 text-center text-xs">Caption / controls obstruction review</div>
+          {file && file.type.startsWith("image/") && previewUrl && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={previewUrl} alt="Uploaded creator preview" className="absolute inset-0 h-full w-full object-cover" />
+          )}
+          {file && file.type.startsWith("video/") && previewUrl && (
+            <video
+              src={previewUrl}
+              controls
+              muted
+              loop
+              playsInline
+              aria-label="Uploaded creator preview"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          )}
+          <div className="absolute inset-x-4 top-16 border border-dashed border-[var(--primary)] bg-[var(--card)]/85 p-2 text-center text-xs">Top safe-zone boundary</div>
+          <div className="absolute inset-x-4 bottom-28 border border-dashed border-[var(--primary)] bg-[var(--card)]/85 p-2 text-center text-xs">Caption / controls obstruction review</div>
           {slug === "sponsored-disclosure-placement-checker" && (
             <div className="absolute left-4 top-4 rounded-md bg-[var(--card)] px-3 py-2 text-sm font-semibold text-[var(--foreground)] shadow-md">{text}</div>
           )}

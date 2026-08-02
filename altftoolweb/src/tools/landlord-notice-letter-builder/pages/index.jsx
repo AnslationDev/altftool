@@ -150,6 +150,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset all fields? This will clear everything you have typed and cannot be undone.")) {
+      return;
+    }
     setForm(DEFAULTS);
     setRepairs(DEFAULT_REPAIRS);
     setMode(LETTER_MODES.VACATE);
@@ -382,10 +385,14 @@ export default function ToolHome() {
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
-              {isVacate ? "Deposit you should get back" : "Repair due by"}
+              {isVacate
+                ? vacate.refundIsNegative
+                  ? "Balance payable by you"
+                  : "Deposit you should get back"
+                : "Repair due by"}
             </p>
             <p className="mt-1 text-3xl font-semibold text-[var(--primary)] sm:text-4xl">
-              {error ? DASH : isVacate ? formatINR(Math.max(0, vacate.expectedRefund)) : formatLongDate(repair.deadlineISO)}
+              {error ? DASH : isVacate ? formatINR(Math.abs(vacate.expectedRefund)) : formatLongDate(repair.deadlineISO)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {error
@@ -482,6 +489,16 @@ export default function ToolHome() {
           an ordinary lease as month to month, terminable by {TPA_MONTHLY_NOTICE_DAYS} days&apos;
           written notice, counted from the date the other side receives it.
         </p>
+
+        {isVacate && !error && vacate.belowStatutoryFallback ? (
+          <p className="mt-3 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-xs leading-5 text-[var(--warning)]">
+            The {plural(vacate.requiredDays, "day")} notice period you entered is shorter than the
+            {" "}
+            {TPA_MONTHLY_NOTICE_DAYS}-day fallback above. That is fine if your written agreement clearly
+            states this shorter period; but if the agreement is actually silent on notice, {TPA_MONTHLY_NOTICE_DAYS}{" "}
+            days is what applies by default, so it is safer to give at least that much.
+          </p>
+        ) : null}
       </section>
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">

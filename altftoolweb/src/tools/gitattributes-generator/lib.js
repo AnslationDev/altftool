@@ -45,7 +45,7 @@ export const SHELL_SCRIPT_LINES = ["*.sh text eol=lf"];
 export const DEFAULT_BINARY_PATTERNS = "*.png, *.jpg, *.gif, *.ico, *.woff2, *.pdf, *.zip";
 
 /** Common large-media formats teams put in LFS. */
-export const DEFAULT_LFS_PATTERNS = "*.psd, *.mp4, *.zip";
+export const DEFAULT_LFS_PATTERNS = "*.psd, *.mp4";
 
 // A gitattributes pattern cannot contain unescaped whitespace — whitespace
 // separates the pattern from its attributes (git-scm.com/docs/gitattributes).

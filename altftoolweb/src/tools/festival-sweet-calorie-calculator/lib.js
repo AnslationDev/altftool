@@ -13,7 +13,6 @@
  */
 
 export const KCAL_PER_G_SUGAR = 4;
-export const KCAL_PER_G_FAT = 9;
 
 /** One level teaspoon of granulated sugar weighs about 4 grams. */
 export const TEASPOON_SUGAR_GRAMS = 4;

@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Palette, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   ASPECT_RATIOS,
   CLIP_USABLE_TOKENS,
@@ -21,6 +22,7 @@ const INPUT_CLASS =
 const TEXTAREA_CLASS =
   "min-h-20 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
 const LABEL_CLASS = "block text-sm font-semibold text-[var(--foreground)]";
+const HINT_CLASS = "mt-1 text-xs text-[var(--muted-foreground)]";
 const PRIMARY_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 const GHOST_BTN =
@@ -56,7 +58,7 @@ export default function ToolHome() {
   const [aspect, setAspect] = useState(DEFAULTS.aspect);
   const [negatives, setNegatives] = useState(DEFAULTS.negatives);
   const [extraNegatives, setExtraNegatives] = useState(DEFAULTS.extraNegatives);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -79,28 +81,29 @@ export default function ToolHome() {
       const next = list.includes(phrase) ? list.filter((item) => item !== phrase) : [...list, phrase];
       return { ...current, [axisId]: next };
     });
-    setCopied(false);
+    resetCopyState();
   };
 
   const toggleNegative = (phrase) => {
     setNegatives((current) =>
       current.includes(phrase) ? current.filter((item) => item !== phrase) : [...current, phrase],
     );
-    setCopied(false);
+    resetCopyState();
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (result.error || !result.sheet) return;
-    try {
-      await navigator.clipboard.writeText(result.sheet);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("sheet", result.sheet, { label: "Style reference sheet" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will discard your subject, axis selections and negative prompts and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setSubject(DEFAULTS.subject);
     setSelections(DEFAULT_SELECTIONS);
     setExtraPhrases(DEFAULTS.extraPhrases);
@@ -109,13 +112,13 @@ export default function ToolHome() {
     setAspect(DEFAULTS.aspect);
     setNegatives(DEFAULTS.negatives);
     setExtraNegatives(DEFAULTS.extraNegatives);
-    setCopied(false);
+    resetCopyState();
   };
 
   const stat = (value) => (result.error ? DASH : value);
   const touch = (setter) => (event) => {
     setter(event.target.value);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -210,7 +213,7 @@ export default function ToolHome() {
             </label>
             <input
               id="style-weight"
-              className={`mt-2 ${INPUT_CLASS}`}
+              className={`mt-2 ${INPUT_CLASS} disabled:opacity-50`}
               type="number"
               inputMode="decimal"
               min={MIN_WEIGHT}
@@ -218,7 +221,12 @@ export default function ToolHome() {
               step="0.05"
               value={emphasisWeight}
               onChange={touch(setEmphasisWeight)}
+              disabled={!emphasisAxis}
+              aria-disabled={!emphasisAxis}
             />
+            {!emphasisAxis ? (
+              <p className={HINT_CLASS}>Choose an axis to emphasise above to use this field.</p>
+            ) : null}
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="style-aspect">
@@ -290,13 +298,20 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the style reference sheet"
+              aria-label={isCopied("sheet") ? "Copied the style reference sheet to clipboard" : "Copy the style reference sheet"}
               className={GHOST_BTN}
               disabled={Boolean(result.error)}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy sheet"}
+              {isCopied("sheet") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("sheet") ? "Copied!" : "Copy sheet"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset

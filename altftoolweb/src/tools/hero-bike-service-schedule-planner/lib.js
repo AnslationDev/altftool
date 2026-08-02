@@ -31,6 +31,8 @@ export const SERVICE_INTERVAL_MONTHS = 3;
 export const FREE_SERVICE_COUNT = 5;
 /** Planning more than 20 visits ahead is guesswork, not a schedule. */
 export const MAX_SERVICES = 20;
+/** Far above the largest real consumable interval (30,000 km); guards against date overflow. */
+export const MAX_SERVICE_KM = 100000;
 /** Mean length of a Gregorian calendar month in days (365.2425 / 12). */
 export const DAYS_PER_MONTH = 30.436875;
 
@@ -39,8 +41,8 @@ export const DAYS_PER_MONTH = 30.436875;
  * prices in INR. Prices move, so the planner scales them with a price index.
  */
 export const CONSUMABLES = [
-  { key: "engineOil", name: "Engine oil (10W30 SL grade)", firstKm: FIRST_SERVICE_KM, intervalKm: 6000, price: 450 },
-  { key: "oilFilter", name: "Oil strainer / centrifugal filter clean", firstKm: FIRST_SERVICE_KM, intervalKm: 6000, price: 120 },
+  { key: "engineOil", name: "Engine oil (10W30 SL grade)", firstKm: "first-service", intervalKm: 6000, price: 450 },
+  { key: "oilFilter", name: "Oil strainer / centrifugal filter clean", firstKm: "first-service", intervalKm: 6000, price: 120 },
   { key: "airFilter", name: "Air filter element", firstKm: null, intervalKm: 12000, price: 320 },
   { key: "sparkPlug", name: "Spark plug", firstKm: null, intervalKm: 12000, price: 180 },
   { key: "brakeShoes", name: "Brake shoes / pads", firstKm: null, intervalKm: 24000, price: 650 },
@@ -113,9 +115,10 @@ export function serviceDueMonths(index, { firstMonths, secondMonths, intervalMon
 }
 
 /** Which consumables are replaced at a given milestone. */
-export function consumablesDueAt(dueKm, previousDueKm) {
+export function consumablesDueAt(dueKm, previousDueKm, actualFirstKm) {
   return CONSUMABLES.filter((item) => {
-    if (item.firstKm !== null && previousDueKm < item.firstKm && dueKm >= item.firstKm) return true;
+    const itemFirstKm = item.firstKm === "first-service" ? actualFirstKm : item.firstKm;
+    if (itemFirstKm !== null && previousDueKm < itemFirstKm && dueKm >= itemFirstKm) return true;
     if (!(item.intervalKm > 0)) return false;
     return Math.floor(dueKm / item.intervalKm) > Math.floor(previousDueKm / item.intervalKm);
   });
@@ -171,6 +174,9 @@ export function planServiceSchedule({
   if (firstKm <= 0 || secondKm <= 0 || intervalKm <= 0) {
     return { error: "Service distances must be greater than zero." };
   }
+  if (firstKm > MAX_SERVICE_KM || secondKm > MAX_SERVICE_KM || intervalKm > MAX_SERVICE_KM) {
+    return { error: `Service distances should be ${MAX_SERVICE_KM.toLocaleString()} km or fewer.` };
+  }
   if (secondKm <= firstKm) {
     return { error: "The second service must fall due after the first one." };
   }
@@ -203,7 +209,7 @@ export function planServiceSchedule({
     const useKm = msKm <= msMonths;
     const dueDate = useKm ? dateByKm : dateByMonths;
 
-    const parts = consumablesDueAt(dueKm, previousDueKm).map((item) => ({
+    const parts = consumablesDueAt(dueKm, previousDueKm, firstKm).map((item) => ({
       key: item.key,
       name: item.name,
       price: Math.round(item.price * priceFactor),

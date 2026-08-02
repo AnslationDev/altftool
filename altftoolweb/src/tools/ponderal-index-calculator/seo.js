@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How do you calculate the ponderal index?",
-      "Divide weight in kilograms by height in metres cubed. An adult of 80 kg and 1.80 m has a ponderal index of 80 ÷ 5.832, which is 13.7 kg/m³. For newborns the convention is different: multiply birth weight in grams by 100 and divide by length in centimetres cubed.",
+      "Divide weight in kilograms by height in metres cubed. An adult of 80 kg and 1.80 m has a ponderal index of 80 ÷ 5.832, which is 13.72 kg/m³. For newborns the convention is different: multiply birth weight in grams by 100 and divide by length in centimetres cubed.",
     ],
     [
       "What is a normal ponderal index for adults?",

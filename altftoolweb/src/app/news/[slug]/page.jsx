@@ -9,6 +9,7 @@ import {
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 import { getNewsDataServer } from "../lib/getNewsDataServer";
+import { buildNewsArticleTitle } from "../lib/headlineTitle";
 import { getRelatedContentForPreset, RelatedContentSection } from "@/platform/linking";
 
 export const revalidate = 600;
@@ -110,7 +111,11 @@ export async function generateMetadata({ params }) {
   }
 
   return createPageMetadata({
-    title: `${article.headline} | AltFTool News`,
+    // Feed headlines run 50–100 characters, so the raw
+    // `headline | AltFTool News` string was 66–116 and every one of them was
+    // truncated in a mobile result. buildNewsArticleTitle clamps the headline
+    // on a phrase boundary to keep the whole title inside 60.
+    title: buildNewsArticleTitle(article.headline),
     description: article.summary || "Read the latest news update on AltFTool News.",
     path: `/news/${article.slug}`,
     image: article.image_url,

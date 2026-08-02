@@ -123,10 +123,14 @@ export function trackDeadlines({ rows, today, warnDays = DEFAULT_WARN_DAYS }) {
     }
   });
 
+  // Rank actionable rows (open / closing-soon) ahead of rows whose window
+  // has not opened yet, and put closed rows last of all — a deadline you
+  // cannot yet act on should never outrank one you can act on today, even
+  // if its close date happens to come sooner.
+  const STATUS_RANK = { open: 0, "closing-soon": 0, "not-open": 1, closed: 2 };
   items.sort((a, b) => {
-    const aClosed = a.status === "closed" ? 1 : 0;
-    const bClosed = b.status === "closed" ? 1 : 0;
-    if (aClosed !== bClosed) return aClosed - bClosed;
+    const rankDiff = STATUS_RANK[a.status] - STATUS_RANK[b.status];
+    if (rankDiff !== 0) return rankDiff;
     return a.daysLeft - b.daysLeft;
   });
 

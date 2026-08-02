@@ -57,6 +57,13 @@ export default function ToolHome() {
   const onFile = async (event) => {
     const file = event.target.files && event.target.files[0];
     if (!file) return;
+    if (
+      source.trim() !== "" &&
+      !window.confirm(`Loading "${file.name}" will replace the SubRip text currently in the box. Continue?`)
+    ) {
+      event.target.value = "";
+      return;
+    }
     const text = await file.text();
     setSource(text);
     setFileName(file.name.replace(/\.[^.]+$/, "") || "subtitles");
@@ -85,6 +92,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (source.trim() !== "" && !window.confirm("Reset will replace your SubRip input with the sample text. Continue?")) {
+      return;
+    }
     setSource(SAMPLE_SRT);
     setFileName("subtitles");
     setOffset("0");

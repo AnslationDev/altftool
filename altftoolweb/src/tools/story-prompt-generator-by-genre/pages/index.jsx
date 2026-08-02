@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Feather, RotateCcw, Shuffle } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   CHARACTER_TYPES,
   GENRES,
@@ -39,7 +40,7 @@ export default function ToolHome() {
   const [length, setLength] = useState(DEFAULTS.length);
   const [count, setCount] = useState(String(DEFAULTS.count));
   const [seed, setSeed] = useState(DEFAULTS.seed);
-  const [copiedId, setCopiedId] = useState("");
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -59,17 +60,6 @@ export default function ToolHome() {
     return result.prompts.map((prompt) => promptToText(prompt)).join("\n\n———\n\n");
   }, [result]);
 
-  const copy = async (id, text) => {
-    if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedId(id);
-      setTimeout(() => setCopiedId(""), 1500);
-    } catch {
-      setCopiedId("");
-    }
-  };
-
   const reset = () => {
     setGenre(DEFAULTS.genre);
     setTone(DEFAULTS.tone);
@@ -77,12 +67,10 @@ export default function ToolHome() {
     setLength(DEFAULTS.length);
     setCount(String(DEFAULTS.count));
     setSeed(DEFAULTS.seed);
-    setCopiedId("");
   };
 
   const shuffle = () => {
     setSeed(Math.floor(Math.random() * 100000) + 1);
-    setCopiedId("");
   };
 
   const prompts = result.error ? [] : result.prompts;
@@ -213,13 +201,13 @@ export default function ToolHome() {
           </button>
           <button
             type="button"
-            onClick={() => copy("all", allText)}
+            onClick={() => copy("all", allText, { label: "All prompts" })}
             aria-label="Copy every generated prompt"
             className={GHOST_BTN}
             disabled={!allText}
           >
-            {copiedId === "all" ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-            {copiedId === "all" ? "Copied!" : "Copy all"}
+            {isCopied("all") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+            {isCopied("all") ? "Copied!" : "Copy all"}
           </button>
           <button type="button" onClick={reset} aria-label="Reset all options" className={GHOST_BTN}>
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
@@ -237,7 +225,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        role="status"
+        aria-live="polite"
+      >
         <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
           Prompts generated
         </p>
@@ -250,6 +242,10 @@ export default function ToolHome() {
             : `${result.genre} · target ${NUM.format(result.wordTarget)} words (${result.lengthLabel})`}
         </p>
       </section>
+
+      <span className="sr-only" role="status" aria-live="polite">
+        {announcement}
+      </span>
 
       {prompts.map((prompt, index) => (
         <article
@@ -265,12 +261,12 @@ export default function ToolHome() {
             </div>
             <button
               type="button"
-              onClick={() => copy(prompt.id, promptToText(prompt))}
+              onClick={() => copy(prompt.id, promptToText(prompt), { label: `Prompt ${index + 1}` })}
               aria-label={`Copy prompt ${index + 1}`}
               className={GHOST_BTN}
             >
-              {copiedId === prompt.id ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copiedId === prompt.id ? "Copied!" : "Copy"}
+              {isCopied(prompt.id) ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+              {isCopied(prompt.id) ? "Copied!" : "Copy"}
             </button>
           </div>
 

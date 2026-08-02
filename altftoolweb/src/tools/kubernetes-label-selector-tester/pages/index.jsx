@@ -63,7 +63,16 @@ export default function ToolHome() {
   };
 
   const setExprField = (index, field, value) => {
-    setExpressions((prev) => prev.map((e, i) => (i === index ? { ...e, [field]: value } : e)));
+    setExpressions((prev) =>
+      prev.map((e, i) => {
+        if (i !== index) return e;
+        const next = { ...e, [field]: value };
+        if (field === "operator" && (value === "Exists" || value === "DoesNotExist")) {
+          next.valuesText = "";
+        }
+        return next;
+      }),
+    );
   };
 
   const addExpression = () => {

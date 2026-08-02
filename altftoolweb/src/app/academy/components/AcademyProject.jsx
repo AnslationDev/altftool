@@ -134,7 +134,13 @@ export default function AcademyProject() {
         </RouteLazySection>
 
         <RouteLazySection fallback={<RouteSectionSkeleton cards={3} />} minHeight={300}>
-          <Feedback />
+          {/*
+            <Feedback /> removed. data/feedback.js holds ten entries built from
+            three quotes: "Ankit Mishra" and "Nidhi Maurya" each appear four
+            times saying exactly the same thing. Nobody wrote them, and the
+            padding is what gives it away. The component and its data are left in
+            place for whenever there is real feedback, given with permission.
+          */}
         </RouteLazySection>
         <RouteLazySection fallback={<RouteSectionSkeleton cards={2} />} minHeight={260}>
           <FaqSection />

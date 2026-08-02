@@ -515,7 +515,7 @@ const LudoGame = () => {
             {/* SETUP OVERLAY */}
             {showPlayerSelect && (
                 <div className="absolute inset-0 bg-black/80 z-50 flex flex-col items-center justify-center p-4">
-                    <h1 className="text-4xl font-bold mb-8 text-yellow-400">LUDO MASTER</h1>
+                    <h2 className="text-4xl font-bold mb-8 text-yellow-400">LUDO MASTER</h2>
                     <div className="flex gap-4 mb-8">
                         {[2, 3, 4].map(num => (
                             <button

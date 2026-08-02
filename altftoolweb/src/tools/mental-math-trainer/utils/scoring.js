@@ -13,19 +13,47 @@ export function calculateAverageTime(answers) {
   return Math.round(total / answers.length * 10) / 10;
 }
 
-export function calculateScore(correct, streak, difficulty) {
-  const multiplier = { beginner: 1, easy: 1.5, medium: 2, hard: 3, expert: 5 };
-  const m = multiplier[difficulty] || 1;
-  const streakBonus = Math.min(streak, 10) * 0.5;
-  return Math.round(correct * 10 * m + streakBonus * 10);
+const DIFFICULTY_MULTIPLIER = { beginner: 1, easy: 1.5, medium: 2, hard: 3, expert: 5 };
+
+/**
+ * Points a single correct answer is worth: a base of 10, scaled by that
+ * question's own difficulty, boosted by the consecutive-correct streak
+ * going into it (capped at 10), then rounded. This is the one scoring rule
+ * shared by the live in-game score (GamePlay.jsx) and the final report
+ * below, so the two numbers can never disagree with each other.
+ */
+export function scoreForAnswer(difficulty, streakBeforeThisAnswer = 0) {
+  const multiplier = DIFFICULTY_MULTIPLIER[difficulty] || 1;
+  return Math.round(10 * multiplier * (1 + Math.min(streakBeforeThisAnswer, 10) * 0.5));
+}
+
+/**
+ * Total score for a session, replaying each answer's own difficulty and the
+ * streak as it stood at that point in the run — not a single flat
+ * difficulty or only the final best streak, since sessions like the Daily
+ * Challenge mix difficulties within one run and a correct answer's bonus
+ * depends on the streak count when it was answered, not the run's peak.
+ */
+export function calculateScore(answers) {
+  let total = 0;
+  let streak = 0;
+  for (const a of answers) {
+    if (a.correct) {
+      total += scoreForAnswer(a.difficulty, streak);
+      streak += 1;
+    } else {
+      streak = 0;
+    }
+  }
+  return total;
 }
 
 export function getSkillLevel(accuracy) {
-  if (accuracy >= SKILL_THRESHOLDS.expert) return { level: "Expert", color: "rose", emoji: "🏆" };
-  if (accuracy >= SKILL_THRESHOLDS.hard) return { level: "Hard", color: "orange", emoji: "🔥" };
-  if (accuracy >= SKILL_THRESHOLDS.medium) return { level: "Medium", color: "amber", emoji: "⭐" };
-  if (accuracy >= SKILL_THRESHOLDS.easy) return { level: "Easy", color: "blue", emoji: "📘" };
-  return { level: "Beginner", color: "emerald", emoji: "🌱" };
+  if (accuracy >= SKILL_THRESHOLDS.expert) return { level: "Expert", emoji: "🏆" };
+  if (accuracy >= SKILL_THRESHOLDS.hard) return { level: "Hard", emoji: "🔥" };
+  if (accuracy >= SKILL_THRESHOLDS.medium) return { level: "Medium", emoji: "⭐" };
+  if (accuracy >= SKILL_THRESHOLDS.easy) return { level: "Easy", emoji: "📘" };
+  return { level: "Beginner", emoji: "🌱" };
 }
 
 export function getWeakTopics(answers) {
@@ -47,7 +75,7 @@ export function getWeakTopics(answers) {
     .sort((a, b) => a.accuracy - b.accuracy);
 }
 
-export function getPerformanceReport(answers, difficulty) {
+export function getPerformanceReport(answers) {
   const correct = answers.filter((a) => a.correct).length;
   const total = answers.length;
   const accuracy = calculateAccuracy(correct, total);
@@ -56,7 +84,7 @@ export function getPerformanceReport(answers, difficulty) {
   const topics = getWeakTopics(answers);
   const weakTopics = topics.filter((t) => t.accuracy < 70);
   const strongTopics = topics.filter((t) => t.accuracy >= 80);
-  const score = calculateScore(correct, 0, difficulty);
+  const score = calculateScore(answers);
 
   return {
     totalScore: score,

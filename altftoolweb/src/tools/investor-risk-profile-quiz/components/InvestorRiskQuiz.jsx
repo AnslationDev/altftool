@@ -2,7 +2,7 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import {
   ShieldAlert, ShieldCheck, HelpCircle, ArrowRight, ArrowLeft, RotateCcw,
-  TrendingUp, AlertTriangle, Coins, Briefcase, Award, CheckCircle, Trash2,
+  AlertTriangle, Coins, Briefcase, Award, CheckCircle, Trash2,
   PieChart, Calendar, DollarSign, Activity, Eye, Zap, Flame
 } from "lucide-react";
 import { QUESTIONS, getProfileByScore, fmt } from "../data/data";
@@ -174,10 +174,15 @@ export default function InvestorRiskQuiz() {
     const nextAnswers = { ...answers, [qId]: score };
     setAnswers(nextAnswers);
 
+    // The bounds check must live inside the functional updater, not in a
+    // closure over `currentIdx` captured at click time: if the user clicks
+    // two options within the 180ms window, two timeouts fire with the same
+    // stale `currentIdx`, both pass the guard, and currentIdx would advance
+    // by 2 (skipping a question, or overshooting past the last question and
+    // crashing on `currentQuestion.category`). Reading `prev` inside the
+    // updater means the second timeout sees the already-advanced value.
     setTimeout(() => {
-      if (currentIdx < totalQuestions - 1) {
-        setCurrentIdx(prev => prev + 1);
-      }
+      setCurrentIdx(prev => (prev < totalQuestions - 1 ? prev + 1 : prev));
     }, 180);
   };
 
@@ -219,9 +224,9 @@ export default function InvestorRiskQuiz() {
   };
 
   const profileGlowClass = () => {
-    if (scoreOutOf100 >= 76) return "quiz-glow-danger border-red-500/40 bg-red-500/5";
+    if (scoreOutOf100 >= 76) return "quiz-glow-danger border-[var(--danger)]/40 bg-[var(--danger)]/5";
     if (scoreOutOf100 >= 51) return "quiz-glow border-[var(--primary)]/40 bg-[var(--primary)]/5";
-    return "quiz-glow-success border-emerald-500/40 bg-emerald-500/5";
+    return "quiz-glow-success border-[var(--success)]/40 bg-[var(--success)]/5";
   };
 
   return (
@@ -412,10 +417,13 @@ export default function InvestorRiskQuiz() {
 
                   {/* Persona Target Points */}
                   <div className="absolute inset-0 flex justify-between px-2 items-center text-[8px] font-bold text-[var(--muted-foreground)] pointer-events-none">
-                    <span className={scoreOutOf100 < 25 ? "text-emerald-400 font-extrabold" : ""}>Buffett (15)</span>
-                    <span className={scoreOutOf100 >= 25 && scoreOutOf100 < 60 ? "text-[var(--primary)] font-extrabold" : ""}>Index Fund (45)</span>
-                    <span className={scoreOutOf100 >= 60 && scoreOutOf100 < 80 ? "text-amber-400 font-extrabold" : ""}>Satoshi Disciple (70)</span>
-                    <span className={scoreOutOf100 >= 80 ? "text-red-400 font-extrabold" : ""}>WSB Ape (95)</span>
+                    {/* Highlight is driven by finalProfile (the same source as the
+                        headline above) rather than a second, independent set of
+                        score thresholds, so the two can never disagree. */}
+                    <span className={finalProfile.name === "Conservative" ? "text-emerald-400 font-extrabold" : ""}>Buffett (15)</span>
+                    <span className={finalProfile.name === "Moderate / Balanced" ? "text-[var(--primary)] font-extrabold" : ""}>Index Fund (45)</span>
+                    <span className={finalProfile.name === "Active Growth" ? "text-amber-400 font-extrabold" : ""}>Satoshi Disciple (70)</span>
+                    <span className={finalProfile.name === "Aggressive Speculator" ? "text-red-400 font-extrabold" : ""}>WSB Ape (95)</span>
                   </div>
 
                   {/* Current Score Pin */}
@@ -437,7 +445,7 @@ export default function InvestorRiskQuiz() {
               <svg className="h-full w-full transform -rotate-90">
                 <circle cx="72" cy="72" r="54" stroke="rgba(255,255,255,0.06)" strokeWidth="10" fill="transparent" />
                 <circle cx="72" cy="72" r="54"
-                  stroke={scoreOutOf100 >= 76 ? "#ef4444" : scoreOutOf100 >= 51 ? "var(--primary)" : "#10b981"}
+                  stroke={scoreOutOf100 >= 76 ? "var(--danger)" : scoreOutOf100 >= 51 ? "var(--primary)" : "var(--success)"}
                   strokeWidth="10"
                   fill="transparent"
                   strokeDasharray={2 * Math.PI * 54}
@@ -489,7 +497,9 @@ export default function InvestorRiskQuiz() {
                 </h4>
                 <div className="flex items-center gap-1.5">
                   <DollarSign className="h-3.5 w-3.5 text-[var(--primary)]" />
-                  <input type="number" min={100} max={10000000} step={1000} value={simAmount} onChange={e => setSimAmount(Math.max(0, +e.target.value))}
+                  <input type="number" min={100} max={10000000} step={1000} value={simAmount}
+                    aria-label="Portfolio amount in US dollars"
+                    onChange={e => setSimAmount(Math.min(10000000, Math.max(0, +e.target.value)))}
                     className="w-24 rounded border border-[var(--input-border)] bg-[var(--background)] px-2 py-0.5 text-xs font-mono font-bold text-[var(--foreground)] outline-none" />
                 </div>
               </div>
@@ -500,7 +510,9 @@ export default function InvestorRiskQuiz() {
 
               {/* Slider controls */}
               <div className="space-y-1">
-                <input type="range" min={1000} max={500000} step={1000} value={simAmount} onChange={e => setSimAmount(+e.target.value)}
+                <input type="range" min={1000} max={500000} step={1000} value={simAmount}
+                  aria-label="Portfolio amount slider, up to $500,000"
+                  onChange={e => setSimAmount(+e.target.value)}
                   className="w-full accent-[var(--primary)] cursor-pointer" />
                 <div className="flex justify-between text-[9px] font-mono text-[var(--muted-foreground)]">
                   <span>$1,000</span>

@@ -14,37 +14,66 @@ const SYSTEMS = [
 
 const clean = (value) => value.trim().replace(/\s+/g, "");
 
-function parseValue(value, system) {
+const DIGIT_ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyz";
+
+// Parses a validated, sign-free digit string in an arbitrary base (2-36) into
+// a BigInt. BigInt() itself only understands decimal (or 0x/0o/0b-PREFIXED)
+// literals, so it cannot be handed a bare base-N digit string directly.
+function parseDigitsInBase(digits, base) {
+  const bigBase = BigInt(base);
+  let result = 0n;
+  for (const char of digits.toLowerCase()) {
+    const digitValue = DIGIT_ALPHABET.indexOf(char);
+    if (digitValue === -1 || digitValue >= base) {
+      throw new Error(`"${char}" is not a valid base-${base} digit.`);
+    }
+    result = result * bigBase + BigInt(digitValue);
+  }
+  return result;
+}
+
+export function parseValue(value, system) {
   const text = clean(value);
   if (!text) return { ok: true, number: 0n };
   const { base, id } = system;
-  let normalized = text;
+  // Strip the sign before any base-specific prefix/digit handling, so a
+  // negative value is accepted uniformly in every base (matches what
+  // formatNumber can now produce for all five bases, not just decimal/base36).
+  const negative = text.startsWith("-");
+  let normalized = negative ? text.slice(1) : text;
   if (id === "binary") {
-    normalized = text.replace(/^0b/i, "");
+    normalized = normalized.replace(/^0b/i, "");
     if (!/^[01]+$/.test(normalized)) throw new Error("Binary can only contain 0 and 1.");
   } else if (id === "octal") {
-    normalized = text.replace(/^0o/i, "");
+    normalized = normalized.replace(/^0o/i, "");
     if (!/^[0-7]+$/.test(normalized)) throw new Error("Octal can only contain 0-7.");
   } else if (id === "hex") {
-    normalized = text.replace(/^0x/i, "");
+    normalized = normalized.replace(/^0x/i, "");
     if (!/^[0-9a-fA-F]+$/.test(normalized)) throw new Error("Hex can only contain 0-9 and A-F.");
   } else if (id === "decimal") {
-    if (!/^-?\d+$/.test(normalized)) throw new Error("Decimal must be a whole number.");
+    if (!/^\d+$/.test(normalized)) throw new Error("Decimal must be a whole number.");
   } else if (id === "base36") {
-    if (!/^-?[0-9a-zA-Z]+$/.test(normalized)) throw new Error("Base-36 can only contain 0-9 and A-Z.");
+    if (!/^[0-9a-zA-Z]+$/.test(normalized)) throw new Error("Base-36 can only contain 0-9 and A-Z.");
   }
-  return { ok: true, number: BigInt(normalized) };
+  const magnitude = parseDigitsInBase(normalized, base);
+  return { ok: true, number: negative ? -magnitude : magnitude };
 }
 
-function formatNumber(number, system) {
+// Prepends a base prefix (0b/0o/0x) after any leading minus sign, so a
+// negative value reads as "-0b101" rather than the invalid "0b-101".
+function withPrefix(prefix, value) {
+  if (!prefix) return value;
+  if (value.startsWith("-")) return `-${prefix}${value.slice(1)}`;
+  return `${prefix}${value}`;
+}
+
+export function formatNumber(number, system) {
   const { base, id } = system;
-  if (number < 0n) return "N/A";
-  let result = number.toString(base).toUpperCase();
-  if (id === "binary") {
-    if (result.length > 64) return "Too large";
-    return result;
-  }
-  return result;
+  const negative = number < 0n;
+  const magnitude = negative ? -number : number;
+  let result = magnitude.toString(base).toUpperCase();
+  if (id === "binary" && result.length > 64) return "Too large";
+  return negative ? `-${result}` : result;
 }
 
 function asciiFromNumber(number) {
@@ -59,7 +88,7 @@ function asciiFromNumber(number) {
 function OutputCard({ system, number, valid, onCopy }) {
   const value = valid ? formatNumber(number, system) : "—";
   const prefix = system.id !== "decimal" && system.id !== "base36" && valid ? system.prefix : "";
-  const display = value !== "—" && value !== "Too large" && value !== "N/A" ? `${prefix}${value}` : value;
+  const display = value !== "—" && value !== "Too large" && value !== "N/A" ? withPrefix(prefix, value) : value;
   const bits = valid && number >= 0n ? (number.toString(2).length).toString() : "—";
   const bytes = bits !== "—" ? Math.max(1, Math.ceil(Number(bits) / 8)).toString() : "—";
   const ascii = valid ? asciiFromNumber(number) : "—";
@@ -91,8 +120,8 @@ function OutputCard({ system, number, valid, onCopy }) {
       )}
       <button
         type="button"
-        onClick={() => onCopy(`${prefix}${value}`)}
-        disabled={!valid || value === "—" || value === "Too large"}
+        onClick={() => onCopy(withPrefix(prefix, value))}
+        disabled={!valid || value === "—" || value === "Too large" || value === "N/A"}
         className="mt-3 inline-flex items-center gap-1.5 rounded-md px-2.5 py-1.5 text-xs font-semibold text-[var(--muted-foreground)] transition-colors hover:bg-[var(--muted)] hover:text-[var(--foreground)] disabled:opacity-40"
       >
         <Copy className="h-3.5 w-3.5" />
@@ -120,13 +149,12 @@ export default function ToolHome() {
   }, []);
 
   const copyAll = useCallback(async () => {
+    if (!parseResult.ok) return;
     const lines = SYSTEMS.map((sys) => {
-      if (!parseResult.ok || parseResult.number < 0n) return "";
       const val = formatNumber(parseResult.number, sys);
       const prefix = sys.id !== "decimal" && sys.id !== "base36" ? sys.prefix : "";
-      return `${sys.label} (base ${sys.base}): ${prefix}${val}`;
-    }).filter(Boolean).join("\n");
-    if (!lines) return;
+      return `${sys.label} (base ${sys.base}): ${withPrefix(prefix, val)}`;
+    }).join("\n");
     const ok = await safeCopyText(lines);
     if (ok) {
       setCopiedInput(true);
@@ -152,7 +180,9 @@ export default function ToolHome() {
         <section className="grid gap-6 2xl:grid-cols-[400px_1fr]">
           <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             <div className="mb-1 flex items-center justify-between">
-              <span className="text-sm font-semibold text-[var(--foreground)]">Input format</span>
+              <label htmlFor="number-system-input" className="text-sm font-semibold text-[var(--foreground)]">
+                Input format
+              </label>
               <span className="text-[10px] font-semibold uppercase tracking-wider text-[var(--muted-foreground)]">
                 {inputSystem.label} · Base-{inputSystem.base}
               </span>
@@ -163,6 +193,7 @@ export default function ToolHome() {
                   key={sys.id}
                   type="button"
                   onClick={() => setInputSystem(sys)}
+                  aria-label={sys.label}
                   className={`flex items-center justify-center gap-1.5 rounded-md px-2 py-2 text-xs font-semibold transition-all ${
                     inputSystem.id === sys.id
                       ? "bg-[var(--card)] text-[var(--primary)] shadow-sm"
@@ -176,6 +207,7 @@ export default function ToolHome() {
             </div>
             <div className="relative mt-4">
               <textarea
+                id="number-system-input"
                 value={value}
                 onChange={(event) => setValue(event.target.value)}
                 className="min-h-32 w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm leading-relaxed outline-none transition-colors placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
@@ -198,7 +230,7 @@ export default function ToolHome() {
               <button
                 type="button"
                 onClick={copyAll}
-                disabled={!parseResult.ok || parseResult.number < 0n}
+                disabled={!parseResult.ok}
                 className="inline-flex h-10 items-center gap-2 rounded-lg border border-[var(--border)] px-4 text-sm font-semibold text-[var(--foreground)] transition-colors hover:bg-[var(--muted)] disabled:opacity-40"
               >
                 <Copy className="h-4 w-4" />

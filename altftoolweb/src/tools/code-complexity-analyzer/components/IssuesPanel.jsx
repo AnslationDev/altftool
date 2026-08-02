@@ -12,23 +12,23 @@ import Badge from './ui/Badge';
 import Button from './ui/Button';
 
 const SEVERITY_CONFIG = {
-    HIGH: { 
-        bg: 'bg-blue-50/50 dark:bg-blue-900/10', 
-        badge: 'primary', 
+    HIGH: {
+        bg: 'bg-(--danger-soft)',
+        badge: 'danger',
         icon: AlertOctagon,
-        color: '#3b82f6'
+        color: 'var(--danger-text)'
     },
-    MEDIUM: { 
-        bg: 'bg-blue-50/50 dark:bg-blue-900/10', 
-        badge: 'primary', 
+    MEDIUM: {
+        bg: 'bg-(--warning-soft)',
+        badge: 'warning',
         icon: AlertTriangle,
-        color: '#3b82f6'
+        color: 'var(--warning-text)'
     },
-    LOW: { 
-        bg: 'bg-blue-50/50 dark:bg-blue-900/10', 
-        badge: 'primary', 
+    LOW: {
+        bg: 'bg-(--info-soft)',
+        badge: 'info',
         icon: Info,
-        color: '#3b82f6'
+        color: 'var(--info)'
     },
 };
 

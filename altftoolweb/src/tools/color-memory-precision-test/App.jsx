@@ -103,6 +103,7 @@ export default function ColorMemoryPrecisionTest() {
   const [scoreError, setScoreError] = useState("");
   const [history, setHistory] = useState([]);
   const [copied, setCopied] = useState(false);
+  const [isNewBest, setIsNewBest] = useState(false);
 
   const timerRef = useRef(null);
 
@@ -141,6 +142,11 @@ export default function ColorMemoryPrecisionTest() {
     setScoreError("");
     setAccuracy(result);
     setGameState("result");
+
+    // A "personal best" claim must be earned: compare against the best score
+    // already in history before this round is added to it.
+    const previousBest = history.length > 0 ? Math.max(...history.map(item => item.score)) : null;
+    setIsNewBest(previousBest === null || result.percentage > previousBest);
 
     // Save to history
     setHistory(prev => [{
@@ -388,6 +394,7 @@ export default function ColorMemoryPrecisionTest() {
                             </div>
                             <button
                               onClick={() => handleCopy(userColor)}
+                              aria-label={copied ? "Hex code copied" : "Copy hex code"}
                               className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white transition-all border border-white/10"
                             >
                               {copied ? <Check size={16} /> : <Copy size={16} />}
@@ -396,9 +403,10 @@ export default function ColorMemoryPrecisionTest() {
                         </div>
 
                         <div className="relative pt-2">
-                          <label className="text-[10px] font-black uppercase text-blue-500 tracking-widest mb-3 block">Neural Color Picker</label>
+                          <label htmlFor="neural-color-picker" className="text-[10px] font-black uppercase text-blue-500 tracking-widest mb-3 block">Neural Color Picker</label>
                           <div className="relative h-12 rounded-xl overflow-hidden border border-(--border) cursor-crosshair">
                             <input
+                              id="neural-color-picker"
                               type="color"
                               value={userColor}
                               onChange={(e) => setUserColor(e.target.value)}
@@ -421,10 +429,11 @@ export default function ColorMemoryPrecisionTest() {
                             g: 'from-green-500/20 to-green-500',
                             b: 'from-blue-500/20 to-blue-500'
                           };
+                          const channelLabel = comp === 'r' ? 'Red Channel' : comp === 'g' ? 'Green Channel' : 'Blue Channel';
                           return (
                             <div key={comp} className="space-y-3">
                               <div className="flex justify-between items-center">
-                                <span className="text-[10px] font-black uppercase text-muted-foreground">{comp === 'r' ? 'Red Channel' : comp === 'g' ? 'Green Channel' : 'Blue Channel'}</span>
+                                <span id={`channel-label-${comp}`} className="text-[10px] font-black uppercase text-muted-foreground">{channelLabel}</span>
                                 <span className="text-sm font-mono font-bold text-blue-500">{val}</span>
                               </div>
                               <input
@@ -433,6 +442,8 @@ export default function ColorMemoryPrecisionTest() {
                                 max="255"
                                 value={val}
                                 onChange={(e) => updateColorComponent(comp, e.target.value)}
+                                aria-label={channelLabel}
+                                aria-describedby={`channel-label-${comp}`}
                                 className={`w-full h-2 bg-(--background) rounded-full appearance-none cursor-pointer border border-(--border) [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-600 [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(37,99,235,0.5)]`}
                               />
                             </div>
@@ -572,15 +583,16 @@ export default function ColorMemoryPrecisionTest() {
                             </div>
                           </div>
 
-                          <div className="p-4 rounded-2xl bg-blue-500/5 border border-blue-500/20 flex flex-wrap sm:flex-nowrap items-center justify-between gap-4">
-                            <div className="flex gap-3 items-center min-w-0">
-                              <Trophy size={20} className="text-yellow-500 shrink-0" />
-                              <div className="min-w-0">
-                                <div className="text-xs font-bold text-(--foreground) truncate">New Personal Best!</div>
-                                <div className="text-[10px] text-muted-foreground uppercase truncate">Your neural accuracy is improving.</div>
+                          <div className="p-4 rounded-2xl bg-blue-500/5 border border-blue-500/20 flex items-center gap-3">
+                            <Trophy size={20} className={`shrink-0 ${isNewBest ? 'text-yellow-500' : 'text-muted-foreground'}`} />
+                            <div className="min-w-0">
+                              <div className="text-xs font-bold text-(--foreground) truncate">
+                                {isNewBest ? 'New Personal Best!' : 'Precision Logged'}
+                              </div>
+                              <div className="text-[10px] text-muted-foreground uppercase truncate">
+                                {isNewBest ? 'Your neural accuracy is improving.' : 'Try again to beat your recent best.'}
                               </div>
                             </div>
-                            <button className="px-4 py-2 rounded-xl bg-blue-600 text-white text-[10px] font-black uppercase tracking-wider shrink-0 whitespace-nowrap">Claim Rank</button>
                           </div>
                         </div>
 

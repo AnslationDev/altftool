@@ -177,7 +177,8 @@ export function bytesToHex(bytes) {
 /** Parse lowercase or uppercase hex back to bytes. Returns null when malformed. */
 export function hexToBytes(hex) {
   const clean = String(hex ?? "").replace(/\s+/g, "");
-  if (clean.length === 0 || clean.length % 2 !== 0 || /[^0-9a-fA-F]/.test(clean)) return null;
+  if (clean.length === 0) return [];
+  if (clean.length % 2 !== 0 || /[^0-9a-fA-F]/.test(clean)) return null;
   const out = [];
   for (let i = 0; i < clean.length; i += 2) out.push(parseInt(clean.slice(i, i + 2), 16));
   return out;
@@ -281,12 +282,14 @@ export function avalancheTest(text) {
     return { error: "Type something first — an empty input has nothing to change." };
   }
   // Flip the case of the first letter, or bump the first character by one.
-  const first = original[0];
+  const firstCodePoint = original.codePointAt(0);
+  const first = String.fromCodePoint(firstCodePoint);
+  const rest = original.slice(first.length);
   const swapped = first === first.toLowerCase() ? first.toUpperCase() : first.toLowerCase();
-  const changed =
-    swapped !== first
-      ? swapped + original.slice(1)
-      : String.fromCodePoint(original.codePointAt(0) + 1) + original.slice(1);
+  // Clamp so a first character already at the maximum valid code point
+  // (U+10FFFF) steps down instead of overflowing String.fromCodePoint.
+  const bumpedCodePoint = firstCodePoint >= 0x10ffff ? firstCodePoint - 1 : firstCodePoint + 1;
+  const changed = swapped !== first ? swapped + rest : String.fromCodePoint(bumpedCodePoint) + rest;
 
   const hashA = sha256Hex(original);
   const hashB = sha256Hex(changed);

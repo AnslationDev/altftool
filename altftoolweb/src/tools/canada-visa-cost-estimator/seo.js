@@ -4,7 +4,7 @@ const seo = {
   useCases: [
     "Costing a super visa application for parents where one applicant is over 79 and pays no biometrics fee",
     "Checking how much a family of six saves by applying for visitor visas together rather than separately",
-    "Budgeting a study permit alongside a spouse's open work permit, including the open work permit holder fee",
+    "Budgeting an open work permit application for the whole family, including the CAD 100 open work permit holder fee for each applicant",
   ],
   benefits: [
     ["Both family caps applied", "CAD 500 on visitor visas and CAD 170 on biometrics, when the conditions are met."],

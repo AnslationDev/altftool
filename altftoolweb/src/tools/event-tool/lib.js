@@ -92,12 +92,12 @@ export function expectedAttendance({ invited, acceptPercent, noShowPercent } = {
   if (!isNum(noShowPercent) || noShowPercent < 0 || noShowPercent > 100) {
     return { error: "The no-show rate must be between 0% and 100%." };
   }
-  const accepted = invited * (acceptPercent / 100);
-  const noShows = accepted * (noShowPercent / 100);
+  const accepted = Math.round(invited * (acceptPercent / 100));
+  const noShows = Math.round(accepted * (noShowPercent / 100));
   return {
-    expected: Math.round(accepted - noShows),
-    accepted: Math.round(accepted),
-    noShows: Math.round(noShows),
+    expected: accepted - noShows,
+    accepted,
+    noShows,
   };
 }
 

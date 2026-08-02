@@ -123,7 +123,10 @@ const getPrioritizedItems = (allItems, filter, query) => {
   return matched;
 };
 
-export default function AltPinterest({ defaultView }) {
+// `heading` is the server-rendered page h1 (see page.jsx / explore/page.jsx).
+// It arrives as children so it is present in the server HTML rather than only
+// after hydration, and exactly one of the two branches below renders it.
+export default function AltPinterest({ defaultView, children: heading }) {
   const [showLanding, setShowLanding] = useState(defaultView !== "explore");
   const [activeTab, setActiveTab] = useState("discover");
   const [activeFilter, setActiveFilter] = useState("All");
@@ -443,6 +446,7 @@ export default function AltPinterest({ defaultView }) {
   if (showLanding) {
     return (
       <ExploreLanding
+        heading={heading}
         onStartExploring={(term) => navigateToExplore(term)}
         onNavigateHome={navigateToHome}
         onNavigateExplore={() => navigateToExplore("")}
@@ -517,6 +521,10 @@ export default function AltPinterest({ defaultView }) {
             </button>
           </div>
         </div>
+
+        {/* Server-rendered page heading. Sits above the tab switch so it is
+            present for every sub-view and stays the single h1 on the route. */}
+        {heading ? <div className="mb-8">{heading}</div> : null}
 
         {/* ======================================= */}
         {/* 1. DISCOVER TOP: SEARCH BAR             */}
@@ -754,9 +762,13 @@ export default function AltPinterest({ defaultView }) {
                 )}
                 {/* Info & Comments */}
                 <div className="px-8 py-8 flex flex-col gap-6">
-                  <h1 className="text-[20px] font-bold leading-tight text-[var(--foreground)] font-[#Segoe_UI]">
+                  {/* Was an h1. The pin detail is a client-side sub-view of
+                      this route, not its own document, and the route now has a
+                      server-rendered h1 above — so this is the sub-view's
+                      heading, not the page's. Text and styling unchanged. */}
+                  <h2 className="text-[20px] font-bold leading-tight text-[var(--foreground)] font-[#Segoe_UI]">
                     {selectedItem.title || "Visual inspiration"}
-                  </h1>
+                  </h2>
 
                   <div className="mt-1 flex items-center gap-3">
                     <span className="text-[14px] font-medium text-[var(--foreground)]">
@@ -842,9 +854,11 @@ export default function AltPinterest({ defaultView }) {
               </button>
 
               <div className="flex items-end gap-[6px]">
-                <h1 className={`text-[40px] leading-[40px] font-bold tracking-[-0.5px] text-[#000000] dark:text-[var(--foreground)] ${manrope.className}`}>
+                {/* Was an h1, demoted for the same reason as the pin detail
+                    above: the Saved tab is a sub-view of this route. */}
+                <h2 className={`text-[40px] leading-[40px] font-bold tracking-[-0.5px] text-[#000000] dark:text-[var(--foreground)] ${manrope.className}`}>
                   Your saved Ideas
-                </h1>
+                </h2>
                 <Heart size={30} strokeWidth={2.5} className="text-[#000000] dark:text-[var(--foreground)] mb-1" />
               </div>
             </div>

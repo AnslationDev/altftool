@@ -31,7 +31,7 @@ export const BASES = [
 
 /**
  * Accepted body-weight window in kilograms. The lower bound covers extremely
- * preterm newborns (around 400 g) and the upper bound sits above the heaviest
+ * preterm newborns (around 300 g) and the upper bound sits above the heaviest
  * recorded adult weights, so anything outside is a typo or the wrong unit.
  */
 export const MIN_WEIGHT_KG = 0.3;
@@ -128,18 +128,31 @@ export function calculateWeightBasedDose({
   const singleDoseMg = basis === "per-dose" ? doseMgPerKg * weightKg : (doseMgPerKg * weightKg) / frequency;
   const dailyDoseMg = basis === "per-dose" ? singleDoseMg * frequency : doseMgPerKg * weightKg;
 
-  // Optional liquid concentration, expressed as "X mg in Y mL".
+  // Optional liquid concentration, expressed as "X mg in Y mL". A problem here
+  // (only one field filled, or an invalid/zero value) must not blank the whole
+  // result — the mg-dose figures above need no concentration data at all, so
+  // they are still returned. Only the mL figures are affected, flagged via
+  // `concentrationError` instead of the top-level `error`.
   let mgPerMl = null;
-  const hasConcentration = !isBlank(concentrationMg) || !isBlank(concentrationMl);
-  if (hasConcentration) {
+  let concentrationError = null;
+  const concentrationMgBlank = isBlank(concentrationMg);
+  const concentrationMlBlank = isBlank(concentrationMl);
+  if (concentrationMgBlank && concentrationMlBlank) {
+    // No liquid strength entered — nothing to convert, and not an error.
+  } else if (concentrationMgBlank || concentrationMlBlank) {
+    concentrationError = "Enter both the mg and mL parts of the liquid strength, for example 250 mg in 5 mL.";
+  } else {
     const cMg = toNumber(concentrationMg);
     const cMl = toNumber(concentrationMl);
     if (!Number.isFinite(cMg) || !Number.isFinite(cMl)) {
-      return { error: "Enter the liquid strength as two numbers, for example 250 mg in 5 mL." };
+      concentrationError = "Enter the liquid strength as two numbers, for example 250 mg in 5 mL.";
+    } else if (cMg <= 0) {
+      concentrationError = "The milligram part of the liquid strength must be greater than zero.";
+    } else if (cMl <= 0) {
+      concentrationError = "The millilitre part of the liquid strength must be greater than zero.";
+    } else {
+      mgPerMl = cMg / cMl;
     }
-    if (cMg <= 0) return { error: "The milligram part of the liquid strength must be greater than zero." };
-    if (cMl <= 0) return { error: "The millilitre part of the liquid strength must be greater than zero." };
-    mgPerMl = cMg / cMl;
   }
 
   const singleDoseMl = mgPerMl ? singleDoseMg / mgPerMl : null;
@@ -168,6 +181,7 @@ export function calculateWeightBasedDose({
     singleDoseMcg: singleDoseMg * 1000,
     dailyDoseG: dailyDoseMg / 1000,
     mgPerMl,
+    concentrationError,
     singleDoseMl,
     dailyDoseMl,
     singleDoseMlRounded: singleDoseMl === null ? null : roundToSyringeMark(singleDoseMl),

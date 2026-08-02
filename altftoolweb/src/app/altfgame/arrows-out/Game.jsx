@@ -83,9 +83,9 @@ function Loader({ onDone }) {
           <p className="mb-3 text-xs font-black uppercase tracking-[0.3em] text-cyan-200">
             Direction system online
           </p>
-          <h1 className="m-0 text-[clamp(1.6rem,4.5vw,2.8rem)] font-black leading-none tracking-normal">
+          <h2 className="m-0 text-[clamp(1.6rem,4.5vw,2.8rem)] font-black leading-none tracking-normal">
             {phase >= 3 ? "Loading" : "Arrows Out"}
-          </h1>
+          </h2>
           <div className="mx-auto mt-6 w-[min(560px,82vw)] rounded-full border border-white/10 bg-white/10 p-1">
             <div
               className="h-2 rounded-full bg-gradient-to-r from-cyan-300 via-white to-rose-400 transition-all duration-500"
@@ -216,9 +216,9 @@ const Arrow = () => {
               →
             </div>
             <div className="min-w-0">
-              <h1 className="m-0 truncate text-xl font-black leading-none">
+              <h2 className="m-0 truncate text-xl font-black leading-none">
                 Arrows Out: Neon Maze
-              </h1>
+              </h2>
               <p className="m-0 mt-1 truncate text-xs font-bold uppercase tracking-[0.16em] text-white/40">
                 Keyboard or touch controls
               </p>
@@ -358,9 +358,9 @@ const Arrow = () => {
             <p className="m-0 text-xs font-black uppercase tracking-[0.24em] text-cyan-200">
               {won ? "Winner" : "Loser"}
             </p>
-            <h1 className="m-0 mt-3 text-[clamp(2.5rem,8vw,4.8rem)] font-black leading-none">
+            <h2 className="m-0 mt-3 text-[clamp(2.5rem,8vw,4.8rem)] font-black leading-none">
               {won ? "Escaped" : "Locked In"}
-            </h1>
+            </h2>
             <p className="mx-auto mt-4 max-w-sm text-sm font-bold leading-6 text-white/60">
               {won
                 ? `${rankFor(moves, time)} in ${moves} moves with ${time}s left.`

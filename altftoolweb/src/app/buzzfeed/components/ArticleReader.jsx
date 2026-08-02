@@ -194,7 +194,15 @@ export default function ArticleReader({ article, onClose, bookmarks, onToggleBoo
             {article.category}
           </span>
 
-          <h1 className="bf-reader-title">{article.title}</h1>
+          {/*
+            The reader is an overlay over /buzzfeed, not its own document — the
+            feed and its H1 stay mounted behind it. An <h1> here stacked a
+            second (and, with the hero, a third) top-level heading onto the
+            same page the moment a story was opened. h2 keeps it the title of
+            the dialog's content under the page heading. `.bf-reader-title`
+            sets the type at both breakpoints, so nothing moves.
+          */}
+          <h2 className="bf-reader-title">{article.title}</h2>
           <p className="bf-reader-excerpt">{article.excerpt}</p>
 
           <div className="bf-reader-meta">

@@ -35,26 +35,11 @@ export {
   getPrecisionRating,
   getContrastColor,
   DIFFICULTY_BANDS,
+  RGB_WEIGHT,
+  HSL_WEIGHT,
+  HUE_WEIGHT,
+  SATURATION_WEIGHT,
+  LIGHTNESS_WEIGHT,
+  MAX_RGB_DISTANCE,
+  RATING_BANDS,
 } from "./utils/colorUtils";
-
-/** Weights blended into the final accuracy percentage. */
-export const RGB_WEIGHT = 0.4;
-export const HSL_WEIGHT = 0.6;
-
-/** Within HSL accuracy: hue matters twice as much as saturation or lightness. */
-export const HUE_WEIGHT = 0.5;
-export const SATURATION_WEIGHT = 0.25;
-export const LIGHTNESS_WEIGHT = 0.25;
-
-/**
- * Greatest possible euclidean distance in RGB space — black to white,
- * √(255² × 3) ≈ 441.67. Used to normalise the RGB half of the score.
- */
-export const MAX_RGB_DISTANCE = Math.sqrt(255 * 255 * 3);
-
-/**
- * Score bands shown after each round.
- * Perfect 99+, Elite 95+, Master 90+, Expert 80+, Adept 60+, Novice 40+,
- * Amateur below 40.
- */
-export const RATING_BANDS = [99, 95, 90, 80, 60, 40];

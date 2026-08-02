@@ -18,6 +18,16 @@ const formatDate = (date) =>
     day: "numeric",
   });
 
+// Parse a "YYYY-MM-DD" date-input string into a LOCAL midnight Date.
+// Parsing manually (rather than new Date(str)) avoids the UTC-vs-local
+// off-by-one that bites date-only strings in negative timezones.
+const parseDateOnly = (str) => {
+  const parts = String(str).split("-");
+  if (parts.length !== 3) return new Date(NaN);
+  const [y, m, d] = parts.map(Number);
+  return new Date(y, m - 1, d);
+};
+
 const compute = (v) => {
   if (!v.date) {
     return {
@@ -26,7 +36,7 @@ const compute = (v) => {
     };
   }
 
-  const date = new Date(v.date);
+  const date = parseDateOnly(v.date);
 
   if (isNaN(date.getTime())) {
     return {
@@ -59,11 +69,13 @@ const compute = (v) => {
   const weekEnd = new Date(weekStart);
   weekEnd.setDate(weekStart.getDate() + 6);
 
-  // Day of year
-  const startOfYear = new Date(date.getFullYear(), 0, 0);
-  const dayOfYear = Math.floor(
-    (date - startOfYear) / (1000 * 60 * 60 * 24)
-  );
+  // Day of year — diffed via UTC-normalized timestamps (not the local `date`/
+  // `startOfYear` instants directly) so a DST transition between Jan 1 and
+  // the target date can't shift the millisecond delta off a whole number of
+  // days.
+  const startOfYearUTC = Date.UTC(date.getFullYear(), 0, 0);
+  const dateUTC = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+  const dayOfYear = Math.round((dateUTC - startOfYearUTC) / (1000 * 60 * 60 * 24));
 
   // Quarter
   const quarter = Math.floor(date.getMonth() / 3) + 1;

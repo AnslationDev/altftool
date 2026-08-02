@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 import WorkflowCard from "../../components/WorkflowCard";
 import NodeBadge from "../../components/NodeBadge";
 import { getAllNodes, getWorkflowsByNode } from "../../data/service";
-import { metaTitle, stripEmojis } from "../../data/text";
+import { fitMetaDescription, metaTitle, stripEmojis } from "../../data/text";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
@@ -17,8 +17,12 @@ import {
 export const dynamic = "force-static";
 export const revalidate = 3600;
 
-const description = (name) =>
-  `Explore free n8n workflow templates that use the ${name} node, compare practical examples, and download reusable automation JSON on AltFTool.`;
+// "built with" rather than "that use", because the count drives the plural and
+// "1 template that use the X node" does not agree.
+const description = (name, count) =>
+  fitMetaDescription(
+    `Browse ${count} free n8n workflow template${count === 1 ? "" : "s"} built with the ${name} node.`,
+  );
 
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];
@@ -29,16 +33,19 @@ export async function generateMetadata({ params }) {
   const { slug } = await params;
   const node = getAllNodes().find((n) => n.slug === slug);
   if (!node) {
+    // Same 70-character floor problem the category route had: this branch
+    // answered in 38 characters.
     return createPageMetadata({
-      title: "Node Not Found",
-      description: "The requested n8n node does not exist.",
+      title: "n8n Node Not Found",
+      description:
+        "That n8n node does not exist. Browse the full AltFTool workflow library instead to find free, importable n8n workflow templates by node or by category.",
       path: `/n8n/node/${slug}`,
       noindex: true,
     });
   }
   return createPageMetadata({
     title: `n8n Workflows with ${metaTitle(node.name, 32)}`,
-    description: description(node.name),
+    description: description(node.name, getWorkflowsByNode(slug).length),
     path: `/n8n/node/${slug}`,
   });
 }
@@ -60,7 +67,7 @@ export default async function Page({ params }) {
           createCollectionPageJsonLd({
             path,
             name: `n8n Workflows using ${node.name}`,
-            description: description(node.name),
+            description: description(node.name, items.length),
           }),
           createItemListJsonLd({
             path,

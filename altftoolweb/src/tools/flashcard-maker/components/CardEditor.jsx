@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { X, Save } from "lucide-react";
 import { motion } from "framer-motion";
+import { DIFFICULTIES } from "../utils/study-logic";
 
 export default function CardEditor({ card, onSave, onClose }) {
   const [front, setFront] = useState(card?.front || "");
@@ -33,8 +34,9 @@ export default function CardEditor({ card, onSave, onClose }) {
 
         <form onSubmit={handleSave} className="p-6 space-y-5">
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-(--muted-foreground)">Front Side</label>
+            <label htmlFor="card-front" className="text-xs font-bold uppercase tracking-wider text-(--muted-foreground)">Front Side</label>
             <textarea
+              id="card-front"
               autoFocus
               rows={3}
               placeholder="Question or concept..."
@@ -45,8 +47,9 @@ export default function CardEditor({ card, onSave, onClose }) {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-bold uppercase tracking-wider text-(--muted-foreground)">Back Side</label>
+            <label htmlFor="card-back" className="text-xs font-bold uppercase tracking-wider text-(--muted-foreground)">Back Side</label>
             <textarea
+              id="card-back"
               rows={4}
               placeholder="Answer or definition..."
               className="w-full p-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:ring-1 focus:ring-(--primary) transition-all text-sm font-medium resize-none"
@@ -58,18 +61,18 @@ export default function CardEditor({ card, onSave, onClose }) {
           <div className="space-y-1.5">
             <label className="text-xs font-bold uppercase tracking-wider text-(--muted-foreground)">Difficulty</label>
             <div className="grid grid-cols-3 gap-2">
-               {['easy', 'medium', 'hard'].map(d => (
+               {DIFFICULTIES.map(({ id, label }) => (
                  <button
-                  key={d}
+                  key={id}
                   type="button"
-                  onClick={() => setDifficulty(d)}
+                  onClick={() => setDifficulty(id)}
                   className={`py-2 rounded-lg font-bold uppercase text-[10px] transition-all border ${
-                    difficulty === d
+                    difficulty === id
                     ? 'bg-(--primary) text-white border-(--primary) shadow-sm'
                     : 'bg-(--background) border-(--border) text-(--muted-foreground) hover:border-(--primary)'
                   }`}
                  >
-                   {d}
+                   {label}
                  </button>
                ))}
             </div>

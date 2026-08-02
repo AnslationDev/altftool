@@ -94,6 +94,12 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the composer? This will clear your post text and author details.")
+    ) {
+      return;
+    }
     setText(DEFAULTS.text);
     setPlatformId(DEFAULTS.platformId);
     setAuthorName(DEFAULTS.authorName);
@@ -106,6 +112,7 @@ export default function ToolHome() {
   const meterWidth = result.error
     ? 0
     : Math.max(0, Math.min(100, (result.counted / result.limit) * 100));
+  const isResultOver = !result.error && Boolean(result.over || result.overBytes);
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -220,34 +227,36 @@ export default function ToolHome() {
       ) : (
         <>
           <section className={`${CARD} mb-6`} aria-labelledby="preview">
-            <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-              <h2 id="preview" className="text-lg font-semibold">
-                {result.platform.name} feed
-              </h2>
-              <span
-                className={
-                  result.over
-                    ? "rounded px-2 py-1 text-sm font-semibold bg-[var(--danger-soft)] text-[var(--danger)]"
-                    : "rounded px-2 py-1 text-sm font-semibold bg-[var(--muted)] text-[var(--muted-foreground)]"
-                }
-              >
-                {result.counted} / {result.limit} {result.platform.unit}
-              </span>
-            </div>
+            <div aria-live="polite" role="status">
+              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+                <h2 id="preview" className="text-lg font-semibold">
+                  {result.platform.name} feed
+                </h2>
+                <span
+                  className={
+                    isResultOver
+                      ? "rounded px-2 py-1 text-sm font-semibold bg-[var(--danger-soft)] text-[var(--danger)]"
+                      : "rounded px-2 py-1 text-sm font-semibold bg-[var(--muted)] text-[var(--muted-foreground)]"
+                  }
+                >
+                  {result.counted} / {result.limit} {result.platform.unit}
+                </span>
+              </div>
 
-            <div
-              className="h-2 w-full overflow-hidden rounded-full bg-[var(--muted)]"
-              role="img"
-              aria-label={`${result.counted} of ${result.limit} ${result.platform.unit} used`}
-            >
               <div
-                className={
-                  result.over
-                    ? "h-full rounded-full bg-[var(--danger)]"
-                    : "h-full rounded-full bg-[var(--primary)]"
-                }
-                style={{ width: `${meterWidth}%` }}
-              />
+                className="h-2 w-full overflow-hidden rounded-full bg-[var(--muted)]"
+                role="img"
+                aria-label={`${result.counted} of ${result.limit} ${result.platform.unit} used`}
+              >
+                <div
+                  className={
+                    isResultOver
+                      ? "h-full rounded-full bg-[var(--danger)]"
+                      : "h-full rounded-full bg-[var(--primary)]"
+                  }
+                  style={{ width: `${meterWidth}%` }}
+                />
+              </div>
             </div>
 
             {/* ---- the mock feed card ---- */}
@@ -428,22 +437,29 @@ export default function ToolHome() {
                   </tr>
                 </thead>
                 <tbody>
-                  {(table.rows || []).map((row) => (
-                    <tr key={row.id} className="border-b border-[var(--border)]">
-                      <td className="py-3 pr-3 font-medium whitespace-nowrap">{row.name}</td>
-                      <td className="py-3 pr-3 whitespace-nowrap">
-                        {row.counted} / {row.limit}
-                      </td>
-                      <td
-                        className={`py-3 pr-3 whitespace-nowrap ${row.over ? "font-semibold text-[var(--danger)]" : "text-[var(--muted-foreground)]"}`}
-                      >
-                        {row.over ? `${Math.abs(row.remaining)} over` : row.remaining}
-                      </td>
-                      <td className="py-3 text-[var(--muted-foreground)]">
-                        {row.truncated ? `${row.hiddenCount} characters hidden` : "shown in full"}
-                      </td>
-                    </tr>
-                  ))}
+                  {(table.rows || []).map((row) => {
+                    const isOver = row.over || row.overBytes;
+                    return (
+                      <tr key={row.id} className="border-b border-[var(--border)]">
+                        <td className="py-3 pr-3 font-medium whitespace-nowrap">{row.name}</td>
+                        <td className="py-3 pr-3 whitespace-nowrap">
+                          {row.counted} / {row.limit}
+                        </td>
+                        <td
+                          className={`py-3 pr-3 whitespace-nowrap ${isOver ? "font-semibold text-[var(--danger)]" : "text-[var(--muted-foreground)]"}`}
+                        >
+                          {row.over
+                            ? `${Math.abs(row.remaining)} over`
+                            : row.overBytes
+                              ? `${row.remaining} (over byte cap)`
+                              : row.remaining}
+                        </td>
+                        <td className="py-3 text-[var(--muted-foreground)]">
+                          {row.truncated ? `${row.hiddenCount} characters hidden` : "shown in full"}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>

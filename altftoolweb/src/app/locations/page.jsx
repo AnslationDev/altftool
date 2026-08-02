@@ -30,10 +30,31 @@ const T = {
 };
 const CARD = { backgroundColor: T.card, boxShadow: T.shadow };
 
+/** Registry counts, so the copy below can never drift from the actual index. */
+function getLocationCounts() {
+  const all = getAllGeoLocations();
+  return {
+    countries: all.filter((entry) => entry.type === "Country").length,
+    states: all.filter((entry) => entry.type === "State").length,
+    cities: all.filter((entry) => entry.type === "City").length,
+  };
+}
+
 export async function generateMetadata() {
+  // trimMetaDescription() only passes a string through verbatim when it is
+  // under 160 chars AND ends in terminal punctuation. The previous copy ran
+  // 169, so the live page shipped "...PDF and image tools." with the closing
+  // "near you" amputated. This lands at 152 with the current counts, and stays
+  // inside the budget until a bucket reaches five digits.
+  const { countries, states, cities } = getLocationCounts();
+  const counted = `Browse ${siteConfig.name} by location: ${countries} countries, ${states} Indian states and ${cities} cities, each with a shortlist of free browser tools — image, PDF, QR and calculators.`;
+
   return createPageMetadata({
     title: `${siteConfig.name} Worldwide — Free Online Tools by Location`,
-    description: `${siteConfig.name}'s free browser tools are available everywhere. Find your country, state, or city and see the most popular converters, calculators, PDF and image tools near you.`,
+    description:
+      counted.length < 160
+        ? counted
+        : `Browse ${siteConfig.name} by location — free browser tools for every country, state and city we index: image, PDF, QR and calculators.`,
     path: "/locations",
   });
 }
@@ -67,6 +88,7 @@ export default function LocationsPage() {
   const countries = all.filter((entry) => entry.type === "Country");
   const states = all.filter((entry) => entry.type === "State");
   const cities = all.filter((entry) => entry.type === "City");
+  const counts = getLocationCounts();
 
   return (
     <div className="mx-auto w-full max-w-6xl space-y-5 px-4 pb-14 pt-6 sm:px-6 lg:px-8" style={{ color: T.ink }}>
@@ -99,9 +121,10 @@ export default function LocationsPage() {
           {siteConfig.name} — Free Online Tools, Everywhere
         </h1>
         <p className="mt-4 max-w-3xl text-sm font-medium leading-relaxed" style={{ color: T.muted }}>
-          Every {siteConfig.name} tool runs in the browser, so it works the same in every country,
-          state, and city — free, private, and with no installation. Pick your location to see the
-          most popular tools and answers for your region.
+          {siteConfig.name} works the same in every country, state and city — free, with nothing to
+          install, and with the everyday tools doing their work inside your own browser. This index
+          covers {counts.countries} countries, {counts.states} Indian states and {counts.cities}{" "}
+          cities; pick one to see a shortlist of tools and the places we cover nearby.
         </p>
       </section>
 

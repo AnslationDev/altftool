@@ -4,6 +4,12 @@ import { useMemo, useState } from "react";
 import { CheckSquare, Copy } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
+const HEX_PATTERN = /^#?[0-9a-fA-F]{6}$|^#?[0-9a-fA-F]{3}$/;
+
+function isValidHex(hex) {
+  return typeof hex === "string" && HEX_PATTERN.test(hex.trim());
+}
+
 function hexToRgb(hex) {
   const normalized = hex.replace("#", "");
   const value = normalized.length === 3 ? normalized.split("").map((char) => char + char).join("") : normalized;
@@ -38,7 +44,10 @@ export default function ToolHome() {
   const [foreground, setForeground] = useState("#111827");
   const [background, setBackground] = useState("#ffffff");
   const [copied, setCopied] = useState(false);
-  const contrast = useMemo(() => ratio(foreground, background), [background, foreground]);
+  const contrast = useMemo(() => {
+    if (!isValidHex(foreground) || !isValidHex(background)) return null;
+    return ratio(foreground, background);
+  }, [background, foreground]);
 
   const copyCss = async () => {
     setCopied(await safeCopyText(`color: ${foreground};\nbackground-color: ${background};`));
@@ -88,11 +97,11 @@ export default function ToolHome() {
             <div className="tool-card-grid mt-5">
               <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
                 <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">Ratio</p>
-                <p className="tool-money-value mt-2">{contrast.toFixed(2)}:1</p>
+                <p className="tool-money-value mt-2">{contrast === null ? "—" : `${contrast.toFixed(2)}:1`}</p>
               </div>
-              <Result label="AA normal" pass={contrast >= 4.5} />
-              <Result label="AA large" pass={contrast >= 3} />
-              <Result label="AAA normal" pass={contrast >= 7} />
+              <Result label="AA normal" pass={contrast !== null && contrast >= 4.5} />
+              <Result label="AA large" pass={contrast !== null && contrast >= 3} />
+              <Result label="AAA normal" pass={contrast !== null && contrast >= 7} />
             </div>
           </div>
         </section>

@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Copy, RotateCcw, TrendingUp } from "lucide-react";
-import { safeCopyText } from "@/shared/utils/clipboard";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const FREQUENCIES = [
   { id: "1", label: "Annually", perYear: 1, each: "year" },
@@ -44,7 +44,7 @@ const fmtPct = (value) => (Number.isFinite(value) ? `${pct.format(value)}%` : "�
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard();
 
   const setField = (key, value) => setForm((prev) => ({ ...prev, [key]: value }));
 
@@ -95,6 +95,12 @@ export default function ToolHome() {
         previous = balance;
       }
       const finalBalance = principal * Math.exp(r * years);
+      if (!Number.isFinite(finalBalance)) {
+        return {
+          error:
+            "This combination of rate and time period grows past what can be calculated (overflow). Try a lower rate or a shorter period.",
+        };
+      }
       return {
         finalBalance,
         totalDeposits: 0,
@@ -152,25 +158,41 @@ export default function ToolHome() {
 
     // Fractional tail of a compounding period — growth only, no fresh deposit.
     if (partialPeriod > 1e-9) {
+      const openingForTail = balance;
       const tailInterest =
         balance * (Math.pow(1 + periodRate, partialPeriod) - 1);
       balance += tailInterest;
-      if (rows.length) {
-        const last = rows[rows.length - 1];
+
+      // The tail belongs to the calendar year it falls in (same convention
+      // as the continuous-compounding branch above: a partial final year is
+      // labelled with Math.ceil(years)). Only fold it into the previous row
+      // when that row is itself still mid-way through that same year —
+      // otherwise the previous row is a *complete* prior year and merging
+      // would mislabel this year's growth as belonging to the last one.
+      const tailYear = Math.ceil(years);
+      const last = rows[rows.length - 1];
+      if (last && last.year === tailYear) {
         last.interest += tailInterest;
         last.closing = balance;
       } else {
         rows.push({
-          year: 1,
-          opening: principal,
-          deposits: totalDeposits,
-          interest: balance - principal - totalDeposits,
+          year: tailYear,
+          opening: openingForTail,
+          deposits: 0,
+          interest: tailInterest,
           closing: balance,
         });
       }
     }
 
     const totalContributed = principal + totalDeposits;
+
+    if (!Number.isFinite(balance)) {
+      return {
+        error:
+          "This combination of rate, period and compounding frequency grows past what can be calculated (overflow). Try a lower rate, a shorter period, or less frequent compounding.",
+      };
+    }
 
     return {
       finalBalance: balance,
@@ -204,13 +226,7 @@ export default function ToolHome() {
       .join("\n");
   }, [form, frequency, isContinuous, result]);
 
-  const copyResult = async () => {
-    if (!report) return;
-    const ok = await safeCopyText(report);
-    if (!ok) return;
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1400);
-  };
+  const copyResult = () => copyToClipboard("result", report, { label: "Compound interest summary" });
 
   const inputClass =
     "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none disabled:opacity-60";
@@ -325,12 +341,19 @@ export default function ToolHome() {
                 type="button"
                 onClick={copyResult}
                 disabled={Boolean(result.error)}
-                aria-label="Copy compound interest summary"
+                aria-label={
+                  isCopied("result")
+                    ? "Copied the compound interest summary to clipboard"
+                    : "Copy compound interest summary"
+                }
                 className="inline-flex min-h-11 items-center gap-2 rounded-md bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 disabled:opacity-50"
               >
                 <Copy className="h-4 w-4" aria-hidden="true" />
-                {copied ? "Copied!" : "Copy result"}
+                {isCopied("result") ? "Copied!" : "Copy result"}
               </button>
+              <span className="sr-only" role="status" aria-live="polite">
+                {announcement}
+              </span>
               <button
                 type="button"
                 onClick={() => setForm(DEFAULTS)}
@@ -343,7 +366,11 @@ export default function ToolHome() {
             </div>
           </section>
 
-          <section className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section
+            aria-live="polite"
+            aria-atomic="true"
+            className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          >
             {result.error ? (
               <div
                 role="alert"

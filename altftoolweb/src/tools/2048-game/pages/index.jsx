@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Gamepad2, RefreshCw, RotateCcw, Timer, Trophy, Play, Pause, Zap } from "lucide-react";
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp, Gamepad2, RefreshCw, RotateCcw, Timer, Trophy, Play, Zap } from "lucide-react";
 import { Kbd } from "@/tools/_shared/game/GameShell";
 
 const SIZE = 4;
@@ -164,23 +164,12 @@ export default function ToolHome() {
   const [gameMode, setGameMode] = useState("classic");
   const [timeLeft, setTimeLeft] = useState(null);
   const [movesCount, setMovesCount] = useState(0);
-  const [startTime, setStartTime] = useState(null);
 
 const TIME_LIMIT = gameMode === "classic" ? null : 60;
 
   const move = useCallback(
     (direction) => {
       if (gameOver || won) return;
-
-      if (TIME_LIMIT) {
-        setTimeLeft(prev => {
-          if (prev <= 1) {
-            setGameOver(true);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }
 
       let result;
       switch (direction) {
@@ -201,6 +190,16 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
       }
 
       if (gridsEqual(grid, result.grid)) return;
+
+      if (TIME_LIMIT) {
+        setTimeLeft(prev => {
+          if (prev <= 1) {
+            setGameOver(true);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }
 
       const withNew = addRandomTile(result.grid);
       const newScore = score + result.score;
@@ -245,6 +244,11 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
 
   useEffect(() => {
     const handleKey = (e) => {
+      const target = e.target;
+      const tag = target?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || target?.isContentEditable) {
+        return;
+      }
       const keyMap = {
         ArrowLeft: "left",
         ArrowRight: "right",
@@ -268,8 +272,7 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
     setGameOver(false);
     setWon(false);
     setContinued(false);
-    setStartTime(Date.now());
-    if (gameMode === "timed") {
+    if (gameMode !== "classic") {
       setTimeLeft(60);
     } else {
       setTimeLeft(null);
@@ -300,12 +303,20 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
               Sliding Puzzle
             </span>
             {TIME_LIMIT && (
-              <span className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-xs font-bold text-red-600">
+              <span
+                className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-xs font-bold text-red-600"
+                role="status"
+                aria-live="polite"
+              >
                 <Timer className="h-3.5 w-3.5" />
                 Time: {formattedTime()}
               </span>
             )}
-            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--card)] px-3 py-1 text-xs font-bold text-[var(--foreground)]">
+            <span
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--card)] px-3 py-1 text-xs font-bold text-[var(--foreground)]"
+              role="status"
+              aria-live="polite"
+            >
               <Trophy className="h-3.5 w-3.5 text-[var(--primary)]" />
               Moves: {movesCount}
             </span>
@@ -317,9 +328,13 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
         </header>
 
         <div className="mb-4 flex flex-wrap items-center justify-center gap-2">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--card)] px-3 py-1 text-xs font-semibold text-[var(--muted-foreground)]">
+          <span
+            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--card)] px-3 py-1 text-xs font-semibold text-[var(--muted-foreground)]"
+            role="status"
+            aria-live="polite"
+          >
             <Trophy className="h-3.5 w-3.5 text-[var(--primary)]" />
-            Achievements: {movesCount >= 10 ? ("🎯 Sixth Move!") : movesCount >= 5 ? ("⭐ Fifth Move!") : movesCount >= 3 ? ("🎯 Third Move!") : movesCount >= 1 ? ("🚀 First Move!") : "----"}
+            Achievements: {movesCount >= 10 ? ("🏆 10th Move!") : movesCount >= 5 ? ("⭐ Fifth Move!") : movesCount >= 3 ? ("🎯 Third Move!") : movesCount >= 1 ? ("🚀 First Move!") : "----"}
           </span>
           {[
             { key: "classic", label: "Classic", icon: Play, desc: "No time limit" },
@@ -335,8 +350,7 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
                 setGrid(addRandomTile(addRandomTile(createEmptyGrid())));
                 setScore(0);
                 setMovesCount(0);
-                setStartTime(Date.now());
-                if (mode.key === "timed") {
+                if (mode.key !== "classic") {
                   setTimeLeft(60);
                 } else {
                   setTimeLeft(null);
@@ -407,7 +421,11 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
             </div>
 
             {gameOver && (
-              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-xl bg-black/60 backdrop-blur-[2px] motion-safe:animate-[altft-menu-in_200ms_ease-out]">
+              <div
+                className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-xl bg-black/60 backdrop-blur-[2px] motion-safe:animate-[altft-menu-in_200ms_ease-out]"
+                role="alert"
+                aria-live="assertive"
+              >
                 <p className="text-3xl font-black text-white">Game Over!</p>
                 <p className="mt-2 text-sm text-white/70">Score: {score.toLocaleString()}</p>
                 <button
@@ -422,7 +440,11 @@ const TIME_LIMIT = gameMode === "classic" ? null : 60;
             )}
 
             {won && (
-              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-xl bg-black/60 backdrop-blur-[2px] motion-safe:animate-[altft-menu-in_200ms_ease-out]">
+              <div
+                className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-xl bg-black/60 backdrop-blur-[2px] motion-safe:animate-[altft-menu-in_200ms_ease-out]"
+                role="alert"
+                aria-live="assertive"
+              >
                 <p className="text-3xl font-black text-amber-400">You Win!</p>
                 <p className="mt-2 text-sm text-white/70">Score: {score.toLocaleString()}</p>
                 <div className="mt-4 flex gap-3">

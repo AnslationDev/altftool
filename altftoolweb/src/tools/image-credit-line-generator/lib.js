@@ -142,7 +142,7 @@ function renderStyle(style, fields) {
  * Pure: same input always gives the same output.
  *
  * @returns {{error: string} | {creditLine: string, iptc: object[], warnings: string[],
- *   styleNote: string, rightsText: string, allStyles: Array<[string, string]>}}
+ *   styleNote: string, allStyles: Array<[string, string]>}}
  */
 export function buildCreditLine(input = {}) {
   const styleKey = clean(input.style) || "wire";
@@ -194,7 +194,7 @@ export function buildCreditLine(input = {}) {
   if (!photographer) {
     warnings.push("No photographer named. The IPTC Creator field should carry the individual maker, not the agency — an unnamed creator is how photographers lose their attribution.");
   }
-  if (agency && owner && agency === owner) {
+  if (creditField && sourceField && creditField === sourceField) {
     warnings.push("Credit Line and Source are identical. They are different IPTC fields: Credit is who to name in print, Source is where the file came from.");
   }
   if (rightsKey === "editorial") {
@@ -214,7 +214,6 @@ export function buildCreditLine(input = {}) {
   return {
     creditLine,
     styleNote: style.note,
-    rightsText: rights.text,
     iptc,
     warnings,
     allStyles,

@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
-import { Database, Lock, Zap } from 'lucide-react';
+import React, { useState, useMemo, useCallback } from 'react';
+import { Lock, Zap } from 'lucide-react';
 import ModeSelector from '../components/ModeSelector';
 import TextInput from '../components/TextInput';
 import OutputPanel from '../components/OutputPanel';
@@ -37,11 +37,23 @@ export default function ToolHome() {
   }
 
   const inputMetrics = useMemo(() => analyzeText(input), [input]);
-  const outputMetrics = useMemo(() => analyzeCompressed(output), [output]);
+  // In Compress mode `output` is a Base64-encoded gzip payload, so it needs
+  // analyzeCompressed()'s Base64-aware byte estimate. In Decompress mode
+  // `output` is the actual plaintext, so it must go through the same
+  // analyzeText() used for the input -- otherwise the byte count and line
+  // count are computed as if the plaintext were still Base64.
+  const outputMetrics = useMemo(
+    () => (mode === 'compress' ? analyzeCompressed(output) : analyzeText(output)),
+    [output, mode],
+  );
 
   const handleClear = useCallback(() => {
+    if (!input) return;
+    if (typeof window !== 'undefined' && !window.confirm('Clear the input text? This cannot be undone.')) {
+      return;
+    }
     setInput('');
-  }, []);
+  }, [input]);
 
   const handleSample = useCallback(() => {
     setInput(mode === 'compress' ? getSampleText() : getSampleGzip());
@@ -74,11 +86,11 @@ export default function ToolHome() {
               </div>
               <div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <h1 className="text-xl font-bold text-foreground leading-none">Gzip Encryption & Decryption</h1>
+                  <h1 className="text-xl font-bold text-foreground leading-none">Gzip Compression & Decompression</h1>
                   <span className="inline-flex rounded-md border border-border bg-background px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-muted-foreground">Developer Tools</span>
                 </div>
                 <p className="text-xs text-muted-foreground mt-1 max-w-xl leading-relaxed">
-                  Compress and decompress text using gzip. Quickly and easily encrypt and decrypt gzip strings!
+                  Compress and decompress text using gzip. Quickly and easily shrink or restore gzip Base64 strings. This is compression, not encryption.
                 </p>
               </div>
             </div>
@@ -97,7 +109,10 @@ export default function ToolHome() {
           <MetricsDisplay inputMetrics={inputMetrics} outputMetrics={outputMetrics} mode={mode} />
 
           {error && (
-            <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-500">
+            <div
+              role="alert"
+              className="rounded-xl border border-[var(--danger)]/30 bg-[var(--danger-soft)] p-4 text-sm font-medium text-[var(--danger-text)]"
+            >
               {error}
             </div>
           )}

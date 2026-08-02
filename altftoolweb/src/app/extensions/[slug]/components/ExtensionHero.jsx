@@ -89,6 +89,13 @@ export default function ExtensionHero({ extension }) {
 
             <div className="inline-flex items-center gap-1 bg-[var(--card)] border border-[var(--border)] px-3 py-1 rounded-full text-xs font-medium text-[var(--foreground)] shadow-xs">
               <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" aria-hidden="true" />
+              {/*
+                ratingText is the extension's own value from the catalog and
+                stays. The "(4.9/5 overall)" that sat beside it was hardcoded on
+                every extension page — an invented site-wide average printed next
+                to a real per-extension number, which made the real one look
+                invented too.
+              */}
               <span className="font-semibold">{ratingText}</span>
             </div>
 
@@ -106,9 +113,12 @@ export default function ExtensionHero({ extension }) {
           </div>
 
           <div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[var(--foreground)] leading-[1.15]">
+            {/* H2, not H1: the route's H1 is server-rendered in page.jsx so it
+                exists before this client component's Firestore read resolves.
+                Two H1s would otherwise appear on the page after hydration. */}
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-[var(--foreground)] leading-[1.15]">
               {formatRenderableValue(extension?.name, "Extension")}
-            </h1>
+            </h2>
             <p className="mt-4 text-lg md:text-xl text-[var(--muted-foreground)] leading-relaxed max-w-3xl font-normal mx-auto lg:mx-0">
               {formatRenderableValue(extension?.description)}
             </p>

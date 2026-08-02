@@ -44,10 +44,13 @@ export const MAX_SCALE = 16;
 export const BYTES_PER_PIXEL = 4;
 
 const SVG_ROOT_RE = /<svg[\s>]/i;
-const SCRIPT_RE = /<script[\s\S]*?<\/script\s*>/gi;
+// Matches both a paired <script>...</script> block and the equally-valid XML
+// self-closing form, e.g. <script href="evil.js"/>, which has no closing tag.
+const SCRIPT_RE = /<script\b[^>]*\/>|<script\b[\s\S]*?<\/script\s*>/gi;
 const EVENT_ATTR_RE = /\son[a-z]+\s*=\s*(?:"[^"]*"|'[^']*'|[^\s>]+)/gi;
 const EXTERNAL_REF_RE = /(?:href|xlink:href|src)\s*=\s*["']\s*(?:https?:)?\/\//i;
 const FOREIGN_OBJECT_RE = /<foreignObject[\s>]/i;
+const ROOT_SVG_OPEN_TAG_RE = /<svg\b[^>]*>/i;
 
 /** Parse one SVG length such as "120", "12mm" or "3.5in" into px. */
 export function parseLengthToPx(value) {
@@ -102,6 +105,9 @@ export function parseSvgDimensions(markup) {
   }
   if (widthAttr && widthAttr > 0) {
     return { width: widthAttr, height: DEFAULT_SVG_HEIGHT, viewBox, source: "width + default" };
+  }
+  if (heightAttr && heightAttr > 0) {
+    return { width: DEFAULT_SVG_WIDTH, height: heightAttr, viewBox, source: "height + default" };
   }
   return {
     width: DEFAULT_SVG_WIDTH,
@@ -187,7 +193,6 @@ export function svgToDataUri(markup) {
     .replace(/"/g, "%22");
   return {
     dataUri: `data:image/svg+xml;charset=utf-8,${encoded}`,
-    characters: encoded.length + 33,
   };
 }
 
@@ -210,7 +215,9 @@ export function analyzeSvg(markup, { scale = 1 } = {}) {
   if (!SVG_ROOT_RE.test(source)) {
     return { error: "That does not look like SVG — the markup has no <svg> element." };
   }
-  if (!/<\/svg\s*>/i.test(source)) {
+  const rootOpenTag = ROOT_SVG_OPEN_TAG_RE.exec(source);
+  const rootIsSelfClosed = Boolean(rootOpenTag && rootOpenTag[0].trimEnd().endsWith("/>"));
+  if (!rootIsSelfClosed && !/<\/svg\s*>/i.test(source)) {
     return { error: "The <svg> element is never closed — paste the whole file." };
   }
 

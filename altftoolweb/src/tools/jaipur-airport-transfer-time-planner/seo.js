@@ -23,7 +23,7 @@ const seo = {
   faqs: [
     [
       "How early should I reach Jaipur airport?",
-      "Two hours before a domestic departure and three hours before an international one is the standard airline advice, and it is comfortable at JAI because Terminal 2 is small. The figure that actually decides your departure, though, is the check-in close — typically 45 minutes before a domestic flight and 60 minutes before an international one — because no amount of early arrival helps once the counter has shut.",
+      "Two hours before a domestic departure and three hours before an international one is the standard airline advice. Counter-intuitively, that arrival-advice window is usually the figure that actually decides your departure here, not the check-in close: 120 or 180 minutes before departure is simply a bigger number than check-in-close-plus-processing-time or gate-close-plus-processing-time comes to at JAI, so the advice window ends up the tighter, binding cutoff in practice. The planner works out all three cutoffs for your specific flight and tells you which one is genuinely binding.",
     ],
     [
       "How long does it take to get to Jaipur airport from the city centre?",

@@ -1,6 +1,6 @@
 import { motion, useInView, animate } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, PlayCircle, Star, Home, Award, ShieldCheck, PaintBucket, Ruler, ChevronDown } from "lucide-react";
+import { ArrowRight, PlayCircle, Star, Home, Award, PaintBucket, Ruler, ChevronDown, ShieldCheck } from "lucide-react";
 
 function Counter({ to, suffix = "" }) {
   const ref = useRef(null);
@@ -124,14 +124,16 @@ export default function Hero() {
             </a>
           </div>
 
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-5 text-primary-foreground/80 text-sm">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-secondary" /> Storm-Ready Materials
-            </div>
-            <div className="h-4 w-px bg-surface/25" />
-            <div className="flex items-center gap-2"><Award className="w-4 h-4 text-secondary" /> Free In-Home Estimates</div>
-          </div>
+          {/*
+            The trust row that sat here claimed "4.9/5 from 3,200+ reviews",
+            "BBB A+ Accredited" and "Licensed & Insured". None of the three is
+            true: there is no review mechanism behind the rating, the BBB
+            accreditation does not exist, and no licence does either. On a page
+            that asks a homeowner for their phone number, those are the lines
+            that make them trust it.
+          */}
         </motion.div>
+
 
         {/* Right floating stats */}
         <div className="hidden">

@@ -178,7 +178,25 @@ export function buildGrepCommand({
   if (engine === "grep") {
     // GNU grep: --include/--exclude apply while descending directories (-r).
     for (const glob of includes) args.push(`--include=${shellQuote(glob)}`);
-    for (const glob of excludes) args.push(`--exclude=${shellQuote(glob)}`);
+    // --exclude only ever matches a file's basename, never a full path, so a
+    // glob containing "/" (e.g. "node_modules/**") can never match anything
+    // via --exclude. Directories must instead be pruned with --exclude-dir,
+    // which takes a bare directory name/glob (GNU grep manual §2.1.3). Peel
+    // the directory name off common "DIR/**" / "DIR/" shaped globs and emit
+    // --exclude-dir for those; anything else keeps using --exclude.
+    for (const glob of excludes) {
+      const dirName = glob.replace(/\/\*\*$/, "").replace(/\/$/, "");
+      if (dirName && dirName !== glob) {
+        args.push(`--exclude-dir=${shellQuote(dirName)}`);
+      } else if (glob.includes("/")) {
+        args.push(`--exclude=${shellQuote(glob)}`);
+        notes.push(
+          `"${glob}" contains a "/", but --exclude only matches a file's basename and will never match it; use a directory name (e.g. "${glob.split("/")[0]}/**") for --exclude-dir, or a bare filename glob.`,
+        );
+      } else {
+        args.push(`--exclude=${shellQuote(glob)}`);
+      }
+    }
     if ((includes.length || excludes.length) && !recursive) {
       notes.push(
         "--include and --exclude only take effect while grep descends directories; add -r for them to matter.",
@@ -199,8 +217,16 @@ export function buildGrepCommand({
     args.push(quotedPattern);
   }
 
+  // Same hazard as the pattern above: a search path starting with "-" would
+  // otherwise be parsed as a flag. Neither tool has a path-specific escape
+  // like -e, so use "--" to mark the end of options instead (GNU grep manual
+  // §2.1, "--"; rg --help, same POSIX convention).
   const path = typeof searchPath === "string" && searchPath.trim() !== "" ? searchPath.trim() : ".";
-  args.push(shellQuote(path));
+  if (path.startsWith("-")) {
+    args.push("--", shellQuote(path));
+  } else {
+    args.push(shellQuote(path));
+  }
 
   const binary = engine === "ripgrep" ? "rg" : "grep";
   return { command: `${binary} ${args.join(" ")}`, notes };

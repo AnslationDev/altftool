@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, MicVocal, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   FORMATS,
   MAX_SECONDS,
@@ -46,7 +48,8 @@ export default function ToolHome() {
   const [audience, setAudience] = useState(DEFAULTS.audience);
   const [angle, setAngle] = useState(DEFAULTS.angle);
   const [cta, setCta] = useState(DEFAULTS.cta);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -63,18 +66,19 @@ export default function ToolHome() {
     [formatId, platformId, paceId, seconds, topic, audience, angle, cta],
   );
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (result.error || !result.prompt) return;
-    try {
-      await navigator.clipboard.writeText(result.prompt);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("prompt", result.prompt, { label: "prompt" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your topic, audience, angle and CTA with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setFormatId(DEFAULTS.formatId);
     setPlatformId(DEFAULTS.platformId);
     setPaceId(DEFAULTS.paceId);
@@ -83,13 +87,13 @@ export default function ToolHome() {
     setAudience(DEFAULTS.audience);
     setAngle(DEFAULTS.angle);
     setCta(DEFAULTS.cta);
-    setCopied(false);
+    resetCopyState();
   };
 
   const stat = (value) => (result.error ? DASH : value);
   const touch = (setter) => (event) => {
     setter(event.target.value);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -120,7 +124,7 @@ export default function ToolHome() {
                   aria-pressed={active}
                   onClick={() => {
                     setFormatId(item.id);
-                    setCopied(false);
+                    resetCopyState();
                   }}
                   className={`min-h-11 rounded-md border px-3 py-2 text-left text-sm transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                     active
@@ -238,7 +242,7 @@ export default function ToolHome() {
               type="button"
               onClick={() => {
                 setSeconds(String(preset));
-                setCopied(false);
+                resetCopyState();
               }}
               className="min-h-11 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
             >
@@ -274,18 +278,25 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the generated creator prompt"
+              aria-label={isCopied("prompt") ? "Copied the generated creator prompt" : "Copy the generated creator prompt"}
               className={GHOST_BTN}
               disabled={Boolean(result.error)}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy prompt"}
+              {isCopied("prompt") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("prompt") ? "Copied!" : "Copy prompt"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
