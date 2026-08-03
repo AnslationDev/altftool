@@ -1,6 +1,7 @@
 "use client";
 import { ThumbsUp, ThumbsDown, MessageSquare, BadgeCheck } from "lucide-react";
 import { useEditor } from "../../../lib/editor-store";
+import ImageViewer from "../../ui/image-viewer";
 
 function YoutubeCommentPreview() {
   const {
@@ -32,7 +33,7 @@ function YoutubeCommentPreview() {
       <div className="flex gap-3 p-3 border-b" style={{ borderColor: border }}>
         <div className="h-14 w-24 bg-neutral-800 rounded overflow-hidden shrink-0 flex items-center justify-center">
           {videoThumbnail ? (
-            <img src={videoThumbnail} className="h-full w-full object-cover" alt="" />
+            <ImageViewer src={videoThumbnail} alt="Video thumbnail" platform="YouTube Video" className="h-full w-full object-cover" />
           ) : (
             <div className="text-[10px] text-neutral-400 font-semibold p-1 text-center">No Thumbnail</div>
           )}
@@ -47,9 +48,9 @@ function YoutubeCommentPreview() {
       {/* Main Comment */}
       <div className="p-4 flex gap-3">
         <div className="grid h-10 w-10 shrink-0 place-items-center overflow-hidden rounded-full bg-secondary">
-          {avatar ? (
-            <img src={avatar} className="h-full w-full object-cover" alt="" />
-          ) : (
+                {avatar ? (
+                  <ImageViewer src={avatar} alt="Avatar" className="h-full w-full object-cover" platform="YouTube" />
+                ) : (
             <span className="text-sm font-bold">{username[0]}</span>
           )}
         </div>
@@ -83,7 +84,7 @@ function YoutubeCommentPreview() {
                 <div key={reply.id} className="flex gap-2.5">
                   <div className="grid h-6 w-6 shrink-0 place-items-center overflow-hidden rounded-full bg-secondary">
                     {reply.avatar ? (
-                      <img src={reply.avatar} className="h-full w-full object-cover" alt="" />
+                      <ImageViewer src={reply.avatar} alt="Reply avatar" className="h-full w-full object-cover" platform="YouTube Reply" />
                     ) : (
                       <span className="text-[10px] font-bold">{reply.username[0]}</span>
                     )}

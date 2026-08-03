@@ -2,6 +2,7 @@
 import { ChevronLeft, Video, Phone, Info, BadgeCheck } from "lucide-react";
 import { useEditor } from "../../../lib/editor-store";
 import { DeviceFrame } from "../DeviceFrame";
+import ImageViewer from "../../ui/image-viewer";
 function InstagramDMPreview() {
   const { username, handle, avatar, verified, messages, theme } = useEditor();
   const dark = theme !== "light";
@@ -11,8 +12,8 @@ function InstagramDMPreview() {
   return <DeviceFrame
     header={<div className="flex items-center gap-2 border-b px-3 py-2" style={{ background: bg, color: fg, borderColor: dark ? "#222" : "#eee" }}>
           <ChevronLeft className="h-5 w-5" />
-          <div className="grid h-9 w-9 place-items-center overflow-hidden rounded-full bg-gradient-to-tr from-pink-500 via-fuchsia-500 to-orange-400">
-            {avatar ? <img src={avatar} className="h-full w-full object-cover" alt="" /> : <span className="text-xs font-bold text-white">{username[0]}</span>}
+            <div className="grid h-9 w-9 place-items-center overflow-hidden rounded-full bg-gradient-to-tr from-pink-500 via-fuchsia-500 to-orange-400">
+            {avatar ? <ImageViewer src={avatar} alt="Avatar" className="h-full w-full object-cover" platform="Instagram DM" /> : <span className="text-xs font-bold text-white">{username[0]}</span>}
           </div>
           <div className="flex-1">
             <p className="flex items-center gap-1 text-sm font-semibold">{handle}{verified && <BadgeCheck className="h-3.5 w-3.5 fill-sky-500 text-white" />}</p>

@@ -66,6 +66,10 @@ const initial = {
     { id: "r2", title: "The Science of Productivity - Harvard Business Review", url: "hbr.org › 2023 › productivity-science", snippet: "Productivity isn't about working longer — it's about working smarter. Here are the strategies top performers use to maximize their output." },
     { id: "r3", title: "How to Stay Focused and Productive: A Complete Guide", url: "lifehacker.com › productivity-guide-2024", snippet: "From time blocking to the Pomodoro technique, we cover all the best methods to help you stay on task and accomplish more in less time." },
   ],
+
+  // ── Generic fields for unimplemented templates ────────────────────
+  title: "Your Title Here",
+  description: "Add a description for this template",
 };
 
 const useEditor = create((set, get) => ({

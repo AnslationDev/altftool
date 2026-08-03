@@ -236,8 +236,8 @@ export default function WorkspaceClient() {
         <div className="absolute left-1/2 -translate-x-1/2 top-14 z-[80] tdn-badge-live !text-xs px-3 py-1.5 tdn-rise">Workspace saved</div>
       )}
 
-      {/* Chart grid */}
-      <div className="flex-1 min-h-0 p-2">
+      {/* Chart grid — tdn-paper content surface (white in light, dark in dark); toolbar keeps the app theme */}
+      <div className="tdn-paper flex-1 min-h-0 p-2">
         {fullscreenId && (
           <button onClick={() => setFullscreenId(null)} className="tdn-btn tdn-btn-ghost !py-1 !px-2 text-xs mb-2">
             <Minimize2 size={13} /> Exit fullscreen chart

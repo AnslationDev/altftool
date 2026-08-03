@@ -4,8 +4,9 @@
 import { cn } from "../../utils/cn";
 
 /**
- * Tradeon brand lockup: a clean, solid "E" monogram mark (no gradients) + the
- * full "Tradeon" wordmark. Reads premium in both light and dark themes.
+ * Tradeon brand lockup: a clean, solid uptrend mark (no gradients, no letter
+ * monogram) + the full "Tradeon" wordmark. Reads premium in both light and dark
+ * themes.
  */
 export default function Logo({ className, mark = true, wordmark = true, size = 30 }) {
   return (
@@ -22,16 +23,19 @@ export default function Logo({ className, mark = true, wordmark = true, size = 3
           }}
           aria-hidden
         >
-          <svg width={size * 0.56} height={size * 0.56} viewBox="0 0 24 24" fill="none">
-            <path
-              d="M7 4.5 V19.5"
-              stroke="var(--tdn-mark-fg)"
-              strokeWidth="2.6"
-              strokeLinecap="round"
-            />
-            <path d="M7 5.4 H18" stroke="var(--tdn-mark-fg)" strokeWidth="2.6" strokeLinecap="round" />
-            <path d="M7 12 H15.5" stroke="var(--tdn-mark-fg)" strokeWidth="2.6" strokeLinecap="round" />
-            <path d="M7 18.6 H18" stroke="var(--tdn-mark-fg)" strokeWidth="2.6" strokeLinecap="round" />
+          <svg
+            width={size * 0.6}
+            height={size * 0.6}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="var(--tdn-mark-fg)"
+            strokeWidth="2.4"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+            <polyline points="16 7 22 7 22 13" />
           </svg>
         </span>
       )}

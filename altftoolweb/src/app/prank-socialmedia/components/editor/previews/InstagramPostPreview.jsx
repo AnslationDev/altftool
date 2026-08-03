@@ -1,6 +1,7 @@
 "use client";
 import { BadgeCheck, Heart, MessageCircle, Send, Bookmark, MoreHorizontal } from "lucide-react";
 import { useEditor } from "../../../lib/editor-store";
+import ImageViewer from "../../ui/image-viewer";
 
 function InstagramPostPreview() {
   const { username, avatar, verified, postImage, caption, location, likes, theme } = useEditor();
@@ -20,7 +21,7 @@ function InstagramPostPreview() {
         <div className="flex items-center gap-2">
           <div className="grid h-8 w-8 place-items-center overflow-hidden rounded-full bg-secondary">
             {avatar ? (
-              <img src={avatar} className="h-full w-full object-cover" alt="" />
+              <ImageViewer src={avatar} alt="Avatar" className="h-full w-full object-cover" platform="Instagram" />
             ) : (
               <span className="text-sm font-bold">{username[0]}</span>
             )}
@@ -39,7 +40,7 @@ function InstagramPostPreview() {
       {/* Post Image */}
       <div className="aspect-square w-full bg-secondary flex items-center justify-center overflow-hidden border-y" style={{ borderColor: border }}>
         {postImage ? (
-          <img src={postImage} className="h-full w-full object-cover" alt="Post" />
+          <ImageViewer src={postImage} alt="Post" platform="Instagram Post" className="h-full w-full object-cover" />
         ) : (
           <div className="text-sm text-muted-foreground p-4 text-center">No image uploaded. Use the sidebar to upload a post image.</div>
         )}

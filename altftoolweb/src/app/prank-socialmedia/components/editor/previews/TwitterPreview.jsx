@@ -1,6 +1,7 @@
 "use client";
 import { BadgeCheck, MessageCircle, Repeat2, Heart, BarChart2, Share, MoreHorizontal } from "lucide-react";
 import { useEditor } from "../../../lib/editor-store";
+import ImageViewer from "../../ui/image-viewer";
 function TwitterPreview() {
   const { username, handle, avatar, verified, body, time, likes, views, theme } = useEditor();
   const dark = theme !== "light";
@@ -12,7 +13,7 @@ function TwitterPreview() {
       <div className="px-5 pt-5">
         <div className="flex items-start gap-3">
           <div className="grid h-12 w-12 place-items-center overflow-hidden rounded-full bg-secondary">
-            {avatar ? <img src={avatar} className="h-full w-full object-cover" alt="" /> : <span className="font-bold">{username[0]}</span>}
+            {avatar ? <ImageViewer src={avatar} alt="Avatar" className="h-full w-full object-cover" platform="Twitter" /> : <span className="font-bold">{username[0]}</span>}
           </div>
           <div className="flex-1">
             <div className="flex items-center gap-1 text-[15px] font-bold">

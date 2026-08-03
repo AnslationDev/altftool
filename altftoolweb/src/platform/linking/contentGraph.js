@@ -23,8 +23,6 @@ import {
   getTop9Category,
   isTop9Indexable,
 } from "@/app/top9/data/getTop9Items";
-import top11CategoryData from "@/app/top11/data/categoryData";
-import { isTop11Indexable } from "@/app/top11/data/indexPolicy";
 import { isSignalIndexable } from "@/app/signals/signalCoverage";
 import { getDeals, getDealPaidProducts } from "@/app/deals/data/deals";
 import { apps as appCatalog } from "@/app/apps/data/apps";
@@ -223,16 +221,9 @@ function buildGraph() {
     });
   });
 
-  Object.entries(top11CategoryData || {}).forEach(([slug, category]) => {
-    if (!isTop11Indexable(`/top11/${slug}`)) return;
-    pushItem(items, seen, {
-      href: `/top11/${slug}`,
-      title: category?.title || `Top 11 ${slug.replace(/-/g, " ")}`,
-      description: category?.description,
-      section: "top11",
-      tags: [slug.split("-"), (category?.tools || []).slice(0, 5).map((tool) => tool?.name)],
-    });
-  });
+  // /top11 contributes no link targets: the whole family is noindexed while its
+  // rankings carry placeholder data (app/top11/data/indexPolicy.js), and this
+  // graph deliberately only offers pages that can rank.
 
   // /deals is a price-comparison family, not a product listing: each page maps
   // one job to the paid products that charge for it. The paid product names are

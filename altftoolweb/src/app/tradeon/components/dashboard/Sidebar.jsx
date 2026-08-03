@@ -11,7 +11,7 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   Settings,
-  Sparkles,
+  Gauge,
   Star,
 } from "lucide-react";
 import { cn } from "../../utils/cn";
@@ -22,7 +22,7 @@ const NAV = [
   { label: "Dashboard", Icon: LayoutDashboard, href: "/tradeon/dashboard", active: true },
   { label: "Markets", Icon: LineChart, href: "/tradeon#markets" },
   { label: "Workspace", Icon: Grid2x2, href: "/tradeon/workspace" },
-  { label: "Predictions", Icon: Sparkles, href: "/tradeon#predictions" },
+  { label: "Predictions", Icon: Gauge, href: "/tradeon#predictions" },
 ];
 
 export default function Sidebar({ collapsed, onToggle }) {
@@ -54,7 +54,7 @@ export default function Sidebar({ collapsed, onToggle }) {
             )}
             style={
               active
-                ? { background: "var(--tdn-iris)", color: "var(--primary-foreground)", boxShadow: "var(--tdn-shadow-sm)" }
+                ? { background: "var(--tdn-iris)", color: "#fff", boxShadow: "var(--tdn-shadow-sm)" }
                 : { color: "var(--tdn-muted)" }
             }
             title={label}

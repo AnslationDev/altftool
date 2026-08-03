@@ -1,90 +1,58 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
-import { TOOL_CATEGORIES } from "../data/tools";
+import { DESIGN_CATEGORIES, FEATURED_DESIGN_TOOLS, LATEST_DESIGN_RESOURCES, ESSENTIAL_DESIGN_TOOLS, PARTNER_DESIGN_PICKS, DESIGNER_TOOLKITS } from "../data/designTools";
+import { getHeroSequenceTimings } from "../lib/heroTiming";
 import { AuthProvider } from "../providers/AuthProvider";
+import { CompareProvider } from "../providers/CompareProvider";
+import { ToolStatsProvider } from "../providers/ToolStatsProvider";
 import AuthDialog from "./AuthDialog";
-import ComboPacksSection from "./ComboPacksSection";
-import EditorsPicksSection from "./EditorsPicksSection";
-import FaqSection from "./FaqSection";
-import Hero from "./Hero";
-import NewlyAddedSection from "./NewlyAddedSection";
-import NewsletterCtaSection from "./NewsletterCtaSection";
-import SectionNav from "./SectionNav";
-import TestimonialsSection from "./TestimonialsSection";
-import ToolsExplorer from "./ToolsExplorer";
-import TrendingSection from "./TrendingSection";
-import ValuePropsSection from "./ValuePropsSection";
+import CompareBar from "./CompareBar";
+import CompareModal from "./CompareModal";
+import ScrollReveal from "./ScrollReveal";
+import HeroSection from "./HeroSection";
+import CategoriesGridSection from "./CategoriesGridSection";
+import CommunityFavoritesSection from "./CommunityFavoritesSection";
+import SavedToolsSection from "./SavedToolsSection";
+import FeaturedDesignToolsSection from "./FeaturedDesignToolsSection";
+import LatestDesignResourcesSection from "./LatestDesignResourcesSection";
+import EssentialDesignToolsSection from "./EssentialDesignToolsSection";
+import PartnerPicksSection from "./PartnerPicksSection";
+import DesignerToolkitsSection from "./DesignerToolkitsSection";
+import AllDesignToolsSection from "./AllDesignToolsSection";
 
-/**
- * Client shell for the Free AI Tools landing page. Owns search query and the
- * active category so the hero (search bar + category grid) and the sidebar
- * explorer below drive the same result grid instead of separate state.
- * Fixed light palette regardless of the site-wide theme. Wrapped in
- * AuthProvider so every tool card can gate its "Open Tool" click behind
- * sign-in/sign-up (see ToolCard.jsx and HeroSearchPreview.jsx).
- */
+const HERO_TITLE = "Discover the Best Design Resources & Tools";
+const HERO_DESCRIPTION =
+  "A carefully curated directory of 200+ design tools, hand-picked for quality, innovation, and ease of use. Updated regularly for the community.";
+const { categoriesStart } = getHeroSequenceTimings(HERO_TITLE, HERO_DESCRIPTION);
+
 export default function FreeAiToolsLanding() {
-  const [query, setQuery] = useState("");
-  const [activeCategoryId, setActiveCategoryId] = useState(TOOL_CATEGORIES[0].id);
-  const explorerRef = useRef(null);
-
-  const scrollToExplorer = useCallback(() => {
-    explorerRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, []);
-
-  const clearQuery = useCallback(() => setQuery(""), []);
-
-  const selectCategoryAndScroll = useCallback(
-    (id) => {
-      setQuery("");
-      setActiveCategoryId(id);
-      scrollToExplorer();
-    },
-    [scrollToExplorer],
-  );
-
   return (
     <AuthProvider>
-      <main className="relative isolate overflow-hidden bg-[#f7f7fc] text-slate-900 selection:bg-violet-200 selection:text-violet-950">
-        <SectionNav />
-        <AuthDialog />
-
-        <Hero
-          query={query}
-          onQueryChange={setQuery}
-          onExplore={scrollToExplorer}
-          onSelectCategory={selectCategoryAndScroll}
-        />
-
-        <div className="bg-white/70">
-          <TrendingSection />
-        </div>
-
-        <NewlyAddedSection />
-
-        <ToolsExplorer
-          activeId={activeCategoryId}
-          onSelectCategory={setActiveCategoryId}
-          query={query}
-          onClearQuery={clearQuery}
-          sectionRef={explorerRef}
-        />
-
-        <ComboPacksSection />
-
-        <div className="bg-white/70">
-          <EditorsPicksSection />
-        </div>
-
-        <ValuePropsSection />
-
-        <div className="bg-white/70">
-          <TestimonialsSection />
-        </div>
-
-        <FaqSection />
-      </main>
+      <ToolStatsProvider>
+        <CompareProvider>
+          <main className="relative isolate overflow-hidden bg-[#F3F4FD] text-[#0A0523]">
+            <AuthDialog />
+            <CompareBar />
+            <CompareModal />
+            <div className="flex min-h-screen flex-col justify-center bg-gradient-to-br from-violet-100 via-fuchsia-50 to-violet-50">
+              <HeroSection title={HERO_TITLE} description={HERO_DESCRIPTION} />
+              <CategoriesGridSection categories={DESIGN_CATEGORIES} startDelay={categoriesStart} />
+            </div>
+            <ScrollReveal><SavedToolsSection /></ScrollReveal>
+            {/* <FeaturedDesignToolsSection tools={FEATURED_DESIGN_TOOLS} /> */}
+            <ScrollReveal><LatestDesignResourcesSection tools={LATEST_DESIGN_RESOURCES} /></ScrollReveal>
+            <ScrollReveal><EssentialDesignToolsSection tools={ESSENTIAL_DESIGN_TOOLS} /></ScrollReveal>
+            <ScrollReveal>
+              {/* <PartnerPicksSection tools={PARTNER_DESIGN_PICKS} /> */}
+              </ScrollReveal>
+            <ScrollReveal>
+              <DesignerToolkitsSection toolkits={DESIGNER_TOOLKITS} />
+              </ScrollReveal>
+            <ScrollReveal><CommunityFavoritesSection /></ScrollReveal>
+            <ScrollReveal><AllDesignToolsSection categories={DESIGN_CATEGORIES} /></ScrollReveal>
+          </main>
+        </CompareProvider>
+      </ToolStatsProvider>
     </AuthProvider>
   );
 }

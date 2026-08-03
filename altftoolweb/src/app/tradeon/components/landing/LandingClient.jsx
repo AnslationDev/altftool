@@ -5,10 +5,10 @@ import { useMarketData } from "../../hooks/useMarketData";
 import TradeonHeader from "./TradeonHeader";
 import Hero from "./Hero";
 import MarketMovers from "./MarketMovers";
-import AIPredictions from "./AIPredictions";
-import WorkspacePreview from "./WorkspacePreview";
 import GlobalMarkets from "./GlobalMarkets";
 import MarketInsights from "./MarketInsights";
+import SectorOutlook from "./SectorOutlook";
+import NewsSection from "../news/NewsSection";
 import TradeonFooter from "./TradeonFooter";
 
 export default function LandingClient() {
@@ -18,13 +18,14 @@ export default function LandingClient() {
     <div id="top" className="tradeon-root">
       {/* Sticky header carries the market tape at its very top */}
       <TradeonHeader data={data} status={status} />
-      <main className="pt-3">
+      {/* Content surface — tdn-paper: white in light theme, app dark in dark theme (header/footer keep the app theme) */}
+      <main className="tdn-paper pt-3">
         <Hero data={data} status={status} />
         <MarketMovers data={data} />
-        <AIPredictions data={data} />
-        <WorkspacePreview data={data} />
         <GlobalMarkets data={data} />
         <MarketInsights data={data} />
+        <NewsSection />
+        <SectorOutlook />
       </main>
       <TradeonFooter status={status} />
     </div>

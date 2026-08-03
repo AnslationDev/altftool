@@ -6,17 +6,19 @@
 // All existing data (live snapshot, prediction, fundamentals) is preserved.
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
-  Check, ChevronLeft, GitCompare, Maximize2, Plus, Share2, Sparkles, Star, TrendingUp,
+  Bell, ChevronLeft, Crosshair, GitCompare, Maximize2, PencilRuler,
+  Plus, Save, Settings2, Share2, Gauge, Star, TrendingUp,
 } from "lucide-react";
 import { useMarketData } from "../../hooks/useMarketData";
+import { useNews } from "../../hooks/useNews";
 import { predict } from "../../lib/ai";
 import { getFundamentals } from "../../lib/fundamentals";
 import { INSTRUMENTS, symbolFromSlug } from "../../lib/instruments";
-import { assetHref, chartHref, formatCap, formatCompact, formatPct, formatPrice } from "../../lib/format";
+import { assetHref, formatCap, formatCompact, formatPct, formatPrice } from "../../lib/format";
 import TradeonHeader from "../landing/TradeonHeader";
 import TradeonFooter from "../landing/TradeonFooter";
 import MiniChart from "../chart/MiniChart";
@@ -25,6 +27,7 @@ import LiveValue from "../shared/LiveValue";
 import MarketStatusBadge from "../shared/MarketStatusBadge";
 import Ring from "../shared/Ring";
 import Sparkline from "../shared/Sparkline";
+import { RecentNewsView } from "../news/RecentNews";
 
 const SIGNAL_COLOR = { BUY: "var(--tdn-up)", SELL: "var(--tdn-down)", HOLD: "var(--tdn-amber)" };
 const SIG = {
@@ -38,7 +41,7 @@ const INDICATORS = ["EMA", "SMA", "RSI", "MACD", "Bollinger", "VWAP"];
 // Map the detail-page period/type selectors onto the shared candle engine.
 const A_TYPE_MAP = { Candlestick: "candlestick", Line: "line", Area: "area", OHLC: "ohlc", Volume: "candlestick" };
 const A_TF_MAP = { "1D": "5m", "5D": "30m", "1M": "4h", "3M": "1d", "6M": "1d", "1Y": "1w", "5Y": "1M", All: "1Y" };
-const TABS = ["Overview", "Financials", "Technical Analysis", "Predictions", "Scenarios", "Historical Data", "Fundamentals", "Holdings", "Earnings", "Dividends", "Related Assets"];
+const TABS = ["Overview", "Financials", "Technical Analysis", "Predictions", "News", "Historical Data", "Fundamentals", "Holdings", "Earnings", "Dividends", "Related Assets"];
 
 /* ---------- small building blocks ---------- */
 function Stat({ label, value, tone }) {
@@ -131,18 +134,26 @@ function Row2({ k, v, c }) {
 }
 
 /* ---------- page ---------- */
-export default function AssetDetailClient() {
+export default function AssetDetailClient({ symbol: symbolProp, defaultTab }) {
   const params = useParams();
-  const symbol = symbolFromSlug(Array.isArray(params.symbol) ? params.symbol[0] : params.symbol || "BTC");
+  const symbol = symbolProp || symbolFromSlug(Array.isArray(params.symbol) ? params.symbol[0] : params.symbol || "BTC");
   const { data, status } = useMarketData();
   const inst = data.find((d) => d.symbol === symbol) || null;
 
-  const [tab, setTab] = useState("Overview");
+  // Live news for the Recent News blocks (fetched once, shared by both spots).
+  const { articles: liveNews, loading: newsLoading } = useNews();
+  const [now, setNow] = useState(null);
+  useEffect(() => {
+    setNow(Date.now());
+    const t = setInterval(() => setNow(Date.now()), 60000);
+    return () => clearInterval(t);
+  }, []);
+
+  const [tab, setTab] = useState(defaultTab || "Overview");
   const [chartType, setChartType] = useState("Candlestick");
   const [timeframe, setTimeframe] = useState("1D");
   const [indicators, setIndicators] = useState(["EMA"]);
   const [watching, setWatching] = useState(false);
-  const [shared, setShared] = useState(false);
 
   const p = useMemo(() => (inst ? predict(inst) : null), [inst]);
   const f = useMemo(() => (inst ? getFundamentals(inst) : null), [inst]);
@@ -154,44 +165,40 @@ export default function AssetDetailClient() {
 
   const toggleInd = (i) => setIndicators((prev) => (prev.includes(i) ? prev.filter((x) => x !== i) : [...prev, i]));
   const zone = (v) => `${formatPrice(v * 0.9975, { currency: cur })} – ${formatPrice(v * 1.0025, { currency: cur })}`;
-  const shareAsset = async () => {
-    try {
-      if (navigator.share) {
-        await navigator.share({ title: `${symbol} on Tradeon`, url: window.location.href });
-      } else {
-        await navigator.clipboard.writeText(window.location.href);
-      }
-      setShared(true);
-      window.setTimeout(() => setShared(false), 1800);
-    } catch {
-      // A cancelled native share should leave the current page unchanged.
-    }
-  };
 
   if (!inst || !p || !f) {
     return (
-      <div className="tradeon-root min-h-screen">
+      <div className="tradeon-root min-h-screen flex flex-col">
         <TradeonHeader data={data} status={status} />
-        <div className="tdn-container py-16"><div className="h-96 tdn-skeleton" /></div>
+        <main className="tdn-paper flex-1">
+          <div className="tdn-container py-6 space-y-3">
+            <div className="tdn-skeleton rounded-xl h-11 w-1/2" />
+            <div className="grid lg:grid-cols-[1fr_320px] gap-4 items-start">
+              <div className="space-y-3">
+                <div className="tdn-skeleton rounded-xl" style={{ height: 420 }} />
+                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-7 gap-2">
+                  {Array.from({ length: 7 }).map((_, i) => <div key={i} className="tdn-skeleton rounded-lg h-14" />)}
+                </div>
+                <div className="tdn-skeleton rounded-xl h-64" />
+              </div>
+              <div className="space-y-3">
+                {Array.from({ length: 4 }).map((_, i) => <div key={i} className="tdn-skeleton rounded-xl h-28" />)}
+              </div>
+            </div>
+          </div>
+        </main>
       </div>
     );
   }
 
   const price = formatPrice(inst.price, { currency: cur });
-  const news = trending.slice(0, 4).map((d, i) => ({
-    title: `${d.name} ${d.changePct >= 0 ? "advances" : "slips"} in an illustrative ${["momentum", "rotation", "level-testing", "volatility"][i % 4]} scenario`,
-    source: "Generated from the current model snapshot",
-    related: d.symbol,
-    sentiment: d.changePct >= 0 ? "Positive" : "Negative",
-    color: d.changePct >= 0 ? "var(--tdn-up)" : "var(--tdn-down)",
-  }));
 
   return (
     <div className="tradeon-root min-h-screen flex flex-col">
       <TradeonHeader data={data} status={status} />
 
       {/* Sticky market header */}
-      <div className="sticky top-[81px] z-40 tdn-topbar">
+      <div className="sticky top-[94px] z-40 tdn-topbar">
         <div className="tdn-container py-2 flex items-center gap-3 flex-wrap">
           <Link href="/tradeon#markets" className="tdn-btn tdn-btn-icon !w-8 !h-8" aria-label="Back to markets"><ChevronLeft size={16} /></Link>
           <div className="flex items-center gap-2 flex-wrap">
@@ -208,22 +215,26 @@ export default function AssetDetailClient() {
             <button onClick={() => setWatching((w) => !w)} className="tdn-btn tdn-btn-ghost !py-1.5 !px-2.5 text-xs" style={watching ? { color: "var(--tdn-amber)", borderColor: "color-mix(in srgb, var(--tdn-amber) 40%, transparent)" } : undefined}>
               <Star size={14} fill={watching ? "var(--tdn-amber)" : "none"} /> <span className="hidden sm:inline">{watching ? "Watching" : "Watchlist"}</span>
             </button>
-            <a href="#prediction" className="tdn-btn tdn-btn-soft !py-1.5 !px-2.5 text-xs"><Sparkles size={14} /> <span className="hidden sm:inline">Prediction</span></a>
-            <Link href="/tradeon/workspace" className="tdn-btn tdn-btn-ghost !py-1.5 !px-2.5 text-xs"><GitCompare size={14} /> <span className="hidden md:inline">Compare</span></Link>
-            <button type="button" onClick={shareAsset} className="tdn-btn tdn-btn-ghost !py-1.5 !px-2.5 text-xs">{shared ? <Check size={14} /> : <Share2 size={14} />} <span className="hidden md:inline">{shared ? "Shared" : "Share"}</span></button>
+            <a href="#prediction" className="tdn-btn tdn-btn-soft !py-1.5 !px-2.5 text-xs"><Gauge size={14} /> <span className="hidden sm:inline">Prediction</span></a>
+            <button className="tdn-btn tdn-btn-ghost !py-1.5 !px-2.5 text-xs"><GitCompare size={14} /> <span className="hidden md:inline">Compare</span></button>
+            <button className="tdn-btn tdn-btn-ghost !py-1.5 !px-2.5 text-xs"><Bell size={14} /> <span className="hidden md:inline">Alerts</span></button>
+            <button className="tdn-btn tdn-btn-ghost !py-1.5 !px-2.5 text-xs"><Share2 size={14} /> <span className="hidden md:inline">Share</span></button>
           </div>
         </div>
       </div>
 
+      {/* Educational-data disclaimer (compliance, from main) */}
       <div className="tdn-container pt-2">
         <p className="tdn-inset px-3 py-2 text-[0.68rem]" style={{ color: "var(--tdn-muted)" }}>
           Crypto quotes use a public market feed when available. Non-crypto prices, fundamentals, scenarios and model signals are illustrative educational data.
         </p>
       </div>
 
-      <main className="tdn-container py-3 flex-1 grid lg:grid-cols-[1fr_320px] gap-4 items-start">
-        {/* ---------- Main column ---------- */}
-        <div className="min-w-0 space-y-3">
+      {/* Content area only — theme-aware surface (tdn-paper: white in light, dark in dark); header/topbar/footer keep the app theme */}
+      <main className="tdn-paper flex-1">
+        <div className="tdn-container py-3 grid lg:grid-cols-[1fr_320px] gap-4 items-start">
+          {/* ---------- Main column ---------- */}
+          <div className="min-w-0 space-y-3">
           {/* PRIMARY CHART — focal point */}
           <section className="tdn-card p-3">
             <div className="flex items-center gap-1.5 flex-wrap mb-2">
@@ -234,7 +245,10 @@ export default function AssetDetailClient() {
                 ))}
               </div>
               <div className="flex items-center gap-0.5 ml-auto">
-                <Link href={chartHref(inst.symbol)} className="tdn-btn tdn-btn-soft !py-1 !px-2.5 !text-xs gap-1 ml-1" title="Open full-screen chart">
+                {[Crosshair, PencilRuler, GitCompare, Settings2, Save].map((Ic, i) => (
+                  <button key={i} className="tdn-btn tdn-btn-icon !w-7 !h-7" title={["Crosshair", "Drawing tools", "Compare assets", "Chart settings", "Save layout"][i]}><Ic size={13} /></button>
+                ))}
+                <Link href={`/tradeon/chart/${encodeURIComponent(inst.symbol)}`} className="tdn-btn tdn-btn-soft !py-1 !px-2.5 !text-xs gap-1 ml-1" title="Open full-screen chart">
                   <Maximize2 size={13} /> Full Chart
                 </Link>
               </div>
@@ -294,7 +308,7 @@ export default function AssetDetailClient() {
           {/* PREDICTION & ANALYSIS */}
           <section id="prediction" className="tdn-card p-4">
             <div className="flex items-center justify-between mb-3">
-              <span className="flex items-center gap-2 text-sm font-bold" style={{ color: "var(--tdn-fg-strong)" }}><Sparkles size={15} style={{ color: "var(--tdn-iris-2)" }} /> Prediction &amp; Analysis</span>
+              <span className="flex items-center gap-2 text-sm font-bold" style={{ color: "var(--tdn-fg-strong)" }}><Gauge size={15} style={{ color: "var(--tdn-iris-2)" }} /> Prediction &amp; Analysis</span>
               <span className="text-xs font-bold px-2.5 py-1 rounded-lg" style={{ color: SIGNAL_COLOR[p.signal], background: `color-mix(in srgb, ${SIGNAL_COLOR[p.signal]} 14%, transparent)` }}>{p.signal} · {p.confidence}% confidence</span>
             </div>
 
@@ -374,43 +388,23 @@ export default function AssetDetailClient() {
               ))}
             </div>
             <div className="p-4">
-              <TabContent tab={tab} inst={inst} p={p} f={f} cur={cur} similar={similar} news={news} />
+              <TabContent tab={tab} inst={inst} p={p} f={f} cur={cur} similar={similar} liveNews={liveNews} newsLoading={newsLoading} now={now} />
             </div>
           </section>
 
-          {/* Model-generated scenarios, never presented as live news. */}
-          <section>
-            <div className="tdn-eyebrow text-[0.62rem] mb-2">Illustrative scenarios</div>
-            <div className="grid sm:grid-cols-2 gap-2.5">
-              {news.map((n, i) => (
-                <article key={i} className="tdn-card tdn-card-hover overflow-hidden flex">
-                  <div className="w-16 shrink-0 grid place-items-center" style={{ background: "color-mix(in srgb, var(--tdn-iris) 8%, transparent)", borderRight: "1px solid var(--tdn-border)" }}>
-                    <span className="text-[0.66rem] font-bold" style={{ color: "var(--tdn-iris-2)" }}>{n.related}</span>
-                  </div>
-                  <div className="p-3 min-w-0 flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="text-[0.58rem] font-semibold px-1.5 py-0.5 rounded" style={{ color: n.color, background: `color-mix(in srgb, ${n.color} 12%, transparent)` }}>{n.sentiment}</span>
-                    </div>
-                    <p className="text-[0.82rem] font-medium leading-snug" style={{ color: "var(--tdn-fg)" }}>{n.title}</p>
-                    <div className="flex items-center gap-2 mt-2 text-[0.62rem]" style={{ color: "var(--tdn-faint)" }}>
-                      <span>{n.source}</span>
-                    </div>
-                  </div>
-                </article>
-              ))}
-            </div>
-          </section>
+          {/* Recent News — real, live, fully clickable (→ News Detail) with images */}
+          <RecentNewsView articles={liveNews} loading={newsLoading} now={now} title="Recent News" limit={4} columns={2} />
         </div>
 
         {/* ---------- Right sidebar ---------- */}
-        <aside className="space-y-3 lg:sticky lg:top-[148px]">
-          <SidebarCard title="Prediction Summary" icon={Sparkles}>
+        <aside className="space-y-3 lg:sticky lg:top-[161px]">
+          <SidebarCard title="Prediction Summary" icon={Gauge}>
             <div className="flex items-center gap-3">
               <Ring value={p.confidence} size={62} stroke={6} color={SIGNAL_COLOR[p.signal]} suffix="%" />
               <div className="flex-1">
                 <div className="text-sm font-bold" style={{ color: SIGNAL_COLOR[p.signal] }}>{p.signal}</div>
                 <div className="text-[0.66rem]" style={{ color: "var(--tdn-faint)" }}>{p.outlook.short} · {p.outlook.long}</div>
-                <div className="text-[0.66rem] mt-1" style={{ color: "var(--tdn-muted)" }}>Model confidence {p.confidence}% · {p.factorTally.bullish}/{p.factors.length} bullish factors</div>
+                <div className="text-[0.66rem] mt-1" style={{ color: "var(--tdn-muted)" }}>Accuracy {p.accuracy}% · {p.factorTally.bullish}/{p.factors.length} bullish factors</div>
               </div>
             </div>
           </SidebarCard>
@@ -425,18 +419,11 @@ export default function AssetDetailClient() {
           <SidebarCard title={inst.assetClass === "stocks" ? "Similar Stocks" : "Similar Assets"}><MiniList rows={similar} /></SidebarCard>
           <SidebarCard title="Watchlist" icon={Star}><MiniList rows={data.filter((d) => ["BTC", "ETH", "AAPL", "NVDA"].includes(d.symbol))} /></SidebarCard>
 
-          <SidebarCard title="Model Scenarios">
-            <div className="space-y-2">
-              {news.slice(0, 3).map((n, i) => (
-                <article key={i}>
-                  <p className="text-[0.74rem] leading-snug" style={{ color: "var(--tdn-fg)" }}>{n.title}</p>
-                  <span className="text-[0.6rem]" style={{ color: "var(--tdn-faint)" }}>{n.source}</span>
-                </article>
-              ))}
-            </div>
+          <SidebarCard title="Recent News">
+            <RecentNewsView articles={liveNews} loading={newsLoading} now={now} variant="list" limit={4} showHeader={false} />
           </SidebarCard>
 
-          <SidebarCard title="Example Event Watchlist">
+          <SidebarCard title="Economic Events">
             <div className="space-y-1.5">
               {[["13:30", "US CPI", "High"], ["15:00", "Fed Speech", "High"], ["18:00", "Crude Inv.", "Med"]].map(([t, e, imp]) => (
                 <div key={e} className="flex items-center gap-2 text-[0.72rem]">
@@ -450,6 +437,7 @@ export default function AssetDetailClient() {
 
           <SidebarCard title="Related Markets"><MiniList rows={indices} /></SidebarCard>
         </aside>
+        </div>
       </main>
 
       <TradeonFooter status={status} />
@@ -458,7 +446,7 @@ export default function AssetDetailClient() {
 }
 
 /* ---------- tab content ---------- */
-function TabContent({ tab, inst, p, f, cur, similar, news }) {
+function TabContent({ tab, inst, p, f, cur, similar, liveNews, newsLoading, now }) {
   if (tab === "Overview") {
     return (
       <div className="grid md:grid-cols-2 gap-4">
@@ -516,18 +504,8 @@ function TabContent({ tab, inst, p, f, cur, similar, news }) {
       </div>
     );
   }
-  if (tab === "Scenarios") {
-    return (
-      <div className="space-y-2">
-        {news.map((n, i) => (
-          <div key={i} className="flex items-center gap-3 py-2 border-b" style={{ borderColor: "var(--tdn-border)" }}>
-            <span className="text-[0.58rem] font-semibold px-1.5 py-0.5 rounded" style={{ color: n.color, background: `color-mix(in srgb, ${n.color} 12%, transparent)` }}>{n.sentiment}</span>
-            <span className="text-[0.82rem] flex-1" style={{ color: "var(--tdn-fg)" }}>{n.title}</span>
-            <span className="text-[0.62rem]" style={{ color: "var(--tdn-faint)" }}>{n.source}</span>
-          </div>
-        ))}
-      </div>
-    );
+  if (tab === "News") {
+    return <RecentNewsView articles={liveNews} loading={newsLoading} now={now} variant="list" limit={8} showHeader={false} />;
   }
   if (tab === "Historical Data") {
     const rows = inst.spark.slice(-10).reverse().map((v, i) => ({ day: `T-${i}`, close: v, open: v * (1 - 0.004), high: v * 1.006, low: v * 0.994 }));

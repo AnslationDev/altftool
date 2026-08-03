@@ -23,6 +23,9 @@ export const SELF_CHROME_PREFIXES = [
   "/housingneeds",
   "/tradeon",
   "/altfcalculators",
+  // Top11 ships its own header, footer and mobile bar (app/top11/components/layout).
+  "/top11",
+  "/top8",
   "/imgprompt/studio",
   // The Labs hub has its own focused header.
   "/labs",

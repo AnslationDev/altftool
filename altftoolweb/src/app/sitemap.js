@@ -17,8 +17,6 @@ import buySmartStores from "@/app/buysmart/data/stores.json";
 import { getDeals } from "@/app/deals/data/deals";
 import dealData from "@/app/exclusivedeals/(data)/db.json";
 import { INCUMBENTS as alternativeIncumbents } from "@/app/alternatives/data/incumbents";
-import top11Categories from "@/app/top11/data/categoryData";
-import { isTop11Indexable } from "@/app/top11/data/indexPolicy";
 import { getIndexableTop9Items } from "@/app/top9/data/getTop9Items";
 import wattpadBooks from "@/app/wattpad/data/books.json";
 import wattpadCategories from "@/app/wattpad/data/categories.json";
@@ -842,16 +840,10 @@ async function buildSitemapEntries({
   }
 
   // A noindexed URL must never be submitted: Google reports that pairing as an
-  // error and the submission is wasted crawl either way. Both loops below ask
+  // error and the submission is wasted crawl either way. The loop below asks
   // the same predicate the pages' own metadata asks, so the sitemap and the
-  // robots directives cannot disagree.
-  for (const slug of Object.keys(top11Categories)) {
-    if (!isTop11Indexable(`/top11/${slug}`)) continue;
-    pushUnique(entries, seen, `/top11/${slug}`, {
-      priority: 0.65,
-      changeFrequency: "monthly",
-    });
-  }
+  // robots directives cannot disagree. (The whole /top11 family is noindexed —
+  // see app/top11/data/indexPolicy.js — so none of it is submitted at all.)
 
   // Only the lists that publish a ranking. The other 46 render a title and a
   // paragraph, are noindexed, and so are not submitted.

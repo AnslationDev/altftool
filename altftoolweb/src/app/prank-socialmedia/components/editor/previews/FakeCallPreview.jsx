@@ -2,6 +2,7 @@
 import { Phone, MessageSquare, Clock, PhoneCall, Volume2, MicOff, Plus, Video, Grid } from "lucide-react";
 import { useEditor } from "../../../lib/editor-store";
 import { DeviceFrame } from "../DeviceFrame";
+import ImageViewer from "../../ui/image-viewer";
 
 function FakeCallPreview() {
   const { callerName, callerNumber, avatar, device, theme } = useEditor();
@@ -19,7 +20,7 @@ function FakeCallPreview() {
         {/* Caller Avatar Overlay / Background */}
         {avatar && (
           <div className="absolute inset-0 z-0 opacity-20 filter blur-xl">
-            <img src={avatar} className="h-full w-full object-cover" alt="" />
+            <ImageViewer src={avatar} alt="Background avatar" className="h-full w-full object-cover" platform="Fake Call" />
           </div>
         )}
 
@@ -33,9 +34,9 @@ function FakeCallPreview() {
 
         {/* Mid Avatar Image */}
         <div className="relative z-10 flex justify-center">
-          <div className="h-28 w-28 rounded-full overflow-hidden border border-white/20 bg-neutral-800 shadow-2xl flex items-center justify-center">
+            <div className="h-28 w-28 rounded-full overflow-hidden border border-white/20 bg-neutral-800 shadow-2xl flex items-center justify-center">
             {avatar ? (
-              <img src={avatar} className="h-full w-full object-cover" alt="" />
+              <ImageViewer src={avatar} alt="Caller avatar" className="h-full w-full object-cover" platform="Call" />
             ) : (
               <PhoneCall className="h-10 w-10 text-neutral-400" />
             )}

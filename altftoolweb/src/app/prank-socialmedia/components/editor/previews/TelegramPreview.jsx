@@ -2,6 +2,7 @@
 import { ChevronLeft, Search, MoreVertical, Check, CheckCheck } from "lucide-react";
 import { useEditor } from "../../../lib/editor-store";
 import { DeviceFrame } from "../DeviceFrame";
+import ImageViewer from "../../ui/image-viewer";
 
 function TelegramPreview() {
   const { username, avatar, messages, theme } = useEditor();
@@ -29,7 +30,7 @@ function TelegramPreview() {
           <ChevronLeft className="h-5 w-5 cursor-pointer" />
           <div className="grid h-9 w-9 place-items-center overflow-hidden rounded-full bg-white/20">
             {avatar ? (
-              <img src={avatar} className="h-full w-full object-cover" alt="" />
+              <ImageViewer src={avatar} alt="Avatar" className="h-full w-full object-cover" platform="Telegram" />
             ) : (
               <span className="text-sm font-bold text-white">{username[0]}</span>
             )}

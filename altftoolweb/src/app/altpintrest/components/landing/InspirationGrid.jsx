@@ -1,21 +1,17 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Download, Heart, Share2, Bookmark, Sparkles, ArrowRight } from 'lucide-react';
 import { MOCK_DATA } from '../../data/mockData';
+import { useSavedPins } from '../../service/useSavedPins';
 
 export default function InspirationGrid({ onExplorePin }) {
-  const [savedPins, setSavedPins] = useState(new Set([1, 4, 8, 12]));
+  const { isSaved, toggleSave } = useSavedPins();
 
-  const toggleSave = (e, id) => {
-    e.stopPropagation();
-    setSavedPins(prev => {
-      const next = new Set(prev);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+  const handleToggleSave = (e, pin) => {
+    if (e && e.stopPropagation) e.stopPropagation();
+    toggleSave(pin);
   };
 
   return (
@@ -40,7 +36,7 @@ export default function InspirationGrid({ onExplorePin }) {
       {/* Masonry Columns Layout */}
       <div className="columns-2 sm:columns-3 lg:columns-4 xl:columns-5 gap-6 space-y-6">
         {MOCK_DATA.map((pin, idx) => {
-          const isSaved = savedPins.has(pin.id);
+          const pinSaved = isSaved(pin.id);
           return (
             <motion.div
               key={pin.id}
@@ -63,24 +59,22 @@ export default function InspirationGrid({ onExplorePin }) {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4">
 
                 {/* Top Right Action Button (Save) */}
-                <div className="flex justify-between items-center">
-                  <span className="px-2.5 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-bold text-white uppercase tracking-wider">
-                    {pin.category}
-                  </span>
+                <div className="flex justify-end items-center">
                   <button
-                    onClick={(e) => toggleSave(e, pin.id)}
-                    className={`px-4 py-2 rounded-full font-bold text-xs shadow-md transition-all ${isSaved
+                    onClick={(e) => handleToggleSave(e, pin)}
+                    aria-label={pinSaved ? "Unsave Pin" : "Save Pin"}
+                    className={`px-4 py-2 rounded-full font-bold text-xs shadow-md transition-all duration-200 active:scale-95 cursor-pointer ${pinSaved
                       ? 'bg-black text-white hover:bg-zinc-800'
-                      : 'bg-[#E60023] text-white hover:bg-red-700'
+                      : 'bg-[#0D9488] text-white hover:bg-teal-700'
                       }`}
                   >
-                    {isSaved ? 'Saved' : 'Save'}
+                    {pinSaved ? 'Saved' : 'Save'}
                   </button>
                 </div>
 
                 {/* Bottom Title & Quick Actions */}
                 <div className="space-y-2">
-                  <h4 className="text-white font-bold text-sm leading-tight line-clamp-2">
+                  <h4 className="text-white font-bold text-sm leading-tight truncate">
                     {pin.title}
                   </h4>
                   <div className="flex items-center justify-between text-white/80 pt-1 text-xs">
@@ -108,7 +102,7 @@ export default function InspirationGrid({ onExplorePin }) {
       <div className="mt-12 text-center">
         <button
           onClick={() => onExplorePin(null)}
-          className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#E60023] hover:bg-red-700 text-white font-bold text-base shadow-lg shadow-red-500/20 hover:scale-105 transition-all"
+          className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#0D9488] hover:bg-teal-700 text-white font-bold text-base shadow-lg shadow-teal-500/20 hover:scale-105 transition-all cursor-pointer"
         >
           <span>Explore All 10,000+ Live Pins</span>
           <ArrowRight size={20} />

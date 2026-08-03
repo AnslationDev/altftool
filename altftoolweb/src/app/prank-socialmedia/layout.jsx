@@ -18,10 +18,5 @@ export const metadata = {
 export const viewport = { width: "device-width", initialScale: 1 };
 
 export default function Layout({ children }) {
-  return (
-    <Providers>
-      <div className="mockly-root">{children}</div>
-      <AltfLauncher />
-    </Providers>
-  );
+  return <Providers>{children}</Providers>;
 }

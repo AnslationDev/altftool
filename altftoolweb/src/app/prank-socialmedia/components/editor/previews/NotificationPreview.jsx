@@ -1,6 +1,7 @@
 "use client";
 import { useEditor } from "../../../lib/editor-store";
 import { DeviceFrame } from "../DeviceFrame";
+import ImageViewer from "../../ui/image-viewer";
 function NotificationPreview() {
   const { username, body, time, avatar, device } = useEditor();
   const isIos = device === "iphone";
@@ -14,8 +15,8 @@ function NotificationPreview() {
         <div className="relative mt-10 w-full">
           <div className={`${isIos ? "rounded-2xl" : "rounded-xl"} bg-white/70 p-3 shadow-xl backdrop-blur-2xl`}>
             <div className="flex items-start gap-3">
-              <div className="grid h-9 w-9 place-items-center overflow-hidden rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-xs font-bold text-white">
-                {avatar ? <img src={avatar} className="h-full w-full object-cover" alt="" /> : username[0]}
+                <div className="grid h-9 w-9 place-items-center overflow-hidden rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 text-xs font-bold text-white">
+                {avatar ? <ImageViewer src={avatar} alt="Avatar" className="h-full w-full object-cover" platform="Notification" /> : username[0]}
               </div>
               <div className="flex-1">
                 <div className="flex items-center justify-between">

@@ -6,7 +6,7 @@ export async function generateMetadata() {
   return createPageMetadata({
   title: "AltPinterest - Visual Discovery Board",
   description:
-    "Discover, search, save, and browse curated visual inspiration boards on AltFTool.",
+    "Discover, search, save, and browse visual inspiration boards powered by AltFTool and live Firebase pin data.",
   path: "/altpintrest",
 });
 }

@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { db, getFirebaseAuth, isFirebaseConfigured } from "@/lib/firebase";
+import { toolId } from "../lib/toolId";
 
 const AuthContext = createContext(null);
 
@@ -45,7 +46,15 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [authPromptOpen, setAuthPromptOpen] = useState(false);
+  const [savedToolIds, setSavedToolIds] = useState(new Set());
   const pendingActionRef = useRef(null);
+  // Deferred actions (run after a sign-in prompt resolves) must read the
+  // freshest user, not whatever `user` was closed over when the action was
+  // created while still signed out — a plain ref sidesteps that staleness.
+  const userRef = useRef(null);
+  useEffect(() => {
+    userRef.current = user;
+  }, [user]);
 
   useEffect(() => {
     let unsubscribe = () => {};
@@ -69,6 +78,35 @@ export function AuthProvider({ children }) {
       unsubscribe();
     };
   }, []);
+
+  // Keep the saved-tools list live for the signed-in user (syncs across
+  // tabs/devices); clears immediately on sign-out.
+  useEffect(() => {
+    if (!user) {
+      setSavedToolIds(new Set());
+      return undefined;
+    }
+    let unsubscribe = () => {};
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const { doc, onSnapshot } = await import("firebase/firestore");
+        unsubscribe = onSnapshot(doc(db, LEADS_COLLECTION, user.uid), (snap) => {
+          if (cancelled) return;
+          const saved = snap.data()?.savedTools;
+          setSavedToolIds(new Set(Array.isArray(saved) ? saved : []));
+        });
+      } catch (error) {
+        console.error("Failed to subscribe to saved tools:", error);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+      unsubscribe();
+    };
+  }, [user]);
 
   const signUp = useCallback(async (email, password) => {
     if (!isFirebaseConfigured) throw new Error("Sign-up isn't configured yet — add NEXT_PUBLIC_FIREBASE_* keys to enable it.");
@@ -122,6 +160,30 @@ export function AuthProvider({ children }) {
     [user],
   );
 
+  /** Toggle a tool's saved/bookmarked state — gated behind sign-in like
+   *  requireAuth's other actions, so an anonymous click prompts auth first
+   *  and then applies the save once the user is signed in. */
+  const toggleSaveTool = useCallback(
+    (tool) => {
+      const id = toolId(tool);
+      requireAuth(async () => {
+        const currentUser = userRef.current;
+        if (!currentUser) return;
+        try {
+          const { doc, setDoc, arrayUnion, arrayRemove } = await import("firebase/firestore");
+          const ref = doc(db, LEADS_COLLECTION, currentUser.uid);
+          const alreadySaved = savedToolIds.has(id);
+          await setDoc(ref, { savedTools: alreadySaved ? arrayRemove(id) : arrayUnion(id) }, { merge: true });
+        } catch (error) {
+          console.error("Failed to toggle saved tool:", error);
+        }
+      });
+    },
+    [requireAuth, savedToolIds],
+  );
+
+  const isToolSaved = useCallback((tool) => savedToolIds.has(toolId(tool)), [savedToolIds]);
+
   const closeAuthPrompt = useCallback(() => {
     pendingActionRef.current = null;
     setAuthPromptOpen(false);
@@ -146,8 +208,24 @@ export function AuthProvider({ children }) {
       authPromptOpen,
       closeAuthPrompt,
       resolveAuthPrompt,
+      savedToolIds,
+      toggleSaveTool,
+      isToolSaved,
     }),
-    [user, loading, signUp, signIn, signInWithGoogle, requireAuth, authPromptOpen, closeAuthPrompt, resolveAuthPrompt],
+    [
+      user,
+      loading,
+      signUp,
+      signIn,
+      signInWithGoogle,
+      requireAuth,
+      authPromptOpen,
+      closeAuthPrompt,
+      resolveAuthPrompt,
+      savedToolIds,
+      toggleSaveTool,
+      isToolSaved,
+    ],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

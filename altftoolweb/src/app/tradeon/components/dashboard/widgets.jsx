@@ -1,9 +1,11 @@
 // src/app/tradeon/components/dashboard/widgets.jsx
 "use client";
 
-import { useMemo } from "react";
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 import {
   Flame,
+  Gauge,
   Grid3x3,
   Newspaper,
   Snowflake,
@@ -12,7 +14,9 @@ import {
 } from "lucide-react";
 import { predict } from "../../lib/ai";
 import { clamp, formatCompact, formatPrice } from "../../lib/format";
+import { useNews } from "../../hooks/useNews";
 import MiniChart from "../chart/MiniChart";
+import NewsCard from "../news/NewsCard";
 import DeltaPill from "../shared/DeltaPill";
 import FearGreedGauge from "../shared/FearGreedGauge";
 import LiveValue from "../shared/LiveValue";
@@ -181,46 +185,33 @@ export function HeatmapWidget({ data }) {
   );
 }
 
-const SCENARIO_TEMPLATES = [
-  { t: "{s} momentum remains positive in the current model snapshot", tag: "Momentum" },
-  { t: "{s} volatility compression creates a potential range scenario", tag: "Volatility" },
-  { t: "{s} is approaching a model-derived support or resistance area", tag: "Levels" },
-  { t: "{s} has mixed short- and long-horizon signals", tag: "Model" },
-  { t: "{s} price action warrants confirmation before any decision", tag: "Risk" },
-];
-
-export function NewsWidget({ data }) {
-  const items = useMemo(() => {
-    const movers = [...data].sort((a, b) => Math.abs(b.changePct) - Math.abs(a.changePct)).slice(0, 5);
-    return movers.map((d, i) => {
-      const tpl = SCENARIO_TEMPLATES[i % SCENARIO_TEMPLATES.length];
-      const sentiment = d.changePct >= 0 ? "Positive" : "Negative";
-      return {
-        title: tpl.t.replace("{s}", d.name),
-        tag: tpl.tag,
-        sentiment,
-        color: d.changePct >= 0 ? "var(--tdn-up)" : "var(--tdn-down)",
-      };
-    });
-  }, [data]);
+export function NewsWidget() {
+  const { articles, loading } = useNews();
+  const [now, setNow] = useState(null);
+  useEffect(() => {
+    setNow(Date.now());
+    const t = setInterval(() => setNow(Date.now()), 60000);
+    return () => clearInterval(t);
+  }, []);
+  const items = articles.slice(0, 6);
   return (
-    <WidgetCard title="Illustrative Scenarios" icon={Newspaper}>
-      <div className="space-y-2.5">
-        {items.map((n, i) => (
-          <article key={i} className="block">
-            <div className="flex items-center gap-2 mb-0.5">
-              <span className="tdn-chip !py-0.5 !px-2 !text-[0.62rem]">{n.tag}</span>
-              <span className="text-[0.62rem] font-semibold px-1.5 py-0.5 rounded" style={{ color: n.color, background: `color-mix(in srgb, ${n.color} 12%, transparent)` }}>
-                {n.sentiment}
-              </span>
-              <span className="text-[0.62rem] ml-auto" style={{ color: "var(--tdn-faint)" }}>Model output</span>
+    <WidgetCard
+      title="Market News"
+      icon={Newspaper}
+      actions={false}
+      right={<Link href="/tradeon/news" className="text-[0.68rem] font-semibold hover:underline" style={{ color: "var(--tdn-iris-2)" }}>View all →</Link>}
+    >
+      {loading && !items.length ? (
+        <div className="space-y-3">{Array.from({ length: 4 }).map((_, i) => <div key={i} className="tdn-skeleton rounded-lg h-16" />)}</div>
+      ) : (
+        <div className="flex flex-col divide-y" style={{ borderColor: "var(--tdn-border)" }}>
+          {items.map((a) => (
+            <div key={a.id} style={{ borderColor: "var(--tdn-border)" }}>
+              <NewsCard article={a} now={now} variant="row" />
             </div>
-            <p className="text-[0.82rem] leading-snug" style={{ color: "var(--tdn-fg)" }}>
-              {n.title}
-            </p>
-          </article>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </WidgetCard>
   );
 }
@@ -229,7 +220,7 @@ export function AIPredictionsWidget({ data }) {
   const rows = useMemo(() => data.slice(0, 6).map((d) => ({ d, p: predict(d) })), [data]);
   const color = { BUY: "var(--tdn-up)", SELL: "var(--tdn-down)", HOLD: "var(--tdn-amber)" };
   return (
-    <WidgetCard title="Predictions" icon={Sparkles}>
+    <WidgetCard title="Predictions" icon={Gauge}>
       <div className="space-y-1.5">
         {rows.map(({ d, p }) => (
           <div key={d.symbol} className="flex items-center gap-3 py-1">

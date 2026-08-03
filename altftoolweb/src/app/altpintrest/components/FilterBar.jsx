@@ -11,7 +11,7 @@ export default function FilterBar({ filters, activeFilter, setActiveFilter }) {
             onClick={() => setActiveFilter(filter)}
             className={`whitespace-nowrap px-6 py-2.5 rounded-[9999px] text-[14px] font-medium transition-all ${
               activeFilter === filter
-                ? "bg-[#2563EB] text-white"
+                ? "bg-[#0D9488] text-white"
                 : "bg-[#F3F4F6] dark:bg-[var(--muted)] text-[#111827] dark:text-[var(--foreground)] hover:bg-[#E5E7EB] dark:hover:bg-[var(--border)]"
             }`}
           >

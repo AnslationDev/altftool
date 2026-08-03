@@ -400,6 +400,7 @@ export const SITE_ROUTES = {
   top11: { label: "Top11", href: "/top11" },
   top9: { label: "Top9", href: "/top9" },
   top10: { label: "Top10", href: "/top10" },
+  top8: { label: "Top8", href: "/top8" },
   about: { label: "About AltFTool", href: "/policypages/about" },
   contact: { label: "Contact", href: "/policypages/contact" },
   privacy: { label: "Privacy", href: "/policypages/privacy" },

@@ -26,6 +26,7 @@ import { LowBatteryPreview } from "../../components/editor/previews/LowBatteryPr
 import { SearchResultsPreview } from "../../components/editor/previews/SearchResultsPreview";
 import { ErrorPopupPreview } from "../../components/editor/previews/ErrorPopupPreview";
 import { FakeCallPreview } from "../../components/editor/previews/FakeCallPreview";
+import { GenericMockupPreview } from "../../components/editor/previews/GenericMockupPreview";
 
 import { Input } from "../../components/ui/input";
 import { Textarea } from "../../components/ui/textarea";
@@ -56,7 +57,7 @@ export default function EditorClient({ slug }) {
       case "search-results": return <SearchResultsPreview />;
       case "error-popup": return <ErrorPopupPreview />;
       case "fake-call": return <FakeCallPreview />;
-      default: return null;
+      default: return <GenericMockupPreview template={tpl} />;
     }
   })();
 
@@ -65,6 +66,7 @@ export default function EditorClient({ slug }) {
 
 function SidebarForSlug({ slug }) {
   const state = useEditor();
+  const tpl = getTemplate(slug);
   const { set } = state;
 
   // ─── 1. CHATS ─────────────────────────────────────────────────────────────
@@ -364,5 +366,24 @@ function SidebarForSlug({ slug }) {
     );
   }
 
-  return null;
+    // ─── 12. FALLBACK FOR UNIMPLEMENTED TEMPLATES ───────────────────────────
+
+      const { title = "", description = "" } = state;
+      return (
+        <>
+          <div className="rounded-xl border border-border bg-card/60 p-3">
+            <p className="text-sm font-semibold">{tpl?.name} editor</p>
+            <p className="text-xs text-muted-foreground mt-1">Customize profile, title, description, image and theme, then export the mockup as PNG.</p>
+          </div>
+          <CommonProfileFields />
+          <AvatarUpload />
+          <Field label="Title / Headline">
+            <Input value={title} onChange={(e) => set("title", e.target.value)} className="rounded-xl" />
+          </Field>
+          <Field label="Short description">
+            <Textarea value={description} onChange={(e) => set("description", e.target.value)} rows={3} className="rounded-xl" />
+          </Field>
+        </>
+      );
+
 }

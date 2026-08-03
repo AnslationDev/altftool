@@ -23,24 +23,6 @@ export async function generateMetadata() {
 // Only the text is passed down. Landing and feed each wrap it in their own
 // container, because "Enter Feed" swaps the two branches client-side without a
 // navigation and a wrapper baked in here would carry the wrong padding across.
-function PageHeading() {
-  return (
-    <>
-      <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-        AltF Pinboard: discover and save visual inspiration
-      </h1>
-      <p className="mt-3 max-w-2xl text-base text-muted-foreground">
-        A masonry feed of AI tools, websites, prompts, and design ideas. Open a
-        pin to see it full size, then save, download, or share it.
-      </p>
-    </>
-  );
-}
-
 export default function Page(props) {
-  return (
-    <PageView {...props}>
-      <PageHeading />
-    </PageView>
-  );
+  return <PageView {...props} />;
 }

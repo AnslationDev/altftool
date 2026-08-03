@@ -33,12 +33,15 @@ const MiniChart = forwardRef(function MiniChart({
   prediction,
   live = true,
   drawTool = "cursor",
-  drawColor = "#6d5efc",
+  drawColor = "#0d9488",
   compareSymbols = [],
   minimal = false,
+  externalBars = null,
+  theme: themeProp,
 }, ref) {
   const { data } = useMarketData();
-  const { theme } = useTradeonTheme();
+  const { theme: ctxTheme } = useTradeonTheme();
+  const theme = themeProp || ctxTheme; // allow callers to force a chart theme (e.g. white pages)
   const inst = data.find((d) => d.symbol === symbol) || null;
 
   const [tfState, setTfState] = useState(defaultTf);
@@ -62,12 +65,19 @@ const MiniChart = forwardRef(function MiniChart({
   }));
 
   useEffect(() => {
+    if (externalBars?.length) return; // real bars supplied by caller — skip synth
     if (!priceRef.current) return;
     setBars(generateCandles(symbol, activeTf, priceRef.current, Date.now()));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [symbol, activeTf, !!inst]);
 
+  // Adopt externally-supplied (e.g. real, fetched) candles when provided.
   useEffect(() => {
+    if (externalBars?.length) setBars(externalBars);
+  }, [externalBars]);
+
+  useEffect(() => {
+    if (externalBars?.length) return; // don't overwrite real candles with the simulated tick
     if (!live || !inst || !barsRef.current.length) return;
     const arr = barsRef.current;
     const last = { ...arr[arr.length - 1] };

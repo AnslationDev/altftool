@@ -2,6 +2,7 @@
 import { Phone, Video, ChevronLeft, Check, CheckCheck } from "lucide-react";
 import { useEditor } from "../../../lib/editor-store";
 import { DeviceFrame } from "../DeviceFrame";
+import ImageViewer from "../../ui/image-viewer";
 function WhatsAppPreview() {
   const { username, avatar, messages, theme } = useEditor();
   const dark = theme !== "light";
@@ -15,7 +16,7 @@ function WhatsAppPreview() {
     header={<div className="flex items-center gap-2 px-3 py-2 text-white" style={{ background: headerBg }}>
           <ChevronLeft className="h-5 w-5" />
           <div className="grid h-9 w-9 place-items-center overflow-hidden rounded-full bg-white/20">
-            {avatar ? <img src={avatar} className="h-full w-full object-cover" alt="" /> : <span className="text-xs font-bold">{username[0]}</span>}
+            {avatar ? <ImageViewer src={avatar} className="h-full w-full object-cover" alt="Avatar" platform="WhatsApp" /> : <span className="text-xs font-bold">{username[0]}</span>}
           </div>
           <div className="flex-1">
             <p className="text-sm font-semibold leading-tight">{username}</p>

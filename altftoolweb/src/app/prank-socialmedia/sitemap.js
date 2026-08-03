@@ -1,16 +1,14 @@
 import { TEMPLATES } from "./lib/templates";
-import { getSiteUrl } from "@/platform/seo/generateMetadata";
-import { toXmlSafeSitemap } from "@/platform/seo/sitemapXml";
 
 export default function sitemap() {
-  const base = getSiteUrl();
-  return toXmlSafeSitemap([
-    { url: `${base}/prank-socialmedia`, changeFrequency: "weekly", priority: 0.8 },
-    { url: `${base}/prank-socialmedia/templates`, changeFrequency: "weekly", priority: 0.7 },
+  const base = process.env.NEXT_PUBLIC_SITE_URL || "https://example.com";
+  return [
+    { url: `${base}/`, changeFrequency: "weekly", priority: 1.0 },
+    { url: `${base}/templates`, changeFrequency: "weekly", priority: 0.9 },
     ...TEMPLATES.map((t) => ({
-      url: `${base}/prank-socialmedia/editor/${t.slug}`,
+      url: `${base}/editor/${t.slug}`,
       changeFrequency: "monthly",
-      priority: 0.6,
+      priority: 0.7,
     })),
-  ]);
+  ];
 }

@@ -1,0 +1,48 @@
+/* Top11 — the handful of base rules the standalone build kept in its own
+   index.css.
+
+   Everything is scoped to .top11-root on purpose. Next keeps a route's CSS
+   attached for the life of the document, so a bare `body { background }` here
+   would repaint every page the visitor opens next
+   (scripts/check-global-css-leaks.mjs fails the build on exactly that). The
+   section's surface colour is set by the wrapper's own Tailwind classes in
+   Top11Shell.jsx instead. */
+
+.top11-root {
+  font-family: var(--font-inter), Inter, ui-sans-serif, -apple-system,
+    BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+}
+
+.top11-root button,
+.top11-root input {
+  font: inherit;
+}
+
+.top11-root button {
+  cursor: pointer;
+}
+
+.top11-root button:focus-visible,
+.top11-root input:focus-visible,
+.top11-root a:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 3px;
+}
+
+.top11-root ::selection {
+  color: #ffffff;
+  background: #2563eb;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .top11-root *,
+  .top11-root *::before,
+  .top11-root *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

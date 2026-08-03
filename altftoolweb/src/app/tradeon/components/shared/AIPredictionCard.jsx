@@ -10,7 +10,6 @@ import {
   Landmark,
   Newspaper,
   ShieldAlert,
-  Sparkles,
   Target,
   TrendingDown,
   TrendingUp,
@@ -98,7 +97,7 @@ export default function AIPredictionCard({ instrument, expanded = true, classNam
         <div className="min-w-0">
           <div className="flex items-center gap-2">
             <span className="tdn-chip tdn-chip-brand !py-1 !px-2.5">
-              <Sparkles size={12} /> Prediction
+              <Gauge size={12} /> Prediction
             </span>
           </div>
           <div className="mt-2 flex items-baseline gap-2">

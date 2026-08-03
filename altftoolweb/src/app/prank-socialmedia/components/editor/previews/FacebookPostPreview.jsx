@@ -1,6 +1,7 @@
 "use client";
 import { ThumbsUp, MessageSquare, Share2, MoreHorizontal, Globe } from "lucide-react";
 import { useEditor } from "../../../lib/editor-store";
+import ImageViewer from "../../ui/image-viewer";
 
 function FacebookPostPreview() {
   const { username, avatar, verified, body, postImage, time, likes, shares, comments, theme } = useEditor();
@@ -21,7 +22,7 @@ function FacebookPostPreview() {
         <div className="flex items-center gap-2.5">
           <div className="grid h-10 w-10 place-items-center overflow-hidden rounded-full bg-secondary">
             {avatar ? (
-              <img src={avatar} className="h-full w-full object-cover" alt="" />
+              <ImageViewer src={avatar} alt="Avatar" className="h-full w-full object-cover" platform="Facebook" />
             ) : (
               <span className="text-base font-bold">{username[0]}</span>
             )}
@@ -51,7 +52,7 @@ function FacebookPostPreview() {
       {/* Optional Post Image */}
       {postImage && (
         <div className="w-full overflow-hidden border-y bg-secondary" style={{ borderColor: border }}>
-          <img src={postImage} className="w-full object-cover max-h-[400px]" alt="" />
+          <ImageViewer src={postImage} alt="Post image" platform="Facebook Post" className="w-full object-cover max-h-[400px]" />
         </div>
       )}
 
@@ -89,11 +90,11 @@ function FacebookPostPreview() {
       {/* Simple Comments List */}
       {comments.length > 0 && (
         <div className="p-3.5 space-y-3">
-          {comments.map((c) => (
+            {comments.map((c) => (
             <div key={c.id} className="flex gap-2">
               <div className="grid h-8 w-8 shrink-0 place-items-center overflow-hidden rounded-full bg-secondary">
                 {c.avatar ? (
-                  <img src={c.avatar} className="h-full w-full object-cover" alt="" />
+                  <ImageViewer src={c.avatar} alt="Comment avatar" className="h-full w-full object-cover" platform="Facebook Comment" />
                 ) : (
                   <span className="text-xs font-bold">{c.username[0]}</span>
                 )}

@@ -1,18 +1,14 @@
 import { TEMPLATES } from "../../lib/templates";
 import EditorClient from "./EditorClient";
 import { notFound } from "next/navigation";
-import JsonLd from "@/platform/seo/JsonLd";
 import {
-  createBreadcrumbJsonLd,
   createPageMetadata,
   createToolJsonLd,
+  createBreadcrumbJsonLd,
 } from "@/platform/seo/generateMetadata";
-import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
-
-export const dynamic = "force-static";
+import JsonLd from "@/platform/seo/JsonLd";
 
 export async function generateStaticParams() {
-  if (shouldDeferBulkPrerendering()) return [];
   return TEMPLATES.map((t) => ({ slug: t.slug }));
 }
 
@@ -30,7 +26,7 @@ export async function generateMetadata({ params }) {
   }
   return createPageMetadata({
     title: `${t.name} — Mockly Editor`,
-    description: `${t.short} Customize a realistic ${t.name.toLowerCase()} mockup in your browser for entertainment, demos, or design previews.`,
+    description: t.short,
     path: `/prank-socialmedia/editor/${slug}`,
   });
 }

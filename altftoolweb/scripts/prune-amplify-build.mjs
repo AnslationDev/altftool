@@ -36,8 +36,17 @@ const nextDir = path.resolve(".next");
 // Raise it only when a job whose gate reading was HIGHER than this one is
 // accepted by AWS. A failure is the only thing that locates the ceiling, and
 // each attempt costs a red main.
+//
+// 2026-08-02: raised 181 -> 184 under exactly that rule, not by arithmetic.
+// Job 104's own build log reads "Amplify artifact gate: 184.21 MiB" and that
+// job SUCCEEDED — AWS accepted the upload. Job 105 read 185.09 and AWS refused
+// it at 220.01. So the ceiling sits in (184.21, 185.09], and 181 was three MiB
+// below a figure AWS had already taken. That gap was holding back every
+// remaining feature branch: the smallest needed 0.70 MiB and only 0.60 was
+// free. 184 stays under the last accepted reading rather than probing toward
+// the refusal.
 const maxArtifactBytes = Number(
-  process.env.ALTFT_AMPLIFY_ARTIFACT_MAX_BYTES || 181 * 1024 * 1024
+  process.env.ALTFT_AMPLIFY_ARTIFACT_MAX_BYTES || 184 * 1024 * 1024
 );
 
 if (!fs.existsSync(nextDir)) {

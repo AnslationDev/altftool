@@ -2,6 +2,7 @@
 import { ChevronLeft, Phone, Video, Info, Circle } from "lucide-react";
 import { useEditor } from "../../../lib/editor-store";
 import { DeviceFrame } from "../DeviceFrame";
+import ImageViewer from "../../ui/image-viewer";
 
 function MessengerPreview() {
   const { username, avatar, messages, theme } = useEditor();
@@ -23,10 +24,10 @@ function MessengerPreview() {
           style={{ background: headerBg, color: fg, borderColor: border }}
         >
           <ChevronLeft className="h-5 w-5 cursor-pointer" />
-          <div className="relative">
+            <div className="relative">
             <div className="grid h-9 w-9 place-items-center overflow-hidden rounded-full bg-secondary">
               {avatar ? (
-                <img src={avatar} className="h-full w-full object-cover" alt="" />
+                <ImageViewer src={avatar} alt="Avatar" className="h-full w-full object-cover" platform="Messenger" />
               ) : (
                 <span className="text-xs font-bold">{username[0]}</span>
               )}

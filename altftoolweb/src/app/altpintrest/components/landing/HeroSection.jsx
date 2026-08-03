@@ -9,8 +9,8 @@ const TOPIC_CATEGORIES = [
   {
     id: 'decor',
     text: 'home decor idea',
-    accentColor: '#E60023', // Pinterest Red
-    bgGradient: 'from-red-500/10 via-white to-gray-50 dark:from-red-950/40 dark:via-zinc-950 dark:to-black',
+    accentColor: '#0D9488', // Teal Accent
+    bgGradient: 'from-teal-500/10 via-white to-gray-50 dark:from-teal-950/40 dark:via-zinc-950 dark:to-black',
     badge: 'Trending Interior Design',
     images: [
       '/pins/Campfire comfort.webp',
@@ -170,7 +170,7 @@ export default function HeroSection({ onExplore }) {
                 return (
                   <div
                     key={col.id}
-                    className="relative overflow-hidden h-[120vh] -top-[10vh] group/column"
+                    className={`relative overflow-hidden h-[120vh] -top-[10vh] group/column ${colIdx >= 2 ? 'hidden md:block' : ''}`}
                   >
                     {/* STEP 1 — Continuous Vertical Scroll Parallax */}
                     <motion.div
@@ -300,47 +300,10 @@ export default function HeroSection({ onExplore }) {
               })}
             </motion.div>
 
-            {/* MINIMAL CENTER OVERLAY — SCALING OUT FROM CENTER TO FRONT */}
-            <div className="relative z-30 flex-1 flex flex-col items-center justify-center px-4 text-center pointer-events-none">
-              <div className="pointer-events-auto">
-                {/* Minimal White Category Card (Scales Out from Center to Front) */}
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeTopic.id}
-                    initial={{ opacity: 0, scale: 0, y: 0 }}
-                    animate={{
-                      opacity: 1,
-                      scale: 1,
-                      y: 0,
-                      transition: {
-                        type: 'spring',
-                        stiffness: 300,
-                        damping: 24,
-                        delay: 0.1
-                      }
-                    }}
-                    exit={{
-                      opacity: 0,
-                      scale: 0.15,
-                      y: 0,
-                      transition: { duration: 0.35, ease: 'easeIn' }
-                    }}
-                    className="bg-white/40 dark:bg-zinc-900/40 backdrop-blur-2xl border border-white/60 dark:border-white/20 shadow-xl shadow-black/5 rounded-full px-6 sm:px-9 py-3.5 sm:py-4 inline-flex items-center justify-center cursor-pointer group hover:scale-105 transition-transform"
-                    onClick={() => onExplore(activeTopic.text)}
-                  >
-                    <span
-                      className="text-lg sm:text-2xl md:text-3xl font-extrabold tracking-tight capitalize"
-                      style={{ color: activeTopic.accentColor }}
-                    >
-                      {activeTopic.text}
-                    </span>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </div>
+
 
             {/* Stage Reveal Trigger Button */}
-            <div className="relative z-30 pb-8 flex justify-center pointer-events-auto">
+            <div className="absolute bottom-6 sm:bottom-10 left-1/2 -translate-x-1/2 z-30 flex justify-center pointer-events-auto">
               <button
                 onClick={() => setScene(2)}
                 className="px-6 py-3 rounded-full bg-gray-900 text-white dark:bg-white/10 dark:text-white hover:bg-black backdrop-blur-md border border-gray-200 dark:border-white/20 font-semibold text-xs sm:text-sm shadow-xl transition-all hover:scale-105 flex items-center gap-2"
@@ -397,14 +360,14 @@ export default function HeroSection({ onExplore }) {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="lg:col-span-6 space-y-6 text-left"
               >
-                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-100 dark:bg-red-500/20 text-[#E60023] dark:text-red-400 border border-red-200 dark:border-red-500/30 text-xs font-bold uppercase tracking-wider">
+                <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-teal-100 dark:bg-teal-500/20 text-[#0D9488] dark:text-teal-400 border border-teal-200 dark:border-teal-500/30 text-xs font-bold uppercase tracking-wider">
                   <Sparkle size={16} />
                   <span>Interactive Discovery Scene</span>
                 </div>
 
                 <h2 className="text-3xl sm:text-5xl font-extrabold text-gray-900 dark:text-white leading-tight">
                   Turn your ideas into <br />
-                  <span className="bg-gradient-to-r from-red-600 via-rose-600 to-amber-600 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 bg-clip-text text-transparent">
                     real-world achievements
                   </span>
                 </h2>
@@ -416,7 +379,7 @@ export default function HeroSection({ onExplore }) {
                 <div className="pt-4 flex flex-wrap gap-4">
                   <button
                     onClick={() => onExplore('')}
-                    className="px-8 py-4 rounded-full bg-[#E60023] hover:bg-red-700 text-white font-extrabold text-base shadow-xl shadow-red-500/20 hover:scale-105 transition-all flex items-center gap-3"
+                    className="px-8 py-4 rounded-full bg-[#0D9488] hover:bg-teal-700 text-white font-extrabold text-base shadow-xl shadow-teal-500/20 hover:scale-105 transition-all flex items-center gap-3 cursor-pointer"
                   >
                     <span>Browse All Live Pins</span>
                     <ArrowRight size={20} />

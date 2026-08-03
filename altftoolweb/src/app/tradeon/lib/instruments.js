@@ -36,6 +36,24 @@ export const INSTRUMENTS = [
   { symbol: "NFLX", name: "Netflix Inc.", assetClass: "stocks", base: 685.2, mcap: 2.9e11 },
   { symbol: "JPM", name: "JPMorgan Chase", assetClass: "stocks", base: 208.7, mcap: 6.0e11 },
 
+  // ---- Indian sector stocks (simulated) — power the home "Sector Outlook" grid ----
+  { symbol: "ICICIBANK", name: "ICICI Bank", assetClass: "stocks", sector: "Banking", base: 1180, mcap: 8.3e11 },
+  { symbol: "SBIN", name: "State Bank of India", assetClass: "stocks", sector: "Banking", base: 825, mcap: 7.4e11 },
+  { symbol: "HDFCBANK", name: "HDFC Bank", assetClass: "stocks", sector: "Banking", base: 1660, mcap: 1.26e12 },
+  { symbol: "AXISBANK", name: "Axis Bank", assetClass: "stocks", sector: "Banking", base: 1180, mcap: 3.6e11 },
+  { symbol: "WIPRO", name: "Wipro", assetClass: "stocks", sector: "IT", base: 470, mcap: 2.5e11 },
+  { symbol: "TCS", name: "Tata Consultancy Services", assetClass: "stocks", sector: "IT", base: 3850, mcap: 1.39e12 },
+  { symbol: "INFY", name: "Infosys", assetClass: "stocks", sector: "IT", base: 1650, mcap: 6.9e11 },
+  { symbol: "HCLTECH", name: "HCL Technologies", assetClass: "stocks", sector: "IT", base: 1420, mcap: 3.9e11 },
+  { symbol: "ITC", name: "ITC Ltd", assetClass: "stocks", sector: "FMCG", base: 430, mcap: 5.4e11 },
+  { symbol: "HINDUNILVR", name: "Hindustan Unilever", assetClass: "stocks", sector: "FMCG", base: 2450, mcap: 5.8e11 },
+  { symbol: "DABUR", name: "Dabur India", assetClass: "stocks", sector: "FMCG", base: 620, mcap: 1.1e11 },
+  { symbol: "COLPAL", name: "Colgate-Palmolive India", assetClass: "stocks", sector: "FMCG", base: 2750, mcap: 7.5e10 },
+  { symbol: "SUNPHARMA", name: "Sun Pharmaceutical", assetClass: "stocks", sector: "Pharma", base: 1500, mcap: 3.6e11 },
+  { symbol: "CIPLA", name: "Cipla", assetClass: "stocks", sector: "Pharma", base: 1480, mcap: 1.2e11 },
+  { symbol: "LUPIN", name: "Lupin", assetClass: "stocks", sector: "Pharma", base: 1650, mcap: 7.5e10 },
+  { symbol: "DRREDDY", name: "Dr. Reddy's Laboratories", assetClass: "stocks", sector: "Pharma", base: 6200, mcap: 1.0e11 },
+
   // ---- Forex (simulated) ----
   { symbol: "EUR/USD", name: "Euro / US Dollar", assetClass: "forex", base: 1.0842, mcap: null },
   { symbol: "GBP/USD", name: "Pound / US Dollar", assetClass: "forex", base: 1.2715, mcap: null },

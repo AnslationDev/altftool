@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X, Sparkles } from "lucide-react";
+import { ArrowRight, MessageCircle, Menu, X } from "lucide-react";
 import { Button } from "../ui/button";
 const links = [
   { to: "/prank-socialmedia", label: "Home" },
@@ -13,11 +13,12 @@ const links = [
 function Navbar() {
   const [open, setOpen] = useState(false);
   return <header className="sticky top-0 z-50 w-full">
-    <div className="mx-auto max-w-7xl px-4 pt-4">
-      <nav className="glass-strong flex items-center justify-between rounded-2xl px-4 py-3 shadow-soft">
+    <div className="mx-auto max-w-[1500px] px-4 pt-3">
+      <nav className="glass-strong flex min-h-16 items-center justify-between rounded-2xl px-5 py-3 shadow-soft">
         <Link href="/prank-socialmedia" className="flex items-center gap-2">
-          <span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-primary text-primary-foreground shadow-glow">
-            <Sparkles className="h-5 w-5" />
+          <span className="relative grid h-9 w-9 place-items-center rounded-2xl bg-gradient-primary text-primary-foreground shadow-glow">
+            <MessageCircle className="h-5 w-5" />
+            <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-white" />
           </span>
           <span className="text-base font-semibold tracking-tight">Mockly<span className="gradient-text">.</span></span>
         </Link>
@@ -27,8 +28,8 @@ function Navbar() {
           </Link>)}
         </div>
         <div className="hidden md:block">
-          <Button asChild className="rounded-xl bg-gradient-primary text-primary-foreground shadow-glow hover:opacity-95">
-            <Link href="/prank-socialmedia/templates">Start Creating</Link>
+          <Button asChild className="rounded-2xl bg-gradient-primary px-6 text-primary-foreground shadow-glow hover:opacity-95">
+            <Link href="/prank-socialmedia/templates">Start Creating <ArrowRight className="ml-2 h-4 w-4" /></Link>
           </Button>
         </div>
         <button onClick={() => setOpen((v) => !v)} className="rounded-lg p-2 md:hidden" aria-label="Menu">

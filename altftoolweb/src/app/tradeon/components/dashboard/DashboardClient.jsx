@@ -84,8 +84,8 @@ export default function DashboardClient() {
           <Link href="/account" className="tdn-btn tdn-btn-icon" aria-label="Account"><User size={17} /></Link>
         </header>
 
-        {/* Widget grid */}
-        <main className="flex-1 p-4 sm:p-6 space-y-4 overflow-x-hidden">
+        {/* Widget grid — tdn-paper content surface (white in light, dark in dark); sidebar/topbar keep the app theme */}
+        <main className="tdn-paper flex-1 p-4 sm:p-6 space-y-4 overflow-x-hidden">
           {data.length === 0 ? (
             <div className="grid gap-4">
               <div className="h-24 tdn-skeleton" />
@@ -117,7 +117,7 @@ export default function DashboardClient() {
                 <HeatmapWidget data={data} />
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
                   <MoversWidget data={data} />
-                  <NewsWidget data={data} />
+                  <NewsWidget />
                 </div>
               </div>
 

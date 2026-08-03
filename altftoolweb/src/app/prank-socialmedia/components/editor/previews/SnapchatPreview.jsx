@@ -2,6 +2,7 @@
 import { ChevronLeft, MessageSquare, Camera, Compass, Smile, MoreHorizontal } from "lucide-react";
 import { useEditor } from "../../../lib/editor-store";
 import { DeviceFrame } from "../DeviceFrame";
+import ImageViewer from "../../ui/image-viewer";
 
 function SnapchatPreview() {
   const { username, avatar, postImage, time, theme, messages } = useEditor();
@@ -21,7 +22,7 @@ function SnapchatPreview() {
             <ChevronLeft className="h-5 w-5 cursor-pointer" />
             <div className="grid h-8 w-8 place-items-center overflow-hidden rounded-full bg-yellow-400">
               {avatar ? (
-                <img src={avatar} className="h-full w-full object-cover" alt="" />
+                <ImageViewer src={avatar} alt="Avatar" className="h-full w-full object-cover" platform="Snapchat" />
               ) : (
                 <span className="text-xs font-bold text-black">{username[0]}</span>
               )}
@@ -43,7 +44,7 @@ function SnapchatPreview() {
       >
         {/* Story Content Background */}
         {postImage ? (
-          <img src={postImage} className="absolute inset-0 h-full w-full object-cover" alt="" />
+          <ImageViewer src={postImage} alt="Snap image" platform="Snapchat" className="absolute inset-0 h-full w-full object-cover" />
         ) : (
           <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center text-neutral-500 bg-neutral-950">
             <p className="text-sm font-semibold">Snapchat Story/Camera Mockup</p>

@@ -1,51 +1,58 @@
 /* ============================================================================
    TRADEON — AI Financial Intelligence Platform
-   Design system: AltFTool semantic tokens with light + dark parity.
+   Design system: premium glassmorphism, dark-first, light + dark parity.
    Everything is scoped under .tradeon-root so it never leaks into the host app.
-   Signature palette: Teal primary · Cyan accent · semantic market status colors
+   Signature palette: Iris/Violet primary · Cyan accent · Emerald up · Rose down
    ============================================================================ */
 
-/* Scoped wrapper mirrors the platform theme for native controls and charts. */
+/* Isolated theme wrapper — owns Tradeon's color-scheme so native controls,
+   scrollbars and form widgets theme correctly WITHOUT touching the global
+   document colorScheme used by the rest of AltFTool. */
 .tradeon-shell { min-height: 100vh; display: flow-root; }
 .tradeon-shell[data-tradeon-theme="dark"] { color-scheme: dark; }
 .tradeon-shell[data-tradeon-theme="light"] { color-scheme: light; }
 
 .tradeon-root {
-  --tdn-iris: var(--primary);
-  --tdn-iris-2: var(--primary);
-  --tdn-violet: var(--anslation-ds-accent);
-  --tdn-cyan: var(--secondary);
-  --tdn-up: var(--anslation-ds-success);
-  --tdn-up-soft: var(--anslation-ds-success-soft);
-  --tdn-down: var(--anslation-ds-danger);
-  --tdn-down-soft: var(--anslation-ds-danger-soft);
-  --tdn-amber: var(--anslation-ds-warning);
+  /* ---- Brand ramps ---- */
+  /* Primary brand: teal #0D9488 */
+  --tdn-iris: #0d9488;
+  --tdn-iris-2: #14b8a6;
+  --tdn-violet: #0f766e;
+  --tdn-cyan: #22d3ee;
+  --tdn-up: #10c477;
+  --tdn-up-soft: rgba(16, 196, 119, 0.14);
+  --tdn-down: #f5426c;
+  --tdn-down-soft: rgba(245, 66, 108, 0.14);
+  --tdn-amber: #f7b955;
 
-  --tdn-brand-gradient: var(--anslation-ds-cta-gradient);
-  --tdn-brand-gradient-soft: color-mix(in srgb, var(--primary) 10%, var(--card));
+  --tdn-brand-gradient: linear-gradient(120deg, #0d9488 0%, #14b8a6 50%, #22d3ee 100%);
+  --tdn-brand-gradient-soft: linear-gradient(120deg, rgba(13, 148, 136, 0.16), rgba(34, 211, 238, 0.12));
 
-  --tdn-bg: var(--background);
-  --tdn-bg-2: var(--anslation-ds-canvas);
-  --tdn-surface: color-mix(in srgb, var(--card) 88%, transparent);
-  --tdn-surface-solid: var(--card);
-  --tdn-elevated: var(--card);
-  --tdn-card: color-mix(in srgb, var(--card) 94%, transparent);
-  --tdn-card-hover: var(--anslation-ds-hover);
-  --tdn-fg: var(--foreground);
-  --tdn-fg-strong: var(--foreground);
-  --tdn-muted: var(--muted-foreground);
-  --tdn-faint: color-mix(in srgb, var(--muted-foreground) 82%, transparent);
-  --tdn-border: var(--border);
-  --tdn-border-strong: var(--anslation-ds-border-strong);
-  --tdn-glass-blur: 16px;
-  --tdn-shadow-sm: var(--anslation-ds-shadow-sm);
-  --tdn-shadow: var(--anslation-ds-shadow-md);
-  --tdn-shadow-lg: var(--anslation-ds-shadow-lg);
-  --tdn-ring: inset 0 0 0 1px color-mix(in srgb, var(--foreground) 5%, transparent);
-  --tdn-grid-line: color-mix(in srgb, var(--border) 45%, transparent);
+  /* ---- Light theme surfaces ---- */
+  --tdn-bg: #eceef7;
+  --tdn-bg-2: #f6f7fc;
+  --tdn-page-glow-1: rgba(13, 148, 136, 0.12);
+  --tdn-page-glow-2: rgba(34, 211, 238, 0.10);
+  --tdn-surface: rgba(255, 255, 255, 0.72);
+  --tdn-surface-solid: #ffffff;
+  --tdn-elevated: rgba(255, 255, 255, 0.9);
+  --tdn-card: rgba(255, 255, 255, 0.66);
+  --tdn-card-hover: rgba(255, 255, 255, 0.86);
+  --tdn-fg: #10132a;
+  --tdn-fg-strong: #060814;
+  --tdn-muted: #5a6079;
+  --tdn-faint: #878da6;
+  --tdn-border: rgba(16, 19, 42, 0.09);
+  --tdn-border-strong: rgba(16, 19, 42, 0.14);
+  --tdn-glass-blur: 18px;
+  --tdn-shadow-sm: 0 1px 2px rgba(16, 19, 42, 0.06), 0 4px 14px rgba(16, 19, 42, 0.05);
+  --tdn-shadow: 0 8px 30px rgba(16, 19, 42, 0.10), 0 2px 8px rgba(16, 19, 42, 0.06);
+  --tdn-shadow-lg: 0 30px 70px -20px rgba(30, 26, 90, 0.30);
+  --tdn-ring: 0 0 0 1px rgba(255, 255, 255, 0.6) inset;
+  --tdn-grid-line: rgba(16, 19, 42, 0.045);
 
-  --tdn-font-display: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --tdn-font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --tdn-font-display: var(--font-sora), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --tdn-font-sans: var(--font-inter), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --tdn-font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
   color: var(--tdn-fg);
@@ -59,13 +66,96 @@
 }
 
 [data-tradeon-theme="dark"] .tradeon-root {
-  --tdn-surface: color-mix(in srgb, var(--card) 88%, transparent);
-  --tdn-card: color-mix(in srgb, var(--card) 92%, transparent);
+  --tdn-bg: #06070f;
+  --tdn-bg-2: #0a0c17;
+  --tdn-page-glow-1: rgba(13, 148, 136, 0.22);
+  --tdn-page-glow-2: rgba(34, 211, 238, 0.16);
+  --tdn-surface: rgba(255, 255, 255, 0.045);
+  --tdn-surface-solid: #0d0f1c;
+  --tdn-elevated: rgba(20, 23, 42, 0.72);
+  --tdn-card: rgba(255, 255, 255, 0.035);
+  --tdn-card-hover: rgba(255, 255, 255, 0.07);
+  --tdn-fg: #e9ebf7;
+  --tdn-fg-strong: #ffffff;
+  --tdn-muted: #9aa0bd;
+  --tdn-faint: #6b7196;
+  --tdn-border: rgba(255, 255, 255, 0.08);
+  --tdn-border-strong: rgba(255, 255, 255, 0.14);
+  --tdn-glass-blur: 22px;
+  --tdn-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --tdn-shadow: 0 10px 34px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.4);
+  --tdn-shadow-lg: 0 40px 90px -24px rgba(0, 0, 0, 0.7);
+  --tdn-ring: 0 0 0 1px rgba(255, 255, 255, 0.06) inset;
+  --tdn-grid-line: rgba(255, 255, 255, 0.04);
+  --tdn-up-soft: rgba(16, 196, 119, 0.16);
+  --tdn-down-soft: rgba(245, 66, 108, 0.16);
 }
 
-/* ---- Quiet terminal grid ---- */
+/* ---- Theme-aware content surface (Weekly Outlook list + detail <main>) ----
+   Applied to the CONTENT AREA only — the header/footer keep their own theme.
+   Light theme → clean pure white; dark theme → the app's dark surface (inherits
+   .tradeon-root's dark tokens, with the ambient glow showing through). Only the
+   surface tokens differ between themes; text / border / shadow tokens are left to
+   inherit from .tradeon-root, so they stay theme-correct automatically. */
+.tdn-paper {
+  --tdn-bg: #ffffff;
+  --tdn-bg-2: #ffffff;
+  --tdn-surface: #ffffff;
+  --tdn-surface-solid: #ffffff;
+  --tdn-elevated: #ffffff;
+  --tdn-card: #ffffff;
+  --tdn-card-hover: #f5f6fb;
+  background: var(--tdn-bg);
+}
+/* Dark theme: drop the white overrides so the content matches the app dark theme
+   (unset makes each inherited custom property fall back to .tradeon-root's value). */
+[data-tradeon-theme="dark"] .tdn-paper {
+  --tdn-bg: unset;
+  --tdn-bg-2: unset;
+  --tdn-surface: unset;
+  --tdn-surface-solid: unset;
+  --tdn-elevated: unset;
+  --tdn-card: unset;
+  --tdn-card-hover: unset;
+  background: transparent;
+}
+
+/* ---- News article prose (extracted full-content HTML) — theme-aware ---- */
+.tdn-article { color: var(--tdn-fg); font-size: 0.98rem; line-height: 1.75; }
+.tdn-article > * + * { margin-top: 1rem; }
+.tdn-article p { color: var(--tdn-fg); }
+.tdn-article h1, .tdn-article h2, .tdn-article h3, .tdn-article h4, .tdn-article h5, .tdn-article h6 {
+  color: var(--tdn-fg-strong); font-weight: 700; line-height: 1.3; margin-top: 1.7rem;
+}
+.tdn-article h1 { font-size: 1.5rem; } .tdn-article h2 { font-size: 1.3rem; }
+.tdn-article h3 { font-size: 1.12rem; } .tdn-article h4 { font-size: 1rem; }
+.tdn-article a { color: var(--tdn-iris-2); text-decoration: underline; text-underline-offset: 2px; }
+.tdn-article a:hover { color: var(--tdn-iris); }
+.tdn-article ul, .tdn-article ol { padding-left: 1.4rem; }
+.tdn-article ul { list-style: disc; } .tdn-article ol { list-style: decimal; }
+.tdn-article li { margin-top: 0.4rem; }
+.tdn-article img { border-radius: 0.75rem; max-width: 100%; height: auto; margin: 1.25rem 0; border: 1px solid var(--tdn-border); }
+.tdn-article figure { margin: 1.25rem 0; }
+.tdn-article figcaption { font-size: 0.8rem; color: var(--tdn-faint); margin-top: 0.45rem; text-align: center; }
+.tdn-article blockquote { border-left: 3px solid var(--tdn-iris); padding-left: 1rem; color: var(--tdn-muted); font-style: italic; }
+.tdn-article table { width: 100%; border-collapse: collapse; font-size: 0.9rem; display: block; overflow-x: auto; }
+.tdn-article th, .tdn-article td { border: 1px solid var(--tdn-border); padding: 0.5rem 0.75rem; text-align: left; }
+.tdn-article th { color: var(--tdn-fg-strong); background: color-mix(in srgb, var(--tdn-fg) 5%, transparent); }
+.tdn-article pre { background: var(--tdn-bg-2); padding: 0.75rem; border-radius: 0.5rem; overflow-x: auto; font-size: 0.85rem; }
+.tdn-article code { font-family: var(--tdn-font-mono); }
+.tdn-article strong, .tdn-article b { color: var(--tdn-fg-strong); font-weight: 700; }
+
+/* ---- Ambient page background: aurora glows + grid ---- */
 .tradeon-root::before {
-  content: none;
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(60rem 60rem at 12% -10%, var(--tdn-page-glow-1), transparent 60%),
+    radial-gradient(50rem 50rem at 100% 0%, var(--tdn-page-glow-2), transparent 55%),
+    radial-gradient(40rem 40rem at 50% 120%, rgba(168, 85, 247, 0.10), transparent 60%);
+  pointer-events: none;
 }
 .tradeon-root::after {
   content: "";
@@ -76,7 +166,7 @@
     linear-gradient(var(--tdn-grid-line) 1px, transparent 1px),
     linear-gradient(90deg, var(--tdn-grid-line) 1px, transparent 1px);
   background-size: 46px 46px;
-  mask-image: linear-gradient(to bottom, black, transparent 80%);
+  mask-image: radial-gradient(circle at 50% 30%, #000 0%, transparent 75%);
   pointer-events: none;
 }
 
@@ -86,21 +176,21 @@
 .tradeon-root h3,
 .tradeon-root h4 {
   font-family: var(--tdn-font-display);
-  letter-spacing: 0;
+  letter-spacing: -0.02em;
   color: var(--tdn-fg-strong);
   font-weight: 700;
 }
 .tdn-display {
   font-family: var(--tdn-font-display);
   font-weight: 720;
-  letter-spacing: 0;
+  letter-spacing: -0.02em;
   line-height: 1.08;
 }
 .tdn-mono { font-family: var(--tdn-font-mono); font-variant-numeric: tabular-nums; }
 .tdn-eyebrow {
   font-size: 0.72rem;
   font-weight: 650;
-  letter-spacing: 0;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--tdn-muted);
 }
@@ -112,7 +202,8 @@
   -webkit-text-fill-color: currentColor;
   color: var(--tdn-accent-text);
 }
-.tradeon-root { --tdn-accent-text: var(--primary); --tdn-mark-bg: var(--primary); --tdn-mark-fg: var(--primary-foreground); --tdn-mark-ring: color-mix(in srgb, var(--primary-foreground) 20%, transparent); }
+.tradeon-root { --tdn-accent-text: #0d9488; --tdn-mark-bg: #0d9488; --tdn-mark-fg: #ffffff; --tdn-mark-ring: rgba(255, 255, 255, 0.22); }
+[data-tradeon-theme="dark"] .tradeon-root { --tdn-accent-text: #2dd4bf; --tdn-mark-bg: #0d9488; --tdn-mark-fg: #ffffff; --tdn-mark-ring: rgba(255, 255, 255, 0.16); --tdn-iris-2: #2dd4bf; }
 
 /* ============================ Surfaces ============================ */
 .tdn-glass {
@@ -124,7 +215,7 @@
 .tdn-card {
   background: var(--tdn-card);
   border: 1px solid var(--tdn-border);
-  border-radius: var(--anslation-ds-radius-lg);
+  border-radius: 13px;
   box-shadow: var(--tdn-shadow-sm);
   backdrop-filter: blur(var(--tdn-glass-blur)) saturate(140%);
   -webkit-backdrop-filter: blur(var(--tdn-glass-blur)) saturate(140%);
@@ -133,7 +224,7 @@
 .tdn-card-i {
   background: var(--tdn-card);
   border: 1px solid var(--tdn-border);
-  border-radius: var(--anslation-ds-radius-lg);
+  border-radius: 14px;
 }
 .tdn-card-hover:hover {
   transform: translateY(-2px);
@@ -144,7 +235,7 @@
 .tdn-panel {
   background: var(--tdn-elevated);
   border: 1px solid var(--tdn-border);
-  border-radius: var(--anslation-ds-radius-lg);
+  border-radius: 13px;
   box-shadow: var(--tdn-shadow);
   backdrop-filter: blur(var(--tdn-glass-blur)) saturate(150%);
   -webkit-backdrop-filter: blur(var(--tdn-glass-blur)) saturate(150%);
@@ -155,7 +246,7 @@
   border-radius: 12px;
 }
 .tdn-hairline { border-color: var(--tdn-border); }
-.tdn-glow-ring { box-shadow: var(--tdn-shadow); }
+.tdn-glow-ring { box-shadow: 0 0 0 1px var(--tdn-border), 0 0 44px -12px rgba(13, 148, 136, 0.55); }
 
 /* ============================ Buttons ============================ */
 .tdn-btn {
@@ -166,9 +257,8 @@
   gap: 0.5rem;
   font-weight: 600;
   font-size: 0.9rem;
-  min-height: 40px;
-  padding: 0.5rem 1rem;
-  border-radius: var(--anslation-ds-radius);
+  padding: 0.62rem 1.05rem;
+  border-radius: 12px;
   border: 1px solid transparent;
   cursor: pointer;
   white-space: nowrap;
@@ -177,11 +267,11 @@
 }
 .tdn-btn:active { transform: translateY(1px) scale(0.99); }
 .tdn-btn-primary {
-  background: var(--primary);
-  color: var(--primary-foreground);
-  box-shadow: var(--tdn-shadow-sm);
+  background: var(--tdn-iris);
+  color: #fff;
+  box-shadow: 0 8px 22px -10px rgba(13, 148, 136, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
-.tdn-btn-primary:hover { background: var(--primary-hover); box-shadow: var(--tdn-shadow); transform: translateY(-1px); }
+.tdn-btn-primary:hover { background: #0f766e; box-shadow: 0 12px 30px -10px rgba(13, 148, 136, 0.7); transform: translateY(-1px); }
 .tdn-btn-ghost {
   background: var(--tdn-surface);
   border-color: var(--tdn-border);
@@ -194,9 +284,10 @@
   color: var(--tdn-iris-2);
   border-color: color-mix(in srgb, var(--tdn-iris) 26%, transparent);
 }
+[data-tradeon-theme="dark"] .tdn-btn-soft { color: #5eead4; }
 .tdn-btn-soft:hover { background: color-mix(in srgb, var(--tdn-iris) 22%, transparent); }
 .tdn-btn-icon {
-  width: 40px; height: 40px; padding: 0; border-radius: var(--anslation-ds-radius);
+  width: 38px; height: 38px; padding: 0; border-radius: 11px;
   background: var(--tdn-surface); border: 1px solid var(--tdn-border); color: var(--tdn-fg);
 }
 .tdn-btn-icon:hover { border-color: var(--tdn-border-strong); background: var(--tdn-card-hover); color: var(--tdn-iris-2); }
@@ -213,6 +304,7 @@
   border-color: color-mix(in srgb, var(--tdn-iris) 30%, transparent);
   color: var(--tdn-iris-2);
 }
+[data-tradeon-theme="dark"] .tdn-chip-brand { color: #5eead4; }
 .tdn-badge-live {
   display: inline-flex; align-items: center; gap: 0.4rem;
   font-size: 0.72rem; font-weight: 650; letter-spacing: 0.02em;
@@ -253,13 +345,29 @@
 .tdn-float { animation: tdn-float 6s ease-in-out infinite; }
 @keyframes tdn-shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
 .tdn-skeleton {
-  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--tdn-fg) 8%, transparent), transparent);
-  background-size: 200% 100%;
-  animation: tdn-shimmer 1.4s infinite;
+  position: relative;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--tdn-fg) 6%, transparent);
   border-radius: 8px;
+}
+.tdn-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--tdn-fg) 9%, transparent), transparent);
+  background-size: 200% 100%;
+  animation: tdn-shimmer 1.5s infinite;
 }
 @keyframes tdn-rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 .tdn-rise { animation: tdn-rise 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+/* Hover elevation for interactive cards (news, listings…) — TradingView/Yahoo-style */
+.tdn-lift { transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.22s ease, border-color 0.22s ease; }
+.tdn-lift:hover { transform: translateY(-4px); box-shadow: var(--tdn-shadow); border-color: var(--tdn-border-strong); }
+@media (prefers-reduced-motion: reduce) {
+  .tdn-lift, .tdn-lift:hover { transition: none; transform: none; }
+  .tdn-skeleton::after { animation: none; }
+}
 @keyframes tdn-spin-slow { to { transform: rotate(360deg); } }
 
 /* Animated gradient border for hero cards */
@@ -356,10 +464,127 @@
   transition: color 0.15s, background 0.15s;
 }
 .tdn-navlink:hover { color: var(--tdn-fg-strong); background: color-mix(in srgb, var(--tdn-fg) 5%, transparent); }
-.tdn-navlink[data-active="true"] { color: var(--tdn-fg-strong); background: color-mix(in srgb, var(--tdn-fg) 6%, transparent); }
+.tdn-navlink[data-active="true"] { color: var(--tdn-iris-2); background: color-mix(in srgb, var(--tdn-iris) 12%, transparent); }
 .tdn-scroll-hide { scrollbar-width: none; -ms-overflow-style: none; }
 .tdn-scroll-hide::-webkit-scrollbar { display: none; }
 
 /* Hide the global site chrome while inside Tradeon */
 body.tradeon-active .altf-global-header,
 body.tradeon-active header[data-global-header] { display: none !important; }
+
+/* ---- Login popup (Tradeon-only, isolated) ---- */
+.tdn-auth-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+}
+.tdn-auth-backdrop {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in srgb, var(--tdn-bg) 45%, rgba(4, 6, 15, 0.74));
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  animation: tdn-auth-fade 0.28s ease-out both;
+}
+.tdn-auth-card {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 20px;
+  background: var(--tdn-surface-solid);
+  border: 1px solid var(--tdn-border-strong);
+  box-shadow: var(--tdn-shadow-lg);
+  overflow: hidden;
+}
+@keyframes tdn-auth-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes tdn-auth-pop {
+  from { opacity: 0; transform: translateY(10px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.tdn-auth-pop { animation: tdn-auth-pop 0.34s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+
+.tdn-auth-x {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  color: var(--tdn-muted);
+  background: transparent;
+  transition: background 0.15s, color 0.15s;
+}
+.tdn-auth-x:hover { background: var(--tdn-card-hover); color: var(--tdn-fg); }
+
+.tdn-auth-btn {
+  width: 100%;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: transform 0.12s ease, box-shadow 0.2s ease, background 0.15s ease, border-color 0.15s ease;
+}
+.tdn-auth-btn:active { transform: scale(0.985); }
+.tdn-auth-btn-google { background: #ffffff; color: #1f2430; border: 1px solid rgba(0, 0, 0, 0.14); }
+.tdn-auth-btn-google:hover { box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16); }
+.tdn-auth-btn-outline { background: var(--tdn-surface); color: var(--tdn-fg); border: 1px solid var(--tdn-border-strong); }
+.tdn-auth-btn-outline:hover { background: var(--tdn-card-hover); }
+.tdn-auth-btn-primary {
+  color: #fff;
+  background: var(--tdn-iris);
+  border: 0;
+  box-shadow: 0 10px 26px -10px rgba(13, 148, 136, 0.9);
+}
+.tdn-auth-btn-primary:hover:not(:disabled) { transform: translateY(-1px); }
+
+.tdn-auth-sep {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0.1rem 0;
+  color: var(--tdn-faint);
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.tdn-auth-sep::before, .tdn-auth-sep::after { content: ""; flex: 1; height: 1px; background: var(--tdn-border-strong); }
+
+.tdn-auth-guest {
+  width: 100%;
+  height: 40px;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--tdn-muted);
+  background: transparent;
+  border: 1px dashed var(--tdn-border-strong);
+  transition: color 0.15s, border-color 0.15s;
+}
+.tdn-auth-guest:hover { color: var(--tdn-fg); border-color: color-mix(in srgb, var(--tdn-iris) 55%, transparent); }
+
+.tdn-auth-back { width: 100%; text-align: center; font-size: 0.76rem; color: var(--tdn-muted); padding-top: 0.1rem; }
+.tdn-auth-back:hover { color: var(--tdn-fg); }
+.tdn-auth-close-text { display: block; width: 100%; text-align: center; font-size: 0.76rem; font-weight: 600; color: var(--tdn-faint); }
+.tdn-auth-close-text:hover { color: var(--tdn-muted); }
+
+/* ---- Full-chart stacked indicator panes ---- */
+.tdn-pane-resize {
+  position: absolute;
+  top: -3px;
+  left: 0;
+  right: 0;
+  height: 6px;
+  z-index: 6;
+  cursor: row-resize;
+  touch-action: none;
+}
+.tdn-pane-resize:hover { background: color-mix(in srgb, var(--tdn-iris) 45%, transparent); }

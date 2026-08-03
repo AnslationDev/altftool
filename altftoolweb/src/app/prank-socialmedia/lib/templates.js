@@ -1,4 +1,5 @@
 import {
+  // Existing icons
   MessageCircle,
   Instagram,
   Image as ImageIcon,
@@ -12,9 +13,44 @@ import {
   BatteryLow,
   Search,
   AlertOctagon,
-  PhoneCall
+  PhoneCall,
+
+  // New icons
+  Music,
+  Linkedin,
+  AtSign,
+  Pin,
+  MessageSquare,
+  Tv,
+  Video,
+  Phone,
+  Camera,
+  Globe,
+  Sparkles,
+  Mic,
+  BookOpen,
+  Share2,
+  Palette,
+  Rocket,
+  Code,
+  Play,
+  Heart,
+  Shield,
+  Users,
+  Monitor,
+  CircleHelp,
+  Layers,
+  Github,
+  Gitlab,
+  Dribbble,
+  Figma,
+  Slack,
+  Twitch,
+  Codesandbox,
 } from "lucide-react";
+
 const TEMPLATES = [
+  // ── EXISTING (Ready) ──────────────────────────────────────────────
   { slug: "whatsapp", name: "WhatsApp Fake Chat", short: "Two-way chat with ticks, timestamps & themes.", icon: MessageCircle, accent: "from-emerald-400 to-emerald-600", ready: true },
   { slug: "instagram-dm", name: "Instagram DM Generator", short: "Realistic IG direct message thread.", icon: Instagram, accent: "from-pink-400 via-fuchsia-500 to-orange-400", ready: true },
   { slug: "twitter", name: "Twitter / X Tweet", short: "Generate a pixel-perfect tweet card.", icon: Twitter, accent: "from-sky-400 to-slate-700", ready: true },
@@ -28,10 +64,73 @@ const TEMPLATES = [
   { slug: "low-battery", name: "Low Battery Alert", short: "Classic 20% / 10% battery popup.", icon: BatteryLow, accent: "from-amber-400 to-orange-500", ready: true },
   { slug: "search-results", name: "Fake Search Results", short: "Search engine results page mock.", icon: Search, accent: "from-slate-400 to-slate-700", ready: true },
   { slug: "error-popup", name: "Error Popup", short: "Windows / macOS error dialog.", icon: AlertOctagon, accent: "from-red-400 to-red-700", ready: true },
-  { slug: "fake-call", name: "Fake Call Screen", short: "Incoming call screen for iOS / Android.", icon: PhoneCall, accent: "from-emerald-400 to-teal-600", ready: true }
+  { slug: "fake-call", name: "Fake Call Screen", short: "Incoming call screen for iOS / Android.", icon: PhoneCall, accent: "from-emerald-400 to-teal-600", ready: true },
+
+  // ── SOCIAL MEDIA – MESSAGING ──────────────────────────────────────
+  { slug: "tiktok", name: "TikTok", short: "TikTok profile, video comments & duets.", icon: Music, accent: "from-cyan-400 via-pink-500 to-black", ready: false },
+  { slug: "linkedin", name: "LinkedIn", short: "Professional post, profile & endorsements.", icon: Linkedin, accent: "from-blue-600 to-blue-800", ready: false },
+  { slug: "discord", name: "Discord", short: "Discord server chat with roles & emojis.", icon: MessagesSquare, accent: "from-indigo-500 to-violet-600", ready: false },
+  { slug: "reddit", name: "Reddit", short: "Reddit post with upvotes, awards & threads.", icon: MessageCircle, accent: "from-orange-500 to-red-600", ready: false },
+  { slug: "pinterest", name: "Pinterest", short: "Pinterest pin board & image feed.", icon: Pin, accent: "from-red-600 to-red-700", ready: false },
+  { slug: "threads", name: "Threads", short: "Meta Threads post with replies.", icon: AtSign, accent: "from-slate-900 to-slate-700", ready: false },
+  { slug: "tumblr", name: "Tumblr", short: "Tumblr blog post with reblogs.", icon: BookOpen, accent: "from-sky-700 to-sky-900", ready: false },
+  { slug: "wechat", name: "WeChat", short: "WeChat chat & moments mockup.", icon: MessageCircle, accent: "from-emerald-400 to-green-600", ready: false },
+  { slug: "line", name: "LINE", short: "LINE messenger with stickers & timeline.", icon: MessageCircle, accent: "from-green-500 to-green-700", ready: false },
+  { slug: "viber", name: "Viber", short: "Viber chat with purple bubbles.", icon: Phone, accent: "from-purple-500 to-violet-700", ready: false },
+  { slug: "signal", name: "Signal", short: "Signal encrypted chat mockup.", icon: Shield, accent: "from-blue-500 to-blue-700", ready: false },
+  { slug: "skype", name: "Skype", short: "Skype chat & call screen.", icon: Monitor, accent: "from-sky-400 to-blue-600", ready: false },
+  { slug: "microsoft-teams", name: "Microsoft Teams", short: "Teams channel chat & meetings.", icon: Users, accent: "from-indigo-500 to-purple-600", ready: false },
+  { slug: "google-chat", name: "Google Chat", short: "Google Chat spaces & threads.", icon: MessageSquare, accent: "from-blue-400 to-green-500", ready: false },
+  { slug: "google-meet", name: "Google Meet", short: "Google Meet call screen mockup.", icon: Video, accent: "from-green-400 to-green-600", ready: false },
+  { slug: "zoom", name: "Zoom", short: "Zoom meeting screen & chat panel.", icon: Video, accent: "from-blue-400 to-blue-600", ready: false },
+  { slug: "facetime", name: "FaceTime", short: "FaceTime incoming & active call screen.", icon: Phone, accent: "from-green-400 to-green-600", ready: false },
+  { slug: "kakao-talk", name: "KakaoTalk", short: "KakaoTalk yellow chat bubbles.", icon: MessageCircle, accent: "from-yellow-400 to-yellow-600", ready: false },
+  { slug: "imo", name: "IMO", short: "IMO video call & chat screen.", icon: Phone, accent: "from-sky-400 to-blue-500", ready: false },
+  { slug: "zalo", name: "Zalo", short: "Zalo Vietnamese messenger mockup.", icon: MessageCircle, accent: "from-blue-400 to-blue-600", ready: false },
+
+  // ── SOCIAL MEDIA – SHORT VIDEO / LIVE ─────────────────────────────
+  { slug: "twitch", name: "Twitch", short: "Twitch stream chat & channel panel.", icon: Tv, accent: "from-purple-500 to-violet-700", ready: false },
+  { slug: "kick", name: "Kick", short: "Kick streaming & live chat mockup.", icon: Tv, accent: "from-green-400 to-emerald-600", ready: false },
+  { slug: "bigo-live", name: "BIGO LIVE", short: "BIGO LIVE streaming screen.", icon: Video, accent: "from-pink-400 to-red-500", ready: false },
+  { slug: "trovo", name: "Trovo", short: "Trovo live stream & chat overlay.", icon: Tv, accent: "from-purple-500 to-violet-700", ready: false },
+  { slug: "vsco", name: "VSCO", short: "VSCO photo grid & editor screen.", icon: Camera, accent: "from-neutral-700 to-neutral-900", ready: false },
+
+  // ── SOCIAL MEDIA – PHOTO / VIDEO ──────────────────────────────────
+  { slug: "flickr", name: "Flickr", short: "Flickr photo stream & album view.", icon: Camera, accent: "from-blue-400 to-pink-500", ready: false },
+
+  // ── SOCIAL MEDIA – PROFESSIONAL / DEV ─────────────────────────────
+  { slug: "slack", name: "Slack", short: "Slack workspace channel & threads.", icon: Slack, accent: "from-purple-500 to-pink-500", ready: false },
+  { slug: "github", name: "GitHub", short: "GitHub profile, repos & contribution graph.", icon: Github, accent: "from-slate-700 to-slate-900", ready: false },
+  { slug: "gitlab", name: "GitLab", short: "GitLab repos, pipelines & issues.", icon: Gitlab, accent: "from-orange-400 to-orange-600", ready: false },
+  { slug: "stack-overflow", name: "Stack Overflow", short: "Stack Overflow question & answers.", icon: Layers, accent: "from-orange-400 to-orange-600", ready: false },
+  { slug: "devto", name: "Dev.to", short: "Dev.to article post & comments.", icon: Code, accent: "from-slate-800 to-neutral-900", ready: false },
+  { slug: "codepen", name: "CodePen", short: "CodePen pen editor & embed view.", icon: Code, accent: "from-slate-700 to-blue-600", ready: false },
+  { slug: "product-hunt", name: "Product Hunt", short: "Product Hunt launch card with upvotes.", icon: Rocket, accent: "from-orange-400 to-red-500", ready: false },
+  { slug: "replit", name: "Replit", short: "Replit code editor & community.", icon: Codesandbox, accent: "from-slate-700 to-indigo-700", ready: false },
+
+  // ── SOCIAL MEDIA – DESIGN ─────────────────────────────────────────
+  { slug: "dribbble", name: "Dribbble", short: "Dribbble shot grid & portfolio.", icon: Dribbble, accent: "from-pink-400 to-pink-600", ready: false },
+  { slug: "behance", name: "Behance", short: "Behance project showcase & gallery.", icon: Palette, accent: "from-blue-500 to-blue-700", ready: false },
+  { slug: "figma-community", name: "Figma Community", short: "Figma community file & plugin page.", icon: Figma, accent: "from-purple-500 to-pink-500", ready: false },
+
+  // ── SOCIAL MEDIA – NICHE / REGIONAL ───────────────────────────────
+  { slug: "bereal", name: "BeReal", short: "BeReal dual-camera snap mockup.", icon: Camera, accent: "from-yellow-300 to-yellow-500", ready: false },
+  { slug: "bluesky", name: "Bluesky", short: "Bluesky post & feed mockup.", icon: Globe, accent: "from-sky-400 to-sky-600", ready: false },
+  { slug: "mastodon", name: "Mastodon", short: "Mastodon toot & timeline mockup.", icon: Globe, accent: "from-purple-500 to-violet-600", ready: false },
+  { slug: "lemon8", name: "Lemon8", short: "Lemon8 lifestyle post & feed.", icon: Sparkles, accent: "from-yellow-300 to-pink-400", ready: false },
+  { slug: "clubhouse", name: "Clubhouse", short: "Clubhouse room & speaker grid.", icon: Mic, accent: "from-amber-300 to-amber-500", ready: false },
+  { slug: "quora", name: "Quora", short: "Quora question & answer thread.", icon: CircleHelp, accent: "from-red-500 to-red-700", ready: false },
+  { slug: "medium", name: "Medium", short: "Medium article header & reading view.", icon: BookOpen, accent: "from-neutral-800 to-neutral-900", ready: false },
+  { slug: "vk", name: "VK", short: "VK post, wall & messaging mockup.", icon: Globe, accent: "from-blue-500 to-blue-700", ready: false },
+  { slug: "weibo", name: "Weibo", short: "Weibo timeline & trending feed.", icon: Globe, accent: "from-orange-400 to-red-500", ready: false },
+  { slug: "xiaohongshu", name: "Xiaohongshu (RED)", short: "Xiaohongshu lifestyle feed & notes.", icon: Heart, accent: "from-red-400 to-red-600", ready: false },
+  { slug: "koo", name: "Koo", short: "Koo Indian microblogging post.", icon: MessageCircle, accent: "from-yellow-400 to-yellow-600", ready: false },
+  { slug: "sharechat", name: "ShareChat", short: "ShareChat regional content feed.", icon: Share2, accent: "from-purple-400 to-pink-500", ready: false },
+  { slug: "moj", name: "Moj", short: "Moj short video feed & profile.", icon: Play, accent: "from-cyan-400 to-blue-500", ready: false },
+  { slug: "josh", name: "Josh", short: "Josh short video app mockup.", icon: Play, accent: "from-orange-400 to-red-500", ready: false },
+  { slug: "chingari", name: "Chingari", short: "Chingari short video feed.", icon: Play, accent: "from-pink-400 to-red-500", ready: false },
 ];
+
 const getTemplate = (slug) => TEMPLATES.find((t) => t.slug === slug);
-export {
-  TEMPLATES,
-  getTemplate
-};
+
+export { TEMPLATES, getTemplate };
