@@ -1,0 +1,396 @@
+/* ================================================================
+   Lookouts dashboard
+   Scoped to /lookouts only. Imported by src/app/lookouts/page.jsx.
+
+   Every colour resolves through the global AltFTool design tokens
+   (--background, --card, --border, --primary, ...) which already flip
+   under [data-theme="dark"], so dark mode needs no extra rules here
+   beyond a handful of surface/glow adjustments.
+   ================================================================ */
+
+/* Standalone shell — used by the /lookouts hub (the sub-routes are not shipped here) that
+   render without the global AltFTool header/footer. */
+.lookouts-page {
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-primary);
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- header ---------- */
+
+.lookouts-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 82%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+}
+
+.lookouts-header-inner {
+  max-width: var(--anslation-ds-container);
+  margin-inline: auto;
+  padding: 0.75rem var(--anslation-ds-gutter);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.lookouts-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-weight: 650;
+  font-size: 0.975rem;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+.lookouts-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--anslation-ds-radius-sm);
+  background: var(--anslation-ds-cta-gradient);
+  /* The one literal colour left in this file, and deliberately not
+     --primary-foreground. The CTA gradient runs primary -> secondary, and
+     --anslation-ds-secondary is #22d3ee in BOTH themes, so the tile stays
+     bright teal/cyan in dark; --primary-foreground would flip this glyph to
+     #07111f and put near-black on a bright tile. White is correct in both
+     themes here. The glyph is aria-hidden and sits beside the visible word
+     "Lookouts", so it is decorative and exempt from the AA text-contrast
+     minimum it would otherwise miss (1.81-3.74:1 across the gradient). */
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.lookouts-header-actions {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.lookouts-icon-button {
+  display: grid;
+  place-items: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: var(--anslation-ds-radius-sm);
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: background-color 0.16s ease, color 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.lookouts-icon-button:hover {
+  background: var(--muted);
+  color: var(--foreground);
+  border-color: var(--anslation-ds-border-strong);
+}
+
+.lookouts-icon-button:focus-visible {
+  outline: none;
+  box-shadow: var(--anslation-ds-focus-ring);
+}
+
+/* Accent used for TEXT on the page background. --primary (teal-500) is a
+   button-fill colour and only reaches ~2:1 as text on white, so text accents
+   use the darker teal-700 in light and the brighter teal-500 in dark. */
+.lookouts-page {
+  --lookouts-accent-text: var(--anslation-ds-primary-active);
+}
+[data-theme="dark"] .lookouts-page {
+  --lookouts-accent-text: var(--anslation-ds-primary);
+}
+
+/* ---------- hero ---------- */
+
+.lookouts-hero {
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+  padding: clamp(3.5rem, 8vw, 6rem) 1.5rem clamp(2.75rem, 5vw, 4rem);
+  border-bottom: 1px solid var(--border);
+}
+.lookouts-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    58% 52% at 50% -6%,
+    color-mix(in srgb, var(--primary) 22%, transparent),
+    transparent 72%
+  );
+}
+.lookouts-hero-inner {
+  position: relative;
+  max-width: 54rem;
+  margin: 0 auto;
+}
+.lookouts-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--border));
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--anslation-ds-primary-active);
+  font-size: 0.775rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+[data-theme="dark"] .lookouts-eyebrow {
+  color: var(--anslation-ds-primary);
+}
+
+.lookouts-title {
+  margin: 1.25rem 0 0;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+}
+.lookouts-title .accent {
+  color: var(--lookouts-accent-text);
+}
+
+.lookouts-lede {
+  max-width: 40rem;
+  margin: 1.3rem auto 0;
+  font-size: clamp(1.02rem, 2vw, 1.2rem);
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+.lookouts-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-top: 2.1rem;
+}
+
+.lookouts-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-weight: 650;
+  font-size: 0.98rem;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, background-color 0.15s ease,
+    border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.lookouts-btn:hover {
+  transform: translateY(-2px);
+}
+.lookouts-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.lookouts-btn--primary {
+  background: var(--anslation-ds-primary-active);
+  /* Must be the token, not a literal white. --anslation-ds-primary-active is
+     brand-800 (#115e59, dark) in light but brand-200 (#99f6e4, light) in dark,
+     so the hardcoded #ffffff this replaced measured 7.58:1 in light and
+     1.26:1 in dark — the CTA label was effectively invisible in dark mode.
+     --primary-foreground flips with it: #ffffff (7.58:1) light,
+     #07111f (15.02:1) dark. Both pass AA. */
+  color: var(--primary-foreground);
+  box-shadow: 0 10px 26px -10px
+    color-mix(in srgb, var(--anslation-ds-primary-active) 65%, transparent);
+}
+
+/* Sections */
+.lookouts-section {
+  padding: clamp(3rem, 7vw, 5rem) 1.5rem;
+  scroll-margin-top: 5rem;
+}
+.lookouts-section--tint {
+  background: color-mix(in srgb, var(--foreground) 3%, transparent);
+  border-block: 1px solid var(--border);
+}
+.lookouts-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+}
+
+.lookouts-head {
+  text-align: center;
+  max-width: 42rem;
+  margin: 0 auto clamp(2rem, 5vw, 3rem);
+}
+.lookouts-head-eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--lookouts-accent-text);
+}
+.lookouts-head-title {
+  margin: 0.55rem 0 0;
+  font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+  font-weight: 770;
+  letter-spacing: -0.025em;
+}
+.lookouts-head-sub {
+  margin: 0.9rem 0 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+/* Value-prop / feature grid */
+.lookouts-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 1.25rem;
+}
+.lookouts-feature {
+  padding: 1.75rem;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: var(--card);
+}
+.lookouts-feature-ico {
+  display: inline-flex;
+  width: 2.9rem;
+  height: 2.9rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 13px;
+  margin-bottom: 1.1rem;
+  background: color-mix(in srgb, var(--primary) 13%, transparent);
+  color: var(--lookouts-accent-text);
+}
+.lookouts-feature h3 {
+  margin: 0 0 0.45rem;
+  font-size: 1.12rem;
+  font-weight: 700;
+}
+.lookouts-feature p {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+/* Product showcase — larger cards than the dashboard catalog */
+.lookouts-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 1.35rem;
+}
+.lookouts-product {
+  display: flex;
+  flex-direction: column;
+  padding: 1.85rem;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.lookouts-product:hover {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
+  box-shadow: var(--shadow-lg);
+}
+.lookouts-product-ico {
+  display: inline-flex;
+  width: 3.1rem;
+  height: 3.1rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  margin-bottom: 1.15rem;
+  background: color-mix(in srgb, var(--primary) 13%, transparent);
+  color: var(--lookouts-accent-text);
+}
+.lookouts-product h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 740;
+  letter-spacing: -0.01em;
+}
+.lookouts-product .lookouts-product-tag {
+  margin: 0.2rem 0 0;
+  font-size: 0.9rem;
+  color: var(--lookouts-accent-text);
+  font-weight: 600;
+}
+.lookouts-product p {
+  margin: 0.85rem 0 0;
+  font-size: 0.97rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+.lookouts-product-go {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  font-weight: 650;
+  font-size: 0.95rem;
+  color: var(--foreground);
+}
+
+/* CTA band */
+.lookouts-band-wrap {
+  margin-top: 1rem;
+}
+.lookouts-band {
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 5vw, 4rem) 1.5rem;
+  border-radius: 24px;
+  background: color-mix(in srgb, var(--primary) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 25%, var(--border));
+  text-align: center;
+}
+.lookouts-band h2 {
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  font-weight: 750;
+  line-height: 1.1;
+}
+.lookouts-band p {
+  margin: 0.75rem 0 0;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+.lookouts-band .lookouts-btn {
+  margin-top: 1.5rem;
+}
+
+/* Icon accent tiles.
+   These deliberately have NO per-card colour modifier. The branch this page
+   came from gave each card its own literal hue (sky/amber/violet/emerald/rose
+   as raw hex, each needing its own [data-theme="dark"] override), which is
+   both a hardcoded palette outside the design tokens and a second source of
+   truth that has to be kept AA-legible by hand in two themes.
+
+   The base .lookouts-product-ico rule above already resolves through
+   --primary for the tile tint and --lookouts-accent-text for the glyph, and
+   that pair is the one checked for contrast on this page (teal-700 in light,
+   teal-500 in dark — see the note next to --lookouts-accent-text). Colour is
+   decorative here: the lucide glyph and the card heading carry the meaning,
+   so a single brand-consistent tile costs nothing in comprehension and keeps
+   every card AA in both themes for free. */

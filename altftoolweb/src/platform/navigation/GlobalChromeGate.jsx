@@ -22,6 +22,8 @@ export const SELF_CHROME_PREFIXES = [
   "/bops",
   "/housingneeds",
   "/altfcalculators",
+  // Renders its own LookupsHeader; without this the page shows two headers.
+  "/lookouts",
   "/imgprompt/studio",
   // The Labs hub has its own focused header.
   "/labs",

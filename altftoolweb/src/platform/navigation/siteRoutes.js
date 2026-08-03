@@ -373,6 +373,10 @@ export const SITE_ROUTES = {
   saleLocator: { label: "Sale Locator", href: "/sale" },
   imgPrompt: { label: "Img Prompt", href: "/imgprompt" },
   freeAiTool: { label: "Free-Ai-Tool", href: "/free-ai-tool" },
+  // Hub over the two routes directly above. It links to those two and
+  // nothing else — see LOOKOUTS_PRODUCTS in src/app/lookouts/lookouts.js,
+  // which must only ever name routes that exist in this tree.
+  lookouts: { label: "Lookouts", href: "/lookouts" },
   academy: { label: "Academy", href: "/academy" },
   blogs: { label: "Blog", href: "/blogs" },
   brandRatings: { label: "Brand Ratings", href: "/brandrating" },
