@@ -149,6 +149,7 @@ jobs:
         run: npm run test:security:production
 
       - name: Run Lighthouse quality gate
+        id: lighthouse
         continue-on-error: true
         # Lighthouse is advisory and retries CI-only trace failures. Bound the
         # step so an unhealthy Chrome session cannot cancel the whole verify
@@ -157,7 +158,7 @@ jobs:
         run: npm run test:lighthouse:production
 
       - name: Upload Playwright artifacts
-        if: failure()
+        if: ${{ failure() || steps.lighthouse.outcome == 'failure' }}
         uses: actions/upload-artifact@v4
         with:
           name: verify-playwright-artifacts

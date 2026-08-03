@@ -3,6 +3,11 @@ import lighthouse from "lighthouse";
 import { launch } from "chrome-launcher";
 
 const webUrl = process.env.ALTFT_WEB_URL || "http://localhost:3002";
+// maxWaitForLoad only covers navigation. Bound the complete audit so two CI
+// attempts still finish inside the 360-second test timeout and reach the
+// existing infrastructure-skip path when Chrome stops answering.
+const LIGHTHOUSE_ATTEMPTS = 2;
+const LIGHTHOUSE_ATTEMPT_TIMEOUT_MS = 150_000;
 
 const DESKTOP_CONFIG = {
   extends: "lighthouse:default",
@@ -73,6 +78,17 @@ function formatScore(score) {
   return Math.round((score || 0) * 100);
 }
 
+function withTimeout(promise, timeoutMs, message) {
+  let timeoutId;
+  const timeout = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => reject(new Error(message)), timeoutMs);
+  });
+
+  return Promise.race([promise, timeout]).finally(() =>
+    clearTimeout(timeoutId),
+  );
+}
+
 async function collectLighthouse(pageConfig) {
   const url = new URL(pageConfig.path, webUrl).toString();
   let lastRuntimeError = null;
@@ -80,7 +96,7 @@ async function collectLighthouse(pageConfig) {
   // A Lighthouse runtimeError means the run never actually measured the page
   // (trace collection failed under load), not that the page regressed. Retry a
   // few times before giving up.
-  for (let attempt = 1; attempt <= 3; attempt += 1) {
+  for (let attempt = 1; attempt <= LIGHTHOUSE_ATTEMPTS; attempt += 1) {
     const chrome = await launch({
       chromeFlags: [
         "--headless=new",
@@ -91,14 +107,18 @@ async function collectLighthouse(pageConfig) {
     });
 
     try {
-      const result = await lighthouse(
-        url,
-        {
-          logLevel: "error",
-          output: "json",
-          port: chrome.port,
-        },
-        DESKTOP_CONFIG,
+      const result = await withTimeout(
+        lighthouse(
+          url,
+          {
+            logLevel: "error",
+            output: "json",
+            port: chrome.port,
+          },
+          DESKTOP_CONFIG,
+        ),
+        LIGHTHOUSE_ATTEMPT_TIMEOUT_MS,
+        `${pageConfig.name}: Lighthouse attempt ${attempt} exceeded ${LIGHTHOUSE_ATTEMPT_TIMEOUT_MS}ms`,
       );
 
       const runtimeError = result?.lhr?.runtimeError?.message || null;
@@ -137,9 +157,17 @@ test.describe.serial("lighthouse quality gate", () => {
       const categories = lhr.categories;
       // Log every category (including the ungated performance number) so the
       // gate stays useful for monitoring real trends over time.
-      const allScores = ["performance", "accessibility", "best-practices", "seo"];
+      const allScores = [
+        "performance",
+        "accessibility",
+        "best-practices",
+        "seo",
+      ];
       const scores = Object.fromEntries(
-        allScores.map((category) => [category, formatScore(categories[category]?.score)]),
+        allScores.map((category) => [
+          category,
+          formatScore(categories[category]?.score),
+        ]),
       );
       console.log(`[lighthouse] ${pageConfig.name}:`, JSON.stringify(scores));
 
