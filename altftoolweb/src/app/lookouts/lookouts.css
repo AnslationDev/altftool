@@ -58,15 +58,10 @@
   height: 2rem;
   border-radius: var(--anslation-ds-radius-sm);
   background: var(--anslation-ds-cta-gradient);
-  /* The one literal colour left in this file, and deliberately not
-     --primary-foreground. The CTA gradient runs primary -> secondary, and
-     --anslation-ds-secondary is #22d3ee in BOTH themes, so the tile stays
-     bright teal/cyan in dark; --primary-foreground would flip this glyph to
-     #07111f and put near-black on a bright tile. White is correct in both
-     themes here. The glyph is aria-hidden and sits beside the visible word
-     "Lookouts", so it is decorative and exempt from the AA text-contrast
-     minimum it would otherwise miss (1.81-3.74:1 across the gradient). */
-  color: #fff;
+  /* The brand tile is media-like decoration, so use the theme-safe on-media
+     token instead of primary-foreground, which flips to dark ink in the dark
+     theme and loses contrast against this teal/cyan gradient. */
+  color: var(--anslation-ds-on-media);
   flex-shrink: 0;
 }
 
