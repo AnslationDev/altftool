@@ -26,7 +26,7 @@ export async function generateMetadata({ params }) {
   }
   return createPageMetadata({
     title: `${t.name} — Mockly Editor`,
-    description: t.short,
+    description: `Create ${t.name} mockups in your browser, customize the content, and export a PNG for parody, education, or entertainment. Not a genuine screenshot.`,
     path: `/prank-socialmedia/editor/${slug}`,
   });
 }
