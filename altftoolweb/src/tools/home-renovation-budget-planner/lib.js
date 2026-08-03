@@ -64,7 +64,8 @@ const round2 = (value) => Math.round(value * 100) / 100;
  * @param {Array} input.rooms [{ id, name, area, ratePerSqft }]
  * @param {string} [input.qualityTier] One of QUALITY_TIERS ids.
  * @param {number|string} [input.extras] Appliances, furniture, permits — a flat amount.
- * @param {number|string} [input.professionalFeesPct] Architect or designer fee, % of works.
+ * @param {number|string} [input.professionalFeesPct] Architect or designer fee, % of project cost
+ *   (room works plus the flat extras amount — see `subtotal` above).
  * @param {number|string} [input.contingencyPct] Buffer, % of works plus fees.
  * @param {boolean} [input.applyGst] Whether the job is a registered works contract.
  * @param {number|string} [input.gstRatePct] GST rate to apply when it is.
@@ -146,6 +147,12 @@ export function planRenovationBudget({
   if (!(subtotal > 0)) {
     return { error: "Every room costs zero — enter an area and a rate per square foot." };
   }
+  // The per-room "Cost" column below rounds each room independently, so the
+  // headline "Works across all rooms" figure must be the sum of those same
+  // rounded numbers rather than a separate round(sum of unrounded costs) —
+  // otherwise a user adding up the visible rows by hand gets a different
+  // total than the one the tool reports.
+  const worksTotalDisplay = roomRows.reduce((sum, row) => sum + round0(row.cost), 0);
 
   const fees = (subtotal * feesPct) / 100;
   const contingency = ((subtotal + fees) * bufferPct) / 100;
@@ -173,10 +180,10 @@ export function planRenovationBudget({
       .map((row) => ({
         ...row,
         cost: round0(row.cost),
-        sharePct: round2((row.cost / worksTotal) * 100),
+        sharePct: worksTotal > 0 ? round2((row.cost / worksTotal) * 100) : 0,
       }))
       .sort((a, b) => b.cost - a.cost),
-    worksTotal: round0(worksTotal),
+    worksTotal: worksTotalDisplay,
     extras: round0(extraAmount),
     subtotal: round0(subtotal),
     fees: round0(fees),

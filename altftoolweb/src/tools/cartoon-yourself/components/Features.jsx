@@ -13,7 +13,7 @@ const features = [
   },
   {
     title: "Fine-tuned Controls",
-    description: "Adjust brightness, contrast, saturation, sharpness, smoothness, and edge strength.",
+    description: "Adjust brightness, contrast, saturation, sharpness, and smoothness.",
     icon: SlidersHorizontal,
   },
   {

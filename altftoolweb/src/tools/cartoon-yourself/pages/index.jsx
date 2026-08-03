@@ -14,6 +14,7 @@ export default function CartoonYourself() {
   const {
     file,
     previewUrl,
+    error,
     canvasRef,
     selectedStyle,
     setSelectedStyle,
@@ -40,6 +41,7 @@ export default function CartoonYourself() {
               <h3 className="text-lg font-semibold text-(--foreground) mb-4">Upload Image</h3>
               <UploadBox
                 previewUrl={previewUrl}
+                error={error}
                 onFile={handleFile}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}

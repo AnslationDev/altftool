@@ -2,14 +2,18 @@
 
 import { UploadCloud, Camera, X } from "lucide-react";
 import { useRef } from "react";
+import { supportedFormats } from "../constants/styles";
 
-export default function UploadBox({ previewUrl, onFile, onDrop, onDragOver, onRemove }) {
+const ACCEPT_ATTR = Object.keys(supportedFormats).join(",");
+
+export default function UploadBox({ previewUrl, error, onFile, onDrop, onDragOver, onRemove }) {
   const inputRef = useRef(null);
   const cameraRef = useRef(null);
 
   const handleInputChange = (e) => {
     const f = e.target.files?.[0];
     if (f) onFile(f);
+    e.target.value = "";
   };
 
   const handleCameraCapture = () => {
@@ -19,6 +23,13 @@ export default function UploadBox({ previewUrl, onFile, onDrop, onDragOver, onRe
   const handleCameraChange = (e) => {
     const f = e.target.files?.[0];
     if (f) onFile(f);
+    e.target.value = "";
+  };
+
+  const handleRemove = () => {
+    if (window.confirm("Remove this photo and reset all styling? This can't be undone.")) {
+      onRemove();
+    }
   };
 
   if (previewUrl) {
@@ -32,12 +43,17 @@ export default function UploadBox({ previewUrl, onFile, onDrop, onDragOver, onRe
           />
         </div>
         <button
-          onClick={onRemove}
-          className="absolute top-2 right-2 w-8 h-8 rounded-full bg-red-500 text-white flex items-center justify-center hover:bg-red-600 transition shadow-md"
+          onClick={handleRemove}
+          className="absolute top-2 right-2 w-8 h-8 rounded-full bg-(--danger) text-(--danger-foreground) flex items-center justify-center hover:opacity-90 transition shadow-md"
           aria-label="Remove image"
         >
           <X className="h-4 w-4" />
         </button>
+        {error && (
+          <p role="alert" className="mt-2 text-xs font-semibold text-(--danger)">
+            {error}
+          </p>
+        )}
       </div>
     );
   }
@@ -56,11 +72,17 @@ export default function UploadBox({ previewUrl, onFile, onDrop, onDragOver, onRe
         <input
           ref={inputRef}
           type="file"
-          accept="image/jpeg,image/png,image/webp"
+          accept={ACCEPT_ATTR}
           className="hidden"
           onChange={handleInputChange}
         />
       </label>
+
+      {error && (
+        <p role="alert" className="mt-2 text-xs font-semibold text-(--danger)">
+          {error}
+        </p>
+      )}
 
       <div className="flex items-center gap-3 mt-3 justify-center">
         <button

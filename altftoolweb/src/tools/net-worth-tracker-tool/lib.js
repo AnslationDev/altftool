@@ -70,7 +70,10 @@ const toNumber = (value, fallback = 0) => {
   return Number.isFinite(number) ? number : NaN;
 };
 
-const round0 = (value) => Math.round(value);
+// Math.round can return -0 for a tiny negative input (e.g. -0.25), which
+// Intl.NumberFormat then renders as "-₹0" — a breakeven position reading as
+// debt. Normalise -0 to 0 so the headline never looks negative when it isn't.
+const round0 = (value) => Math.round(value) || 0;
 const round2 = (value) => Math.round(value * 100) / 100;
 
 const findCategory = (list, value) => list.find((item) => item.value === value) || null;
@@ -138,41 +141,49 @@ export function computeNetWorth({
     return { error: "Add at least one asset or liability to build a net worth statement." };
   }
 
-  const totalAssets = assetSide.total;
-  const totalLiabilities = liabilitySide.total;
+  // Round each row once, up front, then derive every total (headline figure
+  // and every sub-total: liquid, financial, depreciating, unsecured) from
+  // those same rounded rows. Otherwise the headline — rounded once from the
+  // raw sum — can land a rupee away from what the itemised rows below it add
+  // up to.
+  const assetRows = assetSide.rows.map((row) => ({ ...row, roundedAmount: round0(row.amount) }));
+  const liabilityRows = liabilitySide.rows.map((row) => ({ ...row, roundedAmount: round0(row.amount) }));
+
+  const totalAssets = assetRows.reduce((sum, row) => sum + row.roundedAmount, 0);
+  const totalLiabilities = liabilityRows.reduce((sum, row) => sum + row.roundedAmount, 0);
   const netWorth = totalAssets - totalLiabilities;
 
-  const liquidAssets = assetSide.rows
+  const liquidAssets = assetRows
     .filter((row) => row.category.liquid)
-    .reduce((sum, row) => sum + row.amount, 0);
-  const financialAssets = assetSide.rows
+    .reduce((sum, row) => sum + row.roundedAmount, 0);
+  const financialAssets = assetRows
     .filter((row) => row.category.financial)
-    .reduce((sum, row) => sum + row.amount, 0);
-  const depreciatingAssets = assetSide.rows
+    .reduce((sum, row) => sum + row.roundedAmount, 0);
+  const depreciatingAssets = assetRows
     .filter((row) => row.category.depreciating)
-    .reduce((sum, row) => sum + row.amount, 0);
-  const unsecuredDebt = liabilitySide.rows
+    .reduce((sum, row) => sum + row.roundedAmount, 0);
+  const unsecuredDebt = liabilityRows
     .filter((row) => row.category.unsecured)
-    .reduce((sum, row) => sum + row.amount, 0);
+    .reduce((sum, row) => sum + row.roundedAmount, 0);
 
   const share = (part) => (totalAssets > 0 ? round2((part / totalAssets) * 100) : 0);
 
-  const composition = assetSide.rows
+  const composition = assetRows
     .map((row) => ({
       label: row.label,
       categoryLabel: row.category.label,
-      amount: round0(row.amount),
-      sharePct: share(row.amount),
+      amount: row.roundedAmount,
+      sharePct: share(row.roundedAmount),
       liquid: Boolean(row.category.liquid),
     }))
     .sort((a, b) => b.amount - a.amount);
 
-  const debts = liabilitySide.rows
+  const debts = liabilityRows
     .map((row) => ({
       label: row.label,
       categoryLabel: row.category.label,
-      amount: round0(row.amount),
-      sharePct: totalLiabilities > 0 ? round2((row.amount / totalLiabilities) * 100) : 0,
+      amount: row.roundedAmount,
+      sharePct: totalLiabilities > 0 ? round2((row.roundedAmount / totalLiabilities) * 100) : 0,
       unsecured: Boolean(row.category.unsecured),
     }))
     .sort((a, b) => b.amount - a.amount);

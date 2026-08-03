@@ -406,6 +406,17 @@ export function assessResponse({ classIds, doneIds } = {}) {
   const capped = missingCritical.length > 0 && rawPercent > CRITICAL_CAP_PERCENT;
   const percent = capped ? CRITICAL_CAP_PERCENT : rawPercent;
   const band = bandFor(percent);
+  // BANDS' own hint text for the two lowest tiers asserts a direct-loss path
+  // is still open ("still fully exploitable", "a direct route ... is still
+  // open"). That is only true while a critical step is unticked. Once every
+  // applicable critical step is done, a low percent just reflects unfinished
+  // hygiene/monitoring work, so the hint must not claim otherwise — it would
+  // directly contradict the "critical steps still open: 0" stat shown next
+  // to it.
+  const bandHint =
+    missingCritical.length === 0 && (band.id === "exposed" || band.id === "partial")
+      ? "Every critical, direct-loss step that applies to you is closed. What is left is hygiene and monitoring work, not an open financial or identity risk."
+      : band.hint;
 
   const groups = GROUPS.map((name) => {
     const items = steps.filter((item) => item.group === name);
@@ -435,7 +446,7 @@ export function assessResponse({ classIds, doneIds } = {}) {
     criticalTotal: steps.filter((item) => item.critical).length,
     band: band.id,
     bandLabel: band.label,
-    bandHint: band.hint,
+    bandHint,
     remaining,
     missingCritical,
     groups,

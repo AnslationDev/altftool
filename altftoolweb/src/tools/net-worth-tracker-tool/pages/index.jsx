@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Plus, RotateCcw, Scale, Trash2 } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { ASSET_CATEGORIES, LIABILITY_CATEGORIES, computeNetWorth } from "../lib";
 
 const INR = new Intl.NumberFormat("en-IN", {
@@ -129,7 +130,7 @@ export default function ToolHome() {
   const [expenses, setExpenses] = useState("60000");
   const [age, setAge] = useState("40");
   const [income, setIncome] = useState("2400000");
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -168,24 +169,24 @@ export default function ToolHome() {
       .join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "the net worth statement" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset all inputs? This will replace your assets, liabilities, expenses, age and income with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setAssets(DEFAULT_ASSETS);
     setLiabilities(DEFAULT_LIABILITIES);
     setExpenses("60000");
     setAge("40");
     setIncome("2400000");
-    setCopied(false);
   };
 
   const rows = hasError
@@ -194,7 +195,7 @@ export default function ToolHome() {
         ["Total liabilities", DASH],
         ["Liquid assets", DASH],
         ["Financial assets", DASH],
-        ["Property, gold and vehicles", DASH],
+        ["Property, gold, vehicles & other", DASH],
         ["Depreciating assets", DASH],
         ["Unsecured debt", DASH],
         ["Debt-to-asset ratio", DASH],
@@ -206,7 +207,7 @@ export default function ToolHome() {
         ["Liquid assets", `${money(result.liquidAssets)} (${pct(result.liquidSharePct)})`],
         ["Financial assets", `${money(result.financialAssets)} (${pct(result.financialSharePct)})`],
         [
-          "Property, gold and vehicles",
+          "Property, gold, vehicles & other",
           `${money(result.physicalAssets)} (${pct(result.physicalSharePct)})`,
         ],
         [
@@ -225,7 +226,11 @@ export default function ToolHome() {
           "Liquidity in months of expenses",
           result.liquidityMonths === null
             ? "Add monthly expenses"
-            : `${num(result.liquidityMonths)} months`,
+            : `${num(result.liquidityMonths)} months${
+                result.liquidityMet
+                  ? ` — meets the ${result.liquidityTargetMonths}-month target`
+                  : ` — below the ${result.liquidityTargetMonths}-month target`
+              }`,
         ],
       ];
 
@@ -331,11 +336,19 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Net worth
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p
+              className={`mt-1 text-4xl font-semibold ${
+                hasError
+                  ? "text-[var(--primary)]"
+                  : result.positive
+                    ? "text-[var(--success)]"
+                    : "text-[var(--danger)]"
+              }`}
+            >
               {hasError ? DASH : money(result.netWorth)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -347,16 +360,19 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy net worth statement"
+              aria-label={isCopied("result") ? "Copied the net worth statement to the clipboard" : "Copy net worth statement"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -373,7 +389,7 @@ export default function ToolHome() {
           </div>
         )}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

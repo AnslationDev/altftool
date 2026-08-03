@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Check, Copy, Plus, RotateCcw, TrendingDown, Trash2 } from "lucide-react";
 
 import { WINDOW_OPTIONS, addDaysIso, kcalPerUnit, smoothWeighIns } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 });
 const INT = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
@@ -38,12 +39,16 @@ export default function ToolHome() {
   const [rows, setRows] = useState(buildSample);
   const [windowSize, setWindowSize] = useState("7");
   const [units, setUnits] = useState("kg");
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
       smoothWeighIns(
-        rows.map((row) => ({ date: row.date, weight: Number(row.weight) })),
+        // A cleared weight field is blank, not zero — coerce it to NaN so
+        // lib.js's own Number.isFinite check reports "enter a number for
+        // the weight" instead of silently treating it as 0 and failing the
+        // (misleading) out-of-range check further down.
+        rows.map((row) => ({ date: row.date, weight: row.weight === "" ? NaN : Number(row.weight) })),
         { window: Number(windowSize), units },
       ),
     [rows, windowSize, units],
@@ -53,7 +58,6 @@ export default function ToolHome() {
 
   const updateRow = (index, patch) => {
     setRows((current) => current.map((row, i) => (i === index ? { ...row, ...patch } : row)));
-    setCopied(false);
   };
 
   const addRow = () => {
@@ -62,19 +66,19 @@ export default function ToolHome() {
       const nextDate = (last && addDaysIso(last.date, 1)) || SAMPLE_START;
       return [...current, { date: nextDate, weight: last ? last.weight : "" }];
     });
-    setCopied(false);
   };
 
   const removeRow = (index) => {
     setRows((current) => (current.length <= 2 ? current : current.filter((_, i) => i !== index)));
-    setCopied(false);
   };
 
   const reset = () => {
+    if (!window.confirm("Reset every weigh-in? This will replace your logged readings with the sample two weeks and cannot be undone.")) {
+      return;
+    }
     setRows(buildSample());
     setWindowSize("7");
     setUnits("kg");
-    setCopied(false);
   };
 
   const chart = useMemo(() => {
@@ -85,7 +89,9 @@ export default function ToolHome() {
     const range = max - min || 1;
     const innerWidth = CHART_WIDTH - CHART_PADDING * 2;
     const innerHeight = CHART_HEIGHT - CHART_PADDING * 2;
-    const lastOffset = result.series[result.series.length - 1].dayOffset || 1;
+    const first = result.series[0];
+    const last = result.series[result.series.length - 1];
+    const lastOffset = last.dayOffset || 1;
     const toPoint = (row, value) => {
       const x = CHART_PADDING + (row.dayOffset / lastOffset) * innerWidth;
       const y = CHART_PADDING + innerHeight - ((value - min) / range) * innerHeight;
@@ -96,6 +102,8 @@ export default function ToolHome() {
       trend: result.series.map((row) => toPoint(row, row.trend)).join(" "),
       min,
       max,
+      firstTrend: first.trend,
+      lastTrend: last.trend,
     };
   }, [failed, result]);
 
@@ -115,16 +123,7 @@ export default function ToolHome() {
     ].join("\n");
   }, [failed, result]);
 
-  const copyResult = async () => {
-    if (!clipboardText) return;
-    try {
-      await navigator.clipboard.writeText(clipboardText);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("result", clipboardText, { label: "Weigh-in trend summary" });
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -151,10 +150,7 @@ export default function ToolHome() {
               id="wr-window"
               className={`mt-2 ${INPUT_CLASS}`}
               value={windowSize}
-              onChange={(event) => {
-                setWindowSize(event.target.value);
-                setCopied(false);
-              }}
+              onChange={(event) => setWindowSize(event.target.value)}
             >
               {WINDOW_OPTIONS.map((option) => (
                 <option key={option} value={String(option)}>
@@ -171,10 +167,7 @@ export default function ToolHome() {
               id="wr-units"
               className={`mt-2 ${INPUT_CLASS}`}
               value={units}
-              onChange={(event) => {
-                setUnits(event.target.value);
-                setCopied(false);
-              }}
+              onChange={(event) => setUnits(event.target.value)}
             >
               <option value="kg">Kilograms</option>
               <option value="lb">Pounds</option>
@@ -258,8 +251,8 @@ export default function ToolHome() {
           </div>
           <div className="flex flex-wrap gap-2">
             <button type="button" onClick={copyResult} aria-label="Copy the weigh-in trend summary" disabled={failed} className={`${GHOST_BTN} disabled:opacity-40`}>
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset to the sample two weeks" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
@@ -267,12 +260,15 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span aria-live="polite" role="status" className="sr-only">
+          {announcement}
+        </span>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Latest trend weight", failed ? DASH : `${num(result.latestTrend)} ${result.units}`],
             [
-              `Latest ${failed ? "" : result.window}-reading average`,
+              failed ? "Latest reading average" : `Latest ${result.window}-reading average`,
               failed ? DASH : `${num(result.lastAverage)} ${result.units}`,
             ],
             ["This morning vs the trend", failed ? DASH : `${signed(result.scaleVsTrend)} ${result.units}`],
@@ -301,7 +297,11 @@ export default function ToolHome() {
               viewBox={`0 0 ${CHART_WIDTH} ${CHART_HEIGHT}`}
               className="h-48 w-full min-w-[320px]"
               role="img"
-              aria-label={`Line chart of daily weigh-ins from ${num(chart.max)} down to ${num(chart.min)} ${result.units} with a smoothed trend line`}
+              aria-label={
+                chart.lastTrend === chart.firstTrend
+                  ? `Line chart of daily weigh-ins holding steady around ${num(chart.lastTrend)} ${result.units}, with a smoothed trend line`
+                  : `Line chart of daily weigh-ins trending ${chart.lastTrend > chart.firstTrend ? "up" : "down"} from ${num(chart.firstTrend)} to ${num(chart.lastTrend)} ${result.units} on the smoothed trend line`
+              }
             >
               <polyline
                 points={chart.raw}

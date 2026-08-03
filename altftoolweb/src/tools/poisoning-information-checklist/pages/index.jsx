@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Phone, RotateCcw, Siren, TriangleAlert } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   FIELDS,
   FIELD_GROUPS,
@@ -19,8 +20,6 @@ const PRIMARY_BTN =
 const GHOST_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 
-const DEFAULT_EXPOSURE = "2026-01-15T09:15";
-const DEFAULT_NOW = "2026-01-15T09:35";
 const DASH = "—";
 
 const emptyAnswers = () => Object.fromEntries(FIELDS.map((field) => [field.id, ""]));
@@ -36,9 +35,12 @@ export default function ToolHome() {
   const [redFlags, setRedFlags] = useState([]);
   const [routeId, setRouteId] = useState("swallowed");
   const [regionId, setRegionId] = useState("india");
-  const [exposureAt, setExposureAt] = useState(DEFAULT_EXPOSURE);
-  const [nowAt, setNowAt] = useState(DEFAULT_NOW);
-  const [copied, setCopied] = useState(false);
+  // Both time fields start at the real current time (not a fixed demo
+  // timestamp) so a user who never touches them gets an honest "0 minutes
+  // ago" instead of a fabricated elapsed-time reading in the call script.
+  const [exposureAt, setExposureAt] = useState(localNow);
+  const [nowAt, setNowAt] = useState(localNow);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () => buildPoisoningBrief({ answers, redFlags, routeId, regionId, exposureAt, nowAt }),
@@ -46,30 +48,31 @@ export default function ToolHome() {
   );
 
   const hasError = Boolean(result.error);
+  const copied = isCopied("script");
 
   const toggleFlag = (id) => {
     setRedFlags((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.script);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("script", result.script, { label: "call script" });
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the checklist? Every answer, red flag and time you've entered will be cleared.")
+    ) {
+      return;
+    }
     setAnswers(emptyAnswers());
     setRedFlags([]);
     setRouteId("swallowed");
     setRegionId("india");
-    setExposureAt(DEFAULT_EXPOSURE);
-    setNowAt(DEFAULT_NOW);
-    setCopied(false);
+    setExposureAt(localNow());
+    setNowAt(localNow());
+    resetCopyState();
   };
 
   return (
@@ -174,6 +177,13 @@ export default function ToolHome() {
               value={exposureAt}
               onChange={(event) => setExposureAt(event.target.value)}
             />
+            <button
+              type="button"
+              onClick={() => setExposureAt(localNow())}
+              className={`mt-2 ${GHOST_BTN} w-full`}
+            >
+              Use the current time
+            </button>
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="poison-now">
@@ -246,7 +256,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Information gathered
             </p>
@@ -263,7 +273,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the call script"
+              aria-label={copied ? "Copied result" : "Copy result"}
               className={GHOST_BTN}
               disabled={hasError}
             >
@@ -274,7 +284,10 @@ export default function ToolHome() {
               )}
               {copied ? "Copied!" : "Copy result"}
             </button>
-            <button type="button" onClick={reset} aria-label="Clear the checklist" className={PRIMARY_BTN}>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
+            <button type="button" onClick={reset} aria-label="Reset the checklist" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
@@ -298,7 +311,7 @@ export default function ToolHome() {
           </div>
         )}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
           {[
             ["Emergency number", hasError ? DASH : result.emergencyNumber],
             ["Poison information line", hasError ? DASH : result.poisonLine],

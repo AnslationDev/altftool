@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "Net worth is everything you own at today's realisable value minus everything you owe at outstanding principal — one number that a bank balance or a salary slip cannot give you. This tracker builds that statement from itemised assets and liabilities and then reports the three ratios it exists to expose: the share of assets that is genuinely liquid, the split between financial assets and property, gold and vehicles, and the debt-to-asset ratio. Everything is computed in the browser and nothing is stored.",
+    "Net worth is everything you own at today's realisable value minus everything you owe at outstanding principal — one number that a bank balance or a salary slip cannot give you. This tracker builds that statement from itemised assets and liabilities and then reports the three ratios it exists to expose: the share of assets that is genuinely liquid, the split between financial assets and everything else — property, gold, vehicles, business holdings and other assets that cannot be sold in slices — and the debt-to-asset ratio. Everything is computed in the browser and nothing is stored.",
   useCases: [
     "Taking a yearly snapshot each April so you can see whether net worth actually grew or only the property estimate did.",
     "Checking, before taking another loan, whether borrowings already sit above half of total assets.",

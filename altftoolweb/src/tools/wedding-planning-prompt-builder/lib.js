@@ -200,6 +200,9 @@ export function buildWeddingPrompt(input) {
     return { error: `Guest count should be between ${MIN_GUESTS} and ${MAX_GUESTS}.` };
   }
 
+  if (typeof monthsToGo === "string" && monthsToGo.trim() === "") {
+    return { error: "Enter how many months are left as a number." };
+  }
   const months = Number(monthsToGo);
   if (!isFiniteNumber(months)) return { error: "Enter how many months are left as a number." };
   if (months < 0 || months > MAX_MONTHS_TO_GO) {
@@ -216,7 +219,13 @@ export function buildWeddingPrompt(input) {
 
   const costPerGuest = total / guestCount;
   const plateBudget = cateringRow.amount / guestCount;
-  const spendableTotal = total - (contingencyRow ? contingencyRow.amount : 0);
+  // Sum the already-rounded rows rather than `total - contingencyRow.amount`, so this
+  // figure always reconciles with what the "Budget split" table visibly adds up to —
+  // each row is rounded independently, so summing raw `total` first can drift by a
+  // few currency units from the sum of the displayed amounts.
+  const spendableTotal = allocation.rows
+    .filter((row) => row.id !== "contingency")
+    .reduce((sum, row) => sum + row.amount, 0);
 
   const allocationLines = allocation.rows.map(
     (row) => `- ${row.label}: ${row.percent}% (${currencyEntry.id} ${round(row.amount)})`
@@ -224,7 +233,7 @@ export function buildWeddingPrompt(input) {
 
   const constraints = [
     `Total budget ${currencyEntry.id} ${round(total)} for ${guestCount} guests — that is ${currencyEntry.id} ${round(costPerGuest)} per guest all-in.`,
-    `The catering line works out to about ${currencyEntry.id} ${round(plateBudget)} per head. Tell me plainly whether that is realistic ${city.trim() ? `in ${city.trim()}` : "in a typical metro"} and what it buys.`,
+    `The venue-and-catering line (both bundled together) works out to about ${currencyEntry.id} ${round(plateBudget)} per head — that is higher than a caterer's food-only quote, since it also carries venue hire, staging and permits. Tell me plainly whether that is realistic ${city.trim() ? `in ${city.trim()}` : "in a typical metro"} and what it buys.`,
     contingencyRow
       ? `${contingencyRow.percent}% (${currencyEntry.id} ${round(contingencyRow.amount)}) is held back as contingency, so plan against ${currencyEntry.id} ${round(spendableTotal)} of committed spend.`
       : null,

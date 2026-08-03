@@ -19,10 +19,16 @@ import {
   getWeekday,
   calculateAllInsights,
   validateBirthDate,
+  parseBirthDateLocal,
 } from "../utils/birthdayUtils";
 
 export default function BirthdayAnalyzer() {
   const [birthDate, setBirthDate] = useState("");
+  // The date that has actually passed validateBirthDate. The ticking effect
+  // below re-renders from this, not the raw `birthDate` input, so editing
+  // the field (or typing an out-of-range value directly) can never render
+  // results without going through validation via handleAnalyze first.
+  const [analyzedDate, setAnalyzedDate] = useState("");
   const [age, setAge] = useState(null);
   const [totalTime, setTotalTime] = useState(null);
   const [lifeStats, setLifeStats] = useState(null);
@@ -33,10 +39,14 @@ export default function BirthdayAnalyzer() {
   const [error, setError] = useState("");
   const [today] = useState(new Date());
 
-  const todayString = today.toISOString().split("T")[0];
+  // Build "today" from local date parts, not toISOString() (which reports
+  // the UTC calendar date) - otherwise the date input's max is one day
+  // behind local "today" for anyone in a positive UTC-offset timezone.
+  const todayString = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
 
   const updateData = useCallback((dateStr) => {
-    const birth = new Date(dateStr);
+    const birth = parseBirthDateLocal(dateStr);
+    if (!birth) return;
 
     setAge(calculateAge(birth));
     setTotalTime(calculateTotalTime(birth));
@@ -57,18 +67,19 @@ export default function BirthdayAnalyzer() {
     }
 
     setError("");
+    setAnalyzedDate(birthDate);
     updateData(birthDate);
   };
 
   useEffect(() => {
-    if (!birthDate || error) return;
+    if (!analyzedDate) return;
 
     const interval = setInterval(() => {
-      updateData(birthDate);
+      updateData(analyzedDate);
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [birthDate, error, updateData]);
+  }, [analyzedDate, updateData]);
 
   return (
     <div className="px-4 py-6">
@@ -84,7 +95,10 @@ export default function BirthdayAnalyzer() {
           />
 
           {error && (
-            <div className="bg-red-50 text-red-600 p-3 rounded-lg text-center">
+            <div
+              role="alert"
+              className="rounded-lg bg-[var(--danger-soft)] p-3 text-center text-[var(--danger)]"
+            >
               {error}
             </div>
           )}

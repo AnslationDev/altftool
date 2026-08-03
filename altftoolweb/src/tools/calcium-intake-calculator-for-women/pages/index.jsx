@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Bone, Check, Copy, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   CALCIUM_FOODS,
   LIFE_STAGES,
@@ -38,7 +39,7 @@ export default function ToolHome() {
   const [age, setAge] = useState("35");
   const [lifeStage, setLifeStage] = useState(LIFE_STAGES.GENERAL);
   const [servings, setServings] = useState(DEFAULT_SERVINGS);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(() => {
     const numericAge = Number(String(age).trim());
@@ -66,27 +67,28 @@ export default function ToolHome() {
       result.meetsTarget ? "Target met from food." : `Short by ${result.gapMg} mg.`,
     ];
     result.breakdown.forEach((item) => {
-      lines.push(`  ${item.name} x${item.count} (${item.serving}) = ${item.mg} mg`);
+      const note = item.poorlyAbsorbed ? ` (${item.listedMg} mg listed, oxalates cut most of it)` : "";
+      lines.push(`  ${item.name} x${item.count} (${item.serving}) = ${item.mg} mg${note}`);
     });
     return lines.join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "the calcium and vitamin D result" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset all inputs? This will replace your age, life stage and servings with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setAge("35");
     setLifeStage(LIFE_STAGES.GENERAL);
     setServings(DEFAULT_SERVINGS);
-    setCopied(false);
   };
 
   const barPercent = hasError ? 0 : Math.max(0, Math.min(100, result.percentOfTarget));
@@ -189,7 +191,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Daily calcium target
             </p>
@@ -206,16 +208,19 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the calcium and vitamin D result"
+              aria-label={isCopied("result") ? "Copied the calcium and vitamin D result to the clipboard" : "Copy the calcium and vitamin D result"}
               className={GHOST_BTN}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -238,7 +243,7 @@ export default function ToolHome() {
           {hasError ? DASH : `${WHOLE.format(result.percentOfTarget)}% of the daily target`}
         </p>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             ["Calcium from food listed", hasError ? DASH : `${WHOLE.format(result.intakeMg)} mg`],
             [
@@ -247,7 +252,9 @@ export default function ToolHome() {
                 ? DASH
                 : result.gapMg > 0
                   ? `${WHOLE.format(result.gapMg)} mg`
-                  : "Nothing — target met",
+                  : result.overMg > 0
+                    ? `Target met — ${WHOLE.format(result.overMg)} mg over`
+                    : "Nothing — target met exactly",
             ],
             ["Calcium upper limit", hasError ? DASH : `${WHOLE.format(result.calciumUpperLimitMg)} mg/day`],
             [
@@ -284,8 +291,8 @@ export default function ToolHome() {
           </p>
         )}
 
-        {!hasError && result.pregnancyNote && (
-          <p className="mt-4 text-xs leading-5 text-[var(--muted-foreground)]">{result.pregnancyNote}</p>
+        {!hasError && result.lifeStageNote && (
+          <p className="mt-4 text-xs leading-5 text-[var(--muted-foreground)]">{result.lifeStageNote}</p>
         )}
       </section>
 
@@ -305,10 +312,19 @@ export default function ToolHome() {
               <tbody>
                 {result.breakdown.map((item) => (
                   <tr key={item.id} className="border-b border-[var(--border)] last:border-0">
-                    <td className="py-2 pr-3 font-semibold">{item.name}</td>
+                    <td className="py-2 pr-3 font-semibold">
+                      {item.name}
+                      {item.poorlyAbsorbed ? (
+                        <span className="mt-0.5 block text-xs font-normal text-[var(--muted-foreground)]">
+                          {WHOLE.format(item.listedMg)} mg listed, oxalates cut most of it
+                        </span>
+                      ) : null}
+                    </td>
                     <td className="py-2 pr-3 text-[var(--muted-foreground)]">{item.serving}</td>
                     <td className="py-2 pr-3 text-right tabular-nums">{ONE_DP.format(item.count)}</td>
-                    <td className="py-2 text-right tabular-nums">{WHOLE.format(item.mg)} mg</td>
+                    <td className="py-2 text-right tabular-nums">
+                      {WHOLE.format(item.mg)} mg{item.poorlyAbsorbed ? " counted" : ""}
+                    </td>
                   </tr>
                 ))}
               </tbody>

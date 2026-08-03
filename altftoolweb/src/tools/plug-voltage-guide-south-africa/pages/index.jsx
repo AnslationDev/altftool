@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Plug, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import {
   assessSouthAfricanPower,
@@ -30,10 +31,10 @@ const DEFAULTS = {
 };
 
 const PRESETS = [
-  { label: "Laptop charger", minV: "100", maxV: "240", freq: "both", watts: "65" },
-  { label: "Phone charger", minV: "100", maxV: "240", freq: "both", watts: "20" },
-  { label: "US hair dryer", minV: "120", maxV: "120", freq: "60", watts: "1875" },
-  { label: "Kettle", minV: "220", maxV: "240", freq: "50", watts: "2200" },
+  { label: "Laptop charger", plugType: "C", minV: "100", maxV: "240", freq: "both", watts: "65" },
+  { label: "Phone charger", plugType: "C", minV: "100", maxV: "240", freq: "both", watts: "20" },
+  { label: "US hair dryer", plugType: "A", minV: "120", maxV: "120", freq: "60", watts: "1875" },
+  { label: "Kettle", plugType: "G", minV: "220", maxV: "240", freq: "50", watts: "2200" },
 ];
 
 const INPUT_CLASS =
@@ -57,7 +58,7 @@ export default function ToolHome() {
   const [maxV, setMaxV] = useState(DEFAULTS.maxV);
   const [freq, setFreq] = useState(DEFAULTS.freq);
   const [deviceWatts, setDeviceWatts] = useState(DEFAULTS.watts);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -88,15 +89,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "South Africa plug and voltage verdict" });
   };
 
   const reset = () => {
@@ -105,15 +100,14 @@ export default function ToolHome() {
     setMaxV(DEFAULTS.maxV);
     setFreq(DEFAULTS.freq);
     setDeviceWatts(DEFAULTS.watts);
-    setCopied(false);
   };
 
   const applyPreset = (preset) => {
+    setPlugType(preset.plugType);
     setMinV(preset.minV);
     setMaxV(preset.maxV);
     setFreq(preset.freq);
     setDeviceWatts(preset.watts);
-    setCopied(false);
   };
 
   const rows = [
@@ -271,7 +265,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Verdict for South Africa
             </p>
@@ -288,13 +282,16 @@ export default function ToolHome() {
               aria-label="Copy the South Africa plug and voltage verdict"
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
@@ -302,7 +299,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-start justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -312,7 +309,11 @@ export default function ToolHome() {
         </dl>
 
         {!hasError && (
-          <ul className="mt-5 space-y-2 text-sm text-[var(--muted-foreground)]">
+          <ul
+            className="mt-5 space-y-2 text-sm text-[var(--muted-foreground)]"
+            role="status"
+            aria-live="polite"
+          >
             {result.actions.map((action) => (
               <li key={action} className="flex gap-2">
                 <span aria-hidden="true" className="text-[var(--primary)]">

@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This planner sizes a Meta \"Download your information\" request before you submit it, using Meta's real export controls: category selection, HTML or JSON format, Low/Medium/High media quality and a date range. It estimates the archive size, the download time at your line speed, and how sensitive the selection is, so you know whether you are about to pull down 200 MB of activity logs or 60 GB of photos. Useful when migrating away from Facebook or Instagram, auditing ad profiling, or preparing evidence before deleting an account.",
+    "This planner sizes a Meta \"Download your information\" request before you submit it, using Meta's real export controls: category selection, HTML or JSON format, Low/Medium/High media quality and account age as the size driver. It estimates the archive size, the download time at your line speed, and how sensitive the selection is, so you know whether you are about to pull down 200 MB of activity logs or 60 GB of photos. Useful when migrating away from Facebook or Instagram, auditing ad profiling, or preparing evidence before deleting an account.",
   useCases: [
     "Export only 'Your activity off Meta' and 'Ads information' to see which websites and advertisers have been feeding data about you to Meta.",
     "Size a full Messenger and Instagram DM archive before a phone migration, and pick JSON so the messages are searchable.",

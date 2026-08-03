@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { CalendarCheck, Copy, Plus, RotateCcw, Trash2 } from "lucide-react";
-import { safeCopyText } from "@/shared/utils/clipboard";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const WEEKDAYS = [
   { index: 0, short: "Sun", long: "Sunday" },
@@ -16,8 +16,25 @@ const WEEKDAYS = [
 
 const MAX_SPAN_DAYS = 40000;
 
+// Tailwind's JIT scanner needs the literal class names present in source, so
+// this can't be built from a template string like `grid-cols-${n}` — the
+// weekday breakdown grid renders 1-7 cells depending on how many days the
+// user leaves as "working" (weekend selections other than the default
+// Sat+Sun produce anywhere from 1 to 7 cells), so every count needs its own
+// static class here.
+const WEEKDAY_GRID_COLS = {
+  1: "grid-cols-1",
+  2: "grid-cols-2",
+  3: "grid-cols-3",
+  4: "grid-cols-4",
+  5: "grid-cols-5",
+  6: "grid-cols-6",
+  7: "grid-cols-7",
+};
+
 const num = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 const num1 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
+const DASH = "—";
 
 const pad = (value) => String(value).padStart(2, "0");
 const toISO = (date) => `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
@@ -60,7 +77,7 @@ export default function ToolHome() {
   const [weekend, setWeekend] = useState([0, 6]);
   const [hoursPerDay, setHoursPerDay] = useState("8");
   const [holidays, setHolidays] = useState([]);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   useEffect(() => {
     const today = new Date();
@@ -195,6 +212,12 @@ export default function ToolHome() {
   }, [endDate, startDate]);
 
   const reset = useCallback(() => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the calculator? Your custom holiday list and all other fields will be cleared.")
+    ) {
+      return;
+    }
     const today = new Date();
     setStart(toISO(today));
     setEnd(toISO(addDays(today, 30)));
@@ -202,7 +225,19 @@ export default function ToolHome() {
     setWeekend([0, 6]);
     setHoursPerDay("8");
     setHolidays([]);
-  }, []);
+    resetCopyState();
+  }, [resetCopyState]);
+
+  // Number.isFinite(NaN) guard doubles as the "is this a usable number" check;
+  // out-of-range values (or a blank field) fall back to 0 so downstream math
+  // never breaks, but `hoursValid` tracks whether that 0 is a real answer or
+  // a placeholder for bad input, so the UI can tell the two apart instead of
+  // silently presenting "0.0 h" as if it were a computed result.
+  const hoursValid = useMemo(() => {
+    if (hoursPerDay === "") return true;
+    const parsed = Number.parseFloat(hoursPerDay);
+    return Number.isFinite(parsed) && parsed >= 0 && parsed <= 24;
+  }, [hoursPerDay]);
 
   const hoursValue = useMemo(() => {
     const parsed = Number.parseFloat(hoursPerDay);
@@ -229,21 +264,22 @@ export default function ToolHome() {
       `Weekend days: ${num.format(result.weekendDays)}`,
       `Holidays excluded: ${num.format(result.holidayDays)}`,
       `Total calendar days: ${num.format(result.totalDays)}`,
-      `Working hours at ${num1.format(hoursValue)} h/day: ${num1.format(
-        result.workingDays * hoursValue
-      )}`,
+      hoursValid
+        ? `Working hours at ${num1.format(hoursValue)} h/day: ${num1.format(
+            result.workingDays * hoursValue
+          )}`
+        : "Working hours: not calculated — hours per working day must be between 0 and 24.",
       ...(result.holidayHits.length
         ? ["", "Holidays that fell on a working day:", ...result.holidayHits.map((hit) => `- ${hit.iso} ${hit.name}`)]
         : []),
     ].join("\n");
-  }, [endDate, hoursValue, includeEnd, result, startDate, weekend]);
+  }, [endDate, hoursValid, hoursValue, includeEnd, result, startDate, weekend]);
 
-  const copyReport = async () => {
+  const copied = isCopied("report");
+
+  const copyReport = () => {
     if (!report) return;
-    const ok = await safeCopyText(report);
-    if (!ok) return;
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1400);
+    copy("report", report, { label: "working days report" });
   };
 
   const inputClass =
@@ -441,7 +477,7 @@ export default function ToolHome() {
                 Working days
               </p>
               {result ? (
-                <>
+                <div aria-live="polite" role="status">
                   <p className="mt-1 text-5xl font-semibold text-[var(--primary)]">
                     {num.format(result.workingDays)}
                   </p>
@@ -463,7 +499,7 @@ export default function ToolHome() {
                       ],
                       [
                         "Working hours",
-                        `${num1.format(result.workingDays * hoursValue)} h`,
+                        hoursValid ? `${num1.format(result.workingDays * hoursValue)} h` : DASH,
                       ],
                     ].map(([label, value]) => (
                       <div
@@ -476,7 +512,11 @@ export default function ToolHome() {
                     ))}
                   </dl>
 
-                  <div className="mt-4 grid grid-cols-5 gap-1 text-center text-xs">
+                  <div
+                    className={`mt-4 grid gap-1 text-center text-xs ${
+                      WEEKDAY_GRID_COLS[7 - weekend.length] || "grid-cols-5"
+                    }`}
+                  >
                     {WEEKDAYS.filter((day) => !weekend.includes(day.index)).map((day) => (
                       <div
                         key={day.index}
@@ -492,18 +532,21 @@ export default function ToolHome() {
                     <button
                       type="button"
                       onClick={copyReport}
-                      aria-label="Copy working days result"
+                      aria-label={copied ? "Copied result" : "Copy result"}
                       className={primaryButton}
                     >
                       <Copy className="h-4 w-4" aria-hidden="true" />
                       {copied ? "Copied!" : "Copy result"}
                     </button>
+                    <span className="sr-only" role="status" aria-live="polite">
+                      {announcement}
+                    </span>
                     <button type="button" onClick={reset} aria-label="Reset calculator" className={ghostButton}>
                       <RotateCcw className="h-4 w-4" aria-hidden="true" />
                       Reset
                     </button>
                   </div>
-                </>
+                </div>
               ) : (
                 <p className="mt-2 text-sm text-[var(--muted-foreground)]">
                   Pick a valid start and end date to count business days.

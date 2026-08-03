@@ -29,9 +29,6 @@ const MAGNUS_C = 243.12;
 /** rho_v (g/m3) = 216.7 * e(hPa) / T(K). */
 const ABS_HUMIDITY_CONST = 216.7;
 
-/** Exhaled air leaves the airway saturated at core temperature. */
-const EXPIRED_AIR_TEMP_C = 37;
-
 /** Seated minute ventilation, litres per minute. */
 const SEATED_VENTILATION_LPM = 7;
 
@@ -167,7 +164,7 @@ export function computeFlightHydration({
   ) {
     return { error: "Enter a number in every field." };
   }
-  if (weight <= 0 || weight > 350) return { error: "Enter a body weight between 1 kg and 350 kg." };
+  if (weight < 1 || weight > 350) return { error: "Enter a body weight between 1 kg and 350 kg." };
   if (hours <= 0) return { error: "Flight time must be greater than zero." };
   if (hours > 20) return { error: "Enter a flight time of 20 hours or less." };
   if (temp < 10 || temp > 35) return { error: "Cabin temperature should be between 10 °C and 35 °C." };
@@ -198,7 +195,6 @@ export function computeFlightHydration({
       : 0;
 
   // Extra respiratory loss caused by dry cabin air.
-  const expiredDensity = absoluteHumidity(EXPIRED_AIR_TEMP_C, 100);
   const cabinDensity = absoluteHumidity(temp, rh);
   const referenceDensity = absoluteHumidity(REFERENCE_ROOM_TEMP_C, REFERENCE_ROOM_RH);
   const ventM3PerHour = (SEATED_VENTILATION_LPM * 60) / 1000;
@@ -226,13 +222,46 @@ export function computeFlightHydration({
     baselineShareMl + dryAirExtraMl + alcoholDiuresisMl + caffeineDiuresisMl;
   const hourlyMl = totalDrinkMl / hours;
 
-  // Hourly schedule, in elapsed flight hours.
+  // Hourly schedule, in elapsed flight hours. Each slot is rounded to a
+  // sip-friendly 25 ml step using cumulative (Bresenham-style) rounding, so
+  // individual amounts stay tidy while the running total tracks the ideal
+  // proportional split closely. Any residual left by that per-slot rounding
+  // is then folded back in (borrowing from later slots first, then earlier
+  // ones) so the schedule's own total always reconciles exactly with
+  // totalDrinkMl below - the number the headline figure and copy summary
+  // actually show the user.
+  const totalDrinkMlRounded = round(totalDrinkMl, 10);
   const slots = Math.max(1, Math.round(hours));
-  const perSlotMl = Math.max(SIP_ROUNDING_ML, round(totalDrinkMl / slots, SIP_ROUNDING_ML));
   const schedule = [];
-  for (let i = 0; i < slots; i += 1) {
-    schedule.push({ hour: i + 1, amountMl: perSlotMl });
+  {
+    let cumulativeTarget = 0;
+    let cumulativeRounded = 0;
+    for (let i = 0; i < slots; i += 1) {
+      cumulativeTarget += totalDrinkMlRounded / slots;
+      const nextCumulativeRounded = round(cumulativeTarget, SIP_ROUNDING_ML);
+      const amountMl = Math.max(0, nextCumulativeRounded - cumulativeRounded);
+      cumulativeRounded += amountMl;
+      schedule.push({ hour: i + 1, amountMl });
+    }
+    let remaining = totalDrinkMlRounded - cumulativeRounded;
+    for (let i = schedule.length - 1; i >= 0 && remaining !== 0; i -= 1) {
+      const slot = schedule[i];
+      if (remaining > 0) {
+        slot.amountMl += remaining;
+        remaining = 0;
+      } else {
+        const reducible = Math.min(slot.amountMl, -remaining);
+        slot.amountMl -= reducible;
+        remaining += reducible;
+      }
+    }
+    let cumulativeMl = 0;
+    for (const slot of schedule) {
+      cumulativeMl += slot.amountMl;
+      slot.cumulativeMl = cumulativeMl;
+    }
   }
+  const perSlotMl = Math.round(totalDrinkMlRounded / slots);
 
   // Time arithmetic.
   const depart = parseTime(departTime);
@@ -264,7 +293,7 @@ export function computeFlightHydration({
     alcoholDiuresisMl: Math.round(alcoholDiuresisMl),
     caffeineMg: Math.round(caffeineMg),
     caffeineDiuresisMl: Math.round(caffeineDiuresisMl),
-    totalDrinkMl: round(totalDrinkMl, 10),
+    totalDrinkMl: totalDrinkMlRounded,
     hourlyMl: round(hourlyMl, 5),
     perSlotMl,
     schedule,

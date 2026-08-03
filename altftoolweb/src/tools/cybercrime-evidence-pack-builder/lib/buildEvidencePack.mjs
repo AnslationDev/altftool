@@ -2,6 +2,8 @@ const MAX_TEXT_LENGTH = 100_000;
 const MAX_TIMELINE_ROWS = 250;
 const MAX_EVIDENCE_ITEMS = 100;
 
+export { MAX_TEXT_LENGTH, MAX_TIMELINE_ROWS, MAX_EVIDENCE_ITEMS };
+
 function boundedText(value, maximum = MAX_TEXT_LENGTH) {
   return String(value || "").trim().slice(0, maximum);
 }

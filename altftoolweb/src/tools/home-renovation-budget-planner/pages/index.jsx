@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Check, Copy, Hammer, Plus, RotateCcw, Trash2 } from "lucide-react";
 
 import { QUALITY_TIERS, planRenovationBudget } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const INR = new Intl.NumberFormat("en-IN", {
   style: "currency",
@@ -59,7 +60,7 @@ export default function ToolHome() {
   const [months, setMonths] = useState(DEFAULTS.months);
   const [existing, setExisting] = useState(DEFAULTS.existing);
   const [returnPct, setReturnPct] = useState(DEFAULTS.returnPct);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -94,6 +95,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the budget? This will replace every room and setting with the starter example and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setRooms(STARTER_ROOMS);
     setNextId(STARTER_ROOMS.length + 1);
     setTier(DEFAULTS.tier);
@@ -105,7 +113,6 @@ export default function ToolHome() {
     setMonths(DEFAULTS.months);
     setExisting(DEFAULTS.existing);
     setReturnPct(DEFAULTS.returnPct);
-    setCopied(false);
   };
 
   const summary = useMemo(() => {
@@ -125,20 +132,11 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("summary", summary, { label: "Renovation budget" });
 
   const settingFields = [
     { id: "rn-extras", label: "Appliances, furniture & permits (₹)", value: extras, set: setExtras, step: "10000", min: "0" },
-    { id: "rn-fees", label: "Architect or designer fee (% of works)", value: fees, set: setFees, step: "0.5", min: "0" },
+    { id: "rn-fees", label: "Architect or designer fee (% of project cost)", value: fees, set: setFees, step: "0.5", min: "0" },
     { id: "rn-contingency", label: "Contingency buffer (%)", value: contingency, set: setContingency, step: "1", min: "0" },
     { id: "rn-gstrate", label: "GST rate on the works contract (%)", value: gstRate, set: setGstRate, step: "0.5", min: "0" },
     { id: "rn-months", label: "Months before work starts", value: months, set: setMonths, step: "1", min: "1" },
@@ -326,7 +324,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Total renovation budget
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">
               {hasError ? DASH : money(result.grandTotal)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -343,8 +341,8 @@ export default function ToolHome() {
               aria-label="Copy renovation budget"
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("summary") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+              {isCopied("summary") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset the budget" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
@@ -352,6 +350,9 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span aria-live="polite" role="status" className="sr-only">
+          {announcement}
+        </span>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {rows.map(([label, value]) => (

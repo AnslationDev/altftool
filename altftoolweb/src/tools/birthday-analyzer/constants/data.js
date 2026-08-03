@@ -58,23 +58,12 @@ export const birthFlowers = {
   12: { name: "Narcissus", meaning: "Rebirth, reflection, new beginnings" },
 };
 
-export const elements = ["Fire", "Earth", "Air", "Water"];
-
 export const seasons = {
   Spring: { months: [2, 3, 4], emoji: "Spring" },
   Summer: { months: [5, 6, 7], emoji: "Summer" },
   Autumn: { months: [8, 9, 10], emoji: "Autumn" },
   Winter: { months: [11, 0, 1], emoji: "Winter" },
 };
-
-export const generationNames = [
-  { name: "Baby Boomers", range: "1946-1964" },
-  { name: "Generation X", range: "1965-1980" },
-  { name: "Millennials", range: "1981-1996" },
-  { name: "Generation Z", range: "1997-2012" },
-  { name: "Generation Alpha", range: "2013-2025" },
-  { name: "Generation Beta", range: "2026-2039" },
-];
 
 export const luckyNumbers = {
   1: [1, 3, 9, 15, 22, 33],

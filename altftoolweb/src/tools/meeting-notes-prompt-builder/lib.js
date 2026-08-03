@@ -24,6 +24,17 @@ export const MIN_NOTE_WORDS = 5;
 export const DECISION_PATTERN =
   /\b(decided|decision|we agreed|agreed to|agreement|approved|sign(?:ed)? off|going with|go with|final(?:ised|ized)?|resolved|conclusion|no-?go|green ?light)\b/i;
 
+/**
+ * Vocabulary meaning a decision has NOT been reached yet - "sign off" and
+ * friends read as a settled decision on their own, but "blocked on sign
+ * off" / "still need sign off" / "has not signed off" say the opposite.
+ * Checked ahead of DECISION_PATTERN (see analyseNotes) so pending language
+ * can never be mistaken for a settled decision just because it shares a
+ * keyword.
+ */
+export const PENDING_DECISION_PATTERN =
+  /\b(still need|not yet|no decision (?:yet|made)|has ?n[o']?t|have ?n[o']?t|blocked on|waiting on)\b/i;
+
 /** A line is an action when it commits someone to do something. */
 export const ACTION_PATTERN =
   /(^\s*(?:action|ap|todo|to-?do|next step)\b)|\b(will|to follow up|follows? up|owns?|owner|takes? (?:this|it) on|needs? to|should|must|assign(?:ed)?|raise|send|draft|prepare|share|schedule|book|update|review|fix|ship|check)\b/i;
@@ -37,14 +48,26 @@ export const STRONG_QUESTION_PATTERN = /(\?\s*$)|^\s*(?:open question|question|q
 export const WEAK_QUESTION_PATTERN =
   /\b(tbd|to be (?:decided|confirmed)|unclear|unknown|parked|blocked on|waiting on)\b/i;
 
-/** Owner formats we can spot: @handle, "Name will", "Name — ", "Name:" */
-export const HANDLE_PATTERN = /@([A-Za-z][A-Za-z0-9._-]{1,30})/g;
+/**
+ * Owner formats we can spot: @handle, "Name will", "Name — ", "Name:"
+ * The negative lookbehind keeps this from matching the domain half of an
+ * email address ("john@example.com" must not report "example.com" as an
+ * owner) - a real @mention is never immediately preceded by a word
+ * character or dot the way the "@" in an email address always is.
+ */
+export const HANDLE_PATTERN = /(?<![\w.])@([A-Za-z][A-Za-z0-9_-]{1,30})\b/g;
 export const NAMED_OWNER_PATTERN =
   /\b([A-Z][a-z]{1,20})(?:\s+[A-Z][a-z]{1,20})?\s+(?:will|to|owns|is going to|takes|shall|has agreed to)\b/g;
 
 /**
  * Capitalised words that start a note line but are not people. Without this,
- * "Agreed to ship..." reports "Agreed" as an owner.
+ * "Agreed to ship..." reports "Agreed" as an owner. Extended beyond generic
+ * English words to cover the categories that most often collide with
+ * NAMED_OWNER_PATTERN's bare "capitalised word + will/to/shall/owns" trigger
+ * in real meeting notes: weekdays, months, department/team nouns, and
+ * sentence-initial connective words. This can never be an exhaustive list of
+ * every non-name proper noun (e.g. countries) - see the classification
+ * disclaimer shown in the UI.
  */
 export const NOT_A_NAME = new Set(
   [
@@ -54,6 +77,25 @@ export const NOT_A_NAME = new Set(
     "update", "review", "send", "draft", "prepare", "share", "schedule", "book",
     "raise", "fix", "ship", "check", "everyone", "all", "someone", "nobody",
     "the", "our", "their", "his", "her", "moving", "still", "left", "yet",
+    // Weekdays and months - "Friday will be a half day" is not a person.
+    "sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday",
+    "january", "february", "march", "april", "may", "june", "july", "august",
+    "september", "october", "november", "december",
+    // Department/team nouns commonly used as the subject of a commitment.
+    "legal", "finance", "marketing", "sales", "support", "engineering",
+    "product", "design", "hr", "it", "ops", "operations", "compliance",
+    "security", "procurement", "accounting", "billing", "payroll", "qa",
+    // Sentence-initial connectives that precede "to" but name no one.
+    "prior", "due", "according", "subject", "pursuant", "regarding", "per",
+    "once", "before", "after", "given", "unless", "assuming", "regardless",
+    "thanks", "welcome", "besides", "instead", "similarly", "meanwhile",
+    // Countries/regions that commonly show up as the subject of a business
+    // sentence ("China will publish...", "India to review..."). Not
+    // exhaustive - every country name can't reasonably be enumerated here.
+    "china", "india", "japan", "germany", "france", "canada", "australia",
+    "singapore", "ireland", "brazil", "mexico", "spain", "italy",
+    "netherlands", "switzerland", "sweden", "norway", "korea", "russia",
+    "indonesia", "vietnam", "thailand", "philippines", "malaysia", "poland",
   ].map((word) => word.toLowerCase())
 );
 
@@ -116,6 +158,24 @@ const countWords = (text) => (String(text).trim() ? String(text).trim().split(/\
 
 const stripBullet = (line) => line.replace(/^\s*(?:[-*•]|\d+[.)])\s*/, "").trim();
 
+/**
+ * Dedupe a list of owner/name strings case-insensitively - the same person
+ * can surface once via an @handle (lowercase) and once via NAMED_OWNER_PATTERN
+ * (capitalised), e.g. "@priya" and "Priya" in different lines. Keeps a single
+ * entry per person, preferring the properly-capitalised form for display.
+ */
+function dedupeNames(names) {
+  const byKey = new Map();
+  for (const name of names) {
+    const key = name.toLowerCase();
+    const existing = byKey.get(key);
+    if (!existing || (/^[a-z]/.test(existing) && /^[A-Z]/.test(name))) {
+      byKey.set(key, name);
+    }
+  }
+  return [...byKey.values()];
+}
+
 /** Classify every non-empty line and note what each action line is missing. */
 export function analyseNotes(text) {
   const raw = String(text || "");
@@ -126,15 +186,20 @@ export function analyseNotes(text) {
 
   const classified = lines.map((line) => {
     const isStrongQuestion = STRONG_QUESTION_PATTERN.test(line);
-    const isDecision = !isStrongQuestion && DECISION_PATTERN.test(line);
+    // Pending/blocked language is checked ahead of DECISION_PATTERN so that
+    // e.g. "blocked on sign off" or "has not signed off" can never be
+    // mistaken for a settled decision just because it shares the "sign off"
+    // keyword - mirroring how a strong question already outranks a decision.
+    const isPendingDecision = PENDING_DECISION_PATTERN.test(line);
+    const isDecision = !isStrongQuestion && !isPendingDecision && DECISION_PATTERN.test(line);
     const isAction = !isStrongQuestion && !isDecision && ACTION_PATTERN.test(line);
-    const isWeakQuestion = WEAK_QUESTION_PATTERN.test(line);
+    const isWeakQuestion = isPendingDecision || WEAK_QUESTION_PATTERN.test(line);
     const hasDate = DATE_PATTERN.test(line);
     const handles = [...line.matchAll(HANDLE_PATTERN)].map((match) => match[1]);
     const names = [...line.matchAll(NAMED_OWNER_PATTERN)]
       .map((match) => match[1])
       .filter((name) => !NOT_A_NAME.has(name.toLowerCase()));
-    const owners = [...new Set([...handles, ...names])];
+    const owners = dedupeNames([...handles, ...names]);
 
     let kind = "context";
     if (isStrongQuestion) kind = "question";
@@ -150,7 +215,7 @@ export function analyseNotes(text) {
   const questions = classified.filter((item) => item.kind === "question");
   const ownerless = actions.filter((item) => !item.hasOwner);
   const dateless = actions.filter((item) => !item.hasDate);
-  const people = [...new Set(classified.flatMap((item) => item.owners))];
+  const people = dedupeNames(classified.flatMap((item) => item.owners));
   const words = countWords(raw);
 
   return {

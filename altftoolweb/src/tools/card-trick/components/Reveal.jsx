@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Sparkles } from "lucide-react";
 import Card from "./Card";
@@ -7,6 +8,23 @@ import Card from "./Card";
 // Dramatic full-screen reveal of a single card: backdrop blur, glowing ring,
 // scale + rotate entrance. Confetti is fired by the page via canvas-confetti.
 export default function Reveal({ open, card, theme, title, subtitle, onClose }) {
+  const closeButtonRef = useRef(null);
+
+  // Escape-to-close + move focus into the dialog while it's open, matching
+  // the modal convention used elsewhere (e.g. memory-palace-builder).
+  useEffect(() => {
+    if (!open) return undefined;
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") onClose?.();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    const focusId = window.setTimeout(() => closeButtonRef.current?.focus(), 0);
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.clearTimeout(focusId);
+    };
+  }, [open, onClose]);
+
   return (
     <AnimatePresence>
       {open && card && (
@@ -52,6 +70,7 @@ export default function Reveal({ open, card, theme, title, subtitle, onClose }) 
 
             <button
               type="button"
+              ref={closeButtonRef}
               onClick={onClose}
               aria-label="Close reveal"
               className="mt-1 inline-flex items-center gap-2 rounded-xl bg-(--primary) px-5 py-2.5 font-semibold text-(--primary-foreground) transition hover:opacity-90 active:scale-95"

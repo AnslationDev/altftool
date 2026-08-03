@@ -65,6 +65,26 @@ export function formatDuration(minutes) {
   return `${secs} sec`;
 }
 
+/**
+ * Format the speaking/overhead split so the two parts always sum to the
+ * displayed total. formatDuration() rounds each duration independently,
+ * which can visibly disagree with the (exact) total by a second once both
+ * parts are rounded on their own — round the total first, then let overhead
+ * absorb whatever remainder speaking's own rounding leaves behind.
+ */
+export function formatDurationBreakdown(speakingMinutes, overheadMinutes) {
+  if (!Number.isFinite(speakingMinutes) || !Number.isFinite(overheadMinutes)) {
+    return { speaking: "—", overhead: "—" };
+  }
+  const totalSeconds = Math.round((speakingMinutes + overheadMinutes) * 60);
+  const speakingSeconds = Math.round(speakingMinutes * 60);
+  const overheadSeconds = Math.max(0, totalSeconds - speakingSeconds);
+  return {
+    speaking: formatDuration(speakingSeconds / 60),
+    overhead: formatDuration(overheadSeconds / 60),
+  };
+}
+
 /** Format a duration as a clock-style mm:ss (or h:mm:ss). */
 export function formatClock(minutes) {
   if (!Number.isFinite(minutes) || minutes < 0) return "—";

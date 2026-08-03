@@ -1,27 +1,38 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Skull, CheckCircle2, Copy, Trash2, FileText, SlidersHorizontal, Flame } from "lucide-react";
+import React, { useState, useEffect, useId } from "react";
+import { Skull, CheckCircle2, Copy, FileText, SlidersHorizontal, Flame } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
-// Unicode combining diacritics
+// Unicode combining diacritics, classified by their official Unicode name
+// (COMBINING ... ABOVE / BELOW / OVERLAY) so each slider only ever draws
+// marks that actually render in the direction it claims to control.
 const ZALGO_UP = [
   "\u0300", "\u0301", "\u0302", "\u0303", "\u0304", "\u0305", "\u0306", "\u0307", "\u0308", "\u0309", "\u030a", "\u030b", "\u030c", "\u030d",
-  "\u030e", "\u030f", "\u0310", "\u0311", "\u0312", "\u0313", "\u0314", "\u0315", "\u031a", "\u031b", "\u0340", "\u0341", "\u0342", "\u0343",
-  "\u0344", "\u0346", "\u034a", "\u034b", "\u034c", "\u0350", "\u0351", "\u0352", "\u0357", "\u035b", "\u035d", "\u035e", "\u0360", "\u0361",
-  "\u0362", "\u0363", "\u0364", "\u0365", "\u0366", "\u0367", "\u0368", "\u0369", "\u036a", "\u036b", "\u036c", "\u036d", "\u036e", "\u036f"
+  "\u030e", "\u030f", "\u0310", "\u0311", "\u0312", "\u0313", "\u0314", "\u0315", "\u031a", "\u031b", "\u033d", "\u0340", "\u0341", "\u0342",
+  "\u0343", "\u0344", "\u0346", "\u034a", "\u034b", "\u034c", "\u0350", "\u0351", "\u0352", "\u0357", "\u035b", "\u035d", "\u035e", "\u0360",
+  "\u0361", "\u0363", "\u0364", "\u0365", "\u0366", "\u0367", "\u0368", "\u0369", "\u036a", "\u036b", "\u036c", "\u036d", "\u036e", "\u036f"
 ];
 
-const ZALGO_MID = [
-  "\u0315", "\u031b", "\u0320", "\u0334", "\u0335", "\u0336", "\u0337", "\u0338", "\u0339", "\u033a", "\u033b", "\u033c", "\u034f", "\u035c",
-  "\u035f", "\u0362"
-];
+// Only genuine "COMBINING ... OVERLAY" marks (they draw a stroke/solidus
+// straight through the glyph) belong here \u2014 anything named ABOVE/BELOW
+// belongs in ZALGO_UP/ZALGO_DOWN instead, and invisible formatting
+// characters (e.g. GRAPHEME JOINER) don't belong in any pool.
+const ZALGO_MID = ["\u0334", "\u0335", "\u0336", "\u0337", "\u0338"];
 
 const ZALGO_DOWN = [
-  "\u0316", "\u0317", "\u0318", "\u0319", "\u031c", "\u031d", "\u031e", "\u031f", "\u0321", "\u0322", "\u0323", "\u0324", "\u0325", "\u0326",
-  "\u0327", "\u0328", "\u0329", "\u032a", "\u032b", "\u032c", "\u032d", "\u032e", "\u032f", "\u0330", "\u0331", "\u0332", "\u0333", "\u0339",
-  "\u033a", "\u033b", "\u033c", "\u033d", "\u0345", "\u0347", "\u0348", "\u0349", "\u034d", "\u034e", "\u0353", "\u0354", "\u0355", "\u0356",
-  "\u0359", "\u035a", "\u035c", "\u035f", "\u0360"
+  "\u0316", "\u0317", "\u0318", "\u0319", "\u031c", "\u031d", "\u031e", "\u031f", "\u0320", "\u0321", "\u0322", "\u0323", "\u0324", "\u0325",
+  "\u0326", "\u0327", "\u0328", "\u0329", "\u032a", "\u032b", "\u032c", "\u032d", "\u032e", "\u032f", "\u0330", "\u0331", "\u0332", "\u0333",
+  "\u0339", "\u033a", "\u033b", "\u033c", "\u0345", "\u0347", "\u0348", "\u0349", "\u034d", "\u034e", "\u0353", "\u0354", "\u0355", "\u0356",
+  "\u0359", "\u035a", "\u035c", "\u035f", "\u0362"
 ];
+
+const MAX_INPUT_LENGTH = 20000;
+// Slow the regeneration down to one run per animation tick instead of one
+// per keystroke, so pasting a long block of text (or dragging a slider)
+// doesn't synchronously re-run the corruption loop for every intermediate
+// value and stutter the tab.
+const REGEN_DEBOUNCE_MS = 120;
 
 export default function ToolHome() {
   const [input, setInput] = useState("HE COMES TO REIGN");
@@ -29,7 +40,10 @@ export default function ToolHome() {
   const [upVal, setUpVal] = useState(8);
   const [midVal, setMidVal] = useState(3);
   const [downVal, setDownVal] = useState(8);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
+  const upId = useId();
+  const midId = useId();
+  const downId = useId();
 
   useEffect(() => {
     if (!input) {
@@ -37,44 +51,50 @@ export default function ToolHome() {
       return;
     }
 
-    const randElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
+    const timer = setTimeout(() => {
+      const randElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
-    let result = "";
-    for (let i = 0; i < input.length; i++) {
-      const char = input[i];
-      result += char;
+      let result = "";
+      // Iterate by Unicode code point (not UTF-16 code unit) so surrogate
+      // pairs — emoji and other astral-plane characters — stay intact
+      // instead of being split apart and corrupted independently.
+      for (const char of input) {
+        result += char;
 
-      // Skip adding marks to spaces or line breaks to preserve formatting
-      if (char === " " || char === "\n" || char === "\r") {
-        continue;
+        // Skip adding marks to whitespace so word breaks, tab stops and
+        // line structure survive the corruption.
+        if (char === " " || char === "\t" || char === "\n" || char === "\r") {
+          continue;
+        }
+
+        // Add Up combining marks
+        for (let j = 0; j < upVal; j++) {
+          result += randElement(ZALGO_UP);
+        }
+
+        // Add Middle combining marks
+        for (let j = 0; j < midVal; j++) {
+          result += randElement(ZALGO_MID);
+        }
+
+        // Add Down combining marks
+        for (let j = 0; j < downVal; j++) {
+          result += randElement(ZALGO_DOWN);
+        }
       }
+      setOutput(result);
+    }, REGEN_DEBOUNCE_MS);
 
-      // Add Up combining marks
-      for (let j = 0; j < upVal; j++) {
-        result += randElement(ZALGO_UP);
-      }
-
-      // Add Middle combining marks
-      for (let j = 0; j < midVal; j++) {
-        result += randElement(ZALGO_MID);
-      }
-
-      // Add Down combining marks
-      for (let j = 0; j < downVal; j++) {
-        result += randElement(ZALGO_DOWN);
-      }
-    }
-    setOutput(result);
+    return () => clearTimeout(timer);
   }, [input, upVal, midVal, downVal]);
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(output);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch (e) {
-      console.error(e);
+  const handleCopy = () => copy("output", output, { label: "Corrupted text" });
+
+  const loadSample = () => {
+    if (input.trim() && input !== "THE GLITCH DEMON" && !window.confirm("Replace your current text with the sample? This can't be undone.")) {
+      return;
     }
+    setInput("THE GLITCH DEMON");
   };
 
   return (
@@ -124,7 +144,7 @@ export default function ToolHome() {
                 Normal Input Text
               </label>
               <button
-                onClick={() => setInput("THE GLITCH DEMON")}
+                onClick={loadSample}
                 className="text-[10px] font-bold text-primary hover:underline px-2 py-0.5 bg-primary/5 rounded"
               >
                 Load Creepy Sample
@@ -135,6 +155,7 @@ export default function ToolHome() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Type or paste text to corrupt here..."
               rows={4}
+              maxLength={MAX_INPUT_LENGTH}
               className="w-full bg-surface-soft border border-border rounded-xl font-mono text-sm leading-relaxed p-4 outline-none focus:ring-1 focus:ring-primary focus:border-primary transition"
             />
           </div>
@@ -149,10 +170,11 @@ export default function ToolHome() {
               <button
                 onClick={handleCopy}
                 disabled={!output}
+                aria-label="Copy the corrupted zalgo text"
                 className="inline-flex items-center gap-1.5 text-[10px] font-bold text-foreground bg-background border border-border rounded-lg px-2.5 py-1.5 hover:border-primary transition disabled:opacity-50"
               >
-                {copied ? <CheckCircle2 size={12} className="text-primary" /> : <Copy size={12} />}
-                {copied ? "Copied" : "Copy"}
+                {isCopied("output") ? <CheckCircle2 size={12} className="text-primary" /> : <Copy size={12} />}
+                {isCopied("output") ? "Copied" : "Copy"}
               </button>
             </div>
             <textarea
@@ -162,6 +184,9 @@ export default function ToolHome() {
               rows={6}
               className="w-full bg-surface-soft border border-border rounded-xl font-mono text-sm leading-relaxed p-4 outline-none resize-none cursor-text"
             />
+            <span aria-live="polite" role="status" className="sr-only">
+              {announcement}
+            </span>
           </div>
 
           {/* 3. Controls and Presets Grid */}
@@ -178,10 +203,11 @@ export default function ToolHome() {
                 {/* Up Slider */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs text-foreground font-semibold">
-                    <span>Stack Upwards (Above Text)</span>
+                    <label htmlFor={upId}>Stack Upwards (Above Text)</label>
                     <span className="text-primary font-mono">{upVal}</span>
                   </div>
                   <input
+                    id={upId}
                     type="range"
                     min="0"
                     max="20"
@@ -194,10 +220,11 @@ export default function ToolHome() {
                 {/* Mid Slider */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs text-foreground font-semibold">
-                    <span>Stack Middle (Through Text)</span>
+                    <label htmlFor={midId}>Stack Middle (Through Text)</label>
                     <span className="text-primary font-mono">{midVal}</span>
                   </div>
                   <input
+                    id={midId}
                     type="range"
                     min="0"
                     max="10"
@@ -210,10 +237,11 @@ export default function ToolHome() {
                 {/* Down Slider */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs text-foreground font-semibold">
-                    <span>Stack Downwards (Below Text)</span>
+                    <label htmlFor={downId}>Stack Downwards (Below Text)</label>
                     <span className="text-primary font-mono">{downVal}</span>
                   </div>
                   <input
+                    id={downId}
                     type="range"
                     min="0"
                     max="20"
