@@ -8,7 +8,9 @@ const webUrls = parseUrlList(
     process.env.ALTFT_MONITOR_WEB_URL ||
     "https://www.altftool.com",
 );
-const adminUrl = normalizeUrl(process.env.ALTFT_MONITOR_ADMIN_URL || "https://adsmanager.altftool.com");
+const adminUrl = normalizeUrl(
+  process.env.ALTFT_MONITOR_ADMIN_URL || "https://www.tier2.anslation.com",
+);
 const adminToken = process.env.ALTFT_MONITOR_ADMIN_TOKEN || "";
 const adminEmail = process.env.ALTFT_MONITOR_ADMIN_EMAIL || "";
 const adminPassword = process.env.ALTFT_MONITOR_ADMIN_PASSWORD || "";

@@ -412,7 +412,7 @@ npm run release:history:report
 npm run release:doctor:strict -- --output release-doctor-report.json --output-md release-doctor-report.md
 ```
 
-Set `ALTFT_MONITOR_WEB_URL`, `ALTFT_MONITOR_ADMIN_URL`, and `ALTFT_MONITOR_ADMIN_TOKEN` to point it at a specific deployment. For the link monitor, use `ALTFT_LINK_CHECK_URL`, `ALTFT_LINK_CHECK_PAGE_LIMIT`, `ALTFT_LINK_CHECK_LINK_LIMIT`, and `ALTFT_LINK_CHECK_IMAGE_LIMIT` when you need a smaller or larger crawl. The GitHub Actions monitoring workflow defaults the public web check to `https://altftool.com` and uses repository variables/secrets for admin health.
+Set `ALTFT_MONITOR_WEB_URL`, `ALTFT_MONITOR_ADMIN_URL`, and `ALTFT_MONITOR_ADMIN_TOKEN` to point it at a specific deployment. For the link monitor, use `ALTFT_LINK_CHECK_URL`, `ALTFT_LINK_CHECK_PAGE_LIMIT`, `ALTFT_LINK_CHECK_LINK_LIMIT`, and `ALTFT_LINK_CHECK_IMAGE_LIMIT` when you need a smaller or larger crawl. The GitHub Actions monitoring workflow defaults to `https://www.altftool.com` for public web and `https://www.tier2.anslation.com` for admin, with repository variables available for intentional overrides.
 
 Health surfaces:
 
@@ -430,32 +430,24 @@ Production deployment runbook:
 docs/PRODUCTION_DEPLOYMENT.md
 ```
 
-Check local deployment readiness without exposing secret values:
+Check local release readiness without exposing secret values:
 
 ```bash
 npm run env:readiness
-npm run deploy:readiness -- --target=all
-npm run deploy:source-check -- --target=all
 npm run release:doctor
-npm run deploy:parity:strict
+npm run monitor:production
+npm run monitor:links:strict -- --limit 24
 ```
 
-Use `npm run release:doctor:strict` before a production release. It combines saved health/report checks, Firebase Admin access, Firebase public live data, Firebase data integrity, the saved performance budget, Vercel project readiness, production links/images, and the production `/api/health` freshness probe. Use `npm run release:doctor:report` to refresh the admin health-dashboard artifact, then `npm run release:history:report` to append the latest scores to the release history trend panel. Add `--output-md release-doctor-report.md` when you need a Markdown artifact for CI or handoff notes. Add `--require-vercel-token` in deploy/readiness CI so a missing Vercel token becomes a blocker instead of the local developer warning. Use `npm run env:readiness:strict` when validating only environment shape. The `Deployment Readiness` GitHub Actions workflow runs the same strict environment check from repository secrets and variables.
+Use `npm run release:doctor:strict` before a production release. It combines saved health/report checks, Firebase Admin access, Firebase public live data, Firebase data integrity, the saved performance budget, production links/images, and the production `/api/health` freshness probe. Its Vercel readiness panel is retained for the legacy fallback and is advisory unless `--require-vercel-token` is explicitly requested. Use `npm run release:doctor:report` to refresh the admin health-dashboard artifact, then `npm run release:history:report` to append the latest scores to the release history trend panel. Add `--output-md release-doctor-report.md` when you need a Markdown artifact for CI or handoff notes. Use `npm run env:readiness:strict` when validating only environment shape.
 
-Use `npm run deploy:parity:strict` after deploy to compare local release reports with live production health, commit, tool/blog counts, sitemap, RSS, and Firebase public-read signals. Add `--output parity.json --output-md parity.md` when you want artifacts.
+Production web and admin are deployed from the canonical repositories through AWS Amplify. The monorepo and deployment repositories have deliberately different layouts and histories, so sync reviewed application content rather than merging their `main` branches directly. Pushing canonical `main` triggers Amplify; a clean rebuild of an already-pushed commit should use an Amplify `RELEASE` job. See `docs/PRODUCTION_DEPLOYMENT.md` and `docs/AWS_AMPLIFY_RUNBOOK.md` for app IDs, exact commands, verification, and rollback.
 
-Vercel production deploys need these GitHub Actions repository secrets:
+The Vercel workflow is a legacy manual fallback. Normal monorepo pushes do not run it unless this repository variable is deliberately enabled:
 
 ```text
-VERCEL_TOKEN
-VERCEL_ORG_ID
-VERCEL_WEB_PROJECT_ID
-VERCEL_ADMIN_PROJECT_ID
+ALTFT_ENABLE_VERCEL_ADMIN_DEPLOY=true
 ```
-
-`VERCEL_PROJECT_ID` can be used as the public web fallback when `VERCEL_WEB_PROJECT_ID` is not set. Local release checks can also read a secure token path from `VERCEL_TOKEN_FILE`. After changing these secrets, re-run the failed CI deploy jobs or manually run the `Vercel Deploy` workflow with target `all`.
-
-Both Vercel projects should deploy from the final monorepo `AnslationDev/altftool`: public web uses root directory `altftoolweb`, and admin uses root directory `altftoolwebadmin`. The deploy workflow attaches this source repo as deployment metadata and runs `npm run deploy:source-check` after each Vercel deployment so an old repo link cannot silently become the latest production build.
 
 ## 10. Environment Variables
 

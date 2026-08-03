@@ -261,17 +261,18 @@ jobs:
           if-no-files-found: ignore
 
   deploy-production:
-    name: Deploy production admin
+    name: Deploy legacy Vercel admin (opt-in)
     # Gate deploys on deterministic jobs only (build + emulator-backed rules).
     # The "verify" and "visual-regression" jobs still run for visibility but no
     # longer block production on transient live/Lighthouse/snapshot flakiness.
-    # Public www is deployed from canonical-web/main through AWS Amplify. Keep
-    # this monorepo workflow admin-only so a Vercel alias cannot compete with
-    # the canonical web deployment or fail parity against the Amplify commit.
+    # Public web and admin are deployed from their canonical `main` branches
+    # through AWS Amplify. Keep this old Vercel path available only as an
+    # explicit fallback; running it by default makes an otherwise-green release
+    # fail when the legacy Vercel account is disabled.
     needs:
       - build
       - firebase-emulator
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && vars.ALTFT_ENABLE_VERCEL_ADMIN_DEPLOY == 'true'
     uses: ./.github/workflows/vercel-deploy.yml
     with:
       target: admin

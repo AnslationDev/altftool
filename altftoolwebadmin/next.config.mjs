@@ -28,6 +28,7 @@ const nextConfig = {
   // are bundled (lucide-react alone is imported in 386 files). Transform-only —
   // no runtime behavior change.
   experimental: {
+    globalNotFound: true,
     optimizePackageImports: [
       "lucide-react",
       "@tanstack/react-table",

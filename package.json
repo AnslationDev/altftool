@@ -144,7 +144,7 @@
     "test:production-surface-links": "node --test tests/production-surface-links.test.mjs",
     "test:release-doctor": "node --test tests/release-doctor.test.mjs",
     "test:release-history": "node --test tests/release-history-report.test.mjs",
-    "test:route-loading": "node --test tests/route-loading-files.test.mjs",
+    "test:route-loading": "node --test tests/route-loading-files.test.mjs tests/browser-image-constructor-shadowing.test.mjs tests/admin-global-not-found.test.mjs",
     "test:tool-readiness": "node --test tests/tool-readiness-report.test.mjs",
     "test:search-engine": "node --test tests/search-engine.test.mjs",
     "test:seo-config-source": "node --test tests/seo-config-source.test.mjs",

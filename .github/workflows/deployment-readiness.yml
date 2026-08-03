@@ -29,7 +29,7 @@ jobs:
       OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
       NEXT_PUBLIC_DEEPSEEK_API_KEY: ${{ secrets.NEXT_PUBLIC_DEEPSEEK_API_KEY }}
       ALTFT_MONITOR_WEB_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://www.altftool.com' }}
-      ALTFT_MONITOR_ADMIN_URL: ${{ vars.ALTFT_MONITOR_ADMIN_URL || 'https://adsmanager.altftool.com' }}
+      ALTFT_MONITOR_ADMIN_URL: ${{ vars.ALTFT_MONITOR_ADMIN_URL || 'https://www.tier2.anslation.com' }}
       ALTFT_MONITOR_ADMIN_TOKEN: ${{ secrets.ALTFT_MONITOR_ADMIN_TOKEN }}
       ALTFT_MONITOR_ADMIN_EMAIL: ${{ secrets.ALTFT_MONITOR_ADMIN_EMAIL }}
       ALTFT_MONITOR_ADMIN_PASSWORD: ${{ secrets.ALTFT_MONITOR_ADMIN_PASSWORD }}
@@ -58,7 +58,8 @@ jobs:
       - name: Verify deployment environment
         run: npm run env:readiness:strict
 
-      - name: Verify Vercel deploy secrets
+      - name: Verify legacy Vercel deploy secrets
+        if: vars.ALTFT_ENABLE_VERCEL_ADMIN_DEPLOY == 'true'
         env:
           VERCEL_READINESS_OUTPUT_PATH: vercel-deploy-readiness-report.json
         run: npm run deploy:readiness -- --target=all
@@ -80,7 +81,7 @@ jobs:
       - name: Run release doctor gate
         env:
           ALTFT_RELEASE_DOCTOR_WEB_URL: ${{ vars.ALTFT_MONITOR_WEB_URL || 'https://www.altftool.com' }}
-        run: npm run release:doctor:strict -- --require-vercel-token --output release-doctor-report.json --output-md release-doctor-report.md
+        run: npm run release:doctor:strict -- --output release-doctor-report.json --output-md release-doctor-report.md
 
       - name: Upload deployment readiness reports
         if: always()

@@ -1,170 +1,137 @@
-# AltFTool Production Deployment Runbook
+# AltFTool production deployment runbook
 
-Last updated: 2026-05-20
+Last updated: 2026-08-04
 
-This runbook is the release checklist for the monorepo. Use it when CI is green but production is stale, when Vercel deploy jobs are blocked, or before shipping a public web/admin release.
+This is the release checklist for the current AWS Amplify production setup.
+Detailed Amplify build settings, app IDs, and rollback guidance live in
+[`AWS_AMPLIFY_RUNBOOK.md`](./AWS_AMPLIFY_RUNBOOK.md).
 
-## Source Of Truth
+## Production source map
 
-- Monorepo: `AnslationDev/altftool`
-- Public web app root: `altftoolweb`
-- Admin app root: `altftoolwebadmin`
-- Public production health endpoint: `https://altftool.com/api/health`
-- Admin health dashboard: `/health` inside `altftoolwebadmin`
+| Surface | Integration source | Deployment source | Amplify app / branch | Production URL |
+| --- | --- | --- | --- | --- |
+| Public web | `AnslationDev/altftool` (`altftoolweb/`) | `AltFTool/knaltftoolweb` | `d3o0ra1ab3rxzf` / `main` | `https://www.altftool.com` |
+| Admin | `AnslationDev/altftool` (`altftoolwebadmin/`) | `AltFTool/knadmintiertwoanslation` | `d3qv0il8ey2gki` / `main` | `https://www.tier2.anslation.com` |
 
-## Required GitHub Actions Secrets
+The monorepo and the two deployment repositories intentionally have different
+layouts and Git histories. Never merge one repository's `main` directly into
+another. Review branch content against the newest destination tree, port only
+the accepted files, and preserve deployment-only pruning/configuration.
 
-Vercel deploy jobs must be able to read these repository secrets:
+The old Vercel workflow remains a manual fallback. It is disabled on normal
+monorepo pushes unless the repository variable
+`ALTFT_ENABLE_VERCEL_ADMIN_DEPLOY=true` is deliberately configured.
 
-```text
-VERCEL_TOKEN
-VERCEL_ORG_ID
-VERCEL_WEB_PROJECT_ID
-VERCEL_ADMIN_PROJECT_ID
-```
+## Pre-release branch audit
 
-`VERCEL_PROJECT_ID` can be used as the public web fallback when `VERCEL_WEB_PROJECT_ID` is not set.
+1. Fetch every configured remote without deleting any working branch:
 
-Expected Git source for both Vercel projects is `AnslationDev/altftool`. Configure the public web project with root directory `altftoolweb`, and configure the admin project with root directory `altftoolwebadmin`. If the Vercel dashboard shows `AnslationDev/altftools_admin` or `AnslationDev/altftool.com`, reconnect that project to `AnslationDev/altftool` before relying on automatic Git deployments.
+   ```bash
+   git fetch --all --prune --tags
+   ```
 
-Keep the public and admin projects separated in Vercel:
+2. Confirm the monorepo `main`, canonical web `main`, and canonical admin
+   `main` tips. Review every non-ancestor branch with both commit and content
+   diffs. A stale branch must not overwrite a newer production implementation.
+3. Preserve dirty worktrees. If an uncommitted file is byte-identical to the
+   latest `main`, it is already integrated and should not be recommitted.
+4. Keep quarantined, incomplete, fabricated, or soft-404 surfaces out of the
+   release even if an old branch still contains them.
 
-```text
-Public web root: altftoolweb
-Admin web root: altftoolwebadmin
-```
+## Required validation
 
-## Optional Monitoring Inputs
-
-Use these repository variables/secrets when the monitor needs a non-default URL or admin health check:
-
-```text
-ALTFT_MONITOR_WEB_URL
-ALTFT_MONITOR_WEB_URLS
-ALTFT_MONITOR_ADMIN_URL
-ALTFT_MONITOR_ADMIN_TOKEN
-```
-
-The public monitor defaults to `https://altftool.com`.
-
-## Local Readiness Checks
-
-Run these before a release-style push:
+Both Next.js applications must build with webpack as required by `master.md`:
 
 ```bash
-npm run env:readiness
-npm run deploy:readiness -- --target=all
-npm run monitor:production
-npm run monitor:links
-npm run monitor:links:report
+npm run design:check
+npm run security:secrets
+npm run lint:web
+npm run routes:check
+npm run tools:check
+npm run build:web
+npm run build:admin
+npm run bundle:audit
 npm run performance:budget:strict
-npm run firebase:integrity:strict
-npm run deploy:source-check -- --target=all
-npm run release:doctor
-npm run release:doctor:report
-npm run release:history:report
-npm run deploy:parity:strict
-npm run validate:runtime-quality
 ```
 
-Use the strict doctor as the final local release gate:
+Run focused unit and route checks for the changed area. For a complete release,
+use `npm run validate:full`; for a bounded release pass, at minimum run catalog,
+route-loading, tool-readiness, SEO URL/sitemap, and production-monitor tests.
+
+## Deploy
+
+Pushing an audited deployment repository's `main` triggers its Amplify build.
+If the current canonical commit is already pushed and only a clean rebuild is
+needed, start an Amplify `RELEASE` job instead of manufacturing an empty commit.
+
+Public web rebuild:
 
 ```bash
-npm run release:doctor:strict
+aws amplify start-job \
+  --app-id d3o0ra1ab3rxzf \
+  --branch-name main \
+  --job-type RELEASE \
+  --region ap-south-1
 ```
 
-The doctor checks saved admin health manifests, route QA, blog content health, Firebase Admin reads, Firebase public live data, Firebase data integrity, the saved performance budget, Vercel project readiness, production links/images, and production `/api/health` freshness. Use `--offline` when you only want saved local reports and configuration checks. Use `--output-md release-doctor-report.md` to write the same rich Markdown table that GitHub Actions adds to the job summary. Use `--require-vercel-token` in deploy/readiness CI so linked projects without `VERCEL_TOKEN` or `VERCEL_TOKEN_FILE` block the release.
-
-The `Deployment Readiness` GitHub Actions workflow runs the strict doctor and uploads release doctor, Vercel readiness, performance budget, Firebase integrity, and production link/image reports.
-
-After production deploy, run `npm run deploy:parity:strict -- --output production-parity.json --output-md production-parity.md` to compare the live site against local health manifests, route QA, blog content health, sitemap/RSS, Firebase public reads, and the expected commit.
-
-The Vercel web deploy job runs the same strict parity check after production monitoring and uploads `web-production-parity-report.json` plus `web-production-parity-report.md`.
-
-When local web/admin servers are running, `npm run validate:runtime-quality` combines strict route QA, strict Firebase live-data checks, strict Firebase data-integrity checks, and the saved performance budget report. Use `npm run qa:routes:strict -- --output-md route-qa-report.md`, `npm run firebase:live-check:strict -- --output-md firebase-live-report.md`, and `npm run firebase:integrity:strict -- --output-md firebase-integrity-report.md` when you want separate artifacts for debugging.
-
-After `npm run build`, use `npm run performance:budget:strict -- --output performance-budget.json --output-md performance-budget.md` to enforce web/admin JS/CSS chunk budgets, public media budgets, stale asset references, and tool lazy-load boundaries before deployment. Use `npm run performance:budget:report` to refresh the admin health-dashboard snapshot.
-
-Use `npm run monitor:links -- --output production-links.json --output-md production-links.md` to sample production `sitemap.xml`, check same-origin anchors/images, and flag missing canonical/Open Graph tags. Use `npm run monitor:links:strict -- --limit 12` when you want warnings to block a release, or `npm run monitor:links:report -- --limit 12` to refresh the admin dashboard artifact. Use `npm run release:doctor:report` after the checks are clean so the admin health page shows the latest release doctor artifact, then `npm run release:history:report` to append that state to the release history trend panel.
-
-The admin health dashboard opens with a fast `/api/health?lite=1` snapshot that uses saved release-doctor Firebase and production checks. Click `Refresh live` before final release approval to run live Firestore and production `/api/health` probes. When Fix Center shows an action, use its panel link to jump to the exact failing health section; blog content actions also open the blog quality module.
-
-Use the strict environment check when validating production secrets through GitHub Actions:
+Admin rebuild:
 
 ```bash
-npm run env:readiness:strict
+aws amplify start-job \
+  --app-id d3qv0il8ey2gki \
+  --branch-name main \
+  --job-type RELEASE \
+  --region ap-south-1
 ```
 
-## CI Release Flow
+Use an AWS profile that has Amplify job permissions. Never print environment
+variables or replace an Amplify app's complete environment map with a partial
+map.
 
-1. Push to `main`.
-2. The CI workflow runs lint, route checks, Firebase checks, builds, and emulator/visual coverage.
-3. After CI succeeds, the Vercel deploy workflow deploys public web and admin.
-4. The deploy workflow runs production monitoring against the deployed URLs.
-5. The monitoring workflow can be run manually later to confirm production has not drifted.
+## Verify the deployment
 
-Manual deploy fallback:
-
-```text
-GitHub Actions -> Vercel Deploy -> Run workflow -> target: all
-```
-
-## Debugging A Blocked Deploy
-
-If deploy jobs fail before Vercel runs:
-
-1. Open the admin health dashboard and check `Vercel Deploy Readiness`.
-2. Confirm all required secrets exist in GitHub repository settings.
-3. Run `npm run deploy:readiness -- --target=all` locally with equivalent environment values.
-4. Run `npm run release:doctor` and confirm there are no blockers.
-5. Re-run the failed deploy jobs or manually run the `Vercel Deploy` workflow with target `all`.
-
-If only one target is blocked, validate the matching project id:
-
-```text
-Public web: VERCEL_WEB_PROJECT_ID or VERCEL_PROJECT_ID
-Admin web: VERCEL_ADMIN_PROJECT_ID
-```
-
-## Debugging Stale Production
-
-If CI is green but `https://altftool.com` does not show the latest routes or `/api/health` returns `404`:
-
-1. Confirm DNS points to the intended Vercel project.
-2. Confirm the Vercel project root directory is `altftoolweb`.
-3. Confirm the latest deploy used the current `main` commit.
-4. Open `https://altftool.com/api/health` and compare `release.commitSha` with the current Git commit.
-5. Run `npm run monitor:production` and inspect the failed route/API line.
-6. Re-run `Vercel Deploy` after fixing project mapping or secrets.
-
-The admin health dashboard also compares the expected commit with the public health endpoint when the deployed app exposes a release commit.
-
-## Post-Deploy Verification
-
-Check these public surfaces after deploy:
-
-```text
-https://altftool.com/api/health
-https://altftool.com/tools
-https://altftool.com/tools/all
-https://altftool.com/tools/all/api-stress-estimator
-https://altftool.com/api/blogs
-https://altftool.com/sitemap.xml
-https://altftool.com/robots.txt
-https://altftool.com/rss.xml
-```
-
-For sampled crawl health:
+Wait for the corresponding job to reach `SUCCEED`:
 
 ```bash
-npm run monitor:links -- --url https://altftool.com --limit 24
+aws amplify list-jobs \
+  --app-id d3o0ra1ab3rxzf \
+  --branch-name main \
+  --region ap-south-1 \
+  --max-results 5
 ```
 
-For admin:
+Then run:
+
+```bash
+npm run monitor:production
+npm run monitor:links:strict -- --limit 24
+```
+
+Public checks:
 
 ```text
-/health
-/api/health
+https://www.altftool.com/
+https://www.altftool.com/api/health
+https://www.altftool.com/tools/all
+https://www.altftool.com/sitemap.xml
+https://www.altftool.com/robots.txt
+https://www.altftool.com/rss.xml
 ```
 
-The release is ready only when CI, deploy readiness, production monitoring, Firebase public reads, the admin health dashboard, and `npm run release:doctor:strict` are all green.
+Admin checks:
+
+```text
+https://www.tier2.anslation.com/login
+https://www.tier2.anslation.com/api/tools/slugs  (must reject unauthenticated access)
+```
+
+The release is ready only when the Amplify job succeeds, the public health API
+is healthy, route/link monitoring passes, and the canonical domains serve the
+expected application rather than a cached error page.
+
+## Rollback
+
+Do not force-push a broad or unknown tree. Revert the specific release commit
+in the affected deployment repository, push the revert to its `main`, and wait
+for the new Amplify job. For build-memory regressions, follow the environment
+fallbacks in `AWS_AMPLIFY_RUNBOOK.md`.

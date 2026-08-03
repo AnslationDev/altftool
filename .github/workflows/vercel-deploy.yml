@@ -294,7 +294,7 @@ jobs:
         env:
           ALTFT_MONITOR_SKIP_WEB: "true"
           ALTFT_MONITOR_SKIP_FIREBASE_LIVE_DATA: "true"
-          ALTFT_MONITOR_ADMIN_URL: ${{ vars.ALTFT_MONITOR_ADMIN_URL || 'https://adsmanager.altftool.com' }}
+          ALTFT_MONITOR_ADMIN_URL: ${{ vars.ALTFT_MONITOR_ADMIN_URL || 'https://www.tier2.anslation.com' }}
           ALTFT_MONITOR_ADMIN_TOKEN: ${{ secrets.ALTFT_MONITOR_ADMIN_TOKEN }}
           ALTFT_MONITOR_ADMIN_EMAIL: ${{ secrets.ALTFT_MONITOR_ADMIN_EMAIL }}
           ALTFT_MONITOR_ADMIN_PASSWORD: ${{ secrets.ALTFT_MONITOR_ADMIN_PASSWORD }}

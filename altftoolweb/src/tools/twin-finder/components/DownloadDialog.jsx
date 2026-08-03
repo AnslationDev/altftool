@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, Download, FileJson, Image, Loader2 } from "lucide-react";
+import { X, Download, FileJson, Image as ImageIcon, Loader2 } from "lucide-react";
 import { canvasToBlob, downloadBlob } from "../utils/helpers";
 
 export default function DownloadDialog({ open, onClose, imageA, imageB, result }) {
@@ -132,7 +132,7 @@ export default function DownloadDialog({ open, onClose, imageA, imageB, result }
                 {busy === "image" ? (
                   <Loader2 size={16} className="animate-spin" />
                 ) : (
-                  <Image size={16} alt="" />
+                  <ImageIcon size={16} alt="" />
                 )}
                 Download as Image (PNG)
               </button>

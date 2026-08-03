@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
-import { Upload, Image, X, RefreshCw, Clipboard } from "lucide-react";
+import { Upload, X, RefreshCw, Clipboard } from "lucide-react";
 
 const ACCEPTED = { "image/png": [".png"], "image/svg+xml": [".svg"], "image/jpeg": [".jpg",".jpeg"], "image/webp": [".webp"] };
 
