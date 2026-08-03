@@ -13,6 +13,11 @@ function getBearerToken(request) {
   return header.split("Bearer ")[1];
 }
 
+function isFirebaseAuthRejection(error) {
+  const code = error?.code || error?.errorInfo?.code || "";
+  return typeof code === "string" && code.startsWith("auth/");
+}
+
 export function isLocalDevAdminRequest(request) {
   // SECURITY: the local-dev bypass must ONLY be reachable in a development
   // build. The previous implementation also accepted any request whose `Host`
@@ -53,7 +58,17 @@ export async function verifySuperAdminRequest(request) {
     throw new Error("Unauthorized");
   }
 
-  const decoded = await adminAuth.verifyIdToken(token);
+  let decoded;
+  try {
+    decoded = await adminAuth.verifyIdToken(token);
+  } catch (error) {
+    // Invalid, expired, or malformed Firebase tokens are authentication
+    // failures, not server errors. Keep infrastructure/configuration failures
+    // distinguishable so operators still see a genuine 500 when Admin SDK
+    // setup is unavailable.
+    if (isFirebaseAuthRejection(error)) throw new Error("Unauthorized");
+    throw error;
+  }
   const rbacAdmin = await getRbacAdminDoc(decoded);
   if (rbacAdmin) {
     const profile = await buildRbacAdminProfile(decoded, rbacAdmin);
