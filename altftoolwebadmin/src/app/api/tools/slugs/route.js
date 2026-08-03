@@ -1,32 +1,17 @@
 import { NextResponse } from "next/server";
 
 import { TOOL_SLUGS } from "@/config/toolSlugs.generated";
-import { adminAuth } from "@/lib/firebaseAdmin";
+import { withAdminApi } from "@/lib/security/withAdminApi";
 
 export const dynamic = "force-dynamic";
 
 /**
  * GET /api/tools/slugs
  *
- * Admin-only. Previously had no auth check at all, unlike every other route
- * in this app — mirrors the Authorization: Bearer <token> +
- * adminAuth.verifyIdToken() check used by src/app/api/notifications/mark-read/route.js.
+ * Admin-only. Keep this behind the shared active-admin guard so a valid
+ * Firebase user without an active admin profile cannot enumerate admin data.
  */
-export async function GET(request) {
-  const authHeader = request.headers.get("authorization");
-  if (!authHeader?.startsWith("Bearer ")) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
-  const token = authHeader.split("Bearer ")[1];
-
-  try {
-    await adminAuth.verifyIdToken(token);
-  } catch (err) {
-    console.warn("TOOL_SLUGS_TOKEN_REJECTED:", err?.code ?? err?.message);
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
-
+async function handler() {
   return NextResponse.json(
     {
       count: TOOL_SLUGS.length,
@@ -39,3 +24,5 @@ export async function GET(request) {
     },
   );
 }
+
+export const GET = withAdminApi(handler);

@@ -6,6 +6,24 @@ const localAdminHeaders = {
 };
 
 test.describe("admin API safety", () => {
+  test("tool slug catalog requires an active admin session", async ({ request }) => {
+    const unauthorized = await request.get(`${adminUrl}/api/tools/slugs`);
+
+    expect(unauthorized.status()).toBe(401);
+    await expect(unauthorized.json()).resolves.toEqual({ error: "Unauthorized" });
+
+    const authorized = await request.get(`${adminUrl}/api/tools/slugs`, {
+      headers: localAdminHeaders,
+    });
+
+    expect(authorized.ok()).toBeTruthy();
+    expect(authorized.headers()["cache-control"]).toContain("no-store");
+
+    const payload = await authorized.json();
+    expect(payload.count).toBeGreaterThan(0);
+    expect(payload.items).toHaveLength(payload.count);
+  });
+
   test("local super admin can read the admin list without Firebase Admin secrets", async ({ request }) => {
     const response = await request.get(`${adminUrl}/api/admin/list`, {
       headers: localAdminHeaders,
