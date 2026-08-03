@@ -12,6 +12,7 @@ import {
   assessResponse,
   breachSeverity,
 } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const NUM = new Intl.NumberFormat("en-IN");
 
@@ -25,7 +26,7 @@ const DASH = "—";
 export default function ToolHome() {
   const [classes, setClasses] = useState(() => DEFAULT_CLASSES.slice());
   const [done, setDone] = useState(() => DEFAULT_DONE.slice());
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const severity = useMemo(() => breachSeverity(classes), [classes]);
   const result = useMemo(
@@ -37,20 +38,24 @@ export default function ToolHome() {
     setClasses((current) =>
       current.includes(id) ? current.filter((value) => value !== id) : [...current, id]
     );
-    setCopied(false);
   };
 
   const toggleStep = (id) => {
     setDone((current) =>
       current.includes(id) ? current.filter((value) => value !== id) : [...current, id]
     );
-    setCopied(false);
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the checklist? This clears every ticked category and completed step and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setClasses(DEFAULT_CLASSES.slice());
     setDone(DEFAULT_DONE.slice());
-    setCopied(false);
   };
 
   const hasResult = !result.error;
@@ -77,16 +82,7 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [hasResult, hasSeverity, result, severity]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("summary", summary, { label: "Breach response plan" });
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -157,12 +153,12 @@ export default function ToolHome() {
               aria-label="Copy the employer breach response plan"
               className={GHOST_BTN}
             >
-              {copied ? (
+              {isCopied("summary") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("summary") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset the checklist" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
@@ -170,6 +166,9 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span aria-live="polite" role="status" className="sr-only">
+          {announcement}
+        </span>
 
         <div
           className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
@@ -224,8 +223,11 @@ export default function ToolHome() {
           >
             <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
             <span>
-              Held at {CRITICAL_CAP_PERCENT}% while a critical step is open. An unverified payroll
-              account or a reused password is a direct loss path, not a loose end.
+              Held at {CRITICAL_CAP_PERCENT}% while{" "}
+              {result.missingCritical.length === 1 ? "a critical step is" : "critical steps are"} still
+              open: {result.missingCritical.map((item) => item.title).join("; ")}.{" "}
+              {result.missingCritical.length === 1 ? "That is" : "Those are"} a direct loss path, not a
+              loose end.
             </span>
           </p>
         ) : null}

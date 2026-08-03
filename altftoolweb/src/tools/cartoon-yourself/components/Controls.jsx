@@ -9,8 +9,6 @@ const controls = [
   { key: "saturation", label: "Saturation", min: 0, max: 200, default: 100 },
   { key: "sharpness", label: "Sharpness", min: 0, max: 100, default: 0 },
   { key: "smoothness", label: "Smoothness", min: 0, max: 100, default: 0 },
-  { key: "edgeStrength", label: "Edge Strength", min: 0, max: 100, default: 0 },
-  { key: "backgroundBlur", label: "Background Blur", min: 0, max: 20, default: 0 },
 ];
 
 export default function Controls({ adjustments, onUpdate, onReset }) {

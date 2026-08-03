@@ -4,6 +4,10 @@ export function isSameCell(a, b) {
   return a.x === b.x && a.y === b.y;
 }
 
+// Returns null when the snake occupies every cell — there is nowhere left
+// to place food. Falling back to a fixed cell (e.g. {x:0,y:0}) would place
+// food directly on top of the snake's own body instead of signalling that
+// the board is genuinely full.
 export function createFood(snake) {
   const openCells = [];
 
@@ -15,7 +19,8 @@ export function createFood(snake) {
     }
   }
 
-  return openCells[Math.floor(Math.random() * openCells.length)] || { x: 0, y: 0 };
+  if (openCells.length === 0) return null;
+  return openCells[Math.floor(Math.random() * openCells.length)];
 }
 
 export function nextSnakeState(snake, direction, food) {
@@ -23,7 +28,7 @@ export function nextSnakeState(snake, direction, food) {
   const head = snake[0];
   const nextHead = { x: head.x + vector.x, y: head.y + vector.y };
   const hitWall = nextHead.x < 0 || nextHead.x >= GRID_SIZE || nextHead.y < 0 || nextHead.y >= GRID_SIZE;
-  const ateFood = isSameCell(nextHead, food);
+  const ateFood = food != null && isSameCell(nextHead, food);
   const body = ateFood ? snake : snake.slice(0, -1);
   const hitSelf = body.some((cell) => isSameCell(cell, nextHead));
 

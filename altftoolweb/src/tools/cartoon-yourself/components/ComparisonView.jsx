@@ -43,6 +43,8 @@ export default function ComparisonView({ previewUrl, canvasRef }) {
         role="slider"
         aria-label="Comparison slider"
         aria-valuenow={Math.round(sliderPos)}
+        aria-valuemin={0}
+        aria-valuemax={100}
         tabIndex={0}
         onKeyDown={(e) => {
           if (e.key === "ArrowLeft") setSliderPos((p) => Math.max(0, p - 2));
@@ -78,8 +80,8 @@ export default function ComparisonView({ previewUrl, canvasRef }) {
         </div>
 
         <div className="flex justify-between px-3 py-2 text-xs font-semibold text-(--muted-foreground) bg-(--background)">
-          <span>Original</span>
           <span>Cartoon</span>
+          <span>Original</span>
         </div>
       </div>
     </div>

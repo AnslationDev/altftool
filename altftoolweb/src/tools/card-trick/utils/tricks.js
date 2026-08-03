@@ -2,7 +2,7 @@
 // trick step — no React, no side effects — so the page can drive a phase
 // machine and the logic stays testable.
 
-import { dealSpread, randomCard, sampleDistinct } from "./deck";
+import { dealSpread, randomCard, sampleDistinct, shuffle } from "./deck";
 
 // ---- Pick a Card -----------------------------------------------------------
 // Show a fan of face-up cards; player memorises one, cards flip down, then

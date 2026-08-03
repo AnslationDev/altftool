@@ -45,12 +45,12 @@ export const PROMPT_STYLES = [
   {
     id: "challenge",
     label: "Small challenge",
-    build: (topic) => `Try one thing from this on ${topic} this week and reply with what happened.`,
+    build: (topic) => `Try one thing from this on ${topic} this week — what happened when you did?`,
   },
   {
     id: "resource",
     label: "Crowdsource resources",
-    build: (topic) => `Drop your best resource on ${topic} below — I will add the good ones to the description.`,
+    build: (topic) => `Drop your best resource on ${topic} below — what would you add for other viewers?`,
   },
 ];
 
@@ -109,7 +109,11 @@ export function parseLinks(text) {
   const issues = [];
 
   lines.forEach((line, index) => {
-    const [rawLabel, rawUrl] = line.includes("|") ? line.split("|") : [null, line];
+    // Split on the LAST "|" so a label containing its own pipe (or a stray
+    // extra separator) still leaves the URL — which always comes last in
+    // "Label | https://..." — intact in its own segment.
+    const pipeIndex = line.lastIndexOf("|");
+    const [rawLabel, rawUrl] = pipeIndex === -1 ? [null, line] : [line.slice(0, pipeIndex), line.slice(pipeIndex + 1)];
     const url = collapse(rawUrl);
     if (!/^https?:\/\/\S+$/i.test(url)) {
       issues.push(`Line ${index + 1} has no usable URL — "${line}".`);
@@ -124,7 +128,10 @@ export function parseLinks(text) {
 /** Fill in defaults and reject unusable input. */
 export function normaliseBrief(input) {
   const raw = input && typeof input === "object" ? input : {};
-  const topic = collapse(raw.topic);
+  // Strip trailing periods before checking for emptiness — a topic of only
+  // dots (e.g. ".", "...") must not slip past validation and then collapse
+  // to an empty string further down the pipeline.
+  const topic = collapse(raw.topic).replace(/[.]+$/, "");
   if (!topic) return { error: "Enter the video topic so the comment has something to talk about." };
 
   const platform = platformById(typeof raw.platformId === "string" ? raw.platformId : "youtube");
@@ -134,7 +141,7 @@ export function normaliseBrief(input) {
   if (!promptStyle) return { error: "Choose one of the listed prompt styles." };
 
   return {
-    topic: topic.replace(/[.]+$/, ""),
+    topic,
     platform,
     promptStyle,
     intro: collapse(raw.intro),
@@ -175,7 +182,9 @@ export function buildPinnedComment(input) {
     blocks.push(["Links:", ...links.rows.map((row) => `${row.label} — ${row.url}`)].join("\n"));
   }
 
-  if (brief.disclosure) blocks.push(brief.disclosureText);
+  // Only claim "links above" when a Links block actually rendered — an
+  // affiliate disclosure with no links to disclose is a false statement.
+  if (brief.disclosure && links.rows.length > 0) blocks.push(brief.disclosureText);
 
   if (brief.nextUp) blocks.push(`Next up: ${brief.nextUp}`);
 
@@ -198,10 +207,15 @@ export function analysePinnedComment(text, options) {
   const platform = platformById(typeof opts.platformId === "string" ? opts.platformId : "youtube");
   if (!platform) return { error: "Choose one of the listed platforms." };
 
-  const characters = raw.length;
+  // Count Unicode code points, not UTF-16 code units — raw.length would
+  // double-count every emoji (surrogate pair) against the platform limit.
+  const characters = Array.from(raw).length;
   const lines = raw.split(/\r?\n/).length;
   const urls = raw.match(URL_PATTERN) || [];
-  const uniqueUrls = new Set(urls.map((url) => url.toLowerCase()));
+  // Case-sensitive: URL paths differ by case per spec, so "/PageOne" and
+  // "/pageone" are two distinct links, not duplicates — matching how
+  // buildPinnedComment renders every parsed row verbatim with no dedup.
+  const uniqueUrls = new Set(urls);
   const hasQuestion = /\?/.test(raw);
   const hasDisclosure = /affiliate|sponsor|paid partnership|commission|#ad\b/i.test(raw);
 

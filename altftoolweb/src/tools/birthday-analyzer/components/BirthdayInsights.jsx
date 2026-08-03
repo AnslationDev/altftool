@@ -1,6 +1,6 @@
 import { Sparkles, Gem, Flower2, Flame, Snowflake, Wind, Droplets, Users, Hash, Palette } from "lucide-react";
 
-function InsightCard({ label, value, subtext, icon: Icon, color }) {
+function InsightCard({ label, value, subtext, icon: Icon, color, iconColor }) {
   return (
     <div className="bg-(--card) border border-(--border) rounded-xl p-4 shadow-[var(--anslation-ds-shadow-sm)] hover:shadow-md transition">
       <div className="flex items-start gap-3">
@@ -8,7 +8,7 @@ function InsightCard({ label, value, subtext, icon: Icon, color }) {
           className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
           style={{ backgroundColor: color ? `${color}20` : undefined }}
         >
-          <Icon className="h-5 w-5" style={{ color: color || "var(--primary)" }} />
+          <Icon className="h-5 w-5" style={{ color: iconColor || color || "var(--primary)" }} />
         </div>
         <div className="min-w-0">
           <div className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wide">{label}</div>
@@ -61,6 +61,7 @@ export default function BirthdayInsights({ insights }) {
           subtext={insights.birthstone.color}
           icon={Gem}
           color={insights.birthstone.color}
+          iconColor="var(--primary)"
         />
         <InsightCard
           label="Birth Flower"

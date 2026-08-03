@@ -16,13 +16,15 @@ import {
 } from "lucide-react";
 
 import {
+  MAX_EVIDENCE_ITEMS,
+  MAX_TEXT_LENGTH,
   buildCountsOnlySummary,
   buildEvidencePack,
 } from "../lib/buildEvidencePack.mjs";
 
 const MAX_FILE_SIZE = 25 * 1024 * 1024;
 const MAX_TOTAL_SIZE = 100 * 1024 * 1024;
-const MAX_FILES = 100;
+const MAX_FILES = MAX_EVIDENCE_ITEMS;
 
 function toHex(buffer) {
   return [...new Uint8Array(buffer)]
@@ -75,18 +77,34 @@ export default function CybercrimeEvidencePackBuilder() {
   const invalidate = () => setResult(null);
 
   const addFiles = async (files) => {
-    const selected = [...(files || [])].slice(0, MAX_FILES);
+    const incoming = [...(files || [])];
+    if (!incoming.length) return;
     setFileError("");
     setResult(null);
-    if (!selected.length) return;
+
+    // "Choose copies" adds to what is already hashed rather than replacing it, so
+    // re-opening the picker for one more file does not discard earlier work.
+    const availableSlots = MAX_FILES - evidenceItems.length;
+    if (availableSlots <= 0) {
+      setFileError(
+        `You already have ${MAX_FILES} evidence files, the most this tool holds. Remove one before adding another.`,
+      );
+      return;
+    }
+    const overflow = incoming.length - availableSlots;
+    const selected = overflow > 0 ? incoming.slice(0, availableSlots) : incoming;
+
     if (selected.some((file) => file.size > MAX_FILE_SIZE)) {
       setFileError("Each evidence copy must be 25 MB or smaller.");
       return;
     }
-    if (selected.reduce((sum, file) => sum + file.size, 0) > MAX_TOTAL_SIZE) {
-      setFileError("Choose no more than 100 MB of evidence copies at one time.");
+    const existingTotalSize = evidenceItems.reduce((sum, item) => sum + item.size, 0);
+    const incomingTotalSize = selected.reduce((sum, file) => sum + file.size, 0);
+    if (existingTotalSize + incomingTotalSize > MAX_TOTAL_SIZE) {
+      setFileError("Choose no more than 100 MB of evidence copies in total.");
       return;
     }
+
     setHashing(true);
     try {
       const hashed = [];
@@ -100,10 +118,16 @@ export default function CybercrimeEvidencePackBuilder() {
           note: "",
         });
       }
-      setEvidenceItems(hashed);
+      setEvidenceItems((current) => [...current, ...hashed]);
+      if (overflow > 0) {
+        setFileError(
+          `Only ${selected.length} of ${incoming.length} newly selected files were added — the ${MAX_FILES}-file limit was reached. ${overflow} file${overflow === 1 ? " was" : "s were"} not added.`,
+        );
+      }
     } catch {
-      setFileError("One or more files could not be hashed in this browser.");
-      setEvidenceItems([]);
+      setFileError(
+        "One or more of the newly selected files could not be hashed in this browser. Evidence already added is unchanged.",
+      );
     } finally {
       setHashing(false);
     }
@@ -119,6 +143,13 @@ export default function CybercrimeEvidencePackBuilder() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the evidence pack? This clears the incident title, narrative, timeline and every hashed file, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setIncidentTitle("");
     setIncidentReference("");
     setNarrative("");
@@ -202,6 +233,7 @@ export default function CybercrimeEvidencePackBuilder() {
             <textarea
               className="input-field min-h-32 w-full resize-y"
               value={narrative}
+              maxLength={MAX_TEXT_LENGTH}
               onChange={(event) => {
                 setNarrative(event.target.value);
                 invalidate();
@@ -243,13 +275,16 @@ export default function CybercrimeEvidencePackBuilder() {
                 Up to 100 files, 25 MB each and 100 MB total. File content is not embedded.
               </p>
             </div>
-            <label className="btn-secondary inline-flex min-h-10 cursor-pointer items-center gap-2 px-4">
+            <label
+              className={`btn-secondary inline-flex min-h-10 items-center gap-2 px-4 ${hashing ? "cursor-not-allowed opacity-60" : "cursor-pointer"}`}
+            >
               <Upload className="h-4 w-4" aria-hidden="true" />
               Choose copies
               <input
                 ref={fileRef}
                 type="file"
                 multiple
+                disabled={hashing}
                 className="sr-only"
                 onChange={(event) => void addFiles(event.target.files)}
               />
@@ -257,7 +292,11 @@ export default function CybercrimeEvidencePackBuilder() {
           </div>
 
           {hashing ? (
-            <div className="mt-5 flex items-center gap-3 rounded-lg border border-[var(--border)] bg-[var(--muted)] p-4">
+            <div
+              className="mt-5 flex items-center gap-3 rounded-lg border border-[var(--border)] bg-[var(--muted)] p-4"
+              role="status"
+              aria-live="polite"
+            >
               <LoaderCircle className="h-5 w-5 animate-spin text-[var(--primary)]" aria-hidden="true" />
               <p className="text-sm text-[var(--muted-foreground)]">
                 Hashing locally. Keep this tab open.

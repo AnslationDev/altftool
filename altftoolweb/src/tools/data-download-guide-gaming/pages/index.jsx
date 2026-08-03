@@ -12,6 +12,7 @@ import {
   buildExportPlan,
   scoreAudit,
 } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const DASH = "—";
 const NUM = new Intl.NumberFormat("en-IN");
@@ -53,7 +54,7 @@ export default function ToolHome() {
   const [requestedOn, setRequestedOn] = useState(DEFAULTS.requestedOn);
   const [today, setToday] = useState(DEFAULTS.today);
   const [done, setDone] = useState([]);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const plan = useMemo(
     () => buildExportPlan({ platformId, regimeId, requestedOn, today }),
@@ -69,16 +70,21 @@ export default function ToolHome() {
     setDone((current) =>
       current.includes(id) ? current.filter((value) => value !== id) : [...current, id]
     );
-    setCopied(false);
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This clears your platform, regime, dates and the 12-item audit checklist and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setPlatformId(DEFAULTS.platformId);
     setRegimeId(DEFAULTS.regimeId);
     setRequestedOn(DEFAULTS.requestedOn);
     setToday(DEFAULTS.today);
     setDone([]);
-    setCopied(false);
   };
 
   const summary = useMemo(() => {
@@ -88,7 +94,7 @@ export default function ToolHome() {
       `Platform: ${plan.platform.name}`,
       `Legal basis: ${plan.regime.name}`,
       `Requested on: ${plan.requestedOn}`,
-      `Self-serve copy usually lands: ${plan.selfServeFrom} to ${plan.selfServeBy}`,
+      `Self-serve copy usually lands: ${plan.selfServeFrom} to ${plan.selfServeBy}${plan.selfServeOverdue ? " (already passed)" : ""}`,
     ];
     if (plan.hasStatutoryClock) {
       lines.push(`Statutory deadline: ${plan.statutoryDeadline}`);
@@ -106,16 +112,7 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [plan, hasPlan, audit, hasAudit]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("result", summary, { label: "Export plan and audit progress" });
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -207,7 +204,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               {hasPlan && plan.hasStatutoryClock ? "Days left to respond" : "Response deadline"}
             </p>
@@ -221,7 +218,7 @@ export default function ToolHome() {
               {hasPlan
                 ? plan.hasStatutoryClock
                   ? `Counted from ${plan.requestedOn} to the ${plan.statutoryDeadline} deadline, measured on ${plan.today}.`
-                  : "Fix a date to see the countdown."
+                  : `This request has no fixed statutory deadline under "${plan.regime.name}" — no date will produce a countdown here. Track the platform's usual self-serve window instead.`
                 : "Fix the problem above to see a deadline."}
             </p>
           </div>
@@ -232,12 +229,12 @@ export default function ToolHome() {
               aria-label="Copy the export plan and audit progress"
               className={GHOST_BTN}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset every input" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
@@ -246,15 +243,24 @@ export default function ToolHome() {
           </div>
         </div>
 
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
+
         {hasPlan && status ? (
           <p className={`mt-4 inline-flex rounded-md px-3 py-1 text-xs font-semibold ${TONE_CLASS[status.tone]}`}>
             {status.label}
           </p>
         ) : null}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
           {[
-            ["Self-serve copy usually arrives", hasPlan ? `${plan.selfServeFrom} to ${plan.selfServeBy}` : DASH],
+            [
+              "Self-serve copy usually arrives",
+              hasPlan
+                ? `${plan.selfServeFrom} to ${plan.selfServeBy}${plan.selfServeOverdue ? " — already passed" : ""}`
+                : DASH,
+            ],
             ["Days since the request", hasPlan ? NUM.format(plan.daysElapsed) : DASH],
             [
               "Statutory deadline",
@@ -314,7 +320,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-labelledby="audit-heading">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p id="audit-heading" className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Post-export audit
             </p>

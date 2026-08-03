@@ -84,8 +84,6 @@ export const adjustmentDefaults = {
   saturation: 100,
   sharpness: 0,
   smoothness: 0,
-  edgeStrength: 0,
-  backgroundBlur: 0,
 };
 
 export const exportFormats = [

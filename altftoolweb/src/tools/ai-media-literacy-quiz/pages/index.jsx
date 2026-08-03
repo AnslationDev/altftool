@@ -31,7 +31,13 @@ export default function ToolHome() {
   const revealed = submitted && !hasError;
 
   const chooseAnswer = (questionId, optionIndex) => {
+    if (revealed) return; // frozen once graded — fieldset is also disabled, this just guards non-pointer paths
     setAnswers((current) => ({ ...current, [questionId]: optionIndex }));
+    // Changing an answer while a submit is pending-but-not-yet-revealed (the
+    // "Answer at least one question" error state) must NOT silently reveal
+    // every question's correct answer once the error clears — that requires
+    // a deliberate "Check answers" click again.
+    if (submitted && hasError) setSubmitted(false);
   };
 
   const restart = (nextSeed) => {
@@ -39,6 +45,13 @@ export default function ToolHome() {
     setAnswers({});
     setSubmitted(false);
     setCopied(false);
+  };
+
+  // Shuffle/Reset both discard in-progress or completed answers with no way
+  // back — confirm first, but only when there is actually something to lose.
+  const restartWithConfirm = (nextSeed, message) => {
+    if (Object.keys(answers).length > 0 && !window.confirm(message)) return;
+    restart(nextSeed);
   };
 
   const summary = revealed
@@ -112,9 +125,22 @@ export default function ToolHome() {
                 min="1"
                 step="1"
                 value={seed}
+                // Intentionally not confirm-gated: this fires on every
+                // keystroke while typing a set number, so a confirm() here
+                // would pop up mid-type. The explicit Shuffle/Reset buttons
+                // are the confirm-gated destructive actions.
                 onChange={(event) => restart(Number(event.target.value) || 1)}
               />
-              <button type="button" className={GHOST_BTN} onClick={() => restart(seed + 1)}>
+              <button
+                type="button"
+                className={GHOST_BTN}
+                onClick={() =>
+                  restartWithConfirm(
+                    seed + 1,
+                    "Shuffle to a new question set? Your current answers will be cleared.",
+                  )
+                }
+              >
                 Shuffle
               </button>
             </div>
@@ -129,10 +155,16 @@ export default function ToolHome() {
       <section className="mt-6 space-y-4">
         {questions.map((question, index) => {
           const chosen = answers[question.id];
-          const isCorrect = revealed && chosen === question.correct;
+          // Prefer the grade's own per-question `answered`/`correct` flags
+          // (gradeQuiz already computes them) over re-deriving from `answers`
+          // directly, so a skipped question can't be mislabeled as wrong.
+          const resultRow = grade.results?.[index];
+          const wasAnswered = resultRow ? resultRow.answered : chosen !== undefined && chosen !== null;
+          const isCorrect = revealed && Boolean(resultRow?.correct);
           return (
             <fieldset
               key={question.id}
+              disabled={revealed}
               className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
             >
               <legend className="px-1 text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -145,9 +177,9 @@ export default function ToolHome() {
                   const markCorrect = revealed && optionIndex === question.correct;
                   const markWrong = revealed && selected && optionIndex !== question.correct;
                   const tone = markCorrect
-                    ? "border-[var(--success)] text-[var(--success)]"
+                    ? "border-[var(--success)] text-[var(--success-text)]"
                     : markWrong
-                      ? "border-[var(--danger)] text-[var(--danger)]"
+                      ? "border-[var(--danger)] text-[var(--danger-text)]"
                       : selected
                         ? "border-[var(--primary)]"
                         : "border-[var(--border)]";
@@ -175,10 +207,14 @@ export default function ToolHome() {
                   className={`mt-3 rounded-md px-3 py-2 text-sm leading-6 ${
                     isCorrect
                       ? "bg-[var(--muted)] text-[var(--foreground)]"
-                      : "bg-[var(--danger-soft)] text-[var(--danger)]"
+                      : wasAnswered
+                        ? "bg-[var(--danger-soft)] text-[var(--danger-text)]"
+                        : "bg-[var(--muted)] text-[var(--muted-foreground)]"
                   }`}
                 >
-                  <span className="font-semibold">{isCorrect ? "Correct. " : "Not quite. "}</span>
+                  <span className="font-semibold">
+                    {isCorrect ? "Correct. " : wasAnswered ? "Not quite. " : "Skipped. "}
+                  </span>
                   {question.explanation}
                 </p>
               )}
@@ -190,7 +226,7 @@ export default function ToolHome() {
       {submitted && hasError && (
         <p
           role="alert"
-          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
         >
           {grade.error}
         </p>
@@ -198,7 +234,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Your score
             </p>
@@ -218,7 +254,6 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy quiz score"
               className={GHOST_BTN}
               disabled={!revealed}
             >
@@ -227,7 +262,9 @@ export default function ToolHome() {
             </button>
             <button
               type="button"
-              onClick={() => restart(seed)}
+              onClick={() =>
+                restartWithConfirm(seed, "Reset this round? Your current answers will be cleared.")
+              }
               aria-label="Reset the quiz"
               className={GHOST_BTN}
             >
@@ -237,10 +274,11 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
           {[
             ["Answered", revealed ? `${grade.answeredCount} of ${grade.total}` : dash],
             ["Correct", revealed ? String(grade.correctCount) : dash],
+            ["Wrong", revealed ? String(grade.wrongCount) : dash],
             ["Pass mark", `${PASS_MARK}%`],
             ["Result", revealed ? (grade.passed ? "Pass" : "Below pass mark") : dash],
             [

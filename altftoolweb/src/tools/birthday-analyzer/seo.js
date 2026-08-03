@@ -47,11 +47,11 @@ const seo = {
     ],
     [
       "How is the Chinese zodiac animal calculated?",
-      "By looking your birth year up in twelve year tables, one per animal, covering 1924 to 2043 on the standard twelve-year cycle. Note that the cycle is keyed to the calendar year, not the lunar new year — if you were born in January or early February, the traditional animal may be the previous year's.",
+      "By placing your birth year on the standard twelve-year cycle, one animal per year, anchored to 1924 as a Rat year. This works for any accepted birth year (1900 onward), not just a fixed table range. Note that the cycle is keyed to the calendar year, not the lunar new year — if you were born in January or early February, the traditional animal may be the previous year's.",
     ],
     [
       "What generation am I based on my birth year?",
-      "The tool assigns it from your birth year using these bands: 2026 onward Generation Beta, 2013 to 2025 Generation Alpha, 1997 to 2012 Generation Z, 1981 to 1996 Millennials, 1965 to 1980 Generation X, 1946 to 1964 Baby Boomers, and anything earlier Silent Generation.",
+      "The tool assigns it from your birth year using these bands: 2026 onward Generation Beta, 2013 to 2025 Generation Alpha, 1997 to 2012 Generation Z, 1981 to 1996 Millennials, 1965 to 1980 Generation X, 1946 to 1964 Baby Boomers, 1928 to 1945 Silent Generation, and 1900 to 1927 Greatest Generation.",
     ],
     [
       "Are the heartbeat, breath and sleep numbers real measurements?",

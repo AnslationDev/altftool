@@ -22,6 +22,18 @@
 /** Statutory ceiling for a formal access request (GDPR Art. 12(3): one month). */
 export const STATUTORY_RESPONSE_DAYS = 30;
 
+/** Year Facebook opened registration to the general public. */
+export const META_PUBLIC_LAUNCH_YEAR = 2006;
+
+/**
+ * The oldest an account can possibly be, computed from today's date rather than a
+ * fixed number — a hardcoded ceiling goes stale (and starts silently accepting
+ * impossible account ages) the moment it falls behind the real calendar.
+ */
+export function maxAccountAgeYears(referenceDate = new Date()) {
+  return referenceDate.getFullYear() - META_PUBLIC_LAUNCH_YEAR;
+}
+
 /** 1 GB expressed in the MB unit used throughout this module. */
 const MB_PER_GB = 1024;
 
@@ -223,23 +235,34 @@ export const REQUEST_STEPS = [
   ],
 ];
 
-/** Human-readable size from a megabyte figure. */
+/**
+ * Human-readable size from a megabyte figure. The MB/GB threshold is checked on the
+ * value that will actually be displayed (post-rounding), not the raw float — otherwise
+ * a value like 1023.7 MB passes the "< 1024" check, then rounds up to display as the
+ * self-contradicting "1024 MB" instead of rolling over to "1.0 GB".
+ */
 export function formatSize(mb) {
   if (!Number.isFinite(mb) || mb < 0) return "—";
   if (mb < 1) return "<1 MB";
-  if (mb < MB_PER_GB) return `${Math.round(mb)} MB`;
+  const roundedMb = Math.round(mb);
+  if (roundedMb < MB_PER_GB) return `${roundedMb} MB`;
   const gb = mb / MB_PER_GB;
   return `${gb >= 10 ? Math.round(gb) : gb.toFixed(1)} GB`;
 }
 
-/** Human-readable duration from a second count. */
+/**
+ * Human-readable duration from a second count. Every unit is derived from the
+ * previous one's already-rounded, integer value, so rounding never produces an
+ * impossible figure like "60 min" (should be "1 h") or "1 h 60 min" (should be "2 h").
+ */
 export function formatDuration(seconds) {
   if (!Number.isFinite(seconds) || seconds < 0) return "—";
-  if (seconds < 60) return `${Math.max(1, Math.round(seconds))} sec`;
-  const minutes = seconds / 60;
-  if (minutes < 60) return `${Math.round(minutes)} min`;
-  const hours = Math.floor(minutes / 60);
-  const restMinutes = Math.round(minutes - hours * 60);
+  const totalSeconds = Math.max(1, Math.round(seconds));
+  if (totalSeconds < 60) return `${totalSeconds} sec`;
+  const totalMinutes = Math.round(totalSeconds / 60);
+  if (totalMinutes < 60) return `${totalMinutes} min`;
+  const hours = Math.floor(totalMinutes / 60);
+  const restMinutes = totalMinutes - hours * 60;
   return restMinutes === 0 ? `${hours} h` : `${hours} h ${restMinutes} min`;
 }
 
@@ -283,8 +306,11 @@ export function estimateExport({ selectedIds, accountAgeYears, qualityId, format
   if (years <= 0) {
     return { error: "Account age must be greater than zero years." };
   }
-  if (years > 22) {
-    return { error: "Facebook opened to the public in 2006, so an age above 22 years is not possible." };
+  const maxYears = maxAccountAgeYears();
+  if (years > maxYears) {
+    return {
+      error: `Facebook opened to the public in ${META_PUBLIC_LAUNCH_YEAR}, so an age above ${maxYears} years is not possible.`,
+    };
   }
 
   const quality = MEDIA_QUALITIES.find((option) => option.id === qualityId);

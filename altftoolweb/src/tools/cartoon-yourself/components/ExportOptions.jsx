@@ -16,6 +16,8 @@ export default function ExportOptions({ canvasRef, format, setFormat, quality, s
     const copied = await copyCanvasToClipboard(canvasRef.current);
     if (copied) {
       alert("Image copied to clipboard!");
+    } else {
+      alert("Couldn't copy the image — your browser may not support copying images to the clipboard. Try Download HD instead.");
     }
   };
 

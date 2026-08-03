@@ -1,7 +1,7 @@
 const seo = {
   "intro": "Working Days Calculator counts the business days between any two dates, skipping weekends and any holidays you add. You choose which days of the week count as your weekend — Saturday and Sunday, Sunday only, or a Friday-Saturday week — so it works for six-day offices and non-standard rosters too. Alongside the business-day count it reports weekend days, holidays removed, working days per weekday and the total working hours at your chosen hours-per-day.",
   "useCases": [
-    "Work out the real delivery or SLA date when a contract promises '15 working days'.",
+    "Check whether a proposed delivery or SLA date actually satisfies a '15 working days' promise, by counting the business days between your start date and that candidate end date.",
     "Calculate billable days for a contractor or agency invoice over a project period.",
     "Plan a project timeline that has to skip public holidays and your company's fixed offs.",
     "Check how many working days of leave a date range actually consumes before applying."

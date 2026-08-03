@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Pin, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   LINK_SOFT_LIMIT,
   PLATFORMS,
@@ -49,7 +50,7 @@ export default function ToolHome() {
   const [timestampsText, setTimestampsText] = useState(DEFAULTS.timestampsText);
   const [disclosure, setDisclosure] = useState(DEFAULTS.disclosure);
   const [nextUp, setNextUp] = useState(DEFAULTS.nextUp);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const draft = useMemo(
     () =>
@@ -76,18 +77,19 @@ export default function ToolHome() {
   const ok = !error;
   const dash = "—";
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!ok) return;
-    try {
-      await navigator.clipboard.writeText(draft.text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("comment", draft.text, { label: "the pinned comment" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the generator? This will replace your topic, correction, links, timestamps and next-up with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setTopic(DEFAULTS.topic);
     setPlatformId(DEFAULTS.platformId);
     setPromptId(DEFAULTS.promptId);
@@ -97,7 +99,6 @@ export default function ToolHome() {
     setTimestampsText(DEFAULTS.timestampsText);
     setDisclosure(DEFAULTS.disclosure);
     setNextUp(DEFAULTS.nextUp);
-    setCopied(false);
   };
 
   return (
@@ -268,20 +269,23 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the pinned comment"
+              aria-label={isCopied("comment") ? "Copied the pinned comment to the clipboard" : "Copy the pinned comment"}
               className={GHOST_BTN}
             >
-              {copied ? (
+              {isCopied("comment") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy comment"}
+              {isCopied("comment") ? "Copied!" : "Copy comment"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset the generator" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -316,25 +320,27 @@ export default function ToolHome() {
               </div>
             </div>
 
-            {analysis.issues.length > 0 ||
-            draft.timestamps.issues.length > 0 ||
-            draft.links.issues.length > 0 ? (
-              <ul className="mt-4 list-disc space-y-1 pl-5 text-sm text-[var(--muted-foreground)]">
-                {analysis.issues.map((issue) => (
-                  <li key={issue}>{issue}</li>
-                ))}
-                {draft.timestamps.issues.map((issue) => (
-                  <li key={issue}>{issue}</li>
-                ))}
-                {draft.links.issues.map((issue) => (
-                  <li key={issue}>{issue}</li>
-                ))}
-              </ul>
-            ) : (
-              <p className="mt-4 text-sm font-medium text-[var(--success)]">
-                Inside the limit, links parse, and it ends with something to reply to.
-              </p>
-            )}
+            <div aria-live="polite" role="status">
+              {analysis.issues.length > 0 ||
+              draft.timestamps.issues.length > 0 ||
+              draft.links.issues.length > 0 ? (
+                <ul className="mt-4 list-disc space-y-1 pl-5 text-sm text-[var(--muted-foreground)]">
+                  {analysis.issues.map((issue) => (
+                    <li key={issue}>{issue}</li>
+                  ))}
+                  {draft.timestamps.issues.map((issue) => (
+                    <li key={issue}>{issue}</li>
+                  ))}
+                  {draft.links.issues.map((issue) => (
+                    <li key={issue}>{issue}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="mt-4 text-sm font-medium text-[var(--success)]">
+                  Inside the limit, links parse, and it ends with something to reply to.
+                </p>
+              )}
+            </div>
           </>
         ) : null}
       </section>

@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "How many files and events can one pack hold?",
-      "Up to 100 evidence files and 250 timeline events. Each file must be 25 MB or smaller with 100 MB across the whole selection, and file content is never embedded in the manifest — only the filename, media type, size, last-modified date and digest.",
+      "Up to 100 evidence files and 250 timeline events. Each file must be 25 MB or smaller with 100 MB across the whole selection, and file content is never embedded in the manifest — only the filename, media type, size, last-modified date, digest and the optional note you type next to that file. Keep that note factual and non-sensitive, since it is included in the downloadable manifest (though never in the counts-only summary).",
     ],
     [
       "How do I format the timeline?",

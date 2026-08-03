@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, ClipboardList, Copy, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import { OUTPUT_FORMATS, TONES, buildMeetingPrompt, formatMinutes } from "../lib";
 
@@ -45,31 +46,31 @@ const DASH = "—";
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const set = (key) => (event) => {
     const { value } = event.target;
     setForm((prev) => ({ ...prev, [key]: value }));
-    setCopied(false);
   };
 
   const result = useMemo(() => buildMeetingPrompt(form), [form]);
   const ok = !result.error;
+  const copied = isCopied("prompt");
 
-  const copyPrompt = async () => {
+  const copyPrompt = () => {
     if (!ok) return;
-    try {
-      await navigator.clipboard.writeText(result.prompt);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("prompt", result.prompt, { label: "meeting notes prompt" });
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the notes and every field back to the demo example? This cannot be undone.")
+    ) {
+      return;
+    }
     setForm(DEFAULTS);
-    setCopied(false);
+    resetCopyState();
   };
 
   const rows = [
@@ -217,12 +218,15 @@ export default function ToolHome() {
               type="button"
               onClick={copyPrompt}
               disabled={!ok}
-              aria-label="Copy the generated meeting notes prompt"
+              aria-label={copied ? "Copied prompt" : "Copy prompt"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
               {copied ? "Copied!" : "Copy prompt"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset

@@ -34,7 +34,11 @@ export default function ToolHome() {
         </section>
 
         {game.status === "game-over" && (
-          <div className="rounded-lg border border-[var(--primary)] bg-[var(--primary)]/10 p-4 text-sm font-semibold text-[var(--foreground)]">
+          <div
+            role="status"
+            aria-live="polite"
+            className="rounded-lg border border-[var(--primary)] bg-[var(--primary)]/10 p-4 text-sm font-semibold text-[var(--foreground)]"
+          >
             Collision detected. Restart when you are ready for another run.
           </div>
         )}
@@ -44,7 +48,9 @@ export default function ToolHome() {
             <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <p className="text-xs font-semibold uppercase text-[var(--primary)]">Game board</p>
-                <h2 className="mt-1 text-xl font-semibold">{statusText}</h2>
+                <h2 className="mt-1 text-xl font-semibold" role="status" aria-live="polite">
+                  {statusText}
+                </h2>
               </div>
               <p className="text-sm font-semibold text-[var(--muted-foreground)]">
                 {GRID_SIZE} x {GRID_SIZE} grid · {game.settings.label}
@@ -69,7 +75,20 @@ export default function ToolHome() {
                     <Play className="h-4 w-4" /> {game.status === "paused" ? "Resume" : "Start Game"}
                   </button>
                 )}
-                <button type="button" onClick={game.restart} className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold transition hover:border-[var(--primary)] hover:text-[var(--primary)] focus:outline-none focus:shadow-[var(--anslation-ds-focus-ring)]">
+                <button
+                  type="button"
+                  onClick={() => {
+                    const runInProgress = game.status === "running" || game.status === "paused";
+                    if (
+                      runInProgress &&
+                      !window.confirm("Restart? Your current run will end now and count as a finished game.")
+                    ) {
+                      return;
+                    }
+                    game.restart();
+                  }}
+                  className="inline-flex h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold transition hover:border-[var(--primary)] hover:text-[var(--primary)] focus:outline-none focus:shadow-[var(--anslation-ds-focus-ring)]"
+                >
                   <RotateCcw className="h-4 w-4" /> Restart
                 </button>
               </div>

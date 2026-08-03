@@ -4,10 +4,30 @@ import {
   birthstones,
   birthFlowers,
   seasons,
-  generationNames,
   luckyNumbers,
   luckyColors,
 } from "../constants/data";
+
+// The 12-animal Chinese zodiac cycle, in the same order as the `chineseZodiac`
+// lookup table in constants/data.js. 1924 is a Rat year, so any birth year's
+// position in the cycle can be derived with modular arithmetic. This is used
+// as a fallback for years outside the table's explicit 1924-2043 range (the
+// tool accepts any birth year back to 1900) so every valid input resolves to
+// a real animal instead of "Unknown".
+const CHINESE_ZODIAC_CYCLE = [
+  "Rat",
+  "Ox",
+  "Tiger",
+  "Rabbit",
+  "Dragon",
+  "Snake",
+  "Horse",
+  "Goat",
+  "Monkey",
+  "Rooster",
+  "Dog",
+  "Pig",
+];
 
 export function calculateAge(birthDate) {
   const now = new Date();
@@ -58,6 +78,11 @@ export function calculateLifeStats(birthDate) {
 
 export function calculateNextBirthday(birthDate) {
   const now = new Date();
+  // Compare calendar dates (not exact instants) so that on the birthday
+  // itself - when thisYearBirthday's midnight is technically earlier than
+  // "now" for the rest of the day - the birthday isn't wrongly rolled to
+  // next year. This mirrors calculatePreviousBirthday's date-based logic.
+  const todayMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const thisYearBirthday = new Date(
     now.getFullYear(),
     birthDate.getMonth(),
@@ -65,11 +90,14 @@ export function calculateNextBirthday(birthDate) {
   );
 
   const nextBirthday =
-    thisYearBirthday < now
+    thisYearBirthday < todayMidnight
       ? new Date(now.getFullYear() + 1, birthDate.getMonth(), birthDate.getDate())
       : thisYearBirthday;
 
-  const diff = nextBirthday - now;
+  // When today is the birthday, nextBirthday is today's midnight, which is
+  // already in the past relative to "now" - clamp so the countdown reads
+  // 0d 0h 0m 0s instead of a negative duration.
+  const diff = Math.max(0, nextBirthday - now);
 
   return {
     date: nextBirthday,
@@ -127,7 +155,12 @@ export function getWesternZodiac(birthDate) {
 
 export function getChineseZodiac(year) {
   const matched = chineseZodiac.find((z) => z.years.includes(year));
-  return matched ? matched.animal : "Unknown";
+  if (matched) return matched.animal;
+  // Fall back to the 12-year cycle for any year outside the table's
+  // explicit 1924-2043 range (e.g. 1900-1923, which validateBirthDate
+  // otherwise accepts) instead of reporting "Unknown".
+  const index = (((year - 1924) % 12) + 12) % 12;
+  return CHINESE_ZODIAC_CYCLE[index];
 }
 
 export function getBirthstone(month) {
@@ -154,7 +187,10 @@ export function getGeneration(year) {
   if (year >= 1981) return { name: "Millennials", range: "1981-1996" };
   if (year >= 1965) return { name: "Generation X", range: "1965-1980" };
   if (year >= 1946) return { name: "Baby Boomers", range: "1946-1964" };
-  return { name: "Silent Generation", range: "1928-1945" };
+  if (year >= 1928) return { name: "Silent Generation", range: "1928-1945" };
+  // validateBirthDate accepts any year back to 1900, so the fallback band
+  // must actually contain every year it can be shown for.
+  return { name: "Greatest Generation", range: "1900-1927" };
 }
 
 export function getLuckyNumbers(month) {
@@ -174,25 +210,28 @@ export function formatDate(date) {
   });
 }
 
-export function formatDateShort(date) {
-  return date.toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-}
-
-export function isLeapYear(year) {
-  return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
+// The native <input type="date"> gives back a bare "YYYY-MM-DD" string.
+// `new Date("YYYY-MM-DD")` parses that as UTC midnight, but every insight
+// calculation in this file reads the date back with local-time getters
+// (getFullYear/getMonth/getDate/getDay). For anyone in a negative UTC-offset
+// timezone (all of the Americas), that mismatch silently shifts the
+// effective calendar date back by one day. Parsing the components directly
+// into local time keeps the date the user actually picked.
+export function parseBirthDateLocal(dateString) {
+  if (!dateString) return null;
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(dateString);
+  if (!match) return new Date(dateString);
+  const [, year, month, day] = match;
+  return new Date(Number(year), Number(month) - 1, Number(day));
 }
 
 export function validateBirthDate(dateString) {
   if (!dateString) return "Please select your date of birth.";
 
-  const date = new Date(dateString);
+  const date = parseBirthDateLocal(dateString);
   const today = new Date();
 
-  if (isNaN(date.getTime())) return "Invalid date entered.";
+  if (!date || isNaN(date.getTime())) return "Invalid date entered.";
   if (date >= today) return "Date of birth must be in the past.";
   if (date.getFullYear() < 1900) return "Please enter a valid year after 1900.";
 
