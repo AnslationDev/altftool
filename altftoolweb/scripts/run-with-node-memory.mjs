@@ -7,9 +7,10 @@ if (!command.length) {
   process.exit(1);
 }
 
-// The full 999-tool route graph peaks just above 6 GiB during a cold webpack
-// compile. This applies only to the build child process, not the deployed app.
-const maxOldSpaceSize = process.env.ALTFT_NODE_MAX_OLD_SPACE_SIZE || "8192";
+// The full 3,947-tool route graph can exceed 8 GiB during a cold webpack
+// compile. Keep local builds aligned with Amplify's existing build ceiling.
+// This applies only to the build child process, not the deployed app.
+const maxOldSpaceSize = process.env.ALTFT_NODE_MAX_OLD_SPACE_SIZE || "10240";
 const existingNodeOptions = process.env.NODE_OPTIONS || "";
 const memoryOption = `--max-old-space-size=${maxOldSpaceSize}`;
 const nodeOptions = existingNodeOptions.includes("--max-old-space-size")

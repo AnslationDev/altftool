@@ -566,6 +566,7 @@ const nextConfig = {
   },
 
   experimental: {
+    globalNotFound: true,
     ...(!isDevelopment
       ? {
           workerThreads: buildCpuCount > 1,

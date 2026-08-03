@@ -122,6 +122,19 @@ test("public web shell loads", async ({ page }) => {
   await quality.expectClean("public web shell");
 });
 
+test("unmatched nested routes return a branded hard 404", async ({ request }) => {
+  const response = await request.get(
+    `${webUrl}/__altftool-smoke__/missing-nested-route`,
+    { maxRedirects: 0 },
+  );
+
+  expect(response.status()).toBe(404);
+
+  const body = await response.text();
+  expect(body).toContain("This route does not exist");
+  expect(body).toMatch(/<meta[^>]*name="robots"[^>]*content="noindex"[^>]*>/);
+});
+
 test("tool detail routes use the clean workspace flow", async ({ page }) => {
   const quality = createPageQualityGate(page);
 
