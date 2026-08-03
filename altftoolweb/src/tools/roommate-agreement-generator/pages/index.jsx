@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Plus, RotateCcw, Trash2, Users } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   CHORE_PRESETS,
   DEFAULT_NOTICE_DAYS,
@@ -73,7 +74,7 @@ export default function ToolHome() {
   const [chores, setChores] = useState(CHORE_PRESETS.slice(0, 3));
   const [petsAllowed, setPetsAllowed] = useState(false);
   const [smokingAllowed, setSmokingAllowed] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const split = useMemo(
     () =>
@@ -164,18 +165,19 @@ export default function ToolHome() {
     setChores((list) => (list.includes(chore) ? list.filter((c) => c !== chore) : [...list, chore]));
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!ok) return;
-    try {
-      await navigator.clipboard.writeText(agreement.text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("agreement", agreement.text, { label: "roommate agreement" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace the address, dates, flatmates, chores and house rules with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setAddress(DEFAULTS.address);
     setCity(DEFAULTS.city);
     setRent(DEFAULTS.rent);
@@ -194,7 +196,7 @@ export default function ToolHome() {
     setChores(CHORE_PRESETS.slice(0, 3));
     setPetsAllowed(false);
     setSmokingAllowed(false);
-    setCopied(false);
+    resetCopyState();
   };
 
   const weightLabel =
@@ -343,6 +345,9 @@ export default function ToolHome() {
                 </option>
               ))}
             </select>
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+              {SPLIT_METHODS.find((option) => option.id === method)?.hint}
+            </p>
           </div>
         </div>
       </section>
@@ -560,21 +565,24 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the roommate agreement text"
+              aria-label={isCopied("agreement") ? "Copied the roommate agreement to clipboard" : "Copy the roommate agreement text"}
               className={GHOST_BTN}
               disabled={!ok}
             >
-              {copied ? (
+              {isCopied("agreement") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy agreement"}
+              {isCopied("agreement") ? "Copied!" : "Copy agreement"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -596,13 +604,15 @@ export default function ToolHome() {
           ))}
         </dl>
 
-        {ok && split.depositExceedsCap ? (
-          <p className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">
-            The deposit is {split.depositMonths} months of rent. The Model Tenancy Act, 2021 caps a
-            residential security deposit at {MAX_DEPOSIT_MONTHS_RESIDENTIAL} months in states that
-            have adopted it — check your state&apos;s rent law.
-          </p>
-        ) : null}
+        <div aria-live="polite" role="status">
+          {ok && split.depositExceedsCap ? (
+            <p className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">
+              The deposit is {split.depositMonths} months of rent. The Model Tenancy Act, 2021 caps a
+              residential security deposit at {MAX_DEPOSIT_MONTHS_RESIDENTIAL} months in states that
+              have adopted it — check your state&apos;s rent law.
+            </p>
+          ) : null}
+        </div>
 
         {ok ? (
           <div className="mt-5 overflow-x-auto">
@@ -627,8 +637,8 @@ export default function ToolHome() {
                 </tr>
               </thead>
               <tbody>
-                {split.rows.map((row) => (
-                  <tr key={row.name} className="border-b border-[var(--border)] last:border-0">
+                {split.rows.map((row, index) => (
+                  <tr key={`${row.name}-${index}`} className="border-b border-[var(--border)] last:border-0">
                     <td className="py-2 pr-3 font-semibold">
                       {row.name}
                       <span className="ml-1 font-normal text-[var(--muted-foreground)]">

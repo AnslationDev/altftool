@@ -139,7 +139,19 @@ export default function LocalAuditWorkspace({
     setCopied(false);
   };
 
+  const hasUnsavedInput = () => Boolean(text.trim() || file);
+
   const chooseFile = async (selectedFile) => {
+    if (
+      selectedFile &&
+      hasUnsavedInput() &&
+      !window.confirm(
+        "Replace the current input with the selected file? This cannot be undone.",
+      )
+    ) {
+      if (fileInputRef.current) fileInputRef.current.value = "";
+      return;
+    }
     clearResult();
     const operation = operationRef.current;
     setFile(selectedFile || null);
@@ -170,6 +182,12 @@ export default function LocalAuditWorkspace({
   };
 
   const reset = () => {
+    if (
+      hasUnsavedInput() &&
+      !window.confirm("Reset and clear the current input? This cannot be undone.")
+    ) {
+      return;
+    }
     invalidateOperation();
     setText("");
     setFile(null);
@@ -181,6 +199,14 @@ export default function LocalAuditWorkspace({
   };
 
   const loadSample = () => {
+    if (
+      hasUnsavedInput() &&
+      !window.confirm(
+        "Replace the current input with the sample text? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setText(sample);
     setFile(null);
     clearResult();

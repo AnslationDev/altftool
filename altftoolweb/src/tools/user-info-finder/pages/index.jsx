@@ -12,6 +12,7 @@ import {
   UserSearch,
 } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   DEFAULT_PAGE_SIZE,
   MATCH_WEIGHTS,
@@ -44,7 +45,7 @@ export default function ToolHome() {
   const [sortDir, setSortDir] = useState("asc");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const parsed = useMemo(() => parseRecords(raw), [raw]);
 
@@ -96,20 +97,21 @@ export default function ToolHome() {
     });
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (found.error || !found.results || found.results.length === 0) return;
-    try {
-      await navigator.clipboard.writeText(
-        toCsv(parsed.columns, found.results.map((item) => item.row)),
-      );
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("results", toCsv(parsed.columns, found.results.map((item) => item.row)), {
+      label: "Results CSV",
+    });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your pasted or uploaded records with the sample data and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setRaw(SAMPLE_CSV);
     setQuery(DEFAULT_QUERY);
     setFilters({});
@@ -117,7 +119,7 @@ export default function ToolHome() {
     setSortDir("asc");
     setPage(1);
     setPageSize(DEFAULT_PAGE_SIZE);
-    setCopied(false);
+    resetCopyState();
   };
 
   const activeFilterCount = Object.values(filters).reduce((total, list) => total + list.length, 0);
@@ -398,12 +400,12 @@ export default function ToolHome() {
                 onClick={copyResult}
                 disabled={found.results.length === 0}
               >
-                {copied ? (
+                {isCopied("results") ? (
                   <Check className="h-4 w-4" aria-hidden="true" />
                 ) : (
                   <Copy className="h-4 w-4" aria-hidden="true" />
                 )}
-                {copied ? "Copied" : "Copy this page as CSV"}
+                {isCopied("results") ? "Copied" : "Copy this page as CSV"}
               </button>
               <button type="button" className={GHOST_BTN} onClick={reset}>
                 <RotateCcw className="h-4 w-4" aria-hidden="true" />
@@ -411,6 +413,9 @@ export default function ToolHome() {
               </button>
             </div>
           </div>
+          <span aria-live="polite" role="status" className="sr-only">
+            {announcement}
+          </span>
 
           {found.results.length === 0 ? (
             <p className="rounded-md bg-[var(--muted)] px-3 py-6 text-center text-sm text-[var(--muted-foreground)]">

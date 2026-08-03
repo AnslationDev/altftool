@@ -152,6 +152,12 @@ export default function ToolHome() {
             value={bannedWords}
             onChange={(event) => setBannedWords(event.target.value)}
           />
+          {!hasError && guide.bannedWordsTruncated ? (
+            <p className="mt-2 text-xs leading-5 text-[var(--warning-text)]">
+              {guide.bannedWordsEnteredCount} banned words were entered; only the first{" "}
+              {guide.bannedWords.length} unique ones are enforced in the guide below.
+            </p>
+          ) : null}
         </div>
       </section>
 

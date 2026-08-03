@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Waves } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   PURPOSE_OPTIONS,
   SOCIAL_VISIT_STAY_DAYS,
@@ -56,12 +57,12 @@ const DEFAULTS = {
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const set = (key) => (event) => {
     const { value } = event.target;
     setForm((current) => ({ ...current, [key]: value }));
-    setCopied(false);
   };
 
   const result = useMemo(() => buildMalaysiaCoverLetter(form), [form]);
@@ -69,18 +70,19 @@ export default function ToolHome() {
 
   const copyLetter = async () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.letter);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1600);
-    } catch {
-      setCopied(false);
-    }
+    await copyToClipboard("letter", result.letter, { label: "Cover letter" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your details with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setForm(DEFAULTS);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -233,17 +235,20 @@ export default function ToolHome() {
               onClick={copyLetter}
               disabled={hasError}
               aria-label="Copy the finished cover letter to the clipboard"
-              className={`${GHOST_BTN} disabled:opacity-50`}
+              className={`${PRIMARY_BTN} disabled:opacity-50`}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy letter"}
+              {isCopied("letter") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+              {isCopied("letter") ? "Copied!" : "Copy letter"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset every field to the sample values" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset every field to the sample values" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
 
         <dl className="mt-5 grid gap-3 text-sm sm:grid-cols-2">
           <div className="rounded-md border border-[var(--border)] p-3">
@@ -276,20 +281,22 @@ export default function ToolHome() {
           </div>
         </dl>
 
-        {!hasError && result.warnings.length ? (
-          <ul className="mt-4 space-y-2">
-            {result.warnings.map((warning) => (
-              <li key={warning} className="rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">
-                {warning}
-              </li>
-            ))}
-          </ul>
-        ) : null}
-        {!hasError && !result.warnings.length ? (
-          <p className="mt-4 rounded-md border border-[var(--border)] px-3 py-2 text-sm text-[var(--success)]">
-            Stay length, eVISA validity, passport validity, entry point and funding all pass the automatic checks.
-          </p>
-        ) : null}
+        <div aria-live="polite" role="status">
+          {!hasError && result.warnings.length ? (
+            <ul className="mt-4 space-y-2">
+              {result.warnings.map((warning) => (
+                <li key={warning} className="rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">
+                  {warning}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          {!hasError && !result.warnings.length ? (
+            <p className="mt-4 rounded-md border border-[var(--border)] px-3 py-2 text-sm text-[var(--success)]">
+              Stay length, eVISA validity, passport validity, entry point and funding all pass the automatic checks.
+            </p>
+          ) : null}
+        </div>
       </section>
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">

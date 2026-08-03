@@ -15598,7 +15598,7 @@ export default {
   ]
 },
   "trojan-source-detector": {
-  "intro": "The Trojan Source Detector scans pasted source code for the Unicode tricks that make a file read differently to a human than it compiles — the 12 bidirectional formatting controls behind the Trojan Source attack, 8 normally invisible characters such as zero-width space and soft hyphen, and identifiers that mix Latin letters with look-alike Cyrillic or Greek ones. Every hit is reported with its line, column, code point and an escaped rendering, and the whole file is echoed back with each control made visible as \\u{...}. It is for reviewers and maintainers who have to decide whether a patch really says what it appears to say, without running the code.",
+  "intro": "The Trojan Source Detector scans pasted source code for the Unicode tricks that make a file read differently to a human than it compiles — the 12 bidirectional formatting controls behind the Trojan Source attack, 8 normally invisible characters such as zero-width space and soft hyphen, and identifiers that mix Latin letters with look-alike Cyrillic or Greek ones. Every hit is reported with its line, column, code point and an escaped rendering, and the on-page preview echoes back up to 12,000 characters of the source with each control made visible as \\u{...}. It is for reviewers and maintainers who have to decide whether a patch really says what it appears to say, without running the code.",
   "useCases": [
     "A pull request from an unfamiliar contributor touches an access-control check, and you want to confirm no right-to-left override is reordering the comment and the condition on screen.",
     "Two functions in a diff look identically named but the linker disagrees, and you need to see which one has a Cyrillic 'о' or 'а' standing in for the Latin letter.",
@@ -15607,7 +15607,7 @@ export default {
   "benefits": [
     [
       "Invisible characters rendered visible",
-      "The whole source is echoed with every control rewritten as \\u{202E}-style notation, so you read the file as the compiler does rather than as the font draws it."
+      "The on-page preview (up to 12,000 characters) is echoed with every control rewritten as \\u{202E}-style notation, so you read the file as the compiler does rather than as the font draws it. The downloadable report is a separate, redacted findings summary rather than a full-text export."
     ],
     [
       "Homoglyphs mapped to their Latin twin",

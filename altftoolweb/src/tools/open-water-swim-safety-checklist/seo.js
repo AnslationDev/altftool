@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "Copyable brief",
-      "Copy the summary into a group chat so your shore contact knows the plan and the return time.",
+      "Copy the summary into a group chat so your shore contact knows the plan and how long you expect to be in the water.",
     ],
   ],
   faqs: [

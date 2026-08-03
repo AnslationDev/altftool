@@ -7,6 +7,7 @@ import {
   MAX_SOURCE_CHARACTERS,
   buildTrojanSourceReport,
   detectTrojanSource,
+  displaySeverity,
 } from "../lib/detectTrojanSource.mjs";
 
 const SAMPLE =
@@ -42,7 +43,7 @@ function summarize(result) {
     findings: result.findings.map((finding, index) => ({
       id: `${finding.id}-${finding.line}-${finding.column}-${index}`,
       tone: finding.severity === "high" ? "danger" : "warning",
-      severity: finding.severity,
+      severity: displaySeverity(finding.severity),
       title: finding.title,
       detail: finding.explanation,
       location: `Line ${finding.line}, column ${finding.column}`,
@@ -57,6 +58,11 @@ function summarize(result) {
       "This is a focused heuristic inspection, not a complete implementation of every Unicode security profile.",
       "A clear result does not prove that source code is trustworthy, reviewed, or safe to execute.",
       "The visible-source preview changes control characters into notation; it does not modify the original input.",
+      ...(result.visibleSource.length > 12_000
+        ? [
+            "The on-page preview above only shows the first 12,000 characters. The downloadable report is a redacted findings summary and does not contain the rest of the transformed source.",
+          ]
+        : []),
     ],
     outputLabel: "Controls made visible",
     outputText: result.visibleSource,

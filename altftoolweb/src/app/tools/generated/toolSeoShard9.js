@@ -11187,7 +11187,7 @@ export default {
   ]
 },
   "wheel-alignment-planner": {
-  "intro": "The Wheel Alignment Planner schedules two jobs that are constantly confused: alignment, which sets camber, caster and toe so the wheels point where the steering says, and balancing, which distributes mass around each wheel so it does not shake at speed. It works from the standard intervals — roughly every 10,000 km or 6 months for alignment and every 5,000 km for balancing — shortened for poor roads, and it separates the symptoms so a pull to one side is not treated as an imbalance. Events like a kerb strike, new tyres or replaced suspension parts make one of the jobs due immediately, whatever the odometer reads.",
+  "intro": "The Wheel Alignment Planner schedules two jobs that are constantly confused: alignment, which sets camber, caster and toe so the wheels point where the steering says, and balancing, which distributes mass around each wheel so it does not shake at speed. It works from the standard intervals — roughly every 10,000 km or 6 months for alignment and every 5,000 km or 6 months for balancing — shortened for poor roads, and it separates the symptoms so a pull to one side is not treated as an imbalance. Events like a kerb strike, new tyres or replaced suspension parts make one of the jobs due immediately, whatever the odometer reads.",
   "useCases": [
     "Deciding whether a highway vibration needs balancing or the pull on a straight road needs alignment",
     "Planning alignment frequency for a car driven daily on pothole-heavy city roads",
@@ -11211,6 +11211,10 @@ export default {
     [
       "How often should wheel alignment be done?",
       "About every 10,000 km or every 6 months as a routine check, and immediately after hitting a kerb or deep pothole, fitting new tyres, replacing any steering or suspension component, or changing ride height. On badly broken roads, halving that distance is realistic."
+    ],
+    [
+      "How often should wheel balancing be done?",
+      "About every 5,000 km or every 6 months, whichever comes first — the same 6-month cap that applies to alignment also applies to balancing, so a car driven very little can still be due on elapsed time alone. It is also mandatory whenever a tyre is refitted, a puncture is repaired, or a wheel weight comes off."
     ],
     [
       "What is the difference between wheel alignment and wheel balancing?",
@@ -11974,7 +11978,7 @@ export default {
     ],
     [
       "How much depth does a blind need in the recess?",
-      "Roughly 45 mm for a roller or cellular blind, 50 mm for a 25 mm aluminium venetian, 65 mm for a 50 mm wood venetian and 90 mm for verticals if the headrail is to sit fully inside. Shallower reveals can still take a partial recess fit with the rail projecting, but below about 25 mm of clear depth a face fix is the only option."
+      "Roughly 45 mm for a roller or cellular blind, 50 mm for a 25 mm aluminium venetian, 65 mm for a 50 mm wood venetian and 90 mm for verticals if the headrail is to sit fully inside. A shallower reveal can often still take a partial recess fit with the rail projecting, but the minimum for that varies by blind type too: about 25 mm for a roller, cellular or 25 mm venetian, 30 mm for a zebra blind, 32 mm for a 50 mm wood venetian, 40 mm for a roman blind and a full 50 mm for verticals. Below your blind type's own partial-fit minimum, a face fix is the only option."
     ],
     [
       "Inside or outside mount — which is better?",

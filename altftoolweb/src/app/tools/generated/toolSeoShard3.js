@@ -875,7 +875,7 @@ export default {
     ],
     [
       "Can I plug a heater into an extension cord?",
-      "Only into a 16 A board on 1.5 mm² or thicker cord (or a 15 A / 14 AWG cord on 120 V), and never into a light-duty strip. A 2000 W heater draws 8.7 A at 230 V continuously, which is above the 4.8 A continuous ceiling of a 6 A board."
+      "Only into a 16 A board on 1.5 mm² or thicker cord at 230 V, and never into a light-duty strip. A 2000 W heater draws 8.7 A at 230 V continuously, which is above the 4.8 A continuous ceiling of a 6 A board. At 120 V the same heater draws 16.7 A, which overloads anything short of a 20 A board on 12 AWG cord — and even that combination sits above the 16 A continuous-load ceiling, so it only avoids a caution if the heater will not run for hours at a stretch. For 120 V circuits, a dedicated wall socket is the safer choice for a 2000 W heater."
     ],
     [
       "What size cord do I need for a long extension?",

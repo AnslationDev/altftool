@@ -42,8 +42,6 @@ export const PLATFORMS = [
   { id: "android", label: "Android" },
 ];
 
-export const PLATFORM_IDS = PLATFORMS.map((item) => item.id);
-
 export const PHASES = [
   { id: "prepare", order: 1, title: "1. Before you touch anything", tone: "primary" },
   { id: "migrate", order: 2, title: "2. Move what cannot be re-created", tone: "primary" },
@@ -107,6 +105,8 @@ export const STEPS = [
     title: "Move payment cards, transit passes and car keys",
     how: "Remove cards from the wallet app and re-add them on the new phone. Transfer transit passes through the wallet app rather than deleting them.",
     why: "Some transit passes hold a stored balance in the phone's secure element. Erasing the device without transferring them loses the balance.",
+    critical: true,
+    requires: ["backup"],
   },
   {
     id: "esim",
@@ -204,7 +204,7 @@ export const STEPS = [
     why: "Only this route signs out of your Apple Account and clears Activation Lock as part of the erase. A recovery-mode restore leaves the lock in place. The erase discards the encryption keys, so the data is cryptographically destroyed — there is no need to overwrite anything.",
     platform: "ios",
     critical: true,
-    requires: ["backup", "twofa", "passkeys", "sim", "find-my-off"],
+    requires: ["backup", "twofa", "passkeys", "sim", "find-my-off", "watch", "mdm"],
   },
   {
     id: "erase-android",
@@ -214,7 +214,7 @@ export const STEPS = [
     why: "Android storage is encrypted by default since Android 10, so the reset destroys the keys and the data with them. Filling the phone with junk files first is advice from the unencrypted Android 5 era and achieves nothing.",
     platform: "android",
     critical: true,
-    requires: ["backup", "twofa", "passkeys", "sim", "google-account"],
+    requires: ["backup", "twofa", "passkeys", "sim", "google-account", "manufacturer-account", "mdm"],
   },
   {
     id: "boot-check",
@@ -275,7 +275,7 @@ export const OPTION_LABELS = {
  * Build an ordered wipe plan and check the order the user is working in.
  *
  * @param {object} input
- * @param {string} input.platform  One of PLATFORM_IDS.
+ * @param {string} input.platform  One of the ids in PLATFORMS ("ios" or "android").
  * @param {object} input.options   Booleans keyed by OPTION_KEYS.
  * @param {string[]} input.done    Completed step ids.
  * @returns {object} plan, or { error }.
@@ -388,6 +388,14 @@ function consequenceFor(stepId, platform) {
       return "Erasing the phone with a watch still paired leaves the watch with its own activation lock and no clean unpair path.";
     case "esim":
       return "Erasing without transferring the eSIM means asking the carrier to re-issue it, which is not always same-day.";
+    case "manufacturer-account":
+      return "The manufacturer's own reactivation lock survives a factory reset independently of Google's Factory Reset Protection. The buyer is asked for your Samsung, Xiaomi or other manufacturer account at setup, and it cannot be cleared remotely once the phone is out of your hands.";
+    case "mdm":
+      return "A supervised or MDM-enrolled device re-applies its restrictions after a reset, so erasing before the work profile or supervision is removed hands the buyer a phone still managed by your employer.";
+    case "sdcard":
+      return "A factory reset does not necessarily erase removable storage. Anything left on the memory card goes to the buyer along with the phone.";
+    case "wallet":
+      return "Some transit passes hold a stored balance in the phone's secure element. Erasing before moving them destroys that balance along with the rest of the phone's data.";
     default:
       return "This step depends on an earlier one that is not finished yet.";
   }

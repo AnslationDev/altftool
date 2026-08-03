@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, LandPlot, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { LENGTH_UNITS, PLOT_UNITS, convertGaj, otherSide } from "../lib";
 
 const INR = new Intl.NumberFormat("en-IN", {
@@ -39,7 +40,7 @@ export default function ToolHome() {
   const [rate, setRate] = useState("50000");
   const [rateUnit, setRateUnit] = useState("gaj");
   const [knownSide, setKnownSide] = useState("30");
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -76,18 +77,19 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "gaj conversion" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the converter? This will replace the area, dimensions, rate and side inputs with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setMode("area");
     setValue("100");
     setUnit("gaj");
@@ -97,7 +99,7 @@ export default function ToolHome() {
     setRate("50000");
     setRateUnit("gaj");
     setKnownSide("30");
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -270,7 +272,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               In square feet
             </p>
@@ -287,21 +289,32 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy gaj conversion"
+              aria-label={isCopied("result") ? "Copied the gaj conversion to clipboard" : "Copy gaj conversion"}
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset the converter" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {PLOT_UNITS.map((pu) => (
             <div key={pu.id} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{pu.label}</dt>
@@ -315,37 +328,39 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <h2 className="text-base font-semibold">Plot value</h2>
-        {hasError || !result.pricing ? (
-          <p className="mt-2 text-sm text-[var(--muted-foreground)]">
-            {hasError ? DASH : "Enter a rate above to price this plot."}
-          </p>
-        ) : (
-          <>
-            <p className="mt-2 text-3xl font-semibold text-[var(--primary)]">
-              {INR.format(result.pricing.total)}
+        <div aria-live="polite" aria-atomic="true">
+          {hasError || !result.pricing ? (
+            <p className="mt-2 text-sm text-[var(--muted-foreground)]">
+              {hasError ? DASH : "Enter a rate above to price this plot."}
             </p>
-            <div className="mt-3 overflow-x-auto">
-              <table className="w-full min-w-[320px] text-left text-sm">
-                <thead>
-                  <tr className="border-b border-[var(--border)] text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
-                    <th scope="col" className="py-2 pr-3 font-semibold">Same price as</th>
-                    <th scope="col" className="py-2 text-right font-semibold">Rate</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {PLOT_UNITS.map((pu) => (
-                    <tr key={pu.id} className="border-b border-[var(--border)] last:border-0">
-                      <td className="py-2 pr-3">Per {pu.short}</td>
-                      <td className="py-2 text-right font-semibold">
-                        {INR2.format(result.pricing.perUnit[pu.id])}
-                      </td>
+          ) : (
+            <>
+              <p className="mt-2 text-3xl font-semibold text-[var(--primary)]">
+                {INR.format(result.pricing.total)}
+              </p>
+              <div className="mt-3 overflow-x-auto">
+                <table className="w-full min-w-[320px] text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-[var(--border)] text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+                      <th scope="col" className="py-2 pr-3 font-semibold">Same price as</th>
+                      <th scope="col" className="py-2 text-right font-semibold">Rate</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </>
-        )}
+                  </thead>
+                  <tbody>
+                    {PLOT_UNITS.map((pu) => (
+                      <tr key={pu.id} className="border-b border-[var(--border)] last:border-0">
+                        <td className="py-2 pr-3">Per {pu.short}</td>
+                        <td className="py-2 text-right font-semibold">
+                          {INR2.format(result.pricing.perUnit[pu.id])}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+        </div>
       </section>
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
@@ -354,7 +369,7 @@ export default function ToolHome() {
           Bigha is not a standardised unit. These are the compositions commonly used in each place —
           always confirm against the khasra or khatauni entry for the land itself.
         </p>
-        <div className="mt-3 overflow-x-auto">
+        <div className="mt-3 overflow-x-auto" aria-live="polite" aria-atomic="true">
           <table className="w-full min-w-[320px] text-left text-sm">
             <thead>
               <tr className="border-b border-[var(--border)] text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -403,7 +418,7 @@ export default function ToolHome() {
               onChange={(event) => setKnownSide(event.target.value)}
             />
           </div>
-          <div className="flex flex-col justify-end">
+          <div className="flex flex-col justify-end" aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Other side must be
             </p>

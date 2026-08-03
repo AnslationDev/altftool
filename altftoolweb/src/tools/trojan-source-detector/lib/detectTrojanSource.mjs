@@ -75,6 +75,15 @@ function hexCodePoint(codePoint) {
   return `U+${codePoint.toString(16).toUpperCase().padStart(4, "0")}`;
 }
 
+// The tool's aggregate copy (banner text, metric label, report line) all
+// refer to "medium" severity findings as "review" — this maps a raw
+// finding.severity value to that same user-facing label so per-finding
+// badges/report entries use consistent wording instead of the raw internal
+// value.
+export function displaySeverity(severity) {
+  return severity === "medium" ? "review" : severity;
+}
+
 function buildLineStarts(text) {
   const starts = [0];
   for (let index = 0; index < text.length; index += 1) {
@@ -142,6 +151,12 @@ export function makeControlsVisible(value) {
 }
 
 export function detectTrojanSource(value) {
+  // Report the character count of the original, un-normalized input so it
+  // matches the live "N characters" counter shown while pasting/typing.
+  // normalizeText() collapses CRLF/CR line endings for internal line/column
+  // bookkeeping, which otherwise makes this number silently smaller than
+  // what the user was watching moments earlier for CRLF sources.
+  const rawLength = typeof value === "string" ? value.length : String(value ?? "").length;
   const text = normalizeText(value);
   if (text.length > MAX_SOURCE_CHARACTERS) {
     return {
@@ -238,12 +253,19 @@ export function detectTrojanSource(value) {
     ok: true,
     findings,
     counts,
-    characterCount: text.length,
+    characterCount: rawLength,
     truncated,
     visibleSource: makeControlsVisible(text),
     level: counts.high > 0 ? "high" : counts.medium > 0 ? "review" : "none",
   };
 }
+
+// Must match the on-page findings list cap in
+// ../../_shared/security/LocalAuditWorkspace.jsx (`visibleFindings = findings.slice(0, 100)`).
+// Findings beyond this are summarized below without evidence, matching what
+// that shared page's own "may summarize them without source values" note
+// promises, instead of silently emitting full detail for every one anyway.
+const REPORT_DETAIL_LIMIT = 100;
 
 export function buildTrojanSourceReport(result) {
   const totalFindings = result.counts.high + result.counts.medium;
@@ -262,9 +284,11 @@ export function buildTrojanSourceReport(result) {
       "",
     );
   }
-  for (const [index, finding] of result.findings.entries()) {
+  const detailed = result.findings.slice(0, REPORT_DETAIL_LIMIT);
+  const summarizedOnly = result.findings.slice(REPORT_DETAIL_LIMIT);
+  for (const [index, finding] of detailed.entries()) {
     lines.push(
-      `${index + 1}. ${finding.title} (${finding.severity})`,
+      `${index + 1}. ${finding.title} (${displaySeverity(finding.severity)})`,
       `Line ${finding.line}, column ${finding.column}`,
       `Visible notation: ${finding.evidence}`,
       finding.scripts
@@ -273,8 +297,20 @@ export function buildTrojanSourceReport(result) {
       "",
     );
   }
+  if (summarizedOnly.length) {
+    lines.push(
+      `${summarizedOnly.length} additional finding(s) summarized without source values:`,
+    );
+    for (const [index, finding] of summarizedOnly.entries()) {
+      lines.push(
+        `${REPORT_DETAIL_LIMIT + index + 1}. ${finding.title} (${displaySeverity(finding.severity)}) — Line ${finding.line}, column ${finding.column}`,
+      );
+    }
+    lines.push("");
+  }
   lines.push(
     "This is a focused heuristic inspection, not a complete implementation of every Unicode security profile.",
+    "This report is a redacted findings summary — it does not include the full source text, so it is not a substitute for the on-page visible-source preview.",
   );
   return lines.join("\n");
 }

@@ -82,6 +82,8 @@ export const EXPOSURE_ITEMS = [
   {
     id: "rsvp-addresses",
     group: "guests",
+    // Directly part of the stored RSVP record set (see `recordsAtRisk`).
+    affectsGuestRecords: true,
     label: "The RSVP form collects guests' home addresses",
     severity: 5,
     why: "You become the custodian of a list of homes. If the site is breached, that list leaks with it.",
@@ -91,6 +93,7 @@ export const EXPOSURE_ITEMS = [
   {
     id: "rsvp-dob",
     group: "guests",
+    affectsGuestRecords: true,
     label: "The RSVP form asks for dates of birth or ID numbers",
     severity: 4,
     why: "A date of birth is a core identity element. Almost no wedding needs one.",
@@ -100,6 +103,7 @@ export const EXPOSURE_ITEMS = [
   {
     id: "guest-list-public",
     group: "guests",
+    affectsGuestRecords: true,
     label: "The guest list, seating chart or RSVP replies are visible to anyone",
     severity: 4,
     why: "It exposes other people's names and relationships without their consent, not just yours.",
@@ -109,6 +113,8 @@ export const EXPOSURE_ITEMS = [
   {
     id: "children-details",
     group: "guests",
+    // Bio/story content about children, not part of the stored RSVP record
+    // set - intentionally NOT flagged as affectsGuestRecords.
     label: "Children are named alongside their ages or school",
     severity: 4,
     why: "Name plus school plus a known family event is enough for a convincing approach to a child.",
@@ -118,6 +124,7 @@ export const EXPOSURE_ITEMS = [
   {
     id: "guest-contacts-public",
     group: "guests",
+    affectsGuestRecords: true,
     label: "Guest email addresses or phone numbers appear on the page",
     severity: 4,
     why: "Scrapers harvest these for phishing that name-drops your wedding to sound credible.",
@@ -234,11 +241,6 @@ export const RISK_BANDS = [
 
 const MAX_SCORE = EXPOSURE_ITEMS.reduce((sum, item) => sum + item.severity, 0);
 
-/** Total possible severity across the whole catalogue. */
-export function maxExposureScore() {
-  return MAX_SCORE;
-}
-
 function bandFor(percent) {
   return RISK_BANDS.find((band) => percent <= band.max) || RISK_BANDS[RISK_BANDS.length - 1];
 }
@@ -259,8 +261,16 @@ export function auditWeddingSite({ exposedIds, guestRecords, daysPublicAfter } =
   const records = Number(guestRecords);
   const days = Number(daysPublicAfter);
 
-  if (!Number.isFinite(records) || !Number.isFinite(days)) {
+  const recordsInvalid = !Number.isFinite(records);
+  const daysInvalid = !Number.isFinite(days);
+  if (recordsInvalid && daysInvalid) {
     return { error: "Guest records and days online must both be numbers." };
+  }
+  if (recordsInvalid) {
+    return { error: "Guest records stored in the RSVP form must be a number." };
+  }
+  if (daysInvalid) {
+    return { error: "Days the page stays online after the event must be a number." };
   }
   if (records < 0 || days < 0) {
     return { error: "Guest records and days online cannot be negative." };
@@ -285,8 +295,14 @@ export function auditWeddingSite({ exposedIds, guestRecords, daysPublicAfter } =
   });
 
   const critical = exposed.filter((item) => item.severity >= CRITICAL_SEVERITY);
-  const guestDataExposed = exposed.some((item) => item.group === "guests");
-  const recordsAtRisk = guestDataExposed ? Math.round(records) : 0;
+  // Only count the RSVP record set as "at risk" when an exposed item is
+  // actually part of that stored dataset (addresses, DOB, the guest list
+  // itself, or contact detail) - not any item merely grouped under "guests",
+  // which also includes narrative bio content like children's names/ages.
+  const guestDataExposed = exposed.some((item) => item.affectsGuestRecords);
+  // `Math.round(-0)` stays `-0`; normalize with `|| 0` so a "-0" typed into
+  // the guest-records field never renders as the literal string "-0".
+  const recordsAtRisk = guestDataExposed ? Math.round(records) || 0 : 0;
 
   const retentionOverBy = Math.max(0, Math.round(days) - RECOMMENDED_RETENTION_DAYS);
   const retentionFlagged = retentionOverBy > 0 && Math.round(records) > 0;

@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Utensils } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   ACTIVITY_LEVELS,
   GOALS,
@@ -44,7 +45,7 @@ export default function ToolHome() {
   const [activity, setActivity] = useState(DEFAULTS.activity);
   const [goal, setGoal] = useState(DEFAULTS.goal);
   const [illness, setIllness] = useState(DEFAULTS.illness);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -85,15 +86,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "Calorie needs result" });
   };
 
   const reset = () => {
@@ -104,7 +99,7 @@ export default function ToolHome() {
     setActivity(DEFAULTS.activity);
     setGoal(DEFAULTS.goal);
     setIllness(DEFAULTS.illness);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -247,7 +242,11 @@ export default function ToolHome() {
               {hasError ? DASH : `${INT.format(result.target)} kcal`}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-              {hasError ? DASH : `${result.goal.label} · ${result.goal.note}`}
+              {hasError
+                ? DASH
+                : result.floorApplied
+                  ? `${result.goal.label} · Raised to the ${INT.format(result.floor)} kcal safety floor`
+                  : `${result.goal.label} · ${result.goal.note}`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -258,8 +257,8 @@ export default function ToolHome() {
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
@@ -278,7 +277,13 @@ export default function ToolHome() {
             ],
             [
               "Expected weight change",
-              hasError ? DASH : result.weeklyChangeKg === 0 ? "Stable" : `${DEC.format(result.weeklyChangeKg)} kg a week`,
+              hasError
+                ? DASH
+                : result.floorApplied
+                  ? `Not applicable — raised to the ${INT.format(result.floor)} kcal floor`
+                  : result.weeklyChangeKg === 0
+                    ? "Stable"
+                    : `${DEC.format(result.weeklyChangeKg)} kg a week`,
             ],
             [
               "Protein target",

@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "How much depth does a blind need in the recess?",
-      "Roughly 45 mm for a roller or cellular blind, 50 mm for a 25 mm aluminium venetian, 65 mm for a 50 mm wood venetian and 90 mm for verticals if the headrail is to sit fully inside. Shallower reveals can still take a partial recess fit with the rail projecting, but below about 25 mm of clear depth a face fix is the only option.",
+      "Roughly 45 mm for a roller or cellular blind, 50 mm for a 25 mm aluminium venetian, 65 mm for a 50 mm wood venetian and 90 mm for verticals if the headrail is to sit fully inside. A shallower reveal can often still take a partial recess fit with the rail projecting, but the minimum for that varies by blind type too: about 25 mm for a roller, cellular or 25 mm venetian, 30 mm for a zebra blind, 32 mm for a 50 mm wood venetian, 40 mm for a roman blind and a full 50 mm for verticals. Below your blind type's own partial-fit minimum, a face fix is the only option.",
     ],
     [
       "Inside or outside mount — which is better?",
