@@ -2,11 +2,10 @@ import HeroSection from "./components/HeroSection";
 import IntentSelector from "./components/IntentSelector";
 import AiAssistantBox from "@/platform/assistant/AiAssistantBox";
 import CategoriesSection from "./components/CategoriesSection";
-import FAQSection, { faqs } from "./components/FAQSection";
+import FAQSection from "./components/FAQSection";
 import PlatformFactsSection from "./components/PlatformFactsSection";
 import TrendingSection from "./components/TrendingSection";
-import JsonLd from "@/platform/seo/JsonLd";
-import { createFaqJsonLd, createPageMetadata } from "@/platform/seo/generateMetadata";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 // Evergreen and free of dynamic APIs — no cookies(), headers(), searchParams
 // or fetch — so it can be served from the edge. Without this the root layout's
@@ -40,11 +39,6 @@ export async function generateMetadata() {
 export default function Page() {
   return (
     <main className="bg-background text-foreground">
-      {/* Sourced from the same `faqs` array FAQSection renders, so the markup
-          can never drift from the copy. The answers ship inside native
-          <details> and .render-deferred is content-visibility only, so they
-          are in the static HTML — which is what FAQPage markup requires. */}
-      <JsonLd id="home-faq-schema" data={createFaqJsonLd({ path: "/", questions: faqs })} />
       <HeroSection />
       <IntentSelector />
       <div className="border-b border-border bg-background pt-10 sm:pt-12">
