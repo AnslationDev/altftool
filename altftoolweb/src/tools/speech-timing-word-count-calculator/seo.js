@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The Speech Timing Calculator converts a script word count into speaking time using delivery pace, slide-change overhead, planned pauses and a target length. It also compares the same script across common speaking speeds such as ceremonial, technical, conversational, keynote, audiobook, TED-style and fast delivery.",
+    "The Speech Timing Calculator converts a script word count into speaking time using delivery pace, slide-change overhead, planned pauses and a target length. It also compares the same script across every common speaking speed it supports — ceremonial, technical, conversational, keynote, audiobook, TED-style, podcast and fast delivery.",
   useCases: [
     "Check whether a speech, pitch, sermon, lecture or presentation fits a time slot.",
     "Estimate how many words to cut or add for a target duration.",

@@ -2,7 +2,7 @@ const seo = {
   intro:
     "This guide turns a gaming data-access request into a dated plan: it gives the exact export route for Steam, PlayStation, Xbox, Nintendo, Epic Games and Discord, then counts down the statutory deadline the platform must answer by under GDPR Article 12(3), the CCPA as amended by the CPRA, or Brazil's LGPD Article 19. A weighted 12-step audit covers what the archive reveals once it arrives — sign-in records, linked accounts, purchase history, friends lists and retained chat. It is for players who want to see what a platform holds, spot an account takeover, or clean up before selling or closing an account.",
   useCases: [
-    "Prove when an account was compromised by matching the sign-in IP records in a Steam or Xbox export against dates you were not playing.",
+    "Prove when an account was compromised by matching the sign-in IP records in a Steam export, or the sign-in history in a PlayStation export, against dates you were not playing.",
     "Reconcile a year of small in-game currency charges against a card statement before disputing them with the bank.",
     "Find every console, storefront and social identity still linked to an Epic or Discord account before you stop using it.",
     "Track a Sony or Nintendo privacy request that has gone quiet and know the exact date you can escalate to a regulator.",
@@ -23,7 +23,7 @@ const seo = {
     ],
     [
       "Does a PlayStation or Xbox export include voice chat?",
-      "Generally no — live voice is not recorded, so what you get is metadata: who was in the party, when, and for how long. The exception is a clip captured because someone reported it, which appears in the moderation and enforcement section of the export.",
+      "Generally no — live voice is not recorded, so what you get is metadata: who was in the party, when, and for how long. On PlayStation, the exception is a clip captured because someone reported it, which appears in the moderation and enforcement section of the export. Xbox's export does not include an equivalent moderation section, so do not expect to find retained voice clips there the same way.",
     ],
     [
       "What should I look at first in a gaming data export?",

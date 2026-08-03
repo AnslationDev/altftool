@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The Zalgo Text Generator corrupts any text by stacking Unicode combining diacritical marks onto each character — up to 20 above, 10 through and 20 below, drawn at random from pools of 56, 16 and 47 marks. Three sliders control each direction independently, so you can go from a light shimmer to text that bleeds several lines into its neighbours. Spaces and line breaks are left untouched, so your layout survives even at maximum corruption.",
+    "The Zalgo Text Generator corrupts any text by stacking Unicode combining diacritical marks onto each character — up to 20 above, 10 through and 20 below, drawn at random from pools of 56, 5 and 47 marks. Three sliders control each direction independently, so you can go from a light shimmer to text that bleeds several lines into its neighbours. Spaces, tabs and line breaks are left untouched, so your layout survives even at maximum corruption.",
   useCases: [
     "Make a Halloween or horror-game post title look genuinely glitched without opening a graphics editor.",
     "Test how your own app, chat widget or CSS handles overflowing combining marks before a user pastes some in.",
@@ -13,7 +13,7 @@ const seo = {
     ],
     [
       "Layout survives the corruption",
-      "Marks are only appended to visible characters — spaces, newlines and carriage returns are skipped, so word breaks and line structure stay intact.",
+      "Marks are only appended to visible characters — spaces, tabs, newlines and carriage returns are skipped, so word breaks and line structure stay intact.",
     ],
     [
       "Five presets and instant regeneration",

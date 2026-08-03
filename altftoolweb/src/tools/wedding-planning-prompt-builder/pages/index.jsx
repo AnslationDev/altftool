@@ -3,7 +3,15 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Heart, RotateCcw } from "lucide-react";
 
-import { BUDGET_MODELS, CURRENCIES, PRIORITIES, buildWeddingPrompt } from "../lib";
+import {
+  BUDGET_MODELS,
+  CURRENCIES,
+  MAX_GUESTS,
+  MAX_MONTHS_TO_GO,
+  MIN_GUESTS,
+  PRIORITIES,
+  buildWeddingPrompt,
+} from "../lib";
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -63,12 +71,19 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your budget, guest count and notes with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setForm(DEFAULTS);
     setCopied(false);
   };
 
   const rows = [
-    ["Catering budget per plate", ok ? money(result.plateBudget) : DASH],
+    ["Venue & catering budget per plate", ok ? money(result.plateBudget) : DASH],
     ["Contingency held back", ok ? money(result.contingencyAmount) : DASH],
     ["Committed spend to plan against", ok ? money(result.spendableTotal) : DASH],
     ["Guests", ok ? `${result.guests}` : DASH],
@@ -88,8 +103,9 @@ export default function ToolHome() {
         <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">Wedding Planning Prompt Builder</h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Enter the budget, headcount and months remaining. You get a category split, the real cost
-          per guest, the plate budget your caterer will actually work to, and a planning prompt that
-          carries all three so the assistant stops guessing.
+          per guest, the combined venue-and-catering budget per plate (higher than a caterer&apos;s
+          food-only quote, since venue hire is bundled in), and a planning prompt that carries all
+          three so the assistant stops guessing.
         </p>
       </header>
 
@@ -131,8 +147,8 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               type="number"
               inputMode="numeric"
-              min="2"
-              max="5000"
+              min={MIN_GUESTS}
+              max={MAX_GUESTS}
               step="1"
               value={form.guests}
               onChange={set("guests")}
@@ -148,7 +164,7 @@ export default function ToolHome() {
               type="number"
               inputMode="numeric"
               min="0"
-              max="60"
+              max={MAX_MONTHS_TO_GO}
               step="1"
               value={form.monthsToGo}
               onChange={set("monthsToGo")}
@@ -216,7 +232,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               All-in cost per guest
             </p>
@@ -245,7 +261,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-start justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

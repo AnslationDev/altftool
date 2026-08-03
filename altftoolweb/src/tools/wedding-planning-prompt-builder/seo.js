@@ -1,14 +1,14 @@
 const seo = {
   intro:
-    "Wedding Planning Prompt Builder divides a fixed wedding budget across categories, derives the all-in cost per guest and the per-plate catering budget, and places you in a planning phase based on the months remaining. The category percentages are planner rules of thumb — including the 10% contingency most planning guides advise holding back — applied to your own total rather than to national averages. The output is a planning prompt that already carries those numbers, so an AI assistant answers about your wedding rather than a generic one.",
+    "Wedding Planning Prompt Builder divides a fixed wedding budget across categories, derives the all-in cost per guest and the combined venue-and-catering budget per plate, and places you in a planning phase based on the months remaining. The category percentages are planner rules of thumb — including the 10% contingency most planning guides advise holding back — applied to your own total rather than to national averages. The output is a planning prompt that already carries those numbers, so an AI assistant answers about your wedding rather than a generic one.",
   useCases: [
-    "Checking what a 250-guest budget actually leaves per plate before the first caterer meeting.",
+    "Checking what a 250-guest budget actually leaves for venue and catering combined, per plate, before the first caterer meeting.",
     "Deciding whether to cut the guest list or the decor line when the numbers do not fit.",
     "Getting a phase-appropriate task list eight months out instead of a full checklist that includes things you cannot do yet.",
     "Preparing venue and caterer questions with your real per-head figure so quotes can be compared like for like.",
   ],
   benefits: [
-    ["Per-plate reality check", "Turns a headline budget into the per-head figure caterers actually quote against."],
+    ["Per-plate reality check", "Turns a headline budget into the combined venue-and-catering per-head figure, so you know it runs higher than a caterer's food-only quote."],
     ["Contingency protected", "10% is held back before the plan is made, so the committed spend figure is honest."],
     ["Phase-aware tasks", "Shows only the work that belongs to the months you have left."],
   ],
@@ -23,7 +23,7 @@ const seo = {
     ],
     [
       "How do I calculate cost per guest for a wedding?",
-      "Divide the total budget by the confirmed guest count for the all-in figure, then divide only the catering allocation by the same count for the plate budget. The second number is the one caterers quote against, and it is always much lower than the first, which is why headline budgets feel bigger than they are.",
+      "Divide the total budget by the confirmed guest count for the all-in figure, then divide the venue-and-catering allocation by the same count for the venue-and-catering plate figure — most planning models bundle venue hire together with food and service in one line. That combined number is still lower than the all-in figure, but it is higher than a caterer's food-only quote, since it also carries venue rental, staging and permits. Ask any caterer to quote food and service only if you want a true like-for-like comparison.",
     ],
     [
       "When should each wedding task be done?",

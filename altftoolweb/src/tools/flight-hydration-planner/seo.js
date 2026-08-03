@@ -23,7 +23,7 @@ const seo = {
   faqs: [
     [
       "How much water should you drink on a flight?",
-      "A common airline recommendation is around 250 ml an hour, and this planner usually lands near that for a long-haul once alcohol is included. For a 70 kg adult on a ten-hour flight with two beers and a coffee, the total works out around 1.5 litres, or roughly three 500 ml bottles.",
+      "A common airline recommendation is around 250 ml an hour, but this planner's dry-air-plus-alcohol model usually comes in lower than that for a long-haul unless you're drinking heavily throughout. For a 70 kg adult on a ten-hour flight with two beers and a coffee, the total works out around 1.5 litres — about 154 ml an hour, or roughly four 500 ml bottles.",
     ],
     [
       "Does flying really dehydrate you?",

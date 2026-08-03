@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Plane, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   CAFFEINE_CUTOFF_HOURS_BEFORE_SLEEP,
   DEFAULT_CABIN_RH,
@@ -13,6 +14,16 @@ import {
 
 const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 const DASH = "—";
+
+/** Render an arrivalDayOffset as "(+1 day)" / "(1 day earlier)" - never the
+ * malformed "(+-1 day)" you get from blindly prefixing a signed number with
+ * a literal "+". Westward routes with a large UTC-offset spread can land a
+ * negative offset (arrival is calendar-earlier than departure). */
+function formatDayOffset(days) {
+  if (!days) return "";
+  const plural = Math.abs(days) === 1 ? "day" : "days";
+  return days > 0 ? ` (+${days} ${plural})` : ` (${Math.abs(days)} ${plural} earlier)`;
+}
 
 const DEFAULTS = {
   weight: "70",
@@ -48,7 +59,7 @@ export default function ToolHome() {
   const [originOffset, setOriginOffset] = useState(DEFAULTS.originOffset);
   const [destOffset, setDestOffset] = useState(DEFAULTS.destOffset);
   const [bedtime, setBedtime] = useState(DEFAULTS.bedtime);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const num = (value) => (value === "" ? NaN : Number(value));
 
@@ -84,21 +95,17 @@ export default function ToolHome() {
       `Dry cabin air costs: ${NUM.format(result.dryAirExtraMl)} ml`,
       `Alcohol costs: ${NUM.format(result.alcoholDiuresisMl)} ml (${result.alcoholGrams} g ethanol)`,
       `Caffeine costs: ${NUM.format(result.caffeineDiuresisMl)} ml (${NUM.format(result.caffeineMg)} mg)`,
-      `Arrival local time: ${result.arrivalLocalTime}${result.arrivalDayOffset ? ` (+${result.arrivalDayOffset} day)` : ""}`,
+      `Arrival local time: ${result.arrivalLocalTime}${formatDayOffset(result.arrivalDayOffset)}`,
       `Time zones crossed: ${result.zonesCrossed} ${result.direction}`,
       `Last caffeine: ${result.caffeineCutoffDest} destination time`,
     ].join("\n");
   }, [hasError, result, hours, temp, rh]);
 
-  const copyResult = async () => {
+  const copied = isCopied("plan");
+
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("plan", summary, { label: "flight hydration plan" });
   };
 
   const reset = () => {
@@ -113,7 +120,7 @@ export default function ToolHome() {
     setOriginOffset(DEFAULTS.originOffset);
     setDestOffset(DEFAULTS.destOffset);
     setBedtime(DEFAULTS.bedtime);
-    setCopied(false);
+    resetCopyState();
   };
 
   const rows = [
@@ -136,9 +143,7 @@ export default function ToolHome() {
   const timeRows = [
     [
       "Arrival, destination local time",
-      hasError
-        ? DASH
-        : `${result.arrivalLocalTime}${result.arrivalDayOffset ? ` (+${result.arrivalDayOffset} day)` : ""}`,
+      hasError ? DASH : `${result.arrivalLocalTime}${formatDayOffset(result.arrivalDayOffset)}`,
     ],
     [
       "Time zones crossed",
@@ -375,7 +380,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Drink during the flight
             </p>
@@ -392,7 +397,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy flight hydration plan"
+              aria-label={copied ? "Copied result" : "Copy result"}
               className={GHOST_BTN}
               disabled={hasError}
             >
@@ -403,6 +408,9 @@ export default function ToolHome() {
               )}
               {copied ? "Copied!" : "Copy result"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button
               type="button"
               onClick={reset}
@@ -423,7 +431,7 @@ export default function ToolHome() {
           </p>
         )}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -435,7 +443,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <h2 className="text-base font-semibold">Arrival and time zones</h2>
-        <dl className="mt-3 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-3 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
           {timeRows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -467,13 +475,13 @@ export default function ToolHome() {
                   </th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody aria-live="polite" role="status">
                 {result.schedule.map((slot) => (
                   <tr key={slot.hour} className="border-b border-[var(--border)] last:border-0">
                     <td className="py-2 pr-3 font-semibold">Hour {slot.hour}</td>
                     <td className="py-2 pr-3 text-right">{NUM.format(slot.amountMl)} ml</td>
                     <td className="py-2 text-right text-[var(--muted-foreground)]">
-                      {NUM.format(slot.amountMl * slot.hour)} ml
+                      {NUM.format(slot.cumulativeMl)} ml
                     </td>
                   </tr>
                 ))}

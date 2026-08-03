@@ -20,7 +20,9 @@ export default function Card({
 }) {
   const t = CARD_THEMES[theme] || CARD_THEMES.classic;
   const isRed = card?.color === "red";
-  const faceTextColor = isRed ? "#e11d48" : t.faceText;
+  // Each theme defines its own AA-contrast-safe red (see utils/deck.js) —
+  // a single fixed red cannot clear 4.5:1 against every theme's face bg.
+  const faceTextColor = isRed ? t.faceTextRed : t.faceText;
 
   return (
     <motion.button

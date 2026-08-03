@@ -1349,14 +1349,28 @@ function FileLab({ slug }) {
         const source = await file.text();
         const doc = new DOMParser().parseFromString(source, "image/svg+xml");
         doc.querySelectorAll("script, metadata, foreignObject").forEach((node) => node.remove());
+        let dangerousHrefCount = 0;
         doc.querySelectorAll("*").forEach((node) => {
           [...node.attributes].forEach((attribute) => {
-            if (/^on/i.test(attribute.name) || /^(sodipodi|inkscape):/i.test(attribute.name)) node.removeAttribute(attribute.name);
+            const name = attribute.name;
+            const isEventHandler = /^on/i.test(name);
+            // Matches both the namespaced attributes (e.g. inkscape:version)
+            // AND the root element's own xmlns:inkscape / xmlns:sodipodi
+            // namespace-declaration attributes, which the prefix-only regex
+            // used to miss entirely.
+            const isEditorNamespaceAttr = /^(sodipodi|inkscape):/i.test(name) || /^xmlns:(sodipodi|inkscape)$/i.test(name);
+            // href / xlink:href can carry a javascript: URI, which still
+            // executes in the host page's origin once inlined — strip it
+            // even though it isn't a <script>, on* handler, or foreignObject.
+            const isHrefAttr = /^(?:xlink:)?href$/i.test(name);
+            const isJsUri = isHrefAttr && /^javascript:/i.test((attribute.value || "").replace(/\s+/g, ""));
+            if (isJsUri) dangerousHrefCount += 1;
+            if (isEventHandler || isEditorNamespaceAttr || isJsUri) node.removeAttribute(name);
           });
         });
         const cleaned = new XMLSerializer().serializeToString(doc);
         downloadBlob(new Blob([cleaned], { type: "image/svg+xml" }), "altftool-clean.svg");
-        setResult({ summary: `${source.length - cleaned.length} character(s) removed`, rows: [["Original", source.length], ["Cleaned", cleaned.length], ["Scripts remaining", doc.querySelectorAll("script").length]] });
+        setResult({ summary: `${source.length - cleaned.length} character(s) removed`, rows: [["Original", source.length], ["Cleaned", cleaned.length], ["Scripts remaining", doc.querySelectorAll("script").length], ["javascript: links removed", dangerousHrefCount]] });
       } else if (["3d-model-format-converter", "3d-mesh-repair-inspector"].includes(slug)) {
         const source = await file.text();
         const vertices = [...source.matchAll(/^v\s+(-?[\d.e+]+)\s+(-?[\d.e+]+)\s+(-?[\d.e+]+)/gim)].map((match) => match.slice(1).map(Number));

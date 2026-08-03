@@ -162,18 +162,27 @@ export function smoothWeighIns(rawEntries, options = {}) {
   const spanDays = series[series.length - 1].dayOffset - series[0].dayOffset;
 
   const weights = series.map((row) => row.weight);
-  const residuals = series.map((row) => row.deviation);
-  const noise = round(standardDeviation(residuals), 2);
+  // Noise is measured against the straight-line (least-squares) trend, not
+  // the EWMA trend. The EWMA is seeded on the first reading and only moves
+  // partway toward each new value, so during any sustained real trend its
+  // residuals carry a large, systematic lag rather than random scatter —
+  // comparing today's reading against that lag-biased spread flagged a
+  // confirmed, high-R^2 trend as "probably fluid" on almost every day. The
+  // regression residuals have no such bias (their mean is zero by
+  // construction), so they give an honest day-to-day noise estimate.
+  const trendResiduals = regression
+    ? series.map((row) => row.weight - (regression.intercept + regression.slopePerDay * row.dayOffset))
+    : series.map((row) => row.deviation);
+  const noise = round(standardDeviation(trendResiduals), 2);
 
   const slopePerWeek = regression ? round(regression.slopePerDay * DAYS_PER_WEEK, 3) : null;
   const kcalPerDay = regression ? round((regression.slopePerDay * kcalPerUnit(units)), 0) : null;
 
-  const firstAverage = series[0].movingAverage;
   const lastAverage = series[series.length - 1].movingAverage;
-  const averageChange = round(lastAverage - firstAverage, 2);
 
   const latest = series[series.length - 1];
   const scaleVsTrend = round(latest.weight - latest.trend, 2);
+  const latestTrendResidual = round(trendResiduals[trendResiduals.length - 1], 2);
 
   const notes = [];
   if (series.length < window) {
@@ -190,9 +199,9 @@ export function smoothWeighIns(rawEntries, options = {}) {
   notes.push(
     `Day-to-day noise around the trend is ${noise} ${units} (one standard deviation), so a single reading that far from the line means nothing on its own.`,
   );
-  if (Math.abs(scaleVsTrend) > noise) {
+  if (Math.abs(latestTrendResidual) > noise) {
     notes.push(
-      `Your latest reading sits ${Math.abs(scaleVsTrend)} ${units} ${scaleVsTrend > 0 ? "above" : "below"} the trend — further than typical daily noise, usually fluid rather than a real change.`,
+      `Your latest reading sits ${Math.abs(latestTrendResidual)} ${units} ${latestTrendResidual > 0 ? "above" : "below"} the straight-line trend — further than typical day-to-day scatter, usually fluid rather than a real change.`,
     );
   }
 
@@ -208,14 +217,11 @@ export function smoothWeighIns(rawEntries, options = {}) {
     minWeight: round(Math.min(...weights), 2),
     maxWeight: round(Math.max(...weights), 2),
     rawRange: round(Math.max(...weights) - Math.min(...weights), 2),
-    firstAverage,
     lastAverage,
-    averageChange,
     latestTrend: latest.trend,
     scaleVsTrend,
     noise,
     slopePerWeek,
-    slopePerDay: regression ? round(regression.slopePerDay, 4) : null,
     r2: regression ? round(regression.r2, 3) : null,
     kcalPerDay,
     projected30Day:

@@ -11,6 +11,7 @@ import {
   estimateSpeech,
   formatClock,
   formatDuration,
+  formatDurationBreakdown,
   paceComparison,
 } from "../lib";
 
@@ -57,8 +58,19 @@ export default function ToolHome() {
     () => paceComparison({ words, slides, secondsPerSlide, extraPauseSeconds }),
     [words, slides, secondsPerSlide, extraPauseSeconds],
   );
+  const breakdown = useMemo(
+    () => formatDurationBreakdown(result.speakingMinutes, result.overheadMinutes),
+    [result.speakingMinutes, result.overheadMinutes],
+  );
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your script and settings with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setScript(SAMPLE);
     setPresetId("conversational");
     setCustomWpm("130");
@@ -76,15 +88,19 @@ export default function ToolHome() {
       `Words: ${words}`,
       `Pace: ${wpm} wpm`,
       `Total time: ${formatDuration(result.totalMinutes)} (${formatClock(result.totalMinutes)})`,
-      `Speaking only: ${formatDuration(result.speakingMinutes)}`,
-      `Slide/pause overhead: ${formatDuration(result.overheadMinutes)}`,
-      result.wordBudget !== null ? `Target word budget: ${result.wordBudget}` : "",
-      result.wordsToCut ? `Cut about ${result.wordsToCut} words to fit.` : "",
-      result.wordsToAdd ? `You can add about ${result.wordsToAdd} words.` : "",
+      `Speaking only: ${breakdown.speaking}`,
+      `Slide/pause overhead: ${breakdown.overhead}`,
+      result.wordBudget !== null && result.targetFits === false
+        ? "Overhead alone already exceeds the target — no words fit."
+        : result.wordBudget !== null
+          ? `Target word budget: ${result.wordBudget}`
+          : "",
+      result.targetFits !== false && result.wordsToCut ? `Cut about ${result.wordsToCut} words to fit.` : "",
+      result.targetFits !== false && result.wordsToAdd ? `You can add about ${result.wordsToAdd} words.` : "",
     ]
       .filter(Boolean)
       .join("\n");
-  }, [result, words, wpm]);
+  }, [result, words, wpm, breakdown]);
 
   const copySummary = async () => {
     if (!summary) return;
@@ -164,7 +180,7 @@ export default function ToolHome() {
               {result.error}
             </p>
           ) : (
-            <>
+            <div aria-live="polite" role="status">
               <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                 Estimated total time
               </p>
@@ -179,22 +195,30 @@ export default function ToolHome() {
                   <strong className="text-[var(--foreground)]">{words}</strong> words · {chars} characters
                 </div>
                 <div className="rounded-lg bg-[var(--background)] p-3 ring-1 ring-[var(--border)]">
-                  Speaking {formatDuration(result.speakingMinutes)} · overhead{" "}
-                  {formatDuration(result.overheadMinutes)}
+                  Speaking {breakdown.speaking} · overhead {breakdown.overhead}
                 </div>
                 {result.wordBudget !== null ? (
                   <div className="rounded-lg bg-[var(--background)] p-3 ring-1 ring-[var(--border)]">
-                    Target budget: <strong className="text-[var(--foreground)]">{result.wordBudget}</strong>{" "}
-                    words. {result.wordsToCut ? `Cut about ${result.wordsToCut}.` : result.wordsToAdd ? `You can add about ${result.wordsToAdd}.` : "You are on target."}
+                    {result.targetFits === false ? (
+                      <>
+                        Slide and pause overhead alone ({formatDuration(result.overheadMinutes)}) already exceeds
+                        your target — there is no room left to speak. Cut overhead or extend the target.
+                      </>
+                    ) : (
+                      <>
+                        Target budget: <strong className="text-[var(--foreground)]">{result.wordBudget}</strong>{" "}
+                        words. {result.wordsToCut ? `Cut about ${result.wordsToCut}.` : result.wordsToAdd ? `You can add about ${result.wordsToAdd}.` : "You are on target."}
+                      </>
+                    )}
                   </div>
                 ) : null}
               </div>
 
               {!comparison.error ? (
                 <div className="mt-5 overflow-hidden rounded-lg ring-1 ring-[var(--border)]">
-                  {comparison.rows.slice(1, 7).map((row) => (
+                  {comparison.rows.map((row) => (
                     <div key={row.id} className="flex items-center justify-between gap-3 border-b border-[var(--border)] px-3 py-2 text-xs last:border-b-0">
-                      <span className="font-semibold text-[var(--foreground)]">{row.label}</span>
+                      <span className="font-semibold text-[var(--foreground)]" title={row.note}>{row.label}</span>
                       <span className="text-[var(--muted-foreground)]">{formatClock(row.totalMinutes)}</span>
                     </div>
                   ))}
@@ -205,7 +229,7 @@ export default function ToolHome() {
                 {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
                 {copied ? "Copied" : "Copy summary"}
               </button>
-            </>
+            </div>
           )}
         </aside>
       </section>

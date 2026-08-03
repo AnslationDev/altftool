@@ -63,7 +63,7 @@ export default function Deck({ count, theme = "classic", shuffling = false, size
 
       <div className="flex items-center gap-2 text-sm text-(--muted-foreground)">
         <Layers size={14} />
-        <span>
+        <span aria-live="polite">
           <AnimatePresence mode="popLayout" initial={false}>
             <motion.span
               key={count}

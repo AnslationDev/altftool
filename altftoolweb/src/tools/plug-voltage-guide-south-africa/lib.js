@@ -163,13 +163,20 @@ export function assessSouthAfricanPower({
   }
 
   const fittingSockets = socketsForPlug(plug.code);
-  const adapterNeeded = fittingSockets.length === 0;
+  // Type M is the one socket every South African building has — new
+  // installs must ADD a type N socket alongside it, not replace it (see the
+  // file header) — so "adapter needed" has to mean "guaranteed to work
+  // everywhere", not merely "fits at least one socket somewhere". A plug
+  // that only fits type N (or the niche type D / occasional type G outlet)
+  // still needs an adapter as a fallback for the older, type-M-only
+  // buildings. Only a native South African plug is exempt.
+  const adapterNeeded = plug.fit !== "native";
   const conditionalFit = plug.fit === "sometimes";
   const adapterNote =
     plug.fit === "native"
       ? "Your plug is a South African standard plug — nothing to buy."
       : plug.fit === "fits"
-        ? "This plug enters a socket that is genuinely common in South Africa, so an adapter is not strictly needed — but the old type M outlet will not take it."
+        ? "This plug enters a socket that exists in many South African buildings, but not all of them — older buildings that only have the big type M outlet will not take it, so pack an adapter to be safe."
         : plug.fit === "sometimes"
           ? "This is not a South African standard, though some newer buildings fit it. Carry a type M plus type N adapter rather than relying on it."
           : "This plug will not enter any South African socket. Carry an adapter that offers both the large type M pins and the type N pattern.";
@@ -181,7 +188,16 @@ export function assessSouthAfricanPower({
       ? "step-down"
       : "step-up"
     : null;
-  const toleranceRisk = voltageOk && deviceMaxVoltageV < SUPPLY_MAX_V;
+  // Only worth flagging when the label is a *narrow*, near-nominal rating.
+  // A wide multi-country range (e.g. 100-240 V, the spec on nearly every
+  // laptop/phone charger) already demonstrates a large engineering margin
+  // regardless of where its top end sits relative to the supply ceiling,
+  // and a rating that already equals South Africa's own 230 V nominal is
+  // the textbook perfect-fit case, not something to plan around.
+  const NARROW_RANGE_V = 30;
+  const isNarrowRange = deviceMaxVoltageV - deviceMinVoltageV < NARROW_RANGE_V;
+  const toleranceRisk =
+    voltageOk && isNarrowRange && deviceMaxVoltageV > MAINS_VOLTAGE_V && deviceMaxVoltageV < SUPPLY_MAX_V;
 
   const freq = String(deviceFrequency);
   const frequencyOk = freq === "both" || freq === "50";
@@ -199,7 +215,9 @@ export function assessSouthAfricanPower({
   if (adapterNeeded) {
     actions.push("Pack a travel adapter that covers both the large type M pins and the newer type N pattern.");
   }
-  if (conditionalFit) actions.push("Do not count on finding a type G socket; treat it as a bonus, not a plan.");
+  if (conditionalFit) {
+    actions.push(`Do not count on finding a type ${plug.code} socket; treat it as a bonus, not a plan.`);
+  }
   if (!adapterNeeded && !fittingSockets.some((socket) => socket.code === "M")) {
     actions.push(
       "Older buildings only have the big type M outlet, which your plug will not enter — carry a type M adapter as a fallback.",
@@ -209,7 +227,7 @@ export function assessSouthAfricanPower({
     actions.push(
       deviceWatts >= HIGH_DRAW_HINT_W
         ? `Single-voltage and ${Math.round(deviceWatts)} W, so it would need a heavy step-down transformer — buying a 230 V version locally is usually cheaper than carrying one.`
-        : "Single-voltage device: it needs a 230 V to 110/120 V step-down converter. A plug adapter alone will destroy it.",
+        : `Single-voltage device: it needs a ${MAINS_VOLTAGE_V} V to ${Math.round(deviceMaxVoltageV)} V step-down converter. A plug adapter alone will destroy it.`,
     );
   }
   if (converterNeeded && converterDirection === "step-up") {
@@ -231,10 +249,13 @@ export function assessSouthAfricanPower({
   }
   if (actions.length === 0) actions.push("Nothing to buy — plug it straight in.");
 
+  // Note: with adapterNeeded now true for every non-native plug.fit, only
+  // "native" plugs can ever reach the "Plug straight in" verdict here — that
+  // is intentional, since anything else is only guaranteed everywhere with
+  // an adapter in the bag (see adapterNeeded above).
   let verdict;
   if (converterNeeded) verdict = "Converter required";
   else if (adapterNeeded) verdict = "Adapter only";
-  else if (plug.fit === "fits" || plug.fit === "sometimes") verdict = "Fits some sockets";
   else verdict = "Plug straight in";
 
   return {

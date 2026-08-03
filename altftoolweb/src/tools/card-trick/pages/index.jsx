@@ -7,7 +7,7 @@ function pickRandom(list) {
   return list[Math.floor(Math.random() * list.length)];
 }
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Toaster, toast } from "sonner";
 import confetti from "canvas-confetti";
 import { motion, AnimatePresence } from "framer-motion";
@@ -86,6 +86,17 @@ export default function ToolHome() {
 
   const [reveal, setReveal] = useState(null);
 
+  // Tracks the pending `openReveal` timeout scheduled by predictChoose/
+  // memoryGuess so a stale reveal for an abandoned round can never pop up
+  // after the player has already moved on (started a new round, switched
+  // mode, or reset).
+  const revealTimeoutRef = useRef(null);
+  const scheduleReveal = (fn, delay) => {
+    window.clearTimeout(revealTimeoutRef.current);
+    revealTimeoutRef.current = window.setTimeout(fn, delay);
+  };
+  useEffect(() => () => window.clearTimeout(revealTimeoutRef.current), []);
+
   const openReveal = (card, title, subtitle) => {
     setReveal({ card, title, subtitle });
     t.sfx("reveal");
@@ -102,6 +113,7 @@ export default function ToolHome() {
 
   // ---- Mode switching ------------------------------------------------------
   const selectMode = (key) => {
+    window.clearTimeout(revealTimeoutRef.current);
     setMode(key);
     setPickState(null);
     setPredictState(null);
@@ -125,14 +137,16 @@ export default function ToolHome() {
   };
 
   // ---- Prediction ----------------------------------------------------------
-  const startPredict = () =>
+  const startPredict = () => {
+    window.clearTimeout(revealTimeoutRef.current);
     setPredictState({ ...startPredictTrick(freshDeck(), 6), step: "intro" });
+  };
   const predictChoose = (cardId) => {
     setPredictState((s) => (s ? forceCard(s, cardId) : s));
     t.sfx("select");
     const card = predictState?.prediction;
     if (card) {
-      setTimeout(
+      scheduleReveal(
         () =>
           openReveal(
             card,
@@ -146,6 +160,7 @@ export default function ToolHome() {
 
   // ---- Memory --------------------------------------------------------------
   const startMemory = () => {
+    window.clearTimeout(revealTimeoutRef.current);
     setMemoryState(startMemoryTrick(freshDeck(), 8));
     setMode("memory");
   };
@@ -158,12 +173,15 @@ export default function ToolHome() {
       const newStreak = streak + 1;
       setStreak(newStreak);
       t.recordScore(newStreak);
-      setTimeout(
+      scheduleReveal(
         () => openReveal(next.target, "Found it!", `Correct! Streak: ${newStreak}.`),
         350
       );
     } else {
       t.sfx("error");
+      // A miss breaks the streak — otherwise the badge silently turns into a
+      // lifetime win-count instead of a real *consecutive* streak.
+      setStreak(0);
       toast.error("Not quite — study the spread and try again.");
     }
   };
@@ -179,6 +197,22 @@ export default function ToolHome() {
     }
   }, [mode, memoryState?.step]);
 
+  // Auto-advance memory "miss" -> "find" so a wrong guess briefly shows which
+  // card was picked (dimmed) and then re-enables the grid for another
+  // attempt, instead of permanently locking the round.
+  useEffect(() => {
+    if (mode === "memory" && memoryState?.step === "miss") {
+      const id = setTimeout(
+        () =>
+          setMemoryState((s) =>
+            s && s.step === "miss" ? { ...s, step: "find", chosenId: null } : s
+          ),
+        900
+      );
+      return () => clearTimeout(id);
+    }
+  }, [mode, memoryState?.step]);
+
   // ---- Free play -----------------------------------------------------------
   const freeRandom = () => {
     const deck = t.remaining ? t.deck : freshDeck();
@@ -187,6 +221,7 @@ export default function ToolHome() {
   };
 
   const resetAll = () => {
+    window.clearTimeout(revealTimeoutRef.current);
     setPickState(null);
     setPredictState(null);
     setMemoryState(null);
@@ -339,6 +374,15 @@ export default function ToolHome() {
 }
 
 // Build the contextual action buttons for the control bar.
+//
+// Note: Pick/Predict/Memory intentionally have no "Shuffle deck" action here.
+// Those three modes each deal their spread/grid from their own freshly
+// shuffled deck (see freshDeck()) and never touch the shared `deck` (`t`)
+// that FreePlay/handleShuffle operate on, so a shuffle button in those modes
+// would silently reshuffle an invisible, unrelated deck with zero effect on
+// what's on screen. "New spread" / "New prediction" / "New round" (the
+// Replay button) is the real "get a fresh arrangement" action for those
+// modes.
 function controlActions({ mode, deck, onShuffle, onDraw1, onDraw5, onRandom }) {
   if (mode === "free") {
     return [
@@ -346,11 +390,6 @@ function controlActions({ mode, deck, onShuffle, onDraw1, onDraw5, onRandom }) {
       { key: "draw1", label: "Draw 1", icon: <Play size={16} />, onClick: onDraw1, disabled: deck.remaining === 0 },
       { key: "draw5", label: "Draw 5", icon: <Play size={16} />, onClick: onDraw5, disabled: deck.remaining === 0 },
       { key: "random", label: "Random card", icon: <Sparkles size={16} />, onClick: onRandom },
-    ];
-  }
-  if (mode === "pick" || mode === "predict" || mode === "memory") {
-    return [
-      { key: "shuffle", label: "Shuffle deck", icon: <Shuffle size={16} />, onClick: onShuffle, variant: "outline" },
     ];
   }
   return [];
@@ -546,12 +585,19 @@ function MemoryStage({ state, onStart, onGuess, theme, cardSize, streak, best })
 
   return (
     <div className="flex flex-col items-center gap-5">
-      <div className="flex items-center gap-4 text-sm font-semibold">
+      <div
+        className="flex flex-wrap items-center justify-center gap-4 text-sm font-semibold"
+        role="status"
+        aria-live="polite"
+      >
         <span className="rounded-full bg-(--primary)/10 px-3 py-1 text-(--primary)">
           Streak: {streak}
         </span>
         <span className="rounded-full bg-(--muted) px-3 py-1 text-(--muted-foreground)">
           Best: {best}
+        </span>
+        <span className="rounded-full bg-(--muted) px-3 py-1 text-(--muted-foreground)">
+          Attempts: {state.attempts}
         </span>
       </div>
 

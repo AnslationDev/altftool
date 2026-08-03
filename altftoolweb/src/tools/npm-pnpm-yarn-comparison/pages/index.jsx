@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Scale } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { COMMAND_MAP, CRITERIA, MANAGERS, recommendManager } from "../lib";
 
 const CHECK_CLASS =
@@ -25,7 +26,7 @@ const FACT_ROWS = [
 
 export default function ToolHome() {
   const [selected, setSelected] = useState(["diskUsage", "monorepo"]);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const toggle = (id) =>
     setSelected((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
@@ -33,22 +34,15 @@ export default function ToolHome() {
   const result = useMemo(() => recommendManager({ selectedCriteria: selected }), [selected]);
   const winner = result.ranking?.[0];
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!result.ranking) return;
-    try {
-      await navigator.clipboard.writeText(
-        result.ranking.map((r) => `${r.name}: ${r.score}/${r.maxScore}`).join("\n"),
-      );
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("ranking", result.ranking.map((r) => `${r.name}: ${r.score}/${r.maxScore}`).join("\n"), {
+      label: "the ranking",
+    });
   };
 
   const reset = () => {
     setSelected(["diskUsage", "monorepo"]);
-    setCopied(false);
   };
 
   return (
@@ -95,7 +89,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Best fit for your criteria
             </p>
@@ -108,24 +102,27 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the ranking result"
+              aria-label={isCopied("ranking") ? "Copied the ranking result to the clipboard" : "Copy the ranking result"}
               className={GHOST_BTN}
             >
-              {copied ? (
+              {isCopied("ranking") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy ranking"}
+              {isCopied("ranking") ? "Copied!" : "Copy ranking"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset criteria to defaults" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {(result.ranking ?? []).map((entry, index) => (
             <div key={entry.id} className="py-2.5">
               <div className="flex items-center justify-between gap-4">

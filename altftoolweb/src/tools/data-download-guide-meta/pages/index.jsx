@@ -10,7 +10,24 @@ import {
   STATUTORY_RESPONSE_DAYS,
   estimateExport,
   formatSize,
+  maxAccountAgeYears,
 } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
+const MAX_ACCOUNT_AGE_YEARS = maxAccountAgeYears();
+
+/** Only the three sensitivity-5 categories can ever appear in criticalCategories. */
+const CRITICAL_RISK_NOTES = {
+  messages: "other people's private messages",
+  location: "your movement history",
+  "off-meta": "a detailed record of the apps and sites tracking you outside Meta",
+};
+
+function joinWithAnd(items) {
+  if (items.length <= 1) return items.join("");
+  if (items.length === 2) return `${items[0]} and ${items[1]}`;
+  return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
+}
 
 const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 
@@ -36,8 +53,8 @@ export default function ToolHome() {
   const [qualityId, setQualityId] = useState(DEFAULT_QUALITY);
   const [formatId, setFormatId] = useState(DEFAULT_FORMAT);
   const [speed, setSpeed] = useState(DEFAULT_SPEED);
-  const [copied, setCopied] = useState(false);
   const [done, setDone] = useState([]);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -76,25 +93,22 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result, speed]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("plan", summary, { label: "Meta download plan" });
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the planner? This clears every category you picked and the request checklist progress and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setSelected(DEFAULT_SELECTED);
     setYears(DEFAULT_YEARS);
     setQualityId(DEFAULT_QUALITY);
     setFormatId(DEFAULT_FORMAT);
     setSpeed(DEFAULT_SPEED);
     setDone([]);
-    setCopied(false);
   };
 
   return (
@@ -173,7 +187,7 @@ export default function ToolHome() {
               type="number"
               inputMode="decimal"
               min="1"
-              max="22"
+              max={MAX_ACCOUNT_AGE_YEARS}
               step="1"
               value={years}
               onChange={(event) => setYears(event.target.value)}
@@ -242,7 +256,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Estimated archive size
             </p>
@@ -263,12 +277,12 @@ export default function ToolHome() {
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("plan") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy plan"}
+              {isCopied("plan") ? "Copied!" : "Copy plan"}
             </button>
             <button
               type="button"
@@ -282,7 +296,11 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
+
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
           {[
             ["Categories selected", hasError ? DASH : NUM.format(result.count)],
             ["Largest single category", hasError ? DASH : result.largestLabel],
@@ -317,8 +335,14 @@ export default function ToolHome() {
 
         {!hasError && result.criticalCategories.length > 0 ? (
           <p className="mt-3 rounded-md bg-[var(--muted)] px-3 py-2 text-xs leading-5 text-[var(--muted-foreground)]">
-            Highest-risk items here: {result.criticalCategories.join(", ")}. These files contain
-            other people&rsquo;s messages and your movement history — store them encrypted.
+            Highest-risk items here: {result.criticalCategories.join(", ")}. These files contain{" "}
+            {joinWithAnd(
+              result.rows
+                .filter((row) => row.sensitivity >= 5)
+                .map((row) => CRITICAL_RISK_NOTES[row.id])
+                .filter(Boolean),
+            )}{" "}
+            — store them encrypted.
           </p>
         ) : null}
       </section>

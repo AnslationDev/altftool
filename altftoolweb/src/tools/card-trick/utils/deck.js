@@ -29,12 +29,17 @@ export const RANKS = [
 
 // Visual themes for the cards/deck. These are inherent to playing cards
 // (face/back artwork), not UI theme parts, so local colours are fine.
+// `faceTextRed` is a per-theme red chosen to clear the WCAG AA 4.5:1 contrast
+// minimum against that theme's own `face` gradient (both stops), since a
+// single hardcoded red cannot satisfy every theme's background at once —
+// see components/Card.jsx.
 export const CARD_THEMES = {
   classic: {
     id: "classic",
     name: "Classic",
     face: "linear-gradient(160deg, #ffffff 0%, #f5f7fa 100%)",
     faceText: "#0f172a",
+    faceTextRed: "#be123c",
     pip: "rgba(15,23,42,0.06)",
     back: "linear-gradient(135deg, #1e293b 0%, #0f172a 100%)",
     backAccent: "#14b8a6",
@@ -44,6 +49,7 @@ export const CARD_THEMES = {
     name: "Neon",
     face: "linear-gradient(160deg, #0b1020 0%, #131a2e 100%)",
     faceText: "#e2e8f0",
+    faceTextRed: "#fb7185",
     pip: "rgba(34,211,238,0.10)",
     back: "linear-gradient(135deg, #0e7490 0%, #1e1b4b 100%)",
     backAccent: "#22d3ee",
@@ -53,6 +59,7 @@ export const CARD_THEMES = {
     name: "Minimal",
     face: "linear-gradient(160deg, #fbfdff 0%, #eef2f7 100%)",
     faceText: "#334155",
+    faceTextRed: "#be123c",
     pip: "rgba(51,65,85,0.05)",
     back: "linear-gradient(135deg, #cbd5e1 0%, #94a3b8 100%)",
     backAccent: "#14b8a6",
