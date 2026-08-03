@@ -20,10 +20,10 @@ const eslintConfig = defineConfig([
     },
   },
   {
-    // Business Ops and Top8 contain imported, image-heavy microsites that mix remote,
+    // Business Ops contains imported, image-heavy microsites that mix remote,
     // bundled, and clipped comparison media. Keep every other quality rule
     // active while those pages are migrated to next/image one surface at a time.
-    files: ["src/app/bops/**/*.{js,jsx,ts,tsx}", "src/app/top8/**/*.{js,jsx,ts,tsx}"],
+    files: ["src/app/bops/**/*.{js,jsx,ts,tsx}"],
     rules: {
       "@next/next/no-img-element": "off",
     },

@@ -54,14 +54,4 @@ export const LAB_GRADUATES = [
     tone: "violet",
     icon: "Newspaper",
   },
-  {
-    slug: "top11",
-    name: "Top 11 Guides",
-    description:
-      "Ranked, research-backed 'best of' guides that help you pick the right product or service faster.",
-    href: "/top11",
-    label: "Now a core product",
-    tone: "teal",
-    icon: "Trophy",
-  },
 ];

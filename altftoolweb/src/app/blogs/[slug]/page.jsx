@@ -388,7 +388,7 @@ export default async function BlogDetailPage({ params }) {
                   section: "blogs",
                 },
                 slots: [
-                  { sections: ["calculators", "top9", "top11", "deals"], limit: 3 },
+                  { sections: ["calculators", "top9", "deals"], limit: 3 },
                   { sections: ["experiences", "games", "products", "n8n"], limit: 3, minScore: 0 },
                 ],
                 excludeHrefs: initialRelatedTools.map((tool) => tool.href),

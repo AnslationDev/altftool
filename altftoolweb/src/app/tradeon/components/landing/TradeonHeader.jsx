@@ -8,7 +8,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bell, ChevronDown, Coins, Globe, LayoutDashboard, Menu, Newspaper, Search, Star, User } from "lucide-react";
+import { ChevronDown, LayoutDashboard, Menu, Newspaper, Search, Star, User } from "lucide-react";
 import { useClickOutside } from "../../hooks/useClickOutside";
 import { cn } from "../../utils/cn";
 import Logo from "../shared/Logo";
@@ -28,32 +28,10 @@ const NAV = [
   { label: "Dashboard", href: "/tradeon/dashboard" },
 ];
 
-const LANGUAGES = [
-  { value: "en", label: "English", icon: "🇺🇸" },
-  { value: "hi", label: "हिन्दी", icon: "🇮🇳" },
-  { value: "es", label: "Español", icon: "🇪🇸" },
-  { value: "de", label: "Deutsch", icon: "🇩🇪" },
-  { value: "ja", label: "日本語", icon: "🇯🇵" },
-];
-const CURRENCIES = [
-  { value: "USD", label: "USD · US Dollar", icon: "$" },
-  { value: "EUR", label: "EUR · Euro", icon: "€" },
-  { value: "GBP", label: "GBP · Pound", icon: "£" },
-  { value: "INR", label: "INR · Rupee", icon: "₹" },
-  { value: "JPY", label: "JPY · Yen", icon: "¥" },
-];
-const NOTIFICATIONS = [
-  { t: "NVDA signal flipped to Buy", d: "2m ago", c: "var(--tdn-up)" },
-  { t: "BTC crossed $66,000 resistance", d: "11m ago", c: "var(--tdn-iris-2)" },
-  { t: "Fed minutes released — high impact", d: "34m ago", c: "var(--tdn-amber)" },
-];
-
 export default function TradeonHeader({ data = [], status = "live" }) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [megaOpen, setMegaOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [lang, setLang] = useState("en");
-  const [currency, setCurrency] = useState("USD");
   const megaRef = useClickOutside(() => setMegaOpen(false), megaOpen);
   const pathname = usePathname() || "";
 
@@ -127,53 +105,6 @@ export default function TradeonHeader({ data = [], status = "live" }) {
               >
                 <Search size={17} />
               </button>
-
-              <div className="hidden lg:block">
-                <Dropdown
-                  icon={Globe}
-                  label={LANGUAGES.find((l) => l.value === lang)?.icon}
-                  items={LANGUAGES}
-                  value={lang}
-                  onSelect={setLang}
-                  buttonClassName="tdn-btn tdn-btn-icon !w-auto !px-2 !text-xs"
-                  width={170}
-                  showChevron={false}
-                />
-              </div>
-              <div className="hidden lg:block">
-                <Dropdown
-                  icon={Coins}
-                  label={currency}
-                  items={CURRENCIES}
-                  value={currency}
-                  onSelect={setCurrency}
-                  buttonClassName="tdn-btn tdn-btn-icon !w-auto !px-2 !text-xs"
-                  width={190}
-                  showChevron={false}
-                />
-              </div>
-
-              <div className="hidden sm:block">
-              <Dropdown icon={Bell} showChevron={false} buttonClassName="tdn-btn tdn-btn-icon !w-9 !h-9" width={280} align="right">
-                {() => (
-                  <div className="p-1">
-                    <div className="flex items-center justify-between px-2 py-1.5">
-                      <span className="text-sm font-semibold" style={{ color: "var(--tdn-fg-strong)" }}>Notifications</span>
-                      <span className="tdn-badge-live !text-[0.6rem] !py-0.5">3 new</span>
-                    </div>
-                    {NOTIFICATIONS.map((n) => (
-                      <div key={n.t} className="flex gap-2.5 px-2 py-2 rounded-lg hover:bg-[color-mix(in_srgb,var(--tdn-iris)_8%,transparent)]">
-                        <span className="w-1.5 h-1.5 rounded-full mt-1.5 shrink-0" style={{ background: n.c }} />
-                        <div>
-                          <p className="text-xs leading-snug" style={{ color: "var(--tdn-fg)" }}>{n.t}</p>
-                          <span className="text-[0.62rem]" style={{ color: "var(--tdn-faint)" }}>{n.d}</span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </Dropdown>
-              </div>
 
               <ThemeToggle />
 

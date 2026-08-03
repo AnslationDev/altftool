@@ -9,10 +9,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import {
-  Bell, ChevronLeft, Crosshair, GitCompare, Maximize2, PencilRuler,
-  Plus, Save, Settings2, Share2, Gauge, Star, TrendingUp,
-} from "lucide-react";
+import { ChevronLeft, Maximize2, Plus, Gauge, Star, TrendingUp } from "lucide-react";
 import { useMarketData } from "../../hooks/useMarketData";
 import { useNews } from "../../hooks/useNews";
 import { predict } from "../../lib/ai";
@@ -215,10 +212,7 @@ export default function AssetDetailClient({ symbol: symbolProp, defaultTab }) {
             <button onClick={() => setWatching((w) => !w)} className="tdn-btn tdn-btn-ghost !py-1.5 !px-2.5 text-xs" style={watching ? { color: "var(--tdn-amber)", borderColor: "color-mix(in srgb, var(--tdn-amber) 40%, transparent)" } : undefined}>
               <Star size={14} fill={watching ? "var(--tdn-amber)" : "none"} /> <span className="hidden sm:inline">{watching ? "Watching" : "Watchlist"}</span>
             </button>
-            <a href="#prediction" className="tdn-btn tdn-btn-soft !py-1.5 !px-2.5 text-xs"><Gauge size={14} /> <span className="hidden sm:inline">Prediction</span></a>
-            <button className="tdn-btn tdn-btn-ghost !py-1.5 !px-2.5 text-xs"><GitCompare size={14} /> <span className="hidden md:inline">Compare</span></button>
-            <button className="tdn-btn tdn-btn-ghost !py-1.5 !px-2.5 text-xs"><Bell size={14} /> <span className="hidden md:inline">Alerts</span></button>
-            <button className="tdn-btn tdn-btn-ghost !py-1.5 !px-2.5 text-xs"><Share2 size={14} /> <span className="hidden md:inline">Share</span></button>
+            <a href="#prediction" className="tdn-btn tdn-btn-soft !py-1.5 !px-2.5 text-xs"><Gauge size={14} /> <span className="hidden sm:inline">Signal model</span></a>
           </div>
         </div>
       </div>
@@ -245,9 +239,6 @@ export default function AssetDetailClient({ symbol: symbolProp, defaultTab }) {
                 ))}
               </div>
               <div className="flex items-center gap-0.5 ml-auto">
-                {[Crosshair, PencilRuler, GitCompare, Settings2, Save].map((Ic, i) => (
-                  <button key={i} className="tdn-btn tdn-btn-icon !w-7 !h-7" title={["Crosshair", "Drawing tools", "Compare assets", "Chart settings", "Save layout"][i]}><Ic size={13} /></button>
-                ))}
                 <Link href={`/tradeon/chart/${encodeURIComponent(inst.symbol)}`} className="tdn-btn tdn-btn-soft !py-1 !px-2.5 !text-xs gap-1 ml-1" title="Open full-screen chart">
                   <Maximize2 size={13} /> Full Chart
                 </Link>
@@ -398,13 +389,13 @@ export default function AssetDetailClient({ symbol: symbolProp, defaultTab }) {
 
         {/* ---------- Right sidebar ---------- */}
         <aside className="space-y-3 lg:sticky lg:top-[161px]">
-          <SidebarCard title="Prediction Summary" icon={Gauge}>
+          <SidebarCard title="Illustrative signal summary" icon={Gauge}>
             <div className="flex items-center gap-3">
               <Ring value={p.confidence} size={62} stroke={6} color={SIGNAL_COLOR[p.signal]} suffix="%" />
               <div className="flex-1">
                 <div className="text-sm font-bold" style={{ color: SIGNAL_COLOR[p.signal] }}>{p.signal}</div>
                 <div className="text-[0.66rem]" style={{ color: "var(--tdn-faint)" }}>{p.outlook.short} · {p.outlook.long}</div>
-                <div className="text-[0.66rem] mt-1" style={{ color: "var(--tdn-muted)" }}>Accuracy {p.accuracy}% · {p.factorTally.bullish}/{p.factors.length} bullish factors</div>
+                <div className="text-[0.66rem] mt-1" style={{ color: "var(--tdn-muted)" }}>{p.factorTally.bullish}/{p.factors.length} bullish factors · educational model</div>
               </div>
             </div>
           </SidebarCard>
@@ -421,18 +412,6 @@ export default function AssetDetailClient({ symbol: symbolProp, defaultTab }) {
 
           <SidebarCard title="Recent News">
             <RecentNewsView articles={liveNews} loading={newsLoading} now={now} variant="list" limit={4} showHeader={false} />
-          </SidebarCard>
-
-          <SidebarCard title="Economic Events">
-            <div className="space-y-1.5">
-              {[["13:30", "US CPI", "High"], ["15:00", "Fed Speech", "High"], ["18:00", "Crude Inv.", "Med"]].map(([t, e, imp]) => (
-                <div key={e} className="flex items-center gap-2 text-[0.72rem]">
-                  <span className="tdn-mono w-10" style={{ color: "var(--tdn-faint)" }}>{t}</span>
-                  <span className="flex-1 truncate" style={{ color: "var(--tdn-fg)" }}>{e}</span>
-                  <span className="text-[0.58rem] font-semibold px-1.5 py-0.5 rounded" style={{ color: imp === "High" ? "var(--tdn-down)" : "var(--tdn-amber)", background: `color-mix(in srgb, ${imp === "High" ? "var(--tdn-down)" : "var(--tdn-amber)"} 14%, transparent)` }}>{imp}</span>
-                </div>
-              ))}
-            </div>
           </SidebarCard>
 
           <SidebarCard title="Related Markets"><MiniList rows={indices} /></SidebarCard>

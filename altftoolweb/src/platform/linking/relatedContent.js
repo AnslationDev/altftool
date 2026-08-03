@@ -260,7 +260,7 @@ export function getRelatedContent({ source = {}, slots = [], excludeHrefs = [] }
 export const RELATED_PRESETS = {
   // Interactive tool/calculator/game pages: guides + adjacent utilities.
   utility: [
-    { sections: ["blogs", "top9", "top11"], limit: 2 },
+    { sections: ["blogs", "top9"], limit: 2 },
     // examPhoto rides in this slot on purpose: the scorer is token-overlap
     // based, so an exam page only surfaces on a photo/signature resize or
     // compress tool, which is exactly where a candidate already is.
@@ -289,7 +289,7 @@ export const RELATED_PRESETS = {
   // Editorial pages (listicles, news, facts): tools + more reading.
   editorial: [
     { sections: ["tools", "calculators", "deals"], limit: 3 },
-    { sections: ["blogs", "top9", "top11", "news"], limit: 2 },
+    { sections: ["blogs", "top9", "news"], limit: 2 },
     { sections: ["hubs"], limit: 1, minScore: 0 },
   ],
   // Landing/SEO pages (locations, landers, signals): broad discovery.

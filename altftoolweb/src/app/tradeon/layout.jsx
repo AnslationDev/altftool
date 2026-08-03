@@ -1,20 +1,19 @@
-// src/app/tradeon/layout.jsx
-"use client";
+import { notFound } from "next/navigation";
 
-import "./tradeon.css";
-import { useEffect } from "react";
-import { TradeonThemeProvider } from "./hooks/tradeonTheme";
+export const metadata = {
+  robots: { index: false, follow: false },
+};
 
-export default function TradeonLayout({ children }) {
-  useEffect(() => {
-    // Belt-and-suspenders: the GlobalChromeGate already removes AltFTool's
-    // header/footer for /tradeon; this class hides any legacy global chrome too.
-    document.body.classList.add("hide-global-header-active", "tradeon-active");
-    return () => {
-      document.body.classList.remove("hide-global-header-active", "tradeon-active");
-    };
-  }, []);
+// A statically prerendered notFound() can be emitted as a soft 404 by Next.js.
+// Keep this quarantine request-time so the HTTP response is a real 404.
+export const dynamic = "force-dynamic";
 
-  // The scoped wrapper maps the global system/light/dark preference to Tradeon.
-  return <TradeonThemeProvider>{children}</TradeonThemeProvider>;
+/**
+ * Tradeon is held from production while its illustrative market model is
+ * replaced with sourced, dated financial data. Keeping the implementation in
+ * Git makes the work recoverable without publishing synthetic fundamentals,
+ * institutional holdings, or trade targets as facts.
+ */
+export default function TradeonLayout() {
+  notFound();
 }

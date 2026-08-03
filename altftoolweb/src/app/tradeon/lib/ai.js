@@ -116,8 +116,6 @@ export function predict(inst) {
   const stop = round(signal === "SELL" ? price + atr * 1.3 : price - atr * 1.3);
   const rr = Math.abs((target - entry) / (entry - stop) || 1);
 
-  const accuracy = Math.round(clamp(63 + Math.cos(hashStr(inst.symbol)) * 12 + confidence * 0.12, 55, 89));
-
   // ---- Explainable factor scorecard (the "why" behind the call) ----
   const recent = series.slice(-6);
   const recAction = recent.length > 1 ? ((recent[recent.length - 1] - recent[0]) / recent[0]) * 100 : 0;
@@ -165,7 +163,6 @@ export function predict(inst) {
       short: signal === "BUY" ? "Bullish" : signal === "SELL" ? "Bearish" : "Range-bound",
       long: fundamental >= 60 ? "Constructive" : fundamental >= 45 ? "Neutral" : "Cautious",
     },
-    accuracy,
     metrics: { rsi: Math.round(osc), trend: round(trend * 100) / 100, volatility: round(vol) },
     explanation: explain({ inst, signal, osc, trend, chg, vol, confidence, risk, sentiments, rr }),
   };

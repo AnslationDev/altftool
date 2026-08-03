@@ -10,10 +10,38 @@
 // caller falls back to the RSS summary. Output is also sanitised on the client
 // with DOMPurify before rendering.
 
-import http from "node:http";
 import https from "node:https";
 
 const UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126 Safari/537.36";
+
+// Article URLs originate in third-party RSS documents, so they are untrusted
+// even though the feed endpoints themselves are configured by us. Restrict
+// every request and redirect to the publishers represented in NEWS_FEEDS. This
+// keeps a compromised feed from turning the extractor into an SSRF primitive.
+const ALLOWED_PUBLISHER_DOMAINS = Object.freeze([
+  "cnbc.com",
+  "coindesk.com",
+  "cointelegraph.com",
+  "economictimes.indiatimes.com",
+  "fxstreet.com",
+  "investing.com",
+  "moneycontrol.com",
+  "yahoo.com",
+]);
+
+export function isAllowedPublisherUrl(value) {
+  try {
+    const target = new URL(value);
+    const hostname = target.hostname.toLowerCase().replace(/\.$/, "");
+    if (target.protocol !== "https:" || target.username || target.password) return false;
+    if (target.port && target.port !== "443") return false;
+    return ALLOWED_PUBLISHER_DOMAINS.some(
+      (domain) => hostname === domain || hostname.endsWith(`.${domain}`),
+    );
+  } catch {
+    return false;
+  }
+}
 
 // Fetch a URL with a browser-like identity and a generous header cap. Node's
 // global fetch (undici) limits response headers to ~16 KB and throws
@@ -25,10 +53,11 @@ function httpGet(url, { timeout = 9000, redirects = 5 } = {}) {
     let settled = false;
     const ok = (v) => { if (!settled) { settled = true; resolve(v); } };
     const no = (e) => { if (!settled) { settled = true; reject(e); } };
-    let target, lib;
-    try { target = new URL(url); lib = target.protocol === "http:" ? http : https; }
+    let target;
+    try { target = new URL(url); }
     catch { return no(new Error("bad url")); }
-    const req = lib.get(
+    if (!isAllowedPublisherUrl(target)) return no(new Error("publisher not allowed"));
+    const req = https.get(
       target,
       { headers: { "User-Agent": UA, Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "Accept-Language": "en-US,en;q=0.9" }, maxHeaderSize: 262144, timeout },
       (res) => {
@@ -38,9 +67,16 @@ function httpGet(url, { timeout = 9000, redirects = 5 } = {}) {
           res.resume();
           let next;
           try { next = new URL(loc, url).href; } catch { return no(new Error("bad redirect")); }
+          if (!isAllowedPublisherUrl(next)) return no(new Error("redirect publisher not allowed"));
           return httpGet(next, { timeout, redirects: redirects - 1 }).then(ok, no);
         }
+        if (status >= 300 && status < 400) { res.resume(); return no(new Error("redirect refused")); }
         if (status < 200 || status >= 300) { res.resume(); return no(new Error(`status ${status}`)); }
+        const contentType = String(res.headers["content-type"] || "").toLowerCase();
+        if (contentType && !/(?:text\/html|application\/xhtml\+xml)/.test(contentType)) {
+          res.resume();
+          return no(new Error("unsupported content type"));
+        }
         let size = 0;
         const chunks = [];
         res.on("data", (c) => {
@@ -48,7 +84,7 @@ function httpGet(url, { timeout = 9000, redirects = 5 } = {}) {
           if (size > 6_000_000) { req.destroy(); return no(new Error("too large")); }
           chunks.push(c);
         });
-        res.on("end", () => ok({ url, text: Buffer.concat(chunks).toString("utf8") }));
+        res.on("end", () => ok({ url: target.href, text: Buffer.concat(chunks).toString("utf8") }));
       }
     );
     req.on("timeout", () => { req.destroy(); no(new Error("timeout")); });

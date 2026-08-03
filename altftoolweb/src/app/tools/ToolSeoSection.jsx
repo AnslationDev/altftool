@@ -58,7 +58,7 @@ export default function ToolSeoSection({ slug, tool, category = "all" }) {
       section: "tools",
     },
     slots: [
-      { sections: ["blogs", "top9", "top11"], limit: 2 },
+      { sections: ["blogs", "top9"], limit: 2 },
       { sections: ["calculators", "pdfTools", "imageTools", "deals"], limit: 2 },
       { sections: ["experiences", "games", "products"], limit: 2, minScore: 0 },
     ],

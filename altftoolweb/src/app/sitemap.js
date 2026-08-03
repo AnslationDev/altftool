@@ -65,11 +65,6 @@ import { pranks as pranxExperiences } from "@/app/pranx/data/pranxData";
 import { sitemapPages as tripFindBoxPages } from "@/app/bops/tripfindbox/lib/sitemapPages";
 import { HN_CATEGORIES } from "@/app/bops/housingneeds/_data/categories";
 import { BOPS_COLLECTIONS } from "@/app/bops/_data/collections";
-import { INSTRUMENTS as tradeonInstruments } from "@/app/tradeon/lib/instruments";
-import {
-  assetHref as tradeonAssetHref,
-  chartHref as tradeonChartHref,
-} from "@/app/tradeon/lib/format";
 
 export const revalidate = 3600;
 
@@ -96,10 +91,8 @@ const staticRoutes = [
   { path: "/desktop", priority: 0.7 },
   { path: "/fullscrn", priority: 0.65 },
   { path: "/search-eng", priority: 0.65 },
-  // /top11 is deliberately absent: the hub and all ten of its categories are
-  // noindexed (see app/top11/data/indexPolicy.js), and a noindexed URL must
-  // not be submitted. The gated loop further down covers the categories; this
-  // is the hub. /kym is absent for the same reason and never appeared here.
+  // /top11 is quarantined pending sourced editorial review. /kym is absent for
+  // the same noindex reason and never appeared here.
   { path: "/top9", priority: 0.68 },
   { path: "/top10", priority: 0.68 },
   { path: "/labs", priority: 0.66 },
@@ -162,9 +155,6 @@ const staticRoutes = [
   { path: "/imgprompt", priority: 0.76 },
   { path: "/imgprompt/studio", priority: 0.66 },
   { path: "/n8n", priority: 0.76 },
-  { path: "/tradeon", priority: 0.76 },
-  { path: "/tradeon/dashboard", priority: 0.66 },
-  { path: "/tradeon/workspace", priority: 0.66 },
   { path: "/prompts", priority: 0.76 },
   { path: "/prompts/seedream-5-pro", priority: 0.7 },
   { path: "/policypages/about", priority: 0.35 },
@@ -478,17 +468,6 @@ async function buildSitemapEntries({
         changeFrequency: "monthly",
       });
     }
-  }
-
-  for (const instrument of tradeonInstruments) {
-    pushUnique(entries, seen, tradeonAssetHref(instrument.symbol), {
-      priority: 0.58,
-      changeFrequency: instrument.binance ? "daily" : "weekly",
-    });
-    pushUnique(entries, seen, tradeonChartHref(instrument.symbol), {
-      priority: 0.52,
-      changeFrequency: instrument.binance ? "daily" : "weekly",
-    });
   }
 
   for (const suite of PRODUCT_SUITE_CATALOG) {

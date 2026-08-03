@@ -194,15 +194,6 @@ export const PRODUCT_REGISTRY = Object.freeze([
     summary: "Travel, home-service, loan, and insurance destinations organized as focused business workflows.",
   },
   {
-    id: "tradeon",
-    name: "AltF Tradeon",
-    phase: phases.platform.id,
-    priority: "P3",
-    status: "partial",
-    publicPath: "/tradeon",
-    summary: "Educational market dashboards, interactive charts, public crypto pricing, and clearly labelled illustrative multi-asset analysis.",
-  },
-  {
     id: "impact",
     name: "AltF Impact",
     phase: phases.platform.id,

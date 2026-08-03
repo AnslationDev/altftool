@@ -4,7 +4,6 @@ import { Fragment, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 import ToolLogo from "./ToolLogo";
-import RatingStars from "./RatingStars";
 import { useCompare } from "../providers/CompareProvider";
 import { useAuth } from "../providers/AuthProvider";
 import { useToolStats } from "../providers/ToolStatsProvider";
@@ -18,7 +17,7 @@ const PRICING_STYLES = {
 };
 
 /**
- * Five comparison rows. "Popularity" is opens recorded on AltFTool itself
+ * Comparison rows use facts in the directory plus opens recorded on AltFTool
  * (our own click-through data — see ToolStatsProvider), not third-party
  * traffic for the tool's own site, which no public API exposes.
  */
@@ -35,10 +34,6 @@ function buildRows(weeklyOpensFor) {
           {tool.pricing}
         </span>
       ),
-    },
-    {
-      label: "Rating",
-      render: (tool) => <RatingStars rating={tool.rating} size={13} />,
     },
     {
       label: "Popularity",
@@ -101,7 +96,7 @@ export default function CompareModal() {
           <div>
             <h2 className="text-2xl font-bold text-[#0A0523]">Compare Tools</h2>
             <p className="mt-1 text-xs text-[#0A0523]/40">
-              Rating is an editorial score, not a live user vote. Popularity reflects opens via AltFTool.
+              Popularity reflects opens recorded on AltFTool, not third-party traffic.
             </p>
           </div>
           <button

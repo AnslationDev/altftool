@@ -16,70 +16,12 @@ import {
 } from "lucide-react";
 import { toolId } from "../lib/toolId";
 
-// Deterministic, name-derived rating (4.2-4.9) — seeded/editorial, not a live
-// user-vote average. Stable across reloads since it's a pure hash of the
-// name rather than Math.random(). Flagged clearly wherever it's displayed.
-function seedRating(name) {
-  let hash = 0;
-  for (let i = 0; i < name.length; i += 1) {
-    hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
-  }
-  return Math.round((4.2 + (hash % 8) / 10) * 10) / 10;
-}
-
-// Estimated worldwide weekly visits — editorial figures based on general
-// public knowledge of each tool's relative popularity, NOT live third-party
-// analytics (no API gives that for a site you don't own; see AuthDialog/
-// ToolStatsProvider for the analytics we can actually track ourselves).
-// Well-known tools get a hand-picked ballpark; everything else falls back to
-// a smaller deterministic estimate so the long tail still looks plausible
-// rather than uniform.
-const KNOWN_WEEKLY_VISITS = {
-  Canva: 42_000_000,
-  Figma: 18_000_000,
-  Midjourney: 12_000_000,
-  "Adobe Creative Cloud": 9_500_000,
-  "Google Fonts": 8_200_000,
-  Miro: 7_400_000,
-  "Adobe Express": 6_500_000,
-  Webflow: 5_800_000,
-  "Adobe Firefly": 5_000_000,
-  Framer: 3_400_000,
-  "Adobe XD": 3_100_000,
-  ChatGPT: 20_000_000,
-  Claude: 1_500_000,
-  Sketch: 1_600_000,
-  "Adobe Fonts": 2_100_000,
-  Notion: 4_000_000,
-};
-
-function seedWeeklyVisits(name) {
-  if (KNOWN_WEEKLY_VISITS[name]) return KNOWN_WEEKLY_VISITS[name];
-  let hash = 0;
-  for (let i = 0; i < name.length; i += 1) {
-    hash = (hash * 31 + name.charCodeAt(i)) >>> 0;
-  }
-  return 40_000 + (hash % 960_000); // 40K - 1M for the long tail
-}
-
-/** "42000000" -> "42M", "900000" -> "900K". Used wherever weeklyVisits renders. */
-export function formatVisits(n) {
-  if (n >= 1_000_000) {
-    const millions = n / 1_000_000;
-    return `${millions >= 10 ? Math.round(millions) : Math.round(millions * 10) / 10}M`;
-  }
-  if (n >= 1_000) return `${Math.round(n / 1000)}K`;
-  return `${n}`;
-}
-
 const tool = (name, domain, tagline, pricing = "FREE + PAID", category = "Design Tools", url) => ({
   name,
   domain,
   tagline,
   pricing,
   category,
-  weeklyVisits: seedWeeklyVisits(name),
-  rating: seedRating(name),
   url: url || `https://${domain}`,
 });
 

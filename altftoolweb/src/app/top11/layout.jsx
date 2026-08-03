@@ -1,15 +1,17 @@
-import "./top11.css";
-import Top11Shell from "./components/Top11Shell";
+import { notFound } from "next/navigation";
+
+export const metadata = {
+  robots: { index: false, follow: false },
+};
+
+// A statically prerendered notFound() can be emitted as a soft 404 by Next.js.
+// Keep this quarantine request-time so the HTTP response is a real 404.
+export const dynamic = "force-dynamic";
 
 /**
- * Section layout. Top11 ships its own header, footer and mobile bar, so
- * AltFTool's global chrome is suppressed for these routes — see the "/top11"
- * entry in platform/navigation/GlobalChromeGate.
- *
- * Mounting the shell here (rather than inside each page) keeps the header and
- * the search palette alive across client navigations instead of remounting them
- * on every route change.
+ * Top11 remains unavailable until every ranking and recommendation has a
+ * named source, checked date, working destination, and editorial owner.
  */
-export default function Top11Layout({ children }) {
-  return <Top11Shell>{children}</Top11Shell>;
+export default function Top11Layout() {
+  notFound();
 }

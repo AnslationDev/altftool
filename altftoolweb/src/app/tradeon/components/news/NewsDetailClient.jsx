@@ -12,7 +12,7 @@ import { ArrowLeft, ArrowUpRight, Check, Clock, ExternalLink, Flame, Link2, Shar
 import { useMarketData } from "../../hooks/useMarketData";
 import { categoryLabel } from "../../lib/news";
 import { assetHref, formatPct } from "../../lib/format";
-import { outlookSlug, predictionSlug } from "../../lib/slug";
+import { outlookSlug } from "../../lib/slug";
 import LiveValue from "../shared/LiveValue";
 import TradeonHeader from "../landing/TradeonHeader";
 import TradeonFooter from "../landing/TradeonFooter";
@@ -232,7 +232,7 @@ export default function NewsDetailClient() {
                 </div>
               </article>
 
-              {/* Right rail — narrow: Top Gainers → Top Losers → Share Price → Predictions → Related news */}
+              {/* Right rail — live movers, educational market pages and related news. */}
               <aside className="lg:col-span-3 space-y-8">
                 {/* Live market movers (equities), clickable to each asset's detail page */}
                 <MoversPanel title="Top Gainers" icon={Flame} color="var(--tdn-up)" rows={movers.gainers} />
@@ -245,19 +245,6 @@ export default function NewsDetailClient() {
                     {STOCKS.map((s) => (
                       <Link key={s.symbol} href={`/tradeon/weekly-outlook/${outlookSlug(s.symbol)}`} className="text-sm transition-colors hover:text-[var(--tdn-iris-2)] hover:underline" style={{ color: "var(--tdn-fg)" }}>
                         {s.symbol} Share Price
-                      </Link>
-                    ))}
-                  </nav>
-                </section>
-
-                {/* Predictions — clickable titles → each stock's prediction (asset) page */}
-                <section>
-                  <h2 className="text-base font-bold pb-2 mb-4" style={{ color: "var(--tdn-fg-strong)", borderBottom: "2px solid var(--tdn-iris)" }}>Predictions</h2>
-                  <nav className="flex flex-col gap-2.5">
-                    {STOCKS.map((s) => (
-                      <Link key={s.symbol} href={`/tradeon/predictions/${predictionSlug(s.symbol)}`} className="group flex items-center justify-between gap-2 text-sm transition-colors" style={{ color: "var(--tdn-fg)" }}>
-                        <span className="transition-colors group-hover:text-[var(--tdn-iris-2)] group-hover:underline">{s.name} Prediction</span>
-                        <ArrowUpRight size={13} className="shrink-0 opacity-0 transition-opacity group-hover:opacity-100" style={{ color: "var(--tdn-iris-2)" }} />
                       </Link>
                     ))}
                   </nav>

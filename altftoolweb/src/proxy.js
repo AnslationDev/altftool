@@ -14,6 +14,12 @@ import {
 // → canonical category routes. Static data, computed once per worker.
 const LEGACY_CATEGORY_REDIRECTS = getLegacyCategorySlugMap();
 
+// These product families remain in Git for remediation, but must not be
+// reachable until their unsourced rankings/financial claims are replaced.
+// Rewriting to the framework 404 route preserves the normal error UI while
+// setting a real 404 status (layout-level notFound() can stream a soft 404).
+const QUARANTINED_ROUTE_PREFIXES = ["/top11", "/tradeon"];
+
 const REDIRECTS_MAP = {
   "/blog": "/blogs",
   "/about": "/policypages/about",
@@ -38,6 +44,21 @@ export async function proxy(request) {
   let pathname = url.pathname;
   let changed = false;
   let statusCode = 301;
+
+  if (
+    QUARANTINED_ROUTE_PREFIXES.some(
+      (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
+    )
+  ) {
+    const notFoundUrl = new URL("/_not-found", request.url);
+    return NextResponse.rewrite(notFoundUrl, {
+      status: 404,
+      headers: {
+        "Cache-Control": "public, max-age=0, s-maxage=300",
+        "X-Robots-Tag": "noindex, nofollow",
+      },
+    });
+  }
 
   // 1a. ALTF Engine central redirects (admin-managed, no deploy).
   //     Inert when the engine is off: getActiveRedirects() returns [] instantly.

@@ -14,7 +14,7 @@ export const PUBLIC_ROUTE_FAMILIES = Object.freeze([
     description:
       "Focused AltFTool products for ideas, security, careers, creators, markets, and everyday work.",
     href: "/products",
-    prefixes: ["/products", "/signals", "/tradeon"],
+    prefixes: ["/products", "/signals"],
   },
   {
     id: "tools",
@@ -75,7 +75,6 @@ export const PUBLIC_ROUTE_FAMILIES = Object.freeze([
       "/brandrating",
       "/sale",
       "/top9",
-      "/top11",
     ],
   },
   {

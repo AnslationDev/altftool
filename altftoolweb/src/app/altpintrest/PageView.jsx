@@ -615,7 +615,7 @@ export default function AltPinterest({ defaultView, children: heading }) {
   };
 
   return (
-    <div className={`min-h-screen bg-[var(--background)] text-[var(--foreground)] ${inter.className}`}>
+    <div className={`altpinterest-root min-h-screen bg-[var(--background)] text-[var(--foreground)] ${inter.className}`}>
       {/* Global Unified Sticky Header Across All Pages */}
       <header className="sticky top-0 z-50 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border-b border-gray-200/80 dark:border-zinc-800/80 px-3 sm:px-6 lg:px-8 w-full max-w-full">
         <div className="max-w-[1560px] mx-auto h-16 flex items-center justify-between gap-2 sm:gap-4 w-full">

@@ -7,7 +7,6 @@ import {
   Search,
   ShieldCheck,
   ShoppingBag,
-  Star,
   Tags,
   Wrench,
 } from "lucide-react";
@@ -82,12 +81,6 @@ const routeHubMap = {
         description: "Explore buying guides and savings workflows.",
         href: "/buysmart",
         icon: ShoppingBag,
-      },
-      {
-        title: "Top 11 picks",
-        description: "Scan ranked shortlists for common categories.",
-        href: "/top11",
-        icon: Star,
       },
     ],
   },

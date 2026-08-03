@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import { Star, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { SkeletonBlock } from "@/components/ui/skeleton";
 
 export default function AcademyCard({ academy }) {
@@ -26,10 +26,11 @@ export default function AcademyCard({ academy }) {
           <AcademyLogoImage key={academy.image || academy.id || academy.name} academy={academy} />
         </div>
 
-        <div className="academy-pill flex h-[28px] items-center gap-[6px] rounded-[7px] px-[10px] text-sm font-medium">
-          <Star size={16} className="fill-yellow-500 stroke-yellow-500 " />
-          {academy.rating}
-        </div>
+        {academy.rating !== null && academy.rating !== undefined ? (
+          <div className="academy-pill flex h-[28px] items-center rounded-[7px] px-[10px] text-sm font-medium">
+            User rating: {academy.rating}
+          </div>
+        ) : null}
       </div>
 
       <span
