@@ -27,7 +27,6 @@ const staticWebRoutes = [
   "/search-eng",
   "/smartlink",
   "/supportsetting",
-  "/top11",
   "/trendingvids",
   "/wattpad",
   "/news",
@@ -337,11 +336,7 @@ async function buildWebRoutes() {
     });
   }
 
-  routes.push(
-    { group: "top11", route: "/top11/management" },
-    { group: "top11", route: "/top11/web-hosting" },
-    { group: "skill seo", route: "/skill/react/united-states" },
-  );
+  routes.push({ group: "skill seo", route: "/skill/react/united-states" });
 
   for (const article of (newsData.news || []).slice(0, 5)) {
     if (article?.slug) routes.push({ group: "news", route: `/news/${article.slug}` });
@@ -532,7 +527,21 @@ test("seo endpoints and structured data render", async ({ page, request }) => {
   expect(sitemapText).toContain("/tools/all/api-stress-estimator");
   expect(sitemapText).toContain("/blogs/age-calculator-guide");
   expect(sitemapText).toContain("/exclusivedeals/most-popular");
-  expect(sitemapText).toContain("/extensions/");
+  expect(sitemapText).toContain(
+    "<loc>https://www.altftool.com/extensions</loc>",
+  );
+  expect(sitemapText).not.toContain("/top11");
+
+  for (const route of [
+    "/top11",
+    "/top11/management",
+    "/top11/web-hosting",
+  ]) {
+    const response = await request.get(`${webUrl}${route}`);
+    expect(response.status()).toBe(404);
+    expect(response.headers()["x-robots-tag"]).toContain("noindex");
+    expect(await response.text()).toContain('name="robots" content="noindex"');
+  }
 
   const robots = await request.get(`${webUrl}/robots.txt`);
   expect(robots.ok()).toBeTruthy();

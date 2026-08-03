@@ -4,7 +4,7 @@ import { createRequire } from "node:module";
 
 const require = createRequire(import.meta.url);
 const minimumVersions = {
-  postcss: [8, 5, 18],
+  postcss: [8, 5, 23],
   sharp: [0, 35, 0],
 };
 
