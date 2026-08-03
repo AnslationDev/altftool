@@ -296,7 +296,7 @@ export function buildAgreement({
 
   const rotation = buildChoreRotation({
     occupants: split.rows,
-    chores: chores.length ? chores : CHORE_PRESETS.slice(0, 3),
+    chores,
     weeks: rotationWeeks,
   });
   const choreText = rotation.error
@@ -346,7 +346,7 @@ export function buildAgreement({
     clause(
       5,
       "Cleaning and chores",
-      `   The Flatmates run the following ${rotation.error ? "" : `${rotationWeeks}-week `}rotation and each person completes their task before the end of that week:\n${choreText}\n   Everyone cleans up after themselves in shared spaces the same day.`,
+      `   The Flatmates run the following ${rotation.error ? "" : `${rotation.rows.length}-week `}rotation and each person completes their task before the end of that week:\n${choreText}\n   Everyone cleans up after themselves in shared spaces the same day.`,
     ),
     "",
     clause(

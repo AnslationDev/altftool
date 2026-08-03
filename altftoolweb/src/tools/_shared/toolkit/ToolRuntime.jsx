@@ -84,6 +84,23 @@ export default function ToolRuntime({ spec }) {
   };
 
   const reset = () => {
+    // Opt-in only: specs stay silent by default (unchanged behavior for
+    // every tool that doesn't set spec.confirmReset). Tools whose only
+    // meaningful input is free-form pasted text (e.g. a large textarea) can
+    // set spec.confirmReset to a string to gate this destructive action
+    // behind a confirmation, matching the window.confirm convention used by
+    // bespoke tool pages for destructive resets.
+    if (
+      spec.confirmReset &&
+      typeof window !== "undefined" &&
+      !window.confirm(
+        typeof spec.confirmReset === "string"
+          ? spec.confirmReset
+          : "Reset all fields to the defaults? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setRaw(defaultValues(spec.fields));
     if (hasModes) setMode(spec.modes[0].id);
   };

@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "ifsc-decoder-validator",
   "title": "IFSC Decoder & Validator",
-  "description": "IFSC format validate karke bank, branch aur location lookup kare.",
+  "description": "IFSC format validate karke bank aur branch identifier decode kare.",
   "badge": "India-Specific Utilities",
   "category": [
     "Finance",
@@ -51,7 +51,7 @@ export const spec = {
       const valid = /^[A-Z]{4}0[A-Z0-9]{6}$/.test(code);
       const banks = { SBIN: "State Bank of India", HDFC: "HDFC Bank", ICIC: "ICICI Bank", UTIB: "Axis Bank", PUNB: "Punjab National Bank", BARB: "Bank of Baroda", CNRB: "Canara Bank", BKID: "Bank of India", KKBK: "Kotak Mahindra Bank", IDIB: "Indian Bank", UBIN: "Union Bank of India", YESB: "YES Bank", INDB: "IndusInd Bank", IOBA: "Indian Overseas Bank" };
       const prefix = code.slice(0, 4);
-      return { result: valid ? "Structurally valid IFSC" : "Invalid IFSC structure", caption: valid ? (banks[prefix] || "Bank prefix not in local convenience list") : "Expected 4 letters, 0, then 6 letters/digits", rows: [["Normalized", code || "—"], ["Bank prefix", prefix || "—"], ["Bank", banks[prefix] || "Confirm with RBI"], ["Branch identifier", valid ? code.slice(5) : "—"]] };
+      return { result: valid ? "Structurally valid IFSC" : "Invalid IFSC structure", caption: valid ? (banks[prefix] || "Bank prefix not in local convenience list") : "Expected 4 letters, 0, then 6 letters/digits", rows: [["Normalized", code || "—"], ["Bank prefix", valid ? (prefix || "—") : "—"], ["Bank", valid ? (banks[prefix] || "Confirm with RBI") : "—"], ["Branch identifier", valid ? code.slice(5) : "—"]] };
     },
 };
 

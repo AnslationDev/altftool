@@ -436,12 +436,16 @@ const mediaOptions = {
     label: "Pipeline",
     choices: ["resize-1200", "square-crop", "grayscale", "watermark"],
     extension: "png",
-    command: (input, output, choice) => {
+    // The WASM ffmpeg core has no fontconfig, so drawtext requires an explicit
+    // fontfile written into the in-memory FS before exec — otherwise it fails
+    // filter-graph configuration with "No font filename provided" every time.
+    fontUrl: "https://cdn.jsdelivr.net/fontsource/fonts/roboto@latest/latin-400-normal.ttf",
+    command: (input, output, choice, second, fontPath) => {
       const filter = {
         "resize-1200": "scale='min(1200,iw)':-2",
         "square-crop": "crop='min(iw,ih)':'min(iw,ih)',scale=1080:1080",
         grayscale: "format=gray",
-        watermark: "drawtext=text='ALTFTool':x=w-tw-24:y=h-th-24:fontsize=28:box=1:boxborderw=8",
+        watermark: `drawtext=fontfile='${fontPath}':text='ALTFTool':x=w-tw-24:y=h-th-24:fontsize=28:box=1:boxborderw=8`,
       }[choice];
       return ["-i", input, "-vf", filter, output];
     },
@@ -506,6 +510,7 @@ function MediaLab({ slug }) {
   const [busy, setBusy] = useState(false);
   const [progress, setProgress] = useState(0);
   const [message, setMessage] = useState("");
+  const [messageTone, setMessageTone] = useState("info");
   const [logs, setLogs] = useState([]);
   const engine = useRef(null);
   const logsRef = useRef([]);
@@ -516,6 +521,7 @@ function MediaLab({ slug }) {
     if (!file || (config.second && !second)) return;
     setBusy(true);
     setMessage("");
+    setMessageTone("info");
     setLogs([]);
     logsRef.current = [];
     setProgress(0);
@@ -552,12 +558,17 @@ function MediaLab({ slug }) {
         secondName = `secondary.${second.name.split(".").pop() || "bin"}`;
         await ffmpeg.writeFile(secondName, await fetchFile(second));
       }
+      let fontName = "";
+      if (config.fontUrl) {
+        fontName = "altftool-drawtext-font.ttf";
+        await ffmpeg.writeFile(fontName, await fetchFile(config.fontUrl));
+      }
       const extension =
         typeof config.extension === "function"
           ? config.extension(choice)
           : config.extension;
       const output = `altftool-${slug}.${extension}`;
-      const command = config.command(input, output, choice, secondName);
+      const command = config.command(input, output, choice, secondName, fontName);
       const exitCode = await ffmpeg.exec(command);
       if (exitCode !== 0) throw new Error(`Processing exited with code ${exitCode}`);
       if (config.analyze) {
@@ -567,17 +578,21 @@ function MediaLab({ slug }) {
           `altftool-${slug}-analysis.txt`,
         );
         setMessage("Analysis completed. The diagnostic log was downloaded.");
+        setMessageTone("info");
       } else {
         const bytes = await ffmpeg.readFile(output);
         downloadBlob(new Blob([bytes]), output);
         await ffmpeg.deleteFile(output).catch(() => {});
         setMessage(`Completed locally and downloaded ${output}.`);
+        setMessageTone("info");
       }
       await ffmpeg.deleteFile(input).catch(() => {});
       if (secondName) await ffmpeg.deleteFile(secondName).catch(() => {});
+      if (fontName) await ffmpeg.deleteFile(fontName).catch(() => {});
       setProgress(100);
     } catch (error) {
       setMessage(error?.message || "Processing failed");
+      setMessageTone("error");
     } finally {
       setBusy(false);
     }
@@ -648,7 +663,7 @@ function MediaLab({ slug }) {
             <Info label="Profile" value={choice} />
           </dl>
         )}
-        {message && <div className="mt-4"><Notice tone={/fail|error/i.test(message) ? "error" : "info"}>{message}</Notice></div>}
+        {message && <div className="mt-4"><Notice tone={messageTone}>{message}</Notice></div>}
         {!!logs.length && (
           <pre className="mt-4 max-h-72 overflow-auto rounded-md bg-[var(--muted)] p-3 text-xs text-[var(--muted-foreground)]">
             {logs.slice(-30).join("\n")}

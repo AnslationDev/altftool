@@ -1,6 +1,6 @@
 export default function Features() {
   const items = [
-    { title: "Smart Lead-Time Alerts", description: "Set reminders 1, 3, 7, 14, or custom days before an occasion." },
+    { title: "Smart Lead-Time Alerts", description: "Type any custom number of days before an occasion for your reminder lead time." },
     { title: "Recurring Occasion Support", description: "Handle yearly birthdays, monthly payments, and one-time events." },
     { title: "Upcoming vs Overdue Tracking", description: "Instantly see what is upcoming, due today, or already missed." },
     { title: "Priority-Friendly Planning", description: "Organize tasks by urgency so you can act on high-impact reminders first." },

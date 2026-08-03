@@ -46,8 +46,33 @@ function countOutsideQuotes(line, char) {
   return count;
 }
 
+/**
+ * The first logical row of the text, respecting quotes — unlike a naive
+ * `split("\n")[0]`, this does not stop early when the first field is a
+ * quoted value that itself contains a literal newline.
+ */
+function firstLogicalLine(text) {
+  const source = String(text == null ? "" : text);
+  let inQuotes = false;
+  for (let i = 0; i < source.length; i += 1) {
+    const c = source[i];
+    if (c === '"') {
+      if (inQuotes && source[i + 1] === '"') {
+        i += 1;
+        continue;
+      }
+      inQuotes = !inQuotes;
+      continue;
+    }
+    if (!inQuotes && c === "\n") {
+      return source.slice(0, i).replace(/\r$/, "");
+    }
+  }
+  return source.replace(/\r$/, "");
+}
+
 export function detectDelimiter(text) {
-  const firstLine = String(text == null ? "" : text).split("\n")[0] || "";
+  const firstLine = firstLogicalLine(text);
   let best = DELIMITERS[0];
   let bestCount = 0;
   for (const candidate of DELIMITERS) {
@@ -357,7 +382,16 @@ export function tokeniseQuery(query) {
   return tokens;
 }
 
-export function parseQuery(query) {
+/**
+ * @param {string} query
+ * @param {string[]} [columns] Known field names. When given, a `word:rest`
+ *   token is only treated as field syntax when `word` actually names one of
+ *   these columns (case-insensitively) — otherwise the colon is just part of
+ *   the searched text (a time like "10:30", a URL, a score like "3:2", etc.)
+ *   and the whole token is matched as a bare/plain value instead.
+ */
+export function parseQuery(query, columns) {
+  const knownFields = Array.isArray(columns) ? columns.map((column) => String(column).toLowerCase()) : null;
   const terms = [];
   for (const rawToken of tokeniseQuery(query)) {
     let token = rawToken;
@@ -370,8 +404,11 @@ export function parseQuery(query) {
     let field = null;
     const colon = token.indexOf(":");
     if (colon > 0 && !token.slice(0, colon).includes('"')) {
-      field = token.slice(0, colon).trim();
-      token = token.slice(colon + 1);
+      const candidateField = token.slice(0, colon).trim();
+      if (!knownFields || knownFields.includes(candidateField.toLowerCase())) {
+        field = candidateField;
+        token = token.slice(colon + 1);
+      }
     }
 
     let phrase = false;
@@ -431,6 +468,12 @@ function bestMatchForTerm(row, columns, term) {
 }
 
 function compareValues(a, b, type) {
+  // Blank cells always sort last, regardless of column type — checked first
+  // so a numeric column doesn't treat "" as Number("") === 0, a legitimate
+  // comparable value, ahead of this rule.
+  if (a === "" && b !== "") return 1;
+  if (b === "" && a !== "") return -1;
+  if (a === "" && b === "") return 0;
   if (type === "number") {
     const na = Number(a);
     const nb = Number(b);
@@ -441,8 +484,6 @@ function compareValues(a, b, type) {
     if (bOk) return 1;
     return String(a).localeCompare(String(b));
   }
-  if (a === "" && b !== "") return 1;
-  if (b === "" && a !== "") return -1;
   return String(a).localeCompare(String(b), undefined, { numeric: type === "date", sensitivity: "base" });
 }
 
@@ -467,7 +508,7 @@ export function searchRecords(input) {
   if (!columns || columns.length === 0) return { error: "No columns to search — load some records first." };
   if (!rows) return { error: "No records to search — load some records first." };
 
-  const terms = parseQuery(source.query);
+  const terms = parseQuery(source.query, columns);
   const unknownField = terms
     .filter((term) => term.field)
     .map((term) => term.field)

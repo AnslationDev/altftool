@@ -84,6 +84,14 @@ function getExtension(fileName = "") {
   return VIDEO_EXTENSIONS.includes(ext) ? ext : "mp4";
 }
 
+// Unlike getExtension() above (which always falls back to "mp4" for use in
+// output naming), this returns the file's *real* extension with no fallback,
+// so callers that need to validate "is this actually a video file" don't get
+// a false positive just because the fallback happens to be a valid one.
+function getRawExtension(fileName = "") {
+  return fileName.split(".").pop()?.toLowerCase() || "";
+}
+
 function sanitizeFileName(name = "video") {
   return (
     name
@@ -203,7 +211,7 @@ export default function MainComponent() {
     setStatus("");
     clearResult();
 
-    const ext = getExtension(selectedFile?.name);
+    const ext = getRawExtension(selectedFile?.name);
     const isVideo =
       selectedFile?.type?.startsWith("video/") ||
       VIDEO_EXTENSIONS.includes(ext);

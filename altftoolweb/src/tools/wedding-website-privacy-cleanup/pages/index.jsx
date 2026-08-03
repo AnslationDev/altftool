@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, HeartHandshake, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   auditWeddingSite,
   EXPOSURE_GROUPS,
@@ -36,7 +37,8 @@ export default function ToolHome() {
   const [exposed, setExposed] = useState(DEFAULT_EXPOSED);
   const [records, setRecords] = useState(DEFAULT_RECORDS);
   const [days, setDays] = useState(DEFAULT_DAYS);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -54,7 +56,7 @@ export default function ToolHome() {
     setExposed((current) =>
       current.includes(id) ? current.filter((value) => value !== id) : [...current, id],
     );
-    setCopied(false);
+    resetCopyState();
   };
 
   const summary = useMemo(() => {
@@ -77,22 +79,20 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copyToClipboard("plan", summary, { label: "Privacy audit and cleanup plan" });
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the audit? This clears every ticked exposure item and puts the guest-record and days-online fields back to their defaults.",
+      )
+    ) {
+      return;
+    }
     setExposed(DEFAULT_EXPOSED);
     setRecords(DEFAULT_RECORDS);
     setDays(DEFAULT_DAYS);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -165,7 +165,7 @@ export default function ToolHome() {
               value={records}
               onChange={(event) => {
                 setRecords(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             />
           </div>
@@ -183,7 +183,7 @@ export default function ToolHome() {
               value={days}
               onChange={(event) => {
                 setDays(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             />
           </div>
@@ -201,7 +201,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Exposure score
             </p>
@@ -213,29 +213,35 @@ export default function ToolHome() {
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
+            {/* Copy is the safe, non-destructive action, so it gets the
+                visually prominent primary style; Reset is destructive and is
+                de-emphasized as a ghost button (see finding 2). */}
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the privacy audit and cleanup plan"
-              className={GHOST_BTN}
+              aria-label={isCopied("plan") ? "Copied the privacy audit and cleanup plan" : "Copy the privacy audit and cleanup plan"}
+              className={PRIMARY_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("plan") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy plan"}
+              {isCopied("plan") ? "Copied!" : "Copy plan"}
             </button>
             <button
               type="button"
               onClick={reset}
               aria-label="Reset the audit to its defaults"
-              className={PRIMARY_BTN}
+              className={GHOST_BTN}
             >
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

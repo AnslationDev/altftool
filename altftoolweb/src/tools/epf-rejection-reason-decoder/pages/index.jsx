@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   BadgeAlert,
   Building2,
@@ -16,7 +16,9 @@ import {
   Users,
 } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
+  EPF_SUPERANNUATION_AGE,
   FORM31_PURPOSES,
   FORM_FILTERS,
   FORM_GUIDE,
@@ -89,25 +91,21 @@ function reasonTitle(id) {
   return reason ? reason.title : DASH;
 }
 
-function copyText(value, onDone) {
-  navigator.clipboard
-    .writeText(value)
-    .then(() => onDone(true))
-    .catch(() => onDone(false));
-}
-
 export default function ToolHome() {
   const [remark, setRemark] = useState(DEFAULT_REMARK);
   const [query, setQuery] = useState("");
   const [ownerFilter, setOwnerFilter] = useState("all");
   const [formFilter, setFormFilter] = useState("all");
   const [openIds, setOpenIds] = useState([]);
-  const [copiedKey, setCopiedKey] = useState("");
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard({
+    resetMs: 1800,
+  });
 
   // Form 19 timing
   const [exitDate, setExitDate] = useState("2026-05-31");
   const [claimDate, setClaimDate] = useState("2026-07-28");
   const [reEmployed, setReEmployed] = useState(false);
+  const [exitAge, setExitAge] = useState("");
 
   // Form 10C
   const [contributoryMonths, setContributoryMonths] = useState("42");
@@ -120,6 +118,8 @@ export default function ToolHome() {
   const [membershipMonths, setMembershipMonths] = useState("48");
   const [priorOccasions, setPriorOccasions] = useState("0");
   const [advanceAge, setAdvanceAge] = useState("38");
+  const [unemploymentExitDate, setUnemploymentExitDate] = useState("");
+  const [unemploymentClaimDate, setUnemploymentClaimDate] = useState("");
 
   const decoded = useMemo(() => decodeRemark(remark), [remark]);
   const results = useMemo(
@@ -128,8 +128,14 @@ export default function ToolHome() {
   );
 
   const form19 = useMemo(
-    () => assessForm19Timing({ exitDate, claimDate, reEmployed }),
-    [exitDate, claimDate, reEmployed],
+    () =>
+      assessForm19Timing({
+        exitDate,
+        claimDate,
+        reEmployed,
+        ageYears: exitAge === "" ? null : Number(exitAge),
+      }),
+    [exitDate, claimDate, reEmployed, exitAge],
   );
   const form10c = useMemo(
     () =>
@@ -148,15 +154,36 @@ export default function ToolHome() {
         membershipMonths: Number(membershipMonths),
         priorOccasions: Number(priorOccasions),
         ageYears: advanceAge === "" ? null : Number(advanceAge),
+        unemploymentExitDate: unemploymentExitDate || null,
+        unemploymentClaimDate: unemploymentClaimDate || null,
       }),
-    [purposeCode, membershipMonths, priorOccasions, advanceAge],
+    [
+      purposeCode,
+      membershipMonths,
+      priorOccasions,
+      advanceAge,
+      unemploymentExitDate,
+      unemploymentClaimDate,
+    ],
   );
+
+  // Set alongside the filter resets in openReason() below; the effect that
+  // watches query/ownerFilter/formFilter/openIds runs once React has
+  // actually committed those cleared filters to the DOM, so the target
+  // <li id=...> is guaranteed to exist by the time it queries for it — a
+  // plain ref (rather than state) avoids a second render just to clear it.
+  // Querying document.getElementById synchronously right after the
+  // setState calls (the previous approach) could run before React
+  // re-rendered, which silently no-op'd the scroll whenever a search/owner/
+  // form filter had been hiding the target reason.
+  const scrollTargetRef = useRef(null);
 
   const openReason = useCallback((id) => {
     setQuery("");
     setOwnerFilter("all");
     setFormFilter("all");
     setOpenIds((current) => (current.includes(id) ? current : [...current, id]));
+    scrollTargetRef.current = id;
   }, []);
 
   const toggleReason = useCallback((id) => {
@@ -165,6 +192,14 @@ export default function ToolHome() {
     );
   }, []);
 
+  useEffect(() => {
+    const id = scrollTargetRef.current;
+    if (!id) return;
+    const node = document.getElementById(id);
+    if (node) node.scrollIntoView({ block: "start", behavior: "smooth" });
+    scrollTargetRef.current = null;
+  }, [query, ownerFilter, formFilter, openIds]);
+
   // Deep links: /tools/all/epf-rejection-reason-decoder#service-period-overlap
   useEffect(() => {
     let frame = 0;
@@ -172,8 +207,6 @@ export default function ToolHome() {
       const id = window.location.hash.replace("#", "").trim();
       if (!id || !getReasonById(id)) return;
       openReason(id);
-      const node = document.getElementById(id);
-      if (node) node.scrollIntoView({ block: "start", behavior: "auto" });
     }
     frame = window.requestAnimationFrame(applyHash);
     window.addEventListener("hashchange", applyHash);
@@ -183,19 +216,17 @@ export default function ToolHome() {
     };
   }, [openReason]);
 
-  function markCopied(key, ok) {
-    setCopiedKey(ok ? key : "");
-    if (!ok) return;
-    window.setTimeout(() => setCopiedKey(""), 1800);
-  }
-
   function copyReason(reason) {
-    copyText(buildReasonSummary(reason), (ok) => markCopied(`copy-${reason.id}`, ok));
+    void copyToClipboard(`copy-${reason.id}`, buildReasonSummary(reason), {
+      label: reason.title,
+    });
   }
 
   function copyLink(id) {
     const base = `${window.location.origin}${window.location.pathname}`;
-    copyText(`${base}#${id}`, (ok) => markCopied(`link-${id}`, ok));
+    void copyToClipboard(`link-${id}`, `${base}#${id}`, {
+      label: `Link to ${reasonTitle(id)}`,
+    });
   }
 
   function resetAll() {
@@ -204,7 +235,7 @@ export default function ToolHome() {
     setOwnerFilter("all");
     setFormFilter("all");
     setOpenIds([]);
-    setCopiedKey("");
+    resetCopyState();
   }
 
   const topMatch = decoded.matches && decoded.matches.length > 0 ? decoded.matches[0] : null;
@@ -280,18 +311,21 @@ export default function ToolHome() {
             disabled={!topMatch}
             aria-label="Copy the decoded rejection and its correction route"
           >
-            {copiedKey === `copy-${topMatch?.reason.id}` ? (
+            {isCopied(`copy-${topMatch?.reason.id}`) ? (
               <Check className="h-4 w-4" aria-hidden="true" />
             ) : (
               <Copy className="h-4 w-4" aria-hidden="true" />
             )}
-            {copiedKey === `copy-${topMatch?.reason.id}` ? "Copied!" : "Copy the decode"}
+            {isCopied(`copy-${topMatch?.reason.id}`) ? "Copied!" : "Copy the decode"}
           </button>
           <button type="button" className={GHOST_BTN} onClick={resetAll} aria-label="Reset the decoder and filters">
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Reset
           </button>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
       </section>
 
       {decoded.error ? (
@@ -340,11 +374,7 @@ export default function ToolHome() {
               <button
                 type="button"
                 className={GHOST_BTN}
-                onClick={() => {
-                  openReason(topMatch.reason.id);
-                  const node = document.getElementById(topMatch.reason.id);
-                  if (node) node.scrollIntoView({ block: "start", behavior: "smooth" });
-                }}
+                onClick={() => openReason(topMatch.reason.id)}
               >
                 Open the full entry
               </button>
@@ -468,8 +498,8 @@ export default function ToolHome() {
                 onToggle={() => toggleReason(reason.id)}
                 onCopy={() => copyReason(reason)}
                 onCopyLink={() => copyLink(reason.id)}
-                copiedSummary={copiedKey === `copy-${reason.id}`}
-                copiedLink={copiedKey === `link-${reason.id}`}
+                copiedSummary={isCopied(`copy-${reason.id}`)}
+                copiedLink={isCopied(`link-${reason.id}`)}
               />
             ))}
           </ul>
@@ -487,7 +517,7 @@ export default function ToolHome() {
         </p>
 
         {/* Form 19 timing */}
-        <div className={`mt-4 ${CARD_CLASS}`}>
+        <div className={`mt-4 ${CARD_CLASS}`} aria-live="polite">
           <h3 className="text-base font-semibold">Form 19 — the two-month waiting period</h3>
           <div className="mt-3 grid gap-4 sm:grid-cols-2">
             <div>
@@ -515,6 +545,24 @@ export default function ToolHome() {
               />
             </div>
           </div>
+          <div className="mt-3">
+            <label className={LABEL_CLASS} htmlFor="exit-age">
+              Age at exit (years) — leave blank unless retiring at {EPF_SUPERANNUATION_AGE} or
+              older
+            </label>
+            <input
+              id="exit-age"
+              type="number"
+              inputMode="numeric"
+              min="14"
+              max="120"
+              step="1"
+              className={`${INPUT_CLASS} mt-1 sm:max-w-[12rem]`}
+              value={exitAge}
+              onChange={(event) => setExitAge(event.target.value)}
+            />
+          </div>
+
           <label className="mt-3 flex min-h-11 items-center gap-2 text-sm" htmlFor="re-employed">
             <input
               id="re-employed"
@@ -551,7 +599,7 @@ export default function ToolHome() {
         </div>
 
         {/* Form 10C */}
-        <div className={`mt-4 ${CARD_CLASS}`}>
+        <div className={`mt-4 ${CARD_CLASS}`} aria-live="polite">
           <h3 className="text-base font-semibold">Form 10C — is a withdrawal benefit payable at all</h3>
           <div className="mt-3 grid gap-4 sm:grid-cols-2">
             <div>
@@ -640,7 +688,7 @@ export default function ToolHome() {
         </div>
 
         {/* Form 31 */}
-        <div className={`mt-4 ${CARD_CLASS}`}>
+        <div className={`mt-4 ${CARD_CLASS}`} aria-live="polite">
           <h3 className="text-base font-semibold">Form 31 — does the Para 68 gate open</h3>
           <div className="mt-3 grid gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2">
@@ -705,6 +753,34 @@ export default function ToolHome() {
                 onChange={(event) => setAdvanceAge(event.target.value)}
               />
             </div>
+            {purposeCode === "68HH" ? (
+              <>
+                <div>
+                  <label className={LABEL_CLASS} htmlFor="unemployment-exit-date">
+                    Date of exit as EPFO shows it
+                  </label>
+                  <input
+                    id="unemployment-exit-date"
+                    type="date"
+                    className={`${INPUT_CLASS} mt-1`}
+                    value={unemploymentExitDate}
+                    onChange={(event) => setUnemploymentExitDate(event.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className={LABEL_CLASS} htmlFor="unemployment-claim-date">
+                    Date the Form 31 claim was or will be filed
+                  </label>
+                  <input
+                    id="unemployment-claim-date"
+                    type="date"
+                    className={`${INPUT_CLASS} mt-1`}
+                    value={unemploymentClaimDate}
+                    onChange={(event) => setUnemploymentClaimDate(event.target.value)}
+                  />
+                </div>
+              </>
+            ) : null}
           </div>
 
           {form31.error ? (
@@ -924,7 +1000,7 @@ function ReasonCard({ reason, open, onToggle, onCopy, onCopyLink, copiedSummary,
               type="button"
               className={GHOST_BTN}
               onClick={onCopy}
-              aria-label={`Copy the full explanation for ${reason.title}`}
+              aria-label={`Copy this entry: the full explanation for ${reason.title}`}
             >
               {copiedSummary ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
@@ -937,7 +1013,7 @@ function ReasonCard({ reason, open, onToggle, onCopy, onCopyLink, copiedSummary,
               type="button"
               className={GHOST_BTN}
               onClick={onCopyLink}
-              aria-label={`Copy a direct link to ${reason.title}`}
+              aria-label={`Copy link to this reason: a direct link for ${reason.title}`}
             >
               {copiedLink ? (
                 <Check className="h-4 w-4" aria-hidden="true" />

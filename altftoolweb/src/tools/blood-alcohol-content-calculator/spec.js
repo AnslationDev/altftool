@@ -43,16 +43,19 @@ export const spec = {
       "key": "hours",
       "label": "Hours since first drink",
       "type": "number",
-      "default": "2"
+      "default": "2",
+      "min": 0
     }
   ],
   "note": "An estimate only — never use it to decide whether to drive."
 },
-  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
-      if (num(values.weight) <= 0 || num(values.drinks) < 0) return { result: "—", caption: "Enter a valid weight and number of drinks" }; const grams = num(values.drinks) * 14;
+  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v);
+      if (num(values.weight) <= 0 || num(values.drinks) < 0 || num(values.hours) < 0) return { result: "—", caption: "Enter a valid weight, number of drinks and hours" }; const grams = num(values.drinks) * 14;
       const r = values.sex === "female" ? 0.55 : 0.68;
-      const bac = Math.max(0, (grams / (num(values.weight) * 1000 * r)) * 100 - 0.015 * num(values.hours));
-      return { result: bac.toFixed(3) + "% BAC", caption: bac >= 0.08 ? "Over the common 0.08% legal limit" : "Under 0.08%", rows: [["Alcohol consumed", grams.toFixed(0) + " g"], ["Approx. burned off", (0.015 * num(values.hours) * 100).toFixed(1) + " units"]] };
+      const eliminatedPct = 0.015 * num(values.hours);
+      const bac = Number(Math.max(0, (grams / (num(values.weight) * 1000 * r)) * 100 - eliminatedPct).toFixed(3));
+      const burnedGrams = (eliminatedPct * num(values.weight) * 1000 * r) / 100;
+      return { result: bac.toFixed(3) + "% BAC", caption: bac >= 0.08 ? "Over the common 0.08% legal limit" : "Under 0.08%", rows: [["Alcohol consumed", grams.toFixed(0) + " g"], ["Approx. burned off", burnedGrams.toFixed(1) + " g"]] };
     },
 };
 

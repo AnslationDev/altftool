@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, PlugZap, RotateCcw, Trash2 } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   APPLIANCE_LIBRARY,
   BOARD_RATINGS,
@@ -76,7 +77,8 @@ export default function ToolHome() {
   const [continuous, setContinuous] = useState(DEFAULTS.continuous);
   const [rows, setRows] = useState(DEFAULT_ROWS);
   const [nextKey, setNextKey] = useState(DEFAULT_ROWS.length + 1);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const supply = SUPPLY_PRESETS.find((entry) => entry.id === supplyId) ?? SUPPLY_PRESETS[0];
 
@@ -119,16 +121,17 @@ export default function ToolHome() {
 
   const copyResult = async () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    await copyToClipboard("result", summary, { label: "Load check result" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field and remove all appliances you have added? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setSupplyId(DEFAULTS.supplyId);
     setBoardAmps(DEFAULTS.boardAmps);
     setCordId(DEFAULTS.cordId);
@@ -137,7 +140,7 @@ export default function ToolHome() {
     setContinuous(DEFAULTS.continuous);
     setRows(DEFAULT_ROWS);
     setNextKey(DEFAULT_ROWS.length + 1);
-    setCopied(false);
+    resetCopyState();
   };
 
   const addAppliance = (item) => {
@@ -398,22 +401,25 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               aria-label="Copy extension board load result"
-              className={GHOST_BTN}
+              className={PRIMARY_BTN}
               disabled={!ok}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
 
         {ok ? (
           <div className="mt-5">

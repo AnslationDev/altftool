@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, ShieldCheck, TriangleAlert } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   CHECKLIST_ITEMS,
   assessReadiness,
@@ -65,7 +66,8 @@ export default function ToolHome() {
   const [minutes, setMinutes] = useState(DEFAULTS.minutes);
   const [wetsuit, setWetsuit] = useState(DEFAULTS.wetsuit);
   const [acclimatised, setAcclimatised] = useState(DEFAULTS.acclimatised);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -85,7 +87,6 @@ export default function ToolHome() {
     setChecked((current) =>
       current.includes(id) ? current.filter((item) => item !== id) : [...current, id],
     );
-    setCopied(false);
   };
 
   const summary = useMemo(() => {
@@ -106,22 +107,30 @@ export default function ToolHome() {
 
   const copyResult = async () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    await copyToClipboard("summary", summary, { label: "Safety check summary" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the checklist and all inputs back to the starting defaults? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setChecked(DEFAULT_CHECKED);
     setWaterTemp(DEFAULTS.waterTemp);
     setMinutes(DEFAULTS.minutes);
     setWetsuit(DEFAULTS.wetsuit);
     setAcclimatised(DEFAULTS.acclimatised);
-    setCopied(false);
+    resetCopyState();
+  };
+
+  const clearAll = () => {
+    if (!window.confirm("Untick every checklist item? This cannot be undone.")) {
+      return;
+    }
+    setChecked([]);
   };
 
   const groups = checklistGroups();
@@ -219,7 +228,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Readiness score
             </p>
@@ -242,12 +251,12 @@ export default function ToolHome() {
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("summary") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy summary"}
+              {isCopied("summary") ? "Copied!" : "Copy summary"}
             </button>
             <button
               type="button"
@@ -260,6 +269,9 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
@@ -300,7 +312,11 @@ export default function ToolHome() {
       </section>
 
       {!hasError && (result.missingCritical.length > 0 || result.warnings.length > 0) && (
-        <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+        <section
+          className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+          aria-live="polite"
+          role="status"
+        >
           <h2 className="flex items-center gap-2 text-base font-semibold">
             <TriangleAlert className="h-4 w-4 text-[var(--warning)]" aria-hidden="true" />
             Before you get in
@@ -326,6 +342,26 @@ export default function ToolHome() {
         </section>
       )}
 
+      {!hasError && result.missingRecommended.length > 0 && (
+        <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+          <h2 className="text-base font-semibold">Also worth having</h2>
+          <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+            Not safety-critical on their own, but each one closes a gap in the score above.
+          </p>
+          <ul className="mt-3 space-y-2 text-sm">
+            {result.missingRecommended.map((item) => (
+              <li
+                key={item.id}
+                className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2"
+              >
+                <span className="font-semibold">{item.label}</span>{" "}
+                <span className="text-[var(--muted-foreground)]">— {item.why}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-base font-semibold">Pre-swim checks</h2>
@@ -337,7 +373,7 @@ export default function ToolHome() {
             >
               Tick all
             </button>
-            <button type="button" onClick={() => setChecked([])} className={GHOST_BTN}>
+            <button type="button" onClick={clearAll} className={GHOST_BTN}>
               Clear all
             </button>
           </div>

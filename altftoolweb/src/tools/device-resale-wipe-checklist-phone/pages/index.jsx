@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { AlertTriangle, Check, Copy, Eraser, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { OPTION_KEYS, OPTION_LABELS, PLATFORMS, buildWipePlan, formatWipePlan } from "../lib";
 
 const DASH = "—";
@@ -27,7 +28,7 @@ export default function ToolHome() {
   const [platform, setPlatform] = useState("ios");
   const [options, setOptions] = useState(DEFAULT_OPTIONS);
   const [done, setDone] = useState([]);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const plan = useMemo(
     () => buildWipePlan({ platform, options, done }),
@@ -48,22 +49,23 @@ export default function ToolHome() {
     );
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("checklist", summary, { label: "wipe checklist" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the checklist? This will clear the platform, the options you selected and every step you have ticked off, with no way to recover the progress.",
+      )
+    ) {
+      return;
+    }
     setPlatform("ios");
     setOptions(DEFAULT_OPTIONS);
     setDone([]);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -156,7 +158,7 @@ export default function ToolHome() {
         <>
           <section className={`mt-6 ${CARD}`}>
             <div className="flex flex-wrap items-start justify-between gap-3">
-              <div>
+              <div aria-live="polite" role="status">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                   Ready to sell
                 </p>
@@ -176,15 +178,15 @@ export default function ToolHome() {
                 <button
                   type="button"
                   onClick={copyResult}
-                  aria-label="Copy the wipe checklist"
+                  aria-label={isCopied("checklist") ? "Copied the wipe checklist to clipboard" : "Copy the wipe checklist"}
                   className={GHOST_BTN}
                 >
-                  {copied ? (
+                  {isCopied("checklist") ? (
                     <Check className="h-4 w-4" aria-hidden="true" />
                   ) : (
                     <Copy className="h-4 w-4" aria-hidden="true" />
                   )}
-                  {copied ? "Copied!" : "Copy checklist"}
+                  {isCopied("checklist") ? "Copied!" : "Copy checklist"}
                 </button>
                 <button
                   type="button"
@@ -195,6 +197,9 @@ export default function ToolHome() {
                   <RotateCcw className="h-4 w-4" aria-hidden="true" />
                   Reset
                 </button>
+                <span className="sr-only" role="status" aria-live="polite">
+                  {announcement}
+                </span>
               </div>
             </div>
 
@@ -208,7 +213,11 @@ export default function ToolHome() {
               />
             </div>
 
-            <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+            <dl
+              className="mt-5 divide-y divide-[var(--border)] text-sm"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {[
                 ["Critical steps outstanding", `${plan.criticalOutstanding}`],
                 ["Out-of-order steps", `${plan.violations.length}`],
