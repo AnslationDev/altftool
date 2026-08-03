@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "bolt-torque-preload-calculator",
   "title": "Bolt Torque & Preload Calculator",
-  "description": "Bolt size aur K-factor se torque/clamp load estimate kare.",
+  "description": "Estimate clamp load and preload from bolt diameter, applied torque, and nut factor (K).",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Education & Science",

@@ -322,7 +322,7 @@ export default function WhichMythicalCreatureAreYou() {
                     fontSize: "0.8125rem",
                     fontWeight: 500,
                     background: "var(--primary)",
-                    color: "#fff"
+                    color: "var(--primary-foreground)"
                   }}
                 >
                   {t}
@@ -399,7 +399,7 @@ export default function WhichMythicalCreatureAreYou() {
               borderRadius: "8px",
               border: "none",
               background: "var(--primary)",
-              color: "#fff",
+              color: "var(--primary-foreground)",
               fontSize: "1rem",
               fontWeight: 600,
               cursor: "pointer",

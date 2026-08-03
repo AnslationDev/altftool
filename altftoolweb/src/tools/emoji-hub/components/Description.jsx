@@ -23,53 +23,55 @@ const steps = [
   },
   {
     icon: Copy,
-    title: "Pick an Emoji",
+    title: "Copy Instantly",
     description:
-      "Click any emoji to select it. The artwork is a 64px PNG, so a flag or a smiley looks the same on Windows, Android, macOS and Linux.",
+      "Click any emoji to copy it immediately. Your latest picks stay in a Recently used row for quick access.",
   },
   {
     icon: Star,
-    title: "Frequently Used, Automatically",
+    title: "Save Favorites & Recents",
     description:
-      "The emojis you pick most often rise to the Frequently Used row at the top, saved in your own browser so they are still there next visit.",
+      "Star the emojis you use most. Favorites and up to 20 recent picks stay only in this browser's local storage.",
   },
   {
     icon: Share2,
-    title: "Trending GIFs Too",
+    title: "Search GIFs Too",
     description:
-      "Switch to the GIFs tab for the 20 GIFs currently trending on Giphy, fetched through AltFTool's server so no API key reaches your browser.",
+      "Browse Giphy's current trends or search by keyword. Results come through AltFTool's server, so no API key reaches your browser.",
   },
   {
     icon: Smartphone,
-    title: "Works on All Devices",
+    title: "Consistent on Every Device",
     description:
-      "Enjoy a smooth and responsive experience across mobile, tablet, and desktop devices.",
+      "Responsive controls work across phone, tablet, and desktop, while 64px Apple-style emoji artwork stays visually consistent.",
   },
 ];
 
 export default function Description() {
   return (
-    <section className="py-12 sm:py-16 px-4 bg-gray-50">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-10 mt-[-40]">
-          How It Works ?
+    <section className="bg-surface-soft px-4 py-12 sm:py-16">
+      <div className="mx-auto max-w-6xl">
+        <h2 className="mb-10 text-center text-2xl font-bold text-foreground sm:text-3xl md:text-4xl">
+          How Emoji Hub Works
         </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {steps.map((step, index) => {
+          {steps.map((step) => {
             const Icon = step.icon;
             return (
               <div
-                key={index}
-                className="group bg-white rounded-2xl shadow-md p-6 transition duration-300 hover:shadow-xl"
+                key={step.title}
+                className="group rounded-xl border border-border bg-card p-6 shadow-sm transition-shadow duration-150 motion-reduce:transition-none hover:shadow-md"
               >
-                
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-primary-soft text-primary-text">
+                  <Icon className="h-5 w-5" aria-hidden="true" />
+                </div>
 
-                <h3 className="text-lg font-semibold mb-2 group-hover:text-blue-600 transition">
+                <h3 className="mb-2 text-lg font-semibold text-foreground transition-colors duration-150 motion-reduce:transition-none group-hover:text-primary-text">
                   {step.title}
                 </h3>
 
-                <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
                   {step.description}
                 </p>
               </div>

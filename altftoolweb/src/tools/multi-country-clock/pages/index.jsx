@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import HeroSection from "../components/HeroSection";
 import SearchBar from "../components/SearchBar";
 import ClockGrid from "../components/ClockGrid";
 import TimezoneList from "../components/TimezoneList";
 import Features from "../components/Features";
+import { getTimeZoneSearchText } from "../lib";
 
 // Popular timezones to start with
 const DEFAULT_TIMEZONES = [
@@ -16,76 +17,66 @@ const DEFAULT_TIMEZONES = [
   "Australia/Sydney",
 ];
 
+const MAX_SELECTED_TIMEZONES = 12;
+const AVAILABLE_TIMEZONES =
+  typeof Intl.supportedValuesOf === "function"
+    ? Intl.supportedValuesOf("timeZone")
+    : DEFAULT_TIMEZONES;
+
 function App() {
-  const [allTimezones, setAllTimezones] = useState([]);
   const [selectedTimezones, setSelectedTimezones] = useState(DEFAULT_TIMEZONES);
   const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(true);
-
-  // Fetch all available timezones on mount
-  useEffect(() => {
-    const fetchTimezones = async () => {
-      try {
-        const response = await fetch(
-          "https://timeapi.io/api/TimeZone/AvailableTimeZones",
-        );
-
-        if (!response.ok) throw new Error("Failed to fetch");
-
-        const data = await response.json();
-        setAllTimezones(data);
-      } catch (error) {
-        console.error("Failed to fetch timezones:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTimezones();
-  }, []);
+  const [hour12, setHour12] = useState(true);
 
   // Add timezone
   const handleAddTimezone = (timezone) => {
-    if (!selectedTimezones.includes(timezone)) {
-      setSelectedTimezones([...selectedTimezones, timezone]);
-    }
+    setSelectedTimezones((currentTimezones) => {
+      if (
+        currentTimezones.includes(timezone) ||
+        currentTimezones.length >= MAX_SELECTED_TIMEZONES
+      ) {
+        return currentTimezones;
+      }
+
+      return [...currentTimezones, timezone];
+    });
   };
 
   // Remove timezone
   const handleRemoveTimezone = (timezone) => {
-    setSelectedTimezones(selectedTimezones.filter((tz) => tz !== timezone));
+    setSelectedTimezones((currentTimezones) =>
+      currentTimezones.filter((currentTimezone) => currentTimezone !== timezone),
+    );
   };
 
   // Filter search
-  const filteredTimezones = allTimezones.filter((timezone) =>
-    timezone.toLowerCase().includes(searchQuery.toLowerCase()),
+  const normalizedSearch = searchQuery.trim().toLocaleLowerCase("en-US");
+  const filteredTimezones = AVAILABLE_TIMEZONES.filter((timezone) =>
+    getTimeZoneSearchText(timezone).includes(normalizedSearch),
   );
 
   return (
     <div className="min-h-screen bg-(--background) text-(--foreground)">
-      <HeroSection />
+      <HeroSection hour12={hour12} onHour12Change={setHour12} />
 
       <SearchBar searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-
-      <ClockGrid
-        selectedTimezones={selectedTimezones}
-        onRemoveTimezone={handleRemoveTimezone}
-      />
 
       {searchQuery && (
         <TimezoneList
           filteredTimezones={filteredTimezones}
           selectedTimezones={selectedTimezones}
           onAddTimezone={handleAddTimezone}
+          maxSelectedTimezones={MAX_SELECTED_TIMEZONES}
         />
       )}
-      <Features/>
-      {/* Optional loading indicator */}
-      {loading && (
-        <div className="fixed bottom-6 right-6 p-3 rounded-full bg-(--card) border border-(--border)">
-          <div className="w-6 h-6 border-4 border-(--primary) border-t-transparent rounded-full animate-spin"></div>
-        </div>
-      )}
+
+      <ClockGrid
+        selectedTimezones={selectedTimezones}
+        onRemoveTimezone={handleRemoveTimezone}
+        hour12={hour12}
+      />
+
+      <Features />
     </div>
   );
 }

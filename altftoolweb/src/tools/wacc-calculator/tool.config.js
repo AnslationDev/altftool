@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "wacc-calculator",
   name: "WACC Calculator",
   category: ["Finance","Calculator"],
-  description: "Equity, debt aur tax inputs se weighted capital cost calculate kare.",
+  description: "Calculate a company's weighted average cost of capital from its equity, debt, and tax inputs.",
   icon: "scale",
   iconColor: "text-primary",
 };

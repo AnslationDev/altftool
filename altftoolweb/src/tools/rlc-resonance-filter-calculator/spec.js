@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "rlc-resonance-filter-calculator",
   "title": "RLC Resonance & Filter Calculator",
-  "description": "Resonant frequency, Q factor aur cutoff calculate kare.",
+  "description": "Calculate the resonant frequency, Q factor, and cutoff frequency of a series or parallel RLC circuit.",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Electronics",

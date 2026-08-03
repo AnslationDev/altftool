@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "voltage-drop-wire-gauge-calculator",
   "title": "Voltage Drop & Wire Gauge Calculator",
-  "description": "Length, current aur conductor se voltage loss estimate kare.",
+  "description": "Estimate voltage loss along a wire run from its length, current, and conductor type or gauge.",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Electronics",

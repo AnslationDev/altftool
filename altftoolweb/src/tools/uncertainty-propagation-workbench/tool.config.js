@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "uncertainty-propagation-workbench",
   name: "Uncertainty Propagation Workbench",
   category: ["Education & Science","Calculator"],
-  description: "Input uncertainties se combined uncertainty aur Monte Carlo cross-check nikale.",
+  description: "Derive combined and expanded measurement uncertainty from each input's value, uncertainty, and exponent, with a Monte Carlo cross-check for validation.",
   icon: "sigma",
   iconColor: "text-primary",
 };

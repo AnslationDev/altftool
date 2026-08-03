@@ -3,11 +3,8 @@
 import React from "react";
 import ClockCard from "./ClockCard";
 
-const ClockGrid = ({ selectedTimezones, onRemoveTimezone }) => {
-  // Show only first 3 clocks
-  const clocksToShow = selectedTimezones.slice(0, 3);
-
-  if (clocksToShow.length === 0) {
+const ClockGrid = ({ selectedTimezones, onRemoveTimezone, hour12 = true }) => {
+  if (selectedTimezones.length === 0) {
     return (
       <section id="clocks" className="py-16 px-4">
         <div className="max-w-3xl mx-auto text-center space-y-4">
@@ -24,21 +21,21 @@ const ClockGrid = ({ selectedTimezones, onRemoveTimezone }) => {
 
   return (
     <section id="clocks" className="py-16 px-4">
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Title */}
         <div className="text-center mb-10">
           <h2 className="heading">⏰ Your Clocks</h2>
         </div>
 
         {/* Grid */}
-        <div className="flex flex-wrap justify-center gap-6">
-          {clocksToShow.map((timezone) => (
-            <div key={timezone} className="w-full sm:w-[320px]">
-              <ClockCard
-                timezone={timezone}
-                onRemove={() => onRemoveTimezone(timezone)}
-              />
-            </div>
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {selectedTimezones.map((timezone) => (
+            <ClockCard
+              key={timezone}
+              timezone={timezone}
+              onRemove={() => onRemoveTimezone(timezone)}
+              hour12={hour12}
+            />
           ))}
         </div>
       </div>

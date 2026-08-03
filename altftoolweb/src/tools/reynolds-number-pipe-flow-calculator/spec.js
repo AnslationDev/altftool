@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "reynolds-number-pipe-flow-calculator",
   "title": "Reynolds Number & Pipe Flow Calculator",
-  "description": "Flow regime, Reynolds number aur head loss calculate kare.",
+  "description": "Calculate the Reynolds number, flow regime, and head loss for fluid flowing through a pipe.",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Education & Science",

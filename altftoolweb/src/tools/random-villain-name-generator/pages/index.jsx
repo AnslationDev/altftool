@@ -90,7 +90,7 @@ export default function ToolHome() {
         <div className="space-y-6">
           <button
             onClick={handleGenerate}
-            className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-white text-lg transition-all active:scale-[0.98]"
+            className="w-full flex items-center justify-center gap-2 py-4 rounded-xl font-bold text-primary-foreground text-lg transition-all active:scale-[0.98]"
             style={{ background: "var(--primary)" }}
           >
             <Shuffle size={22} /> Generate Villain

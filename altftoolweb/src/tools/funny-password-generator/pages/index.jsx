@@ -219,7 +219,7 @@ export default function ToolHome() {
 
           <button
             onClick={generate}
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-white transition-all active:scale-[0.98]"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-primary-foreground transition-all active:scale-[0.98]"
             style={{ background: "var(--primary)" }}
           >
             <RefreshCw size={18} /> Generate Password

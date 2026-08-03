@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "dimensional-consistency-checker",
   "title": "Dimensional Consistency Checker",
-  "description": "Equation variables ke units compare karke invalid terms detect kare.",
+  "description": "Compare the base-dimension exponents on each side of an equation to flag mismatched, dimensionally invalid terms.",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Education & Science",

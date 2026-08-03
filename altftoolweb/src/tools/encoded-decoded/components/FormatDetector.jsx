@@ -24,7 +24,7 @@ const FormatInspector = ({ data = "" }) => {
         <h3 className="text-(--foreground) font-light text-3xl tracking-tight">
           Format Inspector
         </h3>
-        <span className="bg-(--primary) text-(--foreground) px-3 py-1 rounded-full text-[15px] uppercase font-light border border-(--border)">
+        <span className="bg-(--primary) text-primary-foreground px-3 py-1 rounded-full text-[15px] uppercase font-light border border-(--border)">
           Live Analyzer
         </span>
       </div>

@@ -2,7 +2,7 @@ const seo = {
   title: "Emoji Hub — 1,898 Emojis, Search & Skin Tones",
   h1: "Emoji Hub — Emoji Picker & GIF Browser",
   metaDescription:
-    "Free emoji picker with 1,898 emojis in 8 categories, instant keyword search and skin tones, plus a live feed of the 20 GIFs trending on Giphy.",
+    "Free emoji picker with 1,898 emojis, keyword search, skin tones, private favorites and recents, plus searchable and trending Giphy GIFs.",
   intro:
     "Emoji Hub is a two-tab browser for emojis and GIFs. The Emojis tab runs the open-source emoji-picker-react component over a bundled Unicode dataset of 1,898 emojis in 8 categories, with search powered by an in-browser character index built from every keyword attached to each emoji — so typing \"grin\", \"smile\" or \"face\" all surface the grinning face without a network request. Each glyph is drawn as a 64px Apple-style PNG from the emoji-datasource-apple package on the jsDelivr CDN, so the artwork looks identical on Windows, macOS, Android and Linux. The GIFs tab calls AltFTool's own /api/tools/giphy route, which queries Giphy's trending endpoint server-side and returns 20 GIFs, keeping the Giphy API key off the client.",
   useCases: [
@@ -17,7 +17,7 @@ const seo = {
     ],
     [
       "Keyword search, not just scrolling",
-      "The search bar is focused the moment the tab loads and matches against every keyword in an emoji's name list — an index built in your browser, so results filter as you type with zero latency.",
+      "The picker's search matches against the keywords in each emoji's name list. The index runs in your browser, so results filter as you type without sending the search to AltFTool.",
     ],
     [
       "Skin tones on 323 emojis",
@@ -35,11 +35,11 @@ const seo = {
     ],
     [
       "How do I search for an emoji by name?",
-      "Type a keyword into the search bar at the top of the picker — it's auto-focused when the Emojis tab opens. Search runs against every keyword stored with each emoji, not just its official Unicode name, so \"party\", \"cat\" or \"thumbs\" all work. Matching uses an alphanumeric index built in your browser, so nothing is sent to a server as you type.",
+      "Type a keyword into the search bar at the top of the picker. Search runs against the keywords stored with each emoji, not just its official Unicode name, so \"party\", \"cat\" or \"thumbs\" all work. Matching happens in your browser, so nothing is sent to AltFTool as you type.",
     ],
     [
       "What happens when I click an emoji?",
-      "It's selected and pushed into the Frequently Used row at the top of the picker. That row holds up to 14 emojis ranked by how often you've picked each one, and it's stored in your browser's localStorage under the key epr_suggested — so it's still there the next time you visit, on that browser only.",
+      "It's copied to your clipboard and moved to the front of Emoji Hub's Recently used row. That row keeps up to 20 unique picks in this browser's local storage. You can also star up to 100 favorites or clear either list whenever you want.",
     ],
     [
       "Why do the emojis look like iPhone emojis on Windows or Android?",
@@ -63,9 +63,9 @@ const seo = {
     ],
   ],
   steps: [
-    "Open the Emojis tab and type a keyword — \"party\", \"cat\", \"thumbs\" — into the auto-focused search bar, or scroll the 8 category tabs.",
-    "Set a skin tone from the control in the search bar if the emoji supports one, then click the emoji to select it and add it to your Frequently Used row.",
-    "Switch to the GIFs tab to browse the 20 GIFs currently trending on Giphy.",
+    "Open the Emojis tab and type a keyword — \"party\", \"cat\", or \"thumbs\" — into the picker search, or browse its 8 category tabs.",
+    "Set a skin tone if the emoji supports one, then click the emoji to copy it and add it to Recently used; star any pick you want to keep in Favorites.",
+    "Switch to the GIFs tab to browse Giphy's current trends or submit a keyword search, then copy or share a result link.",
   ],
 };
 

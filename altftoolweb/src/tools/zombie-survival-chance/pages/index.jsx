@@ -243,7 +243,7 @@ export default function ToolHome() {
 
             <button
               onClick={reset}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-white transition-all"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-primary-foreground transition-all"
               style={{ background: "var(--primary)" }}
             >
               <RotateCcw size={18} /> Retake Quiz
@@ -301,7 +301,7 @@ export default function ToolHome() {
                 style={{
                   background: answers[step] === i ? "var(--primary)" : "var(--background)",
                   borderColor: answers[step] === i ? "var(--primary)" : "var(--border)",
-                  color: answers[step] === i ? "#fff" : "var(--foreground)",
+                  color: answers[step] === i ? "var(--primary-foreground)" : "var(--foreground)",
                 }}
               >
                 {opt.text}

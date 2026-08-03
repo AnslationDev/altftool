@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "bayesian-update-calculator",
   "title": "Bayesian Update Calculator",
-  "description": "Prior aur evidence se posterior probability calculate kare.",
+  "description": "Calculate the posterior probability from a prior probability and new evidence using Bayes' theorem.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Education & Science",

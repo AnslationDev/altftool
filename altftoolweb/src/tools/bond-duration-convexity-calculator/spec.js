@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "bond-duration-convexity-calculator",
   "title": "Bond Duration & Convexity Calculator",
-  "description": "Macaulay duration, modified duration aur convexity nikale.",
+  "description": "Calculate a bond's Macaulay duration, modified duration, and convexity to measure its price sensitivity to interest rate changes.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Finance",

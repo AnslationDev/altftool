@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "sample-size-power-calculator",
   "title": "Sample Size & Power Calculator",
-  "description": "Effect size aur power target se required sample estimate kare.",
+  "description": "Estimate the sample size a study needs from your target effect size and statistical power.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Education & Science",

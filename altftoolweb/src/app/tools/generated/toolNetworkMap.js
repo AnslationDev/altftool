@@ -24,7 +24,6 @@ export const TOOL_NETWORK_DESTINATIONS = {
   "link-preview-generator": ["self"],
   "link-sorter": ["cleanuri.com","tinyurl.com"],
   "logo-slogan-generator-tool": ["self"],
-  "multi-country-clock": ["timeapi.io"],
   "pixar-style-generator": ["image.pollinations.ai"],
   "plant-scanner": ["self"],
   "profile-picture-maker": ["self"],

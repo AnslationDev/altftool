@@ -375,7 +375,7 @@ export default function App() {
               onClick={togglePalette}
               className={`p-2 rounded-lg transition-all shadow-md ${
                 showPalette
-                  ? "bg-(--primary) text-foreground"
+                  ? "bg-(--primary) text-primary-foreground"
                   : "bg-muted  text-(--foreground) hover:bg-gray-300 dark:hover:bg-gray-600"
               }`}
               title="Toggle Component Palette"
@@ -390,7 +390,7 @@ export default function App() {
               onClick={() => setPreviewMode("desktop")}
               className={`px-3 sm:px-5 py-2.5 rounded-lg text-sm font-medium transition-all shadow-md ${
                 previewMode === "desktop"
-                  ? "bg-(--primary) text-foreground shadow-md hover:shadow-xl"
+                  ? "bg-(--primary) text-primary-foreground shadow-md hover:shadow-xl"
                   : "bg-muted  text-foreground hover:bg-gray-300 dark:hover:bg-gray-600"
               }`}
             >
@@ -401,7 +401,7 @@ export default function App() {
               onClick={() => setPreviewMode("mobile")}
               className={`px-3 sm:px-5 py-2.5 rounded-lg text-sm font-medium transition-all shadow-md ${
                 previewMode === "mobile"
-                  ? "bg-(--primary) text-foreground shadow-md hover:shadow-xl"
+                  ? "bg-(--primary) text-primary-foreground shadow-md hover:shadow-xl"
                   : "bg-muted  text-foreground hover:bg-gray-300 dark:hover:bg-gray-600"
               }`}
             >
@@ -417,7 +417,7 @@ export default function App() {
               disabled={!selectedComponent}
               className={`p-2 rounded-lg transition-all shadow-md ${
                 showEditor && selectedComponent
-                  ? "bg-(--primary) text-foreground"
+                  ? "bg-(--primary) text-primary-foreground"
                   : "bg-muted  text-(--foreground) hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
               }`}
               title="Toggle Editor Panel"
@@ -476,14 +476,14 @@ export default function App() {
                   <div className="grid grid-cols-2 gap-3">
                     <button
                       onClick={handleExportHtml}
-                      className="py-3 px-4 text-sm font-medium text-foreground bg-(--primary) hover:bg-(--primary)/90 rounded-lg transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-xl"
+                      className="py-3 px-4 text-sm font-medium text-primary-foreground bg-(--primary) hover:bg-(--primary)/90 rounded-lg transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-xl"
                     >
                       <Code className="w-4 h-4" />
                       Export HTML
                     </button>
                     <button
                       onClick={handleExportJson}
-                      className="py-3 px-4 text-sm font-medium text-foreground bg-(--primary) hover:bg-(--primary)/90 rounded-lg transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-xl"
+                      className="py-3 px-4 text-sm font-medium text-primary-foreground bg-(--primary) hover:bg-(--primary)/90 rounded-lg transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-xl"
                     >
                       <Code className="w-4 h-4" />
                       Export JSON
@@ -612,14 +612,14 @@ export default function App() {
               <div className="grid grid-cols-2 gap-3">
                 <button
                   onClick={handleExportHtml}
-                  className="py-3 px-4 text-sm font-medium text-foreground bg-(--primary) hover:hover:bg-(--primary)/90 rounded-lg transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-md hover:shadow-xl"
+                  className="py-3 px-4 text-sm font-medium text-primary-foreground bg-(--primary) hover:hover:bg-(--primary)/90 rounded-lg transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-md hover:shadow-xl"
                 >
                   <Code className="w-4 h-4" />
                   Export HTML
                 </button>
                 <button
                   onClick={handleExportJson}
-                  className="py-3 px-4 text-sm font-medium text-foreground bg-(--primary) hover:hover:bg-(--primary)/90 rounded-lg transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-md hover:shadow-xl"
+                  className="py-3 px-4 text-sm font-medium text-primary-foreground bg-(--primary) hover:hover:bg-(--primary)/90 rounded-lg transition-all flex items-center justify-center gap-2 shadow-md hover:shadow-md hover:shadow-xl"
                 >
                   <Code className="w-4 h-4" />
                   Export JSON

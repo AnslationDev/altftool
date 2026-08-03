@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "ideal-gas-law-calculator",
   "title": "Ideal Gas Law Calculator",
-  "description": "Unit-aware PV=nRT calculation me unknown solve kare.",
+  "description": "Solve for pressure, volume, amount, or temperature in the ideal gas law (PV = nRT) with automatic unit conversion.",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Education & Science",

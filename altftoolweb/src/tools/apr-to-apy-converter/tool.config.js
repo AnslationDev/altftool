@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "apr-to-apy-converter",
   name: "APR-to-APY Converter",
   category: ["Finance","Calculator"],
-  description: "Compounding frequency se nominal APR ko effective APY me badle.",
+  description: "Convert a nominal APR into its effective APY based on the compounding frequency.",
   icon: "percent",
   iconColor: "text-primary",
 };

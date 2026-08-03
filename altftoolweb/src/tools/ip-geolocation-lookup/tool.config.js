@@ -2,7 +2,7 @@ const config = {
   slug: "ip-geolocation-lookup",
   name: "IP Geolocation Lookup",
   category: ["Web", "Developer"],
-  description: "Lookup IP location, ISP, ASN, timezone, map links, and network details.",
+  description: "Look up an IP address's approximate location, ISP, ASN, timezone and map links.",
   icon: "globe",
   iconColor: "text-blue-600",
 };

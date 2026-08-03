@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "strikethrough-text-generator",
   name: "Strikethrough Text Generator",
   category: ["Fun"],
-  description: "Turn your text into stylish Unicode letters for bios, posts and usernames.",
+  description: "Add copy-paste Unicode strikethrough marks to text for posts, bios and messages.",
   icon: "type",
   iconColor: "text-pink-600",
 };

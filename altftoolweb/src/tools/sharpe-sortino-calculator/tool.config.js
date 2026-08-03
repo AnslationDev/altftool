@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "sharpe-sortino-calculator",
   name: "Sharpe & Sortino Calculator",
   category: ["Finance","Calculator"],
-  description: "Return series ka risk-adjusted performance compare kare.",
+  description: "Compare a return series' risk-adjusted performance using the Sharpe and Sortino ratios.",
   icon: "chart-line",
   iconColor: "text-primary",
 };

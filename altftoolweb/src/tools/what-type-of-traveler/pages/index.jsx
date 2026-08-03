@@ -210,7 +210,7 @@ export default function ToolHome() {
               <p className="text-[10px] font-black uppercase tracking-wider mb-2" style={{ color: "var(--muted-foreground)" }}>Traits</p>
               <div className="flex flex-wrap gap-1.5">
                 {result.traits.map((trait, i) => (
-                  <span key={i} className="text-[11px] font-bold px-2.5 py-1 rounded-full" style={{ background: "var(--primary)", color: "#fff" }}>{trait}</span>
+                  <span key={i} className="text-[11px] font-bold px-2.5 py-1 rounded-full" style={{ background: "var(--primary)", color: "var(--primary-foreground)" }}>{trait}</span>
                 ))}
               </div>
             </div>
@@ -227,7 +227,7 @@ export default function ToolHome() {
             </div>
             <button
               onClick={reset}
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-white transition-all hover:opacity-90 active:scale-[0.98]"
+              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-primary-foreground transition-all hover:opacity-90 active:scale-[0.98]"
               style={{ background: "var(--primary)" }}
             >
               <RotateCcw size={18} /> Retake Quiz
@@ -283,7 +283,7 @@ export default function ToolHome() {
                 style={{
                   background: answers[step] === i ? "var(--primary)" : "var(--background)",
                   borderColor: answers[step] === i ? "var(--primary)" : "var(--border)",
-                  color: answers[step] === i ? "#fff" : "var(--foreground)",
+                  color: answers[step] === i ? "var(--primary-foreground)" : "var(--foreground)",
                 }}
               >
                 {opt.text}

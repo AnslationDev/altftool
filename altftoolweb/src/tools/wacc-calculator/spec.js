@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "wacc-calculator",
   "title": "WACC Calculator",
-  "description": "Equity, debt aur tax inputs se weighted capital cost calculate kare.",
+  "description": "Calculate a company's weighted average cost of capital from its equity, debt, and tax inputs.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Finance",

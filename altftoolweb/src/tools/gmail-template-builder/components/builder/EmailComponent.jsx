@@ -270,7 +270,7 @@ const EmailComponent = ({
 
       {/* Selection Border & Indicator */}
       {isSelected && (
-        <div className="absolute top-0 right-0 p-1 bg-(--primary) text-foreground text-xs font-bold rounded-bl-lg z-20 shadow-lg">
+        <div className="absolute top-0 right-0 p-1 bg-(--primary) text-primary-foreground text-xs font-bold rounded-bl-lg z-20 shadow-lg">
           {type.toUpperCase()}
         </div>
       )}

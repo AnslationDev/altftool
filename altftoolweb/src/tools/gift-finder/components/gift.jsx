@@ -276,7 +276,7 @@ export default function GiftPlanner(){
               </button>
               <button
                 onClick={handleGetRecommendations}
-                className="bg-(--primary) cursor-pointer  text-white font-bold py-3 px-8 rounded-lg transition-colors"
+                className="bg-(--primary) cursor-pointer text-primary-foreground font-bold py-3 px-8 rounded-lg transition-colors"
               >
                 Get Recommendations
               </button>
@@ -298,7 +298,7 @@ export default function GiftPlanner(){
               </div>
               <button
                 onClick={resetSearch}
-                className="bg-(--primary) border-2 border-(--border)  text-(--foreground) font-semibold py-2 px-6 rounded-lg transition-colors cursor-pointer"
+                className="bg-(--primary) border-2 border-(--border) text-primary-foreground font-semibold py-2 px-6 rounded-lg transition-colors cursor-pointer"
               >
                 New Search
               </button>
@@ -310,7 +310,7 @@ export default function GiftPlanner(){
                 <p className="text-(--foreground)">Try adjusting your budget or relationship selection</p>
                 <button
                   onClick={resetSearch}
-                  className="mt-4 bg-(--primary) cursor-pointer  text-white font-bold py-2 px-6 rounded-lg"
+                  className="mt-4 bg-(--primary) cursor-pointer text-primary-foreground font-bold py-2 px-6 rounded-lg"
                 >
                   Start Over
                 </button>
@@ -342,7 +342,7 @@ export default function GiftPlanner(){
                         <span className="text-2xl font-bold text-(--foreground)">${gift.price}</span>
                         <span className="text-xs bg-(--card) text-(--foreground) px-2 py-1 rounded">{gift.category}</span>
                       </div>
-                      <button className="w-full bg-(--primary)  text-white font-bold py-3 px-4 rounded-lg transition-colors">
+                      <button className="w-full bg-(--primary) text-primary-foreground font-bold py-3 px-4 rounded-lg transition-colors">
                         Add to Cart
                       </button>
                       <button className="w-full mt-2 bg-white border border-gray-300 hover:border-gray-400 text-(--primary) font-semibold py-2 px-4 rounded-lg transition-colors">
@@ -361,4 +361,3 @@ export default function GiftPlanner(){
     </div>
   );
 };
-

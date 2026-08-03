@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "shannon-entropy-explorer",
   "title": "Shannon Entropy Explorer",
-  "description": "Text ya probability distribution ka entropy visualize kare.",
+  "description": "Visualize the Shannon entropy of any text or probability distribution you enter.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Education & Science",

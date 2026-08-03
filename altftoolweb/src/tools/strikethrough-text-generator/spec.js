@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "strikethrough-text-generator",
   "title": "Strikethrough Text Generator",
-  "description": "Turn your text into stylish Unicode letters for bios, posts and usernames.",
+  "description": "Add copy-paste Unicode strikethrough marks to text for posts, bios and messages.",
   "badge": "Fun",
   "category": [
     "Fun"

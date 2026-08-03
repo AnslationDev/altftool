@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "bootstrap-confidence-workbench",
   "title": "Bootstrap Confidence Workbench",
-  "description": "Uploaded data par seeded bootstrap intervals calculate kare.",
+  "description": "Calculate a seeded, reproducible bootstrap confidence interval for the mean from your numeric sample, with adjustable iterations and confidence level.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Education & Science",

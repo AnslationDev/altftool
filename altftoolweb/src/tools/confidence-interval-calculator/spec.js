@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "confidence-interval-calculator",
   "title": "Confidence Interval Calculator",
-  "description": "Means aur proportions ke confidence intervals nikale.",
+  "description": "Calculate a confidence interval for a mean or proportion from your sample estimate, standard error, and chosen confidence level.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Education & Science",

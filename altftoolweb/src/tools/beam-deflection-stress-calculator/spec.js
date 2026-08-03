@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "beam-deflection-stress-calculator",
   "title": "Beam Deflection & Stress Calculator",
-  "description": "Standard load cases ka deflection aur bending stress nikale.",
+  "description": "Calculate deflection and bending stress for standard simply supported beam load cases.",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Education & Science",

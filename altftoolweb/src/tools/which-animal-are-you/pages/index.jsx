@@ -209,7 +209,7 @@ export default function ToolHome() {
 
             <div className="flex flex-wrap gap-1 mb-4 justify-center">
               {result.compatibility.map((c, i) => (
-                <span key={i} className="text-[10px] font-bold px-2.5 py-1 rounded-full" style={{ background: "var(--primary)", color: "#fff" }}>
+                <span key={i} className="text-[10px] font-bold px-2.5 py-1 rounded-full" style={{ background: "var(--primary)", color: "var(--primary-foreground)" }}>
                   Compatible: {c}
                 </span>
               ))}
@@ -221,7 +221,7 @@ export default function ToolHome() {
 
             <button
               onClick={reset}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-white transition-all"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-primary-foreground transition-all"
               style={{ background: "var(--primary)" }}
             >
               <RotateCcw size={18} /> Retake Quiz
@@ -279,7 +279,7 @@ export default function ToolHome() {
                 style={{
                   background: answers[step] === i ? "var(--primary)" : "var(--background)",
                   borderColor: answers[step] === i ? "var(--primary)" : "var(--border)",
-                  color: answers[step] === i ? "#fff" : "var(--foreground)",
+                  color: answers[step] === i ? "var(--primary-foreground)" : "var(--foreground)",
                 }}
               >
                 {opt.text}

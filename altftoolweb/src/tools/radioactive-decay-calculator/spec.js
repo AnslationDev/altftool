@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "radioactive-decay-calculator",
   "title": "Radioactive Decay Calculator",
-  "description": "Half-life se remaining quantity, activity ya sample age calculate kare.",
+  "description": "Calculate a sample's remaining quantity, activity, or age from its half-life and elapsed time.",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Education & Science",

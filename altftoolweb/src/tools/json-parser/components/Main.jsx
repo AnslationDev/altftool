@@ -174,7 +174,7 @@ export default function Main(){
           <div className="flex flex-wrap gap-3">
             <button
               onClick={parseJSON}
-              className="bg-(--primary) text-foreground font-semibold px-6 py-2 rounded-lg transition-all shadow-lg flex items-center gap-2 cursor-pointer"
+              className="bg-(--primary) text-primary-foreground font-semibold px-6 py-2 rounded-lg transition-all shadow-lg flex items-center gap-2 cursor-pointer"
             >
               <CheckCircle className="w-4 h-4" />
               Parse JSON

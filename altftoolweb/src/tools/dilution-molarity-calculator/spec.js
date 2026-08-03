@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "dilution-molarity-calculator",
   "title": "Dilution & Molarity Calculator",
-  "description": "Concentration, molarity aur solution volumes calculate kare.",
+  "description": "Calculate dilution concentrations and volumes with C1V1 = C2V2, or find molarity from a solute's mass and molar mass.",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Education & Science",

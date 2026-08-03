@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "black-scholes-options-pricer",
   "title": "Black-Scholes Options Pricer",
-  "description": "European call/put value aur five Greeks calculate kare.",
+  "description": "Price a European call or put option from spot, strike, volatility, and rate inputs, and calculate all five Greeks.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Finance",

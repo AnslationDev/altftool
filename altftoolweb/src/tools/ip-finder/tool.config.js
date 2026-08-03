@@ -2,7 +2,7 @@ const config = {
     slug: "ip-finder",
     name: "IP Address Finder",
     category: ["Developer", "Security & Privacy"],
-    description: "Lookup IP location, ISP, ASN, timezone, map links, and network details.",
+    description: "Classify IPv4 or IPv6 addresses, calculate IPv4 subnets and optionally retrieve ISP and approximate location details.",
     icon: "globe",
     iconColor: "text-primary",
 };

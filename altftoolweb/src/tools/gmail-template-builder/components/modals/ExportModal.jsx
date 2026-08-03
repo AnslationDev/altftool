@@ -56,7 +56,7 @@ const ExportModal = ({ title, content, onClose }) => {
           )}
           <button
             onClick={handleCopyToClipboard}
-            className="py-2.5 px-5 bg-(--primary) text-foreground rounded-lg hover:hover:bg-(--primary)/90 transition-all text-base font-medium shadow-md"
+            className="py-2.5 px-5 bg-(--primary) text-primary-foreground rounded-lg hover:hover:bg-(--primary)/90 transition-all text-base font-medium shadow-md"
           >
             Copy to Clipboard
           </button>

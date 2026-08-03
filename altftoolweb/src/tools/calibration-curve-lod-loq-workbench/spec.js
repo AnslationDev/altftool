@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "calibration-curve-lod-loq-workbench",
   "title": "Calibration Curve LOD/LOQ Workbench",
-  "description": "Fit, residuals, confidence bands aur detection limits calculate kare.",
+  "description": "Enter calibration points to compute the linear fit, residuals, and confidence bands, then derive the LOD and LOQ.",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Education & Science",

@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "monte-carlo-risk-scenario-lab",
   "title": "Monte Carlo Risk Scenario Lab",
-  "description": "Seeded simulations se outcome distribution aur percentiles dikhaye.",
+  "description": "Run seeded Monte Carlo simulations on a starting value, expected return, and volatility to reveal the outcome distribution and key percentiles.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Finance",

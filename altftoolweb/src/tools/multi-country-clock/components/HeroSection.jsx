@@ -3,7 +3,14 @@
 import React, { useState, useEffect } from "react";
 import { Clock } from "lucide-react";
 
-const HeroSection = () => {
+import { formatClockTime } from "../lib";
+
+const TIME_FORMATS = [
+  { label: "12-Hour", hour12: true },
+  { label: "24-Hour", hour12: false },
+];
+
+const HeroSection = ({ hour12 = true, onHour12Change }) => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -14,14 +21,7 @@ const HeroSection = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const formatTime = (date) => {
-    return date.toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-      hour12: true,
-    });
-  };
+  const formatTime = (date) => formatClockTime(date, hour12);
 
   const formatDate = (date) => {
     return date.toLocaleDateString("en-US", {
@@ -37,7 +37,7 @@ const HeroSection = () => {
       <div className="max-w-5xl mx-auto text-center space-y-6">
         {/* Top Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-(--border) bg-(--card)">
-          <Clock className="w-4 h-4 text-(--primary)" />
+          <Clock aria-hidden="true" className="w-4 h-4 text-(--primary)" />
           <span className="text-sm font-semibold text-(--primary)">
             Real-Time Updates
           </span>
@@ -54,11 +54,54 @@ const HeroSection = () => {
 
         {/* Live Time Box */}
         <div className="inline-block px-8 py-6 rounded-2xl bg-(--card) border border-(--border)">
-          <div className="text-3xl md:text-4xl font-bold text-(--primary) mb-2">
+          <div
+            role="timer"
+            aria-label="Current local time"
+            className="text-3xl md:text-4xl font-bold font-mono text-(--primary) mb-2"
+          >
             {formatTime(currentTime)}
           </div>
           <div className="text-sm text-(--muted-foreground)">
             {formatDate(currentTime)}
+          </div>
+        </div>
+
+        {/* Time Format Toggle — applies to this clock and every card below */}
+        <div className="flex justify-center">
+          <div
+            role="group"
+            aria-label="Time format"
+            className="inline-flex items-center gap-1 p-1 rounded-full border border-(--border) bg-(--card)"
+          >
+            {TIME_FORMATS.map((format) => {
+              const isActive = hour12 === format.hour12;
+
+              return (
+                <button
+                  key={format.label}
+                  type="button"
+                  onClick={() => onHour12Change?.(format.hour12)}
+                  aria-pressed={isActive}
+                  aria-controls="clocks"
+                  className={`
+                    min-h-11 px-5 py-2
+                    rounded-full
+                    text-sm font-semibold
+                    transition duration-150
+                    focus-visible:outline-none
+                    focus-visible:[box-shadow:var(--focus-ring)]
+                    motion-reduce:transition-none
+                    ${
+                      isActive
+                        ? "bg-(--primary) text-(--primary-foreground)"
+                        : "text-(--muted-foreground) hover:text-(--foreground)"
+                    }
+                  `}
+                >
+                  {format.label}
+                </button>
+              );
+            })}
           </div>
         </div>
 

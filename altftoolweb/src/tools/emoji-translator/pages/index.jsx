@@ -235,8 +235,8 @@ export default function ToolHome() {
                 <button
                   onClick={doTranslate}
                   disabled={!input}
-                  className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-bold text-white transition-all active:scale-95"
-                  style={{ background: flash ? "#0D9488" : "var(--primary)" }}
+                  className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-bold text-primary-foreground transition-all active:scale-95"
+                  style={{ background: flash ? "var(--primary-active)" : "var(--primary)" }}
                 >
                   <Sparkles size={14} /> {flash ? "Translated!" : "Translate"}
                 </button>
@@ -253,7 +253,7 @@ export default function ToolHome() {
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition-all"
                   style={{
                     background: copied ? "var(--primary)" : "transparent",
-                    color: copied ? "#fff" : "var(--muted-foreground)",
+                    color: copied ? "var(--primary-foreground)" : "var(--muted-foreground)",
                     border: `1px solid ${copied ? "var(--primary)" : "var(--border)"}`,
                   }}
                 >

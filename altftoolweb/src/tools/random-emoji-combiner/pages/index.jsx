@@ -113,7 +113,7 @@ export default function ToolHome() {
           <div className="flex flex-wrap justify-center gap-3 mb-6">
             <button
               onClick={handleGenerate}
-              className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-white transition-all active:scale-95"
+              className="flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-primary-foreground transition-all active:scale-95"
               style={{ background: "var(--primary)" }}
             >
               <Shuffle size={18} /> Generate

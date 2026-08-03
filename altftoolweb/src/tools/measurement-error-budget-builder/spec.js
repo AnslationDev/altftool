@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "measurement-error-budget-builder",
   "title": "Measurement Error-Budget Builder",
-  "description": "Error sources, distributions aur coverage factor combine kare.",
+  "description": "Combine uncertainty sources, their distributions, and a coverage factor into a combined and expanded measurement uncertainty.",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Education & Science",

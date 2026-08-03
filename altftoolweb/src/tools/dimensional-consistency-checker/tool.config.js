@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "dimensional-consistency-checker",
   name: "Dimensional Consistency Checker",
   category: ["Education & Science","Developer"],
-  description: "Equation variables ke units compare karke invalid terms detect kare.",
+  description: "Compare the base-dimension exponents on each side of an equation to flag mismatched, dimensionally invalid terms.",
   icon: "brackets",
   iconColor: "text-primary",
 };

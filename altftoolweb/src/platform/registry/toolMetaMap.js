@@ -1648,7 +1648,7 @@ export const toolMetaMap = {
   },
   "apr-to-apy-converter": {
     "name": "APR-to-APY Converter",
-    "description": "Compounding frequency se nominal APR ko effective APY me badle.",
+    "description": "Convert a nominal APR into its effective APY based on the compounding frequency.",
     "category": "Finance Calculators",
     "topics": [
       "Finance",
@@ -2658,7 +2658,7 @@ export const toolMetaMap = {
   },
   "bayesian-update-calculator": {
     "name": "Bayesian Update Calculator",
-    "description": "Prior aur evidence se posterior probability calculate kare.",
+    "description": "Calculate the posterior probability from a prior probability and new evidence using Bayes' theorem.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -2692,7 +2692,7 @@ export const toolMetaMap = {
   },
   "beam-deflection-stress-calculator": {
     "name": "Beam Deflection & Stress Calculator",
-    "description": "Standard load cases ka deflection aur bending stress nikale.",
+    "description": "Calculate deflection and bending stress for standard simply supported beam load cases.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -3160,7 +3160,7 @@ export const toolMetaMap = {
   },
   "black-scholes-options-pricer": {
     "name": "Black-Scholes Options Pricer",
-    "description": "European call/put value aur five Greeks calculate kare.",
+    "description": "Price a European call or put option from spot, strike, volatility, and rate inputs, and calculate all five Greeks.",
     "category": "Finance Calculators",
     "topics": [
       "Finance",
@@ -3455,7 +3455,7 @@ export const toolMetaMap = {
   },
   "bolt-torque-preload-calculator": {
     "name": "Bolt Torque & Preload Calculator",
-    "description": "Bolt size aur K-factor se torque/clamp load estimate kare.",
+    "description": "Estimate clamp load and preload from bolt diameter, applied torque, and nut factor (K).",
     "category": [
       "Education & Science",
       "Calculators"
@@ -3489,7 +3489,7 @@ export const toolMetaMap = {
   },
   "bond-duration-convexity-calculator": {
     "name": "Bond Duration & Convexity Calculator",
-    "description": "Macaulay duration, modified duration aur convexity nikale.",
+    "description": "Calculate a bond's Macaulay duration, modified duration, and convexity to measure its price sensitivity to interest rate changes.",
     "category": "Finance Calculators",
     "topics": [
       "Finance",
@@ -3552,7 +3552,7 @@ export const toolMetaMap = {
   },
   "bootstrap-confidence-workbench": {
     "name": "Bootstrap Confidence Workbench",
-    "description": "Uploaded data par seeded bootstrap intervals calculate kare.",
+    "description": "Calculate a seeded, reproducible bootstrap confidence interval for the mean from your numeric sample, with adjustable iterations and confidence level.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -4280,7 +4280,7 @@ export const toolMetaMap = {
   },
   "calibration-curve-lod-loq-workbench": {
     "name": "Calibration Curve LOD/LOQ Workbench",
-    "description": "Fit, residuals, confidence bands aur detection limits calculate kare.",
+    "description": "Enter calibration points to compute the linear fit, residuals, and confidence bands, then derive the LOD and LOQ.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -6024,7 +6024,7 @@ export const toolMetaMap = {
   },
   "confidence-interval-calculator": {
     "name": "Confidence Interval Calculator",
-    "description": "Means aur proportions ke confidence intervals nikale.",
+    "description": "Calculate a confidence interval for a mean or proportion from your sample estimate, standard error, and chosen confidence level.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -6337,7 +6337,7 @@ export const toolMetaMap = {
   },
   "correlation-simpsons-paradox-visualizer": {
     "name": "Correlation & Simpson's Paradox Visualizer",
-    "description": "Grouped data me misleading aggregate correlations demonstrate kare.",
+    "description": "Compare per-group and aggregate correlations from grouped x/y data, then flag potential Simpson's-paradox reversals where the trends disagree.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -8197,7 +8197,7 @@ export const toolMetaMap = {
   },
   "dilution-molarity-calculator": {
     "name": "Dilution & Molarity Calculator",
-    "description": "Concentration, molarity aur solution volumes calculate kare.",
+    "description": "Calculate dilution concentrations and volumes with C1V1 = C2V2, or find molarity from a solute's mass and molar mass.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -8210,7 +8210,7 @@ export const toolMetaMap = {
   },
   "dimensional-consistency-checker": {
     "name": "Dimensional Consistency Checker",
-    "description": "Equation variables ke units compare karke invalid terms detect kare.",
+    "description": "Compare the base-dimension exponents on each side of an equation to flag mismatched, dimensionally invalid terms.",
     "category": [
       "Education & Science",
       "Developer"
@@ -14205,7 +14205,7 @@ export const toolMetaMap = {
   },
   "ideal-gas-law-calculator": {
     "name": "Ideal Gas Law Calculator",
-    "description": "Unit-aware PV=nRT calculation me unknown solve kare.",
+    "description": "Solve for pressure, volume, amount, or temperature in the ideal gas law (PV = nRT) with automatic unit conversion.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -15406,7 +15406,7 @@ export const toolMetaMap = {
   },
   "ip-finder": {
     "name": "IP Address Finder",
-    "description": "Lookup IP location, ISP, ASN, timezone, map links, and network details.",
+    "description": "Classify IPv4 or IPv6 addresses, calculate IPv4 subnets and optionally retrieve ISP and approximate location details.",
     "category": [
       "Developer",
       "Security & Privacy"
@@ -15416,7 +15416,7 @@ export const toolMetaMap = {
   },
   "ip-geolocation-lookup": {
     "name": "IP Geolocation Lookup",
-    "description": "Lookup IP location, ISP, ASN, timezone, map links, and network details.",
+    "description": "Look up an IP address's approximate location, ISP, ASN, timezone and map links.",
     "category": "Developer",
     "topics": [
       "Web"
@@ -18096,7 +18096,7 @@ export const toolMetaMap = {
   },
   "measurement-error-budget-builder": {
     "name": "Measurement Error-Budget Builder",
-    "description": "Error sources, distributions aur coverage factor combine kare.",
+    "description": "Combine uncertainty sources, their distributions, and a coverage factor into a combined and expanded measurement uncertainty.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -18587,7 +18587,7 @@ export const toolMetaMap = {
   },
   "mirr-calculator": {
     "name": "MIRR Calculator",
-    "description": "Separate finance aur reinvestment rates se modified IRR nikale.",
+    "description": "Calculate a project's Modified Internal Rate of Return from its cash flows using separate finance and reinvestment rates.",
     "category": "Finance Calculators",
     "topics": [
       "Finance",
@@ -18746,7 +18746,7 @@ export const toolMetaMap = {
   },
   "monte-carlo-risk-scenario-lab": {
     "name": "Monte Carlo Risk Scenario Lab",
-    "description": "Seeded simulations se outcome distribution aur percentiles dikhaye.",
+    "description": "Run seeded Monte Carlo simulations on a starting value, expected return, and volatility to reveal the outcome distribution and key percentiles.",
     "category": "Finance Calculators",
     "topics": [
       "Finance",
@@ -22710,7 +22710,7 @@ export const toolMetaMap = {
   },
   "probability-distribution-fitter": {
     "name": "Probability Distribution Fitter",
-    "description": "Dataset ko common distributions ke against compare kare.",
+    "description": "Fit your dataset against common probability distributions and compare goodness of fit.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -23339,7 +23339,7 @@ export const toolMetaMap = {
   },
   "radioactive-decay-calculator": {
     "name": "Radioactive Decay Calculator",
-    "description": "Half-life se remaining quantity, activity ya sample age calculate kare.",
+    "description": "Calculate a sample's remaining quantity, activity, or age from its half-life and elapsed time.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -24440,7 +24440,7 @@ export const toolMetaMap = {
   },
   "reynolds-number-pipe-flow-calculator": {
     "name": "Reynolds Number & Pipe Flow Calculator",
-    "description": "Flow regime, Reynolds number aur head loss calculate kare.",
+    "description": "Calculate the Reynolds number, flow regime, and head loss for fluid flowing through a pipe.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -24516,7 +24516,7 @@ export const toolMetaMap = {
   },
   "rlc-resonance-filter-calculator": {
     "name": "RLC Resonance & Filter Calculator",
-    "description": "Resonant frequency, Q factor aur cutoff calculate kare.",
+    "description": "Calculate the resonant frequency, Q factor, and cutoff frequency of a series or parallel RLC circuit.",
     "category": "Calculators",
     "topics": [
       "Electronics",
@@ -25258,7 +25258,7 @@ export const toolMetaMap = {
   },
   "sample-size-power-calculator": {
     "name": "Sample Size & Power Calculator",
-    "description": "Effect size aur power target se required sample estimate kare.",
+    "description": "Estimate the sample size a study needs from your target effect size and statistical power.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -26116,7 +26116,7 @@ export const toolMetaMap = {
   },
   "shannon-entropy-explorer": {
     "name": "Shannon Entropy Explorer",
-    "description": "Text ya probability distribution ka entropy visualize kare.",
+    "description": "Visualize the Shannon entropy of any text or probability distribution you enter.",
     "category": [
       "Education & Science",
       "Developer"
@@ -26143,7 +26143,7 @@ export const toolMetaMap = {
   },
   "sharpe-sortino-calculator": {
     "name": "Sharpe & Sortino Calculator",
-    "description": "Return series ka risk-adjusted performance compare kare.",
+    "description": "Compare a return series' risk-adjusted performance using the Sharpe and Sortino ratios.",
     "category": "Finance Calculators",
     "topics": [
       "Finance",
@@ -27924,7 +27924,7 @@ export const toolMetaMap = {
   },
   "strikethrough-text-generator": {
     "name": "Strikethrough Text Generator",
-    "description": "Turn your text into stylish Unicode letters for bios, posts and usernames.",
+    "description": "Add copy-paste Unicode strikethrough marks to text for posts, bios and messages.",
     "category": "Fun",
     "icon": "type",
     "iconColor": "text-pink-600"
@@ -30660,7 +30660,7 @@ export const toolMetaMap = {
   },
   "uncertainty-propagation-workbench": {
     "name": "Uncertainty Propagation Workbench",
-    "description": "Input uncertainties se combined uncertainty aur Monte Carlo cross-check nikale.",
+    "description": "Derive combined and expanded measurement uncertainty from each input's value, uncertainty, and exponent, with a Monte Carlo cross-check for validation.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -31880,7 +31880,7 @@ export const toolMetaMap = {
   },
   "voltage-drop-wire-gauge-calculator": {
     "name": "Voltage Drop & Wire Gauge Calculator",
-    "description": "Length, current aur conductor se voltage loss estimate kare.",
+    "description": "Estimate voltage loss along a wire run from its length, current, and conductor type or gauge.",
     "category": "Calculators",
     "topics": [
       "Electronics",
@@ -31964,7 +31964,7 @@ export const toolMetaMap = {
   },
   "wacc-calculator": {
     "name": "WACC Calculator",
-    "description": "Equity, debt aur tax inputs se weighted capital cost calculate kare.",
+    "description": "Calculate a company's weighted average cost of capital from its equity, debt, and tax inputs.",
     "category": "Finance Calculators",
     "topics": [
       "Finance",

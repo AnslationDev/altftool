@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-03T17:56:02.035Z",
+  "generatedAt": "2026-08-03T22:45:07.111Z",
   "tools": {
     "total": 3947,
     "healthy": 3947,
@@ -22,23 +22,23 @@
       "total": 3947,
       "score": 94,
       "counts": {
-        "working": 3864,
-        "api-required": 67,
+        "working": 3865,
+        "api-required": 66,
         "partial": 16,
         "broken": 0
       },
-      "automatedTests": 174,
+      "automatedTests": 175,
       "automatedCoverage": 4,
-      "networkDependent": 67,
+      "networkDependent": 66,
       "envDependent": 4,
       "api": {
-        "tools": 68,
+        "tools": 67,
         "counts": {
           "configured": 0,
           "missing-config": 3,
-          "runtime-check": 65
+          "runtime-check": 64
         },
-        "providerCount": 19,
+        "providerCount": 18,
         "requiredEnvKeys": [
           "DATABASE_URL",
           "NEXT_PUBLIC_API_KEY",
@@ -187,15 +187,6 @@
           },
           {
             "name": "ipapi.co",
-            "tools": 1,
-            "requiredEnvKeys": [],
-            "missingEnvKeys": [],
-            "statuses": [
-              "runtime-check"
-            ]
-          },
-          {
-            "name": "timeapi.io",
             "tools": 1,
             "requiredEnvKeys": [],
             "missingEnvKeys": [],

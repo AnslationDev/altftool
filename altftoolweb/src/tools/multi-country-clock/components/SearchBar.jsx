@@ -36,14 +36,19 @@ const SearchBar = ({ searchQuery = "", setSearchQuery }) => {
               transition
             "
           >
-            <Search className="w-5 h-5 text-(--primary)" />
+            <Search aria-hidden="true" className="w-5 h-5 text-(--primary)" />
 
+            <label htmlFor="timezone-search" className="sr-only">
+              Search by country, city, or timezone name
+            </label>
             <input
+              id="timezone-search"
               type="text"
               placeholder="Search (e.g., London, Tokyo, America)"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               autoComplete="off"
+              aria-controls="timezone-results"
               className="
                 w-full
                 bg-transparent

@@ -281,7 +281,7 @@ console.log(greet('World'));
               aria-pressed={view === "split"}
               className={`min-h-11 bg-(--card) hover:bg-(--primary) border border-(--border) hover:bg-primary/90 text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 cursor-pointer shadow-lg active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                 view === "split"
-                  ? "bg-(--primary) text-(--foreground) shadow-lg"
+                  ? "bg-(--primary) text-primary-foreground shadow-lg"
                   : "bg-(--muted) text-(--foreground) hover:bg-accent"
               }`}
             >
@@ -293,7 +293,7 @@ console.log(greet('World'));
               aria-pressed={view === "editor"}
               className={`min-h-11 bg-(--card) hover:bg-(--primary) border border-(--border)  text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center cursor-pointer gap-2 shadow-lg active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                 view === "editor"
-                  ? "bg-(--primary) text-(--foreground) shadow-lg"
+                  ? "bg-(--primary) text-primary-foreground shadow-lg"
                   : "bg-(--muted) text-(--foreground) hover:bg-accent"
               }`}
             >
@@ -305,7 +305,7 @@ console.log(greet('World'));
               aria-pressed={view === "preview"}
               className={`min-h-11 bg-(--card) hover:bg-(--primary) border border-(--border)  text-foreground px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center cursor-pointer  shadow-lg gap-2 active:scale-[0.98] motion-reduce:transition-none motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
                 view === "preview"
-                  ? "bg-(--primary) text-(--foreground) shadow-lg"
+                  ? "bg-(--primary) text-primary-foreground shadow-lg"
                   : "bg-(--muted) text-(--foreground)hover:bg-accent"
               }`}
             >

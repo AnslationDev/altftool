@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "uncertainty-propagation-workbench",
   "title": "Uncertainty Propagation Workbench",
-  "description": "Input uncertainties se combined uncertainty aur Monte Carlo cross-check nikale.",
+  "description": "Derive combined and expanded measurement uncertainty from each input's value, uncertainty, and exponent, with a Monte Carlo cross-check for validation.",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Education & Science",

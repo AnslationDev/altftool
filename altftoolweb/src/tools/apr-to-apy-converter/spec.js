@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "apr-to-apy-converter",
   "title": "APR-to-APY Converter",
-  "description": "Compounding frequency se nominal APR ko effective APY me badle.",
+  "description": "Convert a nominal APR into its effective APY based on the compounding frequency.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Finance",

@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "probability-distribution-fitter",
   "title": "Probability Distribution Fitter",
-  "description": "Dataset ko common distributions ke against compare kare.",
+  "description": "Fit your dataset against common probability distributions and compare goodness of fit.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Education & Science",

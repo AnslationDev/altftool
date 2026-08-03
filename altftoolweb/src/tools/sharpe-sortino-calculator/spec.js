@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "sharpe-sortino-calculator",
   "title": "Sharpe & Sortino Calculator",
-  "description": "Return series ka risk-adjusted performance compare kare.",
+  "description": "Compare a return series' risk-adjusted performance using the Sharpe and Sortino ratios.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Finance",

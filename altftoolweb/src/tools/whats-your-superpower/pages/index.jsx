@@ -223,7 +223,7 @@ export default function ToolHome() {
             </div>
             <button
               onClick={reset}
-              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-white transition-all"
+              className="w-full flex items-center justify-center gap-2 py-3 rounded-xl font-bold text-primary-foreground transition-all"
               style={{ background: "var(--primary)" }}
             >
               <RotateCcw size={18} /> Retake Quiz

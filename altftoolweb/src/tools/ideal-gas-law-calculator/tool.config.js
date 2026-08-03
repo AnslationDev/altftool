@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "ideal-gas-law-calculator",
   name: "Ideal Gas Law Calculator",
   category: ["Education & Science","Calculator"],
-  description: "Unit-aware PV=nRT calculation me unknown solve kare.",
+  description: "Solve for pressure, volume, amount, or temperature in the ideal gas law (PV = nRT) with automatic unit conversion.",
   icon: "flask-round",
   iconColor: "text-primary",
 };

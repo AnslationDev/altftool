@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "correlation-simpsons-paradox-visualizer",
   "title": "Correlation & Simpson's Paradox Visualizer",
-  "description": "Grouped data me misleading aggregate correlations demonstrate kare.",
+  "description": "Compare per-group and aggregate correlations from grouped x/y data, then flag potential Simpson's-paradox reversals where the trends disagree.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Education & Science",

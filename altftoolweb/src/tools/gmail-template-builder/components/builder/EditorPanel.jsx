@@ -118,7 +118,7 @@ const SocialMediaEditor = ({ component, onUpdate }) => {
         />
         <button
           onClick={handleAddLink}
-          className="p-2 bg-(--primary) text-foreground rounded-lg hover:hover:bg-(--primary)/90 transition-all"
+          className="p-2 bg-(--primary) text-primary-foreground rounded-lg hover:hover:bg-(--primary)/90 transition-all"
           title="Add Link"
         >
           <Plus className="w-5 h-5" />

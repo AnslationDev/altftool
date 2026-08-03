@@ -455,7 +455,7 @@ export default function ToolHome() {
 
             <button
               onClick={reset}
-              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-white transition-all hover:opacity-90 active:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+              className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-bold text-primary-foreground transition-all hover:opacity-90 active:opacity-80 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
               style={{
                 background: "var(--primary)",
                 "--tw-ring-color": "var(--primary)",
@@ -559,7 +559,7 @@ export default function ToolHome() {
                       ? "var(--primary)"
                       : "var(--border)",
                   color:
-                    answers[step] === i ? "#fff" : "var(--foreground)",
+                    answers[step] === i ? "var(--primary-foreground)" : "var(--foreground)",
                   "--tw-ring-color": "var(--primary)",
                 }}
               >

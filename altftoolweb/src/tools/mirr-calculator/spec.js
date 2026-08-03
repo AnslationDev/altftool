@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "mirr-calculator",
   "title": "MIRR Calculator",
-  "description": "Separate finance aur reinvestment rates se modified IRR nikale.",
+  "description": "Calculate a project's Modified Internal Rate of Return from its cash flows using separate finance and reinvestment rates.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Finance",

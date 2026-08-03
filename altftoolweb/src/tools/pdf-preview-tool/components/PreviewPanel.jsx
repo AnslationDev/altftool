@@ -247,7 +247,7 @@ ${html}
       setPreviewMode("desktop");
       setOrientation("portrait");
     }}
-    className={`p-2 rounded-md transition-all duration-200 ${previewMode === "desktop" ? "bg-primary text-(--foreground) shadow-md scale-105" : "hover:bg-(--background)/80 text-(--muted-foreground) hover:text-(--foreground)"}`}
+    className={`p-2 rounded-md transition-all duration-200 ${previewMode === "desktop" ? "bg-primary text-primary-foreground shadow-md scale-105" : "hover:bg-(--background)/80 text-(--muted-foreground) hover:text-(--foreground)"}`}
     title="Desktop View (Full Width)"
     whileHover={{ scale: previewMode === "desktop" ? 1.05 : 1.1 }}
     whileTap={{ scale: 0.95 }}
@@ -259,7 +259,7 @@ ${html}
       setPreviewMode("tablet");
       setOrientation("portrait");
     }}
-    className={`p-2 rounded-md transition-all duration-200 ${previewMode === "tablet" ? "bg-primary text-(--foreground) shadow-md scale-105" : "hover:bg-(--background)/80 text-(--muted-foreground) hover:text-(--foreground)"}`}
+    className={`p-2 rounded-md transition-all duration-200 ${previewMode === "tablet" ? "bg-primary text-primary-foreground shadow-md scale-105" : "hover:bg-(--background)/80 text-(--muted-foreground) hover:text-(--foreground)"}`}
     title="Tablet View (768px)"
     whileHover={{ scale: previewMode === "tablet" ? 1.05 : 1.1 }}
     whileTap={{ scale: 0.95 }}
@@ -271,7 +271,7 @@ ${html}
       setPreviewMode("mobile");
       setOrientation("portrait");
     }}
-    className={`p-2 rounded-md transition-all duration-200 ${previewMode === "mobile" ? "bg-primary text-(--foreground) shadow-md scale-105" : "hover:bg-(--background)/80 text-(--muted-foreground) hover:text-(--foreground)"}`}
+    className={`p-2 rounded-md transition-all duration-200 ${previewMode === "mobile" ? "bg-primary text-primary-foreground shadow-md scale-105" : "hover:bg-(--background)/80 text-(--muted-foreground) hover:text-(--foreground)"}`}
     title="Mobile View (375px)"
     whileHover={{ scale: previewMode === "mobile" ? 1.05 : 1.1 }}
     whileTap={{ scale: 0.95 }}
@@ -440,7 +440,7 @@ ${html}
                   <p className="text-sm text-(--muted-foreground)">{errorMessage}</p>
                   <button
     onClick={handleRefresh}
-    className="mt-2 px-4 py-2 bg-primary text-(--foreground) rounded-md hover:bg-primary/90 transition-colors"
+    className="mt-2 px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition-colors"
   >
                     Retry
                   </button>
