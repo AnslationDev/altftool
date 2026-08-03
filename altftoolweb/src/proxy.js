@@ -18,7 +18,12 @@ const LEGACY_CATEGORY_REDIRECTS = getLegacyCategorySlugMap();
 // reachable until their unsourced rankings/financial claims are replaced.
 // Rewriting to the framework 404 route preserves the normal error UI while
 // setting a real 404 status (layout-level notFound() can stream a soft 404).
-const QUARANTINED_ROUTE_PREFIXES = ["/top11", "/tradeon"];
+const QUARANTINED_ROUTE_PREFIXES = [
+  "/ai-explore",
+  "/top8",
+  "/top11",
+  "/tradeon",
+];
 
 const REDIRECTS_MAP = {
   "/blog": "/blogs",
