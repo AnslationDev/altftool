@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-03T10:38:44.634Z",
-  "buildId": "X8InyxXr_-L8p86peP915",
+  "generatedAt": "2026-08-03T17:25:14.958Z",
+  "buildId": "b1wuTO_dsV0eVY1vV8JEQ",
   "ok": true,
   "indexControlOk": true,
   "qualityOk": true,
   "score": 100,
   "totals": {
-    "routes": 1037,
-    "indexable": 848,
+    "routes": 1035,
+    "indexable": 846,
     "noindex": 189,
-    "sitemapUrls": 5764,
-    "sitemapCovered": 848,
+    "sitemapUrls": 5152,
+    "sitemapCovered": 846,
     "sitemapCoverage": 100,
     "indexConflicts": 0,
     "missingCanonicalTargets": 0,
@@ -225,17 +225,6 @@
       "indexable": 7,
       "noindex": 0,
       "sitemapCovered": 7,
-      "issues": 0,
-      "advisories": 0,
-      "score": 100,
-      "sitemapCoverage": 100
-    },
-    {
-      "group": "Landers",
-      "routes": 5,
-      "indexable": 5,
-      "noindex": 0,
-      "sitemapCovered": 5,
       "issues": 0,
       "advisories": 0,
       "score": 100,
@@ -528,6 +517,17 @@
       "sitemapCoverage": 100
     },
     {
+      "group": "Lookouts",
+      "routes": 1,
+      "indexable": 1,
+      "noindex": 0,
+      "sitemapCovered": 1,
+      "issues": 0,
+      "advisories": 0,
+      "score": 100,
+      "sitemapCoverage": 100
+    },
+    {
       "group": "Open Data",
       "routes": 1,
       "indexable": 1,
@@ -649,7 +649,29 @@
       "sitemapCoverage": 100
     },
     {
+      "group": "Top1",
+      "routes": 1,
+      "indexable": 1,
+      "noindex": 0,
+      "sitemapCovered": 1,
+      "issues": 0,
+      "advisories": 0,
+      "score": 100,
+      "sitemapCoverage": 100
+    },
+    {
       "group": "Top10",
+      "routes": 1,
+      "indexable": 1,
+      "noindex": 0,
+      "sitemapCovered": 1,
+      "issues": 0,
+      "advisories": 0,
+      "score": 100,
+      "sitemapCoverage": 100
+    },
+    {
+      "group": "Top6",
       "routes": 1,
       "indexable": 1,
       "noindex": 0,

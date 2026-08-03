@@ -1,27 +1,27 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-03T10:33:47.214Z",
+  "generatedAt": "2026-08-03T17:25:15.304Z",
   "summary": {
     "methodology": "static-readiness-v2",
     "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
     "total": 3947,
     "score": 94,
     "counts": {
-      "working": 3863,
-      "api-required": 68,
+      "working": 3864,
+      "api-required": 67,
       "partial": 16,
       "broken": 0
     },
     "automatedTests": 172,
     "automatedCoverage": 4,
-    "networkDependent": 68,
+    "networkDependent": 67,
     "envDependent": 4,
     "api": {
-      "tools": 69,
+      "tools": 68,
       "counts": {
         "configured": 0,
         "missing-config": 3,
-        "runtime-check": 66
+        "runtime-check": 65
       },
       "providerCount": 19,
       "requiredEnvKeys": [
@@ -38,7 +38,7 @@
       "providers": [
         {
           "name": "Runtime-provided endpoint",
-          "tools": 54,
+          "tools": 53,
           "requiredEnvKeys": [],
           "missingEnvKeys": [],
           "statuses": [
@@ -665,32 +665,6 @@
         }
       },
       {
-        "slug": "ai-passport-photo-maker",
-        "name": "AI Passport Photo Maker",
-        "category": "Image & Photo",
-        "route": "/tools/all/ai-passport-photo-maker",
-        "status": "api-required",
-        "score": 86,
-        "priority": true,
-        "issues": [],
-        "recommendations": [
-          "Verify provider latency, timeout, fallback, and error states at runtime."
-        ],
-        "evidence": {
-          "automatedTest": true,
-          "networkDependent": true,
-          "envKeys": [],
-          "unresolvedImports": []
-        },
-        "apiReadiness": {
-          "status": "runtime-check",
-          "providers": [
-            "Runtime-provided endpoint"
-          ],
-          "missingEnvKeys": []
-        }
-      },
-      {
         "slug": "image-compressor",
         "name": "Image Compressor",
         "category": "Marketing & Social, Design & Color",
@@ -856,6 +830,33 @@
         "name": "API TESTER",
         "category": "Developer",
         "route": "/tools/all/api-tester",
+        "status": "api-required",
+        "score": 80,
+        "priority": false,
+        "issues": [],
+        "recommendations": [
+          "Verify provider latency, timeout, fallback, and error states at runtime.",
+          "Add one deterministic functional or unit regression test."
+        ],
+        "evidence": {
+          "automatedTest": false,
+          "networkDependent": true,
+          "envKeys": [],
+          "unresolvedImports": []
+        },
+        "apiReadiness": {
+          "status": "runtime-check",
+          "providers": [
+            "Runtime-provided endpoint"
+          ],
+          "missingEnvKeys": []
+        }
+      },
+      {
+        "slug": "app-finder",
+        "name": "App Finder",
+        "category": "Business",
+        "route": "/tools/all/app-finder",
         "status": "api-required",
         "score": 80,
         "priority": false,
@@ -2683,7 +2684,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 4,
-        "sourceBytes": 18307,
+        "sourceBytes": 19217,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -4340,72 +4341,37 @@
       "name": "AI Passport Photo Maker",
       "category": "Image & Photo",
       "route": "/tools/all/ai-passport-photo-maker",
-      "status": "api-required",
-      "score": 86,
+      "status": "working",
+      "score": 100,
       "priority": true,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 34,
-        "sourceBytes": 206747,
+        "sourceFiles": 5,
+        "sourceBytes": 45130,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
         "automatedTest": true,
         "localTest": false,
         "functionalTest": true,
-        "networkDependent": true,
+        "networkDependent": false,
         "envKeys": [],
-        "networkSignals": [
-          {
-            "transport": "fetch",
-            "kind": "dynamic",
-            "provider": "Runtime-provided endpoint",
-            "target": "Runtime-provided endpoint",
-            "envKey": null
-          },
-          {
-            "transport": "fetch",
-            "kind": "browser-local",
-            "provider": "Browser",
-            "target": "In-memory browser resource",
-            "envKey": null
-          }
-        ],
+        "networkSignals": [],
         "placeholderSignals": []
       },
       "apiReadiness": {
-        "required": true,
-        "status": "runtime-check",
-        "providers": [
-          {
-            "name": "Runtime-provided endpoint",
-            "kinds": [
-              "dynamic"
-            ],
-            "requiredEnvKeys": [],
-            "configured": null,
-            "status": "runtime-check"
-          }
-        ],
-        "endpoints": [
-          {
-            "transport": "fetch",
-            "kind": "dynamic",
-            "provider": "Runtime-provided endpoint",
-            "target": "Runtime-provided endpoint",
-            "envKey": null
-          }
-        ],
+        "required": false,
+        "status": "not-required",
+        "providers": [],
+        "endpoints": [],
         "environment": [],
         "requiredEnvKeys": [],
         "missingEnvKeys": [],
-        "browserLocalOperations": 1
+        "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Verify provider latency, timeout, fallback, and error states at runtime."
-      ]
+      "recommendations": []
     },
     {
       "slug": "ai-pilot-success-criteria-builder",
@@ -10721,7 +10687,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 27892,
+        "sourceBytes": 28772,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -15733,7 +15699,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 5675,
+        "sourceBytes": 5727,
         "unresolvedImports": [],
         "interactive": false,
         "output": true,
@@ -16276,8 +16242,8 @@
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 9,
-        "sourceBytes": 110424,
+        "sourceFiles": 5,
+        "sourceBytes": 61450,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -17681,7 +17647,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 34260,
+        "sourceBytes": 35939,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -28634,7 +28600,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 6229,
+        "sourceBytes": 7128,
         "unresolvedImports": [],
         "interactive": false,
         "output": true,
@@ -36168,7 +36134,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 28080,
+        "sourceBytes": 28499,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -37757,7 +37723,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 36730,
+        "sourceBytes": 38277,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -46495,7 +46461,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 117835,
+        "sourceBytes": 123127,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -49211,7 +49177,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 30765,
+        "sourceBytes": 31515,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -55323,7 +55289,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 6198,
+        "sourceBytes": 7772,
         "unresolvedImports": [],
         "interactive": false,
         "output": true,
@@ -56337,7 +56303,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 25437,
+        "sourceBytes": 26219,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -67797,7 +67763,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 5935,
+        "sourceBytes": 5973,
         "unresolvedImports": [],
         "interactive": false,
         "output": true,
@@ -83901,7 +83867,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 39060,
+        "sourceBytes": 40019,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -94977,7 +94943,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 6,
-        "sourceBytes": 21231,
+        "sourceBytes": 26424,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -95980,7 +95946,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 31255,
+        "sourceBytes": 33235,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -116306,7 +116272,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 45618,
+        "sourceBytes": 46267,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -120506,7 +120472,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 6,
-        "sourceBytes": 53761,
+        "sourceBytes": 54978,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -121892,7 +121858,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 25300,
+        "sourceBytes": 25709,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -142489,7 +142455,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 6,
-        "sourceBytes": 16334,
+        "sourceBytes": 18802,
         "unresolvedImports": [],
         "interactive": false,
         "output": true,
@@ -146802,7 +146768,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 48841,
+        "sourceBytes": 50742,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -147814,7 +147780,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 23275,
+        "sourceBytes": 24298,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -149516,7 +149482,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 6,
-        "sourceBytes": 44699,
+        "sourceBytes": 45109,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -152734,7 +152700,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 30995,
+        "sourceBytes": 32622,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -153746,7 +153712,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 31503,
+        "sourceBytes": 32265,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -154524,7 +154490,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 29117,
+        "sourceBytes": 30661,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,

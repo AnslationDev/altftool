@@ -11341,7 +11341,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Friendly matches ka persistent ELO rating track kare."
+    "description": "Track a persistent Elo rating ladder for friendly matches."
   },
   {
     "slug": "friendship-challenge",
@@ -13914,7 +13914,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Lifestyle"
     ],
-    "description": "IFSC format validate karke bank, branch aur location lookup kare."
+    "description": "IFSC format validate karke bank aur branch identifier decode kare."
   },
   {
     "slug": "illegal-entry-objection-letter",

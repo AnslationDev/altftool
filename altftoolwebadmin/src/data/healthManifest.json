@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-03T04:37:30.783Z",
+  "generatedAt": "2026-08-03T17:25:15.304Z",
   "tools": {
     "total": 3947,
     "healthy": 3947,
@@ -22,21 +22,21 @@
       "total": 3947,
       "score": 94,
       "counts": {
-        "working": 3863,
-        "api-required": 68,
+        "working": 3864,
+        "api-required": 67,
         "partial": 16,
         "broken": 0
       },
       "automatedTests": 172,
       "automatedCoverage": 4,
-      "networkDependent": 68,
+      "networkDependent": 67,
       "envDependent": 4,
       "api": {
-        "tools": 69,
+        "tools": 68,
         "counts": {
           "configured": 0,
           "missing-config": 3,
-          "runtime-check": 66
+          "runtime-check": 65
         },
         "providerCount": 19,
         "requiredEnvKeys": [
@@ -53,7 +53,7 @@
         "providers": [
           {
             "name": "Runtime-provided endpoint",
-            "tools": 54,
+            "tools": 53,
             "requiredEnvKeys": [],
             "missingEnvKeys": [],
             "statuses": [
@@ -680,32 +680,6 @@
           }
         },
         {
-          "slug": "ai-passport-photo-maker",
-          "name": "AI Passport Photo Maker",
-          "category": "Image & Photo",
-          "route": "/tools/all/ai-passport-photo-maker",
-          "status": "api-required",
-          "score": 86,
-          "priority": true,
-          "issues": [],
-          "recommendations": [
-            "Verify provider latency, timeout, fallback, and error states at runtime."
-          ],
-          "evidence": {
-            "automatedTest": true,
-            "networkDependent": true,
-            "envKeys": [],
-            "unresolvedImports": []
-          },
-          "apiReadiness": {
-            "status": "runtime-check",
-            "providers": [
-              "Runtime-provided endpoint"
-            ],
-            "missingEnvKeys": []
-          }
-        },
-        {
           "slug": "image-compressor",
           "name": "Image Compressor",
           "category": "Marketing & Social, Design & Color",
@@ -871,6 +845,33 @@
           "name": "API TESTER",
           "category": "Developer",
           "route": "/tools/all/api-tester",
+          "status": "api-required",
+          "score": 80,
+          "priority": false,
+          "issues": [],
+          "recommendations": [
+            "Verify provider latency, timeout, fallback, and error states at runtime.",
+            "Add one deterministic functional or unit regression test."
+          ],
+          "evidence": {
+            "automatedTest": false,
+            "networkDependent": true,
+            "envKeys": [],
+            "unresolvedImports": []
+          },
+          "apiReadiness": {
+            "status": "runtime-check",
+            "providers": [
+              "Runtime-provided endpoint"
+            ],
+            "missingEnvKeys": []
+          }
+        },
+        {
+          "slug": "app-finder",
+          "name": "App Finder",
+          "category": "Business",
+          "route": "/tools/all/app-finder",
           "status": "api-required",
           "score": 80,
           "priority": false,
