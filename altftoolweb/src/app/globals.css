@@ -70,6 +70,7 @@ html[data-theme="light"] {
   --badge-bg: var(--anslation-ds-primary-soft);
   --bg-black: var(--anslation-ds-text);
   --input-placeholder: var(--anslation-ds-footer-muted);
+  --on-media: var(--anslation-ds-on-media);
   --section-highlight: var(--anslation-ds-soft);
   --card-hover-bg: var(--anslation-ds-hover);
   --flashsale-salelocator: var(--anslation-ds-primary-soft);
@@ -130,6 +131,7 @@ html[data-theme="dark"] {
   --section-highlight: var(--anslation-ds-soft);
   --badge-bg: var(--anslation-ds-primary-soft);
   --input-placeholder: var(--anslation-ds-muted);
+  --on-media: var(--anslation-ds-on-media);
   --dealspage-background: var(--anslation-ds-page);
 }
 

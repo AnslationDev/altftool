@@ -27,6 +27,7 @@ html[data-theme="light"] {
   --anslation-ds-footer-muted: #94a3b8;
   --anslation-ds-footer-border: #1e293b;
   --anslation-ds-overlay: rgb(2 6 23 / 56%);
+  --anslation-ds-on-media: #f8fafc;
 
   --anslation-ds-border: #e2e8f0;
   --anslation-ds-border-strong: #cbd5e1;
@@ -147,6 +148,7 @@ html[data-theme="dark"] {
   --anslation-ds-footer-muted: #94a3b8;
   --anslation-ds-footer-border: #1e293b;
   --anslation-ds-overlay: rgb(2 6 23 / 70%);
+  --anslation-ds-on-media: #f8fafc;
 
   --anslation-ds-border: #1e293b;
   --anslation-ds-border-strong: #334155;

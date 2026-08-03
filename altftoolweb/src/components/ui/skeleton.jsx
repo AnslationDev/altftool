@@ -1,5 +1,3 @@
-"use client";
-
 function cx(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -14,7 +12,7 @@ export function SkeletonBlock({ className = "", children }) {
       )}
     >
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute inset-y-0 left-0 w-1/2 translate-x-[-120%] animate-skeleton-shimmer bg-gradient-to-r from-transparent via-white/40 to-transparent will-change-transform dark:via-white/15" />
+        <div className="absolute inset-y-0 left-0 w-1/2 translate-x-[-120%] animate-skeleton-shimmer bg-gradient-to-r from-transparent via-(--foreground)/20 to-transparent will-change-transform motion-reduce:hidden dark:via-(--foreground)/10" />
       </div>
       {children}
     </div>
@@ -359,5 +357,42 @@ export function AcademyResultsSkeleton({ cards = 6 }) {
         </div>
       </div>
     </section>
+  );
+}
+
+// Used by /top10. Copied from the branch that owns that route rather than
+// re-implemented, so the two stay identical if either is edited.
+export function RankedItemSkeleton({ rank = 1 }) {
+  return (
+    <div className="flex flex-col gap-4 border-b border-(--border) px-3 py-6 -mx-3 last:border-b-0 sm:flex-row">
+      <div className="flex w-full shrink-0 items-start gap-3 sm:w-auto">
+        <span className="mt-1 hidden h-8 w-8 shrink-0 items-center justify-center rounded-full bg-(--muted) text-xs font-extrabold text-transparent font-secondary sm:flex">
+          {rank}
+        </span>
+        <SkeletonBlock className="h-56 w-full rounded-xl sm:h-44 sm:w-32" />
+      </div>
+      <div className="min-w-0 flex-1 space-y-3">
+        <SkeletonLine className="h-5 w-3/4" />
+        <SkeletonLine className="h-3 w-1/3" />
+        <div className="space-y-2">
+          <SkeletonLine className="h-3 w-full" />
+          <SkeletonLine className="h-3 w-full" />
+          <SkeletonLine className="h-3 w-2/3" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function RankedListSkeleton({ rows = 4 }) {
+  return (
+    <div role="status" aria-live="polite" aria-busy="true">
+      <span className="sr-only">Loading ranked results…</span>
+      <div className="flex flex-col" aria-hidden="true">
+        {Array.from({ length: rows }).map((_, index) => (
+          <RankedItemSkeleton key={index} rank={index + 1} />
+        ))}
+      </div>
+    </div>
   );
 }

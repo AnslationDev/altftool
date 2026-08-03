@@ -399,6 +399,7 @@ export const SITE_ROUTES = {
   personality: { label: "Personality", href: "/personality" },
   top11: { label: "Top11", href: "/top11" },
   top9: { label: "Top9", href: "/top9" },
+  top10: { label: "Top10", href: "/top10" },
   about: { label: "About AltFTool", href: "/policypages/about" },
   contact: { label: "Contact", href: "/policypages/contact" },
   privacy: { label: "Privacy", href: "/policypages/privacy" },
@@ -541,6 +542,7 @@ export const PUBLIC_NAV_ITEMS = [
       { ...SITE_ROUTES.brandRatings, group: "Research", icon: ShieldCheck },
       { ...SITE_ROUTES.top11, group: "Research", icon: Trophy },
       { ...SITE_ROUTES.top9, group: "Research", icon: LayoutGrid },
+      { ...SITE_ROUTES.top10, group: "Research", icon: LayoutGrid },
     ],
   },
   {
@@ -763,6 +765,7 @@ export const FOOTER_ROUTE_GROUPS = [
       SITE_ROUTES.brandRatings,
       SITE_ROUTES.top11,
       SITE_ROUTES.top9,
+      SITE_ROUTES.top10,
     ],
   },
   {

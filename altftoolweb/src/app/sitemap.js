@@ -103,6 +103,7 @@ const staticRoutes = [
   // not be submitted. The gated loop further down covers the categories; this
   // is the hub. /kym is absent for the same reason and never appeared here.
   { path: "/top9", priority: 0.68 },
+  { path: "/top10", priority: 0.68 },
   { path: "/labs", priority: 0.66 },
   { path: "/licenses", priority: 0.3 },
   // Reference pages built for other people to link to: the open-data terms and

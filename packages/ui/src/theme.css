@@ -9,12 +9,22 @@
   --color-canvas: var(--anslation-ds-canvas);
   --color-surface: var(--anslation-ds-surface);
   --color-surface-soft: var(--anslation-ds-soft);
+  --color-surface-hover: var(--anslation-ds-hover);
   --color-card: var(--anslation-ds-surface);
   --color-card-foreground: var(--anslation-ds-text);
   --color-muted: var(--anslation-ds-soft);
   --color-muted-foreground: var(--anslation-ds-muted);
+  --color-muted-strong: var(--anslation-ds-muted-strong);
+  --color-foreground-soft: var(--anslation-ds-text-soft);
   --color-border: var(--anslation-ds-border);
   --color-border-strong: var(--anslation-ds-border-strong);
+  --color-overlay: var(--anslation-ds-overlay);
+  --color-on-media: var(--anslation-ds-on-media);
+  --color-sidebar: var(--anslation-ds-sidebar);
+  --color-footer: var(--anslation-ds-footer);
+  --color-footer-foreground: var(--anslation-ds-footer-text);
+  --color-footer-muted: var(--anslation-ds-footer-muted);
+  --color-footer-border: var(--anslation-ds-footer-border);
 
   --color-primary: var(--anslation-ds-primary);
   --color-primary-foreground: var(--anslation-ds-primary-foreground);
@@ -38,6 +48,11 @@
   --color-warning-soft: var(--anslation-ds-warning-soft);
   --color-info: var(--anslation-ds-info);
   --color-info-soft: var(--anslation-ds-info-soft);
+  --color-status-foreground: var(--anslation-ds-status-foreground);
+  --color-success-text: var(--anslation-ds-success-text);
+  --color-warning-text: var(--anslation-ds-warning-text);
+  --color-danger-text: var(--anslation-ds-danger-text);
+  --color-info-text: var(--anslation-ds-info-text);
 
   --radius-sm: var(--anslation-ds-radius-sm);
   --radius-md: var(--anslation-ds-radius);

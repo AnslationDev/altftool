@@ -19,18 +19,27 @@
  */
 
 /**
- * CORPUS NOTE — 2026-07-31. READ THIS BEFORE TRUSTING ANY WORD COUNT BELOW.
+ * CORPUS NOTE — RETRACTED 2026-08-03. The note that stood here was wrong, and
+ * the way it was wrong is worth keeping.
  *
- * The per-slug reasoning in this file was written against article bodies that
- * are no longer what Firestore serves. A complete pass through the public feed
- * returned 548 posts, all with the same roughly 300-word generated shape; none
- * exceeded 400 words. In particular, the ferry post has no route table or
- * crossing times, and the IIM post no longer contains the long-form material
- * described by older comments below.
+ * It reported that a complete pass through /api/blogs returned 548 posts all of
+ * roughly 300 words, none over 400, and concluded the corpus was uniform
+ * generated scaffold. That measurement came from the LIST endpoint, which
+ * truncates `content` at about 310 words. The full bodies are not truncated,
+ * and they are much longer.
  *
- * This audit deliberately did not turn a corpus-wide indexing decision into a
- * side effect of a code cleanup. Re-measure the live body before changing an
- * entry, and review the whole blog corpus before applying a broad noindex rule.
+ * Measured against each page's own BlogPosting JSON-LD, whose wordCount
+ * getWordCount() computes from the body the server actually renders:
+ *   5-must-know-travel-websites      API 309 words   real 1,159
+ *   cardione-review                  API 308         real 1,511
+ *   french-open-makes-history        API 319         real   937
+ *   intenskin-review                 API 310         real 1,689
+ *   trip-com-travel-guide            API 310         real 1,653
+ *   ultimate-guide-...-by-ferry      API 306         real 1,464
+ *
+ * So: do not measure a blog body through /api/blogs. Read the page's own
+ * wordCount, or fetch the single post. A word count taken from the list
+ * endpoint is a truncation artefact and will make every post look like filler.
  */
 
 /**

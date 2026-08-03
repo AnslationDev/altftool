@@ -11,11 +11,14 @@ const testRoots = [
   path.join(webRoot, "src/app/blogs/utils"),
   path.join(webRoot, "src/app/kym/data"),
   path.join(webRoot, "src/app/n8n/data"),
+  path.join(webRoot, "src/app/top10/data"),
   path.join(webRoot, "src/app/tools"),
   path.join(webRoot, "src/app/transform"),
   path.join(webRoot, "src/platform/linking"),
   path.join(webRoot, "src/platform/navigation"),
   path.join(webRoot, "src/platform/seo"),
+  path.join(webRoot, "src/lib/providers"),
+  path.join(webRoot, "src/lib/top10"),
   path.join(webRoot, "src/tools"),
 ];
 const TEST_FILE_PATTERN = /\.(?:test|spec)\.(?:js|mjs|cjs)$/i;
