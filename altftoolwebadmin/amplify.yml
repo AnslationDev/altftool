@@ -4,6 +4,7 @@ frontend:
     preBuild:
       commands:
         - nvm use 24
+        - node scripts/write-amplify-runtime-env.mjs
         - npm ci --no-audit --no-fund
     build:
       commands:
