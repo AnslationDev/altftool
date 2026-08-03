@@ -1400,7 +1400,7 @@ export default {
     ],
     [
       "How many files and events can one pack hold?",
-      "Up to 100 evidence files and 250 timeline events. Each file must be 25 MB or smaller with 100 MB across the whole selection, and file content is never embedded in the manifest — only the filename, media type, size, last-modified date and digest."
+      "Up to 100 evidence files and 250 timeline events. Each file must be 25 MB or smaller with 100 MB across the whole selection, and file content is never embedded in the manifest — only the filename, media type, size, last-modified date, digest and the optional note you type next to that file. Keep that note factual and non-sensitive, since it is included in the downloadable manifest (though never in the counts-only summary)."
     ],
     [
       "How do I format the timeline?",
@@ -2581,7 +2581,7 @@ export default {
   "data-download-guide-gaming": {
   "intro": "This guide turns a gaming data-access request into a dated plan: it gives the exact export route for Steam, PlayStation, Xbox, Nintendo, Epic Games and Discord, then counts down the statutory deadline the platform must answer by under GDPR Article 12(3), the CCPA as amended by the CPRA, or Brazil's LGPD Article 19. A weighted 12-step audit covers what the archive reveals once it arrives — sign-in records, linked accounts, purchase history, friends lists and retained chat. It is for players who want to see what a platform holds, spot an account takeover, or clean up before selling or closing an account.",
   "useCases": [
-    "Prove when an account was compromised by matching the sign-in IP records in a Steam or Xbox export against dates you were not playing.",
+    "Prove when an account was compromised by matching the sign-in IP records in a Steam export, or the sign-in history in a PlayStation export, against dates you were not playing.",
     "Reconcile a year of small in-game currency charges against a card statement before disputing them with the bank.",
     "Find every console, storefront and social identity still linked to an Epic or Discord account before you stop using it.",
     "Track a Sony or Nintendo privacy request that has gone quiet and know the exact date you can escalate to a regulator."
@@ -2611,7 +2611,7 @@ export default {
     ],
     [
       "Does a PlayStation or Xbox export include voice chat?",
-      "Generally no — live voice is not recorded, so what you get is metadata: who was in the party, when, and for how long. The exception is a clip captured because someone reported it, which appears in the moderation and enforcement section of the export."
+      "Generally no — live voice is not recorded, so what you get is metadata: who was in the party, when, and for how long. On PlayStation, the exception is a clip captured because someone reported it, which appears in the moderation and enforcement section of the export. Xbox's export does not include an equivalent moderation section, so do not expect to find retained voice clips there the same way."
     ],
     [
       "What should I look at first in a gaming data export?",
@@ -2743,7 +2743,7 @@ export default {
   ]
 },
   "data-download-guide-meta": {
-  "intro": "This planner sizes a Meta \"Download your information\" request before you submit it, using Meta's real export controls: category selection, HTML or JSON format, Low/Medium/High media quality and a date range. It estimates the archive size, the download time at your line speed, and how sensitive the selection is, so you know whether you are about to pull down 200 MB of activity logs or 60 GB of photos. Useful when migrating away from Facebook or Instagram, auditing ad profiling, or preparing evidence before deleting an account.",
+  "intro": "This planner sizes a Meta \"Download your information\" request before you submit it, using Meta's real export controls: category selection, HTML or JSON format, Low/Medium/High media quality and account age as the size driver. It estimates the archive size, the download time at your line speed, and how sensitive the selection is, so you know whether you are about to pull down 200 MB of activity logs or 60 GB of photos. Useful when migrating away from Facebook or Instagram, auditing ad profiling, or preparing evidence before deleting an account.",
   "useCases": [
     "Export only 'Your activity off Meta' and 'Ads information' to see which websites and advertisers have been feeding data about you to Meta.",
     "Size a full Messenger and Instagram DM archive before a phone migration, and pick JSON so the messages are searchable.",

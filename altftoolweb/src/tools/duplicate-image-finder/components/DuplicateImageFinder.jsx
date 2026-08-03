@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef, useCallback, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { hashFromFile, compareImages } from '../../_shared/utils/perceptualHash';
+import { useState, useRef, useCallback, useEffect } from 'react';
+import { motion } from 'framer-motion';
+import { compareImages, computeImageHash } from '../../_shared/utils/perceptualHash';
 import { loadImage } from '../../_shared/utils/imageProcessing';
 import { downloadBlob } from '../../_shared/utils/download';
 
@@ -12,29 +12,100 @@ function formatSize(bytes) {
   return (bytes / 1048576).toFixed(1) + ' MB';
 }
 
+// Some browsers (notably for HEIC/HEIF photos straight off an iPhone) report
+// an empty file.type, so a MIME-type-only check silently drops real images.
+// Fall back to the extension, same as _shared/utils/imageProcessing's
+// validateImage().
+function isImageFile(file) {
+  return file.type.startsWith('image/') || /\.(heic|heif)$/i.test(file.name);
+}
+
+// Escapes a CSV field so filenames containing a comma, quote or newline
+// don't shift every later column out of alignment when opened in a
+// spreadsheet.
+function csvField(value) {
+  const str = String(value ?? '');
+  return /[",\n]/.test(str) ? `"${str.replace(/"/g, '""')}"` : str;
+}
+
 export default function DuplicateImageFinder() {
   const [files, setFiles] = useState([]);
   const [processing, setProcessing] = useState(false);
   const [results, setResults] = useState(null);
   const [dragOver, setDragOver] = useState(false);
   const [selectedGroup, setSelectedGroup] = useState(null);
+  const [skipNotice, setSkipNotice] = useState('');
   const inputRef = useRef(null);
+  const processingRef = useRef(false);
+  const filesRef = useRef(files);
+
+  useEffect(() => {
+    filesRef.current = files;
+  }, [files]);
+
+  // Revoke every remaining object URL when the tool unmounts, so navigating
+  // away doesn't leak the blobs for the rest of the tab's life.
+  useEffect(() => {
+    return () => {
+      filesRef.current.forEach((f) => URL.revokeObjectURL(f.url));
+    };
+  }, []);
 
   const handleFiles = useCallback(async (fileList) => {
-    const newFiles = Array.from(fileList).filter(f => f.type.startsWith('image/'));
-    if (newFiles.length === 0) return;
+    // Guard against overlapping batches: without this, a second "Add More"
+    // click fired while the first batch is still hashing would clear
+    // `processing` early via its own finally block, making the spinner
+    // disappear while the first batch is still silently hashing in the
+    // background.
+    if (processingRef.current) return;
+
+    const allFiles = Array.from(fileList);
+    const newFiles = allFiles.filter(isImageFile);
+    const skippedNotImage = allFiles.length - newFiles.length;
+    if (newFiles.length === 0) {
+      if (skippedNotImage > 0) {
+        setSkipNotice(
+          `Skipped ${skippedNotImage} file${skippedNotImage === 1 ? '' : 's'} that ${skippedNotImage === 1 ? "isn't" : "aren't"} images.`,
+        );
+      }
+      return;
+    }
+
+    processingRef.current = true;
     setProcessing(true);
+    setSkipNotice('');
     try {
       const hashed = [];
+      let failed = 0;
       for (const file of newFiles) {
         try {
-          const hash = await hashFromFile(file);
-          hashed.push({ file, name: file.name, size: file.size, type: file.type, ...hash, url: URL.createObjectURL(file) });
-        } catch { /* skip corrupted */ }
+          const url = URL.createObjectURL(file);
+          const img = await loadImage(url);
+          const width = img.naturalWidth || img.width;
+          const height = img.naturalHeight || img.height;
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          canvas.getContext('2d').drawImage(img, 0, 0);
+          const hash = computeImageHash(canvas);
+          hashed.push({ file, name: file.name, size: file.size, type: file.type, width, height, ...hash, url });
+        } catch {
+          failed += 1; /* skip corrupted */
+        }
       }
+      // Adding files invalidates any previous "Find Duplicates" run — without
+      // this, the stale results (including a "No duplicates found" banner)
+      // keep rendering as if the newly added files had already been checked.
       setFiles(prev => [...prev, ...hashed]);
+      setResults(null);
+
+      const notices = [];
+      if (skippedNotImage > 0) notices.push(`${skippedNotImage} non-image file${skippedNotImage === 1 ? '' : 's'}`);
+      if (failed > 0) notices.push(`${failed} file${failed === 1 ? '' : 's'} that could not be read`);
+      if (notices.length > 0) setSkipNotice(`Skipped ${notices.join(' and ')}.`);
     } finally {
       setProcessing(false);
+      processingRef.current = false;
     }
   }, []);
 
@@ -44,31 +115,69 @@ export default function DuplicateImageFinder() {
     const groups = [];
     for (let i = 0; i < files.length; i++) {
       if (processed.has(i)) continue;
-      const group = { index: i, ...files[i], duplicates: [] };
+      const clusterIndices = [i];
       for (let j = i + 1; j < files.length; j++) {
+        if (processed.has(j)) continue;
         const comparison = compareImages(
           { dHash: files[i].dHash, aHash: files[i].aHash },
           { dHash: files[j].dHash, aHash: files[j].aHash }
         );
         if (comparison.overallSimilarity >= 80) {
-          group.duplicates.push({ index: j, ...files[j], ...comparison });
+          clusterIndices.push(j);
           processed.add(j);
         }
       }
       processed.add(i);
-      groups.push(group);
+
+      if (clusterIndices.length < 2) continue;
+
+      // Keep the highest-resolution file (tie-broken by larger file size) as
+      // the group's representative, instead of whichever one merely
+      // happened to be uploaded first — otherwise "Keep Best" always
+      // discards the higher-quality re-export and keeps the low-res one.
+      const bestIndex = clusterIndices.reduce((best, idx) => {
+        const a = files[idx];
+        const b = files[best];
+        const aPixels = (a.width || 0) * (a.height || 0);
+        const bPixels = (b.width || 0) * (b.height || 0);
+        if (aPixels !== bPixels) return aPixels > bPixels ? idx : best;
+        return a.size > b.size ? idx : best;
+      }, clusterIndices[0]);
+
+      const bestFile = files[bestIndex];
+      const duplicates = clusterIndices
+        .filter((idx) => idx !== bestIndex)
+        .map((idx) => ({
+          index: idx,
+          ...files[idx],
+          ...compareImages(
+            { dHash: bestFile.dHash, aHash: bestFile.aHash },
+            { dHash: files[idx].dHash, aHash: files[idx].aHash }
+          ),
+        }));
+
+      groups.push({ index: bestIndex, ...bestFile, duplicates });
     }
-    setResults(groups.filter(g => g.duplicates.length > 0));
+    setResults(groups);
     setSelectedGroup(null);
   }, [files]);
 
   const removeFile = useCallback((index) => {
-    setFiles(prev => prev.filter((_, i) => i !== index));
+    setFiles(prev => {
+      if (prev[index]) URL.revokeObjectURL(prev[index].url);
+      return prev.filter((_, i) => i !== index);
+    });
     setResults(null);
   }, []);
 
   const removeAll = useCallback(() => {
-    setFiles([]);
+    if (!window.confirm(`Remove all ${filesRef.current.length} loaded image(s) and any results? This cannot be undone.`)) {
+      return;
+    }
+    setFiles(prev => {
+      prev.forEach((f) => URL.revokeObjectURL(f.url));
+      return [];
+    });
     setResults(null);
     setSelectedGroup(null);
   }, []);
@@ -77,6 +186,9 @@ export default function DuplicateImageFinder() {
     setFiles(prev => {
       const group = results[groupIdx];
       const toRemove = new Set(group.duplicates.map(d => d.index));
+      prev.forEach((f, i) => {
+        if (toRemove.has(i)) URL.revokeObjectURL(f.url);
+      });
       return prev.filter((_, i) => !toRemove.has(i));
     });
     setResults(null);
@@ -89,18 +201,28 @@ export default function DuplicateImageFinder() {
       rows.push([`Group ${gi + 1}`, g.name, '100% (original)', formatSize(g.size), g.type]);
       g.duplicates.forEach(d => rows.push([`Group ${gi + 1}`, d.name, `${d.overallSimilarity}%`, formatSize(d.size), d.type]));
     });
-    const csv = rows.map(r => r.join(',')).join('\n');
+    const csv = rows.map(r => r.map(csvField).join(',')).join('\n');
     const blob = new Blob([csv], { type: 'text/csv' });
     downloadBlob(blob, 'duplicate-report.csv');
   };
 
   const dropZone = (
     <motion.div
+      role="button"
+      tabIndex={processing ? -1 : 0}
+      aria-disabled={processing}
+      aria-label="Drop images here or click to browse and upload"
       onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
       onDragLeave={() => setDragOver(false)}
       onDrop={(e) => { e.preventDefault(); setDragOver(false); handleFiles(e.dataTransfer.files); }}
       onClick={() => inputRef.current?.click()}
-      className={`relative cursor-pointer rounded-xl border-2 border-dashed p-10 text-center transition-all ${
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          inputRef.current?.click();
+        }
+      }}
+      className={`relative cursor-pointer rounded-xl border-2 border-dashed p-10 text-center transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)] ${
         dragOver ? 'border-[var(--primary)] bg-[var(--anslation-ds-primary-soft)] scale-[1.01]' : 'border-[var(--border)] hover:border-[var(--primary)]'
       }`}
     >
@@ -129,7 +251,7 @@ export default function DuplicateImageFinder() {
           <div className="flex items-center justify-between">
             <span className="text-sm text-muted-foreground">{files.length} image{files.length !== 1 ? 's' : ''} loaded</span>
             <div className="flex gap-2">
-              <button onClick={() => inputRef.current?.click()} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">Add More</button>
+              <button onClick={() => inputRef.current?.click()} disabled={processing} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground disabled:opacity-50 disabled:cursor-not-allowed">Add More</button>
               <button onClick={findDuplicates} disabled={files.length < 2} className="px-4 py-2 text-sm rounded-lg bg-[var(--primary)] text-white font-medium hover:brightness-110 transition-all shadow-md disabled:opacity-50">Find Duplicates</button>
               <button onClick={removeAll} className="px-4 py-2 text-sm rounded-lg border border-[var(--border)] hover:bg-[var(--anslation-ds-soft)] transition-colors text-muted-foreground">Clear All</button>
             </div>
@@ -137,8 +259,8 @@ export default function DuplicateImageFinder() {
           </div>
 
           {processing && (
-            <div className="flex items-center justify-center gap-3 p-8">
-              <div className="w-6 h-6 border-2 border-[var(--primary)] border-t-transparent rounded-full animate-spin" />
+            <div role="status" aria-live="polite" className="flex items-center justify-center gap-3 p-8">
+              <div className="w-6 h-6 border-2 border-[var(--primary)] border-t-transparent rounded-full animate-spin" aria-hidden="true" />
               <span className="text-sm text-muted-foreground">Processing images...</span>
             </div>
           )}
@@ -151,7 +273,12 @@ export default function DuplicateImageFinder() {
                   <p className="text-xs text-muted-foreground truncate">{f.name}</p>
                   <p className="text-xs text-muted-foreground">{formatSize(f.size)}</p>
                 </div>
-                <button onClick={() => removeFile(i)} className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/50 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">✕</button>
+                <button
+                  onClick={() => removeFile(i)}
+                  aria-label={`Remove ${f.name}`}
+                  title={`Remove ${f.name}`}
+                  className="absolute top-1 right-1 w-5 h-5 rounded-full bg-black/50 text-white text-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                >✕</button>
               </div>
             ))}
           </div>
@@ -215,6 +342,12 @@ export default function DuplicateImageFinder() {
             </div>
           )}
         </div>
+      )}
+
+      {skipNotice && (
+        <p role="status" aria-live="polite" className="text-center text-xs text-amber-600 dark:text-amber-400">
+          {skipNotice}
+        </p>
       )}
     </div>
   );

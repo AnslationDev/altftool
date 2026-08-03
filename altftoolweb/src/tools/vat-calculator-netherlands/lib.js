@@ -70,8 +70,15 @@ function gcd(a, b) {
 /** Share of a bruto price that is tax: tarief / (100 + tarief). */
 export function vatFraction(ratePercent) {
   if (!isNum(ratePercent) || ratePercent <= 0) return null;
-  const numerator = Math.round(ratePercent * 10);
-  const denominator = Math.round((100 + ratePercent) * 10);
+  // Scale by however many decimal places the rate actually has (bounded to
+  // avoid floating-point noise from very long decimals) instead of a fixed
+  // factor of 10, so custom rates with more than one decimal place — e.g.
+  // 21.55, or tiny rates like 0.04 — still reduce to an exact fraction
+  // rather than being rounded down to one decimal digit first.
+  const decimalPart = ratePercent.toFixed(6).replace(/0+$/, "").split(".")[1] || "";
+  const scale = 10 ** Math.min(decimalPart.length, 6);
+  const numerator = Math.round(ratePercent * scale);
+  const denominator = Math.round((100 + ratePercent) * scale);
   const divisor = gcd(numerator, denominator);
   return {
     numerator: numerator / divisor,

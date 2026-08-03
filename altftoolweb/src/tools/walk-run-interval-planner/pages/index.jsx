@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Footprints, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   LEVEL_PRESETS,
   formatDuration,
@@ -45,7 +46,7 @@ export default function ToolHome() {
   const [walkPaceSec, setWalkPaceSec] = useState(DEFAULTS.walkPaceSec);
   const [runSeconds, setRunSeconds] = useState(DEFAULTS.runSeconds);
   const [walkSeconds, setWalkSeconds] = useState(DEFAULTS.walkSeconds);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const plan = useMemo(
     () =>
@@ -86,15 +87,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [ok, plan]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("plan", summary, { label: "Run-walk plan" });
   };
 
   const reset = () => {
@@ -106,7 +101,7 @@ export default function ToolHome() {
     setWalkPaceSec(DEFAULTS.walkPaceSec);
     setRunSeconds(DEFAULTS.runSeconds);
     setWalkSeconds(DEFAULTS.walkSeconds);
-    setCopied(false);
+    resetCopyState();
   };
 
   const rows = [
@@ -320,13 +315,20 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy run walk plan"
+              aria-label={isCopied("plan") ? "Copied the run-walk plan to clipboard" : "Copy run walk plan"}
               className={GHOST_BTN}
               disabled={!ok}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy plan"}
+              {isCopied("plan") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("plan") ? "Copied!" : "Copy plan"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
@@ -344,7 +346,7 @@ export default function ToolHome() {
         </dl>
       </section>
 
-      {ok && plan.preview.length > 0 ? (
+      {ok && (plan.preview.length > 0 || plan.partial) ? (
         <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
           <h2 className="text-base font-semibold">Cycle sheet</h2>
           <div className="mt-3 overflow-x-auto">
@@ -368,6 +370,22 @@ export default function ToolHome() {
                     <td className="py-2 text-right">{formatDuration(row.cumulativeSeconds)}</td>
                   </tr>
                 ))}
+                {plan.partial ? (
+                  <tr className="last:border-0">
+                    <td className="py-2 pr-3 font-semibold">
+                      Finish
+                      <span className="block text-xs font-normal text-[var(--muted-foreground)]">
+                        after {plan.fullCycles} full cycle{plan.fullCycles === 1 ? "" : "s"}
+                      </span>
+                    </td>
+                    <td className="py-2 pr-3 text-right">{n2(plan.partial.runKm)}</td>
+                    <td className="py-2 pr-3 text-right text-[var(--muted-foreground)]">
+                      {n2(plan.partial.walkKm)}
+                    </td>
+                    <td className="py-2 pr-3 text-right">{n2(plan.distanceKm)}</td>
+                    <td className="py-2 text-right">{formatDuration(plan.totalSeconds)}</td>
+                  </tr>
+                ) : null}
               </tbody>
             </table>
           </div>

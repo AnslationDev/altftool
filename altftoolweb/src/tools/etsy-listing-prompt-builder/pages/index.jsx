@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Store } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   ETSY_FIELD_LIMITS,
   STORY_ANGLES,
@@ -54,7 +55,7 @@ const toNumber = (raw) => {
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState("");
+  const { copy: copyText, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const setField = (key) => (event) =>
     setForm((prev) => ({ ...prev, [key]: event.target.value }));
@@ -84,20 +85,17 @@ export default function ToolHome() {
   const stat = (value) => (failed ? DASH : NUM.format(value));
   const tagReport = failed ? null : result.tagReport;
 
-  const copy = async (key, text) => {
+  const copy = (key, text, label) => {
     if (failed || !text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(key);
-      setTimeout(() => setCopied(""), 1500);
-    } catch {
-      setCopied("");
-    }
+    copyText(key, text, { label });
   };
 
   const reset = () => {
+    if (!window.confirm("Reset every field back to the demo example values? This cannot be undone.")) {
+      return;
+    }
     setForm(DEFAULTS);
-    setCopied("");
+    resetCopyState();
   };
 
   return (
@@ -352,23 +350,23 @@ export default function ToolHome() {
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
-              onClick={() => copy("tags", tagReport ? tagReport.tags.join(", ") : "")}
-              aria-label="Copy the validated Etsy tag list"
+              onClick={() => copy("tags", tagReport ? tagReport.tags.join(", ") : "", "the validated Etsy tag list")}
+              aria-label={isCopied("tags") ? "Copied the validated Etsy tag list" : "Copy the validated Etsy tag list"}
               className={GHOST_BTN}
               disabled={failed}
             >
-              {copied === "tags" ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied === "tags" ? "Copied!" : "Copy tags"}
+              {isCopied("tags") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+              {isCopied("tags") ? "Copied!" : "Copy tags"}
             </button>
             <button
               type="button"
-              onClick={() => copy("prompt", result.prompt)}
-              aria-label="Copy the generated Etsy listing prompt"
+              onClick={() => copy("prompt", result.prompt, "the generated Etsy listing prompt")}
+              aria-label={isCopied("prompt") ? "Copied the generated Etsy listing prompt" : "Copy the generated Etsy listing prompt"}
               className={PRIMARY_BTN}
               disabled={failed}
             >
-              {copied === "prompt" ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied === "prompt" ? "Copied!" : "Copy prompt"}
+              {isCopied("prompt") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+              {isCopied("prompt") ? "Copied!" : "Copy prompt"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
@@ -376,6 +374,9 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
 
         {!failed && tagReport.tags.length > 0 && (
           <ul className="mt-4 flex flex-wrap gap-2">

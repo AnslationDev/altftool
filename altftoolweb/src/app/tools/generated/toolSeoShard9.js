@@ -10001,9 +10001,9 @@ export default {
   ]
 },
   "wedding-planning-prompt-builder": {
-  "intro": "Wedding Planning Prompt Builder divides a fixed wedding budget across categories, derives the all-in cost per guest and the per-plate catering budget, and places you in a planning phase based on the months remaining. The category percentages are planner rules of thumb — including the 10% contingency most planning guides advise holding back — applied to your own total rather than to national averages. The output is a planning prompt that already carries those numbers, so an AI assistant answers about your wedding rather than a generic one.",
+  "intro": "Wedding Planning Prompt Builder divides a fixed wedding budget across categories, derives the all-in cost per guest and the combined venue-and-catering budget per plate, and places you in a planning phase based on the months remaining. The category percentages are planner rules of thumb — including the 10% contingency most planning guides advise holding back — applied to your own total rather than to national averages. The output is a planning prompt that already carries those numbers, so an AI assistant answers about your wedding rather than a generic one.",
   "useCases": [
-    "Checking what a 250-guest budget actually leaves per plate before the first caterer meeting.",
+    "Checking what a 250-guest budget actually leaves for venue and catering combined, per plate, before the first caterer meeting.",
     "Deciding whether to cut the guest list or the decor line when the numbers do not fit.",
     "Getting a phase-appropriate task list eight months out instead of a full checklist that includes things you cannot do yet.",
     "Preparing venue and caterer questions with your real per-head figure so quotes can be compared like for like."
@@ -10011,7 +10011,7 @@ export default {
   "benefits": [
     [
       "Per-plate reality check",
-      "Turns a headline budget into the per-head figure caterers actually quote against."
+      "Turns a headline budget into the combined venue-and-catering per-head figure, so you know it runs higher than a caterer's food-only quote."
     ],
     [
       "Contingency protected",
@@ -10033,7 +10033,7 @@ export default {
     ],
     [
       "How do I calculate cost per guest for a wedding?",
-      "Divide the total budget by the confirmed guest count for the all-in figure, then divide only the catering allocation by the same count for the plate budget. The second number is the one caterers quote against, and it is always much lower than the first, which is why headline budgets feel bigger than they are."
+      "Divide the total budget by the confirmed guest count for the all-in figure, then divide the venue-and-catering allocation by the same count for the venue-and-catering plate figure — most planning models bundle venue hire together with food and service in one line. That combined number is still lower than the all-in figure, but it is higher than a caterer's food-only quote, since it also carries venue rental, staging and permits. Ask any caterer to quote food and service only if you want a true like-for-like comparison."
     ],
     [
       "When should each wedding task be done?",
@@ -12547,7 +12547,7 @@ export default {
   "working-days-calculator": {
   "intro": "Working Days Calculator counts the business days between any two dates, skipping weekends and any holidays you add. You choose which days of the week count as your weekend — Saturday and Sunday, Sunday only, or a Friday-Saturday week — so it works for six-day offices and non-standard rosters too. Alongside the business-day count it reports weekend days, holidays removed, working days per weekday and the total working hours at your chosen hours-per-day.",
   "useCases": [
-    "Work out the real delivery or SLA date when a contract promises '15 working days'.",
+    "Check whether a proposed delivery or SLA date actually satisfies a '15 working days' promise, by counting the business days between your start date and that candidate end date.",
     "Calculate billable days for a contractor or agency invoice over a project period.",
     "Plan a project timeline that has to skip public holidays and your company's fixed offs.",
     "Check how many working days of leave a date range actually consumes before applying."
@@ -13684,7 +13684,7 @@ export default {
   "benefits": [
     [
       "Chapter rules enforced",
-      "Timestamps are parsed, sorted and measured, and every rule YouTube applies is reported as a specific fix."
+      "Timestamps are parsed and measured, and every rule YouTube applies — including ascending order — is reported as a specific fix."
     ],
     [
       "Nothing gets truncated",
@@ -14080,7 +14080,7 @@ export default {
   ]
 },
   "zalgo-text-generator": {
-  "intro": "The Zalgo Text Generator corrupts any text by stacking Unicode combining diacritical marks onto each character — up to 20 above, 10 through and 20 below, drawn at random from pools of 56, 16 and 47 marks. Three sliders control each direction independently, so you can go from a light shimmer to text that bleeds several lines into its neighbours. Spaces and line breaks are left untouched, so your layout survives even at maximum corruption.",
+  "intro": "The Zalgo Text Generator corrupts any text by stacking Unicode combining diacritical marks onto each character — up to 20 above, 10 through and 20 below, drawn at random from pools of 56, 5 and 47 marks. Three sliders control each direction independently, so you can go from a light shimmer to text that bleeds several lines into its neighbours. Spaces, tabs and line breaks are left untouched, so your layout survives even at maximum corruption.",
   "useCases": [
     "Make a Halloween or horror-game post title look genuinely glitched without opening a graphics editor.",
     "Test how your own app, chat widget or CSS handles overflowing combining marks before a user pastes some in.",
@@ -14093,7 +14093,7 @@ export default {
     ],
     [
       "Layout survives the corruption",
-      "Marks are only appended to visible characters — spaces, newlines and carriage returns are skipped, so word breaks and line structure stay intact."
+      "Marks are only appended to visible characters — spaces, tabs, newlines and carriage returns are skipped, so word breaks and line structure stay intact."
     ],
     [
       "Five presets and instant regeneration",

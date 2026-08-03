@@ -14498,11 +14498,11 @@ export default {
     ],
     [
       "How is the Chinese zodiac animal calculated?",
-      "By looking your birth year up in twelve year tables, one per animal, covering 1924 to 2043 on the standard twelve-year cycle. Note that the cycle is keyed to the calendar year, not the lunar new year — if you were born in January or early February, the traditional animal may be the previous year's."
+      "By placing your birth year on the standard twelve-year cycle, one animal per year, anchored to 1924 as a Rat year. This works for any accepted birth year (1900 onward), not just a fixed table range. Note that the cycle is keyed to the calendar year, not the lunar new year — if you were born in January or early February, the traditional animal may be the previous year's."
     ],
     [
       "What generation am I based on my birth year?",
-      "The tool assigns it from your birth year using these bands: 2026 onward Generation Beta, 2013 to 2025 Generation Alpha, 1997 to 2012 Generation Z, 1981 to 1996 Millennials, 1965 to 1980 Generation X, 1946 to 1964 Baby Boomers, and anything earlier Silent Generation."
+      "The tool assigns it from your birth year using these bands: 2026 onward Generation Beta, 2013 to 2025 Generation Alpha, 1997 to 2012 Generation Z, 1981 to 1996 Millennials, 1965 to 1980 Generation X, 1946 to 1964 Baby Boomers, 1928 to 1945 Silent Generation, and 1900 to 1927 Greatest Generation."
     ],
     [
       "Are the heartbeat, breath and sleep numbers real measurements?",
@@ -15286,7 +15286,7 @@ export default {
   ]
 },
   "blog-post-ideas": {
-  "intro": "The Blog Post Idea Generator takes one topic or niche and returns five headline angles drawn from eight proven article formats — beginner's guide, common mistakes, budget version, day in the life, myths, 30-day experiment, tools roundup, and honest comparison. Regenerate reshuffles the deck so a different five surface each time. It is for bloggers, newsletter writers and marketers who have a subject but need an angle before they can commit to a post.",
+  "intro": "The Blog Post Idea Generator takes one topic or niche and returns five headline angles drawn from eight proven article formats — beginner's guide, common mistakes, budget version, day in the life, myths, 30-day experiment, tools roundup, and honest comparison. Regenerate draws a fresh random five from the eight, so you will often get a different mix — keep clicking to work through the rest. It is for bloggers, newsletter writers and marketers who have a subject but need an angle before they can commit to a post.",
   "useCases": [
     "Your content calendar has four empty slots for next month and you need working titles for each before the planning meeting on Friday.",
     "You have written three how-to posts in a row on the same subject and want a format you have not used yet — a myth-busting piece or an honest comparison, for instance.",
@@ -15299,7 +15299,7 @@ export default {
     ],
     [
       "Reshuffles for a fresh five",
-      "Regenerating draws a different subset from the eight templates, so you can keep pulling until an angle clicks rather than accepting the first list."
+      "Regenerating draws a new random subset from the eight templates, so you can keep pulling until an angle clicks rather than accepting the first list."
     ],
     [
       "Instant and repeatable",
@@ -15309,7 +15309,7 @@ export default {
   "faqs": [
     [
       "How many ideas do I get?",
-      "Five per run, selected at random from eight underlying angle templates. Hitting regenerate reshuffles and gives you a different five, so across a couple of runs you will see all eight."
+      "Five per run, selected at random from eight underlying angle templates. Hitting regenerate draws a new random five — keep clicking and you will usually work through every angle within several runs."
     ],
     [
       "Are these AI-generated?",

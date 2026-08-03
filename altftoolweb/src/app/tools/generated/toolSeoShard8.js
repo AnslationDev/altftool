@@ -204,7 +204,7 @@ export default {
   ]
 },
   "speech-timing-word-count-calculator": {
-  "intro": "The Speech Timing Calculator converts a script word count into speaking time using delivery pace, slide-change overhead, planned pauses and a target length. It also compares the same script across common speaking speeds such as ceremonial, technical, conversational, keynote, audiobook, TED-style and fast delivery.",
+  "intro": "The Speech Timing Calculator converts a script word count into speaking time using delivery pace, slide-change overhead, planned pauses and a target length. It also compares the same script across every common speaking speed it supports — ceremonial, technical, conversational, keynote, audiobook, TED-style, podcast and fast delivery.",
   "useCases": [
     "Check whether a speech, pitch, sermon, lecture or presentation fits a time slot.",
     "Estimate how many words to cut or add for a target duration.",
@@ -6548,7 +6548,7 @@ export default {
   ]
 },
   "svg-optimizer-cleaner": {
-  "intro": "This tool strips the unsafe and editor-only parts out of an SVG file: it parses the markup with the browser's own XML parser, deletes every <script>, <metadata> and <foreignObject> node, removes all on* event-handler attributes and every Inkscape or Sodipodi editor attribute, then hands back a re-serialised file. It exists because an SVG is executable markup, not just a picture — pasting a downloaded icon straight into a page can carry JavaScript with it. The report shows the original and cleaned character counts and confirms how many script elements remain, which should be zero.",
+  "intro": "This tool strips the unsafe and editor-only parts out of an SVG file: it parses the markup with the browser's own XML parser, deletes every <script>, <metadata> and <foreignObject> node, removes all on* event-handler attributes, every Inkscape or Sodipodi editor attribute (including the xmlns:inkscape/xmlns:sodipodi namespace declarations on the root element), and any javascript: link hidden in an href or xlink:href, then hands back a re-serialised file. It exists because an SVG is executable markup, not just a picture — pasting a downloaded icon straight into a page can carry JavaScript with it. The report shows the original and cleaned character counts and confirms how many script elements remain, which should be zero.",
   "useCases": [
     "You downloaded an icon from a stock site and want the embedded scripting and tracking markup gone before you inline it into a page where it would run with your site's privileges",
     "Illustrator or Inkscape exports are bloating your repo with editor-only namespaced attributes and layer metadata, and you want a version that renders identically without them",
@@ -6561,7 +6561,7 @@ export default {
     ],
     [
       "Strips editor namespaces specifically",
-      "Inkscape and Sodipodi attributes are targeted by namespace prefix, so drawing-app leftovers go while genuine SVG attributes are untouched."
+      "Inkscape and Sodipodi attributes — including the xmlns:inkscape/xmlns:sodipodi namespace declarations on the root <svg> — are targeted by namespace prefix, so drawing-app leftovers go while genuine SVG attributes are untouched."
     ],
     [
       "Shows the before and after size",
@@ -6571,7 +6571,7 @@ export default {
   "faqs": [
     [
       "Is an SVG file actually a security risk?",
-      "Yes, when it is inlined into a page or opened directly. SVG is XML that can carry <script> elements, on-event attributes such as onload, and <foreignObject> blocks containing arbitrary HTML — all of which execute in your page's origin. Those are precisely the three things this cleaner removes."
+      "Yes, when it is inlined into a page or opened directly. SVG is XML that can carry <script> elements, on-event attributes such as onload, <foreignObject> blocks containing arbitrary HTML, and javascript: links hidden in an href or xlink:href — all of which execute in your page's origin. This cleaner removes all four."
     ],
     [
       "Does this shrink my file the way SVGO does?",

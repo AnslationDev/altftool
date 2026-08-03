@@ -13,6 +13,7 @@ import {
   markProjectPublished,
 } from "../utils/recentProjects";
 import { isPostmanCollection, postmanToDocInput } from "../utils/postmanImport";
+import { isSwagger2, swagger2ToOpenApi3 } from "../utils/swagger2Convert";
 import {
   buildShareUrl,
   downloadTextFile,
@@ -47,7 +48,9 @@ export default function ApiDocumentMaker() {
     try {
       const parsed = parseUploadedText(await file.text());
 
-      if (parsed?.openapi || parsed?.swagger) {
+      if (isSwagger2(parsed)) {
+        generatorRef.current?.loadSpecDirectly(swagger2ToOpenApi3(parsed));
+      } else if (parsed?.openapi) {
         generatorRef.current?.loadSpecDirectly(parsed);
       } else if (isPostmanCollection(parsed)) {
         generatorRef.current?.loadAndGenerate(JSON.stringify(postmanToDocInput(parsed), null, 2));
@@ -122,6 +125,7 @@ export default function ApiDocumentMaker() {
       setTimeout(() => setPublished(false), 2000);
     } catch (err) {
       console.error("Failed to publish:", err);
+      window.alert("Couldn't publish this spec. Please try again.");
     }
   };
 

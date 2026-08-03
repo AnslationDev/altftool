@@ -8002,7 +8002,7 @@ export default {
     ],
     [
       "How many hours will a 150 Ah battery run my load?",
-      "Backup hours = (Ah × system volts × inverter efficiency × depth of discharge) ÷ load watts. A 150 Ah 12 V battery at 80% efficiency and 80% DoD gives about 1,150 usable Wh, which is roughly 5 hours on a 230 W load of fans, lights and a router — and under an hour on a 1,000 W electric iron."
+      "Backup hours = (Ah × system volts × inverter efficiency × depth of discharge) ÷ load watts. A 150 Ah 12 V battery at 80% efficiency and 80% DoD gives about 1,150 usable Wh, which is roughly 5 hours on a 230 W load of fans, lights and a router — and just over an hour (about 1 h 9 min) on a 1,000 W electric iron."
     ],
     [
       "Can a normal home inverter run an air conditioner or a geyser?",
@@ -9890,7 +9890,7 @@ export default {
     ],
     [
       "Do Jains choose baby names by nakshatra or rashi?",
-      "Many Jain families do follow the same jyotish practice as their neighbours and pick a starting syllable from the birth nakshatra, but this comes from regional custom rather than from Jain doctrine itself. The starting-letter filter here lets you work with a syllable your family priest suggests; confirm the final choice with your own community."
+      "Many Jain families do follow the same jyotish practice as their neighbours and pick a starting syllable from the birth nakshatra, but this comes from regional custom rather than from Jain doctrine itself. The starting-letter filter here matches a single first letter, not a full syllable — if your family priest suggests a two-letter syllable such as 'Mu', filter on 'M' and then check the meanings and notes yourself for names that actually begin with that syllable; confirm the final choice with your own community."
     ]
   ]
 },

@@ -27,14 +27,14 @@ export default function InputTab({ jsonInput, setJsonInput, error, loadExample, 
           </button>
         </div>
 
-        {/* Error box — only visible when JSON parsing fails */}
+        {/* Error box — visible when JSON parsing fails or the input fails validation */}
         {error && (
-          <div className="bg-red-50 dark:bg-red-950 border border-red-200 
+          <div className="bg-red-50 dark:bg-red-950 border border-red-200
           dark:border-red-800 rounded-lg p-4 mb-4 flex items-start gap-3">
             <AlertCircle className="text-red-600 shrink-0 mt-0.5" size={20} />
             <div>
               <p className="text-red-800 dark:text-red-300 font-semibold">
-                Error parsing JSON:
+                Error:
               </p>
               <p className="text-red-700 dark:text-red-400 text-sm mt-1">
                 {error}

@@ -166,31 +166,31 @@ function EndpointSnippet({ path, method, summary, baseUrl, status, version, late
   };
 
   const methodColors = {
-    GET:    "bg-green-100 text-green-700",
-    POST:   "bg-blue-100 text-blue-700",
-    PUT:    "bg-yellow-100 text-yellow-700",
-    DELETE: "bg-red-100 text-red-700",
-    PATCH:  "bg-purple-100 text-purple-700",
+    GET:    "bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300",
+    POST:   "bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300",
+    PUT:    "bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300",
+    DELETE: "bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300",
+    PATCH:  "bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300",
   };
 
   const statusConfig = {
-    stable:     { label: "Stable",     dot: "🟢", className: "bg-green-100 text-green-700 border border-green-200" },
-    beta:       { label: "Beta",       dot: "🟡", className: "bg-yellow-100 text-yellow-700 border border-yellow-200" },
-    deprecated: { label: "Deprecated", dot: "🔴", className: "bg-red-100 text-red-700 border border-red-200" },
+    stable:     { label: "Stable",     dot: "🟢", className: "bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800" },
+    beta:       { label: "Beta",       dot: "🟡", className: "bg-yellow-100 dark:bg-yellow-900 text-yellow-700 dark:text-yellow-300 border border-yellow-200 dark:border-yellow-800" },
+    deprecated: { label: "Deprecated", dot: "🔴", className: "bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800" },
   };
 
   const latencyConfig = {
-    fast:   { label: "Fast",   icon: "⚡", className: "bg-blue-100 text-blue-700 border border-blue-200" },
-    medium: { label: "Medium", icon: "🕐", className: "bg-orange-100 text-orange-700 border border-orange-200" },
-    slow:   { label: "Slow",   icon: "🐢", className: "bg-red-100 text-red-700 border border-red-200" },
+    fast:   { label: "Fast",   icon: "⚡", className: "bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800" },
+    medium: { label: "Medium", icon: "🕐", className: "bg-orange-100 dark:bg-orange-900 text-orange-700 dark:text-orange-300 border border-orange-200 dark:border-orange-800" },
+    slow:   { label: "Slow",   icon: "🐢", className: "bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800" },
   };
 
   return (
-    <div className="border border-gray-200 rounded-xl mb-6 overflow-hidden shadow-sm">
+    <div className="border border-[var(--border)] rounded-xl mb-6 overflow-hidden shadow-sm">
 
       {/* Endpoint header */}
       <div className="bg-[var(--muted)] px-4 py-3 flex items-center gap-3 border-b border-[var(--border)] flex-wrap">
-        <span className={`text-xs font-bold px-2 py-1 rounded ${methodColors[method.toUpperCase()] || "bg-gray-100 text-gray-700"}`}>
+        <span className={`text-xs font-bold px-2 py-1 rounded ${methodColors[method.toUpperCase()] || "bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300"}`}>
           {method.toUpperCase()}
         </span>
         <span className="font-mono text-[var(--foreground)] font-semibold">{path}</span>
@@ -206,7 +206,7 @@ function EndpointSnippet({ path, method, summary, baseUrl, status, version, late
               </span>
             );
           })()}
-          <span className="text-xs font-semibold px-3 py-1 rounded-full bg-purple-100 text-purple-700 border border-purple-200">
+          <span className="text-xs font-semibold px-3 py-1 rounded-full bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800">
             📌 {version || "v1"}
           </span>
           {(() => {
@@ -221,15 +221,15 @@ function EndpointSnippet({ path, method, summary, baseUrl, status, version, late
       </div>
 
       {/* Language selector tabs */}
-      <div className="flex border-b border-gray-200 bg-white overflow-x-auto">
+      <div className="flex border-b border-[var(--border)] bg-[var(--card)] overflow-x-auto">
         {LANGUAGES.map((lang) => (
           <button
             key={lang}
             onClick={() => setActiveLang(lang)}
             className={`px-4 py-2 text-sm font-medium whitespace-nowrap transition-colors cursor-pointer ${
               activeLang === lang
-                ? "text-blue-600 border-b-2 border-blue-600 bg-white"
-                : "text-gray-500 hover:text-gray-800"
+                ? "text-[var(--primary)] border-b-2 border-[var(--primary)] bg-[var(--card)]"
+                : "text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
             }`}
           >
             {lang}
@@ -262,6 +262,8 @@ function EndpointSnippet({ path, method, summary, baseUrl, status, version, late
                 <span className="text-[var(--muted-foreground)] flex-1 truncate">{v}</span>
                 <button
                   onClick={() => removeHeader(k)}
+                  aria-label={`Remove header ${k}`}
+                  title={`Remove header ${k}`}
                   className="text-red-500 hover:text-red-600 cursor-pointer shrink-0"
                 >
                   <Trash2 size={12} />
@@ -291,6 +293,8 @@ function EndpointSnippet({ path, method, summary, baseUrl, status, version, late
               />
               <button
                 onClick={addHeader}
+                aria-label="Add header"
+                title="Add header"
                 className="px-3 py-1 bg-[var(--primary)] text-[var(--primary-foreground)]
                 rounded text-xs font-medium hover:opacity-90 cursor-pointer shrink-0 mx-auto"
               >
@@ -305,7 +309,9 @@ function EndpointSnippet({ path, method, summary, baseUrl, status, version, late
       <div className="relative bg-gray-900">
         <button
           onClick={copySnippet}
-          className="absolute top-3 right-3 p-2 bg-gray-700 hover:bg-gray-600 
+          aria-label={copied ? "Snippet copied" : "Copy snippet"}
+          title={copied ? "Snippet copied" : "Copy snippet"}
+          className="absolute top-3 right-3 p-2 bg-gray-700 hover:bg-gray-600
           text-white rounded-lg transition-colors cursor-pointer"
         >
           {copied ? <Check size={16} /> : <Copy size={16} />}
@@ -373,6 +379,8 @@ export default function CodeSnippetTab({ swaggerSpec }) {
         {searchQuery && (
           <button
             onClick={() => setSearchQuery("")}
+            aria-label="Clear search"
+            title="Clear search"
             className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
           >
             <X size={18} />

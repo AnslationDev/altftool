@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Tag } from "lucide-react";
 
 import { CURRENCIES, assessSouvenirPrice } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const DEFAULTS = {
   item: "Hand-block printed scarf",
@@ -39,7 +40,7 @@ export default function ToolHome() {
   const [observed, setObserved] = useState(DEFAULTS.observed);
   const [quantity, setQuantity] = useState(DEFAULTS.quantity);
   const [currency, setCurrency] = useState(DEFAULTS.currency);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -81,24 +82,24 @@ export default function ToolHome() {
     ].join("\n");
   }, [ok, item, money, pct, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "souvenir price check" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will clear the item, quoted price, recorded prices, quantity and currency, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setItem(DEFAULTS.item);
     setQuoted(DEFAULTS.quoted);
     setObserved(DEFAULTS.observed);
     setQuantity(DEFAULTS.quantity);
     setCurrency(DEFAULTS.currency);
-    setCopied(false);
   };
 
   const rows = [
@@ -219,7 +220,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Verdict on the quote
             </p>
@@ -241,15 +242,22 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               aria-label="Copy the souvenir price check"
-              className={GHOST_BTN}
+              className={PRIMARY_BTN}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -262,7 +270,11 @@ export default function ToolHome() {
           </p>
         )}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

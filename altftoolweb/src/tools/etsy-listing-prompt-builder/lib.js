@@ -64,11 +64,19 @@ export const STORY_ANGLES = [
   },
 ];
 
-/** Split a textarea or comma list into clean phrases, preserving order. */
-export function parseList(raw, { limit = 80 } = {}) {
+/**
+ * Split a textarea or comma list into clean phrases, preserving order.
+ *
+ * `splitOn` defaults to newlines/commas/semicolons, which suits a field like
+ * tags where sellers commonly paste a comma-separated list. Fields whose
+ * label promises "one per line" (item details, materials) must pass
+ * `{ splitOn: /\n+/ }` so a comma that is part of a single entry — e.g. a
+ * "9 cm tall, 8 cm wide" dimension line — is not silently broken in two.
+ */
+export function parseList(raw, { limit = 80, splitOn = /[\n,;]+/ } = {}) {
   if (typeof raw !== "string") return [];
   const items = [];
-  for (const piece of raw.split(/[\n,;]+/)) {
+  for (const piece of raw.split(splitOn)) {
     const value = piece.trim().replace(/\s+/g, " ");
     if (!value) continue;
     items.push(value);
@@ -167,7 +175,7 @@ export function buildEtsyPrompt({
   const name = String(itemName).trim();
   if (!name) return { error: "Enter the item name — the title, tags and story all build from it." };
 
-  const details = parseList(detailsRaw);
+  const details = parseList(detailsRaw, { splitOn: /\n+/ });
   if (details.length === 0) {
     return { error: "Add at least one item detail (size, finish, weight, what is included)." };
   }
@@ -181,7 +189,7 @@ export function buildEtsyPrompt({
 
   const angle = STORY_ANGLES.find((item) => item.id === storyAngle) || STORY_ANGLES[0];
   const tagReport = buildTags(tagsRaw);
-  const rawMaterials = parseList(materialsRaw);
+  const rawMaterials = parseList(materialsRaw, { splitOn: /\n+/ });
   const materials = rawMaterials.filter((item) => item.length <= MATERIAL_MAX_CHARS).slice(0, MATERIALS_MAX);
   const materialsRejected = rawMaterials.filter((item) => item.length > MATERIAL_MAX_CHARS);
   const materialsOverflow = Math.max(0, rawMaterials.length - materialsRejected.length - materials.length);

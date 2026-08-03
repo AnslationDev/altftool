@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Sprout } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   COCOPEAT_BLOCK_KG,
   COCOPEAT_BLOCK_LITRES,
@@ -94,13 +95,20 @@ function Field({ id, label, value, onChange, min, max, step, hint }) {
 
 export default function ToolHome() {
   const [state, setState] = useState(DEFAULTS);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard();
 
   const set = (key) => (value) => setState((current) => ({ ...current, [key]: value }));
 
   const choosePreset = (presetId) => {
     const preset = MIX_PRESETS[presetId];
     if (!preset) return;
+    if (presetId === "custom") {
+      // "Custom mix" just unlocks the currently active percentages for direct
+      // editing — it must not silently discard whatever recipe was already
+      // dialled in by overwriting it with a hardcoded starting point.
+      setState((current) => ({ ...current, presetId }));
+      return;
+    }
     setState((current) => ({
       ...current,
       presetId,
@@ -109,6 +117,33 @@ export default function ToolHome() {
       cocopeat: String(preset.mix.cocopeat),
       perlite: String(preset.mix.perlite),
       sand: String(preset.mix.sand),
+    }));
+  };
+
+  // Changing the measurement unit must rescale the already-entered dimensions
+  // so they keep meaning the same real-world size — otherwise the same
+  // numbers get silently reinterpreted in the new unit (e.g. "8 ft" becomes
+  // "8 cm") and the result collapses without any error being shown.
+  const convertMeasurement = (rawValue, fromUnitId, toUnitId) => {
+    const fromUnit = LENGTH_UNITS[fromUnitId];
+    const toUnit = LENGTH_UNITS[toUnitId];
+    const value = toNumber(rawValue);
+    if (!fromUnit || !toUnit || !Number.isFinite(value)) return rawValue;
+    const metres = value * fromUnit.toMetres;
+    const converted = metres / toUnit.toMetres;
+    return String(Math.round(converted * 1e6) / 1e6);
+  };
+
+  const changeUnit = (newUnitId) => {
+    if (!LENGTH_UNITS[newUnitId]) return;
+    setState((current) => ({
+      ...current,
+      unitId: newUnitId,
+      length: convertMeasurement(current.length, current.unitId, newUnitId),
+      width: convertMeasurement(current.width, current.unitId, newUnitId),
+      height: convertMeasurement(current.height, current.unitId, newUnitId),
+      headspace: convertMeasurement(current.headspace, current.unitId, newUnitId),
+      fillerDepth: convertMeasurement(current.fillerDepth, current.unitId, newUnitId),
     }));
   };
 
@@ -183,20 +218,13 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [hasError, result, input, costing.total]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "Raised bed soil shopping list" });
   };
 
   const reset = () => {
     setState(DEFAULTS);
-    setCopied(false);
   };
 
   const unitLabel = LENGTH_UNITS[state.unitId]?.label ?? "";
@@ -207,12 +235,15 @@ export default function ToolHome() {
         ["Bed footprint", `${num(result.bedAreaM2)} m² each`],
         ["Actual fill depth", `${num(result.fillDepthM * 100)} cm`],
         ["Mix per bed, before settling", `${num0(result.fillVolumeM3PerBed * 1000)} litres`],
-        ["Extra for settling", `${num0(result.settlementExtraLitres)} litres`],
-        ["Total mix to order", `${num0(result.totalOrderLitres)} litres`],
+        ["Extra for settling (total across all beds)", `${num0(result.settlementExtraLitres)} litres`],
+        ["Total mix to order (all beds)", `${num0(result.totalOrderLitres)} litres`],
         ["Same volume in cubic feet", `${num(result.totalOrderCubicFeet)} cu ft`],
         ["Same volume in cubic metres", `${num(result.totalOrderM3)} m³`],
-        ["Approximate delivered weight", `${num0(result.totalWeightKg)} kg`],
-        ["Bottom filler you can use instead", `${num0(result.fillerVolumeLitresTotal)} litres`],
+        ["Approximate delivered weight (all beds)", `${num0(result.totalWeightKg)} kg`],
+        [
+          "Bottom filler you can use instead (total across all beds)",
+          `${num0(result.fillerVolumeLitresTotal)} litres`,
+        ],
       ];
 
   return (
@@ -244,7 +275,7 @@ export default function ToolHome() {
               id="rb-unit"
               className={`mt-2 ${INPUT_CLASS}`}
               value={state.unitId}
-              onChange={(event) => set("unitId")(event.target.value)}
+              onChange={(event) => changeUnit(event.target.value)}
             >
               {Object.values(LENGTH_UNITS).map((unit) => (
                 <option key={unit.id} value={unit.id}>
@@ -431,17 +462,19 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy raised bed soil shopping list"
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset

@@ -70,14 +70,6 @@ export function letterForPercent(percent, scaleId = "plus-minus") {
   return { letter: band.letter, gpa: band.gpa, cutoff: band.min };
 }
 
-/** Convert points earned out of points possible into a percentage. */
-export function pointsToPercent(earned, possible) {
-  if (!isNum(earned) || !isNum(possible)) return { error: "Enter both the marks earned and the marks possible." };
-  if (possible <= 0) return { error: "Marks possible must be greater than zero." };
-  if (earned < 0) return { error: "Marks earned cannot be negative." };
-  return { percent: (earned / possible) * 100 };
-}
-
 /**
  * Weighted grade across a list of assessments.
  *
@@ -101,13 +93,19 @@ export function computeWeightedGrade({ items, scaleId = "plus-minus" }) {
     }
     totalWeight += weight;
 
-    const isGraded = item.graded !== false && item.score !== null && item.score !== "" && isNum(Number(item.score));
-    if (!isGraded) {
+    const hasScoreInput =
+      item.graded !== false && item.score !== null && item.score !== undefined && item.score !== "";
+    if (!hasScoreInput) {
       rows.push({ ...item, weight, scorePercent: null, points: null, shareOfGrade: 0 });
       continue;
     }
 
     const score = Number(item.score);
+    if (!isNum(score)) {
+      return {
+        error: `"${item.name || "Untitled"}" has a score that isn't a number. Enter a plain percentage like 82, or leave it blank if not yet graded.`,
+      };
+    }
     if (score < 0) return { error: `"${item.name || "Untitled"}" cannot have a negative score.` };
     if (score > MAX_SCORE_PERCENT) {
       return { error: `"${item.name || "Untitled"}" scores above ${MAX_SCORE_PERCENT}% are outside this calculator's range.` };

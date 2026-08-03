@@ -114,12 +114,21 @@ export function parseDurationToken(raw) {
   return Number(h || 0) * 3600 + Number(m || 0) * 60 + Number(s || 0);
 }
 
-/** Parse "1:02:03" / "4:07" / "02:03" into seconds. Returns null when malformed. */
+/**
+ * Parse "1:02:03" / "4:07" / "02:03" / "90:00" into seconds. Returns null when
+ * malformed.
+ *
+ * The minutes group only has to stay under 60 when an hour component is also
+ * present (h:mm:ss) — a bare "minutes:seconds" total (no hour group) is a
+ * perfectly natural way to write a duration over an hour, e.g. "90:00" or
+ * "75:30" for a 90/75-minute video, so that group is not capped at 59.
+ */
 export function parseTimestamp(raw) {
   const token = String(raw ?? "").trim();
-  const match = token.match(/^(?:(\d{1,3}):)?([0-5]?\d):([0-5]\d)$/);
+  const match = token.match(/^(?:(\d{1,3}):)?(\d{1,4}):([0-5]\d)$/);
   if (!match) return null;
   const [, h, m, s] = match;
+  if (h !== undefined && Number(m) > 59) return null;
   return Number(h || 0) * 3600 + Number(m) * 60 + Number(s);
 }
 
@@ -398,9 +407,15 @@ export function buildEmbedCode({
   if (id === "") return { error: "No video id, so there is nothing to embed." };
 
   const host = privacyEnhanced ? "www.youtube-nocookie.com" : "www.youtube.com";
+  const startSeconds = Number.isFinite(start) && start > 0 ? Math.floor(start) : null;
+  const endRequested = Number.isFinite(end) && end > 0;
+  // An end time at or before the start time would produce a broken embed
+  // (the player has nothing to play), so drop it rather than emit it as-is.
+  const endSeconds = endRequested && (startSeconds === null || end > startSeconds) ? Math.floor(end) : null;
+
   const query = [];
-  if (Number.isFinite(start) && start > 0) query.push(`start=${Math.floor(start)}`);
-  if (Number.isFinite(end) && end > 0) query.push(`end=${Math.floor(end)}`);
+  if (startSeconds !== null) query.push(`start=${startSeconds}`);
+  if (endSeconds !== null) query.push(`end=${endSeconds}`);
   if (autoplay) query.push("autoplay=1");
   if (mute || autoplay) query.push("mute=1"); // browsers block unmuted autoplay
   if (loop) query.push("loop=1", `playlist=${id}`); // loop needs playlist=<same id>
@@ -420,6 +435,9 @@ export function buildEmbedCode({
   const notes = [];
   if (autoplay) notes.push("Autoplay only works muted — mute=1 has been added for you.");
   if (loop) notes.push("A single-video loop needs playlist=<same id>; that has been added.");
+  if (endRequested && endSeconds === null) {
+    notes.push("The end time must be after the start time, so end= was left out of this embed.");
+  }
   notes.push(
     privacyEnhanced
       ? "youtube-nocookie.com does not set tracking cookies until the viewer presses play."
@@ -546,7 +564,14 @@ export function parseChapters(description, videoDurationSeconds = null) {
   }
 
   chapters.forEach((chapter) => {
-    if (chapter.lengthSeconds !== null && chapter.lengthSeconds < CHAPTER_MIN_SECONDS) {
+    // A negative length means this chapter's timestamps are out of order, which
+    // is already reported by the "must climb" check above — reporting it again
+    // as a nonsensical negative duration here would just be confusing.
+    if (
+      chapter.lengthSeconds !== null &&
+      chapter.lengthSeconds >= 0 &&
+      chapter.lengthSeconds < CHAPTER_MIN_SECONDS
+    ) {
       issues.push(
         `"${chapter.label || chapter.timecode}" is only ${chapter.lengthSeconds}s long; every chapter must be at least ${CHAPTER_MIN_SECONDS}s.`,
       );

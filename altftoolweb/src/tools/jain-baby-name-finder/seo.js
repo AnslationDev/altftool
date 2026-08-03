@@ -36,7 +36,7 @@ const seo = {
     ],
     [
       "Do Jains choose baby names by nakshatra or rashi?",
-      "Many Jain families do follow the same jyotish practice as their neighbours and pick a starting syllable from the birth nakshatra, but this comes from regional custom rather than from Jain doctrine itself. The starting-letter filter here lets you work with a syllable your family priest suggests; confirm the final choice with your own community.",
+      "Many Jain families do follow the same jyotish practice as their neighbours and pick a starting syllable from the birth nakshatra, but this comes from regional custom rather than from Jain doctrine itself. The starting-letter filter here matches a single first letter, not a full syllable — if your family priest suggests a two-letter syllable such as 'Mu', filter on 'M' and then check the meanings and notes yourself for names that actually begin with that syllable; confirm the final choice with your own community.",
     ],
   ],
 };

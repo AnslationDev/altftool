@@ -134,10 +134,26 @@ export function registrableDomain(host) {
 
 /** The academic suffix a host sits under, or null. */
 export function academicSuffixOf(host) {
-  const clean = String(host ?? "").trim().toLowerCase();
+  // Strip trailing dot(s) the same way registrableDomain() does — "ox.ac.uk."
+  // is a legal, browser-equivalent way to write "ox.ac.uk" and must resolve
+  // to the same academic suffix, not silently fail the endsWith check below.
+  const clean = String(host ?? "").trim().toLowerCase().replace(/\.+$/, "");
   return (
     ACADEMIC_SUFFIXES.find((entry) => clean === entry.suffix || clean.endsWith(`.${entry.suffix}`)) ?? null
   );
+}
+
+/**
+ * Whether `needle` appears in `haystack` as a whole dot/hyphen-delimited
+ * label rather than as a bare substring — so an institution name or decoy
+ * word must stand on its own (e.g. "lse.evil.com" or "lse-portal.evil.com"),
+ * not merely be embedded inside an unrelated word (e.g. "false-alert" or
+ * "lessons" for "lse"/"sso").
+ */
+function containsAsLabel(haystack, needle) {
+  if (!haystack || !needle) return false;
+  const escaped = needle.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(?:^|[.-])${escaped}(?:$|[.-])`, "i").test(haystack);
 }
 
 /**
@@ -240,13 +256,13 @@ export function analysePortalUrl({ url = "", officialDomain = "" } = {}) {
       `The host has ${labels.length} labels. Padding pushes the real domain off the right-hand edge of a phone's address bar, where it is invisible.`);
   }
 
-  const decoyInSub = PORTAL_DECOY_WORDS.filter((w) => subdomain.includes(w));
+  const decoyInSub = PORTAL_DECOY_WORDS.filter((w) => containsAsLabel(subdomain, w));
   if (decoyInSub.length && officialReg && hostReg !== officialReg) {
     pushFinding(findings, "warn", 12, "Portal words used as decoration",
       `"${decoyInSub[0]}" appears in the subdomain, which the owner of ${hostReg} chose freely. Subdomains say nothing about who runs the site.`);
   }
 
-  if (officialReg && subdomain.includes(officialReg.split(".")[0]) && hostReg !== officialReg) {
+  if (officialReg && containsAsLabel(subdomain, officialReg.split(".")[0]) && hostReg !== officialReg) {
     pushFinding(findings, "critical", 30, "Your institution's name used as a subdomain",
       `"${officialReg.split(".")[0]}" sits to the left of ${hostReg}, so it is a label chosen by whoever owns ${hostReg}. The real owner is always the rightmost part of the host.`);
   }

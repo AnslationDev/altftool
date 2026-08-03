@@ -8,6 +8,7 @@ import ErrorGeneratorTab from "./ErrorGeneratorTab";
 import VersionComparisonTab from "./VersionComparisonTab";
 import VisualFlowTab from "./VisualFlowTab";
 import { saveRecentProject } from "../utils/recentProjects";
+import { base64EncodeUnicode, base64DecodeUnicode } from "../utils/exportFormats";
 
 const BLANK_INPUT = {
   title: "",
@@ -42,7 +43,7 @@ const [jsonInput, setJsonInput] = useState(() => {
       const shared = params.get("spec");
       if (shared) {
         // Decode base64 URL param back to JSON string
-        const decoded = JSON.parse(atob(decodeURIComponent(shared)));
+        const decoded = JSON.parse(base64DecodeUnicode(decodeURIComponent(shared)));
         setSwaggerSpec(decoded);
         setActiveTab("preview");
       }
@@ -157,8 +158,18 @@ const handleJsonInput = (value) => {
 
       // Loop through each endpoint and build the paths object
       if (input.endpoints && Array.isArray(input.endpoints)) {
-        input.endpoints.forEach((endpoint) => {
-          const path = endpoint.path;
+        input.endpoints.forEach((endpoint, i) => {
+          const path = endpoint?.path;
+          if (!path || typeof path !== "string") {
+            throw new Error(
+              `Endpoint ${i + 1} is missing a "path" (e.g. "/resource"). Add one and try again.`,
+            );
+          }
+          if (!endpoint?.method || typeof endpoint.method !== "string") {
+            throw new Error(
+              `Endpoint ${i + 1} ("${path}") is missing a "method" (e.g. "GET", "POST"). Add one and try again.`,
+            );
+          }
           const method = endpoint.method.toLowerCase();
 
           // Initialize path object if it doesn't exist yet
@@ -284,13 +295,14 @@ const handleJsonInput = (value) => {
     if (!swaggerSpec) return;
     try {
       // Encode swagger spec to base64 and append to current URL
-      const encoded = encodeURIComponent(btoa(JSON.stringify(swaggerSpec)));
+      const encoded = encodeURIComponent(base64EncodeUnicode(JSON.stringify(swaggerSpec)));
       const shareUrl = `${window.location.origin}${window.location.pathname}?spec=${encoded}`;
       await navigator.clipboard.writeText(shareUrl);
       setCopiedShare(true);
       setTimeout(() => setCopiedShare(false), 2000);
     } catch (err) {
       console.error("Failed to generate share link:", err);
+      window.alert("Couldn't generate a share link for this spec. Please try again.");
     }
   };
 

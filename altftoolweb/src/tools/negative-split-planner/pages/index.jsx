@@ -9,6 +9,7 @@ import {
   formatPace,
   planNegativeSplit,
 } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const NUM1 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
 const NUM2 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 });
@@ -45,7 +46,7 @@ export default function ToolHome() {
   const [splitPct, setSplitPct] = useState(DEFAULTS.splitPct);
   const [mode, setMode] = useState(DEFAULTS.mode);
   const [segmentKm, setSegmentKm] = useState(DEFAULTS.segmentKm);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const plan = useMemo(
     () => planNegativeSplit({ distanceKm, hours, minutes, seconds, splitPct, mode, segmentKm }),
@@ -80,15 +81,9 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [ok, plan]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("plan", summary, { label: "negative split plan" });
   };
 
   const reset = () => {
@@ -100,7 +95,6 @@ export default function ToolHome() {
     setSplitPct(DEFAULTS.splitPct);
     setMode(DEFAULTS.mode);
     setSegmentKm(DEFAULTS.segmentKm);
-    setCopied(false);
   };
 
   const rows = [
@@ -315,17 +309,24 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy negative split plan"
+              aria-label={isCopied("plan") ? "Copied the negative split plan to clipboard" : "Copy negative split plan"}
               className={GHOST_BTN}
               disabled={!ok}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy plan"}
+              {isCopied("plan") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("plan") ? "Copied!" : "Copy plan"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

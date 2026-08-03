@@ -10,7 +10,7 @@ const seo = {
   benefits: [
     [
       "Chapter rules enforced",
-      "Timestamps are parsed, sorted and measured, and every rule YouTube applies is reported as a specific fix.",
+      "Timestamps are parsed and measured, and every rule YouTube applies — including ascending order — is reported as a specific fix.",
     ],
     [
       "Nothing gets truncated",

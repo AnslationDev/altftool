@@ -12366,7 +12366,7 @@ export default {
     ],
     [
       "How do I calculate first-half time for a negative split?",
-      "Divide the goal finish time by (1 + the ratio), where the ratio is 1 minus the split percentage as a decimal. For a 4-hour goal and a 2% split that is 14,400 divided by 1.98, which is 7,272 seconds, or 2:01:13."
+      "Divide the goal finish time by (1 + the ratio), where the ratio is 1 minus the split percentage as a decimal. For a 4-hour goal and a 2% split that is 14,400 divided by 1.98, which is 7,273 seconds, or 2:01:13."
     ],
     [
       "Do elite runners actually negative split?",
@@ -12523,7 +12523,7 @@ export default {
   ]
 },
   "net-worth-tracker-tool": {
-  "intro": "Net worth is everything you own at today's realisable value minus everything you owe at outstanding principal — one number that a bank balance or a salary slip cannot give you. This tracker builds that statement from itemised assets and liabilities and then reports the three ratios it exists to expose: the share of assets that is genuinely liquid, the split between financial assets and property, gold and vehicles, and the debt-to-asset ratio. Everything is computed in the browser and nothing is stored.",
+  "intro": "Net worth is everything you own at today's realisable value minus everything you owe at outstanding principal — one number that a bank balance or a salary slip cannot give you. This tracker builds that statement from itemised assets and liabilities and then reports the three ratios it exists to expose: the share of assets that is genuinely liquid, the split between financial assets and everything else — property, gold, vehicles, business holdings and other assets that cannot be sold in slices — and the debt-to-asset ratio. Everything is computed in the browser and nothing is stored.",
   "useCases": [
     "Taking a yearly snapshot each April so you can see whether net worth actually grew or only the property estimate did.",
     "Checking, before taking another loan, whether borrowings already sit above half of total assets.",

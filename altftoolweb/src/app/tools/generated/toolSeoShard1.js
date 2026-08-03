@@ -5887,7 +5887,7 @@ export default {
     ],
     [
       "Which cartoon style works best for a profile picture?",
-      "Comic Book (160% contrast) and Pop Art (200% saturation) give the boldest, most obviously cartoon result. Anime and Pixar Inspired stay closer to natural skin tones, Watercolour and Minimal are the softest, and Sketch (full grayscale) or Pencil Art (80% grayscale) produce a drawn, monochrome look."
+      "Comic Book (160% contrast) and Pop Art (200% saturation) give the boldest, most obviously cartoon result — Anime (170% saturation) is nearly as vivid. Pixar Inspired and Flat Illustration keep a more moderate saturation boost and stay closer to natural skin tones, Watercolour and Minimal are the softest overall, and Sketch (full grayscale) or Pencil Art (80% grayscale) produce a drawn, monochrome look."
     ],
     [
       "Can I adjust the effect after choosing a style?",

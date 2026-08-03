@@ -50,7 +50,14 @@ const toNumber = (value, fallback = 0) => {
   return Number.isFinite(number) ? number : NaN;
 };
 
-const round0 = (value) => Math.round(value);
+// Math.round() can return -0 for any input in (-0.5, 0), which
+// Intl.NumberFormat then renders as a nonsensical "-₹0". Normalise it to a
+// plain positive zero — -0 === 0 is true in JS, so this only touches values
+// that rounded to zero either way and leaves every other value untouched.
+const round0 = (value) => {
+  const rounded = Math.round(value);
+  return rounded === 0 ? 0 : rounded;
+};
 const round2 = (value) => Math.round(value * 100) / 100;
 
 /**
@@ -123,27 +130,45 @@ export function computeRealHike({
 
   const inflationCost = newTakeHome - realNewTakeHome;
 
+  // Same three-way split the verdict text uses (>0.5 better off, <-0.5 pay
+  // cut, otherwise a neutral "about even" band) so the UI can colour the
+  // verdict consistently with what it says — a binary cutoff at exactly 0
+  // would land the neutral band's own edge cases (e.g. 0% hike, 0% inflation)
+  // in the "pay cut" colour.
   let verdict;
+  let verdictTone;
   if (realGain > 0.5) {
     verdict = "You are genuinely better off in purchasing power.";
+    verdictTone = "positive";
   } else if (realGain < -0.5) {
     verdict = "After tax and inflation this raise is a pay cut in real terms.";
+    verdictTone = "negative";
   } else {
     verdict = "This raise leaves you almost exactly where you started.";
+    verdictTone = "neutral";
   }
+
+  // currentTakeHome and netIncrement are rounded independently below for
+  // display; newTakeHome is derived from those SAME rounded figures (rather
+  // than rounded separately from the raw float) so the UI's "New take-home"
+  // row always equals "Current take-home" + "Extra in hand per year" exactly,
+  // with no possibility of a rounding-boundary mismatch between the two.
+  const currentTakeHomeRounded = round0(takeHome);
+  const netIncrementRounded = round0(netIncrement);
+  const newTakeHomeRounded = currentTakeHomeRounded + netIncrementRounded;
 
   return {
     currentGross: round0(gross),
-    currentTakeHome: round0(takeHome),
+    currentTakeHome: currentTakeHomeRounded,
     hikePct: round2(hike),
     increment: round0(increment),
     effectiveMarginalPct,
     taxOnIncrement: round0(taxOnIncrement),
-    netIncrement: round0(netIncrement),
+    netIncrement: netIncrementRounded,
     netIncrementMonthly: round0(netIncrement / 12),
     newGross: round0(newGross),
-    newTakeHome: round0(newTakeHome),
-    newTakeHomeMonthly: round0(newTakeHome / 12),
+    newTakeHome: newTakeHomeRounded,
+    newTakeHomeMonthly: round0(newTakeHomeRounded / 12),
     inflationCost: round0(inflationCost),
     realNewTakeHome: round0(realNewTakeHome),
     realGain: round0(realGain),
@@ -153,6 +178,6 @@ export function computeRealHike({
     breakEvenHikePct: breakEvenHikePct === null ? null : round2(breakEvenHikePct),
     keptShareOfRaisePct: round2(keepShare * 100),
     verdict,
-    beatsInflation: realGain > 0,
+    verdictTone,
   };
 }

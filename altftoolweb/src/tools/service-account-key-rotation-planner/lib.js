@@ -89,6 +89,9 @@ export function planKeyRotation({
   if (!Number.isFinite(notice) || !Number.isInteger(notice) || notice < 0) {
     return { error: "Notice period cannot be negative." };
   }
+  if (notice > period) {
+    return { error: "Notice period cannot be longer than the rotation period." };
+  }
   if (!Number.isFinite(keys) || !Number.isInteger(keys) || keys < 1) {
     return { error: "Number of keys must be a whole number, at least 1." };
   }
@@ -113,9 +116,17 @@ export function planKeyRotation({
 
   const meetsCis = period <= CIS_MAX_ROTATION_DAYS;
   const rotationsPerYearPerKey = 365.25 / period;
-  const rotationEventsPerYear = Math.round(rotationsPerYearPerKey * keys * 10) / 10;
+  // Round the per-key rate first, and derive the fleet total from that same
+  // rounded figure — the runbook text prints "keys × rate = total", so the
+  // total must actually equal keys times the rate a reader can see, not a
+  // total computed from the unrounded rate behind the scenes.
+  const rotationsPerYearPerKeyRounded = Math.round(rotationsPerYearPerKey * 10) / 10;
+  const rotationEventsPerYear = Math.round(rotationsPerYearPerKeyRounded * keys * 10) / 10;
 
-  const steps = [
+  // Ordered by intended sequence first; sorted by actual date below so a
+  // short notice period combined with a long overlap window (notice <
+  // overlap) can't leave an earlier step numbered after a later one.
+  const orderedSteps = [
     {
       date: toIso(notifyDate),
       title: "Notify owners",
@@ -145,6 +156,10 @@ export function planKeyRotation({
       detail: `After the ${QUARANTINE_DAYS}-day quarantine with no auth failures, delete the disabled key permanently.`,
     },
   ];
+  const steps = orderedSteps
+    .map((step, index) => ({ ...step, index }))
+    .sort((a, b) => (a.date < b.date ? -1 : a.date > b.date ? 1 : a.index - b.index))
+    .map(({ index, ...step }) => step);
 
   return {
     keyAgeDays,
@@ -157,7 +172,7 @@ export function planKeyRotation({
     createDate: toIso(createDate),
     disableDate: toIso(disableDate),
     deleteDate: toIso(deleteDate),
-    rotationsPerYearPerKey: Math.round(rotationsPerYearPerKey * 10) / 10,
+    rotationsPerYearPerKey: rotationsPerYearPerKeyRounded,
     rotationEventsPerYear,
     steps,
   };

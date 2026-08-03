@@ -38,12 +38,33 @@ function parseTimelineLine(line, index) {
 }
 
 export function parseTimeline(source) {
-  const lines = String(source || "")
-    .slice(0, MAX_TEXT_LENGTH)
+  const allLines = String(source || "")
     .split(/\r?\n/)
     .map((line) => line.trim())
-    .filter(Boolean)
-    .slice(0, MAX_TIMELINE_ROWS);
+    .filter(Boolean);
+
+  const rowTruncated = allLines.length > MAX_TIMELINE_ROWS;
+
+  // Keep only whole lines within the character budget, instead of slicing
+  // the raw text to MAX_TEXT_LENGTH characters up front. A raw-text slice
+  // can land mid-line, which both corrupts whatever event straddles the cut
+  // (a truncated `event` field, a `reference` field sheared clean off) and
+  // hides that anything was cut at all, since only line count fed the
+  // `truncated` flag below.
+  let charBudget = MAX_TEXT_LENGTH;
+  let charTruncated = false;
+  const lines = [];
+  for (const line of allLines) {
+    if (lines.length >= MAX_TIMELINE_ROWS) break;
+    const cost = line.length + 1; // +1 for the newline separating it from the next line
+    if (cost > charBudget) {
+      charTruncated = true;
+      break;
+    }
+    lines.push(line);
+    charBudget -= cost;
+  }
+
   const entries = [];
   const errors = [];
   lines.forEach((line, index) => {
@@ -54,10 +75,7 @@ export function parseTimeline(source) {
   return {
     entries,
     errors,
-    truncated:
-      String(source || "")
-        .split(/\r?\n/)
-        .filter((line) => line.trim()).length > MAX_TIMELINE_ROWS,
+    truncated: rowTruncated || charTruncated,
   };
 }
 

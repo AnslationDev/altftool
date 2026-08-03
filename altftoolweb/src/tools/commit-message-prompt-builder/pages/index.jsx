@@ -43,19 +43,27 @@ export default function ToolHome() {
   const [issueRef, setIssueRef] = useState(DEFAULTS.issueRef);
   const [copied, setCopied] = useState(false);
 
-  const result = useMemo(() => {
-    const preview = buildHeaderPreview({ typeId, scope, breaking, description: "" });
-    if (preview.error) return preview;
-    return buildCommitPrompt({ diffSummary, breakingDetail, issueRef, preview });
-  }, [typeId, scope, breaking, diffSummary, breakingDetail, issueRef]);
+  // The header preview depends only on type/scope/breaking, and stays valid
+  // independent of whether the diff summary (below) currently passes
+  // validation — so it's computed and rendered separately from the prompt.
+  const preview = useMemo(
+    () => buildHeaderPreview({ typeId, scope, breaking, description: "" }),
+    [typeId, scope, breaking],
+  );
+  const previewHasError = Boolean(preview.error);
 
-  const hasError = Boolean(result.error);
-  const preview = hasError ? null : result.preview;
+  const promptResult = useMemo(() => {
+    if (previewHasError) return null;
+    return buildCommitPrompt({ diffSummary, breakingDetail, issueRef, preview });
+  }, [previewHasError, preview, diffSummary, breakingDetail, issueRef]);
+
+  const promptHasError = Boolean(promptResult?.error);
+  const errorMessage = previewHasError ? preview.error : promptHasError ? promptResult.error : null;
 
   const copyResult = async () => {
-    if (hasError) return;
+    if (previewHasError || promptHasError || !promptResult) return;
     try {
-      await navigator.clipboard.writeText(result.text);
+      await navigator.clipboard.writeText(promptResult.text);
       setCopied(true);
       setTimeout(() => setCopied(false), 1500);
     } catch {
@@ -64,6 +72,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your diff summary and breaking-change detail with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setTypeId(DEFAULTS.typeId);
     setScope(DEFAULTS.scope);
     setBreaking(DEFAULTS.breaking);
@@ -73,25 +88,20 @@ export default function ToolHome() {
     setCopied(false);
   };
 
-  const rows = hasError
-    ? [
-        ["Prefix length", DASH],
-        ["Room left for the description", DASH],
-        ["Breaking change", DASH],
-        ["Prompt length", DASH],
-      ]
-    : [
-        ["Prefix length", `${preview.fixedLength} characters`],
-        [
-          "Room left for the description",
-          `${preview.room} of ${SUBJECT_SOFT_LIMIT} subject characters`,
-        ],
-        ["Breaking change", preview.breaking ? "Yes — footer required" : "No"],
-        [
-          "Prompt length",
-          `${NUM.format(result.words)} words · ~${NUM.format(result.approxTokens)} tokens`,
-        ],
-      ];
+  const rows = [
+    ["Prefix length", previewHasError ? DASH : `${preview.fixedLength} characters`],
+    [
+      "Room left for the description",
+      previewHasError ? DASH : `${preview.room} of ${SUBJECT_SOFT_LIMIT} subject characters`,
+    ],
+    ["Breaking change", previewHasError ? DASH : preview.breaking ? "Yes — footer required" : "No"],
+    [
+      "Prompt length",
+      previewHasError || promptHasError
+        ? DASH
+        : `${NUM.format(promptResult.words)} words · ~${NUM.format(promptResult.approxTokens)} tokens`,
+    ],
+  ];
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -202,17 +212,17 @@ export default function ToolHome() {
         </div>
       </section>
 
-      {hasError ? (
+      {errorMessage ? (
         <p
           role="alert"
           className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
         >
-          {result.error}
+          {errorMessage}
         </p>
       ) : null}
 
-      {!hasError && preview.warnings.length > 0 ? (
-        <ul className="mt-6 space-y-2">
+      {!previewHasError && preview.warnings.length > 0 ? (
+        <ul aria-live="polite" role="status" className="mt-6 space-y-2">
           {preview.warnings.map((warning) => (
             <li
               key={warning}
@@ -231,10 +241,10 @@ export default function ToolHome() {
               Header the prompt enforces
             </p>
             <p className="mt-1 break-all font-mono text-2xl font-semibold text-[var(--primary)] sm:text-3xl">
-              {hasError ? DASH : preview.header}
+              {previewHasError ? DASH : preview.header}
             </p>
             <p className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]">
-              {hasError
+              {previewHasError
                 ? "Fix the input above to see a result."
                 : "The model fills <description> in imperative mood within the length budget."}
             </p>
@@ -243,9 +253,9 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              disabled={hasError}
+              disabled={previewHasError || promptHasError}
               aria-label="Copy the generated commit message prompt"
-              className={`${GHOST_BTN} disabled:opacity-50`}
+              className={`${PRIMARY_BTN} disabled:opacity-50`}
             >
               {copied ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
@@ -258,7 +268,7 @@ export default function ToolHome() {
               type="button"
               onClick={reset}
               aria-label="Reset all inputs to defaults"
-              className={PRIMARY_BTN}
+              className={GHOST_BTN}
             >
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
@@ -281,7 +291,7 @@ export default function ToolHome() {
           </h2>
           <div className="mt-2 overflow-x-auto rounded-md border border-[var(--border)] bg-[var(--background)] p-4">
             <pre className="whitespace-pre-wrap break-words text-sm leading-6 text-[var(--foreground)]">
-              {hasError ? DASH : result.text}
+              {previewHasError || promptHasError ? DASH : promptResult.text}
             </pre>
           </div>
         </div>

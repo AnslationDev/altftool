@@ -643,6 +643,57 @@ function claimedUncompressedSize(entry) {
   return Number.isFinite(size) && size >= 0 ? size : null;
 }
 
+/**
+ * Decompress a zip entry's text incrementally, aborting the moment the
+ * actual decompressed byte count exceeds `maxBytes`.
+ *
+ * The zip header's declared uncompressedSize is attacker-controlled, and
+ * JSZip does not enforce it as a decompression ceiling: entry.async("string")
+ * fully decompresses and buffers the entire payload before any length check
+ * runs, so a part that lies about its size (tiny declared size, a DEFLATE
+ * stream that actually expands to hundreds of MB) would already have
+ * exhausted memory by the time a post-hoc `text.length` check could catch
+ * it. Reading via entry.internalStream and pausing on the first chunk that
+ * pushes the running total past the cap means real memory use stays bounded
+ * near maxBytes regardless of what the archive claims or how large the
+ * stream would otherwise decompress to.
+ */
+function readCappedXmlText(entry, maxBytes) {
+  return new Promise((resolve) => {
+    let total = 0;
+    let text = "";
+    let settled = false;
+    const finish = (result) => {
+      if (settled) return;
+      settled = true;
+      resolve(result);
+    };
+
+    let stream;
+    try {
+      stream = entry.internalStream("text");
+    } catch {
+      finish({ exceeded: true, text: "" });
+      return;
+    }
+
+    stream
+      .on("data", (chunk) => {
+        if (settled) return;
+        total += chunk.length;
+        if (total > maxBytes) {
+          stream.pause();
+          finish({ exceeded: true, text: "" });
+          return;
+        }
+        text += chunk;
+      })
+      .on("error", () => finish({ exceeded: true, text: "" }))
+      .on("end", () => finish({ exceeded: false, text }))
+      .resume();
+  });
+}
+
 export async function inspectOoxmlArchive(bytesInput, options = {}) {
   const extensionValidation = validateExtension(
     options.fileName || "package.zip",
@@ -714,12 +765,17 @@ export async function inspectOoxmlArchive(bytesInput, options = {}) {
         continue;
       }
 
-      const text = await entry.async("string");
-      if (text.length > MAX_XML_PART_BYTES) {
+      // The declared size above is only a fast pre-filter and cannot be
+      // trusted as a security boundary — the zip header it comes from is
+      // attacker-controlled. readCappedXmlText enforces the real cap while
+      // decompressing, so a part that lies about its size still cannot
+      // exhaust memory.
+      const capped = await readCappedXmlText(entry, MAX_XML_PART_BYTES);
+      if (capped.exceeded) {
         skippedXmlParts += 1;
         continue;
       }
-      entries[name] = text;
+      entries[name] = capped.text;
       inspectedXmlParts += 1;
     }
 

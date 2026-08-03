@@ -4703,7 +4703,7 @@ export default {
   "faqs": [
     [
       "How much water should you drink on a flight?",
-      "A common airline recommendation is around 250 ml an hour, and this planner usually lands near that for a long-haul once alcohol is included. For a 70 kg adult on a ten-hour flight with two beers and a coffee, the total works out around 1.5 litres, or roughly three 500 ml bottles."
+      "A common airline recommendation is around 250 ml an hour, but this planner's dry-air-plus-alcohol model usually comes in lower than that for a long-haul unless you're drinking heavily throughout. For a 70 kg adult on a ten-hour flight with two beers and a coffee, the total works out around 1.5 litres — about 154 ml an hour, or roughly four 500 ml bottles."
     ],
     [
       "Does flying really dehydrate you?",
@@ -15714,7 +15714,7 @@ export default {
   ]
 },
   "hidden-revision-inspector": {
-  "intro": "The Hidden Revision Inspector unzips an Office OOXML file in your browser and runs eighteen structural checks over its XML parts — tracked-change elements, the track-revisions setting, comments and speaker notes, populated core and custom properties, hidden sheets, very-hidden sheets, hidden slides, hidden-text markers, hidden rows and columns, embedded files, VBA and ActiveX parts, and relationships marked External. It reports counts only: it tells you that six comments and two author fields exist, never who wrote them or what they say. It is for anyone about to send a document outside their organisation who wants to know what is still inside it.",
+  "intro": "The Hidden Revision Inspector unzips an Office OOXML file in your browser and runs nineteen structural checks over its XML parts — tracked-change elements, the track-revisions setting and revision-log package parts; comments and speaker notes; populated core properties, author fields and custom properties; hidden sheets, very-hidden sheets, hidden slides, hidden-text markers, hidden rows and columns; and embedded files, VBA macro parts, a macro-enabled container marker, ActiveX parts, and relationships marked External. It reports counts only: it tells you that six comments and two author fields exist, never who wrote them or what they say. It is for anyone about to send a document outside their organisation who wants to know what is still inside it.",
   "useCases": [
     "You are about to email a contract .docx to the other side and want to confirm no tracked deletions or reviewer comments survived the final edit.",
     "A workbook is going to a client and you need to check whether any sheet is set to hidden or veryHidden before it leaves.",

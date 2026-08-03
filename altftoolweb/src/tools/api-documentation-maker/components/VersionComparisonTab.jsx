@@ -45,11 +45,11 @@ export default function VersionComparisonTab() {
     const v2 = parseEndpoints(v2Input);
 
     if (!v1.valid) {
-      setError("V1 JSON invalid hai.");
+      setError("V1 JSON is invalid.");
       return;
     }
     if (!v2.valid) {
-      setError("V2 JSON invalid hai.");
+      setError("V2 JSON is invalid.");
       return;
     }
 
@@ -93,7 +93,7 @@ const METHOD_COLORS = {
         className={`flex items-center gap-3 px-3 py-2 rounded-lg border ${bgRow}`}
       >
         <span
-          className={`text-xs font-bold px-2 py-0.5 rounded shrink-0 ${METHOD_COLORS[method] || "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300"}"}`}
+          className={`text-xs font-bold px-2 py-0.5 rounded shrink-0 ${METHOD_COLORS[method] || "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300"}`}
         >
           {method}
         </span>

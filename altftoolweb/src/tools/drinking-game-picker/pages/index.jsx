@@ -1,5 +1,5 @@
 "use client";
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Beer, SkipForward, RotateCcw, Star, Users,
@@ -110,40 +110,58 @@ export default function ToolHome() {
   const [category, setCategory] = useState("classic");
   const [currentGame, setCurrentGame] = useState(null);
   const [currentChallenge, setCurrentChallenge] = useState(null);
+  // Which category the *currently shown* game actually came from — tracked
+  // separately from the live `category`/`penaltyMode` toggles so the badge
+  // above the result never shows a category the game wasn't drawn from
+  // (penalty mode draws from GAMES.penalty regardless of the selected tab).
+  const [resultCategoryId, setResultCategoryId] = useState(null);
   const [history, setHistory] = useState([]);
   const [isAnimating, setIsAnimating] = useState(false);
   const [penaltyMode, setPenaltyMode] = useState(false);
   const [showGame, setShowGame] = useState(true);
   const [favorites, setFavorites] = useState([]);
   const [skipped, setSkipped] = useState(0);
+  const [announcement, setAnnouncement] = useState("");
 
   const games = GAMES[category] || GAMES.classic;
 
   const pickGame = useCallback(() => {
-    if (isAnimating || games.length === 0) return;
+    // Penalty mode draws from the penalty set instead of whichever category
+    // tab is selected — a quick single consequence rather than a full game.
+    const pool = penaltyMode ? GAMES.penalty : games;
+    const pickedCategoryId = penaltyMode ? "penalty" : category;
+    if (isAnimating || pool.length === 0) return;
     setIsAnimating(true);
 
-    let count = 0;
     const maxSteps = 10 + Math.floor(Math.random() * 8);
-    const interval = setInterval(() => {
-      const randomGame = games[Math.floor(Math.random() * games.length)];
+    let count = 0;
+
+    const tick = () => {
+      const randomGame = pool[Math.floor(Math.random() * pool.length)];
       setCurrentGame(randomGame);
-      count++;
+      count += 1;
       if (count >= maxSteps) {
-        clearInterval(interval);
-        const chosen = games[Math.floor(Math.random() * games.length)];
+        const chosen = pool[Math.floor(Math.random() * pool.length)];
         setCurrentGame(chosen);
+        setResultCategoryId(pickedCategoryId);
         setIsAnimating(false);
         const challenge = CHALLENGES[Math.floor(Math.random() * CHALLENGES.length)];
         setCurrentChallenge(challenge);
+        setAnnouncement(`${chosen.name} picked. Challenge: ${challenge}`);
         setHistory((prev) => [
           { id: generateId(), game: chosen.name, challenge, date: new Date().toLocaleString() },
           ...prev.slice(0, 49),
         ]);
         setShowGame(true);
+        return;
       }
-    }, 60 + count * 5);
-  }, [games, isAnimating]);
+      // Each successive tick waits a little longer than the last, so the
+      // spin visibly decelerates instead of flashing at a fixed rate.
+      window.setTimeout(tick, 60 + count * 5);
+    };
+
+    window.setTimeout(tick, 60);
+  }, [games, isAnimating, penaltyMode, category]);
 
   const skip = useCallback(() => {
     setSkipped((prev) => prev + 1);
@@ -160,14 +178,26 @@ export default function ToolHome() {
   }, [currentGame]);
 
   const reset = useCallback(() => {
+    if (
+      !window.confirm(
+        "Reset the picker? This clears the current game, challenge and the full pick history, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setCurrentGame(null);
     setCurrentChallenge(null);
+    setResultCategoryId(null);
     setHistory([]);
     setSkipped(0);
+    setAnnouncement("");
   }, []);
 
   const isFavorited = currentGame && favorites.some((f) => f.name === currentGame.name);
+  // The category being browsed in the tabs/grid below — independent of
+  // resultCat, which is whichever category the displayed pick came from.
   const currentCat = CATEGORIES.find((c) => c.id === category);
+  const resultCat = CATEGORIES.find((c) => c.id === resultCategoryId) || currentCat;
 
   return (
     <div className="min-h-screen bg-(--background)">
@@ -184,8 +214,14 @@ export default function ToolHome() {
                 {CATEGORIES.map((c) => (
                   <button
                     key={c.id}
-                    onClick={() => { setCategory(c.id); setCurrentGame(null); setCurrentChallenge(null); }}
-                    className={`px-3 py-1.5 rounded-full text-xs font-medium border transition flex items-center gap-1 ${
+                    disabled={isAnimating}
+                    onClick={() => {
+                      setCategory(c.id);
+                      setCurrentGame(null);
+                      setCurrentChallenge(null);
+                      setResultCategoryId(null);
+                    }}
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium border transition flex items-center gap-1 disabled:cursor-not-allowed disabled:opacity-40 ${
                       category === c.id
                         ? "bg-(--primary) text-(--primary-foreground) border-(--primary)"
                         : "bg-(--card) text-(--muted-foreground) border-(--border) hover:border-(--primary)"
@@ -223,8 +259,8 @@ export default function ToolHome() {
                       className="text-center w-full"
                     >
                       <div className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold uppercase mb-3 bg-(--primary)/10 text-(--primary)">
-                        {currentCat && <currentCat.icon size="12" className={currentCat.color} />}
-                        <span>{currentCat?.label}</span>
+                        {resultCat && <resultCat.icon size="12" className={resultCat.color} />}
+                        <span>{resultCat?.label}</span>
                       </div>
                       <div className="mb-4">
                         <p className="text-2xl font-bold text-(--foreground) mb-2">{currentGame.name}</p>
@@ -243,7 +279,12 @@ export default function ToolHome() {
                         <p className="text-lg font-bold text-(--primary)">{currentChallenge}</p>
                       </div>
                       <div className="flex justify-center gap-2 mt-4">
-                        <button onClick={toggleFavorite} className="p-2 rounded-lg hover:bg-(--muted) transition">
+                        <button
+                          onClick={toggleFavorite}
+                          aria-label={isFavorited ? `Remove ${currentGame.name} from favorites` : `Add ${currentGame.name} to favorites`}
+                          aria-pressed={Boolean(isFavorited)}
+                          className="p-2 rounded-lg hover:bg-(--muted) transition"
+                        >
                           <Star size="16" className={isFavorited ? "fill-amber-400 text-amber-400" : "text-(--muted-foreground)"} />
                         </button>
                         <button onClick={skip} className="px-4 py-2 rounded-lg bg-(--muted) text-(--foreground) text-sm font-medium hover:bg-(--border) transition flex items-center gap-1.5">
@@ -255,11 +296,15 @@ export default function ToolHome() {
                     <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-center text-(--muted-foreground)">
                       <Beer size="48" className="mx-auto mb-2 opacity-30" />
                       <p className="text-sm">Pick a game to get started!</p>
-                      <p className="text-xs mt-1">Skipped: {skipped}</p>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
+
+              <p className="text-center text-xs text-(--muted-foreground)">Skipped: {skipped}</p>
+              <span className="sr-only" role="status" aria-live="polite">
+                {announcement}
+              </span>
 
               <button
                 onClick={pickGame}
@@ -291,7 +336,7 @@ export default function ToolHome() {
                     onChange={(e) => setPenaltyMode(e.target.checked)}
                     className="w-4 h-4 rounded border-(--border) text-(--primary) focus:ring-(--primary)"
                   />
-                  <Timer size="14" /> Penalty mode (harder challenges)
+                  <Timer size="14" /> Penalty mode (single penalty instead of a full game)
                 </label>
               </div>
             </div>
@@ -327,7 +372,10 @@ export default function ToolHome() {
                 <div className="space-y-1 max-h-48 overflow-y-auto custom-scrollbar">
                   {history.slice(0, 15).map((h) => (
                     <div key={h.id} className="px-2.5 py-1.5 rounded-lg bg-(--muted)">
-                      <p className="text-xs font-medium text-(--foreground) truncate">{h.game}</p>
+                      <div className="flex items-baseline justify-between gap-2">
+                        <p className="text-xs font-medium text-(--foreground) truncate">{h.game}</p>
+                        <p className="shrink-0 text-[9px] text-(--muted-foreground)">{h.date}</p>
+                      </div>
                       <p className="text-[10px] text-(--muted-foreground) truncate">{h.challenge}</p>
                     </div>
                   ))}
@@ -353,6 +401,7 @@ export default function ToolHome() {
                 }`}
                 onClick={() => {
                   setCurrentGame(game);
+                  setResultCategoryId(category);
                   setCurrentChallenge(CHALLENGES[Math.floor(Math.random() * CHALLENGES.length)]);
                 }}
               >

@@ -237,7 +237,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Real gain in purchasing power
             </p>
@@ -269,19 +269,22 @@ export default function ToolHome() {
         </div>
 
         <p
+          aria-live="polite"
           className={`mt-4 rounded-md px-3 py-2 text-sm font-semibold ${
             hasError
               ? "bg-[var(--muted)] text-[var(--muted-foreground)]"
-              : result.beatsInflation
+              : result.verdictTone === "positive"
                 ? "bg-[var(--success-soft)] text-[var(--success)]"
-                : "bg-[var(--danger-soft)] text-[var(--danger)]"
+                : result.verdictTone === "negative"
+                  ? "bg-[var(--danger-soft)] text-[var(--danger)]"
+                  : "bg-[var(--muted)] text-[var(--muted-foreground)]"
           }`}
         >
           {hasError ? DASH : result.verdict}
         </p>
 
         {!hasError && (
-          <div className="mt-4">
+          <div className="mt-4" aria-live="polite">
             <div
               className="flex h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
               role="img"

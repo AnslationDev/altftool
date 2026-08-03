@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, KeyRound, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { planKeyRotation } from "../lib";
 
 const NUM = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
@@ -10,8 +11,6 @@ const NUM = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
 const LABEL_CLASS = "block text-sm font-semibold text-[var(--foreground)]";
-const PRIMARY_BTN =
-  "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 const GHOST_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 
@@ -28,7 +27,7 @@ export default function ToolHome() {
   const [overlapDays, setOverlapDays] = useState("7");
   const [noticeDays, setNoticeDays] = useState("14");
   const [keyCount, setKeyCount] = useState("12");
-  const [copied, setCopied] = useState(false);
+  const { copy: copyText, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const asNumber = (value) => (value.trim() === "" ? Number.NaN : Number(value));
 
@@ -62,25 +61,26 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result, rotationPeriodDays, keyCount]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyText("plan", summary, { label: "the key rotation plan" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every date and cadence field back to the demo defaults? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setLastRotationDate(isoDaysAgo(60));
     setToday(isoToday());
     setRotationPeriodDays("90");
     setOverlapDays("7");
     setNoticeDays("14");
     setKeyCount("12");
-    setCopied(false);
+    resetCopyState();
   };
 
   const rows = hasError
@@ -219,7 +219,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -249,27 +253,30 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the key rotation plan"
+              aria-label={isCopied("plan") ? "Copied the key rotation plan" : "Copy the key rotation plan"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("plan") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy plan"}
+              {isCopied("plan") ? "Copied!" : "Copy plan"}
             </button>
             <button
               type="button"
               onClick={reset}
               aria-label="Reset all inputs to defaults"
-              className={PRIMARY_BTN}
+              className={GHOST_BTN}
             >
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {rows.map(([label, value]) => (
@@ -282,7 +289,11 @@ export default function ToolHome() {
       </section>
 
       {hasError ? null : (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           <h2 className="text-base font-semibold">Cutover schedule</h2>
           <ol className="mt-3 space-y-3">
             {result.steps.map((step, index) => (
