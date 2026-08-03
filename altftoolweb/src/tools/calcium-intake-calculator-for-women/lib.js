@@ -38,16 +38,6 @@ export const VITAMIN_D_BANDS = [
  */
 export const SINGLE_DOSE_LIMIT_MG = 500;
 
-/**
- * Oxalate-bound calcium (cooked spinach and similar high-oxalate greens) is
- * only around 5% bioavailable, versus roughly 30-35% for dairy (Weaver &
- * Plawecki 1994; Weaver & Heaney, "Calcium," in Modern Nutrition in Health
- * and Disease). Foods flagged `poorlyAbsorbed` use this factor so the target
- * math agrees with the tool's own "oxalate blocks much of it" caveat instead
- * of counting their full nominal mg as absorbed.
- */
-export const POORLY_ABSORBED_ABSORPTION_FACTOR = 0.05;
-
 export const AGE_MIN = 9;
 export const AGE_MAX = 100;
 export const MAX_SERVINGS_PER_FOOD = 20;
@@ -129,9 +119,11 @@ export function calculateCalciumPlan({ age, lifeStage = LIFE_STAGES.GENERAL, ser
     }
     if (count > 0) {
       const listedMg = count * food.mg;
-      // Poorly-absorbed foods count toward the target at their effective
-      // (absorbed) mg, not their listed mg — see POORLY_ABSORBED_ABSORPTION_FACTOR.
-      const mg = food.poorlyAbsorbed ? Math.round(listedMg * POORLY_ABSORBED_ABSORPTION_FACTOR) : listedMg;
+      // Dietary reference targets and food tables are both expressed as
+      // ingested calcium, not calcium absorbed into the bloodstream. Keep the
+      // labelled amount in the tally and flag high-oxalate foods separately;
+      // applying an absorption percentage here would compare unlike units.
+      const mg = listedMg;
       intakeMg += mg;
       breakdown.push({
         id: food.id,
@@ -156,6 +148,8 @@ export function calculateCalciumPlan({ age, lifeStage = LIFE_STAGES.GENERAL, ser
   // How many separate sittings the day's calcium should ideally be spread over.
   const suggestedSittings = Math.max(1, Math.ceil(target / SINGLE_DOSE_LIMIT_MG));
 
+  const lifeStageNote = lifeStageNoteFor(lifeStage);
+
   return {
     age,
     lifeStage,
@@ -176,7 +170,12 @@ export function calculateCalciumPlan({ age, lifeStage = LIFE_STAGES.GENERAL, ser
     exceedsUpperLimit: roundedIntake > calciumBand.ul,
     suggestedSittings,
     singleDoseLimitMg: SINGLE_DOSE_LIMIT_MG,
-    lifeStageNote: lifeStageNoteFor(lifeStage),
+    lifeStageNote,
+    // Backward-compatible field retained for existing consumers.
+    pregnancyNote:
+      lifeStage === LIFE_STAGES.PREGNANT || lifeStage === LIFE_STAGES.BREASTFEEDING
+        ? lifeStageNote
+        : "",
   };
 }
 
@@ -197,20 +196,16 @@ function lifeStageNoteFor(lifeStage) {
 export function suggestTopUps(gapMg, foods = CALCIUM_FOODS) {
   if (!isNum(gapMg) || gapMg <= 0) return [];
   return foods
-    .filter((food) => food.mg > 0)
-    .map((food) => {
-      // Rank poorly-absorbed foods (e.g. spinach) by the calcium they
-      // actually deliver toward the target, not their listed mg — otherwise
-      // the tool would recommend a food it knows is a bad top-up choice.
-      const effectiveMg = food.poorlyAbsorbed ? food.mg * POORLY_ABSORBED_ABSORPTION_FACTOR : food.mg;
-      return {
-        id: food.id,
-        name: food.name,
-        serving: food.serving,
-        mg: food.mg,
-        servingsNeeded: Math.ceil(gapMg / effectiveMg),
-      };
-    })
+    // High-oxalate foods still count by their labelled calcium in the intake
+    // tally, but are poor choices for a "close this gap" recommendation.
+    .filter((food) => food.mg > 0 && !food.poorlyAbsorbed)
+    .map((food) => ({
+      id: food.id,
+      name: food.name,
+      serving: food.serving,
+      mg: food.mg,
+      servingsNeeded: Math.ceil(gapMg / food.mg),
+    }))
     // Fewest servings first; where several tie, prefer the smallest portion
     // that still closes the gap rather than the biggest hit of calcium.
     .sort((a, b) => a.servingsNeeded - b.servingsNeeded || a.mg - b.mg)

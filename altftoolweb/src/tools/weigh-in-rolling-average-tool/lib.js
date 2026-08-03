@@ -178,7 +178,11 @@ export function smoothWeighIns(rawEntries, options = {}) {
   const slopePerWeek = regression ? round(regression.slopePerDay * DAYS_PER_WEEK, 3) : null;
   const kcalPerDay = regression ? round((regression.slopePerDay * kcalPerUnit(units)), 0) : null;
 
+  // Retain the original public summary fields for callers that consumed this
+  // calculator before the residual-noise correction.
+  const firstAverage = series[0].movingAverage;
   const lastAverage = series[series.length - 1].movingAverage;
+  const averageChange = round(lastAverage - firstAverage, 2);
 
   const latest = series[series.length - 1];
   const scaleVsTrend = round(latest.weight - latest.trend, 2);
@@ -217,11 +221,14 @@ export function smoothWeighIns(rawEntries, options = {}) {
     minWeight: round(Math.min(...weights), 2),
     maxWeight: round(Math.max(...weights), 2),
     rawRange: round(Math.max(...weights) - Math.min(...weights), 2),
+    firstAverage,
     lastAverage,
+    averageChange,
     latestTrend: latest.trend,
     scaleVsTrend,
     noise,
     slopePerWeek,
+    slopePerDay: regression ? round(regression.slopePerDay, 4) : null,
     r2: regression ? round(regression.r2, 3) : null,
     kcalPerDay,
     projected30Day:

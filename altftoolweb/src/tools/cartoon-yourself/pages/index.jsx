@@ -15,6 +15,7 @@ export default function CartoonYourself() {
     file,
     previewUrl,
     error,
+    isProcessing,
     canvasRef,
     selectedStyle,
     setSelectedStyle,
@@ -42,6 +43,7 @@ export default function CartoonYourself() {
               <UploadBox
                 previewUrl={previewUrl}
                 error={error}
+                isProcessing={isProcessing}
                 onFile={handleFile}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
@@ -68,6 +70,7 @@ export default function CartoonYourself() {
               quality={quality}
               setQuality={setQuality}
               previewUrl={previewUrl}
+              isProcessing={isProcessing}
             />
           </div>
         </div>

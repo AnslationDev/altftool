@@ -19,10 +19,10 @@ export default function Card({
   style,
 }) {
   const t = CARD_THEMES[theme] || CARD_THEMES.classic;
-  const isRed = card?.color === "red";
-  // Each theme defines its own AA-contrast-safe red (see utils/deck.js) —
-  // a single fixed red cannot clear 4.5:1 against every theme's face bg.
-  const faceTextColor = isRed ? t.faceTextRed : t.faceText;
+  // Suit symbols communicate the suit without relying on colour. Using the
+  // theme's tested face text also avoids a fixed red that fails contrast on
+  // one of the selectable light/dark card artworks.
+  const faceTextColor = t.faceText;
 
   return (
     <motion.button
@@ -33,7 +33,7 @@ export default function Card({
       aria-label={ariaLabel || (card ? `Card ${card.name}` : "Face-down card")}
       whileHover={disabled ? undefined : { y: -6, scale: 1.03 }}
       whileTap={disabled ? undefined : { scale: 0.97 }}
-      className={`relative shrink-0 rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-(--primary) ${
+      className={`relative shrink-0 rounded-xl outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary) ${
         disabled ? "cursor-default" : "cursor-pointer"
       }`}
       style={{

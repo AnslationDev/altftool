@@ -431,7 +431,7 @@ export default function ToolHome() {
           </p>
         )}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -443,7 +443,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <h2 className="text-base font-semibold">Arrival and time zones</h2>
-        <dl className="mt-3 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
+        <dl className="mt-3 divide-y divide-[var(--border)] text-sm">
           {timeRows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -475,7 +475,7 @@ export default function ToolHome() {
                   </th>
                 </tr>
               </thead>
-              <tbody aria-live="polite" role="status">
+              <tbody>
                 {result.schedule.map((slot) => (
                   <tr key={slot.hour} className="border-b border-[var(--border)] last:border-0">
                     <td className="py-2 pr-3 font-semibold">Hour {slot.hour}</td>
@@ -495,7 +495,7 @@ export default function ToolHome() {
         Informational estimate for healthy adults, not medical advice. The dry-air figure is smaller
         than most travel advice implies — dry eyes, nose and throat on a flight come from surface
         evaporation rather than whole-body dehydration. If you take diuretics, have heart or kidney
-        disease, or are pregnant, follow your clinician's advice on flying and fluids.
+        disease, or are pregnant, follow your clinician&apos;s advice on flying and fluids.
       </p>
     </main>
   );

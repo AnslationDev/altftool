@@ -22,7 +22,7 @@ export const MIN_NOTE_WORDS = 5;
 
 /** A line is a decision when it records something settled. */
 export const DECISION_PATTERN =
-  /\b(decided|decision|we agreed|agreed to|agreement|approved|sign(?:ed)? off|going with|go with|final(?:ised|ized)?|resolved|conclusion|no-?go|green ?light)\b/i;
+  /\b(decided|decision|we agreed|agreed to|agreement|approved|signed off|sign[- ]off (?:complete|completed|received|given)|going with|go with|final(?:ised|ized)?|resolved|conclusion|no-?go|green ?light)\b/i;
 
 /**
  * Vocabulary meaning a decision has NOT been reached yet - "sign off" and
@@ -33,7 +33,7 @@ export const DECISION_PATTERN =
  * keyword.
  */
 export const PENDING_DECISION_PATTERN =
-  /\b(still need|not yet|no decision (?:yet|made)|has ?n[o']?t|have ?n[o']?t|blocked on|waiting on)\b/i;
+  /\b(still need(?:s)?|need(?:s)? to|not yet|no decision (?:yet|made)|has ?n[o']?t|have ?n[o']?t|blocked on|waiting on|awaiting|pending|sign[- ]off (?:needed|required|outstanding))\b/i;
 
 /** A line is an action when it commits someone to do something. */
 export const ACTION_PATTERN =

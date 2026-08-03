@@ -130,7 +130,10 @@ export function planRenovationBudget({
     if (area < 0 || rate < 0) return { error: "Areas and rates cannot be negative." };
     if (area > MAX_AREA_SQFT) return { error: `Room area should be ${MAX_AREA_SQFT} sq ft or less.` };
 
-    const cost = area * rate * tier.multiplier;
+    // The UI and exports use whole currency units. Round each room once here,
+    // then build the entire ledger from those visible values so every subtotal
+    // can be checked by hand without hidden fractional carry.
+    const cost = round0(area * rate * tier.multiplier);
     totalArea += area;
     roomRows.push({
       id: room?.id,
@@ -143,27 +146,22 @@ export function planRenovationBudget({
   }
 
   const worksTotal = roomRows.reduce((sum, row) => sum + row.cost, 0);
-  const subtotal = worksTotal + extraAmount;
+  const extrasDisplay = round0(extraAmount);
+  const subtotal = worksTotal + extrasDisplay;
   if (!(subtotal > 0)) {
     return { error: "Every room costs zero — enter an area and a rate per square foot." };
   }
-  // The per-room "Cost" column below rounds each room independently, so the
-  // headline "Works across all rooms" figure must be the sum of those same
-  // rounded numbers rather than a separate round(sum of unrounded costs) —
-  // otherwise a user adding up the visible rows by hand gets a different
-  // total than the one the tool reports.
-  const worksTotalDisplay = roomRows.reduce((sum, row) => sum + round0(row.cost), 0);
 
-  const fees = (subtotal * feesPct) / 100;
-  const contingency = ((subtotal + fees) * bufferPct) / 100;
+  const fees = round0((subtotal * feesPct) / 100);
+  const contingency = round0(((subtotal + fees) * bufferPct) / 100);
   const taxableValue = subtotal + fees + contingency;
-  const gst = applyGst ? (taxableValue * gstPct) / 100 : 0;
+  const gst = applyGst ? round0((taxableValue * gstPct) / 100) : 0;
   const grandTotal = taxableValue + gst;
 
   const wholeMonths = Math.round(months);
   const i = returnPct / 100 / 12;
   const growthFactor = Math.pow(1 + i, wholeMonths);
-  const existingFuture = existing * growthFactor;
+  const existingFuture = round0(existing * growthFactor);
   const gap = Math.max(0, grandTotal - existingFuture);
   let monthlySaving = 0;
   if (gap > 0) {
@@ -179,24 +177,24 @@ export function planRenovationBudget({
     rooms: roomRows
       .map((row) => ({
         ...row,
-        cost: round0(row.cost),
+        cost: row.cost,
         sharePct: worksTotal > 0 ? round2((row.cost / worksTotal) * 100) : 0,
       }))
       .sort((a, b) => b.cost - a.cost),
-    worksTotal: worksTotalDisplay,
-    extras: round0(extraAmount),
-    subtotal: round0(subtotal),
-    fees: round0(fees),
-    contingency: round0(contingency),
-    taxableValue: round0(taxableValue),
-    gst: round0(gst),
+    worksTotal,
+    extras: extrasDisplay,
+    subtotal,
+    fees,
+    contingency,
+    taxableValue,
+    gst,
     gstApplied: Boolean(applyGst),
     gstRatePct: round2(gstPct),
-    grandTotal: round0(grandTotal),
+    grandTotal,
     costPerSqft: totalArea > 0 ? round0(grandTotal / totalArea) : null,
     monthsToStart: wholeMonths,
-    existingFuture: round0(existingFuture),
-    gap: round0(gap),
+    existingFuture,
+    gap,
     monthlySaving: round0(monthlySaving),
     fullyFunded: gap <= 0,
   };

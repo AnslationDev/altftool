@@ -1,20 +1,20 @@
 const seo = {
   intro:
-    "This tool strips the unsafe and editor-only parts out of an SVG file: it parses the markup with the browser's own XML parser, deletes every <script>, <metadata> and <foreignObject> node, removes all on* event-handler attributes, every Inkscape or Sodipodi editor attribute (including the xmlns:inkscape/xmlns:sodipodi namespace declarations on the root element), and any javascript: link hidden in an href or xlink:href, then hands back a re-serialised file. It exists because an SVG is executable markup, not just a picture — pasting a downloaded icon straight into a page can carry JavaScript with it. The report shows the original and cleaned character counts and confirms how many script elements remain, which should be zero.",
+    "This local cleaner parses an SVG as XML, rejects malformed files and entity declarations, then removes scripts, CSS, foreignObject content, animation elements, event handlers, editor metadata and every non-fragment URL before downloading a re-serialised copy. SVG is executable markup rather than a passive picture, so the conservative policy intentionally removes features that could change attributes later or load remote content. Treat the result as defence in depth: keep untrusted uploads isolated and serve them as downloads instead of relying on any browser cleaner as your only security boundary.",
   useCases: [
     "You downloaded an icon from a stock site and want the embedded scripting and tracking markup gone before you inline it into a page where it would run with your site's privileges",
     "Illustrator or Inkscape exports are bloating your repo with editor-only namespaced attributes and layer metadata, and you want a version that renders identically without them",
     "You are accepting user-uploaded SVG avatars or logos and want to see what a file actually contains — event handlers, foreignObject blocks, embedded metadata — before deciding whether it is safe to serve",
   ],
   benefits: [
-    ["Removes the executable surface, not just whitespace", "Script nodes, foreignObject blocks and every attribute starting with \"on\" are deleted, which is what makes a hostile SVG dangerous when inlined."],
+    ["Uses a conservative active-content policy", "Scripts, CSS, animation, foreignObject blocks, event handlers and non-fragment references are removed instead of trying to preserve executable SVG features."],
     ["Strips editor namespaces specifically", "Inkscape and Sodipodi attributes — including the xmlns:inkscape/xmlns:sodipodi namespace declarations on the root <svg> — are targeted by namespace prefix, so drawing-app leftovers go while genuine SVG attributes are untouched."],
     ["Shows the before and after size", "The result reports the original character count, the cleaned count and the difference, so you can see exactly how much was editor cruft."],
   ],
   faqs: [
     [
       "Is an SVG file actually a security risk?",
-      "Yes, when it is inlined into a page or opened directly. SVG is XML that can carry <script> elements, on-event attributes such as onload, <foreignObject> blocks containing arbitrary HTML, and javascript: links hidden in an href or xlink:href — all of which execute in your page's origin. This cleaner removes all four.",
+      "Yes, especially when it is inlined into a page or opened directly. SVG can contain scripts, event attributes, CSS, animation and remote references. This tool removes those common active surfaces, but an isolated origin and attachment-style delivery are still the safer boundary for untrusted uploads.",
     ],
     [
       "Does this shrink my file the way SVGO does?",
@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "Will the cleaned image still look the same?",
-      "In almost every case yes, because only non-visual nodes and editor bookkeeping are removed. The exception is an SVG that relied on <foreignObject> to render HTML content inside the graphic, or on scripting to draw or animate — those parts will be missing, so compare the cleaned file against the original before shipping it.",
+      "Simple paths and shapes should remain, but CSS, animation, remote images, external links, foreignObject content and scripts are deliberately removed. Any graphic that relied on those features can look different, so compare the cleaned download with the original before use.",
     ],
     [
       "Can I clean several files at once?",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Check, Copy, Phone, RotateCcw, Siren, TriangleAlert } from "lucide-react";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
@@ -35,12 +35,26 @@ export default function ToolHome() {
   const [redFlags, setRedFlags] = useState([]);
   const [routeId, setRouteId] = useState("swallowed");
   const [regionId, setRegionId] = useState("india");
-  // Both time fields start at the real current time (not a fixed demo
-  // timestamp) so a user who never touches them gets an honest "0 minutes
-  // ago" instead of a fabricated elapsed-time reading in the call script.
-  const [exposureAt, setExposureAt] = useState(localNow);
-  const [nowAt, setNowAt] = useState(localNow);
+  // Keep server and first-client render deterministic. The visitor's local
+  // clock is read only after hydration, then "time now" stays live until the
+  // visitor edits it manually.
+  const [exposureAt, setExposureAt] = useState("");
+  const [nowAt, setNowAt] = useState("");
+  const [nowIsLive, setNowIsLive] = useState(true);
   const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
+
+  useEffect(() => {
+    if (!nowIsLive) return undefined;
+
+    const syncClock = () => {
+      const current = localNow();
+      setExposureAt((previous) => previous || current);
+      setNowAt(current);
+    };
+    syncClock();
+    const timer = window.setInterval(syncClock, 30_000);
+    return () => window.clearInterval(timer);
+  }, [nowIsLive]);
 
   const result = useMemo(
     () => buildPoisoningBrief({ answers, redFlags, routeId, regionId, exposureAt, nowAt }),
@@ -70,8 +84,10 @@ export default function ToolHome() {
     setRedFlags([]);
     setRouteId("swallowed");
     setRegionId("india");
-    setExposureAt(localNow());
-    setNowAt(localNow());
+    const current = localNow();
+    setExposureAt(current);
+    setNowAt(current);
+    setNowIsLive(true);
     resetCopyState();
   };
 
@@ -194,11 +210,17 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               type="datetime-local"
               value={nowAt}
-              onChange={(event) => setNowAt(event.target.value)}
+              onChange={(event) => {
+                setNowAt(event.target.value);
+                setNowIsLive(false);
+              }}
             />
             <button
               type="button"
-              onClick={() => setNowAt(localNow())}
+              onClick={() => {
+                setNowAt(localNow());
+                setNowIsLive(true);
+              }}
               className={`mt-2 ${GHOST_BTN} w-full`}
             >
               Use the current time
@@ -311,7 +333,7 @@ export default function ToolHome() {
           </div>
         )}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Emergency number", hasError ? DASH : result.emergencyNumber],
             ["Poison information line", hasError ? DASH : result.poisonLine],

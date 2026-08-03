@@ -274,7 +274,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Answered", revealed ? `${grade.answeredCount} of ${grade.total}` : dash],
             ["Correct", revealed ? String(grade.correctCount) : dash],

@@ -9,19 +9,26 @@ import Card from "./Card";
 // scale + rotate entrance. Confetti is fired by the page via canvas-confetti.
 export default function Reveal({ open, card, theme, title, subtitle, onClose }) {
   const closeButtonRef = useRef(null);
+  const previousFocusRef = useRef(null);
 
   // Escape-to-close + move focus into the dialog while it's open, matching
   // the modal convention used elsewhere (e.g. memory-palace-builder).
   useEffect(() => {
     if (!open) return undefined;
+    previousFocusRef.current = document.activeElement;
     const handleKeyDown = (e) => {
       if (e.key === "Escape") onClose?.();
+      if (e.key === "Tab") {
+        e.preventDefault();
+        closeButtonRef.current?.focus();
+      }
     };
     window.addEventListener("keydown", handleKeyDown);
     const focusId = window.setTimeout(() => closeButtonRef.current?.focus(), 0);
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.clearTimeout(focusId);
+      if (previousFocusRef.current?.isConnected) previousFocusRef.current.focus();
     };
   }, [open, onClose]);
 
@@ -73,7 +80,7 @@ export default function Reveal({ open, card, theme, title, subtitle, onClose }) 
               ref={closeButtonRef}
               onClick={onClose}
               aria-label="Close reveal"
-              className="mt-1 inline-flex items-center gap-2 rounded-xl bg-(--primary) px-5 py-2.5 font-semibold text-(--primary-foreground) transition hover:opacity-90 active:scale-95"
+              className="mt-1 inline-flex min-h-11 items-center gap-2 rounded-md bg-(--primary) px-5 py-2.5 font-semibold text-(--primary-foreground) transition hover:opacity-90 active:scale-95 focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)"
             >
               <X size={16} /> Close
             </button>

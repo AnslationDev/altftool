@@ -261,7 +261,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-start justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

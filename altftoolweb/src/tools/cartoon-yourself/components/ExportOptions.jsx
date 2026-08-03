@@ -4,7 +4,7 @@ import { Download, Copy, Printer, Image } from "lucide-react";
 import { exportFormats } from "../constants/styles";
 import { downloadCanvas, copyCanvasToClipboard } from "../utils/imageFilters";
 
-export default function ExportOptions({ canvasRef, format, setFormat, quality, setQuality, previewUrl }) {
+export default function ExportOptions({ canvasRef, format, setFormat, quality, setQuality, previewUrl, isProcessing }) {
   const handleDownload = () => {
     const selectedFormat = exportFormats.find((f) => f.id === format);
     if (!selectedFormat || !canvasRef?.current) return;
@@ -82,7 +82,7 @@ export default function ExportOptions({ canvasRef, format, setFormat, quality, s
         <div className="tool-action-grid">
           <button
             onClick={handleDownload}
-            disabled={!previewUrl}
+            disabled={!previewUrl || isProcessing}
             className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold bg-(--primary) text-white rounded-lg hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Download className="h-4 w-4" />
@@ -90,7 +90,7 @@ export default function ExportOptions({ canvasRef, format, setFormat, quality, s
           </button>
           <button
             onClick={handleCopy}
-            disabled={!previewUrl}
+            disabled={!previewUrl || isProcessing}
             className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold bg-(--card) border border-(--border) text-(--foreground) rounded-lg hover:border-(--primary) transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Copy className="h-4 w-4" />
@@ -98,7 +98,7 @@ export default function ExportOptions({ canvasRef, format, setFormat, quality, s
           </button>
           <button
             onClick={handlePrint}
-            disabled={!previewUrl}
+            disabled={!previewUrl || isProcessing}
             className="inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold bg-(--card) border border-(--border) text-(--foreground) rounded-lg hover:border-(--primary) transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Printer className="h-4 w-4" />

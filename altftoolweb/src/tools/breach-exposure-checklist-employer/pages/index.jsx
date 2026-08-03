@@ -65,8 +65,8 @@ export default function ToolHome() {
     if (!hasResult) return "";
     const lines = [
       "Employer Data Breach Employee Checklist",
-      `Breach severity: ${hasSeverity ? severity.tierLabel : DASH}`,
-      `Response score: ${result.percent}% — ${result.bandLabel}`,
+      `Data sensitivity priority: ${hasSeverity ? severity.tierLabel : DASH}`,
+      `Checklist progress: ${result.percent}% — ${result.bandLabel}`,
       `Applicable steps done: ${result.completed} of ${result.total}`,
       `Critical steps still open: ${result.missingCritical.length} of ${result.criticalTotal}`,
       "",
@@ -96,7 +96,8 @@ export default function ToolHome() {
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Start from what the notice actually says was exposed. The plan below adds and removes steps
-          as you tick categories, and the score only counts the steps that apply to your breach.
+          as you tick categories, and the progress figure only counts the steps that apply. It is not
+          a prediction of fraud or proof that checking a box removed the risk.
         </p>
       </header>
 
@@ -136,7 +137,7 @@ export default function ToolHome() {
               id="score-heading"
               className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]"
             >
-              Response score
+              Checklist progress
             </p>
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
               {hasResult ? `${result.percent}%` : DASH}
@@ -173,7 +174,7 @@ export default function ToolHome() {
         <div
           className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
           role="img"
-          aria-label={hasResult ? `Response score ${result.percent} out of 100` : "Score unavailable"}
+          aria-label={hasResult ? `Checklist progress ${result.percent} out of 100` : "Progress unavailable"}
         >
           <span
             className="block h-full bg-[var(--primary)]"
@@ -192,9 +193,9 @@ export default function ToolHome() {
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
-            ["Breach severity", hasSeverity ? severity.tierLabel : DASH],
+            ["Data sensitivity priority", hasSeverity ? severity.tierLabel : DASH],
             [
-              "Severity points",
+              "Sensitivity points",
               hasSeverity ? `${NUM.format(severity.points)} / ${NUM.format(severity.maxPoints)}` : DASH,
             ],
             ["Steps that apply to you", hasResult ? NUM.format(result.total) : DASH],
@@ -223,11 +224,11 @@ export default function ToolHome() {
           >
             <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
             <span>
-              Held at {CRITICAL_CAP_PERCENT}% while{" "}
-              {result.missingCritical.length === 1 ? "a critical step is" : "critical steps are"} still
+              Progress is held at {CRITICAL_CAP_PERCENT}% while{" "}
+              {result.missingCritical.length === 1 ? "a priority step is" : "priority steps are"} still
               open: {result.missingCritical.map((item) => item.title).join("; ")}.{" "}
-              {result.missingCritical.length === 1 ? "That is" : "Those are"} a direct loss path, not a
-              loose end.
+              Mark a step complete only after you verify the action; a checked box is not a guarantee
+              that misuse cannot occur.
             </span>
           </p>
         ) : null}
@@ -282,7 +283,7 @@ export default function ToolHome() {
                             <span className="text-sm font-semibold">{item.title}</span>
                             {item.critical ? (
                               <span className="rounded-full bg-[var(--danger-soft)] px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--danger)]">
-                                Critical
+                                Priority
                               </span>
                             ) : null}
                             <span className="text-[11px] font-semibold text-[var(--muted-foreground)]">
@@ -328,7 +329,8 @@ export default function ToolHome() {
         Informational only, and not legal advice. Nothing you tick leaves this browser tab, and the
         page never asks for employer names, account numbers or identifiers. Employment and data
         protection rights vary by country &mdash; consult a lawyer or your data protection regulator
-        about claims and deadlines.
+        about claims and deadlines. The points are a checklist-ordering heuristic, not an actuarial
+        risk score or confirmation that an account, identity or payment is secure.
       </p>
     </main>
   );

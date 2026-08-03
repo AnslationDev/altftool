@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-02T22:50:23.925Z",
+  "generatedAt": "2026-08-03T04:37:30.783Z",
   "summary": {
     "methodology": "static-readiness-v2",
     "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
@@ -12,7 +12,7 @@
       "partial": 16,
       "broken": 0
     },
-    "automatedTests": 163,
+    "automatedTests": 172,
     "automatedCoverage": 4,
     "networkDependent": 68,
     "envDependent": 4,
@@ -4191,7 +4191,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 29232,
+        "sourceBytes": 31307,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -14797,7 +14797,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 15,
-        "sourceBytes": 41162,
+        "sourceBytes": 43973,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -15577,7 +15577,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 4546,
+        "sourceBytes": 5274,
         "unresolvedImports": [],
         "interactive": false,
         "output": true,
@@ -17909,18 +17909,18 @@
       "category": "Security & Privacy",
       "route": "/tools/all/breach-exposure-checklist-employer",
       "status": "working",
-      "score": 94,
+      "score": 100,
       "priority": false,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 5,
-        "sourceBytes": 35490,
+        "sourceFiles": 6,
+        "sourceBytes": 36573,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
-        "automatedTest": false,
-        "localTest": false,
+        "automatedTest": true,
+        "localTest": true,
         "functionalTest": false,
         "networkDependent": false,
         "envKeys": [],
@@ -17938,9 +17938,7 @@
         "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Add one deterministic functional or unit regression test."
-      ]
+      "recommendations": []
     },
     {
       "slug": "breach-exposure-checklist-password-reuse",
@@ -20233,18 +20231,18 @@
       "category": "Health Calculators",
       "route": "/tools/all/calcium-intake-calculator-for-women",
       "status": "working",
-      "score": 94,
+      "score": 100,
       "priority": false,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 5,
-        "sourceBytes": 26637,
+        "sourceFiles": 6,
+        "sourceBytes": 29155,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
-        "automatedTest": false,
-        "localTest": false,
+        "automatedTest": true,
+        "localTest": true,
         "functionalTest": false,
         "networkDependent": false,
         "envKeys": [],
@@ -20262,9 +20260,7 @@
         "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Add one deterministic functional or unit regression test."
-      ]
+      "recommendations": []
     },
     {
       "slug": "calendar-privacy-scrubber",
@@ -21878,7 +21874,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 14,
-        "sourceBytes": 49657,
+        "sourceBytes": 52929,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -22346,7 +22342,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 14,
-        "sourceBytes": 34543,
+        "sourceBytes": 38452,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -33797,7 +33793,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 6,
-        "sourceBytes": 24994,
+        "sourceBytes": 28210,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -34965,7 +34961,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 45984,
+        "sourceBytes": 46774,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -35121,7 +35117,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 33019,
+        "sourceBytes": 35231,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -52909,18 +52905,18 @@
       "category": "Health & Fitness",
       "route": "/tools/all/flight-hydration-planner",
       "status": "working",
-      "score": 94,
+      "score": 100,
       "priority": false,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 5,
-        "sourceBytes": 34396,
+        "sourceFiles": 6,
+        "sourceBytes": 36484,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
-        "automatedTest": false,
-        "localTest": false,
+        "automatedTest": true,
+        "localTest": true,
         "functionalTest": false,
         "networkDependent": false,
         "envKeys": [],
@@ -52938,9 +52934,7 @@
         "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Add one deterministic functional or unit regression test."
-      ]
+      "recommendations": []
     },
     {
       "slug": "flipkart-listing-image-spec-checker",
@@ -64732,18 +64726,18 @@
       "category": "Finance Calculators",
       "route": "/tools/all/home-renovation-budget-planner",
       "status": "working",
-      "score": 94,
+      "score": 100,
       "priority": false,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 5,
-        "sourceBytes": 29789,
+        "sourceFiles": 6,
+        "sourceBytes": 30267,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
-        "automatedTest": false,
-        "localTest": false,
+        "automatedTest": true,
+        "localTest": true,
         "functionalTest": false,
         "networkDependent": false,
         "envKeys": [],
@@ -64761,9 +64755,7 @@
         "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Add one deterministic functional or unit regression test."
-      ]
+      "recommendations": []
     },
     {
       "slug": "home-service-entry-consent-form-generator",
@@ -85985,18 +85977,18 @@
       "category": "Productivity",
       "route": "/tools/all/meeting-notes-prompt-builder",
       "status": "working",
-      "score": 94,
+      "score": 100,
       "priority": false,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 5,
-        "sourceBytes": 26964,
+        "sourceFiles": 6,
+        "sourceBytes": 31072,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
-        "automatedTest": false,
-        "localTest": false,
+        "automatedTest": true,
+        "localTest": true,
         "functionalTest": false,
         "networkDependent": false,
         "envKeys": [],
@@ -86014,9 +86006,7 @@
         "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Add one deterministic functional or unit regression test."
-      ]
+      "recommendations": []
     },
     {
       "slug": "meeting-transcript-action-extractor",
@@ -92101,7 +92091,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 32405,
+        "sourceBytes": 34219,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -94207,7 +94197,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 20984,
+        "sourceBytes": 21163,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -101860,7 +101850,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 26144,
+        "sourceBytes": 27642,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -102499,7 +102489,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 29916,
+        "sourceBytes": 31555,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -103279,7 +103269,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 29958,
+        "sourceBytes": 31239,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -125992,8 +125982,8 @@
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 10,
-        "sourceBytes": 18652,
+        "sourceFiles": 11,
+        "sourceBytes": 25616,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -127753,7 +127743,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 5,
-        "sourceBytes": 19613,
+        "sourceBytes": 21548,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
@@ -133816,7 +133806,7 @@
         "entry": true,
         "config": true,
         "sourceFiles": 3,
-        "sourceBytes": 3811,
+        "sourceBytes": 3871,
         "unresolvedImports": [],
         "interactive": false,
         "output": true,
@@ -152662,18 +152652,18 @@
       "category": "Lifestyle",
       "route": "/tools/all/wedding-planning-prompt-builder",
       "status": "working",
-      "score": 94,
+      "score": 100,
       "priority": false,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 5,
-        "sourceBytes": 28364,
+        "sourceFiles": 6,
+        "sourceBytes": 30605,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
-        "automatedTest": false,
-        "localTest": false,
+        "automatedTest": true,
+        "localTest": true,
         "functionalTest": false,
         "networkDependent": false,
         "envKeys": [],
@@ -152691,9 +152681,7 @@
         "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Add one deterministic functional or unit regression test."
-      ]
+      "recommendations": []
     },
     {
       "slug": "wedding-travel-packing-list-builder",
@@ -152974,18 +152962,18 @@
       "category": "Health Calculators",
       "route": "/tools/all/weigh-in-rolling-average-tool",
       "status": "working",
-      "score": 94,
+      "score": 100,
       "priority": false,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 5,
-        "sourceBytes": 29066,
+        "sourceFiles": 6,
+        "sourceBytes": 30784,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
-        "automatedTest": false,
-        "localTest": false,
+        "automatedTest": true,
+        "localTest": true,
         "functionalTest": false,
         "networkDependent": false,
         "envKeys": [],
@@ -153003,9 +152991,7 @@
         "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Add one deterministic functional or unit regression test."
-      ]
+      "recommendations": []
     },
     {
       "slug": "weight-based-dose-converter",
@@ -155113,18 +155099,18 @@
       "category": "Calculators",
       "route": "/tools/all/working-days-calculator",
       "status": "working",
-      "score": 94,
+      "score": 100,
       "priority": false,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 4,
-        "sourceBytes": 25225,
+        "sourceFiles": 6,
+        "sourceBytes": 27073,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
-        "automatedTest": false,
-        "localTest": false,
+        "automatedTest": true,
+        "localTest": true,
         "functionalTest": false,
         "networkDependent": false,
         "envKeys": [],
@@ -155142,9 +155128,7 @@
         "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Add one deterministic functional or unit regression test."
-      ]
+      "recommendations": []
     },
     {
       "slug": "working-memory-trainer",
@@ -156593,18 +156577,18 @@
       "category": "Text & Writing",
       "route": "/tools/all/zalgo-text-generator",
       "status": "working",
-      "score": 94,
+      "score": 100,
       "priority": false,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 4,
-        "sourceBytes": 15313,
+        "sourceFiles": 6,
+        "sourceBytes": 17376,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
-        "automatedTest": false,
-        "localTest": false,
+        "automatedTest": true,
+        "localTest": true,
         "functionalTest": false,
         "networkDependent": false,
         "envKeys": [],
@@ -156622,9 +156606,7 @@
         "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Add one deterministic functional or unit regression test."
-      ]
+      "recommendations": []
     },
     {
       "slug": "zip-tar-archive-surgeon",

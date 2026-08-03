@@ -308,7 +308,9 @@ export function computeFlightHydration({
     jetlagDays: Math.round(zonesCrossed * JETLAG_DAYS_PER_ZONE),
     caffeineCutoffDest,
     caffeineCutoffOrigin,
-    bottlesOf500: Math.ceil(totalDrinkMl / 500),
+    // Bottle planning must use the same rounded total shown in the headline.
+    // Otherwise 1,500.1 ml can display as 1,500 ml while asking for 4 bottles.
+    bottlesOf500: Math.ceil(totalDrinkMlRounded / 500),
   };
 }
 
