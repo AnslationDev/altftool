@@ -1531,7 +1531,17 @@ const FORM31_INDEX = FORM31_PURPOSES.reduce((acc, purpose) => {
  *           priorOccasions?: number, ageYears?: number|null }} input
  */
 export function assessForm31Advance(input = {}) {
-  const { purposeCode, membershipMonths, priorOccasions = 0, ageYears = null } = input;
+  const {
+    purposeCode,
+    membershipMonths,
+    priorOccasions = 0,
+    ageYears = null,
+    // Para 68HH's own gate — one calendar month of continuous unemployment
+    // since the date of exit — needs these two dates. They are ignored for
+    // every other Para 68 purpose.
+    unemploymentExitDate = null,
+    unemploymentClaimDate = null,
+  } = input;
 
   const purpose = FORM31_INDEX[purposeCode];
   if (!purpose) {
@@ -1548,6 +1558,26 @@ export function assessForm31Advance(input = {}) {
   }
   if (ageYears !== null && (!Number.isFinite(ageYears) || ageYears < 14 || ageYears > 120)) {
     return { error: "Enter an age between 14 and 120 years." };
+  }
+
+  let unemploymentExit = null;
+  let unemploymentClaim = null;
+  if (purpose.code === "68HH") {
+    if (unemploymentExitDate) {
+      unemploymentExit = parseIsoDate(unemploymentExitDate);
+      if (!unemploymentExit) return { error: "Enter the date of exit as a real calendar date." };
+    }
+    if (unemploymentClaimDate) {
+      unemploymentClaim = parseIsoDate(unemploymentClaimDate);
+      if (!unemploymentClaim) return { error: "Enter the claim date as a real calendar date." };
+    }
+    if (
+      unemploymentExit &&
+      unemploymentClaim &&
+      unemploymentClaim.getTime() < unemploymentExit.getTime()
+    ) {
+      return { error: "The claim date cannot fall before the date of exit." };
+    }
   }
 
   const months = Math.floor(membershipMonths);
@@ -1588,6 +1618,30 @@ export function assessForm31Advance(input = {}) {
     }
   }
 
+  let unemploymentDaysElapsed = null;
+  let unemploymentDaysRemaining = null;
+  if (purpose.code === "68HH") {
+    if (!unemploymentExit || !unemploymentClaim) {
+      blockers.push(
+        "Para 68HH requires one calendar month of continuous unemployment since the date of exit — enter both the date of exit and the claim date to test it.",
+      );
+      reasonId = reasonId || "form31-unemployment-68hh";
+    } else {
+      const earliest = addMonthsClamped(unemploymentExit, 1);
+      unemploymentDaysElapsed = daysBetween(unemploymentExit, unemploymentClaim);
+      const daysRemaining = daysBetween(unemploymentClaim, earliest);
+      if (daysRemaining > 0) {
+        unemploymentDaysRemaining = daysRemaining;
+        blockers.push(
+          `Only ${unemploymentDaysElapsed} day${unemploymentDaysElapsed === 1 ? "" : "s"} of unemployment ${unemploymentDaysElapsed === 1 ? "has" : "have"} run against the one calendar month Para 68HH requires — ${daysRemaining} day${daysRemaining === 1 ? "" : "s"} short.`,
+        );
+        reasonId = reasonId || "form31-unemployment-68hh";
+      } else {
+        unemploymentDaysRemaining = 0;
+      }
+    }
+  }
+
   const membershipYears = Math.floor(months / 12);
   const membershipRemainder = months % 12;
 
@@ -1597,6 +1651,8 @@ export function assessForm31Advance(input = {}) {
     membershipLabel: `${membershipYears} year${membershipYears === 1 ? "" : "s"} ${membershipRemainder} month${membershipRemainder === 1 ? "" : "s"}`,
     priorOccasions: occasions,
     shortfallMonths,
+    unemploymentDaysElapsed,
+    unemploymentDaysRemaining,
     eligible: blockers.length === 0,
     blockers,
     headline: blockers.length === 0 ? "Gate met" : "Gate not met",

@@ -235,9 +235,11 @@ export function buildMalaysiaCoverLetter(input = {}) {
   const issue = parseISODate(input.visaIssueDate);
   let visaUsableUntil = null;
   let entryWithinVisaValidity = null;
+  let issuedAfterArrival = false;
   if (issue !== null) {
     visaUsableUntil = addMonthsUTC(issue, visaType.validityMonths);
     entryWithinVisaValidity = arrival <= visaUsableUntil;
+    issuedAfterArrival = issue > arrival;
   }
 
   const mdacOpens = mdacOpensOn(arrival);
@@ -262,6 +264,11 @@ export function buildMalaysiaCoverLetter(input = {}) {
       `${visaType.multiple ? "This multiple-entry visa" : "A single-entry eVISA"} is valid for ${plural(visaType.validityMonths, "month")} from issue. Issued on ${formatLongDate(issue)} it would lapse on ${formatLongDate(visaUsableUntil)}, before your arrival on ${formatLongDate(arrival)}.`,
     );
   }
+  if (issuedAfterArrival) {
+    warnings.push(
+      `Your visa issue date of ${formatLongDate(issue)} falls after your arrival date of ${formatLongDate(arrival)} — check these dates before you submit, since the eVISA cannot be issued after you have already entered the country.`,
+    );
+  }
   if (leadDays < 0) {
     warnings.push("Your arrival date falls before the application date — check the dates before you submit.");
   } else if (leadDays < 7) {
@@ -272,7 +279,7 @@ export function buildMalaysiaCoverLetter(input = {}) {
   if (!clean(input.entryPoint)) {
     warnings.push("Name the airport or checkpoint you will enter through — it is asked for on the application and helps the officer match your file to your ticket.");
   }
-  if (budgetMyr > 0 && perPersonPerDayMyr < 150) {
+  if (perPersonPerDayMyr < 150) {
     warnings.push(
       `Your funds work out to about RM ${perPersonPerDayMyr.toFixed(0)} per person per day. There is no published minimum, but immigration officers can ask visitors to show funds and a return ticket at the counter.`,
     );
@@ -334,6 +341,10 @@ export function buildMalaysiaCoverLetter(input = {}) {
         ? `I work as ${occupation} at ${employer}, my leave for these dates is approved, and I return to work immediately afterwards.`
         : `I am ${occupation}, and the enclosed documents confirm my circumstances at home.`,
     );
+  } else if (employer) {
+    tiesParts.push(
+      `I am affiliated with ${employer}, my leave for these dates is approved, and I return to work immediately afterwards.`,
+    );
   }
   if (tiesStatement) tiesParts.push(tiesStatement);
   tiesParts.push(
@@ -380,6 +391,7 @@ export function buildMalaysiaCoverLetter(input = {}) {
     passportValidityOk,
     visaUsableUntil: visaUsableUntil === null ? null : formatLongDate(visaUsableUntil),
     entryWithinVisaValidity,
+    issuedAfterArrival,
     mdacOpensOn: formatLongDate(mdacOpens),
     mdacClosesOn: formatLongDate(arrival),
     dailyBudgetMyr,

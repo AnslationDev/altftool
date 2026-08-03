@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This calculator estimates the total storage a vector index needs from vector count, dimensions and data type: raw data is count × dimensions × bytes per dimension, and index overhead follows the Faiss sizing rules (HNSW adds M × 2 × 4 bytes of graph links per vector; IVF adds 8-byte ids plus a √N centroid table). It is for engineers capacity-planning a Pinecone, Qdrant, Milvus, pgvector or Faiss deployment who need a defensible RAM and disk figure before provisioning.",
+    "This calculator estimates the total storage a vector index needs from vector count, dimensions and data type: raw data is count × dimensions × bytes per dimension, and index overhead follows the Faiss sizing rules (HNSW adds M × 2 × 4 bytes of graph links per vector; IVF adds 8-byte ids plus a 4×√N centroid table, the conservative end of Faiss's recommended 4×√N-16×√N range). It is for engineers capacity-planning a Pinecone, Qdrant, Milvus, pgvector or Faiss deployment who need a defensible RAM and disk figure before provisioning.",
   useCases: [
     "Sizing the RAM needed for 10 million 1536-dimension float32 embeddings in an HNSW index before choosing a managed vector database tier",
     "Comparing float32 against int8 storage for a 100M-vector product catalogue to decide whether scalar quantisation is worth the recall trade-off",
@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How do I calculate the size of a vector database index?",
-      "Multiply vector count × dimensions × bytes per dimension for the raw data (4 bytes per dimension for float32), then add index overhead: an HNSW graph adds roughly M × 2 × 4 bytes per vector (128 bytes at the default M=16), and IVF adds an 8-byte id per vector plus about √N float32 centroids. Finally multiply by your replica count.",
+      "Multiply vector count × dimensions × bytes per dimension for the raw data (4 bytes per dimension for float32), then add index overhead: an HNSW graph adds roughly M × 2 × 4 bytes per vector (128 bytes at the default M=16), and IVF adds an 8-byte id per vector plus about 4×√N float32 centroids (the conservative end of Faiss's recommended 4×√N-16×√N range). Finally multiply by your replica count.",
     ],
     [
       "How much memory do 1 million OpenAI embeddings need?",
@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "Does quantisation reduce vector index size?",
-      "Yes — int8 scalar quantisation cuts raw vector data to a quarter of float32 and binary quantisation to one thirty-second, but graph overhead and metadata do not shrink with it. That is why a binary-quantised HNSW index is dominated by its links: 128 bytes of graph per vector versus 192 bytes of data for a 1536-dimension binary vector.",
+      "Yes — int8 scalar quantisation cuts raw vector data to a quarter of float32 and binary quantisation to one thirty-second, but graph overhead and metadata do not shrink with it. That is why a binary-quantised HNSW index carries a much heavier proportional link cost: 128 bytes of graph per vector versus 192 bytes of data for a 1536-dimension binary vector, so the graph is two-thirds as large as the data itself — a far bigger share than at float32 precision, where the same 128 bytes of graph is only about 2% of the 6,144 bytes of data.",
     ],
   ],
 };

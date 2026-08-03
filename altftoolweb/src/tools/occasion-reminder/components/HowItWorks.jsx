@@ -2,7 +2,7 @@ export default function HowItWorks() {
   const steps = [
     { title: "Add Occasion Details", text: "Enter title, date, type, and optional notes for each reminder." },
     { title: "Set Reminder Lead Time", text: "Choose how many days before the event you want an alert." },
-    { title: "Apply Recurrence", text: "Use one-time, yearly, monthly, or custom repeat schedules." },
+    { title: "Apply Recurrence", text: "Use one-time, yearly, or monthly recurrence to match how each occasion repeats." },
     { title: "Execute Next Actions", text: "View upcoming reminders and prepare gifts, calls, or tasks in advance." },
   ];
 

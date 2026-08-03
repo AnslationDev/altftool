@@ -278,7 +278,15 @@ export function bandFor(value) {
   return { id: "high", intensity: "strong", qualifier: "Strongly" };
 }
 
-/** Parse a free-text banned-word list (commas and newlines) into unique entries. */
+/** Highest number of unique banned words the guide will actually enforce. */
+export const MAX_BANNED_WORDS = 40;
+
+/**
+ * Parse a free-text banned-word list (commas and newlines) into unique
+ * entries. Returns every unique word found — callers that need to cap the
+ * list (see MAX_BANNED_WORDS) are responsible for slicing it themselves so
+ * they can still see, and surface, how many were dropped.
+ */
 export function parseBannedWords(raw) {
   return Array.from(
     new Set(
@@ -287,7 +295,7 @@ export function parseBannedWords(raw) {
         .map((word) => word.trim().toLowerCase())
         .filter(Boolean),
     ),
-  ).slice(0, 40);
+  );
 }
 
 function poleLabel(dimension, band) {
@@ -355,11 +363,26 @@ export function buildVoiceGuide({ brandName, audience = "", dials = {}, bannedWo
     avoid.push(...content.avoid);
   }
 
-  const bannedList = parseBannedWords(bannedWords);
-  const preferList = Array.from(new Set(prefer.map((w) => w.toLowerCase())));
+  const bannedAll = parseBannedWords(bannedWords);
+  const bannedList = bannedAll.slice(0, MAX_BANNED_WORDS);
+  const bannedWordsTruncated = bannedAll.length > MAX_BANNED_WORDS;
+  const bannedSet = new Set(bannedList);
+  // A user's explicit ban always wins: strip banned words out of the
+  // built-in "prefer" list first, then union the built-in "avoid" list
+  // (itself resolved against that already-banned-free prefer list) with the
+  // full banned list. Doing it in this order means a banned word can never
+  // simultaneously surface as "recommended" while being dropped from the
+  // avoid list, which happened when the banned list was merged into avoid
+  // and then filtered against the still-unfiltered prefer list.
+  const preferList = Array.from(new Set(prefer.map((w) => w.toLowerCase()))).filter(
+    (word) => !bannedSet.has(word),
+  );
   const avoidList = Array.from(
-    new Set([...avoid.map((w) => w.toLowerCase()), ...bannedList]),
-  ).filter((word) => !preferList.includes(word));
+    new Set([
+      ...avoid.map((w) => w.toLowerCase()).filter((word) => !preferList.includes(word)),
+      ...bannedList,
+    ]),
+  );
 
   const sentenceWords = Math.round(
     SENTENCE_WORDS_FORMAL + (casualness / DIAL_MAX) * (SENTENCE_WORDS_CASUAL - SENTENCE_WORDS_FORMAL),
@@ -417,6 +440,12 @@ export function buildVoiceGuide({ brandName, audience = "", dials = {}, bannedWo
     "",
     `**Avoid:** ${avoidList.join(", ")}`,
     "",
+    ...(bannedWordsTruncated
+      ? [
+          `_${bannedAll.length} banned words were entered; only the first ${MAX_BANNED_WORDS} unique ones are enforced above._`,
+          "",
+        ]
+      : []),
   ].join("\n");
 
   return {
@@ -429,6 +458,8 @@ export function buildVoiceGuide({ brandName, audience = "", dials = {}, bannedWo
     prefer: preferList,
     avoid: avoidList,
     bannedWords: bannedList,
+    bannedWordsEnteredCount: bannedAll.length,
+    bannedWordsTruncated,
     mechanics,
     markdown,
   };

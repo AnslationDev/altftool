@@ -177,6 +177,11 @@ export default function ToolHome() {
       setImageSize({ width: img.naturalWidth, height: img.naturalHeight });
       setFileName(file.name);
       setLoadError("");
+      // A new photo has a different size and face position, so the previous
+      // zoom/pan would frame the wrong part of it — start each upload centred.
+      setZoom(DEFAULTS.zoom);
+      setOffsetX(DEFAULTS.offsetX);
+      setOffsetY(DEFAULTS.offsetY);
     };
     img.onerror = () => {
       setLoadError("That image could not be read. Try a different file.");

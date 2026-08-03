@@ -107,7 +107,7 @@ export function checkExtensionLoad({
   if (!(lengthMeters >= 0) || lengthMeters > MAX_LENGTH_M) {
     return { error: `Cord length must be between 0 and ${MAX_LENGTH_M} m.` };
   }
-  if (!(powerFactor > 0) || powerFactor > 1) {
+  if (!(powerFactor >= 0.1) || powerFactor > 1) {
     return { error: "Power factor must be between 0.1 and 1." };
   }
   if (!Array.isArray(appliances) || appliances.length === 0) {
@@ -127,8 +127,11 @@ export function checkExtensionLoad({
       return { error: "Appliance quantity must be a whole number of 0 or more." };
     }
     totalWatts += watts * qty;
-    // Worst realistic instant: everything running plus the single largest start-up surge.
-    peakWatts = Math.max(peakWatts, watts * (Number.isFinite(surge) && surge >= 1 ? surge : 1) - watts);
+    // Worst realistic instant: everything running plus the single largest start-up surge,
+    // from among the rows that actually have at least one unit present (qty > 0).
+    if (qty > 0) {
+      peakWatts = Math.max(peakWatts, watts * (Number.isFinite(surge) && surge >= 1 ? surge : 1) - watts);
+    }
   }
   if (totalWatts > MAX_TOTAL_WATTS) {
     return { error: "That total load is far beyond any plug-in extension board." };

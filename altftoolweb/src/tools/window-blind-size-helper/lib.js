@@ -206,7 +206,11 @@ export function planBlindSize({
   const insideOrderHeightMm = maxHeight;
   const insideFinishedWidthMm = insideOrderWidthMm - blind.insideDeductionMm;
   const insideGapEachSideMm = blind.insideDeductionMm / 2;
-  // Light gap at the tightest point plus whatever the recess narrows by.
+  // The order width is set to the recess's NARROWEST point, so the light gap
+  // is smallest there (just the factory deduction). At the recess's WIDEST
+  // point the same finished blind leaves a bigger gap - the deduction plus
+  // however much wider that point is than the narrowest one. This returns
+  // that worst-case gap, which occurs at the widest point, not the tightest.
   const worstLightGapMm = insideGapEachSideMm * 2 + widthSpread;
 
   const depthVerdict =
@@ -261,7 +265,12 @@ export function planBlindSize({
     insideOrderWidthMm: round1(insideOrderWidthMm),
     insideOrderHeightMm: round1(insideOrderHeightMm),
     insideFinishedWidthMm: round1(insideFinishedWidthMm),
-    insideGapEachSideMm: round1(insideGapEachSideMm),
+    // Round to 2dp (not 1dp) so this always reconciles with the 1dp
+    // "Factory deduction" figure: every current insideDeductionMm value has
+    // at most 1 decimal digit, so half of it always terminates by 2dp
+    // (e.g. 9.5 / 2 = 4.75 exactly - rounding that to 1dp as 4.8 would make
+    // 2 x 4.8 = 9.6, not 9.5).
+    insideGapEachSideMm: round2(insideGapEachSideMm),
     worstLightGapMm: round1(worstLightGapMm),
     insideBrackets,
 

@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Check, Copy, Plus, RotateCcw, Trash2, Vote } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   MAX_LABEL_LENGTH,
   MAX_NAMES,
@@ -52,8 +53,9 @@ export default function ToolHome() {
   const [activeVoter, setActiveVoter] = useState(STARTER_VOTERS[0].id);
   const [newName, setNewName] = useState("");
   const [newVoter, setNewVoter] = useState("");
-  const [copied, setCopied] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   useEffect(() => {
     try {
@@ -86,15 +88,9 @@ export default function ToolHome() {
 
   const summary = useMemo(() => boardToText(tally, voters), [tally, voters]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "shortlist results" });
   };
 
   const addName = () => {
@@ -148,13 +144,20 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the whole board? This clears every name, voter and vote and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setNames(STARTER_NAMES);
     setVoters(STARTER_VOTERS);
     setVotes(STARTER_VOTES);
     setActiveVoter(STARTER_VOTERS[0].id);
     setNewName("");
     setNewVoter("");
-    setCopied(false);
+    resetCopyState();
   };
 
   const activeVotes = votes[activeVoter] || {};
@@ -355,22 +358,30 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the shortlist results"
-              className={GHOST_BTN}
+              disabled={!summary}
+              aria-label={
+                isCopied("result")
+                  ? "Copied the shortlist results to clipboard"
+                  : "Copy the shortlist results"
+              }
+              className={`${PRIMARY_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy results"}
+              {isCopied("result") ? "Copied!" : "Copy results"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset the whole board" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset the whole board" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset board
             </button>
           </div>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
@@ -414,7 +425,7 @@ export default function ToolHome() {
                   <td className="px-4 py-3 align-top">
                     <span className="font-semibold">{row.label}</span>
                     {row.vetoed ? (
-                      <span className="ml-2 rounded px-1.5 py-0.5 text-xs font-semibold text-[var(--danger)]">
+                      <span className="ml-2 rounded bg-[var(--danger-soft)] px-1.5 py-0.5 text-xs font-semibold text-[var(--danger-text)]">
                         vetoed ×{row.vetoes}
                       </span>
                     ) : null}

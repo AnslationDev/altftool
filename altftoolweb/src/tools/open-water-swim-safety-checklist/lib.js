@@ -301,7 +301,17 @@ export function assessReadiness({
       "Below 15 °C the cold shock gasp response is strong. Enter slowly, keep your face out until your breathing settles, and remember 1-10-1.",
     );
   }
-  if (!wearingWetsuit && !acclimatised && plannedMinutes > temperature.novicePlainSwimMinutes) {
+  // The "minutes ~= water °C" rule of thumb is a cold-acclimatisation guideline —
+  // it only makes sense while cold is the actual risk. Once the water is at or
+  // above the point where wetsuits stop being a competition option (i.e. it is
+  // squarely in "comfortable" or "warm" territory), overheating replaces cold
+  // shock as the concern, so do not fire a cold-acclimatisation warning there.
+  if (
+    !wearingWetsuit &&
+    !acclimatised &&
+    temperature.waterTempC <= WETSUIT_BANNED_ABOVE_C &&
+    plannedMinutes > temperature.novicePlainSwimMinutes
+  ) {
     warnings.push(
       `Without a wetsuit and without recent cold acclimatisation, ${plannedMinutes} minutes is longer than the club rule of thumb of about ${temperature.novicePlainSwimMinutes} minutes at ${temperature.waterTempC} °C.`,
     );

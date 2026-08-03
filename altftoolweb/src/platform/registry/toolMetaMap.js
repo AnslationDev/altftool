@@ -11771,7 +11771,7 @@ export const toolMetaMap = {
   },
   "friend-elo-ladder": {
     "name": "Friend ELO Ladder",
-    "description": "Friendly matches ka persistent ELO rating track kare.",
+    "description": "Track a persistent Elo rating ladder for friendly matches.",
     "category": [
       "Productivity",
       "Business"
@@ -14373,7 +14373,7 @@ export const toolMetaMap = {
   },
   "ifsc-decoder-validator": {
     "name": "IFSC Decoder & Validator",
-    "description": "IFSC format validate karke bank, branch aur location lookup kare.",
+    "description": "IFSC format validate karke bank aur branch identifier decode kare.",
     "category": [
       "Finance Calculators",
       "Lifestyle"

@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, PackageOpen, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   DECISION_METHODS,
   DEFAULT_SECONDS_PER_ITEM,
@@ -51,7 +52,7 @@ export default function ToolHome() {
   const [toneId, setToneId] = useState(DEFAULTS.toneId);
   const [constraints, setConstraints] = useState(DEFAULTS.constraints);
   const [includeDisposal, setIncludeDisposal] = useState(DEFAULTS.includeDisposal);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -91,18 +92,19 @@ export default function ToolHome() {
     }
   };
 
-  const copyPrompt = async () => {
+  const copyPrompt = () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.prompt);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("prompt", result.prompt, { label: "decluttering prompt" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace the room, zones, item count, tone and constraints with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setRoomId(DEFAULTS.roomId);
     setRoomLabel(DEFAULTS.roomLabel);
     setZonesText(DEFAULTS.zonesText);
@@ -113,7 +115,7 @@ export default function ToolHome() {
     setToneId(DEFAULTS.toneId);
     setConstraints(DEFAULTS.constraints);
     setIncludeDisposal(DEFAULTS.includeDisposal);
-    setCopied(false);
+    resetCopyState();
   };
 
   const rows = hasError
@@ -331,15 +333,15 @@ export default function ToolHome() {
               type="button"
               onClick={copyPrompt}
               disabled={hasError}
-              aria-label="Copy the decluttering prompt"
+              aria-label={isCopied("prompt") ? "Copied the decluttering prompt to clipboard" : "Copy the decluttering prompt"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("prompt") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy prompt"}
+              {isCopied("prompt") ? "Copied!" : "Copy prompt"}
             </button>
             <button
               type="button"
@@ -350,6 +352,9 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

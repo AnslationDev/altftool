@@ -21,7 +21,11 @@ function parseISO(value) {
   const m = Number(match[2]);
   const d = Number(match[3]);
   if (m < 1 || m > 12 || d < 1 || d > 31) return null;
-  const probe = new Date(y, m - 1, d);
+  // new Date(y, m - 1, d) reinterprets a two-digit year (0-99) as 1900+y, so
+  // build the probe with setFullYear, which does not apply that legacy
+  // shorthand, to keep years 0-99 usable.
+  const probe = new Date(0, 0, 1);
+  probe.setFullYear(y, m - 1, d);
   if (probe.getFullYear() !== y || probe.getMonth() !== m - 1 || probe.getDate() !== d) return null;
   return { y, m, d, date: probe };
 }
@@ -102,22 +106,19 @@ export default function ToolHome() {
     const aFirst = totalDaysBetween(parsedA, parsedB) >= 0;
     const earlier = aFirst ? parsedA : parsedB;
     const later = aFirst ? parsedB : parsedA;
-    const olderName = (aFirst ? nameA : nameB) || "Person A";
-    const youngerName = (aFirst ? nameB : nameA) || "Person B";
+    const olderName = (aFirst ? nameA : nameB) || (aFirst ? "Person A" : "Person B");
+    const youngerName = (aFirst ? nameB : nameA) || (aFirst ? "Person B" : "Person A");
 
     const gap = calendarDiff(earlier, later);
     const totalDays = totalDaysBetween(earlier, later);
     const totalMonths = gap.years * 12 + gap.months;
 
-    const ages =
-      parsedRef && totalDaysBetween(earlier, parsedRef) >= 0
-        ? {
-            older:
-              totalDaysBetween(earlier, parsedRef) >= 0 ? calendarDiff(earlier, parsedRef) : null,
-            younger:
-              totalDaysBetween(later, parsedRef) >= 0 ? calendarDiff(later, parsedRef) : null,
-          }
-        : null;
+    const ages = parsedRef
+      ? {
+          older: totalDaysBetween(earlier, parsedRef) >= 0 ? calendarDiff(earlier, parsedRef) : null,
+          younger: totalDaysBetween(later, parsedRef) >= 0 ? calendarDiff(later, parsedRef) : null,
+        }
+      : null;
 
     return {
       gap,
@@ -142,6 +143,12 @@ export default function ToolHome() {
   }, [dateA, dateB, nameA, nameB]);
 
   const reset = useCallback(() => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset both names and dates of birth? This cannot be undone.")
+    ) {
+      return;
+    }
     setNameA("Person A");
     setNameB("Person B");
     setDateA(DEFAULT_A);
@@ -163,12 +170,16 @@ export default function ToolHome() {
       `Total weeks: ${num.format(result.totalWeeks)} weeks and ${result.remainderDays} day(s)`,
       `Total months: ${num.format(result.totalMonths)}`,
     ];
-    if (result.ages?.older && result.ages?.younger && parsedRef) {
+    if (parsedRef && (result.ages?.older || result.ages?.younger)) {
       lines.push(
         "",
         `As of ${formatLong(parsedRef)}:`,
-        `${result.olderName} is ${phrase(result.ages.older)}`,
-        `${result.youngerName} is ${phrase(result.ages.younger)}`
+        `${result.olderName} is ${
+          result.ages.older ? phrase(result.ages.older) : "not yet born on this date"
+        }`,
+        `${result.youngerName} is ${
+          result.ages.younger ? phrase(result.ages.younger) : "not yet born on this date"
+        }`
       );
     }
     return lines.join("\n");
@@ -293,7 +304,10 @@ export default function ToolHome() {
           </div>
         </section>
 
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          aria-live="polite"
+        >
           {result ? (
             <>
               <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -330,14 +344,16 @@ export default function ToolHome() {
                 ))}
               </dl>
 
-              {result.ages?.older && result.ages?.younger && parsedRef && (
+              {parsedRef && (result.ages?.older || result.ages?.younger) && (
                 <div className="mt-5 rounded-md border border-[var(--border)] bg-[var(--background)] p-3 text-sm">
                   <p className="font-semibold">Ages on {formatLong(parsedRef)}</p>
                   <p className="mt-1 text-[var(--muted-foreground)]">
-                    {result.olderName}: {phrase(result.ages.older)}
+                    {result.olderName}:{" "}
+                    {result.ages.older ? phrase(result.ages.older) : "not yet born on this date"}
                   </p>
                   <p className="text-[var(--muted-foreground)]">
-                    {result.youngerName}: {phrase(result.ages.younger)}
+                    {result.youngerName}:{" "}
+                    {result.ages.younger ? phrase(result.ages.younger) : "not yet born on this date"}
                   </p>
                 </div>
               )}

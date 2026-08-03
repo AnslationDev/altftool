@@ -46,6 +46,15 @@ const toNumber = (raw) => {
 
 function ServiceCard({ title, service, score, needed }) {
   const overdue = service.status === "overdue";
+  // The headline must reflect whichever limit (distance or time) is actually
+  // driving the status — otherwise a car that is overdue purely on elapsed
+  // time can show a reassuring "X,XXX km" headline next to an urgent badge.
+  const limitedByTime = service.limitedBy === "time";
+  const headline = overdue
+    ? "Now"
+    : limitedByTime
+      ? `${NUM.format(service.monthsRemaining)} mo`
+      : `${KM.format(service.kmRemaining)} km`;
   return (
     <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
@@ -60,9 +69,7 @@ function ServiceCard({ title, service, score, needed }) {
           {needed ? "Book it" : STATUS_TEXT[service.status]}
         </span>
       </div>
-      <p className="mt-2 text-2xl font-semibold text-[var(--primary)]">
-        {service.kmRemaining > 0 ? `${KM.format(service.kmRemaining)} km` : "Now"}
-      </p>
+      <p className="mt-2 text-2xl font-semibold text-[var(--primary)]">{headline}</p>
       <dl className="mt-3 divide-y divide-[var(--border)] text-xs">
         {[
           ["Interval", `${KM.format(service.intervalKm)} km / ${NUM.format(service.intervalMonths)} mo`],

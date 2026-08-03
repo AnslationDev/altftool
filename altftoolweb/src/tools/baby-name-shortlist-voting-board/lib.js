@@ -149,7 +149,11 @@ export function tallyBoard({ names = [], voters = [], votes = {} } = {}) {
     mostDivisive: contested.length
       ? contested.reduce((worst, row) => (row.consensus < worst.consensus ? row : worst), contested[0])
       : null,
-    unanimousCount: contested.filter((row) => row.consensus === 100).length,
+    // Counts every row whose consensus band the table actually displays as "Unanimous"
+    // (the table only shows a band once a name has at least one vote cast), not just
+    // rows with more than one vote — otherwise a name with exactly one vote is labelled
+    // "Unanimous" in the table but excluded from this count.
+    unanimousCount: rows.filter((row) => row.votesCast > 0 && row.consensus === 100).length,
   };
 }
 

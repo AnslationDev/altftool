@@ -23,7 +23,7 @@ const seo = {
   "faqs": [
     [
       "How is the age gap in months and days worked out?",
-      "The calculator subtracts the earlier date from the later one field by field. If the day number goes negative it borrows the actual number of days from the preceding calendar month, and if the month goes negative it borrows 12 months from the year."
+      "The calculator counts the largest number of whole calendar months that fit between the two dates, then adds that many months to the earlier date (clamping to the last day of the target month, so 31 January plus one month lands on 28 or 29 February). Whatever days are left over after that point become the day count. This calendar-anchored approach is why month-end dates such as 31 January to 28 February come out as '1 month, 0 days' rather than '0 months, 28 days'."
     ],
     [
       "Does the order of the two dates matter?",

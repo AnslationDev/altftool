@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Database, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   DATA_TYPES,
   HNSW_M_DEFAULT,
@@ -51,7 +52,7 @@ export default function ToolHome() {
   const [hnswM, setHnswM] = useState(DEFAULTS.hnswM);
   const [metadataBytes, setMetadataBytes] = useState(DEFAULTS.metadataBytes);
   const [replicas, setReplicas] = useState(DEFAULTS.replicas);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -83,18 +84,15 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "Vector index size estimate" });
   };
 
   const reset = () => {
+    if (!window.confirm("Reset all inputs to their defaults? This will discard your current values.")) {
+      return;
+    }
     setVectorCount(DEFAULTS.vectorCount);
     setDimensions(DEFAULTS.dimensions);
     setDataTypeId(DEFAULTS.dataTypeId);
@@ -102,7 +100,6 @@ export default function ToolHome() {
     setHnswM(DEFAULTS.hnswM);
     setMetadataBytes(DEFAULTS.metadataBytes);
     setReplicas(DEFAULTS.replicas);
-    setCopied(false);
   };
 
   const rows = hasError
@@ -299,26 +296,29 @@ export default function ToolHome() {
               onClick={copyResult}
               disabled={hasError}
               aria-label="Copy the vector index size estimate"
-              className={`${GHOST_BTN} disabled:opacity-50`}
+              className={`${PRIMARY_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
               onClick={reset}
               aria-label="Reset all inputs to defaults"
-              className={PRIMARY_BTN}
+              className={GHOST_BTN}
             >
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
         </div>
+        <span aria-live="polite" role="status" className="sr-only">
+          {announcement}
+        </span>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {rows.map(([label, value]) => (

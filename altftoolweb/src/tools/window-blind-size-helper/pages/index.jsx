@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Blinds, Check, Copy, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { BLIND_TYPES, planBlindSize } from "../lib";
 
 const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
@@ -60,7 +61,8 @@ export default function ToolHome() {
   const [depth, setDepth] = useState(DEFAULTS.depth);
   const [blindId, setBlindId] = useState(DEFAULTS.blindId);
   const [blackout, setBlackout] = useState(DEFAULTS.blackout);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const setWidthAt = (index, value) =>
     setWidths((current) => current.map((item, i) => (i === index ? value : item)));
@@ -98,25 +100,23 @@ export default function ToolHome() {
     ].join("\n");
   }, [failed, result]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copyToClipboard("result", summary, { label: "Blind order sizes" });
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset all inputs? This discards every width, height, depth and blind-type setting you entered and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setUnit(DEFAULTS.unit);
     setWidths(DEFAULTS.widths);
     setHeights(DEFAULTS.heights);
     setDepth(DEFAULTS.depth);
     setBlindId(DEFAULTS.blindId);
     setBlackout(DEFAULTS.blackout);
-    setCopied(false);
+    resetCopyState();
   };
 
   const rows = [
@@ -130,7 +130,7 @@ export default function ToolHome() {
     ["Factory deduction", failed ? DASH : `${num(result.insideDeductionMm)} mm`],
     ["Finished blind width", failed ? DASH : `${num(result.insideFinishedWidthMm)} mm`],
     ["Clearance each side", failed ? DASH : `${num(result.insideGapEachSideMm)} mm`],
-    ["Widest light gap at the tight point", failed ? DASH : `${num(result.worstLightGapMm)} mm`],
+    ["Widest light gap (at the recess's widest point)", failed ? DASH : `${num(result.worstLightGapMm)} mm`],
     ["Recess depth measured", failed ? DASH : `${num(result.depthMm)} mm`],
     ["Depth verdict", failed ? DASH : DEPTH_TEXT[result.depthVerdict]],
     [
@@ -281,7 +281,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        role="status"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -311,24 +315,30 @@ export default function ToolHome() {
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
+            {/* Copy is the safe, non-destructive action, so it gets the
+                visually prominent primary style; Reset is destructive and is
+                de-emphasized as a ghost button (see finding 4). */}
             <button
               type="button"
               onClick={copyResult}
               disabled={failed}
-              aria-label="Copy the blind order sizes"
-              className={`${GHOST_BTN} disabled:opacity-50`}
+              aria-label={isCopied("result") ? "Copied the blind order sizes" : "Copy the blind order sizes"}
+              className={`${PRIMARY_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

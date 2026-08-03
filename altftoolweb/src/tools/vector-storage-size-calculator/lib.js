@@ -7,8 +7,9 @@
  *   - HNSW: each vector stores ~M*2 neighbour links of 4 bytes each on top of
  *     its data (Faiss guidelines: HNSW memory per vector = d*4 + M*2*4 bytes).
  *   - IVF: vectors gain an 8-byte id inside the inverted lists, plus the
- *     centroid table of nlist x d float32 values; Faiss recommends
- *     nlist ~ sqrt(N) cells for datasets around 1M vectors.
+ *     centroid table of nlist x d float32 values; Faiss recommends nlist
+ *     between 4 x sqrt(N) and 16 x sqrt(N) cells — this estimator uses the
+ *     conservative 4 x sqrt(N) end of that range.
  */
 
 /** Bytes per dimension for each storage data type (IEEE 754 / ML formats). */
@@ -46,6 +47,12 @@ export const IVF_ID_BYTES = 8;
 
 /** IVF centroids are kept in float32 regardless of the stored vector dtype. */
 export const IVF_CENTROID_BYTES_PER_DIM = 4;
+
+/**
+ * Faiss recommends nlist between 4x sqrt(N) and 16x sqrt(N) inverted-list
+ * cells; this estimator uses the conservative low end of that range.
+ */
+export const IVF_NLIST_MULTIPLIER = 4;
 
 /** Sanity ceilings so absurd input is rejected instead of overflowing the display. */
 export const MAX_DIMENSIONS = 65536;
@@ -97,8 +104,8 @@ export function computeIndexSize({
   const copies = Number(replicas);
   const m = Number(hnswM);
 
-  if (!Number.isFinite(count) || count <= 0) {
-    return { error: "Enter the number of vectors as a positive number." };
+  if (!Number.isFinite(count) || count <= 0 || !Number.isInteger(count)) {
+    return { error: "Enter the number of vectors as a positive whole number." };
   }
   if (count > MAX_VECTORS) {
     return { error: "Vector count above one trillion is outside any single index — shard the estimate." };
@@ -124,8 +131,13 @@ export function computeIndexSize({
   const indexType = INDEX_TYPES.find((t) => t.id === indexTypeId);
   if (!indexType) return { error: "Choose an index type." };
 
-  if (indexTypeId === "hnsw" && (!Number.isFinite(m) || m < HNSW_M_MIN || m > HNSW_M_MAX)) {
-    return { error: `HNSW M must be between ${HNSW_M_MIN} and ${HNSW_M_MAX} (library default is ${HNSW_M_DEFAULT}).` };
+  if (
+    indexTypeId === "hnsw" &&
+    (!Number.isFinite(m) || m < HNSW_M_MIN || m > HNSW_M_MAX || !Number.isInteger(m))
+  ) {
+    return {
+      error: `HNSW M must be a whole number between ${HNSW_M_MIN} and ${HNSW_M_MAX} (library default is ${HNSW_M_DEFAULT}).`,
+    };
   }
 
   const bytesPerVectorData = Math.ceil(dims * dataType.bytesPerDim);
@@ -141,11 +153,11 @@ export function computeIndexSize({
     indexOverheadBytes = count * m * HNSW_LINKS_PER_VECTOR_FACTOR * HNSW_LINK_BYTES;
     overheadNote = `HNSW graph: ${m} × ${HNSW_LINKS_PER_VECTOR_FACTOR} links × ${HNSW_LINK_BYTES} bytes = ${m * HNSW_LINKS_PER_VECTOR_FACTOR * HNSW_LINK_BYTES} bytes per vector.`;
   } else if (indexTypeId === "ivf") {
-    nlist = Math.max(1, Math.round(Math.sqrt(count)));
+    nlist = Math.max(1, Math.round(IVF_NLIST_MULTIPLIER * Math.sqrt(count)));
     const centroidBytes = nlist * dims * IVF_CENTROID_BYTES_PER_DIM;
     const idBytes = count * IVF_ID_BYTES;
     indexOverheadBytes = centroidBytes + idBytes;
-    overheadNote = `IVF: ${IVF_ID_BYTES}-byte id per vector plus ${nlist.toLocaleString("en-US")} float32 centroids (nlist ≈ √N).`;
+    overheadNote = `IVF: ${IVF_ID_BYTES}-byte id per vector plus ${nlist.toLocaleString("en-US")} float32 centroids (nlist ≈ ${IVF_NLIST_MULTIPLIER}×√N, the low end of Faiss's recommended 4×√N-16×√N range).`;
   }
 
   const perReplicaBytes = rawDataBytes + metadataTotal + indexOverheadBytes;

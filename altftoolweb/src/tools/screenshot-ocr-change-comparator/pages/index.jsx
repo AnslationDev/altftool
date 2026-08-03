@@ -351,7 +351,13 @@ export default function ScreenshotOcrChangeComparator() {
     [],
   );
 
-  const invalidate = () => {
+  const invalidate = (message) => {
+    if (result) {
+      setNotice(
+        message ||
+          "Inputs changed since the last comparison. Click Compare reviewed text again for updated results.",
+      );
+    }
     setResult(null);
     setCopied(false);
   };
@@ -396,17 +402,26 @@ export default function ScreenshotOcrChangeComparator() {
 
     setLoadingSides((current) => ({ ...current, [side]: true }));
     try {
-      const header = new Uint8Array(
-        await file
-          .slice(
-            0,
-            Math.min(file.size, ocrComparatorLimits.maxHeaderBytes),
-          )
-          .arrayBuffer(),
-      );
-      const mediaType = detectRasterImageType(header);
-      const dimensions = parseRasterImageDimensions(header);
+      const readHeader = async (byteLimit) =>
+        new Uint8Array(
+          await file.slice(0, Math.min(file.size, byteLimit)).arrayBuffer(),
+        );
+      let header = await readHeader(ocrComparatorLimits.maxHeaderBytes);
+      let mediaType = detectRasterImageType(header);
+      let dimensions = parseRasterImageDimensions(header);
       if (selectionRef.current !== selection) return;
+      if (
+        mediaType === "image/jpeg" &&
+        !dimensions &&
+        header.length < file.size
+      ) {
+        // A large embedded EXIF thumbnail/preview can push the JPEG SOF
+        // marker past the initial header window. Re-scan the full file
+        // before concluding the header is unsupported.
+        header = await readHeader(ocrComparatorLimits.maxFileBytes);
+        dimensions = parseRasterImageDimensions(header);
+        if (selectionRef.current !== selection) return;
+      }
       if (!mediaType || !dimensions || dimensions.mediaType !== mediaType) {
         setErrors([
           `${isBefore ? "Before" : "After"} screenshot does not have a complete supported PNG, JPEG, or WebP header.`,
@@ -475,6 +490,16 @@ export default function ScreenshotOcrChangeComparator() {
   };
 
   const reset = () => {
+    const hasData =
+      beforeImage || afterImage || beforeText || afterText || result;
+    if (
+      hasData &&
+      !window.confirm(
+        "Reset the comparator? This discards both screenshots, both reviewed transcripts, and the current comparison. This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     clearImage("before");
     clearImage("after");
     setBeforeText("");
@@ -768,7 +793,11 @@ export default function ScreenshotOcrChangeComparator() {
           </div>
 
           {truncated ? (
-            <div className="rounded-xl border border-warning bg-warning-soft p-4 text-sm text-foreground">
+            <div
+              className="rounded-xl border border-warning bg-warning-soft p-4 text-sm text-foreground"
+              role="status"
+              aria-live="polite"
+            >
               <p className="font-bold">Comparison bounds were reached</p>
               <p className="mt-1 leading-relaxed">
                 At least one transcript, line list, word list, or detail list was
@@ -823,7 +852,11 @@ export default function ScreenshotOcrChangeComparator() {
             )}
 
             {result.line.detailsTruncated ? (
-              <p className="mt-4 text-sm font-semibold text-warning">
+              <p
+                className="mt-4 text-sm font-semibold text-warning"
+                role="status"
+                aria-live="polite"
+              >
                 Only the first {ocrComparatorLimits.maxChangeDetails} line changes are
                 displayed.
               </p>
