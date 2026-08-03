@@ -161,13 +161,35 @@ export function planningPhaseFor(monthsToGo) {
 export function allocateBudget(total, modelId) {
   const model = BUDGET_MODELS.find((item) => item.id === modelId) || BUDGET_MODELS[0];
   if (!isFiniteNumber(total) || total <= 0) return null;
-  const rows = model.split.map((item) => ({
-    id: item.id,
-    label: item.label,
-    percent: item.percent,
-    amount: round((total * item.percent) / 100),
-  }));
-  return { model, rows };
+  const roundedTotal = round(total);
+  const rows = model.split.map((item, index) => {
+    const exactAmount = (roundedTotal * item.percent) / 100;
+    return {
+      id: item.id,
+      label: item.label,
+      percent: item.percent,
+      amount: Math.floor(exactAmount),
+      remainder: exactAmount - Math.floor(exactAmount),
+      index,
+    };
+  });
+
+  // Largest-remainder allocation keeps each row in whole currency units and
+  // guarantees that the visible table adds back to the visible total.
+  let unitsLeft = roundedTotal - rows.reduce((sum, row) => sum + row.amount, 0);
+  const byRemainder = [...rows].sort(
+    (a, b) => b.remainder - a.remainder || a.index - b.index,
+  );
+  for (let index = 0; index < byRemainder.length && unitsLeft > 0; index += 1) {
+    byRemainder[index].amount += 1;
+    unitsLeft -= 1;
+  }
+
+  return {
+    model,
+    total: roundedTotal,
+    rows: rows.map(({ remainder: _remainder, index: _index, ...row }) => row),
+  };
 }
 
 const countWords = (text) => (text.trim() ? text.trim().split(/\s+/).length : 0);
@@ -187,10 +209,10 @@ export function buildWeddingPrompt(input) {
 
   const currencyEntry = CURRENCIES.find((item) => item.id === currency) || CURRENCIES[0];
 
-  const total = Number(totalBudget);
-  if (!isFiniteNumber(total)) return { error: "Enter the total budget as a number." };
-  if (total <= 0) return { error: "Total budget must be greater than zero." };
-  if (total > MAX_BUDGET) return { error: "That budget is out of range — enter a realistic figure." };
+  const enteredTotal = Number(totalBudget);
+  if (!isFiniteNumber(enteredTotal)) return { error: "Enter the total budget as a number." };
+  if (enteredTotal <= 0) return { error: "Total budget must be greater than zero." };
+  if (enteredTotal > MAX_BUDGET) return { error: "That budget is out of range — enter a realistic figure." };
 
   const guestCount = Number(guests);
   if (!isFiniteNumber(guestCount) || !Number.isInteger(guestCount)) {
@@ -209,7 +231,8 @@ export function buildWeddingPrompt(input) {
     return { error: `Months remaining should be between 0 and ${MAX_MONTHS_TO_GO}.` };
   }
 
-  const allocation = allocateBudget(total, model);
+  const allocation = allocateBudget(enteredTotal, model);
+  const total = allocation.total;
   const phase = planningPhaseFor(months);
   const priorityEntry = PRIORITIES.find((item) => item.id === priority) || PRIORITIES[0];
 

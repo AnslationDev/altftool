@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, useCallback } from "react";
-import { drawToCanvas, buildFilterString } from "../utils/imageFilters";
+import { drawToCanvas } from "../utils/imageFilters";
 import { adjustmentDefaults, cartoonStyles, maxFileSize, supportedFormats } from "../constants/styles";
 
 const MAX_FILE_SIZE_LABEL = `${Math.round(maxFileSize / (1024 * 1024))}MB`;
@@ -12,10 +12,13 @@ export function useImageProcessing() {
   const [selectedStyle, setSelectedStyle] = useState("classic");
   const [adjustments, setAdjustments] = useState(adjustmentDefaults);
   const [error, setError] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
   const previewUrlRef = useRef(null);
+  const pendingUrlRef = useRef(null);
+  const loadSequenceRef = useRef(0);
 
   const currentStyle = cartoonStyles.find((s) => s.id === selectedStyle);
 
@@ -39,13 +42,41 @@ export function useImageProcessing() {
       return;
     }
 
-    if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
     const next = URL.createObjectURL(f);
-    previewUrlRef.current = next;
+    if (pendingUrlRef.current) URL.revokeObjectURL(pendingUrlRef.current);
+    pendingUrlRef.current = next;
+    const sequence = loadSequenceRef.current + 1;
+    loadSequenceRef.current = sequence;
 
     setError(null);
-    setFile(f);
-    setPreviewUrl(next);
+    setIsProcessing(true);
+
+    // Decode the candidate before replacing the current image. A corrupt file
+    // therefore cannot leave the preview pointing at one image while the
+    // export canvas still contains another.
+    const candidate = new Image();
+    candidate.onload = () => {
+      if (loadSequenceRef.current !== sequence) {
+        if (pendingUrlRef.current === next) pendingUrlRef.current = null;
+        URL.revokeObjectURL(next);
+        return;
+      }
+      if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
+      previewUrlRef.current = next;
+      pendingUrlRef.current = null;
+      imageRef.current = candidate;
+      setFile(f);
+      setPreviewUrl(next);
+      setIsProcessing(false);
+    };
+    candidate.onerror = () => {
+      if (pendingUrlRef.current === next) pendingUrlRef.current = null;
+      URL.revokeObjectURL(next);
+      if (loadSequenceRef.current !== sequence) return;
+      setError("That file has an image type but could not be decoded. The previous image was kept.");
+      setIsProcessing(false);
+    };
+    candidate.src = next;
   }, []);
 
   const handleDrop = useCallback((e) => {
@@ -59,11 +90,19 @@ export function useImageProcessing() {
   }, []);
 
   const removeImage = useCallback(() => {
+    loadSequenceRef.current += 1;
+    if (pendingUrlRef.current) URL.revokeObjectURL(pendingUrlRef.current);
     if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
+    pendingUrlRef.current = null;
     previewUrlRef.current = null;
+    imageRef.current = null;
+
+    const canvas = canvasRef.current;
+    canvas?.getContext("2d")?.clearRect(0, 0, canvas.width, canvas.height);
 
     setFile(null);
     setError(null);
+    setIsProcessing(false);
     setPreviewUrl(null);
     setAdjustments(adjustmentDefaults);
     setSelectedStyle("classic");
@@ -72,53 +111,27 @@ export function useImageProcessing() {
   // Revoke whatever object URL is still outstanding when the tool itself
   // unmounts (e.g. route change away from the page).
   useEffect(() => () => {
+    loadSequenceRef.current += 1;
+    if (pendingUrlRef.current) URL.revokeObjectURL(pendingUrlRef.current);
     if (previewUrlRef.current) URL.revokeObjectURL(previewUrlRef.current);
   }, []);
 
   useEffect(() => {
     if (!previewUrl) return undefined;
-
-    // Guard against a slower-loading earlier upload overwriting a faster
-    // one: if `previewUrl` has already moved on by the time this image
-    // finishes decoding, drop the result instead of drawing it.
-    let cancelled = false;
-    const img = new Image();
-    img.crossOrigin = "anonymous";
-
-    img.onload = () => {
-      if (cancelled) return;
-      imageRef.current = img;
-      const canvas = canvasRef.current;
-      if (canvas) {
-        canvas.width = img.width;
-        canvas.height = img.height;
-        drawToCanvas(canvas, img, adjustments, currentStyle?.filter);
-      }
-    };
-
-    img.src = previewUrl;
-
-    return () => {
-      cancelled = true;
-    };
-  }, [previewUrl]);
-
-  useEffect(() => {
-    const canvas = canvasRef.current;
     const img = imageRef.current;
+    const canvas = canvasRef.current;
     if (!canvas || !img) return undefined;
-
-    const t = setTimeout(() => {
-      drawToCanvas(canvas, img, adjustments, currentStyle?.filter);
-    }, 30);
-
-    return () => clearTimeout(t);
-  }, [adjustments, selectedStyle, currentStyle?.filter]);
+    canvas.width = img.naturalWidth || img.width;
+    canvas.height = img.naturalHeight || img.height;
+    drawToCanvas(canvas, img, adjustments, currentStyle?.filter);
+    return undefined;
+  }, [adjustments, currentStyle?.filter, previewUrl]);
 
   return {
     file,
     previewUrl,
     error,
+    isProcessing,
     canvasRef,
     selectedStyle,
     setSelectedStyle,

@@ -253,7 +253,7 @@ export default function ToolHome() {
           </p>
         ) : null}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             [
               "Self-serve copy usually arrives",

@@ -67,7 +67,7 @@ export default function ToolHome() {
       result.meetsTarget ? "Target met from food." : `Short by ${result.gapMg} mg.`,
     ];
     result.breakdown.forEach((item) => {
-      const note = item.poorlyAbsorbed ? ` (${item.listedMg} mg listed, oxalates cut most of it)` : "";
+      const note = item.poorlyAbsorbed ? " (high oxalate lowers absorption)" : "";
       lines.push(`  ${item.name} x${item.count} (${item.serving}) = ${item.mg} mg${note}`);
     });
     return lines.join("\n");
@@ -243,7 +243,7 @@ export default function ToolHome() {
           {hasError ? DASH : `${WHOLE.format(result.percentOfTarget)}% of the daily target`}
         </p>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Calcium from food listed", hasError ? DASH : `${WHOLE.format(result.intakeMg)} mg`],
             [
@@ -316,14 +316,14 @@ export default function ToolHome() {
                       {item.name}
                       {item.poorlyAbsorbed ? (
                         <span className="mt-0.5 block text-xs font-normal text-[var(--muted-foreground)]">
-                          {WHOLE.format(item.listedMg)} mg listed, oxalates cut most of it
+                          High oxalate lowers absorption; the tally uses the listed calcium amount
                         </span>
                       ) : null}
                     </td>
                     <td className="py-2 pr-3 text-[var(--muted-foreground)]">{item.serving}</td>
                     <td className="py-2 pr-3 text-right tabular-nums">{ONE_DP.format(item.count)}</td>
                     <td className="py-2 text-right tabular-nums">
-                      {WHOLE.format(item.mg)} mg{item.poorlyAbsorbed ? " counted" : ""}
+                      {WHOLE.format(item.mg)} mg{item.poorlyAbsorbed ? " listed" : ""}
                     </td>
                   </tr>
                 ))}

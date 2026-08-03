@@ -300,7 +300,7 @@ export default function ToolHome() {
           {announcement}
         </span>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Categories selected", hasError ? DASH : NUM.format(result.count)],
             ["Largest single category", hasError ? DASH : result.largestLabel],

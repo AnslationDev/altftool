@@ -12,6 +12,7 @@ import {
   LoaderCircle,
   RotateCcw,
   ShieldCheck,
+  Trash2,
   Upload,
 } from "lucide-react";
 
@@ -61,6 +62,7 @@ function formatBytes(bytes) {
 
 export default function CybercrimeEvidencePackBuilder() {
   const fileRef = useRef(null);
+  const hashOperationRef = useRef(0);
   const [incidentTitle, setIncidentTitle] = useState("");
   const [incidentReference, setIncidentReference] = useState("");
   const [narrative, setNarrative] = useState("");
@@ -106,9 +108,12 @@ export default function CybercrimeEvidencePackBuilder() {
     }
 
     setHashing(true);
+    const operation = hashOperationRef.current + 1;
+    hashOperationRef.current = operation;
     try {
       const hashed = [];
       for (const file of selected) {
+        if (hashOperationRef.current !== operation) return;
         hashed.push({
           filename: file.name,
           mediaType: file.type || "application/octet-stream",
@@ -118,6 +123,7 @@ export default function CybercrimeEvidencePackBuilder() {
           note: "",
         });
       }
+      if (hashOperationRef.current !== operation) return;
       setEvidenceItems((current) => [...current, ...hashed]);
       if (overflow > 0) {
         setFileError(
@@ -125,11 +131,12 @@ export default function CybercrimeEvidencePackBuilder() {
         );
       }
     } catch {
+      if (hashOperationRef.current !== operation) return;
       setFileError(
         "One or more of the newly selected files could not be hashed in this browser. Evidence already added is unchanged.",
       );
     } finally {
-      setHashing(false);
+      if (hashOperationRef.current === operation) setHashing(false);
     }
   };
 
@@ -142,6 +149,11 @@ export default function CybercrimeEvidencePackBuilder() {
     invalidate();
   };
 
+  const removeEvidence = (index) => {
+    setEvidenceItems((current) => current.filter((_, itemIndex) => itemIndex !== index));
+    invalidate();
+  };
+
   const reset = () => {
     if (
       !window.confirm(
@@ -150,6 +162,9 @@ export default function CybercrimeEvidencePackBuilder() {
     ) {
       return;
     }
+    // Invalidate any digest operation that is currently awaiting file bytes
+    // or Web Crypto, so its late completion cannot repopulate a reset form.
+    hashOperationRef.current += 1;
     setIncidentTitle("");
     setIncidentReference("");
     setNarrative("");
@@ -286,7 +301,11 @@ export default function CybercrimeEvidencePackBuilder() {
                 multiple
                 disabled={hashing}
                 className="sr-only"
-                onChange={(event) => void addFiles(event.target.files)}
+                onChange={(event) => {
+                  const selectedFiles = [...(event.target.files || [])];
+                  event.target.value = "";
+                  void addFiles(selectedFiles);
+                }}
               />
             </label>
           </div>
@@ -339,6 +358,16 @@ export default function CybercrimeEvidencePackBuilder() {
                           placeholder="Optional: where this copy came from"
                         />
                       </label>
+                      <button
+                        type="button"
+                        disabled={hashing}
+                        onClick={() => removeEvidence(index)}
+                        className="btn-secondary mt-3 inline-flex min-h-10 items-center gap-2 px-3 text-sm disabled:cursor-not-allowed disabled:opacity-50"
+                        aria-label={`Remove ${item.filename} from the evidence pack`}
+                      >
+                        <Trash2 className="h-4 w-4" aria-hidden="true" />
+                        Remove
+                      </button>
                     </div>
                   </div>
                 </article>

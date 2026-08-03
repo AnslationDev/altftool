@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useId } from "react";
 import { Skull, CheckCircle2, Copy, FileText, SlidersHorizontal, Flame } from "lucide-react";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import { generateZalgoText } from "../lib";
 
 // Unicode combining diacritics, classified by their official Unicode name
 // (COMBINING ... ABOVE / BELOW / OVERLAY) so each slider only ever draws
@@ -36,7 +37,7 @@ const REGEN_DEBOUNCE_MS = 120;
 
 export default function ToolHome() {
   const [input, setInput] = useState("HE COMES TO REIGN");
-  const [output, setOutput] = useState("");
+  const [generated, setGenerated] = useState({ key: "", text: "" });
   const [upVal, setUpVal] = useState(8);
   const [midVal, setMidVal] = useState(3);
   const [downVal, setDownVal] = useState(8);
@@ -44,49 +45,29 @@ export default function ToolHome() {
   const upId = useId();
   const midId = useId();
   const downId = useId();
+  const generationKey = `${input}\u0000${upVal}\u0000${midVal}\u0000${downVal}`;
+  // A debounced result is usable only when it belongs to the inputs currently
+  // on screen. This makes the copy button go empty immediately after a change
+  // instead of copying the previous corruption during the debounce window.
+  const output = generated.key === generationKey ? generated.text : "";
 
   useEffect(() => {
-    if (!input) {
-      setOutput("");
-      return;
-    }
+    if (!input) return undefined;
 
     const timer = setTimeout(() => {
-      const randElement = (arr) => arr[Math.floor(Math.random() * arr.length)];
-
-      let result = "";
-      // Iterate by Unicode code point (not UTF-16 code unit) so surrogate
-      // pairs — emoji and other astral-plane characters — stay intact
-      // instead of being split apart and corrupted independently.
-      for (const char of input) {
-        result += char;
-
-        // Skip adding marks to whitespace so word breaks, tab stops and
-        // line structure survive the corruption.
-        if (char === " " || char === "\t" || char === "\n" || char === "\r") {
-          continue;
-        }
-
-        // Add Up combining marks
-        for (let j = 0; j < upVal; j++) {
-          result += randElement(ZALGO_UP);
-        }
-
-        // Add Middle combining marks
-        for (let j = 0; j < midVal; j++) {
-          result += randElement(ZALGO_MID);
-        }
-
-        // Add Down combining marks
-        for (let j = 0; j < downVal; j++) {
-          result += randElement(ZALGO_DOWN);
-        }
-      }
-      setOutput(result);
+      const text = generateZalgoText(input, {
+        upCount: upVal,
+        midCount: midVal,
+        downCount: downVal,
+        upMarks: ZALGO_UP,
+        midMarks: ZALGO_MID,
+        downMarks: ZALGO_DOWN,
+      });
+      setGenerated({ key: generationKey, text });
     }, REGEN_DEBOUNCE_MS);
 
     return () => clearTimeout(timer);
-  }, [input, upVal, midVal, downVal]);
+  }, [generationKey, input, upVal, midVal, downVal]);
 
   const handleCopy = () => copy("output", output, { label: "Corrupted text" });
 

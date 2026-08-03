@@ -6,7 +6,7 @@ import { supportedFormats } from "../constants/styles";
 
 const ACCEPT_ATTR = Object.keys(supportedFormats).join(",");
 
-export default function UploadBox({ previewUrl, error, onFile, onDrop, onDragOver, onRemove }) {
+export default function UploadBox({ previewUrl, error, isProcessing, onFile, onDrop, onDragOver, onRemove }) {
   const inputRef = useRef(null);
   const cameraRef = useRef(null);
 
@@ -36,6 +36,8 @@ export default function UploadBox({ previewUrl, error, onFile, onDrop, onDragOve
     return (
       <div className="relative w-full max-w-md mx-auto">
         <div className="rounded-xl border border-(--border) bg-(--card) overflow-hidden shadow-[var(--anslation-ds-shadow-sm)]">
+          {/* Blob URLs are local user files and cannot use Next Image optimisation. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={previewUrl}
             alt="Uploaded preview"
@@ -44,7 +46,8 @@ export default function UploadBox({ previewUrl, error, onFile, onDrop, onDragOve
         </div>
         <button
           onClick={handleRemove}
-          className="absolute top-2 right-2 w-8 h-8 rounded-full bg-(--danger) text-(--danger-foreground) flex items-center justify-center hover:opacity-90 transition shadow-md"
+          disabled={isProcessing}
+          className="absolute top-2 right-2 w-8 h-8 rounded-full bg-(--danger) text-(--danger-foreground) flex items-center justify-center hover:opacity-90 transition shadow-md disabled:cursor-not-allowed disabled:opacity-50"
           aria-label="Remove image"
         >
           <X className="h-4 w-4" />
@@ -62,6 +65,7 @@ export default function UploadBox({ previewUrl, error, onFile, onDrop, onDragOve
     <div
       onDrop={onDrop}
       onDragOver={onDragOver}
+      aria-busy={isProcessing}
       className="w-full max-w-md mx-auto"
     >
       <label className="flex min-h-60 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-(--border) bg-(--background) p-6 text-center hover:border-(--primary) hover:bg-(--muted) transition">
@@ -73,6 +77,7 @@ export default function UploadBox({ previewUrl, error, onFile, onDrop, onDragOve
           ref={inputRef}
           type="file"
           accept={ACCEPT_ATTR}
+          disabled={isProcessing}
           className="hidden"
           onChange={handleInputChange}
         />
@@ -83,18 +88,25 @@ export default function UploadBox({ previewUrl, error, onFile, onDrop, onDragOve
           {error}
         </p>
       )}
+      {isProcessing && (
+        <p role="status" aria-live="polite" className="mt-2 text-xs font-semibold text-(--muted-foreground)">
+          Checking and decoding the image locally…
+        </p>
+      )}
 
       <div className="flex items-center gap-3 mt-3 justify-center">
         <button
           onClick={() => inputRef.current?.click()}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-(--foreground) bg-(--card) border border-(--border) rounded-lg hover:border-(--primary) transition"
+          disabled={isProcessing}
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-(--foreground) bg-(--card) border border-(--border) rounded-lg hover:border-(--primary) transition disabled:cursor-not-allowed disabled:opacity-50"
         >
           <UploadCloud className="h-4 w-4" />
           Browse Files
         </button>
         <button
           onClick={handleCameraCapture}
-          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-(--foreground) bg-(--card) border border-(--border) rounded-lg hover:border-(--primary) transition"
+          disabled={isProcessing}
+          className="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold text-(--foreground) bg-(--card) border border-(--border) rounded-lg hover:border-(--primary) transition disabled:cursor-not-allowed disabled:opacity-50"
         >
           <Camera className="h-4 w-4" />
           Camera
@@ -106,6 +118,7 @@ export default function UploadBox({ previewUrl, error, onFile, onDrop, onDragOve
         type="file"
         accept="image/*"
         capture="user"
+        disabled={isProcessing}
         className="hidden"
         onChange={handleCameraChange}
       />

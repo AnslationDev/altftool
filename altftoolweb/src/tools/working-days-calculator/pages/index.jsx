@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { CalendarCheck, Copy, Plus, RotateCcw, Trash2 } from "lucide-react";
 import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import { parseWorkingHours } from "../lib";
 
 const WEEKDAYS = [
   { index: 0, short: "Sun", long: "Sunday" },
@@ -80,13 +81,17 @@ export default function ToolHome() {
   const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   useEffect(() => {
-    const today = new Date();
-    setStart(toISO(today));
-    setEnd(toISO(addDays(today, 30)));
+    const timer = window.setTimeout(() => {
+      const today = new Date();
+      setStart(toISO(today));
+      setEnd(toISO(addDays(today, 30)));
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const startDate = useMemo(() => parseISO(start), [start]);
   const endDate = useMemo(() => parseISO(end), [end]);
+  const hoursResult = useMemo(() => parseWorkingHours(hoursPerDay), [hoursPerDay]);
 
   const errors = useMemo(() => {
     const list = [];
@@ -102,12 +107,9 @@ export default function ToolHome() {
       }
     }
     if (weekend.length === 7) list.push("At least one day of the week must be a working day.");
-    const hours = Number.parseFloat(hoursPerDay);
-    if (hoursPerDay !== "" && (!Number.isFinite(hours) || hours < 0 || hours > 24)) {
-      list.push("Hours per working day must be between 0 and 24.");
-    }
+    if (!hoursResult.ok) list.push(hoursResult.error);
     return list;
-  }, [end, endDate, hoursPerDay, start, startDate, weekend]);
+  }, [end, endDate, hoursResult, start, startDate, weekend]);
 
   const holidaySet = useMemo(() => {
     const map = new Map();
@@ -228,21 +230,8 @@ export default function ToolHome() {
     resetCopyState();
   }, [resetCopyState]);
 
-  // Number.isFinite(NaN) guard doubles as the "is this a usable number" check;
-  // out-of-range values (or a blank field) fall back to 0 so downstream math
-  // never breaks, but `hoursValid` tracks whether that 0 is a real answer or
-  // a placeholder for bad input, so the UI can tell the two apart instead of
-  // silently presenting "0.0 h" as if it were a computed result.
-  const hoursValid = useMemo(() => {
-    if (hoursPerDay === "") return true;
-    const parsed = Number.parseFloat(hoursPerDay);
-    return Number.isFinite(parsed) && parsed >= 0 && parsed <= 24;
-  }, [hoursPerDay]);
-
-  const hoursValue = useMemo(() => {
-    const parsed = Number.parseFloat(hoursPerDay);
-    return Number.isFinite(parsed) && parsed >= 0 && parsed <= 24 ? parsed : 0;
-  }, [hoursPerDay]);
+  const hoursValid = hoursResult.ok;
+  const hoursValue = hoursResult.ok ? hoursResult.value : 0;
 
   const report = useMemo(() => {
     if (!result || !startDate || !endDate) return "";
@@ -477,8 +466,8 @@ export default function ToolHome() {
                 Working days
               </p>
               {result ? (
-                <div aria-live="polite" role="status">
-                  <p className="mt-1 text-5xl font-semibold text-[var(--primary)]">
+                <div>
+                  <p className="mt-1 text-5xl font-semibold text-[var(--primary)]" aria-live="polite">
                     {num.format(result.workingDays)}
                   </p>
                   <p className="mt-1 text-sm text-[var(--muted-foreground)]">

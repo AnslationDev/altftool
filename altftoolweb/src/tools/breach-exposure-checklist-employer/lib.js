@@ -42,26 +42,26 @@ export const SEVERITY_TIERS = [
   {
     id: "severe",
     min: 16,
-    label: "Severe",
-    hint: "Enough for identity theft and salary diversion. Treat the monitoring offer as a starting point, not a remedy.",
+    label: "Highest priority",
+    hint: "Several sensitive categories are listed, so identity, payroll and account safeguards may all be relevant. Confirm the actual scope with the employer.",
   },
   {
     id: "serious",
     min: 9,
-    label: "Serious",
-    hint: "Direct financial fraud is plausible. Work through the payroll and credit steps this week.",
+    label: "High priority",
+    hint: "The listed categories can support financial or identity misuse when combined with other information. Prioritise the matching safeguards.",
   },
   {
     id: "moderate",
     min: 4,
     label: "Moderate",
-    hint: "Mainly a targeted-phishing and account-takeover problem rather than an identity theft one.",
+    hint: "The notice supports targeted phishing and may support account or identity misuse depending on the exact fields exposed.",
   },
   {
     id: "limited",
     min: 0,
     label: "Limited",
-    hint: "Low direct risk, but breach-themed phishing that names your employer is very likely.",
+    hint: "Fewer sensitive categories are selected, but targeted follow-on messages are still possible. Verify unexpected contact independently.",
   },
 ];
 
@@ -149,7 +149,7 @@ export const CHECKLIST = [
     detail:
       "Refund fraud needs your tax number and your income figures, which is exactly what a payroll breach leaks. Filing first blocks the duplicate return, and a rejected filing is often the first sign someone got there ahead of you.",
     weight: 5,
-    appliesTo: ["nationalId", "compensation"],
+    appliesTo: ["nationalId"],
   },
   {
     id: "id-doc-reissue",
@@ -272,10 +272,10 @@ export const DEFAULT_DONE = ["keep-notice"];
 
 /** Bands as a percentage of the applicable weight; the first band reached wins. */
 export const BANDS = [
-  { id: "covered", min: 90, label: "Response complete", hint: "Every path this breach opened has been closed or is being watched." },
-  { id: "strong", min: 70, label: "Mostly covered", hint: "The direct-loss paths are shut. Finish the monitoring steps." },
-  { id: "partial", min: 40, label: "Partly covered", hint: "A direct route to your salary or your identity is still open." },
-  { id: "exposed", min: 0, label: "Barely started", hint: "The breach is still fully exploitable against you." },
+  { id: "covered", min: 90, label: "Nearly complete", hint: "You marked nearly all applicable checklist items complete. Verify that providers actually applied each requested safeguard and keep monitoring." },
+  { id: "strong", min: 70, label: "Most steps marked", hint: "Most applicable checklist items are marked complete. Finish the remaining items and continue watching for misuse." },
+  { id: "partial", min: 40, label: "In progress", hint: "Several recommended actions remain. Work through the priority items first and verify completion with the relevant provider." },
+  { id: "exposed", min: 0, label: "Just started", hint: "Few applicable actions are marked complete. Use the ordered list as a response plan, starting with the priority items." },
 ];
 
 /**
@@ -406,17 +406,6 @@ export function assessResponse({ classIds, doneIds } = {}) {
   const capped = missingCritical.length > 0 && rawPercent > CRITICAL_CAP_PERCENT;
   const percent = capped ? CRITICAL_CAP_PERCENT : rawPercent;
   const band = bandFor(percent);
-  // BANDS' own hint text for the two lowest tiers asserts a direct-loss path
-  // is still open ("still fully exploitable", "a direct route ... is still
-  // open"). That is only true while a critical step is unticked. Once every
-  // applicable critical step is done, a low percent just reflects unfinished
-  // hygiene/monitoring work, so the hint must not claim otherwise — it would
-  // directly contradict the "critical steps still open: 0" stat shown next
-  // to it.
-  const bandHint =
-    missingCritical.length === 0 && (band.id === "exposed" || band.id === "partial")
-      ? "Every critical, direct-loss step that applies to you is closed. What is left is hygiene and monitoring work, not an open financial or identity risk."
-      : band.hint;
 
   const groups = GROUPS.map((name) => {
     const items = steps.filter((item) => item.group === name);
@@ -446,7 +435,7 @@ export function assessResponse({ classIds, doneIds } = {}) {
     criticalTotal: steps.filter((item) => item.critical).length,
     band: band.id,
     bandLabel: band.label,
-    bandHint,
+    bandHint: band.hint,
     remaining,
     missingCritical,
     groups,
