@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-03T17:25:15.304Z",
+  "generatedAt": "2026-08-03T17:56:02.035Z",
   "summary": {
     "methodology": "static-readiness-v2",
     "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
@@ -12,7 +12,7 @@
       "partial": 16,
       "broken": 0
     },
-    "automatedTests": 172,
+    "automatedTests": 174,
     "automatedCoverage": 4,
     "networkDependent": 67,
     "envDependent": 4,
@@ -10681,18 +10681,18 @@
       "category": "Lifestyle",
       "route": "/tools/all/baby-name-shortlist-voting-board",
       "status": "working",
-      "score": 94,
+      "score": 100,
       "priority": false,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 5,
+        "sourceFiles": 6,
         "sourceBytes": 28772,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
-        "automatedTest": false,
-        "localTest": false,
+        "automatedTest": true,
+        "localTest": true,
         "functionalTest": false,
         "networkDependent": false,
         "envKeys": [],
@@ -10710,9 +10710,7 @@
         "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Add one deterministic functional or unit regression test."
-      ]
+      "recommendations": []
     },
     {
       "slug": "baby-shower-invitation-wording",
@@ -147774,18 +147772,18 @@
       "category": "Calculators",
       "route": "/tools/all/vector-storage-size-calculator",
       "status": "working",
-      "score": 94,
+      "score": 100,
       "priority": false,
       "evidence": {
         "entry": true,
         "config": true,
-        "sourceFiles": 5,
+        "sourceFiles": 6,
         "sourceBytes": 24298,
         "unresolvedImports": [],
         "interactive": true,
         "output": true,
-        "automatedTest": false,
-        "localTest": false,
+        "automatedTest": true,
+        "localTest": true,
         "functionalTest": false,
         "networkDependent": false,
         "envKeys": [],
@@ -147803,9 +147801,7 @@
         "browserLocalOperations": 0
       },
       "issues": [],
-      "recommendations": [
-        "Add one deterministic functional or unit regression test."
-      ]
+      "recommendations": []
     },
     {
       "slug": "vegan-macro-calculator",
