@@ -390,6 +390,11 @@ export const SITE_ROUTES = {
   desktop: { label: "Desktop Software", href: "/desktop" },
   trendingVideos: { label: "Trending Videos", href: "/trendingvids" },
   personality: { label: "Personality", href: "/personality" },
+  // Every entry here must have a page.jsx under src/app — a nav link to a
+  // missing route resolves to the global not-found document served with a
+  // 200, which is the soft 404 these routes exist to stop producing.
+  top1: { label: "Top1", href: "/top1" },
+  top6: { label: "Top6", href: "/top6" },
   top9: { label: "Top9", href: "/top9" },
   top10: { label: "Top10", href: "/top10" },
   about: { label: "About AltFTool", href: "/policypages/about" },
@@ -531,6 +536,8 @@ export const PUBLIC_NAV_ITEMS = [
       { ...SITE_ROUTES.buySmart, group: "Find deals", icon: ShoppingBag },
       { ...SITE_ROUTES.saleLocator, group: "Find deals", icon: MapPin },
       { ...SITE_ROUTES.brandRatings, group: "Research", icon: ShieldCheck },
+      { ...SITE_ROUTES.top1, group: "Research", icon: LayoutGrid },
+      { ...SITE_ROUTES.top6, group: "Research", icon: LayoutGrid },
       { ...SITE_ROUTES.top9, group: "Research", icon: LayoutGrid },
       { ...SITE_ROUTES.top10, group: "Research", icon: LayoutGrid },
     ],
@@ -752,6 +759,8 @@ export const FOOTER_ROUTE_GROUPS = [
       SITE_ROUTES.exclusiveDeals,
       SITE_ROUTES.buySmart,
       SITE_ROUTES.brandRatings,
+      SITE_ROUTES.top1,
+      SITE_ROUTES.top6,
       SITE_ROUTES.top9,
       SITE_ROUTES.top10,
     ],

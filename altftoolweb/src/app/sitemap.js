@@ -93,6 +93,8 @@ const staticRoutes = [
   { path: "/search-eng", priority: 0.65 },
   // /top11 is quarantined pending sourced editorial review. /kym is absent for
   // the same noindex reason and never appeared here.
+  { path: "/top1", priority: 0.68 },
+  { path: "/top6", priority: 0.68 },
   { path: "/top9", priority: 0.68 },
   { path: "/top10", priority: 0.68 },
   { path: "/labs", priority: 0.66 },
