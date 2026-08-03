@@ -77,6 +77,16 @@ export function parseTimestamp(raw) {
   return hours * 3600 + minutes * 60 + seconds;
 }
 
+/**
+ * Slice text by Unicode code point rather than by UTF-16 code unit. A plain
+ * `String.slice` can land inside a surrogate pair (e.g. an emoji), leaving an
+ * unpaired surrogate that renders as a broken glyph — iterating the string
+ * (which walks code points) and re-joining keeps 4-byte characters intact.
+ */
+function sliceByCodePoint(text, count) {
+  return Array.from(String(text ?? "")).slice(0, count).join("");
+}
+
 /** Format seconds back into YouTube's own timestamp style. */
 export function formatTimestamp(totalSeconds) {
   const value = Math.max(0, Math.floor(Number(totalSeconds) || 0));
@@ -286,8 +296,8 @@ export function buildDescription(input = {}) {
     length,
     remaining: DESCRIPTION_MAX_CHARS - length,
     usedShare: length / DESCRIPTION_MAX_CHARS,
-    aboveFold: text.slice(0, ABOVE_FOLD_CHARS),
-    searchSnippet: summaryText.slice(0, SEARCH_SNIPPET_CHARS),
+    aboveFold: sliceByCodePoint(text, ABOVE_FOLD_CHARS),
+    searchSnippet: sliceByCodePoint(summaryText, SEARCH_SNIPPET_CHARS),
     summaryLength: summaryText.length,
     summaryFitsSnippet: summaryText.length <= SEARCH_SNIPPET_CHARS,
     chapters: chapterReport.chapters,

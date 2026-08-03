@@ -117,7 +117,11 @@ export function computeTimberWeight({
   pieces = 1,
   moisturePercent = REFERENCE_MOISTURE_PERCENT,
 }) {
-  if (![thickness, width, length, pieces, moisturePercent, customDensity].every(isNum)) {
+  const species = getSpecies(speciesId);
+  const requiredFields = species.custom
+    ? [thickness, width, length, pieces, moisturePercent, customDensity]
+    : [thickness, width, length, pieces, moisturePercent];
+  if (!requiredFields.every(isNum)) {
     return { error: "Enter a valid number in every field." };
   }
   if (thickness <= 0 || width <= 0 || length <= 0) {
@@ -130,7 +134,6 @@ export function computeTimberWeight({
     return { error: "Moisture content should be between 0% and 200% of dry weight." };
   }
 
-  const species = getSpecies(speciesId);
   const density12 = species.custom ? customDensity : species.density12;
   if (!(density12 > 0) || density12 > 1500) {
     return { error: "Density should be between 1 and 1500 kg per cubic metre." };

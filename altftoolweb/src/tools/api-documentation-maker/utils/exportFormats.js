@@ -24,9 +24,29 @@ export function downloadTextFile(content, filename, mime) {
   URL.revokeObjectURL(url);
 }
 
+// Plain btoa()/atob() only handle Latin1 (code points <= U+00FF) and throw an
+// InvalidCharacterError on anything else — which real API titles/descriptions
+// routinely contain (accented letters, em dashes, curly quotes, non-Latin
+// scripts). These wrap the spec's UTF-8 bytes so any JSON string round-trips.
+export function base64EncodeUnicode(str) {
+  const bytes = new TextEncoder().encode(str);
+  let binary = "";
+  bytes.forEach((b) => {
+    binary += String.fromCharCode(b);
+  });
+  return btoa(binary);
+}
+
+export function base64DecodeUnicode(b64) {
+  const binary = atob(b64);
+  const bytes = new Uint8Array(binary.length);
+  for (let i = 0; i < binary.length; i += 1) bytes[i] = binary.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+
 // Encodes the spec into a shareable URL — mirrors SwaggerDocGenerator's own share-link logic.
 export function buildShareUrl(spec) {
-  const encoded = encodeURIComponent(btoa(JSON.stringify(spec)));
+  const encoded = encodeURIComponent(base64EncodeUnicode(JSON.stringify(spec)));
   return `${window.location.origin}${window.location.pathname}?spec=${encoded}`;
 }
 

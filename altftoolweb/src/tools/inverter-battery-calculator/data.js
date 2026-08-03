@@ -58,7 +58,7 @@ export const APPLIANCES = [
     watts: 1000,
     group: "Heavy",
     heavy: true,
-    note: "A pure resistive load — it will flatten a 150 Ah battery in well under an hour.",
+    note: "A pure resistive load — it will flatten a 150 Ah battery in a bit over an hour, far faster than lights or fans.",
   },
   {
     id: "microwave",

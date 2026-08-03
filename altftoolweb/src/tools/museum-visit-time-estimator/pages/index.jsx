@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Landmark, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   VIEWING_STYLES,
   estimateMuseumVisit,
@@ -72,7 +73,7 @@ export default function ToolHome() {
   const [shopMinutes, setShopMinutes] = useState(DEFAULTS.shopMinutes);
   const [restBreakMinutes, setRestBreakMinutes] = useState(DEFAULTS.restBreakMinutes);
   const [availableMinutes, setAvailableMinutes] = useState(DEFAULTS.availableMinutes);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -106,19 +107,20 @@ export default function ToolHome() {
     ],
   );
 
-  const copyResult = async () => {
+  const copyResult = () => {
     const text = formatVisitText(result, museum);
     if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("estimate", text, { label: "Visit estimate" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your museum, object/gallery counts and all timing fields with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setMuseum(DEFAULTS.museum);
     setObjectsOnDisplay(DEFAULTS.objectsOnDisplay);
     setGalleries(DEFAULTS.galleries);
@@ -132,7 +134,7 @@ export default function ToolHome() {
     setShopMinutes(DEFAULTS.shopMinutes);
     setRestBreakMinutes(DEFAULTS.restBreakMinutes);
     setAvailableMinutes(DEFAULTS.availableMinutes);
-    setCopied(false);
+    resetCopyState();
   };
 
   const activeStyle = VIEWING_STYLES.find((item) => item.id === style);
@@ -278,12 +280,16 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the visit estimate"
+              aria-label={isCopied("estimate") ? "Copied the visit estimate" : "Copy the visit estimate"}
               className={GHOST_BTN}
               disabled={Boolean(result.error)}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy estimate"}
+              {isCopied("estimate") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("estimate") ? "Copied!" : "Copy estimate"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
@@ -291,6 +297,9 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[

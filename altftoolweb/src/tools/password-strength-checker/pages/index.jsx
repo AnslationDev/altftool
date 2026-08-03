@@ -14,7 +14,7 @@ import {
   Wand2,
   X,
 } from "lucide-react";
-import { safeCopyText } from "@/shared/utils/clipboard";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { COMMON_PASSWORDS, DICTIONARY_WORDS, KEYBOARD_ROWS, PASSPHRASE_WORDS } from "../data";
 
 const CHAR_SETS = [
@@ -26,7 +26,7 @@ const CHAR_SETS = [
 
 const SCENARIOS = [
   { id: "throttled", label: "Online attack, rate limited", detail: "100 guesses / second", rate: 1e2 },
-  { id: "unthrottled", label: "Online attack, no rate limit", detail: "10 thousand guesses / second", rate: 1e4 },
+  { id: "unthrottled", label: "Online attack, no rate limit", detail: "1 thousand guesses / second", rate: 1e3 },
   { id: "slow", label: "Offline crack, slow hash (bcrypt)", detail: "10 thousand guesses / second", rate: 1e4 },
   { id: "gpu", label: "Offline crack, fast hash (GPU)", detail: "10 billion guesses / second", rate: 1e10 },
   { id: "rig", label: "Dedicated cracking rig", detail: "1 trillion guesses / second", rate: 1e12 },
@@ -48,6 +48,17 @@ const EXAMPLES = [
 ];
 
 const LEET_MAP = { "@": "a", "3": "e", "0": "o", "1": "i", $: "s" };
+
+// Cap how long a password we run the pattern checks against. keyboardRun()
+// below is quadratic in the input length, and this field intentionally has
+// no autoComplete/masking assumptions — someone pasting a whole paragraph
+// (or a file's contents) would otherwise freeze the tab for seconds. No real
+// password needs to be longer than this.
+const MAX_PASSWORD_LENGTH = 256;
+
+// Precomputed once (not per keyboardRun call) since reversing each row is
+// otherwise repeated on every one of the O(n^2) substring checks below.
+const KEYBOARD_ROWS_REVERSED = KEYBOARD_ROWS.map((row) => [...row].reverse().join(""));
 
 const SEPARATORS = ["-", ".", "_", "+", "=", "!", "?", "&"];
 
@@ -104,9 +115,9 @@ function keyboardRun(value) {
   for (let start = 0; start < value.length; start += 1) {
     for (let end = value.length; end - start >= 4; end -= 1) {
       const chunk = value.slice(start, end);
-      for (const row of KEYBOARD_ROWS) {
-        if (row.includes(chunk)) return chunk;
-        if ([...row].reverse().join("").includes(chunk)) return chunk;
+      for (let i = 0; i < KEYBOARD_ROWS.length; i += 1) {
+        if (KEYBOARD_ROWS[i].includes(chunk)) return chunk;
+        if (KEYBOARD_ROWS_REVERSED[i].includes(chunk)) return chunk;
       }
     }
   }
@@ -163,7 +174,13 @@ function analyze(password) {
       const candidate = exact || WORD_LIST.find((word) => word.length >= 4 && deleeted.includes(word));
       const embedded = candidate && !lower.includes(candidate) ? candidate : null;
       if (embedded) {
-        const swaps = [...lower].filter((char) => LEET_MAP[char]).length;
+        // Only count the substitutions actually used to disguise the matched
+        // word, not every LEET_MAP character anywhere in the password (which
+        // double-counts trailing digits/symbols that happen to reuse the same
+        // characters, e.g. the plain "123" suffix in "P@ssw0rd123").
+        const start = deleeted.indexOf(embedded);
+        const matchedSpan = start >= 0 ? lower.slice(start, start + embedded.length) : lower;
+        const swaps = [...matchedSpan].filter((char) => LEET_MAP[char]).length;
         findings.push({
           id: "leet",
           label: "Leet-speak dictionary word",
@@ -187,15 +204,21 @@ function analyze(password) {
       });
     }
 
-    const repeat = lower.match(/(.)\1{2,}/);
+    // The "u" flag makes "." match a whole Unicode code point instead of a
+    // single UTF-16 code unit, so repeated astral-plane characters (most
+    // emoji are surrogate pairs) are detected instead of silently passing
+    // with full entropy credit. repeat[0].length still counts UTF-16 units,
+    // so the run length itself is measured with a code-point-aware spread.
+    const repeat = lower.match(/(.)\1{2,}/u);
     if (repeat) {
+      const runLength = [...repeat[0]].length;
       findings.push({
         id: "repeat",
         label: "Repeated characters",
-        detail: `"${repeat[0]}" is the same character ${repeat[0].length} times over. A repeat is one choice plus a length, not ${repeat[0].length} independent choices.`,
+        detail: `"${repeat[0]}" is the same character ${runLength} times over. A repeat is one choice plus a length, not ${runLength} independent choices.`,
         fix: "Replace the repeated run with different characters.",
         cap: 2,
-        penalty: Math.max(0, repeat[0].length * poolBits - (poolBits + Math.log2(repeat[0].length))),
+        penalty: Math.max(0, runLength * poolBits - (poolBits + Math.log2(runLength))),
       });
     }
 
@@ -307,9 +330,20 @@ export default function ToolHome() {
   const [visible, setVisible] = useState(false);
   const [wordCount, setWordCount] = useState(4);
   const [passphrase, setPassphrase] = useState("");
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const analysis = useMemo(() => analyze(password), [password]);
+
+  const applyExample = (value) => {
+    if (
+      password &&
+      password !== value &&
+      !window.confirm("Replace the password you typed with this example? This cannot be undone.")
+    ) {
+      return;
+    }
+    setPassword(value);
+  };
 
   const regenerate = useCallback((count) => {
     try {
@@ -324,14 +358,13 @@ export default function ToolHome() {
   }, [regenerate, wordCount]);
 
   const level = SCORE_LEVELS[analysis.score];
+  const displayLabel = analysis.length ? level.label : "Waiting for input";
+  const displayTone = analysis.length ? level.tone : "var(--muted-foreground)";
   const phraseBits = passphraseBits(wordCount);
 
-  const copyPassphrase = async () => {
+  const copyPassphrase = () => {
     if (!passphrase) return;
-    const success = await safeCopyText(passphrase);
-    if (!success) return;
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1400);
+    copy("passphrase", passphrase, { label: "Passphrase" });
   };
 
   return (
@@ -358,11 +391,12 @@ export default function ToolHome() {
                   <input
                     type={visible ? "text" : "password"}
                     value={password}
-                    onChange={(event) => setPassword(event.target.value)}
+                    onChange={(event) => setPassword(event.target.value.slice(0, MAX_PASSWORD_LENGTH))}
                     autoComplete="off"
                     autoCorrect="off"
                     autoCapitalize="off"
                     spellCheck={false}
+                    maxLength={MAX_PASSWORD_LENGTH}
                     placeholder="Type or paste a password"
                     className="h-12 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 pr-12 font-mono outline-none focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
                   />
@@ -399,7 +433,7 @@ export default function ToolHome() {
                     <button
                       key={example.label}
                       type="button"
-                      onClick={() => setPassword(example.value)}
+                      onClick={() => applyExample(example.value)}
                       className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-left text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)]"
                     >
                       {example.label}
@@ -434,15 +468,18 @@ export default function ToolHome() {
                   type="button"
                   onClick={copyPassphrase}
                   className="flex h-9 w-9 shrink-0 items-center justify-center rounded-md text-[var(--muted-foreground)] transition hover:text-[var(--primary)]"
-                  aria-label="Copy passphrase"
+                  aria-label={isCopied("passphrase") ? "Copied the passphrase" : "Copy passphrase"}
                 >
-                  {copied ? (
+                  {isCopied("passphrase") ? (
                     <Check className="h-4 w-4" style={{ color: "var(--anslation-ds-success)" }} />
                   ) : (
                     <Copy className="h-4 w-4" />
                   )}
                 </button>
               </div>
+              <span className="sr-only" role="status" aria-live="polite">
+                {announcement}
+              </span>
 
               <label className="mt-4 block">
                 <span className="text-sm font-semibold">Words: {wordCount}</span>
@@ -480,13 +517,13 @@ export default function ToolHome() {
                 <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">Overall strength</p>
                 <span
                   className="rounded-full px-3 py-1 text-xs font-semibold"
-                  style={{ background: "var(--muted)", color: level.tone }}
+                  style={{ background: "var(--muted)", color: displayTone }}
                 >
-                  {analysis.length ? level.label : "Waiting for input"}
+                  {displayLabel}
                 </span>
               </div>
 
-              <div className="mt-3 flex gap-1.5" aria-live="polite" aria-label={`Strength: ${level.label}`}>
+              <div className="mt-3 flex gap-1.5" aria-live="polite" aria-label={`Strength: ${displayLabel}`}>
                 {SCORE_LEVELS.map((item, index) => (
                   <div
                     key={item.label}

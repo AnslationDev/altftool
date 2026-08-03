@@ -23,7 +23,7 @@ const seo = {
     ],
     [
       "How do I calculate first-half time for a negative split?",
-      "Divide the goal finish time by (1 + the ratio), where the ratio is 1 minus the split percentage as a decimal. For a 4-hour goal and a 2% split that is 14,400 divided by 1.98, which is 7,272 seconds, or 2:01:13.",
+      "Divide the goal finish time by (1 + the ratio), where the ratio is 1 minus the split percentage as a decimal. For a 4-hour goal and a 2% split that is 14,400 divided by 1.98, which is 7,273 seconds, or 2:01:13.",
     ],
     [
       "Do elite runners actually negative split?",

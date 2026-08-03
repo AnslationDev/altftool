@@ -57,7 +57,7 @@ const STATUS_ICON = {
 
 const STATUS_TONE = {
   pass: "text-[var(--success)]",
-  warn: "text-[var(--primary)]",
+  warn: "text-[var(--warning)]",
   fail: "text-[var(--danger)]",
   info: "text-[var(--muted-foreground)]",
 };
@@ -142,6 +142,13 @@ export default function ToolHome() {
   }, [hasError, result]);
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the URL, title and description back to the demo example? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setUrl(DEFAULTS.url);
     setTitle(DEFAULTS.title);
     setDescription(DEFAULTS.description);

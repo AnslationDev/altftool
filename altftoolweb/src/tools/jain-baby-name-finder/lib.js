@@ -25,12 +25,6 @@
 /** Tirthankaras in the present descending half-cycle (avasarpini). */
 export const TIRTHANKARA_COUNT = 24;
 
-/** Virtues in the Das Lakshana Dharma observed during Paryushan. */
-export const DAS_LAKSHANA_COUNT = 10;
-
-/** Entities saluted in the Navkar (Namokar) mantra. */
-export const NAVKAR_SALUTATIONS = 5;
-
 /** Maximum number of names a single search may return. */
 export const MAX_RESULTS = 60;
 
@@ -265,10 +259,8 @@ export function findJainNames(input) {
   const rotated = sorted.slice(offset).concat(sorted.slice(0, offset));
   const names = rotated.slice(0, limit);
 
-  const byCategory = {};
   const byGender = { boy: 0, girl: 0 };
   matched.forEach((entry) => {
-    byCategory[entry.category] = (byCategory[entry.category] || 0) + 1;
     byGender[entry.gender] += 1;
   });
 
@@ -277,7 +269,6 @@ export function findJainNames(input) {
     matchedCount: matched.length,
     totalCount: JAIN_NAMES.length,
     shownCount: names.length,
-    byCategory,
     byGender,
     gender,
     category,

@@ -88,7 +88,6 @@ export default function ToolHome() {
     const vaRequired = totalW / POWER_FACTOR;
     const recommendedVA = nextStandard(vaRequired, VA_SIZES);
     const utilisation = recommendedVA ? (vaRequired / recommendedVA) * 100 : 0;
-    const longestHours = items.reduce((max, item) => Math.max(max, item.hours), 0);
 
     const surgeItems = items.filter((item) => item.spec.surge && item.qty > 0);
     const worst = surgeItems.reduce(
@@ -109,13 +108,11 @@ export default function ToolHome() {
       vaRequired,
       recommendedVA,
       utilisation,
-      longestHours,
       worst,
       peakW,
       peakVA,
       surgeSafeVA,
       surgeRisk,
-      heavy: items.filter((item) => item.spec.heavy),
     };
   }, [items]);
 
@@ -125,7 +122,10 @@ export default function ToolHome() {
     const depth = Math.min(1, Math.max(0.1, clampMin(dod, 0.1)));
     const divisor = volts * eff * depth;
     const requiredAh = divisor > 0 ? load.energyWh / divisor : 0;
-    const recommendedAh = nextStandard(requiredAh, AH_SIZES) || AH_SIZES[AH_SIZES.length - 1];
+    const recommendedAh = nextStandard(requiredAh, AH_SIZES);
+    const maxStandardAh = AH_SIZES[AH_SIZES.length - 1];
+    const recommendedParallelCount =
+      !recommendedAh && requiredAh > 0 ? Math.ceil(requiredAh / maxStandardAh) : 0;
     const chosenAh = clampMin(batteryAh, 1);
     const seriesCount = Math.max(1, Math.round(volts / 12));
     const parallelStrings = chosenAh > 0 ? Math.max(1, Math.ceil(requiredAh / chosenAh)) : 1;
@@ -143,6 +143,8 @@ export default function ToolHome() {
       divisor,
       requiredAh,
       recommendedAh,
+      maxStandardAh,
+      recommendedParallelCount,
       chosenAh,
       seriesCount,
       parallelStrings,
@@ -155,8 +157,12 @@ export default function ToolHome() {
 
   const hoursLabel = (value) => {
     if (!Number.isFinite(value) || value <= 0) return "—";
-    const h = Math.floor(value);
-    const m = Math.round((value - h) * 60);
+    let h = Math.floor(value);
+    let m = Math.round((value - h) * 60);
+    if (m === 60) {
+      m = 0;
+      h += 1;
+    }
     if (h === 0) return `${m} min`;
     return `${h} h ${m} min`;
   };
@@ -164,6 +170,13 @@ export default function ToolHome() {
   const addRow = () => {
     if (!catalog.has(picker)) return;
     setRows((current) => [...current, { key: uid(), id: picker, qty: 1, hours: clampMin(masterHours) }]);
+  };
+
+  const resetRows = () => {
+    if (!window.confirm("Reset the appliance list? This replaces your current rows with the default example and cannot be undone.")) {
+      return;
+    }
+    setRows(defaultRows());
   };
 
   const updateRow = (key, patch) => {
@@ -203,7 +216,11 @@ export default function ToolHome() {
           battery.requiredAh,
           1
         )} Ah`,
-        `  Recommended standard size: ${num(battery.recommendedAh)} Ah`,
+        `  Recommended standard size: ${
+          battery.recommendedAh
+            ? `${num(battery.recommendedAh)} Ah`
+            : `above ${num(battery.maxStandardAh)} Ah — needs ${battery.recommendedParallelCount} × ${num(battery.maxStandardAh)} Ah batteries in parallel`
+        }`,
         `  Bank: ${battery.totalBatteries} × 12 V ${num(battery.chosenAh)} Ah (${battery.seriesCount} in series × ${battery.parallelStrings} parallel) = ${num(battery.bankAh)} Ah at ${battery.volts} V`,
         `  Actual backup at ${num(load.totalW)} W: ${hoursLabel(battery.actualHours)}`,
         `  Charging time at ${num(clampMin(chargeCurrent, 0.1))} A (incl. 20% losses): ${hoursLabel(battery.chargeHours)}`,
@@ -239,7 +256,12 @@ export default function ToolHome() {
               ["Connected load", `${num(load.totalW)} W`],
               ["Energy needed", `${num(load.energyWh)} Wh`],
               ["Inverter", load.recommendedVA ? `${num(load.recommendedVA)} VA` : "3.5 kVA+"],
-              ["Battery", `${num(battery.recommendedAh)} Ah`],
+              [
+                "Battery",
+                battery.recommendedAh
+                  ? `${num(battery.recommendedAh)} Ah`
+                  : `${battery.recommendedParallelCount} × ${num(battery.maxStandardAh)} Ah`,
+              ],
             ].map(([label, value]) => (
               <div key={label} className="rounded-md border border-[var(--border)] bg-[var(--background)] p-3">
                 <p className="text-xs text-[var(--muted-foreground)]">{label}</p>
@@ -260,7 +282,7 @@ export default function ToolHome() {
               </div>
               <button
                 type="button"
-                onClick={() => setRows(defaultRows())}
+                onClick={resetRows}
                 className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--primary)]"
               >
                 <RotateCcw className="h-3.5 w-3.5" />
@@ -679,6 +701,20 @@ export default function ToolHome() {
                 );
               })}
             </div>
+            {!battery.recommendedAh && (
+              <p className="mt-3 flex items-start gap-2 text-xs leading-5">
+                <AlertTriangle
+                  className="mt-0.5 h-3.5 w-3.5 shrink-0"
+                  style={{ color: "var(--anslation-ds-danger)" }}
+                />
+                <span className="text-[var(--muted-foreground)]">
+                  {num(battery.requiredAh, 1)} Ah needed is past the largest standard size (
+                  {num(battery.maxStandardAh)} Ah). No single battery covers this — you would need{" "}
+                  {battery.recommendedParallelCount} × {num(battery.maxStandardAh)} Ah batteries wired in
+                  parallel (or a custom higher-capacity bank) to actually get this backup time.
+                </span>
+              </p>
+            )}
           </div>
 
           <div className="mt-4 rounded-md border border-[var(--border)] bg-[var(--background)] p-4" aria-live="polite">

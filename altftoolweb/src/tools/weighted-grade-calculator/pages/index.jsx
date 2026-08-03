@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Check, Copy, GraduationCap, Plus, RotateCcw, Trash2 } from "lucide-react";
 
 import { computeWeightedGrade, GRADE_SCALES, requiredOnRemaining } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const DEFAULT_ITEMS = [
   { id: "i1", name: "Homework", weight: "20", score: "95" },
@@ -24,6 +25,10 @@ const DASH = "—";
 
 const NUM2 = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
 const two = (v) => (Number.isFinite(v) ? NUM2.format(v) : DASH);
+// GPA is always shown to one decimal place, everywhere it appears on the
+// page — otherwise a whole-number GPA (e.g. exactly 4.0) renders as "4" in
+// the results card but "4.0" in the scale reference table below it.
+const gpa = (v) => (Number.isFinite(v) ? v.toFixed(1) : DASH);
 
 function Row({ label, value }) {
   return (
@@ -38,7 +43,7 @@ export default function ToolHome() {
   const [items, setItems] = useState(DEFAULT_ITEMS);
   const [scaleId, setScaleId] = useState(DEFAULTS.scaleId);
   const [target, setTarget] = useState(DEFAULTS.target);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const libItems = useMemo(
     () =>
@@ -71,28 +76,28 @@ export default function ToolHome() {
   }
 
   function reset() {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your assessments, scale and target with the example course and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setItems(DEFAULT_ITEMS);
     setScaleId(DEFAULTS.scaleId);
     setTarget(DEFAULTS.target);
-    setCopied(false);
   }
 
-  async function copyResult() {
+  function copyResult() {
     if (error) return;
     const lines = [
-      `Weighted grade: ${two(grade.currentPercent)}% (${grade.currentLetter}, ${two(grade.currentGpa)} GPA) on work graded so far`,
+      `Weighted grade: ${two(grade.currentPercent)}% (${grade.currentLetter}, ${gpa(grade.currentGpa)} GPA) on work graded so far`,
       `Projected if nothing else is submitted: ${two(grade.projectedPercent)}% (${grade.projectedLetter})`,
       `Graded weight: ${two(grade.gradedWeight)} of ${two(grade.totalWeight)}; grade points banked: ${two(grade.pointsEarned)}`,
       `Highest still reachable: ${two(grade.maxPossiblePercent)}%`,
       needed.error ? needed.error : `To finish on ${two(needed.targetPercent)}% you need ${two(needed.neededPercent)}% across the remaining ${two(needed.remainingWeight)} weight`,
     ];
-    try {
-      await navigator.clipboard.writeText(lines.join("\n"));
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", lines.join("\n"), { label: "grade summary" });
   }
 
   const activeScale = GRADE_SCALES.find((s) => s.id === scaleId) ?? GRADE_SCALES[0];
@@ -192,19 +197,36 @@ export default function ToolHome() {
           </div>
 
           <div className="flex flex-wrap gap-3">
-            <button type="button" className={PRIMARY_BTN} onClick={copyResult} aria-label="Copy the grade summary to the clipboard">
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy result"}
+            <button
+              type="button"
+              className={PRIMARY_BTN}
+              onClick={copyResult}
+              aria-label={isCopied("result") ? "Copied the grade summary to the clipboard" : "Copy the grade summary to the clipboard"}
+            >
+              {isCopied("result") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" className={GHOST_BTN} onClick={reset} aria-label="Reset the calculator to its example course">
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </section>
 
         <section className="grid gap-4">
-          <div className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+          <div
+            className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             {error ? (
               <p className="mb-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]" role="alert">
                 {error}
@@ -215,7 +237,7 @@ export default function ToolHome() {
               {error ? DASH : `${two(grade.currentPercent)}%`}
             </p>
             <p className="mt-1 text-sm font-semibold text-[var(--success)]">
-              {error ? DASH : `${grade.currentLetter} · ${two(grade.currentGpa)} on the 4.0 scale`}
+              {error ? DASH : `${grade.currentLetter} · ${gpa(grade.currentGpa)} on the 4.0 scale`}
             </p>
 
             <dl className="mt-4">
@@ -227,7 +249,12 @@ export default function ToolHome() {
             </dl>
           </div>
 
-          <div className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+          <div
+            className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+            role="status"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             <h2 className="text-sm font-semibold text-[var(--foreground)]">To finish on {two(Number(target))}%</h2>
             {needed.error ? (
               <p className="mt-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]" role="alert">
@@ -271,7 +298,7 @@ export default function ToolHome() {
                     <tr key={band.letter} className="border-t border-[var(--border)]">
                       <td className="py-2 pr-3 text-[var(--foreground)]">{band.letter}</td>
                       <td className="py-2 pr-3 text-right tabular-nums text-[var(--foreground)]">{band.min}%</td>
-                      <td className="py-2 text-right tabular-nums text-[var(--foreground)]">{band.gpa.toFixed(1)}</td>
+                      <td className="py-2 text-right tabular-nums text-[var(--foreground)]">{gpa(band.gpa)}</td>
                     </tr>
                   ))}
                 </tbody>

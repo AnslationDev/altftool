@@ -63,6 +63,10 @@ function formatBytes(bytes) {
 export default function CybercrimeEvidencePackBuilder() {
   const fileRef = useRef(null);
   const hashOperationRef = useRef(0);
+  // Bumped on every reset() so an in-flight addFiles() batch can tell it was
+  // reset out from under it and discard its results instead of merging stale
+  // hashes back into the just-cleared state.
+  const resetTokenRef = useRef(0);
   const [incidentTitle, setIncidentTitle] = useState("");
   const [incidentReference, setIncidentReference] = useState("");
   const [narrative, setNarrative] = useState("");
@@ -81,6 +85,7 @@ export default function CybercrimeEvidencePackBuilder() {
   const addFiles = async (files) => {
     const incoming = [...(files || [])];
     if (!incoming.length) return;
+    const token = resetTokenRef.current;
     setFileError("");
     setResult(null);
 
@@ -112,31 +117,66 @@ export default function CybercrimeEvidencePackBuilder() {
     hashOperationRef.current = operation;
     try {
       const hashed = [];
+      const failed = [];
+      // Hash each file independently so one unreadable file (e.g. removed
+      // from a mounted/removable drive mid-read) doesn't discard every file
+      // in the batch that already hashed successfully earlier in the loop.
       for (const file of selected) {
-        if (hashOperationRef.current !== operation) return;
-        hashed.push({
-          filename: file.name,
-          mediaType: file.type || "application/octet-stream",
-          size: file.size,
-          lastModified: file.lastModified,
-          sha256: await hashFile(file),
-          note: "",
-        });
+        if (
+          hashOperationRef.current !== operation ||
+          resetTokenRef.current !== token
+        ) {
+          return;
+        }
+        try {
+          const sha256 = await hashFile(file);
+          if (
+            hashOperationRef.current !== operation ||
+            resetTokenRef.current !== token
+          ) {
+            return;
+          }
+          hashed.push({
+            filename: file.name,
+            mediaType: file.type || "application/octet-stream",
+            size: file.size,
+            lastModified: file.lastModified,
+            sha256,
+            note: "",
+          });
+        } catch {
+          failed.push(file.name);
+        }
       }
-      if (hashOperationRef.current !== operation) return;
-      setEvidenceItems((current) => [...current, ...hashed]);
+
+      // Reset() ran while this batch was still hashing — its results are
+      // stale, discard them rather than repopulating the list the user just
+      // cleared.
+      if (resetTokenRef.current !== token) return;
+
+      if (hashed.length) {
+        setEvidenceItems((current) => [...current, ...hashed]);
+      }
+
+      const messages = [];
       if (overflow > 0) {
-        setFileError(
+        messages.push(
           `Only ${selected.length} of ${incoming.length} newly selected files were added — the ${MAX_FILES}-file limit was reached. ${overflow} file${overflow === 1 ? " was" : "s were"} not added.`,
         );
       }
-    } catch {
-      if (hashOperationRef.current !== operation) return;
-      setFileError(
-        "One or more of the newly selected files could not be hashed in this browser. Evidence already added is unchanged.",
-      );
+      if (failed.length) {
+        messages.push(
+          `${failed.length} file${failed.length === 1 ? "" : "s"} could not be hashed in this browser and ${failed.length === 1 ? "was" : "were"} skipped: ${failed.join(", ")}.${hashed.length ? " The rest were added." : ""}`,
+        );
+      }
+      if (messages.length) setFileError(messages.join(" "));
     } finally {
-      if (hashOperationRef.current === operation) setHashing(false);
+      if (
+        hashOperationRef.current === operation &&
+        resetTokenRef.current === token
+      ) {
+        setHashing(false);
+      }
     }
   };
 
@@ -165,6 +205,7 @@ export default function CybercrimeEvidencePackBuilder() {
     // Invalidate any digest operation that is currently awaiting file bytes
     // or Web Crypto, so its late completion cannot repopulate a reset form.
     hashOperationRef.current += 1;
+    resetTokenRef.current += 1;
     setIncidentTitle("");
     setIncidentReference("");
     setNarrative("");
@@ -263,6 +304,7 @@ export default function CybercrimeEvidencePackBuilder() {
             <textarea
               className="input-field min-h-52 w-full resize-y font-mono text-sm"
               value={timelineSource}
+              maxLength={MAX_TEXT_LENGTH}
               onChange={(event) => {
                 setTimelineSource(event.target.value);
                 invalidate();
@@ -404,7 +446,12 @@ export default function CybercrimeEvidencePackBuilder() {
           <Archive className="h-4 w-4" aria-hidden="true" />
           Build evidence manifest
         </button>
-        <button type="button" className="btn-secondary min-h-11 px-5" onClick={reset}>
+        <button
+          type="button"
+          className="btn-secondary min-h-11 px-5"
+          disabled={hashing}
+          onClick={reset}
+        >
           <RotateCcw className="h-4 w-4" aria-hidden="true" />
           Reset
         </button>

@@ -28,9 +28,6 @@
  * All functions are pure: times are arithmetic on the inputs, never the clock.
  */
 
-/** Smith & Smith (2001), Metropolitan Museum of Art: median seconds per work. */
-export const MET_MEDIAN_SECONDS = 17;
-
 /** Smith, Smith & Tinio (2017), Art Institute of Chicago: median seconds per work. */
 export const ART_INSTITUTE_MEDIAN_SECONDS = 21;
 
@@ -192,8 +189,21 @@ export function estimateMuseumVisit(input) {
   let reverse = null;
   if (available > 0) {
     const afterFixed = available - fixedMinutes;
-    const restAllowance = restMinutes > 0 ? Math.floor(Math.max(0, afterFixed) / FATIGUE_BREAK_INTERVAL_MIN) * restMinutes : 0;
-    const galleryBudgetMinutes = afterFixed - restAllowance;
+
+    // Rest breaks are scheduled per hour of *gallery* time (viewing + transit),
+    // matching the forward model's own rule — but here gallery time is itself
+    // what's left after rest is carved out of the fixed budget, so solve for
+    // the fixed point instead of deriving break count from the pre-subtraction
+    // pool (which can straddle an hour boundary rest removal would erase).
+    const restBreaksFor = (budgetMinutes) =>
+      restMinutes > 0 ? Math.floor(Math.max(0, budgetMinutes) / FATIGUE_BREAK_INTERVAL_MIN) : 0;
+    let galleryBudgetMinutes = Math.max(0, afterFixed);
+    for (let i = 0; i < 10; i += 1) {
+      const nextBudget = afterFixed - restBreaksFor(galleryBudgetMinutes) * restMinutes;
+      if (nextBudget === galleryBudgetMinutes) break;
+      galleryBudgetMinutes = nextBudget;
+    }
+    const restAllowance = restBreaksFor(galleryBudgetMinutes) * restMinutes;
     const viewingBudgetSeconds = galleryBudgetMinutes * 60 - transitSeconds;
 
     if (galleryBudgetMinutes <= 0) {
@@ -211,8 +221,21 @@ export function estimateMuseumVisit(input) {
         message: `Walking the ${rooms} rooms takes ${formatDuration(transitSeconds / 60)} on its own, which uses the whole gallery budget. You would be moving, not looking.`,
       };
     } else {
+      // Mirror the forward calculation's split between highlights (slow,
+      // fixed count) and ordinary stops (fast, the rest), instead of pricing
+      // every object at the flat per-object rate.
       const perObject = chosen.secondsPerObject;
-      const objectsPossible = Math.floor(viewingBudgetSeconds / perObject);
+      const highlightTimeNeeded = highlightCount * highlightSecs;
+      let objectsPossible;
+      let highlightsPossible;
+      if (highlightCount > 0 && viewingBudgetSeconds < highlightTimeNeeded) {
+        highlightsPossible = highlightSecs > 0 ? Math.floor(viewingBudgetSeconds / highlightSecs) : highlightCount;
+        objectsPossible = highlightsPossible;
+      } else {
+        highlightsPossible = highlightCount;
+        const remainingSeconds = viewingBudgetSeconds - highlightTimeNeeded;
+        objectsPossible = highlightCount + Math.floor(remainingSeconds / perObject);
+      }
       const coveragePct = (Math.min(objectsPossible, objects) / objects) * 100;
       reverse = {
         feasible: true,
@@ -223,7 +246,9 @@ export function estimateMuseumVisit(input) {
         message:
           objectsPossible >= stoppedObjects
             ? "Comfortable — you have time for the full pace you chose."
-            : `Enough for ${objectsPossible.toLocaleString("en-US")} objects at ${perObject} seconds each, against the ${stoppedObjects.toLocaleString("en-US")} this pace normally stops at.`,
+            : highlightCount > 0
+              ? `Enough for ${objectsPossible.toLocaleString("en-US")} objects — including ${Math.min(highlightsPossible, objectsPossible).toLocaleString("en-US")} highlights at ${highlightSecs} seconds each — against the ${stoppedObjects.toLocaleString("en-US")} this pace normally stops at.`
+              : `Enough for ${objectsPossible.toLocaleString("en-US")} objects at ${perObject} seconds each, against the ${stoppedObjects.toLocaleString("en-US")} this pace normally stops at.`,
       };
     }
   }
@@ -242,6 +267,11 @@ export function estimateMuseumVisit(input) {
   }
   if (entry === 0) {
     notes.push("No queue time budgeted. Major museums routinely run 20 to 45 minutes at the door without a timed ticket.");
+  }
+  if (highlightCount > stoppedObjects) {
+    notes.push(
+      `Only ${stoppedObjects.toLocaleString("en-US")} of the ${highlightCount.toLocaleString("en-US")} highlights you entered are counted — at this pace you only stop at ${stoppedObjects.toLocaleString("en-US")} objects in total, so the rest are treated as skipped.`,
+    );
   }
 
   const breakdown = [

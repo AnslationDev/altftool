@@ -52,7 +52,9 @@ export default function ToolHome() {
       `Registrable domain: ${result.registrableDomain}`,
       `Verdict: ${result.verdictLabel}`,
       "",
-      ...result.findings.filter((f) => f.weight > 0 || f.severity === "ok").map((f) => `• ${f.title} — ${f.detail}`),
+      ...result.findings
+        .filter((f) => f.weight > 0 || f.severity === "ok" || f.title === "Registrable domain matches")
+        .map((f) => `• ${f.title} — ${f.detail}`),
       "",
       "What to do:",
       ...STUDENT_CHECKLIST.map((step, i) => `${i + 1}. ${step}`),
@@ -140,7 +142,11 @@ export default function ToolHome() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         {hasError && (
           <p role="alert" className="rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">
             {result.error}
@@ -154,6 +160,11 @@ export default function ToolHome() {
               {hasError ? "—" : result.registrableDomain}
             </p>
             <p className="mt-1 text-sm font-semibold">{hasError ? "—" : result.verdictLabel}</p>
+            {!hasError && (
+              <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                Risk signal score: {result.score}/100 (sum of the weighted red flags found below)
+              </p>
+            )}
           </div>
           <div className="flex flex-wrap gap-2">
             <button

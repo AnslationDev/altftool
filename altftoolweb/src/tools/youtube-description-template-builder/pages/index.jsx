@@ -81,6 +81,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will replace your summary, chapters, links, credits and hashtags with the demo example values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setSummary(DEFAULTS.summary);
     setCta(DEFAULTS.cta);
     setChaptersRaw(DEFAULTS.chaptersRaw);

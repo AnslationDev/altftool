@@ -38,6 +38,13 @@ export const MAX_DISTANCE_KM = 300;
 export const MAX_FINISH_SECONDS = 24 * 3600;
 /** Fastest credible human road pace, ~2:00/km (world record marathon pace is ~2:54/km). */
 export const MIN_PACE_SEC_PER_KM = 120;
+/**
+ * Ceiling on how many rows the split sheet can build. Comfortably covers the
+ * planner's own stated bounds (a 300 km ultra at a fine 0.1 km step is 3,000
+ * rows) while still refusing a segment length so small it would try to
+ * build an unreasonable table.
+ */
+export const MAX_SEGMENTS = 6000;
 
 const toFinite = (value) => {
   const num = typeof value === "number" ? value : Number(String(value ?? "").trim());
@@ -135,6 +142,13 @@ export function planNegativeSplit({
   if (!(segLength > 0) || segLength > distance) {
     return { error: "Segment length must be greater than zero and no longer than the race." };
   }
+  const segmentCount = Math.ceil((distance - 1e-9) / segLength);
+  if (segmentCount > MAX_SEGMENTS) {
+    const minSegmentKm = distance / MAX_SEGMENTS;
+    return {
+      error: `A ${segLength} km segment over ${distance} km would build ${segmentCount} rows, more than this planner supports. Use a segment length of at least ${minSegmentKm.toFixed(2)} km.`,
+    };
+  }
 
   // Second-half time = first-half time x ratio, and the two must add to the goal.
   const ratio = 1 - split / 100;
@@ -164,7 +178,8 @@ export function planNegativeSplit({
   let cumulative = 0;
   let covered = 0;
   let guard = 0;
-  while (covered < distance - 1e-9 && guard < 1000) {
+  const guardLimit = segmentCount + 2;
+  while (covered < distance - 1e-9 && guard < guardLimit) {
     const start = covered;
     const end = Math.min(distance, covered + segLength);
     const secs = segmentSeconds({
@@ -185,10 +200,14 @@ export function planNegativeSplit({
       seconds: secs,
       pacePerKm: secs / (end - start),
       cumulativeSeconds: cumulative,
-      half: end <= halfDistance + 1e-9 ? "first" : start >= halfDistance - 1e-9 ? "second" : "split",
     });
     covered = end;
     guard += 1;
+  }
+  if (covered < distance - 1e-6) {
+    // Should be unreachable now that segmentCount is validated up front, but
+    // never hand back a truncated table that looks complete.
+    return { error: "Could not build a complete split sheet for these inputs. Try a longer segment length." };
   }
 
   const notes = [];

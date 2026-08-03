@@ -82,6 +82,8 @@ export default function ToolHome() {
       `Duration: ${NUM0.format(result.minutes)} minutes`,
     ];
     if (result.heartRate !== null) lines.push(`Average heart rate: ${NUM0.format(result.heartRate)} bpm`);
+    if (result.age !== null) lines.push(`Age: ${NUM0.format(result.age)} years`);
+    if (result.sex !== null) lines.push(`Sex: ${result.sex === "male" ? "Male" : "Female"}`);
     if (result.powerW !== null) lines.push(`Average power: ${NUM0.format(result.powerW)} W`);
     if (result.resistanceLevel !== null) lines.push(`Resistance level: ${NUM0.format(result.resistanceLevel)}`);
     if (result.rampDegrees !== null) lines.push(`Ramp: ${NUM0.format(result.rampDegrees)}°`);
@@ -329,7 +331,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Calories burned (gross)
             </p>
@@ -395,6 +397,11 @@ export default function ToolHome() {
             [
               "Average heart rate",
               hasError || result.heartRate === null ? DASH : `${NUM0.format(result.heartRate)} bpm`,
+            ],
+            ["Age", hasError || result.age === null ? DASH : `${NUM0.format(result.age)} years`],
+            [
+              "Sex",
+              hasError || result.sex === null ? DASH : result.sex === "male" ? "Male" : "Female",
             ],
             [
               "Console power",

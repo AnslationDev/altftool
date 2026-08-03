@@ -163,7 +163,7 @@ export function planWalkRun({ distanceKm, runPaceSec, walkPaceSec, runSeconds, w
       runSecondsTotal += secs;
       runDistance += remaining;
       runSegments += 1;
-      partial = { type: "run", km: remaining, seconds: secs };
+      partial = { type: "run", km: remaining, seconds: secs, runKm: remaining, walkKm: 0 };
     } else {
       const walkPart = remaining - runDistancePerCycle;
       const secs = runInterval + walkPart * walkPace;
@@ -174,7 +174,7 @@ export function planWalkRun({ distanceKm, runPaceSec, walkPaceSec, runSeconds, w
       walkDistance += walkPart;
       runSegments += 1;
       walkSegments += 1;
-      partial = { type: "run+walk", km: remaining, seconds: secs };
+      partial = { type: "run+walk", km: remaining, seconds: secs, runKm: runDistancePerCycle, walkKm: walkPart };
     }
   }
 

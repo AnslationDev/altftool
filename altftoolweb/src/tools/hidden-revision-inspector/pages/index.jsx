@@ -134,6 +134,10 @@ export default function HiddenRevisionInspector() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
+  // Bumped whenever the selected file changes or the panel is cleared, so an
+  // inspection promise still in flight from a previous file can recognize
+  // it has been superseded and must not overwrite newer state on arrival.
+  const requestEpochRef = useRef(0);
 
   const groupedChecks = useMemo(() => {
     if (!result?.ok) return [];
@@ -155,6 +159,9 @@ export default function HiddenRevisionInspector() {
   );
 
   const selectFile = (nextFile) => {
+    // A new selection (or clearing the input) always supersedes whatever
+    // inspection may still be running for the previous file.
+    requestEpochRef.current += 1;
     setResult(null);
     setError("");
     if (!nextFile) {
@@ -171,7 +178,8 @@ export default function HiddenRevisionInspector() {
   };
 
   const inspect = async () => {
-    if (!file) return;
+    if (!file || busy) return;
+    const requestEpoch = requestEpochRef.current;
     setBusy(true);
     setResult(null);
     setError("");
@@ -180,19 +188,25 @@ export default function HiddenRevisionInspector() {
         fileName: file.name,
         fileSize: file.size,
       });
+      // The user may have selected a different file or hit Clear while this
+      // was in flight; a superseded result must never repopulate the panel.
+      if (requestEpochRef.current !== requestEpoch) return;
       if (!inspection.ok) {
         setError(inspection.error);
         return;
       }
       setResult(inspection);
     } catch {
-      setError("The package could not be inspected locally.");
+      if (requestEpochRef.current === requestEpoch) {
+        setError("The package could not be inspected locally.");
+      }
     } finally {
-      setBusy(false);
+      if (requestEpochRef.current === requestEpoch) setBusy(false);
     }
   };
 
   const clear = () => {
+    requestEpochRef.current += 1;
     setFile(null);
     setResult(null);
     setError("");
@@ -261,13 +275,18 @@ export default function HiddenRevisionInspector() {
               ? `${extensionLabel(file)} · ${formatBytes(file.size)} · filename hidden from results`
               : "DOCX, DOCM, DOTX, XLSX, XLSM, XLTX, PPTX, PPTM, POTX, PPSX, or OOXML ZIP"}
           </p>
-          <label className="btn-secondary mt-4 inline-flex min-h-11 cursor-pointer items-center gap-2 px-5">
+          <label
+            className={`btn-secondary mt-4 inline-flex min-h-11 items-center gap-2 px-5 ${
+              busy ? "pointer-events-none cursor-not-allowed opacity-60" : "cursor-pointer"
+            }`}
+          >
             <FileUp className="h-4 w-4" aria-hidden="true" />
             {file ? "Choose another file" : "Choose file"}
             <input
               ref={fileInputRef}
               type="file"
               className="sr-only"
+              disabled={busy}
               accept=".docx,.docm,.dotx,.dotm,.xlsx,.xlsm,.xltx,.xltm,.xlam,.pptx,.pptm,.potx,.potm,.ppsx,.ppsm,.zip"
               onChange={(event) => selectFile(event.target.files?.[0] || null)}
             />
