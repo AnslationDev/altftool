@@ -1,0 +1,133 @@
+/* Scoped to /top6. Semantic tokens only — no literal colour, radius or
+   shadow — so the route follows the site's light and dark themes exactly
+   like the utility classes it replaces.
+ *
+ * Why these exist at all: RankedRow renders 66 times in this route's
+ * prerendered HTML (eleven categories, six rows each) and again in the
+ * RSC flight payload, so every character of a utility chain on it is
+ * shipped roughly 130 times. Naming the recipe once here keeps the same
+ * design and cuts the route's rendered markup by about a third, which is
+ * what keeps it inside the build's artifact budget. Everything on the
+ * page that renders once still uses plain Tailwind utilities. */
+
+.t6-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-secondary);
+}
+.t6-row:last-child {
+  border-bottom: 0;
+}
+.t6-media {
+  display: flex;
+  width: 100%;
+  flex-shrink: 0;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+@media (min-width: 640px) {
+  .t6-row {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  .t6-media {
+    width: auto;
+  }
+}
+
+.t6-rank {
+  display: flex;
+  height: 2rem;
+  width: 2rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.25rem;
+  border-radius: 9999px;
+  background: var(--primary-hover);
+  color: var(--primary-foreground);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.t6-thumb {
+  position: relative;
+  height: 12rem;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: var(--muted);
+}
+.t6-thumb img {
+  object-fit: cover;
+}
+.t6-thumb > div {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted-foreground);
+}
+@media (min-width: 640px) {
+  .t6-thumb {
+    height: 8rem;
+    width: 11rem;
+  }
+}
+
+.t6-body {
+  min-width: 0;
+  flex: 1;
+}
+.t6-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--foreground);
+}
+.t6-rating {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: 0.5rem;
+  padding: 0 0.5rem;
+  border-radius: 9999px;
+  background: var(--warning-soft);
+  color: var(--warning-text);
+  font-size: 0.75rem;
+}
+.t6-sub {
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.t6-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+.t6-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--primary-text);
+}
+.t6-link:hover {
+  color: var(--primary-hover);
+}
+.t6-link:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
