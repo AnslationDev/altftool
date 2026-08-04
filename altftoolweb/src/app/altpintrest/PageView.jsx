@@ -150,9 +150,9 @@ const getPrioritizedItems = (allItems, filter, query) => {
   return matched;
 };
 
-// `heading` is the server-rendered page h1 (see page.jsx / explore/page.jsx).
-// It arrives as children so it is present in the server HTML rather than only
-// after hydration, and exactly one of the two branches below renders it.
+// `heading` is the server-rendered landing-page h1 from page.jsx. It arrives as
+// children so it is present in the initial HTML; the explore branch supplies
+// its own visible h1 in ExploreHeaderHero.
 export default function AltPinterest({ defaultView, children: heading }) {
   const [showLanding, setShowLanding] = useState(defaultView !== "explore");
   const [activeTab, setActiveTab] = useState("discover");
@@ -799,12 +799,6 @@ export default function AltPinterest({ defaultView, children: heading }) {
         />
       ) : (
         <div className="max-w-[1560px] mx-auto w-full flex flex-col pt-6 pb-20 px-4 sm:px-6 lg:px-8">
-          {heading ? (
-            <div className="mb-6">
-              {heading}
-            </div>
-          ) : null}
-
           {/* ======================================= */}
           {/* EXPLORE HERO & EDITORIAL CATEGORY PANELS */}
           {/* ======================================= */}

@@ -135,6 +135,36 @@ test("unmatched nested routes return a branded hard 404", async ({ request }) =>
   expect(body).toMatch(/<meta[^>]*name="robots"[^>]*content="noindex"[^>]*>/);
 });
 
+test("AltPinterest keeps one primary heading when landing switches to the feed", async ({ page }) => {
+  await page.goto(`${webUrl}/altpintrest`, { waitUntil: "domcontentloaded" });
+
+  await expect(page.locator("h1")).toHaveCount(1);
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: "Discover and save visual inspiration with AltF Pinboard",
+    }),
+  ).toBeVisible();
+
+  await page
+    .getByRole("button", { name: "Enter Feed", exact: true })
+    .filter({ visible: true })
+    .click();
+
+  await expect(page.locator("h1")).toHaveCount(1);
+  await expect(
+    page.getByRole("heading", {
+      level: 1,
+      name: "Discover your next visual story",
+    }),
+  ).toBeVisible();
+
+  await page.goto(`${webUrl}/altpintrest/explore`, {
+    waitUntil: "domcontentloaded",
+  });
+  await expect(page.locator("h1")).toHaveCount(1);
+});
+
 test("tool detail routes use the clean workspace flow", async ({ page }) => {
   const quality = createPageQualityGate(page);
 

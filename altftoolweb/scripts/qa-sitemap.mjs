@@ -1,4 +1,5 @@
 import { writeFile } from "node:fs/promises";
+import { Buffer } from "node:buffer";
 
 const baseUrl = new URL(process.env.BASE_URL || "http://127.0.0.1:3000");
 const concurrency = Math.max(1, Number(process.env.CONCURRENCY || 12));
@@ -17,12 +18,16 @@ function localize(url) {
 }
 
 function decode(value = "") {
-  return value
+  const decoded = value
     .replaceAll("&amp;", "&")
     .replaceAll("&quot;", '"')
     .replaceAll("&#39;", "'")
     .replaceAll("&lt;", "<")
     .replaceAll("&gt;", ">");
+
+  // RegExp captures can be sliced strings that retain the complete HTML/XML
+  // response. Flatten small result values so a full sitemap crawl stays bounded.
+  return Buffer.from(decoded, "utf8").toString("utf8");
 }
 
 function locations(xml) {
