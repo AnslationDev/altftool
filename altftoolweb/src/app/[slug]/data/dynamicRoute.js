@@ -12,6 +12,7 @@ const DYNAMIC_ROUTE_URL =
   `/databases/(default)/documents/projects/${PROJECT_ID}/navigation/dynamic?key=${FIREBASE_API_KEY}`;
 
 let memoryCache = null;
+let inFlightRequest = null;
 
 function firestoreValueToJs(value) {
   if (!value) return undefined;
@@ -47,9 +48,9 @@ function decodeDocument(document) {
 function readCache() {
   if (!memoryCache || memoryCache.expiresAt <= Date.now()) {
     memoryCache = null;
-    return null;
+    return { hit: false, value: null };
   }
-  return memoryCache.value;
+  return { hit: true, value: memoryCache.value };
 }
 
 function writeCache(value) {
@@ -62,9 +63,22 @@ function writeCache(value) {
 
 export async function fetchDynamicRouteConfig() {
   const cached = readCache();
-  if (cached) return cached;
+  if (cached.hit) return cached.value;
   if (!FIREBASE_API_KEY || !FIREBASE_PROJECT_ID) return null;
 
+  if (inFlightRequest) return inFlightRequest;
+
+  const request = fetchAndCacheDynamicRouteConfig();
+  inFlightRequest = request;
+
+  try {
+    return await request;
+  } finally {
+    if (inFlightRequest === request) inFlightRequest = null;
+  }
+}
+
+async function fetchAndCacheDynamicRouteConfig() {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), FIRESTORE_TIMEOUT_MS);
 

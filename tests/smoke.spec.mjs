@@ -122,17 +122,27 @@ test("public web shell loads", async ({ page }) => {
   await quality.expectClean("public web shell");
 });
 
-test("unmatched nested routes return a branded hard 404", async ({ request }) => {
-  const response = await request.get(
-    `${webUrl}/__altftool-smoke__/missing-nested-route`,
-    { maxRedirects: 0 },
-  );
+test("invalid public routes return branded hard 404 responses", async ({ request }) => {
+  const invalidPaths = [
+    "/__altftool-smoke__/missing-nested-route",
+    "/tools/not-a-real-category",
+    "/tools/all/not-a-real-tool",
+    "/__altftool-unknown-root__",
+  ];
 
-  expect(response.status()).toBe(404);
+  for (const invalidPath of invalidPaths) {
+    const response = await request.get(`${webUrl}${invalidPath}`, {
+      maxRedirects: 0,
+    });
 
-  const body = await response.text();
-  expect(body).toContain("This route does not exist");
-  expect(body).toMatch(/<meta[^>]*name="robots"[^>]*content="noindex"[^>]*>/);
+    expect(response.status(), invalidPath).toBe(404);
+
+    const body = await response.text();
+    expect(body, invalidPath).toContain("This route does not exist");
+    expect(body, invalidPath).toMatch(
+      /<meta[^>]*name="robots"[^>]*content="noindex"[^>]*>/,
+    );
+  }
 });
 
 test("AltPinterest keeps one primary heading when landing switches to the feed", async ({ page }) => {

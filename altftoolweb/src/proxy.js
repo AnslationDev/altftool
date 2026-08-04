@@ -4,11 +4,19 @@ import { NextResponse } from "next/server";
 import { toolSlugSet } from "./platform/registry/toolSlugs.js";
 import { getActiveRedirects } from "./platform/seo/redirectSource.js";
 import { resolveRedirect } from "@altftool/core/seo/resolver";
-import { getLegacyCategorySlugMap } from "./platform/registry/categoryTaxonomy.js";
+import {
+  getCanonicalCategoryBySlug,
+  getLegacyCategorySlugMap,
+} from "./platform/registry/categoryTaxonomy.js";
 import {
   EXACT_ROUTE_REDIRECT_STATUS,
   getExactRouteRedirect,
 } from "./platform/navigation/exactRouteManifest.js";
+import { getDynamicTopLevelSlugCandidate } from "./platform/navigation/topLevelRouteManifest.js";
+import {
+  fetchDynamicRouteConfig,
+  isDynamicRouteActiveForSlug,
+} from "./app/[slug]/data/dynamicRoute.js";
 
 // Pre-consolidation category slugs (e.g. /tools/calculator, /tools/utility)
 // → canonical category routes. Static data, computed once per worker.
@@ -44,6 +52,17 @@ const REDIRECTS_MAP = {
   "/games/candy-crush": "/games/candy-match-3",
 };
 
+function notFoundRewrite(request) {
+  const notFoundUrl = new URL("/_not-found", request.url);
+  return NextResponse.rewrite(notFoundUrl, {
+    status: 404,
+    headers: {
+      "Cache-Control": "public, max-age=0, s-maxage=300",
+      "X-Robots-Tag": "noindex, nofollow",
+    },
+  });
+}
+
 export async function proxy(request) {
   const url = request.nextUrl.clone();
   let pathname = url.pathname;
@@ -55,14 +74,7 @@ export async function proxy(request) {
       (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
     )
   ) {
-    const notFoundUrl = new URL("/_not-found", request.url);
-    return NextResponse.rewrite(notFoundUrl, {
-      status: 404,
-      headers: {
-        "Cache-Control": "public, max-age=0, s-maxage=300",
-        "X-Robots-Tag": "noindex, nofollow",
-      },
-    });
+    return notFoundRewrite(request);
   }
 
   // 1a. ALTF Engine central redirects (admin-managed, no deploy).
@@ -105,7 +117,15 @@ export async function proxy(request) {
         // Legacy free-text category slug → canonical category route.
         pathname = `/tools/${LEGACY_CATEGORY_REDIRECTS[slug]}`;
         changed = true;
+      } else if (slug !== "all" && !getCanonicalCategoryBySlug(slug)) {
+        return notFoundRewrite(request);
       }
+    } else if (
+      segments.length === 3 &&
+      segments[0] === "tools" &&
+      !toolSlugSet.has(segments[2])
+    ) {
+      return notFoundRewrite(request);
     }
   }
 
@@ -135,6 +155,23 @@ export async function proxy(request) {
     return NextResponse.redirect(targetUrl, statusCode);
   }
 
+  // The root [slug] page is intentionally admin-managed, but allowing every
+  // other root segment to reach it makes framework notFound() responses stream
+  // with HTTP 200. Known routes bypass this check; possible dynamic slugs use
+  // the shared, cached Firestore resolver and fail closed on config errors.
+  const dynamicSlug = getDynamicTopLevelSlugCandidate(pathname);
+  if (dynamicSlug) {
+    try {
+      const dynamicConfig = await fetchDynamicRouteConfig();
+      if (!isDynamicRouteActiveForSlug(dynamicConfig, dynamicSlug)) {
+        return notFoundRewrite(request);
+      }
+    } catch (error) {
+      console.error("Failed to validate dynamic top-level route:", error);
+      return notFoundRewrite(request);
+    }
+  }
+
   return NextResponse.next();
 }
 
@@ -143,11 +180,12 @@ export const config = {
     /*
      * Match all request paths except for the ones starting with:
      * - api (API routes)
+     * - _not-found (internal target for real 404 rewrites)
      * - _next/static (static files)
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      * - assets (public assets)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico|assets).*)",
+    "/((?!api|_not-found|_next/static|_next/image|favicon.ico|assets).*)",
   ],
 };
