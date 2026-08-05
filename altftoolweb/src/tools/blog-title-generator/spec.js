@@ -40,18 +40,23 @@ export const spec = {
   ],
   "regenerate": true
 },
-  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+  compute: (values, _mode, random) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
       const k = (values.keyword || "your topic").trim();
       const K = k.replace(/\b\w/g, (c) => c.toUpperCase());
-      const n = [7, 9, 11, 13, 5][Math.floor(Math.random() * 5)];
+      const n = [7, 9, 11, 13, 5][Math.floor(random() * 5)];
+      const year = new Date().getFullYear();
       const pools = {
-        howto: [`How to Master ${K} in 2026`, `A Beginner's Guide to ${K}`, `How to Get Started With ${K} (Step by Step)`, `The Right Way to Do ${K}`],
+        howto: [`How to Master ${K} in ${year}`, `A Beginner's Guide to ${K}`, `How to Get Started With ${K} (Step by Step)`, `The Right Way to Do ${K}`],
         listicle: [`${n} ${K} Tips That Actually Work`, `${n} Mistakes to Avoid With ${K}`, `${n} ${K} Tools You Need Today`, `Top ${n} ${K} Ideas for Beginners`],
         bold: [`Everything You Know About ${K} Is Wrong`, `Why ${K} Matters More Than Ever`, `The Ultimate Guide to ${K}`, `Stop Struggling With ${K} — Do This Instead`],
       };
       const pool = pools[values.tone] || pools.howto;
-      const pick = [...pool].sort(() => Math.random() - 0.5).slice(0, 4);
-      return { list: pick };
+      const shuffled = [...pool];
+      for (let i = shuffled.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return { list: shuffled.slice(0, 4) };
     },
 };
 

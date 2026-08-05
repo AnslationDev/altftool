@@ -21,7 +21,7 @@ export const spec = {
   ],
   "regenerate": true
 },
-  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+  compute: (values, _mode, random) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
             const isFantasy = false;
             const k = String(values.keyword || "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
             const A = ["Nova", "Lumen", "Vertex", "Quartz", "Harbor", "Ember", "Cascade", "Cobalt", "Nimbus", "Zephyr", "Onyx", "Delta", "Pixel", "Echo", "Aster", "Flux", "Vela", "Rune"];
@@ -30,8 +30,8 @@ export const spec = {
             const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
             const out = new Set(); let g = 0;
             while (out.size < 6 && g++ < 60) {
-              if (isFantasy) out.add(fant[Math.floor(Math.random() * fant.length)] + " " + fant[Math.floor(Math.random() * fant.length)]);
-              else { const a = A[Math.floor(Math.random() * A.length)]; const b = B[Math.floor(Math.random() * B.length)]; out.add(k ? cap(k) + b : a + b); }
+              if (isFantasy) out.add(fant[Math.floor(random() * fant.length)] + " " + fant[Math.floor(random() * fant.length)]);
+              else { const a = A[Math.floor(random() * A.length)]; const b = B[Math.floor(random() * B.length)]; out.add(k ? cap(k) + b : a + b); }
             }
             return { list: [...out] };
           },

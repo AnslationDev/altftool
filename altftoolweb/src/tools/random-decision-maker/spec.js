@@ -21,7 +21,7 @@ export const spec = {
   ],
   "regenerate": true
 },
-  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—"; const a = ["Yes, definitely", "It is certain", "Most likely", "Outlook good", "Reply hazy, try again", "Ask again later", "Don't count on it", "My reply is no", "Very doubtful"]; return { result: "🎱 " + a[Math.floor(Math.random() * a.length)], caption: values.q ? '"' + values.q + '"' : "Shake for an answer" }; },
+  compute: (values, _mode, random) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—"; const a = ["Yes, definitely", "It is certain", "Most likely", "Outlook good", "Reply hazy, try again", "Ask again later", "Don't count on it", "My reply is no", "Very doubtful"]; return { result: "🎱 " + a[Math.floor(random() * a.length)], caption: values.q ? '"' + values.q + '"' : "Shake for an answer" }; },
 };
 
 export default spec;

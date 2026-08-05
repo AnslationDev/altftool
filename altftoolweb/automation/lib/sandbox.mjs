@@ -3,6 +3,7 @@
 // before its code is ever written into the app. No network, no fs, no require.
 import vm from "node:vm";
 import { webcrypto } from "node:crypto";
+import { createSeededRandom } from "../../src/tools/_shared/toolkit/runtimeHelpers.js";
 
 const SAFE_GLOBALS = {
   Math,
@@ -59,7 +60,7 @@ export function normalizeComputeSource(src) {
   const looksLikeFn = /^async\s+function|^function|^\(|^async\s*\(/.test(s);
   if (looksLikeFn) return s;
   // Bare body -> wrap as a function.
-  return `(values, mode) => { ${s} }`;
+  return `(values, mode, random) => { ${s} }`;
 }
 
 // Mirror the browser runtime's coerceValues EXACTLY so validation is faithful:
@@ -105,7 +106,10 @@ export async function runCompute(computeSrc, fields, sampleValues, mode = "") {
   for (const raw of sampleValues) {
     try {
       const values = coerce(fields, raw);
-      const out = await withTimeout(Promise.resolve(fn(values, mode)), 2000);
+      const out = await withTimeout(
+        Promise.resolve(fn(values, mode, createSeededRandom(0))),
+        2000,
+      );
       if (out == null || (typeof out === "object" && out.result === undefined && !out.list && !out.rows && !out.table)) {
         return { ok: false, error: "compute returned no usable result for " + JSON.stringify(raw), samples };
       }
@@ -129,7 +133,12 @@ export async function runOnce(computeSrc, fields, rawValues, mode = "") {
     return { ok: false, error: "compile: " + (e.message || e) };
   }
   try {
-    const out = await withTimeout(Promise.resolve(fn(coerce(fields, rawValues), mode)), 2000);
+    const out = await withTimeout(
+      Promise.resolve(
+        fn(coerce(fields, rawValues), mode, createSeededRandom(0)),
+      ),
+      2000,
+    );
     return { ok: true, output: out };
   } catch (e) {
     return { ok: false, error: "runtime: " + (e.message || e) };

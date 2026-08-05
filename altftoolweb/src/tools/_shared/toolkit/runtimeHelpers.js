@@ -60,6 +60,29 @@ export function loadInitial(spec, storageKey, hasModes) {
   return { raw, mode };
 }
 
+// Generate a fresh seed once per client session. Random tools then use a
+// deterministic generator derived from this seed, so ordinary input changes
+// do not reshuffle an answer while Generate/Regenerate still produces a new
+// result. The timestamp fallback covers older browsers without Web Crypto.
+export function createRuntimeSeed() {
+  if (typeof globalThis.crypto?.getRandomValues === "function") {
+    return globalThis.crypto.getRandomValues(new Uint32Array(1))[0];
+  }
+  return Date.now() >>> 0;
+}
+
+// Mulberry32: compact, deterministic and suitable for non-cryptographic UI
+// generators. Security-sensitive tools must continue using Web Crypto.
+export function createSeededRandom(seed) {
+  let state = Number(seed) >>> 0;
+  return () => {
+    state = (state + 0x6d2b79f5) >>> 0;
+    let value = Math.imul(state ^ (state >>> 15), 1 | state);
+    value ^= value + Math.imul(value ^ (value >>> 7), 61 | value);
+    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
 // Normalise whatever compute() returns into a stable shape for rendering.
 export function normalizeResult(r) {
   if (r === null || r === undefined) return { result: "", caption: "", rows: [], list: [], table: null, error: "" };

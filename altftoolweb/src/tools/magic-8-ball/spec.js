@@ -21,9 +21,9 @@ export const spec = {
   ],
   "regenerate": true
 },
-  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+  compute: (values, _mode, random) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
       const a = ["It is certain", "Without a doubt", "Yes — definitely", "Most likely", "Outlook good", "Signs point to yes", "Reply hazy, try again", "Ask again later", "Cannot predict now", "Don't count on it", "My reply is no", "Very doubtful", "Outlook not so good"];
-      return { result: "🎱 " + a[Math.floor(Math.random() * a.length)], caption: values.question ? `"${values.question}"` : "Ask a yes/no question, then shake" };
+      return { result: "🎱 " + a[Math.floor(random() * a.length)], caption: values.question ? `"${values.question}"` : "Ask a yes/no question, then shake" };
     },
 };
 

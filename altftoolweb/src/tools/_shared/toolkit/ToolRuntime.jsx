@@ -17,6 +17,8 @@ import {
   coerceValues,
   defaultValues,
   fieldsForMode,
+  createRuntimeSeed,
+  createSeededRandom,
   loadInitial,
   missingRequired,
   normalizeResult,
@@ -29,8 +31,10 @@ import {
  * A ToolSpec (see automation/lib/spec.mjs for the contract) declares:
  *   { title, description, badge, icon, modes?, fields[], compute, presets?,
  *     outputLabel?, note? }
- * `compute(values, mode) => { result, caption?, rows?, list?, table?, error? }`
- * is a pure function; number/range fields are coerced to Number first.
+ * `compute(values, mode, random) => { result, caption?, rows?, list?, table?, error? }`
+ * is a pure function; number/range fields are coerced to Number first. Random
+ * specs use the provided seeded function so editing inputs does not reshuffle
+ * an answer; Generate/Regenerate advances the seed.
  *
  * Everything below (modes, presets, validation, history, copy/download,
  * empty/error states, responsive + dark mode) is provided generically so any
@@ -49,7 +53,7 @@ export default function ToolRuntime({ spec }) {
   const [copied, setCopied] = useState(false);
   const [history, setHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
-  const [nonce, setNonce] = useState(0);
+  const [nonce, setNonce] = useState(createRuntimeSeed);
   const computeToken = useRef(0);
 
   const activeFields = useMemo(() => fieldsForMode(spec.fields, mode), [spec.fields, mode]);
@@ -60,7 +64,15 @@ export default function ToolRuntime({ spec }) {
   useEffect(() => {
     const token = ++computeToken.current;
     Promise.resolve()
-      .then(() => (missing.length ? null : spec.compute(coerceValues(activeFields, raw), mode)))
+      .then(() =>
+        missing.length
+          ? null
+          : spec.compute(
+              coerceValues(activeFields, raw),
+              mode,
+              createSeededRandom(nonce),
+            ),
+      )
       .then((r) => {
         if (token === computeToken.current) setResult(normalizeResult(r));
       })

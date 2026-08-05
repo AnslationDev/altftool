@@ -253,10 +253,21 @@ const S = [
     fields: [{ key: "drinks", label: "Standard drinks", type: "number", default: "3" }, { key: "weight", label: "Body weight (kg)", type: "number", default: "70" }, { key: "sex", label: "Sex", type: "select", default: "male", choices: [{ value: "male", label: "Male" }, { value: "female", label: "Female" }] }, { key: "hours", label: "Hours since first drink", type: "number", default: "2" }],
     note: "An estimate only — never use it to decide whether to drive.",
     compute: (values) => {
+      if (num(values.weight) <= 0 || num(values.drinks) < 0 || num(values.hours) < 0) {
+        return { result: "—", caption: "Enter a valid weight, number of drinks and hours" };
+      }
       const grams = num(values.drinks) * 14;
       const r = values.sex === "female" ? 0.55 : 0.68;
-      const bac = Math.max(0, (grams / (num(values.weight) * 1000 * r)) * 100 - 0.015 * num(values.hours));
-      return { result: bac.toFixed(3) + "% BAC", caption: bac >= 0.08 ? "Over the common 0.08% legal limit" : "Under 0.08%", rows: [["Alcohol consumed", grams.toFixed(0) + " g"], ["Approx. burned off", (0.015 * num(values.hours) * 100).toFixed(1) + " units"]] };
+      const eliminatedPct = 0.015 * num(values.hours);
+      const bac = Number(
+        Math.max(
+          0,
+          (grams / (num(values.weight) * 1000 * r)) * 100 - eliminatedPct,
+        ).toFixed(3),
+      );
+      const burnedGrams =
+        (eliminatedPct * num(values.weight) * 1000 * r) / 100;
+      return { result: bac.toFixed(3) + "% BAC", caption: bac >= 0.08 ? "Over the common 0.08% legal limit" : "Under 0.08%", rows: [["Alcohol consumed", grams.toFixed(0) + " g"], ["Approx. burned off", burnedGrams.toFixed(1) + " g"]] };
     },
   },
   {
@@ -521,18 +532,23 @@ const S = [
     description: "Generate catchy blog title ideas from a keyword and tone.",
     icon: "heading", iconColor: "text-fuchsia-600", regenerate: true,
     fields: [{ key: "keyword", label: "Topic / keyword", type: "text", default: "email marketing" }, { key: "tone", label: "Tone", type: "select", default: "howto", choices: [{ value: "howto", label: "How-to" }, { value: "listicle", label: "Listicle" }, { value: "bold", label: "Bold" }] }],
-    compute: (values) => {
+    compute: (values, _mode, random) => {
       const k = (values.keyword || "your topic").trim();
       const K = k.replace(/\b\w/g, (c) => c.toUpperCase());
-      const n = [7, 9, 11, 13, 5][Math.floor(Math.random() * 5)];
+      const n = [7, 9, 11, 13, 5][Math.floor(random() * 5)];
+      const year = new Date().getFullYear();
       const pools = {
-        howto: [`How to Master ${K} in 2026`, `A Beginner's Guide to ${K}`, `How to Get Started With ${K} (Step by Step)`, `The Right Way to Do ${K}`],
+        howto: [`How to Master ${K} in ${year}`, `A Beginner's Guide to ${K}`, `How to Get Started With ${K} (Step by Step)`, `The Right Way to Do ${K}`],
         listicle: [`${n} ${K} Tips That Actually Work`, `${n} Mistakes to Avoid With ${K}`, `${n} ${K} Tools You Need Today`, `Top ${n} ${K} Ideas for Beginners`],
         bold: [`Everything You Know About ${K} Is Wrong`, `Why ${K} Matters More Than Ever`, `The Ultimate Guide to ${K}`, `Stop Struggling With ${K} — Do This Instead`],
       };
       const pool = pools[values.tone] || pools.howto;
-      const pick = [...pool].sort(() => Math.random() - 0.5).slice(0, 4);
-      return { list: pick };
+      const shuffled = [...pool];
+      for (let i = shuffled.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return { list: shuffled.slice(0, 4) };
     },
   },
   {
@@ -556,10 +572,17 @@ const S = [
     description: "Generate fresh blog post angles for any topic.",
     icon: "lightbulb", iconColor: "text-amber-500", regenerate: true,
     fields: [{ key: "topic", label: "Topic / niche", type: "text", default: "home fitness" }],
-    compute: (values) => {
-      const t = (values.topic || "your topic").trim();
-      const templates = [`The ultimate beginner's guide to ${t}`, `10 common ${t} mistakes (and how to fix them)`, `${t} on a budget: what really works`, `A day in the life of a ${t} enthusiast`, `${t} myths everyone still believes`, `How I improved my ${t} in 30 days`, `The best ${t} tools of 2026`, `${t} vs. the alternatives: an honest comparison`];
-      return { list: [...templates].sort(() => Math.random() - 0.5).slice(0, 5) };
+    compute: (values, _mode, random) => {
+      const trimmed = typeof values.topic === "string" ? values.topic.trim() : "";
+      const t = trimmed || "your topic";
+      const year = new Date().getFullYear();
+      const templates = [`The ultimate beginner's guide to ${t}`, `10 common ${t} mistakes (and how to fix them)`, `${t} on a budget: what really works`, `A day in the life of a ${t} enthusiast`, `${t} myths everyone still believes`, `How I improved my ${t} in 30 days`, `The best ${t} tools of ${year}`, `${t} vs. the alternatives: an honest comparison`];
+      const shuffled = [...templates];
+      for (let i = shuffled.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return { list: shuffled.slice(0, 5) };
     },
   },
   {
@@ -567,10 +590,15 @@ const S = [
     description: "Generate punchy CTA button and headline variations.",
     icon: "megaphone", iconColor: "text-red-500", regenerate: true,
     fields: [{ key: "offer", label: "What you're offering", type: "text", default: "free trial" }],
-    compute: (values) => {
+    compute: (values, _mode, random) => {
       const o = (values.offer || "it").trim();
       const ctas = [`Start your ${o} now`, `Get ${o} — free`, `Claim your ${o} today`, `Yes, I want ${o}!`, `Try ${o} risk-free`, `Unlock ${o} instantly`, `Grab ${o} before it's gone`, `Join now and get ${o}`];
-      return { list: [...ctas].sort(() => Math.random() - 0.5).slice(0, 5) };
+      const shuffled = [...ctas];
+      for (let i = shuffled.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return { list: shuffled.slice(0, 5) };
     },
   },
   {
@@ -578,7 +606,7 @@ const S = [
     description: "Generate band name ideas by genre.",
     icon: "music", iconColor: "text-purple-600", regenerate: true,
     fields: [{ key: "genre", label: "Genre", type: "select", default: "rock", choices: [{ value: "rock", label: "Rock" }, { value: "indie", label: "Indie" }, { value: "metal", label: "Metal" }, { value: "electronic", label: "Electronic" }] }],
-    compute: (values) => {
+    compute: (values, _mode, random) => {
       const words = {
         rock: [["Electric", "Velvet", "Midnight", "Broken", "Wild"], ["Wolves", "Kings", "Riot", "Echoes", "Thunder"]],
         indie: [["Lonely", "Paper", "Golden", "Quiet", "Neon"], ["Foxes", "Waves", "Ghosts", "Rivers", "Bloom"]],
@@ -586,7 +614,7 @@ const S = [
         electronic: [["Neon", "Digital", "Chrome", "Solar", "Static"], ["Pulse", "Circuit", "Drift", "Signal", "Void"]],
       };
       const [a, b] = words[values.genre] || words.rock;
-      const pick = () => "The " + a[Math.floor(Math.random() * a.length)] + " " + b[Math.floor(Math.random() * b.length)];
+      const pick = () => "The " + a[Math.floor(random() * a.length)] + " " + b[Math.floor(random() * b.length)];
       const set = new Set(); while (set.size < 5) set.add(pick());
       return { list: [...set] };
     },
@@ -646,9 +674,9 @@ const S = [
     description: "Flip 20 coins at once and see the longest run of the same side.",
     icon: "circle-dollar-sign", iconColor: "text-amber-600", regenerate: true,
     fields: [],
-    compute: () => {
+    compute: (_values, _mode, random) => {
       let seq = "", best = 1, cur = 1, last = "";
-      for (let i = 0; i < 20; i++) { const f = Math.random() < 0.5 ? "H" : "T"; seq += f; if (f === last) { cur++; best = Math.max(best, cur); } else cur = 1; last = f; }
+      for (let i = 0; i < 20; i++) { const f = random() < 0.5 ? "H" : "T"; seq += f; if (f === last) { cur++; best = Math.max(best, cur); } else cur = 1; last = f; }
       const heads = seq.split("").filter((c) => c === "H").length;
       return { result: seq.match(/.{1,10}/g).join(" "), caption: "Longest streak: " + best, rows: [["Heads", heads], ["Tails", 20 - heads]] };
     },
@@ -658,9 +686,9 @@ const S = [
     description: "Ask a yes/no question and let the Magic 8 Ball decide.",
     icon: "circle-help", iconColor: "text-slate-800", regenerate: true,
     fields: [{ key: "question", label: "Your question", type: "text", default: "", required: false }],
-    compute: (values) => {
+    compute: (values, _mode, random) => {
       const a = ["It is certain", "Without a doubt", "Yes — definitely", "Most likely", "Outlook good", "Signs point to yes", "Reply hazy, try again", "Ask again later", "Cannot predict now", "Don't count on it", "My reply is no", "Very doubtful", "Outlook not so good"];
-      return { result: "🎱 " + a[Math.floor(Math.random() * a.length)], caption: values.question ? `"${values.question}"` : "Ask a yes/no question, then shake" };
+      return { result: "🎱 " + a[Math.floor(random() * a.length)], caption: values.question ? `"${values.question}"` : "Ask a yes/no question, then shake" };
     },
   },
 

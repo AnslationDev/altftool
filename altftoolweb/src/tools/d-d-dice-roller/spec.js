@@ -26,7 +26,7 @@ export const spec = {
   ],
   "regenerate": true
 },
-  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—"; const c = Math.max(1, Math.min(10, num(values.count))); const s = Math.max(2, num(values.sides)); const r = Array.from({ length: c }, () => 1 + Math.floor(Math.random() * s)); return { result: r.join(" + ") + " = " + r.reduce((a, b) => a + b, 0) }; },
+  compute: (values, _mode, random) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—"; const c = Math.max(1, Math.min(10, num(values.count))); const s = Math.max(2, num(values.sides)); const r = Array.from({ length: c }, () => 1 + Math.floor(random() * s)); return { result: r.join(" + ") + " = " + r.reduce((a, b) => a + b, 0) }; },
 };
 
 export default spec;

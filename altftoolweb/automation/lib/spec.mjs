@@ -1,4 +1,6 @@
-// ToolSpec contract: normalization, validation, and file emission.
+// ToolSpec contract: normalization, validation, and file emission. A compute
+// function receives (values, mode, random); the third argument is the runtime's
+// seeded non-cryptographic generator and may be ignored by deterministic tools.
 // A ToolSpec is the ONLY thing a generator must produce. Everything about how
 // a tool looks/behaves is derived from it generically — no per-tool code.
 import fs from "node:fs";

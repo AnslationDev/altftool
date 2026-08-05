@@ -288,10 +288,10 @@ const clusters = [
     match: (n) => { if (/coin flip|coin toss|flip a coin/.test(n)) return { mode: "coin" }; if (/dice|die roll|roll a dice/.test(n)) return { mode: "dice" }; if (/magic 8|8 ?ball|yes.?no|decision maker|decision picker/.test(n)) return { mode: "eight" }; if (/random number/.test(n)) return { mode: "number" }; if (/uuid|guid/.test(n)) return { mode: "uuid" }; return null; },
     build: (e, p) => {
       const defs = {
-        coin: { d: "Flip a virtual coin.", regen: true, f: [], fn: () => ({ result: Math.random() < 0.5 ? "🪙 Heads" : "🪙 Tails" }) },
-        dice: { d: "Roll dice.", regen: true, f: [["sides", "Sides", "6"], ["count", "How many", "2"]], fn: (values) => { const c = Math.max(1, Math.min(10, num(values.count))); const s = Math.max(2, num(values.sides)); const r = Array.from({ length: c }, () => 1 + Math.floor(Math.random() * s)); return { result: r.join(" + ") + " = " + r.reduce((a, b) => a + b, 0) }; } },
-        eight: { d: "Ask a yes/no question.", regen: true, f: [{ key: "q", label: "Question", type: "text", default: "", required: false }], fn: (values) => { const a = ["Yes, definitely", "It is certain", "Most likely", "Outlook good", "Reply hazy, try again", "Ask again later", "Don't count on it", "My reply is no", "Very doubtful"]; return { result: "🎱 " + a[Math.floor(Math.random() * a.length)], caption: values.q ? '"' + values.q + '"' : "Shake for an answer" }; } },
-        number: { d: "Generate a random number in a range.", regen: true, f: [["min", "Min", "1"], ["max", "Max", "100"]], fn: (values) => { const lo = num(values.min), hi = num(values.max); return { result: String(lo + Math.floor(Math.random() * (hi - lo + 1))) }; } },
+        coin: { d: "Flip a virtual coin.", regen: true, f: [], fn: (_values, _mode, random) => ({ result: random() < 0.5 ? "🪙 Heads" : "🪙 Tails" }) },
+        dice: { d: "Roll dice.", regen: true, f: [["sides", "Sides", "6"], ["count", "How many", "2"]], fn: (values, _mode, random) => { const c = Math.max(1, Math.min(10, num(values.count))); const s = Math.max(2, num(values.sides)); const r = Array.from({ length: c }, () => 1 + Math.floor(random() * s)); return { result: r.join(" + ") + " = " + r.reduce((a, b) => a + b, 0) }; } },
+        eight: { d: "Ask a yes/no question.", regen: true, f: [{ key: "q", label: "Question", type: "text", default: "", required: false }], fn: (values, _mode, random) => { const a = ["Yes, definitely", "It is certain", "Most likely", "Outlook good", "Reply hazy, try again", "Ask again later", "Don't count on it", "My reply is no", "Very doubtful"]; return { result: "🎱 " + a[Math.floor(random() * a.length)], caption: values.q ? '"' + values.q + '"' : "Shake for an answer" }; } },
+        number: { d: "Generate a random number in a range.", regen: true, f: [["min", "Min", "1"], ["max", "Max", "100"]], fn: (values, _mode, random) => { const lo = num(values.min), hi = num(values.max); return { result: String(lo + Math.floor(random() * (hi - lo + 1))) }; } },
         uuid: { d: "Generate random UUIDs (v4).", regen: true, f: [], fn: () => ({ list: Array.from({ length: 5 }, () => crypto.randomUUID()) }) },
       };
       const cfg = defs[p.mode];
@@ -409,7 +409,7 @@ const clusters = [
           description: "Generate fresh " + (fantasy ? "fantasy character names" : "name ideas") + " from a keyword.",
           regenerate: true,
           fields: [{ key: "keyword", label: fantasy ? "Theme (optional)" : "Keyword", type: "text", default: fantasy ? "" : "cloud", required: false }],
-          compute: (values) => {
+          compute: (values, _mode, random) => {
             const isFantasy = __FANTASY__;
             const k = String(values.keyword || "").trim().toLowerCase().replace(/[^a-z0-9]/g, "");
             const A = ["Nova", "Lumen", "Vertex", "Quartz", "Harbor", "Ember", "Cascade", "Cobalt", "Nimbus", "Zephyr", "Onyx", "Delta", "Pixel", "Echo", "Aster", "Flux", "Vela", "Rune"];
@@ -418,8 +418,8 @@ const clusters = [
             const cap = (s) => s.charAt(0).toUpperCase() + s.slice(1);
             const out = new Set(); let g = 0;
             while (out.size < 6 && g++ < 60) {
-              if (isFantasy) out.add(fant[Math.floor(Math.random() * fant.length)] + " " + fant[Math.floor(Math.random() * fant.length)]);
-              else { const a = A[Math.floor(Math.random() * A.length)]; const b = B[Math.floor(Math.random() * B.length)]; out.add(k ? cap(k) + b : a + b); }
+              if (isFantasy) out.add(fant[Math.floor(random() * fant.length)] + " " + fant[Math.floor(random() * fant.length)]);
+              else { const a = A[Math.floor(random() * A.length)]; const b = B[Math.floor(random() * B.length)]; out.add(k ? cap(k) + b : a + b); }
             }
             return { list: [...out] };
           },
