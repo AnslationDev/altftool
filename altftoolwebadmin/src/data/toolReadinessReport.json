@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-05T19:30:07.885Z",
+  "generatedAt": "2026-08-05T20:38:05.877Z",
   "summary": {
     "methodology": "static-readiness-v2",
     "description": "Build-time evidence grades route structure, entry imports, interaction signals, automated coverage, placeholders, and external API dependencies. It complements browser QA; it does not claim a live third-party API is available.",
@@ -19,8 +19,8 @@
     "api": {
       "tools": 67,
       "counts": {
-        "configured": 1,
-        "missing-config": 2,
+        "configured": 0,
+        "missing-config": 3,
         "runtime-check": 64
       },
       "providerCount": 18,
@@ -29,12 +29,11 @@
         "NEXT_PUBLIC_API_KEY",
         "NEXT_PUBLIC_WHEREGOES_API_URL"
       ],
-      "configuredEnvKeys": [
-        "NEXT_PUBLIC_WHEREGOES_API_URL"
-      ],
+      "configuredEnvKeys": [],
       "missingEnvKeys": [
         "DATABASE_URL",
-        "NEXT_PUBLIC_API_KEY"
+        "NEXT_PUBLIC_API_KEY",
+        "NEXT_PUBLIC_WHEREGOES_API_URL"
       ],
       "providers": [
         {
@@ -195,9 +194,11 @@
           "requiredEnvKeys": [
             "NEXT_PUBLIC_WHEREGOES_API_URL"
           ],
-          "missingEnvKeys": [],
+          "missingEnvKeys": [
+            "NEXT_PUBLIC_WHEREGOES_API_URL"
+          ],
           "statuses": [
-            "configured"
+            "missing-config"
           ]
         },
         {
@@ -153717,7 +153718,7 @@
       },
       "apiReadiness": {
         "required": true,
-        "status": "configured",
+        "status": "missing-config",
         "providers": [
           {
             "name": "Runtime-provided endpoint",
@@ -153736,8 +153737,8 @@
             "requiredEnvKeys": [
               "NEXT_PUBLIC_WHEREGOES_API_URL"
             ],
-            "configured": true,
-            "status": "configured"
+            "configured": false,
+            "status": "missing-config"
           }
         ],
         "endpoints": [
@@ -153752,18 +153753,20 @@
         "environment": [
           {
             "name": "NEXT_PUBLIC_WHEREGOES_API_URL",
-            "configured": true
+            "configured": false
           }
         ],
         "requiredEnvKeys": [
           "NEXT_PUBLIC_WHEREGOES_API_URL"
         ],
-        "missingEnvKeys": [],
+        "missingEnvKeys": [
+          "NEXT_PUBLIC_WHEREGOES_API_URL"
+        ],
         "browserLocalOperations": 0
       },
       "issues": [],
       "recommendations": [
-        "Verify provider latency, timeout, fallback, and error states at runtime.",
+        "Configure NEXT_PUBLIC_WHEREGOES_API_URL before runtime verification.",
         "Add one deterministic functional or unit regression test."
       ]
     },

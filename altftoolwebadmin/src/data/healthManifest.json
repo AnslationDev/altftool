@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-05T19:30:07.885Z",
+  "generatedAt": "2026-08-05T20:38:05.877Z",
   "tools": {
     "total": 3947,
     "healthy": 3947,
@@ -34,8 +34,8 @@
       "api": {
         "tools": 67,
         "counts": {
-          "configured": 1,
-          "missing-config": 2,
+          "configured": 0,
+          "missing-config": 3,
           "runtime-check": 64
         },
         "providerCount": 18,
@@ -44,12 +44,11 @@
           "NEXT_PUBLIC_API_KEY",
           "NEXT_PUBLIC_WHEREGOES_API_URL"
         ],
-        "configuredEnvKeys": [
-          "NEXT_PUBLIC_WHEREGOES_API_URL"
-        ],
+        "configuredEnvKeys": [],
         "missingEnvKeys": [
           "DATABASE_URL",
-          "NEXT_PUBLIC_API_KEY"
+          "NEXT_PUBLIC_API_KEY",
+          "NEXT_PUBLIC_WHEREGOES_API_URL"
         ],
         "providers": [
           {
@@ -210,9 +209,11 @@
             "requiredEnvKeys": [
               "NEXT_PUBLIC_WHEREGOES_API_URL"
             ],
-            "missingEnvKeys": [],
+            "missingEnvKeys": [
+              "NEXT_PUBLIC_WHEREGOES_API_URL"
+            ],
             "statuses": [
-              "configured"
+              "missing-config"
             ]
           },
           {

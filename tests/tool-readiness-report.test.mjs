@@ -38,6 +38,18 @@ test("reserved invalid URLs never count as configured providers", () => {
     })].sort(),
     ["API_KEY", "LIVE_URL"],
   );
+  assert.deepEqual(
+    [
+      ...configuredEnvironmentKeys(
+        {
+          LIVE_URL: "https://api.example.com",
+          API_KEY: "real-api-key",
+        },
+        { canonical: true },
+      ),
+    ],
+    [],
+  );
 });
 
 test("tool readiness separates working, API-required, partial, and broken tools", async () => {

@@ -76,7 +76,12 @@ export function isConfiguredEnvironmentValue(value) {
   return true;
 }
 
-export function configuredEnvironmentKeys(values = {}) {
+export function configuredEnvironmentKeys(
+  values = {},
+  { canonical = false } = {},
+) {
+  if (canonical) return new Set();
+
   return new Set(
     Object.entries(values)
       .filter(([, value]) => isConfiguredEnvironmentValue(value))

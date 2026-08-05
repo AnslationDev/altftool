@@ -534,13 +534,22 @@ async function buildManifest() {
   const functionalSpecSource = await readText(
     path.join(workspaceRoot, "tests/tool-functional.spec.mjs"),
   );
-  const environmentSnapshot = await loadEnvironmentSnapshot({
-    workspaceRoot,
-    roots: [workspaceRoot, webRoot, adminRoot],
+  const canonicalEnvironment =
+    process.argv.includes("--canonical") ||
+    /^(?:1|true|yes|on)$/iu.test(
+      String(process.env.ALTFT_HEALTH_MANIFEST_CANONICAL || "").trim(),
+    );
+  const environmentValues = canonicalEnvironment
+    ? {}
+    : (
+        await loadEnvironmentSnapshot({
+          workspaceRoot,
+          roots: [workspaceRoot, webRoot, adminRoot],
+        })
+      ).values;
+  const configuredEnvKeys = configuredEnvironmentKeys(environmentValues, {
+    canonical: canonicalEnvironment,
   });
-  const configuredEnvKeys = configuredEnvironmentKeys(
-    environmentSnapshot.values,
-  );
   const generatedAt = new Date().toISOString();
   const [tools, qa, seo, content, automation, toolReadinessReport] =
     await Promise.all([
