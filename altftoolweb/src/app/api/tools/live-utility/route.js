@@ -4,6 +4,7 @@ import { isIP } from "node:net";
 import http from "node:http";
 import https from "node:https";
 import { enforceRateLimit } from "@altftool/core/http";
+import { buildFrankfurterV1Url } from "@/lib/providers/frankfurter/client";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -279,7 +280,7 @@ async function handle(slug, params) {
   if (slug === "fx-rate-alerter") {
     const [base, quote] = (query || "USD/INR").toUpperCase().split(/[\/,\s-]+/);
     const data = await (
-      await timeoutFetch(`https://api.frankfurter.app/latest?from=${encodeURIComponent(base)}&to=${encodeURIComponent(quote)}`)
+      await timeoutFetch(buildFrankfurterV1Url("latest", { base, quote }))
     ).json();
     return {
       summary: `1 ${base} = ${data.rates?.[quote]} ${quote}`,

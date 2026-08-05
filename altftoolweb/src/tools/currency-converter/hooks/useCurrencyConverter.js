@@ -3,6 +3,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { API_URL, HISTORICAL_API_BASE } from "../constants/currencies";
 import { calculateRate } from "../utils/calculateRate";
+import { extractHistoricalRate } from "../utils/extractHistoricalRate";
 
 export const useCurrencyConverter = () => {
   const [amount, setAmount] = useState(1.0);
@@ -596,9 +597,7 @@ useEffect(() => {
 
         if (!data.rates) return;
 
-        const rate = data.rates?.[date]?.[toCurrency];
-
-        setHistoricalRate(rate || null);
+        setHistoricalRate(extractHistoricalRate(data, date, toCurrency));
       } catch (err) {
         console.error("Historical error:", err);
         setHistoricalRate(null);

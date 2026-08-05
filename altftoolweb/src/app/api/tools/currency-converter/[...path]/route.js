@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { enforceRateLimit, fetchJson } from "@altftool/core/http";
+import { buildFrankfurterV1Url } from "@/lib/providers/frankfurter/client";
 
-const FRANKFURTER_BASE_URL = "https://api.frankfurter.app";
 const DATE_PATH_PATTERN = /^\d{4}-\d{2}-\d{2}(\.\.\d{4}-\d{2}-\d{2})?$/;
 const CURRENCY_PATTERN = /^[A-Z]{3}$/;
 
@@ -23,9 +23,7 @@ export async function GET(request, { params }) {
     return Response.json({ error: "Invalid currency history request." }, { status: 400 });
   }
 
-  const upstreamUrl = new URL(`${FRANKFURTER_BASE_URL}/${path}`);
-  upstreamUrl.searchParams.set("from", from);
-  upstreamUrl.searchParams.set("to", to);
+  const upstreamUrl = buildFrankfurterV1Url(path, { base: from, quote: to });
 
   try {
     const result = await fetchJson(upstreamUrl, {
