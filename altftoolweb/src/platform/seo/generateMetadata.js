@@ -2,6 +2,7 @@ import { resolveSeo, applyResolvedSeo, resolveExtendedMeta } from "@altftool/cor
 import { getSeoConfigSnapshot, primeSeoConfig } from "./seoConfigSource.js";
 import { getGeoCountries } from "./geoLocations.js";
 import { normalizeCanonicalUrl, resolveSiteUrl } from "./siteUrl.js";
+import { shouldNoindexPagePath } from "./pageIndexPolicy.js";
 
 export const siteConfig = {
   name: "AltFTool",
@@ -265,6 +266,7 @@ export async function createPageMetadata(rawArgs = {}) {
   const cleanDescription = trimMetaDescription(description);
   const keywordList = [...new Set([...siteConfig.keywords, ...keywords].filter(Boolean))];
   const resolvedTitle = title || siteConfig.name;
+  const suppressIndexing = noindex || shouldNoindexPagePath(path);
 
   // Extended central-config overrides (inert/empty when engine disabled).
   const ext = getExtendedMeta(rawArgs.path || path, rawArgs.brandId);
@@ -327,10 +329,10 @@ export async function createPageMetadata(rawArgs = {}) {
       images: [twitterImageUrl],
     },
     robots: {
-      index: !noindex,
+      index: !suppressIndexing,
       follow,
       googleBot: {
-        index: !noindex,
+        index: !suppressIndexing,
         follow,
         "max-image-preview": "large",
         "max-snippet": -1,

@@ -8,7 +8,7 @@
    beyond a handful of surface/glow adjustments.
    ================================================================ */
 
-/* Standalone shell — used by the /lookouts hub (the sub-routes are not shipped here) that
+/* Standalone shell — used by product pages under /lookouts/<slug>/ that
    render without the global AltFTool header/footer. */
 .lookouts-page {
   min-height: 100vh;
@@ -58,10 +58,7 @@
   height: 2rem;
   border-radius: var(--anslation-ds-radius-sm);
   background: var(--anslation-ds-cta-gradient);
-  /* The brand tile is media-like decoration, so use the theme-safe on-media
-     token instead of primary-foreground, which flips to dark ink in the dark
-     theme and loses contrast against this teal/cyan gradient. */
-  color: var(--anslation-ds-on-media);
+  color: #fff;
   flex-shrink: 0;
 }
 
@@ -200,15 +197,17 @@
 }
 .lookouts-btn--primary {
   background: var(--anslation-ds-primary-active);
-  /* Must be the token, not a literal white. --anslation-ds-primary-active is
-     brand-800 (#115e59, dark) in light but brand-200 (#99f6e4, light) in dark,
-     so the hardcoded #ffffff this replaced measured 7.58:1 in light and
-     1.26:1 in dark — the CTA label was effectively invisible in dark mode.
-     --primary-foreground flips with it: #ffffff (7.58:1) light,
-     #07111f (15.02:1) dark. Both pass AA. */
-  color: var(--primary-foreground);
+  color: #ffffff;
   box-shadow: 0 10px 26px -10px
     color-mix(in srgb, var(--anslation-ds-primary-active) 65%, transparent);
+}
+.lookouts-btn--ghost {
+  background: var(--card);
+  border-color: var(--border);
+  color: var(--foreground);
+}
+.lookouts-btn--ghost:hover {
+  border-color: var(--foreground);
 }
 
 /* Sections */
@@ -305,7 +304,7 @@
 .lookouts-product:hover {
   transform: translateY(-4px);
   border-color: color-mix(in srgb, var(--primary) 45%, var(--border));
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 22px 50px -28px rgba(15, 23, 42, 0.5);
 }
 .lookouts-product-ico {
   display: inline-flex;
@@ -375,17 +374,43 @@
   margin-top: 1.5rem;
 }
 
-/* Icon accent tiles.
-   These deliberately have NO per-card colour modifier. The branch this page
-   came from gave each card its own literal hue (sky/amber/violet/emerald/rose
-   as raw hex, each needing its own [data-theme="dark"] override), which is
-   both a hardcoded palette outside the design tokens and a second source of
-   truth that has to be kept AA-legible by hand in two themes.
+/* Icon accent colors */
+.lookouts-product-ico--sky {
+  background: color-mix(in srgb, #0ea5e9 13%, transparent);
+  color: #0975b2;
+}
+[data-theme="dark"] .lookouts-product-ico--sky {
+  color: #38bdf8;
+}
 
-   The base .lookouts-product-ico rule above already resolves through
-   --primary for the tile tint and --lookouts-accent-text for the glyph, and
-   that pair is the one checked for contrast on this page (teal-700 in light,
-   teal-500 in dark — see the note next to --lookouts-accent-text). Colour is
-   decorative here: the lucide glyph and the card heading carry the meaning,
-   so a single brand-consistent tile costs nothing in comprehension and keeps
-   every card AA in both themes for free. */
+.lookouts-product-ico--amber {
+  background: color-mix(in srgb, #f59e0b 13%, transparent);
+  color: #b45309;
+}
+[data-theme="dark"] .lookouts-product-ico--amber {
+  color: #fbbf24;
+}
+
+.lookouts-product-ico--violet {
+  background: color-mix(in srgb, #a855f7 13%, transparent);
+  color: #6d28d9;
+}
+[data-theme="dark"] .lookouts-product-ico--violet {
+  color: #c084fc;
+}
+
+.lookouts-product-ico--emerald {
+  background: color-mix(in srgb, #10b981 13%, transparent);
+  color: #065f46;
+}
+[data-theme="dark"] .lookouts-product-ico--emerald {
+  color: #6ee7b7;
+}
+
+.lookouts-product-ico--rose {
+  background: color-mix(in srgb, #f43f5e 13%, transparent);
+  color: #be123c;
+}
+[data-theme="dark"] .lookouts-product-ico--rose {
+  color: #fb7185;
+}

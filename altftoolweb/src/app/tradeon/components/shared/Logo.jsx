@@ -4,11 +4,18 @@
 import { cn } from "../../utils/cn";
 
 /**
- * Tradeon brand lockup: a clean, solid uptrend mark (no gradients, no letter
- * monogram) + the full "Tradeon" wordmark. Reads premium in both light and dark
- * themes.
+ * Tradeon brand lockup: a clean, solid uptrend mark + wordmark.
+ * Use `variant="white"` in dark background areas like the Footer.
  */
-export default function Logo({ className, mark = true, wordmark = true, size = 30 }) {
+export default function Logo({
+  className,
+  mark = true,
+  wordmark = true,
+  size = 30,
+  variant = "default", // "default" | "white"
+}) {
+  const isWhite = variant === "white";
+
   return (
     <span className={cn("inline-flex items-center gap-2.5 select-none", className)}>
       {mark && (
@@ -40,8 +47,16 @@ export default function Logo({ className, mark = true, wordmark = true, size = 3
         </span>
       )}
       {wordmark && (
-        <span className="tdn-display text-[1.22rem] font-bold tracking-tight" style={{ color: "var(--tdn-fg-strong)" }}>
-          Trade<span style={{ color: "var(--tdn-accent-text)" }}>on</span>
+        <span className="tdn-display text-[1.22rem] font-bold tracking-tight">
+          <span
+            className={cn(
+              "transition-colors",
+              isWhite ? "text-white" : "text-slate-900 dark:text-white"
+            )}
+          >
+            Trade
+          </span>
+          <span style={{ color: "var(--tdn-accent-text)" }}>on</span>
         </span>
       )}
     </span>

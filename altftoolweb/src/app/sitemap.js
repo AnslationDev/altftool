@@ -151,7 +151,6 @@ const staticRoutes = [
   // the sub-routes its source branch also defined (festival,
   // top-discount-products, ai-bundles) are not in this tree, and the hub's
   // LOOKOUTS_PRODUCTS deliberately no longer links to them.
-  { path: "/lookouts", priority: 0.6 },
   { path: "/supportsetting", priority: 0.45 },
   { path: "/request-a-tool", priority: 0.5 },
   { path: "/site-map", priority: 0.5 },

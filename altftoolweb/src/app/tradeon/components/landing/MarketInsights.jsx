@@ -2,7 +2,13 @@
 "use client";
 
 import { useMemo } from "react";
-import { CalendarClock, Newspaper, Sparkles } from "lucide-react";
+import {
+  LineChart,
+  BrainCircuit,
+  Clock,
+  TrendingUp,
+  AlertTriangle
+} from "lucide-react";
 
 const SCENARIO_TEMPLATES = [
   { t: "{s} momentum is strengthening in this model snapshot", tag: "Momentum" },
@@ -28,11 +34,13 @@ export default function MarketInsights({ data = [] }) {
     const movers = [...data].sort((a, b) => Math.abs(b.changePct) - Math.abs(a.changePct)).slice(0, 6);
     return movers.map((d, i) => {
       const tpl = SCENARIO_TEMPLATES[i % SCENARIO_TEMPLATES.length];
+      const isPositive = d.changePct >= 0;
       return {
         title: tpl.t.replace("{s}", d.name),
         tag: tpl.tag,
-        sentiment: d.changePct >= 0 ? "Positive" : "Negative",
-        color: d.changePct >= 0 ? "var(--tdn-up)" : "var(--tdn-down)",
+        sentiment: isPositive ? "Positive" : "Negative",
+        isPositive,
+        color: isPositive ? "var(--tdn-up)" : "var(--tdn-down)",
       };
     });
   }, [data]);
@@ -47,79 +55,141 @@ export default function MarketInsights({ data = [] }) {
   }, [data]);
 
   return (
-    <section className="tdn-container tdn-section-tight">
-      <div className="flex items-end justify-between mb-3">
-        <div>
-          <span className="tdn-eyebrow text-[0.62rem]">Market intelligence</span>
-          <h2 className="tdn-display text-xl sm:text-2xl mt-0.5" style={{ color: "var(--tdn-fg-strong)" }}>
-            Model scenarios &amp; market breadth
-          </h2>
-        </div>
+    <section className="tdn-container tdn-section-tight bg-transparent w-full">
+      {/* Section Header */}
+      <div className="mb-5">
+        <span className="tdn-eyebrow text-[0.62rem] uppercase tracking-widest text-[var(--tdn-iris-2)] font-bold">
+          Market Intelligence
+        </span>
+        <h2 className="tdn-display text-xl sm:text-2xl mt-0.5 font-bold tracking-tight" style={{ color: "var(--tdn-fg-strong)" }}>
+          Model scenarios &amp; market breadth
+        </h2>
       </div>
 
-      <div className="grid lg:grid-cols-12 gap-3 items-start">
-        {/* Model-generated scenarios, not a news feed. */}
-        <div className="tdn-card p-3.5 lg:col-span-7">
-          <div className="flex items-center gap-2 mb-2.5">
-            <Newspaper size={15} style={{ color: "var(--tdn-iris-2)" }} />
-            <span className="text-sm font-semibold" style={{ color: "var(--tdn-fg-strong)" }}>Illustrative market scenarios</span>
-          </div>
-          <div className="divide-y" style={{ borderColor: "var(--tdn-border)" }}>
-            {news.map((n, i) => (
-              <article key={i} className="flex items-start gap-3 py-2.5 first:pt-0">
-                <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2 mb-0.5">
-                    <span className="tdn-chip !py-0.5 !px-2 !text-[0.6rem]">{n.tag}</span>
-                    <span className="text-[0.6rem] font-semibold px-1.5 py-0.5 rounded" style={{ color: n.color, background: `color-mix(in srgb, ${n.color} 12%, transparent)` }}>
-                      {n.sentiment}
-                    </span>
+      {/* Main Grid Layout */}
+      <div className="grid lg:grid-cols-12 gap-8 items-stretch">
+
+        {/* Left Column: Scenarios */}
+        <div className="lg:col-span-7 flex flex-col justify-between h-full">
+          <div>
+            <div className="flex items-center gap-2 mb-3">
+              <div className="p-1.5 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[var(--tdn-iris-2)]">
+                <LineChart size={16} />
+              </div>
+              <span className="text-sm font-bold tracking-wide" style={{ color: "var(--tdn-fg-strong)" }}>
+                Illustrative Market Scenarios
+              </span>
+            </div>
+
+            {/* Scenarios List with dynamic icons */}
+            <div className="flex flex-col">
+              {news.map((n, i) => (
+                <article
+                  key={i}
+                  className="group relative flex items-start gap-3 py-3 px-1.5 border-b border-slate-200 dark:border-white/10 hover:bg-slate-50/80 dark:hover:bg-white/[0.02] transition-all rounded-r-md"
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="tdn-chip !py-0.5 !px-2 !text-[0.6rem] font-semibold tracking-wider">
+                        {n.tag}
+                      </span>
+                      <span
+                        className="flex items-center gap-1 text-[0.6rem] font-bold px-1.5 py-0.5 rounded tracking-wide"
+                        style={{
+                          color: n.color,
+                          background: `color-mix(in srgb, ${n.color} 12%, transparent)`,
+                        }}
+                      >
+                        {n.isPositive ? <TrendingUp size={10} /> : <AlertTriangle size={10} />}
+                        {n.sentiment}
+                      </span>
+                    </div>
+                    <p className="text-[0.84rem] leading-snug font-medium transition-colors group-hover:text-[var(--tdn-iris-2)]" style={{ color: "var(--tdn-fg)" }}>
+                      {n.title}
+                    </p>
                   </div>
-                  <p className="text-[0.84rem] leading-snug" style={{ color: "var(--tdn-fg)" }}>
-                    {n.title}
-                  </p>
-                </div>
-                <span className="text-[0.62rem] shrink-0 pt-0.5" style={{ color: "var(--tdn-faint)" }}>Model</span>
-              </article>
-            ))}
+                  <span className="text-[0.62rem] font-mono shrink-0 pt-0.5 uppercase tracking-wider opacity-70" style={{ color: "var(--tdn-faint)" }}>
+                    Model
+                  </span>
+                </article>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* Right: AI read + calendar */}
-        <div className="lg:col-span-5 space-y-3">
-          <div className="tdn-card p-3.5">
-            <div className="flex items-center gap-2 mb-2">
-              <Sparkles size={15} style={{ color: "var(--tdn-iris-2)" }} />
-              <span className="text-sm font-semibold" style={{ color: "var(--tdn-fg-strong)" }}>Market Summary</span>
+        {/* Right Column: AI Read + Calendar Watchlist */}
+        <div className="lg:col-span-5 flex flex-col justify-between h-full gap-6">
+
+          {/* Market Summary Panel with BrainCircuit AI Icon */}
+          <div className="flex flex-col p-4 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50/50 dark:bg-white/[0.02]">
+            <div className="flex items-center gap-2.5 mb-2.5">
+              <div className="relative flex items-center justify-center p-2 rounded-lg bg-indigo-500/10 dark:bg-indigo-400/15 text-[var(--tdn-iris-2)] border border-indigo-500/20 shadow-sm">
+                <BrainCircuit size={18} className="animate-pulse" />
+              </div>
+              <div>
+                <span className="text-sm font-bold tracking-wide block" style={{ color: "var(--tdn-fg-strong)" }}>
+                  Market Summary
+                </span>
+              </div>
             </div>
-            <p className="text-[0.84rem] leading-relaxed" style={{ color: "var(--tdn-muted)" }}>
-              Breadth is <strong style={{ color: "var(--tdn-fg)" }}>{read.pct}% advancing</strong>, a{" "}
-              <strong style={{ color: "var(--tdn-fg)" }}>{read.tone}</strong> backdrop. Leadership sits with{" "}
-              <strong style={{ color: "var(--tdn-up)" }}>{read.leaders}</strong>, while{" "}
-              <strong style={{ color: "var(--tdn-down)" }}>{read.laggards}</strong> lag. The model favours
-              patience where signals are mixed and confirmation on breakouts.
+
+            <p className="text-[0.84rem] leading-relaxed font-normal" style={{ color: "var(--tdn-muted)" }}>
+              Breadth is <strong className="font-bold text-[var(--tdn-fg-strong)]">{read.pct}% advancing</strong>, reflecting a{" "}
+              <strong className="font-bold text-[var(--tdn-fg-strong)]">{read.tone}</strong> tone. Leadership sits with{" "}
+              <strong className="font-bold text-[var(--tdn-up)]">{read.leaders}</strong>, while{" "}
+              <strong className="font-bold text-[var(--tdn-down)]">{read.laggards}</strong> lag. The model favours
+              patience where signals are mixed.
             </p>
           </div>
 
-          <div className="tdn-card p-3.5">
-            <div className="flex items-center gap-2 mb-2.5">
-              <CalendarClock size={15} style={{ color: "var(--tdn-iris-2)" }} />
-              <span className="text-sm font-semibold" style={{ color: "var(--tdn-fg-strong)" }}>Example event watchlist</span>
+          {/* Event Watchlist with Clock Icon */}
+          <div className="flex flex-col flex-1">
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 rounded-md bg-slate-100 dark:bg-white/5 border border-slate-200 dark:border-white/10 text-[var(--tdn-iris-2)]">
+                  <Clock size={16} />
+                </div>
+                <span className="text-sm font-bold tracking-wide" style={{ color: "var(--tdn-fg-strong)" }}>
+                  Event Watchlist
+                </span>
+              </div>
+              <span className="text-[0.62rem] font-mono uppercase tracking-wider opacity-60" style={{ color: "var(--tdn-faint)" }}>
+                Sample
+              </span>
             </div>
-            <p className="mb-2 text-[0.68rem]" style={{ color: "var(--tdn-faint)" }}>Illustrative only; this is not a live calendar.</p>
-            <div className="space-y-1.5">
+
+            {/* Event List */}
+            <div className="flex flex-col justify-between flex-1 mt-1">
               {CALENDAR.map((c) => (
-                <div key={c.event} className="flex items-center gap-2.5">
-                  <span className="tdn-mono text-[0.7rem] w-11 shrink-0" style={{ color: "var(--tdn-faint)" }}>{c.time}</span>
-                  <span className="text-[0.62rem] font-bold w-6 shrink-0" style={{ color: "var(--tdn-muted)" }}>{c.country}</span>
-                  <span className="text-xs flex-1 truncate" style={{ color: "var(--tdn-fg)" }}>{c.event}</span>
-                  <span className="text-[0.6rem] font-semibold px-1.5 py-0.5 rounded shrink-0" style={{ color: IMPACT_COLOR[c.impact], background: `color-mix(in srgb, ${IMPACT_COLOR[c.impact]} 14%, transparent)` }}>
+                <div
+                  key={c.event}
+                  className="flex items-center gap-2.5 py-2.5 px-1 border-b border-slate-200 dark:border-white/10 hover:bg-slate-50/60 dark:hover:bg-white/[0.02] transition-colors"
+                >
+                  <span className="tdn-mono text-[0.7rem] w-11 shrink-0 font-bold" style={{ color: "var(--tdn-faint)" }}>
+                    {c.time}
+                  </span>
+                  <span className="text-[0.62rem] font-black w-6 shrink-0 tracking-wider" style={{ color: "var(--tdn-muted)" }}>
+                    {c.country}
+                  </span>
+                  <span className="text-xs flex-1 truncate font-semibold" style={{ color: "var(--tdn-fg)" }}>
+                    {c.event}
+                  </span>
+                  <span
+                    className="text-[0.6rem] font-bold px-2 py-0.5 rounded shrink-0 shadow-xs"
+                    style={{
+                      color: IMPACT_COLOR[c.impact],
+                      background: `color-mix(in srgb, ${IMPACT_COLOR[c.impact]} 15%, transparent)`,
+                    }}
+                  >
                     {c.impact}
                   </span>
                 </div>
               ))}
             </div>
           </div>
+
         </div>
+
       </div>
     </section>
   );

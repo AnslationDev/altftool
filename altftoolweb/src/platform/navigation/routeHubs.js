@@ -1,12 +1,14 @@
 import {
   BookOpen,
   GraduationCap,
+  MapPin,
   MonitorPlay,
   Newspaper,
   Puzzle,
   Search,
   ShieldCheck,
   ShoppingBag,
+  Store,
   Tags,
   Wrench,
 } from "lucide-react";
@@ -81,6 +83,38 @@ const routeHubMap = {
         description: "Explore buying guides and savings workflows.",
         href: "/buysmart",
         icon: ShoppingBag,
+      },
+    ],
+  },
+  bazaar: {
+    eyebrow: "Bazaar preview routes",
+    title: "Explore the marketplace prototype",
+    description:
+      "Browse fictional sample listings by category or city and review the preview safety flow.",
+    items: [
+      {
+        title: "All categories",
+        description: "Explore the sample category and subcategory directory.",
+        href: "/bazaar/categories",
+        icon: Store,
+      },
+      {
+        title: "Browse by city",
+        description: "Preview the city-based browsing experience.",
+        href: "/bazaar/cities",
+        icon: MapPin,
+      },
+      {
+        title: "Price guide preview",
+        description: "Inspect price-guide UI built from sample asking prices.",
+        href: "/bazaar/price-guide",
+        icon: Tags,
+      },
+      {
+        title: "Safety centre",
+        description: "Review the intended marketplace safety guidance.",
+        href: "/bazaar/safety",
+        icon: ShieldCheck,
       },
     ],
   },

@@ -169,9 +169,9 @@ export async function fetchSales() {
 
 
 
-export async function createSale(id, data) {
+export async function createSale(data) {
 
-  const ref = doc(salesRef, id);
+  const ref = doc(salesRef);
 
 
 
@@ -182,10 +182,10 @@ export async function createSale(id, data) {
   await setDoc(ref, {
 
     ...normalized,
-    id,
+    id: ref.id,
     createdAt: serverTimestamp(),
   });
-  return id;
+  return ref.id;
 
 }
 

@@ -30,7 +30,21 @@ async function discoverStaticTopLevelSegments() {
     const files = await readdir(path.join(appRoot, entry.name), {
       withFileTypes: true,
     });
-    if (files.some((file) => file.isFile() && routeFilePattern.test(file.name))) {
+    const hasRootPage = files.some(
+      (file) => file.isFile() && routeFilePattern.test(file.name),
+    );
+    const optionalCatchAll = files.find(
+      (file) => file.isDirectory() && /^\[\[\.\.\.[^\]]+\]\]$/.test(file.name),
+    );
+    const hasOptionalCatchAllPage = optionalCatchAll
+      ? (
+          await readdir(path.join(appRoot, entry.name, optionalCatchAll.name), {
+            withFileTypes: true,
+          })
+        ).some((file) => file.isFile() && routeFilePattern.test(file.name))
+      : false;
+
+    if (hasRootPage || hasOptionalCatchAllPage) {
       segments.add(entry.name);
     }
   }

@@ -1,0 +1,2569 @@
+/* ================================================================
+   Festival Discovery Platform — Banani design port
+   Scoped to /lookouts/festival route
+   ================================================================ */
+
+@import "../_altf/altf-brand.css";
+
+.festival-page {
+  /* Paper-craft palette: cream stock, espresso ink, and five poster inks.
+     Every surface is a flat cut of paper outlined in --f-ink and offset by a
+     hard shadow — no blur, no gradient fills. --f-shadow is that offset
+     colour, tokenised because dark mode needs it lighter than the ink. */
+  --f-ink: #3b2e24;
+  --f-shadow: #3b2e24;
+  --f-pink: #f2879e;
+  --f-teal: #3fa79a;
+  --f-mustard: #e2a63b;
+  --f-violet: #8c6fd1;
+  --f-blue: #4c8fd1;
+  --f-orange: #e07a3f;
+
+  /* "Night" stock — the dark slab the countdown cards are cut from. Held
+     constant across both themes on purpose: the cards invert against the
+     page rather than following it, which is what makes the strip read as the
+     page's focal point. */
+  --f-night: #241c17;
+  --f-night-fg: #f7f0e4;
+  --f-night-muted: #b6a692;
+
+  --f-bg: #fbf4e6;
+  --f-fg: #3b2e24;
+  --f-border: #3b2e24;
+  --f-input: #ffffff;
+  --f-primary: #f2879e;
+  --f-primary-fg: #ffffff;
+  --f-secondary: #fde7ec;
+  --f-muted: #f4ecdc;
+  --f-muted-fg: #8a7a68;
+  --f-accent: #e2a63b;
+  --f-accent-fg: #3b2e24;
+  --f-surface: #ffffff;
+  --f-glass: rgba(255, 255, 255, 0.75);
+  --f-glass-border: #3b2e24;
+
+  /* Icon-tile tint pairs (bg/fg) for religion & category cards — pastel
+     stock with a saturated poster ink on top. */
+  --f-tint-orange-bg: #fde5cf;
+  --f-tint-orange-fg: #c2610c;
+  --f-tint-gray-bg: #ece4d6;
+  --f-tint-gray-fg: #5c4c3d;
+  --f-tint-violet-bg: #e9e0fa;
+  --f-tint-violet-fg: #6b4bbd;
+  --f-tint-pink-bg: #fde2e8;
+  --f-tint-pink-fg: #d4526e;
+  --f-tint-teal-bg: #d6efe9;
+  --f-tint-teal-fg: #2c8175;
+  --f-tint-blue-bg: #dde9f8;
+  --f-tint-blue-fg: #2f6fac;
+  --f-tint-peach-bg: #fde6d5;
+  --f-tint-peach-fg: #c2712c;
+
+  background: var(--f-bg);
+  color: var(--f-fg);
+  font-family: var(--font-family-body, ui-sans-serif, system-ui, sans-serif);
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* Dark mode keeps the construction — outline plus offset shadow — but flips
+   the stock to a deep warm brown. The outline goes *lighter* than the
+   surface (a black outline on a dark card is invisible) and --f-shadow with
+   it, so the same `box-shadow: Npx Npx 0 var(--f-shadow)` reads on both. */
+[data-theme="dark"] .festival-page {
+  --f-ink: #f7ecd9;
+  --f-shadow: #120d08;
+  --f-pink: #f79bb0;
+  --f-teal: #56bfb2;
+  --f-mustard: #f0bc57;
+  --f-violet: #a68ce0;
+  --f-blue: #6da6e0;
+  --f-orange: #ec8f57;
+
+  /* Lifted a step off the dark page so the card still separates from its
+     background; --f-night is only theme-varying token in the night set. */
+  --f-night: #33271f;
+
+  --f-bg: #221a12;
+  --f-fg: #f7ecd9;
+  --f-border: #5c4a38;
+  --f-input: #2e2418;
+  --f-primary: #f79bb0;
+  --f-primary-fg: #2a1015;
+  --f-secondary: #432b31;
+  --f-muted: #2e2418;
+  --f-muted-fg: #bfae96;
+  --f-accent: #f0bc57;
+  --f-accent-fg: #2a1f07;
+  --f-surface: #2e2418;
+  --f-glass: rgba(46, 36, 24, 0.75);
+  --f-glass-border: #5c4a38;
+
+  --f-tint-orange-bg: #45301c;
+  --f-tint-orange-fg: #f5a962;
+  --f-tint-gray-bg: #352c21;
+  --f-tint-gray-fg: #d5c7b4;
+  --f-tint-violet-bg: #362a4d;
+  --f-tint-violet-fg: #c4b0f0;
+  --f-tint-pink-bg: #452530;
+  --f-tint-pink-fg: #f7a8bd;
+  --f-tint-teal-bg: #1e403a;
+  --f-tint-teal-fg: #74d3c6;
+  --f-tint-blue-bg: #253651;
+  --f-tint-blue-fg: #9cc4ea;
+  --f-tint-peach-bg: #45311d;
+  --f-tint-peach-fg: #f0b183;
+}
+
+.festival-page * {
+  box-sizing: border-box;
+}
+
+.festival-page a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ========== HERO ========== */
+
+/* The hero is content-sized, not viewport-sized: it is a cream page with
+   confetti rather than a cropped photo, so a min-height would only pad the
+   bottom with empty stock. Kept as a hook for the confetti field's absolute
+   positioning (the Tailwind side sets the rest of the box). */
+.festival-hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.festival-hero-bg {
+  position: absolute;
+  inset: 0;
+}
+
+.festival-hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+.festival-hero-bg-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 35%;
+}
+
+.festival-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 35, 25, 0.62) 0%,
+    rgba(10, 35, 25, 0.8) 60%,
+    rgba(10, 35, 25, 0.96) 100%
+  );
+}
+
+/* Confetti — the falling paper field behind the hero. Geometry (size, tint,
+   offset, duration) is set inline per piece by ConfettiField; this rule owns
+   only what every piece shares. */
+.festival-confetti-piece {
+  position: absolute;
+  top: -30px;
+  opacity: 0.85;
+  animation-name: festival-confetti-fall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes festival-confetti-fall {
+  from {
+    transform: translateY(0) rotate(0deg);
+  }
+  to {
+    transform: translateY(110vh) rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .festival-confetti-piece {
+    animation: none;
+  }
+}
+
+/* search bar (calendar filters — the hero's own bar is Tailwind-authored) */
+.festival-search-container {
+  margin-top: 0.25rem;
+  width: 100%;
+  max-width: 820px;
+  display: flex;
+  align-items: stretch;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--f-surface);
+  border: 2px solid var(--f-ink);
+  box-shadow: 5px 5px 0 var(--f-shadow);
+  flex-wrap: wrap;
+}
+
+.festival-search-box {
+  flex: 1;
+  min-width: 220px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.1rem;
+  border-right: 2px solid color-mix(in srgb, var(--f-ink) 15%, transparent);
+  color: var(--f-muted-fg);
+}
+
+.festival-search-box svg {
+  flex-shrink: 0;
+  color: var(--f-muted-fg);
+}
+
+.festival-search-box input {
+  border: 0;
+  outline: none;
+  background: transparent;
+  width: 100%;
+  font-size: 0.875rem;
+  color: var(--f-fg);
+}
+
+.festival-search-box input::placeholder {
+  color: var(--f-muted-fg);
+}
+
+.festival-filter-item {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.9rem 1rem;
+  border-right: 2px solid color-mix(in srgb, var(--f-ink) 15%, transparent);
+  color: var(--f-fg);
+  white-space: nowrap;
+}
+
+.festival-filter-item svg {
+  color: var(--f-muted-fg);
+  flex-shrink: 0;
+}
+
+.festival-filter-item select {
+  border: 0;
+  outline: none;
+  background: transparent;
+  font-size: 0.875rem;
+  color: var(--f-fg);
+  cursor: pointer;
+  max-width: 130px;
+}
+
+.festival-search-btn {
+  margin: 0.35rem;
+  padding: 0.7rem 1.5rem;
+  background: var(--f-primary);
+  color: #fff;
+  border: 2px solid var(--f-ink);
+  border-radius: 14px;
+  font-family: var(--font-fredoka), inherit;
+  font-size: 0.875rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--f-shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.festival-search-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--f-shadow);
+}
+
+.festival-search-btn:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--f-shadow);
+}
+
+/* ========== SECTIONS ========== */
+
+.festival-section {
+  width: 100%;
+  background: var(--f-bg);
+  padding: clamp(2.5rem, 6vw, 4rem) 0;
+}
+
+.festival-section--tint {
+  background: var(--f-surface);
+}
+
+.festival-section-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Scoped under .festival-page (and text-align set explicitly) to beat the
+   unrelated global `.section-header` utility class defined in globals.css,
+   which centers content and caps it at 48rem — wrong for this layout. */
+.festival-page .section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  max-width: none;
+  margin-inline: 0;
+  text-align: left;
+}
+
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--f-primary);
+  margin: 0 0 0.4rem;
+}
+
+.section-header h2 {
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 800;
+  margin: 0;
+}
+
+.see-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--f-primary);
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* ========== UPCOMING FESTIVALS (auto-scrolling carousel) ========== */
+
+.festival-upcoming-carousel {
+  overflow: hidden;
+  width: 100%;
+}
+
+.festival-upcoming-track {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.festival-upcoming-slide {
+  flex: 0 0 calc(33.333% - 1rem);
+  min-width: 0;
+}
+
+@media (max-width: 1024px) {
+  .festival-upcoming-slide {
+    flex-basis: calc(50% - 0.75rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .festival-upcoming-slide {
+    flex-basis: 88%;
+  }
+}
+
+.festival-upcoming-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+}
+
+.festival-upcoming-dot {
+  width: 7px;
+  height: 7px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: var(--f-border);
+  cursor: pointer;
+  transition: background 0.2s ease, width 0.2s ease;
+}
+
+.festival-upcoming-dot.is-active {
+  background: var(--f-primary);
+  width: 20px;
+}
+
+/* The countdown card is a dark slab in both themes — a deliberate inversion
+   against the cream page, which is what makes the strip read as the page's
+   focal point. Its own colours are therefore fixed rather than tokenised to
+   --f-fg/--f-surface, which flip with the theme. */
+.festival-upcoming-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0.6rem;
+  border-radius: 22px;
+  background: var(--f-night);
+  color: var(--f-night-fg);
+  overflow: hidden;
+}
+
+/* Fixed aspect rather than a min-height: every card in the row then crops to
+   the same frame regardless of the source photo's proportions, which is what
+   keeps the three-up row aligned. */
+.upcoming-card-image {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  width: 100%;
+  border-radius: 16px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.upcoming-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.upcoming-card-badge {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(20, 15, 11, 0.72);
+  backdrop-filter: blur(6px);
+  text-transform: capitalize;
+}
+
+.upcoming-card-status {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--f-orange);
+}
+
+.upcoming-card-content {
+  padding: 0.9rem 0.5rem 0.4rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.upcoming-card-meta {
+  display: flex;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--f-night-muted);
+  margin-bottom: 0.3rem;
+}
+
+.upcoming-card-content h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--f-night-fg);
+  margin: 0 0 0.9rem;
+  /* Pushes the countdown row to the card's bottom edge so the four pills
+     line up across the row even when one title wraps to two lines. */
+  flex: 1;
+}
+
+.countdown {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.45rem 0.6rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid transparent;
+  min-width: 52px;
+}
+
+.countdown-item span {
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--f-night-fg);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-item label {
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--f-night-muted);
+  margin-top: 0.3rem;
+}
+
+.countdown-item--seconds {
+  background: transparent;
+  border-color: var(--f-orange);
+}
+
+.countdown-item--seconds span {
+  color: var(--f-orange);
+  animation: festival-tick 1s steps(1) infinite;
+}
+
+@keyframes festival-tick {
+  0% { opacity: 1; }
+  40% { opacity: 0.55; }
+  100% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .countdown-item--seconds span {
+    animation: none;
+  }
+}
+
+.bookmark-btn {
+  margin-left: auto;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid transparent;
+  color: var(--f-night-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.bookmark-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: var(--f-night-fg);
+}
+
+/* ========== RELIGION GRID ========== */
+
+.religion-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.15rem;
+}
+
+@media (max-width: 1024px) {
+  .religion-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .religion-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.religion-card {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  border-radius: 16px;
+  border: 1px solid var(--f-border);
+  background: var(--f-surface);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.religion-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -12px rgba(13, 43, 34, 0.25);
+}
+
+.religion-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.religion-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  background: var(--f-muted);
+  color: var(--f-fg);
+}
+
+.religion-icon--orange,
+.category-icon--orange {
+  background: var(--f-tint-orange-bg);
+  color: var(--f-tint-orange-fg);
+}
+.religion-icon--gray,
+.category-icon--gray {
+  background: var(--f-tint-gray-bg);
+  color: var(--f-tint-gray-fg);
+}
+.religion-icon--violet,
+.category-icon--violet {
+  background: var(--f-tint-violet-bg);
+  color: var(--f-tint-violet-fg);
+}
+.religion-icon--pink,
+.category-icon--pink {
+  background: var(--f-tint-pink-bg);
+  color: var(--f-tint-pink-fg);
+}
+.religion-icon--teal,
+.category-icon--teal {
+  background: var(--f-tint-teal-bg);
+  color: var(--f-tint-teal-fg);
+}
+.religion-icon--blue,
+.category-icon--blue {
+  background: var(--f-tint-blue-bg);
+  color: var(--f-tint-blue-fg);
+}
+.religion-icon--peach,
+.category-icon--peach {
+  background: var(--f-tint-peach-bg);
+  color: var(--f-tint-peach-fg);
+}
+
+.religion-count {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--f-muted-fg);
+}
+
+.religion-card h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0 0 0.15rem;
+}
+
+.religion-card > p {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--f-primary);
+  margin: 0;
+}
+
+.religion-card ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.religion-card li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+}
+
+.religion-card .dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--f-accent);
+  flex-shrink: 0;
+}
+
+.dot--orange { background: var(--f-tint-orange-fg); }
+.dot--gray { background: var(--f-tint-gray-fg); }
+.dot--violet { background: var(--f-tint-violet-fg); }
+.dot--pink { background: var(--f-tint-pink-fg); }
+.dot--teal { background: var(--f-tint-teal-fg); }
+.dot--blue { background: var(--f-tint-blue-fg); }
+.dot--peach { background: var(--f-tint-peach-fg); }
+
+/* ========== COUNTRY GRID ========== */
+
+.country-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.15rem;
+}
+
+.country-card {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.25rem;
+  border-radius: 16px;
+  border: 1px solid var(--f-border);
+  background: var(--f-bg);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.country-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -12px rgba(13, 43, 34, 0.2);
+}
+
+.country-card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.country-flag {
+  font-size: 1.8rem;
+}
+
+.country-card-top h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.country-card-top p {
+  font-size: 0.72rem;
+  color: var(--f-muted-fg);
+  margin: 0.1rem 0 0;
+}
+
+.country-upcoming {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--f-border);
+  font-size: 0.72rem;
+  color: var(--f-muted-fg);
+}
+
+.country-upcoming svg {
+  flex-shrink: 0;
+}
+
+.country-upcoming strong {
+  color: var(--f-primary);
+  font-weight: 600;
+}
+
+/* ========== FEATURED FESTIVAL ========== */
+
+.featured-festival {
+  display: block;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--f-border);
+}
+
+.featured-hero {
+  position: relative;
+  height: 380px;
+}
+
+.featured-hero img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.featured-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(8, 28, 18, 0.88) 40%, rgba(8, 28, 18, 0.1) 100%);
+}
+
+.featured-hero-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2.5rem;
+  max-width: 620px;
+}
+
+.featured-tags {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.tag {
+  padding: 0.3rem 0.65rem;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.14);
+  text-transform: capitalize;
+}
+
+.tag--accent {
+  background: var(--f-accent);
+  border-color: var(--f-accent);
+}
+
+.featured-hero-content h3 {
+  font-size: clamp(1.7rem, 3.5vw, 2.4rem);
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 0.5rem;
+}
+
+.featured-hero-content > p {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0 0 1rem;
+}
+
+.featured-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  flex-wrap: wrap;
+  font-size: 0.85rem;
+  color: #fff;
+}
+
+.featured-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.featured-details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background: var(--f-surface);
+}
+
+.featured-col {
+  padding: 1.5rem;
+  border-right: 1px solid var(--f-border);
+}
+
+.featured-col:last-child {
+  border-right: none;
+}
+
+.featured-col h4 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+}
+
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Scoped under .festival-page to beat the unrelated global `.chip` utility
+   class in globals.css (pill-shaped, different token set). */
+.festival-page .chip {
+  padding: 0.4rem 0.75rem;
+  border-radius: 10px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  background: var(--f-muted);
+  color: var(--f-fg);
+}
+
+.featured-history {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--f-muted-fg);
+  margin: 0 0 0.75rem;
+}
+
+.read-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--f-primary);
+}
+
+/* ========== FESTIVAL GRID (all festivals) ========== */
+
+.festival-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.festival-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--f-border);
+  background: var(--f-bg);
+  box-shadow: 0 6px 18px -12px rgba(13, 43, 34, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.festival-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 34px -14px rgba(13, 43, 34, 0.32);
+}
+
+.festival-card-image {
+  position: relative;
+  display: block;
+  height: 300px;
+  overflow: hidden;
+}
+
+.festival-card-image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.festival-card:hover .festival-card-image img {
+  transform: scale(1.06);
+}
+
+.festival-card-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8, 28, 18, 0.92) 0%, rgba(8, 28, 18, 0.15) 55%, rgba(8, 28, 18, 0.3) 100%);
+}
+
+.festival-card-type {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 8px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--f-primary);
+  text-transform: capitalize;
+  z-index: 1;
+}
+
+.festival-card-days {
+  position: absolute;
+  top: 0.75rem;
+  right: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(6px);
+  min-width: 38px;
+  z-index: 1;
+}
+
+.festival-card-days span {
+  font-weight: 800;
+  font-size: 0.85rem;
+  color: #fff;
+  line-height: 1;
+}
+
+.festival-card-days label {
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.festival-card-content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1rem 1.1rem;
+  z-index: 1;
+}
+
+.festival-card-content h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0.2rem 0 0;
+}
+
+.festival-card-meta {
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+}
+
+.favorite-btn {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.15s ease;
+}
+
+.favorite-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ========== PAGINATION ========== */
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+.pagination button {
+  padding: 0.55rem 1.1rem;
+  border-radius: 10px;
+  border: 1px solid var(--f-border);
+  background: var(--f-surface);
+  color: var(--f-fg);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination button:not(:disabled):hover {
+  border-color: var(--f-primary);
+  color: var(--f-primary);
+}
+
+.pagination-info {
+  font-size: 0.8rem;
+  color: var(--f-muted-fg);
+}
+
+/* ========== EMPTY STATE ========== */
+
+.festival-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 1rem;
+  gap: 0.4rem;
+}
+
+.festival-empty h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.festival-empty p {
+  color: var(--f-muted-fg);
+  margin: 0;
+}
+
+/* ========== NEWSLETTER ========== */
+
+.festival-newsletter {
+  width: 100%;
+  background: var(--f-surface);
+  padding: clamp(3rem, 6vw, 4.5rem) 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.newsletter-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  background: var(--f-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--f-primary);
+  margin-bottom: 0.75rem;
+}
+
+.festival-newsletter h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  margin: 0 0 0.5rem;
+}
+
+.newsletter-sub-lead {
+  color: var(--f-muted-fg);
+  max-width: 480px;
+  margin: 0 0 1rem;
+}
+
+.newsletter-form {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 440px;
+  margin-top: 0.5rem;
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 0.8rem 1.1rem;
+  border-radius: 14px;
+  border: 1px solid var(--f-border);
+  background: var(--f-input);
+  color: var(--f-fg);
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.newsletter-form input::placeholder {
+  color: var(--f-muted-fg);
+}
+
+.newsletter-form button {
+  padding: 0.8rem 1.3rem;
+  border-radius: 14px;
+  border: none;
+  background: var(--f-primary);
+  color: var(--f-primary-fg);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.newsletter-form button:hover {
+  opacity: 0.9;
+}
+
+.newsletter-sub {
+  font-size: 0.72rem;
+  color: var(--f-muted-fg);
+  margin: 0.5rem 0 0;
+}
+
+/* ========== FOOTER ========== */
+
+.festival-footer {
+  width: 100%;
+  background: var(--f-fg);
+  color: rgba(255, 255, 255, 0.85);
+  padding: clamp(2.5rem, 5vw, 3.5rem) 1.5rem 1.75rem;
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  padding-bottom: 2.5rem;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 220px;
+  max-width: 280px;
+}
+
+.footer-brand h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+.footer-brand > p {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0;
+}
+
+.social-links {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+}
+
+.social-links a {
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.social-links a:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.footer-links {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 2rem;
+  min-width: 260px;
+}
+
+.footer-links h4 {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.9rem;
+}
+
+.footer-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.footer-links a {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.footer-links a:hover {
+  color: #fff;
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ========== RESPONSIVE ========== */
+
+@media (max-width: 900px) {
+  .featured-details {
+    grid-template-columns: 1fr;
+  }
+  .featured-col {
+    border-right: none;
+    border-bottom: 1px solid var(--f-border);
+  }
+  .featured-col:last-child {
+    border-bottom: none;
+  }
+  .footer-links {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .festival-search-container {
+    border-radius: 14px;
+  }
+  .festival-search-box,
+  .festival-filter-item {
+    border-right: none;
+    border-bottom: 1px solid var(--f-border);
+    width: 100%;
+  }
+  .festival-search-btn {
+    width: 100%;
+  }
+  .festival-hero-stats {
+    gap: 1.25rem;
+  }
+  .footer-content {
+    flex-direction: column;
+  }
+  .footer-links {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ================================================================
+   Additions — header/nav, placeholders, detail page, list pages
+   ================================================================ */
+
+/* ========== HEADER / NAV ========== */
+
+.festival-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--f-surface) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  border-bottom: 1px solid var(--f-border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.festival-header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.festival-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.festival-brand-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--f-primary);
+  color: var(--f-primary-fg);
+  flex-shrink: 0;
+}
+
+.festival-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.festival-nav-link {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--f-fg);
+  opacity: 0.8;
+}
+
+.festival-nav-link:hover {
+  opacity: 1;
+  color: var(--f-primary);
+}
+
+.festival-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.festival-icon-button {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--f-border);
+  background: transparent;
+  color: var(--f-fg);
+  cursor: pointer;
+}
+
+.festival-icon-button:hover {
+  border-color: var(--f-primary);
+  color: var(--f-primary);
+}
+
+.festival-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.festival-btn--ghost {
+  background: transparent;
+  border: 1px solid var(--f-border);
+  color: var(--f-fg);
+}
+
+.festival-btn--ghost:hover {
+  border-color: var(--f-primary);
+  color: var(--f-primary);
+}
+
+.festival-btn--primary {
+  background: var(--f-primary);
+  border: 1px solid var(--f-primary);
+  color: var(--f-primary-fg);
+}
+
+.festival-btn--primary:hover {
+  opacity: 0.92;
+}
+
+@media (max-width: 900px) {
+  .festival-nav {
+    display: none;
+  }
+}
+
+/* ========== IMAGE PLACEHOLDERS ========== */
+
+.festival-hero-bg-fallback {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 20%, var(--f-secondary), var(--f-bg) 70%);
+}
+
+.festival-card-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.4rem;
+  background: linear-gradient(135deg, var(--f-secondary), var(--f-muted));
+}
+
+/* ========== CATEGORY GRID (mirrors religion-grid) ========== */
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.15rem;
+}
+
+@media (max-width: 1024px) {
+  .category-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.category-card {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 1.5rem 1.1rem;
+  border-radius: 18px;
+  border: none;
+  background: var(--f-muted);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.category-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px -12px rgba(13, 43, 34, 0.25);
+}
+
+.category-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--f-surface);
+  color: var(--f-primary);
+}
+
+.category-card h3 {
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.category-card p {
+  font-size: 0.75rem;
+  color: var(--f-muted-fg);
+  margin: 0;
+}
+
+/* ========== MONTH TABS ========== */
+
+.festival-month-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.75rem;
+}
+
+.festival-month-tab {
+  padding: 0.4rem 0.9rem;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: var(--f-muted);
+  color: var(--f-fg);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.festival-month-tab.is-active {
+  background: var(--f-primary);
+  color: var(--f-primary-fg);
+}
+
+.festival-calendar-hint {
+  margin-top: 1.25rem;
+  font-size: 0.8rem;
+  color: var(--f-muted-fg);
+}
+
+/* ========== FOOD & CULTURE ========== */
+
+.food-culture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.food-culture-card {
+  display: block;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid var(--f-border);
+  background: var(--f-surface);
+  box-shadow: 0 6px 18px -12px rgba(13, 43, 34, 0.2);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.food-culture-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 18px 32px -14px rgba(13, 43, 34, 0.3);
+}
+
+.food-culture-image {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.food-culture-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.food-culture-card:hover .food-culture-image img {
+  transform: scale(1.07);
+}
+
+.food-culture-body {
+  padding: 1.1rem 1.25rem;
+}
+
+.food-culture-body h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0 0 0.3rem;
+}
+
+.food-culture-body p {
+  font-size: 0.8rem;
+  color: var(--f-muted-fg);
+  margin: 0;
+}
+
+/* ========== STATS BAND ========== */
+
+.festival-stats-band {
+  width: 100%;
+  background: var(--f-fg);
+  color: #fff;
+  padding: clamp(2.5rem, 5vw, 3.5rem) 0;
+  text-align: center;
+}
+
+/* The !important dates from when this band was a dark slab and the label had
+   to beat `.section-label`'s brand colour. The band is a light tint now, so
+   the value follows the theme — the !important stays only to keep winning
+   that same fight. */
+.festival-stats-label {
+  color: var(--f-muted-fg) !important;
+}
+
+.festival-stats-heading {
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  font-weight: 800;
+  margin: 0 0 2rem;
+}
+
+.festival-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.5rem;
+}
+
+.festival-stat-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 1.25rem 1rem;
+  border-radius: 16px;
+  background: var(--f-surface);
+}
+
+.festival-stat-icon {
+  color: var(--f-accent);
+}
+
+.festival-stat-tile strong {
+  font-size: 1.6rem;
+  font-weight: 800;
+}
+
+.festival-stat-tile label {
+  font-size: 0.75rem;
+  color: var(--f-muted-fg);
+}
+
+/* ========== DETAIL PAGE — HERO ========== */
+
+.festival-detail-hero {
+  position: relative;
+  /* Matches the hub hero's scale for a consistent "premium banner" feel
+     across the site. */
+  min-height: clamp(560px, 76vh, 720px);
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+}
+
+@media (max-width: 640px) {
+  .festival-detail-hero {
+    min-height: clamp(460px, 82vh, 560px);
+  }
+}
+
+@media (max-width: 480px) {
+  .festival-detail-hero {
+    min-height: 440px;
+  }
+}
+
+.festival-detail-hero-content {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(3rem, 7vw, 4.5rem) 1.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.festival-detail-hero-content h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  color: #fff;
+  margin: 0;
+}
+
+.festival-detail-tagline {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.78);
+  max-width: 620px;
+  margin: 0;
+}
+
+.countdown--detail {
+  margin-top: 0.5rem;
+}
+
+/* ========== BREADCRUMBS ========== */
+
+.festival-breadcrumbs {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 0.5rem;
+}
+
+.festival-list-header .festival-breadcrumbs {
+  color: var(--f-muted-fg);
+}
+
+.festival-breadcrumb-item {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.festival-breadcrumb-item a:hover {
+  color: var(--f-primary);
+}
+
+/* ========== DETAIL PAGE — NARROW TEXT SECTIONS ========== */
+
+.festival-detail-narrow {
+  max-width: 820px;
+}
+
+.festival-detail-body {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--f-fg);
+}
+
+/* ========== OVERVIEW ========== */
+
+.festival-overview-facts {
+  margin-top: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.festival-overview-fact {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 1rem;
+  border-radius: 14px;
+  background: var(--f-surface);
+  border: 1px solid var(--f-border);
+  color: var(--f-primary);
+}
+
+.festival-overview-fact div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.festival-overview-fact span {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--f-muted-fg);
+}
+
+.festival-overview-fact strong {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--f-fg);
+}
+
+.festival-food-chips {
+  margin-top: 1.5rem;
+}
+
+.festival-food-chips .chip {
+  padding: 0.55rem 1rem;
+  font-size: 0.82rem;
+  border-radius: 12px;
+}
+
+/* ========== TIMELINE ========== */
+
+.festival-timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+.festival-timeline-item {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 1.75rem;
+  padding-left: 0.5rem;
+}
+
+.festival-timeline-item::before {
+  content: "";
+  position: absolute;
+  left: 0.85rem;
+  top: 1.4rem;
+  bottom: -0.25rem;
+  width: 2px;
+  background: var(--f-border);
+}
+
+.festival-timeline-item:last-child::before {
+  display: none;
+}
+
+.festival-timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.festival-timeline-dot {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  margin-top: 0.2rem;
+  border-radius: 999px;
+  background: var(--f-primary);
+  border: 3px solid var(--f-bg);
+  box-shadow: 0 0 0 1px var(--f-border);
+  z-index: 1;
+}
+
+.festival-timeline-item h4 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin: 0 0 0.3rem;
+}
+
+.festival-timeline-item p {
+  font-size: 0.85rem;
+  color: var(--f-muted-fg);
+  margin: 0;
+}
+
+.festival-detail-attribution {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--f-muted-fg);
+}
+
+.festival-detail-attribution a {
+  color: var(--f-primary);
+  text-decoration: underline;
+}
+
+/* ========== DETAIL PAGE — TRADITIONS / FOOD COLUMNS ========== */
+
+.festival-detail-columns {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.festival-detail-col-card {
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: var(--f-surface);
+  border: 1px solid var(--f-border);
+}
+
+.festival-detail-col-card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0 0 1rem;
+}
+
+/* ========== GALLERY ========== */
+
+/* True CSS-columns masonry: items flow down each column and wrap, giving
+   the "real gallery" staggered look rather than a uniform grid. */
+.festival-gallery-masonry {
+  columns: 4 220px;
+  column-gap: 1rem;
+}
+
+@media (max-width: 900px) {
+  .festival-gallery-masonry {
+    columns: 3 160px;
+  }
+}
+
+@media (max-width: 640px) {
+  .festival-gallery-masonry {
+    columns: 2 140px;
+  }
+}
+
+.festival-gallery-thumb {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: pointer;
+  background: var(--f-muted);
+  margin: 0 0 1rem;
+  break-inside: avoid;
+}
+
+.festival-gallery-thumb--0 {
+  aspect-ratio: 3 / 4;
+}
+.festival-gallery-thumb--1 {
+  aspect-ratio: 1 / 1;
+}
+.festival-gallery-thumb--2 {
+  aspect-ratio: 4 / 5;
+}
+
+.festival-gallery-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.festival-gallery-thumb-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 28, 18, 0);
+  transition: background 0.25s ease;
+}
+
+.festival-gallery-thumb:hover img {
+  transform: scale(1.08);
+}
+
+.festival-gallery-thumb:hover .festival-gallery-thumb-overlay {
+  background: rgba(8, 28, 18, 0.15);
+}
+
+.festival-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: rgba(6, 12, 10, 0.92);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.festival-lightbox-image {
+  max-width: min(90vw, 900px);
+  max-height: 75vh;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+.festival-lightbox-close,
+.festival-lightbox-nav {
+  position: absolute;
+  border: none;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-radius: 999px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.festival-lightbox-close {
+  top: 1.5rem;
+  right: 1.5rem;
+}
+
+.festival-lightbox-nav--prev {
+  left: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.festival-lightbox-nav--next {
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.festival-lightbox-credit {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.78rem;
+}
+
+/* ========== HIGHLIGHTS ========== */
+
+.festival-highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.15rem;
+}
+
+.festival-highlight-card {
+  padding: 1.25rem;
+  border-radius: 16px;
+  background: var(--f-surface);
+  border: 1px solid var(--f-border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.festival-highlight-card h3 {
+  font-size: 0.95rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.festival-highlight-card p {
+  font-size: 0.8rem;
+  color: var(--f-muted-fg);
+  margin: 0;
+}
+
+/* ========== LOCATION / MAP ========== */
+
+.festival-location-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 1.5rem;
+}
+
+.festival-map-embed {
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 320px;
+  border: 1px solid var(--f-border);
+}
+
+.festival-map-embed iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  border: 0;
+}
+
+.festival-location-facts {
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: var(--f-surface);
+  border: 1px solid var(--f-border);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.festival-location-facts h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.festival-country-facts {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem 1rem;
+  margin: 0;
+}
+
+.festival-country-facts dt {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--f-muted-fg);
+  margin: 0;
+}
+
+.festival-country-facts dd {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 0.15rem 0 0;
+}
+
+.festival-location-note {
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--f-muted-fg);
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .festival-location-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========== TRAVEL INFO ========== */
+
+.festival-travel-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.15rem;
+  margin-bottom: 1.5rem;
+}
+
+.festival-travel-fact {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1.1rem;
+  border-radius: 14px;
+  background: var(--f-surface);
+  border: 1px solid var(--f-border);
+  color: var(--f-primary);
+}
+
+.festival-travel-fact h4 {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--f-fg);
+  margin: 0 0 0.2rem;
+}
+
+.festival-travel-fact p {
+  font-size: 0.8rem;
+  color: var(--f-muted-fg);
+  margin: 0;
+}
+
+.festival-travel-tips {
+  list-style: disc;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--f-muted-fg);
+}
+
+/* ========== FAQ ========== */
+
+.festival-faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.festival-faq-item {
+  border-radius: 14px;
+  border: 1px solid var(--f-border);
+  background: var(--f-surface);
+  overflow: hidden;
+}
+
+.festival-faq-question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.25rem;
+  background: none;
+  border: none;
+  text-align: left;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--f-fg);
+  cursor: pointer;
+}
+
+.festival-faq-chevron {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.festival-faq-item.is-open .festival-faq-chevron {
+  transform: rotate(180deg);
+}
+
+.festival-faq-answer {
+  padding: 0 1.25rem 1.1rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--f-muted-fg);
+  margin: 0;
+}
+
+/* ========== LIST PAGES ========== */
+
+/* Was `background: var(--f-fg)` with hardcoded white text — a dark banner
+   built by borrowing the *text* colour as a fill. That inverts the moment
+   --f-fg is light, which is exactly what dark mode does: the band turned
+   cream and its white title vanished. It is now a normal tinted band that
+   inherits the theme's own foreground, so it reads in both. */
+.festival-list-header {
+  width: 100%;
+  background: var(--f-muted);
+  color: var(--f-fg);
+  border-bottom: 2px solid var(--f-ink);
+  padding: clamp(2.5rem, 5vw, 3.5rem) 0 2.5rem;
+}
+
+.festival-list-header h1 {
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  font-weight: 800;
+  margin: 0.25rem 0 0.5rem;
+}
+
+.festival-list-description {
+  color: var(--f-muted-fg);
+  margin: 0 0 1.5rem;
+}
+
+.festival-search-container--inline {
+  max-width: none;
+  border: 2px solid var(--f-ink);
+  box-shadow: 4px 4px 0 var(--f-shadow);
+}
+
+.festival-country-info-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.festival-country-info-card h3 {
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0 0 0.2rem;
+}
+
+.festival-country-info-card p {
+  font-size: 0.82rem;
+  color: var(--f-muted-fg);
+  margin: 0;
+}
+
+@media (max-width: 640px) {
+  .festival-detail-hero-content .featured-meta {
+    gap: 0.6rem;
+  }
+}
+
+/* ================================================================
+   PAPER-CRAFT LAYER
+   ================================================================
+   The hero establishes the construction — every surface is a flat cut of
+   paper: 2px ink outline, hard offset shadow, no blur and no gradient. The
+   rest of the route was authored against a soft drop-shadow system, so
+   rather than rewrite ~40 rules in place this layer restates just the
+   properties that differ, keyed on the classes those rules already use.
+
+   Ordering matters: this block sits last so it wins over the base rules at
+   equal specificity. Where a base rule is more specific, the selector here
+   is matched to it rather than padded with !important.
+   ================================================================ */
+
+/* ---------- Display type ---------- */
+
+.festival-page h1,
+.festival-page h2,
+.festival-page h3,
+.festival-page h4,
+.festival-page .section-label,
+.festival-page .festival-brand,
+.festival-page .festival-btn,
+.festival-page .festival-month-tab,
+.festival-page .stat-value,
+.festival-page .festival-card-days {
+  font-family: var(--font-fredoka), var(--font-family-body, ui-sans-serif, system-ui, sans-serif);
+  letter-spacing: 0;
+}
+
+.festival-page .section-label {
+  color: var(--f-pink);
+  font-weight: 600;
+}
+
+/* ---------- Cards & tiles ---------- */
+
+/* The countdown cards are deliberately absent here: they are the one surface
+   that stays a dark slab in both themes (see --f-night), so giving them the
+   light paper fill would erase that inversion. They take the outline and
+   offset shadow below on their own terms. */
+.festival-page .religion-card,
+.festival-page .country-card,
+.festival-page .category-card,
+.festival-page .festival-card,
+.festival-page .featured-festival,
+.festival-page .festival-stat-tile,
+.festival-page .festival-detail-col-card,
+.festival-page .food-culture-card {
+  border: 2px solid var(--f-ink);
+  border-radius: 18px;
+  box-shadow: 4px 4px 0 var(--f-shadow);
+  background: var(--f-surface);
+  transition: transform 0.16s ease, box-shadow 0.16s ease, background-color 0.3s ease,
+    border-color 0.3s ease, color 0.3s ease;
+}
+
+.festival-page .festival-upcoming-card {
+  border: 2px solid var(--f-ink);
+  box-shadow: 4px 4px 0 var(--f-shadow);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+
+.festival-page .religion-card:hover,
+.festival-page .country-card:hover,
+.festival-page .category-card:hover,
+.festival-page .festival-card:hover,
+.festival-page .festival-upcoming-card:hover,
+.festival-page .food-culture-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--f-shadow);
+}
+
+/* Cards whose top edge is a photo: the image has to be clipped back to the
+   card's inner radius or its square corners poke through the 2px outline.
+   The countdown card is exempt — its photo is inset on all four sides and
+   carries its own all-round radius. */
+.festival-page .festival-card-image,
+.festival-page .food-culture-image {
+  border-radius: 15px 15px 0 0;
+}
+
+/* ---------- Buttons ---------- */
+
+.festival-page .festival-btn,
+.festival-page .newsletter-form button,
+.festival-page .festival-icon-button {
+  border: 2px solid var(--f-ink);
+  border-radius: 14px;
+  box-shadow: 3px 3px 0 var(--f-shadow);
+  font-weight: 700;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.3s ease,
+    border-color 0.3s ease, color 0.3s ease;
+}
+
+.festival-page .festival-btn:hover,
+.festival-page .newsletter-form button:hover,
+.festival-page .festival-icon-button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--f-shadow);
+}
+
+.festival-page .festival-btn:active,
+.festival-page .newsletter-form button:active,
+.festival-page .festival-icon-button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--f-shadow);
+}
+
+.festival-page .festival-btn--primary {
+  background: var(--f-pink);
+  color: #fff;
+}
+
+.festival-page .festival-btn--ghost {
+  background: var(--f-surface);
+  color: var(--f-ink);
+}
+
+.festival-page .festival-icon-button {
+  border-radius: 12px;
+  background: var(--f-surface);
+  color: var(--f-ink);
+}
+
+/* ---------- Inputs ---------- */
+
+.festival-page .newsletter-form input,
+.festival-page .festival-detail-body input {
+  border: 2px solid var(--f-ink);
+  border-radius: 14px;
+  background: var(--f-surface);
+  color: var(--f-fg);
+}
+
+/* ---------- Month tabs (calendar section) ---------- */
+
+.festival-page .festival-month-tab {
+  border: 2px solid var(--f-ink);
+  border-radius: 999px;
+  background: var(--f-surface);
+  color: var(--f-ink);
+  font-weight: 600;
+  box-shadow: 2px 2px 0 var(--f-shadow);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.festival-page .festival-month-tab:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--f-shadow);
+}
+
+.festival-page .festival-month-tab.is-active {
+  background: var(--f-pink);
+  color: #fff;
+}
+
+/* ---------- Header ---------- */
+
+.festival-page .festival-header {
+  background: var(--f-bg);
+  border-bottom: 2px solid var(--f-ink);
+}
+
+.festival-page .festival-brand-mark {
+  border: 2px solid var(--f-ink);
+  border-radius: 12px;
+  box-shadow: 2px 2px 0 var(--f-shadow);
+}
+
+/* ---------- Section bands ---------- */
+
+/* Alternating bands were surface-white against a near-white page, which is
+   invisible at this palette's contrast. The tint band becomes the warmer
+   stock so the rhythm still reads. */
+.festival-page .festival-section--tint {
+  background: var(--f-muted);
+}
+
+/* ---------- Newsletter, stats & footer ---------- */
+
+/* These three were dark bands built the same way .festival-list-header was —
+   `background: var(--f-fg)` with hardcoded white text nested throughout. The
+   fill is now a light tint, so every one of those white descendants has to
+   come back to the theme's own foreground or it disappears against the
+   cream. Descendants are re-pointed at the muted token wholesale rather than
+   rule-by-rule; the few that carried emphasis (headings, hover states) are
+   restored to full --f-fg below. */
+.festival-page .festival-newsletter,
+.festival-page .festival-stats-band {
+  border-top: 2px solid var(--f-ink);
+  border-bottom: 2px solid var(--f-ink);
+  background: var(--f-muted);
+  color: var(--f-fg);
+}
+
+.festival-page .festival-footer {
+  border-top: 2px solid var(--f-ink);
+  background: var(--f-bg);
+  color: var(--f-muted-fg);
+}
+
+.festival-page .festival-stats-band .festival-stats-label,
+.festival-page .festival-footer .footer-brand > p,
+.festival-page .festival-footer .footer-links a,
+.festival-page .festival-footer .footer-bottom,
+.festival-page .festival-footer .footer-bottom p {
+  color: var(--f-muted-fg);
+}
+
+.festival-page .festival-stats-band .festival-stats-heading,
+.festival-page .festival-footer .footer-brand h3,
+.festival-page .festival-footer .footer-links h4,
+.festival-page .festival-footer .footer-links a:hover {
+  color: var(--f-fg);
+}
+
+/* The social buttons were white-on-translucent-white pills; at this palette
+   they become outlined paper chips like every other control. */
+.festival-page .festival-footer .social-links a {
+  background: var(--f-surface);
+  color: var(--f-ink);
+  border: 2px solid var(--f-ink);
+  box-shadow: 2px 2px 0 var(--f-shadow);
+}
+
+.festival-page .festival-footer .social-links a:hover {
+  background: var(--f-pink);
+  color: #fff;
+}
+
+/* ---------- Detail-page hero ---------- */
+
+/* The detail hero keeps its photograph, so its scrim is retinted from the
+   old green to the palette's ink — a green wash over a warm-cream route
+   reads as a different site. */
+.festival-page .festival-detail-hero .festival-hero-overlay,
+.festival-page .festival-hero-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(40, 30, 22, 0.5) 0%,
+    rgba(40, 30, 22, 0.74) 60%,
+    rgba(40, 30, 22, 0.94) 100%
+  );
+}
+
+.festival-page .festival-detail-hero {
+  border-bottom: 2px solid var(--f-ink);
+}
+
+/* ---------- Pagination & empty state ---------- */
+
+.festival-page .pagination button,
+.festival-page .pagination a,
+.festival-page .festival-empty {
+  border: 2px solid var(--f-ink);
+  border-radius: 14px;
+  background: var(--f-surface);
+  box-shadow: 3px 3px 0 var(--f-shadow);
+}

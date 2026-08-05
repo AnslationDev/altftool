@@ -1,9 +1,4 @@
 // src/app/tradeon/components/landing/SectorOutlook.jsx
-// Home "Sector Outlook" grid — four sector columns (Banking / IT / FMCG / Pharma),
-// each a list of "<TICKER> Outlook for the Week" rows in a 40% logo / 60% title
-// layout, matching the reference. Each row links to that symbol's asset page.
-// Official company logos are loaded by domain from Brandfetch's logo CDN; a
-// coloured monogram is shown as a fallback if a logo can't load.
 "use client";
 
 import { useState } from "react";
@@ -14,56 +9,51 @@ const SECTORS = [
   {
     name: "Banking Sector",
     stocks: [
-      { t: "ICICIBANK", s: "ICICI", c: "#f58220", d: "icicibank.com" },
-      { t: "SBIN", s: "SBI", c: "#1aa2d6", d: "sbi.co.in" },
-      { t: "HDFCBANK", s: "HDFC", c: "#e4022d", d: "hdfcbank.com" },
-      { t: "AXISBANK", s: "AXIS", c: "#97144d", d: "axisbank.com" },
+      { t: "ICICIBANK", s: "ICICI", d: "icicibank.com" },
+      { t: "SBIN", s: "SBI", d: "sbi.co.in" },
+      { t: "HDFCBANK", s: "HDFC", d: "hdfcbank.com" },
+      { t: "AXISBANK", s: "AXIS", d: "axisbank.com" },
     ],
   },
   {
     name: "IT Sector",
     stocks: [
-      { t: "WIPRO", s: "WIPRO", c: "#7a29a0", d: "wipro.com" },
-      { t: "TCS", s: "TCS", c: "#ee3984", d: "tcs.com" },
-      { t: "INFY", s: "INFY", c: "#007cc3", d: "infosys.com" },
-      { t: "HCLTECH", s: "HCL", c: "#0f5aa8", d: "hcltech.com" },
-    ],
-  },
-  {
-    name: "FMCG Sector",
-    stocks: [
-      { t: "ITC", s: "ITC", c: "#00447c", d: "itcportal.com" },
-      { t: "HINDUNILVR", s: "HUL", c: "#1e3888", d: "hul.co.in" },
-      { t: "DABUR", s: "DABUR", c: "#5a9e2f", d: "dabur.com" },
-      { t: "COLPAL", s: "CP", c: "#ed1c24", d: "colgate.com" },
+      { t: "WIPRO", s: "WIPRO", d: "wipro.com" },
+      { t: "TCS", s: "TCS", d: "tcs.com" },
+      { t: "INFY", s: "INFY", d: "infosys.com" },
+      { t: "HCLTECH", s: "HCL", d: "hcltech.com" },
     ],
   },
   {
     name: "Pharma Sector",
     stocks: [
-      { t: "SUNPHARMA", s: "SUN", c: "#f5821f", d: "sunpharma.com" },
-      { t: "CIPLA", s: "CIPLA", c: "#0057a8", d: "cipla.com" },
-      { t: "LUPIN", s: "LUPIN", c: "#00a651", d: "lupin.com" },
-      { t: "DRREDDY", s: "DRL", c: "#5b2d8e", d: "drreddys.com" },
+      { t: "SUNPHARMA", s: "SUN", d: "sunpharma.com" },
+      { t: "CIPLA", s: "CIPLA", d: "cipla.com" },
+      { t: "LUPIN", s: "LUPIN", d: "lupin.com" },
+      { t: "DRREDDY", s: "DRL", d: "drreddys.com" },
     ],
   },
 ];
 
-// Official logo (Brandfetch CDN, by domain) — keeps aspect ratio via object-fit;
-// falls back to a coloured monogram if the image can't load.
+// Official logo CDN with theme-friendly fallback styling
 function CompanyLogo({ st }) {
   const [failed, setFailed] = useState(false);
+
   if (failed) {
-    return <span className="text-[0.62rem] font-black tracking-tight" style={{ color: st.c }}>{st.s}</span>;
+    return (
+      <span className="text-xs font-black tracking-tight" style={{ color: "var(--tdn-accent-text, #38bdf8)" }}>
+        {st.s}
+      </span>
+    );
   }
+
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
       src={`https://cdn.brandfetch.io/${st.d}/w/256/h/128`}
       alt={`${st.t} logo`}
       loading="lazy"
-      className="object-contain"
-      style={{ maxWidth: "92%", maxHeight: "88%" }}
+      className="object-contain max-w-[88%] max-h-[85%]"
       onError={() => setFailed(true)}
     />
   );
@@ -71,7 +61,8 @@ function CompanyLogo({ st }) {
 
 export default function SectorOutlook() {
   return (
-    <section className="tdn-container tdn-section-tight">
+    <section className="tdn-container tdn-section-tight w-full">
+      {/* Section Header */}
       <div className="mb-3">
         <span className="tdn-eyebrow text-[0.62rem]">By sector</span>
         <h2 className="tdn-display text-xl sm:text-2xl mt-0.5" style={{ color: "var(--tdn-fg-strong)" }}>
@@ -79,32 +70,35 @@ export default function SectorOutlook() {
         </h2>
       </div>
 
-      {/* One continuous thick top rule spanning all columns (matches the design) */}
-      <div className="pt-4" style={{ borderTop: "3px solid var(--tdn-fg-strong)" }}>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-6">
+      {/* Top Divider Line (Theme-aware) */}
+      <div className="pt-4 border-t-2 border-[var(--tdn-fg-strong)]">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-6">
           {SECTORS.map((sec) => (
-            <div key={sec.name}>
-              <h3 className="text-sm font-extrabold uppercase tracking-wide mb-1" style={{ color: "var(--tdn-fg-strong)" }}>
+            <div key={sec.name} className="flex flex-col">
+              <h3
+                className="text-xs sm:text-sm font-extrabold uppercase tracking-wide mb-2"
+                style={{ color: "var(--tdn-fg-strong)" }}
+              >
                 {sec.name}
               </h3>
               {sec.stocks.map((st) => (
                 <Link
                   key={st.t}
                   href={`/tradeon/weekly-outlook/${outlookSlug(st.t)}`}
-                  className="group flex items-center gap-3 py-2.5 border-b"
-                  style={{ borderColor: "var(--tdn-border)" }}
+                  className="group flex items-center gap-2.5 py-2.5 border-b border-white/10 dark:border-white/10 border-slate-200 hover:bg-white/5 transition-colors"
                 >
-                  {/* 40% — official logo on a light tile (readable in any theme) */}
+                  {/* Logo Tile — Styled with theme surface colors */}
                   <span
-                    className="shrink-0 grid place-items-center rounded-lg overflow-hidden"
-                    style={{ flexBasis: "40%", height: 72, background: "#ffffff", border: "1px solid var(--tdn-border)" }}
+                    className="shrink-0 grid place-items-center rounded-md overflow-hidden bg-white/5 border border-white/10"
+                    style={{ flexBasis: "35%", height: 56 }}
                   >
                     <CompanyLogo st={st} />
                   </span>
-                  {/* 60% — title */}
+
+                  {/* Title */}
                   <span
-                    className="text-sm font-semibold leading-snug transition-colors group-hover:text-[var(--tdn-iris-2)]"
-                    style={{ flexBasis: "60%", color: "var(--tdn-fg-strong)" }}
+                    className="text-xs sm:text-sm font-semibold leading-snug transition-colors group-hover:text-[var(--tdn-iris-2)]"
+                    style={{ flexBasis: "65%", color: "var(--tdn-fg-strong)" }}
                   >
                     {st.t} Outlook for the Week
                   </span>
@@ -115,8 +109,12 @@ export default function SectorOutlook() {
         </div>
       </div>
 
-      <div className="flex justify-center mt-8">
-        <Link href="/tradeon/outlook" className="tdn-btn" style={{ background: "var(--tdn-fg-strong)", color: "var(--tdn-bg)", minWidth: 150 }}>
+      {/* View All CTA Button */}
+      <div className="flex justify-center mt-6 sm:mt-8">
+        <Link
+          href="/tradeon/outlook"
+          className="tdn-btn tdn-btn-primary px-6 py-2 text-xs font-semibold"
+        >
           View All
         </Link>
       </div>

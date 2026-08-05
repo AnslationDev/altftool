@@ -37,11 +37,12 @@ export default function GlobalMarkets({ data = [] }) {
             <button
               key={c.id}
               onClick={() => setTab(c.id)}
-              className="px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all"
+              className="px-3.5 py-1.5 rounded-full text-sm font-semibold transition-all backdrop-blur-md"
               style={{
                 background: tab === c.id ? "var(--tdn-brand-gradient)" : "var(--tdn-surface)",
                 color: tab === c.id ? "#fff" : "var(--tdn-muted)",
-                border: "1px solid var(--tdn-border)",
+                border: tab === c.id ? "1px solid transparent" : "1px solid var(--tdn-border)",
+                boxShadow: "none",
               }}
             >
               {c.label}
@@ -49,27 +50,33 @@ export default function GlobalMarkets({ data = [] }) {
           ))}
         </div>
 
-        <div className="tdn-panel overflow-hidden">
+        {/* Transparent Table Container */}
+        <div className="w-full overflow-hidden bg-transparent border-none shadow-none">
           <div className="overflow-x-auto tdn-scroll-thin">
-            <table className="tdn-table min-w-[720px]">
+            <table className="w-full border-collapse min-w-[720px] bg-transparent shadow-none">
               <thead>
-                <tr>
-                  <th className="tdn-sticky-col">Asset</th>
-                  <th className="text-right">Price</th>
-                  <th className="text-right">24h</th>
-                  <th className="text-right hidden sm:table-cell">Volume</th>
-                  <th className="text-center hidden md:table-cell">7d trend</th>
-                  <th className="text-right">Signal</th>
+                {/* Header row with adaptive border for light & dark mode */}
+                <tr className="border-b border-black/10 dark:border-white/10 bg-transparent">
+                  <th className="tdn-sticky-col !bg-transparent text-left py-3 px-4 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Asset</th>
+                  <th className="text-right py-3 px-4 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Price</th>
+                  <th className="text-right py-3 px-4 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">24h</th>
+                  <th className="text-right hidden sm:table-cell py-3 px-4 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Volume</th>
+                  <th className="text-center hidden md:table-cell py-3 px-4 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">7d trend</th>
+                  <th className="text-right py-3 px-4 font-semibold text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Signal</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="bg-transparent">
                 {rows.map((d) => {
                   const p = predict(d);
                   return (
-                    <tr key={d.symbol}>
-                      <td className="tdn-sticky-col">
+                    /* Adaptive Separator Line (Black/10 in Light mode, White/10 in Dark mode) */
+                    <tr
+                      key={d.symbol}
+                      className="bg-transparent hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition-colors border-b border-black/10 dark:border-white/10 last:border-b-0"
+                    >
+                      <td className="tdn-sticky-col !bg-transparent py-3.5 px-4">
                         <Link href={assetHref(d.symbol)} className="flex flex-col group">
-                          <span className="font-bold group-hover:text-[var(--tdn-iris-2)] transition-colors" style={{ color: "var(--tdn-fg-strong)" }}>
+                          <span className="font-bold group-hover:text-cyan-500 transition-colors" style={{ color: "var(--tdn-fg-strong)" }}>
                             {d.symbol}
                           </span>
                           <span className="text-xs" style={{ color: "var(--tdn-faint)" }}>
@@ -77,21 +84,21 @@ export default function GlobalMarkets({ data = [] }) {
                           </span>
                         </Link>
                       </td>
-                      <td className="text-right font-semibold" style={{ color: "var(--tdn-fg-strong)" }}>
+                      <td className="text-right font-semibold py-3.5 px-4" style={{ color: "var(--tdn-fg-strong)" }}>
                         <LiveValue value={d.price} currency={d.assetClass === "forex" ? "" : "$"} />
                       </td>
-                      <td className="text-right">
+                      <td className="text-right py-3.5 px-4">
                         <DeltaPill value={d.changePct} showIcon={false} />
                       </td>
-                      <td className="text-right hidden sm:table-cell tdn-mono" style={{ color: "var(--tdn-muted)" }}>
+                      <td className="text-right hidden sm:table-cell tdn-mono py-3.5 px-4" style={{ color: "var(--tdn-muted)" }}>
                         {d.volume ? `$${formatCompact(d.volume)}` : "—"}
                       </td>
-                      <td className="hidden md:table-cell">
+                      <td className="hidden md:table-cell py-3.5 px-4">
                         <div className="flex justify-center">
                           <Sparkline data={d.spark} width={110} height={30} color={d.changePct >= 0 ? "var(--tdn-up)" : "var(--tdn-down)"} />
                         </div>
                       </td>
-                      <td className="text-right">
+                      <td className="text-right py-3.5 px-4">
                         <span
                           className="text-xs font-bold px-2 py-1 rounded-md"
                           style={{ color: SIGNAL_COLOR[p.signal], background: `color-mix(in srgb, ${SIGNAL_COLOR[p.signal]} 14%, transparent)` }}

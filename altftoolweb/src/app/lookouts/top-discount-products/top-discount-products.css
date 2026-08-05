@@ -1,0 +1,241 @@
+/* ================================================================
+   Top Discount Products
+   Scoped to /lookouts/top-discount-products.
+
+   This route runs its OWN fixed "neo-brutalist" palette (yellow /
+   ink-black / coral / sky) instead of the site's light-dark design
+   tokens — same pattern as the free-ai-tool and ai-bundles sub-pages,
+   each of which owns a scoped mini design system. Colours below are
+   deliberately literal hex, not var(--foreground) etc: this page looks
+   the same regardless of the global dark-mode toggle. Tailwind classes
+   that reuse literal "black"/"white" (not arbitrary hex) get silently
+   remapped to theme tokens by the site's .anslation-ds-public
+   compatibility layer (see globals.css ~L1230) — every component in
+   this route uses arbitrary hex values (`text-[#171717]`,
+   `bg-[#ffffff]`) for that reason, never the bare `text-black`/`bg-white`
+   utilities.
+   ================================================================ */
+
+.tdp-page {
+  min-height: 100vh;
+  background: #fffbea;
+  color: #171717;
+  font-family: var(--font-inter, var(--font-primary));
+}
+
+/* ---------- header (mirrors free-ai-tool's fat-header structure) ---------- */
+
+.tdp-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, #ffffff 85%, transparent);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  border-bottom: 3px solid #171717;
+}
+
+.tdp-header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.tdp-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  white-space: nowrap;
+  color: #171717;
+  text-decoration: none;
+}
+
+.tdp-brand-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f59e0b, #ff5a5f);
+  color: #fff;
+  border: 2px solid #171717;
+  flex-shrink: 0;
+}
+
+.tdp-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.tdp-icon-button {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #171717;
+  background: #ffffff;
+  color: #171717;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 2px 2px 0 #171717;
+}
+
+.tdp-icon-button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 #171717;
+}
+
+/* ---------- hero ---------- */
+
+.tdp-hero-orbit {
+  background-color: #ffe566;
+  background-image: radial-gradient(circle, rgba(23, 23, 23, 0.12) 1.5px, transparent 1.6px);
+  background-size: 16px 16px;
+}
+
+.tdp-hero-burst {
+  position: absolute;
+  top: -30px;
+  left: 50%;
+  z-index: 0;
+  width: 280px;
+  height: 280px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: repeating-conic-gradient(#ff5a5f 0deg 10deg, transparent 10deg 20deg);
+  opacity: 0.18;
+  pointer-events: none;
+  animation: tdp-hero-spin 30s linear infinite;
+}
+@keyframes tdp-hero-spin {
+  to { transform: translateX(-50%) rotate(360deg); }
+}
+
+.tdp-hero-pop {
+  animation: tdp-hero-wiggle 3.5s ease-in-out infinite;
+}
+@keyframes tdp-hero-wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(-2deg); }
+}
+
+.tdp-scroll-indicator {
+  animation: tdp-bounce 2s ease-in-out infinite;
+}
+@keyframes tdp-bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(8px); opacity: 1; }
+}
+
+/* ---------- neo-brutalist building blocks (cards, buttons, badges) ---------- */
+
+.tdp-neo-card {
+  border: 3px solid #171717;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 5px 5px 0 #171717;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.tdp-neo-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 #171717;
+}
+
+.tdp-neo-card-sm {
+  border: 2.5px solid #171717;
+  border-radius: 14px;
+  background: #ffffff;
+  box-shadow: 3px 3px 0 #171717;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.tdp-neo-card-sm:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 #171717;
+}
+
+.tdp-neo-btn {
+  border: 3px solid #171717;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: 4px 4px 0 #171717;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.tdp-neo-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 #171717;
+}
+.tdp-neo-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #171717;
+}
+.tdp-neo-btn:disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.tdp-neo-chip {
+  border: 2.5px solid #171717;
+  border-radius: 999px;
+  font-weight: 700;
+  box-shadow: 3px 3px 0 #171717;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.tdp-neo-chip:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 #171717;
+}
+
+/* ---------- product card image + interactions ---------- */
+
+.tdp-card-image-wrap {
+  overflow: hidden;
+}
+.tdp-card-image {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.tdp-neo-card:hover .tdp-card-image {
+  transform: scale(1.08);
+}
+
+/* ---------- skeleton shimmer ---------- */
+
+.tdp-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: #f3f0dd;
+}
+.tdp-shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(23, 23, 23, 0.08), transparent);
+  animation: tdp-shimmer-sweep 1.6s ease-in-out infinite;
+}
+@keyframes tdp-shimmer-sweep {
+  100% { transform: translateX(100%); }
+}
+
+/* ---------- horizontal scroll rails (category chips / trending) ---------- */
+
+.tdp-rail {
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.tdp-rail::-webkit-scrollbar {
+  display: none;
+}
+.tdp-rail > * {
+  scroll-snap-align: start;
+}

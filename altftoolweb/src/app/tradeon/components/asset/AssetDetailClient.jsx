@@ -194,22 +194,22 @@ export default function AssetDetailClient({ symbol: symbolProp, defaultTab }) {
     <div className="tradeon-root min-h-screen flex flex-col">
       <TradeonHeader data={data} status={status} />
 
-      {/* Sticky market header */}
+      {/* Sticky market header — responsive: secondary text collapses on small screens */}
       <div className="sticky top-[94px] z-40 tdn-topbar">
-        <div className="tdn-container py-2 flex items-center gap-3 flex-wrap">
-          <Link href="/tradeon#markets" className="tdn-btn tdn-btn-icon !w-8 !h-8" aria-label="Back to markets"><ChevronLeft size={16} /></Link>
-          <div className="flex items-center gap-2 flex-wrap">
-            <h1 className="text-lg font-bold leading-none" style={{ color: "var(--tdn-fg-strong)" }}>{inst.symbol}</h1>
-            <span className="text-xs" style={{ color: "var(--tdn-muted)" }}>{inst.name}</span>
-            <span className="tdn-chip !py-0.5 !px-2 !text-[0.6rem]">{f.exchange}</span>
+        <div className="tdn-container py-2 flex items-center gap-x-3 gap-y-1.5 flex-wrap">
+          <Link href="/tradeon#markets" className="tdn-btn tdn-btn-icon !w-8 !h-8 shrink-0" aria-label="Back to markets"><ChevronLeft size={16} /></Link>
+          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+            <h1 className="text-base sm:text-lg font-bold leading-none shrink-0" style={{ color: "var(--tdn-fg-strong)" }}>{inst.symbol}</h1>
+            <span className="text-xs truncate hidden md:inline" style={{ color: "var(--tdn-muted)" }}>{inst.name}</span>
+            <span className="tdn-chip !py-0.5 !px-2 !text-[0.6rem] shrink-0 hidden sm:inline-flex">{f.exchange}</span>
             <MarketStatusBadge status={status} />
           </div>
-          <div className="flex items-baseline gap-2">
-            <span className="tdn-mono text-xl font-bold" style={{ color: "var(--tdn-fg-strong)" }}><LiveValue value={inst.price} currency={cur} /></span>
+          <div className="flex items-baseline gap-1.5 sm:gap-2 shrink-0">
+            <span className="tdn-mono text-base sm:text-xl font-bold" style={{ color: "var(--tdn-fg-strong)" }}><LiveValue value={inst.price} currency={cur} /></span>
             <DeltaPill value={inst.changePct} />
           </div>
-          <div className="flex items-center gap-1.5 ml-auto">
-            <button onClick={() => setWatching((w) => !w)} className="tdn-btn tdn-btn-ghost !py-1.5 !px-2.5 text-xs" style={watching ? { color: "var(--tdn-amber)", borderColor: "color-mix(in srgb, var(--tdn-amber) 40%, transparent)" } : undefined}>
+          <div className="flex items-center gap-1.5 ml-auto shrink-0">
+            <button onClick={() => setWatching((w) => !w)} className="tdn-btn tdn-btn-ghost !py-1.5 !px-2.5 text-xs" style={watching ? { color: "var(--tdn-amber)", borderColor: "color-mix(in srgb, var(--tdn-amber) 40%, transparent)" } : undefined} aria-label={watching ? "Remove from watchlist" : "Add to watchlist"}>
               <Star size={14} fill={watching ? "var(--tdn-amber)" : "none"} /> <span className="hidden sm:inline">{watching ? "Watching" : "Watchlist"}</span>
             </button>
             <a href="#prediction" className="tdn-btn tdn-btn-soft !py-1.5 !px-2.5 text-xs"><Gauge size={14} /> <span className="hidden sm:inline">Signal model</span></a>

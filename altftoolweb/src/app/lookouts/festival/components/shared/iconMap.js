@@ -1,0 +1,51 @@
+import {
+  Flame,
+  MoonStar,
+  Church,
+  Flower2,
+  Swords,
+  Star,
+  Gem,
+  Landmark,
+  CircleDot,
+  Leaf,
+  Flag,
+  Globe,
+  Globe2,
+  Sparkle,
+  Sparkles,
+  Music4,
+  Sun,
+  Wheat,
+  Headphones,
+  Utensils,
+  Heart,
+} from "lucide-react";
+
+const ICONS = {
+  flame: Flame,
+  "moon-star": MoonStar,
+  cross: Church,
+  flower: Flower2,
+  swords: Swords,
+  star: Star,
+  gem: Gem,
+  "torii-gate": Landmark,
+  "circle-dot": CircleDot,
+  leaf: Leaf,
+  flag: Flag,
+  globe: Globe,
+  "globe-2": Globe2,
+  sparkle: Sparkle,
+  sparkles: Sparkles,
+  "music-4": Music4,
+  sun: Sun,
+  wheat: Wheat,
+  headphones: Headphones,
+  utensils: Utensils,
+  heart: Heart,
+};
+
+export function getIcon(key) {
+  return ICONS[key] || Sparkle;
+}

@@ -1,42 +1,87 @@
-// Lookouts product registry — the single source of truth for the /lookouts hub.
+// Lookouts product registry.
 //
-// HARD RULE: every entry here must point at a route that exists in THIS tree.
-// A card whose href 404s turns this hub into a page that manufactures soft
-// 404s for every crawler that follows it, which is the exact bug /lookouts
-// was shipped to fix. Before adding an entry, confirm the route renders and
-// is registered in src/app/sitemap.js.
+// This is the single source of truth for the /lookouts dashboard.
+// To add a new lookout product, create its folder under src/app/lookouts/<slug>/
+// and append one entry here.
 //
 // Fields:
-//   slug        stable React key
+//   slug        folder name under src/app/lookouts/ (also the React key)
 //   name        display name
 //   tagline     one short line shown under the name
-//   description 1-2 sentences describing what the destination does
-//   href        route to open (must exist in this tree)
-//   icon        key resolved to a lucide icon in page.jsx
-//
-// There is deliberately no per-card accent colour — see the note on
-// .lookouts-product-ico in lookouts.css.
+//   description 1–2 sentences describing what the product does
+//   href        route to open
+//   status      "live" | "beta" | "planned"
+//   accent      icon tile colour: sky | amber | violet | emerald | rose
+//   icon        key resolved to a lucide icon
 
 export const LOOKOUTS_PRODUCTS = [
   {
+    slug: "festival",
+    name: "Festival",
+    tagline: "Discover festivals worldwide",
+    description:
+      "Explore and discover festivals from around the world. Find events by category, location, and date to plan your next adventure.",
+    href: "/lookouts/festival",
+    status: "live",
+    accent: "sky",
+    icon: "music",
+  },
+  {
+    slug: "top-discount-products",
+    name: "Top Discount Products",
+    tagline: "Best deals and discounts",
+    description:
+      "Find and compare the best discount products and deals across multiple categories. Save money on everything you need.",
+    href: "/lookouts/top-discount-products",
+    status: "live",
+    accent: "amber",
+    icon: "tags",
+  },
+  {
     slug: "ai-prompt-studio",
     name: "AI Prompt Studio",
-    tagline: "Build and refine AI prompts",
-    // Both sentences track /imgprompt's own navigation (Prompt Studio, Prompt
-    // Generator, Prompt Optimizer, Image/Video/Cinema Prompt, and the AI
-    // Models section) rather than describing a structure it does not have.
+    tagline: "Create with AI prompts",
     description:
-      "Image, video and cinema prompts grouped by AI model, plus a studio that generates and optimises prompts of your own.",
+      "Design and generate creative content with AI-powered prompt templates. Perfect for artists, writers, and creators.",
     href: "/imgprompt",
+    status: "live",
+    accent: "violet",
     icon: "sparkles",
   },
   {
-    slug: "free-ai-tool",
-    name: "Free AI Tools",
-    tagline: "A directory of free AI tools",
+    slug: "ai-bundles",
+    name: "AI Bundle",
+    tagline: "AI tools collection",
     description:
-      "A categorised directory of free AI tools for writing, images, video, audio and code, with a link straight out to each one.",
-    href: "/free-ai-tool",
+      "Access a comprehensive bundle of AI tools designed to boost productivity. All your AI needs in one place.",
+    href: "/lookouts/ai-bundles",
+    status: "live",
+    accent: "emerald",
+    icon: "package",
+  },
+  {
+    slug: "free-ai-tool",
+    name: "Free AI Tool",
+    tagline: "Free AI utilities",
+    description:
+      "Explore our collection of free AI-powered tools for everyday tasks. No subscription required — start using them now.",
+    href: "/lookouts/free-ai-tool",
+    status: "live",
+    accent: "rose",
     icon: "bot",
   },
 ];
+
+export const STATUS_META = {
+  live: { label: "Live", tone: "live" },
+  beta: { label: "Beta", tone: "beta" },
+  planned: { label: "In development", tone: "planned" },
+};
+
+export function getLookupsStats(products = LOOKOUTS_PRODUCTS) {
+  const live = products.filter((p) => p.status === "live").length;
+  const beta = products.filter((p) => p.status === "beta").length;
+  const planned = products.filter((p) => p.status === "planned").length;
+
+  return { total: products.length, live, beta, planned };
+}

@@ -1,0 +1,394 @@
+/* AI Bundles landing — page-scoped styles (aib- prefix).
+   Theme matches the Festival/Lookouts palette exactly (same hex values as
+   .festival-page in ../festival.css), scoped here under .aib-page so both
+   sections can share one visual identity without colliding class scopes.
+   Global prefers-reduced-motion kill-switch in globals.css covers these. */
+
+/* Same shared brand-lockup styles Festival/Lookouts headers use (.altf-brandlock,
+   .altf-by, etc.) — without this import those classes have no rules at all,
+   so the "by Alt F" byline falls back to plain inline flow and wraps onto
+   its own line instead of sitting flush beside the brand name. */
+@import "../../_altf/altf-brand.css";
+
+.aib-page {
+  --aib-bg: #f0f4f3;
+  --aib-fg: #0d2b22;
+  --aib-fg-muted: #64748b;
+  --aib-fg-subtle: #94a3b8;
+  --aib-border: #d4e4df;
+  --aib-hairline: rgba(15, 23, 42, 0.06);
+  --aib-primary: #1a6b54;
+  --aib-primary-fg: #ffffff;
+  --aib-secondary: #c8e6de;
+  --aib-muted: #dceae5;
+  --aib-muted-fg: #5e8a7a;
+  --aib-accent: #e8a020;
+  --aib-accent-fg: #ffffff;
+  --aib-surface: #ffffff;
+  --aib-surface-2: #f8fafc;
+  --aib-surface-3: #eef2f1;
+  --aib-tile-bg: #fbfbfe;
+  --aib-tile-dot: rgba(15, 23, 42, 0.09);
+  --aib-glass: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.78));
+
+  color: var(--aib-fg);
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+[data-theme="dark"] .aib-page {
+  --aib-bg: #0f1a16;
+  --aib-fg: #eaf3f0;
+  --aib-fg-muted: #9db8ac;
+  --aib-fg-subtle: #7a968a;
+  --aib-border: #234135;
+  --aib-hairline: rgba(255, 255, 255, 0.08);
+  --aib-primary: #2a9c7a;
+  --aib-primary-fg: #06120d;
+  --aib-secondary: #1e3a2e;
+  --aib-muted: #1a2f26;
+  --aib-muted-fg: #8fb7a6;
+  --aib-accent: #f0b13a;
+  --aib-accent-fg: #241703;
+  --aib-surface: #142620;
+  --aib-surface-2: #182e26;
+  --aib-surface-3: #1e392f;
+  --aib-tile-bg: #16291f;
+  --aib-tile-dot: rgba(255, 255, 255, 0.07);
+  --aib-glass: linear-gradient(rgba(26, 47, 38, 0.92), rgba(20, 38, 32, 0.78));
+}
+
+/* --- Sticky header (mirrors .festival-header exactly) --------------------- */
+
+.aib-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--aib-surface) 82%, transparent);
+  backdrop-filter: blur(14px) saturate(1.4);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  border-bottom: 1px solid var(--aib-border);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.aib-header-inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.aib-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  white-space: nowrap;
+  color: var(--aib-fg);
+}
+
+.aib-brand-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--aib-primary);
+  color: var(--aib-primary-fg);
+}
+
+.aib-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.aib-icon-button {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--aib-border);
+  background: transparent;
+  color: var(--aib-fg);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.aib-icon-button:hover {
+  border-color: var(--aib-primary);
+  color: var(--aib-primary);
+}
+
+/* --- Hero background: dark teal/navy wash + amber accent glow ------------- */
+
+.aib-hero-wash {
+  background-color: #061410;
+  background-image:
+    radial-gradient(60% 55% at 88% -6%, rgba(42, 156, 122, 0.45), transparent 70%),
+    radial-gradient(48% 42% at 8% 96%, rgba(240, 177, 58, 0.22), transparent 72%),
+    linear-gradient(135deg, rgba(26, 107, 84, 0.16), rgba(42, 156, 122, 0.14) 50%, rgba(240, 177, 58, 0.08));
+}
+
+/* Grid-line texture for the dark hero background, fading out toward the edges. */
+.aib-hero-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 0%, black 30%, transparent 85%);
+}
+
+/* Dark glass variant for hero-only surfaces (search bar, its results dropdown). */
+.aib-glass-dark {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: linear-gradient(rgba(24, 24, 34, 0.8), rgba(10, 10, 16, 0.7));
+}
+
+@keyframes aib-hue {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.aib-gradient-text {
+  background-image: linear-gradient(100deg, #2a9c7a, #f0b13a, #1a6b54, #2a9c7a);
+  background-size: 240% 240%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: aib-hue 7s ease-in-out infinite;
+}
+
+.aib-card {
+  border: 1px solid var(--aib-hairline);
+  background: var(--aib-surface);
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.04),
+    0 16px 40px -28px rgba(15, 23, 42, 0.18);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease,
+    background-color 0.35s ease;
+}
+
+.aib-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(26, 107, 84, 0.28);
+  box-shadow:
+    0 24px 56px -24px rgba(26, 107, 84, 0.3),
+    0 12px 32px -20px rgba(15, 23, 42, 0.16);
+}
+
+.aib-tile {
+  border: 1px solid var(--aib-hairline);
+  background-color: var(--aib-tile-bg);
+  background-image:
+    radial-gradient(var(--aib-tile-dot) 1px, transparent 1.4px),
+    linear-gradient(135deg, var(--aib-tile-a, rgba(26, 107, 84, 0.1)), var(--aib-tile-b, rgba(240, 177, 58, 0.08)));
+  background-size: 12px 12px, 100% 100%;
+}
+
+.aib-glass {
+  border: 1px solid var(--aib-hairline);
+  background: var(--aib-glass);
+}
+
+.aib-chip { transition: transform 0.25s ease, border-color 0.25s ease, color 0.25s ease; }
+.aib-chip:hover { transform: translateY(-2px); }
+
+.aib-no-scrollbar { scrollbar-width: none; -ms-overflow-style: none; }
+.aib-no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* --- Dark-mode bridge for baked-in light utilities ------------------------
+   Same rationale as free-ai-tool.css: the 32 components here hardcode Tailwind
+   neutrals, so `.aib-card` alone going dark would still leave white utility
+   surfaces and near-black text. Scoped to `[data-theme="dark"] .aib-page`, so
+   inert in light mode. Brand greens/ambers are left alone.
+
+   Note the hero is *intentionally* dark in both themes (.aib-hero-wash is a
+   dark teal wash), so hero-local `text-white` / `bg-white/N` overlays must NOT
+   be remapped — only the page-body neutrals below are. */
+
+[data-theme="dark"] .aib-page .text-slate-900,
+[data-theme="dark"] .aib-page .text-slate-800,
+[data-theme="dark"] .aib-page .text-slate-700 {
+  color: var(--aib-fg);
+}
+
+[data-theme="dark"] .aib-page .text-slate-600,
+[data-theme="dark"] .aib-page .text-slate-500 {
+  color: var(--aib-fg-muted);
+}
+
+[data-theme="dark"] .aib-page .text-slate-400,
+[data-theme="dark"] .aib-page .text-slate-300 {
+  color: var(--aib-fg-subtle);
+}
+
+[data-theme="dark"] .aib-page .bg-\[\#f5f9f7\] {
+  background-color: var(--aib-bg);
+}
+
+[data-theme="dark"] .aib-page .bg-white {
+  background-color: var(--aib-surface);
+}
+
+[data-theme="dark"] .aib-page .bg-slate-100 {
+  background-color: var(--aib-surface-2);
+}
+
+[data-theme="dark"] .aib-page .bg-slate-200 {
+  background-color: var(--aib-surface-3);
+}
+
+[data-theme="dark"] .aib-page .bg-white\/90 { background-color: color-mix(in srgb, var(--aib-surface) 90%, transparent); }
+[data-theme="dark"] .aib-page .bg-white\/70 { background-color: color-mix(in srgb, var(--aib-surface) 70%, transparent); }
+
+[data-theme="dark"] .aib-page .border-slate-200,
+[data-theme="dark"] .aib-page .border-slate-100 {
+  border-color: var(--aib-border);
+}
+
+[data-theme="dark"] .aib-page .ring-slate-900\/5 {
+  --tw-ring-color: var(--aib-hairline);
+}
+
+[data-theme="dark"] .aib-page .bg-slate-900 {
+  background-color: var(--aib-surface-3);
+}
+
+/* --- Hero showcase stage -------------------------------------------------- */
+
+.aib-dot-grid {
+  background-image: radial-gradient(var(--aib-tile-dot) 1px, transparent 1.4px);
+  background-size: 20px 20px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 40%, transparent 85%);
+}
+
+@keyframes aib-tab-progress {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+.aib-tab-progress {
+  animation-name: aib-tab-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+/* --- Ambient background blobs -------------------------------------------- */
+
+@keyframes aib-blob-drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(26px, -22px) scale(1.08); }
+  66% { transform: translate(-18px, 20px) scale(0.94); }
+}
+
+.aib-blob { animation: aib-blob-drift 15s ease-in-out infinite; will-change: transform; }
+
+/* --- Button sheen sweep (hover) ------------------------------------------- */
+
+.aib-sheen { position: relative; overflow: hidden; }
+
+.aib-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, 0.45) 50%, transparent 60%);
+  transform: translateX(-130%);
+  transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.aib-sheen:hover::after { transform: translateX(130%); }
+
+/* --- Search bar idle glow pulse ------------------------------------------- */
+
+@keyframes aib-glow-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(26, 107, 84, 0); }
+  50% { box-shadow: 0 0 28px 3px rgba(42, 156, 122, 0.2); }
+}
+
+.aib-search-pulse { animation: aib-glow-pulse 3.4s ease-in-out infinite; }
+
+/* --- Waveform bar pulse (staggered via inline animation-delay) ------------ */
+
+@keyframes aib-wave-pulse {
+  0%, 100% { transform: scaleY(1); }
+  50% { transform: scaleY(1.22); }
+}
+
+.aib-wave-bar { animation: aib-wave-pulse 1.8s ease-in-out infinite; transform-origin: bottom; }
+
+/* --- Typewriter cursor blink (hero headline word-rotation) ---------------- */
+
+@keyframes aib-caret-blink {
+  0%, 45% { opacity: 1; }
+  50%, 95% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.aib-caret { animation: aib-caret-blink 1s step-end infinite; }
+
+/* --- Live badge dot pulse -------------------------------------------------- */
+
+@keyframes aib-dot-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(26, 107, 84, 0.35); }
+  50% { box-shadow: 0 0 0 4px rgba(26, 107, 84, 0); }
+}
+
+.aib-live-dot { animation: aib-dot-pulse 2.2s ease-in-out infinite; }
+
+/* --- Hero tool wall: continuous vertical marquee columns ------------------ */
+
+@keyframes aib-marquee-up {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+
+@keyframes aib-marquee-down {
+  from { transform: translateY(-50%); }
+  to { transform: translateY(0); }
+}
+
+.aib-marquee-col {
+  animation: aib-marquee-up linear infinite;
+  animation-duration: var(--aib-marquee-duration, 30s);
+}
+
+.aib-marquee-col.aib-marquee-reverse { animation-name: aib-marquee-down; }
+
+.aib-marquee-track:hover .aib-marquee-col { animation-play-state: paused; }
+
+.aib-marquee-mask {
+  mask-image: linear-gradient(to bottom, transparent, black 14%, black 86%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 14%, black 86%, transparent);
+}
+
+/* --- Hero radar sweep visual ----------------------------------------------
+   Fixed-dark canvas (see .aib-hero-wash above), so the sweep/blip accent
+   reads consistently in both themes rather than dimming under the darker
+   [data-theme="dark"] --aib-primary swap. */
+
+@keyframes aib-radar-spin {
+  to { transform: rotate(360deg); }
+}
+
+.aib-radar-sweep {
+  background: conic-gradient(from 0deg, color-mix(in srgb, var(--aib-primary) 28%, transparent), transparent 34%);
+  animation: aib-radar-spin 4.5s linear infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes aib-radar-ping {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--aib-primary) 55%, transparent); }
+  12% { box-shadow: 0 0 0 14px color-mix(in srgb, var(--aib-primary) 0%, transparent); }
+  100% { box-shadow: 0 0 0 14px color-mix(in srgb, var(--aib-primary) 0%, transparent); }
+}
+
+.aib-radar-blip-dot {
+  animation: aib-radar-ping 4.5s ease-out infinite;
+}
