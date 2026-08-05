@@ -74,6 +74,15 @@ async function applyVisualVariant(page, variant) {
   }, { theme: variant.theme });
 }
 
+async function expectGlobalHeaderReady(page) {
+  // React streams the resolved Suspense boundary through a hidden staging
+  // container. On a slow runner that hidden copy can briefly share the
+  // header's ID, so assert the single user-visible landmark instead.
+  const header = page.getByRole("banner");
+  await expect(header).toBeVisible();
+  await expect(header).toHaveAttribute("data-hydrated", "true");
+}
+
 test.describe("visual regression", () => {
   // Increased suite-level timeout to allow for potential dev server compile delays
   test.describe.configure({ timeout: 240_000 });
@@ -113,7 +122,7 @@ test.describe("visual regression", () => {
     const quality = createPageQualityGate(page);
 
     await gotoWithRetry(page, `${webUrl}/tools`);
-    await expect(page.locator("#main-header")).toBeVisible();
+    await expectGlobalHeaderReady(page);
     await expect(page.getByRole("heading", { name: /tools/i }).first()).toBeVisible();
     await page.addStyleTag({
       content: ".tools-ad-row { display: none !important; }",
@@ -156,7 +165,7 @@ test.describe("visual regression", () => {
       await applyVisualVariant(page, variant);
 
       await gotoWithRetry(page, `${webUrl}/search`);
-      await expect(page.locator("#main-header")).toBeVisible();
+      await expectGlobalHeaderReady(page);
       await expect(
         page.getByRole("heading", { name: "Search all of AltFTool", exact: true }),
       ).toBeVisible();

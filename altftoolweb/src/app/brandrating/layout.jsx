@@ -1,7 +1,19 @@
-import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import JsonLd from "@/platform/seo/JsonLd";
+import RouteDiscoveryBand from "@/platform/navigation/RouteDiscoveryBand";
+import {
+  getRouteHub,
+  getRouteHubJsonLdItems,
+} from "@/platform/navigation/routeHubs";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createItemListJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
 
 const DESCRIPTION =
   "Explore AltFTool brand comparison previews, category guides, and product research in one place.";
+const brandRatingRouteHub = getRouteHub("brandrating");
 
 export async function generateMetadata() {
   return createPageMetadata({
@@ -16,5 +28,29 @@ export async function generateMetadata() {
 }
 
 export default function BrandRatingLayout({ children }) {
-  return children;
+  return (
+    <>
+      <JsonLd
+        id="brandrating-schema"
+        data={[
+          createCollectionPageJsonLd({
+            path: "/brandrating",
+            name: "AltFTool Brand Rating",
+            description: DESCRIPTION,
+          }),
+          createItemListJsonLd({
+            path: "/brandrating",
+            name: "AltFTool brand rating routes",
+            items: getRouteHubJsonLdItems("brandrating"),
+          }),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Brand Rating", path: "/brandrating" },
+          ]),
+        ]}
+      />
+      {children}
+      <RouteDiscoveryBand {...brandRatingRouteHub} />
+    </>
+  );
 }

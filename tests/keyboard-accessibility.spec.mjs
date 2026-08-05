@@ -36,7 +36,7 @@ test.describe("keyboard accessibility flows", () => {
 
     await page.setViewportSize({ width: 1440, height: 900 });
     await page.goto(`${webUrl}/tools`, { waitUntil: "domcontentloaded" });
-    const header = page.locator("#main-header");
+    const header = page.getByRole("banner");
     await expect(header).toBeVisible();
     await expect(header).toHaveAttribute("data-hydrated", "true");
 
@@ -52,50 +52,34 @@ test.describe("keyboard accessibility flows", () => {
 
     await page.setViewportSize({ width: 390, height: 844 });
     await page.reload({ waitUntil: "domcontentloaded" });
-    await expect(page.locator("#main-header")).toHaveAttribute(
+    await expect(page.getByRole("banner")).toHaveAttribute(
       "data-hydrated",
       "true",
     );
 
-    const openMenu = page.getByRole("button", { name: "Open menu" });
-    await openMenu.focus();
+    const mobileNav = page.getByRole("navigation", { name: "Primary" });
+    const toolsTab = mobileNav.getByRole("button", {
+      name: "Tools",
+      exact: true,
+    });
+    await toolsTab.focus();
+    await expect(toolsTab).toBeFocused();
+    await toolsTab.press("Enter");
+
+    const toolsDialog = page.getByRole("dialog", {
+      name: "Tools",
+      exact: true,
+    });
+    await expect(toolsDialog).toBeVisible();
     await expect
       .poll(() =>
         page.evaluate(() => document.activeElement?.getAttribute("aria-label")),
       )
-      .toBe("Open menu");
-    await openMenu.press("Enter");
+      .toBe("Close Tools");
 
-    const closeMenu = page.getByRole("button", { name: "Close menu" });
-    await expect
-      .poll(() =>
-        page.evaluate(() => {
-          const button = document.querySelector(
-            'button[aria-label="Close menu"]',
-          );
-          return button
-            ? Math.round(button.getBoundingClientRect().left)
-            : -999;
-        }),
-      )
-      .toBeGreaterThanOrEqual(0);
-    await expect
-      .poll(() =>
-        page.evaluate(() => document.activeElement?.getAttribute("aria-label")),
-      )
-      .toBe("Close menu");
-
-    await closeMenu.press("Escape");
-    await expect
-      .poll(() =>
-        page.evaluate(() => {
-          const button = document.querySelector(
-            'button[aria-label="Close menu"]',
-          );
-          return button ? Math.round(button.getBoundingClientRect().left) : 0;
-        }),
-      )
-      .toBeLessThan(0);
+    await page.keyboard.press("Escape");
+    await expect(toolsDialog).toBeHidden();
+    await expect(toolsTab).toBeFocused();
 
     await quality.expectClean("public header keyboard");
   });

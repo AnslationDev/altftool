@@ -14,3 +14,12 @@ test("brand rating hub owns its canonical and stays out of search previews", () 
     /\{\s*path:\s*["']\/brandrating["']/u,
   );
 });
+
+test("brand rating server layout restores the complete hub schema bundle", () => {
+  assert.match(source, /createCollectionPageJsonLd/u);
+  assert.match(source, /createItemListJsonLd/u);
+  assert.match(source, /createBreadcrumbJsonLd/u);
+  assert.match(source, /getRouteHubJsonLdItems\(["']brandrating["']\)/u);
+  assert.match(source, /getRouteHub\(["']brandrating["']\)/u);
+  assert.match(source, /<RouteDiscoveryBand/u);
+});

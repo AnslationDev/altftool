@@ -55,8 +55,9 @@ test("public web shell loads", async ({ page }) => {
       ),
     )
     .toBe("system");
-  const mainHeader = page.locator("#main-header");
+  const mainHeader = page.getByRole("banner");
   await expect(mainHeader).toBeVisible();
+  await expect(mainHeader).toHaveAttribute("data-hydrated", "true");
   await expect(
     mainHeader.getByRole("img", { name: "AltFTool" }),
   ).toBeVisible();
