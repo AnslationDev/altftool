@@ -20,13 +20,18 @@ import {
 import { getAllCategories } from "../data/categories";
 import { getAllCountries } from "../data/countries";
 import { Reveal, StaggerGroup, StaggerItem } from "../components/motion";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
-export const metadata = {
-  title: "All Categories & Countries",
-  description:
-    "Browse every Top5 category and country index — the full directory of fields the ranking platform covers.",
-  alternates: { canonical: "/top5/categories" },
-};
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "All Categories & Countries",
+    description:
+      "Browse every Top5 category and country index — the full directory of fields the ranking platform covers.",
+    path: "/top5/categories",
+    noindex: true,
+    follow: true,
+  });
+}
 
 const ICONS = {
   Cpu,

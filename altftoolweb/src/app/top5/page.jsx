@@ -11,13 +11,18 @@ import MethodologyIntro from "./components/MethodologyIntro";
 import MethodologySteps from "./components/MethodologySteps";
 import ClosingCta from "./components/ClosingCta";
 import Newsletter from "./components/Newsletter";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
-export const metadata = {
-  title: "Discover the World's Top 5 Rankings",
-  description:
-    "A more considered way to find the people, products, places, and ideas that define what is exceptional. Explore Top5 rankings by category and country.",
-  alternates: { canonical: "/top5" },
-};
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "Discover the World's Top 5 Rankings",
+    description:
+      "A more considered way to find the people, products, places, and ideas that define what is exceptional. Explore Top5 rankings by category and country.",
+    path: "/top5",
+    noindex: true,
+    follow: true,
+  });
+}
 
 export default function Top5HomePage() {
   return (

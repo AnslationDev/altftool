@@ -6,6 +6,7 @@ import { getAllRankings } from "../../data/rankings";
 import CategorySearchForm from "../../components/CategorySearchForm";
 import CategoryExplorer from "../../components/CategoryExplorer";
 import { Reveal } from "../../components/motion";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export function generateStaticParams() {
   const categorySlugs = getAllCategories().map((category) => ({ slug: category.slug }));
@@ -46,13 +47,17 @@ function resolveEntity(slug) {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const entity = resolveEntity(slug);
-  if (!entity) return {};
+  const path = `/top5/category/${encodeURIComponent(String(slug || ""))}`;
 
-  return {
-    title: `The best of ${entity.name}`,
-    description: `Independent Top5 rankings for the products, people, companies, and ideas moving ${entity.name} forward.`,
-    alternates: { canonical: `/top5/category/${entity.slug}` },
-  };
+  return createPageMetadata({
+    title: entity ? `The best of ${entity.name}` : "Top5 category not found",
+    description: entity
+      ? `Independent Top5 rankings for the products, people, companies, and ideas moving ${entity.name} forward.`
+      : "This Top5 category is not available.",
+    path,
+    noindex: true,
+    follow: true,
+  });
 }
 
 export default async function Top5CategoryIndexPage({ params }) {

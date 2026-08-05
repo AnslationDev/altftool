@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "generatedAt": "2026-08-03T22:58:13.073Z",
-  "buildId": "tOhvqqyHdPScRpTMejB45",
+  "generatedAt": "2026-08-05T11:35:15.491Z",
+  "buildId": "_2YUwBpLAYi3kfS5xuP4d",
   "ok": true,
   "indexControlOk": true,
   "qualityOk": true,
   "score": 100,
   "totals": {
-    "routes": 1035,
-    "indexable": 846,
-    "noindex": 189,
-    "sitemapUrls": 5152,
-    "sitemapCovered": 846,
+    "routes": 1171,
+    "indexable": 850,
+    "noindex": 321,
+    "sitemapUrls": 5765,
+    "sitemapCovered": 850,
     "sitemapCoverage": 100,
     "indexConflicts": 0,
     "missingCanonicalTargets": 0,
@@ -66,6 +66,17 @@
       "sitemapCoverage": 100
     },
     {
+      "group": "Lookouts",
+      "routes": 80,
+      "indexable": 1,
+      "noindex": 79,
+      "sitemapCovered": 1,
+      "issues": 0,
+      "advisories": 0,
+      "score": 100,
+      "sitemapCoverage": 100
+    },
+    {
       "group": "Prank Socialmedia",
       "routes": 66,
       "indexable": 66,
@@ -82,6 +93,17 @@
       "indexable": 65,
       "noindex": 0,
       "sitemapCovered": 65,
+      "issues": 0,
+      "advisories": 0,
+      "score": 100,
+      "sitemapCoverage": 100
+    },
+    {
+      "group": "Top5",
+      "routes": 51,
+      "indexable": 0,
+      "noindex": 51,
+      "sitemapCovered": 0,
       "issues": 0,
       "advisories": 0,
       "score": 100,
@@ -231,6 +253,17 @@
       "sitemapCoverage": 100
     },
     {
+      "group": "Landers",
+      "routes": 5,
+      "indexable": 5,
+      "noindex": 0,
+      "sitemapCovered": 5,
+      "issues": 0,
+      "advisories": 0,
+      "score": 100,
+      "sitemapCoverage": 100
+    },
+    {
       "group": "Account",
       "routes": 4,
       "indexable": 0,
@@ -332,9 +365,9 @@
     {
       "group": "Brandrating",
       "routes": 1,
-      "indexable": 1,
-      "noindex": 0,
-      "sitemapCovered": 1,
+      "indexable": 0,
+      "noindex": 1,
+      "sitemapCovered": 0,
       "issues": 0,
       "advisories": 0,
       "score": 100,
@@ -517,17 +550,6 @@
       "sitemapCoverage": 100
     },
     {
-      "group": "Lookouts",
-      "routes": 1,
-      "indexable": 1,
-      "noindex": 0,
-      "sitemapCovered": 1,
-      "issues": 0,
-      "advisories": 0,
-      "score": 100,
-      "sitemapCoverage": 100
-    },
-    {
       "group": "Open Data",
       "routes": 1,
       "indexable": 1,
@@ -676,6 +698,17 @@
       "indexable": 1,
       "noindex": 0,
       "sitemapCovered": 1,
+      "issues": 0,
+      "advisories": 0,
+      "score": 100,
+      "sitemapCoverage": 100
+    },
+    {
+      "group": "Top8",
+      "routes": 1,
+      "indexable": 0,
+      "noindex": 1,
+      "sitemapCovered": 0,
       "issues": 0,
       "advisories": 0,
       "score": 100,

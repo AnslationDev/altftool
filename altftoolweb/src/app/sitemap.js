@@ -137,7 +137,6 @@ const staticRoutes = [
   { path: "/news/newsletter", priority: 0.48 },
   { path: "/news/topics", priority: 0.6 },
   { path: "/news/trending", priority: 0.6 },
-  { path: "/brandrating", priority: 0.7 },
   { path: "/deals", priority: 0.85 },
   { path: "/exclusivedeals", priority: 0.85 },
   { path: "/exclusivedeals/all-stores", priority: 0.75 },
@@ -1046,7 +1045,7 @@ async function buildSitemapEntries({
 
 export const getSitemapEntries = unstable_cache(
   buildSitemapEntries,
-  ["altftool-sitemap-entries-v4"],
+  ["altftool-sitemap-entries-v5"],
   {
     revalidate: 3600,
     tags: ["altftool-sitemap-entries"],
@@ -1059,7 +1058,7 @@ export const getStaticSearchSitemapEntries = unstable_cache(
       includeLiveCollections: false,
       includeSeoConfig: false,
     }),
-  ["altftool-static-search-sitemap-entries-v4"],
+  ["altftool-static-search-sitemap-entries-v5"],
   {
     revalidate: 86400,
     tags: ["altftool-static-search-sitemap-entries"],

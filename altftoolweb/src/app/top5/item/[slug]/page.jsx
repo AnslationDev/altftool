@@ -8,6 +8,7 @@ import CompareTable from "../../components/CompareTable";
 import HeroParallaxImage from "../../components/HeroParallaxImage";
 import TabsBar from "../../components/TabsBar";
 import { Reveal } from "../../components/motion";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export function generateStaticParams() {
   return getAllRankingSlugs().map((slug) => ({ slug }));
@@ -16,13 +17,15 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const ranking = getRanking(slug);
-  if (!ranking) return {};
+  const path = `/top5/item/${encodeURIComponent(String(slug || ""))}`;
 
-  return {
-    title: ranking.title,
-    description: ranking.description,
-    alternates: { canonical: `/top5/item/${ranking.slug}` },
-  };
+  return createPageMetadata({
+    title: ranking?.title || "Top5 ranking not found",
+    description: ranking?.description || "This Top5 ranking is not available.",
+    path,
+    noindex: true,
+    follow: true,
+  });
 }
 
 export default async function Top5ItemPage({ params }) {
