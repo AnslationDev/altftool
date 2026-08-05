@@ -29,6 +29,11 @@ const seo = {
       "No, it is an asterism — a recognisable pattern of seven stars inside the larger constellation Ursa Major. Its two end stars, Dubhe and Merak, point roughly five times their own separation to Polaris, the pole star in Ursa Minor.",
     ],
   ],
+  steps: [
+    "Type a name or meaning into the Search constellations… box, or narrow the chart with the season tabs — ★ All, Spring, Summer, Fall and Winter. If nothing matches, the sky map prints No constellations match your search.",
+    "Click a star on the map to select its constellation: its lines brighten and its name is drawn above the pattern. The on-canvas hint reads Scroll to zoom · Drag to pan · Click a star, and the toolbar's zoom out, zoom in and reset view buttons work either side of the percentage readout, between 30% and 600%.",
+    "The panel on the right switches from No constellation selected to the constellation's season, genitive, name and meaning, with Brightest star, Stars counted, a Major stars list giving each star's magnitude in mag and distance in ly, and Mythology and Did you know? notes.",
+  ],
 };
 
 export default seo;

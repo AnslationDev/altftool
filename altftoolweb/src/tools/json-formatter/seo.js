@@ -29,6 +29,11 @@ const seo = {
       "Almost always because it is JavaScript rather than JSON: trailing commas, single-quoted strings, unquoted keys, comments and `undefined` are all valid in a JS object literal and all rejected by JSON. The panel shows the parser's own message, which names the character position where it stopped.",
     ],
   ],
+  steps: [
+    "Choose one of the four mode cards — Regular Formatter, API GET Test, API POST Form or API POST JSON — and fill the input panel it opens: Raw JSON Input, GET Target URL (placeholder https://api.example.com/v1/search?q=query...) or POST Form Payload (placeholder key1=val1&key2=val2). Load Sample drops a worked example into whichever panel is showing, and each mode also starts with one pre-filled.",
+    "There is no convert button — Formatted Result JSON updates as you type. Set Tab Size to 2 Spaces, 4 Spaces, 8 Spaces or Tab to change the indentation, and in the GET and POST modes edit the Parameters Editor rows (Key, Value, Add Row, or Remove on a row) to have the URL or form body rewritten to match. Input the parser rejects is replaced by Invalid JSON:, or Invalid JSON payload: in API POST JSON mode, followed by the browser's own message.",
+    "Use Copy above the result — it flips to Copied for two seconds — or Download, which saves the formatted JSON as api_payload_regular.json, api_payload_get.json, api_payload_post.json or api_payload_postJson.json depending on the mode you are in. The output header shows output.json with a live line and character count, and Clear empties every input field.",
+  ],
 };
 
 export default seo;

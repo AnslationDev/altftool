@@ -29,6 +29,11 @@ const seo = {
       "Yes — on X every hashtag character counts against the 280-character post limit, and there is no separate hashtag cap. This tool subtracts your caption first, then shows how many tags still fit.",
     ],
   ],
+  steps: [
+    "Paste your tags into the box labelled \"Hashtags (separate with spaces, commas or new lines)\" — spaces, commas, semicolons, pipes and slashes all work as separators — then optionally type the post text into \"Caption text that will share the same field (optional)\". Pick a Platform (Instagram, TikTok, X (Twitter), LinkedIn, YouTube or Facebook), an Order (Paste order, A → Z, Shortest first or Longest first) and a Rotation sets count between 1 and 10.",
+    "The result updates as you type: Clean hashtags kept gives the surviving count, and the rows underneath report Duplicates removed, Entries rejected, Characters used by hashtags, Characters used in total (caption + hashtags) against the platform limit, Characters left, Hashtag slots left and Average hashtag length. A green line confirms the set fits, or a red one says how many hashtags will not post; anything dropped is listed under Rejected entries with its reason, such as \"Numbers only — this never becomes a clickable hashtag\".",
+    "Press Copy result to copy the cleaned, space-separated hashtag block (the button flips to Copied! for 1.5 seconds), use the Copy button on Set 1, Set 2 and the rest to take one rotation set at a time, and check the \"Where else this set fits\" table for the other platforms. Reset restores the sample hashtags, caption, platform and set count.",
+  ],
 };
 
 export default seo;

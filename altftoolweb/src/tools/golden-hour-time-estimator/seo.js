@@ -29,6 +29,11 @@ const seo = {
       "Most apps quote sunrise and sunset for a flat sea-level horizon with 0.833° of refraction and solar radius applied, which is what this tool does too, so times normally agree within a minute. Real terrain — hills, tall buildings, or standing on a beach versus a rooftop — moves the visible sunset by several minutes.",
     ],
   ],
+  steps: [
+    "Choose a place from the Location preset list (New Delhi, Mumbai, Bengaluru, London, New York, Sydney, Reykjavik or Custom coordinates), then set Date, UTC offset (hours), Latitude (°, north positive) and Longitude (°, east positive) — or press Use my location to fill the coordinates from the browser. Editing any coordinate switches the preset to Custom coordinates on its own.",
+    "There is no calculate button: every figure recomputes as you type. The headline reads Evening golden hour starts, with the time, how long it lasts and when it ends, and the table below lists Morning blue hour, Morning golden hour, Sunrise, Solar noon, Sunset, Evening golden hour, Evening blue hour, Civil twilight (dawn / dusk), Nautical twilight (dawn / dusk), Astronomical twilight (dawn / dusk), Day length, Solar declination and Equation of time. Sun elevation across the day charts the Sun's height sampled every 20 minutes with the golden-hour band shaded.",
+    "Copy times puts the date, coordinates, UTC offset, both blue hours, both golden hours with their durations, sunrise, solar noon, sunset and day length on the clipboard, and the button reads Copied! for a moment. Reset returns the form to today's date, your browser's own UTC offset and the New Delhi, India preset.",
+  ],
 };
 
 export default seo;

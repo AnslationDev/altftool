@@ -29,6 +29,11 @@ const seo = {
       "The split is the time since the previous lap; the total is the time since you started the stopwatch. Recording a lap shows both side by side, so you can compare rep to rep without doing subtraction yourself.",
     ],
   ],
+  steps: [
+    "Choose the Countdown Timer or Stopwatch tab. For a countdown, fill the Hours, Minutes and Seconds number fields — they clamp to 23, 59 and 59 — and press Set Time; an all-zero entry is ignored.",
+    "Press Start to run the countdown. The same button becomes Pause while it is running, Reset returns it to zero, and an alert tone plays the moment the remaining time reaches zero.",
+    "On the Stopwatch tab, Start and Stop drive a display that refreshes every 10 ms down to hundredths of a second. Lap is enabled only while it runs and adds a row to the #, Split, Total list, marking the fastest split green and the slowest red once there is more than one; Clear Laps empties the list and Reset clears the clock with it.",
+  ],
 };
 
 export default seo;

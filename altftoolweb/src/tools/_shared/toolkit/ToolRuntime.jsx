@@ -14,6 +14,7 @@ import {
 import Icon from "@/shared/ui/Icon";
 import { safeCopyText } from "@/shared/utils/clipboard";
 import {
+  allowsResultHistory,
   coerceValues,
   defaultValues,
   fieldsForMode,
@@ -22,6 +23,7 @@ import {
   loadInitial,
   missingRequired,
   normalizeResult,
+  persistableValues,
   summarize,
 } from "./runtimeHelpers";
 
@@ -81,7 +83,10 @@ export default function ToolRuntime({ spec }) {
       });
     if (typeof window !== "undefined") {
       try {
-        window.localStorage.setItem(storageKey, JSON.stringify({ raw, mode }));
+        window.localStorage.setItem(
+          storageKey,
+          JSON.stringify({ raw: persistableValues(spec.fields, raw), mode }),
+        );
       } catch {
         /* ignore quota */
       }
@@ -118,7 +123,7 @@ export default function ToolRuntime({ spec }) {
   };
 
   const pushHistory = () => {
-    if (!result.result) return;
+    if (!result.result || !allowsResultHistory(spec)) return;
     setHistory((h) => [{ at: Date.now(), text: result.result }, ...h].slice(0, 8));
   };
 
@@ -452,13 +457,15 @@ function Field({ field, value, onChange }) {
       ) : (
         <span className="flex items-center gap-2">
           <input
-            type={field.type === "number" ? "number" : field.type === "date" ? "date" : "text"}
+            type={field.type === "number" ? "number" : field.type === "date" ? "date" : field.type === "password" ? "password" : "text"}
             value={value}
             min={field.min}
             max={field.max}
             step={field.step}
+            autoComplete={field.autoComplete || (field.type === "password" ? "off" : undefined)}
             inputMode={field.type === "number" ? "decimal" : undefined}
             placeholder={field.placeholder}
+            spellCheck={field.type === "password" ? false : undefined}
             onChange={(e) => onChange(field.key, e.target.value)}
             className={`${common} h-11`}
           />

@@ -29,6 +29,11 @@ const seo = {
       "Growth carries 30% of the score, and it cannot be computed from a single snapshot. A skill with 2,400 openings that had 1,600 a year ago is growing at 50%; the same 2,400 against 4,800 last year is halving. Most job boards let you filter by date posted, or you can use an archived search from your own notes.",
     ],
   ],
+  steps: [
+    "Fill the seven fields: Skill, Live openings today, Openings 12 months ago, Applicants per posting, Remote share (%), Median salary, postings with the skill, and Median salary, whole role family. All six numeric fields take 0 or more, the two salary fields are annual rupee figures, and each field carries a hint such as \"Same search, same market, one year earlier.\"",
+    "There is no calculate button — the Skill demand score updates as you type, showing a figure out of 100, its band (Critical demand, Strong demand, Emerging demand, Soft demand or Oversupplied) and that band's one-line advice. Below it the rows report Year-on-year openings growth, Salary premium over role family, Projected openings in 12 months and Weakest factor, and the How the score is built table lists each factor's weight — Live openings 30%, Year-on-year growth 30%, Competition 20%, Salary premium 15%, Remote share 5% — next to the sub-score it earned.",
+    "Click Copy result to put the skill, score and band, growth, salary premium, applicants per posting, projected openings and weakest factor on the clipboard; the button reads Copied! for 1.5 seconds. Reset returns all seven fields to the Kubernetes example they start with.",
+  ],
 };
 
 export default seo;

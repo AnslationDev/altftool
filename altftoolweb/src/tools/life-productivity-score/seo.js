@@ -29,6 +29,11 @@ const seo = {
       "No. It is a self-tracking aid that scores your own logged numbers against public health guidelines. It cannot diagnose anything, and persistent short sleep, exhaustion or low mood are worth discussing with a doctor rather than a calculator.",
     ],
   ],
+  steps: [
+    "Log the day in the eight number boxes: Sleep last night (hours), Focused, undistracted work (hours), Physical activity (minutes), Tasks completed, Tasks planned, Non-work screen time (hours), Reading or learning (minutes) and Meaningful social contact (minutes). The three hour fields step by 0.5 and cap at 24, the minute fields step by 5 and cap at 1440, and the two task fields are whole numbers up to 999.",
+    "Today's score recalculates on every keystroke — there is no calculate button — giving a total out of 100, a band from Exceptional through Strong, Solid and Building to Needs attention with its one-line note, and one row per pillar showing points earned against the weight, for example Sleep (target 7–9 hours) 25 / 25. Two further rows name the Biggest single gain available and the Hours accounted for out of 24; if sleep, focus, screen time, activity, learning and social time add up to more than 24 hours the score is replaced by \"That adds up to … hours — a day only has 24.\"",
+    "Click Copy result to copy the score and band, every pillar line with its target and points, the biggest gap and the hours logged as plain text — the button reads Copied! for 1.5 seconds. Reset puts all eight fields back to their starting values.",
+  ],
 };
 
 export default seo;

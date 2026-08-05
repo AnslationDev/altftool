@@ -29,6 +29,11 @@ const seo = {
       "The eight starred squares, at circuit positions 0, 8, 13, 21, 26, 34, 39 and 47 — the four player start squares and the four squares eight steps before each of them. A token sitting on one of these cannot be sent back to the yard.",
     ],
   ],
+  steps: [
+    "Choose vs Computer or Local in the header — Local adds 2, 3 and 4 buttons for the player count — then use the settings button to pick a Game Mode and, in vs Computer, an AI Difficulty of easy, medium or hard.",
+    "Click the dice (labelled Roll dice) while the status reads \"Roll the dice!\", then tap a token once it changes to Select a token to move; the turn card shows Rolled: with the value, the status shows AI is thinking… on the computer's turn, and New Game restarts at any point.",
+    "The first player to bring all 4 tokens home triggers the 🏆 Winner card with New Game and Close buttons; the statistics button records Games Played, Wins, Losses, Win %, Total Turns and Fastest Win, with Reset Statistics to clear them.",
+  ],
 };
 
 export default seo;

@@ -29,6 +29,11 @@ const seo = {
       "Median imputation for numeric columns and mode (most frequent value) for categorical ones, applied only to blank, null or undefined cells. Both change your data's distribution — median filling shrinks variance and mode filling inflates the most common category — so use them for a quick pass and consider whether the missingness itself carries information before relying on the filled version.",
     ],
   ],
+  steps: [
+    "Under Upload CSV File, click Browse Files and choose a .csv — the picker accepts only that extension and anything else is refused with \"Please select a CSV file\". The filename then replaces the No file selected line, and the ✕ beside it clears the choice.",
+    "Click Analyse CSV. The button changes to Analysing… with a running percentage while the file is parsed, then the Profile, Clean and Visual Builder tabs appear. Profile opens on Dataset Overview with Rows, Columns, Missing Cells and Duplicate Rows, followed by per-column Missing, Min, Max, Mean, Median, Std Dev, Outliers and Unique figures.",
+    "On the Clean tab tick the operations you want — Remove duplicate rows, Fill missing numbers with median, Drop low-quality columns (constant / >80% missing), Normalize column names (lowercase, underscores) and the rest — click Preview to see the first 10 rows of the result, then Apply to dataset to keep it or Download CSV to save it as datlens_cleaned.csv.",
+  ],
 };
 
 export default seo;

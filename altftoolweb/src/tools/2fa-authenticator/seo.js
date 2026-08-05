@@ -29,6 +29,11 @@ const seo = {
       "The counter. HOTP (RFC 4226) increments a counter each time you request a code, while TOTP (RFC 6238) computes the counter from the clock as floor(unix_time / period), which is why the code rotates on its own every 30 seconds. Both then run the same HMAC and dynamic-truncation step to produce the digits.",
     ],
   ],
+  steps: [
+    "On the Enter Secret Key tab, paste your seed into the Secret Key (Base32) field — the hint under it reads Format: 16–32 character Base32 key (letters A–Z, digits 2–7), and the eye icon reveals what you typed. Or switch to the Scan QR Code tab and press Upload QR code image to pick any image file: it is decoded on your device and an otpauth:// URI fills in the secret, the Account Name and the algorithm, digits and period for you.",
+    "Optionally open Advanced Options to set Algorithm, Digits and Period, then click Generate Code. The code appears under Your Authentication Code with a ring counting down the Seconds remaining in the current window; an unusable seed shows Enter a valid Base32 secret key (letters A-Z and digits 2-7). in place of the digits.",
+    "Press Copy Code — it reads Copied! for a moment, and the clipboard is overwritten again 30 seconds later. The + button beside Saved Accounts stores the secret in the encrypted vault and confirms with Account saved & encrypted, clearing the entered secret; every code generated is also listed with its timestamp under Recent Codes.",
+  ],
 };
 
 export default seo;

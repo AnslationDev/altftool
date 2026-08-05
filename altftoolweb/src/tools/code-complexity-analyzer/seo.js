@@ -29,6 +29,11 @@ const seo = {
       "No. Tokenising, parsing, scoring and the suggestions all run as JavaScript in your own tab, and nothing is written to a network request. You can confirm it by opening the network panel and analysing a file — there are no outbound calls.",
     ],
   ],
+  steps: [
+    "The Studio Editor opens with the Complex Processor sample already loaded — type or paste your own code over it, or pick Simple Calculator or Complex Processor from the \"Select Sample...\" dropdown in the editor bar. Tab inserts two spaces, and the status bar tracks Line N, Column 1.",
+    "There is no analyse button: the scan reruns on its own about 350 ms after you stop typing, flashing an Analyzing badge while it works. The default thresholds flag functions longer than 40 lines, nesting deeper than 3, more than 4 parameters, and cyclomatic complexity above 10.",
+    "Read the results across the Overview, Functions and Issues tabs — Overview gives the Overall Quality Score ring with Complexity, Readability and Stability alongside Total Lines, Functions, Maintainability and Issues cards, and the Structure panel scrolls the editor to a line when you click a block. Copy puts the editor contents on the clipboard and briefly reads Copied; Reset restores the default sample after a confirmation prompt.",
+  ],
 };
 
 export default seo;

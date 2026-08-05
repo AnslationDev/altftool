@@ -38,6 +38,11 @@ const seo = {
       "No — treat it as a first pass. Detection only reads the PDF text layer, so scanned or photographed statements return nothing to scan, and the tool requires you to acknowledge the export and confirm a final visual inspection before download for exactly this reason.",
     ],
   ],
+  steps: [
+    "Drop a file on Drag & drop statement here, or browse files, paste one with Ctrl+V, or use the picker, which accepts PDF, PNG, JPEG, WebP, BMP and AVIF. Anything over 40 MB is refused, as are PDFs longer than 30 pages; once a file loads the card shows its name, size and page count beside a Validated & Ready badge, and Replace document swaps in a different file.",
+    "Pick a Redaction Mask Style — Permanent Black Box, White Out Box, Gaussian Blur, Pixelation Block, Mask with XXXXXX, [REDACTED] Label or Custom Placeholder — then place boxes from Statement Region Presets (Account holder name, Postal address, Account number, IFSC / routing code, IBAN / SWIFT, Card references, Balance amounts, Transaction rows) or draw one with Custom Mask. Sensitive Data Radar lists what the PDF text layer matched and offers Mask High Risk and Redact Selected; a selected box can be repositioned by percentage, repeated with Apply position to all N pages, or removed with Delete or Clear page masks.",
+    "Choose the Raster Resolution (DPI Quality) — Standard (96 DPI), Balanced (144 DPI, the default) or Ultra High (216 DPI) — tick the box confirming you reviewed every page, then press Generate Permanently Flattened Document. Inspect the rebuilt file in the Mandatory Final Inspection preview, tick that box too, and Download Redacted Copy saves it as <filename>-redacted.pdf, or <filename>-redacted.png when the source was an image.",
+  ],
 };
 
 export default seo;

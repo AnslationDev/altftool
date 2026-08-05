@@ -29,6 +29,11 @@ const seo = {
       "Because every extra look is another chance to cross the significance line by luck, so repeated peeking pushes the real false-positive rate well above the 5% a 95% confidence level implies. Fix the sample and the end date first, then read the result once.",
     ],
   ],
+  steps: [
+    "Fill the Test inputs panel: pick a Platform and choose Impressions (testing CTR) or Clicks (testing conversion rate). The volume and cost labels change with that choice — Daily impressions plus CPM, or Daily clicks plus CPC — and you can then set Current rate, minimum relative lift, confidence and statistical power.",
+    "Write Variant A (control) and Variant B (challenger) side by side. Each box is checked against the selected platform's first listed field and shows its own character count, limit, number, call-to-action and question diagnostics; changing copy updates those diagnostics and the Wording difference, but the sample plan depends on the numeric test inputs above.",
+    "Read Run the test for and the rows beneath it, including sample per variant, total sample, whole-week schedule, expected events, estimated media cost and the lift a 7-day test could detect. Copy plan copies a text summary, while Reset restores every field to its defaults.",
+  ],
 };
 
 export default seo;

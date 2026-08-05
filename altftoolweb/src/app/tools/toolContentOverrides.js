@@ -1370,9 +1370,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the mass of the substance in grams (g) into the Density Calculator",
-      "Input the volume of the substance in either cubic centimeters (cm³) or milliliters (mL)",
-      "Click the calculate button to obtain the density, which will be displayed in grams per cubic centimeter (g/cm³) or grams per milliliter (g/mL)"
+      "Enter the mass of the substance in grams in the Mass (g) field, which starts at 100",
+      "Enter the volume in the Volume (cm³ / mL) field, which starts at 50 — a volume of 0 replaces the result with the message Volume can't be zero",
+      "No calculate button is needed: the Result panel recomputes as you type, showing the density to three decimals in g/cm³ alongside a kg/m³ conversion and a vs water card reading sinks or floats, and the Copy or Download button saves that summary as density-calculator.txt"
     ]
   },
   "mortgage-affordability-calculator": {
@@ -1493,9 +1493,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the total number of items (n) you have in your set, which could be anything from a deck of cards to a list of candidates.",
-      "Specify the number of items (r) you want to choose from your set, which determines whether you're calculating permutations or combinations.",
-      "Select whether you want to calculate permutations (nPr) or combinations (nCr) based on whether the order of selection matters."
+      "Enter the size of your set in the Total items (n) field, which starts at 6; decimal values are rounded down before the calculation.",
+      "Enter how many you are picking in the Chosen (r) field, which starts at 3 and also rounds decimals down; r has to be between 0 and n, otherwise the result reads Need 0 ≤ r ≤ n.",
+      "There is no permutations-or-combinations switch — both are computed live as you type: the headline gives the nCr total followed by the word combinations, and the two cards below it are labelled Permutations (nPr) and Combinations (nCr)."
     ]
   },
   "quadratic-equation-solver": {
@@ -1534,9 +1534,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the coefficients a, b, and c into the designated input fields to define your quadratic equation",
-      "Click the 'Solve' button to calculate the roots, discriminant, and vertex of the equation",
-      "Review the detailed solution, including real or complex roots, to understand the nature of the equation's solutions"
+      "Enter the coefficients into the three input fields labelled a, b and c to define your quadratic equation; they start at 1, -3 and 2, and setting a to 0 replaces the result with the message a can't be zero (not quadratic)",
+      "There is no Solve button — the Result panel recalculates as you type, printing x₁ and x₂ for a positive discriminant, a single x marked (double root) when it is zero, or the x = h ± ki form when it is negative",
+      "Review the cards under the result — Discriminant, Nature (two real roots, one real root or two complex roots) and Vertex as an (x, y) pair — then use Copy or Download to save the whole solution as quadratic-equation-solver.txt"
     ]
   },
   "standard-deviation-calculator": {
@@ -1575,9 +1575,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter a series of numbers into the calculator to analyze the dataset, such as exam scores or temperatures.",
-      "Select the type of calculation, either 'Population' or 'Sample', depending on whether the data represents the entire population or a subset.",
-      "Click the 'Calculate' button to generate the standard deviation, variance, and mean of the input numbers."
+      "Type or paste your data into the Numbers box, which is prefilled with the set 2, 4, 4, 4, 5, 5, 7, 9. Values can be separated by commas, spaces or new lines, and at least two are needed before a result appears.",
+      "Set Type to Population or Sample, depending on whether the values cover the whole group or only a subset; Sample divides by one less than the count.",
+      "The Result panel updates as you type with σ to four decimal places, the chosen type named beneath it, and Variance, Mean and Count tiles; press Download to save that summary as standard-deviation-calculator.txt or Copy to put it on the clipboard."
     ]
   },
   "cagr-calculator": {
@@ -1657,9 +1657,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter a phrase or sentence into the text input field of the Camel Case Converter",
-      "Select the desired output case (camelCase, PascalCase, or CONSTANT_CASE) from the available options",
-      "Click the 'Convert' button to transform the input phrase into the chosen case notation"
+      "Type or paste your words into the Text box, which starts with my variable name here; ASCII letters and digits are kept, while spaces, punctuation and non-ASCII characters mark word breaks",
+      "Watch the Result line update as you type — it holds the camelCase form, while PascalCase and CONSTANT_CASE appear in tiles directly beneath it",
+      "Press Copy to put the whole summary on the clipboard, Download to save it as camel-case-converter.txt, or Reset to restore the default text"
     ]
   },
   "coin-toss-streak-game": {
@@ -1698,9 +1698,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to generate 20 random coin flips and view the results",
-      "Analyze the longest streak of consecutive heads or tails in the generated sequence",
-      "Repeat the process to observe how the streaks change with each new set of flips"
+      "Open the tool and 20 flips are dealt straight away, then press Generate to deal a fresh set whenever you like",
+      "Read the Result line, which prints the run as H and T characters in two blocks of ten, with Longest streak shown underneath it",
+      "Compare the Heads and Tails tiles for the split across the 20 flips, then press Generate again to watch the longest streak shift from round to round"
     ]
   },
   "crc32-calculator": {
@@ -1739,9 +1739,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the text for which you want to calculate the CRC32 checksum in the input field of the CRC32 Calculator",
-      "Click the 'Calculate' button to process the text and generate the CRC32 value",
-      "Copy the resulting CRC32 hex value for use in your application or verification process"
+      "Type or paste text into the Text box, which starts with hello world; case and trailing spaces change the checksum, while non-ASCII text may differ from UTF-8 CRC32 tools because this calculator uses each JavaScript character code's low byte",
+      "Read the Result line as you type; it shows the checksum as eight lowercase hex digits behind a 0x prefix, with Decimal and Length tiles below it",
+      "Press Copy to place the input and checksum summary on your clipboard, or Download to save it as crc32-calculator.txt"
     ]
   },
   "days-between-dates-calculator": {
@@ -1780,9 +1780,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter your start date in the 'Start date' field to define the beginning of your time period",
+      "Enter your start date in the 'Start date' field to define the beginning of your time period, or click the 'This year' chip under Examples to fill both dates at once",
       "Input your end date in the 'End date' field to specify the end of your time period",
-      "Click the 'Calculate' button to instantly see the number of days, weeks, and months between your start and end dates"
+      "There is no Calculate button — the Result panel updates as soon as both dates are set, showing the total in days with Weeks, Months and Years cards beneath it, and the Copy or Download button saves that summary as days-between-dates-calculator.txt"
     ]
   },
   "factorial-calculator": {
@@ -1821,9 +1821,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter a whole number (n) between 0 and 2000 into the input field to calculate its factorial.",
-      "Click the 'Calculate' button to initiate the computation.",
-      "Review the result, which will be displayed as the exact factorial of the input number (n!)."
+      "Type a value into the 'n (0–2000)' field, which starts at 20; the calculator rounds decimals down before checking the range, while a resulting value below 0 or above 2000 shows a dash and 'Enter a whole number 0–2000'.",
+      "There is no Calculate button — the Result updates as you type, printing 'n! =' followed by the value, cut to its first 30 digits with an ellipsis when it is longer, and a caption counting the total digits.",
+      "Read the complete exact factorial from the 'Full value' card below the result, or use Copy or Download to save the whole number as factorial-calculator.txt."
     ]
   },
   "hourly-to-salary-calculator": {
@@ -1862,9 +1862,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter your hourly rate to start the calculation, ensuring it reflects your current or proposed wage.",
-      "Specify the number of hours you work per week, considering full-time, part-time, or variable schedules.",
-      "Input the number of weeks you work per year, accounting for vacation time, holidays, or seasonal fluctuations."
+      "Type your wage into the 'Hourly rate' field in the Inputs panel — it opens pre-filled with 25, so a result is already on screen before you touch anything.",
+      "Set 'Hours per week' (starts at 40) and 'Weeks per year' (starts at 52). There is no Calculate button: the headline recomputes on every keystroke, reading '52,000 / year' at those defaults, with no currency symbol.",
+      "Read the 'Monthly', 'Weekly' and 'Daily' cards under the result — Daily is your hourly rate times a fifth of your weekly hours, so it assumes a five-day week — then use Copy to put the summary on the clipboard, Download to save it as hourly-to-salary-calculator.txt, or Reset to return to 25 / 40 / 52."
     ]
   },
   "ai-write": {
@@ -2105,9 +2105,9 @@ export const toolContentOverrides = {
   "baby-growth-percentile-calculator": {
     "intro": "The Baby Growth Percentile Calculator is a simplified online tool designed for parents and caregivers to estimate a baby's weight-for-age percentile from 0 to 24 months. By inputting the baby's sex, age in months, and weight in kilograms, users can obtain a rough estimate of their baby's growth percentile. This tool is intended for informational purposes only and should not replace official growth charts provided by a pediatrician.",
     "useCases": [
-      "A first-time mother wants to track her baby's growth progress at home between pediatrician visits",
-      "A concerned parent notices their baby is not gaining weight as expected and wants a preliminary assessment before consulting a doctor",
-      "A caregiver needs a quick and easy way to monitor the growth of the babies in their care and identify any potential issues early"
+      "A parent exploring how age and weight affect a rough percentile estimate before reviewing an official chart with a pediatrician",
+      "A caregiver comparing the calculator's simplified interpolation with measurements already recorded by a health professional",
+      "A student learning why infant growth references vary by age and sex without treating the result as a diagnosis"
     ],
     "benefits": [
       [
@@ -2116,11 +2116,11 @@ export const toolContentOverrides = {
       ],
       [
         "Informative Tracking",
-        "Regularly track your baby's growth percentile to identify patterns or potential issues in their development"
+        "See how the same weight maps differently across the tool's limited age and sex reference points"
       ],
       [
         "Peace of Mind",
-        "Have a better understanding of your baby's growth to alleviate concerns and make more informed decisions about their health"
+        "The page labels the result as a rough estimate and directs health questions to official pediatric charts and a qualified clinician"
       ]
     ],
     "faqs": [
@@ -2130,7 +2130,7 @@ export const toolContentOverrides = {
       ],
       [
         "How often should I use the Baby Growth Percentile Calculator?",
-        "It's recommended to use the calculator regularly, ideally during the same week of each month, to track consistent growth patterns"
+        "Use it only as an educational estimate. For growth tracking, rely on consistent clinical measurements and the official chart recommended by your pediatrician"
       ],
       [
         "Why does the calculator stress the importance of consulting a pediatrician?",
@@ -2138,9 +2138,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Select your baby's sex to ensure the calculator uses the correct growth chart standards",
-      "Enter your baby's age in months to accurately place them within the growth percentile range",
-      "Input your baby's weight in kilograms to calculate their estimated weight-for-age percentile"
+      "Pick 'Boy' or 'Girl' in the Sex dropdown — it opens on Boy — because the calculator swaps between separate male and female weight-for-age anchor points",
+      "Enter 'Age (months)', pre-filled with 6 and clamped internally to the 0–24 month range, and 'Weight (kg)', pre-filled with 7.5; there is no Calculate button, the estimate recomputes on every keystroke",
+      "Read the headline percentile (held between the 1st and the 99th), the caption giving the median weight for that age in kg, and the 'Your baby' and 'Z-score' cards beneath it — the tool's own note reads 'A simplified estimate — always use your pediatrician's official growth charts.'"
     ]
   },
   "band-name-generator": {
@@ -2179,9 +2179,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Select your preferred music genre from the dropdown menu, such as Rock, Jazz, or Electronic, to get started with the Band Name Generator",
-      "Click the 'Generate' button to produce a list of band name ideas based on your chosen genre",
-      "Browse through the generated list and pick the name that resonates with your band's image and sound"
+      "Pick one of the four options in the 'Genre' dropdown — Rock, Indie, Metal or Electronic — to choose the word lists the generator draws from",
+      "A list of five names is already there when the page loads; click the 'Generate' button to replace it with a fresh set drawn from the same genre",
+      "Browse the five suggestions — each is 'The' plus a two-word pair, such as The Electric Wolves — then use Copy or Download to save the list as band-name-generator.txt"
     ]
   },
   "blog-outline-generator": {
@@ -2220,9 +2220,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter your topic into the Blog Outline Generator to get started, and watch as the tool begins to suggest relevant sections and subtopics",
-      "Define your main sections to help the tool understand the scope and focus of your blog post, allowing it to generate a more tailored outline",
-      "Review and customize your generated outline, adding or removing sections as needed to ensure it meets your writing needs"
+      "Type your subject into the 'Topic' field, which starts pre-filled with 'starting a podcast'. There is no submit button — the outline rebuilds as you type.",
+      "Drag the 'Main sections' slider (2 to 8, default 4) to set how many body sections you want; their angles come from a fixed list that starts 'Why it matters', 'Getting started', 'Key steps' and 'Common mistakes'.",
+      "Read the markdown outline in the Result panel — an H1 title, 'Introduction — hook + what readers will learn', your numbered sections, then 'Conclusion — recap + call to action' and 'FAQ — 3 common questions', summarised as 'Outline with 8 sections' at the default of 4. Use Copy or Download (saved as blog-outline-generator.txt) to keep it, or Reset to restore the defaults."
     ]
   },
   "blog-post-ideas": {
@@ -2259,11 +2259,6 @@ export const toolContentOverrides = {
         "Are the generated ideas unique and original?",
         "Yes, the Blog Post Idea Generator uses advanced algorithms to produce unique and original ideas, ensuring you won't find the same ideas elsewhere"
       ]
-    ],
-    "steps": [
-      "Enter a specific topic or niche into the Blog Post Idea Generator to get started",
-      "Select the type of content you want to create, such as a listicle, tutorial, or opinion piece, to narrow down the ideas",
-      "Browse through the generated list of blog post ideas and choose the ones that resonate with your audience and writing style"
     ]
   },
   "blog-title-generator": {
@@ -2302,16 +2297,16 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter a relevant topic or keyword into the Blog Title Generator to get started, such as 'sustainable fashion' or 'artificial intelligence'",
-      "Select a tone that fits your brand's voice, such as 'funny', 'professional', or 'inspirational', to tailor the title suggestions to your audience",
-      "Click the 'Generate Titles' button to receive a list of unique and compelling title ideas that incorporate your keyword and tone"
+      "Type a subject into the 'Topic / keyword' field, which starts with 'email marketing'; each word's first character is uppercased before insertion, while the remaining letter casing is preserved.",
+      "Pick one of the three 'Tone' choices — 'How-to', 'Listicle' or 'Bold'. Listicle titles also draw a number from 5, 7, 9, 11 and 13, as in '7 Email Marketing Tips That Actually Work'.",
+      "Click 'Generate' to shuffle four titles into the Result panel, then use Copy or Download (saved as blog-title-generator.txt) to keep them, or Reset to restore the defaults."
     ]
   },
   "blood-alcohol-content-calculator": {
     "intro": "The Blood Alcohol Content Calculator is an educational tool designed to estimate an individual's blood alcohol content (BAC) using the Widmark formula. It's intended for responsible drinkers who want to understand how alcohol consumption affects their BAC. By inputting the number of standard drinks, body weight, sex, and hours since the first drink, users can obtain an estimated BAC level.",
     "useCases": [
       "A college student wanting to understand how drinking at a party might affect their BAC before deciding whether to stay overnight or find a safe ride home",
-      "A social drinker who needs to drive home after a dinner party and wants to estimate their BAC to ensure they are safe to drive",
+      "A social drinker comparing how the educational estimate changes over time while arranging a safe ride instead of using the result to decide whether to drive",
       "A health educator teaching a class about responsible drinking and using the calculator as a tool to illustrate how different factors influence BAC levels"
     ],
     "benefits": [
@@ -2325,7 +2320,7 @@ export const toolContentOverrides = {
       ],
       [
         "Personalized Estimates",
-        "By considering individual factors such as body weight and sex, the calculator provides personalized BAC estimates that are more accurate than generic guidelines"
+        "The estimate shows how the Widmark inputs affect the result, but it cannot measure impairment or determine whether anyone is safe to drive"
       ]
     ],
     "faqs": [
@@ -2343,17 +2338,17 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the number of standard drinks you've consumed, considering one standard drink as 12 ounces of beer, 5 ounces of wine, or 1.5 ounces of distilled spirits",
-      "Input your body weight in kilograms to help the calculator account for how alcohol is distributed in your body",
-      "Select your sex and specify the number of hours that have passed since your first drink to get an accurate estimate of your current BAC level"
+      "Enter how many drinks you have had in the 'Standard drinks' field, which starts at 3; each one is counted as 14 g of alcohol and totalled in the 'Alcohol consumed' box under the result.",
+      "Enter your weight in the 'Body weight (kg)' field (default 70) and pick 'Male' or 'Female' under 'Sex' — the Widmark distribution ratio used is 0.68 for male and 0.55 for female.",
+      "Set 'Hours since first drink' to subtract 0.015% per hour, reported as 'Approx. burned off'. The estimate updates live with no button to press, reading '0.058% BAC' and 'Under 0.08%' at the defaults, or 'Over the common 0.08% legal limit' above that — the page's own note warns it is an estimate only, never a decision about driving."
     ]
   },
   "body-surface-area-calculator": {
-    "intro": "The Body Surface Area Calculator is a specialized tool designed for medical professionals and researchers to estimate the body surface area (BSA) of individuals using the Mosteller and Du Bois formulas. By inputting a person's weight in kilograms and height in centimeters, users can quickly obtain an accurate BSA calculation. This tool is particularly useful in fields such as pharmacology, where BSA is used to determine drug dosages.",
+    "intro": "The Body Surface Area Calculator is an educational tool that estimates BSA from height and weight using the Mosteller and Du Bois formulas. It compares the two mathematical results but is not a clinical dosing, burn-assessment, or treatment tool.",
     "useCases": [
-      "Determining the appropriate dosage of chemotherapy for a cancer patient based on their calculated body surface area",
-      "Assessing the severity of burns in emergency medicine by calculating the percentage of body surface area affected",
-      "Conducting clinical trials where body surface area is a critical factor in understanding drug efficacy and safety"
+      "Learning how the Mosteller and Du Bois formulas convert the same height and weight into slightly different BSA estimates",
+      "Checking a hand calculation for an academic exercise without using the result for medication or treatment decisions",
+      "Preparing questions about a BSA value that a qualified clinician calculated from verified measurements"
     ],
     "benefits": [
       [
@@ -2362,11 +2357,11 @@ export const toolContentOverrides = {
       ],
       [
         "Time Efficiency",
-        "By automating the calculation process, medical professionals can quickly obtain the necessary data without spending valuable time on manual computations"
+        "The page computes both formula estimates immediately so learners can compare them without repeating the arithmetic by hand"
       ],
       [
         "Improved Patient Care",
-        "With accurate BSA calculations, healthcare providers can make more informed decisions regarding patient treatment, leading to better outcomes"
+        "The side-by-side estimates make the formula difference visible; clinical decisions still require a qualified professional and verified measurements"
       ]
     ],
     "faqs": [
@@ -2376,17 +2371,17 @@ export const toolContentOverrides = {
       ],
       [
         "Can I use this calculator for pediatric patients?",
-        "Yes, the Body Surface Area Calculator can be used for patients of all ages, as it relies on weight and height, which are applicable across different age groups"
+        "The formulas accept height and weight values, but this page is not validated for pediatric dosing or treatment decisions; ask a qualified clinician to select the appropriate method"
       ],
       [
         "How do I interpret the calculated body surface area?",
-        "The calculated BSA can be used in various medical applications, such as determining drug dosages, assessing burn severity, or conducting clinical research"
+        "Treat it as a mathematical estimate only. Do not use this page to choose medication doses, assess burns, or make treatment decisions"
       ]
     ],
     "steps": [
-      "Enter the patient's weight in kilograms into the Weight (kg) field of the Body Surface Area Calculator",
-      "Input the patient's height in centimeters into the Height (cm) field",
-      "Click the 'Calculate' button to generate the estimated body surface area using the Mosteller and Du Bois formulas"
+      "Type the weight in kilograms into the 'Weight (kg)' field, which starts pre-filled with 70.",
+      "Type the height in centimetres into the 'Height (cm)' field, which starts at 175 — there is no Calculate button, the figures recompute on every keystroke.",
+      "Read the Mosteller estimate as the headline result ('1.84 m²' at those defaults, captioned 'Mosteller formula') with the 'Du Bois formula' value ('1.85 m²') in the box beneath it; enter 0 or less in either field and the panel falls back to '—' with 'Enter weight and height'."
     ]
   },
   "bond-yield-calculator": {
@@ -2466,9 +2461,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the horizontal and vertical offset values in pixels to control the shadow's position relative to the element",
-      "Adjust the blur and spread values to achieve the desired level of shadow diffusion and size",
-      "Select the color and choose whether the shadow should be inset or outset to finalize the CSS box-shadow effect"
+      "Drag the 'Horizontal offset (px)' and 'Vertical offset (px)' sliders — they are range sliders, not typed fields, running from -50 to 50 and starting at 4 and 6, with each current value printed underneath it",
+      "Drag 'Blur (px)' (0 to 100, starts at 12) and 'Spread (px)' (-50 to 50, starts at 0), then type any CSS colour into the 'Color' text box, which is pre-filled with rgba(0,0,0,0.25)",
+      "Tick the 'Inner shadow' checkbox under Inset to prefix the value with 'inset '. The Result panel updates live — no Generate button — showing the value captioned 'box-shadow value' with the whole declaration in the 'Full rule' card, 'box-shadow: 4px 6px 12px 0px rgba(0,0,0,0.25);' at the defaults; press Copy for the clipboard or Download to save box-shadow-generator.txt"
     ]
   },
   "break-even-units-calculator": {
@@ -2548,13 +2543,13 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter your desired text into the Bubble Text Generator's input field to get started",
-      "Choose your preferred font style and size to customize the circled letters",
-      "Copy and paste the generated bubble text into your social media bio, post, or profile"
+      "Type or paste your wording into the Text box — the circled version appears under Result as you type, so there is nothing to submit",
+      "Letters A-Z and digits 0-9 are swapped for their circled forms, as in Ⓑⓤⓑⓑⓛⓔ, while spaces and punctuation pass through unchanged; Reset returns the box to the sample text 'bubble text'",
+      "Press Copy to put a summary carrying the Result line on your clipboard, or Download to save it as bubble-text-generator.txt, then paste the circled text into your bio, post, or profile"
     ]
   },
   "bucket-list-maker": {
-    "intro": "The Bucket List Goal Planner is a powerful tool designed for individuals seeking to turn their aspirations into achievable plans. By inputting your goal and target date, this tool generates a customized plan with a countdown and milestones to help you stay on track. Whether you're looking to run a marathon, learn a new language, or start a business, the Bucket List Goal Planner is the perfect companion to help you reach your goals.",
+    "intro": "The Bucket List Goal Planner is a powerful tool designed for individuals seeking to turn their aspirations into achievable plans. By filling in the 'Your goal' and 'Target date' fields, this tool builds a plan with a live countdown and three starting milestones to help you stay on track. Whether you're looking to run a marathon, learn a new language, or start a business, the Bucket List Goal Planner is the perfect companion to help you reach your goals.",
     "useCases": [
       "Planning a dream wedding: use the Bucket List Goal Planner to set a target date for your special day and create a countdown with milestones such as booking a venue, sending out invitations, and finalizing the guest list",
       "Training for a marathon: input your goal to complete a marathon and set a target date, then use the generated plan to create a training schedule with milestones such as running a certain distance or completing a certain number of workouts",
@@ -2581,7 +2576,7 @@ export const toolContentOverrides = {
       ],
       [
         "Can I edit my plan once it's been generated?",
-        "Yes, you can edit your plan at any time by going back to the 'Your goal' and 'Target date' fields and making changes, then clicking the 'Create Plan' button again to generate an updated plan"
+        "Yes, you can edit your plan at any time by going back to the 'Your goal' and 'Target date' fields and making changes — the countdown and milestones rebuild themselves as you type, so there is nothing to submit, and Reset restores the starting 'Visit Japan' goal with an empty target date"
       ],
       [
         "How often should I review and update my plan?",
@@ -2591,7 +2586,7 @@ export const toolContentOverrides = {
     "steps": [
       "Enter your goal in the 'Your goal' field, making sure it's specific and meaningful to you, such as 'Complete a triathlon' or 'Write a novel'",
       "Set a realistic target date in the 'Target date' field, giving yourself enough time to work towards your goal without feeling overwhelmed",
-      "Click the 'Create Plan' button to generate a personalized plan with a countdown and milestones, helping you break down your goal into manageable tasks"
+      "The plan builds itself as soon as both fields are filled — your goal appears beside a 🎯 with a countdown reading 'days to go' (or 'days overdue' once the date has passed), Target, Countdown and 'Save per week' cards, and the milestones 'Break it into 3 milestones', 'Set a monthly reminder' and 'Track progress weekly'"
     ]
   },
   "call-to-action-generator": {
@@ -2630,9 +2625,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the product, service, or offer you want to promote into the Call-to-Action Generator to get started",
-      "Review and customize the generated CTA button and headline variations to fit your brand's voice and style",
-      "Select the most effective CTAs and integrate them into your website, social media, or marketing campaigns"
+      "Type the product, service, or offer you are promoting into the \"What you're offering\" field, which starts on the sample value 'free trial'",
+      "Five lines are drawn from a set of eight templates, so 'free trial' yields CTAs such as 'Start your free trial now', 'Try free trial risk-free' and 'Grab free trial before it's gone'; click Generate to shuffle a different five",
+      "Use Copy to take the list to your clipboard or Download to save it as call-to-action-generator.txt, then drop the lines you like into your buttons, headlines, or campaigns"
     ]
   },
   "calorie-burn-calculator": {
@@ -2671,9 +2666,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Select your activity from the list provided in the Calorie Burn Calculator, choosing from a wide range of options such as running, swimming, or cycling to ensure the most accurate MET value for your calculation.",
+      "Pick from the Activity dropdown, which holds six choices — Walking (brisk), Running, Cycling, Swimming, Weight training (the one selected by default) and Jump rope — each carrying its own MET value.",
       "Enter your weight in kilograms into the calculator to personalize the calorie burn estimation, as body weight significantly affects the energy expenditure during physical activities.",
-      "Input the duration of your activity in minutes to complete the calculation, allowing the Calorie Burn Calculator to provide a precise estimate of calories burned based on the MET value, your weight, and the time spent on the activity."
+      "Fill in Duration (minutes) and the estimate updates live, with no button to press: the headline gives the total in kcal, and Per minute and Per hour cards sit beneath it. Copy or Download saves your inputs and every figure as calorie-burn-calculator.txt."
     ]
   },
   "calorie-deficit-calculator": {
@@ -2780,9 +2775,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the buy price per unit and sell price per unit of your investment to establish the initial and final values of your assets.",
-      "Specify the quantity of units you are buying or selling to calculate the total cost and revenue.",
-      "Input your applicable tax rate as a percentage to determine the tax owed on your capital gains."
+      "Type the two unit prices into the Buy price (per unit) and Sell price (per unit) number fields, which open prefilled with 100 and 150. The result recalculates as you type — there is no Calculate button to press.",
+      "Set Quantity to the number of units you sold. The headline reads Gain followed by the total amount, or Loss when the sell price is below the buy price.",
+      "Enter your Tax rate (%) and read the Tax owed, Net profit and Return cards below the headline; tax is applied only to a gain, never to a loss. Copy or Download saves your inputs and every figure as capital-gains-calculator.txt, and Reset restores the defaults."
     ]
   },
   "car-loan-calculator": {
@@ -2821,9 +2816,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the car's purchase price to calculate your monthly payments and total cost",
-      "Input your down payment amount to see how it affects your loan term and interest paid",
-      "Adjust the interest rate and loan term in years to compare different loan scenarios"
+      "Enter the vehicle's price in the Car price field (prefilled with 25000). The Result panel recalculates live as you type, so there is no Calculate button",
+      "Set Down payment — it is subtracted from the price to give the Loan amount card, so raising it lowers both the monthly figure and Total interest, while the term stays whatever you set in its own field",
+      "Enter Interest rate (%/yr) and Loan term (years) to compare scenarios; the headline shows the payment followed by / month, and the cards list Loan amount, Total interest and Total cost, which adds your down payment back on top of the repayments. Copy or Download saves them as car-loan-calculator.txt"
     ]
   },
   "carpet-area-calculator": {
@@ -2862,9 +2857,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the length and width of the room in the desired unit of measurement, such as feet, inches, yards, or meters, to get started with the calculation.",
-      "Select the unit of measurement that matches your room's dimensions to ensure accurate calculations.",
-      "Click the 'Calculate' button to instantly obtain the total floor area and material requirements for your project."
+      "Enter the room's Length and Width in the two number fields, which open prefilled with 5 and 4. The area recalculates as you type, so there is no Calculate button.",
+      "Open the Unit dropdown and pick the unit your dimensions are in — the only two options are Meters and Feet — and the headline area appears in that unit as m² or sq ft.",
+      "Read the three cards under the headline: Square meters and Square feet give the same area converted both ways, and +10% wastage is your area plus a 10% cutting allowance. Copy or Download saves the figures as carpet-area-calculator.txt."
     ]
   },
   "change-background-of-image": {
@@ -2939,9 +2934,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the version number for which you are generating the changelog, ensuring it follows the standard versioning format.",
-      "Input your list of changes, one per line, starting each line with 'add', 'fix', 'change', or 'remove' to categorize the type of update.",
-      "Click generate to produce a clean, categorized Keep-a-Changelog entry that you can use in your project's documentation."
+      "Type the release number into the Version text field (prefilled with 1.2.0). It appears in the headline as Changelog for v followed by that number, and as the first output line, ## [version] - the current UTC date in YYYY-MM-DD form.",
+      "Paste your changes into the box labelled Changes (one per line, start with add/fix/change/remove). Lines starting with fix go under ### Fixed, change or update under ### Changed, remove or delete under ### Removed, and anything else falls through to ### Added, with that leading verb stripped from the entry.",
+      "The entry rebuilds as you type — there is no generate button — and each Markdown line renders as its own card. Copy or Download writes a plain-text summary of your inputs plus every generated line, saved as changelog-generator.txt."
     ]
   },
   "child-height-predictor": {
@@ -2980,9 +2975,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the mother's height in centimeters and the father's height in centimeters into the Child Height Predictor tool",
-      "Select the child's sex to ensure an accurate calculation",
-      "Click the 'Calculate' button to receive a statistical estimate of the child's adult height, taking into account a margin of error of ±8.5 cm"
+      "Type both measurements into the Mother's height (cm) and Father's height (cm) number fields, which open prefilled with 165 and 178 — centimetres are the only unit the tool accepts",
+      "Pick from the Child's sex dropdown, whose two options are Boy and Girl: Boy adds 13 cm to the parents' combined height before halving it, Girl subtracts 13 cm",
+      "The prediction appears as you type, with no button to press — a height in cm under the caption predicted adult height, alongside a Likely range card (that figure ±8.5 cm) and an In feet card, with a footnote that this is a statistical estimate and actual height depends on nutrition, health and genetics"
     ]
   },
   "chore-chart-maker": {
@@ -3021,9 +3016,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter your list of chores, one per line, into the Chore Chart Maker to get started on creating a fair schedule.",
-      "Next, input the list of people who will be responsible for these chores, also one per line, to ensure everyone is accounted for.",
-      "Finally, generate the chore chart and review the round-robin assignments to ensure a balanced distribution of tasks among all individuals."
+      "Type or paste your tasks into the 'Chores (one per line)' box, one per line. It opens pre-filled with Dishes, Vacuum, Trash, Laundry, Bathroom and Groceries, and blank lines are ignored.",
+      "Enter the names into the 'People (one per line)' box, also one per line. It starts with Alex, Sam and Jordan; Reset restores both boxes to those defaults.",
+      "There is no generate button - the chart builds as you type. The Result reads '6 chores across 3 people' for the defaults, and the table below it lists every chore under the Chore and Assigned to columns, cycling through the names in order. Use Copy or Download to save it as chore-chart-maker.txt."
     ]
   },
   "churn-rate-calculator": {
@@ -3064,7 +3059,7 @@ export const toolContentOverrides = {
     "steps": [
       "Enter the number of customers your business had at the start of the period you're analyzing into the 'Customers at start' field of the Churn Rate Calculator.",
       "Input the number of customers your business lost during that same period into the 'Customers lost' field.",
-      "Click the 'Calculate' button to instantly see your customer churn and retention rates for the specified period."
+      "There is no Calculate button - the Result panel recomputes as you type, showing '5.00% churn' for the 1000 and 50 defaults, with Retention rate and Customers remaining listed beneath it."
     ]
   },
   "content-improver": {
@@ -3182,7 +3177,7 @@ export const toolContentOverrides = {
     "steps": [
       "Enter the number of total visitors to your website in the 'Visitors' field.",
       "Input the number of conversions (e.g., sales, sign-ups) in the 'Conversions' field.",
-      "If applicable, enter the value per conversion in the 'Value per Conversion' field."
+      "The 'Value per conversion' field is optional and starts at 0; set it above zero and a Revenue figure joins Visitors per conversion under the live result, which reads '3.00% conversion' for the 5000 and 150 defaults."
     ]
   },
   "age-in-days-calculator": {
@@ -3264,7 +3259,7 @@ export const toolContentOverrides = {
     "steps": [
       "Enter the cost of your product or service into the Profit Margin Calculator to establish your base expense",
       "Input the selling price of your product or service to calculate the revenue generated",
-      "Click calculate to determine your gross margin, markup, and profit"
+      "There is no calculate button; the Result panel updates live as you type, reading '40.00% margin' for the 60 and 100 defaults, with Profit and Markup shown beneath it as 40 and 66.67%"
     ]
   },
   "glob-pattern-tester": {
@@ -3344,17 +3339,17 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the text you want to encode or decode in the 'Input' field and select the 'Mode' as either 'Encode' to convert your text to Base32 or 'Decode' to convert Base32 back to text.",
-      "Choose the appropriate mode based on whether you are working with text that needs to be encoded for secure transmission or storage, or if you have Base32 encoded data that you need to decode to read or process.",
-      "Click the 'Encode' or 'Decode' button to process the input text, and the tool will display the result in the output area, allowing you to copy and use the encoded or decoded text as needed."
+      "Type or paste your text into the 'Input' box (up to 10,000 characters, tracked by the live counter under the field) — this tool only encodes, and the Base32 result appears in the 'Output' panel as you type. 'Clear' empties the box.",
+      "Under 'Encoding Options' set 'Alphabet Case' to 'Uppercase (A–Z)' or 'Lowercase (a–z)', set 'Padding' to 'With Padding' or 'Without Padding', and optionally put a number from 0 to 512 in 'Line Length (Optional)' to wrap the output — 0 for no wrap.",
+      "Click 'Encode to Base32' to scroll to the output, where the button flashes 'Encoded!' and the status row reads 'Encoded successfully!' with the processing time; then use 'Copy' or 'Download' to save the result as base32-output.txt."
     ]
   },
   "base58-encoder": {
-    "intro": "The Base58 Encoder is a browser-based tool designed for cryptocurrency enthusiasts and developers to encode text into the Base58 alphabet used by Bitcoin or decode Base58 strings back into readable text. It's perfect for those working with Bitcoin addresses or other Base58-encoded data. With its simple interface, users can easily switch between encoding and decoding modes.",
+    "intro": "The Base58 Encoder converts ordinary UTF-8 text to and from raw Base58 using the Bitcoin alphabet. It is useful for human-transcribable IDs and learning the encoding, but it does not add the version byte or checksum required by Bitcoin's Base58Check format and must not be used to generate or recover wallet credentials.",
     "useCases": [
-      "Converting a Bitcoin address from its standard Base58 format to a more readable text format for easier comparison or verification.",
-      "Generating a Base58-encoded string from a user's name or other identifier for use in a custom cryptocurrency application.",
-      "Decoding a Base58-encoded private key to recover access to a Bitcoin wallet."
+      "Round-tripping a short UTF-8 identifier through the Bitcoin Base58 alphabet while testing an application.",
+      "Comparing a raw Base58 implementation against known ASCII and Unicode test vectors.",
+      "Inspecting whether a Base58 string represents valid UTF-8 text without treating it as a Bitcoin address or wallet key."
     ],
     "benefits": [
       [
@@ -3362,8 +3357,8 @@ export const toolContentOverrides = {
         "The Base58 Encoder provides a straightforward way to convert between Base58 and plain text, saving time and reducing errors."
       ],
       [
-        "Bitcoin Compatibility",
-        "By using the exact alphabet and encoding rules as Bitcoin, this tool ensures compatibility with Bitcoin addresses and other Base58-encoded data."
+        "Exact Raw Alphabet",
+        "The conversion uses Bitcoin's Base58 alphabet while clearly remaining raw Base58 rather than Base58Check or WIF."
       ],
       [
         "Web-Based Convenience",
@@ -3373,7 +3368,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What is the character set used by the Base58 Encoder?",
-        "The Base58 Encoder uses the Bitcoin alphabet, which consists of the digits 0-9, the uppercase letters A-H and J-N, and the lowercase letters a-k and m-z, excluding the characters '1', 'I', 'l', and 'O' to avoid ambiguity."
+        "The tool uses the Bitcoin Base58 alphabet: digits 1-9, uppercase letters except I and O, and lowercase letters except l. It omits 0, O, I and l to reduce visual ambiguity."
       ],
       [
         "Can I use the Base58 Encoder for encoding data other than Bitcoin addresses?",
@@ -3381,17 +3376,17 @@ export const toolContentOverrides = {
       ],
       [
         "Is the Base58 Encoder secure for handling sensitive information like private keys?",
-        "While the Base58 Encoder is a useful tool, it's recommended to use it with caution when handling sensitive information. Since it runs in your browser, ensure your connection is secure and consider using it in a private browsing session to minimize exposure."
+        "Base58 is an encoding, not encryption, so anyone with the output can decode it. Use test or non-sensitive text here and keep real private keys in a purpose-built wallet or secret manager."
       ]
     ],
     "steps": [
-      "Enter the text you want to encode or decode in the 'Input' field and select the 'Mode' as either 'Encode' to convert your text into Base58 or 'Decode' to convert a Base58 string back into text.",
-      "Choose the correct mode based on whether you're working with a Bitcoin address or any other data that uses the Base58 alphabet.",
-      "Click the 'Encode' or 'Decode' button to perform the operation, and the result will be displayed, allowing you to use the encoded or decoded text as needed."
+      "Type or paste your text into the 'Input' box — or click the 'Encode Hello' chip in the 'Examples' row to load a sample — then set 'Mode' to 'Encode to Base58' or 'Decode from Base58'.",
+      "The 'Result' panel updates live as you type; there is no submit button. Encoding converts the text to UTF-8 bytes and shows accurate 'Input bytes' and 'Output chars' counts, while decoding validates the Base58 characters and recovers UTF-8 text.",
+      "Use 'Copy' or 'Download' to keep the result — Download saves base58-encoder.txt containing the tool title, your Input and Mode, and the Result — or 'Reset' to put the Input back to its default 'Hello'."
     ]
   },
   "basic-auth-header-generator": {
-    "intro": "The Basic Auth Header Generator is a specialized tool designed for developers and IT professionals who need to generate basic authentication headers for secure access to web servers, APIs, or other protected resources. By providing a username, password, and realm, users can quickly create the required 'Basic' header with base64 encoded credentials. This tool simplifies the process of authenticating with servers that use basic authentication, saving time and reducing errors.",
+    "intro": "The Basic Auth Header Generator formats a username and password as an HTTP Authorization header for development and testing. It base64-encodes username:password, keeps the optional realm as a display-only reference, masks the password on screen, and copies only the finished header. Base64 is reversible, so use HTTPS and avoid real production credentials.",
     "useCases": [
       "Using the Basic Auth Header Generator to authenticate with a private API that requires basic authentication for accessing sensitive data",
       "Generating a basic authentication header for accessing a protected web server directory that is not accessible without proper credentials",
@@ -3407,14 +3402,14 @@ export const toolContentOverrides = {
         "By automatically generating the 'Basic' header with base64 encoded credentials, the tool saves developers and IT professionals valuable time."
       ],
       [
-        "Enhanced Security",
-        "Using the Basic Auth Header Generator ensures that credentials are properly encoded, enhancing the security of the authentication process."
+        "Safer Local Handling",
+        "The password field is masked and excluded from browser storage and text summaries; Copy and Download contain only the generated header."
       ]
     ],
     "faqs": [
       [
         "What is the format of the generated authentication header?",
-        "The generated header is in the format 'Basic <base64 encoded credentials>', where the credentials are a combination of the provided username, password, and realm."
+        "The header is 'Basic <base64(username:password)>'. The realm is shown only as a reference and is not included in the encoded credential."
       ],
       [
         "Do I need to install any software to use the Basic Auth Header Generator?",
@@ -3422,13 +3417,13 @@ export const toolContentOverrides = {
       ],
       [
         "Can I use the Basic Auth Header Generator for both HTTP and HTTPS connections?",
-        "Yes, the generated 'Basic' header can be used for both HTTP and HTTPS connections, but it is recommended to use HTTPS for secure transmission of credentials."
+        "The header syntax works with either protocol, but Basic credentials are only base64-encoded and must not be sent over unencrypted HTTP. Use HTTPS."
       ]
     ],
     "steps": [
-      "Enter your username and password along with the realm for which you are generating the authentication header into the Basic Auth Header Generator",
-      "Click the generate button to create the 'Basic' header with your credentials base64 encoded",
-      "Copy the generated 'Basic <base64 encoded credentials>' header to use in your HTTP requests, API calls, or other applications requiring basic authentication"
+      "Fill in the 'Username', 'Password' and 'Realm' fields in the Inputs panel — they start pre-filled with admin, password123 and Restricted Area — or click the 'Example' chip to load user, pass and Example Realm.",
+      "The 'Result' panel recomputes live as you type, with no generate button: it shows 'Basic <base64 encoded credentials>' plus rows for 'Username', 'Password' (masked as ********), 'Realm' and 'Authorization Header'. Only username:password is base64 encoded — the realm is displayed for reference, not encoded.",
+      "Use 'Copy' to place only the finished Basic header on the clipboard, or 'Download' to save only that header in basic-auth-header-generator.txt. Treat either output as a credential and send it only over HTTPS."
     ]
   },
   "bmr-calculator": {
@@ -3508,9 +3503,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the start date in the 'Start date' field to define the beginning of the period you want to calculate.",
-      "Enter the end date in the 'End date' field to define the end of the period you want to calculate.",
-      "Click the 'Calculate' button to get the total number of business days between the two dates."
+      "Pick the beginning of the period in the 'Start date' field. Both date fields are empty to begin with, so the Result panel reads 'Enter Start date, End date to see the result.'",
+      "Pick the end of the period in the 'End date' field. There is no calculate button — the count appears as soon as both dates are set, and an end date earlier than the start shows '—' captioned 'Pick a valid date range'.",
+      "Read the headline count of business days — Mon–Fri only, weekends excluded, both the start and end dates included — alongside the 'Total days' and 'Weekend days' rows, then use 'Copy' or 'Download' to save them as business-days-calculator.txt."
     ]
   },
   "connection-string-builder": {
@@ -3549,9 +3544,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Select your database type from the options provided, such as Postgres, MySQL, or MongoDB, to ensure the correct scheme is used in your connection string.",
-      "Enter the host and, if necessary, the port number for your database server, leaving the port field blank to use the default port for your chosen database type.",
-      "Provide your database username, password (taking care not to use production secrets), and the name of the database you wish to connect to, to complete the connection string."
+      "Pick your engine in the 'Database' dropdown — the options read PostgreSQL, MySQL, MariaDB, MongoDB, Redis and SQL Server — or click 'Postgres local' or 'MongoDB' in the Examples row to fill the whole form at once. The scheme follows the engine, so MariaDB emits mysql:// and SQL Server emits sqlserver://.",
+      "Set 'Host' (pre-filled with localhost) and leave the field labelled 'Port (blank = default)' empty to fall back to that engine's standard port — 5432, 3306, 27017, 6379 or 1433 — or type a number to override it. Host is the only required field; clear it and the panel reads \"Enter Host to see the result.\"",
+      "Add 'Username', 'Password' and 'Database name'. The URI rebuilds live under Result as you type — there is no button to press — with Scheme, Host, Port and Database listed beneath it. Copy puts a plain-text summary on the clipboard (the tool title, your field values, then a 'Result:' line) and Download saves it as connection-string-builder.txt. Never paste production secrets: the password is shown in clear text."
     ]
   },
   "conventional-commit-builder": {
@@ -3590,9 +3585,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Select a commit type from the Conventional Commit Builder's dropdown menu, such as 'feat' for new features or 'fix' for bug fixes, to categorize your commit.",
-      "Specify the commit scope to provide context about which part of the project the commit affects, using the tool's input field for commit scope.",
-      "Craft a concise commit subject and an optional commit body using the Conventional Commit Builder's input fields, ensuring the subject is under 50 characters and the body is used for additional details."
+      "Choose an entry in the 'Commit Type' dropdown. Its options are spelled out in full — New Feature, Bug Fix, Documentation, Code Style, Code Refactoring, Performance Improvement, Test Addition, Build System, Continuous Integration and Miscellaneous — and they write the prefixes feat, fix, docs, style, refactor, perf, test, build, ci and chore.",
+      "Fill in 'Commit Scope', 'Commit Subject' and 'Commit Body'. All three start empty and all three must be filled before anything is generated; until then the output panel reads \"Enter Commit Scope, Commit Subject, Commit Body to see the result.\" Your scope is wrapped in parentheses straight after the type, and the body is appended after a blank line.",
+      "Read the assembled message under Result, with Type, Scope, Subject and Body broken out beneath it, then use Copy or Download. Click the 'Example' preset in the Examples row to load feat(login): add login button with a matching body if you want to see the shape of the output first."
     ]
   },
   "css-clamp-generator": {
@@ -3631,9 +3626,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the minimum pixel value to set the lower bound for your responsive design, ensuring your content doesn't become too small on smaller screens.",
-      "Input the maximum pixel value to define the upper limit, preventing your text or elements from becoming too large on larger screens.",
-      "Specify the preferred viewport width as a percentage to allow your design to scale fluidly between the minimum and maximum pixel values."
+      "Set 'Min (px)', which starts at 16, to the smallest size the value may shrink to; it becomes the first argument of the generated clamp().",
+      "Set 'Max (px)', which starts at 48, to the ceiling; it becomes the third argument, so the value never grows past it however wide the viewport gets.",
+      "Set 'Preferred (vw)', default 4, for the fluid middle term — the field is in vw units, not percent. The Result recomputes as you type into a ready-to-paste value such as clamp(16px, 4vw, 48px), captioned 'responsive size' with Min and Max echoed below it; Copy places a summary containing that 'Result:' line on the clipboard."
     ]
   },
   "css-triangle-generator": {
@@ -3672,9 +3667,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the size of your triangle in pixels to determine its dimensions",
-      "Select the direction of your triangle from the available options to control its orientation",
-      "Choose a color for your triangle to match your website's design scheme"
+      "Drag the 'Size (px)' slider — it runs from 4 to 200 in steps of 2 and starts at 40 — to set the border width that decides how large the triangle is; the current number appears just under the slider",
+      "Choose up, down, left or right in the 'Direction' dropdown. The rule sets the two side borders to transparent and colours the one opposite the direction you picked, so down produces a coloured border-top",
+      "Type any CSS colour into the 'Color' field, which starts at #4f46e5 and is a plain text box rather than a swatch picker. Result then shows the full declaration beginning width:0;height:0; followed by the three border rules, and Copy places a summary with that 'Result:' line on the clipboard — the tool prints the CSS only and does not draw a preview of the triangle"
     ]
   },
   "cursive-text-generator": {
@@ -3713,13 +3708,13 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the text you want to transform into cursive in the input field of the Cursive Text Generator",
-      "Choose the style of cursive text you prefer, if options are available, or simply generate the text to see the default cursive version",
-      "Copy the generated cursive text and paste it into your desired platform, such as Instagram, Twitter, or a gaming profile"
+      "Type or paste into the 'Text' box, a textarea pre-filled with Hello World — select all and overwrite it, because emptying the field replaces the output with \"Enter Text to see the result.\" The 'Sample' button in the Examples row restores Hello World",
+      "Conversion runs as you type: there is no generate button and no style chooser, as the tool applies one fixed script style. Every a–z and A–Z letter is remapped to its Unicode mathematical-script counterpart, with ℬ, ℰ, ℱ, ℋ, ℐ, ℒ, ℳ, ℛ, ℯ, ℊ and ℴ substituted where that block has gaps, while digits, spaces, punctuation and emoji pass through unchanged",
+      "Read the converted string under Result and press Copy — note that it copies a summary, not the bare letters: the tool title, your Text, then a line starting 'Result: '. Strip that prefix before pasting into an Instagram bio, a username or any other Unicode-friendly field. Download saves the same summary as cursive-text-generator.txt"
     ]
   },
   "d-d-dice-roller": {
-    "intro": "The D&D Dice Roller is a specialized browser tool designed for Dungeon Masters and players of Dungeons & Dragons, allowing them to roll virtual dice with ease. By inputting the number of sides on the dice and how many dice to roll, users can generate random outcomes to enhance their gaming experience. This tool is perfect for those who want to add an extra layer of realism and excitement to their D&D sessions.",
+    "intro": "The D&D Dice Roller generates pseudorandom results for 1 to 10 dice, each with 2 to 1000 sides, and displays every face plus the total. It is intended for casual tabletop play and practice, not cryptographic, gambling, or independently auditable randomness.",
     "useCases": [
       "During a critical combat encounter, a Dungeon Master can use the D&D Dice Roller to quickly determine the outcome of a character's attack roll, adding tension and unpredictability to the scene.",
       "Players can use the tool to roll for ability scores during character creation, ensuring a fair and random distribution of stats without the need for physical dice.",
@@ -3732,17 +3727,17 @@ export const toolContentOverrides = {
       ],
       [
         "Fairness",
-        "The tool ensures completely random and unbiased results, preventing any potential cheating or manipulation of dice rolls."
+        "A seeded browser pseudorandom generator produces repeatable, evenly distributed casual-game rolls without claiming cryptographic or tamper-proof randomness."
       ],
       [
         "Versatility",
-        "The D&D Dice Roller can be used for any type of dice roll, from simple checks to complex calculations, making it an indispensable tool for any D&D game."
+        "Choose a whole-number die size from 2 to 1000 and roll up to 10 at once, with individual faces and the total shown."
       ]
     ],
     "faqs": [
       [
         "How do I roll multiple dice at once?",
-        "To roll multiple dice, simply enter the number of dice you want to roll in the 'How many' input field and click the 'Roll' button."
+        "Enter a whole number from 1 to 10 in the 'How many' field and click Generate. Fractional or out-of-range values are rejected with an error."
       ],
       [
         "Can I customize the appearance of the dice?",
@@ -3754,9 +3749,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the number of sides on the dice you want to roll, such as 6 for a standard die or 20 for a d20, in the 'Sides' input field of the D&D Dice Roller.",
-      "Specify how many dice you want to roll at once in the 'How many' input field, allowing you to roll multiple dice simultaneously for complex calculations or combat scenarios.",
-      "Click the 'Roll' button to generate a random outcome, which will be displayed on the screen, providing an instant and unbiased result for your game."
+      "Enter a whole-number die size from 2 to 1000 in the 'Sides' field, such as 6 for a standard die or 20 for a d20; invalid values show an error instead of being silently changed.",
+      "Set 'How many' to a whole-number dice count from 1 to 10; it starts at 2, and fractional or out-of-range values are rejected.",
+      "Click the 'Generate' button to roll. The result lists every die and its total, such as 3 + 5 = 8, and each click produces a fresh roll; use Copy or Download to save it and Reset to return both fields to their defaults."
     ]
   },
   "domain-name-ideas-generator": {
@@ -3795,9 +3790,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter a keyword related to your business or brand into the Domain Name Ideas Generator",
-      "Click the 'Generate Ideas' button to produce a list of innovative domain name suggestions",
-      "Browse through the generated list to find the perfect domain name that suits your needs"
+      "Type a word into the 'Keyword' field, which starts on cloud, to seed the suggestions",
+      "Click the 'Generate' button to draw six fresh ideas, each one your keyword plus an ending such as ly, ify, hub, labs, kit, flow, forge or works — Cloudly, Cloudhub, Cloudlabs",
+      "Browse the six names listed under the result, then use Copy or Download to save them (Download writes domain-name-ideas-generator.txt) and check availability with a registrar"
     ]
   },
   "duration-calculator": {
@@ -3824,25 +3819,25 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use the Duration Calculator?",
-        "To use the Duration Calculator, simply enter the number of seconds you want to convert and click the 'Calculate' button."
+        "To use the Duration Calculator, simply type the number of seconds you want to convert into the 'Seconds' field — the duration updates as you type, so there is no button to press."
       ],
       [
         "What format will the result be in?",
-        "The result will be displayed in a human-readable format, such as hours, minutes, and seconds (e.g., 1 hour 30 minutes 0 seconds)."
+        "The result is a compact string that lists only the units that are non-zero, so 5400 seconds reads as 1h 30m, and the Days, Hours, Minutes and Seconds cards underneath show each unit on its own."
       ],
       [
         "Can I convert decimal seconds?",
-        "Yes, the Duration Calculator supports decimal seconds, allowing for precise conversions and calculations."
+        "You can type one, but it is floored to the whole second below — 90.7 is read as 90 seconds — and negative values are clamped to zero, so convert milliseconds to seconds before entering them."
       ]
     ],
     "steps": [
-      "Enter the number of seconds you want to convert into the Duration Calculator's input field",
-      "Click the 'Calculate' button to generate the human-readable duration",
-      "Review the result, which will be displayed in a format such as hours, minutes, and seconds"
+      "Enter the number of seconds you want to convert into the 'Seconds' field, which starts at 90061 and is rounded down to a whole number of seconds",
+      "The duration updates as you type — there is no button to press — and is written compactly as days, hours, minutes and seconds, so 90061 becomes 1d 1h 1m 1s",
+      "Review the four cards below the result labelled Days, Hours, Minutes and Seconds for each component on its own, then use Copy or Download to save the breakdown"
     ]
   },
   "fantasy-character-name-generator": {
-    "intro": "The Fantasy Character Name Generator is a powerful tool designed for authors, game developers, and fantasy enthusiasts, generating unique and captivating character names from a single keyword. With the option to specify a theme, users can tailor their results to fit their specific world-building needs. Whether you're writing a novel or creating a new game, this tool helps spark creativity and bring your characters to life.",
+    "intro": "The Fantasy Character Name Generator is a powerful tool designed for authors, game developers, and fantasy enthusiasts, listing six unique two-part character names every time you press Generate. Both halves are drawn from the same fixed pool of twelve invented roots, and the 'Theme (optional)' box is not read by the generator, so each set comes from that one pool. Whether you're writing a novel or creating a new game, this tool helps spark creativity and bring your characters to life.",
     "useCases": [
       "Developing a new role-playing game and needing a diverse cast of characters with unique and memorable names",
       "Writing a fantasy novel and seeking inspiration for character names that fit the story's specific magical or cultural context",
@@ -3855,17 +3850,17 @@ export const toolContentOverrides = {
       ],
       [
         "Time-Saving",
-        "With the ability to generate names based on a keyword and theme, you can save hours of brainstorming and focus on developing your story or game"
+        "Each press of Generate returns six finished two-part names at once, so you can save hours of brainstorming and focus on developing your story or game"
       ],
       [
         "Customization",
-        "The tool's optional theme feature allows you to tailor the generated names to fit the specific needs of your world, whether it's high fantasy, science fiction, or historical fiction"
+        "Every result is two independent roots, so you can swap one half or change a vowel by hand to fit the specific needs of your world — the 'Theme (optional)' box is not wired into the generator, so the tailoring happens after you copy the names out"
       ]
     ],
     "faqs": [
       [
         "How do I use the theme option to get more specific results?",
-        "To use the theme option, simply select a theme from the dropdown list before generating names, and the tool will tailor the results to fit that specific cultural or mythological background"
+        "'Theme (optional)' is a plain text box rather than a dropdown, and the generator does not currently read it, so typing in it does not steer the results — the twelve-root pool is fixed. Press Generate for another set and edit the closest name by hand to push it toward a particular culture"
       ],
       [
         "Can I use the Fantasy Character Name Generator for free?",
@@ -3873,13 +3868,13 @@ export const toolContentOverrides = {
       ],
       [
         "How do I save my favorite generated names for later use?",
-        "You can save your favorite names by clicking on the 'Favorite' button next to each name, and they will be stored in a separate list for easy access later"
+        "There is no favourite button — the six names render as plain, non-clickable list items. Use Copy to put the whole set on the clipboard, one name per line under the tool title, or Download to save it as fantasy-character-name-generator.txt, then keep the ones you like in your own notes before pressing Generate again"
       ]
     ],
     "steps": [
-      "Enter a keyword that inspires your character, such as 'dragon' or 'moon', to generate a list of fresh and imaginative names",
-      "Optionally, select a theme from the provided list to narrow down the results and give your character a specific cultural or mythological background",
-      "Browse through the generated list of names, and click on the ones that resonate with you to discover more variations and inspirations"
+      "Six two-part names are listed as soon as the tool loads, each pairing two entries drawn from a fixed pool of twelve — Aeloria, Thornwood, Kaelith, Silvarn, Draven, Elowen, Fenrith, Mirelle, Zorander, Ysolde, Varkon and Lythia",
+      "Click the 'Generate' button for a fresh set of six; the 'Theme (optional)' text field above the results is not read by the generator, so typing in it does not change the names",
+      "Read the six names in the list — they are plain text, not clickable — and use Copy or Download to keep the set, or Reset to clear the theme field"
     ]
   },
   "grade-percentage-calculator": {
@@ -3918,9 +3913,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the percentage value you want to calculate in the '%' field, such as 25 for 25%.",
-      "Input the 'of value' in the corresponding field, which is the total or base value from which the percentage will be calculated.",
-      "Click the 'Calculate' button to find the calculated percentage of the given 'of value'."
+      "Enter the percentage value you want to calculate in the 'Percent (%)' field, such as 25 for 25%; it starts at 15.",
+      "Input the total or base value from which the percentage will be calculated in the 'Of value' field, which starts at 200.",
+      "The answer updates as you type, with no button to press: the headline figure is the percentage of that value, captioned 15% of 200 for the defaults, above two cards labelled 'Value + %' and 'Value − %' that add and subtract the result from the base."
     ]
   },
   "ipv6-expander": {
@@ -3959,9 +3954,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter a shortened IPv6 address into the IPv6 Expander tool to initiate the expansion process.",
-      "The tool will then process the input address, applying IPv6 expansion rules to generate the full address.",
-      "The expanded IPv6 address will be displayed, ready for use in network configuration, troubleshooting, or other applications."
+      "Type or paste a shortened address into the 'IPv6 address' field under Inputs; it opens pre-filled with 2001:db8::1. Text with no colon in it leaves the Result at an em dash under the caption 'Enter an IPv6 address'.",
+      "The Result updates live as you type — there is no expand button. The :: shorthand is refilled with zero groups and every group is padded to four hex digits, so 2001:db8::1 becomes 2001:0db8:0000:0000:0000:0000:0000:0001 with the caption 'expanded'.",
+      "Press Copy to put the title, your IPv6 address and the expanded Result on the clipboard (the button reads Copied for a moment), Download to save that same text as ipv6-expander.txt, or Reset to restore the default address."
     ]
   },
   "iso-8601-formatter": {
@@ -4000,9 +3995,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter a date and time into the ISO 8601 Formatter's input field, using a format that the tool can recognize, such as YYYY-MM-DD HH:MM:SS",
-      "Select the desired output format from the available options, which include ISO-8601, RFC 2822, and others",
-      "Click the 'Format' button to convert the input date/time into the chosen output format"
+      "Type or paste a moment into the single 'Date/time' field under Inputs, which opens pre-filled with 2026-07-20 15:30; anything the browser's Date parser accepts works, and text it cannot parse leaves the Result at an em dash with the caption 'Enter a valid date/time'",
+      "There is no output-format picker and no Format button — the Result recomputes as you type and always shows the same set at once: the ISO-8601 UTC timestamp on the headline line, plus cards labelled 'Unix (s)', 'UTC' and 'Local'",
+      "Use Copy to place the Date/time you entered, the ISO-8601 Result and the Unix (s), UTC and Local rows on the clipboard, Download to save that text as iso-8601-formatter.txt, or Reset to put the field back to its default"
     ]
   },
   "kebab-case-converter": {
@@ -4041,9 +4036,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the text you want to convert into the input field of the Kebab Case Converter",
-      "Select the desired output format: kebab-case, snake_case, or URL slug",
-      "Click the 'Convert' button to generate the formatted text"
+      "Type or paste your phrase into the 'Text' textarea under Inputs; it starts pre-filled with 'My Variable Name Here', and input with no letters or digits left in it shows an em dash with the caption 'Enter some text'",
+      "There is no format selector and no Convert button — the Result recomputes as you type and shows all three forms at once: kebab-case on the headline line ('my-variable-name-here' for the default phrase), plus cards labelled 'snake_case' and 'dot.case'",
+      "Every run of characters outside ASCII letters and digits collapses into a single separator and the words are lowercased; press Copy to take the Text and all three forms to the clipboard, Download to save them as kebab-case-converter.txt, or Reset to restore the default phrase"
     ]
   },
   "lcm-and-gcd-calculator": {
@@ -4082,9 +4077,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the first number in the designated input field to begin the calculation process for finding the GCD and LCM.",
-      "Input the second number in the corresponding field, ensuring it is a valid integer to proceed with the computation.",
-      "Click the calculate button to instantly obtain the GCD and LCM of the two input numbers, which will be displayed in a clear and readable format."
+      "Type a value into the 'First number' box under Inputs, which opens at 12. Decimals are floored and negatives are made positive, so 12.9 and -12 are both treated as 12.",
+      "Fill in the 'Second number' box, which opens at 18. Enter 0 in either box and the Result stays an em dash with the caption 'Enter two whole numbers'.",
+      "There is no calculate button — the Result recomputes as you type, reading 'GCD 6 · LCM 36' for the default 12 and 18, with cards labelled 'GCD (HCF)' and 'LCM' beneath it. Copy sends that text to the clipboard, Download saves it as lcm-and-gcd-calculator.txt, and Reset returns the boxes to 12 and 18."
     ]
   },
   "line-break-remover": {
@@ -4123,9 +4118,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the multi-line text you want to merge into the 'Text' input field of the Line Break Remover tool",
-      "Select or type your preferred separator in the 'Join with' field to specify how the lines should be connected",
-      "Click the process button to instantly join the text into one line with your chosen separator"
+      "Paste your multi-line text into the 'Text' textarea under Inputs; it starts pre-filled with the sample lines 'line one', 'line two' and 'line three'. Each line is trimmed and empty lines are dropped before joining",
+      "Choose a separator from the 'Join with' dropdown. It is a fixed list of three options and you cannot type your own: Space (the default), Comma — which joins with a comma followed by a space — or Nothing, which runs the lines together with no character between them",
+      "There is no process button: the joined line appears in the Result as you type, with cards labelled 'Lines joined' and 'Characters'. Press Copy to take it to the clipboard, Download to save it as line-break-remover.txt, or Reset to restore the sample text and the Space option"
     ]
   },
   "loan-comparison-tool": {
@@ -4206,7 +4201,7 @@ export const toolContentOverrides = {
     ],
     "steps": [
       "Enter your yes/no question into the Magic 8 Ball input field, making sure to phrase it in a way that can be answered with a simple 'yes' or 'no'",
-      "Click the 'Get Answer' button to shake the Magic 8 Ball and reveal its response",
+      "Click the 'Generate' button in the Result panel to shake the ball; every press re-rolls the answer, and the caption underneath repeats your question in quotes, or reads 'Ask a yes/no question, then shake' while the field is empty",
       "Interpret the Magic 8 Ball's answer, which will be one of its classic responses, such as 'Signs point to yes' or 'Outlook not so good'"
     ]
   },
@@ -4248,7 +4243,7 @@ export const toolContentOverrides = {
     "steps": [
       "Enter the cost of your product or service in the 'Cost' field to establish the base value for your calculation",
       "Input the desired markup percentage in the 'Markup (%)' field to determine the amount of profit you want to add to the cost",
-      "Click the calculate button to instantly generate the selling price and profit, giving you a clear understanding of your product's pricing and profitability"
+      "There is no calculate button to press: the Result panel recalculates as you type, showing the selling price above the caption 'selling price' with 'Profit' and 'Margin' cards beneath it, the margin given to two decimals as a percentage"
     ]
   },
   "mean-median-mode-calculator": {
@@ -4285,11 +4280,6 @@ export const toolContentOverrides = {
         "Can I use the Mean, Median & Mode Calculator for large datasets?",
         "Yes, the tool can handle large datasets, but extremely large inputs may impact performance."
       ]
-    ],
-    "steps": [
-      "Enter a list of numbers separated by commas or spaces into the Mean, Median & Mode Calculator to begin the calculation process.",
-      "Click the 'Calculate' button to process the input numbers and generate the mean, median, mode, range, and standard deviation.",
-      "Review the calculated statistical measures to gain insights into the central tendency and variability of the input data."
     ]
   },
   "media-query-generator": {
@@ -4329,8 +4319,8 @@ export const toolContentOverrides = {
     ],
     "steps": [
       "Enter the minimum width in pixels (or 0 if you don't want to specify a minimum) and the maximum width in pixels (or 0 if you don't want to specify a maximum) into the Media Query Generator's input fields.",
-      "Click the 'Generate Media Query' button to create the CSS media query based on your specified widths.",
-      "Copy the generated media query code and apply it to your CSS stylesheet to implement responsive design for the specified breakpoint."
+      "There is no generate button: the Result panel rewrites itself as you type, so the defaults 768 and 0 produce @media (min-width: 768px) { /* … */ }, setting both fields to 0 falls back to @media all { /* … */ }, and a 'Query' card shows the bare condition on its own.",
+      "Press 'Copy' to put a plain-text summary on the clipboard (the field labels and values, the Result line and the Query row) or 'Download' to save that same summary as media-query-generator.txt, then paste the @media rule into your stylesheet."
     ]
   },
   "random-decision-maker": {
@@ -4369,9 +4359,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter a yes/no question into the Random Decision Maker's input field, such as 'Should I go to the beach today?'",
-      "Click the 'Get Decision' button to generate a random outcome",
-      "Receive a random 'yes' or 'no' answer to help inform your decision"
+      "Type your question into the Question field. It is optional: whatever you type is echoed back in quotes beneath the answer, and leaving it blank shows the caption 'Shake for an answer' instead.",
+      "Click Generate to draw an answer. The result is a 🎱 followed by one of nine fixed replies such as 'It is certain', 'Reply hazy, try again' or 'Don't count on it', and clicking Generate again draws a fresh one.",
+      "Click Copy to put the whole result block (your Question, the Result line and the caption) on the clipboard — the button reads Copied for about a second — or Download to save that text as random-decision-maker.txt. Reset clears the Question field, and a History button appears once you have copied or downloaded, listing up to 8 copied or downloaded results under Recent results."
     ]
   },
   "sha1-hash-generator": {
@@ -4410,9 +4400,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the text you want to generate a SHA1 hash for into the input field of the SHA1 Hash Generator",
-      "Click the 'Generate SHA1 Hash' button to process the text and produce a hash value",
-      "Copy the resulting SHA1 hash value for use in your application, verification process, or security protocol"
+      "Type or paste your text into the Text field, or click the 'hello world' chip in the Examples row to load the sample input.",
+      "The hash is computed in the browser as you type — there is no button to press. The Result panel shows the 40-character lowercase hex digest, with Algorithm (SHA-1) and Length (the JavaScript UTF-16 code-unit count of your input) in the cards below it.",
+      "Click Copy to put the whole result block — your Text line, the Result line, Algorithm and Length — on the clipboard, or Download to save that text as sha1-hash-generator.txt. Reset restores the default 'hello world' input."
     ]
   },
   "slug-generator": {
@@ -4451,13 +4441,13 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Simply paste the title or text into the input field of the Slug Generator.",
-      "Click on the 'Generate' button to convert your text into a clean, SEO-optimized slug.",
-      "Copy the generated slug and use it in your website URLs for better search engine visibility."
+      "Type or paste your title into the Text field, or click the Sample chip in the Examples row to load 'Hello World'.",
+      "The slug appears in the Result panel as you type — there is no button to press. Accented Latin text is normalized, then characters outside ASCII letters, digits, underscores, spaces or hyphens are stripped; runs of spaces and underscores become single hyphens, so 'Hello World' becomes hello-world and an all-non-Latin input can become an em dash.",
+      "Click Copy to put the result block (your Text line plus the Result line) on the clipboard, or Download to save it as slug-generator.txt. Reset restores the default 'hello world' input."
     ]
   },
   "strikethrough-text-generator": {
-    "intro": "The Strikethrough Text Generator is a unique browser tool designed for social media enthusiasts, gamers, and content creators who want to add a touch of style to their bios, posts, and usernames. It converts regular text into stylish Unicode letters with a strikethrough effect, making it stand out from the crowd. With this tool, users can easily generate eye-catching text to enhance their online presence.",
+    "intro": "The Strikethrough Text Generator is a unique browser tool designed for social media enthusiasts, gamers, and content creators who want to add a touch of style to their bios, posts, and usernames. It keeps your own letters and inserts the Unicode combining long stroke (U+0336) after each character, so the line travels with the text and makes it stand out from the crowd. With this tool, users can easily generate eye-catching text to enhance their online presence.",
     "useCases": [
       "Adding a strikethrough effect to a Twitter bio to indicate a previous username or a changed handle",
       "Creating stylized text for a Facebook post to draw attention to a promotion or event",
@@ -4480,7 +4470,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use the Strikethrough Text Generator?",
-        "Simply enter your text in the input field, click the 'Generate' button, and copy the resulting Unicode characters"
+        "Type or paste your text into the Text field and the struck-through version appears in the Result panel as you type — there is no button to press — then click Copy and trim the copied block, which also carries the tool title and your Text line, down to the struck characters"
       ],
       [
         "Can I use the generated text on any platform?",
@@ -4492,9 +4482,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the text you want to stylize in the Strikethrough Text Generator's input field",
-      "Click the 'Generate' button to convert your text into Unicode characters with a strikethrough effect",
-      "Copy and paste the generated text into your social media bio, post, or username"
+      "Type or paste your text into the Text field, or click the Sample chip in the Examples row to load 'Hello World'.",
+      "The struck-through version appears in the Result panel as you type — there is no button to press. Your own characters are kept and a combining long stroke overlay (U+0336) is inserted after each one, so the line travels with the text as plain Unicode rather than as formatting.",
+      "Click Copy to put the result block on the clipboard — it includes the tool title and your Text line as well as the Result line, so trim it down to the struck characters before pasting into a bio, post or username — or Download to save that text as strikethrough-text-generator.txt. Reset restores the default 'Hello World' input."
     ]
   },
   "text-shadow-generator": {
@@ -4533,9 +4523,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter the desired X offset value to determine how far to the right or left the text shadow will be positioned",
-      "Adjust the Y offset value to control how far above or below the original text the shadow will appear",
-      "Set the blur value to define the level of fuzziness or sharpness of the text shadow, with higher values producing more subtle effects"
+      "Drag the X offset and Y offset sliders to position the shadow. Both run from -20 to 20 in steps of 1 and start at 2, negative values pushing the shadow left and up, and each slider shows its current value directly beneath it.",
+      "Drag the Blur slider (0 to 40, default 4) to soften the edge, where 0 gives a hard-edged copy of the text. The shadow color is fixed at rgba(0,0,0,0.5); this tool has no color control.",
+      "Read the finished value in the Result panel — with the defaults it is '2px 2px 4px rgba(0,0,0,0.5)' — and the ready-to-paste declaration in the Full rule card, 'text-shadow: 2px 2px 4px rgba(0,0,0,0.5);'. Click Copy to put the result block on the clipboard or Download to save it as text-shadow-generator.txt."
     ]
   },
   "tweet-character-counter": {
@@ -4613,11 +4603,6 @@ export const toolContentOverrides = {
         "Are the swapped images watermarked?",
         "No, the 2 Images Swap tool does not add any watermarks to the swapped image composition, so you can use it for personal or commercial purposes"
       ]
-    ],
-    "steps": [
-      "Click the button to upload your two images, which will be displayed side-by-side in the preview area",
-      "Adjust the images as needed, and the tool will instantly swap their positions, showing you the result in real-time",
-      "Export the swapped image composition in your desired format"
     ]
   },
   "2048-game": {
@@ -4654,11 +4639,6 @@ export const toolContentOverrides = {
         "Can I undo a move in the 2048 Game?",
         "No, the 2048 Game does not have an undo feature, so players must think carefully before making each move"
       ]
-    ],
-    "steps": [
-      "Click the button to start a new game and begin merging tiles to get closer to your goal of 2048",
-      "Use your spatial reasoning and planning skills to decide which tiles to merge and when",
-      "Continue merging tiles until you reach 2048 or run out of possible moves"
     ]
   },
   "30-day-habit-tracker": {
@@ -4697,9 +4677,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to start tracking your habit and input the details of the habit you want to track, including the status, dates, and any progress notes.",
-      "Each day, return to the 30-Day Habit Tracker to update your habit status, reflecting whether you successfully maintained the habit or not.",
-      "At the end of the 30 days, review your progress notes to identify patterns, successes, and areas for improvement to refine your habit-forming strategy."
+      "Press Create Custom Habit to open the Create Custom 30-Day Habit form and fill in Habit Name, Category, Start Date, Description and Milestone Reward, then press Start 30-Day Challenge - or pick a card such as Daily Reading from Quick Presets to seed a 30-day run instantly.",
+      "In the 30-Day Progress Grid click any D1 to D30 block to open its Day Inspector, set Day Status to Completed, Skipped or Unmarked, write a Daily Reflections Note and press Save Details; Completion Rate, Current Streak and Longest Streak recalculate from those marks.",
+      "Press Download Report to save the journal as Habit_Report_<habit_name_with_underscores>.txt with every day's status and note, or Reset Grid to put all 30 days back to pending."
     ]
   },
   "ac-tonnage-calculator": {
@@ -4738,9 +4718,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter your room's dimensions and select the level of sun exposure it receives to get an accurate calculation of the required AC tonnage",
-      "Choose your city from the climate database to factor in the local temperature and humidity conditions",
-      "Click the 'Calculate' button to generate the recommended AC tonnage and estimated monthly running cost"
+      "Enter Length, Width and Height in ft, then People in the room, Number of windows and Total window glass area, and switch on whichever of the Top floor, Direct sunlight on windows and West-facing wall toggles apply",
+      "Pick Your city from the dropdown, which selects the matching climate zone (Hot & dry ×1.1, Hot & humid ×1.15, Moderate ×0.92 or Composite ×1.05), then choose Insulation quality and tap the appliance chips such as TV + set-top box · 120 W",
+      "Recommended size and the Load breakdown table in BTU/hr update live with no Calculate button; set Star rating, Hours per day and Electricity tariff to read the Monthly bill, then use Copy report or Download for ac-tonnage-sizing-report.txt"
     ]
   },
   "acne-severity-analyzer": {
@@ -4764,24 +4744,10 @@ export const toolContentOverrides = {
         "With detailed scoring and coverage metrics, users can make informed decisions about their skincare treatments and product choices."
       ]
     ],
-    "faqs": [
-      [
-        "How does the Acne Severity Analyzer ensure the privacy of my skin analysis data?",
-        "The Acne Severity Analyzer is designed with user privacy in mind, utilizing secure servers to store and process all uploaded images and analysis data."
-      ],
-      [
-        "Can I use the Acne Severity Analyzer to track skin conditions other than acne?",
-        "While the Acne Severity Analyzer is specifically designed for acne assessment, it may also detect other skin irregularities; however, for comprehensive analysis of other conditions, consult with a dermatologist."
-      ],
-      [
-        "Is the Acne Severity Analyzer suitable for all skin types and tones?",
-        "Yes, the Acne Severity Analyzer is designed to be inclusive of all skin types and tones, providing accurate analysis regardless of individual skin characteristics."
-      ]
-    ],
     "steps": [
-      "Click the 'Analyze' button to upload an image of your skin for AI-powered analysis",
-      "The tool will then detect and assess blemishes, inflammation, and breakouts",
-      "Receive a detailed report with scoring and coverage metrics to understand your acne severity"
+      "Drop a photo onto the 'Upload a clear front-facing photo' panel, or click it to browse for an image file. The panel notes you get the best results with natural lighting and no makeup/filters.",
+      "Analysis starts on its own once the image loads. A progress panel steps through Loading face detection model, Loading face landmark model, Detecting face and Analyzing skin, and stops with 'No face detected' if your face is not clearly visible and well-lit.",
+      "Read the severity badge (Clear, Mild, Moderate, Moderately Severe or Severe) above the Acne Severity Score bar, the Detection Metrics for Detected Spots and Coverage, the Acne Heatmap that tints flagged pixels red, and the Detailed Analysis rows; click Analyze Another to run a new photo."
     ]
   },
   "acronym-generator": {
@@ -4820,9 +4786,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to start generating acronyms from your phrase or to find phrase ideas from your acronym letters",
-      "Enter your phrase to create a custom acronym, or input your acronym letters to discover potential phrase meanings",
-      "Refine your acronym results by adjusting the input phrase or acronym letters to achieve the desired outcome"
+      "Choose a direction with the Phrase → Acronym or Letters → Phrase buttons at the top of the input card.",
+      "In Phrase → Acronym, type into the Enter a Phrase box (placeholder 'e.g., Advanced Network Technology Solutions') and click Generate Acronym to take the first letter of every word. In Letters → Phrase, type into Enter Letters (placeholder 'e.g., NASA'), pick a Tech, Business, Creative or Health theme, then click Expand Letters; each letter uses a themed word when available and shows '<letter> —' when that theme has no match.",
+      "The Result panel shows the acronym above one row per letter with its matching word; click Copy to put '<acronym>: <words>' on the clipboard, and the button reads Copied for a moment."
     ]
   },
   "ad-banner-size-finder-tool": {
@@ -4846,24 +4812,10 @@ export const toolContentOverrides = {
         "Easily find ad banner sizes for all major platforms, including Google Ads, Facebook Ads, and more."
       ]
     ],
-    "faqs": [
-      [
-        "What ad platforms do you support?",
-        "We support all major ad platforms, including Google Ads, Facebook Ads, and many more, covering a wide range of ad banner sizes."
-      ],
-      [
-        "Do I need to input any data to use the tool?",
-        "No, simply click the 'Find Ad Banner Sizes' button to access the list of standard ad banner dimensions."
-      ],
-      [
-        "Are the ad banner sizes updated regularly?",
-        "Yes, our database is regularly updated to reflect any changes in standard ad banner sizes across all supported platforms."
-      ]
-    ],
     "steps": [
-      "Click the 'Find Ad Banner Sizes' button to instantly retrieve a list of standard ad banner dimensions",
-      "Review the list to find the specific ad banner size you need for your campaign",
-      "Use the provided dimensions to create or adjust your ad banners for optimal performance"
+      "Under Match a custom size, enter your artwork's dimensions in Your creative width (px) and Your creative height (px); both start filled in at 1200 x 628.",
+      "The Closest standard slot panel names the nearest standard size and its platform, then lists the aspect ratio, orientation, the Export at 2x for retina dimensions, total pixels, file size cap, your artwork scaled to fit and the empty space left after fitting. Other close slots lists the runners-up underneath in Size, Name, Ratio and Ratio gap columns.",
+      "Use Browse the full catalogue to search by name, platform or pixels and filter by Platform or Orientation, watching the '<n> sizes match.' count; click Copy result to copy the matched size summary as text, or Reset to return every field to its default."
     ]
   },
   "ad-copy-ab-planner": {
@@ -4900,11 +4852,6 @@ export const toolContentOverrides = {
         "Are the live mock previews customizable?",
         "Yes, the live mock previews can be customized to match your brand's style and tone, giving you a realistic view of how your ads will appear"
       ]
-    ],
-    "steps": [
-      "Click the 'Create A/B Test' button to initiate a new ad copy comparison, where you can input and customize your ad copy variations",
-      "Use the side-by-side comparison feature to analyze and refine your ad copy, making data-driven decisions to improve performance",
-      "Schedule your A/B test using the campaign testing scheduler, ensuring your ads are optimized for maximum impact"
     ]
   },
   "afterimage-generator": {
@@ -4941,11 +4888,6 @@ export const toolContentOverrides = {
         "Is the Afterimage Generator suitable for people with visual impairments?",
         "The Afterimage Generator is designed to be accessible, but users with certain visual impairments may need to adjust their screen settings or use assistive technology to fully experience the tool's effects"
       ]
-    ],
-    "steps": [
-      "Click the button to generate an afterimage, then stare at the resulting image to experience the effects of retinal adaptation",
-      "Adjust your screen's brightness and color settings to enhance the afterimage effect",
-      "Try generating afterimages with different colors and patterns to see how they interact with your visual perception"
     ]
   },
   "age-gender-detector": {
@@ -5072,7 +5014,7 @@ export const toolContentOverrides = {
     ]
   },
   "ai-fake-image-detector": {
-    "intro": "The AI Fake Image Detector is a cutting-edge tool designed to help digital forensic experts, journalists, and social media moderators identify AI-generated images, deepfakes, and manipulation artifacts. By analyzing images, this tool provides a powerful solution for detecting fake visual content. With its user-friendly interface, simply click the 'Analyze Image' button to start the detection process.",
+    "intro": "The AI Fake Image Detector is a cutting-edge tool designed to help digital forensic experts, journalists, and social media moderators identify AI-generated images, deepfakes, and manipulation artifacts. By analyzing images, this tool provides a powerful solution for detecting fake visual content. With its user-friendly interface, you simply drop a file onto the 'Upload an image for analysis' panel — or click it to browse — and the analysis starts on its own.",
     "useCases": [
       "Investigating the authenticity of images used in news articles to prevent the spread of misinformation",
       "Verifying the legitimacy of social media profiles by analyzing profile pictures for signs of AI-generated content",
@@ -5095,7 +5037,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How does the AI Fake Image Detector work?",
-        "The AI Fake Image Detector uses advanced machine learning algorithms to analyze images for signs of AI-generated content, including inconsistencies in lighting, shadows, and textures."
+        "The AI Fake Image Detector runs eight statistical forensic checks in your browser — noise consistency, compression artifacts, metadata presence, lighting consistency, texture consistency, edge consistency, colour distribution and face detection — and combines their weighted scores into a single reading out of 100. There is no machine-learning model behind it and the image never leaves your device."
       ],
       [
         "Can the AI Fake Image Detector detect all types of AI-generated images?",
@@ -5107,9 +5049,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Analyze Image' button to upload your image for analysis",
-      "Wait for the AI Fake Image Detector to process the image and detect potential AI-generated content or manipulation",
-      "Review the results, which include a detailed report highlighting any suspicious artifacts or anomalies found in the image"
+      "Drag a JPG, PNG, WebP or TIFF onto the 'Upload an image for analysis' panel, or click it to browse for one file",
+      "Analysis starts by itself as soon as the file loads — a progress bar runs under 'Analyzing image...' while the eight forensic checks execute in your browser",
+      "Review the ring meter's score out of 100 with its 'Confidence: n%' line and a Likely Authentic, Possibly AI Generated or Likely AI Generated badge, then use the Report, Technical Details and Export tabs — Export offers Download JSON, Print Report and Copy Summary"
     ]
   },
   "ai-jd-analyzer-tool": {
@@ -6015,7 +5957,7 @@ export const toolContentOverrides = {
     ]
   },
   "ascii-explorer": {
-    "intro": "The ASCII Explorer is a specialized browser tool designed for developers, programmers, and IT professionals who need to work with ASCII characters. It allows users to explore the full 128-character ASCII table, complete with binary, hex, and decimal values. By using the ASCII Explorer, users can easily convert text to ASCII codes and vice versa, streamlining their workflow and improving productivity.",
+    "intro": "The ASCII Explorer is a specialized browser tool designed for developers, programmers, and IT professionals who need to work with ASCII characters. It allows users to explore the full 128-character ASCII table, complete with binary, octal, hex, and decimal values. By using the ASCII Explorer, users can look up a character to get its ASCII code, or enter a code from 0 to 127 to get the character back, streamlining their workflow and improving productivity.",
     "useCases": [
       "Debugging network protocols that rely on ASCII-encoded data, such as HTTP or FTP, and needing to verify the accuracy of ASCII character transmissions.",
       "Developing software that requires precise control over ASCII character encoding, such as a text editor or a terminal emulator.",
@@ -6024,7 +5966,7 @@ export const toolContentOverrides = {
     "benefits": [
       [
         "Effortless ASCII Conversion",
-        "The ASCII Explorer simplifies the process of converting text to ASCII codes and vice versa, saving time and reducing errors."
+        "The ASCII Explorer simplifies the process of converting a character to its ASCII code and back again, saving time and reducing errors."
       ],
       [
         "Comprehensive Character Reference",
@@ -6038,7 +5980,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use the ASCII Explorer to convert text to ASCII codes?",
-        "To convert text to ASCII codes, simply enter the text into the input field and click the 'Convert' button."
+        "Type the character into the Character Lookup box and press Lookup, or just hit Enter. It handles one character at a time, and the result banner then reports that character's Dec, Hex, Oct and Bin values."
       ],
       [
         "What is the difference between the binary, hex, and decimal representations of ASCII characters?",
@@ -6050,9 +5992,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Explore' button to browse the full ASCII character table and view detailed information about each character, including its binary, hex, and decimal representations.",
-      "Enter a string of text into the input field and use the ASCII Explorer to convert it into its corresponding ASCII code values.",
-      "Use the ASCII Explorer to look up specific ASCII characters by their decimal, hex, or binary values, and discover their corresponding text representations."
+      "Type a character into the Character Lookup box and press Lookup (or hit Enter). The result banner shows that character with its Dec, Hex, Oct and Bin values plus a description such as 'Uppercase letter A'; anything above code 127 gets the notice that it is outside the 7-bit ASCII range.",
+      "To go the other way, enter a decimal code between 0 and 127 in the ASCII Code Lookup box and press Lookup. The matching row is highlighted and scrolled into view in the ASCII Table (0 - 127), which lists Dec, Hex, Oct, Binary, Char and Description for all 128 codes.",
+      "Browse the table on its own with the All, Control and Printable filters and the 'Search char, code, hex or name' box, then use the copy button at the end of any row to put the character — or its mnemonic text for a control code such as LF or NUL — on your clipboard."
     ]
   },
   "ashtakoot-matching": {
@@ -7487,7 +7429,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I start a new game?",
-        "Simply click the 'Start Game' button to begin."
+        "Click New Game to deal a 5x5 board and begin a round."
       ],
       [
         "What happens if I don't get five in a row?",
@@ -7499,9 +7441,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Start Game' button to begin playing.",
-      "Watch as the numbers are called automatically and your board is filled in real-time.",
-      "When you get five in a row, the game will detect your win and celebrate with confetti!"
+      "Press New Game or New Board to deal a fresh 5x5 card and reset the called numbers, timer and current round.",
+      "Use Call Next Number to draw one ball at a time, or Start Auto Call to let the caller run at the Auto Speed you set.",
+      "With Auto Mark Numbers set to ON, cells are marked as their numbers are called; completing a row, column, diagonal, the four corners or a full house ends the round."
     ]
   },
   "bio-link-page-builder": {
@@ -7733,7 +7675,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use Blur Comparison?",
-        "Upload an image, adjust the slider, and view the comparison side by side."
+        "Drop a photo on the upload panel or click it to browse, set the strength with the Intensity slider under Blur Settings, then drag the white handle across the preview to wipe between the blurred left side and the untouched Original right side."
       ],
       [
         "Is it free?",
@@ -7741,13 +7683,13 @@ export const toolContentOverrides = {
       ],
       [
         "Can I compare multiple images at once?",
-        "No, currently you can only compare one pair of images at a time."
+        "No. One photo is loaded at a time and it is compared against its own blurred copy, so there is a single before-and-after view. Use Change Photo to swap in a different picture."
       ]
     ],
     "steps": [
-      "Upload an image by clicking the 'Select Image' button.",
-      "Adjust the blur intensity using the interactive slider.",
-      "View the original and blurred images side by side for comparison."
+      "Drop a photo onto the 'Drop your photo here or click to upload' panel, or click it to browse. JPG, PNG and WebP are supported, and the Interactive View header then shows the image's pixel dimensions.",
+      "Set the strength with the Intensity slider under Blur Settings — 1px to 100px, with the current value shown in the px badge beside it — or hit the Subtle, Medium and Heavy presets for 5px, 15px and 40px.",
+      "Drag the white handle across the preview to wipe between the blurred left side and the untouched Original right side, or jump to Original, 50 / 50 and Blurred under Slider Position. Export saves the blurred copy as blurred-<intensity>px.png, and Reset returns to 10px at the halfway point."
     ]
   },
   "blur-detector": {
@@ -8993,17 +8935,17 @@ export const toolContentOverrides = {
       ],
       [
         "Can I save my cartoon portraits?",
-        "Yes, you can download and save your custom cartoons directly from the tool."
+        "Yes. Download HD under Export Options saves the result as cartoon.png, cartoon.jpg or cartoon.webp depending on the format you picked, and Copy Image and Print are there too."
       ],
       [
         "Is it free to use?",
-        "Cartoon Yourself is a paid service, but we offer a free trial for new users."
+        "Yes, and there is no sign-up or trial to start. Everything runs in your browser on a canvas — your photo is never uploaded anywhere."
       ]
     ],
     "steps": [
-      "Upload your photo by clicking the 'Choose File' button.",
-      "Select from multiple art styles, including classic comic book, pixelated, and more.",
-      "Customize your cartoon with options like eye size, mouth shape, and hair style."
+      "Drop a photo on the Upload Image panel, or use the Browse Files button to pick one and the Camera button to shoot one — JPG, PNG and WEBP up to 10MB.",
+      "Pick one of the 11 presets under Cartoon Style: Classic Cartoon, Anime, Comic Book, Sketch, Pencil Art, Watercolor, Pixar Inspired, 3D Cartoon, Minimal Cartoon, Pop Art or Flat Illustration. The Before / After panel redraws immediately, with a handle you drag to wipe between the Cartoon and Original sides.",
+      "Fine-tune the Brightness, Contrast, Saturation, Sharpness and Smoothness sliders under Adjustments (Reset puts all five back to their defaults), then choose PNG, JPEG or WEBP under Export Options and click Download HD, Copy Image or Print."
     ]
   },
   "celebrity-look-alike": {
@@ -9130,44 +9072,44 @@ export const toolContentOverrides = {
     ]
   },
   "chemical-reaction-explorer": {
-    "intro": "The Chemical Reaction Explorer is an interactive stoichiometric chemical reaction simulator designed for chemistry students, educators, and researchers. It allows users to simulate and visualize chemical reactions with animated molecular rearrangements, balanced equations, and enthalpy energy diagrams. By clicking the 'Explore Reaction' button, users can delve into the world of chemical reactions and gain a deeper understanding of the underlying principles.",
+    "intro": "The Chemical Reaction Explorer is an interactive chemical reaction simulator designed for chemistry students, educators, and researchers. It animates five classic reaction types, each with its balanced equation and its enthalpy of reaction. By clicking the Trigger Reaction button, users can watch reactants turn into products and gain a deeper understanding of the underlying principles.",
     "useCases": [
-      "Investigating the combustion reaction of methane to understand the release of energy and the formation of carbon dioxide and water",
-      "Simulating the synthesis of ammonia from nitrogen and hydrogen to optimize the reaction conditions",
-      "Exploring the oxidation of glucose to understand the energy yield and the production of carbon dioxide and water"
+      "Investigating the combustion of methane, CH4 + 2O2 to CO2 + 2H2O, to understand the release of energy and the formation of carbon dioxide and water",
+      "Showing a class the difference between a combination reaction that builds water from 2H2 + O2 and a decomposition that breaks hydrogen peroxide back down",
+      "Comparing the enthalpy of a single replacement, Zn + 2HCl, with a double replacement that drops a solid AgCl precipitate"
     ],
     "benefits": [
       [
         "Enhanced Visualization",
-        "The Chemical Reaction Explorer provides interactive 3D visualizations of molecular structures and reactions, facilitating a deeper understanding of chemical principles"
+        "The Chemical Reaction Explorer animates each reaction on a canvas, fading the labelled reactants out as the products appear, which makes the transformation easy to follow"
       ],
       [
         "Accurate Stoichiometry",
-        "The tool ensures accurate balancing of chemical equations, allowing users to focus on the underlying chemistry"
+        "Every equation ships already balanced, with the coefficients drawn on the molecules themselves, so users can focus on the underlying chemistry"
       ],
       [
         "Thermodynamic Insights",
-        "The enthalpy energy diagrams provide valuable information on the thermodynamic properties of the reaction, enabling users to predict and analyze the energy changes"
+        "The enthalpy figure and thermodynamic label for each reaction give a quick read on the energy change, from -65.5 kJ/mol for the precipitation up to -890.3 kJ/mol for combustion"
       ]
     ],
     "faqs": [
       [
         "What types of chemical reactions can I simulate with the Chemical Reaction Explorer?",
-        "The tool supports a wide range of chemical reactions, including combustion, synthesis, oxidation, and more"
+        "Five preset reaction types are built in: Combination (Synthesis), Decomposition, Single Replacement, Double Replacement and Combustion, each with one worked example"
       ],
       [
         "How do I balance a chemical equation using the Chemical Reaction Explorer?",
-        "Simply input the reactants and products, and the tool will automatically balance the equation and provide the stoichiometric coefficients"
+        "You do not have to. There is no field for entering your own reactants and products; every preset arrives already balanced, and the coefficients are drawn on the molecules so you can count the atoms on both sides yourself"
       ],
       [
         "Can I save and share my simulations with others?",
-        "Yes, the Chemical Reaction Explorer allows you to save and share your simulations, making it easy to collaborate with colleagues or students"
+        "There is no save or share button, and nothing is sent to a server. Each run is defined entirely by the reaction you select and where you leave the Reactants to Products slider, so anyone can reproduce it in a couple of clicks"
       ]
     ],
     "steps": [
-      "Click the 'Explore Reaction' button to initiate the simulation and input the reactants and products of the desired chemical reaction",
-      "Adjust the stoichiometric coefficients to balance the equation and observe the animated molecular rearrangements",
-      "Analyze the enthalpy energy diagrams to understand the thermodynamic properties of the reaction"
+      "Pick one of the five buttons in the Reaction Type Selector — Combination (Synthesis), Decomposition, Single Replacement, Double Replacement or Combustion. Each button carries its own balanced equation, and the chosen one is pinned to the top-left corner of the canvas",
+      "Click Trigger Reaction to run the animation: the labelled reactants fade out on the left as the products fade in on the right. The button reads Pause Reaction while it plays, it stops on its own at the products, and Reset returns everything to the reactants",
+      "Drag the Reactants to Products slider under the canvas to scrub the transformation by hand, and read the Enthalpy and Thermodynamics tiles beside the selector — combustion of methane, for instance, reports -890.3 kJ/mol and Highly Exothermic"
     ]
   },
   "chess-multiplayer": {
@@ -10819,11 +10761,11 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use the Crontab Evaluator?",
-        "Simply click on the 'Preview Cron Expression' button, enter your five-field cron expression in the designated field, and click 'Evaluate'. The tool will then display a table showing when each task is scheduled to run."
+        "Type your expression into the Cron expression box. There is no run button — the plain-English reading, the Next run headline and the Upcoming runs table all recalculate as you type."
       ],
       [
         "What types of cron expressions can the Crontab Evaluator handle?",
-        "The Crontab Evaluator supports standard five-field cron expressions, including minute, hour, day of month, month, and day of week fields."
+        "The Crontab Evaluator supports standard five-field cron expressions, including minute, hour, day of month, month, and day of week fields, plus the shorthand macros @yearly, @annually, @monthly, @weekly, @daily, @midnight and @hourly."
       ],
       [
         "Is the Crontab Evaluator free to use?",
@@ -10831,9 +10773,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the 'Preview Cron Expression' button to input your five-field cron expression.",
-      "Enter your cron expression in the designated field and click 'Evaluate'.",
-      "The tool will display a table showing when each task is scheduled to run, based on the current date and time."
+      "Type a five-field expression into the Cron expression box — minute, hour, day-of-month, month, day-of-week — or press one of the Common schedules buttons such as '09:30 on weekdays' or '@daily macro'. There is no run button: everything recalculates as you type, and an invalid field is called out in an alert naming the field, such as 'Minute: values must be between 0 and 59.'",
+      "Set Count from to the moment you want to measure from, which starts at your current local time, and Occurrences to show for how many runs to list — any whole number from 1 to 50, defaulting to 8.",
+      "Read Next run at the top for the weekday, time and how long the wait is, check the In plain English, Shortest gap between runs and Runs per day rows underneath, then use Copy runs to put the whole schedule on your clipboard or Reset to return to 30 9 * * 1-5 from now."
     ]
   },
   "crush-percentage": {
@@ -11330,7 +11272,7 @@ export const toolContentOverrides = {
     ]
   },
   "csv-converter": {
-    "intro": "The CSV Converter is a powerful browser-based tool designed to easily convert CSV files into various formats such as JSON, HTML, XML, SQL inserts, and Python dictionaries. Ideal for developers, data analysts, and anyone needing to quickly transform data for different applications.",
+    "intro": "The CSV Converter is a powerful browser-based tool designed to easily convert CSV you paste into various formats such as JSON, an HTML table, XML, SQL INSERT statements, and Python dictionaries. Ideal for developers, data analysts, and anyone needing to quickly transform data for different applications.",
     "useCases": [
       "A web developer needs to import user data into a database and requires it in JSON format for API integration.",
       "A data analyst wants to visualize data using an HTML table but currently has it in CSV format.",
@@ -11353,29 +11295,29 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use the CSV Converter?",
-        "Upload your CSV file and select the desired output format from the dropdown menu. Click 'Convert' to get your new file."
+        "Paste your CSV into the 'CSV input' box and pick the format you want from the 'Convert to' dropdown. There is no file picker and no Convert button — the Output panel regenerates as you type, and the 'Copy output' button puts the result on your clipboard."
       ],
       [
         "What formats can I convert my CSV data into?",
-        "You can convert your CSV data into JSON, HTML, XML, SQL inserts, and Python dictionaries."
+        "You can convert your CSV data into JSON, an HTML table, XML, SQL INSERT statements, and Python dicts."
       ],
       [
         "Is the conversion process secure?",
-        "Yes, all files are processed in your browser and no data is sent to our servers."
+        "Yes, everything you paste is parsed and converted in your browser and no data is sent to our servers."
       ]
     ],
     "steps": [
-      "Click the 'Convert' button on the CSV Converter page.",
-      "Upload your CSV file by clicking the 'Choose File' button.",
-      "Select the desired output format from the dropdown menu."
+      "Paste your CSV into the 'CSV input' box on the CSV Converter page, typing over the sample rows that load there — the 'Reset' button brings the sample and the default settings back.",
+      "Pick your target from the 'Convert to' dropdown (JSON, HTML table, XML, SQL INSERT or Python dicts) and match the 'Delimiter' list, 'First row is a header' and 'Detect numbers, booleans and blanks' to your data; choosing SQL INSERT reveals a 'SQL table name' field.",
+      "The Output panel updates as you type — check the 'Parsed preview' of the first five rows, then press 'Copy output' to copy the converted result."
     ]
   },
   "csv-lead-cleaner": {
-    "intro": "Effortlessly clean and organize your CSV leads with just a click using the powerful CSV Lead Cleaner tool. Perfect for marketers, sales professionals, and anyone managing large datasets.",
+    "intro": "Effortlessly clean and organize your CSV leads with the powerful CSV Lead Cleaner tool: choose a file, press Process CSV, and download a CRM-ready list. Perfect for marketers, sales professionals, and anyone managing large datasets.",
     "useCases": [
       "A marketing team needs to clean a list of 10,000 email addresses for their upcoming campaign.",
-      "A sales professional wants to filter out irrelevant contacts from a large database of potential clients.",
-      "An e-commerce business needs to organize product data for inventory management."
+      "A sales professional wants to drop the contacts with no email address from a large database of potential clients.",
+      "An e-commerce business merging its newsletter and checkout exports needs a single list where each customer email appears only once."
     ],
     "benefits": [
       [
@@ -11384,31 +11326,31 @@ export const toolContentOverrides = {
       ],
       [
         "Data Accuracy",
-        "Remove duplicates and correct errors with smart filters for accurate data analysis."
+        "Every address is trimmed and lower-cased before comparison, so Sam@Acme.com and sam@acme.com collapse into one lead instead of two."
       ],
       [
         "Focus on Quality",
-        "Filter out irrelevant contacts to focus on high-quality leads that drive results."
+        "Rows with no email address are dropped and counted as Invalid Rows, so what you download is only the contacts you can actually reach."
       ]
     ],
     "faqs": [
       [
         "How does the CSV Lead Cleaner work?",
-        "Upload your CSV file, select filters, and download the cleaned version in just a few clicks."
+        "Click the 'Choose CSV File' box to pick your list, press 'Process CSV', and press 'Download Cleaned CSV' to save the result — three clicks, all of them in your browser."
       ],
       [
         "What types of filters are available?",
-        "The tool offers filters for removing duplicates, correcting errors, and focusing on specific criteria like email format or phone number validity."
+        "There are no filter settings to pick from — the cleaning rules are fixed and always run. Each email is trimmed and lower-cased, only the first row for each unique email is kept, and any row with no email at all is discarded. Headers such as 'Email Address', 'Mobile', 'Full Name' or 'Organization' are matched to the Name, Email, Phone and Company columns automatically. Phone numbers are carried across as written, not validated."
       ],
       [
         "Is my data secure with the CSV Lead Cleaner?",
-        "Yes, your data is securely processed within our platform to ensure privacy and confidentiality."
+        "Yes — your file is read and cleaned by your own browser and is never uploaded to a server, so your lead data never leaves your device."
       ]
     ],
     "steps": [
-      "Upload your raw CSV file by clicking on the 'Select File' button.",
-      "Choose from various smart filters to remove duplicates, correct errors, and focus on high-quality leads.",
-      "Download your cleaned and organized CSV file with just one more click."
+      "Click the 'Choose CSV File' box to pick your raw lead list; the picker accepts .csv files, and your filename replaces 'No file chosen' underneath once it is loaded.",
+      "Press 'Process CSV'. Four counters appear — Total Rows, Cleaned Rows, Duplicates Removed and Invalid Rows — above a preview of the first five cleaned records in Name, Email, Phone and Company columns.",
+      "Press 'Download Cleaned CSV' to save the deduplicated list as cleaned_leads.csv."
     ]
   },
   "csv-to-json": {

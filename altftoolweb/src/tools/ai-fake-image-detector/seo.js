@@ -12,8 +12,8 @@ const seo = {
       "Each detector reports its own confidence, and the overall score is a confidence-scaled weighted mean rather than a flat average.",
     ],
     [
-      "Shows the raw measurements",
-      "Every check prints its numbers — noise sigma, cross-block coefficient of variation, JPEG block boundary ratio, Sobel gradient CV — so you can judge the reasoning yourself.",
+      "Exports the raw measurements",
+      "Every check records its own numbers — noise sigma, cross-block coefficient of variation, JPEG block boundary ratio, Sobel gradient CV — and Download JSON and Copy Summary carry them out in full, so you can judge the reasoning yourself.",
     ],
     [
       "Reads real container metadata",
@@ -37,6 +37,11 @@ const seo = {
       "Is my image uploaded to a server?",
       "No. The image is drawn to a canvas and analysed in JavaScript in your tab, and only the first 512 KB of the file is read for metadata parsing. Large images are downsampled to about 400,000 pixels before the statistical checks run, purely to keep the analysis fast.",
     ],
+  ],
+  steps: [
+    "Drop a JPG, PNG, WebP or TIFF onto the Upload an image for analysis panel, or click it to browse — one file at a time. The preview underneath lists the filename, its size and its file type.",
+    "Analysis starts on its own as soon as the file loads: a progress bar runs under Analyzing image..., then the ring meter reports the score out of 100, a Confidence: n% line, and one of Likely Authentic, Possibly AI Generated or Likely AI Generated.",
+    "Read the Analysis Summary under the Report tab — its written verdict plus the Score, Confidence, Risk Level and Checks tiles — and the File Properties and EXIF Summary read-out under Technical Details, then open Export: Download JSON saves ai-detection-report-<timestamp>.json, Print Report opens a printable report with a row per check, and Copy Summary puts the text version, per-check scores included, on the clipboard. Upload Different Image swaps in another file.",
   ],
 };
 

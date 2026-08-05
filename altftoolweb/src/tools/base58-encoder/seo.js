@@ -1,10 +1,10 @@
 const seo = {
   intro:
-    "The Base58 Encoder converts text to and from Base58 using the Bitcoin alphabet, treating the input as one big integer and repeatedly dividing it by 58 with BigInt so long values stay exact. The alphabet is the 58 characters 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz — the digit 0 and the letters O, I and l are removed because they are the pairs people misread. It is for developers working with Bitcoin-style addresses, IPFS-adjacent identifiers, or any short human-transcribable key, who need to check a value in both directions.",
+    "The Base58 Encoder converts ordinary UTF-8 text to and from raw Base58 using the Bitcoin alphabet. It treats the UTF-8 bytes as one big integer and repeatedly divides with BigInt so long values stay exact. The alphabet is 123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz; 0, O, I and l are omitted to reduce visual ambiguity. This is raw Base58, not Base58Check, WIF, encryption, or a wallet-key recovery tool.",
   useCases: [
-    "You are studying how a Bitcoin address is put together and want to see the byte string behind a Base58 value.",
-    "A short ID from an API arrives Base58-encoded and you need to read what it actually contains before filing a bug.",
-    "You are generating human-readable identifiers and want to confirm your implementation matches the standard Bitcoin alphabet rather than a variant.",
+    "Round-trip a short UTF-8 identifier through the Bitcoin Base58 alphabet while testing an application.",
+    "Compare a raw Base58 implementation against known ASCII and Unicode test vectors.",
+    "Check whether a Base58 string decodes to valid UTF-8 text without treating it as a Bitcoin address or wallet key.",
   ],
   benefits: [
     [
@@ -13,7 +13,7 @@ const seo = {
     ],
     [
       "Both directions in one field",
-      "Flip the mode select to decode the same box you just encoded from, so you can round-trip a value and confirm it comes back unchanged.",
+      "Flip the mode select to decode the same box you just encoded from. Invalid alphabet characters and byte sequences that are not valid UTF-8 are rejected instead of silently altered.",
     ],
     [
       "Leading zero bytes are preserved",

@@ -38,6 +38,11 @@ const seo = {
       "The generation is non-deterministic, so repeated runs on identical input produce different lines by design. Use that to widen the option pool, and make the style description more specific — industry, tone, audience — when the results feel generic.",
     ],
   ],
+  steps: [
+    "Enter your Brand Name in the first field (placeholder \"e.g., Stellar Coffee Co.\", maximum 80 characters) and your positioning in the three-row Brand Style / Description box (placeholder \"e.g., Premium, sustainable, and friendly coffee shop for remote workers.\", maximum 500 characters).",
+    "Click Generate Slogans. The button stays disabled until both fields have text and reads Generating... while the request runs; generations are rate limited to 8 per minute.",
+    "The results card, headed \"Suggested Slogans for\" plus your brand name in capitals, lists the taglines as a numbered list of up to 7, with the model's own bullets and numbering stripped from each line. Press Clear to empty both fields and the results; a failed request shows the same card headed Generation Error.",
+  ],
 };
 
 export default seo;

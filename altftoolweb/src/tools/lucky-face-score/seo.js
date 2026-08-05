@@ -29,6 +29,11 @@ const seo = {
       "Nothing. Scores run from 1 to 100 and fall into five badges — below 35 Needs a Four-Leaf Clover, 35–54 Beginner's Luck, 55–74 Lucky Star, 75–89 Fortune's Favourite and 90 or above Grand Luck Master. They are entertainment, not a prediction or an assessment of any kind.",
     ],
   ],
+  steps: [
+    "Pick a file with the Your photo picker. It takes any image file up to 20 MB — a larger one is refused with a message telling you to keep it under 20 MB, and a non-image with one naming JPEG, PNG, WebP or HEIC. The chosen photo previews on the page and is read in the browser, never uploaded.",
+    "Nothing to press: the reading recomputes as soon as the file is read. The card fills in Luck score out of 100, a badge with its one-line note, the Charm, Timing, Fortune and Aura rows each scored out of 100, then Lucky number, Lucky day, Lucky colour and an Image fingerprint, with the fortune line quoted underneath.",
+    "Click Copy result — it reads Copied! for a moment — to copy the whole reading as plain text headed Lucky Face Score (for entertainment only). Choose another photo reopens the picker for a different file, and Reset clears the photo and blanks every field back to a dash.",
+  ],
 };
 
 export default seo;

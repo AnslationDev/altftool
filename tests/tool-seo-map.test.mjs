@@ -7,6 +7,7 @@ import { pathToFileURL } from "node:url";
 import { brotliDecompressSync } from "node:zlib";
 
 import { toolContentOverrides } from "../altftoolweb/src/app/tools/toolContentOverrides.js";
+import { hasPublishableHowToSteps } from "../altftoolweb/src/app/tools/howtoStepQuality.js";
 import {
   buildMetaDescription,
   TOOL_META_DESCRIPTION_BOUNDS,
@@ -28,6 +29,17 @@ function decodeGeneratedSeo() {
   return JSON.parse(
     brotliDecompressSync(readFileSync(generatedMapPath)).toString("utf8"),
   );
+}
+
+function withoutUnpublishableHowTo(seo = {}) {
+  const sanitized = { ...seo };
+  if (
+    Object.hasOwn(sanitized, "steps") &&
+    !hasPublishableHowToSteps(sanitized.steps)
+  ) {
+    delete sanitized.steps;
+  }
+  return sanitized;
 }
 
 let authoredSeoPromise;
@@ -69,10 +81,15 @@ test("compressed tool SEO lookup preserves legacy and per-tool content", async (
   assert.deepEqual(Object.keys(generatedSeo).sort(), expectedSlugs);
   for (const slug of expectedSlugs) {
     assert.deepEqual(generatedSeo[slug], {
-      ...(toolContentOverrides[slug] || {}),
-      ...(authoredSeo[slug] || {}),
+      ...withoutUnpublishableHowTo(toolContentOverrides[slug]),
+      ...withoutUnpublishableHowTo(authoredSeo[slug]),
     });
   }
+  assert.equal(
+    Object.hasOwn(generatedSeo["algebra-solver"], "steps"),
+    false,
+    "generic HowTo steps must not reach the compressed payload",
+  );
   assert.equal(typeof generatedSeo["age-calculator"]?.intro, "string");
   assert.equal(
     typeof generatedSeo["audio-edit-boundary-visualizer"]?.intro,

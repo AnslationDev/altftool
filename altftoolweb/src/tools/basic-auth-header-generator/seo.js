@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The Basic Auth Header Generator builds the HTTP Authorization header defined in RFC 7617: it joins your username and password with a single colon, Base64-encodes that string, and prefixes it with the word Basic. You get a ready-to-paste value in the form Basic dXNlcjpwYXNz, plus a realm field for the matching WWW-Authenticate challenge on the server side. It is for developers wiring up a cURL call, an API client, a webhook, or a CI job against an endpoint that expects HTTP Basic authentication.",
+    "The Basic Auth Header Generator joins username and password with a colon, encodes that string as UTF-8 bytes, Base64-encodes the bytes, and prefixes the result with Basic. It rejects a colon in the username, masks and does not persist the password, and copies only the finished header. The optional realm is a display-only reference for a server challenge and is never encoded into the client credential.",
   useCases: [
     "You are testing an internal API with Postman or cURL and need the exact Authorization header value rather than letting the client build it for you.",
     "A CI pipeline or webhook config takes a raw header string, so you need the encoded credential to paste into a secret variable.",
@@ -23,7 +23,7 @@ const seo = {
   faqs: [
     [
       "How is a Basic auth header built?",
-      "Take username:password as a single string, Base64-encode it, and send it as Authorization: Basic <encoded>. That is the whole scheme, defined in RFC 7617, which replaced the Basic definition in RFC 2617.",
+      "This tool takes username:password, converts it to UTF-8 bytes, Base64-encodes those bytes, and returns Basic <encoded>. Confirm that the target server expects UTF-8 credentials, since legacy Basic-auth deployments can use a different character encoding.",
     ],
     [
       "Is Basic authentication secure?",

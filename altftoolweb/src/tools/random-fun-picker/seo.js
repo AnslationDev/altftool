@@ -29,6 +29,11 @@ const seo = {
       "No — the names and ratings are sample data used to demonstrate the filters. Use it to decide the cuisine, budget and meal type, then search for a real place near you that fits.",
     ],
   ],
+  steps: [
+    "Choose one of the three Picker radios — Lunch picker, Truth or Dare or Name picker — then set that picker's fields: Cuisine, Budget, Meal type and Minimum rating (0 to 5); or Draw (Either — let the coin decide, Truth only, Dare only) and Difficulty (Easy, Medium or Hard); or the Names — one per line, or comma separated box with How many to draw and Split into how many teams (2–20).",
+    "Press Spin again. It re-seeds the generator so the shuffle produces a fresh draw, and editing any field above redraws immediately as well.",
+    "The result panel headlines the pick under Lunch is, You drew or Drawn with the odds listed beneath — Chance this one came up, Chance of this card or Chance of being drawn — plus the Everything that matched table for lunch or the Teams grid for names. Copy result puts that summary on the clipboard and the button flips to Copied!, while Reset returns every picker to its defaults.",
+  ],
 };
 
 export default seo;

@@ -20,14 +20,18 @@ export const spec = {
     {
       "key": "password",
       "label": "Password",
-      "type": "text",
-      "default": "password123"
+      "type": "password",
+      "default": "password123",
+      "sensitive": true,
+      "autoComplete": "off",
+      "required": false
     },
     {
       "key": "realm",
       "label": "Realm",
       "type": "text",
-      "default": "Restricted Area"
+      "default": "Restricted Area",
+      "required": false
     }
   ],
   "presets": [
@@ -40,14 +44,19 @@ export const spec = {
       }
     }
   ],
-  "note": "Generated headers are in the format 'Basic <base64 encoded credentials>'"
+  "note": "Encodes username:password as UTF-8 in the format 'Basic <base64 credentials>'. Treat the output as a credential.",
+  "exportResultOnly": true
 },
   compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
-      const username = values.username;
-      const password = values.password;
-      const realm = values.realm;
+      const username = String(values.username ?? "");
+      const password = String(values.password ?? "");
+      const realm = String(values.realm ?? "");
+      if (username.includes(":")) return { result: "", error: "Username cannot contain a colon." };
       const auth = `${username}:${password}`;
-      const encodedAuth = btoa(auth);
+      const bytes = new TextEncoder().encode(auth);
+      let binary = "";
+      for (const byte of bytes) binary += String.fromCharCode(byte);
+      const encodedAuth = btoa(binary);
       const authHeader = `Basic ${encodedAuth}`;
       return {
          result: authHeader,

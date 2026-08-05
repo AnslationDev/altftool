@@ -29,6 +29,11 @@ const seo = {
       "Yes, the ten most recent colours are kept in a history strip for the session and clicking one restores it. Nothing is uploaded — the history lives only in the page you have open.",
     ],
   ],
+  steps: [
+    "Set the colour under Select Color: click the swatch to open your system colour picker, or type straight into the hex field beside it, which starts on #14B8A6. The Hue slider below runs 0 to 360 degrees, Saturation and Lightness run 0 to 100 percent, and Alpha / Opacity reads out as a percentage in 1 percent steps.",
+    "Read the two Accessibility panels as you go — Accessibility (Light Text) scores the colour against white and Accessibility (Dark Text) against #111827, each showing the exact Ratio and a PASS AA badge at 4.5:1 or FAIL below it. Under Generated Palettes, clicking any swatch in the Analogous, Complementary, Triadic or Monochromatic strip makes that shade the current colour and copies its hex.",
+    "Take the value from the Color Formats list, where HEX, RGB, RGBA, HSL and CMYK each have their own copy button, or use Copy CSS Styles in the Live Preview panel for a color and opacity pair, or Copy Tailwind Class for a bg-[#hex] utility. The History strip holds the last ten colours and clicking one restores it.",
+  ],
 };
 
 export default seo;

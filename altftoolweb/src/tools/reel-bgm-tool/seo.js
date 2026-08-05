@@ -29,6 +29,11 @@ const seo = {
       "Because your phrasing did not hit any mood keyword or appear in a track's vibe or usage text, so it falls back to a general set and tells you it did. Simplify the query — \"sad emotional\" or \"relaxed cooking\" rather than a long specific description like \"ASMR soft whispering rainy day\" — and the mood matcher will catch it.",
     ],
   ],
+  steps: [
+    "Type how you would describe your reel into the required search field, whose placeholder reads \"e.g., Aesthetic travel montage, motivational gym clip, sad video\".",
+    "Click Suggest Music. The page shows \"Searching internal database with smart matching...\" while your words are mapped to a mood category such as Motivational Workout, Relaxed Cooking or Sad/Emotional, then — if nothing maps — searched against each track's vibe and trending-use text.",
+    "Up to five unique tracks appear under \"Top Suggested Audio Tracks\", each with its artist, a Mood and a Vibe badge, and a Trending Use line; the \"Listen/Find Track (Playable)\" button opens a Google search for that track and artist. If nothing matched, a Notice banner says no highly specific match was found and general trending suggestions are shown instead.",
+  ],
 };
 
 export default seo;

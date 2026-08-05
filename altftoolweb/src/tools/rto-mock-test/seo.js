@@ -38,6 +38,11 @@ const seo = {
       "Eighteen for a light motor vehicle or a geared two-wheeler, and 16 for a motorcycle without gears of engine capacity up to 50cc, with the guardian's consent. Age, document and fee requirements are set by your state transport department, so confirm the current rules on its official portal before applying.",
     ],
   ],
+  steps: [
+    "On the Mock test tab press Start 20-question test to draw a fresh paper from the 141-question bank; once five or more questions are saved, Test me on my mistakes re-sits only those. Practice, Revise these and Quick reference are the other tabs.",
+    "Pick option A, B, C or D on each question, use Mark for review to flag one for later, and move with Previous and Next or the numbered grid under Progress, which counts how many are answered. The clock starts at 20:00 and auto-submits at zero; Submit test asks \"Submit this test?\" before scoring, with Yes, submit and Keep answering.",
+    "The result page shows the score ring, a Pass or Fail badge, the percentage, the 12-correct pass mark, a Category breakdown and a Full review giving Your answer, Correct answer and the explanation for every question. New test starts another paper, Revise mistakes opens the saved set, and Attempts and Best score are kept on this device.",
+  ],
 };
 
 export default seo;

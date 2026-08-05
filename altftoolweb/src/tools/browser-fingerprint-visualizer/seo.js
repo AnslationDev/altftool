@@ -29,6 +29,11 @@ const seo = {
       "A SHA-256 digest — 64 hexadecimal characters — of every raw signal joined together. It is computed in your tab with the Web Crypto API and never sent anywhere. Change one input, such as connecting an external monitor or installing a font, and the hash changes completely, which is exactly how you can test whether a privacy setting worked.",
     ],
   ],
+  steps: [
+    "There is nothing to upload — collection starts the moment the page loads, and a progress bar pinned to the top names each probe as it runs: Reading browser information..., Reading screen & display info..., Detecting fonts..., Capturing canvas fingerprint..., Extracting WebGL fingerprint..., Generating fingerprint hash... and Calculating tracking risk score...",
+    "Read the two cards at the top. Your Browser Fingerprint ID prints the 64-character digest under the note SHA-256 · 256-bit · Locally generated, and Tracking Risk Score counts up to a number out of 100 against the bands Low (0–30), Medium (30–70) and High (70–100); press Show score breakdown to see how many points each signal contributed.",
+    "Press Copy Hash to put the digest on the clipboard — the button reads Copied! for two seconds — then change a browser or extension setting and press Re-run Analysis, which reads Analyzing... while it re-probes, to see whether the hash moved. Reloading the page instead feeds the Fingerprint Stability card, which compares the hash between visits and carries its own Reset test button.",
+  ],
 };
 
 export default seo;

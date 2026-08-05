@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The Kebab Case Converter rewrites any phrase as kebab-case by splitting it on every run of non-alphanumeric characters, lowercasing each piece and joining them with single hyphens. The same word list is also shown as snake_case and dot.case, so one paste covers the three naming conventions most projects switch between. It is for developers naming CSS classes, URL slugs, branch names and config keys who want a consistent result instead of hand-hyphenating.",
+    "The Kebab Case Converter rewrites a phrase as kebab-case by splitting it on every run of characters outside ASCII A-Z, a-z and 0-9, lowercasing each surviving piece and joining them with single hyphens. The same word list is also shown as snake_case and dot.case, so one paste covers the three naming conventions most projects switch between. It is for developers naming CSS classes, URL slugs, branch names and config keys who want a consistent result instead of hand-hyphenating.",
   useCases: [
     "You have a page title like \"2026 Annual Report (Draft)\" and need the URL slug for it without stray brackets, double hyphens or trailing punctuation.",
     "A design handoff lists component names in Title Case and your CSS convention is kebab-case, so you need them converted in one pass.",
@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     ["No double or trailing separators", "Runs of spaces, punctuation and symbols collapse to a single hyphen, and empty segments are dropped, so the output is always a clean slug."],
     ["Three conventions from one input", "The same tokens are returned as kebab-case, snake_case and dot.case, so you can copy whichever the file you are editing expects."],
-    ["Safe for URLs and class names", "Because only letters and digits survive the split, the result never contains a character that would need percent-encoding in a path."],
+    ["Safe for URLs and class names", "Because only ASCII letters and digits survive the split, the result never contains a character that would need percent-encoding in a path."],
   ],
   faqs: [
     [

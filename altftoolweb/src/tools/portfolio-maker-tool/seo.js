@@ -38,6 +38,11 @@ const seo = {
       "No. Everything you type stays in the page for the current session and is not stored in the browser or sent to a server, so copy anything you want to keep before you navigate away.",
     ],
   ],
+  steps: [
+    "Fill in the form: Full Name, Professional Title and Short Bio under Personal Information; Email Address, Website URL, GitHub Username and LinkedIn Username under Contact & Social — the last two take the handle alone, and the links are built as github.com/<username> and linkedin.com/in/<username>; then up to three Project Name plus Project Description (Optional) pairs under Key Projects, and Skill 1 to Skill 4 under Top Skills.",
+    "Click Generate Portfolio. The form is replaced by the finished page, marked with a Live Preview badge.",
+    "The preview renders a hero with your name, title and bio plus one icon per contact field you filled, a Featured Projects grid — projects left without a name are dropped — Technical Skills badges, and a copyright footer carrying the current year and your name. Click Edit Info to go back to the form; there is no file export, so copy anything you want to keep.",
+  ],
 };
 
 export default seo;

@@ -38,6 +38,11 @@ const seo = {
       "Two ways: the HTML export gives you the complete document with doctype, head styles and inline-styled table body ready to paste into a sending platform, and the JSON export gives you the raw block array with every style property so you can version it or feed it into your own tooling.",
     ],
   ],
+  steps: [
+    "Drag a block from the Components palette — Text Block, Image Block, Button Link, Divider Line, Header Area, Footer Area, Signature Block, Logo/Brand or Social Media — onto the canvas, which starts on Start Building Your Email until the first block lands.",
+    "Click a block to open its Edit panel and set values such as Text Color, Font Size (px), Text Alignment, Border Radius (px) and the four Padding fields; drag the grip handle to reorder, Delete Component removes the block, and History gives you Undo, Redo and Clear.",
+    "Press Export HTML or Export JSON to open the Generated Email HTML or Generated Email JSON window, then Copy to Clipboard — a Copied to clipboard! confirmation appears. Blocks stay saved in your browser between visits, and Clear empties the canvas after a confirmation.",
+  ],
 };
 
 export default seo;

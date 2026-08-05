@@ -29,6 +29,11 @@ const seo = {
       "No. The file is read into memory in the tab, thumbnails are rendered on a canvas, and the reordered document is written locally and downloaded as reordered.pdf. Nothing is sent to a server.",
     ],
   ],
+  steps: [
+    "Click Upload PDF and choose a file — the picker accepts .pdf. Until you do, the page reads \"Upload a PDF file to start reordering pages\"; afterwards every page is rendered to a thumbnail and captioned Page 1, Page 2 and so on in a grid.",
+    "Drag a page by the grip handle beside its caption to a new slot. A pointer drag has to travel about 8 pixels before it starts, so a plain click will not disturb the order, and a keyboard sensor lets you move a focused page with the arrow keys instead.",
+    "Click Download Reordered PDF — the button appears once pages are loaded — to save the result as reordered.pdf. Each page is copied one at a time out of the original document into a new one in your chosen order, so nothing is re-rasterised.",
+  ],
 };
 
 export default seo;

@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The Slug Generator turns any title into a clean, lowercase URL slug by applying Unicode NFKD normalisation, stripping every character that is not a letter, digit, underscore, space or hyphen, then collapsing runs of spaces and underscores into single hyphens. It is built for anyone who has to hand a CMS, router or file system a safe path segment — bloggers, developers and content editors — and it shows the finished slug the moment you type the title. Because NFKD splits accented letters into a base letter plus a combining mark that then gets removed, \"Café Münchén\" comes out as cafe-munchen rather than a percent-encoded mess.",
+    "The Slug Generator turns a title into a lowercase ASCII URL slug by applying Unicode NFKD normalisation, stripping every character that is not an ASCII letter, digit, underscore, space or hyphen, then collapsing runs of spaces and underscores into single hyphens. It is built for anyone who has to hand a CMS, router or file system a safe path segment — bloggers, developers and content editors — and it shows the finished slug the moment you type the title. Because NFKD splits accented Latin letters into a base letter plus a combining mark that then gets removed, \"Café Münchén\" comes out as cafe-munchen rather than a percent-encoded form.",
   useCases: [
     "You are publishing a post titled \"Café Münchén: A 2024 Guide!\" and need the permalink to be plain ASCII so it survives copy-paste into email and chat without percent-encoding.",
     "You are adding a route to a Next.js or Laravel app and want the folder name, the URL segment and the database key to match exactly instead of each being typed by hand.",
@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "What characters does the slug generator remove?",
-      "Everything except letters, digits, the underscore, whitespace and the hyphen. Punctuation such as commas, colons, exclamation marks, quotes and em dashes is deleted outright, whitespace and underscores are converted to hyphens, and repeated hyphens are squeezed down to a single one.",
+      "Everything except ASCII letters, digits, the underscore, whitespace and the plain hyphen. Punctuation such as commas, colons, exclamation marks, quotes and em dashes is deleted outright, whitespace and underscores are converted to hyphens, and repeated hyphens are squeezed down to a single one.",
     ],
     [
       "Does it handle accented or non-English letters?",

@@ -29,6 +29,11 @@ const seo = {
       "Each skill named in the job description gets a weight of 1, rising by 0.5 for every extra mention up to a cap of 2, so a skill the post repeats counts for more than a passing mention. The match score is your matched weight divided by the total weight. Skills outside the built-in library are not counted in either direction.",
     ],
   ],
+  steps: [
+    "Replace the sample post in the Job description box with your own (it prompts \"Paste the full job post here…\"), then list what you know in the \"Your skills (comma separated)\" field underneath, which starts with a worked example. Anything shorter than 25 words is refused with a message telling you how many words you pasted.",
+    "There is no analyse button — every panel recalculates as you type. \"Job description quality score\" reports out of 100 with a grade of Strong, Good, Needs work or Weak, above a table of Words, Flesch reading ease, Flesch–Kincaid grade level, Average words per sentence, Seniority, Skills named, Sections missing and Masculine-coded words.",
+    "Read \"Your match against this job\" for your percentage and the You have / Gaps to close skill chips, then click Copy result to put the whole report on the clipboard as plain text — the button reads Copied! for about a second and a half — or Reset to restore the sample job description and skills.",
+  ],
 };
 
 export default seo;

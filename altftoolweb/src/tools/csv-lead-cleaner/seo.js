@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "What column headers does my CSV need?",
-      "Name, Email, Phone and Company, spelled that way in the first row. Email is the only one that must be populated — a row missing Name, Phone or Company is kept with those fields blank, while a row with no email is counted as invalid and dropped.",
+      "The cleaner recognizes Name or Full Name; Email, Email Address or E-mail; Phone, Mobile, Phone Number, Contact or Contact Number; and Company or Organization, without regard to case or surrounding spaces. Email is the only field that must be populated — rows missing Name, Phone or Company are kept with blanks, while a row with no email is counted as invalid and dropped.",
     ],
     [
       "Which duplicate does it keep?",

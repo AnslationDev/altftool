@@ -8,6 +8,7 @@ import { toolNetworkDestinations } from "./generated/toolNetworkMap";
 import { getSeoConfigSnapshot } from "@/platform/seo/seoConfigSource";
 import { resolveContent } from "@altftool/core/seo/resolver";
 import { buildMetaDescription } from "./toolMetaDescription";
+import { hasPublishableHowToSteps } from "./howtoStepQuality";
 
 let decodedGeneratedToolSeo = null;
 const generatedToolSeoPath = path.join(
@@ -354,9 +355,17 @@ export const buildToolSeoContent = cache(function buildToolSeoContent(slug, tool
   // every templated tool is a structured-data policy risk across ~1,900 URLs.
   // The fallback prose still renders for readers — only the schema is gated.
   const hasCuratedFaqs = Boolean(central.faqs?.length || override?.faqs?.length);
-  const hasCuratedSteps = Boolean(
-    central.steps?.length || override?.steps?.length,
-  );
+  // Admin content uses the same quality floor as repository-authored content.
+  // A generic central override must not bypass the build-time filter and emit
+  // low-value HowTo schema; when rejected, a valid reviewed code override may
+  // still supply the workflow.
+  const centralSteps = hasPublishableHowToSteps(central.steps)
+    ? central.steps
+    : null;
+  const overrideSteps = hasPublishableHowToSteps(override?.steps)
+    ? override.steps
+    : null;
+  const hasCuratedSteps = Boolean(centralSteps || overrideSteps);
 
   return {
     name,
@@ -372,10 +381,10 @@ export const buildToolSeoContent = cache(function buildToolSeoContent(slug, tool
     examples,
     // Per-tool "How to use" steps when available (admin override > hand/AI
     // override > category template), so each tool reads uniquely.
-    steps: central.steps?.length
-      ? central.steps
-      : override?.steps?.length
-      ? [`Open ${name} on AltFTool — it loads instantly in your browser.`, ...override.steps]
+    steps: centralSteps
+      ? centralSteps
+      : overrideSteps
+      ? [`Open ${name} on AltFTool — it loads instantly in your browser.`, ...overrideSteps]
       : [`Open ${name} on AltFTool — it loads instantly in your browser.`, ...template.steps],
     faqs,
   };

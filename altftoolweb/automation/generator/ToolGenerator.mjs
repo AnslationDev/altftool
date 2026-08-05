@@ -40,13 +40,15 @@ export const SPEC_CONTRACT = `Return ONLY one JSON object (no markdown, no prose
   "fields": [
     {"key":"amount","label":"Amount","type":"number","default":"1000","suffix":"$"},
     {"key":"unit","label":"From","type":"select","default":"c","choices":[{"value":"c","label":"Celsius"},{"value":"f","label":"Fahrenheit"}]}
-    // types: number | text | textarea | select | date | range | toggle | file
+    // types: number | text | textarea | password | select | date | range | toggle | file
+    // password fields are masked and excluded from browser storage/summary exports
     // add "mode":"<modeId>" to a field to show it only in that mode
     // file fields: {"key":"doc","label":"Upload file","type":"file","readAs":"text"}   // or "dataUrl" for images/binary
   ],
   "compute": "(values, mode) => { /* PURE js */ return { result: 'string', caption: 'optional', rows: [['Label','Value']], list: ['optional'], table: {headers:['A'],rows:[['1']]} }; }",
   "presets": [{"label":"Example","values":{"amount":"1000"}}],
   "note": "short factual disclaimer, optional",
+  "exportResultOnly": false,                              // OPTIONAL: true when copy/download must contain only result.result
   "intro": "one friendly paragraph about the tool",
   "useCases": ["use case 1","use case 2","use case 3"],
   "benefits": [["Benefit title","one sentence"],["...","..."],["...","..."]],
@@ -61,6 +63,6 @@ RULES for "compute":
 - number and range fields arrive as Numbers; file fields arrive as {name, type, size, text?, dataUrl?}.
 - MUST return an object with at least a string "result", computed from the inputs.
 - NO import/require, NO fetch/XHR/network, NO window/document/DOM, NO Node APIs.
-- Only use Math, Date, Number, String, Array, Object, JSON, Intl, BigInt, RegExp, crypto.subtle, TextEncoder, btoa, atob.
+- Only use Math, Date, Number, String, Array, Object, JSON, Intl, BigInt, RegExp, crypto.subtle, TextEncoder, TextDecoder, btoa, atob.
 - Guard divide-by-zero / NaN and return a helpful message string instead.
 - Make it genuinely correct and useful (REAL formulas/algorithms). NEVER return placeholder text like "in progress", "converted to…", "saved as…", "example.com", or echo the input unchanged. If it can't be computed for real in the browser, it will be rejected — do not fake it.`;

@@ -29,6 +29,11 @@ const seo = {
       "No. The file is read as an array buffer in the page and every page is rasterised locally on a canvas. The PDF never leaves your device.",
     ],
   ],
+  steps: [
+    "Click Choose PDF File in the \"Drop your PDF here\" panel; the picker accepts application/pdf. While it works the page shows \"Processing your PDF...\" and renders every page to a canvas at 0.25 scale.",
+    "The pages arrive as a thumbnail grid, each captioned Page 1, Page 2 and so on, with the filename and the page count in a bar above them. Upload New swaps in a different document without reloading the page.",
+    "Click any thumbnail to re-render that page at 2x scale in a dialog headed \"Page N - HD Preview\", which shows \"Loading HD preview...\" until the canvas is ready. There is no save or export — the tool only displays what is already in the file.",
+  ],
 };
 
 export default seo;

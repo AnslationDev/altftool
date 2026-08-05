@@ -38,6 +38,11 @@ const seo = {
       "No. It suggests a care routine from four self-reported answers and cannot diagnose anything. Persistent shedding, sudden thinning, bald patches, or a flaky itchy scalp that does not settle with an anti-dandruff routine should be seen by a dermatologist or trichologist.",
     ],
   ],
+  steps: [
+    "Answer the opening question, What's your hair type?, by clicking one of the four option cards — Straight, Wavy, Curly or Coily — each carrying a short description such as Tight coils and kinks. A counter above the card reads Question 1 of 4 alongside a percentage and progress bar.",
+    "Work through the remaining three questions the same way: How would you describe your hair texture? (Fine, Medium, Thick), What's your main hair concern? (Dryness, Oiliness, Dandruff, Damage) and What's your hair goal? (Hair Growth, Shine & Luster, Volume, Repair). There is no submit button — each choice advances on its own, and Back returns to the previous question.",
+    "The result opens as Your Personalized Routine with the matched routine name in a badge, for example Deep Repair & Moisture Routine, then numbered Morning Routine and Night Routine cards naming a product for every step, plus a Pro Tips list; profiles without a dedicated match get Basic Hair Care Routine. Take Quiz Again clears all four answers and returns to question 1 — the routine is on-screen only, with no download or copy.",
+  ],
 };
 
 export default seo;

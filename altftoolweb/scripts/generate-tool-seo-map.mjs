@@ -27,6 +27,10 @@ import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { brotliCompressSync, constants as zlibConstants } from "node:zlib";
 import { toolContentOverrides } from "../src/app/tools/toolContentOverrides.js";
+import {
+  getHowToStepIssues,
+  hasPublishableHowToSteps,
+} from "../src/app/tools/howtoStepQuality.js";
 
 const TOOLS_DIR = "src/tools";
 const OUT_DIR = "src/app/tools/generated";
@@ -34,6 +38,23 @@ const OUT_DIR = "src/app/tools/generated";
 // server process. Maximum-quality Brotli costs a few extra build seconds but
 // preserves deployment headroom for the 3,944-entry catalogue.
 const BROTLI_QUALITY = 11;
+const omittedHowTo = [];
+
+function withoutUnpublishableHowTo(slug, seo, source) {
+  const sanitized = { ...seo };
+  if (
+    Object.hasOwn(sanitized, "steps") &&
+    !hasPublishableHowToSteps(sanitized.steps)
+  ) {
+    omittedHowTo.push({
+      slug,
+      source,
+      issues: getHowToStepIssues(sanitized.steps),
+    });
+    delete sanitized.steps;
+  }
+  return sanitized;
+}
 
 const slugs = fs
   .readdirSync(TOOLS_DIR, { withFileTypes: true })
@@ -67,13 +88,17 @@ for (const slug of slugs) {
 // catalogue; merging here preserves the same field-level precedence while
 // letting Brotli compress the whole data set once.
 const mergedSeoEntries = new Map(
-  Object.entries(toolContentOverrides).map(([slug, seo]) => [slug, seo]),
+  Object.entries(toolContentOverrides).map(([slug, seo]) => [
+    slug,
+    withoutUnpublishableHowTo(slug, seo, "toolContentOverrides.js"),
+  ]),
 );
 
 for (const [slug, seo] of seoEntries) {
+  const sanitizedSeo = withoutUnpublishableHowTo(slug, seo, "seo.js");
   mergedSeoEntries.set(slug, {
     ...(mergedSeoEntries.get(slug) || {}),
-    ...seo,
+    ...sanitizedSeo,
   });
 }
 
@@ -93,3 +118,13 @@ console.log(
     `${(serializedSeo.length / (1024 * 1024)).toFixed(2)} MiB JSON -> ` +
     `${(compressedSeo.length / (1024 * 1024)).toFixed(2)} MiB Brotli)`,
 );
+if (omittedHowTo.length > 0) {
+  const preview = omittedHowTo
+    .slice(0, 12)
+    .map(({ slug, source }) => `${slug} (${source})`)
+    .join(", ");
+  console.warn(
+    `⚠️ HowTo quality filter omitted ${omittedHowTo.length} generic step set(s): ` +
+      `${preview}${omittedHowTo.length > 12 ? ", …" : ""}`,
+  );
+}

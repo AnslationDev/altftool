@@ -289,7 +289,7 @@ const clusters = [
     build: (e, p) => {
       const defs = {
         coin: { d: "Flip a virtual coin.", regen: true, f: [], fn: (_values, _mode, random) => ({ result: random() < 0.5 ? "🪙 Heads" : "🪙 Tails" }) },
-        dice: { d: "Roll dice.", regen: true, f: [["sides", "Sides", "6"], ["count", "How many", "2"]], fn: (values, _mode, random) => { const c = Math.max(1, Math.min(10, num(values.count))); const s = Math.max(2, num(values.sides)); const r = Array.from({ length: c }, () => 1 + Math.floor(random() * s)); return { result: r.join(" + ") + " = " + r.reduce((a, b) => a + b, 0) }; } },
+        dice: { d: "Roll dice.", regen: true, f: [{ key: "sides", label: "Sides", type: "number", default: "6", min: 2, max: 1000, step: 1 }, { key: "count", label: "How many", type: "number", default: "2", min: 1, max: 10, step: 1 }], fn: (values, _mode, random) => { const c = Number(values.count); const s = Number(values.sides); if (!Number.isInteger(c) || c < 1 || c > 10) return { result: "", error: "How many must be a whole number from 1 to 10." }; if (!Number.isInteger(s) || s < 2 || s > 1000) return { result: "", error: "Sides must be a whole number from 2 to 1000." }; const r = Array.from({ length: c }, () => 1 + Math.floor(random() * s)); return { result: r.join(" + ") + " = " + r.reduce((a, b) => a + b, 0) }; } },
         eight: { d: "Ask a yes/no question.", regen: true, f: [{ key: "q", label: "Question", type: "text", default: "", required: false }], fn: (values, _mode, random) => { const a = ["Yes, definitely", "It is certain", "Most likely", "Outlook good", "Reply hazy, try again", "Ask again later", "Don't count on it", "My reply is no", "Very doubtful"]; return { result: "🎱 " + a[Math.floor(random() * a.length)], caption: values.q ? '"' + values.q + '"' : "Shake for an answer" }; } },
         number: { d: "Generate a random number in a range.", regen: true, f: [["min", "Min", "1"], ["max", "Max", "100"]], fn: (values, _mode, random) => { const lo = num(values.min), hi = num(values.max); return { result: String(lo + Math.floor(random() * (hi - lo + 1))) }; } },
         uuid: { d: "Generate random UUIDs (v4).", regen: true, f: [], fn: () => ({ list: Array.from({ length: 5 }, () => crypto.randomUUID()) }) },
@@ -365,6 +365,41 @@ const clusters = [
     }),
   },
 
+  // ------------------------------------------------------------ Basic authentication header
+  {
+    id: "basic-auth",
+    match: (n) => (/\bbasic auth(?:entication)? header generator\b/.test(n) ? {} : null),
+    build: (e) => ({
+      raw: {
+        title: e.name,
+        category: e.category?.length ? e.category : ["Developer"],
+        icon: "code",
+        iconColor: "text-emerald-600",
+        description: "Generate an HTTP Basic Authorization header from UTF-8 credentials.",
+        fields: [
+          { key: "username", label: "Username", type: "text", default: "admin" },
+          { key: "password", label: "Password", type: "password", default: "password123", sensitive: true, autoComplete: "off", required: false },
+          { key: "realm", label: "Realm", type: "text", default: "Restricted Area", required: false },
+        ],
+        presets: [{ label: "Example", values: { username: "user", password: "pass", realm: "Example Realm" } }],
+        note: "Encodes username:password as UTF-8 in the format 'Basic <base64 credentials>'. Treat the output as a credential.",
+        exportResultOnly: true,
+        compute: (values) => {
+          const username = String(values.username ?? "");
+          const password = String(values.password ?? "");
+          const realm = String(values.realm ?? "");
+          if (username.includes(":")) return { result: "", error: "Username cannot contain a colon." };
+          const bytes = new TextEncoder().encode(`${username}:${password}`);
+          let binary = "";
+          for (const byte of bytes) binary += String.fromCharCode(byte);
+          const authHeader = `Basic ${btoa(binary)}`;
+          return { result: authHeader, rows: [["Username", username], ["Password", "********"], ["Realm", realm], ["Authorization Header", authHeader]] };
+        },
+      },
+      verify: { invariants: [] },
+    }),
+  },
+
   // ------------------------------------------------------------ base58 encode/decode
   {
     id: "base58",
@@ -381,16 +416,27 @@ const clusters = [
           const input = values.input || "";
           if (!input) return { result: "", caption: "Enter some text" };
           if (values.mode === "decode") {
-            let acc = 0n; for (const c of input) { const i = A.indexOf(c); if (i < 0) continue; acc = acc * 58n + BigInt(i); }
-            let hex = acc.toString(16); if (hex.length % 2) hex = "0" + hex; let out = "";
-            for (let i = 0; i < hex.length; i += 2) out += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
-            for (const c of input) { if (c === "1") out = "\0" + out; else break; }
-            return { result: out.replace(/^\0+/, ""), caption: "Decoded from Base58" };
+            let acc = 0n;
+            for (const c of input) {
+              const i = A.indexOf(c);
+              if (i < 0) return { result: "", error: `Invalid Base58 character: ${c}` };
+              acc = acc * 58n + BigInt(i);
+            }
+            const bytes = [];
+            while (acc > 0n) { bytes.unshift(Number(acc % 256n)); acc /= 256n; }
+            for (const c of input) { if (c === "1") bytes.unshift(0); else break; }
+            try {
+              const out = new TextDecoder("utf-8", { fatal: true }).decode(Uint8Array.from(bytes));
+              return { result: out, caption: "Decoded from Base58", rows: [["Output bytes", bytes.length]] };
+            } catch {
+              return { result: "", error: "Decoded bytes are not valid UTF-8 text" };
+            }
           }
-          let acc = 0n; for (let i = 0; i < input.length; i++) acc = acc * 256n + BigInt(input.charCodeAt(i));
+          const bytes = new TextEncoder().encode(input);
+          let acc = 0n; for (const byte of bytes) acc = acc * 256n + BigInt(byte);
           let out = ""; while (acc > 0n) { out = A[Number(acc % 58n)] + out; acc /= 58n; }
-          for (let i = 0; i < input.length && input[i] === "\0"; i++) out = "1" + out;
-          return { result: out || "1", caption: "Encoded to Base58", rows: [["Input bytes", input.length], ["Output chars", out.length]] };
+          for (let i = 0; i < bytes.length && bytes[i] === 0; i++) out = "1" + out;
+          return { result: out || "1", caption: "Encoded to Base58", rows: [["Input bytes", bytes.length], ["Output chars", out.length]] };
         },
       },
       verify: { invariants: [] },

@@ -19,8 +19,10 @@ function createHostBridge() {
     btoa(value) {
       return Buffer.from(value, "binary").toString("base64");
     },
-    decode(bytesJson) {
-      return new TextDecoder().decode(Uint8Array.from(JSON.parse(bytesJson)));
+    decode(bytesJson, fatal) {
+      return new TextDecoder("utf-8", { fatal: fatal === true }).decode(
+        Uint8Array.from(JSON.parse(bytesJson)),
+      );
     },
     async digest(algorithm, bytesJson) {
       const bytes = Uint8Array.from(JSON.parse(bytesJson));
@@ -92,9 +94,17 @@ const CONTEXT_BOOTSTRAP = `
   }
 
   class SandboxTextDecoder {
+    constructor(label = "utf-8", options = {}) {
+      const normalizedLabel = SafeString(label).toLowerCase();
+      if (normalizedLabel !== "utf-8" && normalizedLabel !== "utf8") {
+        throw new SafeTypeError("Only UTF-8 decoding is supported");
+      }
+      this.fatal = options && options.fatal === true;
+    }
+
     decode(value = new SafeUint8Array()) {
       try {
-        return hostDecode(bytesToJson(value));
+        return hostDecode(bytesToJson(value), this.fatal);
       } catch (error) {
         throw hostError(error);
       }
@@ -370,7 +380,7 @@ export function buildSampleInputs(fields) {
   const edge = { ...base };
   for (const f of fields || []) {
     if (f.type === "number" || f.type === "range") edge[f.key] = 0;
-    else if (f.type === "text" || f.type === "textarea") edge[f.key] = "aaaaaaaaaaaaaaaaaaaa".repeat(50) + "! <>&";
+    else if (f.type === "text" || f.type === "textarea" || f.type === "password") edge[f.key] = "aaaaaaaaaaaaaaaaaaaa".repeat(50) + "! <>&";
   }
   return [base, variant, edge];
 }

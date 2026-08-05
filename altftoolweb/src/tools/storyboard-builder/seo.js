@@ -29,6 +29,11 @@ const seo = {
       "There is no rule, but the figure is worth watching: if speech fills more than about 70% of runtime the piece is closer to a radio spot with pictures, and if it fills under 20% the visuals have to carry the story on their own. The tool reports the percentage so you can make that a decision rather than an accident.",
     ],
   ],
+  steps: [
+    "Set the top panel: Storyboard title, Frame rate (23.976, 24, 25, 29.97, 30, 48, 50 or 60 fps), Target runtime (seconds), and Speaking pace (words per minute), which has to sit between 80 and 260 or the sheet refuses to build.",
+    "Build the list under Shots. Each card takes Scene, Shot size (EWS, WS, MLS, MS, MCU, CU, ECU, OTS, POV, TWO or INS), Slug line (optional), Action, Dialogue or narration and Duration (seconds); Add shot appends a card and Remove shot deletes one. Nothing needs submitting — Total runtime and the Shot list retime on every keystroke, giving each shot an In point in SMPTE non-drop-frame HH:MM:SS:FF.",
+    "Check Average shot length, Dialogue, Dialogue density, Against target and Warnings, then press Copy sheet for the markdown production sheet or Copy CSV for the shot list, whose header row is index,scene,shot_type,start_timecode,end_timecode,duration_seconds,slug,action,dialogue. Each button reads Copied! for 1.5 seconds, and Reset restores the default title and the three starting shots.",
+  ],
 };
 
 export default seo;

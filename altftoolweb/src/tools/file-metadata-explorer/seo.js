@@ -11,6 +11,11 @@ const seo = {
     ["Real specification fields", "Parses IHDR, SOFn, RIFF fmt, MPEG frame and ftyp/mvhd headers as the specs define them."],
     ["Nothing leaves the device", "Bytes are read locally with the File API — no upload, no server, no logging."],
   ],
+  steps: [
+    "The page opens on a built-in sample-swatch.png so you can see the layout. Drag your own file onto the Choose a file to inspect zone, or use the file picker inside it; no file type is filtered out, and anything over the stated limit is refused with That file is larger than the 256.0 MiB this reader handles.",
+    "The bytes are read in the tab and the report redraws at once, with no button to press: Exact size in bytes, Detected format, True MIME type (from bytes), Type the browser reported, First 16 bytes (hex), CRC-32 checksum, Entropy in bits per byte, Last modified, Pixel dimensions, Aspect ratio, Megapixels and Bytes per pixel. When the name disagrees with the signature, a red Extension mismatch line names the extension and the format the bytes actually are.",
+    "Format-specific header fields, EXIF camera data and Text statistics (Characters, Words, Lines, Line endings, Reading time) appear underneath for files that carry them. Copy metadata puts that whole report on the clipboard as plain text and the button reads Copied! for a moment, and Reset returns the page to the sample-swatch.png sample.",
+  ],
   faqs: [
     [
       "How do I check a file's real type without opening it?",

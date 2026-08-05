@@ -38,6 +38,11 @@ const seo = {
       "Approximately 70 characters in Gmail Desktop, 40 in Gmail Mobile, 60 in Outlook's reading-pane list and 90 in Apple Mail on iPhone or iPad. These are widely-cited approximations rather than pixel measurements — real truncation shifts with font, zoom and window width, so treat them as a planning guide.",
     ],
   ],
+  steps: [
+    "Type into the Subject line box (placeholder \"Type or paste your email subject line…\", capped at 300 characters), press Paste to pull the line from your clipboard, or Try an example to cycle through the six built-in samples. The line below counts \"N characters · N words\" and flips to \"Likely to truncate on most inboxes\" past 60 characters.",
+    "There is nothing to submit — scoring runs live as you type. The overview shows the score gauge, the grade letter and its label (A+ Excellent, A Great, B Good, C Needs Work, D High Risk), a \"N characters · N words · Clickability N/100\" line and the nine weights under Scored on, while the tabs beneath hold Metrics, Highlights, Suggestions, Variations, Inbox Preview, Insights, Compare (A/B) and History.",
+    "Under Export, click PDF, JSON or TXT — the button reads Exporting… while it runs — to download the metric breakdown, suggestions and variations as email-subject-analysis-<subject-slug>.pdf, .json or .txt, the slug being your subject lowercased, hyphenated and cut to 40 characters. Clear empties the box so you can start on the next line.",
+  ],
 };
 
 export default seo;

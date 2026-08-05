@@ -38,6 +38,11 @@ const seo = {
       "In your browser's local storage on this device only, under a single key, so the list survives a page reload but is never uploaded. Clearing site data or opening the page in a different browser starts you with an empty list.",
     ],
   ],
+  steps: [
+    "In Add New Habit, pick a Category icon, type the habit into Habit Name (placeholder \"e.g., Morning coffee, Netflix subscription\", capped at 50 characters), then enter Cost (₹) and choose a Frequency of Daily, Weekly, Monthly or Yearly. Show Impact Assessment opens the optional Time per day (hrs) and Years active fields plus Low/Medium/High selects for Health, Stress, Productivity and Relationship Impact.",
+    "Click Add Habit. The button reads Adding Habit... and then Habit added successfully!, the entry appears under Your Habits with its Monthly, Yearly and 5 Years cost, and the three cards at the top update Monthly Spending, Yearly Spending and 5-Year Spending.",
+    "Read the projection in Future Loss Visualization: switch between 1 Year, 5 Years, 10 Years and Lifetime, drag the Interest Rate slider (1 to 30%, 12% by default) and compare 💸 Wasted against 📈 Invested Value, with ⏱️ Time Lost in Hours, Days and Months once a time per day is entered. The trash icon on any row deletes that habit.",
+  ],
 };
 
 export default seo;

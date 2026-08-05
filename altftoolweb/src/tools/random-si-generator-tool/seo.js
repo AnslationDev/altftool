@@ -29,6 +29,11 @@ const seo = {
       "Yes. Note the seed number shown under the inputs; typing it back in with the same locks regenerates exactly the same idea, because nothing is stored on a server.",
     ],
   ],
+  steps: [
+    "Set the inputs: Lock the audience and Lock the delivery model both start on Surprise me and can be pinned to any one option, and Seed (the same seed rebuilds the same idea) is a number field running from 1 to 2147483647 that opens on 2026.",
+    "Press New idea to draw a fresh seed. The card rewrites itself immediately, headed Idea #N of 86,400, with the headline, the pitch, the build-effort score as N/10 next to its band label (Weekend build, Small team, one quarter, Funded build or Hard mode) and a breakdown of Audience, Problem, Delivery, Differentiator, Pricing and Raw effort weight shown as N of 25.",
+    "Copy puts the headline, the pitch, all five slot labels and a Build effort line on the clipboard and the button reads Copied! for two seconds; Shortlist adds the idea to a Shortlist (last 8, kept in this tab only) table of Idea, Seed and Effort; Reset puts the seed back to 2026, clears both locks and empties the shortlist.",
+  ],
 };
 
 export default seo;

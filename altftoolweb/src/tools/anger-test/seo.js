@@ -29,6 +29,11 @@ const seo = {
       "Interrupt the physical build-up before you respond. The technique this tool offers at the moderate band is 4-7-8 breathing — inhale for 4 seconds, hold for 7, exhale for 8 — and at higher bands, physically leaving the situation and using sensory grounding: name 5 things you can see, 4 you can hear, 3 you can feel, 2 you can smell, 1 you can taste. If you ever feel you might harm yourself or someone else, contact a crisis line or emergency services immediately.",
     ],
   ],
+  steps: [
+    "Click Start Assessment → under the How It Works panel. The Give Your Answers screen then shows one scenario at a time, each with five options lettered A to E, and a Question 1 of 10 counter beneath the progress bar.",
+    "Tap the option closest to your real reaction — the quiz advances on the tap, with no submit button. After the tenth answer the result screen opens with your band name and Score: N points plus its range, from Minimal Anger 10-15 points to High Anger 43-50 points, a Stress & Anger Correlation percentage, and tips grouped under ⚡ Immediate Actions, 🎯 Long-term Strategies and 🌿 Lifestyle Changes.",
+    "In Download Your Report, click Download PDF Report to save Anger-Report-YYYY-MM-DD.pdf — the button reads Generating PDF... while it builds — or Share Results to send that same file. 🔄 Take Assessment Again reloads the page for a fresh run.",
+  ],
 };
 
 export default seo;

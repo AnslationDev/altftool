@@ -46,3 +46,53 @@ test("regenerate advances random tools to a new deterministic sequence", () => {
   );
   assert.equal(changed.length, RANDOM_SPECS.length);
 });
+
+test("dice fields publish and enforce exact integer bounds", () => {
+  const sides = diceRoller.fields.find((field) => field.key === "sides");
+  const count = diceRoller.fields.find((field) => field.key === "count");
+  assert.deepEqual(
+    { min: sides.min, max: sides.max, step: sides.step },
+    { min: 2, max: 1000, step: 1 },
+  );
+  assert.deepEqual(
+    { min: count.min, max: count.max, step: count.step },
+    { min: 1, max: 10, step: 1 },
+  );
+
+  for (const values of [
+    { sides: 6.9, count: 2 },
+    { sides: 6, count: 2.9 },
+    { sides: 1, count: 2 },
+    { sides: 1001, count: 2 },
+    { sides: 6, count: 0 },
+    { sides: 6, count: 11 },
+    { sides: Number.NaN, count: 2 },
+    { sides: 6, count: Number.POSITIVE_INFINITY },
+  ]) {
+    const result = diceRoller.compute(values, "", createSeededRandom(42));
+    assert.equal(result.result, "", JSON.stringify(values));
+    assert.match(result.error, /whole number/u);
+  }
+});
+
+test("dice accepts both valid boundaries with deterministic rolls", () => {
+  const low = diceRoller.compute(
+    { sides: 2, count: 1 },
+    "",
+    createSeededRandom(42),
+  );
+  const highA = diceRoller.compute(
+    { sides: 1000, count: 10 },
+    "",
+    createSeededRandom(42),
+  );
+  const highB = diceRoller.compute(
+    { sides: 1000, count: 10 },
+    "",
+    createSeededRandom(42),
+  );
+
+  assert.match(low.result, /^[12] = [12]$/u);
+  assert.equal(highA.result.split(" + ").length, 10);
+  assert.deepEqual(highA, highB);
+});

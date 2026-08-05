@@ -81,7 +81,12 @@ for (const dir of toolDirs) {
     }
   }
 
-  map[toolName] = `() => import("@/tools/${toolName}/entry")`;
+  // Emit the file this resolved to, not a bare "entry". Five tools carry both
+  // entry.js and entry.jsx, and an extensionless import left the choice to
+  // webpack's resolve order — which silently boots the .js one and makes the
+  // .jsx dead code. validEntryFiles is ordered to match webpack, so naming the
+  // file changes nothing today; it just stops the decision being invisible.
+  map[toolName] = `() => import("@/tools/${toolName}/${entryFile}")`;
 }
 
 /* ---------------- WRITE FILE ---------------- */

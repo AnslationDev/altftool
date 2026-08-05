@@ -29,6 +29,11 @@ const seo = {
       "Only partly. Fixating on a specific corner or edge biases which interpretation appears and can extend it, which is why this tool includes a hint option. Voluntary control changes the balance between the two percepts, but the alternation itself continues on its own.",
     ],
   ],
+  steps: [
+    "Find a figure in the gallery: type into Search optical illusions... or narrow the grid with the Category, Difficulty (Beginner, Intermediate, Advanced) and Status (Solved, Unsolved, Favorites) chip rows, watching the Showing X of Y figures counter. Click any card, or Open Featured Figure, to open it in the viewer.",
+    "Inside the viewer, use Select Interpretation to switch between the figure's readings — each one prints its own Perceptual Focus hint, such as Look for the beak pointing to the left for the duck. The Viewing Tools panel gives In, Out, Reset, Blur, Spotlight and Invert (also +, -, r, b, s and i on the keyboard), and Perception Metrics reports the live Zoom Level, Active Mode, Difficulty and number of Interpretations.",
+    "Mark Solved records the figure and the button switches to Solved!, the heart button adds it to Favorites, and both survive a reload because they are kept in this browser. Share copies the page link and flashes Link copied to clipboard!, Download Image saves the artwork as <figure-id>.svg, and Escape closes the viewer.",
+  ],
 };
 
 export default seo;

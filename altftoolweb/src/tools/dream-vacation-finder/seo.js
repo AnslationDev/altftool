@@ -20,6 +20,11 @@ const seo = {
       "Best time to visit, an estimated daily cost range, signature dishes and highlight sights come with the result, so you can rule a place out before opening a booking site.",
     ],
   ],
+  steps: [
+    "Work through the seven one-tap questions — What's your budget?, Preferred climate?, What kind of trip?, Travel style?, Preferred season?, Trip duration? and Preferred continent? — picking an option advances the card automatically while the counter reads 1 of 7; Back returns to the previous question and Reset clears every answer.",
+    "Once six of the seven are answered the Find My Vacation button appears; click it (it reads Finding... while it works) to score all 55 destinations against your answers, or click Surprise Me at any point to skip the quiz and draw a random destination you have not been shown before.",
+    "Your Perfect Match shows the winning destination with its match percentage badge, best time to visit, cost estimate and star rating, then More Destinations You'll Love lists the next six; Show more expands Top Highlights, Local Cuisine and Fun Fact, the copy button puts those details on your clipboard, the heart saves the place to the Saved tab, and Try Different Preferences or Shuffle Results restarts the quiz or reorders the runners-up.",
+  ],
   faqs: [
     [
       "How many destinations does it choose from?",

@@ -26,6 +26,7 @@ export function remember(spec, meta = {}) {
     slug: spec.slug, name: spec.title, category: spec.category,
     fields: spec.fields, computeSrc: String(spec.compute),
     modes: spec.modes || null, presets: spec.presets || [], regenerate: !!spec.regenerate,
+    exportResultOnly: !!spec.exportResultOnly,
     icon: spec.icon, iconColor: spec.iconColor,
     clusterId: meta.clusterId || null, confidence: meta.confidence ?? null,
   };
@@ -68,6 +69,7 @@ export function recall(entry, threshold = 0.92) {
     icon: best.icon, iconColor: best.iconColor, description: best.name + " style tool.",
     fields: best.fields, compute: best.computeSrc, presets: best.presets,
     ...(best.modes ? { modes: best.modes } : {}), ...(best.regenerate ? { regenerate: true } : {}),
+    ...(best.exportResultOnly ? { exportResultOnly: true } : {}),
   };
   return { raw, via: "memory:" + best.slug + "(" + bestScore.toFixed(2) + ")" };
 }

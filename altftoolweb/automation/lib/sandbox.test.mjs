@@ -72,6 +72,33 @@ test("compute sandbox keeps approved browser-style helpers functional", async ()
   assert.match(result.output.rows[1][1], /^[0-9a-f]{8}-[0-9a-f-]{27}$/i);
 });
 
+test("sandbox TextDecoder honors fatal UTF-8 decoding", async () => {
+  const fatal = await runOnce(
+    `() => {
+      try {
+        new TextDecoder("utf-8", { fatal: true }).decode(Uint8Array.from([255]));
+        return { result: "accepted" };
+      } catch {
+        return { result: "rejected" };
+      }
+    }`,
+    [],
+    {},
+  );
+  assert.equal(fatal.ok, true, fatal.error);
+  assert.equal(fatal.output.result, "rejected");
+
+  const replacement = await runOnce(
+    `() => ({
+      result: new TextDecoder().decode(Uint8Array.from([255])),
+    })`,
+    [],
+    {},
+  );
+  assert.equal(replacement.ok, true, replacement.error);
+  assert.equal(replacement.output.result, "�");
+});
+
 test("compute sandbox serializes non-finite output for validation", async () => {
   const result = await runOnce(
     `() => ({ result: Infinity, rows: [["nan", NaN]] })`,

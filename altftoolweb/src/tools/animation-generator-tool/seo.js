@@ -29,6 +29,11 @@ const seo = {
       "Transform, in almost every case. `transform` and `opacity` can be handled by the compositor without recalculating layout or repainting, so they stay smooth; animating `top`, `left`, `width` or `height` forces layout work on every frame. All the slide and scale presets here use translate and scale for exactly that reason.",
     ],
   ],
+  steps: [
+    "Pick a preset from the Select Animation dropdown — Fade In, Fade Out, Slide Up, Slide Down, Slide Right, Slide Left, Rotate, Bounce, Scale Up, Scale Down, Pulse, Shake, Flip, Swing or Heartbeat — or click one of the Fade In, Bounce, Pulse, Rotate and Shake shortcut badges, then set Duration (s), Delay (s), Easing (ease, linear, ease-in, ease-out, ease-in-out), Iterations (1, 2, 3, 5, 10 or infinite), Direction (normal, reverse, alternate, alternate-reverse) and Fill Mode (none, forwards, backwards, both).",
+    "Watch it run on the Preview tab, where a status bar reports the Animation name, the Duration and a Status of Playing or Paused. Click Replay to re-trigger a one-shot animation from the start, or Pause to freeze it — the button then reads Play.",
+    "Switch to the CSS Code tab for the Generated CSS: the `.animated-element` rule plus the matching @keyframes block. Copy puts it on the clipboard and briefly reads Copied!, and the Download CSS button saves it as <animation>-animation.css, for example fadeIn-animation.css.",
+  ],
 };
 
 export default seo;

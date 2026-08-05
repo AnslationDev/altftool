@@ -63,9 +63,9 @@ const seo = {
     ],
   ],
   steps: [
-    "Pick a mode above the board — Classic for untimed play, or Timed for a 60-second countdown. Each mode button deals a fresh grid with two starting tiles.",
+    "The 4×4 board deals two tiles as soon as the page loads. Pick Classic, Timed or Challenge above the board to restart with a fresh grid; Classic is untimed, while Timed and Challenge display a 60-second countdown.",
     "Press the arrow keys, or tap the on-screen arrow pad, to slide every tile in that direction. Equal neighbours merge into one tile of double the value and add that value to your score.",
-    "Keep merging until a 2048 tile appears. Choose Keep Going to continue past the win, or New at any time to reset the board and the score.",
+    "Keep merging until a 2048 tile raises the You Win! overlay, then choose Keep Going to play on or New Game to reset. If no moves remain, the Game Over! overlay offers Try Again.",
   ],
 };
 

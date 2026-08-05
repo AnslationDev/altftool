@@ -6,6 +6,14 @@ export function fieldsForMode(fields, mode) {
   return fields.filter((f) => !f.mode || !mode || f.mode === mode);
 }
 
+export function isSensitiveField(field) {
+  return field?.sensitive === true || field?.type === "password";
+}
+
+export function allowsResultHistory(spec) {
+  return !(spec?.fields || []).some(isSensitiveField);
+}
+
 // Coerce raw string form values into the types compute() expects.
 export function coerceValues(fields, raw) {
   const out = {};
@@ -28,7 +36,7 @@ export function coerceValues(fields, raw) {
 export function missingRequired(fields, raw, mode) {
   const active = fieldsForMode(fields, mode);
   return active
-    .filter((f) => f.required !== false && ["number", "range", "text", "textarea", "date", "file"].includes(f.type))
+    .filter((f) => f.required !== false && ["number", "range", "text", "textarea", "password", "date", "file"].includes(f.type))
     .filter((f) => {
       const v = raw[f.key];
       return v === "" || v === undefined || v === null;
@@ -44,6 +52,20 @@ export function defaultValues(fields) {
   return out;
 }
 
+export function persistableValues(fields, raw) {
+  const persisted = {};
+  for (const field of fields || []) {
+    if (
+      !isSensitiveField(field) &&
+      raw &&
+      Object.hasOwn(raw, field.key)
+    ) {
+      persisted[field.key] = raw[field.key];
+    }
+  }
+  return persisted;
+}
+
 // Seed state from defaults, overlaid with the last saved session (client-only).
 export function loadInitial(spec, storageKey, hasModes) {
   const raw = defaultValues(spec.fields);
@@ -51,7 +73,16 @@ export function loadInitial(spec, storageKey, hasModes) {
   if (typeof window !== "undefined") {
     try {
       const saved = JSON.parse(window.localStorage.getItem(storageKey) || "null");
-      if (saved && saved.raw) Object.assign(raw, saved.raw);
+      if (saved && saved.raw) {
+        for (const field of spec.fields || []) {
+          if (
+            !isSensitiveField(field) &&
+            Object.hasOwn(saved.raw, field.key)
+          ) {
+            raw[field.key] = saved.raw[field.key];
+          }
+        }
+      }
       if (saved && saved.mode && hasModes && spec.modes.some((m) => m.id === saved.mode)) mode = saved.mode;
     } catch {
       /* ignore corrupt storage */
@@ -99,12 +130,15 @@ export function normalizeResult(r) {
 
 // Build a plain-text summary for copy / download.
 export function summarize(spec, raw, result, mode) {
+  if (spec.exportResultOnly) return result.result || "";
+
   const lines = [spec.title];
   if (mode && spec.modes?.length) {
     const m = spec.modes.find((x) => x.id === mode);
     if (m) lines.push("Mode: " + m.label);
   }
   for (const f of fieldsForMode(spec.fields, mode)) {
+    if (isSensitiveField(f)) continue;
     if (raw[f.key] !== "" && raw[f.key] !== undefined) lines.push((f.label || f.key) + ": " + raw[f.key]);
   }
   lines.push("");

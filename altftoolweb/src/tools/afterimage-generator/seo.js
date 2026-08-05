@@ -32,6 +32,11 @@ const seo = {
       "For most people a short colour-staring exercise is harmless, but skip it if you are photosensitive, have epilepsy or are prone to migraine. Keep the room lit rather than dark and stop if you feel any discomfort.",
     ],
   ],
+  steps: [
+    "Set Stimulus colour with the swatch picker or by typing a hex code in the field beside it, or press one of the eight Preset stimuli — Red, Green, Blue, Yellow, Orange, Violet, Turquoise, Magenta. Then set Staring time (seconds, max 60) and choose a Complement model: sRGB inverse (255 − channel) — photographic negative, or Hue + 180° in HSL — designer's complement.",
+    "Click Start experiment. The panel floods with your stimulus colour and counts down under it — Hold your gaze on the centre dot — Ns left — then switches to the white reveal field and reports Now look at the white field. Modelled strength remaining: N%. Stop ends the run early, and the button reads Restart once a run has started.",
+    "Read Predicted afterimage colour, shown as a swatch plus its hex, with the table beneath giving sRGB inverse, Hue + 180° complement, Stimulus hue, Stimulus saturation, Relative luminance (WCAG), Contrast against the white field, Dominant opponent axis and Modelled fade time. Copy result copies that summary to the clipboard and briefly reads Copied!, and Reset returns the colour, staring time and model to their defaults.",
+  ],
 };
 
 export default seo;

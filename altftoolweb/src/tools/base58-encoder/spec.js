@@ -50,16 +50,27 @@ export const spec = {
           const input = values.input || "";
           if (!input) return { result: "", caption: "Enter some text" };
           if (values.mode === "decode") {
-            let acc = 0n; for (const c of input) { const i = A.indexOf(c); if (i < 0) continue; acc = acc * 58n + BigInt(i); }
-            let hex = acc.toString(16); if (hex.length % 2) hex = "0" + hex; let out = "";
-            for (let i = 0; i < hex.length; i += 2) out += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
-            for (const c of input) { if (c === "1") out = "\0" + out; else break; }
-            return { result: out.replace(/^\0+/, ""), caption: "Decoded from Base58" };
+            let acc = 0n;
+            for (const c of input) {
+              const i = A.indexOf(c);
+              if (i < 0) return { result: "", error: `Invalid Base58 character: ${c}` };
+              acc = acc * 58n + BigInt(i);
+            }
+            const bytes = [];
+            while (acc > 0n) { bytes.unshift(Number(acc % 256n)); acc /= 256n; }
+            for (const c of input) { if (c === "1") bytes.unshift(0); else break; }
+            try {
+              const out = new TextDecoder("utf-8", { fatal: true }).decode(Uint8Array.from(bytes));
+              return { result: out, caption: "Decoded from Base58", rows: [["Output bytes", bytes.length]] };
+            } catch {
+              return { result: "", error: "Decoded bytes are not valid UTF-8 text" };
+            }
           }
-          let acc = 0n; for (let i = 0; i < input.length; i++) acc = acc * 256n + BigInt(input.charCodeAt(i));
+          const bytes = new TextEncoder().encode(input);
+          let acc = 0n; for (const byte of bytes) acc = acc * 256n + BigInt(byte);
           let out = ""; while (acc > 0n) { out = A[Number(acc % 58n)] + out; acc /= 58n; }
-          for (let i = 0; i < input.length && input[i] === "\0"; i++) out = "1" + out;
-          return { result: out || "1", caption: "Encoded to Base58", rows: [["Input bytes", input.length], ["Output chars", out.length]] };
+          for (let i = 0; i < bytes.length && bytes[i] === 0; i++) out = "1" + out;
+          return { result: out || "1", caption: "Encoded to Base58", rows: [["Input bytes", bytes.length], ["Output chars", out.length]] };
         },
 };
 

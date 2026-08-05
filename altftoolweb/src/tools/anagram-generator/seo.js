@@ -29,6 +29,11 @@ const seo = {
       "A rearrangement that uses every letter of the original exactly once — \"listen\" and \"silent\" is the classic example. That is stricter than a scramble that drops or adds letters, and it is why the permutation count is a factorial rather than a count of possible substrings.",
     ],
   ],
+  steps: [
+    "Type or paste into the Input Workspace box, which prompts you to type or paste any word or phrase, or click one of the Quick Examples chips — listen, triangle, conversation, education, developer or creative. The line under the box counts Chars and Words and shows Est. Permutations for what you typed.",
+    "Set Number of Anagrams with the 1–100 slider or its 10 / 20 / 30 / 50 / 100 presets, choose a Sorting Order of Random, A - Z or Length, then click Generate Anagrams. The button reads Rearranging... while it runs and the dashboard badge updates to a count of Variations Found; the set always includes your original spelling, and the generator gives up after 1,000 shuffle attempts, so short words with repeated letters return fewer results than you asked for.",
+    "Click Copy All to put the results on the clipboard one per line, or TXT, CSV or JSON to download anagrams-<your-input>.txt, .csv or .json — the CSV carries Index, Anagram and Length columns. Share Results passes the first five to your device's share sheet or copies a summary line, and the Clear button above the box empties your input.",
+  ],
 };
 
 export default seo;

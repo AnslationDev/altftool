@@ -7,7 +7,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { normalizeComputeSource } from "./sandbox.mjs";
 
-const FIELD_TYPES = new Set(["number", "text", "textarea", "select", "date", "range", "toggle", "file"]);
+const FIELD_TYPES = new Set(["number", "text", "textarea", "password", "select", "date", "range", "toggle", "file"]);
 const J = (v) => JSON.stringify(v);
 
 const cleanText = (v) => String(v ?? "").replace(/\s+/g, " ").trim();
@@ -66,6 +66,8 @@ export function normalizeSpec(entry, raw = {}) {
     ...(f.hint ? { hint: cleanText(f.hint) } : {}),
     ...(f.mode ? { mode: f.mode } : {}),
     ...(f.required === false ? { required: false } : {}),
+    ...(f.sensitive === true ? { sensitive: true } : {}),
+    ...(f.autoComplete ? { autoComplete: cleanText(f.autoComplete) } : {}),
     ...(f.checkboxLabel ? { checkboxLabel: cleanText(f.checkboxLabel) } : {}),
   }));
 
@@ -91,6 +93,7 @@ export function normalizeSpec(entry, raw = {}) {
     ...(raw.regenerate ? { regenerate: true } : {}),
     ...(raw.outputLabel ? { outputLabel: cleanText(raw.outputLabel) } : {}),
     ...(raw.note ? { note: cleanText(raw.note) } : {}),
+    ...(raw.exportResultOnly ? { exportResultOnly: true } : {}),
     compute: normalizeComputeSource(raw.compute),
     // SEO/content payload (fed into toolContentOverrides.js)
     intro: cleanText(raw.intro || ""),

@@ -43,6 +43,11 @@ const seo = {
       "Because the two branches have no commit in common, so there is no merge base for a three-way merge — man git-merge: \"By default, git merge command refuses to merge histories that do not share a common ancestor.\" It nearly always means you ran git init and committed locally against a hosted repo that was created with its own initial README or LICENSE commit. Adding --allow-unrelated-histories to the merge or pull joins them with one merge commit and is SAFE; nothing is discarded.",
     ],
   ],
+  steps: [
+    "Paste the message into the box labelled Paste the git error, or type a few words — its placeholder shows the expected shape, fatal: refusing to merge unrelated histories. Or use the Or pick one from the list dropdown, which groups all 20 catalogue entries by topic. A paste over 2,000 characters is refused with a message telling you to trim it to the error itself.",
+    "Matching runs as you type, with no button to press. The result card names the Closest match, its Worst blast radius in its commands, the breakdown under Its commands, by grade as counts of safe, rewrite history and destructive, and the Words matched. Each matching entry below opens out into What actually happened, Why it shows up and Commands, graded, every command carrying a SAFE, REWRITES HISTORY or DESTRUCTIVE badge.",
+    "Use Copy top match, or the Copy button on any single entry, to copy that entry as plain text — its title, then WHAT HAPPENED, WHY IT SHOWS UP, the graded COMMANDS list and a Source line; the button reads Copied! for a moment afterwards. Reset clears the box and brings back all 20 entries.",
+  ],
 };
 
 export default seo;

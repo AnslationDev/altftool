@@ -38,6 +38,11 @@ const seo = {
       "No. The company name you type is sent over the network to the DuckDuckGo Instant Answer API through a public CORS proxy, so treat the query as visible to third parties. Avoid entering anything confidential, such as an unannounced acquisition target.",
     ],
   ],
+  steps: [
+    "Type a company name into the Search Company field, whose placeholder reads \"Enter company name (e.g., Google)\". Before your first lookup the page shows a No Results Yet card reading \"Enter a company name and click search\".",
+    "Click Search or press Enter. The button reads Searching... while the DuckDuckGo Instant Answer API is queried through the api.allorigins.win proxy; an empty box returns \"Please enter a company name!\" and a failed request returns \"Failed to fetch company information. Please try again.\"",
+    "The result card shows the heading, the abstract text (or \"No description available\"), a Source: line naming where it came from, and a Learn More button linking to the original page. If the answer carries an infobox, its label-value pairs follow as a Company Details grid, and any related topics appear under Related Information, each with a Read more link.",
+  ],
 };
 
 export default seo;

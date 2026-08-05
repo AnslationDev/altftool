@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This D&D dice roller rolls up to 10 dice of any size you name — d4, d6, d8, d10, d12, d20, d100 or anything else with at least 2 faces — and prints every individual face plus the total, so 4d6 comes back as something like 5 + 2 + 6 + 3 = 16. Each face is drawn independently and uniformly, exactly like a fair physical die. It is for players and DMs whose dice bag is at home, in another room, or scattered under the sofa mid-session.",
+    "This D&D dice roller rolls up to 10 dice with any whole-number size from 2 to 1000 faces — d4, d6, d8, d10, d12, d20, d100 or an unusual d7 — and prints every individual face plus the total. A seeded browser pseudorandom generator makes it useful for casual sessions without claiming cryptographic or independently auditable randomness.",
   useCases: [
     "Rolling 4d6 six times for a new character's ability scores when you are building a sheet on a laptop away from your dice",
     "Settling an attack or a saving throw over video call, where everyone can see the same numbers instead of trusting a muttered result",
@@ -22,11 +22,11 @@ const seo = {
     ],
     [
       "Are the rolls actually random?",
-      "They use the browser's pseudo-random generator, which produces a uniform result over the faces — each side of a d20 comes up 5% of the time over enough rolls. It is not cryptographically random, so it is right for a game night but not for anything where money or security depends on the outcome.",
+      "They use a seeded browser pseudorandom generator designed to spread results across the selected faces. It is suitable for a casual game night, but it is not cryptographic, independently auditable, or appropriate where money or security depends on the outcome.",
     ],
     [
       "What is the smallest die I can roll?",
-      "Two faces — a coin flip, in effect. There is no upper limit on sides, so unusual dice such as d3 or d30 and percentile d100 rolls all work by typing that number into the sides field.",
+      "Two faces is the minimum and 1000 is the maximum. The field accepts whole numbers only, so unusual dice such as d3 or d30 and percentile d100 rolls work while fractions and out-of-range values are rejected.",
     ],
   ],
 };

@@ -29,6 +29,11 @@ const seo = {
       "A scan is an image with no text layer, so there is no stored sequence to compare. Run OCR to add a text layer first — the approach described in W3C technique PDF7 for scanned documents.",
     ],
   ],
+  steps: [
+    "Drop a file on the Upload PDF Document zone, click Browse PDF File, or paste one with Ctrl+V — the picker accepts .pdf only, up to 100 MB and 100 pages, otherwise it reports \"Choose a PDF no larger than 100 MB.\" or \"Choose a PDF with 1 to 100 pages.\" Try Demo PDF loads a built-in sample instead.",
+    "The Open PDF button reads Analyzing... while the text layer is parsed, then the dashboard shows Accessibility Score, Reading Blocks and Detected Defects. Choose a Visual Overlay View Mode — All Overlays, Reading Numbers Only, Bounding Boxes Only, Direction Flow Arrows Only, Accessibility Heatmap or Color-coded by Tag Type — and press Play Sequence to step through the page block by block.",
+    "Open the Issues tab for Detected Accessibility Defects; clicking one jumps to its page and highlights the block, while the Screen Reader Stream lists the same blocks in order and Outline shows each block's tag type. The status bar keeps Score and Defects in view, and the Reset inspection button clears the file.",
+  ],
 };
 
 export default seo;

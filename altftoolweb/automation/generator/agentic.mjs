@@ -44,7 +44,7 @@ export function makePools(cfg = {}) {
   };
 }
 
-const FIELD_TYPES = "number | text | textarea | select | date | range | toggle";
+const FIELD_TYPES = "number | text | textarea | password | select | date | range | toggle";
 
 async function design(pool, entry, ctx) {
   const cats = (Array.isArray(entry.category) ? entry.category.join(", ") : entry.category) || "Utility";
@@ -76,7 +76,7 @@ The input fields (use these EXACT keys on \`values\`): ${keys}
 number/range fields arrive as Numbers.
 
 Return ONLY JSON: {"compute":"(values) => { /* pure JS, real algorithm from the reference */ return { result: 'string', rows: [['Label','Value']] }; }"}
-Rules: pure JS only (Math, Date, JSON, Intl, RegExp, crypto.subtle, TextEncoder, btoa, atob). NO fetch/DOM/require. Use the EXACT field keys. Implement the REAL algorithm from the reference — never a placeholder or echo.${priorError ? "\n\nYour previous attempt failed validation: " + priorError + "\nFix it." : ""}`;
+Rules: pure JS only (Math, Date, JSON, Intl, RegExp, crypto.subtle, TextEncoder, TextDecoder, btoa, atob). NO fetch/DOM/require. Use the EXACT field keys. Implement the REAL algorithm from the reference — never a placeholder or echo.${priorError ? "\n\nYour previous attempt failed validation: " + priorError + "\nFix it." : ""}`;
   const { text } = await pool.chat([{ role: "system", content: "You are an expert JS engineer. Output only valid JSON with a working pure function." }, { role: "user", content: prompt }], { json: true });
   return parseJSON(text).compute;
 }

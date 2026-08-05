@@ -29,6 +29,11 @@ const seo = {
       "They are read out of your own text: a trailing number followed by ms becomes the latency sample, and a standalone 3-digit 1xx–5xx code becomes the status. Statuses of 400 and above count as errors. If your log lines carry neither, the endpoint still appears with its request count and the tool notes that status and latency were missing.",
     ],
   ],
+  steps: [
+    "Paste into the Request Data box — its placeholder reads \"Paste access logs, cURL commands, fetch calls, or Axios requests…\" and it wants one request, log line, or code statement per line. Sample loads the built-in example log and Clear empties the box; the strip underneath counts the lines and flags how many were unrecognized.",
+    "Analysis runs live as you type, so there is no run button: the tiles across the top give Requests, Endpoints, Methods and Errors, and Mapped Endpoints lists one card per method plus normalized path with a Low, Medium or High risk badge, the request count, the ok and error counts and the error rate. Narrow the list with the Filter paths… box, the All methods and All risks dropdowns, the Errors only toggle and the sort menu (Most requests, Highest error rate, Slowest p95, Path A–Z), and click View details for error rate, average, p95 and min–max latency, the status-code counts and recommendations.",
+    "Use Copy Summary to copy one \"METHOD path — N requests\" line per visible endpoint (the button then reads Copied), JSON to download api-endpoint-usage.json, or Export CSV to download api-endpoint-usage.csv with a column each for method, normalized_path, requests, successful, errors, error_rate_percent, unknown_status, the four latency figures, risk, status_distribution and recommendations. All three buttons stay disabled until at least one endpoint is visible.",
+  ],
 };
 
 export default seo;

@@ -11,6 +11,11 @@ const seo = {
     ["Reads whatever shape your export is in", "Nested JSON is walked recursively for role/content pairs, so both single-conversation files and full history dumps resolve into a message list."],
     ["Shows what is actually in the thread", "A stats panel counts messages by role, words, characters, code blocks, tables, images and links, with reading time at 200 words per minute."],
   ],
+  steps: [
+    "Drop a saved conversation onto the Drag & drop your chat export panel, or click to browse files — the picker accepts .json, .md, .markdown, .txt, .html, .htm and .csv — or click Paste your chat conversation and press Parse Conversation on the text you paste in.",
+    "The thread is parsed in the browser, a Parsed <n> messages confirmation appears and the Viewer tab opens; the Settings tab controls Page Size (A4 or Letter), Orientation (Portrait or Landscape), font size, line height and the Show Avatars, Show Timestamps, Hide User Messages and Hide Assistant Messages toggles.",
+    "Open the Export tab and click PDF, DOCX, Markdown, HTML, TXT, JSON or CSV to save the document under the conversation title with that extension (or chat-export if the title has no usable characters); Copy to Clipboard, Print and Share sit beside them, and Clear empties the workspace.",
+  ],
   faqs: [
     [
       "How do I get my ChatGPT conversation out of the app first?",

@@ -293,12 +293,12 @@ The only artifact a generator produces is a **ToolSpec** (see `lib/spec.mjs`):
   slug, title, description, badge, category, icon, iconColor,
   modes?: [{ id, label }],               // optional tabs
   fields: [
-    { key, label, type, default, choices?, min?, max?, step?, suffix?, placeholder?, mode?, required? }
-    // type: number | text | textarea | select | date | range | toggle | file
+    { key, label, type, default, choices?, min?, max?, step?, suffix?, placeholder?, mode?, required?, sensitive?, autoComplete? }
+    // type: number | text | textarea | password | select | date | range | toggle | file
   ],
   presets?: [{ label, values }],
   regenerate?: true,                      // for "press-a-button" generators
-  note?, outputLabel?,
+  note?, outputLabel?, exportResultOnly?, // copy/download only result.result when true
   compute: (values, mode) => ({           // PURE function — the only logic
     result: "string",                     // required
     caption?, rows?: [[label,value]], list?: [], table?: { headers, rows }, error?
@@ -309,7 +309,7 @@ The only artifact a generator produces is a **ToolSpec** (see `lib/spec.mjs`):
 Rules the pipeline enforces on `compute`:
 - Pure JS only — no `fetch`, DOM, `require`, or Node APIs. Allowed globals:
   `Math, Date, Number, String, Array, Object, JSON, Intl, BigInt, RegExp,
-  crypto.subtle, TextEncoder, btoa, atob`.
+  crypto.subtle, TextEncoder, TextDecoder, btoa, atob`.
 - Field **keys must match** exactly what `compute` reads from `values`.
 - Must return a real `result` (no `NaN`, no placeholder/echo strings).
 - number/range fields arrive as Numbers; file fields as `{name,type,size,text?,dataUrl?}`.

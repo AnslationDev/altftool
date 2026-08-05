@@ -11,6 +11,11 @@ const seo = {
     ["Quizzes built from real definitions", "Wrong answers are drawn from the word's own other senses and your saved words, which makes the multiple choice test comprehension rather than pattern-matching."],
     ["Spoken both ways, at two speeds", "Speech synthesis reads the word in an en-US or en-GB voice, with a slow mode at half rate for syllable-by-syllable practice."],
   ],
+  steps: [
+    "Type an English word into the Search for a word... box on the Dictionary tab. From two characters on, a Suggestions list drops down that you can walk with the arrow keys and choose with Enter, and an empty box instead offers your last eight Recent searches with a Clear all link.",
+    "Press Search — the button reads Searching... while the lookup runs — or just hit Enter. The entry comes back headed by the word, its phonetic spelling and an Easy, Medium or Hard badge, and the US, UK, Slow and Listen buttons speak it in the accent and speed you select.",
+    "Definitions are grouped by part of speech with See more revealing the rest, and the Hindi, Spanish and French chips under any single definition translate just that line in place; Learn this word saves the entry, the button switching to Saved!, and the saved word then appears under My Vocab and feeds the Quiz tab, while Refresh clears the result and empties the search box.",
+  ],
   faqs: [
     [
       "Can I hear how a word is pronounced?",

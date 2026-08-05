@@ -66,7 +66,10 @@ export const spec = {
       const z = (num(values.weight) - median) / sd;
       const pct = Math.round(100 * (0.5 * (1 + erf(z / Math.SQRT2))));
       function erf(x) { const t = 1 / (1 + 0.3275911 * Math.abs(x)); const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x); return x >= 0 ? y : -y; }
-      return { result: "~" + Math.max(1, Math.min(99, pct)) + "th percentile", caption: `Median for age ≈ ${median.toFixed(1)} kg`, rows: [["Your baby", num(values.weight).toFixed(1) + " kg"], ["Z-score", z.toFixed(2)]] };
+      const percentile = Math.max(1, Math.min(99, pct));
+      const mod100 = percentile % 100;
+      const suffix = mod100 >= 11 && mod100 <= 13 ? "th" : percentile % 10 === 1 ? "st" : percentile % 10 === 2 ? "nd" : percentile % 10 === 3 ? "rd" : "th";
+      return { result: `~${percentile}${suffix} percentile`, caption: `Median for age ≈ ${median.toFixed(1)} kg`, rows: [["Your baby", num(values.weight).toFixed(1) + " kg"], ["Z-score", z.toFixed(2)]] };
     },
 };
 

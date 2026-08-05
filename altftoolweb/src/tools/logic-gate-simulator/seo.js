@@ -38,6 +38,11 @@ const seo = {
       "Yes, up to a point. Signal propagation runs repeatedly until nothing changes or 20 passes elapse, so a stable feedback structure settles into its held state. Because there is no real timing model, oscillating circuits and race conditions will not reproduce true hardware behaviour — the delay and power figures shown are rough teaching estimates based on a fixed per-stage assumption, not device specifications.",
     ],
   ],
+  steps: [
+    "Click any preset in the Element Library — Input Toggle, Clock Gen, AND Gate, OR Gate, NOT Inverter, NAND Gate, NOR Gate, XOR Gate, XNOR Gate or Signal Lamp — to drop it on the canvas, drag the blocks into position, then click a block's output port dot followed by the destination input port dot to run a wire between them.",
+    "Click a toggle's ON/OFF button to flip that input. The simulation never stops — the status bar reads simulation running (1Hz clock oscillation) alongside the node count — so a wire driving a 1 turns green and animates a travelling dot, and any Signal Lamp downstream lights up.",
+    "The Logic Analyzer & Optimization Engine below rebuilds after every change: an Exhaustive Truth Table Sweep labelled with the number of states evaluated, the Sum of Minterms, the Karnaugh Map (K-Map) Grid Reduction and the Minimized Sum-of-Products Expression for whichever column you pick under Output Target. Save Project downloads the circuit as logic-circuit-project.json, Open JSON reloads a saved .json file, and Clear Board empties the canvas.",
+  ],
 };
 
 export default seo;

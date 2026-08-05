@@ -161,7 +161,7 @@ async function main() {
       }
     }
 
-    const runtimeLine = `"${slug}": () => import("@/tools/${slug}/entry")`;
+    const runtimeLine = `"${slug}": () => import("@/tools/${slug}/${entryFile}")`;
     if (entryFile && runtimeMapSource && !runtimeMapSource.includes(runtimeLine)) {
       failures.push(`${slug}: missing from generated toolRuntimeMap.js`);
     }

@@ -43,6 +43,11 @@ const seo = {
       "Because NULL = NULL is Unknown, not true (ISO/IEC 9075-2 §8.2), and a join keeps only rows whose condition evaluates to True. A row whose key is NULL therefore matches nothing at all, not even another NULL key, and an INNER JOIN discards it silently. Counting rows WHERE key IS NULL on both sides before joining shows how many are at stake.",
     ],
   ],
+  steps: [
+    "Under 1. Describe your join, set Rows in the base table and Base grain (one row per what?), then fill each fieldset's Table name, Alias, Join key column and Primary key (used by the window fix). Add a joined table adds tables up to a limit of six, each with its own Joins to parent, Join key cardinality (1:1, 1:many or many:many), Average matching rows per parent row, Join type (INNER JOIN or LEFT JOIN), Parent rows with no match (%) and Of those, NULL join keys (%).",
+    "Under 2. Which columns do you aggregate?, use Add an aggregate — up to ten — and give each one a Function (SUM(col), COUNT(*), COUNT(col), COUNT(DISTINCT col), AVG(col), MIN(col), MAX(col) or SUM(DISTINCT col)), a From table and a Column. There is no run button: every field recomputes the answer as you type.",
+    "Fan-out result prints the multiplication factor above Base rows in, Rows out of the join, Extra rows created and Base rows dropped by inner joins, then grades every aggregate Survives, Inflated, Distorted or Not a fix, and Copy takes that whole summary. Under Your query, as written and corrected, switch between As written, Fix 1 — pre-aggregate, Fix 2 — window de-dup and, when a LEFT JOIN is filtered in WHERE, Fix 3 — move WHERE to ON, then Copy the SQL; Reset returns every field to the starting example.",
+  ],
 };
 
 export default seo;
