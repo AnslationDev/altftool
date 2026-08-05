@@ -13,6 +13,7 @@ import {
   getExactRouteRedirect,
 } from "./platform/navigation/exactRouteManifest.js";
 import { getDynamicTopLevelSlugCandidate } from "./platform/navigation/topLevelRouteManifest.js";
+import { isBazaarRouteBlocked } from "./platform/navigation/bazaarRoutePolicy.js";
 import {
   fetchDynamicRouteConfig,
   isDynamicRouteActiveForSlug,
@@ -70,6 +71,7 @@ export async function proxy(request) {
   let statusCode = 301;
 
   if (
+    isBazaarRouteBlocked(pathname) ||
     QUARANTINED_ROUTE_PREFIXES.some(
       (prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`),
     )
