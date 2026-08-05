@@ -13,11 +13,18 @@ import FoodCultureSection from "./FoodCultureSection";
 import StatsBand from "./StatsBand";
 import NewsletterSection from "./NewsletterSection";
 
-export default function FestivalHome({ stats, upcoming, featured, foodPhotos }) {
+export default function FestivalHome({
+  stats,
+  upcoming,
+  featured,
+  foodPhotos,
+  calendarYear,
+  initialCalendarMonth,
+}) {
   return (
     <div className="festival-page">
       <FestivalHeader />
-      <FestivalHero stats={stats} />
+      <FestivalHero stats={stats} upcoming={upcoming} />
       <UpcomingFestivalsSection items={upcoming} />
       <CategoryGrid />
       <ReligionGrid />
@@ -30,7 +37,7 @@ export default function FestivalHome({ stats, upcoming, featured, foodPhotos }) 
           historyExtract={featured.historyExtract}
         />
       ) : null}
-      <MonthlyCalendarSection />
+      <MonthlyCalendarSection calendarYear={calendarYear} initialMonth={initialCalendarMonth} />
       <FoodCultureSection photos={foodPhotos} />
       <StatsBand stats={stats} />
       <NewsletterSection />

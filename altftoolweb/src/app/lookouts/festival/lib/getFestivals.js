@@ -28,6 +28,12 @@ export function getFestivalsByCountry(countryCode) {
   return FESTIVALS.filter((f) => f.countryCodes.includes(upper));
 }
 
+// Matches on `festival.month`, which is the month a festival *typically*
+// falls in — not the month it actually lands in for any given year. Lunar
+// festivals drift out of it (Krishna Janmashtami is filed under 8 but falls
+// in September in 2026), so this is the wrong tool for building a calendar:
+// use resolveDateInYear() + getIsoMonth() from lib/dateMath instead, which is
+// what MonthlyCalendarSection does.
 export function getFestivalsByMonth(monthNumber) {
   return FESTIVALS.filter((f) => f.month === Number(monthNumber));
 }

@@ -9,12 +9,12 @@ import {
   useTransform,
   useAnimationFrame,
   useMotionValueEvent,
+  useReducedMotion,
 } from "framer-motion";
 import ManagedImage from "@/components/ui/ManagedImage";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { Reveal, EASE } from "./motion";
-import { getAllRankings } from "../data/rankings";
 
 // Continuous auto-scrolling carousel with full manual control layered on
 // top: the row drifts endlessly (list is doubled, position wraps, so cards
@@ -26,13 +26,6 @@ const GAP_PX = 24; // matches gap-6
 const DRIFT_SPEED = 55; // px per second while idle
 const HOVER_SPEED = 14; // px per second while the pointer is over the row
 
-function parseViews(views) {
-  const match = String(views).match(/^([\d.]+)\s*([KMB]?)$/i);
-  if (!match) return 0;
-  const unit = { K: 1e3, M: 1e6, B: 1e9 }[match[2]?.toUpperCase()] || 1;
-  return parseFloat(match[1]) * unit;
-}
-
 // How many cards fit the measured container width — a partial "peek" of
 // the next card below desktop so the row reads as scrollable on purpose.
 function getVisibleCards(width) {
@@ -43,16 +36,12 @@ function getVisibleCards(width) {
   return 4;
 }
 
-export default function TrendingSection() {
-  // "Trending" = the ten most-viewed rankings, most heat first.
-  const rankings = useMemo(
-    () =>
-      [...getAllRankings()]
-        .sort((a, b) => parseViews(b.views) - parseViews(a.views))
-        .slice(0, 10),
-    [],
-  );
+// `items` = the ten most-viewed rankings (slim fields), pre-sorted on the
+// server so the full dataset never ships to the client.
+export default function TrendingSection({ items = [] }) {
+  const rankings = items;
   const loop = useMemo(() => [...rankings, ...rankings], [rankings]);
+  const reduceMotion = useReducedMotion();
 
   const viewportRef = useRef(null);
   const [cardWidth, setCardWidth] = useState(300);
@@ -86,7 +75,7 @@ export default function TrendingSection() {
   // Endless drift. Slows (rather than stopping) on hover so the row visibly
   // keeps moving, and yields fully while dragging or arrow-paging.
   useAnimationFrame((_, delta) => {
-    if (dragging || animating || !totalWidth) return;
+    if (reduceMotion || dragging || animating || !totalWidth) return;
     const speed = hovering ? HOVER_SPEED : DRIFT_SPEED;
     let next = x.get() - (speed * delta) / 1000;
     if (next <= -totalWidth) next += totalWidth;
@@ -290,8 +279,8 @@ export default function TrendingSection() {
             >
               See all trending
               <motion.span
-                animate={{ x: [0, 4, 0] }}
-                transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+                animate={reduceMotion ? undefined : { x: [0, 4, 0] }}
+                transition={reduceMotion ? undefined : { duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
                 aria-hidden="true"
               >
                 &rarr;

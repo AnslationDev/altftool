@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Check } from "lucide-react";
 import { getRanking, getAllRankingSlugs } from "../../data/rankings";
 import RankedItemsList from "../../components/RankedItemsList";
-import RankingActions from "../../components/RankingActions";
+import RankingHeader from "../../components/RankingHeader";
+import HeadToHead from "../../components/HeadToHead";
 import CompareTable from "../../components/CompareTable";
 import HeroParallaxImage from "../../components/HeroParallaxImage";
 import TabsBar from "../../components/TabsBar";
@@ -36,49 +37,18 @@ export default async function Top5ItemPage({ params }) {
   return (
     <article>
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 pt-12">
-        <Reveal>
-          <p className="text-xs font-semibold tracking-widest text-[#10b981]">
-            {ranking.category.toUpperCase()} / DEFINITIVE RANKING
-          </p>
-        </Reveal>
-
-        <div className="mt-4 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
-          <Reveal delay={0.05} className="max-w-3xl">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-[#0b1120] leading-[1.05]">
-              {ranking.title}
-            </h1>
-          </Reveal>
-
-          <Reveal delay={0.15} className="lg:w-[340px] shrink-0">
-            <p className="text-[#4b5563] leading-relaxed">{ranking.description}</p>
-            <RankingActions
-              slug={ranking.slug}
-              title={ranking.title}
-              description={ranking.description}
-            />
-          </Reveal>
-        </div>
-
-        <Reveal delay={0.2} className="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 border-y border-black/10 py-6">
-          <div>
-            <p className="text-xs font-semibold tracking-widest text-[#9ca3af]">Updated</p>
-            <p className="mt-1 font-semibold text-[#0b1120]">{ranking.updated}</p>
-          </div>
-          <div>
-            <p className="text-xs font-semibold tracking-widest text-[#9ca3af]">Reviewed by</p>
-            <p className="mt-1 font-semibold text-[#0b1120]">{ranking.reviewedBy}</p>
-          </div>
-          <div>
-            <p className="text-xs font-semibold tracking-widest text-[#9ca3af]">Read time</p>
-            <p className="mt-1 font-semibold text-[#0b1120]">{ranking.readTime}</p>
-          </div>
-          <div>
-            <p className="text-xs font-semibold tracking-widest text-[#9ca3af]">Entries</p>
-            <p className="mt-1 font-semibold text-[#0b1120]">{ranking.items.length}</p>
-          </div>
-        </Reveal>
-      </div>
+      <RankingHeader
+        ranking={{
+          slug: ranking.slug,
+          category: ranking.category,
+          title: ranking.title,
+          description: ranking.description,
+          updated: ranking.updated,
+          reviewedBy: ranking.reviewedBy,
+          readTime: ranking.readTime,
+          entriesCount: ranking.items.length,
+        }}
+      />
 
       {/* Hero image with scroll parallax */}
       <HeroParallaxImage
@@ -91,7 +61,10 @@ export default async function Top5ItemPage({ params }) {
 
       <div className="max-w-7xl mx-auto px-6">
         {/* Intro / methodology teaser */}
-        <div className="grid lg:grid-cols-[1fr_340px] gap-10 py-14 border-b border-black/10">
+        <div
+          id="methodology"
+          className="grid scroll-mt-20 gap-10 border-b border-border py-14 lg:grid-cols-[1fr_340px]"
+        >
           <Reveal>
             <p className="text-xs font-semibold tracking-widest text-[#10b981]">
               {ranking.intro.eyebrow}
@@ -153,6 +126,9 @@ export default async function Top5ItemPage({ params }) {
             </div>
           </Reveal>
           <Reveal delay={0.1}>
+            <HeadToHead items={ranking.items} />
+          </Reveal>
+          <Reveal delay={0.15}>
             <CompareTable items={ranking.items} />
           </Reveal>
         </div>

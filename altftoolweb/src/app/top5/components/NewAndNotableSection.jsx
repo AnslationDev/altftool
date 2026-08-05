@@ -1,14 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import ManagedImage from "@/components/ui/ManagedImage";
 import SectionHeading from "./SectionHeading";
 import { Reveal, EASE } from "./motion";
-import { getRanking } from "../data/rankings";
 
-export default function NewAndNotableSection() {
-  const item = getRanking("cities-after-dark");
+// `item` (slim fields) comes from the server page.
+export default function NewAndNotableSection({ item }) {
+  const reduceMotion = useReducedMotion();
   if (!item) return null;
 
   return (
@@ -42,8 +42,8 @@ export default function NewAndNotableSection() {
             </motion.div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
             <motion.span
-              animate={{ opacity: [0.5, 1, 0.5] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+              animate={reduceMotion ? undefined : { opacity: [0.5, 1, 0.5] }}
+              transition={reduceMotion ? undefined : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
               className="absolute top-6 left-6 z-10 rounded-full bg-[#10b981] px-3 py-1 text-xs font-bold text-white"
             >
               NEW

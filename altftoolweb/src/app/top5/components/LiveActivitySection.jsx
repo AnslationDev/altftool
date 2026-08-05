@@ -1,36 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { Bookmark } from "lucide-react";
+import { motion, useReducedMotion } from "framer-motion";
+import { ArrowUpRight } from "lucide-react";
 import { Reveal, staggerContainer, staggerItem } from "./motion";
-import { getRanking } from "../data/rankings";
 
-const RECENT_UPDATES = [
-  { slug: "global-universities", time: "12 MIN AGO", note: "Methodology and 2026 research output updated" },
-  { slug: "ai-tools", time: "2 HRS AGO", note: "New capability testing and pricing review" },
-  { slug: "electric-cars", time: "TODAY", note: "Range, availability, and owner scores refreshed" },
-  { slug: "football-players", time: "YESTERDAY", note: "Latest match data and form index added" },
-];
+// Both lists are selected and slimmed on the server. This keeps authored
+// ranking data out of the client bundle and avoids synthetic activity or
+// engagement claims.
+export default function LiveActivitySection({ updates = [], editorialPicks = [] }) {
+  const reduceMotion = useReducedMotion();
 
-const COMMUNITY_FAVORITES = [
-  { title: "Design studios defining a new visual culture", saves: "32.8K saves" },
-  { title: "Independent hotels worth planning a trip around", saves: "27.1K saves" },
-  { title: "Books every product leader should revisit", saves: "22.6K saves" },
-  { title: "The most liveable small cities in Europe", saves: "19.4K saves" },
-];
-
-export default function LiveActivitySection() {
   return (
-    <section className="w-full py-14 sm:py-20 md:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16">
+    <section className="w-full bg-surface py-14 sm:py-20 md:py-24">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:gap-12 sm:px-6 lg:grid-cols-2 lg:gap-16">
         <div>
           <Reveal>
-            <p className="text-xs font-semibold tracking-widest text-[#10b981]">
-              05 / RECENTLY UPDATED
+            <p className="text-xs font-semibold tracking-widest text-primary-text">
+              05 / EDITORIAL UPDATES
             </p>
-            <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-[#0b1120]">
-              Fresh context, clearly marked.
+            <h2 className="mt-3 text-2xl font-black tracking-tight text-foreground sm:text-3xl md:text-4xl">
+              Published context, clearly dated.
             </h2>
           </Reveal>
 
@@ -39,71 +29,86 @@ export default function LiveActivitySection() {
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
-            className="mt-8 sm:mt-10 space-y-6 sm:space-y-8"
+            className="mt-8 space-y-6 sm:mt-10 sm:space-y-8"
           >
-            {RECENT_UPDATES.map((update) => {
-              const ranking = getRanking(update.slug);
-              if (!ranking) return null;
-              return (
-                <motion.li key={update.slug} variants={staggerItem} className="relative pl-6">
-                  <motion.span
-                    animate={{ scale: [1, 1.4, 1], opacity: [1, 0.5, 1] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    className="absolute left-0 top-1.5 h-2 w-2 rounded-full bg-[#10b981]"
-                  />
-                  <p className="text-xs font-semibold tracking-widest text-[#10b981]">
-                    {update.time}
-                  </p>
-                  <Link
-                    href={`/top5/item/${update.slug}`}
-                    className="mt-1 block font-bold text-[#0b1120] hover:text-[#5ea8ff] transition-colors"
-                  >
-                    {ranking.shortLabel}
-                  </Link>
-                  <p className="text-sm text-[#6b7280]">{update.note}</p>
-                </motion.li>
-              );
-            })}
+            {updates.map((update) => (
+              <motion.li key={update.slug} variants={staggerItem} className="relative pl-6">
+                <motion.span
+                  aria-hidden="true"
+                  animate={
+                    reduceMotion
+                      ? undefined
+                      : { scale: [1, 1.4, 1], opacity: [1, 0.5, 1] }
+                  }
+                  transition={
+                    reduceMotion
+                      ? undefined
+                      : { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                  }
+                  className="absolute left-0 top-1.5 h-2 w-2 rounded-full bg-primary"
+                />
+                <p className="text-xs font-semibold tracking-widest text-primary-text">
+                  {update.updated}
+                </p>
+                <Link
+                  href={`/top5/item/${update.slug}`}
+                  className="mt-1 block font-bold text-foreground transition-colors hover:text-secondary"
+                >
+                  {update.shortLabel}
+                </Link>
+                <p className="text-sm text-muted-foreground">
+                  {update.category} · {update.entriesCount} ranked entries
+                </p>
+              </motion.li>
+            ))}
           </motion.ul>
         </div>
 
         <div>
           <Reveal delay={0.1}>
-            <p className="text-xs font-semibold tracking-widest text-[#10b981]">
-              06 / COMMUNITY FAVORITES
+            <p className="text-xs font-semibold tracking-widest text-primary-text">
+              06 / EDITORIAL SHORTLIST
             </p>
-            <h2 className="mt-3 text-2xl sm:text-3xl md:text-4xl font-black tracking-tight text-[#0b1120]">
-              Saved by people with taste.
+            <h2 className="mt-3 text-2xl font-black tracking-tight text-foreground sm:text-3xl md:text-4xl">
+              Four authored lists to explore next.
             </h2>
           </Reveal>
 
           <motion.ul
-            id="community"
+            id="editorial-picks"
             variants={staggerContainer}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.2 }}
-            className="mt-8 sm:mt-10 divide-y divide-black/10 scroll-mt-20"
+            className="mt-8 scroll-mt-20 divide-y divide-border sm:mt-10"
           >
-            {COMMUNITY_FAVORITES.map((fav, index) => (
+            {editorialPicks.map((pick, index) => (
               <motion.li
-                key={fav.title}
+                key={pick.slug}
                 variants={staggerItem}
-                whileHover={{ x: 6 }}
-                className="flex items-center justify-between gap-4 py-5"
+                whileHover={reduceMotion ? undefined : { x: 6 }}
               >
-                <div className="flex items-start gap-4 min-w-0">
-                  <span className="text-sm text-[#9ca3af] pt-0.5">
-                    {String(index + 1).padStart(2, "0")}
+                <Link
+                  href={`/top5/item/${pick.slug}`}
+                  className="group flex min-h-16 items-center justify-between gap-4 py-5"
+                >
+                  <span className="flex min-w-0 items-start gap-4">
+                    <span className="pt-0.5 text-sm text-muted-foreground">
+                      {String(index + 1).padStart(2, "0")}
+                    </span>
+                    <span className="min-w-0">
+                      <span className="block truncate font-bold text-foreground transition-colors group-hover:text-secondary">
+                        {pick.shortLabel}
+                      </span>
+                      <span className="block text-sm text-muted-foreground">{pick.category}</span>
+                    </span>
                   </span>
-                  <div className="min-w-0">
-                    <p className="font-bold text-[#0b1120] truncate">{fav.title}</p>
-                    <p className="text-sm text-[#9ca3af]">{fav.saves}</p>
-                  </div>
-                </div>
-                <motion.span whileHover={{ scale: 1.2, color: "#10b981" }}>
-                  <Bookmark size={18} className="shrink-0 text-[#d1d5db]" />
-                </motion.span>
+                  <ArrowUpRight
+                    size={18}
+                    aria-hidden="true"
+                    className="shrink-0 text-muted-foreground transition-colors group-hover:text-primary-text"
+                  />
+                </Link>
               </motion.li>
             ))}
           </motion.ul>

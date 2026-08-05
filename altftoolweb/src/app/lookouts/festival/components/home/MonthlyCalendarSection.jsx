@@ -2,40 +2,59 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { getFestivalsByMonth } from "../../lib/getFestivals";
-import { getMonthName, resolveEstimatedDate } from "../../lib/dateMath";
-import { getCountryName } from "../../data/countryNames";
-import FestivalGrid from "../shared/FestivalGrid";
+import { motion } from "framer-motion";
+import { getAllFestivals } from "../../lib/getFestivals";
+import { getIsoMonth, getMonthName, resolveDateInYear } from "../../lib/dateMath";
+import MonthlyFestivalCard from "./MonthlyFestivalCard";
 
 const MONTHS = Array.from({ length: 12 }, (_, i) => i + 1);
-const VISIBLE_COUNT = 6;
 
-export default function MonthlyCalendarSection() {
-  const now = useMemo(() => new Date(), []);
-  const [activeMonth, setActiveMonth] = useState(now.getMonth() + 1);
+// The cards arrive one after another rather than as a block. delayChildren
+// lets the container's own fade land first so the stagger reads as arrivals
+// into a settled list instead of a competing animation.
+const listVariants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.11, delayChildren: 0.08 } },
+};
+
+export default function MonthlyCalendarSection({ calendarYear, initialMonth }) {
+  // The server resolves this anchor once and passes plain numbers into the
+  // client component. Re-reading `new Date()` independently during SSR and
+  // hydration can select different months around a timezone boundary.
+  const year = calendarYear;
+  const [activeMonth, setActiveMonth] = useState(initialMonth);
   const [photos, setPhotos] = useState({});
 
-  const festivals = getFestivalsByMonth(activeMonth);
-  const visibleFestivals = festivals.slice(0, VISIBLE_COUNT);
-  const dates = useMemo(() => {
-    const map = {};
-    festivals.forEach((f) => {
-      map[f.slug] = resolveEstimatedDate(f, { now });
-    });
-    return map;
-  }, [festivals, now]);
+  // Festivals whose date *in this year* lands in the selected month.
+  //
+  // Filtering on the resolved date, not on `festival.month`, is what keeps the
+  // tabs honest: `month` is the month a festival typically falls in, and lunar
+  // festivals drift out of it — Krishna Janmashtami is filed under 8 but
+  // actually falls on 4 Sep 2026, so it belongs under September. Whatever a
+  // month genuinely contains is what it shows, one festival or ten.
+  const festivals = useMemo(
+    () =>
+      getAllFestivals()
+        .map((festival) => ({ festival, dateIso: resolveDateInYear(festival, year) }))
+        .filter(({ dateIso }) => getIsoMonth(dateIso) === activeMonth)
+        .sort((a, b) => a.dateIso.localeCompare(b.dateIso)),
+    [activeMonth, year],
+  );
 
+  // Photos are fetched per month and cached by slug across month switches, so
+  // flipping back to a month already seen paints instantly and costs nothing.
+  // `wikipediaTitle` lets the route fall back to the festival's Wikipedia
+  // image when no photo-provider key is configured.
   useEffect(() => {
     let cancelled = false;
+    const missing = festivals.filter(({ festival }) => !(festival.slug in photos));
+    if (!missing.length) return undefined;
 
     Promise.all(
-      visibleFestivals.map(async (festival) => {
-        if (photos[festival.slug]) return [festival.slug, photos[festival.slug]];
+      missing.map(async ({ festival }) => {
         try {
-          // wikipediaTitle lets the route fall back to the festival's Wikipedia
-          // image when no photo-provider key is configured.
           const res = await fetch(
-            `/api/lookouts/festival/photos?query=${encodeURIComponent(festival.unsplashQuery)}` +
+            `/api/lookouts/festival/photos?query=${encodeURIComponent(festival.unsplashQuery || festival.name)}` +
               `&wikipediaTitle=${encodeURIComponent(festival.wikipediaTitle || "")}`,
           );
           const data = await res.json();
@@ -52,8 +71,11 @@ export default function MonthlyCalendarSection() {
     return () => {
       cancelled = true;
     };
+    // `photos` is deliberately not a dependency: it is written by this effect,
+    // and depending on it would re-run the effect on its own result. The slug
+    // check above is what keeps already-fetched festivals from refetching.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeMonth]);
+  }, [festivals]);
 
   return (
     <section className="festival-section festival-section--tint" id="calendar">
@@ -68,24 +90,70 @@ export default function MonthlyCalendarSection() {
           </Link>
         </div>
 
-        <div className="festival-month-tabs">
-          {MONTHS.map((month) => (
-            <button
-              key={month}
-              type="button"
-              className={`festival-month-tab${month === activeMonth ? " is-active" : ""}`}
-              onClick={() => setActiveMonth(month)}
-            >
-              {getMonthName(month).slice(0, 3)}
-            </button>
-          ))}
-        </div>
+        <nav
+          aria-label="Filter festivals by month"
+          className="mb-8 flex flex-wrap gap-2 rounded-lg border border-border-strong bg-surface p-2 shadow-sm"
+        >
+          {MONTHS.map((month) => {
+            const isActive = month === activeMonth;
+            return (
+              <button
+                key={month}
+                type="button"
+                onClick={() => setActiveMonth(month)}
+                aria-pressed={isActive}
+                className={`relative rounded-md px-3.5 py-1.5 font-mono text-xs uppercase tracking-widest transition-colors ${
+                  isActive ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {/* One shared layoutId means the ink pill slides between tabs
+                    rather than cross-fading in place. */}
+                {isActive ? (
+                  <motion.span
+                    layoutId="festival-month-pill"
+                    className="absolute inset-0 rounded-md bg-primary"
+                    transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  />
+                ) : null}
+                <span className="relative">{getMonthName(month).slice(0, 3)}</span>
+              </button>
+            );
+          })}
+        </nav>
 
-        <FestivalGrid festivals={visibleFestivals} dates={dates} photos={photos} />
+        {/* Keyed on the month so React remounts the list and the stagger
+            replays from the top on every switch. Deliberately not wrapped in
+            AnimatePresence with mode="wait": that holds the incoming month
+            back until the outgoing one's exit finishes, and anything that
+            stalls the animation loop leaves the previous month's cards on
+            screen for good. A remount has no exit to wait on. */}
+        <motion.div
+          key={activeMonth}
+          variants={listVariants}
+          initial="hidden"
+          animate="show"
+          className="flex flex-col gap-4"
+        >
+          {festivals.length ? (
+            festivals.map(({ festival, dateIso }) => (
+              <MonthlyFestivalCard
+                key={festival.slug}
+                festival={festival}
+                dateIso={dateIso}
+                photo={photos[festival.slug]}
+              />
+            ))
+          ) : (
+            <p className="rounded-lg border border-dashed border-border-strong p-8 text-center text-sm text-muted-foreground">
+              No festivals listed for {getMonthName(activeMonth)} {year}.
+            </p>
+          )}
+        </motion.div>
+
         {festivals.length ? (
-          <p className="festival-calendar-hint">
-            Showing festivals typically celebrated in {getMonthName(activeMonth)}
-            {festivals[0] ? ` across ${getCountryName(festivals[0].countryCodes[0])} and more` : ""}.
+          <p className="mt-6 text-center text-xs uppercase tracking-widest text-muted-foreground">
+            {festivals.length} {festivals.length === 1 ? "festival" : "festivals"} in {getMonthName(activeMonth)}{" "}
+            {year}
           </p>
         ) : null}
       </div>

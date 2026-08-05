@@ -1,10 +1,14 @@
 import { Fraunces } from "next/font/google";
+import Top5Bar from "./components/Top5Bar";
+import Footer from "./components/Footer";
+import Top5MotionProvider from "./components/Top5MotionProvider";
+import "./top5.css";
 
-// Top5 now uses the common AltFTool header/footer (same as /top9 and
-// /top11) — it is no longer registered as a self-chrome route in
-// GlobalChromeGate, so the platform-wide Header/Footer render around it
-// automatically from the root layout. This file only exists to scope the
-// display font and the route's metadata to /top5.
+// Top5 is a self-chrome microsite: it is registered in GlobalChromeGate's
+// SELF_CHROME_PREFIXES, so the platform-wide AltFTool header/footer stay
+// out of the way and this layout renders the section's own chrome — the
+// sticky "Top5 by Alt F" navbar (Top5Bar) on top and the Top5 footer
+// below. It also scopes the display font and metadata to /top5.
 export const metadata = {
   title: {
     default: "Top5 – Discover the World's Top 5 Rankings",
@@ -32,8 +36,12 @@ const fraunces = Fraunces({
 
 export default function Top5Layout({ children }) {
   return (
-    <div className={`top5-root bg-white ${fraunces.variable}`}>
-      <main>{children}</main>
-    </div>
+    <Top5MotionProvider>
+      <div className={`top5-root bg-page text-foreground ${fraunces.variable}`}>
+        <Top5Bar />
+        <main>{children}</main>
+        <Footer />
+      </div>
+    </Top5MotionProvider>
   );
 }

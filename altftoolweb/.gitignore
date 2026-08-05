@@ -48,3 +48,7 @@ tmp/
 
 # workspace package installs (a local npm install here must never be committed)
 packages/*/node_modules/
+
+# local design notes
+apple/
+DESIGN.md

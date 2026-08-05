@@ -32,15 +32,16 @@ export default function CategorySearchForm({ entityName }) {
           .getElementById("top5-category-results")
           ?.scrollIntoView({ behavior: "smooth", block: "start" });
       }}
-      className="mt-5 flex items-center gap-2 rounded-full bg-white p-1.5 pl-4 shadow-sm transition-shadow focus-within:shadow-md focus-within:ring-1 focus-within:ring-black/5"
+      className="mt-5 flex items-center gap-2 rounded-full bg-surface p-1.5 pl-4 shadow-sm transition-shadow focus-within:shadow-md focus-within:ring-1 focus-within:ring-border"
     >
-      <Search size={16} className="text-[#10b981] shrink-0" />
+      <Search size={16} className="shrink-0 text-primary-text" />
       <input
         type="text"
-        value={value}
-        onChange={(event) => emit(event.target.value)}
-        placeholder={`Search within ${entityName}`}
-        className="flex-1 min-w-0 bg-transparent py-2.5 text-sm text-[#0b1120] placeholder:text-[#9ca3af] outline-none"
+      value={value}
+      onChange={(event) => emit(event.target.value)}
+      placeholder={`Search within ${entityName}`}
+      aria-label={`Search within ${entityName}`}
+        className="min-w-0 flex-1 bg-transparent py-2.5 text-sm text-foreground outline-none placeholder:text-muted-foreground"
       />
       <AnimatePresence>
         {value ? (
@@ -53,7 +54,7 @@ export default function CategorySearchForm({ entityName }) {
             exit={{ opacity: 0, scale: 0.6 }}
             transition={{ duration: 0.18 }}
             onClick={() => emit("")}
-            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-[#9ca3af] hover:bg-[#f3f4f6] hover:text-[#0b1120] transition-colors"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-muted-foreground transition-colors hover:bg-surface-soft hover:text-foreground"
           >
             <X size={14} />
           </motion.button>
@@ -64,7 +65,7 @@ export default function CategorySearchForm({ entityName }) {
         whileTap={{ scale: 0.92 }}
         type="submit"
         aria-label="Search"
-        className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#0b1120] text-white"
+        className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground"
       >
         <ArrowRight size={15} />
       </motion.button>

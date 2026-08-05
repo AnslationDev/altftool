@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { FOOD_CULTURE } from "../../data/foodCulture";
 import { getFestivalBySlug } from "../../lib/getFestivals";
@@ -28,8 +29,16 @@ export default function FoodCultureSection({ photos = {} }) {
                 <Link href={`/lookouts/festival/${item.festivalSlug}`} className="food-culture-card">
                   <div className="food-culture-image">
                     {photo?.url ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={photo.url} alt={photo.alt || item.food} />
+                      // next/image, not a bare <img>: the Wikipedia fallback
+                      // hands back the raw upload, routinely several MB. The
+                      // optimizer resizes and serves AVIF/WebP instead.
+                      <Image
+                        src={photo.url}
+                        alt={photo.alt || item.food}
+                        fill
+                        sizes="(max-width: 640px) 90vw, (max-width: 1024px) 45vw, 300px"
+                        style={{ objectFit: "cover" }}
+                      />
                     ) : (
                       <div className="festival-card-placeholder" aria-hidden="true">
                         <span>🍽️</span>

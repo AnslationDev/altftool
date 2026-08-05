@@ -25,6 +25,8 @@ export const SELF_CHROME_PREFIXES = [
   // Renders its own LookupsHeader; without this the page shows two headers.
   "/lookouts",
   "/imgprompt/studio",
+  // Top5 ships its own header and footer from src/app/top5/layout.jsx.
+  "/top5",
   // The Labs hub has its own focused header.
   "/labs",
   // Immersive experiences declare their chrome behavior in one catalog.

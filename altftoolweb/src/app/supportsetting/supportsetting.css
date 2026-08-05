@@ -3,14 +3,35 @@
   --support-secondary: var(--secondary);
   --support-cta-gradient: linear-gradient(135deg, var(--support-primary), var(--support-secondary));
   --support-cta-gradient-hover: linear-gradient(135deg, var(--primary-hover, var(--support-primary)), var(--support-secondary));
-  --support-cta-shadow: 0 18px 34px color-mix(in srgb, var(--support-primary) 26%, transparent);
-  --support-cta-shadow-hover: 0 22px 42px color-mix(in srgb, var(--support-secondary) 24%, transparent);
+  --support-cta-shadow: var(--shadow-md);
+  --support-cta-shadow-hover: var(--shadow-lg);
   min-height: 100vh;
   background:
     radial-gradient(circle at 8% 10rem, color-mix(in srgb, var(--support-primary) 6%, transparent), transparent 24rem),
     radial-gradient(circle at 95% 18rem, color-mix(in srgb, var(--support-secondary) 5%, transparent), transparent 28rem),
     var(--background);
   color: var(--foreground);
+}
+
+/* Every section on this page (System Overview, Popular Settings, Helpful
+   Tips, FAQ Shortcuts, Troubleshooting, Diagnostics, Device Info, Keyboard
+   Shortcuts, System Status, Quick Actions...) opens with the shared
+   `<SectionHeader title=... description=... />` from @altftool/ui, but
+   nothing in this stylesheet — or, it turns out, in that shared component
+   — puts any guaranteed space between the header block and whatever comes
+   right after it. Reported concretely as System Overview's description
+   text overlapping the tile grid below it, but since every section here
+   uses the exact same header-then-content pattern with no per-section gap
+   of its own, it's really one bug repeated ~11 times, not one bug in one
+   place. Fixed once, generically, with an adjacent-sibling rule scoped to
+   this page only — it does not touch SectionHeader itself (so nothing else
+   in the app that also renders it is affected), it only guarantees a
+   minimum gap after it wherever it appears in Support Settings. Uses
+   margin-top on the following element rather than margin-bottom on the
+   header so it plays correctly with normal block margin-collapsing even
+   if the header ever does end up with its own bottom margin upstream. */
+.support-setting-page .alt-ui-section-header + * {
+  margin-top: 1rem;
 }
 
 .support-setting-shell {
@@ -21,8 +42,67 @@
 .support-setting-sticky,
 .support-settings-sidebar,
 .support-settings-content-inner,
-.support-setting-ads-stack {
+.support-setting-ads-stack,
+.support-prefs-body-open,
+.support-home-search-results,
+.support-devicepicker-body,
+.support-platform-switcher-row {
   scrollbar-color: color-mix(in srgb, var(--support-primary) 44%, transparent) transparent;
+  scrollbar-width: thin;
+}
+
+/* WebKit/Blink (Chrome, Edge, Safari) equivalent of the `scrollbar-color`
+   rule above — `scrollbar-color` alone only styles Firefox, so every one
+   of these scrollable surfaces (sidebar, article body, sponsored rail,
+   preferences/search/device-picker dropdowns, the mobile platform-pill
+   strip) would otherwise fall back to the browser's plain default
+   scrollbar in every Chromium-based browser, which is most visitors. Kept
+   thin and on-brand rather than the bulky OS default, matching the rest of
+   this module's "premium product, not a documentation template" bar. */
+.support-setting-sticky::-webkit-scrollbar,
+.support-settings-sidebar::-webkit-scrollbar,
+.support-settings-content-inner::-webkit-scrollbar,
+.support-setting-ads-stack::-webkit-scrollbar,
+.support-prefs-body-open::-webkit-scrollbar,
+.support-home-search-results::-webkit-scrollbar,
+.support-devicepicker-body::-webkit-scrollbar,
+.support-platform-switcher-row::-webkit-scrollbar {
+  width: 0.4rem;
+  height: 0.4rem;
+}
+
+.support-setting-sticky::-webkit-scrollbar-track,
+.support-settings-sidebar::-webkit-scrollbar-track,
+.support-settings-content-inner::-webkit-scrollbar-track,
+.support-setting-ads-stack::-webkit-scrollbar-track,
+.support-prefs-body-open::-webkit-scrollbar-track,
+.support-home-search-results::-webkit-scrollbar-track,
+.support-devicepicker-body::-webkit-scrollbar-track,
+.support-platform-switcher-row::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.support-setting-sticky::-webkit-scrollbar-thumb,
+.support-settings-sidebar::-webkit-scrollbar-thumb,
+.support-settings-content-inner::-webkit-scrollbar-thumb,
+.support-setting-ads-stack::-webkit-scrollbar-thumb,
+.support-prefs-body-open::-webkit-scrollbar-thumb,
+.support-home-search-results::-webkit-scrollbar-thumb,
+.support-devicepicker-body::-webkit-scrollbar-thumb,
+.support-platform-switcher-row::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, var(--support-primary) 44%, transparent);
+  border-radius: var(--anslation-ds-radius-pill);
+}
+
+.support-setting-sticky::-webkit-scrollbar-thumb:hover,
+.support-settings-sidebar::-webkit-scrollbar-thumb:hover,
+.support-settings-content-inner::-webkit-scrollbar-thumb:hover,
+.support-setting-ads-stack::-webkit-scrollbar-thumb:hover,
+.support-prefs-body-open::-webkit-scrollbar-thumb:hover,
+.support-home-search-results::-webkit-scrollbar-thumb:hover,
+.support-devicepicker-body::-webkit-scrollbar-thumb:hover,
+.support-platform-switcher-row::-webkit-scrollbar-thumb:hover {
+  background-color: color-mix(in srgb, var(--support-primary) 62%, transparent);
 }
 
 .support-settings-sidebar {
@@ -58,12 +138,32 @@
 
 /* Icon + wordmark, styled to match the same premium language as the hero
    title (brand gradient, confident weight) instead of sitting as bare
-   text — this is the small "masthead" for the whole sidebar. */
+   text — this is the small "masthead" for the whole sidebar. It's a real
+   `<button>` now (click it to go Home), so it also gets a plain-button
+   reset here rather than inheriting the browser default button look. */
 .support-settings-sidebar-title {
   display: flex;
   align-items: center;
   gap: 0.55rem;
   min-width: 0;
+  border: none;
+  background: transparent;
+  padding: 0.2rem 0.25rem 0.2rem 0;
+  margin: -0.2rem 0 -0.2rem -0.25rem;
+  border-radius: var(--anslation-ds-radius);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  transition: opacity 150ms ease;
+}
+
+.support-settings-sidebar-title:hover {
+  opacity: 0.82;
+}
+
+.support-settings-sidebar-title:focus-visible {
+  outline: 2px solid var(--ai-search-accent-1, var(--support-primary));
+  outline-offset: 2px;
 }
 
 .support-settings-sidebar-title-icon {
@@ -116,6 +216,71 @@
   background: transparent;
   padding: 0.75rem;
   flex: 1;
+}
+
+/* Standout "Contact Support" shortcut card at the foot of the sidebar —
+   visually its own card (border, tint, bold title + subtitle) rather than
+   another plain nav row, so it reads as a deliberate "need help finding
+   something? talk to us" exit rather than one more item in the list. */
+.support-sidebar-contact-card {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: calc(100% - 1.5rem);
+  margin: 0.25rem 0.75rem 0.75rem;
+  padding: 0.75rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--support-primary) 22%, var(--border));
+  border-radius: var(--anslation-ds-radius-lg);
+  background: color-mix(in srgb, var(--support-primary) 6%, var(--card));
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease, transform 150ms ease;
+}
+
+.support-sidebar-contact-card:hover,
+.support-sidebar-contact-card:focus-visible {
+  border-color: color-mix(in srgb, var(--support-primary) 40%, var(--border));
+  background: color-mix(in srgb, var(--support-primary) 10%, var(--card));
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.support-sidebar-contact-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  flex-shrink: 0;
+  border-radius: var(--anslation-ds-radius);
+  background: color-mix(in srgb, var(--support-primary) 16%, var(--card));
+  color: var(--support-primary);
+}
+
+.support-sidebar-contact-card-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.support-sidebar-contact-card-title {
+  font-size: 0.84rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.support-sidebar-contact-card-desc {
+  font-size: 0.72rem;
+  color: var(--muted-foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.support-sidebar-contact-card-chevron {
+  flex-shrink: 0;
+  color: color-mix(in srgb, var(--support-primary) 55%, transparent);
 }
 
 .support-settings-nav-group-label {
@@ -291,21 +456,6 @@
   margin-bottom: 1.5rem;
 }
 
-.support-hero-eyebrow {
-  display: inline-flex;
-  width: fit-content;
-  border: 1px solid color-mix(in srgb, var(--support-primary) 16%, var(--border));
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--support-primary) 8%, var(--card));
-  color: var(--support-primary);
-  padding: 0.4rem 0.75rem;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin: 0 0 0.75rem;
-}
-
 .support-hero-title {
   font-size: clamp(1.75rem, 3vw, 2.5rem);
   font-weight: 780;
@@ -335,13 +485,70 @@
 }
 
 .support-platform-switcher-label {
-  font-size: 0.875rem;
-  color: var(--muted-foreground);
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
   margin-bottom: 0.65rem;
 }
 
-.support-platform-switcher-label strong {
+/* The new section title above the "Showing settings for X" caption —
+   bold and noticeably bigger so the whole block reads as an invitation
+   ("pick a device here") instead of just a quiet status line sitting
+   above the cards. */
+.support-platform-switcher-heading {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 800;
   color: var(--foreground);
+  letter-spacing: -0.01em;
+}
+
+.support-platform-switcher-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.support-platform-switcher-label-row strong {
+  color: var(--foreground);
+}
+
+/* Reset, moved here from inside the device-card row (see PlatformSwitcher.jsx)
+   — a small icon-only circle sitting between the iOS card and "More
+   Devices" broke the row's rhythm (every other item there is a full-size
+   card) and read as a stray, disconnected control. It only ever appears
+   next to the "Previewing X settings" text anyway, so it belongs on that
+   line: a clearly-labelled action tied to the exact sentence explaining
+   why it's there, not an unlabelled icon guessed at from its position. */
+.support-platform-switcher-label-reset {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--anslation-ds-radius-pill);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 25%, var(--border));
+  background: color-mix(in srgb, var(--support-primary) 6%, transparent);
+  color: var(--support-primary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 160ms ease, transform 160ms ease;
+}
+
+.support-platform-switcher-label-reset:hover {
+  background: color-mix(in srgb, var(--support-primary) 14%, transparent);
+  transform: translateY(-1px);
+}
+
+.support-platform-switcher-label-reset:focus-visible {
+  outline: none;
+  box-shadow: var(--anslation-ds-focus-ring);
 }
 
 .support-platform-switcher-pills {
@@ -425,6 +632,292 @@
   padding: 0.45rem;
   min-width: 2.25rem;
   justify-content: center;
+}
+
+/* ---- "Choose your device" cards (Home hero) ----
+   Replaces the old row of small text pills for the non-compact (Home)
+   rendering of PlatformSwitcher only — the `compact` sidebar variant above
+   (currently unused, kept for a future sidebar) still uses
+   .support-platform-pill-*, untouched. Compact but not cryptic: a small
+   icon, the device name, and — only when there's something to say — a
+   short one-word status tag ("Active"/"Detected"). Went through two other
+   versions first: a full "CURRENTLY VIEWING" text pill (too wide, forced
+   the card oversized) and a bare icon-only dot (too subtle — unreadable
+   at a glance). One short word landed in the middle. */
+/* No `justify-content: space-between` — spreading cards apart to close
+   the gap was tried twice and rejected both times, small cards or big
+   ones, because it visibly separates them instead of growing them. The
+   only fix that was ever going to satisfy "cover the space, don't add
+   space between them" is a bigger card, not a bigger gap — see the wider
+   padding on .support-platform-device-card below. Cards stay packed
+   together at this row's own small gap, same as every other card row on
+   this page. */
+.support-platform-device-row {
+  gap: 0.5rem;
+}
+
+/* Always a single row, at every viewport width — a real screenshot showed
+   "More Devices" dropping down onto its own second line on an ordinary
+   desktop width even with flex-wrap: wrap's normal packing (the wider
+   cards from the sizing pass above just don't leave enough room for a 5th
+   item at every width). Reusing the exact nowrap + horizontal-scroll
+   treatment this row already uses on phones (see the max-width: 640px
+   rules further down) instead of shrinking the cards back down keeps them
+   at the size that was asked for while guaranteeing the row itself never
+   breaks in two: if everything fits, it just looks like a normal row; if
+   it doesn't, it scrolls sideways in place rather than wrapping down. */
+/* `overflow-x: auto` above forces the browser to also clip the Y axis
+   (per spec, an axis left at its default `visible` gets coerced to `auto`
+   the moment the OTHER axis isn't `visible` — there's no way to opt back
+   out of that with `overflow-y: visible`). Without headroom, that silently
+   sliced the bottom off the active card's own resting box-shadow (`0 4px
+   14px …` on .support-platform-device-card-active) and the hover lift's
+   shadow — a real screenshot showed the active card's border reading as
+   flat-cut along the bottom instead of rounded. Generous top/bottom
+   padding gives the clip box room for both; the matching negative margin
+   cancels that padding back out for layout purposes, so this row still
+   sits exactly where it did before — nothing outside it shifts. */
+.support-platform-device-row-outer {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 0.5rem 0 1.25rem;
+  margin: -0.5rem 0 -1.25rem;
+  -webkit-overflow-scrolling: touch;
+  /* `proximity` (not `mandatory`) so this only gently settles on a card
+     near where a swipe/drag ends, rather than fighting the arrow buttons'
+     own smooth-scroll or forcing a snap on every tiny scroll — a small
+     native-app-like touch for touch/trackpad scrolling without changing
+     how clicking a card or the arrows behaves. */
+  scroll-snap-type: x proximity;
+  /* The left/right arrow buttons (see PlatformSwitcher.jsx) are the
+     intended scroll affordance now, exactly like the search bar's own
+     chip rows (.support-home-search-chip-row, same convention) — a
+     visible native scrollbar sitting right underneath them was a real
+     reported redundant/cluttered look, doubling up on the same signal. */
+  scrollbar-width: none;
+}
+
+.support-platform-device-row-outer::-webkit-scrollbar {
+  display: none;
+}
+
+.support-platform-device-row {
+  flex-wrap: nowrap;
+}
+
+.support-platform-device-row .support-platform-device-card,
+.support-platform-device-row .support-devicemenu-wrap {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+/* Wraps the scrollable row (.support-platform-device-row-outer, untouched
+   above) together with its two optional arrow buttons (see
+   PlatformSwitcher.jsx's `useScrollArrows` — only rendered once there's
+   actually more content off-screen on that side, never a decorative dead
+   arrow). `flex: 1; min-width: 0` on the row itself lets it size normally
+   when no arrows are showing (the common case) and share the line with
+   them once they appear, instead of forcing the switcher box wider. */
+.support-platform-device-row-scrollwrap {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.support-platform-device-row-scrollwrap .support-platform-device-row-outer {
+  flex: 1;
+  min-width: 0;
+}
+
+.support-platform-device-scroll-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--support-primary) 20%, var(--border));
+  background: var(--card);
+  color: var(--support-primary);
+  cursor: pointer;
+  box-shadow: var(--anslation-ds-shadow-sm);
+  transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
+}
+
+.support-platform-device-scroll-btn:hover {
+  border-color: color-mix(in srgb, var(--support-primary) 45%, var(--border));
+  background: color-mix(in srgb, var(--support-primary) 8%, var(--card));
+  transform: translateY(-1px);
+}
+
+.support-platform-device-scroll-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--anslation-ds-focus-ring);
+}
+
+/* Was a vertical stack (icon on top, name below, status pill below that)
+   at a fixed 6.25rem width — square-ish and, with 5 of them in a row,
+   still narrower overall than the panel around them. Icon-then-text laid
+   out horizontally instead, sized to its own content rather than a fixed
+   width, makes each card an actual rectangle (wider than tall) rather
+   than a small square tile — and because a horizontal card naturally
+   takes up more width per card than a stacked one did, the row of 5
+   collectively reaches further across the panel too, without any of the
+   artificial gap-stretching or oversizing already tried and reverted
+   above. */
+.support-platform-device-card {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--anslation-ds-radius);
+  border: 1.5px solid color-mix(in srgb, var(--support-primary) 16%, var(--border));
+  background: var(--card);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.support-platform-device-card:hover {
+  border-color: color-mix(in srgb, var(--support-primary) 40%, var(--border));
+  transform: translateY(-2px);
+  box-shadow: var(--anslation-ds-shadow-sm);
+}
+
+.support-platform-device-card-active {
+  border-color: var(--support-primary);
+  background: linear-gradient(165deg, color-mix(in srgb, var(--support-primary) 10%, var(--card)), var(--card));
+  box-shadow: var(--shadow-md);
+}
+
+.support-platform-device-card-active:hover {
+  transform: none;
+}
+
+.support-platform-device-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  flex-shrink: 0;
+  border-radius: 0.55rem;
+  background: color-mix(in srgb, var(--support-primary) 12%, var(--card));
+  color: var(--support-primary);
+}
+
+.support-platform-device-card-active .support-platform-device-card-icon {
+  background: var(--support-cta-gradient);
+  color: var(--primary-foreground);
+}
+
+/* Name + status now sit side by side after the icon (row layout, see
+   .support-platform-device-card above) rather than stacked underneath
+   it — the card's own `gap` already spaces icon / name / status apart,
+   this only needed a size bump now that there's room for it. */
+.support-platform-device-card-name {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--foreground);
+  white-space: nowrap;
+}
+
+/* The short status tag — "Active" (with a small checkmark) for the card
+   currently being viewed, "Detected" for the auto-detected-but-not-active
+   one. Both single words at a small size so they read at a glance without
+   forcing the card wider, but they're real visible text (not just a color/
+   icon), so it's unambiguous what's selected vs. merely auto-detected. */
+.support-platform-device-card-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--anslation-ds-radius-pill);
+}
+
+.support-platform-device-card-status-active {
+  background: var(--support-cta-gradient);
+  color: var(--primary-foreground);
+}
+
+.support-platform-device-card-status-detected {
+  background: color-mix(in srgb, var(--support-primary) 14%, var(--card));
+  color: var(--support-primary);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 30%, var(--border));
+}
+
+/* "More Devices" restyled to match the compact card row it now sits in —
+   DeviceMegaMenu.jsx's non-compact branch now renders the same icon-badge
+   + label + count-pill structure its compact (sidebar) branch already
+   used, so the card carries real content instead of a bare icon + text
+   floating in a lot of empty space. Higher selector specificity here (two
+   classes) wins over the base .support-devicemenu-trigger rule regardless
+   of source order. */
+.support-platform-device-row .support-devicemenu-wrap {
+  flex: 0 0 auto;
+  display: flex;
+}
+
+/* Row layout now, matching the device cards' own icon-then-text rectangle
+   shape (see .support-platform-device-card above) instead of the stacked
+   icon/label/count column it used before — same reasoning: a horizontal
+   card is a genuine rectangle instead of a small square, and collectively
+   the row reaches further across the panel because of it. */
+.support-platform-device-row .support-devicemenu-trigger {
+  gap: 0.4rem;
+  padding: 0.55rem 0.85rem;
+  border-radius: var(--anslation-ds-radius);
+  border: 1.5px dashed color-mix(in srgb, var(--support-primary) 30%, var(--border));
+  font-size: 0.86rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.support-platform-device-row .support-devicemenu-trigger-icon {
+  width: 2.15rem;
+  height: 2.15rem;
+  flex-shrink: 0;
+  border-radius: 0.55rem;
+}
+
+.support-platform-device-row .support-devicemenu-trigger-label {
+  flex: none;
+  text-align: left;
+}
+
+.support-platform-device-row .support-devicemenu-trigger-count {
+  font-size: 0.6rem;
+}
+
+.support-platform-device-row .support-devicemenu-trigger:hover {
+  transform: translateY(-2px);
+}
+
+/* The "Showing settings for your device: X" line now sits above a row of
+   cards that already say the same thing via the active card's "Currently
+   Viewing" badge — kept (it still carries useful extra context on override:
+   "Previewing X settings") but de-emphasized to a small kicker instead of
+   body-sized text, so it doesn't visually compete with the badge that's
+   about to repeat it. Scoped to the Home hero specifically, not every
+   PlatformSwitcher mount.
+   The de-emphasis only ever applied to that caption line, so it now
+   targets `-label-row` (where the caption actually lives); the bold
+   "Explore Settings" heading sitting above it in `-label` on its own
+   keeps its full size — it's meant to stand out, not shrink with it. */
+.support-landing-hero-platform .support-platform-switcher-label {
+  margin-bottom: 0.5rem;
+}
+
+.support-landing-hero-platform .support-platform-switcher-label-row {
+  font-size: 0.76rem;
 }
 
 /* ============================================================
@@ -1447,6 +1940,22 @@
   }
 }
 
+/* Below `lg` (the same 1024px boundary Tailwind's `lg:` prefix uses on the
+   Sponsored rail's own classes in SupportClient.jsx), the two-column grid
+   collapses to one column, so the rail — second in document order — flows
+   below the article instead of beside it. `auto-rows` isn't needed: a
+   1-column grid stacks its items as rows automatically in source order. */
+@media (max-width: 1023.98px) {
+  .support-setting-main-wrap {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .support-setting-ads {
+    width: 100%;
+    margin-top: clamp(1.25rem, 3vw, 1.75rem);
+  }
+}
+
 @media (max-width: 834px) {
   .support-help-grid,
   .support-stat-grid {
@@ -1548,10 +2057,6 @@
 
   .support-card {
     padding: 0.85rem;
-  }
-
-  .support-hero-eyebrow {
-    font-size: 0.62rem;
   }
 }
 
@@ -1695,24 +2200,27 @@
 .support-sidebar-device-context {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.65rem;
   margin: 0.75rem 0.85rem 0;
-  padding: 0.55rem 0.6rem;
+  padding: 0.6rem 0.7rem;
   border-radius: var(--anslation-ds-radius);
-  border: 1px solid color-mix(in srgb, var(--device-accent, var(--support-primary)) 22%, var(--border));
-  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 8%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--device-accent, var(--support-primary)) 28%, var(--border));
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--device-accent, var(--support-primary)) 11%, var(--card)), var(--card));
+  box-shadow: var(--shadow-sm);
 }
 
 .support-sidebar-device-context-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2rem;
-  height: 2rem;
+  width: 2.15rem;
+  height: 2.15rem;
   flex-shrink: 0;
-  border-radius: 0.55rem;
-  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 16%, var(--card));
-  color: var(--device-accent, var(--support-primary));
+  border-radius: 0.6rem;
+  background: linear-gradient(135deg, var(--device-accent, var(--support-primary)), color-mix(in srgb, var(--device-accent, var(--support-primary)) 60%, var(--support-secondary)));
+  color: var(--primary-foreground);
+  box-shadow: var(--shadow-sm);
 }
 
 .support-sidebar-device-context-text {
@@ -1720,13 +2228,26 @@
   min-width: 0;
 }
 
+/* A small "live" dot ahead of the eyebrow text — a quiet, premium touch
+   that reinforces "this is the active context", not just a plain label. */
 .support-sidebar-device-context-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
   margin: 0;
   font-size: 0.62rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted-foreground);
+}
+
+.support-sidebar-device-context-eyebrow::before {
+  content: "";
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 999px;
+  background: var(--device-accent, var(--support-primary));
 }
 
 .support-sidebar-device-context-name {
@@ -1758,6 +2279,72 @@
     background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 14%, var(--card));
     color: var(--device-accent, var(--support-primary));
   }
+}
+
+/* OS-platform equivalent of the device context banner above — same layout
+   minus the exit button, since there's nothing to "exit" from the base
+   OS-level nav. Gives switching Windows/macOS/Android/iOS on the Home page
+   the same visible confirmation in the sidebar that switching to a device
+   already had. */
+.support-sidebar-platform-context {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin: 0.75rem 0.85rem 0;
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--anslation-ds-radius);
+  border: 1px solid color-mix(in srgb, var(--device-accent, var(--support-primary)) 28%, var(--border));
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--device-accent, var(--support-primary)) 11%, var(--card)), var(--card));
+  box-shadow: var(--shadow-sm);
+}
+
+.support-sidebar-platform-context-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  flex-shrink: 0;
+  border-radius: 0.6rem;
+  background: linear-gradient(135deg, var(--device-accent, var(--support-primary)), color-mix(in srgb, var(--device-accent, var(--support-primary)) 60%, var(--support-secondary)));
+  color: var(--primary-foreground);
+  box-shadow: var(--shadow-sm);
+}
+
+.support-sidebar-platform-context-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.support-sidebar-platform-context-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.support-sidebar-platform-context-eyebrow::before {
+  content: "";
+  width: 0.32rem;
+  height: 0.32rem;
+  border-radius: 999px;
+  background: var(--device-accent, var(--support-primary));
+}
+
+.support-sidebar-platform-context-name {
+  margin: 0.05rem 0 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* The group label above a device's own settings list reuses
@@ -1827,35 +2414,6 @@
     linear-gradient(180deg, color-mix(in srgb, var(--support-secondary) 5%, var(--card)), var(--card));
   box-shadow: var(--anslation-ds-shadow-sm);
   padding: clamp(1.1rem, 2.4vw, 1.75rem);
-}
-
-.support-detail-hero-top {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.85rem;
-}
-
-.support-detail-category-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.3rem 0.65rem;
-  border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--support-primary) 20%, var(--border));
-  background: color-mix(in srgb, var(--support-primary) 8%, var(--card));
-  color: var(--support-primary);
-  font-size: 0.72rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.support-detail-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
 }
 
 .support-detail-hero-main {
@@ -2141,33 +2699,153 @@
 .support-landing {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.15rem;
 }
 
+/* Title/subtitle + the platform/device picker, both folded into ONE hero
+   card (title row on top, a thin divider, then the picker) instead of two
+   separately-bordered stacked cards — that used to cost an entire extra
+   card's worth of border/padding/shadow plus the page's own inter-section
+   gap for zero added information. A decorative illustration panel sits on
+   the right of the title row — a filled brand-gradient panel (same
+   `--support-primary`→`--support-secondary` gradient already used on every
+   CTA button in this app, see HomeHeroIllustration in
+   SupportLandingPage.jsx), not a sourced image asset, so it reads as a
+   real piece of art rather than faint line-work floating in empty space,
+   and repaints correctly in dark mode / brand overrides since it's built
+   from this stylesheet's own CSS variables. */
 .support-landing-hero {
-  margin-bottom: 0;
-}
-
-/* ---- Landing page: two-column widget dashboard ----
-   Mirrors how a native Settings app's Home page is actually laid out — a
-   couple of primary widget cards (a short heading + a dense row list)
-   next to a stack of smaller secondary ones, instead of one long column
-   of big marketing-style cards. */
-.support-landing-dashboard {
-  display: grid;
-  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
-  gap: 1.25rem;
-  align-items: start;
-}
-
-.support-landing-dashboard-main,
-.support-landing-dashboard-side {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
-  min-width: 0;
+  gap: 0.85rem;
+  margin-bottom: 0;
+  padding: 0.85rem 1rem;
+  border-radius: var(--anslation-ds-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 14%, var(--border));
+  background:
+    radial-gradient(circle at 6% 0%, color-mix(in srgb, var(--support-primary) 7%, transparent), transparent 12rem),
+    var(--card);
 }
 
+.support-landing-hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.support-landing-hero-content {
+  min-width: 0;
+  flex: 1;
+}
+
+/* Scoped smaller than the shared `.support-hero-title` used on every other
+   Support Settings page — the landing hero now also carries the platform
+   picker underneath it, so it needs to stay compact rather than claim the
+   same large title height a single-purpose page hero gets. */
+.support-landing-hero .support-hero-title {
+  font-size: clamp(1.4rem, 2.2vw, 1.75rem);
+  margin: 0;
+}
+
+.support-landing-hero-subtitle {
+  margin: 0.25rem 0 0;
+  font-size: 0.88rem;
+  color: var(--muted-foreground);
+  max-width: 34rem;
+}
+
+.support-landing-hero-illustration {
+  flex-shrink: 0;
+  width: clamp(140px, 17vw, 190px);
+  height: 5.5rem;
+  border-radius: var(--anslation-ds-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+/* Thin divider + no extra card chrome for the platform picker now that
+   it's nested inside the hero card — PlatformSwitcher's own border/
+   background/padding are stripped below so it doesn't double up. */
+.support-landing-hero-platform {
+  padding-top: 0.75rem;
+  border-top: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--border));
+}
+
+/* ---- Quick Actions — the one prominent row on the page, each real action
+   as its own standalone card (icon, title, one-line description, action
+   button) rather than a compact settings-list row, matching a native
+   Settings Home screen's own shortcuts row. Not wrapped in a
+   `.support-landing-widget` — the individual cards are the visual unit
+   here, there's no need for an outer card-around-cards. */
+.support-landing-quickaction-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.support-landing-quickaction-card {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.3rem;
+  padding: 0.85rem 0.9rem;
+  border-radius: var(--anslation-ds-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--border));
+  background: var(--card);
+  box-shadow: var(--anslation-ds-shadow-sm);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.support-landing-quickaction-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--anslation-ds-shadow-md);
+}
+
+.support-landing-quickaction-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--anslation-ds-radius);
+  background: color-mix(in srgb, var(--support-primary) 14%, var(--card));
+  color: var(--support-primary);
+}
+
+.support-landing-quickaction-title {
+  margin: 0;
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.support-landing-quickaction-desc {
+  margin: 0 0 0.2rem;
+  font-size: 0.74rem;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.support-landing-quickaction-btn {
+  align-self: stretch;
+  justify-content: center;
+  min-height: 1.9rem;
+  padding-top: 0.35rem;
+  padding-bottom: 0.35rem;
+  font-size: 0.8rem;
+}
+
+/* ---- Landing page: single merged "Popular Settings" widget ----
+   Was a two-column, six-card dashboard grid; collapsed to one widget card
+   (see SupportLandingPage.jsx's docblock for why) so only the shared
+   `.support-landing-widget` card shell remains in use here. */
 .support-landing-widget {
   border: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--border));
   border-radius: var(--anslation-ds-radius-lg);
@@ -2188,85 +2866,60 @@
   border-radius: 0;
 }
 
-@media (max-width: 900px) {
-  .support-landing-dashboard {
-    grid-template-columns: 1fr;
-  }
-}
-
 /* ---- Persistent top search bar (see SettingsContent) ---- */
 .support-persistent-search {
   margin-bottom: 0.5rem;
 }
 
-/* ---- Premium platform/device picker panel — moved here from the sidebar.
-   PlatformSwitcher's non-compact mode already draws its own card (border/
-   background/padding); stripped here so it doesn't double up inside the
-   `.support-landing-widget` card wrapping it, same pattern used for the
-   row-list-inside-a-widget case above. ---- */
-.support-landing-platform-panel .support-platform-switcher {
-  border: none;
-  background: transparent;
-  padding: 0;
-  margin-bottom: 0;
+/* ---- Premium platform/device picker — moved here from the sidebar,
+   nested inside the hero card (see `.support-landing-hero-platform`
+   above). Restored PlatformSwitcher's own card chrome (border/
+   background) so the picker reads as its own widget instead of blending
+   into the hero's plain white background. Sized to hug its own content
+   (`width: fit-content`) rather than stretched to the hero's full width
+   — the two things that were ever spread apart to fill that width
+   (justify-content: space-between on the row, or an oversized wrapper
+   box) both got explicitly rejected, so the box no longer tries to reach
+   the hero's exact edge at all. What actually closes most of that gap is
+   the card padding below (.support-platform-device-card) — cards wide
+   enough that this fit-content box ends up close to the hero's width on
+   its own, with zero forced gap either inside the box or between cards
+   to get there. `max-width: 100%` keeps it from overflowing a narrow
+   (mobile) hero card — the card row's own horizontal scroll (see the
+   max-width: 640px rules below) handles content wider than that. */
+.support-landing-hero-platform .support-platform-switcher {
+  width: fit-content;
+  max-width: 100%;
 }
 
-/* ---- Personalize widget — real wallpaper-style thumbnail photos (not
-   CSS-drawn swatches), same idea as the wallpaper gallery in Windows
-   "Personalize > Background" or macOS "Wallpaper" settings: a grid of
-   actual image thumbnails you tap to open personalization settings. ---- */
-.support-personalize-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
-  margin-top: 1rem;
+/* Wraps System Overview + Popular Settings + Helpful Tips (see
+   SupportLandingPage.jsx) — everything below the picker that's actually
+   platform-specific. Mirrors `.support-landing`'s own flex-column + gap so
+   adding this wrapper doesn't shift any spacing; `key={platform}` on it
+   remounts the whole block on every device switch, and this animation is
+   what makes that remount read as a deliberate transition instead of a
+   jump-cut. */
+.support-landing-platform-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  animation: support-landing-content-in 320ms ease;
 }
 
-.support-personalize-tile {
-  aspect-ratio: 1;
-  border: none;
-  border-radius: var(--anslation-ds-radius);
-  cursor: pointer;
-  padding: 0;
-  overflow: hidden;
-  background: var(--muted);
-  transition: transform 150ms ease, box-shadow 150ms ease;
+@keyframes support-landing-content-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.support-personalize-tile:hover {
-  transform: translateY(-1px) scale(1.02);
-  box-shadow: var(--anslation-ds-shadow-sm);
-}
-
-.support-personalize-tile-img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.support-personalize-more {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-top: 0.85rem;
-  border: none;
-  background: transparent;
-  padding: 0;
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--support-primary);
-  cursor: pointer;
-}
-
-.support-personalize-more:hover {
-  text-decoration: underline;
-}
-
-@media (max-width: 480px) {
-  .support-personalize-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.4rem;
+@media (prefers-reduced-motion: reduce) {
+  .support-landing-platform-content {
+    animation: none;
   }
 }
 
@@ -2281,6 +2934,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 0.75rem;
+  margin-top: 1rem;
 }
 
 .support-landing-tip-card {
@@ -2291,6 +2945,22 @@
   border-radius: var(--anslation-ds-radius);
   background: color-mix(in srgb, var(--support-primary) 5%, var(--card));
   border: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  /* Rendered as a <button> (it navigates to a real setting) — reset the
+     native button chrome so it still reads as the same card the CSS
+     above was already drawing. */
+  width: 100%;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.support-landing-tip-card:hover,
+.support-landing-tip-card:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: var(--anslation-ds-shadow-sm);
+  border-color: color-mix(in srgb, var(--support-primary) 22%, var(--border));
+  outline: none;
 }
 
 .support-landing-tip-icon {
@@ -2305,11 +2975,24 @@
   color: var(--primary-foreground);
 }
 
+.support-landing-tip-card-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.support-landing-tip-card-title {
+  font-size: 0.83rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
 .support-landing-tip-card p {
   margin: 0;
-  font-size: 0.85rem;
-  line-height: 1.5;
-  color: var(--foreground);
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
 }
 
 .support-landing-popular {
@@ -2401,31 +3084,115 @@
 ============================================================ */
 
 /* ---- Hero search ---- */
+/* Stretches to fill the content column on every page, Home included — the
+   same persistent search bar reads the same width everywhere instead of a
+   narrower, centered "hero" treatment on Home only. */
 .support-home-search {
   position: relative;
   margin-top: 1.25rem;
-  max-width: 34rem;
+  max-width: none;
+  /* Back to the app's own brand color (green/teal `--support-primary` /
+     `--support-secondary`) after feedback that the indigo/violet redesign
+     read as an unwanted purple shade — aliased through these two
+     search-scoped variables (rather than used directly) so every rule
+     below still only needs to reference `--ai-search-accent-*`, keeping
+     the search bar easy to re-theme independently later without another
+     find-and-replace across this whole block. */
+  --ai-search-accent-1: var(--support-primary);
+  --ai-search-accent-2: var(--support-secondary);
+}
+
+/* The soft glow behind the pill is done with `box-shadow` on
+   `.support-home-search-box` itself (see the box-shadow lines in the
+   states below), not a separate blurred pseudo-element. A box-shadow is
+   guaranteed by the CSS spec to paint behind the element's own background,
+   so it can never wash over the pill's white interior or, worse, leak
+   into the suggestions/results panel below — an earlier version used an
+   absolutely-positioned `::before` sized to the *outer* search wrapper,
+   which also contains that dropdown panel, and once the panel was open
+   the blur stretched across its full white background as a visible
+   purple tint (a real reported bug). box-shadow has no such failure mode:
+   it's inherently contained to the shadow-casting element. */
+
+/* The animated gradient border rotates continuously around all four sides
+   of the pill at all times — not just once focused — in three speeds:
+     - idle (nothing focused): a slow, calm rotation.
+     - focused, empty: a medium rotation — "listening".
+     - focused WITH a typed query (.support-home-search-box-typing, set in
+       HomeSearchBar.jsx from the real `searchQuery` value): the fastest
+       rotation + strongest glow — reflects that a real local match is
+       being computed right now (see data/smartSearch.js), not a
+       decorative state unrelated to what's actually happening.
+   `@property` lets the browser interpolate a custom angle so the SAME
+   conic-gradient can be smoothly animated (plain CSS can't animate a
+   gradient's own angle otherwise). Browsers without `@property` support
+   just render the conic-gradient at its initial 0deg — a static ring,
+   not a broken one. */
+@property --support-search-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes support-search-border-spin {
+  to {
+    --support-search-angle: 360deg;
+  }
 }
 
 .support-home-search-box {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 0.65rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--support-primary) 20%, var(--border));
-  background: var(--card);
-  box-shadow: var(--anslation-ds-shadow-sm);
-  padding: 0.85rem 1.15rem;
-  transition: box-shadow 200ms ease, border-color 200ms ease;
+  border: 1.5px solid transparent;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    conic-gradient(
+      from var(--support-search-angle),
+      color-mix(in srgb, var(--ai-search-accent-1) 55%, var(--border)),
+      color-mix(in srgb, var(--ai-search-accent-2) 55%, var(--border)),
+      color-mix(in srgb, var(--ai-search-accent-1) 55%, var(--border))
+    ) border-box;
+  box-shadow: var(--shadow-sm);
+  padding: 0.9rem 1.2rem;
+  animation: support-search-border-spin 9s linear infinite;
+  transition: box-shadow 200ms ease, background 260ms ease;
 }
 
 .support-home-search-box:focus-within {
-  border-color: color-mix(in srgb, var(--support-primary) 45%, var(--border));
-  box-shadow: 0 0 0 4px color-mix(in srgb, var(--support-primary) 12%, transparent), var(--anslation-ds-shadow-sm);
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    conic-gradient(
+      from var(--support-search-angle),
+      color-mix(in srgb, var(--ai-search-accent-1) 65%, transparent),
+      color-mix(in srgb, var(--ai-search-accent-2) 65%, transparent),
+      color-mix(in srgb, var(--ai-search-accent-1) 65%, transparent)
+    ) border-box;
+  animation: support-search-border-spin 5.5s linear infinite;
+  box-shadow: var(--focus-ring), var(--shadow-md);
+}
+
+.support-home-search-box.support-home-search-box-typing {
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    conic-gradient(from var(--support-search-angle), var(--ai-search-accent-1), var(--ai-search-accent-2), var(--ai-search-accent-1)) border-box;
+  animation: support-search-border-spin 2.2s linear infinite;
+  box-shadow: var(--focus-ring), var(--shadow-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .support-home-search-box,
+  .support-home-search-box:focus-within,
+  .support-home-search-box.support-home-search-box-typing {
+    animation: none;
+  }
 }
 
 .support-home-search-icon {
-  color: var(--support-primary);
+  color: var(--ai-search-accent-1);
   flex-shrink: 0;
 }
 
@@ -2435,7 +3202,8 @@
   border: none;
   outline: none;
   background: transparent;
-  font-size: 0.92rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
   color: var(--foreground);
 }
 
@@ -2444,12 +3212,7 @@
 }
 
 .support-home-search-results {
-  position: absolute;
-  top: calc(100% + 0.5rem);
-  left: 0;
-  right: 0;
-  z-index: 20;
-  border: 1px solid color-mix(in srgb, var(--support-primary) 16%, var(--border));
+  border: 1px solid var(--border);
   border-radius: var(--anslation-ds-radius-lg);
   background: var(--card);
   box-shadow: var(--anslation-ds-shadow-md, var(--anslation-ds-shadow-sm));
@@ -2458,12 +3221,36 @@
   overflow-y: auto;
 }
 
-.support-home-search-empty {
+/* Real count, not decorative — mirrors displayResults.length exactly, and
+   doubles as the screen-reader announcement (aria-live) for "results
+   changed" since it's the same honest number either way. */
+.support-home-search-results-count {
+  margin: 0 0 0.5rem;
+  padding: 0 0.25rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+.support-home-search-empty-state {
   padding: 0.85rem;
+  text-align: center;
+}
+
+.support-home-search-empty {
   font-size: 0.82rem;
   color: var(--muted-foreground);
-  text-align: center;
-  margin: 0;
+  margin: 0 0 0.65rem;
+}
+
+/* A dead end ("no matches") is a bad place to just stop — these reuse the
+   same real, working example queries as the idle "Try Asking" panel, so
+   there's always a next honest step instead of a plain "nothing found". */
+.support-home-search-empty-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
 }
 
 .support-home-search-result {
@@ -2477,11 +3264,29 @@
   border-radius: var(--anslation-ds-radius);
   text-align: left;
   cursor: pointer;
-  transition: background-color 150ms ease;
+  transition: background-color 150ms ease, box-shadow 150ms ease, transform 120ms ease;
 }
 
 .support-home-search-result:hover {
-  background: color-mix(in srgb, var(--support-primary) 8%, var(--card));
+  background: color-mix(in srgb, var(--ai-search-accent-1) 7%, var(--card));
+}
+
+/* Quick tactile "registered your tap" feedback — a real press state, not
+   just a hover change, so selecting a result feels responsive even on
+   trackpad/touch clicks that never trigger :hover at all. */
+.support-home-search-result:active {
+  transform: scale(0.985);
+}
+
+/* The keyboard-highlighted row (Up/Down arrows — mirrors the Command
+   Palette's nav). Uses an inset ring rather than swapping the background
+   outright so it stays visually distinct from — and layers cleanly on top
+   of — the "Best match" tint when the top result is also the one
+   currently highlighted (true by default, before any arrow key is
+   pressed). */
+.support-home-search-result-active {
+  background: color-mix(in srgb, var(--ai-search-accent-1) 15%, var(--card));
+  box-shadow: var(--focus-ring);
 }
 
 .support-home-search-result-icon {
@@ -2492,8 +3297,8 @@
   height: 2rem;
   flex-shrink: 0;
   border-radius: var(--anslation-ds-radius);
-  background: color-mix(in srgb, var(--support-primary) 10%, var(--card));
-  color: var(--support-primary);
+  background: color-mix(in srgb, var(--ai-search-accent-1) 10%, var(--card));
+  color: var(--ai-search-accent-1);
 }
 
 .support-home-search-result-text {
@@ -2518,8 +3323,490 @@
 }
 
 .support-home-search-result-arrow {
-  color: var(--support-primary);
+  color: var(--ai-search-accent-1);
   flex-shrink: 0;
+}
+
+/* Ranked-first result gets a subtle tint + a "Best match" badge, so the
+   smart matcher's ranking (see data/smartSearch.js) is visible, not just
+   an invisible sort order. */
+.support-home-search-result-best {
+  background: color-mix(in srgb, var(--ai-search-accent-1) 6%, var(--card));
+}
+
+.support-home-search-best-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: var(--anslation-ds-radius-pill);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--primary-foreground);
+  background: linear-gradient(120deg, var(--ai-search-accent-1), var(--ai-search-accent-2));
+  vertical-align: middle;
+}
+
+/* Small neutral badge on results that AREN'T a plain setting — System
+   Overview, Help & Tools pages, AI Tools — so it's visually clear the
+   result is a different kind of destination, not just an unusual setting
+   title. */
+.support-home-search-kind-badge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.5rem;
+  padding: 0.05rem 0.4rem;
+  border-radius: var(--anslation-ds-radius-pill);
+  border: 1px solid var(--border);
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--muted-foreground);
+  vertical-align: middle;
+}
+
+/* Keyboard-shortcut recap under the results list — purely a recap of the
+   real bindings already handled in handleInputKeyDown (HomeSearchBar.jsx),
+   not a promise of anything new. Hidden below 640px: a touch-only visitor
+   has no arrow keys/Enter/Esc to reference, so the hint would be noise
+   there rather than help. */
+.support-home-search-hints {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 0.35rem;
+  padding: 0.55rem 0.75rem 0.15rem;
+  border-top: 1px solid var(--border);
+}
+
+.support-home-search-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+.support-home-search-hint-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.15rem;
+  height: 1.15rem;
+  padding: 0 0.3rem;
+  border-radius: var(--anslation-ds-radius-sm);
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--foreground) 4%, var(--card));
+  font-family: inherit;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+@media (max-width: 640px) {
+  .support-home-search-hints {
+    display: none;
+  }
+}
+
+/* Shared highlight mark — used by HighlightText.jsx wherever a result's
+   title/description shows the word that was actually typed (Home search
+   dropdown, Other Platforms chips, Command Palette results). A plain
+   `<mark>` reset to the brand palette rather than the browser's default
+   yellow, so it fits the rest of the UI instead of looking like a random
+   find-in-page highlight. */
+.support-search-highlight {
+  background: color-mix(in srgb, var(--support-secondary) 30%, transparent);
+  color: var(--foreground);
+  border-radius: 0.2em;
+  padding: 0 0.05em;
+  font-weight: 700;
+}
+
+/* Inside the Home search bar specifically, the highlight follows the same
+   AI accent pair as the rest of this redesign rather than the app's teal
+   brand color — this rule wins over the shared one above (later in the
+   cascade, equal specificity) only where nested inside .support-home-search,
+   so the Command Palette's highlight (a different surface, out of scope
+   for this redesign) is untouched. */
+.support-home-search .support-search-highlight {
+  background: color-mix(in srgb, var(--ai-search-accent-2) 28%, transparent);
+}
+
+/* Voice search — only ever rendered when the browser actually supports
+   `SpeechRecognition` (see useVoiceSearch in HomeSearchBar.jsx), so
+   there's no risk of a mic icon that does nothing. `.is-listening` pulses
+   with a real box-shadow ring while the browser's own recognition engine
+   is actively capturing audio — tied to genuine recognition state, not a
+   decorative loop. */
+.support-home-search-voice-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--foreground) 4%, var(--card));
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+}
+
+.support-home-search-voice-btn:hover {
+  color: var(--ai-search-accent-1);
+  border-color: color-mix(in srgb, var(--ai-search-accent-1) 40%, var(--border));
+  background: color-mix(in srgb, var(--ai-search-accent-1) 10%, var(--card));
+}
+
+.support-home-search-voice-btn.is-listening {
+  color: var(--ai-search-accent-2);
+  border-color: color-mix(in srgb, var(--ai-search-accent-2) 55%, var(--border));
+  background: color-mix(in srgb, var(--ai-search-accent-2) 14%, var(--card));
+  animation: support-search-voice-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes support-search-voice-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.78;
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .support-home-search-voice-btn.is-listening {
+    animation: none;
+  }
+}
+
+/* Command Palette trigger — jumps to the same global search-everything
+   palette as the Ctrl+K / Cmd+K shortcut, only rendered when the parent
+   page actually wires up onOpenPalette. */
+.support-home-search-command-trigger {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  height: 1.5rem;
+  padding: 0 0.45rem;
+  border-radius: var(--anslation-ds-radius-sm);
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--foreground) 4%, var(--card));
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--muted-foreground);
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+
+.support-home-search-command-trigger:hover {
+  color: var(--ai-search-accent-1);
+  border-color: color-mix(in srgb, var(--ai-search-accent-1) 40%, var(--border));
+  background: color-mix(in srgb, var(--ai-search-accent-1) 10%, var(--card));
+}
+
+/* Suggested-query chips shown before anything is typed — real, working
+   example phrases (see SUGGESTED_QUERIES in HomeSearchBar.jsx), not
+   illustrative-only copy. Uses the same dropdown-panel treatment as the
+   results list below it so it doesn't read as a second, different UI. */
+.support-home-search-suggestions {
+  border: 1px solid var(--border);
+  border-radius: var(--anslation-ds-radius-lg);
+  background: var(--card);
+  box-shadow: var(--anslation-ds-shadow-md, var(--anslation-ds-shadow-sm));
+  padding: 0.85rem;
+}
+
+.support-home-search-suggestions-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.support-home-search-clear-recent {
+  border: none;
+  background: transparent;
+  padding: 0.15rem 0.3rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  border-radius: var(--anslation-ds-radius-sm);
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.support-home-search-clear-recent:hover {
+  color: var(--ai-search-accent-1);
+  background: color-mix(in srgb, var(--ai-search-accent-1) 8%, transparent);
+}
+
+.support-home-search-recent {
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.support-home-search-recent-empty {
+  margin: 0.5rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+}
+
+/* Chip rows scroll horizontally instead of wrapping to a second/third line
+   once there are more suggestions/recent queries than fit — the optional
+   arrow buttons (rendered only when there's actually more to scroll to,
+   see the useScrollArrows hook in HomeSearchBar.jsx) sit either side. The
+   native scrollbar is hidden since the arrows are the intended affordance,
+   but the row stays fully scrollable by trackpad/touch/drag either way. */
+.support-home-search-chip-row-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.support-home-search-chip-row {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 0.45rem;
+  overflow-x: auto;
+  /* Setting only `overflow-x` makes the browser compute `overflow-y` as
+     `auto` too (a real CSS Overflow Module rule: if one axis is scrollable
+     and the other is left at its 'visible' default, the 'visible' one is
+     forced to 'auto' as well) — so this row clips vertically even though
+     only horizontal scrolling was intended. A chip's hover state lifts it
+     1px (`transform: translateY(-1px)`) and adds a soft drop shadow, and
+     without room to spare that got visibly cut off at the row's top edge
+     on hover (a real reported bug). This padding is exactly that spare
+     room, so the lift + shadow stay fully visible instead of clipping. */
+  padding: 0.55rem 0.2rem;
+  margin: -0.55rem -0.2rem;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  flex: 1;
+  min-width: 0;
+  /* Same gentle native-app-like settle as the device-card row below — see
+     that rule's own comment for why `proximity` rather than `mandatory`. */
+  scroll-snap-type: x proximity;
+}
+
+.support-home-search-chip-row::-webkit-scrollbar {
+  display: none;
+}
+
+.support-home-search-scroll-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  box-shadow: var(--anslation-ds-shadow-sm);
+  transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease;
+}
+
+.support-home-search-scroll-btn:hover {
+  color: var(--ai-search-accent-1);
+  border-color: color-mix(in srgb, var(--ai-search-accent-1) 40%, var(--border));
+  background: color-mix(in srgb, var(--ai-search-accent-1) 8%, var(--card));
+}
+
+/* Both the "Try Asking" suggestion chips and the live results list used to
+   be `position: absolute`, floating over whatever content sat below the
+   search bar (a real reported bug — the page content underneath got
+   visually hidden instead of making room). They're normal in-flow elements
+   now, wrapped in this collapsible panel, so opening either one actually
+   pushes the breadcrumb/page content downward like a real expanding
+   section instead of overlapping it.
+   The 0fr → 1fr `grid-template-rows` transition is what lets a smoothly
+   *animated* height work at all without knowing the panel's real height up
+   front (its content — chip count, result count — varies every time), and
+   the inner wrapper's `overflow: hidden` + `min-height: 0` is required for
+   that trick to actually clip during the animation instead of the content
+   just poking out. Both the mount-in and unmount-out are animated (see the
+   `useCollapsible` hook in HomeSearchBar.jsx), so closing collapses
+   smoothly too, not just an instant disappearance. */
+.support-home-search-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  margin-top: 0;
+  transition: grid-template-rows 220ms ease, opacity 180ms ease, margin-top 220ms ease;
+}
+
+.support-home-search-collapse.is-expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 0.5rem;
+}
+
+.support-home-search-collapse-inner {
+  overflow: hidden;
+  min-height: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .support-home-search-collapse {
+    transition: none;
+  }
+}
+
+.support-home-search-suggestions-label {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0 0 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--muted-foreground);
+}
+
+.support-home-search-chip {
+  flex-shrink: 0;
+  padding: 0.4rem 0.85rem;
+  border-radius: var(--anslation-ds-radius-pill);
+  border: 1px solid var(--border);
+  background: var(--card);
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--foreground);
+  white-space: nowrap;
+  transition: border-color 150ms ease, background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+  scroll-snap-align: start;
+}
+
+.support-home-search-chip:hover {
+  border-color: color-mix(in srgb, var(--ai-search-accent-1) 45%, var(--border));
+  background: color-mix(in srgb, var(--ai-search-accent-1) 8%, var(--card));
+  box-shadow: var(--shadow-sm);
+  transform: translateY(-1px);
+}
+
+.support-home-search-chip:active {
+  transform: translateY(0) scale(0.96);
+}
+
+/* A recent-query chip is a container (not itself a button — it holds two:
+   the query text, and a separate "remove" button) since nesting a button
+   inside a button is invalid HTML. */
+.support-home-search-recent-chip {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.4rem 0.35rem 0.85rem;
+  border-radius: var(--anslation-ds-radius-pill);
+  border: 1px solid var(--border);
+  background: var(--card);
+  transition: border-color 150ms ease, background-color 150ms ease;
+  scroll-snap-align: start;
+}
+
+.support-home-search-recent-chip:hover {
+  border-color: color-mix(in srgb, var(--ai-search-accent-2) 40%, var(--border));
+  background: color-mix(in srgb, var(--ai-search-accent-2) 6%, var(--card));
+}
+
+.support-home-search-recent-chip-text {
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--foreground);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.support-home-search-recent-chip-remove {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.3rem;
+  height: 1.3rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  transition: color 150ms ease, background-color 150ms ease;
+}
+
+.support-home-search-recent-chip-remove:hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 10%, transparent);
+}
+
+/* Results/chips fade in with a short stagger the moment a panel opens.
+   `backwards` (deliberately NOT `both`/`forwards`) only holds the "from"
+   state during each item's animation-delay, then releases the property the
+   instant the animation ends — a `forwards` fill would permanently pin
+   `transform` on these same elements, silently disabling the real :hover
+   lift and :active press feedback defined above. */
+@keyframes support-search-item-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.support-home-search-result,
+.support-home-search-chip,
+.support-home-search-recent-chip {
+  animation: support-search-item-fade-in 220ms ease backwards;
+}
+
+.support-home-search-result:nth-child(1) { animation-delay: 0ms; }
+.support-home-search-result:nth-child(2) { animation-delay: 30ms; }
+.support-home-search-result:nth-child(3) { animation-delay: 60ms; }
+.support-home-search-result:nth-child(4) { animation-delay: 90ms; }
+.support-home-search-result:nth-child(5) { animation-delay: 120ms; }
+.support-home-search-result:nth-child(6) { animation-delay: 150ms; }
+
+.support-home-search-chip:nth-child(1),
+.support-home-search-recent-chip:nth-child(1) { animation-delay: 0ms; }
+.support-home-search-chip:nth-child(2),
+.support-home-search-recent-chip:nth-child(2) { animation-delay: 25ms; }
+.support-home-search-chip:nth-child(3),
+.support-home-search-recent-chip:nth-child(3) { animation-delay: 50ms; }
+.support-home-search-chip:nth-child(4),
+.support-home-search-recent-chip:nth-child(4) { animation-delay: 75ms; }
+.support-home-search-chip:nth-child(5),
+.support-home-search-recent-chip:nth-child(5) { animation-delay: 100ms; }
+.support-home-search-chip:nth-child(6),
+.support-home-search-recent-chip:nth-child(6) { animation-delay: 125ms; }
+.support-home-search-chip:nth-child(7),
+.support-home-search-recent-chip:nth-child(7) { animation-delay: 150ms; }
+.support-home-search-chip:nth-child(8),
+.support-home-search-recent-chip:nth-child(8) { animation-delay: 175ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .support-home-search-result,
+  .support-home-search-chip,
+  .support-home-search-recent-chip {
+    animation: none;
+  }
 }
 
 /* ---- Quick actions ---- */
@@ -2552,7 +3839,7 @@
 .support-quick-action-card:focus-visible {
   transform: translateY(-3px);
   border-color: color-mix(in srgb, var(--support-primary) 32%, var(--border));
-  box-shadow: 0 16px 32px color-mix(in srgb, var(--support-primary) 14%, transparent);
+  box-shadow: var(--shadow-md);
 }
 
 .support-quick-action-icon {
@@ -2580,9 +3867,17 @@
 }
 
 /* ---- System overview dashboard ---- */
+/* Was `minmax(180px, 1fr)` with the Storage tile force-spanning 2 columns
+   — at typical content widths that put 3 narrow tiles + 1 double-wide tile
+   in one row: the OS tile's "Windows · Windows 10 / 11" value had barely
+   150px to work with and wrapped across 3 broken lines, while Storage's
+   short "X used of Y available" line sat in ~2x the width it needed,
+   mostly empty. All 4 tiles now share one equal width instead — wide
+   enough (210px) that the OS value comfortably wraps to at most 2 lines,
+   and Storage's progress bar still has plenty of room at that width. */
 .support-overview-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
   gap: 0.75rem;
 }
 
@@ -2598,7 +3893,7 @@
 }
 
 .support-overview-tile-wide {
-  grid-column: span 2;
+  grid-column: span 1;
 }
 
 .support-overview-tile-action {
@@ -2651,11 +3946,11 @@
 }
 
 .support-overview-value-good {
-  color: var(--anslation-ds-success, #16a34a);
+  color: var(--success-text);
 }
 
 .support-overview-value-warn {
-  color: var(--anslation-ds-danger, #dc2626);
+  color: var(--danger-text);
 }
 
 .support-overview-bar {
@@ -2670,6 +3965,109 @@
   height: 100%;
   border-radius: 999px;
   background: var(--support-cta-gradient);
+}
+
+/* Secondary "more device details" chip row — see SystemOverview.jsx for
+   which chips can appear and why each one is independently feature-
+   detected. Deliberately lighter-weight than the 4 tiles above (small
+   inline pills, not cards) so this reads as supplementary detail rather
+   than doubling the size/prominence of the section — but still visually
+   tied to the tiles above it via the same tinted-primary border and a
+   small icon-badge (see .support-overview-chip-icon) matching the tiles'
+   own icon treatment, plus an explicit "More Device Details" label (see
+   .support-overview-chip-row-label) so this reads as a deliberate second
+   section rather than a stray row of pills tacked onto the end. */
+.support-overview-chip-row-label {
+  margin: 0.85rem 0 0.5rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted-foreground);
+}
+
+.support-overview-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* A found-by-testing overflow bug, not a hypothetical: at a 320px-wide
+   viewport, a chip with a longer label ("Screen Resolution", "CPU Cores
+   (logical)") plus its value could add up to wider than the whole row has
+   room for, and — because `flex-wrap: wrap` on the row only ever moves a
+   *whole* chip to the next line, never shrinks one — that single
+   oversized chip pushed past the row's own edge and caused a real,
+   measurable horizontal scrollbar on the entire page (confirmed via a
+   Playwright sweep across breakpoints; every other tested width was
+   clean). `max-width: 100%` stops any one chip from ever claiming more
+   than its row actually has: below.
+   Setting `min-width: 0` here fixed a real, measured bug (a chip pushing
+   the page into horizontal scroll on the actual narrowest supported
+   breakpoint) and is deliberately left permanently applied at every
+   width rather than only inside a narrow-viewport media query — a flex
+   item's default `min-width: auto` blocks it from ever shrinking below
+   its own content's natural size, which is exactly what let the label +
+   value combination overflow in the first place; that failure mode isn't
+   unique to 320px, so the fix isn't either. */
+.support-overview-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.7rem 0.35rem 0.35rem;
+  border-radius: var(--anslation-ds-radius-pill);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--border));
+  background: var(--card);
+  font-size: 0.76rem;
+  color: var(--muted-foreground);
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+.support-overview-chip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  flex-shrink: 0;
+  border-radius: 0.4rem;
+  background: color-mix(in srgb, var(--support-primary) 12%, var(--card));
+  color: var(--support-primary);
+}
+
+.support-overview-chip-label {
+  font-weight: 600;
+  color: var(--foreground);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* `min-width: 0` is what actually lets this shrink below its own text's
+   natural width when the chip as a whole is squeezed (see
+   .support-overview-chip's own comment) — without it, a flex item's
+   default `min-width: auto` overrides `max-width` for shrinking purposes
+   and the ellipsis truncation below never gets a chance to kick in. */
+.support-overview-chip-value {
+  color: var(--muted-foreground);
+  max-width: 12rem;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  /* The label can't shrink (see .support-overview-chip-label) and short
+     viewport widths don't leave 12rem spare for the value on top of a
+     longer label like "CPU Cores (logical)" — this is the other half of
+     the fix for the same real overflow bug, tightening the value's own
+     cap so the pair reliably fits without the value being trimmed to an
+     unreadable sliver. */
+  .support-overview-chip-value {
+    max-width: 7rem;
+  }
 }
 
 /* ---- Helpful guidance ---- */
@@ -2699,7 +4097,7 @@
 .support-guidance-card:focus-visible {
   transform: translateY(-3px);
   border-color: color-mix(in srgb, var(--support-primary) 28%, var(--border));
-  box-shadow: 0 14px 28px color-mix(in srgb, var(--support-primary) 12%, transparent);
+  box-shadow: var(--shadow-md);
 }
 
 .support-guidance-icon {
@@ -2739,114 +4137,6 @@
 .support-guidance-card:focus-visible .support-guidance-arrow {
   opacity: 1;
   transform: translateX(0);
-}
-
-/* ---- Recent activity ---- */
-.support-recent-empty {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  text-align: center;
-  border: 1px dashed color-mix(in srgb, var(--support-primary) 20%, var(--border));
-  border-radius: var(--anslation-ds-radius-lg);
-  padding: 1.75rem 1rem;
-  color: var(--muted-foreground);
-}
-
-.support-recent-empty svg {
-  color: color-mix(in srgb, var(--support-primary) 55%, var(--muted-foreground));
-  margin-bottom: 0.25rem;
-}
-
-.support-recent-empty p {
-  margin: 0;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--foreground);
-}
-
-.support-recent-empty-sub {
-  font-weight: 400 !important;
-  font-size: 0.78rem !important;
-  color: var(--muted-foreground) !important;
-  max-width: 24rem;
-}
-
-/* ---- Popular settings (trimmed, redesigned) ---- */
-.support-popular-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 0.65rem;
-}
-
-.support-popular-card {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  border: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--border));
-  border-radius: 999px;
-  background: var(--card);
-  padding: 0.6rem 0.9rem;
-  cursor: pointer;
-  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
-}
-
-.support-popular-card:hover,
-.support-popular-card:focus-visible {
-  transform: translateY(-2px);
-  border-color: transparent;
-  background: var(--support-cta-gradient);
-  color: var(--primary-foreground);
-  box-shadow: var(--support-cta-shadow);
-}
-
-.support-popular-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.9rem;
-  height: 1.9rem;
-  flex-shrink: 0;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--support-primary) 12%, var(--card));
-  color: var(--support-primary);
-}
-
-.support-popular-card:hover .support-popular-icon {
-  background: color-mix(in srgb, white 25%, transparent);
-  color: inherit;
-}
-
-/* ---- Favorite Settings — reuses the Popular Settings pill/grid layout
-   (same premium card treatment), with a small filled star pushed to the
-   end of each pill via `margin-left: auto` so it sits flush right within
-   the existing flex row, no separate positioning system needed. ---- */
-.support-favorites-star {
-  color: color-mix(in srgb, var(--support-primary) 70%, #f5a524);
-}
-
-.support-favorite-card {
-  border-color: color-mix(in srgb, #f5a524 20%, var(--border));
-}
-
-.support-favorite-card-badge {
-  margin-left: auto;
-  flex-shrink: 0;
-  color: color-mix(in srgb, var(--support-primary) 55%, #f5a524);
-}
-
-.support-favorite-card:hover .support-favorite-card-badge {
-  color: inherit;
-}
-
-.support-popular-title {
-  font-size: 0.82rem;
-  font-weight: 650;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 /* ---- Support discovery ---- */
@@ -3136,7 +4426,6 @@
 @media (prefers-reduced-motion: reduce) {
   .support-quick-action-card,
   .support-guidance-card,
-  .support-popular-card,
   .support-discovery-item,
   .support-discovery-tool,
   .support-overview-tile-action {
@@ -3145,7 +4434,6 @@
 
   .support-quick-action-card:hover,
   .support-guidance-card:hover,
-  .support-popular-card:hover,
   .support-discovery-tool:hover,
   .support-overview-tile-action:hover {
     transform: none;
@@ -3264,24 +4552,36 @@
 }
 
 /* ---- 3. Right sidebar: smaller sponsored rail + collapse.
-   Collapsing animates width AND its own left padding down to a hard 0 —
+   From `lg` (1024px) up this sits beside the article exactly as before:
+   collapsing animates width AND its own left padding down to a hard 0 —
    not down to some small persistent strip — so the main content column
    (a CSS grid track defined as `minmax(0, 1fr)`) reclaims 100% of the
    freed width instead of leaving a permanent dead gap the width of a mini
-   sidebar. The re-expand control is a separate, absolutely-positioned
+   sidebar. The re-expand control there is a separate, absolutely-positioned
    floating button (`.support-ads-collapse-toggle-floating` below) that
    lives outside this column entirely, so it never claims any grid width
    of its own — collapsed or not — and doesn't need to be inside this
-   element to stay reachable while it's animating shut. */
+   element to stay reachable while it's animating shut.
+
+   Below `lg`, `.support-setting-main-wrap` (see the responsive rules
+   further down) drops to a single grid column, so this same rail simply
+   flows below the article in normal document order instead of beside it —
+   tablet gets a collapsible strip under the content, mobile gets the rail
+   stacked under the article, matching the desktop collapse/expand
+   behavior exactly (see `.support-ads-stack-items` below for how
+   "collapsed" is expressed at these sizes, since there's no horizontal
+   width to reclaim there). */
 .support-setting-ads {
   transition: width 220ms ease, padding-left 220ms ease;
 }
 
-.support-setting-ads-collapsed {
-  width: 0 !important;
-  padding-left: 0 !important;
-  overflow: hidden;
-  pointer-events: none;
+@media (min-width: 1024px) {
+  .support-setting-ads-collapsed {
+    width: 0 !important;
+    padding-left: 0 !important;
+    overflow: hidden;
+    pointer-events: none;
+  }
 }
 
 .support-ads-panel-header {
@@ -3294,18 +4594,72 @@
   border-bottom: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--border));
 }
 
-/* ---- 3b. Floating collapse/expand toggle — positioned against the shell
-   (not inside the sponsored column), so it occupies zero layout width in
-   either state and never jumps as the rail beside it animates open/shut.
-   Vertically aligned with the shell's own top padding, which lines up
-   with the top of the content card — the same spot the in-panel toggle
-   used to sit at the top of the (old) "Sponsored" header row. ---- */
+.support-setting-ads-stack {
+  gap: 0.75rem;
+}
+
+.support-ads-stack-items {
+  gap: 0.75rem;
+}
+
+/* ---- 3b. Floating collapse/expand toggle — desktop only (`lg` and up),
+   positioned against the shell (not inside the sponsored column), so it
+   occupies zero layout width in either state and never jumps as the rail
+   beside it animates open/shut. Vertically aligned with the shell's own
+   top padding, which lines up with the top of the content card — the same
+   spot the in-panel toggle used to sit at the top of the (old) "Sponsored"
+   header row. Below `lg` the rail has stacked under the article and uses
+   the inline toggle inside its own header instead (`.support-ads-collapse-
+   toggle-inline` below) — a fixed top/right position relative to the shell
+   no longer means anything once the rail isn't beside it. ---- */
 .support-ads-collapse-toggle-floating {
   position: absolute;
   top: clamp(1rem, 2vw, 1.5rem);
   right: clamp(1rem, 2vw, 1.5rem);
   z-index: 5;
   animation: support-ad-fade-in 220ms ease both;
+}
+
+/* ---- 3c. Inline collapse/expand toggle — the tablet/mobile counterpart
+   to the floating desktop button above, living inside the "Sponsored"
+   header itself so it stays visible (and reachable) even while the ad
+   stack below it is collapsed. `.support-ads-collapse-toggle` already
+   supplies the shared button chrome (size/border/background/hover); this
+   only adds the icon rotation. */
+.support-ads-collapse-toggle-inline .lucide {
+  transition: transform 200ms ease;
+}
+
+/* Both toggles also carry Tailwind's `hidden lg:inline-flex` /
+   `lg:hidden` utilities in the JSX to pick their breakpoint, but this file
+   is deliberately kept outside any CSS `@layer` (see the note near the top
+   of "Round 4" above) specifically so its own rules always win the cascade
+   — which means the shared `.support-ads-collapse-toggle` base class's own
+   `display: inline-flex` would otherwise beat Tailwind's `hidden` utility
+   at a tie, leaving the wrong toggle visible/interactive at the wrong
+   breakpoint. These two rules make each toggle's visibility authoritative
+   here instead of depending on which stylesheet's utility class happens to
+   win that tie. */
+@media (max-width: 1023.98px) {
+  .support-ads-collapse-toggle-floating {
+    display: none !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .support-ads-collapse-toggle-inline {
+    display: none !important;
+  }
+}
+
+/* Below `lg`, "collapsed" no longer means animating the rail's width to 0
+   (there's no horizontal space to reclaim once it's stacked under the
+   article) — it means hiding just the ad stack while the header + inline
+   toggle stay put, so the visitor can always re-expand it. */
+@media (max-width: 1023px) {
+  .support-setting-ads-collapsed .support-ads-stack-items {
+    display: none;
+  }
 }
 
 /* The AdCard component (read-only) renders its own "Sponsored" pill as an
@@ -3540,6 +4894,24 @@
   .support-page-breadcrumb-current {
     max-width: 11rem;
   }
+
+  /* Side-by-side `flex: 1` (set at 640px above) still forces "Back to
+     Support Home" and "Exit Focus Mode" to fit half the screen each on
+     one line (`white-space: nowrap` never wraps them) — at these widths
+     neither label fits its half, and the overflow pushes past the
+     viewport edge instead of shrinking, clipping "Exit Focus Mode" clean
+     off. Stacking them full-width instead gives each label the entire
+     row to fit in, so nothing overflows regardless of how narrow the
+     screen gets. */
+  .support-page-nav-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .support-page-back-btn,
+  .support-page-focus-btn {
+    width: 100%;
+  }
 }
 
 /* ---- 5. AI Tools detail page — reuses every .support-detail-*
@@ -3554,10 +4926,17 @@
   );
 }
 
-.support-aitool-category-badge {
-  background: color-mix(in srgb, var(--support-secondary) 10%, var(--card));
-  border-color: color-mix(in srgb, var(--support-secondary) 24%, var(--border));
-  color: var(--support-secondary);
+/* "Highlights" — Problems + Features side by side as two compact grouped
+   lists instead of two separately-headed sections each with its own wall
+   of bullets (see AiToolDetailPage.jsx). Scoped to .support-aitool-page
+   only, so this never touches SettingDetailPage's own sections, which
+   already use .support-detail-native-list on their own and weren't part
+   of what was asked to change here. Single column below ~640px so the two
+   groups stack instead of squeezing side by side on a phone. */
+.support-aitool-highlights-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.25rem;
 }
 
 /* ---- 6. Landing page "Explore Support Tools" AI Tools teaser ---- */
@@ -3631,7 +5010,66 @@
 /* ---- 9. Loading skeleton — shown only until real platform detection
    and persisted page preferences have both loaded on the client, so a
    visitor never sees a flash of the "windows + defaults" guess before
-   their actual platform/preferences are known. ---- */
+   their actual platform/preferences are known. ----
+   Base look for every `Skeleton`/`SkeletonText` primitive from
+   @altftool/ui used across this module (this loading gate,
+   ContentSkeleton's per-navigation placeholder, and
+   RecommendedResourcesPanel's card skeletons). The shared component only
+   ever renders a bare `.alt-ui-skeleton` span with no visual style of its
+   own — every block below (`.support-skeleton-hero`, `-card`, `-line`,
+   `.support-resource-skeleton-line`, etc.) only sets size/spacing on top
+   of it, so without this base rule a "skeleton" is really just invisible,
+   correctly-sized empty space — which is why loading previously looked
+   like nothing happening rather than a premium shimmer. `Skeleton`/
+   `SkeletonText` are only ever imported inside this module (see
+   ContentSkeleton.jsx, RecommendedResourcesPanel.jsx, SettingsContent.jsx,
+   SupportClient.jsx), so styling their base classes here can't leak into
+   any other part of the site. */
+.alt-ui-skeleton {
+  display: inline-block;
+  background: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--anslation-ds-muted) 14%, var(--card)) 30%,
+    color-mix(in srgb, var(--anslation-ds-muted) 26%, var(--card)) 50%,
+    color-mix(in srgb, var(--anslation-ds-muted) 14%, var(--card)) 70%
+  );
+  background-size: 250% 100%;
+  border-radius: var(--anslation-ds-radius-sm);
+  animation: support-skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+.alt-ui-skeleton-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.alt-ui-skeleton-text__line {
+  display: block;
+  width: 100%;
+  height: 0.8rem;
+}
+
+.alt-ui-skeleton-text__line--last {
+  width: 65%;
+}
+
+@keyframes support-skeleton-shimmer {
+  0% {
+    background-position: 200% 50%;
+  }
+  100% {
+    background-position: -50% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .alt-ui-skeleton {
+    animation: none;
+    background-position: 50% 50%;
+  }
+}
+
 .support-skeleton-sidebar {
   display: flex;
   flex-direction: column;
@@ -4097,10 +5535,12 @@
   flex-shrink: 0;
 }
 
-/* ---- Compatibility banner (wrong-platform experience) — a single,
-   compact inline warning line in the design system's danger/red tone.
-   No card, no stacked buttons: one icon, one sentence (with the official
-   docs link woven inline where it's actually relevant), one dismiss. ---- */
+/* ---- "Platform Optimized" note (formerly the red compatibility warning)
+   — the same single compact inline row below the breadcrumb, restyled
+   from the danger/red tone into brand-tinted glass with a sparkle icon.
+   The red warning treatment is gone entirely: this now reads as part of
+   the Adaptive Experience layer (see components/AdaptiveExperience.jsx),
+   not as an error. Same class names kept so nothing else changes. ---- */
 .support-compat-banner {
   position: relative;
   display: flex;
@@ -4108,8 +5548,12 @@
   gap: 0.6rem;
   padding: 0.7rem 2.5rem 0.7rem 0.85rem;
   border-radius: var(--anslation-ds-radius);
-  border: 1px solid color-mix(in srgb, var(--anslation-ds-danger) 32%, var(--border));
-  background: var(--anslation-ds-danger-soft);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 22%, var(--border));
+  background:
+    linear-gradient(120deg, color-mix(in srgb, var(--support-primary) 7%, transparent), color-mix(in srgb, var(--support-secondary) 5%, transparent)),
+    color-mix(in srgb, var(--card) 72%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   margin-bottom: 1.25rem;
   animation: support-banner-in 220ms var(--anslation-ds-ease-out, ease) both;
 }
@@ -4121,7 +5565,7 @@
 
 .support-compat-banner-icon {
   display: inline-flex;
-  color: var(--anslation-ds-danger);
+  color: var(--support-primary);
   flex-shrink: 0;
 }
 
@@ -4130,7 +5574,7 @@
   min-width: 0;
   font-size: 0.84rem;
   line-height: 1.5;
-  color: color-mix(in srgb, var(--anslation-ds-danger) 55%, var(--foreground));
+  color: color-mix(in srgb, var(--foreground) 82%, var(--support-primary));
   margin: 0;
 }
 
@@ -4140,14 +5584,14 @@
   gap: 0.2rem;
   margin-left: 0.4rem;
   font-weight: 600;
-  color: var(--anslation-ds-danger);
+  color: var(--support-primary);
   text-decoration: underline;
   text-underline-offset: 2px;
   white-space: nowrap;
 }
 
 .support-compat-banner-link:hover {
-  color: color-mix(in srgb, var(--anslation-ds-danger) 80%, black);
+  color: var(--primary-hover);
 }
 
 .support-compat-banner-close {
@@ -4155,13 +5599,13 @@
   top: 50%;
   right: 0.6rem;
   transform: translateY(-50%);
-  color: var(--anslation-ds-danger);
+  color: color-mix(in srgb, var(--support-primary) 70%, var(--foreground));
   padding: 0.25rem;
   border-radius: var(--anslation-ds-radius);
 }
 
 .support-compat-banner-close:hover {
-  background: color-mix(in srgb, var(--anslation-ds-danger) 14%, transparent);
+  background: color-mix(in srgb, var(--support-primary) 12%, transparent);
 }
 
 /* ---- Recommended Resources panel (replaces "Sponsored") ---- */
@@ -4290,15 +5734,25 @@
 }
 
 /* ---- Device landing / coming-soon pages ----
-   Every device in the taxonomy already carries its own brand color
-   (device.color, e.g. Apple blue for iPad, graphite for AirPods, Samsung
-   navy for Galaxy Watch) — DeviceLandingPage now exposes it as
-   `--device-accent` on the page root, not just the small hero icon, so it
-   can tint the hero panel, the guide cards, and every accent below. This
-   is what makes one device's page read as its own space instead of a
-   copy-pasted list wearing the same generic teal everywhere. Every rule
-   here is scoped to `.support-device-landing` (or a class that only ever
-   renders inside it), so none of it reaches OS/utility/AI-tool pages. */
+   Every rule below reads `--device-accent` with a `var(--support-primary)`
+   fallback, but DeviceLandingPage no longer sets `--device-accent` from
+   each device's own brand color (Apple blue for iPad, Samsung navy for
+   Galaxy Watch, etc.) — that per-device rainbow was tried and reverted so
+   this page matches the rest of Support Settings, which already stays on
+   the app's one teal brand color throughout (see the same call already
+   made for `.support-category-hub-row-icon` and the sidebar's device/
+   platform banners). The `var(--device-accent, ...)` fallback chain is
+   left in place rather than rewritten to a flat `var(--support-primary)`
+   so nothing here breaks if a caller ever has a real reason to set it
+   again. Every rule here is scoped to `.support-device-landing` (or a
+   class that only ever renders inside it), so none of it reaches OS/
+   utility/AI-tool pages. */
+.support-device-landing {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
 .support-device-landing-hero {
   position: relative;
   display: flex;
@@ -4306,18 +5760,11 @@
   align-items: flex-start;
   gap: 0.5rem;
   padding: 1.5rem 1.65rem;
-  margin-bottom: 0.5rem;
   border-radius: var(--anslation-ds-radius-lg);
   border: 1px solid color-mix(in srgb, var(--device-accent, var(--support-primary)) 16%, var(--border));
   background:
     radial-gradient(circle at 8% -10%, color-mix(in srgb, var(--device-accent, var(--support-primary)) 12%, transparent), transparent 60%),
     var(--card);
-}
-
-.support-device-landing-hero .support-hero-eyebrow {
-  border-color: color-mix(in srgb, var(--device-accent, var(--support-primary)) 22%, var(--border));
-  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 10%, var(--card));
-  color: var(--device-accent, var(--support-primary));
 }
 
 .support-device-landing-icon {
@@ -4377,120 +5824,6 @@
   text-decoration: underline;
 }
 
-/* "Most used for {device}" highlight block above the full guide list —
-   wrapped in its own soft panel (rather than sitting flush with the rest
-   of the page) so it reads as a featured strip, not just the first
-   section in a flat list. */
-.support-device-landing-highlight {
-  margin-bottom: 1.75rem;
-  padding: 1.1rem 1.1rem 1.25rem;
-  border-radius: var(--anslation-ds-radius-lg);
-  border: 1px solid color-mix(in srgb, var(--device-accent, var(--support-primary)) 14%, var(--border));
-  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 4%, var(--card));
-}
-
-.support-device-landing-highlight-heading {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--foreground);
-  margin: 0 0 0.85rem;
-}
-
-.support-device-landing-highlight-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.6rem;
-  height: 1.6rem;
-  flex-shrink: 0;
-  border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 16%, var(--card));
-  color: color-mix(in srgb, var(--device-accent, var(--support-primary)) 70%, #f5a524);
-}
-
-/* Difficulty / reading-time badges on each guide card. */
-.support-card-meta-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  margin: 0.6rem 0;
-}
-
-.support-card-meta-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.7rem;
-  font-weight: 600;
-  color: var(--muted-foreground);
-  background: color-mix(in srgb, var(--support-primary) 6%, var(--card));
-  border: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--border));
-  border-radius: 999px;
-  padding: 0.2rem 0.55rem;
-}
-
-.support-card-meta-badge svg {
-  width: 0.75rem;
-  height: 0.75rem;
-}
-
-/* Guide cards sit in a CSS grid row (.support-card-grid), and grid rows
-   stretch every item to match the tallest one by default. `.support-card-
-   description` (the base class this extends) carries `flex: 1` so it can
-   grow to push the CTA to the bottom in OTHER, non-clamped uses — but on a
-   clamped description that same flex-grow lets a taller sibling card in the
-   row stretch this box past its intended 2-line height, and a `-webkit-box`
-   line-clamp doesn't clip cleanly once something else has forced it taller
-   than its own content — the result is a sliver of a 3rd/4th line peeking
-   out, chopped mid-character, instead of a clean two-line ellipsis. Pinning
-   `flex` back to its own content size and adding an explicit max-height
-   backstop (2 lines at this class's own 1.5 line-height) makes the clamp
-   height deterministic regardless of how tall the row stretches the card —
-   the CTA below still lands at the bottom via its own `margin-top: auto`,
-   so nothing about the card's overall layout changes. */
-.support-card-description-clamp {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  flex: 0 1 auto;
-  max-height: 3em;
-}
-
-/* Guides grouped by category, when a device has more than one category
-   worth of settings. */
-.support-device-landing-category-section {
-  margin-bottom: 1.75rem;
-}
-
-.support-device-landing-category-section:last-child {
-  margin-bottom: 0;
-}
-
-.support-device-landing-category-heading {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--foreground);
-  margin: 0 0 0.85rem;
-  padding-left: 0.7rem;
-  border-left: 3px solid var(--device-accent, var(--support-primary));
-}
-
-.support-device-landing-category-count {
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--device-accent, var(--support-primary));
-  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 10%, var(--card));
-  border-radius: 999px;
-  padding: 0.15rem 0.5rem;
-}
-
 .support-device-comingsoon {
   border: 1px dashed color-mix(in srgb, var(--support-primary) 26%, var(--border));
   border-radius: var(--anslation-ds-radius-lg);
@@ -4510,57 +5843,73 @@
   gap: 0.65rem;
 }
 
-.support-device-guide-card {
-  cursor: pointer;
-  text-align: left;
-}
-
-.support-device-guide-card-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--support-primary);
-  margin-top: auto;
-}
-
-.support-device-landing-siblings {
-  margin-top: 2rem;
-}
-
 .support-device-landing-sibling-grid {
   margin-top: 0.5rem;
 }
 
-/* Guide cards on a device page reuse the sitewide `.support-card` /
-   `.support-card-icon` classes (also used by OS settings, AI tools, and
-   utility pages) — these two rules only retint them while inside
-   `.support-device-landing`, so every other page keeps its plain
-   `--support-primary` teal exactly as before. */
-.support-device-landing .support-card-icon {
-  background: color-mix(in srgb, var(--device-accent, var(--support-primary)) 14%, var(--card));
-  color: var(--device-accent, var(--support-primary));
+/* Wraps CategoryHubGroup instances (one per device category) — same idea
+   as `.support-cathub`'s own flex+gap, just scoped to this section since
+   DeviceLandingPage keeps its own `<section>` wrapper for the aria-label. */
+.support-device-landing-guides {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-.support-device-landing .support-card:hover {
-  border-color: color-mix(in srgb, var(--device-accent, var(--support-primary)) 32%, var(--border));
-  box-shadow: 0 16px 32px color-mix(in srgb, var(--device-accent, var(--support-primary)) 14%, transparent);
+/* Tips & Learning — small cards surfacing a real authored tip
+   (setting.tipsAndTricks, not invented text) with a byline back to the
+   guide it came from. */
+.support-device-tip-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 0.75rem;
 }
 
-.support-device-landing .support-device-guide-card-cta {
-  color: var(--device-accent, var(--support-primary));
+.support-device-tip-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  align-items: flex-start;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border-radius: var(--anslation-ds-radius-lg);
+  border: 1px solid var(--border);
+  background: var(--card);
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.support-device-tip-card:hover,
+.support-device-tip-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--support-primary) 30%, var(--border));
+  box-shadow: var(--shadow-md);
+  outline: none;
+}
+
+.support-device-tip-text {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--foreground);
+}
+
+.support-device-tip-source {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--support-primary);
 }
 
 /* ---- Category hub: flat native-style settings list ----
    Replaces the card-grid layout for OS category pages (e.g. "Display,
-   Sound & Notifications") with a single, dense, divided list — the shape
-   every native Settings app uses for a category's sub-settings (icon,
-   title, one-line description, chevron; no badges, no "most used"
-   callout, no card grid). Scoped entirely to its own classes, so
-   `.support-card` / `.support-device-landing-guides` and every page that
-   still uses the card-grid layout (device pages, AI tools, utilities)
-   are completely unaffected. */
+   Sound & Notifications") — and now device pages too (see
+   DeviceLandingPage.jsx, which reuses these same row/group components) —
+   with a single, dense, divided list — the shape every native Settings
+   app uses for a category's sub-settings (icon, title, one-line
+   description, chevron; no badges, no "most used" callout, no card grid).
+   `.support-card` (the bordered-card layout) is still used elsewhere —
+   AI tools, utility pages, and "Related Settings" style strips — this
+   list is scoped entirely to its own classes so those are unaffected. */
 .support-category-hub-list {
   display: flex;
   flex-direction: column;
@@ -4602,16 +5951,16 @@
   height: 2.25rem;
   flex-shrink: 0;
   border-radius: 0.6rem;
-  /* `--category-accent` is set inline per-row (see CategoryHubPage,
-     SettingDetailPage's Related Settings, and SupportLandingPage's
-     Recommended/Popular/Favorite widgets), one distinct color per setting
-     category — matching how native Settings apps give each category area
-     its own icon color instead of repeating one brand color everywhere.
-     Falls back to the platform/device accent, then the app's teal brand
-     color, for any row that doesn't set a category (there shouldn't be
-     any, but this keeps old callers from breaking). */
-  background: color-mix(in srgb, var(--category-accent, var(--device-accent, var(--support-primary))) 14%, var(--card));
-  color: var(--category-accent, var(--device-accent, var(--support-primary)));
+  /* Deliberately NOT reading `--category-accent` or `--device-accent` here
+     (each row still sets `--category-accent` inline — see CategoryHubPage,
+     SettingDetailPage's Related Settings, SupportLandingPage's Recommended/
+     Popular/Favorite widgets — but this rule ignores it). A per-category
+     rainbow treatment and per-platform brand-color leakage were both tried
+     and explicitly rejected: the app's single teal brand color, matching
+     the setting detail page's own icon treatment, is the one consistent
+     theme every icon on Support Settings should use. */
+  background: color-mix(in srgb, var(--support-primary) 14%, var(--card));
+  color: var(--support-primary);
 }
 
 .support-category-hub-row-text {
@@ -4661,7 +6010,6 @@
   border-radius: var(--anslation-ds-radius-pill);
   border: 1px solid var(--border);
   color: var(--anslation-ds-muted);
-  margin-left: auto;
   flex-shrink: 0;
   transition: color 150ms ease, border-color 150ms ease, transform 150ms ease;
 }
@@ -4675,6 +6023,47 @@
   color: var(--anslation-ds-warning);
   border-color: color-mix(in srgb, var(--anslation-ds-warning) 40%, var(--border));
   background: var(--anslation-ds-warning-soft);
+}
+
+/* ---- Share / Print icon buttons — grouped with Bookmark (see
+   SettingDetailPage.jsx) as this page's own "meta actions" row. The
+   group itself carries the `margin-left: auto` that used to live
+   directly on .support-bookmark-btn, so the whole trio still gets
+   pushed to the far right of the hero exactly like the bookmark star
+   did on its own before. ---- */
+.support-detail-hero-icon-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.support-detail-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: var(--anslation-ds-radius-pill);
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--anslation-ds-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
+}
+
+.support-detail-icon-btn:hover {
+  transform: scale(1.06);
+  color: var(--support-primary);
+  border-color: color-mix(in srgb, var(--support-primary) 35%, var(--border));
+  background: color-mix(in srgb, var(--support-primary) 6%, var(--card));
+}
+
+.support-detail-icon-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--anslation-ds-focus-ring);
 }
 
 .support-detail-hero-title-col {
@@ -4907,7 +6296,16 @@
   .support-platform-switcher-row {
     flex-wrap: nowrap;
     overflow-x: auto;
-    padding-bottom: 0.25rem;
+    /* No padding-bottom override here anymore — the non-compact row
+       (.support-platform-device-row-outer) now sets its own top/bottom
+       padding + matching negative margin at every width, including this
+       one, to keep the active/hover card's box-shadow from being clipped
+       by this same overflow-x's forced overflow-y (see that rule's own
+       comment). Re-setting a smaller padding-bottom here would undo that
+       fix just at this breakpoint without touching the margin that
+       compensates for it, visually shifting the row. Compact mode (the
+       only other user of this shared class) doesn't need it — the
+       override two rules below resets padding-bottom to 0 for it anyway. */
     -webkit-overflow-scrolling: touch;
   }
 
@@ -4934,6 +6332,37 @@
 
   .support-platform-switcher-pills-compact {
     flex-wrap: wrap;
+  }
+
+  /* The non-compact (Home) device-card row inherits the same nowrap +
+     horizontal-swipe behavior as the old pill row above, on purpose — it
+     matches the horizontal-scroll convention this page already uses
+     elsewhere (Recent Searches, Try Asking chips) instead of wrapping much
+     bigger cards into a cramped multi-row grid on a phone-width screen.
+     Two additions on top of that inherited behavior: `flex-shrink: 0` so a
+     card can never get squeezed narrower by the row's own nowrap (verified
+     — without this, the cards were fine in testing, but nothing upstream
+     actually guarantees it), and a right-edge fade on the row's wrapper so
+     there's a visible hint more devices are off-screen to the right,
+     instead of the row just ending abruptly at the card in view. */
+  .support-platform-device-row .support-platform-device-card,
+  .support-platform-device-row .support-devicemenu-wrap {
+    flex-shrink: 0;
+  }
+
+  .support-platform-device-row-outer {
+    position: relative;
+  }
+
+  .support-platform-device-row-outer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0.25rem;
+    width: 2.5rem;
+    pointer-events: none;
+    background: linear-gradient(to right, transparent, var(--card));
   }
 
   .support-devicemenu-grid {
@@ -4979,4 +6408,1624 @@
 
 [data-theme="dark"] .support-devicepicker-panel {
   box-shadow: 0 20px 48px rgb(0 0 0 / 46%);
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   PREMIUM NAVIGATION LOADING — a brief skeleton + fade/slide transition
+   on every activeId change (setting, category, device, OS, utility, AI
+   tool), driven from SettingsContent.jsx. The persistent search bar and
+   breadcrumb bar live outside this, so they never flicker — only the
+   page body itself transitions. See components/ContentSkeleton.jsx.
+   ════════════════════════════════════════════════════════════════════ */
+@keyframes support-page-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.support-page-transition-in {
+  animation: support-page-fade-in 260ms ease;
+}
+
+.support-page-content-skeleton {
+  position: relative;
+  animation: support-page-fade-in 200ms ease;
+}
+
+.support-page-progressbar {
+  position: absolute;
+  top: -0.75rem;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--support-primary) 10%, transparent);
+  overflow: hidden;
+}
+
+@keyframes support-page-progressbar-fill {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 92%;
+  }
+}
+
+.support-page-progressbar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--support-cta-gradient);
+  animation: support-page-progressbar-fill 300ms ease-out forwards;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   CATEGORY HUB PAGE — premium redesign. Replaces the old "big empty
+   hero + one long flat list" layout with a compact stat-driven hero,
+   a Quick Access strip, a Recently Viewed strip (real data — see
+   preferences.js — never fabricated), collapsible grouped sections,
+   in-category search, status/badge pills, a per-row quick-action button,
+   and a Related Settings strip at the bottom. Everything here is scoped
+   to `.support-cathub-*` classes plus the existing `.support-category-
+   hub-list/-row/-icon/-text/-title/-desc` primitives it still reuses for
+   row layout — so SupportLandingPage's widgets, SettingDetailPage's
+   Related Settings, and every other consumer of those shared classes are
+   completely unaffected.
+   ════════════════════════════════════════════════════════════════════ */
+.support-cathub {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Compact hero — roughly half the height of the old
+   `.support-device-landing-hero` treatment: icon + title sit on one row,
+   the description drops to a single line, and the old big empty bottom
+   margin is gone. Stats replace the empty space instead. */
+.support-cathub-hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.1rem 1.3rem;
+  border-radius: var(--anslation-ds-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 16%, var(--border));
+  background:
+    radial-gradient(circle at 8% 0%, color-mix(in srgb, var(--support-primary) 8%, transparent), transparent 10rem),
+    var(--card);
+}
+
+/* A quiet decorative flourish on the right — two soft, blurred color
+   blobs sitting behind the content, never competing with the title/
+   description/stats for attention. Pure CSS pseudo-elements (no
+   illustration asset to source, license, or keep in sync with each
+   category's own accent) rather than real DOM nodes, so there's nothing
+   here for assistive tech to encounter in the first place; `pointer-
+   events: none` and the hero's own `overflow: hidden` keep them from ever
+   affecting layout width or click targets. Hidden below the point where
+   the hero stacks the icon above the title (see the responsive rules
+   further down) — there's no spare right-hand space for it once the
+   layout goes single-column. */
+.support-cathub-hero::before,
+.support-cathub-hero::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.support-cathub-hero::before {
+  right: -3rem;
+  width: 11rem;
+  height: 11rem;
+  background: color-mix(in srgb, var(--support-primary) 16%, transparent);
+  filter: blur(2.25rem);
+}
+
+.support-cathub-hero::after {
+  right: 4rem;
+  width: 6rem;
+  height: 6rem;
+  background: color-mix(in srgb, var(--support-secondary) 20%, transparent);
+  filter: blur(1.5rem);
+}
+
+.support-cathub-hero-top {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.support-cathub-hero-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex-shrink: 0;
+  border-radius: var(--anslation-ds-radius);
+  background: color-mix(in srgb, var(--support-primary) 16%, var(--card));
+  color: var(--support-primary);
+}
+
+.support-cathub-hero-title-col {
+  min-width: 0;
+  flex: 1;
+}
+
+.support-cathub-hero-title {
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  font-weight: 780;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.support-cathub-hero-desc {
+  font-size: 0.82rem;
+  color: var(--muted-foreground);
+  margin: 0.1rem 0 0;
+  line-height: 1.4;
+}
+
+.support-cathub-hero-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.support-cathub-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--anslation-ds-muted);
+  padding: 0.3rem 0.6rem;
+  border-radius: var(--anslation-ds-radius-pill);
+  background: color-mix(in srgb, var(--support-primary) 6%, var(--card));
+  border: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--border));
+}
+
+.support-cathub-stat svg {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+/* Quick Access + Recently Viewed strips — compact horizontal cards, not
+   full rows, so 3-5 of them read as a featured shelf rather than another
+   copy of the list below. */
+.support-cathub-strip-title {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--foreground);
+  margin: 0 0 0.6rem;
+}
+
+.support-cathub-strip-title svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  color: var(--support-primary);
+}
+
+.support-cathub-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.65rem;
+}
+
+.support-cathub-strip-card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--anslation-ds-radius);
+  border: 1px solid var(--border);
+  background: var(--card);
+  text-align: left;
+  cursor: pointer;
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+
+.support-cathub-strip-card:hover,
+.support-cathub-strip-card:focus-visible {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--support-primary) 30%, var(--border));
+  box-shadow: var(--shadow-md);
+  outline: none;
+}
+
+.support-cathub-strip-card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: 0.55rem;
+  background: color-mix(in srgb, var(--support-primary) 14%, var(--card));
+  color: var(--support-primary);
+}
+
+.support-cathub-strip-card-title {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+
+/* Collapsible groups */
+.support-cathub-group {
+  border: 1px solid var(--border);
+  border-radius: var(--anslation-ds-radius-lg);
+  background: var(--card);
+  overflow: hidden;
+}
+
+.support-cathub-group-trigger {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 0.5rem;
+  padding: 0.8rem 1.1rem;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.support-cathub-group-trigger:hover {
+  background: color-mix(in srgb, var(--support-primary) 4%, var(--card));
+}
+
+.support-cathub-group-count {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--support-primary);
+  background: color-mix(in srgb, var(--support-primary) 10%, var(--card));
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+}
+
+.support-cathub-group-chevron {
+  margin-left: auto;
+  width: 1rem;
+  height: 1rem;
+  color: var(--anslation-ds-muted);
+  transition: transform 200ms ease;
+}
+
+.support-cathub-group-chevron-open {
+  transform: rotate(180deg);
+}
+
+.support-cathub-group-body {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--border);
+}
+
+/* Premium interactive row — extends the existing flat
+   `.support-category-hub-row` with badges, a status pill, a dedicated
+   quick-action button, and a slightly stronger hover treatment. */
+.support-cathub-row-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.25rem;
+}
+
+.support-cathub-row-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.66rem;
+  font-weight: 700;
+  padding: 0.12rem 0.45rem;
+  border-radius: 999px;
+}
+
+.support-cathub-row-badge svg {
+  width: 0.65rem;
+  height: 0.65rem;
+}
+
+.support-cathub-row-badge-recommended {
+  color: var(--support-primary);
+  background: color-mix(in srgb, var(--support-primary) 12%, var(--card));
+}
+
+.support-cathub-row-badge-frequent {
+  color: var(--warning-text);
+  background: var(--anslation-ds-warning-soft);
+}
+
+.support-cathub-row-badge-difficulty {
+  color: var(--anslation-ds-muted);
+  background: color-mix(in srgb, var(--anslation-ds-muted) 10%, var(--card));
+}
+
+.support-cathub-row-action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: var(--anslation-ds-radius-pill);
+  border: 1px solid var(--border);
+  color: var(--anslation-ds-muted);
+  background: var(--card);
+  transition: color 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+
+.support-cathub-row-action:hover {
+  color: var(--support-primary);
+  border-color: color-mix(in srgb, var(--support-primary) 35%, var(--border));
+  transform: scale(1.06);
+}
+
+/* Pin/favorite star — same pill-button treatment as the quick-action
+   button above, in the same warm amber already used for favorites
+   elsewhere in this app (e.g. the old Favorite Settings pill), not a new
+   color. Optional (see CategoryHubRow) — only rendered when a caller
+   passes `onToggleBookmark`. */
+.support-cathub-row-bookmark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: var(--anslation-ds-radius-pill);
+  border: 1px solid var(--border);
+  color: var(--anslation-ds-muted);
+  background: var(--card);
+  transition: color 150ms ease, border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
+}
+
+.support-cathub-row-bookmark:hover {
+  color: var(--warning-text);
+  border-color: color-mix(in srgb, var(--warning) 30%, var(--border));
+  transform: scale(1.06);
+}
+
+.support-cathub-row-bookmark-active {
+  color: var(--warning-text);
+  border-color: color-mix(in srgb, var(--warning) 30%, var(--border));
+  background: var(--warning-soft);
+}
+
+
+@media (max-width: 640px) {
+  .support-cathub-hero-top {
+    flex-wrap: wrap;
+  }
+
+  .support-cathub-hero::before,
+  .support-cathub-hero::after {
+    display: none;
+  }
+
+  .support-landing-hero-top {
+    flex-wrap: wrap;
+  }
+
+  .support-landing-hero-illustration {
+    display: none;
+  }
+
+  .support-cathub-strip {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   COMMAND PALETTE — the global Ctrl+K / Cmd+K "ask anything" surface
+   (see components/CommandPalette.jsx). Deliberately reuses the exact same
+   backdrop/panel/scale-in treatment as the existing Device Picker modal
+   (.support-devicepicker-*) rather than inventing a second modal language,
+   just with its own class prefix since the internal layout (a persistent
+   top search input + a live-filtered list, not a static grid of cards) is
+   different enough to need its own rules.
+   ════════════════════════════════════════════════════════════════════ */
+.support-command-palette-anchor {
+  display: none;
+}
+
+.support-command-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 10vh 1.25rem 5vh;
+  background: var(--anslation-ds-overlay);
+  backdrop-filter: blur(2px);
+  animation: support-picker-backdrop-in 180ms ease both;
+}
+
+.support-command-panel {
+  display: flex;
+  flex-direction: column;
+  width: min(38rem, 100%);
+  max-height: 75vh;
+  border-radius: var(--anslation-ds-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 18%, var(--border));
+  background: var(--card);
+  box-shadow: var(--anslation-ds-shadow-lg);
+  overflow: hidden;
+  animation: support-picker-panel-in 200ms var(--anslation-ds-ease-out, ease) both;
+}
+
+.support-command-search {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--support-primary) 12%, var(--border));
+  flex-shrink: 0;
+}
+
+.support-command-search-icon {
+  color: var(--support-primary);
+  flex-shrink: 0;
+}
+
+.support-command-search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 0.95rem;
+  color: var(--foreground);
+}
+
+.support-command-search-input::placeholder {
+  color: var(--muted-foreground);
+}
+
+.support-command-kbd {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 1.5rem;
+  padding: 0 0.5rem;
+  border-radius: var(--anslation-ds-radius-sm);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 18%, var(--border));
+  background: color-mix(in srgb, var(--support-primary) 6%, var(--card));
+  font-family: inherit;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+.support-command-body {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.65rem;
+  min-height: 8rem;
+}
+
+.support-command-section-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.35rem 0.5rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: var(--muted-foreground);
+}
+
+/* Only rendered once the Hugging Face embedding model has actually
+   produced the current ranking (see data/semanticSearch.js /
+   CommandPalette.jsx) — this label is a fact about what happened, not
+   decoration, so it never appears for a plain keyword match. Shared visual
+   treatment with .support-home-search-semantic-flag below. */
+.support-command-semantic-flag,
+.support-home-search-semantic-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--anslation-ds-radius-pill);
+  background: color-mix(in srgb, var(--support-secondary) 14%, transparent);
+  color: var(--support-secondary);
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.support-home-search-semantic-flag {
+  margin: 0 0.5rem 0.5rem;
+}
+
+.support-command-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 2.5rem 1rem;
+  color: var(--anslation-ds-muted);
+  text-align: center;
+}
+
+.support-command-empty p {
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+.support-command-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.support-command-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.6rem 0.65rem;
+  border: none;
+  background: transparent;
+  border-radius: var(--anslation-ds-radius);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.support-command-item:hover,
+.support-command-item-active {
+  background: color-mix(in srgb, var(--support-primary) 9%, var(--card));
+}
+
+.support-command-item-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.9rem;
+  height: 1.9rem;
+  flex-shrink: 0;
+  border-radius: var(--anslation-ds-radius);
+  background: color-mix(in srgb, var(--support-primary) 10%, var(--card));
+  color: var(--support-primary);
+}
+
+.support-command-item-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.support-command-item-title {
+  font-size: 0.85rem;
+  font-weight: 650;
+  color: var(--foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.support-command-item-desc {
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.support-command-item-badge {
+  flex-shrink: 0;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--anslation-ds-radius-pill);
+  border: 1px solid var(--border);
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.support-command-item-arrow {
+  color: var(--support-primary);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.support-command-item:hover .support-command-item-arrow,
+.support-command-item-active .support-command-item-arrow {
+  opacity: 1;
+}
+
+.support-command-footer {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.6rem 1rem;
+  border-top: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  font-size: 0.72rem;
+  color: var(--muted-foreground);
+  flex-shrink: 0;
+}
+
+.support-command-footer span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.support-command-footer span:last-child {
+  margin-left: auto;
+}
+
+.support-command-footer kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.2rem;
+  height: 1.2rem;
+  padding: 0 0.3rem;
+  border-radius: var(--anslation-ds-radius-sm);
+  border: 1px solid var(--border);
+  background: var(--card);
+  font-family: inherit;
+  font-size: 0.65rem;
+}
+
+@media (max-width: 640px) {
+  .support-command-backdrop {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .support-command-panel {
+    width: 100%;
+    max-height: 100%;
+    border-radius: 0;
+    border-width: 0;
+  }
+
+  .support-command-footer span:not(:last-child) {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .support-command-backdrop,
+  .support-command-panel {
+    animation: none;
+  }
+}
+
+[data-theme="dark"] .support-command-panel {
+  box-shadow: var(--shadow-lg);
+}
+
+/* ============================================================
+   Onboarding coach-mark — one-time "here's where things are" hint
+   highlighting the search bar and device picker on a visitor's very first
+   visit to Support Settings (see data/onboarding.js and components/
+   OnboardingCoachMark.jsx). Deliberately lightweight: a highlight ring
+   drawn around the real element (pointer-events: none, so the search bar/
+   device picker underneath stay fully clickable/typeable) plus a small
+   anchored tooltip bubble — never a full-screen dimmed modal, matching the
+   "chhota" (small/light) hint that was actually asked for.
+============================================================ */
+.support-onboarding-ring {
+  position: fixed;
+  z-index: 1050;
+  border-radius: 14px;
+  border: 2px solid var(--support-primary);
+  box-shadow: var(--focus-ring), var(--shadow-md);
+  pointer-events: none;
+  animation: support-onboarding-ring-in 320ms ease, support-onboarding-pulse 2.2s ease-in-out 320ms infinite;
+  transition: top 250ms ease, left 250ms ease, width 250ms ease, height 250ms ease;
+}
+
+@keyframes support-onboarding-ring-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes support-onboarding-pulse {
+  0%,
+  100% {
+    box-shadow: var(--focus-ring), var(--shadow-md);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: var(--focus-ring), var(--shadow-md);
+    transform: scale(1.015);
+  }
+}
+
+.support-onboarding-tooltip {
+  position: fixed;
+  z-index: 1051;
+  /* min() keeps this consistent with the JS positioning logic (see
+     OnboardingCoachMark.jsx's own `TOOLTIP_WIDTH = Math.min(300,
+     window.innerWidth - 24)`) at every viewport width, instead of relying
+     on a separate max-width/breakpoint override the JS clamp math doesn't
+     know about. box-sizing: border-box is what makes this `width` actually
+     equal the rendered box (padding included) rather than the box coming
+     out wider than the value the JS math clamped against. */
+  width: min(300px, calc(100vw - 24px));
+  box-sizing: border-box;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--anslation-ds-radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 0.9rem 1rem 1rem;
+  animation: support-onboarding-tooltip-in 280ms ease;
+}
+
+@keyframes support-onboarding-tooltip-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Bubble is anchored above the target instead of below it (see the
+   `placeAbove` logic in OnboardingCoachMark.jsx) — its entrance slides
+   from the opposite direction so it still reads as "growing out of" the
+   ring it points at, rather than sliding in from the wrong side. */
+.support-onboarding-tooltip-above {
+  animation-name: support-onboarding-tooltip-in-above;
+}
+
+@keyframes support-onboarding-tooltip-in-above {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.support-onboarding-close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: var(--anslation-ds-radius-pill);
+  border: none;
+  background: transparent;
+  color: var(--anslation-ds-muted);
+  cursor: pointer;
+  transition: background-color 150ms ease, color 150ms ease;
+}
+
+.support-onboarding-close:hover {
+  background: color-mix(in srgb, var(--support-primary) 8%, transparent);
+  color: var(--support-primary);
+}
+
+.support-onboarding-close:focus-visible {
+  outline: none;
+  box-shadow: var(--anslation-ds-focus-ring);
+}
+
+.support-onboarding-step {
+  margin: 0 0 0.2rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--support-primary);
+}
+
+.support-onboarding-title {
+  margin: 0 0 0.3rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--foreground);
+  padding-right: 1.2rem;
+}
+
+.support-onboarding-text {
+  margin: 0 0 0.8rem;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--anslation-ds-muted);
+}
+
+.support-onboarding-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+
+.support-onboarding-skip {
+  border: none;
+  background: transparent;
+  color: var(--anslation-ds-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.4rem 0.3rem;
+}
+
+.support-onboarding-skip:hover {
+  color: var(--foreground);
+}
+
+.support-onboarding-next {
+  border: none;
+  border-radius: var(--anslation-ds-radius-pill);
+  padding: 0.45rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--primary-foreground);
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--support-primary), var(--support-secondary));
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.support-onboarding-next:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.support-onboarding-next:focus-visible,
+.support-onboarding-skip:focus-visible {
+  outline: none;
+  box-shadow: var(--anslation-ds-focus-ring);
+}
+
+/* ============================================================
+   Print — "Print this guide" (see SettingDetailPage.jsx's Printer
+   button). Only kicks in via an actual print/print-preview; nothing here
+   is visible on screen. The goal is what a native OS Settings app's own
+   "print this article" would produce: just the guide's own content, full
+   width, no navigation chrome, no ads, no buttons that can't do anything
+   on paper anyway.
+============================================================ */
+@media print {
+  /* The onboarding ring/tooltip only ever render on Home, and only for a
+     visitor who hasn't dismissed them yet — but the browser's native
+     Ctrl/Cmd+P works on any page, so this is a safety net rather than
+     something expected to actually trigger often. */
+  .support-onboarding-ring,
+  .support-onboarding-tooltip {
+    display: none !important;
+  }
+
+  /* Sidebar (desktop + mobile), the sponsored rail and its floating
+     toggle, the persistent search bar, and the breadcrumb/back/Focus
+     Mode nav row — none of it is content, all of it is navigation for a
+     screen that won't exist on the printed page. */
+  .support-setting-sticky,
+  .md\:hidden.fixed.inset-y-0.left-0,
+  .support-settings-mobile-toggle,
+  .support-setting-ads,
+  .support-ads-collapse-toggle-floating,
+  .support-persistent-search,
+  .support-page-nav,
+  /* This page's own Bookmark/Share/Print buttons and the "Was this
+     helpful?" prompt are all interactive controls with nothing for them
+     to do once they're ink on paper. */
+  .support-detail-print-hide,
+  .support-was-helpful {
+    display: none !important;
+  }
+
+  /* The main column no longer needs to share width with a sidebar/rail
+     that isn't printing, and the sticky/scroll containers around it
+     shouldn't clip a tall article across page breaks. */
+  .support-setting-shell,
+  .support-setting-main-wrap {
+    display: block !important;
+  }
+
+  .support-setting-main {
+    width: 100% !important;
+  }
+
+  .support-detail-page {
+    max-width: 100%;
+  }
+
+  /* Printers vary widely in how they render this app's soft brand tints
+     and shadows — force system ink-on-paper colors so the guide stays legible
+     regardless, rather than assuming every printer reproduces color (or
+     that a visitor printing in grayscale doesn't lose contrast). */
+  body,
+  .support-setting-page,
+  .support-detail-page {
+    background: Canvas !important;
+    color: CanvasText !important;
+  }
+
+  .support-detail-page * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  /* A setting's real action link (e.g. "ms-settings:update") isn't
+     clickable on paper — printing the URL right after the button text is
+     what actually carries that information onto the page. Scoped to the
+     article body only, so this doesn't also print search/nav/sidebar
+     hrefs that got hidden above anyway. */
+  .support-detail-page a[href]:not([href^="#"])::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    font-weight: 400;
+    color: CanvasText;
+  }
+
+  /* Accordion answers (FAQs) are collapsed by default and only mount into
+     the DOM once expanded — CSS alone can't reveal a panel that was never
+     rendered, so this is handled in SettingDetailPage.jsx instead (a
+     `beforeprint`/`afterprint` listener expands every FAQ for the
+     duration of printing, for both this page's own Print button and the
+     browser's native Ctrl/Cmd+P). Nothing needed here. */
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   ADAPTIVE EXPERIENCE LAYER — the Smart Platform Card, AI Adaptive
+   badge, "Why is this different?" modal, "How this works" side sheet,
+   and the one-time AI Status Timeline (see components/
+   AdaptiveExperience.jsx). Everything here follows the same premium
+   rules as the rest of this module: glass surfaces (translucent card
+   color + backdrop blur), the one teal brand gradient, soft micro-
+   animations that respect both prefers-reduced-motion and the in-page
+   Reduce Motion preference, and positive capability language only.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ---- Search bar + AI Adaptive badge row ---- */
+.support-search-adaptive-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+.support-search-adaptive-grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.support-ai-adaptive {
+  position: relative;
+  flex-shrink: 0;
+  /* Vertically centers the pill against the search box's own height
+     without hard-coding that height here. */
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+}
+
+.support-ai-adaptive-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  padding: 0.42rem 0.75rem;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  color: var(--support-primary);
+  border-radius: var(--anslation-ds-radius-pill);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 26%, var(--border));
+  background:
+    linear-gradient(120deg, color-mix(in srgb, var(--support-primary) 9%, transparent), color-mix(in srgb, var(--support-secondary) 7%, transparent)),
+    color-mix(in srgb, var(--card) 70%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 180ms ease, transform 180ms ease, border-color 180ms ease;
+}
+
+.support-ai-adaptive-badge:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--support-primary) 42%, var(--border));
+  box-shadow: var(--shadow-md);
+}
+
+.support-ai-adaptive-badge svg {
+  animation: support-ai-badge-twinkle 3.2s ease-in-out infinite;
+}
+
+@keyframes support-ai-badge-twinkle {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.65; transform: scale(0.88); }
+}
+
+.support-ai-adaptive-pop {
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  right: 0;
+  z-index: 40;
+  min-width: 13.5rem;
+  padding: 0.8rem 0.9rem;
+  border-radius: var(--anslation-ds-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 20%, var(--border));
+  background:
+    linear-gradient(150deg, color-mix(in srgb, var(--support-primary) 6%, transparent), transparent 55%),
+    color-mix(in srgb, var(--card) 88%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: var(--shadow-lg);
+  animation: support-adaptive-pop-in 180ms var(--anslation-ds-ease-out, ease) both;
+}
+
+@keyframes support-adaptive-pop-in {
+  from { opacity: 0; transform: translateY(-4px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.support-ai-adaptive-pop-title {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0 0 0.4rem;
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--support-primary);
+}
+
+.support-ai-adaptive-pop-line {
+  margin: 0 0 0.25rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.support-ai-adaptive-pop-state {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: color-mix(in srgb, var(--support-primary) 78%, var(--foreground));
+}
+
+/* ---- Smart Platform Card (under the search bar, Home only) ---- */
+.support-smart-platform-card {
+  margin-top: 0.85rem;
+  padding: 0.85rem 1rem 0.75rem;
+  border-radius: var(--anslation-ds-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 18%, var(--border));
+  background:
+    radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--support-primary) 8%, transparent), transparent 60%),
+    radial-gradient(circle at 100% 120%, color-mix(in srgb, var(--support-secondary) 7%, transparent), transparent 55%),
+    color-mix(in srgb, var(--card) 74%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-sm);
+  animation: support-banner-in 260ms var(--anslation-ds-ease-out, ease) both;
+}
+
+.support-smart-platform-main {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.support-smart-platform-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  flex-shrink: 0;
+  border-radius: 0.85rem;
+  color: var(--primary-foreground);
+  background: var(--support-cta-gradient);
+  box-shadow: var(--shadow-md);
+}
+
+.support-smart-platform-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.support-smart-platform-title {
+  margin: 0 0 0.12rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.support-smart-platform-text {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--anslation-ds-muted, var(--foreground));
+}
+
+.support-smart-platform-action {
+  flex-shrink: 0;
+}
+
+.support-smart-platform-launch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--primary-foreground);
+  border-radius: var(--anslation-ds-radius-pill);
+  background: var(--support-cta-gradient);
+  box-shadow: var(--support-cta-shadow);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.support-smart-platform-launch:hover {
+  transform: translateY(-1px);
+  background: var(--support-cta-gradient-hover);
+  box-shadow: var(--support-cta-shadow-hover);
+}
+
+.support-smart-platform-why {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.45rem 0.7rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--support-primary);
+  border-radius: var(--anslation-ds-radius-pill);
+  border: 1px solid transparent;
+  transition: border-color 180ms ease, background-color 180ms ease;
+}
+
+.support-smart-platform-why:hover {
+  border-color: color-mix(in srgb, var(--support-primary) 30%, transparent);
+  background: color-mix(in srgb, var(--support-primary) 8%, transparent);
+}
+
+.support-smart-platform-why svg {
+  transition: transform 180ms ease;
+}
+
+.support-smart-platform-why:hover svg {
+  transform: translateX(2px);
+}
+
+/* ---- AI Status Timeline — animates once when the card mounts ---- */
+.support-ai-timeline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.15rem 0.4rem;
+  margin: 0.7rem 0 0;
+  padding: 0.55rem 0 0;
+  list-style: none;
+  border-top: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--border));
+}
+
+.support-ai-timeline-step {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32rem;
+  opacity: 0;
+  animation: support-ai-timeline-in 360ms var(--anslation-ds-ease-out, ease) both;
+  animation-delay: var(--timeline-delay, 0ms);
+}
+
+@keyframes support-ai-timeline-in {
+  from { opacity: 0; transform: translateX(-5px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.support-ai-timeline-dot {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.15rem;
+  height: 1.15rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  color: var(--support-primary);
+  background: color-mix(in srgb, var(--support-primary) 12%, transparent);
+}
+
+.support-ai-timeline-step.is-final .support-ai-timeline-dot {
+  color: var(--primary-foreground);
+  background: var(--support-cta-gradient);
+  box-shadow: var(--shadow-sm);
+}
+
+.support-ai-timeline-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--anslation-ds-muted, var(--foreground));
+}
+
+.support-ai-timeline-step.is-final .support-ai-timeline-label {
+  color: var(--support-primary);
+  font-weight: 700;
+}
+
+.support-ai-timeline-arrow {
+  color: color-mix(in srgb, var(--support-primary) 40%, transparent);
+  margin-left: 0.25rem;
+}
+
+/* ---- Shared overlay for the modal + side sheet ----
+   Portaled to <body> (see AdaptiveExperience.jsx) so position:fixed
+   really means the viewport — backdrop-filter on the glass card would
+   otherwise trap this inside the card's own box. z-index sits above the
+   site navbar and every panel on this page. */
+.support-adaptive-overlay {
+  /* This overlay is PORTALED to <body> (outside .support-setting-page),
+     so the --support-* tokens defined on that class don't cascade here —
+     without these local re-definitions every color-mix()/gradient using
+     them goes invalid and the whole modal background silently drops,
+     leaving an unreadable grey glass sheet (the exact bug this fixes).
+     Same values as .support-setting-page's own definitions. */
+  --support-primary: var(--primary);
+  --support-secondary: var(--secondary);
+  --support-cta-gradient: linear-gradient(135deg, var(--support-primary), var(--support-secondary));
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: var(--anslation-ds-overlay);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  animation: support-adaptive-overlay-in 200ms ease both;
+}
+
+.support-adaptive-overlay.is-sheet {
+  justify-content: flex-end;
+  padding: 0;
+}
+
+@keyframes support-adaptive-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ---- "Why is this different?" modal ---- */
+.support-adaptive-modal {
+  position: relative;
+  overflow: hidden auto;
+  width: min(30rem, 100%);
+  max-height: min(85vh, 40rem);
+  padding: 1.25rem 1.2rem 1.1rem;
+  border-radius: calc(var(--anslation-ds-radius-lg) + 4px);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 20%, var(--border));
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--support-primary) 9%, transparent), transparent 55%),
+    var(--card);
+  box-shadow: var(--shadow-lg);
+  animation: support-adaptive-modal-in 280ms var(--anslation-ds-ease-out, ease) both;
+}
+
+/* Thin brand-gradient hairline across the modal's top edge — the same
+   premium accent treatment Linear/Notion-style dialogs use. */
+.support-adaptive-modal::before,
+.support-howworks-sheet::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--support-cta-gradient);
+}
+
+@keyframes support-adaptive-modal-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.support-adaptive-modal-header,
+.support-howworks-sheet-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding-right: 1.6rem;
+  position: relative;
+}
+
+.support-adaptive-modal-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: 0.7rem;
+  color: var(--primary-foreground);
+  background: var(--support-cta-gradient);
+  box-shadow: var(--shadow-md);
+}
+
+.support-adaptive-modal-title {
+  margin: 0 0 0.15rem;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.support-adaptive-modal-subtitle {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--anslation-ds-muted, var(--foreground));
+}
+
+.support-adaptive-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  padding: 0.3rem;
+  color: var(--anslation-ds-muted, var(--foreground));
+  border-radius: var(--anslation-ds-radius);
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.support-adaptive-close:hover {
+  color: var(--support-primary);
+  background: color-mix(in srgb, var(--support-primary) 10%, transparent);
+}
+
+.support-adaptive-modal-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.support-adaptive-modal-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: var(--anslation-ds-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  background: color-mix(in srgb, var(--card) 60%, transparent);
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.support-adaptive-modal-row:hover {
+  border-color: color-mix(in srgb, var(--support-primary) 28%, var(--border));
+  transform: translateY(-1px);
+}
+
+.support-adaptive-modal-row-glyph {
+  font-size: 1.05rem;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+
+.support-adaptive-modal-row-title {
+  margin: 0 0 0.1rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.support-adaptive-modal-row-body {
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.45;
+  color: var(--anslation-ds-muted, var(--foreground));
+}
+
+.support-adaptive-modal-footnote {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  margin: 0.9rem 0 0;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.74rem;
+  line-height: 1.5;
+  color: color-mix(in srgb, var(--foreground) 80%, var(--support-primary));
+  border-radius: var(--anslation-ds-radius-lg);
+  background: color-mix(in srgb, var(--support-primary) 7%, transparent);
+}
+
+/* ---- "How this works" chip (beside the page title) ---- */
+.support-hero-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+.support-howworks-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.32rem 0.7rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--support-primary);
+  border-radius: var(--anslation-ds-radius-pill);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 24%, var(--border));
+  background: color-mix(in srgb, var(--card) 65%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: box-shadow 180ms ease, transform 180ms ease, border-color 180ms ease;
+}
+
+.support-howworks-chip:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in srgb, var(--support-primary) 42%, var(--border));
+  box-shadow: var(--shadow-md);
+}
+
+/* ---- "How this works" side sheet ---- */
+.support-howworks-sheet {
+  position: relative;
+  width: min(21.5rem, 92vw);
+  height: 100%;
+  overflow-y: auto;
+  padding: 1.2rem 1.15rem 1.1rem;
+  border-left: 1px solid color-mix(in srgb, var(--support-primary) 18%, var(--border));
+  background:
+    radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--support-primary) 8%, transparent), transparent 50%),
+    var(--card);
+  box-shadow: var(--shadow-lg);
+  animation: support-howworks-sheet-in 280ms var(--anslation-ds-ease-out, ease) both;
+}
+
+@keyframes support-howworks-sheet-in {
+  from { opacity: 0; transform: translateX(2rem); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.support-howworks-sheet-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 1.1rem;
+}
+
+.support-howworks-sheet-row {
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--anslation-ds-radius-lg);
+  border: 1px solid color-mix(in srgb, var(--support-primary) 10%, var(--border));
+  background: color-mix(in srgb, var(--card) 55%, transparent);
+  opacity: 0;
+  animation: support-ai-timeline-in 320ms var(--anslation-ds-ease-out, ease) both;
+  animation-delay: var(--sheet-row-delay, 0ms);
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.support-howworks-sheet-row:hover {
+  border-color: color-mix(in srgb, var(--support-primary) 28%, var(--border));
+  transform: translateX(2px);
+}
+
+.support-howworks-sheet-row-title {
+  margin: 0 0 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.support-howworks-sheet-row-body {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--anslation-ds-muted, var(--foreground));
+}
+
+.support-howworks-sheet-row-body svg {
+  color: var(--support-primary);
+  flex-shrink: 0;
+}
+
+/* ---- Responsive + motion preferences ---- */
+@media (max-width: 720px) {
+  .support-smart-platform-main {
+    flex-wrap: wrap;
+  }
+
+  .support-smart-platform-action {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* The timeline's later steps matter less than keeping the card short
+     on small screens — let the row wrap naturally and tighten it. */
+  .support-ai-timeline {
+    gap: 0.2rem 0.35rem;
+  }
+
+  .support-ai-timeline-label {
+    font-size: 0.66rem;
+  }
+}
+
+@media (max-width: 560px) {
+  /* Keep the search box full-width on phones; the badge's story is told
+     by the Smart Platform Card right below it there. */
+  .support-ai-adaptive {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .support-smart-platform-card,
+  .support-ai-timeline-step,
+  .support-howworks-sheet-row,
+  .support-adaptive-overlay,
+  .support-adaptive-modal,
+  .support-howworks-sheet,
+  .support-ai-adaptive-pop {
+    animation: none;
+    opacity: 1;
+  }
+
+  .support-ai-adaptive-badge svg {
+    animation: none;
+  }
+}
+
+/* The in-page Reduce Motion preference forces near-zero durations
+   globally (see .support-reduce-motion * above) — the staggered
+   entrances here start at opacity: 0, so also force them visible. */
+.support-reduce-motion .support-ai-timeline-step,
+.support-reduce-motion .support-howworks-sheet-row {
+  opacity: 1;
+}
+
+[data-theme="dark"] .support-adaptive-modal,
+[data-theme="dark"] .support-howworks-sheet {
+  box-shadow: var(--shadow-lg);
 }

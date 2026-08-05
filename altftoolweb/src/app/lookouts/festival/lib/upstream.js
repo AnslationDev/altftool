@@ -148,12 +148,27 @@ async function fetchPexelsPhoto(query) {
 // null (callers should fall back further to a Wikipedia thumbnail or a
 // static placeholder). Returns an array of { url, thumbUrl, alt, credit,
 // creditUrl, source } or null if no key is configured / no results found.
-export async function fetchFestivalPhotos(query) {
-  const unsplash = await fetchUnsplashPhoto(query);
-  if (unsplash) return unsplash;
+// Both providers treat extra search terms as further constraints, so the long
+// descriptive queries in the catalog can over-specify themselves into zero
+// results — "la tomatina tomato fight spain" returns nothing while "la
+// tomatina" returns a full page. Retrying on the leading two words recovers
+// those cases; anything already that short just isn't retried.
+function broadenQuery(query) {
+  const words = (query || "").trim().split(/\s+/).filter(Boolean);
+  if (words.length <= 2) return null;
+  return words.slice(0, 2).join(" ");
+}
 
-  const pexels = await fetchPexelsPhoto(query);
-  if (pexels) return pexels;
+export async function fetchFestivalPhotos(query) {
+  const attempts = [query, broadenQuery(query)].filter(Boolean);
+
+  for (const attempt of attempts) {
+    const unsplash = await fetchUnsplashPhoto(attempt);
+    if (unsplash) return unsplash;
+
+    const pexels = await fetchPexelsPhoto(attempt);
+    if (pexels) return pexels;
+  }
 
   return null;
 }
@@ -172,22 +187,21 @@ export async function fetchFestivalPhotos(query) {
 
 // Wikipedia's summary endpoint hands back only two sizes: a 330px thumbnail
 // (too soft for a card on a 2x screen) and the raw upload, routinely 4000px
-// and several MB. Neither is what a card wants, and rewriting the thumbnail's
-// `/<N>px-` segment to ask for something in between is not reliable —
-// Wikimedia's on-demand thumbnailer caps per file, and the same rewrite that
-// works at 500px returns HTTP 400 at 660px on the very next image.
+// and several MB. Rewriting the thumbnail's `/<N>px-` segment to ask for
+// something in between is not reliable — Wikimedia's on-demand thumbnailer
+// caps per file, and the same rewrite that works at 500px returns HTTP 400 at
+// 660px on the very next image.
 //
-// Next's own optimizer is the way out: point it at the full-res original and
-// it fetches once, resizes, and serves a cached AVIF/WebP derivative.
-// upload.wikimedia.org is allow-listed in next.config.mjs remotePatterns for
-// exactly this. `w` must be one of the configured deviceSizes and `q` one of
-// the configured qualities, or the optimizer 400s — hence 828/75 rather than
-// a round 800.
-function optimized(url, width) {
-  if (!url) return null;
-  return `/_next/image?url=${encodeURIComponent(url)}&w=${width}&q=75`;
-}
-
+// So this returns the original upload and lets next/image size it. It must
+// return the *source* URL and nothing else: an earlier version handed back a
+// pre-built `/_next/image?url=…&w=828` string, which <Image> then received as
+// its own `src` and tried to optimize a second time. Next reads that as a
+// local path carrying a query string, demands images.localPatterns, and fails
+// the production build outright ("Image with src /_next/image?url=… is using a
+// query string which is not configured"). It stayed hidden only because the
+// one surface that rendered these — the related-festivals strip — was being
+// passed an empty photo map. upload.wikimedia.org is allow-listed in
+// next.config.mjs remotePatterns so <Image> can fetch and resize it directly.
 export async function fetchFestivalPhoto({ unsplashQuery, wikipediaTitle, name } = {}) {
   const photos = await fetchFestivalPhotos(unsplashQuery);
   if (photos?.[0]) return photos[0];
@@ -198,12 +212,9 @@ export async function fetchFestivalPhoto({ unsplashQuery, wikipediaTitle, name }
   if (!thumb && !original) return null;
 
   return {
-    // Cards: a properly sized derivative of the original when there is one,
-    // else the API's own thumbnail.
-    url: original ? optimized(original, 828) : thumb,
-    // Hero/full-bleed.
-    fullUrl: original ? optimized(original, 1920) : thumb,
-    thumbUrl: original ? optimized(original, 384) : thumb,
+    url: original || thumb,
+    fullUrl: original || thumb,
+    thumbUrl: thumb || original,
     alt: name || wiki.title || "Festival photo",
     credit: "Wikipedia",
     creditUrl: wiki.pageUrl || "https://en.wikipedia.org",

@@ -221,7 +221,7 @@ const PagePreferencesPanel = ({ prefs, togglePref, updatePref, resetPrefs, bookm
               <p className="support-toggle-label">Bookmarks</p>
               <p className="support-toggle-description">
                 {bookmarkedCount > 0
-                  ? `${bookmarkedCount} bookmarked ${bookmarkedCount === 1 ? "page" : "pages"} — visible under Favorite Settings on the home page.`
+                  ? `${bookmarkedCount} bookmarked ${bookmarkedCount === 1 ? "page" : "pages"} saved locally in this browser.`
                   : "Star any guide's header to save it here."}
               </p>
             </div>

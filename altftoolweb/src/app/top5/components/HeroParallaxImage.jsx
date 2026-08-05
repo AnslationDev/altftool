@@ -7,6 +7,7 @@ import {
   useTransform,
   useMotionValue,
   useSpring,
+  useReducedMotion,
 } from "framer-motion";
 import ManagedImage from "@/components/ui/ManagedImage";
 import { ArrowDown } from "lucide-react";
@@ -27,6 +28,7 @@ const GRAIN =
  */
 export default function HeroParallaxImage({ src, alt, category, entries, readTime }) {
   const ref = useRef(null);
+  const reduceMotion = useReducedMotion();
 
   // Scroll-linked motion: the oversized photo drifts vertically inside the
   // frame, and the whole frame settles from a slight scale as it enters.
@@ -56,12 +58,12 @@ export default function HeroParallaxImage({ src, alt, category, entries, readTim
 
   return (
     <div ref={ref} className="mt-10 sm:mt-12">
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-14">
+      <div className="max-w-6xl mx-auto px-6 sm:px-10 lg:px-12">
         <motion.div
-          style={{ scale: frameScale }}
-          onPointerMove={onPointerMove}
+          style={{ scale: reduceMotion ? 1 : frameScale }}
+          onPointerMove={reduceMotion ? undefined : onPointerMove}
           onPointerLeave={onPointerLeave}
-          className="group relative overflow-hidden rounded-3xl sm:rounded-[32px] bg-[#0b1120] ring-1 ring-black/10 aspect-[4/3] sm:aspect-[16/8] lg:aspect-[21/9] shadow-[0_35px_90px_-25px_rgba(11,17,32,0.45)]"
+          className="group relative overflow-hidden rounded-3xl sm:rounded-[32px] bg-footer ring-1 ring-border aspect-[3/2] sm:aspect-[16/7] lg:aspect-[21/8] shadow-lg"
         >
           {/* Two-stage curtain: an emerald accent leads, the ink panel
               follows a beat later — a considered, editorial reveal. */}
@@ -71,7 +73,7 @@ export default function HeroParallaxImage({ src, alt, category, entries, readTim
             whileInView={{ x: "101%" }}
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.9, ease: EASE, delay: 0.28 }}
-            className="absolute inset-0 z-30 bg-[#10b981]"
+            className="absolute inset-0 z-30 bg-primary"
           />
           <motion.div
             aria-hidden="true"
@@ -79,7 +81,7 @@ export default function HeroParallaxImage({ src, alt, category, entries, readTim
             whileInView={{ x: "101%" }}
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 0.9, ease: EASE, delay: 0.1 }}
-            className="absolute inset-0 z-20 bg-[#0b1120]"
+            className="absolute inset-0 z-20 bg-footer"
           />
 
           {/* One-time light sweep right after the curtains part. */}
@@ -89,17 +91,17 @@ export default function HeroParallaxImage({ src, alt, category, entries, readTim
             whileInView={{ x: "140%", opacity: [0, 0.45, 0] }}
             viewport={{ once: true, amount: 0.35 }}
             transition={{ duration: 1.1, ease: "easeInOut", delay: 1.15 }}
-            className="pointer-events-none absolute inset-y-0 z-10 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-white/60 to-transparent"
+            className="pointer-events-none absolute inset-y-0 z-10 w-1/3 -skew-x-12 bg-gradient-to-r from-transparent via-on-media/60 to-transparent"
           />
 
           {/* Oversized photo: parallax + pointer lean + slow settle-zoom. */}
           <motion.div
-            style={{ y: imageY, x: leanX }}
+            style={{ y: reduceMotion ? 0 : imageY, x: reduceMotion ? 0 : leanX }}
             className="absolute inset-x-0 -top-[10%] -bottom-[10%]"
           >
             <motion.div
-              style={{ y: leanY }}
-              initial={{ scale: 1.14 }}
+              style={{ y: reduceMotion ? 0 : leanY }}
+              initial={{ scale: 1.09 }}
               whileInView={{ scale: 1.02 }}
               viewport={{ once: true, amount: 0.35 }}
               transition={{ duration: 1.6, ease: EASE }}
@@ -114,7 +116,7 @@ export default function HeroParallaxImage({ src, alt, category, entries, readTim
           </motion.div>
 
           {/* Legibility gradients, film grain, and a soft vignette. */}
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/0 to-black/25" />
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-footer/45 via-footer/0 to-footer/15" />
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 opacity-[0.07] mix-blend-overlay"
@@ -122,13 +124,13 @@ export default function HeroParallaxImage({ src, alt, category, entries, readTim
           />
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 shadow-[inset_0_0_130px_rgba(0,0,0,0.38)]"
+            className="pointer-events-none absolute inset-0 ring-1 ring-inset ring-footer/20"
           />
 
           {/* Hairline inner frame — the matte around the print. */}
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-2.5 sm:inset-3.5 rounded-[18px] sm:rounded-3xl border border-white/15"
+            className="pointer-events-none absolute inset-2.5 sm:inset-3.5 rounded-[18px] sm:rounded-3xl border border-on-media/15"
           />
 
           {/* Top-left: feature eyebrow chip (glass). */}
@@ -137,12 +139,12 @@ export default function HeroParallaxImage({ src, alt, category, entries, readTim
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 1.15, ease: EASE }}
-            className="absolute top-5 left-5 sm:top-7 sm:left-7 z-10 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-[10px] sm:text-xs font-semibold tracking-[0.2em] text-white backdrop-blur-md shadow-lg shadow-black/10"
+            className="absolute top-5 left-5 sm:top-7 sm:left-7 z-10 inline-flex items-center gap-2 rounded-full border border-on-media/20 bg-on-media/10 px-3.5 py-1.5 text-[10px] sm:text-xs font-semibold tracking-[0.2em] text-on-media backdrop-blur-md shadow-lg"
           >
             <motion.span
-              animate={{ opacity: [1, 0.35, 1] }}
-              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-              className="h-1.5 w-1.5 rounded-full bg-[#10b981]"
+              animate={reduceMotion ? undefined : { opacity: [1, 0.35, 1] }}
+              transition={reduceMotion ? undefined : { duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+              className="h-1.5 w-1.5 rounded-full bg-primary"
               aria-hidden="true"
             />
             {(category || "FEATURE").toUpperCase()}
@@ -157,7 +159,7 @@ export default function HeroParallaxImage({ src, alt, category, entries, readTim
             className="absolute top-5 right-5 sm:top-7 sm:right-7 z-10 hidden sm:block"
             aria-hidden="true"
           >
-            <PetalBurst className="h-9 w-9 text-white/40" />
+            <PetalBurst className="h-9 w-9 text-on-media/40" />
           </motion.div>
 
           {/* Bottom-left: editorial caption in the display serif. */}
@@ -168,12 +170,12 @@ export default function HeroParallaxImage({ src, alt, category, entries, readTim
             transition={{ duration: 0.6, delay: 1.3, ease: EASE }}
             className="absolute bottom-5 left-5 sm:bottom-7 sm:left-7 z-10 max-w-[75%]"
           >
-            <p className="flex items-center gap-2.5 text-[10px] sm:text-xs font-semibold tracking-[0.2em] text-white/60">
-              <span className="inline-block h-px w-6 bg-[#10b981]" aria-hidden="true" />
+            <p className="flex items-center gap-2.5 text-[10px] sm:text-xs font-semibold tracking-[0.2em] text-on-media/60">
+              <span className="inline-block h-px w-6 bg-primary" aria-hidden="true" />
               FEATURE PHOTOGRAPHY
             </p>
             <p
-              className="mt-1.5 line-clamp-2 text-base sm:text-2xl text-white italic"
+              className="mt-1.5 line-clamp-2 text-base sm:text-2xl text-on-media italic"
               style={{ fontFamily: "var(--font-top5-display, serif)" }}
             >
               {alt}
@@ -189,19 +191,19 @@ export default function HeroParallaxImage({ src, alt, category, entries, readTim
             className="absolute bottom-5 right-5 sm:bottom-7 sm:right-7 z-10 hidden sm:flex items-center gap-3"
           >
             {entries ? (
-              <span className="rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-md">
+              <span className="rounded-full border border-on-media/20 bg-on-media/10 px-3.5 py-1.5 text-xs font-semibold text-on-media backdrop-blur-md">
                 {entries} entries
               </span>
             ) : null}
             {readTime ? (
-              <span className="rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-white backdrop-blur-md">
+              <span className="rounded-full border border-on-media/20 bg-on-media/10 px-3.5 py-1.5 text-xs font-semibold text-on-media backdrop-blur-md">
                 {readTime}
               </span>
             ) : null}
             <motion.span
-              animate={{ y: [0, 5, 0] }}
-              transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-[#0b1120] shadow-lg shadow-black/20"
+              animate={reduceMotion ? undefined : { y: [0, 5, 0] }}
+              transition={reduceMotion ? undefined : { duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+              className="flex h-9 w-9 items-center justify-center rounded-full bg-on-media/90 text-footer shadow-lg"
               aria-hidden="true"
             >
               <ArrowDown size={15} />

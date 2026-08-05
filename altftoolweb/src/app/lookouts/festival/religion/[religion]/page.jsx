@@ -13,10 +13,25 @@ export async function generateStaticParams() {
   return RELIGIONS.map((religion) => ({ religion: religion.slug }));
 }
 
+// Declared for completeness, but note it does NOT gate this route the way it
+// gates [slug]. dynamicParams only applies to statically-generated segments,
+// and this one reads searchParams for pagination, which makes it dynamic (`ƒ`
+// in the build output). Verified against `npm start`: /religion/bogus still
+// answers 200. See the robots note in generateMetadata for what actually
+// keeps unknown taxonomies out of the index.
+export const dynamicParams = false;
+
 export async function generateMetadata({ params }) {
   const { religion: slug } = await params;
   const religion = getReligion(slug);
-  if (!religion) return {};
+  // An unknown slug renders the not-found body but cannot carry a 404 status:
+  // festival/loading.jsx opens a Suspense boundary above this route, so the
+  // response has already streamed by the time notFound() runs. That boundary
+  // is load-bearing (it fixes a hydration/event-wiring race — see its own
+  // comment), so rather than trade a real bug for a status code, the page
+  // tells crawlers not to index it. Metadata is resolved before the stream, so
+  // this tag does land.
+  if (!religion) return { robots: { index: false, follow: false } };
 
   return createPageMetadata({
     title: `${religion.name} Festivals — Dates, Traditions & Countdowns`,

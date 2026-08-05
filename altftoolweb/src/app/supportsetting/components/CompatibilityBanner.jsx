@@ -1,31 +1,30 @@
 "use client";
 
 import { useState } from "react";
-import { AlertTriangle, ExternalLink, X } from "lucide-react";
+import { Sparkles, ExternalLink, X } from "lucide-react";
 
 /**
- * The "wrong platform" experience — a single, compact inline warning line
- * (not a native alert, not a card stacked with buttons) shown below the
- * breadcrumb whenever the guide currently open doesn't match the device
- * the visitor is actually using. There's no "Switch to X" action here —
- * switching platforms already lives one click away in the platform
- * switcher itself, so this stays purely informational. The official docs
- * link, when there is one, is woven inline into the sentence rather than
- * given its own button, since it's supplementary context, not the primary
- * action. Dismissing it is remembered for the rest of this page view only
- * — it reappears on another mismatched page, which is the honest behavior
- * (it's not nagging, it's per-page context).
+ * The "different platform" experience — reframed from the old red warning
+ * line into a premium, positive "Platform Optimized" note. Same single
+ * compact inline row below the breadcrumb, same per-page dismiss behavior,
+ * but the message is now about what the page DOES for the visitor (Smart
+ * Guided Navigation adapts the steps) rather than what might go wrong.
+ * No danger tone, no alert icon — brand-tinted glass, a sparkle glyph,
+ * and language that always stays on the "Adaptive Experience" side:
+ * never "not supported" / "may not apply". The official docs link, when
+ * there is one, stays woven inline as supplementary context.
  */
 const CompatibilityBanner = ({ targetLabel, currentLabel, officialDocsUrl, officialDocsLabel }) => {
   const [dismissed, setDismissed] = useState(false);
   if (dismissed) return null;
 
   return (
-    <div className="support-compat-banner" role="status">
-      <AlertTriangle className="support-compat-banner-icon h-4 w-4" aria-hidden="true" />
+    <div className="support-compat-banner" role="note">
+      <Sparkles className="support-compat-banner-icon h-4 w-4" aria-hidden="true" />
       <p className="support-compat-banner-text">
-        This guide is designed for <strong>{targetLabel}</strong> — you&rsquo;re currently using {currentLabel}, so
-        some steps or links here may not apply to your device.
+        <strong>Platform Optimized</strong> — this guide is tuned for <strong>{targetLabel}</strong>, and
+        you&rsquo;re browsing from {currentLabel}. Smart Guided Navigation keeps every step easy to follow
+        from any device.
         {officialDocsUrl && (
           <a
             href={officialDocsUrl}
@@ -33,7 +32,7 @@ const CompatibilityBanner = ({ targetLabel, currentLabel, officialDocsUrl, offic
             rel="noopener noreferrer"
             className="support-compat-banner-link"
           >
-            {officialDocsLabel || `${targetLabel} documentation`}
+            {officialDocsLabel || `${targetLabel} resources`}
             <ExternalLink className="h-3 w-3" />
           </a>
         )}
@@ -42,7 +41,7 @@ const CompatibilityBanner = ({ targetLabel, currentLabel, officialDocsUrl, offic
         type="button"
         className="support-compat-banner-close"
         onClick={() => setDismissed(true)}
-        aria-label="Dismiss compatibility notice"
+        aria-label="Dismiss"
       >
         <X className="h-3.5 w-3.5" />
       </button>

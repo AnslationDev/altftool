@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
@@ -46,8 +47,17 @@ export default function UpcomingFestivalsSection({ items }) {
                 <Link href={`/lookouts/festival/${festival.slug}`} className="festival-upcoming-card">
                   <div className="upcoming-card-image">
                     {photo?.url ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={photo.url} alt={photo.alt || festival.name} />
+                      // next/image, not a bare <img>: the Wikipedia fallback
+                      // hands back the raw upload, which is routinely several
+                      // MB. The optimizer resizes it to the slide width and
+                      // serves AVIF/WebP; a plain tag would ship the original.
+                      <Image
+                        src={photo.url}
+                        alt={photo.alt || festival.name}
+                        fill
+                        sizes="(max-width: 640px) 90vw, (max-width: 1024px) 50vw, 33vw"
+                        style={{ objectFit: "cover" }}
+                      />
                     ) : (
                       <div className="festival-card-placeholder" aria-hidden="true">
                         <span>🎉</span>

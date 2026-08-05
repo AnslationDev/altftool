@@ -8,6 +8,7 @@ import { getAllCountryCodesUsed } from "../../lib/getFestivals";
 import { getCountryName } from "../../data/countryNames";
 import { getMonthName } from "../../lib/dateMath";
 import ConfettiField from "./ConfettiField";
+import CountUp from "./CountUp";
 
 const heroContainerVariants = {
   hidden: {},
@@ -19,26 +20,26 @@ const heroItemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
-// Each pill carries its own fill. Written as literals rather than
-// `bg-[${tint}]` because Tailwind scans source text statically — an
-// interpolated class name is never emitted into the stylesheet.
-const QUICK_TAGS = [
-  { label: "Diwali", slug: "diwali", className: "bg-[#E2A63B]" },
-  { label: "Ramadan", slug: "ramadan-start", className: "bg-[#3FA79A]" },
-  { label: "Christmas", slug: "christmas", className: "bg-[#F2879E]" },
-  { label: "New Year", slug: "new-years-day", className: "bg-[#8C6FD1]" },
-  { label: "Holi", slug: "holi", className: "bg-[#4C8FD1]" },
-  { label: "Carnival", slug: "rio-carnival", className: "bg-[#E08A4C]" },
-];
+const QUICK_TAG_COUNT = 6;
 
 const MONTH_OPTIONS = Array.from({ length: 12 }, (_, i) => ({ value: i + 1, label: getMonthName(i + 1) }));
 
 // 2px ink outline + hard offset shadow, the paper-craft signature. The hover
 // pair on the button lifts the face away from its own shadow.
 const INK_EDGE = "border-2 border-[var(--f-ink)]";
+const QUICK_TAG_CLASS_NAME = `shrink-0 whitespace-nowrap rounded-full bg-primary px-[18px] py-2 font-[family-name:var(--font-fredoka)] text-[13px] font-semibold text-primary-foreground transition-transform duration-200 hover:-translate-y-[3px] hover:-rotate-2 ${INK_EDGE}`;
 
-export default function FestivalHero({ stats }) {
+export default function FestivalHero({ stats, upcoming = [] }) {
   const countryCodes = getAllCountryCodesUsed();
+
+  // The six soonest real festivals, not a hardcoded list — this row used to
+  // name Diwali/Ramadan/Christmas regardless of the date, which went stale the
+  // moment any of them passed. `upcoming` is resolved on the server and
+  // already sorted, so the order is stable between server and client render.
+  const quickTags = upcoming.slice(0, QUICK_TAG_COUNT).map(({ festival }) => ({
+    label: festival.name,
+    slug: festival.slug,
+  }));
   const [query, setQuery] = useState("");
   const [country, setCountry] = useState("");
   const [month, setMonth] = useState("");
@@ -81,11 +82,13 @@ export default function FestivalHero({ stats }) {
     return () => form.removeEventListener("submit", listener);
   }, []);
 
+  // Value and suffix are separate so CountUp can animate the number while the
+  // "+" stays put instead of being parsed out of a string every frame.
   const statTiles = [
-    { value: `${stats.countries}+`, label: "Countries" },
-    { value: `${stats.festivals}+`, label: "Festivals" },
-    { value: stats.religions, label: "Religions" },
-    { value: stats.categories, label: "Categories" },
+    { value: stats.countries, suffix: "+", label: "Countries" },
+    { value: stats.festivals, suffix: "+", label: "Festivals" },
+    { value: stats.religions, suffix: "", label: "Religions" },
+    { value: stats.categories, suffix: "", label: "Categories" },
   ];
 
   return (
@@ -196,24 +199,46 @@ export default function FestivalHero({ stats }) {
           </button>
         </motion.form>
 
-        <motion.div variants={heroItemVariants} className="flex flex-wrap justify-center gap-2.5">
-          {QUICK_TAGS.map((tag) => (
-            <Link
-              key={tag.slug}
-              href={`/lookouts/festival/${tag.slug}`}
-              className={`rounded-full px-[18px] py-2 font-[family-name:var(--font-fredoka)] text-[13px] font-semibold text-white transition-transform duration-200 hover:-translate-y-[3px] hover:-rotate-2 ${INK_EDGE} ${tag.className}`}
-            >
-              {tag.label}
-            </Link>
-          ))}
-        </motion.div>
+        {/* One row that scrolls itself. The track holds the six tags twice and
+            translates exactly half its width, so the second copy lands where
+            the first began and the loop is seamless. aria-hidden on the
+            duplicate is decorative text, so only the first set is exposed as
+            links to assistive technology and keyboard navigation. */}
+        {quickTags.length ? (
+          <motion.div
+            variants={heroItemVariants}
+            className="festival-quick-marquee w-full max-w-[820px] overflow-hidden"
+          >
+            <div className="festival-quick-marquee-track flex w-max gap-2.5">
+              {[0, 1].map((copy) =>
+                quickTags.map((tag) =>
+                  copy === 0 ? (
+                    <Link
+                      key={`${copy}-${tag.slug}`}
+                      href={`/lookouts/festival/${tag.slug}`}
+                      className={QUICK_TAG_CLASS_NAME}
+                    >
+                      {tag.label}
+                    </Link>
+                  ) : (
+                    <span key={`${copy}-${tag.slug}`} aria-hidden="true" className={QUICK_TAG_CLASS_NAME}>
+                      {tag.label}
+                    </span>
+                  ),
+                ),
+              )}
+            </div>
+          </motion.div>
+        ) : null}
 
         <motion.div variants={heroItemVariants} className="mt-2.5 flex flex-wrap justify-center gap-x-[52px] gap-y-6">
           {statTiles.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center gap-1">
-              <span className="font-[family-name:var(--font-fredoka)] text-[30px] font-bold text-[var(--f-pink)]">
-                {stat.value}
-              </span>
+              <CountUp
+                value={stat.value}
+                suffix={stat.suffix}
+                className="font-[family-name:var(--font-fredoka)] text-[30px] font-bold text-primary-text"
+              />
               <span className="text-[13px] font-medium text-[var(--f-muted-fg)]">{stat.label}</span>
             </div>
           ))}

@@ -85,10 +85,10 @@ export default function RankingActions({ slug, title, description }) {
           whileTap={{ scale: 0.94 }}
           transition={{ duration: 0.2, ease: EASE }}
           aria-pressed={saved}
-          className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
+          className={`inline-flex min-h-11 items-center gap-2 rounded-full border px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
             saved
-              ? "border-[#0b1120] bg-[#0b1120] text-white"
-              : "border-black/10 text-[#0b1120] hover:bg-[#f3f4f6]"
+              ? "border-primary bg-primary text-primary-foreground"
+              : "border-border text-foreground hover:bg-surface-soft"
           }`}
         >
           <motion.span
@@ -108,7 +108,7 @@ export default function RankingActions({ slug, title, description }) {
           whileHover={{ scale: 1.04, y: -1 }}
           whileTap={{ scale: 0.94 }}
           transition={{ duration: 0.2, ease: EASE }}
-          className="inline-flex items-center gap-2 rounded-full border border-black/10 px-4 py-2 text-sm font-semibold text-[#0b1120] hover:bg-[#f3f4f6] transition-colors"
+          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-border px-4 py-2 text-sm font-semibold text-foreground transition-colors hover:bg-surface-soft"
         >
           <Share2 size={15} />
           Share
@@ -126,8 +126,8 @@ export default function RankingActions({ slug, title, description }) {
             transition={{ duration: 0.35, ease: EASE }}
             className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2"
           >
-            <span className="flex items-center gap-2.5 rounded-full bg-[#0b1120] px-5 py-3 text-sm font-semibold text-white shadow-2xl shadow-black/30">
-              <toast.icon size={15} className="text-[#10b981]" />
+            <span className="flex items-center gap-2.5 rounded-full bg-footer px-5 py-3 text-sm font-semibold text-on-media shadow-lg">
+              <toast.icon size={15} className="text-primary" />
               {toast.text}
             </span>
           </motion.div>

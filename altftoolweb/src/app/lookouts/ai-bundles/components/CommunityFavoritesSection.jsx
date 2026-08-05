@@ -37,7 +37,7 @@ export default function CommunityFavoritesSection() {
           <SectionHeading eyebrow="Loved by the community" title="Community favorites" subtitle="What real users rate, save, and visit the most." />
         </Reveal>
 
-        <div className="mx-auto mt-8 flex max-w-md justify-center gap-2">
+        <div className="mx-auto mt-8 flex max-w-2xl justify-center gap-2">
           {TABS.map((tab) => (
             <motion.button
               key={tab.id}

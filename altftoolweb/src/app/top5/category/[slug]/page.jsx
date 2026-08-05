@@ -1,11 +1,9 @@
 import { notFound } from "next/navigation";
-import { Compass } from "lucide-react";
 import { getCategory, getAllCategories } from "../../data/categories";
 import { getCountry, getAllCountries } from "../../data/countries";
 import { getAllRankings } from "../../data/rankings";
-import CategorySearchForm from "../../components/CategorySearchForm";
+import CategoryHero from "../../components/CategoryHero";
 import CategoryExplorer from "../../components/CategoryExplorer";
-import { Reveal } from "../../components/motion";
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export function generateStaticParams() {
@@ -104,45 +102,15 @@ export default async function Top5CategoryIndexPage({ params }) {
       cardImage: ranking.cardImage,
     }));
 
-  const rankingsCount =
-    entity.kind === "country" ? `${entity.count}` : `${entity.count} rankings`;
-
   return (
     <div>
-      <section className="bg-[#f7f8fa]">
-        <div className="max-w-7xl mx-auto px-6 py-16">
-          <Reveal className="flex items-center gap-2.5 text-xs font-semibold tracking-widest text-[#10b981]">
-            <span className="inline-block h-px w-6 bg-[#10b981]" aria-hidden="true" />
-            <Compass size={14} />
-            TOP5 {entity.kind === "country" ? "COUNTRY" : "CATEGORY"} INDEX
-          </Reveal>
-
-          <div className="mt-5 flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
-            <Reveal delay={0.05}>
-              <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tight text-[#0b1120] leading-[1.02]">
-                The best of {entity.name.toLowerCase()}.
-              </h1>
-            </Reveal>
-
-            <Reveal delay={0.15} className="lg:w-[420px] shrink-0">
-              <p className="text-[#4b5563] leading-relaxed">
-                Independent rankings for the products, people, companies, and
-                ideas moving this field forward.
-              </p>
-              <CategorySearchForm entityName={entity.name} />
-            </Reveal>
-          </div>
-
-          <Reveal delay={0.2} className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-2 border-t border-black/10 pt-6 text-sm text-[#4b5563]">
-            <span>
-              <strong className="text-[#0b1120]">{rankingsCount}</strong>
-              {entity.kind === "country" ? " curated rankings" : ""}
-            </span>
-            <span>Updated daily</span>
-            <span>Global coverage</span>
-          </Reveal>
-        </div>
-      </section>
+      <CategoryHero
+        entity={{
+          name: entity.name,
+          kind: entity.kind,
+          countLabel: `${entity.count}`.replace(" rankings", ""),
+        }}
+      />
 
       <section id="top5-category-results" className="max-w-7xl mx-auto px-6 py-14 scroll-mt-24">
         <CategoryExplorer

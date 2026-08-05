@@ -23,8 +23,13 @@ export default function TabsBar() {
     const onScroll = () => {
       const probe = window.innerHeight * 0.35;
       let current = 0;
+      let closestTop = Number.NEGATIVE_INFINITY;
       sections.forEach((section, index) => {
-        if (section.getBoundingClientRect().top <= probe) current = index;
+        const top = section.getBoundingClientRect().top;
+        if (top <= probe && top > closestTop) {
+          closestTop = top;
+          current = index;
+        }
       });
       setActive(current);
     };
@@ -44,22 +49,20 @@ export default function TabsBar() {
   };
 
   return (
-    <div
-      id="methodology"
-      className="flex items-center gap-6 sm:gap-8 border-b border-black/10 scroll-mt-20 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-    >
+    <div className="flex items-center gap-6 overflow-x-auto border-b border-border sm:gap-8 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {TABS.map((tab, index) => (
         <a
           key={tab.label}
           href={tab.href}
           onClick={(event) => scrollTo(event, index)}
-          className="relative shrink-0 whitespace-nowrap py-4 text-sm font-semibold text-[#9ca3af] hover:text-[#0b1120] transition-colors"
+          aria-current={active === index ? "location" : undefined}
+          className="relative shrink-0 whitespace-nowrap py-4 text-sm font-semibold text-muted-foreground transition-colors hover:text-foreground"
         >
-          <span className={active === index ? "text-[#0b1120]" : ""}>{tab.label}</span>
+          <span className={active === index ? "text-foreground" : ""}>{tab.label}</span>
           {active === index ? (
             <motion.span
               layoutId="top5-tab-underline"
-              className="absolute left-0 right-0 -bottom-px h-[2px] bg-[#10b981]"
+              className="absolute -bottom-px left-0 right-0 h-[2px] bg-primary"
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             />
           ) : null}

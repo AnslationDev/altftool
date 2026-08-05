@@ -147,7 +147,7 @@ export const FESTIVALS = [
     regionLabel: "India & Nepal",
     month: 1,
     day: 14,
-    dateOverrides: { 2026: "2027-01-14", 2027: "2027-01-14" },
+    dateOverrides: { 2026: "2026-01-14", 2027: "2027-01-14" },
     nagerMatch: null,
     traditions: ["Kite flying", "Bonfires", "Holy river bathing", "Til-gud sharing"],
     foods: ["Tilgul", "Khichdi", "Puran Poli"],

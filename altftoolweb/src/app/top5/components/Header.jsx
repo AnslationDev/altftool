@@ -7,7 +7,6 @@ import { Search } from "lucide-react";
 const NAV_LINKS = [
   { label: "Trending", href: "/top5#trending" },
   { label: "Categories", href: "/top5/categories" },
-  { label: "Countries", href: "/top5/categories#countries" },
   { label: "New & notable", href: "/top5#featured" },
 ];
 

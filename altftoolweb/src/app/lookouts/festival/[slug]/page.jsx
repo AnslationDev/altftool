@@ -8,13 +8,24 @@ import {
 } from "@/platform/seo/generateMetadata";
 import { getAllFestivals, getFestivalBySlug, getRelatedFestivals } from "../lib/getFestivals";
 import { resolveLiveDates } from "../lib/resolveLiveFestivals";
-import { fetchCountryInfo, fetchFestivalPhotos, fetchWikiSummary } from "../lib/upstream";
+import { fetchCountryInfo, fetchFestivalPhoto, fetchFestivalPhotos, fetchWikiSummary } from "../lib/upstream";
 import FestivalDetail from "../components/detail/FestivalDetail";
 import "../../festival.css";
 
 export async function generateStaticParams() {
   return getAllFestivals().map((festival) => ({ slug: festival.slug }));
 }
+
+// The slug set is finite and fully enumerated above, so anything outside it is
+// genuinely not a page. This route is statically generated (`●` in the build
+// output), which is what lets dynamicParams gate it: verified against
+// `npm start`, /lookouts/festival/bogus-festival answers a real 404.
+//
+// The sibling taxonomy routes (religion/category/country) read searchParams
+// for pagination, so they render dynamically and this flag does nothing for
+// them — they fall back to a robots noindex instead. See the note in
+// religion/[religion]/page.jsx.
+export const dynamicParams = false;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -63,11 +74,19 @@ export default async function FestivalDetailPage({ params }) {
     related.map((f) => [f.slug, relatedLiveDates.get(f.slug)?.date]),
   );
 
-  const [wiki, photos, countries] = await Promise.all([
+  const [wiki, photos, countries, relatedPhotoEntries] = await Promise.all([
     fetchWikiSummary(festival.wikipediaTitle),
     fetchFestivalPhotos(festival.unsplashQuery),
     fetchCountryInfo(festival.countryCodes),
+    // The related strip rendered flag placeholders for every card because it
+    // was handed an empty photo map and had no way to fill one — it is a
+    // server component, so it cannot fetch for itself. Resolving the photos
+    // here puts them on the same round of requests as the hero's.
+    Promise.all(
+      related.map(async (f) => [f.slug, await fetchFestivalPhoto(f)]),
+    ),
   ]);
+  const relatedPhotos = Object.fromEntries(relatedPhotoEntries);
 
   const heroPhoto = photos?.[0]
     ? { ...photos[0], url: photos[0].fullUrl || photos[0].url }
@@ -98,6 +117,7 @@ export default async function FestivalDetailPage({ params }) {
         countries={countries}
         related={related}
         relatedDates={relatedDates}
+        relatedPhotos={relatedPhotos}
       />
     </>
   );

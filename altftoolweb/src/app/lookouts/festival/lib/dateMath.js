@@ -20,6 +20,41 @@ function startOfDay(date) {
   return d;
 }
 
+// The festival's date *within one specific year*, regardless of whether that
+// date has already passed.
+//
+// This is what a calendar needs, and it is not the same question
+// resolveEstimatedDate() answers. That one finds the next occurrence from
+// today and rolls forward, so on 4 Aug 2026 it reports Krishna Janmashtami as
+// 4 Sep 2026 — correct for a countdown, wrong for deciding which month tab
+// the festival belongs in. Filtering a calendar on `festival.month` is wrong
+// too: that field is the month the festival *typically* falls in, and lunar
+// festivals drift out of it (Krishna Janmashtami is filed under 8 but lands
+// in September in 2026).
+//
+// Returns null when the festival has neither an override for the year nor a
+// usable fixed month/day.
+export function resolveDateInYear(festival, year) {
+  const override = festival?.dateOverrides?.[year];
+  // An override is only usable if it actually falls in the year it is keyed
+  // under. A mis-keyed entry (festivals.js briefly had `2026: "2027-01-14"`)
+  // would otherwise put a 2027 card in the 2026 calendar, since the month
+  // reads the same either way. Falling through to the fixed month/day keeps
+  // the festival on the calendar, in the right year, at its typical date.
+  if (override && override.startsWith(`${year}-`)) return override;
+  if (!festival?.month || !festival?.day) return null;
+  return toIsoDate(year, festival.month, festival.day);
+}
+
+// The 1-12 month an ISO date falls in, read off the string rather than via
+// `new Date()` — parsing "2026-09-04" as a Date and calling getMonth() shifts
+// it a day (and sometimes a month) west of UTC.
+export function getIsoMonth(iso) {
+  if (!iso || iso.length < 7) return null;
+  const month = Number(iso.slice(5, 7));
+  return Number.isFinite(month) ? month : null;
+}
+
 // Finds the next occurrence on/after `now` from an explicit per-year map
 // (dateOverrides) or, failing that, rolls a fixed month/day forward year by
 // year until it lands on/after `now`.

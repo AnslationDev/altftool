@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { CalendarDays, MapPin, ArrowRight } from "lucide-react";
 import { formatDateLabel } from "../../lib/dateMath";
 import Reveal from "../shared/Reveal";
@@ -18,8 +19,16 @@ export default function FeaturedFestivalSpotlight({ festival, dateIso, photo, hi
           <Link href={`/lookouts/festival/${festival.slug}`} className="featured-festival">
             <div className="featured-hero">
               {photo?.url ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img src={photo.url} alt={photo.alt || festival.name} />
+                // next/image, not a bare <img>: the Wikipedia fallback hands
+                // back the raw upload, routinely several MB. The optimizer
+                // resizes and serves AVIF/WebP instead of the original.
+                <Image
+                  src={photo.url}
+                  alt={photo.alt || festival.name}
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 1200px"
+                  style={{ objectFit: "cover" }}
+                />
               ) : (
                 <div className="festival-card-placeholder" aria-hidden="true">
                   <span>✨</span>

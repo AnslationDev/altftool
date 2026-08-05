@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, animate } from "framer-motion";
+import { motion, animate, useReducedMotion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 /**
@@ -116,6 +116,7 @@ export function PetalBurst({ className, color = "currentColor", petals = 8 }) {
 
 export function AnimatedCounter({ value, className, duration = 1.6 }) {
   const ref = useRef(null);
+  const reduceMotion = useReducedMotion();
   const match = String(value).match(/^([\d,]+(?:\.\d+)?)(.*)$/);
   const numeric = match ? parseFloat(match[1].replace(/,/g, "")) : 0;
   const suffix = match ? match[2] : "";
@@ -129,6 +130,12 @@ export function AnimatedCounter({ value, className, duration = 1.6 }) {
   useEffect(() => {
     const node = ref.current;
     if (!node) return undefined;
+
+    if (reduceMotion) {
+      const fixed = decimals ? numeric.toFixed(decimals) : Math.round(numeric).toString();
+      setDisplay(hasComma ? Number(fixed).toLocaleString("en-US") : fixed);
+      return undefined;
+    }
 
     let stopAnimation = () => {};
     const observer = new IntersectionObserver(
@@ -154,7 +161,7 @@ export function AnimatedCounter({ value, className, duration = 1.6 }) {
       stopAnimation();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [numeric, duration]);
+  }, [numeric, duration, reduceMotion, decimals, hasComma]);
 
   return (
     <span ref={ref} className={className}>

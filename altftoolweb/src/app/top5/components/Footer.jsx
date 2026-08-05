@@ -10,7 +10,6 @@ const COLUMNS = [
     links: [
       { label: "Trending", href: "/top5#trending" },
       { label: "Categories", href: "/top5/categories" },
-      { label: "Countries", href: "/top5/categories#countries" },
     ],
   },
   {
@@ -24,7 +23,7 @@ const COLUMNS = [
   {
     heading: "COMMUNITY",
     links: [
-      { label: "Favorites", href: "/top5#community" },
+      { label: "Editorial picks", href: "/top5#editorial-picks" },
       { label: "Suggest a list", href: "/top5" },
       { label: "Newsletter", href: "/top5#newsletter" },
     ],

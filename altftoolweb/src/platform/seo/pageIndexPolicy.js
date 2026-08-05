@@ -6,6 +6,7 @@ const NOINDEX_ROUTE_PREFIXES = Object.freeze([
   "/lookouts",
   "/top5",
   "/top8",
+  "/top49",
 ]);
 
 function normalizePath(value = "/") {

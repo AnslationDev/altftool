@@ -141,6 +141,7 @@ export default function CategoryExplorer({
       <motion.div
         layout
         onMouseLeave={() => setHoveredSlug(null)}
+        style={{ perspective: 1100 }}
         className="mt-8 grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5 lg:gap-6"
       >
         <AnimatePresence mode="popLayout">
@@ -155,10 +156,11 @@ export default function CategoryExplorer({
               <motion.div
                 key={ranking.slug}
                 layout
-                initial={{ opacity: 0, y: 26, scale: 0.97 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.25, ease: EASE } }}
-                transition={{ duration: 0.55, delay: Math.min(index * 0.06, 0.3), ease: EASE }}
+                initial={{ opacity: 0, y: 48, rotateX: 14, scale: 0.94, filter: "blur(6px)" }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0, scale: 1, filter: "blur(0px)" }}
+                viewport={{ once: true, amount: 0.15 }}
+                exit={{ opacity: 0, scale: 0.92, filter: "blur(4px)", transition: { duration: 0.25, ease: EASE } }}
+                transition={{ duration: 0.7, delay: Math.min(index * 0.09, 0.45), ease: EASE }}
                 onMouseEnter={() => setHoveredSlug(ranking.slug)}
                 onFocus={() => setHoveredSlug(ranking.slug)}
                 onBlur={() => setHoveredSlug(null)}

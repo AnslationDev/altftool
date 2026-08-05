@@ -13,10 +13,18 @@ export async function generateStaticParams() {
   return CATEGORIES.map((category) => ({ category: category.slug }));
 }
 
+// Does NOT gate this route — dynamicParams only applies to statically
+// generated segments, and this one reads searchParams for pagination, which
+// makes it dynamic. See the fuller note in religion/[religion]/page.jsx.
+export const dynamicParams = false;
+
 export async function generateMetadata({ params }) {
   const { category: slug } = await params;
   const category = getCategory(slug);
-  if (!category) return {};
+  // Unknown slug: renders the not-found body but cannot carry a 404 (the
+  // response has already streamed past festival/loading.jsx's boundary), so
+  // keep it out of the index instead. See religion/[religion]/page.jsx.
+  if (!category) return { robots: { index: false, follow: false } };
 
   return createPageMetadata({
     title: `${category.name} Festivals — Dates, Traditions & Countdowns`,

@@ -14,8 +14,25 @@ export async function generateStaticParams() {
   return getAllCountryCodesUsed().map((code) => ({ code: code.toLowerCase() }));
 }
 
+// Does NOT gate this route — dynamicParams only applies to statically
+// generated segments, and this one reads searchParams for pagination, which
+// makes it dynamic. Verified against `npm start`: both /country/xx and the
+// uppercase /country/IN still answer 200 and render. See the fuller note in
+// religion/[religion]/page.jsx.
+//
+// Casing therefore stays permissive: /country/IN and /country/in both render.
+// generateMetadata points both at the lowercase path as canonical, which is
+// what keeps that from reading as duplicate content.
+export const dynamicParams = false;
+
 export async function generateMetadata({ params }) {
   const { code } = await params;
+  // Unknown code: renders the not-found body but cannot carry a 404 (the
+  // response has already streamed past festival/loading.jsx's boundary), so
+  // keep it out of the index instead. See religion/[religion]/page.jsx.
+  const known = getAllCountryCodesUsed().some((c) => c.toLowerCase() === code.toLowerCase());
+  if (!known) return { robots: { index: false, follow: false } };
+
   const name = getCountryName(code.toUpperCase());
   return createPageMetadata({
     title: `Festivals in ${name} — Dates, Traditions & Countdowns`,

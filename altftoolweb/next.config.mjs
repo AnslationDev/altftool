@@ -405,6 +405,13 @@ const nextConfig = {
         protocol: "https",
         hostname: "images.ctfassets.net",
       },
+      {
+        // Festival lookups use Wikipedia's public media host. Keep the
+        // optimizer restricted to that exact HTTPS hostname.
+        protocol: "https",
+        hostname: "upload.wikimedia.org",
+        pathname: "/**",
+      },
 
     ],
   },
@@ -451,6 +458,7 @@ const nextConfig = {
     //   html2canvas, which dedupe with the app's own direct dependencies.
     config.resolve.alias = {
       ...config.resolve.alias,
+      "@": path.resolve(workspaceRoot, "src"),
       "onnxruntime-web/webgpu$": "onnxruntime-web",
       "@vladmandic/face-api$": "@vladmandic/face-api/dist/face-api.esm-nobundle.js",
       "html2pdf.js$": "html2pdf.js/src/index.js",

@@ -1,6 +1,6 @@
 import FestivalGrid from "../shared/FestivalGrid";
 
-export default function RelatedFestivals({ festivals, dates }) {
+export default function RelatedFestivals({ festivals, dates, photos = {} }) {
   if (!festivals.length) return null;
 
   return (
@@ -12,7 +12,7 @@ export default function RelatedFestivals({ festivals, dates }) {
             <h2>Related Festivals</h2>
           </div>
         </div>
-        <FestivalGrid festivals={festivals} dates={dates} photos={{}} />
+        <FestivalGrid festivals={festivals} dates={dates} photos={photos} />
       </div>
     </section>
   );

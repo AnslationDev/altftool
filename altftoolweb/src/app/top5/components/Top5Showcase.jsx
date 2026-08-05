@@ -2,18 +2,16 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import ManagedImage from "@/components/ui/ManagedImage";
 import { Reveal, EASE } from "./motion";
-import { getRanking } from "../data/rankings";
 
 // The hero promises "five at a time" — this section is where that promise
 // plays out as motion: a countdown through one flagship ranking's five
 // entries, staged as the video reference's overlapping "latest projects"
 // card pair, re-purposed as a rank-5-to-rank-1 reveal. Mock data only —
 // same rankings.js used by TrendingSection/PopularSection elsewhere.
-const FEATURED_SLUG = "ai-tools";
 const AUTOPLAY_MS = 4200;
 
 // Deterministic scalloped "seal" outline for the CTA badge, echoing the
@@ -35,14 +33,14 @@ function sealPath(r = 56, bumps = 14, amplitude = 3) {
 
 const SEAL_PATH = sealPath();
 
-function SealLink({ href, children }) {
+function SealLink({ href, children, reduceMotion = false }) {
   return (
     <Link href={href} className="group relative block h-28 w-28 shrink-0 sm:h-32 sm:w-32">
       <motion.svg
         viewBox="0 0 120 120"
         className="absolute inset-0 h-full w-full"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 22, repeat: Infinity, ease: "linear" }}
+        animate={reduceMotion ? undefined : { rotate: 360 }}
+        transition={reduceMotion ? undefined : { duration: 22, repeat: Infinity, ease: "linear" }}
       >
         <path d={SEAL_PATH} className="fill-white transition-colors group-hover:fill-[#10b981]" />
       </motion.svg>
@@ -53,19 +51,21 @@ function SealLink({ href, children }) {
   );
 }
 
-export default function Top5Showcase() {
-  const ranking = getRanking(FEATURED_SLUG);
-  const countdown = ranking ? [...ranking.items].reverse() : [];
+// `ranking` (slim fields + items) comes from the server page — the full
+// rankings dataset stays out of the client bundle.
+export default function Top5Showcase({ ranking }) {
+  const countdown = ranking?.items ? [...ranking.items].reverse() : [];
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    if (paused || countdown.length < 2) return undefined;
+    if (reduceMotion || paused || countdown.length < 2) return undefined;
     const id = setInterval(() => {
       setActiveIndex((current) => (current + 1) % countdown.length);
     }, AUTOPLAY_MS);
     return () => clearInterval(id);
-  }, [paused, countdown.length]);
+  }, [reduceMotion, paused, countdown.length]);
 
   if (!ranking) return null;
 
@@ -105,7 +105,7 @@ export default function Top5Showcase() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <SealLink href={`/top5/item/${ranking.slug}`}>
+            <SealLink href={`/top5/item/${ranking.slug}`} reduceMotion={reduceMotion}>
               See full
               <br />
               ranking

@@ -1,17 +1,18 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Search, ArrowRight, ChevronDown } from "lucide-react";
 import { EASE } from "./motion";
 import ManagedImage from "@/components/ui/ManagedImage";
-import { getRanking } from "../data/rankings";
 
 // Editorial, agency-brief-style hero: light canvas, soft color-bloom behind
 // the display type, and a fanned row of the site's five flagship rankings
-// standing in for the "portfolio strip" moment. Every image below comes
-// straight out of the existing rankings.js mock data — nothing new to fetch.
+// standing in for the "portfolio strip" moment. Card image/title data
+// arrives as a slim `quickRankings` prop from the server page, so the full
+// rankings dataset never ships in the client bundle.
 const QUICK_LINKS = [
   { label: "AI tools", slug: "ai-tools", rotate: -7 },
   { label: "Universities", slug: "global-universities", rotate: -3 },
@@ -21,7 +22,6 @@ const QUICK_LINKS = [
 ].map((link, i, arr) => ({
   ...link,
   lift: i === Math.floor((arr.length - 1) / 2) ? -18 : Math.abs(i - (arr.length - 1) / 2) * 6,
-  ranking: getRanking(link.slug),
 }));
 
 const headingLineOne = ["Discover", "the", "world's"];
@@ -36,8 +36,11 @@ const wordVariants = {
   }),
 };
 
-export default function Hero() {
+export default function Hero({ quickRankings = {} }) {
   const sectionRef = useRef(null);
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+  const reduceMotion = useReducedMotion();
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -45,6 +48,12 @@ export default function Hero() {
 
   const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "14%"]);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0]);
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const query = searchQuery.trim().slice(0, 80);
+    router.push(query ? `/top5/categories?q=${encodeURIComponent(query)}` : "/top5/categories");
+  };
 
   return (
     <section
@@ -118,9 +127,9 @@ export default function Hero() {
             className="block font-[family-name:var(--font-top5-display)] italic"
           >
             <motion.span
-              className="bg-[linear-gradient(90deg,#10b981,#5ea8ff,#10b981)] bg-clip-text text-transparent bg-[length:200%_100%]"
-              animate={{ backgroundPosition: ["0% 50%", "200% 50%"] }}
-              transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+              className="bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent bg-[length:200%_100%]"
+              animate={reduceMotion ? undefined : { backgroundPosition: ["0% 50%", "200% 50%"] }}
+              transition={reduceMotion ? undefined : { duration: 6, repeat: Infinity, ease: "linear" }}
             >
               Top 5
             </motion.span>{" "}
@@ -143,27 +152,31 @@ export default function Hero() {
             initial={{ opacity: 0, y: 22, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.7, delay: 0.72, ease: EASE }}
-            onSubmit={(event) => event.preventDefault()}
-            whileHover={{ boxShadow: "0 25px 60px -20px rgba(11,17,32,0.25)" }}
-            className="flex w-full max-w-md items-center gap-2 rounded-full border border-black/5 bg-white p-2 pl-5 shadow-[0_10px_40px_-18px_rgba(11,17,32,0.2)]"
+            onSubmit={handleSearch}
+            className="flex w-full max-w-md items-center gap-2 rounded-full border border-border bg-surface p-2 pl-5 shadow-sm transition-shadow hover:shadow-md"
           >
-            <Search size={18} className="shrink-0 text-[#10b981]" />
+            <Search size={18} className="shrink-0 text-primary-text" />
             <input
               type="text"
-              placeholder="Search anything..."
-              className="min-w-0 flex-1 bg-transparent py-2.5 text-[#0b1120] outline-none placeholder:text-[#9ca3af]"
+              value={searchQuery}
+              onChange={(event) => setSearchQuery(event.target.value)}
+              maxLength={80}
+              aria-label="Search Top5 categories"
+              placeholder="Search categories..."
+              className="min-w-0 flex-1 bg-transparent py-2.5 text-foreground outline-none placeholder:text-muted-foreground"
             />
             <motion.button
               whileHover={{ scale: 1.04 }}
               whileTap={{ scale: 0.96 }}
               type="submit"
-              className="flex shrink-0 items-center gap-2 rounded-full bg-[#0b1120] px-4 py-2.5 text-sm font-semibold text-white sm:px-5"
+              aria-label="Explore Top5 categories"
+              className="flex min-h-11 shrink-0 items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground sm:px-5"
             >
               <span className="hidden sm:inline">EXPLORE</span>
               <motion.span
-                animate={{ x: [0, 3, 0] }}
-                transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
-                className="flex h-7 w-7 items-center justify-center rounded-full bg-white/10"
+                animate={reduceMotion ? undefined : { x: [0, 3, 0] }}
+                transition={reduceMotion ? undefined : { duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+                className="flex h-7 w-7 items-center justify-center rounded-full bg-on-media/10"
               >
                 <ArrowRight size={14} />
               </motion.span>
@@ -179,7 +192,7 @@ export default function Hero() {
           >
             <Link
               href="/top5/categories"
-              className="inline-flex items-center gap-2 rounded-full border border-black/10 bg-white px-6 py-3.5 text-sm font-semibold text-[#0b1120] shadow-sm hover:bg-[#f7f8fa] transition-colors"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-6 py-3.5 text-sm font-semibold text-foreground shadow-sm transition-colors hover:bg-surface-hover"
             >
               Browse every list
               <ArrowRight size={14} />
@@ -237,8 +250,8 @@ export default function Hero() {
               <Link href={`/top5/item/${item.slug}`} className="group block">
                 <div className="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-[0_20px_45px_-20px_rgba(11,17,32,0.35)] ring-1 ring-black/5">
                   <ManagedImage
-                    src={item.ranking?.cardImage}
-                    alt={item.ranking?.title || item.label}
+                    src={quickRankings[item.slug]?.cardImage}
+                    alt={quickRankings[item.slug]?.title || item.label}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/0 to-black/0" />

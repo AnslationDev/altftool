@@ -112,6 +112,8 @@ export default async function FestivalHubPage() {
       <FestivalHome
         stats={STATS}
         upcoming={upcoming}
+        calendarYear={now.getUTCFullYear()}
+        initialCalendarMonth={now.getUTCMonth() + 1}
         featured={{
           festival: featuredFestival,
           dateIso: featuredDateIso,

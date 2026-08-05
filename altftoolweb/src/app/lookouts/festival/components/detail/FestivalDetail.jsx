@@ -26,6 +26,7 @@ export default function FestivalDetail({
   countries,
   related,
   relatedDates,
+  relatedPhotos,
 }) {
   return (
     <div className="festival-page">
@@ -63,7 +64,7 @@ export default function FestivalDetail({
         <FaqSection festival={festival} dateIso={dateIso} dateSource={dateSource} />
       </Reveal>
       <Reveal>
-        <RelatedFestivals festivals={related} dates={relatedDates} />
+        <RelatedFestivals festivals={related} dates={relatedDates} photos={relatedPhotos} />
       </Reveal>
 
       <FestivalFooter />

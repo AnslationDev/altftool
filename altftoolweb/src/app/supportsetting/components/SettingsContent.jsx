@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import { Menu, ChevronRight, Home, Maximize2, Minimize2 } from "lucide-react";
 import HomeSearchBar from "./HomeSearchBar";
 import SupportLandingPage from "./SupportLandingPage";
@@ -9,10 +10,23 @@ import AiToolDetailPage from "./AiToolDetailPage";
 import DeviceLandingPage from "./DeviceLandingPage";
 import CategoryHubPage from "./CategoryHubPage";
 import CompatibilityBanner from "./CompatibilityBanner";
+import { SmartPlatformCard, DeviceAdaptiveBadge } from "./AdaptiveExperience";
+import ContentSkeleton from "./ContentSkeleton";
+import OnboardingCoachMark from "./OnboardingCoachMark";
 import { getCategoryById } from "../data/categories";
 import { getDeviceById } from "../data/deviceTaxonomy";
 import { getSettingsForDevice, ALL_DEVICE_SETTINGS } from "../data/devices";
-import { getSettingsForCategoryFromSettings, parseCategoryActiveId } from "../data/clientData";
+import { getSettingsForCategoryFromSettings, parseCategoryActiveId, categoryActiveId } from "../data/clientData";
+import { useOnboardingHint } from "../data/onboarding";
+
+// How long the brief "content is loading" skeleton shows on each
+// navigation. Every page here renders from data that's already loaded
+// locally (no real network fetch happens on click), so a long artificial
+// delay just reads as unnecessary lag on every single click — the
+// opposite of the premium, instant feel native Settings apps have when
+// switching between local pages. Kept brief rather than removed outright
+// only to smooth over a one-frame unstyled flash on slower devices.
+const NAV_SKELETON_MS = 120;
 
 const PLATFORM_LABEL = { windows: "Windows", macos: "macOS", android: "Android", ios: "iOS" };
 
@@ -52,6 +66,7 @@ const SettingsContent = ({
   onSelectUtility,
   onVisit,
   onOpenSidebar,
+  onOpenPalette,
   onGoHome,
   searchInputRef,
   focusMode,
@@ -64,6 +79,31 @@ const SettingsContent = ({
   onClearHistory,
 }) => {
   const { platform, detectedPlatform } = platformState;
+
+  // Brief "content is loading" skeleton on every navigation (opening a
+  // setting, category, device, OS, utility, or AI tool page) — the
+  // persistent search bar and breadcrumb/back bar below are deliberately
+  // OUTSIDE this, so they update instantly and stay interactive; only the
+  // page body itself briefly shows a skeleton before fading in. The
+  // sidebar (rendered separately, one level up) already highlights the
+  // newly-selected row immediately since its own `activeId` prop updates
+  // synchronously — nothing here delays that.
+  const [showNavSkeleton, setShowNavSkeleton] = useState(false);
+  const prevActiveIdRef = useRef(activeId);
+  useEffect(() => {
+    if (prevActiveIdRef.current === activeId) return;
+    prevActiveIdRef.current = activeId;
+    setShowNavSkeleton(true);
+    const timer = setTimeout(() => setShowNavSkeleton(false), NAV_SKELETON_MS);
+    return () => clearTimeout(timer);
+  }, [activeId]);
+
+  // First-visit-only coach-mark highlighting the search bar and device
+  // picker (see data/onboarding.js + OnboardingCoachMark.jsx). Both of its
+  // steps target Home-page-only elements, so it's only ever active while
+  // `activeId === null` — it stays permanently dismissed (via localStorage)
+  // once closed, on this page or any other.
+  const { showHint, dismissHint } = useOnboardingHint();
 
   const isUtility = typeof activeId === "string" && activeId.startsWith("util-");
   const isAiTool = typeof activeId === "string" && activeId.startsWith("ai-");
@@ -90,21 +130,41 @@ const SettingsContent = ({
   // device's own catalog, not the current OS platform's.
   const relatedLookup = activeDeviceSetting ? ALL_DEVICE_SETTINGS : allSettings;
 
+  // Every breadcrumb has "Support Home" (always goes all the way home) and
+  // a current-page title (never a link, it's where you already are) — but
+  // the middle "section" segment used to be inert (a plain, unclickable
+  // span) no matter what it said. Now it always resolves to a real
+  // "one step back" target: the category hub for a setting's category, the
+  // device landing page for a device setting, or — for pages with no
+  // separate hub of their own (a utility page, an AI tool, a device
+  // landing page, or a category hub itself) — Support Home, same as
+  // clicking the Home crumb. That way every breadcrumb segment actually
+  // does something when clicked, never a dead label.
   let breadcrumb = null;
   if (activeOsSetting) {
     const category = getCategoryById(activeOsSetting.category);
-    breadcrumb = { section: category?.label || "Settings", title: activeOsSetting.title };
+    breadcrumb = {
+      section: category?.label || "Settings",
+      title: activeOsSetting.title,
+      onSectionClick: category
+        ? () => onSelectSetting(categoryActiveId(activeOsSetting.platform, activeOsSetting.category))
+        : onGoHome,
+    };
   } else if (activeDeviceSetting) {
     const device = getDeviceById(activeDeviceSetting.platform);
-    breadcrumb = { section: device?.name || "Devices", title: activeDeviceSetting.title };
+    breadcrumb = {
+      section: device?.name || "Devices",
+      title: activeDeviceSetting.title,
+      onSectionClick: device ? () => onSelectSetting(`device-${activeDeviceSetting.platform}`) : onGoHome,
+    };
   } else if (isUtility) {
-    breadcrumb = { section: "Help & Tools", title: UTILITY_TITLES[activeId] || "Help & Tools" };
+    breadcrumb = { section: "Help & Tools", title: UTILITY_TITLES[activeId] || "Help & Tools", onSectionClick: onGoHome };
   } else if (activeAiTool) {
-    breadcrumb = { section: "AI Tools", title: activeAiTool.name };
+    breadcrumb = { section: "AI Tools", title: activeAiTool.name, onSectionClick: onGoHome };
   } else if (activeDeviceLanding) {
-    breadcrumb = { section: "Devices", title: activeDeviceLanding.name };
+    breadcrumb = { section: "Devices", title: activeDeviceLanding.name, onSectionClick: onGoHome };
   } else if (activeCategory) {
-    breadcrumb = { section: PLATFORM_LABEL[categoryRef.platform] || "Settings", title: activeCategory.label };
+    breadcrumb = { section: PLATFORM_LABEL[categoryRef.platform] || "Settings", title: activeCategory.label, onSectionClick: onGoHome };
   }
 
   // Compatibility check (item 3): does the guide currently open match the
@@ -133,18 +193,41 @@ const SettingsContent = ({
             in the side nav and never only-on-some-pages. It shares the same
             searchQuery state the sidebar list filters against, so typing
             here filters the sidebar too. */}
-        <div className="support-persistent-search">
-          <HomeSearchBar
-            ref={searchInputRef}
-            settings={allSettings}
-            searchQuery={searchQuery}
-            onSearchChange={onSearchChange}
-            onSelectSetting={onSelectSetting}
-            platform={platform}
-            onSwitchPlatform={platformState?.setOverride}
-            wideSearchResults={wideSearchResults}
-          />
+        <div className={`support-persistent-search ${activeId !== null ? "support-persistent-search-page" : ""}`}>
+          {/* Search bar + the tiny device-adaptive pill beside it — the pill's
+              popover is the one-glance answer to "will this open my
+              Settings directly, or guide me?" (Set for X / Direct Launch
+              Available vs Guided Help Ready). */}
+          <div className="support-search-adaptive-row">
+            <div className="support-search-adaptive-grow">
+              <HomeSearchBar
+                ref={searchInputRef}
+                settings={allSettings}
+                searchQuery={searchQuery}
+                onSearchChange={onSearchChange}
+                onSelectSetting={onSelectSetting}
+                platform={platform}
+                onSwitchPlatform={platformState?.setOverride}
+                wideSearchResults={wideSearchResults}
+                onOpenPalette={onOpenPalette}
+                aiTools={aiTools}
+                onGoHome={onGoHome}
+              />
+            </div>
+            <DeviceAdaptiveBadge platform={platform} detectedPlatform={detectedPlatform} />
+          </div>
+
+          {/* Smart Platform Card — Home only (keeps inner pages exactly as
+              tall as before). Detects the device on load and frames its
+              capability positively: Windows gets "Instant Settings Access"
+              with a real direct-launch button; every other platform gets
+              "Smart Guided Navigation" plus the "Why is this different?"
+              explainer — never a warning banner. Closes with a concise
+              platform-support summary. */}
+          {activeId === null && <SmartPlatformCard platform={platform} detectedPlatform={detectedPlatform} />}
         </div>
+
+        <OnboardingCoachMark active={showHint && activeId === null} onDismiss={dismissHint} />
 
         {/* Mobile Sidebar Toggle */}
         <div className="md:hidden my-5">
@@ -164,9 +247,19 @@ const SettingsContent = ({
               {breadcrumb && (
                 <>
                   <ChevronRight className="h-3.5 w-3.5 support-page-breadcrumb-sep" />
-                  <span className="support-page-breadcrumb-link" style={{ cursor: "default" }}>
-                    {breadcrumb.section}
-                  </span>
+                  {breadcrumb.onSectionClick ? (
+                    <button
+                      type="button"
+                      className="support-page-breadcrumb-link"
+                      onClick={breadcrumb.onSectionClick}
+                    >
+                      {breadcrumb.section}
+                    </button>
+                  ) : (
+                    <span className="support-page-breadcrumb-link" style={{ cursor: "default" }}>
+                      {breadcrumb.section}
+                    </span>
+                  )}
                   <ChevronRight className="h-3.5 w-3.5 support-page-breadcrumb-sep" />
                   <span className="support-page-breadcrumb-current">{breadcrumb.title}</span>
                 </>
@@ -190,6 +283,11 @@ const SettingsContent = ({
             </div>
           </div>
         )}
+
+        {showNavSkeleton ? (
+          <ContentSkeleton />
+        ) : (
+        <div key={activeId ?? "home"} className="support-page-transition-in">
 
         {compatibility && (
           <CompatibilityBanner
@@ -225,14 +323,26 @@ const SettingsContent = ({
             device={activeDeviceLanding}
             settings={getSettingsForDevice(activeDeviceLanding.id)}
             onSelectSetting={onSelectSetting}
+            onSelectUtility={onSelectUtility}
             platformState={platformState}
             onGoHome={onGoHome}
+            recentlyUsedSettings={recentlyUsedSettings}
+            isBookmarked={isBookmarked}
+            toggleBookmark={toggleBookmark}
+            onVisit={onVisit}
           />
         ) : activeCategory ? (
           <CategoryHubPage
+            key={activeCategory.id}
             category={activeCategory}
             settings={categorySettings}
             platform={categoryRef.platform}
+            allSettings={allSettings}
+            recentlyUsedSettings={recentlyUsedSettings}
+            isBookmarked={isBookmarked}
+            onToggleBookmark={toggleBookmark}
+            onVisit={onVisit}
+            detectedPlatform={detectedPlatform}
             onSelectSetting={onSelectSetting}
           />
         ) : (
@@ -243,15 +353,12 @@ const SettingsContent = ({
             allSettings={allSettings}
             frequentlyUsed={frequentlyUsed}
             recommended={recommended}
-            recentlyUsedSettings={recentlyUsedSettings}
-            bookmarkedSettings={bookmarkedSettings}
-                aiTools={aiTools}
-                wideSearchResults={wideSearchResults}
-                searchQuery={searchQuery}
-            onSearchChange={onSearchChange}
+            aiTools={aiTools}
             onSelectSetting={onSelectSetting}
             onSelectUtility={onSelectUtility}
           />
+        )}
+        </div>
         )}
       </div>
     </div>

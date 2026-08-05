@@ -1,0 +1,11 @@
+@media (prefers-reduced-motion: reduce) {
+  .top5-root,
+  .top5-root *,
+  .top5-root *::before,
+  .top5-root *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

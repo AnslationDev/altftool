@@ -1,4 +1,5 @@
 import GameGridSection from "@/app/altfgame/_components/GameGrid";
+import GameHero from "@/app/altfgame/_components/GameHero";
 import { GAMES, CATEGORIES, TRENDING, POPULAR, NEW_RELEASES } from "@/app/altfgame/_data/games";
 import { ArrowRight, Clock, Flame, TrendingUp } from "lucide-react";
 import Link from "next/link";
@@ -65,8 +66,9 @@ export default function GamesIndex() {
   return (
     <div className="w-full">
       <JsonLd id="altf-games-hub-schema" data={jsonLd} />
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">All Games</h1>
+      <GameHero />
+      <div id="all-games" className="mb-8 scroll-mt-24">
+        <h2 className="text-3xl font-bold tracking-tight">All Games</h2>
         <p className="mt-2 text-foreground/60">
           {GAMES.length} games across {CATEGORIES.length} categories. Pick one to start.
         </p>

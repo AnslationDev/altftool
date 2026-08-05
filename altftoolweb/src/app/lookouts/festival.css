@@ -167,6 +167,44 @@
   );
 }
 
+/* Quick-tag marquee. The track carries the tag list twice and shifts left by
+   exactly half its own width, so copy two arrives where copy one started and
+   the seam never shows. Percentage-based, so it stays seamless whatever the
+   festival names happen to be — the row is built from live data, so their
+   widths aren't known up front. */
+.festival-quick-marquee {
+  /* Fades the tags into the page at both ends instead of letting them clip
+     against a hard edge mid-word. */
+  mask-image: linear-gradient(to right, transparent, currentColor 6%, currentColor 94%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, currentColor 6%, currentColor 94%, transparent);
+}
+
+.festival-quick-marquee-track {
+  animation: festival-quick-marquee 26s linear infinite;
+}
+
+.festival-quick-marquee:hover .festival-quick-marquee-track,
+.festival-quick-marquee:focus-within .festival-quick-marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes festival-quick-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    /* Half the track, plus half of the gap that sits between the two copies,
+       so the loop point lands on the same pixel the row started at. */
+    transform: translateX(calc(-50% - 0.3125rem));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .festival-quick-marquee-track {
+    animation: none;
+  }
+}
+
 /* Confetti — the falling paper field behind the hero. Geometry (size, tint,
    offset, duration) is set inline per piece by ConfettiField; this rule owns
    only what every piece shares. */
@@ -355,25 +393,33 @@
   width: 100%;
 }
 
+/* Spacing lives on the slides, not as a `gap` on the track.
+   Embla loops by translating individual slides, and that offset is computed
+   from slide widths alone — a container `gap` isn't part of it, so the moment
+   a slide wraps around the spacing goes uneven and neighbouring cards look
+   stuck together. Folding the gutter into each slide's own box (padding, with
+   a matching negative margin on the track to cancel the leading one) keeps it
+   attached to the thing being translated. */
 .festival-upcoming-track {
   display: flex;
-  gap: 1.5rem;
+  margin-left: -1.5rem;
 }
 
 .festival-upcoming-slide {
-  flex: 0 0 calc(33.333% - 1rem);
+  flex: 0 0 33.333%;
   min-width: 0;
+  padding-left: 1.5rem;
 }
 
 @media (max-width: 1024px) {
   .festival-upcoming-slide {
-    flex-basis: calc(50% - 0.75rem);
+    flex-basis: 50%;
   }
 }
 
 @media (max-width: 640px) {
   .festival-upcoming-slide {
-    flex-basis: 88%;
+    flex-basis: 90%;
   }
 }
 
@@ -563,49 +609,12 @@
   color: var(--f-night-fg);
 }
 
-/* ========== RELIGION GRID ========== */
-
-.religion-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.15rem;
-}
-
-@media (max-width: 1024px) {
-  .religion-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .religion-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.religion-card {
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  padding: 1.25rem;
-  border-radius: 16px;
-  border: 1px solid var(--f-border);
-  background: var(--f-surface);
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-}
-
-.religion-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 24px -12px rgba(13, 43, 34, 0.25);
-}
-
-.religion-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+/* ========== RELIGION GRID ==========
+   The grid and its cards are authored in Tailwind inside ReligionGrid.jsx —
+   they animate in on scroll, which wants the markup and the motion variants
+   in one place. Only the icon tile survives here, because
+   CelebrationHighlights on the detail page reuses it, and its tint rules are
+   shared with the category grid's. */
 
 .religion-icon {
   width: 44px;
@@ -654,57 +663,6 @@
   background: var(--f-tint-peach-bg);
   color: var(--f-tint-peach-fg);
 }
-
-.religion-count {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--f-muted-fg);
-}
-
-.religion-card h3 {
-  font-size: 1.1rem;
-  font-weight: 800;
-  margin: 0 0 0.15rem;
-}
-
-.religion-card > p {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--f-primary);
-  margin: 0;
-}
-
-.religion-card ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.religion-card li {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.78rem;
-}
-
-.religion-card .dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--f-accent);
-  flex-shrink: 0;
-}
-
-.dot--orange { background: var(--f-tint-orange-fg); }
-.dot--gray { background: var(--f-tint-gray-fg); }
-.dot--violet { background: var(--f-tint-violet-fg); }
-.dot--pink { background: var(--f-tint-pink-fg); }
-.dot--teal { background: var(--f-tint-teal-fg); }
-.dot--blue { background: var(--f-tint-blue-fg); }
-.dot--peach { background: var(--f-tint-peach-fg); }
 
 /* ========== COUNTRY GRID ========== */
 
@@ -2348,7 +2306,6 @@
    that stays a dark slab in both themes (see --f-night), so giving them the
    light paper fill would erase that inversion. They take the outline and
    offset shadow below on their own terms. */
-.festival-page .religion-card,
 .festival-page .country-card,
 .festival-page .category-card,
 .festival-page .festival-card,
@@ -2370,7 +2327,6 @@
   transition: transform 0.16s ease, box-shadow 0.16s ease;
 }
 
-.festival-page .religion-card:hover,
 .festival-page .country-card:hover,
 .festival-page .category-card:hover,
 .festival-page .festival-card:hover,

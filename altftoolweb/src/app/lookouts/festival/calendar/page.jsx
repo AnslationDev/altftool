@@ -30,10 +30,14 @@ export default async function FestivalCalendarPage({ searchParams }) {
   const country = sp?.country || "";
   const month = sp?.month || "";
   const category = sp?.category || "";
-  const page = Math.max(1, Number(sp?.page) || 1);
+  const requestedPage = Math.max(1, Number(sp?.page) || 1);
 
   const filtered = applyFilters(getAllFestivals(), { query, country, month, category });
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  // Clamped to the last real page. Without this, ?page=999 renders the
+  // "No festivals found" empty state directly under a heading that says 75
+  // festivals matched — the count and the grid contradicting each other.
+  const page = Math.min(requestedPage, totalPages);
   const pageItems = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   const now = new Date();

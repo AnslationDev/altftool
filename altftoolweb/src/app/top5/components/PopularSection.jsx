@@ -7,7 +7,6 @@ import ManagedImage from "@/components/ui/ManagedImage";
 import { ArrowUpRight, ChevronDown } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 import { Reveal, staggerContainer, staggerItem, EASE } from "./motion";
-import { getAllRankings } from "../data/rankings";
 
 // How many rows are visible before "Show more" expands the rest.
 const VISIBLE_COUNT = 7;
@@ -65,8 +64,9 @@ function PopularRow({ item, index }) {
   );
 }
 
-export default function PopularSection() {
-  const rankings = getAllRankings();
+// `items` (slim fields) comes from the server page.
+export default function PopularSection({ items = [] }) {
+  const rankings = items;
   const [expanded, setExpanded] = useState(false);
 
   const visibleItems = rankings.slice(0, VISIBLE_COUNT);

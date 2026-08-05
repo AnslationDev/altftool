@@ -1,0 +1,2310 @@
+/* ============================================================================
+   TOP 49 — Route-scoped design system
+   ----------------------------------------------------------------------------
+   The route keeps its editorial layout while inheriting ALTFTool's shared
+   teal/cyan semantic theme, type, spacing, radius, shadow, and motion tokens.
+
+   EVERY rule in this file is scoped under `.t49`. Nothing here can affect any
+   other route in the project. Do not import this file outside /top49.
+   ========================================================================== */
+
+.t49 {
+  /* ---- type stacks -------------------------------------------------------- */
+  --t49-font: var(--font-primary);
+  --t49-font-display: var(--font-primary);
+  --t49-font-num: var(--font-mono);
+
+  /* ---- shared spacing scale ---------------------------------------------- */
+  --t49-xxs: var(--anslation-ds-space-1);
+  --t49-xs: var(--anslation-ds-space-2);
+  --t49-sm: var(--anslation-ds-space-3);
+  --t49-md: var(--anslation-ds-space-4);
+  --t49-lg: var(--anslation-ds-space-6);
+  --t49-xl: var(--anslation-ds-space-8);
+  --t49-xxl: var(--anslation-ds-space-12);
+  --t49-section: var(--anslation-ds-space-16);
+
+  /* ---- shared radii ------------------------------------------------------- */
+  --t49-r-none: 0;
+  --t49-r-xs: var(--anslation-ds-radius-xs);
+  --t49-r-sm: var(--anslation-ds-radius);
+  --t49-r-md: var(--anslation-ds-radius-lg);
+  --t49-r-lg: var(--anslation-ds-radius-xl);
+  --t49-r-pill: var(--anslation-ds-radius-pill);
+
+  /* ---- motion ------------------------------------------------------------- */
+  --t49-ease: var(--anslation-ds-ease-out);
+  --t49-fast: var(--anslation-ds-motion-base);
+  --t49-base: var(--anslation-ds-motion-modal);
+
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--t49-font);
+  font-size: 17px;
+  line-height: 1.47;
+  letter-spacing: -0.374px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.t49 *,
+.t49 *::before,
+.t49 *::after {
+  box-sizing: border-box;
+}
+
+.t49 img {
+  max-width: 100%;
+}
+
+/* ============================================================================
+   1. BANDS — full-bleed tiles. The surface change IS the section divider.
+   ========================================================================== */
+
+.t49-band {
+  position: relative;
+  padding-block: clamp(48px, 3rem + 3vw, 80px);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.t49-band--parchment {
+  background: var(--surface-soft);
+}
+.t49-band--soft {
+  background: var(--surface-soft);
+}
+.t49-band--dark {
+  background: var(--anslation-ds-footer);
+  color: var(--on-media);
+}
+.t49-band--dark-2 {
+  background: color-mix(in srgb, var(--anslation-ds-footer) 92%, var(--secondary));
+  color: var(--on-media);
+}
+.t49-band--dark-3 {
+  background: var(--anslation-ds-footer);
+  color: var(--on-media);
+}
+.t49-band--black {
+  background: var(--anslation-ds-footer);
+  color: var(--on-media);
+}
+.t49-band--primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.t49-band--flush {
+  padding-block: 0;
+}
+.t49-band--tight {
+  padding-block: clamp(32px, 2rem + 2vw, 56px);
+}
+
+/* Text roles inside dark / primary bands */
+.t49-band--dark .t49-muted,
+.t49-band--dark-2 .t49-muted,
+.t49-band--dark-3 .t49-muted,
+.t49-band--black .t49-muted {
+  color: color-mix(in srgb, var(--on-media) 82%, transparent);
+}
+.t49-band--primary .t49-muted {
+  color: color-mix(in srgb, var(--primary-foreground) 82%, transparent);
+}
+.t49-band--dark .t49-link,
+.t49-band--dark-2 .t49-link,
+.t49-band--dark-3 .t49-link,
+.t49-band--black .t49-link {
+  color: var(--primary);
+}
+.t49-band--primary .t49-link {
+  color: var(--primary-foreground);
+}
+
+/* ---- containers ---------------------------------------------------------- */
+.t49-wrap {
+  width: 100%;
+  max-width: 1440px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 48px);
+}
+.t49-wrap--narrow {
+  max-width: 1120px;
+}
+.t49-wrap--prose {
+  max-width: 760px;
+}
+
+/* ============================================================================
+   2. TYPOGRAPHY — shared ALTFTool ladder with editorial display moments
+   ========================================================================== */
+
+.t49-hero-display {
+  font-family: var(--t49-font-display);
+  font-size: clamp(34px, 1.6rem + 3.6vw, 56px);
+  font-weight: 600;
+  line-height: 1.07;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* The editorial voice: massive, uppercase, weight 800. Reserved for rank and
+   editorial moments — never for running headings. */
+.t49-hero-heavy {
+  font-family: var(--t49-font-display);
+  font-size: clamp(40px, 1.4rem + 6.4vw, 96px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* Professional Typewriter effect for Hero */
+.t49-typewriter-wrapper {
+  display: inline-block;
+  vertical-align: bottom;
+  position: relative;
+  min-height: 1em;
+}
+
+.t49-typewriter-text {
+  background: linear-gradient(135deg, var(--on-media), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline;
+}
+
+.t49-typewriter-cursor {
+  display: inline-block;
+  width: 4px;
+  height: 0.75em;
+  margin-left: 6px;
+  background-color: var(--secondary);
+  border-radius: 2px;
+  box-shadow: var(--shadow-md);
+  vertical-align: baseline;
+  animation: t49-blink 0.85s infinite;
+}
+
+.t49-band--primary .t49-typewriter-text {
+  background: linear-gradient(135deg, var(--primary-foreground), var(--secondary-foreground));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.t49-band--primary .t49-typewriter-cursor {
+  background-color: var(--primary-foreground);
+}
+
+@keyframes t49-blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.t49-display {
+  font-family: var(--t49-font-display);
+  font-size: clamp(28px, 1.4rem + 2.2vw, 40px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+.t49-display-sm {
+  font-family: var(--t49-font-display);
+  font-size: clamp(22px, 1.2rem + 1.2vw, 30px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.018em;
+  margin: 0;
+}
+
+.t49-lead {
+  font-size: clamp(19px, 1rem + 0.7vw, 24px);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0;
+  margin: 0;
+  color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+
+.t49-tagline {
+  font-family: var(--t49-font-display);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.19;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.t49-body {
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.47;
+  letter-spacing: -0.374px;
+  margin: 0;
+}
+.t49-body-strong {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.24;
+  letter-spacing: -0.374px;
+  margin: 0;
+}
+
+.t49-caption {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.43;
+  letter-spacing: -0.224px;
+  margin: 0;
+}
+.t49-caption-strong {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.29;
+  letter-spacing: -0.224px;
+  margin: 0;
+}
+
+.t49-fine {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: -0.12px;
+  margin: 0;
+}
+
+/* Editorial eyebrow: 800, uppercase, wide-set */
+.t49-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary-text);
+  margin: 0;
+}
+.t49-band--dark .t49-eyebrow,
+.t49-band--dark-2 .t49-eyebrow,
+.t49-band--dark-3 .t49-eyebrow,
+.t49-band--black .t49-eyebrow {
+  color: var(--primary);
+}
+.t49-band--primary .t49-eyebrow {
+  color: var(--primary-foreground);
+}
+
+.t49-muted {
+  color: var(--muted-foreground);
+}
+.t49-faint {
+  color: var(--muted-foreground);
+}
+.t49-num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.t49-link {
+  color: var(--primary-text);
+  text-decoration: none;
+  font-weight: 400;
+  transition: opacity var(--t49-fast) var(--t49-ease);
+}
+.t49-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.t49-link:active {
+  opacity: 0.7;
+}
+
+.t49-clamp-1,
+.t49-clamp-2,
+.t49-clamp-3 {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.t49-clamp-1 {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+.t49-clamp-2 {
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+.t49-clamp-3 {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+/* ============================================================================
+   3. BUTTONS — ALTFTool actions within the editorial grammar
+   ========================================================================== */
+
+.t49-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 11px 22px;
+  border: 1px solid transparent;
+  border-radius: var(--t49-r-pill);
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: -0.374px;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--t49-fast) var(--t49-ease),
+    color var(--t49-fast) var(--t49-ease),
+    border-color var(--t49-fast) var(--t49-ease),
+    transform var(--t49-fast) var(--t49-ease);
+}
+.t49-btn:active {
+  transform: scale(0.95);
+}
+.t49-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.t49-btn[disabled],
+.t49-btn[aria-disabled="true"] {
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.t49-btn--primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}
+.t49-btn--primary:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.t49-btn--ghost {
+  background: transparent;
+  color: var(--primary-text);
+  border-color: var(--primary);
+}
+.t49-btn--ghost:hover {
+  background: var(--primary-soft);
+}
+.t49-band--dark .t49-btn--ghost,
+.t49-band--dark-2 .t49-btn--ghost,
+.t49-band--dark-3 .t49-btn--ghost,
+.t49-band--black .t49-btn--ghost {
+  color: var(--on-media);
+  border-color: color-mix(in srgb, var(--on-media) 40%, transparent);
+}
+.t49-band--dark .t49-btn--ghost:hover,
+.t49-band--dark-2 .t49-btn--ghost:hover,
+.t49-band--dark-3 .t49-btn--ghost:hover,
+.t49-band--black .t49-btn--ghost:hover {
+  background: color-mix(in srgb, var(--on-media) 10%, transparent);
+  border-color: var(--on-media);
+}
+.t49-band--primary .t49-btn--primary {
+  background: var(--surface);
+  color: var(--primary-text);
+  border-color: var(--surface);
+}
+.t49-band--primary .t49-btn--primary:hover {
+  background: var(--surface-soft);
+  border-color: var(--surface-soft);
+}
+.t49-band--primary .t49-btn--ghost {
+  color: var(--primary-foreground);
+  border-color: color-mix(in srgb, var(--primary-foreground) 55%, transparent);
+}
+.t49-band--primary .t49-btn--ghost:hover {
+  background: color-mix(in srgb, var(--primary-foreground) 14%, transparent);
+  border-color: var(--primary-foreground);
+}
+
+/* Compact utility rect — the secondary button grammar */
+.t49-btn--utility {
+  min-height: 36px;
+  padding: 8px 15px;
+  border-radius: var(--t49-r-sm);
+  background: var(--foreground);
+  color: var(--background);
+  font-size: 14px;
+  letter-spacing: -0.224px;
+  border-color: var(--foreground);
+}
+.t49-btn--utility:hover {
+  background: var(--muted-foreground);
+}
+
+.t49-btn--pearl {
+  min-height: 36px;
+  padding: 8px 14px;
+  border-radius: var(--t49-r-md);
+  background: var(--surface);
+  color: var(--muted-foreground);
+  border-color: var(--border);
+  font-size: 14px;
+  letter-spacing: -0.224px;
+}
+.t49-btn--pearl:hover {
+  border-color: var(--border);
+  color: var(--foreground);
+}
+
+.t49-btn--sm {
+  min-height: 36px;
+  padding: 8px 16px;
+  font-size: 14px;
+  letter-spacing: -0.224px;
+}
+.t49-btn--lg {
+  min-height: 52px;
+  padding: 14px 28px;
+  font-size: 18px;
+  font-weight: 300;
+}
+.t49-btn--block {
+  width: 100%;
+}
+
+/* Circular chip that floats over photography */
+.t49-btn--icon {
+  width: 44px;
+  height: 44px;
+  min-height: 44px;
+  padding: 0;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--surface-soft) 64%, transparent);
+  color: var(--foreground);
+  border-color: transparent;
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+}
+.t49-btn--icon:hover {
+  background: color-mix(in srgb, var(--surface-soft) 86%, transparent);
+}
+
+/* ============================================================================
+   4. CHIPS / PILLS / BADGES
+   ========================================================================== */
+
+.t49-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: var(--t49-r-pill);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted-foreground);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.224px;
+  line-height: 1.2;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: all var(--t49-fast) var(--t49-ease);
+}
+.t49-chip:hover {
+  border-color: var(--border-strong);
+  color: var(--foreground);
+}
+.t49-chip:active {
+  transform: scale(0.95);
+}
+.t49-chip:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.t49-chip[aria-pressed="true"],
+.t49-chip[data-selected="true"],
+.t49-chip--active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  font-weight: 600;
+}
+
+.t49-chip--static {
+  cursor: default;
+  background: var(--surface-soft);
+  border-color: transparent;
+}
+.t49-chip--static:hover {
+  border-color: transparent;
+  color: var(--muted-foreground);
+}
+
+.t49-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: var(--t49-r-pill);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.t49-badge--primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.t49-badge--soft {
+  background: var(--primary-soft);
+  color: var(--primary-text);
+}
+.t49-badge--ink {
+  background: var(--foreground);
+  color: var(--background);
+}
+.t49-badge--glass {
+  background: var(--overlay);
+  color: var(--on-media);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+}
+.t49-badge--up {
+  background: var(--success-soft);
+  color: var(--success-text);
+}
+.t49-badge--down {
+  background: var(--danger-soft);
+  color: var(--danger-text);
+}
+.t49-badge--flat {
+  background: var(--surface-soft);
+  color: var(--muted-foreground);
+}
+
+/* ============================================================================
+   5. CARDS — hairline, no shadow. Shadow belongs to imagery only.
+   ========================================================================== */
+
+.t49-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--t49-r-lg);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color var(--t49-base) var(--t49-ease),
+    transform var(--t49-base) var(--t49-ease);
+}
+a.t49-card:hover {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+a.t49-card:active {
+  transform: translateY(0) scale(0.99);
+}
+a.t49-card:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.t49-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: var(--t49-lg);
+  flex: 1 1 auto;
+}
+.t49-card__body--tight {
+  padding: 16px;
+  gap: 6px;
+}
+.t49-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px var(--t49-lg);
+  border-top: 1px solid var(--border);
+  margin-top: auto;
+}
+
+/* Media frame — the ONLY place the system's drop shadow appears */
+.t49-media {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-soft);
+  isolation: isolate;
+}
+.t49-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 520ms var(--t49-ease);
+}
+a.t49-card:hover .t49-media img {
+  transform: scale(1.035);
+}
+.t49-media--1-1 {
+  aspect-ratio: 1 / 1;
+}
+.t49-media--4-3 {
+  aspect-ratio: 4 / 3;
+}
+.t49-media--16-10 {
+  aspect-ratio: 16 / 10;
+}
+.t49-media--16-9 {
+  aspect-ratio: 16 / 9;
+}
+.t49-media--3-4 {
+  aspect-ratio: 3 / 4;
+}
+.t49-media--2-3 {
+  aspect-ratio: 2 / 3;
+}
+.t49-media--21-9 {
+  aspect-ratio: 21 / 9;
+}
+.t49-media--rounded {
+  border-radius: var(--t49-r-lg);
+}
+.t49-media--shadow {
+  box-shadow: var(--shadow-md);
+}
+
+/* Legibility scrim for text laid over photography */
+.t49-media__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--anslation-ds-footer) 78%, transparent) 0%,
+    color-mix(in srgb, var(--anslation-ds-footer) 45%, transparent) 34%,
+    color-mix(in srgb, var(--anslation-ds-footer) 8%, transparent) 68%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+.t49-media__scrim--even {
+  background: var(--overlay);
+}
+.t49-media__overlay {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: var(--t49-lg);
+  color: var(--on-media);
+  z-index: 1;
+}
+.t49-media__corner {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.t49-media__corner--tl {
+  top: 12px;
+  left: 12px;
+}
+.t49-media__corner--tr {
+  top: 12px;
+  right: 12px;
+}
+.t49-media__corner--bl {
+  bottom: 12px;
+  left: 12px;
+}
+.t49-media__corner--br {
+  bottom: 12px;
+  right: 12px;
+}
+
+/* ── Podium ──────────────────────────────────────────────────────────────
+   The three cards are always the same size. Rows stretch, the card fills its
+   cell, and the summary is the only element allowed to flex — so the score and
+   meter line up across all three regardless of how long a name or blurb runs. */
+
+.t49-podium {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--t49-lg);
+  align-items: stretch;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.t49-podium > li {
+  display: flex;
+  min-width: 0;
+}
+.t49-podium__card {
+  width: 100%;
+}
+.t49-podium__card .t49-card__body {
+  flex: 1 1 auto;
+  gap: 6px;
+}
+/* Pushes the score row and meter to a common baseline in every card. */
+.t49-podium__summary {
+  flex: 1 1 auto;
+  margin-top: 2px;
+}
+.t49-podium__score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+}
+/* First place is marked by the medal and this rule — never by a bigger card. */
+.t49-podium__card.is-first {
+  border-color: color-mix(in srgb, var(--primary) 34%, var(--border));
+}
+.t49-podium__card.is-first::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 3px;
+  background: var(--primary);
+  z-index: 2;
+}
+
+@media (max-width: 833px) {
+  .t49-podium {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .t49-podium {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ============================================================================
+   6. RANK & SCORE
+   ========================================================================== */
+
+.t49-rank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  padding-inline: 8px;
+  border-radius: var(--t49-r-pill);
+  background: var(--surface-soft);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  font-family: var(--t49-font-display);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.t49-rank--1 {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+}
+.t49-rank--2 {
+  background: var(--secondary);
+  border-color: var(--secondary);
+  color: var(--secondary-foreground);
+}
+.t49-rank--3 {
+  background: var(--info-text);
+  border-color: var(--info-text);
+  color: var(--anslation-ds-status-foreground);
+}
+.t49-rank--glass {
+  background: var(--overlay);
+  border-color: color-mix(in srgb, var(--on-media) 22%, transparent);
+  color: var(--on-media);
+  backdrop-filter: blur(10px) saturate(160%);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+}
+.t49-rank--lg {
+  min-width: 56px;
+  height: 56px;
+  font-size: 22px;
+}
+
+/* The editorial numeral moment — huge, heavy, uppercase-adjacent */
+.t49-numeral {
+  font-family: var(--t49-font-display);
+  font-weight: 800;
+  font-size: clamp(56px, 3rem + 6vw, 132px);
+  line-height: 0.82;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+  display: block;
+}
+
+.t49-score {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 2px;
+  font-family: var(--t49-font-display);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+.t49-score__value {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--primary-text);
+}
+.t49-score__max {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--muted-foreground);
+}
+.t49-score--lg .t49-score__value {
+  font-size: 34px;
+}
+.t49-score--lg .t49-score__max {
+  font-size: 15px;
+}
+
+/* Score meter */
+.t49-meter {
+  display: block;
+  width: 100%;
+  height: 6px;
+  border-radius: var(--t49-r-pill);
+  background: var(--surface-soft);
+  overflow: hidden;
+}
+.t49-meter__fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary);
+  transition: width 640ms var(--t49-ease);
+}
+.t49-band--dark .t49-meter,
+.t49-band--dark-2 .t49-meter,
+.t49-band--dark-3 .t49-meter,
+.t49-band--black .t49-meter {
+  background: color-mix(in srgb, var(--on-media) 16%, transparent);
+}
+.t49-band--dark .t49-meter__fill,
+.t49-band--dark-2 .t49-meter__fill,
+.t49-band--dark-3 .t49-meter__fill,
+.t49-band--black .t49-meter__fill {
+  background: var(--primary);
+}
+
+/* ============================================================================
+   7. SUB-NAV — frosted, sticky, sits under the global site header
+   ========================================================================== */
+
+.t49-subnav {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--surface-soft) 82%, transparent);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+.t49-subnav__inner {
+  display: flex;
+  align-items: center;
+  gap: var(--t49-lg);
+  min-height: 56px;
+  padding-block: 8px;
+}
+.t49-subnav__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--t49-font-display);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.t49-subnav__brand b {
+  color: var(--primary-text);
+  font-weight: 800;
+}
+.t49-subnav__by {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted-foreground);
+  text-transform: lowercase;
+  margin-inline: 1px 2px;
+}
+.t49-subnav__links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.t49-subnav__links::-webkit-scrollbar {
+  display: none;
+}
+.t49-subnav__link {
+  padding: 8px 12px;
+  border-radius: var(--t49-r-sm);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.224px;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color var(--t49-fast) var(--t49-ease),
+    background-color var(--t49-fast) var(--t49-ease);
+}
+.t49-subnav__link:hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, transparent);
+}
+.t49-subnav__link[aria-current="page"] {
+  color: var(--primary-text);
+  font-weight: 600;
+}
+.t49-subnav__link:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ============================================================================
+   8. INPUTS
+   ========================================================================== */
+
+.t49-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.t49-field__icon {
+  position: absolute;
+  left: 18px;
+  display: flex;
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+.t49-input {
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--t49-r-pill);
+  background: var(--surface);
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: 17px;
+  letter-spacing: -0.374px;
+  line-height: 1.4;
+  transition: border-color var(--t49-fast) var(--t49-ease);
+  appearance: none;
+}
+.t49-field__icon ~ .t49-input {
+  padding-left: 48px;
+}
+.t49-input::placeholder {
+  color: var(--muted-foreground);
+}
+.t49-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--primary-soft);
+}
+.t49-input--rect {
+  border-radius: var(--t49-r-sm);
+}
+
+.t49-select {
+  min-height: 40px;
+  padding: 8px 34px 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--t49-r-pill);
+  background-color: var(--surface);
+  background-image: linear-gradient(45deg, transparent 50%, currentColor 50%),
+    linear-gradient(135deg, currentColor 50%, transparent 50%);
+  background-position: calc(100% - 18px) 55%, calc(100% - 13px) 55%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  color: var(--foreground);
+  font-family: inherit;
+  font-size: 14px;
+  letter-spacing: -0.224px;
+  cursor: pointer;
+  appearance: none;
+}
+.t49-select:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ============================================================================
+   8b. RANKED LIST — one container, hairline-separated rows
+   ----------------------------------------------------------------------------
+   Individually boxing forty-nine rows turns the page into noise, so the list is
+   a single surface divided by hairlines. Each row is a four-rail grid — rank,
+   thumbnail, editorial, score — with the editorial note breaking out beneath.
+   ========================================================================== */
+
+.t49-ranklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--t49-r-lg);
+  background: var(--surface);
+  overflow: hidden;
+}
+.t49-ranklist > li + li {
+  border-top: 1px solid var(--border);
+}
+
+.t49-rankrow {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px 116px minmax(0, 1fr) 132px;
+  grid-template-areas:
+    'rank media main score'
+    '.    .     note note';
+  column-gap: 22px;
+  row-gap: 0;
+  padding: 24px;
+  transition: background-color var(--t49-fast) var(--t49-ease);
+}
+.t49-rankrow:hover {
+  background: color-mix(in srgb, var(--foreground) 3%, transparent);
+}
+
+/* One invisible hit target covers the row; nested links stay clickable. */
+.t49-rankrow__hit {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.t49-rankrow__hit:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -3px;
+  border-radius: var(--t49-r-sm);
+}
+.t49-rankrow > *:not(.t49-rankrow__hit) {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+.t49-rankrow a:not(.t49-rankrow__hit),
+.t49-rankrow button {
+  pointer-events: auto;
+}
+
+/* ── rank rail ── */
+.t49-rankrow__rank {
+  grid-area: rank;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding-top: 2px;
+}
+.t49-rankrow__num {
+  font-family: var(--t49-font-display);
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+}
+.t49-rankrow__num.is-rank-1 {
+  color: var(--primary-text);
+}
+.t49-rankrow__num.is-rank-2 {
+  color: var(--secondary);
+}
+.t49-rankrow__num.is-rank-3 {
+  color: var(--info-text);
+}
+
+/* ── media rail ── */
+.t49-rankrow__media {
+  grid-area: media;
+}
+
+/* ── editorial rail ── */
+.t49-rankrow__main {
+  grid-area: main;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.t49-rankrow__title {
+  font-family: var(--t49-font-display);
+  font-size: 19px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--foreground);
+  transition: color var(--t49-fast) var(--t49-ease);
+}
+.t49-rankrow:hover .t49-rankrow__title {
+  color: var(--primary-text);
+}
+
+.t49-rankrow__specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+  margin: 0;
+  padding: 12px 0 0;
+  border-top: 1px solid var(--border);
+}
+.t49-rankrow__spec {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.t49-rankrow__spec dt {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.t49-rankrow__spec dd {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+
+.t49-rankrow__tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ── score rail ── */
+.t49-rankrow__score {
+  grid-area: score;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  padding-top: 2px;
+}
+.t49-rankrow__score .t49-score__value {
+  font-size: 26px;
+}
+.t49-rankrow__score .t49-meter {
+  width: 100%;
+}
+
+/* ── editorial note ── */
+.t49-rankrow__note {
+  grid-area: note;
+  margin: 16px 0 0;
+  padding: 12px 16px;
+  border-left: 3px solid var(--primary);
+  border-radius: 0 var(--t49-r-sm) var(--t49-r-sm) 0;
+  background: var(--surface-soft);
+  font-size: 14px;
+  line-height: 1.5;
+  letter-spacing: -0.224px;
+  color: var(--muted-foreground);
+}
+
+@media (max-width: 1068px) {
+  .t49-rankrow {
+    grid-template-columns: 48px 104px minmax(0, 1fr) 108px;
+    column-gap: 18px;
+  }
+}
+
+@media (max-width: 833px) {
+  .t49-rankrow {
+    grid-template-columns: 44px 92px minmax(0, 1fr);
+    grid-template-areas:
+      'rank media main'
+      'score score score'
+      'note note note';
+    column-gap: 16px;
+    padding: 20px;
+  }
+  .t49-rankrow__score {
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .t49-rankrow__score .t49-meter {
+    flex: 1 1 auto;
+  }
+  .t49-rankrow__note {
+    margin-top: 14px;
+  }
+}
+
+@media (max-width: 520px) {
+  .t49-rankrow {
+    grid-template-columns: 34px 68px minmax(0, 1fr);
+    column-gap: 12px;
+    padding: 18px 14px;
+  }
+  .t49-rankrow__num {
+    font-size: 22px;
+  }
+  .t49-rankrow__title {
+    font-size: 17px;
+  }
+  .t49-rankrow__specs {
+    gap: 8px 16px;
+  }
+  .t49-rankrow__note {
+    padding: 10px 12px;
+  }
+}
+
+/* ============================================================================
+   8c. COMPARE — built on the shared configurator grammar
+   ----------------------------------------------------------------------------
+   Slots are store-utility-cards (canvas, 1px hairline, 18px radius, 24px pad).
+   Unfilled slots are drawn rather than hidden, so a one-item comparison reads
+   as a deliberate state instead of a broken table. Product imagery is the only
+   thing in this route carrying the system drop-shadow.
+   ========================================================================== */
+
+.t49-cmp-slots {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--t49-lg);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.t49-cmp-slot {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: var(--t49-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--t49-r-lg);
+  min-width: 0;
+}
+
+/* Product render resting on a surface — the single shadow in the system. */
+.t49-cmp-slot__figure {
+  border-radius: var(--t49-r-sm);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.t49-cmp-slot__name {
+  font-family: var(--t49-font-display);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: -0.374px;
+  margin: 0;
+  color: var(--foreground);
+  text-decoration: none;
+}
+.t49-cmp-slot__name:hover {
+  color: var(--primary-text);
+}
+
+.t49-cmp-slot__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+.t49-cmp-slot__remove {
+  align-self: flex-start;
+  border: 0;
+  background: none;
+  padding: 0;
+  font: inherit;
+  font-size: 14px;
+  letter-spacing: -0.224px;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.t49-cmp-slot__remove:hover {
+  color: var(--primary-text);
+}
+
+/* Empty slot — dashed, quiet, and a real link into the picker. */
+.t49-cmp-slot--empty {
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 240px;
+  text-align: center;
+  background: transparent;
+  border-style: dashed;
+  border-color: var(--border);
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: border-color var(--t49-fast) var(--t49-ease),
+    color var(--t49-fast) var(--t49-ease);
+}
+.t49-cmp-slot--empty:hover {
+  border-color: var(--primary);
+  color: var(--primary-text);
+}
+.t49-cmp-slot__plus {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  font-size: 22px;
+  line-height: 1;
+}
+
+/* ── configurator chips (the picker) ── */
+.t49-cmp-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 10px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.t49-cmp-chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--t49-r-pill);
+  background: var(--surface);
+  color: var(--foreground);
+  font: inherit;
+  font-size: 14px;
+  letter-spacing: -0.224px;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--t49-fast) var(--t49-ease),
+    transform var(--t49-fast) var(--t49-ease);
+}
+.t49-cmp-chip:hover {
+  border-color: var(--border-strong);
+}
+.t49-cmp-chip:active {
+  transform: scale(0.95);
+}
+.t49-cmp-chip:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+.t49-cmp-chip[data-selected='true'] {
+  border-width: 2px;
+  border-color: var(--primary);
+}
+.t49-cmp-chip__thumb {
+  flex: none;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--surface-soft);
+}
+.t49-cmp-chip__text {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+}
+.t49-cmp-chip__name {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.t49-cmp-chip__where {
+  font-size: 12px;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── comparison matrix ── */
+.t49-cmp-matrix {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--t49-r-lg);
+  background: var(--surface);
+  scrollbar-width: none;
+}
+.t49-cmp-matrix::-webkit-scrollbar {
+  display: none;
+}
+.t49-cmp-matrix table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.t49-cmp-matrix th,
+.t49-cmp-matrix td {
+  padding: 16px 20px;
+  text-align: left;
+  vertical-align: top;
+  border-top: 1px solid var(--border);
+}
+.t49-cmp-matrix tr:first-child th,
+.t49-cmp-matrix tr:first-child td {
+  border-top: 0;
+}
+/* Attribute label column stays put while the item columns scroll. */
+.t49-cmp-matrix th[scope='row'] {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  width: 210px;
+  min-width: 180px;
+  background: var(--surface);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.08px;
+  color: var(--muted-foreground);
+}
+.t49-cmp-matrix td {
+  min-width: 190px;
+  font-size: 15px;
+  letter-spacing: -0.224px;
+  color: var(--foreground);
+}
+.t49-cmp-group th {
+  padding-top: 26px;
+  padding-bottom: 10px;
+  background: var(--surface-soft);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.t49-cmp-matrix .t49-cmp-group th[scope='row'] {
+  background: var(--surface-soft);
+}
+.t49-cmp-null {
+  color: var(--muted-foreground);
+}
+/* Marks the leading value on rows where higher genuinely means better. */
+.t49-cmp-best {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 7px;
+  font-weight: 700;
+  color: var(--primary-text);
+}
+.t49-cmp-best::after {
+  content: 'Best';
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: var(--t49-r-pill);
+  background: var(--primary-soft);
+}
+
+/* ── floating summary bar ── */
+.t49-cmp-bar {
+  position: sticky;
+  bottom: 16px;
+  z-index: 30;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 64px;
+  margin-top: var(--t49-xl);
+  padding: 12px 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--t49-r-pill);
+  background: color-mix(in srgb, var(--surface-soft) 82%, transparent);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+}
+
+@media (max-width: 1068px) {
+  .t49-cmp-slots {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 560px) {
+  .t49-cmp-slots {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .t49-cmp-slot--empty {
+    min-height: 150px;
+  }
+  .t49-cmp-options {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .t49-cmp-matrix th[scope='row'] {
+    width: 140px;
+    min-width: 130px;
+  }
+  .t49-cmp-bar {
+    border-radius: var(--t49-r-lg);
+    padding: 14px 18px;
+  }
+}
+
+/* ============================================================================
+   9. TABLE — the ranked list
+   ========================================================================== */
+
+.t49-tablewrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--t49-r-lg);
+  background: var(--surface);
+  -webkit-overflow-scrolling: touch;
+}
+.t49-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.t49-table th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 12px 16px;
+  background: var(--surface-soft);
+  color: var(--muted-foreground);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: left;
+  white-space: nowrap;
+}
+.t49-table th[data-align="right"],
+.t49-table td[data-align="right"] {
+  text-align: right;
+}
+.t49-table td {
+  padding: 14px 16px;
+  border-top: 1px solid var(--border);
+  color: var(--foreground);
+  vertical-align: middle;
+}
+.t49-table tbody tr {
+  transition: background-color var(--t49-fast) var(--t49-ease);
+}
+.t49-table tbody tr:hover {
+  background: color-mix(in srgb, var(--foreground) 3%, transparent);
+}
+/* ============================================================================
+   10. GRIDS
+   ========================================================================== */
+
+.t49-grid {
+  display: grid;
+  gap: var(--t49-lg);
+}
+.t49-grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.t49-grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.t49-grid--4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+.t49-grid--5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.t49-grid--6 {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+.t49-grid--tight {
+  gap: 12px;
+}
+
+/* Horizontal snap rail */
+/* Horizontal snap rail.
+   The scrollbar is hidden in every engine while the region stays fully
+   scrollable — swipe, trackpad, shift+wheel and keyboard all still work, and
+   tabbing through the cards scrolls the rail natively. */
+.t49-rail {
+  display: flex;
+  gap: var(--t49-lg);
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  padding-block: 4px 8px;
+  margin-inline: calc(clamp(20px, 4vw, 48px) * -1);
+  padding-inline: clamp(20px, 4vw, 48px);
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* legacy Edge */
+}
+.t49-rail::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+  width: 0;
+  height: 0;
+}
+.t49-rail > * {
+  scroll-snap-align: start;
+  flex: 0 0 auto;
+}
+
+/* ============================================================================
+   LANDING HERO — full-bleed editorial photography
+   ----------------------------------------------------------------------------
+   The base surface is the near-black tile, so if the remote photograph ever
+   fails to load the hero degrades into a clean dark ALTFTool band rather
+   than a broken frame. The scrim is tuned so that even against a pure-white
+   photograph the text zone composites to at least 5.7:1 against white.
+   ========================================================================== */
+
+.t49-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: clamp(500px, 66vh, 720px);
+  padding-block: clamp(56px, 7vw, 96px);
+  background: var(--anslation-ds-footer);
+  color: var(--on-media);
+}
+
+/* The backdrop is a finished dark composition in its own right. The photograph
+   sits on top of it, so a slow or failed image never leaves an empty frame —
+   the hero simply reads as the near-black tile it was designed against. */
+.t49-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(118% 88% at 10% 6%, color-mix(in srgb, var(--secondary) 15%, transparent) 0%, transparent 56%),
+    radial-gradient(96% 82% at 92% 96%, color-mix(in srgb, var(--primary) 15%, transparent) 0%, transparent 58%),
+    linear-gradient(158deg, var(--anslation-ds-footer) 0%, color-mix(in srgb, var(--anslation-ds-footer) 86%, var(--secondary)) 44%, var(--anslation-ds-footer) 100%);
+}
+.t49-hero__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.92;
+  filter: brightness(1.3) contrast(1.15) saturate(1.25);
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+.t49-hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      100deg,
+      color-mix(in srgb, var(--anslation-ds-footer) 88%, transparent) 0%,
+      color-mix(in srgb, var(--anslation-ds-footer) 72%, transparent) 32%,
+      color-mix(in srgb, var(--anslation-ds-footer) 35%, transparent) 60%,
+      color-mix(in srgb, var(--anslation-ds-footer) 12%, transparent) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--anslation-ds-footer) 35%, transparent) 0%,
+      transparent 35%,
+      color-mix(in srgb, var(--anslation-ds-footer) 45%, transparent) 100%
+    );
+}
+
+.t49-hero__glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: -1;
+  filter: blur(70px);
+  opacity: 0.65;
+  animation: t49-orb-pulse 6s infinite alternate ease-in-out;
+}
+
+.t49-hero__glow-orb--1 {
+  width: 520px;
+  height: 520px;
+  top: -100px;
+  right: 8%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--secondary) 45%, transparent) 0%, color-mix(in srgb, var(--info) 25%, transparent) 50%, transparent 100%);
+}
+
+.t49-hero__glow-orb--2 {
+  width: 420px;
+  height: 420px;
+  bottom: -80px;
+  left: 10%;
+  background: radial-gradient(circle, color-mix(in srgb, var(--primary) 35%, transparent) 0%, color-mix(in srgb, var(--secondary) 20%, transparent) 60%, transparent 100%);
+  animation-delay: -3s;
+}
+
+.t49-hero__glow-center {
+  position: absolute;
+  top: 50%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  width: 650px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, color-mix(in srgb, var(--secondary) 40%, transparent) 0%, color-mix(in srgb, var(--info) 20%, transparent) 50%, transparent 75%);
+  filter: blur(65px);
+  pointer-events: none;
+  z-index: -1;
+  animation: t49-orb-pulse 5s ease-in-out infinite alternate;
+}
+
+@keyframes t49-orb-pulse {
+  0% {
+    transform: scale(1) translateY(0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.18) translateY(-14px);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 0.5;
+  }
+}
+
+.t49-hero__content {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+}
+
+/* On-dark text roles inside the hero */
+.t49-hero .t49-eyebrow {
+  color: var(--primary);
+}
+.t49-hero .t49-lead {
+  color: color-mix(in srgb, var(--on-media) 86%, transparent);
+}
+.t49-hero .t49-stat__value {
+  color: var(--on-media);
+}
+.t49-hero .t49-stat__label {
+  color: color-mix(in srgb, var(--on-media) 76%, transparent);
+}
+.t49-hero .t49-hero-heavy {
+  text-shadow: var(--shadow-lg);
+}
+
+/* Below the two-column breakpoint the copy spans the full width, so the scrim
+   switches from a side wash to an even vertical one. */
+@media (max-width: 833px) {
+  .t49-hero {
+    min-height: 0;
+  }
+  .t49-hero__scrim {
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--anslation-ds-footer) 89%, transparent) 0%,
+      color-mix(in srgb, var(--anslation-ds-footer) 91%, transparent) 46%,
+      color-mix(in srgb, var(--anslation-ds-footer) 95%, transparent) 100%
+    );
+  }
+}
+
+/* Landing hero: single column until there is room for the spotlight panel */
+.t49-hero-grid {
+  display: grid;
+  gap: clamp(32px, 5vw, 64px);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+}
+@media (min-width: 1069px) {
+  .t49-hero-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  }
+}
+
+/* Two-column content split used on list and item pages */
+.t49-split {
+  display: grid;
+  gap: clamp(28px, 4vw, 48px);
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+}
+@media (min-width: 1069px) {
+  .t49-split {
+    grid-template-columns: minmax(0, 1fr) 320px;
+  }
+  .t49-split__aside {
+    position: sticky;
+    top: 88px;
+  }
+}
+
+/* Numbered process steps */
+@media (min-width: 735px) {
+  .t49-step {
+    grid-template-columns: 140px minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+/* Section head */
+.t49-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--t49-lg);
+  margin-bottom: var(--t49-xl);
+}
+.t49-head__text {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 720px;
+}
+
+/* ============================================================================
+   11. STATES — loading, empty, error
+   ========================================================================== */
+
+.t49-skel {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-soft);
+  border-radius: var(--t49-r-sm);
+}
+.t49-skel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--surface) 60%, transparent),
+    transparent
+  );
+  animation: t49-shimmer 1.4s infinite;
+}
+@keyframes t49-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+.t49-skel--text {
+  height: 12px;
+  border-radius: 99px;
+}
+.t49-skel--media {
+  border-radius: var(--t49-r-lg);
+}
+
+.t49-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+  padding: clamp(40px, 6vw, 72px) var(--t49-lg);
+  border: 1px solid var(--border);
+  border-radius: var(--t49-r-lg);
+  background: var(--surface-soft);
+}
+.t49-state__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--muted-foreground);
+}
+.t49-state__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+/* ============================================================================
+   12. MISC
+   ========================================================================== */
+
+.t49-crumbs {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  letter-spacing: -0.224px;
+  color: var(--muted-foreground);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.t49-crumbs a {
+  color: var(--muted-foreground);
+  text-decoration: none;
+}
+.t49-crumbs a:hover {
+  color: var(--primary-text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.t49-crumbs li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.t49-crumbs [aria-current="page"] {
+  color: var(--foreground);
+}
+
+.t49-divide {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 0;
+}
+
+.t49-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.t49-stat__value {
+  font-family: var(--t49-font-display);
+  font-size: clamp(28px, 1.4rem + 1.6vw, 40px);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}
+.t49-stat__label {
+  font-size: 14px;
+  letter-spacing: -0.224px;
+  color: var(--muted-foreground);
+}
+
+.t49-details {
+  border-top: 1px solid var(--border);
+}
+.t49-details summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--t49-font-display);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+.t49-details summary::-webkit-details-marker {
+  display: none;
+}
+.t49-details summary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+.t49-details summary::after {
+  content: "";
+  flex: none;
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform var(--t49-base) var(--t49-ease);
+  color: var(--muted-foreground);
+}
+.t49-details[open] summary::after {
+  transform: rotate(-135deg) translate(-2px, -2px);
+}
+.t49-details__body {
+  padding: 0 0 22px;
+  max-width: 68ch;
+  color: var(--muted-foreground);
+}
+
+.t49-anchor {
+  scroll-margin-top: 96px;
+}
+
+.t49-sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================================
+   13. RESPONSIVE — structural breakpoints
+   ========================================================================== */
+
+@media (max-width: 1068px) {
+  .t49-grid--6 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .t49-grid--5 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .t49-grid--4 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 833px) {
+  .t49-grid--6,
+  .t49-grid--5,
+  .t49-grid--4,
+  .t49-grid--3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .t49-grid--2 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .t49-head {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .t49-band {
+    padding-block: 44px;
+  }
+  .t49-grid {
+    gap: 16px;
+  }
+  .t49-grid--6,
+  .t49-grid--5,
+  .t49-grid--4,
+  .t49-grid--3 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .t49-grid--stack-sm {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .t49-btn {
+    font-size: 16px;
+  }
+  .t49-subnav__brand {
+    font-size: 18px;
+  }
+  .t49-card__body {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 419px) {
+  .t49-grid--6,
+  .t49-grid--5,
+  .t49-grid--4,
+  .t49-grid--3 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t49 *,
+  .t49 *::before,
+  .t49 *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .t49-media img {
+    transform: none !important;
+  }
+}
+
+@media print {
+  .t49-subnav,
+  .t49-rail {
+    display: none;
+  }
+}
+
+/* ============================================================================
+   14. PROGRESSIVE CATEGORY REVEAL
+   ----------------------------------------------------------------------------
+   The control is a bare chevron rather than a labelled button — chrome recedes,
+   the affordance is the arrow itself. It bounces while more categories remain
+   and flips to point up once the full set is showing.
+   ========================================================================== */
+
+.t49-expandable-grid-container {
+  width: 100%;
+}
+
+/* Only applied to items revealed after the first batch, so the initial paint
+   is not animated and there is no layout jitter on load. */
+.t49-grid-item-fade {
+  animation: t49-grid-item-appear 340ms var(--t49-ease) both;
+}
+
+@keyframes t49-grid-item-appear {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.t49-expand-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.t49-expand-arrow,
+.t49-expand-arrow-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 1.5px solid var(--border);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--muted-foreground);
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: all var(--t49-fast) var(--t49-ease);
+  box-shadow: var(--shadow-sm);
+}
+
+.t49-expand-arrow:hover,
+.t49-expand-arrow-btn:hover {
+  color: var(--primary-text);
+  border-color: var(--primary-text);
+  background: var(--primary-soft);
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: var(--shadow-md);
+}
+
+.t49-expand-arrow:active,
+.t49-expand-arrow-btn:active {
+  transform: scale(0.95);
+}
+
+.t49-expand-arrow:focus-visible,
+.t49-expand-arrow-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.t49-expand-arrow__icon,
+.t49-expand-arrow-icon {
+  transition: transform var(--t49-base) var(--t49-ease);
+}
+
+.t49-expand-arrow__icon.is-bouncing,
+.t49-expand-arrow-icon.is-bouncing {
+  animation: t49-arrow-bounce 1.6s infinite ease-in-out;
+}
+
+.t49-expand-arrow__icon.is-expanded,
+.t49-expand-arrow-icon.is-expanded {
+  transform: rotate(180deg);
+  animation: none;
+}
+
+.t49-arrow-count-badge {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.t49-expand-controls:hover .t49-arrow-count-badge {
+  color: var(--primary-text);
+}
+
+@keyframes t49-arrow-bounce {
+  0%,
+  100% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
