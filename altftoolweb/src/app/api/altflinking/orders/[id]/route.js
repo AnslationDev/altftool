@@ -101,8 +101,11 @@ export async function PATCH(request, { params }) {
       update.adminApprovedAt = now;
     }
     if (newStatus === "VERIFIED_LIVE") {
-      update.isDofollow = body.isDofollow ?? true;
-      update.isIndexed  = body.isIndexed  ?? true;
+      if (typeof body.isDofollow !== "boolean" || typeof body.isIndexed !== "boolean") {
+        return err("VERIFIED_LIVE requires explicit isDofollow and isIndexed evidence", 400);
+      }
+      update.isDofollow = body.isDofollow;
+      update.isIndexed  = body.isIndexed;
       update.crawledAt  = now;
     }
 

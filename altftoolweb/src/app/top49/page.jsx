@@ -78,8 +78,8 @@ function Hero() {
 
           <p className="t49-lead" style={{ marginTop: 22, maxWidth: '52ch' }}>
             Every entry is scored out of 100 against criteria we publish on the list itself. No
-            sponsored placements, no hidden weighting — if something moves, the methodology explains
-            why.
+            sponsored placements, no hidden weighting — each displayed position follows the published
+            criteria in this editorial preview.
           </p>
 
           <div style={{ marginTop: 32 }}>
@@ -97,7 +97,7 @@ function Hero() {
             <Stat value={totals.categories} label="Categories" />
             <Stat value={totals.lists} label="Ranked lists" />
             <Stat value={totals.items} label="Entries scored" />
-            <Stat value={totals.votes} label="Reader votes" compact />
+            <Stat value={totals.rankings} label="Ranking records" compact />
           </div>
         </div>
       </div>
@@ -115,9 +115,9 @@ async function Trending() {
     <Band tone="parchment" aria-labelledby="t49-trending-heading">
       <SectionHead
         id="t49-trending-heading"
-        eyebrow="Moving this month"
-        title="Lists people are reading right now"
-        lead="Ordered by the rate readers are arriving, not by total traffic — this is where positions are changing fastest."
+        eyebrow="Catalogue selection"
+        title="Lists selected from across Top 49"
+        lead="A stable cross-category selection from the curated preview catalogue."
         action={
           <Link href="/top49/categories" className="t49-btn t49-btn--ghost t49-btn--sm">
             Browse all categories
@@ -150,8 +150,8 @@ function Scoring() {
     },
     {
       weight: '25%',
-      name: 'Verified audience',
-      body: 'Reader votes and platform ratings, outlier-trimmed so brigading cannot move a position.',
+      name: 'Audience score',
+      body: 'An illustrative audience-response field, weighted alongside the other published criteria.',
     },
     {
       weight: '25%',

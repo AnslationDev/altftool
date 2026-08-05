@@ -110,7 +110,7 @@ const rankings = {
     category: "Education",
     title: "The World's 5 Most Influential Universities",
     description:
-      "Institutions with exceptional research, teaching, and global impact. Every entry is independently evaluated for capability, experience, accessibility, and lasting relevance.",
+      "An illustrative comparison of institutions across capability, experience, accessibility, and lasting relevance using the authored preview rubric.",
     updated: "March 18, 2026",
     reviewedBy: "Top5 Research",
     readTime: "15 minutes",

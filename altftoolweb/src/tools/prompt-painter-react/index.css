@@ -1,3 +1,4 @@
+/* The Vite scaffold mounts at #root; the Next registry uses .ppr-scope. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,7 +8,8 @@ All colors MUST be HSL.
 */
 
 @layer base {
-  :root {
+  #root,
+  .ppr-scope {
     /* Only Dark Theme Colors - removed light theme colors */
     --background: 240 20% 6%;
     --background-secondary: 240 18% 8%;
@@ -56,24 +58,26 @@ All colors MUST be HSL.
 }
 
 @layer base {
-  * {
-    @apply border-border;
+  #root,
+  #root *,
+  .ppr-scope,
+  .ppr-scope * {
+    border-color: hsl(var(--border));
   }
 
-  body {
+  #root,
+  .ppr-scope {
     min-height: 100dvh;
     position: relative;
     overflow-x: hidden;
-  }
-
-  /* A tool stylesheet stays attached for the life of the document, so painting
-     body here repainted every page the visitor opened next. */
-  .ppr-scope {
-    @apply text-foreground transition-colors duration-500;
+    color: hsl(var(--foreground));
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+    transition-duration: 500ms;
     background: hsl(var(--background));
   }
 
-  body::before {
+  #root::before,
+  .ppr-scope::before {
     content: '';
     position: fixed;
     top: 0;
@@ -87,10 +91,10 @@ All colors MUST be HSL.
       radial-gradient(circle at 40% 20%, hsl(var(--gradient-3) / 0.1) 0%, transparent 50%),
       radial-gradient(circle at 90% 30%, hsl(var(--gradient-4) / 0.1) 0%, transparent 50%),
       hsl(var(--background));
-    animation: gradient-shift 15s ease infinite;
+    animation: ppr-gradient-shift 15s ease infinite;
   }
 
-  @keyframes gradient-shift {
+  @keyframes ppr-gradient-shift {
     0%, 100% {
       opacity: 1;
     }
@@ -101,7 +105,8 @@ All colors MUST be HSL.
 }
 
 @layer utilities {
-  .glass-panel {
+  #root .glass-panel,
+  .ppr-scope .glass-panel {
     background: hsl(var(--card-glass));
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
@@ -111,33 +116,38 @@ All colors MUST be HSL.
       inset 0 1px 1px 0 hsl(0 0% 100% / 0.15);
   }
 
-  .gradient-primary {
+  #root .gradient-primary,
+  .ppr-scope .gradient-primary {
     background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
   }
 
-  .gradient-accent {
+  #root .gradient-accent,
+  .ppr-scope .gradient-accent {
     background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)));
   }
 
-  .text-gradient {
+  #root .text-gradient,
+  .ppr-scope .text-gradient {
     background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
-  .glow-effect {
+  #root .glow-effect,
+  .ppr-scope .glow-effect {
     box-shadow:
       0 0 20px hsl(var(--primary) / 0.4),
       0 0 40px hsl(var(--primary) / 0.3),
       0 0 60px hsl(var(--primary) / 0.2);
   }
 
-  .smooth-transition {
+  #root .smooth-transition,
+  .ppr-scope .smooth-transition {
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  @keyframes float {
+  @keyframes ppr-float {
     0%, 100% {
       transform: translateY(0px);
     }
@@ -146,7 +156,8 @@ All colors MUST be HSL.
     }
   }
 
-  .animate-float {
-    animation: float 3s ease-in-out infinite;
+  #root .animate-float,
+  .ppr-scope .animate-float {
+    animation: ppr-float 3s ease-in-out infinite;
   }
 }

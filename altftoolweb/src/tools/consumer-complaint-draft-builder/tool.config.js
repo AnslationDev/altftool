@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "consumer-complaint-draft-builder",
   name: "Consumer Complaint Draft Builder",
   category: ["Text & Writing","India","Legal"],
-  description: "Facts, relief aur evidence se complaint format banaye.",
+  description: "Build a formatted consumer complaint from your facts, the relief sought and evidence.",
   icon: "file-warning",
   iconColor: "text-primary",
 };

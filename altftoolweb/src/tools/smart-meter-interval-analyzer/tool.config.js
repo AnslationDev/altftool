@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "smart-meter-interval-analyzer",
   name: "Smart-Meter Interval Analyzer",
   category: ["Lifestyle","Calculator"],
-  description: "Energy CSV me peaks aur time-of-use opportunities dikhaye.",
+  description: "Find demand peaks and time-of-use savings in your smart meter CSV export.",
   icon: "gauge",
   iconColor: "text-primary",
 };

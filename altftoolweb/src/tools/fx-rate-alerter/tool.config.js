@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Selected currency rate cross hone par alert de.",
+  "description": "Alerts you when a selected currency rate crosses your threshold.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

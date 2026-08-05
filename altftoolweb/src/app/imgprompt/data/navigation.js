@@ -177,7 +177,7 @@ export const NAV_GROUPS = [
       { label: "Favorites", slug: "favorites", icon: Heart, kind: "library" },
       { label: "Collections", slug: "collections", icon: FolderOpen, kind: "library" },
       { label: "Community", slug: "community", icon: Users, kind: "library" },
-      { label: "Trending Prompts", slug: "trending", icon: TrendingUp, kind: "library" },
+      { label: "Prompt Examples", slug: "trending", icon: TrendingUp, kind: "library" },
       { label: "Saved Prompt", slug: "saved", icon: Bookmark, kind: "library" },
     ],
   },

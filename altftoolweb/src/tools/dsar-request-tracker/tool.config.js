@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "dsar-request-tracker",
   name: "DSAR Request Tracker",
   category: ["Security & Privacy","Productivity"],
-  description: "Data-access requests, deadlines, responses aur evidence manage kare.",
+  description: "Manage data-access requests with their deadlines, responses and supporting evidence.",
   icon: "calendar-clock",
   iconColor: "text-primary",
 };

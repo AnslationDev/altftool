@@ -11,8 +11,8 @@ import { Reveal, EASE } from "./motion";
  * Client-side explorer for the category index page.
  *
  * Owns three pieces of interactivity the server page can't provide:
- *   1. Working filter tabs (Show all / Trending / Latest / Most viewed /
- *      Most saved) plus a working topic dropdown.
+ *   1. Working filter tabs for the authored preview fields
+ *      plus a working topic dropdown.
  *   2. Live search — listens for the `top5:category-search` event emitted
  *      by CategorySearchForm up in the hero.
  *   3. The "spotlight" hover treatment on the card grid: the card being
@@ -33,32 +33,20 @@ function parseUpdatedDate(updated) {
   return Number.isNaN(time) ? 0 : time;
 }
 
-// Deterministic pseudo "saves" metric so "Most saved" always produces the
-// same, plausible order (a share of views, weighted per-slug).
-function savesMetric(ranking) {
-  let hash = 0;
-  for (let i = 0; i < ranking.slug.length; i += 1) {
-    hash = (hash * 31 + ranking.slug.charCodeAt(i)) % 997;
-  }
-  return parseViews(ranking.views) * (0.12 + (hash % 23) / 100);
-}
-
 function sortRankings(rankings, filter) {
   const list = [...rankings];
   switch (filter) {
-    case "Trending":
-      // Curated order already encodes editorial "heat"; bias it with views.
+    case "Highlighted":
+      // Keep the authored preview ordering stable while using its demo fields.
       return list.sort(
         (a, b) =>
           parseViews(b.views) * 0.6 + parseUpdatedDate(b.updated) / 1e9 -
           (parseViews(a.views) * 0.6 + parseUpdatedDate(a.updated) / 1e9),
       );
-    case "Latest":
+    case "Preview date":
       return list.sort((a, b) => parseUpdatedDate(b.updated) - parseUpdatedDate(a.updated));
-    case "Most viewed":
+    case "Preview activity":
       return list.sort((a, b) => parseViews(b.views) - parseViews(a.views));
-    case "Most saved":
-      return list.sort((a, b) => savesMetric(b) - savesMetric(a));
     default:
       return list;
   }
@@ -114,10 +102,10 @@ export default function CategoryExplorer({
         <div>
           <h2 className="text-2xl sm:text-3xl font-black tracking-tight text-[#0b1120]">
             {mode === "dedicated" || hasDedicatedRankings
-              ? `Trending in ${entityName}`
+              ? `Preview rankings in ${entityName}`
               : mode === "related"
                 ? `Closest to ${entityName.toLowerCase()}`
-                : "Trending on Top5"}
+                : "Top5 preview rankings"}
           </h2>
           {mode === "related" ? (
             <p className="mt-1.5 max-w-lg text-sm text-[#6b7280]">
@@ -129,7 +117,7 @@ export default function CategoryExplorer({
           {mode === "fallback" && !hasDedicatedRankings ? (
             <p className="mt-1.5 max-w-lg text-sm text-[#6b7280]">
               We haven&apos;t published dedicated{" "}{entityName.toLowerCase()}{" "}rankings
-              yet &mdash; here&apos;s what&apos;s trending across Top5 in the meantime.
+              yet &mdash; here are related preview rankings in the meantime.
             </p>
           ) : null}
         </div>

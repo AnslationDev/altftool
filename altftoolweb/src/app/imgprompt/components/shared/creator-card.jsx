@@ -1,15 +1,10 @@
 "use client";
 
-import * as React from "react";
 import { motion } from "framer-motion";
-import { BadgeCheck, Users } from "lucide-react";
-import { formatCompact } from "../../lib/utils";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { Button } from "../ui/button";
 import { PromptThumb } from "./prompt-thumb";
 
 export function CreatorCard({ creator, index = 0 }) {
-  const [following, setFollowing] = React.useState(false);
   const initials = creator.name.split(" ").map((w) => w[0]).slice(0, 2).join("");
 
   return (
@@ -30,24 +25,12 @@ export function CreatorCard({ creator, index = 0 }) {
         </Avatar>
         <div className="mt-3 flex items-center gap-1">
           <h3 className="font-display font-semibold">{creator.name}</h3>
-          {creator.verified && <BadgeCheck className="h-4 w-4 text-primary" />}
         </div>
         <div className="text-xs text-muted-foreground">@{creator.handle}</div>
         <div className="mt-1 text-xs text-primary">{creator.specialty}</div>
-
-        <div className="mt-4 flex w-full items-center justify-center gap-4 text-xs text-muted-foreground">
-          <span className="inline-flex items-center gap-1"><Users className="h-3.5 w-3.5" /> {formatCompact(creator.followers ?? 0)}</span>
-          <span>{creator.prompts} prompts</span>
+        <div className="mt-4 rounded-full border border-border bg-foreground/[0.03] px-3 py-1 text-xs text-muted-foreground">
+          Fictional demo profile
         </div>
-
-        <Button
-          variant={following ? "secondary" : "outline"}
-          size="sm"
-          className="mt-4 w-full"
-          onClick={() => setFollowing((f) => !f)}
-        >
-          {following ? "Following" : "Follow"}
-        </Button>
       </div>
     </motion.div>
   );

@@ -156,10 +156,10 @@ function buildExplanation(input, prompt, negative, scores) {
   const s = input.idea + input.modelId + "exp";
 
   const strengths = [
-    `Optimized specifically for ${model.name}'s strengths: ${model.strengths.slice(0, 2).join(" & ")}.`,
+    `Uses prompt terms associated with ${model.name}'s documented strengths: ${model.strengths.slice(0, 2).join(" & ")}.`,
     `Layered creative direction (composition, lighting, lens & palette) gives the model precise guidance.`,
     `${words} well-structured tokens keep the prompt information-dense without overloading the model.`,
-    cat ? `Tailored to the ${cat.name} category with domain-specific keywords.` : `Balanced subject-to-style ratio for reliable results.`,
+    cat ? `Uses ${cat.name} category terms as a starting point.` : `Balances subject and style instructions for easier editing.`,
   ];
 
   const weaknesses = [];
@@ -176,8 +176,8 @@ function buildExplanation(input, prompt, negative, scores) {
   ].slice(0, 4);
 
   return {
-    summary: `This prompt scores ${scores.overall}/100 because it pairs a clear subject with ${model.name}-tuned styling, professional camera & lighting language, and a curated negative prompt — the exact recipe that produces gallery-quality results on the first try.`,
-    scoreReason: `The ${scores.overall} reflects strong quality (${scores.quality}), composition (${scores.composition}) and optimization (${scores.optimization}) sub-scores. Points are held back only where creative direction is left on "auto".`,
+    summary: `This draft combines a clear subject with ${model.name}-oriented styling, camera and lighting terms, plus an editable negative prompt. Treat it as a starting point and test it in your chosen model.`,
+    scoreReason: `The ${scores.overall}/100 checklist value is a deterministic local heuristic based on prompt length, specificity and selected controls. It is not an external model evaluation or outcome prediction.`,
     strengths,
     weaknesses,
     missingKeywords,
@@ -190,16 +190,7 @@ function buildExplanation(input, prompt, negative, scores) {
     betterLighting: seededPick(s + "bli", LIGHTING),
     betterColor: seededPick(s + "bco", PALETTES),
     negativeSuggestions: negative.split(", ").slice(0, 6),
-    expectedOutput: `Expect a ${seededPick(s + "eo", MOODS)}, ${model.medium === "video" ? "cinematic clip" : "high-resolution image"} with ${seededPick(s + "eo2", ["crisp detail", "clean edges", "rich color", "professional polish"])}.`,
-    estimatedQuality: scores.overall > 90 ? "Exceptional" : scores.overall > 80 ? "High" : "Good",
-    estimatedRenderTime: model.medium === "video" ? `${18 + Math.round(seededRandom(s) * 40)}s` : `${4 + Math.round(seededRandom(s) * 12)}s`,
-    successProbability: Math.min(98, scores.confidence + 2),
-    commercialUse: [
-      cat ? `${cat.name} marketing campaigns` : "Marketing campaigns",
-      "Social media content",
-      "Client presentations & mockups",
-      scores.commercial > 80 ? "Print & advertising (license-ready)" : "Concept exploration",
-    ],
+    expectedOutput: `One possible direction is a ${seededPick(s + "eo", MOODS)} ${model.medium === "video" ? "cinematic clip" : "image"} with ${seededPick(s + "eo2", ["crisp detail", "clean edges", "rich color", "a polished finish"])}; actual output depends on the model and settings.`,
     complexity: complexityFor(scores.overall, words),
   };
 }

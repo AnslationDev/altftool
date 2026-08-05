@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "wearable-sleep-csv-analyzer",
   name: "Wearable Sleep CSV Analyzer",
   category: ["Health & Fitness","Developer"],
-  description: "Oura, Whoop aur Fitbit exports ke sleep trends dikhaye.",
+  description: "See sleep trends from your Oura, Whoop or Fitbit CSV exports.",
   icon: "moon-star",
   iconColor: "text-primary",
 };

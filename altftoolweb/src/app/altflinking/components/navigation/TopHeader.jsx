@@ -20,8 +20,6 @@ import {
   ShoppingBag,
   User,
   Settings,
-  CreditCard,
-  Building2,
 } from "lucide-react";
 
 export default function TopHeader({
@@ -41,16 +39,12 @@ export default function TopHeader({
 }) {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
-  const [unreadCount, setUnreadCount] = useState(3);
+  const [unreadCount, setUnreadCount] = useState(0);
   // useMounted: prevent SSR/client hydration mismatch on userSession-conditional rendering
   const [mounted, setMounted] = useState(false);
   useEffect(() => { setMounted(true); }, []);
 
-  const notificationsList = [
-    { id: 1, title: "Backlink Live & Verified", desc: "techradar-insights.com verified dofollow link", time: "10m ago" },
-    { id: 2, title: "New Order Received", desc: "Guest post request on saasgrowthjournal.io", time: "1h ago" },
-    { id: 3, title: "Escrow Payment Released", desc: "$240.00 transferred to your payout wallet", time: "3h ago" },
-  ];
+  const notificationsList = [];
 
   // Listen for Cmd+K or Ctrl+K keyboard shortcut
   useEffect(() => {
@@ -91,7 +85,7 @@ export default function TopHeader({
       case "analytics":
         return "Analytics";
       case "wallet":
-        return "Publisher Wallet";
+        return "Publisher Studio";
       case "messages":
         return "Messages";
       case "settings":
@@ -138,10 +132,6 @@ export default function TopHeader({
               while leaving each view with exactly one h1. */}
           <div className="text-xs sm:text-sm font-extrabold text-slate-900 tracking-tight truncate flex items-center gap-1.5">
             {getSectionTitle()}
-            <span className="hidden xl:inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-2 py-0.5 text-[9px] font-bold text-emerald-600 border border-emerald-500/20">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              LIVE
-            </span>
           </div>
         </div>
       </div>
@@ -153,7 +143,7 @@ export default function TopHeader({
           className="relative w-full cursor-pointer flex items-center gap-2 rounded-lg bg-slate-100 border border-slate-200 px-3 py-1 text-xs text-slate-500 hover:border-indigo-400 dark:hover:border-slate-200 transition"
         >
           <Search className="h-3.5 w-3.5 text-slate-500 shrink-0" />
-          <span className="truncate text-xs">Search 1,400+ websites, DR 50+...</span>
+          <span className="truncate text-xs">Search approved listings by domain or niche...</span>
           <kbd className="hidden lg:inline-flex items-center rounded border border-slate-300 bg-white px-1 py-0.2 font-mono text-[9px] font-semibold text-slate-600 ml-auto shrink-0">
             ⌘K
           </kbd>
@@ -219,6 +209,9 @@ export default function TopHeader({
               </div>
 
               <div className="space-y-1.5 max-h-60 overflow-y-auto">
+                {notificationsList.length === 0 ? (
+                  <p className="p-3 text-center text-[11px] text-slate-500">No recorded notifications.</p>
+                ) : null}
                 {notificationsList.map((n) => (
                   <div key={n.id} className="p-2 rounded-xl bg-slate-50 border border-slate-200 space-y-0.5">
                     <p className="text-xs font-semibold text-slate-900 ">{n.title}</p>
@@ -296,14 +289,6 @@ export default function TopHeader({
                 >
                   <Globe className="h-3.5 w-3.5 text-cyan-500" />
                   <span>Publisher Studio</span>
-                </button>
-
-                <button
-                  onClick={() => { setActiveTab("wallet"); setShowProfileMenu(false); }}
-                  className="w-full text-left px-3 py-1.5 text-xs font-semibold text-slate-700 hover:text-indigo-600 dark:hover:text-indigo-600 hover:bg-slate-100 rounded-lg flex items-center gap-2"
-                >
-                  <CreditCard className="h-3.5 w-3.5 text-emerald-500" />
-                  <span>Wallet</span>
                 </button>
 
                 <button

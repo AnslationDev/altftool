@@ -487,9 +487,11 @@ export default function NewsCard({ news, variant = "default", rank }) {
     return (
       <Link href={`/news/${news.slug}`} className="group block">
         <div className="flex items-start gap-4 rounded-lg p-2.5 transition hover:bg-[var(--surface-soft)]">
-          <span className="shrink-0 text-xs font-medium text-[var(--muted-foreground)] tabular-nums">
-            {timeAgo(news.published_hours_ago)}
-          </span>
+          {news.published_at && timeAgo(news.published_hours_ago) ? (
+            <time className="shrink-0 text-xs font-medium text-[var(--muted-foreground)] tabular-nums" dateTime={news.published_at}>
+              {timeAgo(news.published_hours_ago)}
+            </time>
+          ) : null}
           <p className="flex-1 text-sm font-medium text-[var(--foreground)] group-hover:underline underline-offset-2 line-clamp-2">
             {news.headline}
           </p>

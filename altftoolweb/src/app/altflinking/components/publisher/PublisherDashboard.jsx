@@ -6,16 +6,16 @@
 "use client";
 
 import React, { useState } from "react";
-import { Globe, ShieldCheck, Plus, CheckCircle2, Clock, Wallet, Copy, ExternalLink, ArrowRight, AlertTriangle, Loader2 } from "lucide-react";
+import { Globe, ShieldCheck, Plus, CheckCircle2, Clock, Copy, ExternalLink, ArrowRight, AlertTriangle, Loader2 } from "lucide-react";
 import { NICHES } from "../../types";
 import DnsVerificationFlowVisual from "../visuals/DnsVerificationFlowVisual";
 import * as apiClient from "../../services/apiClient";
+import { formatPrice } from "../../lib/pricing";
 
 export default function PublisherDashboard({
   websites = [],
   onSubmitWebsite,
   onOpenSubmitModal,
-  onOpenWithdrawal,
   incomingOrders = [],
   onAcceptOrder,
   onSubmitLiveLink,
@@ -40,8 +40,8 @@ export default function PublisherDashboard({
   const openManageModal = (site) => {
     setManagingSite(site);
     setManageForm({
-      guestPostPrice: String(site.prices?.guestPost || 0),
-      linkInsertionPrice: String(site.prices?.linkInsertion || 0),
+      guestPostPrice: site.prices?.guestPost == null ? "" : String(site.prices.guestPost),
+      linkInsertionPrice: site.prices?.linkInsertion == null ? "" : String(site.prices.linkInsertion),
       tatDays: String(site.tatDays || 7),
       guidelines: site.guidelines || "",
     });
@@ -87,7 +87,7 @@ export default function PublisherDashboard({
     try {
       await onSubmitWebsite({
         domain: cleanDomain,
-        name: domainInput.split(".")[0].toUpperCase() + " Media",
+        name: cleanDomain,
         niche: nicheInput,
         country: "United States",
         prices: {
@@ -121,7 +121,7 @@ export default function PublisherDashboard({
         <div className="altf-card p-4 space-y-1">
           <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Approved Live</p>
           <p className="text-2xl font-black text-emerald-400 font-mono">
-            {websites.filter((w) => w.status === "APPROVED" || w.verified).length}
+            {websites.filter((w) => w.status === "APPROVED").length}
           </p>
         </div>
         <div className="altf-card p-4 space-y-1">
@@ -130,19 +130,10 @@ export default function PublisherDashboard({
             {websites.filter((w) => w.status === "PENDING_REVIEW").length}
           </p>
         </div>
-        <div className="altf-card p-4 flex items-center justify-between">
-          <div className="space-y-1">
-            <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Wallet Balance</p>
-            <p className="text-2xl font-black text-cyan-400 font-mono">$1,240.00</p>
-          </div>
-          {onOpenWithdrawal && (
-            <button
-              onClick={onOpenWithdrawal}
-              className="altf-btn-primary py-1.5 px-3 text-xs font-bold shrink-0"
-            >
-              Withdraw
-            </button>
-          )}
+        <div className="altf-card p-4 space-y-1">
+          <p className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Incoming Requests</p>
+          <p className="text-2xl font-black text-cyan-400 font-mono">{incomingOrders.length}</p>
+          <p className="text-[10px] text-slate-500">Recorded for your listings</p>
         </div>
       </div>
 
@@ -195,13 +186,13 @@ export default function PublisherDashboard({
                     <td className="p-3 font-bold text-white font-mono">{site.domain}</td>
                     <td className="p-3 text-slate-600">{site.niche}</td>
                     <td className="p-3">
-                      <span className="altf-badge altf-badge-dr-high font-mono">DR {site.dr}</span>
+                      <span className="altf-badge altf-badge-dr-high font-mono">DR {site.dr ?? "—"}</span>
                     </td>
                     <td className="p-3 font-mono text-emerald-400 font-semibold">
-                      {(site.traffic || 0).toLocaleString()}/mo
+                      {typeof site.traffic === "number" ? `${site.traffic.toLocaleString()}/mo` : "—"}
                     </td>
                     <td className="p-3 font-mono font-bold text-indigo-400">
-                      ${site.prices?.guestPost || 0}
+                      {formatPrice(site.prices?.guestPost)}
                     </td>
                     <td className="p-3">
                       {site.status === "APPROVED" ? (
@@ -470,7 +461,7 @@ export default function PublisherDashboard({
                     disabled={isSubmittingListing}
                     className="altf-btn-primary py-1.5 px-4 text-xs font-bold disabled:opacity-60"
                   >
-                    {isSubmittingListing ? "Submitting…" : "Confirm & Publish Listing"}
+                    {isSubmittingListing ? "Submitting…" : "Submit for Admin Review"}
                   </button>
                 </div>
               </div>

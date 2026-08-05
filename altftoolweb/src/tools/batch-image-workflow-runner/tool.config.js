@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "Resize, crop, recolor aur watermark steps ko reusable pipeline banaye.",
+  "description": "Build resize, crop, recolor and watermark steps into a reusable image pipeline.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

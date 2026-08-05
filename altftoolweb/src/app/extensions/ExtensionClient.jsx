@@ -150,16 +150,30 @@ export default function ExtensionsPage() {
                 </form>
 
                 <div className="extensions-hero-stats" aria-label="Extension catalog highlights">
-                  <span className="extensions-hero-stat-item">
-                    <LayoutGrid className="extensions-hero-stat-icon" aria-hidden="true" />
-                    <span className="extensions-hero-stat-value">{allExtensions.length}+</span>
-                    <span className="extensions-hero-stat-label">Curated add-ons</span>
-                  </span>
+                  {/* The catalogue loads from Firestore after hydration, so
+                      before this guard the server HTML — the copy a crawler
+                      reads — shipped a literal "0+ Curated add-ons". The "+"
+                      is gone too: this is an exact count of the catalogue, not
+                      a floor, and there is nothing above it to imply. */}
+                  {allExtensions.length ? (
+                    <span className="extensions-hero-stat-item">
+                      <LayoutGrid className="extensions-hero-stat-icon" aria-hidden="true" />
+                      <span className="extensions-hero-stat-value">{allExtensions.length}</span>
+                      <span className="extensions-hero-stat-label">Curated add-ons</span>
+                    </span>
+                  ) : null}
                   {averageRating ? (
                     <span className="extensions-hero-stat-item">
                       <Star className="extensions-hero-stat-icon extensions-hero-stat-icon-gold" aria-hidden="true" />
                       <span className="extensions-hero-stat-value">{averageRating.toFixed(1)}/5</span>
-                      <span className="extensions-hero-stat-label">Average Rating</span>
+                      {/* "Average Rating" next to a gold star reads as a user
+                          rating. These scores are entered by an editor in the
+                          admin panel; no extension here carries a review count
+                          and nothing collects visitor ratings, which is also
+                          why the detail pages deliberately emit no
+                          aggregateRating. The label now says whose score it
+                          is. */}
+                      <span className="extensions-hero-stat-label">Average editor score</span>
                     </span>
                   ) : null}
                 </div>

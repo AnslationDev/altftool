@@ -9,6 +9,7 @@ import { enforceRateLimit } from "@altftool/core/http";
 import { initAdmin }  from "@/lib/altflinking/firebaseAdmin";
 import { verifyToken, getUserRole, ok, err } from "@/lib/altflinking/authMiddleware";
 import { FieldValue } from "firebase-admin/firestore";
+import { validateListingPrices } from "@/app/altflinking/lib/pricing";
 
 async function assertAdmin(request) {
   const { user, error } = await verifyToken(request);
@@ -99,10 +100,15 @@ export async function PATCH(request) {
     } else if (action === "edit") {
       // Admin can edit any field
       const safeFields = ["name", "niche", "dr", "da", "traffic", "spamScore",
-                          "indexRate", "tatDays", "prices", "guidelines",
+                          "indexRate", "tatDays", "guidelines",
                           "sampleUrls", "language", "country", "featured"];
       for (const f of safeFields) {
         if (editFields[f] !== undefined) update[f] = editFields[f];
+      }
+      if (editFields.prices !== undefined) {
+        const validatedPrices = validateListingPrices(editFields.prices);
+        if (validatedPrices.error) return err(validatedPrices.error, 400);
+        update.prices = validatedPrices.value;
       }
       if (adminNotes !== undefined) update.adminNotes = adminNotes;
     } else {

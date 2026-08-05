@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Forecast se comparatively lower-UV outdoor windows dikhaye.",
+  "description": "Find the comparatively lower-UV windows for going outdoors from the forecast.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

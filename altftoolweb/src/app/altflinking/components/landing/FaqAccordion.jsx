@@ -1,74 +1,79 @@
-/**
- * Interactive FAQ Accordion Component
- * Location: src/app/altflinking/components/landing/FaqAccordion.jsx
- */
-
 "use client";
 
 import React, { useState } from "react";
-import { ChevronDown, HelpCircle, ShieldCheck } from "lucide-react";
+import { ChevronDown, HelpCircle } from "lucide-react";
+
+const FAQS = [
+  {
+    question: "Where do listing prices and metrics come from?",
+    answer:
+      "Publishers submit their listing details, including placement prices and any metrics they choose to provide. Admins review listings before public display, but review does not independently guarantee every submitted metric. Unavailable values remain unavailable.",
+  },
+  {
+    question: "What happens when I place an order?",
+    answer:
+      "ALTFTool creates a placement request tied to the selected listing and placement type. The request records the listing price at that time, but it is not a payment receipt and does not guarantee that the publisher will accept or publish it.",
+  },
+  {
+    question: "Does ALTFTool collect payments or hold funds?",
+    answer:
+      "No current marketplace flow shown here collects, holds, or releases funds. Any commercial arrangements require separate confirmation; a status change in ALTFTool should not be treated as proof of payment.",
+  },
+  {
+    question: "Does admin approval verify every website metric?",
+    answer:
+      "Admin approval means the submitted listing passed the platform review step. Metrics can be publisher-supplied or unavailable, so buyers should evaluate the listing details before sending a request.",
+  },
+  {
+    question: "Are publication, link attributes, or indexing guaranteed?",
+    answer:
+      "No. A publisher may submit a live URL for review, but ALTFTool does not guarantee publication, link permanence, dofollow status, search-engine indexing, rankings, traffic, or any other search outcome.",
+  },
+  {
+    question: "Is turnaround time guaranteed?",
+    answer:
+      "No. A listing may include a publisher-provided turnaround estimate. It is contextual information for the request, not a service-level guarantee from ALTFTool.",
+  },
+];
 
 export default function FaqAccordion() {
   const [openIdx, setOpenIdx] = useState(0);
 
-  const faqs = [
-    {
-      q: "How does domain ownership verification work?",
-      a: "Publishers verify domain ownership by adding a unique TXT record (e.g. altftool-verify=xyz...) to their domain DNS settings. Our automated crawler checks the DNS TXT record instantly, ensuring zero unauthorized third-party brokers.",
-    },
-    {
-      q: "How does the Escrow Payment Guarantee protect buyers?",
-      a: "When you place a guest post or link insertion order, your payment is held securely in platform escrow. Funds are only released to the publisher after our system crawls the published URL and confirms that your target anchor and dofollow link are live and indexed by Google.",
-    },
-    {
-      q: "What happens if a link is removed or changed to nofollow later?",
-      a: "Our continuous 24/7 crawler monitors every active backlink placed through ALTFTool. If a link drops, encounters a 404/500 error, or changes rel attribute to nofollow, an emergency alert is sent to the publisher to fix it within 48 hours or trigger an automatic escrow refund.",
-    },
-    {
-      q: "Are there any upfront listing fees for website publishers?",
-      a: "No! Listing your verified domain on ALTFTool Marketplace is 100% free. Publishers keep 100% of their set listing price. We charge buyers a transparent 15% platform escrow & verification fee.",
-    },
-    {
-      q: "What is the typical turnaround time (TAT) for backlink orders?",
-      a: "Average turnaround time across our marketplace is 2.4 days. Every publisher listing clearly specifies its guaranteed TAT limit (ranging from 1 to 5 days).",
-    },
-  ];
-
   return (
-    <div className="altf-card p-8 space-y-6">
-      <div className="text-center max-w-xl mx-auto space-y-2">
-        <h2 className="text-2xl font-black text-white tracking-tight flex items-center justify-center gap-2">
-          <HelpCircle className="h-6 w-6 text-indigo-400" />
-          <span>Frequently Asked Questions</span>
+    <section className="altf-card space-y-6 border border-border p-6 sm:p-8" aria-labelledby="faq-heading">
+      <div className="mx-auto max-w-xl space-y-2 text-center">
+        <h2 id="faq-heading" className="flex items-center justify-center gap-2 text-2xl font-black tracking-tight text-foreground">
+          <HelpCircle className="h-6 w-6 text-primary" aria-hidden="true" />
+          Frequently asked questions
         </h2>
-        <p className="text-xs text-slate-500">Everything you need to know about purchasing and listing backlinks on ALTFTool</p>
+        <p className="text-sm text-muted">How listing data, review, and placement requests work today.</p>
       </div>
 
-      <div className="space-y-3 max-w-3xl mx-auto">
-        {faqs.map((faq, idx) => {
-          const isOpen = openIdx === idx;
+      <div className="mx-auto max-w-3xl space-y-3">
+        {FAQS.map((faq, index) => {
+          const isOpen = openIdx === index;
+          const panelId = `altflinking-faq-panel-${index}`;
           return (
-            <div
-              key={idx}
-              className="rounded-2xl bg-white border border-slate-200 overflow-hidden transition"
-            >
+            <div key={faq.question} className="overflow-hidden rounded-lg border border-border bg-surface">
               <button
-                onClick={() => setOpenIdx(isOpen ? null : idx)}
-                className="w-full flex items-center justify-between p-4 text-left font-bold text-xs sm:text-sm text-white hover:text-indigo-400 transition"
+                type="button"
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                onClick={() => setOpenIdx(isOpen ? null : index)}
+                className="flex min-h-11 w-full items-center justify-between gap-4 p-4 text-left text-sm font-bold text-foreground transition hover:bg-surface-soft focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
               >
-                <span>{faq.q}</span>
-                <ChevronDown className={`h-4 w-4 text-slate-500 shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`} />
+                <span>{faq.question}</span>
+                <ChevronDown className={`h-4 w-4 shrink-0 text-muted transition-transform ${isOpen ? "rotate-180" : ""}`} aria-hidden="true" />
               </button>
-
               {isOpen && (
-                <div className="p-4 pt-0 text-xs text-slate-600 leading-relaxed border-t border-slate-200">
-                  {faq.a}
+                <div id={panelId} className="border-t border-border p-4 text-xs leading-relaxed text-muted">
+                  {faq.answer}
                 </div>
               )}
             </div>
           );
         })}
       </div>
-    </div>
+    </section>
   );
 }

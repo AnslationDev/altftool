@@ -44,7 +44,14 @@ function toolMeta(slug) {
 export async function generateMetadata({ params }) {
   const { incumbent } = await params;
   const entry = INCUMBENTS[incumbent];
-  if (!entry) return {};
+  if (!entry) {
+    return createPageMetadata({
+      title: "Alternative not found",
+      description: "This comparison is not available. Browse AltFTool's alternatives index instead.",
+      path: `/alternatives/${incumbent}`,
+      noindex: true,
+    });
+  }
 
   const path = `/alternatives/${entry.slug}`;
   const short = entry.shortName || entry.name;

@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Supported orientation sensor se tilt aur slope measure kare.",
+  "description": "Measure tilt and slope using your device's orientation sensor where supported.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

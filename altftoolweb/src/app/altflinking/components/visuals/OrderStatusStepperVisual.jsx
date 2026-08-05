@@ -6,15 +6,14 @@
 "use client";
 
 import React from "react";
-import { Lock, FileText, Globe, ShieldCheck, CheckCircle2 } from "lucide-react";
+import { Send, FileText, Globe, ShieldCheck, CheckCircle2 } from "lucide-react";
 
-export default function OrderStatusStepperVisual({ currentStep = 3 }) {
+export default function OrderStatusStepperVisual({ currentStep = 1 }) {
   const steps = [
-    { step: 1, label: "Escrow Locked", icon: Lock },
-    { step: 2, label: "Content Written", icon: FileText },
-    { step: 3, label: "Published Live", icon: Globe },
-    { step: 4, label: "Google Indexed", icon: ShieldCheck },
-    { step: 5, label: "Funds Released", icon: CheckCircle2 },
+    { step: 1, label: "Request Submitted", icon: Send },
+    { step: 2, label: "Publisher Accepted", icon: FileText },
+    { step: 3, label: "URL Submitted", icon: Globe },
+    { step: 4, label: "Admin Reviewed", icon: ShieldCheck },
   ];
 
   return (

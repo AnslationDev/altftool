@@ -242,13 +242,7 @@ function BlogDetailPage() {
                                     <h3 className="text-xl font-bold text-gray-900 mb-1">
                                         Written by {blogDetail.author}
                                     </h3>
-                                    <p className="text-sm text-gray-600">Content Creator & Industry Expert</p>
                                 </div>
-                                <p className="text-gray-700 leading-relaxed">
-                                    Passionate about exploring trends, sharing insights, and helping readers make informed decisions.
-                                    With years of experience in {blogDetail.category.toLowerCase()}, I strive to deliver valuable content
-                                    that empowers and inspires.
-                                </p>
                             </div>
                         </div>
                     </div>

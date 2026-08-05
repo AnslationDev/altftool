@@ -5,7 +5,7 @@ const toolConfig = {
     "Security & Privacy",
     "Productivity"
   ],
-  "description": "Check kare backup files actually decrypt, extract aur open ho rahe hain.",
+  "description": "Check that your backup files really do decrypt, extract and open before you need them.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

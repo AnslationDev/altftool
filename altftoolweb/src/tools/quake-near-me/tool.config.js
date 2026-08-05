@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Recent earthquakes ko distance aur magnitude se filter kare.",
+  "description": "Filter recent earthquakes by distance from you and by magnitude.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

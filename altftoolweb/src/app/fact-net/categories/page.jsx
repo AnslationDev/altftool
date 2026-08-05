@@ -25,7 +25,11 @@ export async function generateMetadata() {
   const withNames = `Browse ${formatCount(stats.categoryCount)} Fact Hub ${categoryWord}: ${nameList} — ${counts}`;
 
   return createPageMetadata({
-    title: "Fact Hub Categories",
+    // Branded in the string, not left to the root layout's "%s | AltFTool"
+    // template: this section's layout sets a plain-string title, which consumes
+    // that template, so every page under /fact-net shipped with no site name at
+    // all. 30 characters.
+    title: "Fact Hub Categories | AltFTool",
     description:
       nameList && withNames.length <= 158
         ? withNames

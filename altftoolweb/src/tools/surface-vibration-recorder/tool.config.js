@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Accelerometer readings ka vibration timeline banaye.",
+  "description": "Build a vibration timeline for any surface from your device's accelerometer.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

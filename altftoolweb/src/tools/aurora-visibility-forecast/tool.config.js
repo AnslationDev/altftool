@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Kp index aur location se possible visibility estimate kare.",
+  "description": "Estimate possible aurora visibility from the Kp index and your location.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

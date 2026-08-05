@@ -33,7 +33,7 @@ export async function generateMetadata() {
   return createPageMetadata({
     title: "Press & Media Kit",
     description:
-      "Boilerplate, logo files, brand colours, live section counts and contact details for journalists writing about AltFTool — plus the things AltFTool is not, so a correction is never needed.",
+      "Boilerplate, logo files, brand colours, live section counts and press contacts for journalists writing about AltFTool — plus what AltFTool is not.",
     path: "/press",
     keywords: [
       "AltFTool press kit",

@@ -30,10 +30,18 @@ export async function generateMetadata({ params }) {
   const book = books.find((item) => item.slug === slug);
 
   if (!book) {
-    return {
+    // A bare {title, robots} object skips createPageMetadata entirely, so the
+    // response carried no canonical of its own and Next fell back to the site
+    // root — every unknown story slug told Google it was a duplicate of the
+    // homepage — and no description, so the sitewide boilerplate shipped as the
+    // snippet. Self-canonical + noindex is the correct pair for a miss.
+    return createPageMetadata({
       title: "Story Not Found",
-      robots: { index: false, follow: true },
-    };
+      description:
+        "No Wattpad-style story is filed under this address on AltFTool. Browse the story library for romance, fantasy, horror and fanfiction reads.",
+      path: `/wattpad/book/${encodeURIComponent(slug)}`,
+      noindex: true,
+    });
   }
 
   // 7 of the 8 books have no chapters at all, so the page is a dead end: no
@@ -44,8 +52,14 @@ export async function generateMetadata({ params }) {
   const storyDescription = book.description || book.summary || "";
   return createPageMetadata({
     title: `${book.title} - Wattpad-Style Story`,
+    // LENGTH: the hasChapters tail used to end "…and discover related stories
+    // in AltFTool's browser reading library", which ran to 177 characters on
+    // the one book that has chapters, so trimMetaDescription() cut it at
+    // "…related stories in AltFTool's." — a possessive with nothing after it.
+    // The shorter tail keeps the sentence whole; measured across all 8 books it
+    // tops out at 124 characters.
     description: hasChapters
-      ? `${storyDescription} Read ${book.title} online, browse its available chapters, and discover related stories in AltFTool's browser reading library.`
+      ? `${storyDescription} Read ${book.title} online and browse its available chapters on AltFTool.`
       : `${storyDescription} No parts of ${book.title} have been published yet.`,
     path: `/wattpad/book/${book.slug}`,
     image: book.coverImage || book.bannerImage,

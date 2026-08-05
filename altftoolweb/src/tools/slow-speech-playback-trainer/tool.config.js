@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "slow-speech-playback-trainer",
   name: "Slow Speech Playback Trainer",
   category: ["Accessibility", "Productivity"],
-  description: "Pitch preserve karke speech slow, loop aur segment kare.",
+  description: "Slow, loop and segment speech for practice while preserving the original pitch.",
   icon: "accessibility",
   iconColor: "text-primary",
   wideWorkspace: true,

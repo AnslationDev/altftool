@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Multiple global resolvers par DNS record changes compare kare.",
+  "description": "Compare a DNS record across multiple global resolvers to track propagation.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

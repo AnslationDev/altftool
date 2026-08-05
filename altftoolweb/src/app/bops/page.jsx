@@ -12,22 +12,34 @@ import {
   Sparkles,
   Wallet,
 } from "lucide-react";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 import BusinessOpsHeader from "./components/BusinessOpsHeader";
 import AltfLauncher from "@/app/_altf/AltfLauncher";
 import { BUSINESS_OPS_PRODUCTS } from "./businessOps";
 import "./bops.css";
 import "@/app/_altf/altf-brand.css";
 
-export const metadata = {
-  title: "Business Ops",
-  description:
-    "Compare travel deals, connect with home-improvement pros and find better insurance — the everyday services worth getting right, in one place.",
-  // follow:true deliberately. This hub is noindex, but it is the entry point to
-  // the family's ~60 indexable pages; nofollow told crawlers to discard every
-  // link out of it. Every other noindex surface in /bops already uses
-  // follow:true (buildHousingServiceMetadata, the six legal-services layouts).
-  robots: { index: false, follow: true },
-};
+// Was a plain `export const metadata` object with no `alternates`, so Next fell
+// back to metadataBase and this page shipped
+// <link rel="canonical" href="https://www.altftool.com"> — /bops declared the
+// site homepage as its canonical URL. Verified live before the fix. Going
+// through createPageMetadata gives it a self-canonical alongside the OG,
+// Twitter and robots blocks every other hub in the family already emits.
+//
+// noindex is unchanged and deliberate. follow:true is too: this hub is the
+// entry point to the family's ~130 indexable pages, and nofollow told crawlers
+// to discard every link out of it. Every other noindex surface in /bops
+// already uses follow:true (buildHousingServiceMetadata, the six
+// legal-services layouts).
+export async function generateMetadata() {
+  return createPageMetadata({
+    title: "Business Ops — Travel, Home Services & Insurance",
+    description:
+      "Compare travel deals, connect with home-improvement pros and find better insurance — the everyday services worth getting right, in one place.",
+    path: "/bops",
+    noindex: true,
+  });
+}
 
 // Product icon keys -> lucide components (matches businessOps.js).
 const PRODUCT_ICONS = {

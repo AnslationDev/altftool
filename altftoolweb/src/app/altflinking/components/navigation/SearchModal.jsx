@@ -7,6 +7,7 @@
 
 import React, { useState } from "react";
 import { Search, X, ShieldCheck, ArrowRight, Globe, Store, FileText, Zap } from "lucide-react";
+import { formatPrice } from "../../lib/pricing";
 
 export default function SearchModal({ isOpen, onClose, websites = [], onSelectDomain }) {
   const [query, setQuery] = useState("");
@@ -16,9 +17,9 @@ export default function SearchModal({ isOpen, onClose, websites = [], onSelectDo
   const filtered = query.trim()
     ? websites.filter(
         (s) =>
-          s.domain.toLowerCase().includes(query.toLowerCase()) ||
-          s.name.toLowerCase().includes(query.toLowerCase()) ||
-          s.niche.toLowerCase().includes(query.toLowerCase())
+          String(s.domain || "").toLowerCase().includes(query.toLowerCase()) ||
+          String(s.name || "").toLowerCase().includes(query.toLowerCase()) ||
+          String(s.niche || "").toLowerCase().includes(query.toLowerCase())
       )
     : websites.slice(0, 5);
 
@@ -32,7 +33,7 @@ export default function SearchModal({ isOpen, onClose, websites = [], onSelectDo
           <input
             type="text"
             autoFocus
-            placeholder="Search domain, DR 50+, traffic, niche..."
+            placeholder="Search domain, name, or niche..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             className="w-full bg-transparent text-sm text-slate-900 placeholder-slate-400 outline-none"
@@ -66,14 +67,16 @@ export default function SearchModal({ isOpen, onClose, websites = [], onSelectDo
                   <div>
                     <h4 className="text-xs font-bold text-slate-900 group-hover:text-indigo-600 transition flex items-center gap-1.5">
                       {site.domain}
-                      {site.verified && <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />}
+                      {site.status === "APPROVED" && <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />}
                     </h4>
-                    <p className="text-[11px] text-slate-500">{site.niche} • DR {site.dr} • {site.traffic.toLocaleString()}/mo</p>
+                    <p className="text-[11px] text-slate-500">
+                      {site.niche || "Unspecified"} • DR {site.dr ?? "—"} • {typeof site.traffic === "number" ? `${site.traffic.toLocaleString()}/mo` : "traffic —"}
+                    </p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-xs font-bold text-indigo-400">${site.prices.guestPost}</span>
+                  <span className="font-mono text-xs font-bold text-indigo-400">{formatPrice(site.prices?.guestPost)}</span>
                   <ArrowRight className="h-4 w-4 text-slate-500 group-hover:text-indigo-600 transition" />
                 </div>
               </div>
@@ -84,7 +87,7 @@ export default function SearchModal({ isOpen, onClose, websites = [], onSelectDo
         {/* Footer Hint */}
         <div className="flex items-center justify-between border-t border-slate-200 pt-2 text-[10px] text-slate-500">
           <span>Tip: Press ESC to close</span>
-          <span>Showing verified marketplace publishers</span>
+          <span>Showing approved marketplace listings</span>
         </div>
       </div>
     </div>

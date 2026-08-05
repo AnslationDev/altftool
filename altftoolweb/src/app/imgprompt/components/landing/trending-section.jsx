@@ -18,12 +18,12 @@ export function TrendingSection() {
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeader
             align="left"
-            eyebrow="🔥 Trending Today"
-            title="Prompts creators can't stop rendering"
-            subtitle="Explore strong prompt patterns, then copy, adjust, and use them in your preferred model."
+            eyebrow="Prompt Examples"
+            title="Patterns to copy, adapt and test"
+            subtitle="Explore curated examples from the local prompt library, then adjust them for your preferred model."
           />
           <Button variant="outline" className="shrink-0" onClick={scrollToCategories}>
-            View all trending <ArrowRight className="h-4 w-4" />
+            View prompt categories <ArrowRight className="h-4 w-4" />
           </Button>
         </div>
 

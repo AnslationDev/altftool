@@ -106,6 +106,31 @@ const BLOG_SEO_OVERRIDES = {
     description:
       "Which software discounts to expect on Cyber Monday 2026: AI writing, design, productivity and VPN tools, plus how to judge an offer before you buy.",
   },
+
+  // Added 2026-08-05. NOT a click-loss entry — I had no Search Console access,
+  // so this one is here for a different and simpler reason: the stored fields
+  // describe a different page than the one that renders.
+  //
+  // Fetched from production on 2026-08-05, the page shipped
+  // <title>WhereGoes Tool – Free URL Redirect Checker 301 | AltFTool</title>
+  // and a description ending "…improve SEO with ALTFTool's WhereGoes Tool",
+  // i.e. a product page for a third-party tool. The page's only H1 is "How to
+  // Trace URL Redirects: The Complete 2026 Guide" and its own BlogPosting
+  // wordCount is 1021. A searcher clicking that snippet expects a tool and
+  // lands on an explainer. (The stored description also spells the brand
+  // "ALTFTool"; the house spelling is "AltFTool".)
+  //
+  // Body verified from the rendered page, section by section: "What is a URL
+  // redirect?", "Why tracing redirects matters", "HTTP redirect status codes",
+  // "How to trace a redirect chain" with a "Reading the results" subsection,
+  // "Best practices", "Conclusion" and an FAQ. All four status codes named
+  // below occur in the body (301 x5, 302 x3, 307 x2, 308 x1). The description
+  // promises only those sections — no tool, no download, no comparison table.
+  "how-to-trace-url-redirects-the-complete-2026-guide": {
+    title: "Trace a URL Redirect Chain: 301, 302, 307, 308",
+    description:
+      "What a redirect chain is, what 301, 302, 307 and 308 mean, how to trace a chain step by step, how to read the results, and the best practices to follow.",
+  },
 };
 
 /**

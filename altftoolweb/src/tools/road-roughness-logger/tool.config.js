@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Accelerometer aur GPS data se speed-normalized road jolts record kare.",
+  "description": "Record speed-normalized road jolts from your device's accelerometer and GPS.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

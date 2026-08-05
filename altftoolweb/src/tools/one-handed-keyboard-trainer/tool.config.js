@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "one-handed-keyboard-trainer",
   name: "One-Handed Keyboard Trainer",
   category: ["Accessibility", "Productivity"],
-  description: "Single-hand layouts aur typing exercises provide kare.",
+  description: "Practice single-handed keyboard layouts with typing exercises built for one hand.",
   icon: "accessibility",
   iconColor: "text-primary",
   wideWorkspace: true,

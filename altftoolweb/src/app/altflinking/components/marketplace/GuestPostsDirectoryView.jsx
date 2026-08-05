@@ -28,6 +28,7 @@ import {
 import FilterSidebar from "../common/FilterSidebar";
 import WebsiteCard from "./WebsiteCard";
 
+import { resolveGuestPostPrice, formatPrice } from "../../lib/pricing";
 export default function GuestPostsDirectoryView({
   websites,
   filters,
@@ -76,27 +77,27 @@ export default function GuestPostsDirectoryView({
             </div>
 
             <h1 className="text-2xl sm:text-4xl font-black text-slate-900 tracking-tight leading-tight">
-              Publish High-DR Guest Posts <br className="hidden sm:block" />
-              With Guaranteed Google Indexation
+              Review Guest Post Listings <br className="hidden sm:block" />
+              Before Requesting Placement
             </h1>
 
             <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-              Order permanent dofollow guest posts on 1,400+ DNS-verified news outlets and niche blogs. Every article draft passes through Admin Moderation with 100% Escrow Refund Safety.
+              Browse approved publisher listings with their submitted metrics, turnaround targets, guidelines, and explicit guest-post prices. A request does not guarantee publication or search indexing.
             </p>
 
             {/* Quick Metrics Pills */}
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <span className="flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-2xs">
                 <FileEdit className="h-4 w-4 text-indigo-600" />
-                1,400+ Active Publications
+                {websites.length} Approved Listing{websites.length === 1 ? "" : "s"}
               </span>
               <span className="flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-2xs">
                 <Clock className="h-4 w-4 text-cyan-600" />
-                2.4-Day Avg Turnaround
+                Publisher-Stated Timing
               </span>
               <span className="flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-white px-3 py-1.5 rounded-xl border border-slate-200 shadow-2xs">
                 <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                100% Google Index Guarantee
+                Admin-Reviewed Listings
               </span>
             </div>
           </div>
@@ -150,7 +151,7 @@ export default function GuestPostsDirectoryView({
             {websites.length} Guest Post Opportunities
           </span>
           <span className="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold">
-            Live Verified
+            Approved Listings
           </span>
         </div>
 
@@ -278,7 +279,7 @@ export default function GuestPostsDirectoryView({
                       </td>
 
                       <td className="p-3 font-mono font-black text-emerald-600 text-sm">
-                        ${site.prices?.guestPost || site.price || 180}
+                        {formatPrice(resolveGuestPostPrice(site))}
                       </td>
 
                       <td className="p-3 text-right">

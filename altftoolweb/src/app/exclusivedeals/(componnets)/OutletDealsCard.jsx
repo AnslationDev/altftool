@@ -64,9 +64,12 @@ function OutletDealsCard() {
   return (
     <section className="section animate-slide-up">
       <div className="lg:mb-12 mb-6">
-        <h2 className="section-title">Top Coupons from Trusted Brands</h2>
+        <h2 className="section-title">Coupons from Popular Brands</h2>
+        {/* Was "Verified deals. Updated daily. No expired coupons" — three
+            claims, none of which anything in this codebase performs. There is
+            no verification step, no daily job and no expiry check. */}
         <p className="section-subtitle mx-0! text-left ">
-          Verified deals. Updated daily. No expired coupons
+          Browse the offers currently listed for each brand
         </p>
       </div>
 

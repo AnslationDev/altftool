@@ -8,8 +8,12 @@ import {
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 
+// "verified coupons" was the claim here and on every /exclusivedeals/<category>
+// description. Nothing tests these codes: the offers come straight from the
+// brand feed, none carries a checked-on date, and there is no validation job
+// anywhere in this repo. The word asserted a process that does not exist.
 const STORE_DESCRIPTION =
-  "Browse stores by category and find verified coupons, deals, and exclusive offers on AltFTool. Save more on your favorite brands.";
+  "Browse stores by category on AltFTool and open any brand to see the coupon codes, promo codes and deals currently listed for it.";
 
 // PageView builds every card link with its own slugify ("&" becomes "and"),
 // which is NOT lib/brandSlug.js. The ItemList has to use the same one or it

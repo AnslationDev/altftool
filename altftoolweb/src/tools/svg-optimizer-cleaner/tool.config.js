@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "Unnecessary markup, editor data aur metadata safely remove kare.",
+  "description": "Safely strip unnecessary markup, editor data and metadata from an SVG file.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

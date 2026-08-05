@@ -1,4 +1,6 @@
-import { toolMetaMap } from "@/platform/registry/toolMetaMap";
+"use client";
+
+import { toolMetaMap } from "@/platform/registry/clientToolMetaMap";
 import { CANONICAL_CATEGORIES, slugifyCategory } from "@/platform/registry/categoryTaxonomy";
 
 /**

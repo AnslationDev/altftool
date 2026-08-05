@@ -1,27 +1,37 @@
 "use client";
 import Image from 'next/image'
 import React from 'react'
-import data from "../(data)/db.json"
+import seedData from "../(data)/db.json"
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { categoryfirebase } from "../service/firebasecategory";
 import { BrowserCategorySkeleton } from "../DealsPageSkeleton";
 
-function BrowserCategory() {
+// db.json is the build-time copy of the same catalogue Firestore serves. Mapped
+// here to the shape this component renders: Firestore calls it `name`, the
+// bundled file calls it `categoryName`.
+const SEED_CATEGORIES = (seedData.categories || [])
+  .map((item) => ({
+    id: item?.id,
+    name: item?.categoryName,
+    image: item?.image || item?.img,
+  }))
+  .filter((item) => item.id && item.name && item.image);
 
-       const [category, setcategory] = useState([]);
-    const [loading, setLoading] = useState(true);
-  
+function BrowserCategory() {
+    const [category, setcategory] = useState(SEED_CATEGORIES);
+    const [loading, setLoading] = useState(SEED_CATEGORIES.length === 0);
+
     useEffect(() => {
-      const unsubscribe = categoryfirebase((data) => {
-        setcategory(data);
-  
+      const unsubscribe = categoryfirebase((liveCategories) => {
+        if (Array.isArray(liveCategories) && liveCategories.length) {
+          setcategory(liveCategories);
+        }
         setLoading(false);
       });
-  
+
       return () => unsubscribe();
     }, []);
-
 
     if (loading) return <BrowserCategorySkeleton />;
   

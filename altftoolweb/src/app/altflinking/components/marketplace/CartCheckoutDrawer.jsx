@@ -1,37 +1,43 @@
 /**
- * Bulk Cart & Multi-Domain Escrow Checkout Drawer Component
+ * Bulk Cart & Multi-Domain Placement Request Drawer Component
  * Location: src/app/altflinking/components/marketplace/CartCheckoutDrawer.jsx
  */
 
 "use client";
 
 import React, { useState } from "react";
-import { X, ShoppingBag, Trash2, Lock, ShieldCheck, ArrowRight, CheckCircle2 } from "lucide-react";
+import { X, ShoppingBag, Trash2, ArrowRight } from "lucide-react";
 
-export default function CartCheckoutDrawer({ isOpen, onClose, cartItems = [], onRemoveCartItem, onCheckoutEscrow }) {
+import { resolveGuestPostPrice, formatPrice, isOrderable } from "../../lib/pricing";
+export default function CartCheckoutDrawer({ isOpen, onClose, cartItems = [], onRemoveCartItem, onCheckout }) {
   const [targetUrl, setTargetUrl] = useState("https://mycompany.com/saas");
   const [anchorText, setAnchorText] = useState("best growth platform");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   if (!isOpen) return null;
 
-  const totalPrice = cartItems.reduce((acc, item) => acc + (item.prices?.guestPost || 180), 0);
+  const hasUnknownPrices = cartItems.some((item) => !isOrderable(item));
+  const totalPrice = cartItems.reduce((acc, item) => acc + (resolveGuestPostPrice(item) ?? 0), 0);
 
-  const handleCheckout = (e) => {
+  const handleCheckout = async (e) => {
     e.preventDefault();
-    if (cartItems.length === 0) return;
+    if (cartItems.length === 0 || hasUnknownPrices) return;
+    setSubmitError("");
     setIsSubmitting(true);
-
-    setTimeout(() => {
-      onCheckoutEscrow({
+    try {
+      await onCheckout({
         items: cartItems,
         totalPrice,
         targetUrl,
         anchorText,
       });
-      setIsSubmitting(false);
       onClose();
-    }, 800);
+    } catch (error) {
+      setSubmitError(error.message || "Failed to submit order requests");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -46,7 +52,7 @@ export default function CartCheckoutDrawer({ isOpen, onClose, cartItems = [], on
             </div>
             <div>
               <h2 className="text-base font-extrabold text-white">Bulk Backlink Cart ({cartItems.length})</h2>
-              <p className="text-xs text-slate-500">Lock multiple publisher orders into 100% escrow</p>
+              <p className="text-xs text-slate-500">Submit placement requests to multiple publishers</p>
             </div>
           </div>
 
@@ -59,7 +65,7 @@ export default function CartCheckoutDrawer({ isOpen, onClose, cartItems = [], on
           <div className="p-10 text-center space-y-3 altf-card">
             <ShoppingBag className="h-10 w-10 text-slate-600 mx-auto" />
             <p className="text-sm font-bold text-white">Your Backlink Cart is Empty</p>
-            <p className="text-xs text-slate-500">Add domains from the marketplace directory to initiate bulk escrow checkout.</p>
+            <p className="text-xs text-slate-500">Add approved listings from the directory to submit placement requests.</p>
           </div>
         ) : (
           <form onSubmit={handleCheckout} className="space-y-5">
@@ -72,7 +78,7 @@ export default function CartCheckoutDrawer({ isOpen, onClose, cartItems = [], on
                     <p className="text-[10px] text-slate-500">DR {item.dr} • {item.niche}</p>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="font-mono font-bold text-indigo-400">${item.prices?.guestPost || 180}</span>
+                    <span className="font-mono font-bold text-indigo-400">{formatPrice(resolveGuestPostPrice(item))}</span>
                     <button
                       type="button"
                       onClick={() => onRemoveCartItem(item.id)}
@@ -113,21 +119,25 @@ export default function CartCheckoutDrawer({ isOpen, onClose, cartItems = [], on
             {/* Total Price & Checkout */}
             <div className="p-4 rounded-xl bg-indigo-50 border border-indigo-200 space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-slate-700">Total Placement Amount ({cartItems.length} Domains)</span>
-                <span className="text-lg font-black text-indigo-700 font-mono">$0.00 (100% FREE)</span>
+                <span className="text-xs font-bold text-slate-700">Current Listed Total ({cartItems.length} Domains)</span>
+                <span className="text-lg font-black text-indigo-700 font-mono">{formatPrice(totalPrice)}</span>
               </div>
+
+              {hasUnknownPrices ? (
+                <p className="text-xs text-rose-600">Remove listings with an unknown price before submitting.</p>
+              ) : null}
+              {submitError ? <p className="text-xs text-rose-600">{submitError}</p> : null}
 
               <button
                 type="submit"
-                disabled={isSubmitting}
+                disabled={isSubmitting || hasUnknownPrices}
                 className="altf-btn-primary w-full py-3 text-xs font-bold"
               >
                 {isSubmitting ? (
-                  <span>Submitting Free Request...</span>
+                  <span>Submitting Request...</span>
                 ) : (
                   <>
-                    <Lock className="h-4 w-4" />
-                    <span>Submit Free Request ($0)</span>
+                    <span>Submit Request ({formatPrice(totalPrice)})</span>
                     <ArrowRight className="h-4 w-4" />
                   </>
                 )}

@@ -91,16 +91,81 @@ export function generateStaticParams() {
 }
 
 /**
+ * The manifest blurbs run 70-134 characters — over the 70-character floor, but
+ * 60 of the 64 sat under 110 and left most of a mobile SERP snippet unused.
+ * Rather than rewrite 64 strings in the manifest (which scripts/assert-transform
+ * -manifest.mjs validates), each blurb gets ONE closing clause appended, chosen
+ * longest-first from the ladder its engine owns.
+ *
+ * Both ladders only restate what this page already publishes about itself in
+ * createConverterJsonLd's featureList above: where the conversion runs, that the
+ * input is not kept, that the result copies or downloads, and that it is free.
+ */
+const DESCRIPTION_MIN = 150;
+const DESCRIPTION_MAX = 158;
+const DESCRIPTION_CLAUSES = {
+  browser: [
+    "Runs entirely in your browser, so what you paste is never uploaded, and the result copies or downloads in one click. Free, no signup.",
+    "Runs entirely in your browser, so what you paste is never uploaded, and the result copies or downloads in one click.",
+    "Runs entirely in your browser, so what you paste is never uploaded. Free, no signup.",
+    "Runs in your browser — what you paste is never uploaded. Free, no signup.",
+    "Runs in your browser; what you paste is never uploaded. No signup.",
+    "Runs in your browser — nothing you paste is uploaded.",
+    "Free, and it runs entirely in your browser.",
+    "Runs in your browser, free.",
+    "Free to use.",
+  ],
+  server: [
+    "Runs on the AltFTool server, which keeps nothing you paste, and the result copies or downloads in one click. Free, no signup.",
+    "Runs on the AltFTool server, which keeps nothing you paste, and the result copies or downloads in one click.",
+    "Runs on the AltFTool server, which keeps nothing you paste. Free, no signup.",
+    "Runs on the AltFTool server and keeps nothing you paste. No signup.",
+    "Runs on the AltFTool server; nothing you paste is stored.",
+    "Free, with no signup, on the AltFTool server.",
+    "Free, with no signup.",
+    "Free to use.",
+  ],
+};
+
+/**
+ * @param {import("../_lib/manifest.js").ToolMeta} tool
+ * @returns {string} 141-158 characters across the current 64-tool manifest.
+ */
+function buildToolDescription(tool) {
+  let out = String(tool.description || "").trim();
+  if (!/[.!?]$/.test(out)) out = `${out}.`;
+  if (out.length >= DESCRIPTION_MIN) return out;
+  const ladder = DESCRIPTION_CLAUSES[tool.engine] || DESCRIPTION_CLAUSES.server;
+  for (const clause of ladder) {
+    const next = `${out} ${clause}`;
+    if (next.length <= DESCRIPTION_MAX) return next;
+  }
+  return out;
+}
+
+/**
  * Per-tool SEO: unique title, description, canonical, OG + Twitter tags.
  * @param {{ params: Promise<{ slug: string }> }} ctx
  */
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const tool = getToolBySlug(slug);
-  if (!tool) return {};
+  // An empty object is not "no metadata" — Next falls back to the /transform
+  // layout's, so an unknown slug would answer with the hub's title, the hub's
+  // canonical and robots "index". Live traffic never reaches here (unknown
+  // slugs 308 to /transform), but the component below calls notFound(), and
+  // this is what keeps that 404 out of the index if the redirect ever moves.
+  if (!tool) {
+    return {
+      title: "Converter Not Found",
+      description: "The requested AltFTool format converter does not exist.",
+      alternates: { canonical: `/transform/${slug}` },
+      robots: { index: false, follow: true },
+    };
+  }
 
   const title = `${tool.title} Converter`;
-  const description = tool.description;
+  const description = buildToolDescription(tool);
   const url = `/transform/${tool.slug}`;
 
   return {

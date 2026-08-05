@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "Flash/clap recording se audio lead/lag milliseconds calculate kare.",
+  "description": "Calculate audio lead or lag in milliseconds from a flash or clap recording.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

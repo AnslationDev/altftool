@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "OBJ, STL aur GLB convert karke mesh statistics dikhaye.",
+  "description": "Convert between OBJ, STL and GLB, and see the mesh statistics for each.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

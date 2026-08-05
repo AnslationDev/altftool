@@ -6,7 +6,29 @@ import {
   createItemListJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
-import { formatCategoryLabel, getToolCategorySlugs } from "./toolRouteUtils";
+import {
+  formatCategoryLabel,
+  getToolCatalogCount,
+  getToolCategorySlugs,
+} from "./toolRouteUtils";
+
+/**
+ * The catalogue size, rounded down to a round hundred.
+ *
+ * The hub advertised "100+" in its title, its description and its
+ * CollectionPage entity while its own H1 — rendered from the live registry a
+ * few hundred bytes below — read "3,947 free online tools". A searcher who
+ * clicks a result promising 100 tools and lands on 3,947 has been told the
+ * wrong thing about the page, and every one of those three strings was a
+ * hardcoded literal that no longer tracked the registry.
+ *
+ * Derived, not literal, so it cannot drift again. Rounded down so the claim
+ * stays true between registry regenerations, and formatted the same way the
+ * body copy already formats it.
+ */
+function getRoundedCatalogTotal() {
+  return (Math.floor(getToolCatalogCount("all") / 100) * 100).toLocaleString();
+}
 
 // Evergreen and free of dynamic APIs — no cookies(), headers(), searchParams
 // or fetch — so it can be served from the edge. Without this the root layout's
@@ -21,10 +43,11 @@ export const revalidate = 86400;
 
 
 export async function generateMetadata() {
+  const total = getRoundedCatalogTotal();
+
   return createPageMetadata({
-    title: "Micro Tools – 100+ Free Daily Use Online Tools",
-    description:
-      "Access 100+ free micro tools for everyday tasks including calculators, converters, generators, and productivity utilities on AltFTool.",
+    title: `Micro Tools – ${total}+ Free Daily Use Online Tools`,
+    description: `Browse ${total}+ free AltFTool microtools in one directory: calculators, converters, generators, PDF and image tools, developer utilities and browser games.`,
     path: "/tools",
   });
 }
@@ -54,8 +77,7 @@ export default function Page() {
           createCollectionPageJsonLd({
             path: "/tools",
             name: "AltFTool Micro Tools",
-            description:
-              "Hub of 100+ free browser-based tools: converters, calculators, PDF, image, developer and AI utilities.",
+            description: `Hub of ${getRoundedCatalogTotal()}+ free browser-based tools: converters, calculators, PDF, image, developer and AI utilities.`,
           }),
           createItemListJsonLd({
             path: "/tools",

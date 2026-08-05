@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "home-heat-loss-retrofit-estimator",
   name: "Home Heat-Loss & Retrofit Estimator",
   category: ["Lifestyle","Calculator"],
-  description: "Room dimensions aur insulation se improvement scenarios compare kare.",
+  description: "Compare insulation retrofit scenarios using your room dimensions and current insulation.",
   icon: "house",
   iconColor: "text-primary",
 };

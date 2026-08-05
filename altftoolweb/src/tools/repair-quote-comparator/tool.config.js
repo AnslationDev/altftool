@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "repair-quote-comparator",
   name: "Repair Quote Comparator",
   category: ["Lifestyle","Business"],
-  description: "Parts, labour, warranty aur exclusions across repair quotes compare kare.",
+  description: "Compare repair quotes on parts, labour, warranty and what each one excludes.",
   icon: "wrench",
   iconColor: "text-primary",
 };

@@ -47,9 +47,9 @@ export default function DealsPage() {
     <div className="exclusive-deals-page bg-(--dealspage-background) text-(--foreground)">
           <HeroSection/>
           <OutletDealsCard/>
-          <RouteLazySection fallback={<RouteStripSkeleton items={6} />} minHeight={260}>
-            <BrowserCategory/>
-          </RouteLazySection>
+          {/* Not lazy-mounted: this is the first section a crawler should see,
+              and it now renders real categories server-side. */}
+          <BrowserCategory/>
           <RouteLazySection fallback={<RouteStripSkeleton items={4} />} minHeight={360}>
             <TreindingPrice/>
           </RouteLazySection>

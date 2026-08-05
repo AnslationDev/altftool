@@ -6,11 +6,17 @@
 "use client";
 
 import React from "react";
-import { ShieldCheck, Eye, Clock, TrendingUp, Plus, Check, ShoppingBag, ArrowRight, Repeat } from "lucide-react";
+import { ShieldCheck, Eye, Clock, TrendingUp, Plus, Check, ShoppingBag, ArrowRight } from "lucide-react";
 import TrafficSparklineSvg from "../visuals/TrafficSparklineSvg";
 
-export default function WebsiteCard({ site, onQuickPreview, onSelectOrder, isCompared, onToggleCompare, onAddToCart, isLinkExchange = false }) {
+import { resolveGuestPostPrice, resolveLinkInsertionPrice, formatPrice, isOrderable } from "../../lib/pricing";
+import { trafficTrendPercent } from "../visuals/TrafficSparklineSvg";
+export default function WebsiteCard({ site, onQuickPreview, onSelectOrder, isCompared, onToggleCompare, onAddToCart }) {
   const isHighDr = site.dr >= 70;
+  const guestPostPrice = resolveGuestPostPrice(site);
+  const canOrder = isOrderable(site, "GUEST_POST") || isOrderable(site, "LINK_INSERTION");
+  const isFreeGuestPost = guestPostPrice === 0;
+  const trafficTrend = trafficTrendPercent(site.trafficHistory);
 
   // Extract logo avatar initials
   const domainName = site.name || site.domain || "website.com";
@@ -22,7 +28,7 @@ export default function WebsiteCard({ site, onQuickPreview, onSelectOrder, isCom
 
   const formattedTraffic = typeof site.traffic === "number"
     ? `${(site.traffic / 1000).toFixed(0)}k`
-    : site.traffic || "50k";
+    : site.traffic || "—";
 
   return (
     <div className="altf-card p-5 flex flex-col justify-between space-y-4 hover:border-indigo-300 transition-all duration-200 group bg-white">
@@ -55,7 +61,7 @@ export default function WebsiteCard({ site, onQuickPreview, onSelectOrder, isCom
             }`}>
               DR {site.dr}
             </span>
-            <span className="text-[10px] text-slate-500 font-mono font-medium">DA {site.da || Math.round(site.dr * 0.95)}</span>
+            <span className="text-[10px] text-slate-500 font-mono font-medium">DA {site.da ?? "—"}</span>
           </div>
         </div>
 
@@ -68,7 +74,7 @@ export default function WebsiteCard({ site, onQuickPreview, onSelectOrder, isCom
             {formattedTraffic} traffic/mo
           </span>
           <span className="bg-cyan-50 text-cyan-700 px-2.5 py-0.5 rounded-lg text-[11px] font-mono border border-cyan-200/80 flex items-center gap-1">
-            <Clock className="h-3 w-3" /> {site.tatDays || 3}d TAT
+            <Clock className="h-3 w-3" /> {site.tatDays ? `${site.tatDays}d TAT` : "TAT —"}
           </span>
         </div>
       </div>
@@ -80,21 +86,23 @@ export default function WebsiteCard({ site, onQuickPreview, onSelectOrder, isCom
             <TrendingUp className="h-3.5 w-3.5 text-indigo-600" />
             6-Month Organic Trend
           </span>
-          <span className="text-emerald-600 font-mono font-extrabold">+28%</span>
+          {trafficTrend === null ? null : (
+              <span className="text-emerald-600 font-mono font-extrabold">
+                {trafficTrend > 0 ? "+" : ""}
+                {trafficTrend}%
+              </span>
+            )}
         </div>
         <TrafficSparklineSvg trafficHistory={site.trafficHistory} width={220} height={28} />
       </div>
 
       {/* Pricing / Link Exchange Info Container */}
       <div className="bg-indigo-50/40 p-2.5 rounded-xl border border-indigo-100 flex items-center justify-between text-xs">
-        {isLinkExchange || (site.prices?.guestPost === 0 || site.price === 0) ? (
+        {isFreeGuestPost ? (
           <div className="flex items-center justify-between w-full">
-            <div className="flex items-center gap-1.5">
-              <Repeat className="h-4 w-4 text-indigo-600" />
-              <span className="font-extrabold text-indigo-900 text-xs">1:1 Link Exchange</span>
-            </div>
+            <span className="font-extrabold text-indigo-900 text-xs">Guest Post</span>
             <span className="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full text-[10px] font-black border border-emerald-200">
-              FREE ($0 Fee)
+              Free
             </span>
           </div>
         ) : (
@@ -102,13 +110,13 @@ export default function WebsiteCard({ site, onQuickPreview, onSelectOrder, isCom
             <div>
               <span className="text-[10px] text-slate-500 uppercase font-bold block leading-none">Guest Post</span>
               <span className="font-mono font-black text-indigo-600 text-sm">
-                ${site.prices?.guestPost || site.price || 180}
+                {formatPrice(guestPostPrice)}
               </span>
             </div>
             <div className="text-right">
               <span className="text-[10px] text-slate-500 uppercase font-bold block leading-none">Insertion</span>
               <span className="font-mono font-bold text-slate-700 text-xs">
-                ${site.prices?.linkInsertion || Math.round((site.price || 180) * 0.65)}
+                {formatPrice(resolveLinkInsertionPrice(site))}
               </span>
             </div>
           </>
@@ -141,7 +149,7 @@ export default function WebsiteCard({ site, onQuickPreview, onSelectOrder, isCom
             <span>Compare</span>
           </button>
 
-          {onAddToCart && (
+          {onAddToCart && canOrder && (
             <button
               onClick={() => onAddToCart(site)}
               className="flex-1 py-1.5 px-2 rounded-xl bg-slate-50 hover:bg-indigo-50 hover:text-indigo-600 text-slate-700 text-xs font-bold transition flex items-center justify-center gap-1 border border-slate-200"
@@ -156,9 +164,10 @@ export default function WebsiteCard({ site, onQuickPreview, onSelectOrder, isCom
         {/* Tier 2: Primary Order Action CTA */}
         <button
           onClick={() => onSelectOrder(site)}
+          disabled={!canOrder}
           className="altf-btn-primary w-full py-2.5 text-xs font-extrabold flex items-center justify-center gap-1.5 rounded-xl shadow-md shadow-indigo-600/20 active:scale-[0.98] transition-all"
         >
-          <span>{isLinkExchange ? "Swap Link Now" : "Order Backlink"}</span>
+          <span>{!canOrder ? "Price unavailable" : "Request Placement"}</span>
           <ArrowRight className="h-3.5 w-3.5" />
         </button>
       </div>

@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "price-evidence-locker",
   name: "Price Evidence Locker",
   category: ["Shopping","Security & Privacy"],
-  description: "Product price aur offer claims ka timestamped evidence save kare.",
+  description: "Save timestamped evidence of a product's price and the offer claims made about it.",
   icon: "archive-restore",
   iconColor: "text-primary",
 };

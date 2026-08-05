@@ -39,7 +39,7 @@ export function useSearchDataSource() {
       // ── Layer 2: Tools from toolMetaMap (static, instant after import) ────
       let toolResults = [];
       try {
-        const { toolMetaMap } = await import("@/platform/registry/toolMetaMap");
+        const { toolMetaMap } = await import("@/platform/registry/clientToolMetaMap");
 
         toolResults = Object.entries(toolMetaMap).map(([slug, tool]) => {
           const cats = Array.isArray(tool.category)

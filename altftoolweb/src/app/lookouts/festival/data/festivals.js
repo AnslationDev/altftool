@@ -30,7 +30,7 @@ export const FESTIVALS = [
     religion: "hinduism",
     category: "religious",
     countryCodes: ["IN", "NP"],
-    regionLabel: "India, Nepal & 40+ countries",
+    regionLabel: "India & Nepal",
     month: 11,
     day: 8,
     dateOverrides: { 2026: "2026-11-08", 2027: "2027-10-29" },

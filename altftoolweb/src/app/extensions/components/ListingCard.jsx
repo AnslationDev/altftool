@@ -6,7 +6,22 @@ import ManagedImage from "@/components/ui/ManagedImage";
 
 export default function ListingCard({ extension, slug }) {
 
-  const usersCount = extension.users || "10K+";
+  // Was `extension.users || "10K+"`. Every one of the 57 Firestore extension
+  // records has an empty `users` field (39 omit it, 18 store ""), so the
+  // fallback fired on all of them and the grid published an invented install
+  // count of "10K+ users" on every card. There is no analytics feed behind
+  // this number, so the row renders only when a record actually carries one.
+  const usersCount =
+    typeof extension.users === "string" || typeof extension.users === "number"
+      ? String(extension.users).trim()
+      : "";
+
+  // Same rule for the rating: the star only appears next to a real value, and
+  // a 0 from an unrated record must not render as a zero-star score.
+  const ratingValue =
+    typeof extension.rating === "number" && extension.rating > 0
+      ? String(extension.rating)
+      : "";
 
   return (
     <Link
@@ -41,12 +56,14 @@ export default function ListingCard({ extension, slug }) {
         </h3>
 
         {/* Rating row */}
-        <div className="flex items-center gap-2 text-sm mt-1">
-          <span className="text-(--muted-foreground) font-medium">
-            {extension.rating}
-          </span>
-          <Star className="w-4 h-4 fill-[var(--primary)] text-[var(--primary)]" aria-hidden="true" />
-        </div>
+        {ratingValue ? (
+          <div className="flex items-center gap-2 text-sm mt-1">
+            <span className="text-(--muted-foreground) font-medium">
+              {ratingValue}
+            </span>
+            <Star className="w-4 h-4 fill-[var(--primary)] text-[var(--primary)]" aria-hidden="true" />
+          </div>
+        ) : null}
 
         {/* Description */}
         <p className="text-sm text-(--muted-foreground) mt-2 line-clamp-2">
@@ -55,7 +72,7 @@ export default function ListingCard({ extension, slug }) {
 
         {/* Footer (users) */}
         <div className="mt-auto flex items-center justify-between gap-3 pt-3 text-xs text-(--muted-foreground)">
-          <span>{usersCount} users</span>
+          {usersCount ? <span>{usersCount} users</span> : <span />}
           <span className="extension-listing-action inline-flex items-center gap-1 font-bold">
             Open <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
           </span>

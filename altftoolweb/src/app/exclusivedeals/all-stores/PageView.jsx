@@ -11,11 +11,13 @@ import { brandsfirebase } from "../service/firebasebrand";
 import { AltftoolLoader, LoadingBone } from "@/components/ui/route-loading";
 
 const TABS = [
-  { label: "Popularity", value: "popularity" },
+  // "Live Sales" ordered by deal count and "Newest" by array position — neither
+  // signal exists in this data. These labels now name what the sort actually is;
+  // there is no created-at field, so there is no "Newest" ordering to offer.
+  { label: "Featured", value: "popularity" },
   { label: "A-Z", value: "az" },
   { label: "Top Discount", value: "top-discount" },
-  { label: "Live Sales", value: "live-sales" },
-  { label: "Newest", value: "newest" },
+  { label: "Most Deals", value: "live-sales" },
 ];
 
 function AllStoresContent() {
@@ -99,9 +101,6 @@ function AllStoresContent() {
 
       case "live-sales":
         return brands.sort((a, b) => b.totalDeals - a.totalDeals);
-
-      case "newest":
-        return brands.sort((a, b) => b.originalIndex - a.originalIndex);
 
       case "popularity":
       default:

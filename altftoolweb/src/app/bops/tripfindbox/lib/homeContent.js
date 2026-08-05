@@ -25,18 +25,17 @@ export const DEFAULT_HOME_CONTENT = {
     eyebrow: "Premium flight booking",
     title: "Find Your Perfect Flight & Travel Deal",
     lead: "Search real flights, compare fares, and plan a smoother trip with destination ideas built around your route.",
+    // Badges describe what the product does, not how well it is rated. The
+    // previous set claimed "Verified route data" (nothing verifies it) and a
+    // "4.8 traveler rating" that the review strip below it simultaneously
+    // reported as 3.9 — two invented numbers disagreeing on the same screen.
     trustBadges: [
-      { iconKey: "ShieldCheck", label: "Verified route data" },
-      { iconKey: "Star", label: "4.8 traveler rating" },
+      { iconKey: "ShieldCheck", label: "Live fare search" },
       { iconKey: "CreditCard", label: "Secure booking path" },
     ],
-    reviewStrip: {
-      trustedByCount: "100,000+",
-      excellentLabel: "Excellent",
-      filledStars: 4,
-      reviewScore: "3.9",
-      reviewCount: "89",
-    },
+    // reviewStrip removed. It supplied "Trusted by 100,000+ customers every
+    // year" and "(3.9) 89 Reviews on ★ Trustpilot" to the hero. There is no
+    // Trustpilot profile and no source for any of those figures.
     mobileCallText: "Call & Get Unpublished Flight Deals!",
   },
   insights: [

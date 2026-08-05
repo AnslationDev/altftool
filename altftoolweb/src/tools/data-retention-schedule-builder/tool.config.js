@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "data-retention-schedule-builder",
   name: "Data Retention Schedule Builder",
   category: ["Productivity","Business"],
-  description: "Data categories ke review aur deletion periods define kare.",
+  description: "Define review and deletion periods for each of your data categories.",
   icon: "table-properties",
   iconColor: "text-primary",
 };

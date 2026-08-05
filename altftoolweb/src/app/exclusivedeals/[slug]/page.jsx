@@ -4,6 +4,14 @@
 // overrode all of it and every URL in this family shipped the same one.
 
 import dealData from "../(data)/db.json";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createItemListJsonLd,
+} from "@/platform/seo/generateMetadata";
+import { brandSlug } from "@/app/exclusivedeals/lib/brandSlug";
+
 import PageView from "./PageView";
 
 /**
@@ -24,8 +32,45 @@ export default async function Page(props) {
   const category = (dealData.categories || []).find((item) => item.slug === slug);
   const headingName = category?.categoryName || categoryNameFromSlug(slug);
 
+  const path = `/exclusivedeals/${slug}`;
+  // brandSlug, not brand.id: the ItemList advertised /exclusivedeals/<cat>/1,
+  // which is not the canonical URL for that brand and is not what the sitemap
+  // submits. Those ids still resolve, but they canonicalise to the slug URL,
+  // so pointing structured data at them listed a non-canonical URL as the item.
+  const brandItems = (category?.brands || [])
+    .filter((brand) => brand?.brandName)
+    .map((brand) => ({
+      name: brand.brandName,
+      path: `${path}/${brandSlug(brand.brandName)}`,
+    }));
+
   return (
     <>
+      {/* Moved out of layout.jsx: rendered there it also ran on every
+          /exclusivedeals/<category>/<brand> URL, which then shipped two
+          BreadcrumbList nodes and a CollectionPage describing the parent. */}
+      {category ? (
+        <JsonLd
+          id={`exclusive-deals-category-schema-${category.slug}`}
+          data={[
+            createCollectionPageJsonLd({
+              path,
+              name: `${category.categoryName} Deals`,
+              description: `Browse ${category.categoryName} deals, coupons, and brand offers on AltFTool.`,
+            }),
+            createItemListJsonLd({
+              path,
+              name: `${category.categoryName} brand offers`,
+              items: brandItems,
+            }),
+            createBreadcrumbJsonLd([
+              { name: "Home", path: "/" },
+              { name: "Exclusive Deals", path: "/exclusivedeals" },
+              { name: category.categoryName, path },
+            ]),
+          ]}
+        />
+      ) : null}
       {/* All 12 category URLs shipped no H1 at all: the highest heading in
           CategoryBrand.jsx is the sidebar's "STORE CATEGORIES" H2. Rendered on
           the server so it does not wait on the client view, and visually

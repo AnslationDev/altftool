@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "ropa-builder",
   name: "ROPA Builder",
   category: ["Productivity","Business"],
-  description: "Personal-data processing activities ka structured register banaye.",
+  description: "Build a structured register of your personal-data processing activities.",
   icon: "table-properties",
   iconColor: "text-primary",
 };

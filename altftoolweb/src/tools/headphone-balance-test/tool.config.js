@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Left/right stereo placement aur channel balance check karne ke liye hard-panned tone alternate kare.",
+  "description": "Alternate a hard-panned tone between channels to check stereo placement and balance.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

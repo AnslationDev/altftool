@@ -3,10 +3,10 @@
 import * as React from "react";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import { Copy, Maximize2, Bookmark, Share2, ArrowUpRight, Sparkles } from "lucide-react";
+import { Copy, Maximize2, Bookmark, Share2, ArrowUpRight } from "lucide-react";
 import { getModel } from "../../data/models";
 import { getCategory } from "../../data/categories";
-import { cn, copyToClipboard, formatDate, scoreColor } from "../../lib/utils";
+import { cn, copyToClipboard } from "../../lib/utils";
 import { useCopyPrompt } from "../../hooks/use-copy-prompt";
 import { Badge } from "../ui/badge";
 import { PromptThumb } from "./prompt-thumb";
@@ -40,14 +40,9 @@ export function PromptCard({ prompt, index = 0 }) {
             seed={prompt.seed}
             emoji={category?.emoji}
             gradient={category?.gradient}
-            count={prompt.images}
             rounded="rounded-none"
             className="h-52 w-full"
           />
-          <div className="absolute right-2.5 top-2.5 flex items-center gap-1 rounded-lg bg-black/50 px-2 py-1 text-xs font-semibold backdrop-blur">
-            <Sparkles className={cn("h-3.5 w-3.5", scoreColor(prompt.score))} />
-            <span className={scoreColor(prompt.score)}>{prompt.score}</span>
-          </div>
           <div className="absolute right-2.5 bottom-2.5 flex gap-1.5 opacity-0 translate-y-1 transition-all duration-300 group-hover:opacity-100 group-hover:translate-y-0">
             <button
               onClick={(e) => { e.stopPropagation(); setSaved((s) => !s); }}
@@ -70,9 +65,7 @@ export function PromptCard({ prompt, index = 0 }) {
         </div>
 
         <div className="flex flex-1 flex-col p-5">
-          <span className="text-xs text-muted-foreground">{formatDate(prompt.createdAt)}</span>
-
-          <button onClick={() => setOpen(true)} className="mt-1.5 flex items-start gap-1.5 text-left">
+          <button onClick={() => setOpen(true)} className="flex items-start gap-1.5 text-left">
             <h3 className="font-display text-lg font-semibold leading-tight tracking-tight transition-colors group-hover:text-primary">
               {prompt.title}
             </h3>

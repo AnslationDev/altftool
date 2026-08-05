@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "micr-cheque-code-decoder",
   name: "MICR Cheque Code Decoder",
   category: ["Finance","India"],
-  description: "MICR city, bank aur branch fields explain kare.",
+  description: "Decode and explain the city, bank and branch fields in a cheque's MICR code.",
   icon: "scan-line",
   iconColor: "text-primary",
 };

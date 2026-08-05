@@ -39,7 +39,7 @@ export default function RankingHeader({ ranking }) {
   const words = ranking.title.split(" ");
   const stats = [
     { label: "Updated", value: ranking.updated },
-    { label: "Reviewed by", value: ranking.reviewedBy },
+    { label: "Preview byline", value: ranking.reviewedBy },
     { label: "Read time", value: ranking.readTime },
     { label: "Entries", value: String(ranking.entriesCount) },
   ];

@@ -6,7 +6,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Search, Star, ShieldCheck, ArrowRight, Sparkles, SlidersHorizontal, ChevronDown, Check } from "lucide-react";
+import { Search, ShieldCheck, Sparkles, SlidersHorizontal, Check } from "lucide-react";
 import { NICHES } from "../../types";
 
 export default function LandingHero({ onExploreMarketplace, onListWebsite, onSearchFilter }) {
@@ -50,54 +50,27 @@ export default function LandingHero({ onExploreMarketplace, onListWebsite, onSea
         {/* Soft Light Overlay Gradient */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/40 via-transparent to-slate-50/80 pointer-events-none" />
 
-      {/* Floating Domain Badges (Matching Reference Image) */}
-      <div className="hidden lg:block pointer-events-none select-none">
-        {/* Top-Left: Techcrunch */}
-        <div className="absolute top-4 left-6 bg-white border border-slate-200 rounded-full px-3.5 py-1.5 shadow-lg flex items-center gap-2 animate-bounce duration-1000">
-          <span className="text-xs font-bold text-slate-800 font-mono">techcrunch.com</span>
-          <span className="text-[10px] font-extrabold text-emerald-500 bg-emerald-500/10 px-1.5 py-0.5 rounded-full">DR 93</span>
-        </div>
-
-        {/* Top-Right: Business Insider */}
-        <div className="absolute top-8 right-8 bg-white border border-slate-200 rounded-full px-3.5 py-1.5 shadow-lg flex items-center gap-2">
-          <span className="text-xs font-bold text-slate-800 font-mono">businessinsider.com</span>
-          <span className="text-[10px] font-extrabold text-indigo-500 bg-indigo-500/10 px-1.5 py-0.5 rounded-full">DR 91</span>
-        </div>
-
-        {/* Mid-Left: Forbes */}
-        <div className="absolute top-64 left-2 bg-white border border-slate-200 rounded-full px-3.5 py-1.5 shadow-lg flex items-center gap-2">
-          <span className="text-xs font-bold text-slate-800 font-mono">forbes.com</span>
-          <span className="text-[10px] font-extrabold text-purple-500 bg-purple-500/10 px-1.5 py-0.5 rounded-full">DR 94</span>
-        </div>
-
-        {/* Mid-Right: NYMag */}
-        <div className="absolute top-72 right-4 bg-white border border-slate-200 rounded-full px-3.5 py-1.5 shadow-lg flex items-center gap-2">
-          <span className="text-xs font-bold text-slate-800 font-mono">nymag.com</span>
-          <span className="text-[10px] font-extrabold text-cyan-500 bg-cyan-500/10 px-1.5 py-0.5 rounded-full">DR 89</span>
-        </div>
-      </div>
-
       <div className="max-w-4xl mx-auto text-center space-y-8 relative z-10">
 
         {/* Trust Pill Header */}
         <div className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-4 py-1.5 text-xs font-bold text-amber-800">
-          <Star className="h-3.5 w-3.5 text-amber-500 fill-amber-500" />
-          <span>The #1 Marketplace for Quality Backlinks</span>
+          <ShieldCheck className="h-3.5 w-3.5 text-amber-700" />
+          <span>Publisher-submitted listings with admin review</span>
         </div>
 
         {/* Headline */}
         <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 leading-[1.15]">
-          Build Powerful{" "}
+          Explore Publisher-Submitted{" "}
           <span className="bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 bg-clip-text text-transparent">
-            Backlinks
+            Placement Listings
           </span>{" "}
           <br className="hidden sm:block" />
-          That Improve Rankings
+          With Explicit Pricing
         </h1>
 
         {/* Subtitle */}
         <p className="text-sm sm:text-base text-slate-600 max-w-2xl mx-auto leading-relaxed">
-          Find high-quality websites, guest posts, and link opportunities to grow your authority, traffic, and search rankings.
+          Compare the details publishers provide, then submit a placement request for admin and publisher review.
         </p>
 
         {/* Comprehensive Search Box Overlay Card (Reference Match) */}
@@ -147,7 +120,7 @@ export default function LandingHero({ onExploreMarketplace, onListWebsite, onSea
               <Search className="h-4 w-4 absolute left-3.5 top-3 text-slate-500" />
               <input
                 type="text"
-                placeholder="Enter domain name (e.g. techcrunch.com)"
+                placeholder="Enter a publisher domain"
                 value={domainSearch}
                 onChange={(e) => setDomainSearch(e.target.value)}
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-indigo-500"
@@ -271,11 +244,11 @@ export default function LandingHero({ onExploreMarketplace, onListWebsite, onSea
         <div className="flex flex-wrap items-center justify-center gap-6 text-xs font-semibold text-slate-600 pt-2">
           <span className="flex items-center gap-1.5 text-indigo-600">
             <Check className="h-4 w-4" />
-            500K+ Backlinks Delivered
+            Publisher-set prices only
           </span>
           <span className="flex items-center gap-1.5 text-indigo-600">
             <Check className="h-4 w-4" />
-            Secure &amp; Trusted Marketplace
+            Unknown prices cannot be ordered
           </span>
         </div>
 

@@ -49,10 +49,18 @@ export function Dashboard() {
     <div className="mx-auto max-w-[1500px] px-4 py-8 sm:px-6 lg:px-8">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
+          {/* The sole h1 on /imgprompt/studio, an indexable page titled "AI
+              Prompt Studio", used to read "Welcome back 👋" — the greeting is
+              what a signed-out visitor and a crawler both saw, so the one
+              heading on the page named neither the product nor the topic. The
+              greeting keeps its place directly underneath. */}
           <h1 className="font-display text-2xl font-bold tracking-tight sm:text-3xl">
-            Welcome back{user ? `, ${user.name.split(" ")[0]}` : ""} 👋
+            AI Prompt Studio
           </h1>
-          <p className="mt-1 text-muted-foreground">Your creative command center. Let's make something iconic.</p>
+          <p className="mt-1 text-muted-foreground">
+            Welcome back{user ? `, ${user.name.split(" ")[0]}` : ""} 👋 — your
+            creative command center for image, video and story prompts.
+          </p>
         </div>
         <Button asChild size="lg">
           <Link href="/imgprompt/studio/prompt-generator"><Sparkles className="h-4 w-4" /> New Prompt</Link>

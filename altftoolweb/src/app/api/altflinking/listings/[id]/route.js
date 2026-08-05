@@ -10,6 +10,7 @@ import { enforceRateLimit } from "@altftool/core/http";
 import { initAdmin } from "@/lib/altflinking/firebaseAdmin";
 import { verifyToken, getUserRole, ok, err } from "@/lib/altflinking/authMiddleware";
 import { FieldValue } from "firebase-admin/firestore";
+import { validateListingPrices } from "@/app/altflinking/lib/pricing";
 
 export async function PATCH(request, { params }) {
   const limited = enforceRateLimit(NextResponse, request, {
@@ -41,10 +42,16 @@ export async function PATCH(request, { params }) {
     const updates = { updatedAt: FieldValue.serverTimestamp() };
 
     if (body.guestPostPrice !== undefined || body.linkInsertionPrice !== undefined) {
-      updates.prices = {
-        guestPost: body.guestPostPrice !== undefined ? Number(body.guestPostPrice) || 0 : listing.prices?.guestPost || 0,
-        linkInsertion: body.linkInsertionPrice !== undefined ? Number(body.linkInsertionPrice) || 0 : listing.prices?.linkInsertion || 0,
-      };
+      const validatedPrices = validateListingPrices({
+        guestPost: body.guestPostPrice !== undefined
+          ? body.guestPostPrice
+          : listing.prices?.guestPost,
+        linkInsertion: body.linkInsertionPrice !== undefined
+          ? body.linkInsertionPrice
+          : listing.prices?.linkInsertion,
+      });
+      if (validatedPrices.error) return err(validatedPrices.error, 400);
+      updates.prices = validatedPrices.value;
     }
     if (body.tatDays !== undefined) updates.tatDays = Number(body.tatDays) || listing.tatDays || 7;
     if (body.guidelines !== undefined) updates.guidelines = String(body.guidelines).slice(0, 2000);

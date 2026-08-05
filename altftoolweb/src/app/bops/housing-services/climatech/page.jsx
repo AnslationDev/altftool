@@ -5,7 +5,6 @@ import Showcase from "./components/Showcase";
 import About from "./components/About";
 import WhyChooseUs from "./components/WhyChooseUs";
 import Process from "./components/Process";
-import Testimonials from "./components/Testimonials";
 import BlogSection from "./components/BlogSection";
 import FAQ from "./components/FAQ";
 import CTABanner from "./components/CTABanner";
@@ -22,7 +21,6 @@ export default function Home() {
       <About />
       <WhyChooseUs />
       <Process />
-      <Testimonials />
       <BlogSection />
       <FAQ />
       <CTABanner />

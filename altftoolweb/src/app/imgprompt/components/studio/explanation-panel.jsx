@@ -2,7 +2,7 @@
 
 import {
   CheckCircle2, AlertTriangle, Lightbulb, Camera, Sun, Palette, Ban,
-  Eye, Clock, Target, Award, GraduationCap, Sparkles,
+  Eye, GraduationCap, Sparkles,
 } from "lucide-react";
 import { Badge } from "../ui/badge";
 
@@ -19,11 +19,11 @@ function List({ items, icon: Icon, tone }) {
   );
 }
 
-function Tile({ icon: Icon, label, value, accent }) {
+function Tile({ icon: Icon, label, value }) {
   return (
     <div className="rounded-xl border border-border bg-foreground/[0.02] p-3">
       <div className="flex items-center gap-1.5 text-[11px] uppercase tracking-wide text-muted-foreground">
-        <Icon className="h-3.5 w-3.5" style={{ color: accent }} /> {label}
+        <Icon className="h-3.5 w-3.5 text-primary" /> {label}
       </div>
       <div className="mt-1 text-sm font-medium text-foreground/90">{value}</div>
     </div>
@@ -49,32 +49,14 @@ export function ExplanationPanel({ ex }) {
 
       <div className="rounded-xl border border-primary/20 bg-primary/[0.06] p-4">
         <div className="mb-1 flex items-center gap-1.5 text-xs font-semibold text-primary">
-          <Sparkles className="h-3.5 w-3.5" /> Why this prompt is good
+          <Sparkles className="h-3.5 w-3.5" /> Why this structure may help
         </div>
         <p className="text-sm leading-relaxed text-foreground/85">{ex.summary}</p>
       </div>
 
       <div className="mt-3 rounded-xl border border-border bg-foreground/[0.02] p-4">
-        <div className="mb-1 text-xs font-semibold text-muted-foreground">Why this score</div>
+        <div className="mb-1 text-xs font-semibold text-muted-foreground">How the checklist works</div>
         <p className="text-sm leading-relaxed text-foreground/80">{ex.scoreReason}</p>
-      </div>
-
-      <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-        <div className="rounded-xl border border-border bg-foreground/[0.02] p-3">
-          <Award className="mx-auto h-4 w-4 text-emerald-400" />
-          <div className="mt-1 text-sm font-semibold">{ex.estimatedQuality}</div>
-          <div className="text-[10px] text-muted-foreground">Est. Quality</div>
-        </div>
-        <div className="rounded-xl border border-border bg-foreground/[0.02] p-3">
-          <Clock className="mx-auto h-4 w-4 text-sky-400" />
-          <div className="mt-1 text-sm font-semibold">{ex.estimatedRenderTime}</div>
-          <div className="text-[10px] text-muted-foreground">Render Time</div>
-        </div>
-        <div className="rounded-xl border border-border bg-foreground/[0.02] p-3">
-          <Target className="mx-auto h-4 w-4 text-primary" />
-          <div className="mt-1 text-sm font-semibold">{ex.successProbability}%</div>
-          <div className="text-[10px] text-muted-foreground">Success</div>
-        </div>
       </div>
 
       <Section title="Strengths">
@@ -99,9 +81,9 @@ export function ExplanationPanel({ ex }) {
 
       <Section title="Better Creative Direction">
         <div className="grid gap-2 sm:grid-cols-3">
-          <Tile icon={Camera} label="Camera" value={ex.betterCamera} accent="#22d3ee" />
-          <Tile icon={Sun} label="Lighting" value={ex.betterLighting} accent="#f59e0b" />
-          <Tile icon={Palette} label="Color" value={ex.betterColor} accent="#ec4899" />
+          <Tile icon={Camera} label="Camera" value={ex.betterCamera} />
+          <Tile icon={Sun} label="Lighting" value={ex.betterLighting} />
+          <Tile icon={Palette} label="Color" value={ex.betterColor} />
         </div>
       </Section>
 
@@ -115,18 +97,10 @@ export function ExplanationPanel({ ex }) {
         </div>
       </Section>
 
-      <Section title="Expected AI Output">
+      <Section title="Possible output direction">
         <p className="flex items-start gap-2 text-sm text-foreground/80">
           <Eye className="mt-0.5 h-4 w-4 shrink-0 text-primary" /> {ex.expectedOutput}
         </p>
-      </Section>
-
-      <Section title="Commercial Use">
-        <div className="flex flex-wrap gap-1.5">
-          {ex.commercialUse.map((k) => (
-            <Badge key={k} variant="info" className="font-normal">{k}</Badge>
-          ))}
-        </div>
       </Section>
 
       <div className="mt-4 flex items-center justify-between rounded-xl border border-border bg-foreground/[0.02] p-3">

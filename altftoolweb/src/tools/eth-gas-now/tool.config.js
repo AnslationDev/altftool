@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Ethereum gas fees slow, normal aur fast tiers me dikhaye.",
+  "description": "See current Ethereum gas fees across slow, normal and fast tiers.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

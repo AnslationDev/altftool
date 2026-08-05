@@ -293,7 +293,7 @@ export default async function ItemPage({ params }) {
                 “{best.ranking.editorialNote}”
               </p>
               <cite className="t49-fine" style={{ color: 'color-mix(in srgb, var(--on-media) 68%, transparent)', fontStyle: 'normal' }}>
-                — Top 49 editorial panel, on {best.list.shortTitle}
+                — Top 49, on {best.list.shortTitle}
               </cite>
             </blockquote>
           ) : null}

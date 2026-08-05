@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "Unused glyphs remove karke web-optimized font banaye.",
+  "description": "Remove unused glyphs and build a web-optimized WOFF2 font subset.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

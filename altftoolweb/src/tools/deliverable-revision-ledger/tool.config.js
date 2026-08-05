@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "deliverable-revision-ledger",
   name: "Deliverable Revision Ledger",
   category: ["Business","Productivity"],
-  description: "Versions, feedback, approvals aur included revision count record kare.",
+  description: "Record versions, feedback, approvals and how many included revisions remain.",
   icon: "history",
   iconColor: "text-primary",
 };

@@ -11,7 +11,7 @@ import {
 
 const buySmartRouteHub = getRouteHub("buysmart");
 const buySmartDescription =
-  "Explore BuySmart on AltFTool for smart product and tool deals, top recommendations, buying guides, store pages, and savings insights for software, gadgets, and digital services.";
+  "Explore BuySmart on AltFTool for product and tool deals, buying guides, store pages and savings insights across software, gadgets and digital services.";
 
 export async function generateMetadata() {
   return createPageMetadata({

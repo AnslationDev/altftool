@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, Check } from "lucide-react";
 
-const FILTERS = ["Show all", "Trending", "Latest", "Most viewed", "Most saved"];
+const FILTERS = ["Show all", "Highlighted", "Preview date", "Preview activity"];
 
 export default function CategoryFilterBar({
   active: activeProp,

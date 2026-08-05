@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "ev-road-trip-charge-planner",
   name: "EV Road-Trip Charge Planner",
   category: ["Lifestyle","Calculator"],
-  description: "Battery, range aur route legs se charging stops plan kare.",
+  description: "Plan charging stops along a route from your battery size, range and each leg.",
   icon: "route",
   iconColor: "text-primary",
 };

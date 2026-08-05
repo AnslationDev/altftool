@@ -1,152 +1,90 @@
-/**
- * Featured Publishers Component (Reference Match)
- * Location: src/app/altflinking/components/landing/FeaturedPublishers.jsx
- */
-
 "use client";
 
 import React from "react";
-import { Star, ShieldCheck, ArrowRight } from "lucide-react";
+import { ArrowRight, ShieldCheck } from "lucide-react";
+import { formatPrice, resolveGuestPostPrice } from "../../lib/pricing";
 
-export default function FeaturedPublishers({ onSelectSite, onExploreMarketplace }) {
-  const publishers = [
-    {
-      id: "site_techcrunch_01",
-      domain: "TechCrunch.com",
-      color: "bg-emerald-600 text-white",
-      logoText: "TC",
-      dr: 93,
-      da: 92,
-      traffic: "5.2M/mo",
-      price: 280,
-      rating: 4.9,
-      reviews: 123,
-      verified: true,
-    },
-    {
-      id: "site_forbes_02",
-      domain: "Forbes.com",
-      color: "bg-white text-white border border-slate-200",
-      logoText: "Forbes",
-      dr: 94,
-      da: 93,
-      traffic: "8.7M/mo",
-      price: 350,
-      rating: 4.9,
-      reviews: 98,
-      verified: true,
-    },
-    {
-      id: "site_bi_03",
-      domain: "BusinessInsider.com",
-      color: "bg-blue-600 text-white",
-      logoText: "BI",
-      dr: 91,
-      da: 90,
-      traffic: "6.1M/mo",
-      price: 250,
-      rating: 4.8,
-      reviews: 76,
-      verified: true,
-    },
-    {
-      id: "site_medium_04",
-      domain: "Medium.com",
-      color: "bg-white text-white font-serif",
-      logoText: "M",
-      dr: 92,
-      da: 91,
-      traffic: "4.3M/mo",
-      price: 180,
-      rating: 4.8,
-      reviews: 76,
-      verified: true,
-    },
-    {
-      id: "site_yahoo_05",
-      domain: "Yahoo.com",
-      color: "bg-purple-600 text-white",
-      logoText: "yahoo!",
-      dr: 92,
-      da: 90,
-      traffic: "3.2M/mo",
-      price: 200,
-      rating: 4.7,
-      reviews: 58,
-      verified: true,
-    },
-  ];
+function formatTraffic(value) {
+  return Number.isFinite(value) ? `${value.toLocaleString()}/mo` : "Not provided";
+}
+
+export default function FeaturedPublishers({
+  publishers = [],
+  onSelectSite,
+  onExploreMarketplace,
+}) {
+  const approved = publishers
+    .filter((publisher) => publisher.status === "APPROVED")
+    .sort((a, b) => Number(Boolean(b.featured)) - Number(Boolean(a.featured)))
+    .slice(0, 5);
+
+  if (!approved.length) return null;
 
   return (
-    <div className="space-y-4 my-8">
-      <div className="flex items-center justify-between">
+    <section className="space-y-4 my-8" aria-labelledby="featured-publishers-heading">
+      <div className="flex items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-black text-slate-900 tracking-tight">
-            Featured Publishers
+          <h2 id="featured-publishers-heading" className="text-xl font-black text-foreground tracking-tight">
+            Current Publisher Listings
           </h2>
-          <p className="text-xs text-slate-500 ">
-            Top quality websites trusted by thousands of marketers.
-          </p>
+          <p className="text-xs text-muted">Metrics and prices below are supplied with each approved listing.</p>
         </div>
-
         <button
+          type="button"
           onClick={onExploreMarketplace}
-          className="text-xs font-bold text-indigo-600 hover:underline flex items-center gap-1"
+          className="text-xs font-bold text-primary hover:underline flex items-center gap-1"
         >
-          <span>View All Publishers</span>
+          <span>View all listings</span>
           <ArrowRight className="h-3.5 w-3.5" />
         </button>
       </div>
 
-      {/* Grid of 5 Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        {publishers.map((pub) => (
-          <div
-            key={pub.id}
-            onClick={() => onSelectSite && onSelectSite(pub)}
-            className="altf-card p-4 rounded-2xl border border-slate-200 space-y-4 hover:border-indigo-500/40 hover:shadow-lg transition cursor-pointer group"
-          >
-            {/* Top Row: Logo + Domain Name */}
-            <div className="flex items-center gap-2.5">
-              <div
-                className={`h-10 w-10 rounded-xl flex items-center justify-center font-extrabold text-xs shrink-0 shadow-xs ${pub.color}`}
-              >
-                {pub.logoText}
+        {approved.map((publisher) => {
+          const label = publisher.name || publisher.domain;
+          const initials = (label || "Publisher").slice(0, 2).toUpperCase();
+          return (
+            <button
+              type="button"
+              key={publisher.id}
+              onClick={() => onSelectSite?.(publisher)}
+              className="altf-card p-4 rounded-xl border border-border space-y-4 hover:border-primary transition text-left"
+            >
+              <div className="flex items-center gap-2.5">
+                <span className="h-10 w-10 rounded-lg bg-primary/10 text-primary flex items-center justify-center font-extrabold text-xs shrink-0">
+                  {initials}
+                </span>
+                <span className="min-w-0">
+                  <span className="text-xs font-extrabold text-foreground truncate flex items-center gap-1">
+                    {label}
+                    {publisher.verified ? (
+                      <ShieldCheck className="h-3.5 w-3.5 text-primary shrink-0" aria-label="Ownership check recorded" />
+                    ) : null}
+                  </span>
+                  <span className="block text-[10px] font-mono text-muted truncate">{publisher.domain}</span>
+                </span>
               </div>
-              <div className="min-w-0">
-                <h3 className="text-xs font-extrabold text-slate-900 truncate flex items-center gap-1 group-hover:text-indigo-600 dark:group-hover:text-indigo-400">
-                  {pub.domain}
-                  <ShieldCheck className="h-3.5 w-3.5 text-blue-500 shrink-0" />
-                </h3>
-                <div className="flex items-center gap-2 text-[10px] font-mono text-slate-500 mt-0.5">
-                  <span>DR <strong className="text-indigo-600">{pub.dr}</strong></span>
-                  <span>DA <strong className="text-blue-600">{pub.da || "—"}</strong></span>
+
+              <dl className="space-y-2 text-[11px]">
+                <div className="flex justify-between gap-2">
+                  <dt className="text-muted">DR / DA</dt>
+                  <dd className="font-mono text-foreground">{publisher.dr ?? "—"} / {publisher.da ?? "—"}</dd>
                 </div>
-              </div>
-            </div>
-
-            {/* Traffic Row */}
-            <div className="bg-slate-50 p-2 rounded-xl text-[11px] font-mono flex items-center justify-between border border-slate-100 ">
-              <span className="text-slate-500">Traffic</span>
-              <span className="font-bold text-slate-900 ">{pub.traffic}</span>
-            </div>
-
-            {/* Price & Rating Bottom Row */}
-            <div className="flex items-center justify-between pt-1 border-t border-slate-100 ">
-              <div>
-                <span className="text-sm font-black text-indigo-600 font-mono">${pub.price}</span>
-                <span className="text-[10px] text-slate-500 block font-sans leading-none">Guest Post</span>
-              </div>
-
-              <div className="flex items-center gap-1 text-[11px] font-bold text-amber-500">
-                <Star className="h-3 w-3 fill-amber-500" />
-                <span>{pub.rating}</span>
-                <span className="text-[10px] text-slate-500 font-normal">({pub.reviews})</span>
-              </div>
-            </div>
-          </div>
-        ))}
+                <div className="flex justify-between gap-2">
+                  <dt className="text-muted">Traffic</dt>
+                  <dd className="font-mono text-foreground">{formatTraffic(publisher.traffic)}</dd>
+                </div>
+                <div className="flex justify-between gap-2 border-t border-border pt-2">
+                  <dt className="text-muted">Guest post</dt>
+                  <dd className="font-mono font-bold text-primary">
+                    {formatPrice(resolveGuestPostPrice(publisher))}
+                  </dd>
+                </div>
+              </dl>
+            </button>
+          );
+        })}
       </div>
-    </div>
+    </section>
   );
 }

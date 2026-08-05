@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "bionic-reading-converter",
   name: "Bionic Reading Converter",
   category: ["Accessibility", "Productivity"],
-  description: "Word beginnings ko optional visual emphasis de.",
+  description: "Adds optional visual emphasis to the start of each word.",
   icon: "accessibility",
   iconColor: "text-primary",
   wideWorkspace: true,

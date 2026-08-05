@@ -1,6 +1,7 @@
+/* The Vite scaffold mounts at #root; the Next registry uses .gadw-scope. */
 @import "tailwindcss" source("./");
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark *, [data-theme="dark"] *));
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
@@ -40,7 +41,8 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-:root {
+#root,
+.gadw-scope {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -75,7 +77,11 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
-.dark {
+.dark #root,
+.dark .gadw-scope,
+[data-theme="dark"] .gadw-scope,
+#root.dark,
+.gadw-scope.dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -110,7 +116,10 @@
 }
 
 @layer base {
-  * {
+  #root,
+  #root *,
+  .gadw-scope,
+  .gadw-scope * {
     @apply border-border outline-ring/50;
   }
   .gadw-scope {

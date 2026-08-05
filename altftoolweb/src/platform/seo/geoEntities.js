@@ -285,7 +285,9 @@ export function buildGeoJsonLdBundle(slugOrLocation, { path, title, description 
 export async function createGeoPageMetadata(slugOrLocation, overrides = {}) {
   const location =
     typeof slugOrLocation === "string" ? getGeoLocation(slugOrLocation) : slugOrLocation;
-  if (!location) return createPageMetadata(overrides);
+  // An unrecognised slug is a miss, not a location page. Preserve caller copy
+  // and canonical hints, but never let an invented place become indexable.
+  if (!location) return createPageMetadata({ ...overrides, noindex: true });
 
   return createPageMetadata({
     // Starts with the brand, so resolveDocumentTitle() treats it as absolute

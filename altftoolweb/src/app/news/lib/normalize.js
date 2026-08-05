@@ -1,5 +1,7 @@
 // lib/news/normalize.js
 
+import { getNewsHoursAgo, normalizePublishedAt } from "./time.js";
+
 /**
  * Deterministic 32-bit hash, used only to disambiguate slugs for syndicated
  * stories that share a headline. It must never be used to synthesise data
@@ -64,15 +66,6 @@ function faviconUrl(link = "") {
 }
 
 /**
- * Compute published_hours_ago from a date string.
- */
-function hoursAgo(dateStr) {
-  if (!dateStr) return 0;
-  const diffMs = Date.now() - new Date(dateStr).getTime();
-  return Math.max(0, Math.round(diffMs / 36e5));
-}
-
-/**
  * Infer category from title/description text if not already set.
  */
 const CATEGORY_KEYWORDS = {
@@ -105,12 +98,15 @@ export function normalizeItem(item) {
     ""
   ).slice(0, 200);
 
-  const publishedAt = item.isoDate || item.pubDate || new Date().toISOString();
   const externalUrl = item.link || item.guid || "";
   const imageUrl = extractImage(item);
   const source = item._source || item["dc:creator"] || "Unknown";
+  const publishedAt = normalizePublishedAt(item.isoDate || item.pubDate);
   const category = inferCategory(headline + " " + summary, item._category || "world");
-  const id = `${slugify(headline)}-${new Date(publishedAt).getTime()}`;
+  const idSuffix = publishedAt
+    ? Date.parse(publishedAt)
+    : hashString(`${externalUrl}|${source}|${headline}`);
+  const id = `${slugify(headline)}-${idSuffix}`;
   // Syndicated wire stories often share an identical (or near-identical)
   // headline across sources — a bare slugify(headline) collides and the
   // second article becomes permanently unreachable behind the first's page.
@@ -127,7 +123,7 @@ export function normalizeItem(item) {
     external_url: externalUrl,
     category,
     published_at: publishedAt,
-    published_hours_ago: hoursAgo(publishedAt),
+    published_hours_ago: getNewsHoursAgo(publishedAt),
     location: null,
     // No likes/comments/shares: we have no engagement data for syndicated
     // feed items, and inventing counts would be fabricated.

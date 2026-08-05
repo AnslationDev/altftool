@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "privacy-policy-version-diff",
   name: "Privacy Policy Version Diff",
   category: ["Security & Privacy","Text & Writing"],
-  description: "Policy updates ke meaningful privacy changes highlight kare.",
+  description: "Highlight the privacy changes that actually matter between two policy versions.",
   icon: "file-diff",
   iconColor: "text-primary",
 };

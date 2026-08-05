@@ -37,7 +37,7 @@ export default function CategoryHero({ entity }) {
 
   const stats = [
     { icon: Layers, value: entity.countLabel, label: entity.kind === "country" ? "curated rankings" : "rankings" },
-    { icon: RefreshCw, value: null, label: "Updated daily" },
+    { icon: RefreshCw, value: null, label: "Illustrative dataset" },
     { icon: Globe2, value: null, label: "Global coverage" },
   ];
 

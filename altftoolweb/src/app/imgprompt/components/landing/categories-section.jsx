@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { CATEGORIES } from "../../data/categories";
 import { NAV_ITEMS_BY_SLUG, studioHref } from "../../data/navigation";
-import { formatCompact } from "../../lib/utils";
 import { useAuth } from "../../providers/auth-provider";
 import { SectionHeader } from "../shared/section-header";
 import { Button } from "../ui/button";
@@ -23,8 +22,7 @@ function studioTargetFor(category) {
 export function CategoriesSection() {
   const router = useRouter();
   const { requireAuth } = useAuth();
-  const featured = CATEGORIES.filter((c) => c.trending).slice(0, 18);
-  const list = featured.length >= 12 ? featured : CATEGORIES.slice(0, 18);
+  const list = CATEGORIES.slice(0, 18);
 
   const goTo = (href) => (e) => {
     e.preventDefault();
@@ -37,9 +35,9 @@ export function CategoriesSection() {
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <SectionHeader
             align="left"
-            eyebrow="Popular Categories"
-            title="100+ categories, endless creativity"
-            subtitle="From healthcare illustration to cyberpunk cities — a bespoke prompt engine for every niche."
+            eyebrow="Prompt Categories"
+            title={`${CATEGORIES.length} ways to start creating`}
+            subtitle="Browse the available categories, choose a starting point and adapt the generated prompt to your project."
           />
           <Button variant="outline" className="shrink-0" onClick={goTo("/imgprompt/studio")}>
             Browse all <ArrowRight className="h-4 w-4" />
@@ -69,7 +67,6 @@ export function CategoriesSection() {
                   <div className="font-display text-sm font-semibold leading-tight transition-colors group-hover:text-primary">
                     {c.name}
                   </div>
-                  <div className="mt-0.5 text-xs text-muted-foreground">{formatCompact(c.count)} prompts</div>
                 </div>
               </a>
             </motion.div>

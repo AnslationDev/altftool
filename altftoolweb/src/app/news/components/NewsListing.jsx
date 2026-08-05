@@ -8,6 +8,7 @@ import {
 import ManagedImage from "@/components/ui/ManagedImage";
 import CategoriesSection from "./CategoriesSection";
 import NewsUnavailable from "./NewsUnavailable";
+import { compareNewsNewestFirst } from "../lib/time";
 
 function timeAgo(h) {
   if (!h && h !== 0) return "";
@@ -67,7 +68,7 @@ function NewsletterWidget() {
             Subscribe to Newsletter
           </h3>
           <p className="mt-[6px] max-w-[240px] text-[14px] leading-[1.6] text-[var(--muted-foreground)]">
-            Get the latest news delivered to your inbox daily.
+            Leave your email and we&apos;ll be in touch when the newsletter launches.
           </p>
         </div>
       </div>
@@ -162,9 +163,11 @@ function TopNewsCard({ news }) {
           <span className="text-[12px] font-bold uppercase tracking-wider text-[var(--primary)]">
             {news.category || "General"}
           </span>
-          <span className="text-[12px] text-[var(--muted-foreground)]">
-            {timeAgo(news.published_hours_ago)}
-          </span>
+          {news.published_at && timeAgo(news.published_hours_ago) ? (
+            <time className="text-[12px] text-[var(--muted-foreground)]" dateTime={news.published_at}>
+              {timeAgo(news.published_hours_ago)}
+            </time>
+          ) : null}
         </div>
         <Link href={`/news/${news.slug}`}>
           <h3 className="mt-[6px] text-xl font-bold leading-[1.35] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
@@ -191,7 +194,6 @@ function TopNewsCard({ news }) {
 }
 
 function TrendingItem({ news, rank }) {
-  const readTime = Math.max(3, Math.ceil(news.headline.length / 100) * 3);
 
   return (
     <Link href={`/news/${news.slug}`} className="group flex items-center gap-[14px]">
@@ -216,7 +218,7 @@ function TrendingItem({ news, rank }) {
           {news.headline}
         </p>
         <span className="text-[13px] font-medium text-[var(--muted-foreground)]">
-          {readTime} min read
+          {news.source}
         </span>
       </div>
       <span className="shrink-0 text-base text-[var(--muted-foreground)] transition group-hover:translate-x-0.5 group-hover:text-[var(--primary)]">
@@ -250,9 +252,11 @@ function MoreNewsRow({ news }) {
             <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--primary)]">
               {news.category || "General"}
             </span>
-            <span className="text-xs text-[var(--muted-foreground)]">
-              {timeAgo(news.published_hours_ago)}
-            </span>
+            {news.published_at && timeAgo(news.published_hours_ago) ? (
+              <time className="text-xs text-[var(--muted-foreground)]" dateTime={news.published_at}>
+                {timeAgo(news.published_hours_ago)}
+              </time>
+            ) : null}
           </div>
           <p className="mt-[4px] text-lg font-bold leading-[1.3] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
             {news.headline}
@@ -287,7 +291,7 @@ const TRENDING_TAGS = [
 
 export default function NewsListing({ title, articles = [], description }) {
   const sorted = useMemo(() => {
-    return [...articles].sort((a, b) => a.published_hours_ago - b.published_hours_ago);
+    return [...articles].sort(compareNewsNewestFirst);
   }, [articles]);
 
   const topNews = useMemo(() => sorted.slice(0, 9), [sorted]);
@@ -316,7 +320,7 @@ export default function NewsListing({ title, articles = [], description }) {
         <div className="mx-auto flex items-center gap-6 px-4 md:px-8 lg:px-12">
           <span className="flex shrink-0 items-center gap-1.5 text-[13px] font-bold uppercase tracking-[1px] text-[var(--primary)]">
             <Zap size={16} />
-            Trending Now
+            Popular Topics
           </span>
           <div className="flex items-center gap-6 overflow-x-auto scrollbar-thin">
             {TRENDING_TAGS.map((tag, i) => (

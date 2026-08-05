@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "Hiss, hum aur room echo locally reduce kare.",
+  "description": "Reduce hiss, hum and room echo in a podcast recording.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

@@ -12,31 +12,31 @@ import { Reveal, EASE } from "./motion";
 const STEPS = [
   {
     title: "Research",
-    summary: "Every candidate is sourced before a single score is written.",
+    summary: "The production workflow starts by documenting each candidate.",
     detail:
-      "We start from primary sources — official data, first-party specs, direct usage — instead of secondary roundups. A candidate needs a documented case for inclusion before it's ever scored.",
-    tags: ["PRIMARY SOURCES", "CANDIDATE SOURCING"],
+      "The current entries are illustrative. A publishable version should attach primary sources, first-party specifications, and a documented inclusion case before scoring.",
+    tags: ["SOURCE PLAN", "CANDIDATE RECORD"],
   },
   {
     title: "Scoring",
-    summary: "A weighted rubric, applied the same way to every entry.",
+    summary: "A visible weighted rubric is attached to every demo ranking.",
     detail:
-      "Each category has a fixed rubric agreed before research begins, so criteria can't be adjusted after the fact to favor a particular result. Weightings are published alongside the list.",
-    tags: ["WEIGHTED CRITERIA", "EXPERT PANEL"],
+      "Each category publishes its authored criteria and weights. The numbers demonstrate the scoring model; they are not presented as independently validated measurements.",
+    tags: ["WEIGHTED CRITERIA", "VISIBLE RUBRIC"],
   },
   {
-    title: "Verification",
-    summary: "Independent reviewers check every score before publication.",
+    title: "Review readiness",
+    summary: "Every entry exposes the notes a future reviewer would need.",
     detail:
-      "A second, independent reviewer re-checks sourcing and scoring on every entry. Disagreements are resolved by a third reviewer rather than the original author.",
-    tags: ["FACT-CHECKED", "CROSS-REFERENCED"],
+      "This preview has not completed a second- or third-reviewer workflow. Production records should add source checks, reviewer identity, and a resolution trail for disagreements.",
+    tags: ["REVIEW READY", "SOURCE GAPS"],
   },
   {
     title: "Publishing",
-    summary: "Rankings ship with their reasoning attached, not just a list.",
+    summary: "Preview rankings keep their reasoning attached, not just a list.",
     detail:
-      "Every published ranking links back to the strengths, tradeoffs, and score behind each placement, and is re-reviewed on a fixed schedule rather than left static.",
-    tags: ["TRANSPARENT", "SCHEDULED REVIEW"],
+      "Each page shows strengths, tradeoffs, and the score behind a placement. The preview is not maintained on a live or fixed review schedule.",
+    tags: ["TRANSPARENT", "DEMO DATA"],
   },
 ];
 

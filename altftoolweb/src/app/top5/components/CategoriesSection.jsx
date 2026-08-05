@@ -95,7 +95,7 @@ export default function CategoriesSection() {
             index="02"
             eyebrow="CATEGORIES"
             heading="Every field. One standard."
-            description="Move across disciplines without losing context. Each field is reviewed through its own editorial lens."
+            description="Move across disciplines without losing context. Each field uses its own authored preview criteria."
           />
         </Reveal>
 

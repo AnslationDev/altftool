@@ -5,7 +5,7 @@ export async function generateMetadata() {
   return createPageMetadata({
     title: "ALTFTool Backlink Marketplace — High-DR Guest Posts",
     description:
-      "Buy and sell verified high-DR backlinks, guest posts and link insertions with automated domain verification, escrow protection and real-time index tracking.",
+      "Browse approved publisher listings for guest posts and link insertions, compare submitted metrics and prices, and request placements.",
     path: "/altflinking",
     keywords: [
       "backlink marketplace",
@@ -24,7 +24,7 @@ export default function Page(props) {
     slug: "altflinking",
     tool: {
       name: "ALTFTool Backlink Marketplace",
-      description: "Buy & sell verified high-DR guest posts and backlinks with escrow protection.",
+      description: "Browse approved publisher listings and request guest-post or link-insertion placements.",
       category: ["SEO Tools", "Marketing", "Backlinks"],
     },
     category: "marketing",

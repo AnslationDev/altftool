@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Loud audio events ko locally timestamped timeline me log kare.",
+  "description": "Log loud sound events to a timestamped timeline kept on your own device.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

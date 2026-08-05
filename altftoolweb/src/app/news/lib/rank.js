@@ -1,5 +1,7 @@
 // lib/news/rank.js
 
+import { compareNewsNewestFirst } from "./time.js";
+
 const MAX_ARTICLES = 50;
 
 /**
@@ -10,6 +12,6 @@ const MAX_ARTICLES = 50;
  */
 export function rankArticles(articles, limit = MAX_ARTICLES) {
   return [...articles]
-    .sort((a, b) => new Date(b.published_at) - new Date(a.published_at))
+    .sort(compareNewsNewestFirst)
     .slice(0, limit);
 }

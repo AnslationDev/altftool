@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "Speech readable rakhte hue speaker-identifying vocal cues neutralize kare.",
+  "description": "Neutralize speaker-identifying vocal cues while keeping the speech intelligible.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

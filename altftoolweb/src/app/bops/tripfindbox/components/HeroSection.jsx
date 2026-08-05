@@ -108,11 +108,17 @@ function Header({ header }) {
   );
 }
 
+// The hero used to close with a "review strip": "Trusted by 100,000+ customers
+// every year" and a four-star "(3.9) 89 Reviews on ★ Trustpilot" mark. Every
+// one of those numbers was a literal in lib/homeContent.js — no review store,
+// no Trustpilot business profile, no analytics behind the customer count — and
+// the badge above it claimed a "4.8 traveler rating" at the same time, which is
+// a number the strip itself contradicted. Attributing an invented score to a
+// named review platform is the part that turns this from puffery into a
+// misrepresentation, so the strip and its data are gone rather than softened.
 function Hero({ header, hero }) {
   hero = hero || DEFAULT_HOME_CONTENT.hero;
   header = header || DEFAULT_HOME_CONTENT.header;
-  const review = hero.reviewStrip || {};
-  const filled = Number(review.filledStars) || 0;
   return (
     <section id="top" className="nova-hero">
       <div className="nova-glow nova-glow-one" />
@@ -147,19 +153,6 @@ function Hero({ header, hero }) {
       </div>
       <div className="nova-search-panel reveal-up">
         <FlightSearchBox compact />
-      </div>
-      <div className="nova-hero-review-strip" aria-label="TripFindBox customer trust rating">
-        <p>Trusted by <strong>{review.trustedByCount}</strong> customers every year</p>
-        <div>
-          <span>{review.excellentLabel}</span>
-          <span className="nova-review-stars" aria-label={`${review.reviewScore} out of 5 stars`}>
-            {[0, 1, 2, 3, 4].map((index) => (
-              <i key={index} className={index >= filled ? "is-muted" : undefined}>★</i>
-            ))}
-          </span>
-          <span>({review.reviewScore}) {review.reviewCount} Reviews on</span>
-          <strong className="nova-trustpilot-mark">★ Trustpilot</strong>
-        </div>
       </div>
       <a className="home-mobile-callbar" href={telHref(header.phone)}>
         <span><FloatingCallIcon /></span>

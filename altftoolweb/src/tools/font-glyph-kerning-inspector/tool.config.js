@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "Glyph coverage, kerning pairs aur OpenType features inspect kare.",
+  "description": "Inspect a font's glyph coverage, kerning pairs and OpenType feature tables.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

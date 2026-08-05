@@ -59,7 +59,7 @@ export default function StudioToolClient({ slug }) {
     case "trending":
       return (
         <div className="mx-auto max-w-[1500px] px-4 py-8 sm:px-6 lg:px-8">
-          <GridHeader icon={TrendingUp} title="Trending Prompts" subtitle="What creators are rendering most right now." />
+          <GridHeader icon={TrendingUp} title="Prompt Examples" subtitle="Sample prompts from the local demo library, not live popularity data." />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {TRENDING_PROMPTS.map((p, i) => <PromptCard key={p.id} prompt={p} index={i} />)}
           </div>
@@ -68,7 +68,7 @@ export default function StudioToolClient({ slug }) {
     case "collections":
       return (
         <div className="mx-auto max-w-[1500px] px-4 py-8 sm:px-6 lg:px-8">
-          <GridHeader icon={FolderOpen} title="Collections" subtitle="Curated prompt drops from editors & top creators." />
+          <GridHeader icon={FolderOpen} title="Sample Collections" subtitle="Example collections from the local demo dataset." />
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {COLLECTIONS.map((c, i) => <CollectionCard key={c.id} collection={c} index={i} />)}
           </div>
@@ -77,7 +77,7 @@ export default function StudioToolClient({ slug }) {
     case "community":
       return (
         <div className="mx-auto max-w-[1500px] px-4 py-8 sm:px-6 lg:px-8">
-          <GridHeader icon={Users} title="Community" subtitle="Follow and remix prompts from verified creators." />
+          <GridHeader icon={Users} title="Sample Profiles" subtitle="Fictional profiles that preview a possible community layout." />
           <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
             {CREATORS.map((c, i) => <CreatorCard key={c.id} creator={c} index={i} />)}
           </div>

@@ -5,7 +5,7 @@ const toolConfig = {
     "Marketing & Social",
     "Productivity"
   ],
-  "description": "Reels, Shorts aur TikTok obstruction areas overlay kare.",
+  "description": "Overlay the UI safe zones for Reels, Shorts and TikTok on your vertical video.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

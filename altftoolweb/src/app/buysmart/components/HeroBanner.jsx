@@ -14,12 +14,6 @@ export default function HeroBanner({ children }) {
 }
 
 function PremiumBuySmartHero({ children }) {
-  const stats = [
-    { label: "Categories", value: "100+" },
-    { label: "Verified stores", value: "15K+" },
-    { label: "Happy shoppers", value: "2M+" },
-  ];
-
   return (
     <section className="buy-smart-hero animate-slide-up">
       <div className="buy-smart-hero-glow" aria-hidden="true" />
@@ -55,17 +49,6 @@ function PremiumBuySmartHero({ children }) {
             </Link>
           </div>
 
-          <div className="buy-smart-hero-stats">
-            {stats.map(({ label, value }) => (
-              <div
-                key={label}
-                className="buy-smart-hero-stat-card"
-              >
-                <p>{value}</p>
-                <span>{label}</span>
-              </div>
-            ))}
-          </div>
         </div>
 
         <div className="buy-smart-hero-visual" aria-hidden="true">

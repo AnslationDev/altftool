@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "breach-notification-timeline-planner",
   name: "Breach Notification Timeline Planner",
   category: ["Security & Privacy","Productivity"],
-  description: "Incident discovery se required review aur notification milestones map kare.",
+  description: "Map the review and notification milestones required from the date a breach is discovered.",
   icon: "clock-alert",
   iconColor: "text-primary",
 };

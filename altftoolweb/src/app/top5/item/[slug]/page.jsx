@@ -120,8 +120,8 @@ export default async function Top5ItemPage({ params }) {
               </h2>
               <p className="text-[#6b7280] max-w-sm lg:text-right">
                 Use this compact view to find the strongest fit for your
-                priorities. Scores are based on our editorial testing
-                framework.
+                priorities. Scores come from the authored preview model shown
+                on this page.
               </p>
             </div>
           </Reveal>

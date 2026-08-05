@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "apple-health-export-explorer",
   name: "Apple Health Export Explorer",
   category: ["Health & Fitness","Developer"],
-  description: "Health export ko readable local charts me convert kare.",
+  description: "Turn an Apple Health export into readable charts on your own device.",
   icon: "file-heart",
   iconColor: "text-primary",
 };

@@ -15,7 +15,7 @@
           "website": "https://www.boat-lifestyle.com",
           "heading": "boAt India – Audio & Wearable Electronics",
           "img":"/dealImg/ boat.png",
-          "about": "Get the latest boAt coupon codes & offers for 2025. Save up to 70% on headphones, smartwatches, speakers & more. Grab the best discounts today!",
+          "about": "boAt coupon codes and deals for headphones, earbuds, smartwatches and speakers, with every offer currently listed and a direct link to the boAt store.",
           "offers": {
             "coupons": [
               {
@@ -23,7 +23,6 @@
                 "heading": "Get Flat 15% Off on boAt Headphones & Earbuds",
                 "description": "Save big on premium audio products with boAt's exclusive coupon code. Apply BOAT15 at checkout for instant discount.",
                 "tags": [
-                  "Verified",
                   "Flash Sale"
                 ],
                 "websiteLink": "https://www.boat-lifestyle.com",
@@ -39,7 +38,6 @@
                 "heading": "Save 20% on boAt Smartwatches – Code: WATCH20",
                 "description": "Upgrade your wrist with boAt smartwatches at amazing discounts. Use code WATCH20 during checkout.",
                 "tags": [
-                  "Verified",
                   "Flash Sale"
                 ],
                 "websiteLink": "https://www.boat-lifestyle.com",
@@ -55,7 +53,6 @@
                 "heading": "Get 10% Off Portable Speakers Using Code SPEAKER10",
                 "description": "Rock your parties with boAt portable speakers. Enjoy 10% off on all speaker models with code SPEAKER10.",
                 "tags": [
-                  "Verified",
                   "Flash Sale"
                 ],
                 "websiteLink": "https://www.boat-lifestyle.com",
@@ -73,7 +70,6 @@
                 "heading": "Flash Deals on boAt Products | Up to 70% Off Limited-Time Offers",
                 "description": "Shop boAt's Flash Deals now and save up to 70%! Limited-time discounts on audio accessories and wearables. Hurry, deals won't last long!",
                 "tags": [
-                  "Verified",
                   "Flash Sale"
                 ],
                 "websiteLink": "https://www.boat-lifestyle.com",
@@ -89,7 +85,6 @@
                 "heading": "boAt Airdopes 141 with Up to 40% Off",
                 "description": "Experience superior sound quality with boAt Airdopes 141. True wireless earbuds with 42 hours playback and ASAP charging.",
                 "tags": [
-                  "Verified",
                   "Best Seller"
                 ],
                 "websiteLink": "https://www.boat-lifestyle.com",
@@ -105,7 +100,6 @@
                 "heading": "boAt Wave Call Smartwatch with Up to 50% Off",
                 "description": "Get advanced health tracking with the boAt Wave Call smartwatch. Features Bluetooth calling and 7-day battery life.",
                 "tags": [
-                  "Verified",
                   "Trending"
                 ],
                 "websiteLink": "https://www.boat-lifestyle.com",
@@ -121,7 +115,6 @@
                 "heading": "boAt Stone 350 Bluetooth Speaker with Up to 35% Off",
                 "description": "Portable Bluetooth speaker with powerful 10W sound output. Perfect for outdoor adventures with IPX7 water resistance.",
                 "tags": [
-                  "Verified",
                   "Hot Deal"
                 ],
                 "websiteLink": "https://www.boat-lifestyle.com",
@@ -141,7 +134,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://www.samsung.com/in",
           "heading": "Samsung India – Leading Electronics Brand",
-          "about": "Discover Samsung's latest smartphones, TVs, home appliances & wearables. Get exclusive deals and cashback offers on premium electronics.",
+          "about": "Samsung coupon codes and deals for smartphones, TVs, home appliances and wearables, with every offer currently listed and a direct link to the Samsung store.",
           "offers": {
             "coupons": [
               {
@@ -149,7 +142,6 @@
                 "heading": "Flat ₹5000 Off on Samsung Galaxy Smartphones",
                 "description": "Upgrade to the latest Samsung Galaxy with instant discount. Use code GALAXY5000 at checkout.",
                 "tags": [
-                  "Verified",
                   "Exclusive"
                 ],
                 "websiteLink": "https://www.samsung.com/in",
@@ -167,7 +159,6 @@
                 "heading": "Samsung Smart TV Sale | Up to 40% Off",
                 "description": "Transform your viewing experience with Samsung Smart TVs. Get up to 40% off on 4K and QLED models.",
                 "tags": [
-                  "Verified",
                   "Mega Sale"
                 ],
                 "websiteLink": "https://www.samsung.com/in",
@@ -187,7 +178,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://www.apple.com/in",
           "heading": "Apple India – Premium Electronics & Devices",
-          "about": "Shop the latest iPhone, iPad, MacBook, Apple Watch & AirPods. Get exclusive student discounts and exchange offers on Apple products.",
+          "about": "Apple coupon codes and deals for iPhone, iPad, MacBook, Apple Watch and AirPods, with every offer currently listed and a direct link to the Apple store.",
           "offers": {
             "coupons": [
               {
@@ -195,7 +186,6 @@
                 "heading": "Get ₹10,000 Cashback on iPhone 15 Series",
                 "description": "Buy iPhone 15 and get instant cashback on credit card purchases. Limited period offer.",
                 "tags": [
-                  "Verified",
                   "Bank Offer"
                 ],
                 "websiteLink": "https://www.apple.com/in",
@@ -213,7 +203,6 @@
                 "heading": "Apple AirPods Pro (2nd Gen) with Up to 15% Off",
                 "description": "Experience immersive sound with AirPods Pro. Active noise cancellation and spatial audio included.",
                 "tags": [
-                  "Verified",
                   "Premium"
                 ],
                 "websiteLink": "https://www.apple.com/in",
@@ -222,316 +211,6 @@
                   "more": "Active noise cancellation & transparency mode",
                   "redem": "Direct discount—no code needed",
                   "offer": "Free engraving available"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "id": 4,
-          "brandName": "Apple",
-          "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
-          "website": "https://www.apple.com/in",
-          "heading": "Apple India – Premium Electronics & Devices",
-          "about": "Shop the latest iPhone, iPad, MacBook, Apple Watch & AirPods. Get exclusive student discounts and exchange offers on Apple products.",
-          "offers": {
-            "coupons": [
-              {
-                "id": 1,
-                "heading": "Get ₹10,000 Cashback on iPhone 15 Series",
-                "description": "Buy iPhone 15 and get instant cashback on credit card purchases. Limited period offer.",
-                "tags": [
-                  "Verified",
-                  "Bank Offer"
-                ],
-                "websiteLink": "https://www.apple.com/in",
-                "viewDetail": {
-                  "discount": "₹10,000 cashback on select bank cards",
-                  "more": "Valid on iPhone 15, 15 Plus, 15 Pro & 15 Pro Max",
-                  "redem": "Automatic cashback on eligible cards",
-                  "offer": "Combine with exchange for maximum savings"
-                }
-              }
-            ],
-            "deals": [
-              {
-                "id": 1,
-                "heading": "Apple AirPods Pro (2nd Gen) with Up to 15% Off",
-                "description": "Experience immersive sound with AirPods Pro. Active noise cancellation and spatial audio included.",
-                "tags": [
-                  "Verified",
-                  "Premium"
-                ],
-                "websiteLink": "https://www.apple.com/in",
-                "viewDetail": {
-                  "discount": "Save up to 15% on AirPods Pro",
-                  "more": "Active noise cancellation & transparency mode",
-                  "redem": "Direct discount—no code needed",
-                  "offer": "Free engraving available"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "id": 5,
-          "brandName": "Apple",
-          "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
-          "website": "https://www.apple.com/in",
-          "heading": "Apple India – Premium Electronics & Devices",
-          "about": "Shop the latest iPhone, iPad, MacBook, Apple Watch & AirPods. Get exclusive student discounts and exchange offers on Apple products.",
-          "offers": {
-            "coupons": [
-              {
-                "id": 1,
-                "heading": "Get ₹10,000 Cashback on iPhone 15 Series",
-                "description": "Buy iPhone 15 and get instant cashback on credit card purchases. Limited period offer.",
-                "tags": [
-                  "Verified",
-                  "Bank Offer"
-                ],
-                "websiteLink": "https://www.apple.com/in",
-                "viewDetail": {
-                  "discount": "₹10,000 cashback on select bank cards",
-                  "more": "Valid on iPhone 15, 15 Plus, 15 Pro & 15 Pro Max",
-                  "redem": "Automatic cashback on eligible cards",
-                  "offer": "Combine with exchange for maximum savings"
-                }
-              }
-            ],
-            "deals": [
-              {
-                "id": 1,
-                "heading": "Apple AirPods Pro (2nd Gen) with Up to 15% Off",
-                "description": "Experience immersive sound with AirPods Pro. Active noise cancellation and spatial audio included.",
-                "tags": [
-                  "Verified",
-                  "Premium"
-                ],
-                "websiteLink": "https://www.apple.com/in",
-                "viewDetail": {
-                  "discount": "Save up to 15% on AirPods Pro",
-                  "more": "Active noise cancellation & transparency mode",
-                  "redem": "Direct discount—no code needed",
-                  "offer": "Free engraving available"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "id": 6,
-          "brandName": "Apple",
-          "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
-          "website": "https://www.apple.com/in",
-          "heading": "Apple India – Premium Electronics & Devices",
-          "about": "Shop the latest iPhone, iPad, MacBook, Apple Watch & AirPods. Get exclusive student discounts and exchange offers on Apple products.",
-          "offers": {
-            "coupons": [
-              {
-                "id": 1,
-                "heading": "Get ₹10,000 Cashback on iPhone 15 Series",
-                "description": "Buy iPhone 15 and get instant cashback on credit card purchases. Limited period offer.",
-                "tags": [
-                  "Verified",
-                  "Bank Offer"
-                ],
-                "websiteLink": "https://www.apple.com/in",
-                "viewDetail": {
-                  "discount": "₹10,000 cashback on select bank cards",
-                  "more": "Valid on iPhone 15, 15 Plus, 15 Pro & 15 Pro Max",
-                  "redem": "Automatic cashback on eligible cards",
-                  "offer": "Combine with exchange for maximum savings"
-                }
-              }
-            ],
-            "deals": [
-              {
-                "id": 1,
-                "heading": "Apple AirPods Pro (2nd Gen) with Up to 15% Off",
-                "description": "Experience immersive sound with AirPods Pro. Active noise cancellation and spatial audio included.",
-                "tags": [
-                  "Verified",
-                  "Premium"
-                ],
-                "websiteLink": "https://www.apple.com/in",
-                "viewDetail": {
-                  "discount": "Save up to 15% on AirPods Pro",
-                  "more": "Active noise cancellation & transparency mode",
-                  "redem": "Direct discount—no code needed",
-                  "offer": "Free engraving available"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "id": 7,
-          "brandName": "boAt",
-          "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
-          "website": "https://www.boat-lifestyle.com",
-          "heading": "boAt India – Audio & Wearable Electronics",
-          "about": "Get the latest boAt coupon codes & offers for 2025. Save up to 70% on headphones, smartwatches, speakers & more. Grab the best discounts today!",
-          "offers": {
-            "coupons": [
-              {
-                "id": 1,
-                "heading": "Get Flat 15% Off on boAt Headphones & Earbuds",
-                "description": "Save big on premium audio products with boAt's exclusive coupon code. Apply BOAT15 at checkout for instant discount.",
-                "tags": [
-                  "Verified",
-                  "Flash Sale"
-                ],
-                "websiteLink": "https://www.boat-lifestyle.com",
-                "viewDetail": {
-                  "discount": "15% instant discount on headphones & earbuds",
-                  "more": "Wide range of wireless earbuds, headphones & neckbands",
-                  "redem": "Easy redemption—apply BOAT15 at checkout",
-                  "offer": "Limited-time offer valid for all customers"
-                }
-              },
-              {
-                "id": 2,
-                "heading": "Save 20% on boAt Smartwatches – Code: WATCH20",
-                "description": "Upgrade your wrist with boAt smartwatches at amazing discounts. Use code WATCH20 during checkout.",
-                "tags": [
-                  "Verified",
-                  "Flash Sale"
-                ],
-                "websiteLink": "https://www.boat-lifestyle.com",
-                "viewDetail": {
-                  "discount": "20% instant discount on smartwatch category",
-                  "more": "Feature-rich smartwatches with health tracking & notifications",
-                  "redem": "Easy redemption—apply WATCH20 at checkout",
-                  "offer": "Limited-time offer valid for all customers"
-                }
-              },
-              {
-                "id": 3,
-                "heading": "Get 10% Off Portable Speakers Using Code SPEAKER10",
-                "description": "Rock your parties with boAt portable speakers. Enjoy 10% off on all speaker models with code SPEAKER10.",
-                "tags": [
-                  "Verified",
-                  "Flash Sale"
-                ],
-                "websiteLink": "https://www.boat-lifestyle.com",
-                "viewDetail": {
-                  "discount": "Instant 10% discount with code SPEAKER10",
-                  "more": "Bluetooth speakers with powerful sound & bass",
-                  "redem": "Easy redemption—apply SPEAKER10 at checkout",
-                  "offer": "Limited-time offer valid for all customers"
-                }
-              }
-            ],
-            "deals": [
-              {
-                "id": 1,
-                "heading": "Flash Deals on boAt Products | Up to 70% Off Limited-Time Offers",
-                "description": "Shop boAt's Flash Deals now and save up to 70%! Limited-time discounts on audio accessories and wearables. Hurry, deals won't last long!",
-                "tags": [
-                  "Verified",
-                  "Flash Sale"
-                ],
-                "websiteLink": "https://www.boat-lifestyle.com",
-                "viewDetail": {
-                  "discount": "Limited-time offers on a wide range of products.",
-                  "more": "Massive discounts on earbuds, headphones, smartwatches & speakers",
-                  "redem": "Frequent updates with new flash deals for fresh, exciting offers",
-                  "offer": "Pan-India shipping with easy returns"
-                }
-              },
-              {
-                "id": 2,
-                "heading": "boAt Airdopes 141 with Up to 40% Off",
-                "description": "Experience superior sound quality with boAt Airdopes 141. True wireless earbuds with 42 hours playback and ASAP charging.",
-                "tags": [
-                  "Verified",
-                  "Best Seller"
-                ],
-                "websiteLink": "https://www.boat-lifestyle.com",
-                "viewDetail": {
-                  "discount": "Up to 40% off on boAt Airdopes 141",
-                  "more": "42 hours playback, IPX4 water resistance & touch controls",
-                  "redem": "No code needed—discount auto-applied at checkout",
-                  "offer": "Limited stock available"
-                }
-              },
-              {
-                "id": 3,
-                "heading": "boAt Wave Call Smartwatch with Up to 50% Off",
-                "description": "Get advanced health tracking with the boAt Wave Call smartwatch. Features Bluetooth calling and 7-day battery life.",
-                "tags": [
-                  "Verified",
-                  "Trending"
-                ],
-                "websiteLink": "https://www.boat-lifestyle.com",
-                "viewDetail": {
-                  "discount": "Save up to 50% on boAt Wave Call smartwatch",
-                  "more": "Bluetooth calling, health monitoring & multiple sport modes",
-                  "redem": "Direct discount—no coupon code required",
-                  "offer": "Free shipping on prepaid orders"
-                }
-              },
-              {
-                "id": 4,
-                "heading": "boAt Stone 350 Bluetooth Speaker with Up to 35% Off",
-                "description": "Portable Bluetooth speaker with powerful 10W sound output. Perfect for outdoor adventures with IPX7 water resistance.",
-                "tags": [
-                  "Verified",
-                  "Hot Deal"
-                ],
-                "websiteLink": "https://www.boat-lifestyle.com",
-                "viewDetail": {
-                  "discount": "Up to 35% discount on boAt Stone 350",
-                  "more": "10W sound, IPX7 waterproof & 12 hours playback",
-                  "redem": "Instant discount at checkout—no code needed",
-                  "offer": "1-year warranty included"
-                }
-              }
-            ]
-          }
-        },
-        {
-          "id": 8,
-          "brandName": "Samsung",
-          "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
-          "website": "https://www.samsung.com/in",
-          "heading": "Samsung India – Leading Electronics Brand",
-          "about": "Discover Samsung's latest smartphones, TVs, home appliances & wearables. Get exclusive deals and cashback offers on premium electronics.",
-          "offers": {
-            "coupons": [
-              {
-                "id": 1,
-                "heading": "Flat ₹5000 Off on Samsung Galaxy Smartphones",
-                "description": "Upgrade to the latest Samsung Galaxy with instant discount. Use code GALAXY5000 at checkout.",
-                "tags": [
-                  "Verified",
-                  "Exclusive"
-                ],
-                "websiteLink": "https://www.samsung.com/in",
-                "viewDetail": {
-                  "discount": "₹5000 instant discount on Galaxy series",
-                  "more": "Valid on Galaxy S series, A series & M series",
-                  "redem": "Apply GALAXY5000 at checkout",
-                  "offer": "Combine with exchange offers for extra savings"
-                }
-              }
-            ],
-            "deals": [
-              {
-                "id": 1,
-                "heading": "Samsung Smart TV Sale | Up to 40% Off",
-                "description": "Transform your viewing experience with Samsung Smart TVs. Get up to 40% off on 4K and QLED models.",
-                "tags": [
-                  "Verified",
-                  "Mega Sale"
-                ],
-                "websiteLink": "https://www.samsung.com/in",
-                "viewDetail": {
-                  "discount": "Up to 40% off on Smart TVs",
-                  "more": "4K UHD, QLED technology & smart features",
-                  "redem": "No code required—discounts auto-applied",
-                  "offer": "Free installation and demo"
                 }
               }
             ]
@@ -554,7 +233,7 @@
           "website": "https://www.myntra.com",
           "img":"/dealImg/ai-generated-portrait-of-a-fashion-girl-going-crazy-in-casual-colorful-clothes-png 1.png",
           "heading": "Myntra – India's Fashion Destination",
-          "about": "Save big on clothing, footwear & accessories with Myntra coupons. Enjoy up to 80% OFF on top brands like Nike, Puma, H&M & more.",
+          "about": "Myntra coupon codes and deals for clothing, footwear and accessories, with every offer currently listed and a direct link to the Myntra store.",
           "offers": {
             "coupons": [
               {
@@ -562,7 +241,6 @@
                 "heading": "Flat 20% Off on First Purchase – Code: MYNTRA20",
                 "description": "New to Myntra? Get flat 20% discount on your first order. Use code MYNTRA20 at checkout.",
                 "tags": [
-                  "Verified",
                   "New User"
                 ],
                 "websiteLink": "https://www.myntra.com",
@@ -578,7 +256,6 @@
                 "heading": "Extra 15% Off on Branded Fashion – Code: BRAND15",
                 "description": "Shop from premium brands and save extra 15% with exclusive coupon code.",
                 "tags": [
-                  "Verified",
                   "Premium"
                 ],
                 "websiteLink": "https://www.myntra.com",
@@ -594,7 +271,6 @@
                 "heading": "Get ₹500 Off on Orders Above ₹2999 – Code: SAVE500",
                 "description": "Shop more, save more! Get flat ₹500 off on minimum purchase of ₹2999.",
                 "tags": [
-                  "Verified",
                   "Flash Sale"
                 ],
                 "websiteLink": "https://www.myntra.com",
@@ -612,7 +288,6 @@
                 "heading": "End of Season Sale | Up to 80% Off on Fashion",
                 "description": "Myntra's biggest fashion sale is here! Get up to 80% off on clothing, footwear and accessories from top brands.",
                 "tags": [
-                  "Verified",
                   "Mega Sale"
                 ],
                 "websiteLink": "https://www.myntra.com",
@@ -628,7 +303,6 @@
                 "heading": "Nike Shoes Starting at Just ₹1999",
                 "description": "Step up your sneaker game with Nike shoes at unbeatable prices. Limited stock available.",
                 "tags": [
-                  "Verified",
                   "Hot Deal"
                 ],
                 "websiteLink": "https://www.myntra.com",
@@ -644,7 +318,6 @@
                 "heading": "H&M Fashion Collection with Up to 50% Off",
                 "description": "Refresh your wardrobe with trendy H&M clothing at up to 50% discount.",
                 "tags": [
-                  "Verified",
                   "Trending"
                 ],
                 "websiteLink": "https://www.myntra.com",
@@ -660,7 +333,6 @@
                 "heading": "Buy 3 Get 30% Off on All Products",
                 "description": "Shop more and save more with Myntra's buy 3 get 30% off deal. Valid across all categories.",
                 "tags": [
-                  "Verified",
                   "Bundle Offer"
                 ],
                 "websiteLink": "https://www.myntra.com",
@@ -680,7 +352,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://www.ajio.com",
           "heading": "Ajio – Fashion & Lifestyle Store",
-          "about": "Discover latest fashion trends with Ajio. Get exclusive deals on ethnic wear, western wear, footwear and accessories.",
+          "about": "Ajio coupon codes and deals for ethnic wear, western wear, footwear and accessories, with every offer currently listed and a direct link to the Ajio store.",
           "offers": {
             "coupons": [
               {
@@ -688,7 +360,6 @@
                 "heading": "Extra 25% Off on Fashion Brands – Code: AJIO25",
                 "description": "Shop from top fashion brands and save an extra 25% with this exclusive coupon code.",
                 "tags": [
-                  "Verified",
                   "Exclusive"
                 ],
                 "websiteLink": "https://www.ajio.com",
@@ -706,7 +377,6 @@
                 "heading": "Ethnic Wear Sale | Up to 70% Off",
                 "description": "Celebrate in style with Ajio's ethnic wear collection. Get up to 70% off on kurtas, sarees and more.",
                 "tags": [
-                  "Verified",
                   "Festive Sale"
                 ],
                 "websiteLink": "https://www.ajio.com",
@@ -737,7 +407,7 @@
           "website": "https://paytm.com",
           "img":"/dealImg/ChatGPT Image Apr 2, 2026, 03_29_03 PM 1.png",
           "heading": "Paytm – Mobile Recharge & Bill Payments",
-          "about": "Get instant cashback and discount offers on mobile recharge, DTH recharge & bill payments. Save more with Paytm wallet cashback.",
+          "about": "Paytm coupon codes and deals for mobile recharge, DTH recharge and bill payments, with every offer currently listed and a direct link to Paytm.",
           "offers": {
             "coupons": [
               {
@@ -745,7 +415,6 @@
                 "heading": "Get ₹50 Cashback on First Mobile Recharge",
                 "description": "New users get flat ₹50 cashback on first mobile recharge of ₹149 or more. Use code MOBILE50.",
                 "tags": [
-                  "Verified",
                   "New User"
                 ],
                 "websiteLink": "https://paytm.com",
@@ -761,7 +430,6 @@
                 "heading": "DTH Recharge Cashback – Get ₹30 Back on ₹300+",
                 "description": "Recharge your DTH and earn guaranteed cashback. Use code DTH30 for instant savings.",
                 "tags": [
-                  "Verified",
                   "Cashback"
                 ],
                 "websiteLink": "https://paytm.com",
@@ -777,7 +445,6 @@
                 "heading": "Bill Payment Offer – ₹100 Cashback on Electricity Bills",
                 "description": "Pay your electricity bill and get ₹100 cashback on payments above ₹1000.",
                 "tags": [
-                  "Verified",
                   "Utility"
                 ],
                 "websiteLink": "https://paytm.com",
@@ -795,7 +462,6 @@
                 "heading": "Paytm Postpaid – Get ₹500 Instant Credit",
                 "description": "Activate Paytm Postpaid and get ₹500 instant credit. Pay later with 0% interest.",
                 "tags": [
-                  "Verified",
                   "Credit"
                 ],
                 "websiteLink": "https://paytm.com",
@@ -811,7 +477,6 @@
                 "heading": "Broadband Bill Payment – Flat 5% Cashback",
                 "description": "Pay your broadband bill through Paytm and earn 5% cashback up to ₹200.",
                 "tags": [
-                  "Verified",
                   "Recurring"
                 ],
                 "websiteLink": "https://paytm.com",
@@ -827,7 +492,6 @@
                 "heading": "FastTag Recharge – Get ₹75 Cashback",
                 "description": "Recharge your FASTag and get assured cashback. Minimum recharge ₹500 required.",
                 "tags": [
-                  "Verified",
                   "Transport"
                 ],
                 "websiteLink": "https://paytm.com",
@@ -843,7 +507,6 @@
                 "heading": "Gas Cylinder Booking – ₹50 Cashback",
                 "description": "Book your LPG cylinder through Paytm and save ₹50 instantly.",
                 "tags": [
-                  "Verified",
                   "Essential"
                 ],
                 "websiteLink": "https://paytm.com",
@@ -863,7 +526,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://www.phonepe.com",
           "heading": "PhonePe – Recharge & Payments",
-          "about": "Recharge mobile, pay bills and earn cashback with PhonePe. Get instant discounts on every transaction.",
+          "about": "PhonePe coupon codes and deals for mobile recharge and bill payments, with every offer currently listed and a direct link to PhonePe.",
           "offers": {
             "coupons": [
               {
@@ -871,7 +534,6 @@
                 "heading": "Mobile Recharge Cashback – Get ₹40 on ₹200+",
                 "description": "Recharge your mobile on PhonePe and earn guaranteed cashback on every recharge.",
                 "tags": [
-                  "Verified",
                   "Cashback"
                 ],
                 "websiteLink": "https://www.phonepe.com",
@@ -889,7 +551,6 @@
                 "heading": "Switch to PhonePe – Get ₹100 Sign-Up Bonus",
                 "description": "New to PhonePe? Complete your first transaction and earn ₹100 bonus in your wallet.",
                 "tags": [
-                  "Verified",
                   "Welcome Offer"
                 ],
                 "websiteLink": "https://www.phonepe.com",
@@ -920,7 +581,7 @@
           "website": "https://www.makemytrip.com",
           "img":"/dealImg/ChatGPT Image Apr 2, 2026, 03_32_55 PM 1.png",
           "heading": "MakeMyTrip – Flights, Hotels & Holiday Packages",
-          "about": "Book flights, hotels and holiday packages with exclusive MakeMyTrip coupons. Get instant discounts and cashback on domestic & international travel.",
+          "about": "MakeMyTrip coupon codes and deals for flights, hotels and holiday packages, with every offer currently listed and a direct link to MakeMyTrip.",
           "offers": {
             "coupons": [
               {
@@ -928,7 +589,6 @@
                 "heading": "Flat ₹3000 Off on Domestic Flights – Code: FLYMMT",
                 "description": "Book domestic flights and save ₹3000 instantly. Use coupon code FLYMMT at checkout.",
                 "tags": [
-                  "Verified",
                   "Flight Deal"
                 ],
                 "websiteLink": "https://www.makemytrip.com",
@@ -944,7 +604,6 @@
                 "heading": "Get ₹5000 Off on International Flights – Code: INTFLY",
                 "description": "Planning international travel? Save ₹5000 on flight bookings with exclusive code.",
                 "tags": [
-                  "Verified",
                   "International"
                 ],
                 "websiteLink": "https://www.makemytrip.com",
@@ -960,7 +619,6 @@
                 "heading": "Hotel Booking Offer – Up to 60% Off + Extra 15%",
                 "description": "Book hotels and get up to 60% off plus extra 15% discount with coupon code MMTHOTEL.",
                 "tags": [
-                  "Verified",
                   "Hotel Deal"
                 ],
                 "websiteLink": "https://www.makemytrip.com",
@@ -978,7 +636,6 @@
                 "heading": "Weekend Getaway Packages Starting at ₹4999",
                 "description": "Escape for the weekend with MakeMyTrip's curated packages. Includes hotel stay, meals and sightseeing.",
                 "tags": [
-                  "Verified",
                   "Package Deal"
                 ],
                 "websiteLink": "https://www.makemytrip.com",
@@ -994,7 +651,6 @@
                 "heading": "Visa Services – Get ₹500 Off on Visa Processing",
                 "description": "Apply for international visa through MakeMyTrip and save ₹500 on processing fees.",
                 "tags": [
-                  "Verified",
                   "Service"
                 ],
                 "websiteLink": "https://www.makemytrip.com",
@@ -1010,7 +666,6 @@
                 "heading": "Rail Booking – Flat ₹150 Cashback",
                 "description": "Book train tickets on MakeMyTrip and get ₹150 cashback on successful bookings.",
                 "tags": [
-                  "Verified",
                   "Rail"
                 ],
                 "websiteLink": "https://www.makemytrip.com",
@@ -1026,7 +681,6 @@
                 "heading": "Bus Booking – Get 25% Off on Bus Tickets",
                 "description": "Travel by bus and save big! Get 25% discount on bus tickets across India.",
                 "tags": [
-                  "Verified",
                   "Bus Deal"
                 ],
                 "websiteLink": "https://www.makemytrip.com",
@@ -1046,7 +700,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://www.goibibo.com",
           "heading": "Goibibo – Smart Travel Booking",
-          "about": "Book cheap flights, hotels and buses with Goibibo. Earn GoCash on every booking and save more on your next trip.",
+          "about": "Goibibo coupon codes and deals for flights, hotels and bus bookings, with every offer currently listed and a direct link to Goibibo.",
           "offers": {
             "coupons": [
               {
@@ -1054,7 +708,6 @@
                 "heading": "Flat ₹2500 Off on Flights – Code: GOFLIGHT",
                 "description": "Book domestic or international flights and save ₹2500 instantly with Goibibo.",
                 "tags": [
-                  "Verified",
                   "Flight"
                 ],
                 "websiteLink": "https://www.goibibo.com",
@@ -1072,7 +725,6 @@
                 "heading": "Hotel Booking – Flat 25% Off + GoCash Rewards",
                 "description": "Book hotels and get 25% off plus earn GoCash for future bookings.",
                 "tags": [
-                  "Verified",
                   "Hotel"
                 ],
                 "websiteLink": "https://www.goibibo.com",
@@ -1098,11 +750,11 @@
           "id": 1,
           "brandName": "PharmEasy",
           "imagedeal": "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-          "brandLogo": "/dealImg/ pharmeasylog.png",
+          "brandLogo": "/dealImg/PharmEasy_logo.png",
           "website": "https://pharmeasy.in",
           "img":"/dealImg/ChatGPT Image Apr 2, 2026, 03_37_16 PM 1.png",
           "heading": "PharmEasy – India's Leading Online Pharmacy",
-          "about": "Order medicines online and save with PharmEasy coupons. Get up to 30% off on medicines, healthcare products, and diagnostic tests with doorstep delivery.",
+          "about": "PharmEasy coupon codes and deals for medicines, health products and diagnostic tests, with every offer currently listed and a direct link to PharmEasy.",
           "offers": {
             "coupons": [
               {
@@ -1110,7 +762,6 @@
                 "heading": "Flat 25% Off on First Medicine Order – Code: FIRST25",
                 "description": "New to PharmEasy? Get 25% discount on your first medicine order. Use code FIRST25 at checkout.",
                 "tags": [
-                  "Verified",
                   "New User"
                 ],
                 "websiteLink": "https://pharmeasy.in",
@@ -1126,7 +777,6 @@
                 "heading": "Get 20% Off on Health Supplements – Code: HEALTH20",
                 "description": "Shop vitamins, supplements and health products with 20% exclusive discount.",
                 "tags": [
-                  "Verified",
                   "Wellness"
                 ],
                 "websiteLink": "https://pharmeasy.in",
@@ -1142,7 +792,6 @@
                 "heading": "Diagnostic Tests – Flat ₹500 Off on Health Checkups",
                 "description": "Book comprehensive health packages and save ₹500 on lab tests at home.",
                 "tags": [
-                  "Verified",
                   "Diagnostics"
                 ],
                 "websiteLink": "https://pharmeasy.in",
@@ -1160,7 +809,6 @@
                 "heading": "PharmEasy Plus Membership – Save Up to 30% on All Orders",
                 "description": "Subscribe to PharmEasy Plus and get unlimited free delivery plus extra savings on every order.",
                 "tags": [
-                  "Verified",
                   "Membership"
                 ],
                 "websiteLink": "https://pharmeasy.in",
@@ -1176,7 +824,6 @@
                 "heading": "Healthcare Devices – Up to 50% Off",
                 "description": "Shop blood pressure monitors, glucometers, nebulizers and more at up to 50% discount.",
                 "tags": [
-                  "Verified",
                   "Devices"
                 ],
                 "websiteLink": "https://pharmeasy.in",
@@ -1192,7 +839,6 @@
                 "heading": "Diabetes Care Products – Flat 30% Off",
                 "description": "Manage diabetes better with special discounts on diabetic care essentials.",
                 "tags": [
-                  "Verified",
                   "Special Care"
                 ],
                 "websiteLink": "https://pharmeasy.in",
@@ -1208,7 +854,6 @@
                 "heading": "Baby Care Products – Buy 2 Get 1 Free",
                 "description": "Stock up on baby essentials with buy 2 get 1 free offer on diapers, wipes and more.",
                 "tags": [
-                  "Verified",
                   "Baby Care"
                 ],
                 "websiteLink": "https://pharmeasy.in",
@@ -1228,7 +873,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://www.1mg.com",
           "heading": "1mg – Online Medicine & Healthcare",
-          "about": "India's trusted online pharmacy. Order medicines, book lab tests and consult doctors online. Get genuine medicines at discounted prices.",
+          "about": "1mg coupon codes and deals for medicines, lab tests and online doctor consultations, with every offer currently listed and a direct link to 1mg.",
           "offers": {
             "coupons": [
               {
@@ -1236,7 +881,6 @@
                 "heading": "Flat 20% Off on All Medicines – Code: MED20",
                 "description": "Save on prescription medicines with 20% instant discount. Valid on all orders.",
                 "tags": [
-                  "Verified",
                   "Medicine"
                 ],
                 "websiteLink": "https://www.1mg.com",
@@ -1254,7 +898,6 @@
                 "heading": "Health Checkup Packages Starting at ₹399",
                 "description": "Book comprehensive health packages at home with certified labs. Prices start at just ₹399.",
                 "tags": [
-                  "Verified",
                   "Lab Tests"
                 ],
                 "websiteLink": "https://www.1mg.com",
@@ -1284,7 +927,7 @@
           "website": "https://www.decathlon.in",
           "img":"/dealImg/ChatGPT Image Apr 2, 2026, 03_46_00 PM 1.png",
           "heading": "Decathlon India – Sports & Fitness Equipment",
-          "about": "Shop sports gear, fitness equipment and sportswear at Decathlon. Get best deals on cycling, running, swimming, gym equipment & outdoor sports.",
+          "about": "Decathlon coupon codes and deals for sports gear, fitness equipment and sportswear, with every offer currently listed and a direct link to Decathlon.",
           "offers": {
             "coupons": [
               {
@@ -1292,7 +935,6 @@
                 "heading": "Flat ₹500 Off on Cycles – Code: CYCLE500",
                 "description": "Upgrade your ride! Get ₹500 instant discount on all bicycles. Use code CYCLE500 at checkout.",
                 "tags": [
-                  "Verified",
                   "Cycling"
                 ],
                 "websiteLink": "https://www.decathlon.in",
@@ -1308,7 +950,6 @@
                 "heading": "Get 20% Off on Fitness Equipment – Code: FIT20",
                 "description": "Build your home gym with 20% discount on dumbbells, yoga mats, resistance bands and more.",
                 "tags": [
-                  "Verified",
                   "Fitness"
                 ],
                 "websiteLink": "https://www.decathlon.in",
@@ -1324,7 +965,6 @@
                 "heading": "Sportswear Sale – Extra 15% Off with Code SPORT15",
                 "description": "Shop performance sportswear and athleisure with extra 15% discount code.",
                 "tags": [
-                  "Verified",
                   "Apparel"
                 ],
                 "websiteLink": "https://www.decathlon.in",
@@ -1342,7 +982,6 @@
                 "heading": "Camping Equipment – Up to 50% Off",
                 "description": "Gear up for adventure! Get up to 50% off on tents, sleeping bags, backpacks and camping essentials.",
                 "tags": [
-                  "Verified",
                   "Outdoor"
                 ],
                 "websiteLink": "https://www.decathlon.in",
@@ -1358,7 +997,6 @@
                 "heading": "Swimming Essentials Starting at ₹199",
                 "description": "Dive into savings! Swimming goggles, caps, fins and accessories starting at just ₹199.",
                 "tags": [
-                  "Verified",
                   "Swimming"
                 ],
                 "websiteLink": "https://www.decathlon.in",
@@ -1374,7 +1012,6 @@
                 "heading": "Badminton Rackets – Buy 1 Get 1 at 50% Off",
                 "description": "Perfect for pairs! Buy one badminton racket and get second at 50% discount.",
                 "tags": [
-                  "Verified",
                   "Racquet Sports"
                 ],
                 "websiteLink": "https://www.decathlon.in",
@@ -1390,7 +1027,6 @@
                 "heading": "Football & Cricket Gear – Flat 30% Off",
                 "description": "Score big savings on football boots, cricket bats, balls and protective gear.",
                 "tags": [
-                  "Verified",
                   "Team Sports"
                 ],
                 "websiteLink": "https://www.decathlon.in",
@@ -1410,7 +1046,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://www.nike.com/in",
           "heading": "Nike India – Athletic Footwear & Apparel",
-          "about": "Just Do It with Nike. Shop the latest sneakers, sportswear and athletic gear. Get exclusive deals on running shoes, basketball shoes & training apparel.",
+          "about": "Nike coupon codes and deals for sneakers, sportswear and training apparel, with every offer currently listed and a direct link to the Nike store.",
           "offers": {
             "coupons": [
               {
@@ -1418,7 +1054,6 @@
                 "heading": "Get ₹1000 Off on Shoes Above ₹5999 – Code: NIKE1000",
                 "description": "Step up your game with premium Nike shoes. Save ₹1000 on purchases above ₹5999.",
                 "tags": [
-                  "Verified",
                   "Footwear"
                 ],
                 "websiteLink": "https://www.nike.com/in",
@@ -1436,7 +1071,6 @@
                 "heading": "Nike Sale – Up to 40% Off on Select Styles",
                 "description": "Shop Nike's seasonal sale with up to 40% off on footwear and apparel.",
                 "tags": [
-                  "Verified",
                   "Sale"
                 ],
                 "websiteLink": "https://www.nike.com/in",
@@ -1465,9 +1099,9 @@
           "imagedeal": "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
           "brandLogo": "/dealImg/amazon_PNG1 2.png",
           "website": "https://www.amazon.in",
-         
+
           "heading": "Amazon India – Home & Kitchen Essentials",
-          "about": "Shop home appliances, kitchen essentials, furniture and home decor with Amazon deals. Get instant discounts on electronics, cookware and home improvement.",
+          "about": "Amazon coupon codes and deals for home appliances, kitchen essentials, furniture and decor, with every offer currently listed and a direct link to Amazon.",
           "offers": {
             "coupons": [
               {
@@ -1475,7 +1109,6 @@
                 "heading": "Flat ₹2000 Off on Large Appliances – Code: APPLIANCE2000",
                 "description": "Upgrade your home with refrigerators, washing machines and ACs. Save ₹2000 instantly.",
                 "tags": [
-                  "Verified",
                   "Appliances"
                 ],
                 "websiteLink": "https://www.amazon.in",
@@ -1491,7 +1124,6 @@
                 "heading": "Kitchen Appliances – Extra 20% Off with Code KITCHEN20",
                 "description": "Make cooking easier with mixer grinders, microwaves and induction cooktops at 20% extra discount.",
                 "tags": [
-                  "Verified",
                   "Kitchen"
                 ],
                 "websiteLink": "https://www.amazon.in",
@@ -1507,7 +1139,6 @@
                 "heading": "Home Decor Sale – Get ₹500 Off on ₹2999+",
                 "description": "Beautify your home with wall art, curtains, cushions and decorative items. Save ₹500 today.",
                 "tags": [
-                  "Verified",
                   "Decor"
                 ],
                 "websiteLink": "https://www.amazon.in",
@@ -1525,7 +1156,6 @@
                 "heading": "Great Indian Festival – Up to 60% Off on Home & Kitchen",
                 "description": "Amazon's biggest sale is here! Get up to 60% off on home and kitchen products from top brands.",
                 "tags": [
-                  "Verified",
                   "Mega Sale"
                 ],
                 "websiteLink": "https://www.amazon.in",
@@ -1541,7 +1171,6 @@
                 "heading": "Furniture Deals – Starting at ₹999",
                 "description": "Furnish your home on a budget! Chairs, tables, beds and storage starting at just ₹999.",
                 "tags": [
-                  "Verified",
                   "Furniture"
                 ],
                 "websiteLink": "https://www.amazon.in",
@@ -1557,7 +1186,6 @@
                 "heading": "Cookware Sets – Buy 1 Get 1 Free",
                 "description": "Stock your kitchen! Buy one cookware set and get another absolutely free.",
                 "tags": [
-                  "Verified",
                   "Bundle"
                 ],
                 "websiteLink": "https://www.amazon.in",
@@ -1573,7 +1201,6 @@
                 "heading": "Smart Home Devices – Up to 50% Off",
                 "description": "Make your home smarter with Alexa devices, smart bulbs, cameras and automation at half price.",
                 "tags": [
-                  "Verified",
                   "Smart Home"
                 ],
                 "websiteLink": "https://www.amazon.in",
@@ -1593,7 +1220,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://www.pepperfry.com",
           "heading": "Pepperfry – Furniture & Home Decor",
-          "about": "India's largest furniture marketplace. Shop sofas, beds, dining tables, wardrobes and home decor with attractive discounts and EMI options.",
+          "about": "Pepperfry coupon codes and deals for sofas, beds, dining tables, wardrobes and home decor, with every offer currently listed and a link to Pepperfry.",
           "offers": {
             "coupons": [
               {
@@ -1601,7 +1228,6 @@
                 "heading": "Flat ₹5000 Off on Furniture – Code: FURNISH5000",
                 "description": "Revamp your home with Pepperfry furniture. Get ₹5000 instant discount on orders above ₹25,000.",
                 "tags": [
-                  "Verified",
                   "Furniture"
                 ],
                 "websiteLink": "https://www.pepperfry.com",
@@ -1619,7 +1245,6 @@
                 "heading": "End of Season Sale – Up to 70% Off",
                 "description": "Pepperfry's biggest furniture sale! Get up to 70% off on all categories.",
                 "tags": [
-                  "Verified",
                   "Clearance"
                 ],
                 "websiteLink": "https://www.pepperfry.com",
@@ -1649,7 +1274,7 @@
           "website": "https://www.nykaa.com",
           "img":"/dealImg/ChatGPT Image Apr 2, 2026, 03_56_12 PM 1.png",
           "heading": "Nykaa – Beauty & Cosmetics Destination",
-          "about": "Shop makeup, skincare, haircare and personal care products from top brands. Get exclusive Nykaa coupons on cosmetics, fragrances and beauty tools.",
+          "about": "Nykaa coupon codes and deals for makeup, skincare, haircare and fragrances, with every offer currently listed and a direct link to the Nykaa store.",
           "offers": {
             "coupons": [
               {
@@ -1657,7 +1282,6 @@
                 "heading": "Flat 20% Off on First Purchase – Code: BEAUTY20",
                 "description": "New to Nykaa? Get 20% discount on your first beauty purchase. Use code BEAUTY20 at checkout.",
                 "tags": [
-                  "Verified",
                   "New User"
                 ],
                 "websiteLink": "https://www.nykaa.com",
@@ -1673,7 +1297,6 @@
                 "heading": "Luxury Beauty – Extra 15% Off with Code LUXURY15",
                 "description": "Shop premium international brands with extra 15% discount. Valid on MAC, Estee Lauder, Clinique & more.",
                 "tags": [
-                  "Verified",
                   "Premium"
                 ],
                 "websiteLink": "https://www.nykaa.com",
@@ -1689,7 +1312,6 @@
                 "heading": "Skincare Sale – Get ₹300 Off on ₹1999+",
                 "description": "Pamper your skin with premium skincare products. Save ₹300 on purchases above ₹1999.",
                 "tags": [
-                  "Verified",
                   "Skincare"
                 ],
                 "websiteLink": "https://www.nykaa.com",
@@ -1707,7 +1329,6 @@
                 "heading": "Nykaa Hot Pink Sale – Up to 50% Off + Free Gifts",
                 "description": "Nykaa's biggest beauty sale! Get up to 50% off on makeup and skincare plus free gifts with purchase.",
                 "tags": [
-                  "Verified",
                   "Mega Sale"
                 ],
                 "websiteLink": "https://www.nykaa.com",
@@ -1723,7 +1344,6 @@
                 "heading": "Lipstick Mania – Buy 2 Get 1 Free",
                 "description": "Build your lipstick collection! Buy 2 lipsticks and get 1 absolutely free from popular brands.",
                 "tags": [
-                  "Verified",
                   "Makeup"
                 ],
                 "websiteLink": "https://www.nykaa.com",
@@ -1739,7 +1359,6 @@
                 "heading": "Fragrance Festival – Perfumes Starting at ₹299",
                 "description": "Smell amazing for less! Premium perfumes and body mists starting at just ₹299.",
                 "tags": [
-                  "Verified",
                   "Fragrance"
                 ],
                 "websiteLink": "https://www.nykaa.com",
@@ -1755,7 +1374,6 @@
                 "heading": "Haircare Combo Deals – Save Up to 40%",
                 "description": "Get salon-quality hair with shampoo + conditioner combos at up to 40% discount.",
                 "tags": [
-                  "Verified",
                   "Haircare"
                 ],
                 "websiteLink": "https://www.nykaa.com",
@@ -1775,7 +1393,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://www.sugarcosmetics.com",
           "heading": "Sugar Cosmetics – Makeup That Performs",
-          "about": "India's leading makeup brand. Shop long-lasting lipsticks, foundations, eyeliners and more. Cruelty-free and dermatologically tested products.",
+          "about": "Sugar Cosmetics coupon codes and deals for lipsticks, foundations, eyeliners and other makeup, with every offer currently listed and a link to Sugar.",
           "offers": {
             "coupons": [
               {
@@ -1783,7 +1401,6 @@
                 "heading": "Flat 25% Off on All Products – Code: SUGAR25",
                 "description": "Get your Sugar favorites at 25% discount. Use code SUGAR25 for instant savings.",
                 "tags": [
-                  "Verified",
                   "Sitewide"
                 ],
                 "websiteLink": "https://www.sugarcosmetics.com",
@@ -1801,7 +1418,6 @@
                 "heading": "Mini Makeup Kits Starting at ₹499",
                 "description": "Complete makeup kits perfect for gifting or travel. Includes lipstick, kajal and more.",
                 "tags": [
-                  "Verified",
                   "Kit"
                 ],
                 "websiteLink": "https://www.sugarcosmetics.com",
@@ -1830,7 +1446,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://www.swiggy.com",
           "heading": "Swiggy – Food Delivery & Grocery",
-          "about": "Order food from your favorite restaurants with Swiggy. Get instant discounts, free delivery and exclusive bank offers on food delivery and grocery.",
+          "about": "Swiggy coupon codes and deals for food delivery and grocery orders, with every offer currently listed and a direct link to Swiggy.",
           "offers": {
             "coupons": [
               {
@@ -1838,7 +1454,6 @@
                 "heading": "Flat 60% Off on First Order – Code: WELCOME60",
                 "description": "New to Swiggy? Get 60% off on your first food order up to ₹100. Use code WELCOME60.",
                 "tags": [
-                  "Verified",
                   "New User"
                 ],
                 "websiteLink": "https://www.swiggy.com",
@@ -1854,7 +1469,6 @@
                 "heading": "Get ₹125 Off on Orders Above ₹299 – Code: FEAST125",
                 "description": "Order your favorite meal and save ₹125 instantly. Minimum order ₹299 required.",
                 "tags": [
-                  "Verified",
                   "Food"
                 ],
                 "websiteLink": "https://www.swiggy.com",
@@ -1870,7 +1484,6 @@
                 "heading": "Swiggy Instamart – ₹100 Off on Grocery Orders",
                 "description": "Get groceries delivered in minutes! Save ₹100 on grocery orders above ₹499.",
                 "tags": [
-                  "Verified",
                   "Grocery"
                 ],
                 "websiteLink": "https://www.swiggy.com",
@@ -1888,7 +1501,6 @@
                 "heading": "Swiggy One Membership – Free Delivery + Extra Discounts",
                 "description": "Subscribe to Swiggy One and get unlimited free delivery plus exclusive discounts on every order.",
                 "tags": [
-                  "Verified",
                   "Membership"
                 ],
                 "websiteLink": "https://www.swiggy.com",
@@ -1904,7 +1516,6 @@
                 "heading": "Flash Deals – Up to 50% Off on Select Restaurants",
                 "description": "Limited time flash deals on popular restaurants. Get up to 50% off on meals.",
                 "tags": [
-                  "Verified",
                   "Flash Deal"
                 ],
                 "websiteLink": "https://www.swiggy.com",
@@ -1920,7 +1531,6 @@
                 "heading": "Bank Offers – Flat ₹150 Cashback",
                 "description": "Pay with select bank cards and get ₹150 cashback on food orders above ₹500.",
                 "tags": [
-                  "Verified",
                   "Bank Offer"
                 ],
                 "websiteLink": "https://www.swiggy.com",
@@ -1936,7 +1546,6 @@
                 "heading": "Late Night Cravings – Extra 20% Off After 11 PM",
                 "description": "Satisfy midnight hunger with extra 20% discount on late-night orders.",
                 "tags": [
-                  "Verified",
                   "Night Offer"
                 ],
                 "websiteLink": "https://www.swiggy.com",
@@ -1956,7 +1565,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://www.bigbasket.com",
           "heading": "BigBasket – Online Grocery Shopping",
-          "about": "India's largest online supermarket. Order groceries, fruits, vegetables, dairy and household essentials with doorstep delivery.",
+          "about": "BigBasket coupon codes and deals for groceries, fresh produce, dairy and household essentials, with every offer currently listed and a link to BigBasket.",
           "offers": {
             "coupons": [
               {
@@ -1964,7 +1573,6 @@
                 "heading": "Flat ₹200 Off on First Grocery Order – Code: BB200",
                 "description": "New customer? Get ₹200 discount on your first BigBasket order above ₹1000.",
                 "tags": [
-                  "Verified",
                   "New User"
                 ],
                 "websiteLink": "https://www.bigbasket.com",
@@ -1982,7 +1590,6 @@
                 "heading": "Weekly Essentials – Up to 30% Off",
                 "description": "Stock up on weekly groceries with up to 30% discount on staples and essentials.",
                 "tags": [
-                  "Verified",
                   "Grocery"
                 ],
                 "websiteLink": "https://www.bigbasket.com",
@@ -2008,10 +1615,10 @@
           "id": 1,
           "brandName": "Udemy",
           "imagedeal": "https://images.unsplash.com/photo-1523240795612-9a054b0db644",
-          "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
+          "brandLogo": "/dealImg/Udemy_logo.svg.png",
           "website": "https://www.udemy.com",
           "heading": "Udemy – Learn Anything, Anytime",
-          "about": "Master new skills with Udemy online courses. Get discount coupons on programming, business, design, marketing and personal development courses.",
+          "about": "Udemy coupon codes and deals for online courses across development, business and design, with every offer currently listed and a direct link to Udemy.",
           "offers": {
             "coupons": [
               {
@@ -2019,7 +1626,6 @@
                 "heading": "Flat 80% Off on All Courses – Code: LEARN80",
                 "description": "Learn from industry experts! Get 80% discount on any Udemy course. Use code LEARN80.",
                 "tags": [
-                  "Verified",
                   "Flash Sale"
                 ],
                 "websiteLink": "https://www.udemy.com",
@@ -2035,7 +1641,6 @@
                 "heading": "Business Courses – Extra 15% Off with Code BIZ15",
                 "description": "Advance your career with business and entrepreneurship courses at extra 15% discount.",
                 "tags": [
-                  "Verified",
                   "Business"
                 ],
                 "websiteLink": "https://www.udemy.com",
@@ -2051,7 +1656,6 @@
                 "heading": "Programming Bundle – Get 3 Courses for ₹1999",
                 "description": "Master programming with specially curated course bundles at discounted prices.",
                 "tags": [
-                  "Verified",
                   "Bundle"
                 ],
                 "websiteLink": "https://www.udemy.com",
@@ -2069,7 +1673,6 @@
                 "heading": "Free Courses – Learn Without Paying",
                 "description": "Explore thousands of free Udemy courses and start learning today without any cost.",
                 "tags": [
-                  "Verified",
                   "Free"
                 ],
                 "websiteLink": "https://www.udemy.com",
@@ -2085,7 +1688,6 @@
                 "heading": "Udemy Pro Subscription – All-Access Learning",
                 "description": "Get unlimited access to 7000+ top courses with Udemy Pro subscription.",
                 "tags": [
-                  "Verified",
                   "Subscription"
                 ],
                 "websiteLink": "https://www.udemy.com",
@@ -2101,7 +1703,6 @@
                 "heading": "IT Certification Prep – Up to 70% Off",
                 "description": "Prepare for IT certifications with expert-led courses at up to 70% discount.",
                 "tags": [
-                  "Verified",
                   "Certification"
                 ],
                 "websiteLink": "https://www.udemy.com",
@@ -2117,7 +1718,6 @@
                 "heading": "Personal Development – Courses Starting at ₹449",
                 "description": "Invest in yourself! Personal development and productivity courses starting at just ₹449.",
                 "tags": [
-                  "Verified",
                   "Self Growth"
                 ],
                 "websiteLink": "https://www.udemy.com",
@@ -2137,7 +1737,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://www.coursera.org",
           "heading": "Coursera – Learn from Top Universities",
-          "about": "Access courses from Stanford, Yale, Google and more. Earn certificates and degrees from world-class institutions online.",
+          "about": "Coursera coupon codes and deals for online courses and certificates from universities, with every offer currently listed and a link to Coursera.",
           "offers": {
             "coupons": [
               {
@@ -2145,7 +1745,6 @@
                 "heading": "Get 7-Day Free Trial on Coursera Plus",
                 "description": "Try Coursera Plus free for 7 days. Access 7000+ courses from top universities.",
                 "tags": [
-                  "Verified",
                   "Trial"
                 ],
                 "websiteLink": "https://www.coursera.org",
@@ -2163,7 +1762,6 @@
                 "heading": "Professional Certificates – Start Your Tech Career",
                 "description": "Google, IBM and Meta professional certificates to launch your tech career. Financial aid available.",
                 "tags": [
-                  "Verified",
                   "Career"
                 ],
                 "websiteLink": "https://www.coursera.org",
@@ -2189,10 +1787,10 @@
           "id": 1,
           "brandName": "Netflix",
            "imagedeal": "https://images.unsplash.com/photo-1542751371-adc38448a05e",
-          "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
+          "brandLogo": "/dealImg/netflix-vector-flat-logo-735811696261671nhzlvgcmyf.png",
           "website": "https://www.netflix.com",
           "heading": "Netflix – Watch Unlimited Movies & TV Shows",
-          "about": "Stream award-winning series, movies, documentaries and more. Get Netflix subscription deals and offers for unlimited entertainment.",
+          "about": "Netflix coupon codes and deals for streaming subscriptions covering series, films and documentaries, with every offer currently listed and a link to Netflix.",
           "offers": {
             "coupons": [
               {
@@ -2200,7 +1798,6 @@
                 "heading": "Mobile Plan – Watch on Your Phone for Just ₹149/Month",
                 "description": "Netflix Mobile plan gives you unlimited streaming on your mobile device at the lowest price.",
                 "tags": [
-                  "Verified",
                   "Mobile Plan"
                 ],
                 "websiteLink": "https://www.netflix.com",
@@ -2216,7 +1813,6 @@
                 "heading": "Premium Plan – Watch on 4 Screens in Ultra HD",
                 "description": "Get Netflix Premium and enjoy Ultra HD streaming on up to 4 devices simultaneously.",
                 "tags": [
-                  "Verified",
                   "Premium"
                 ],
                 "websiteLink": "https://www.netflix.com",
@@ -2232,7 +1828,6 @@
                 "heading": "Jio Users – Get Netflix Free with Select Plans",
                 "description": "Jio postpaid users can get Netflix subscription included free with select plans.",
                 "tags": [
-                  "Verified",
                   "Telecom Offer"
                 ],
                 "websiteLink": "https://www.netflix.com",
@@ -2250,7 +1845,6 @@
                 "heading": "First Month Free – Try Netflix Risk-Free",
                 "description": "New subscribers get the first month absolutely free. Cancel anytime during trial period.",
                 "tags": [
-                  "Verified",
                   "Trial"
                 ],
                 "websiteLink": "https://www.netflix.com",
@@ -2266,7 +1860,6 @@
                 "heading": "Student Discount – Save 20% on Subscription",
                 "description": "Verified students can get 20% discount on Netflix Basic and Standard plans.",
                 "tags": [
-                  "Verified",
                   "Student"
                 ],
                 "websiteLink": "https://www.netflix.com",
@@ -2282,7 +1875,6 @@
                 "heading": "Prepaid Annual Plan – Pay Yearly & Save 15%",
                 "description": "Subscribe to Netflix annual plan and save 15% compared to monthly billing.",
                 "tags": [
-                  "Verified",
                   "Annual"
                 ],
                 "websiteLink": "https://www.netflix.com",
@@ -2298,7 +1890,6 @@
                 "heading": "Gift Cards Available – Perfect Gift for Entertainment Lovers",
                 "description": "Netflix gift cards make perfect gifts. Available in denominations from ₹500 to ₹5000.",
                 "tags": [
-                  "Verified",
                   "Gift"
                 ],
                 "websiteLink": "https://www.netflix.com",
@@ -2318,7 +1909,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://www.primevideo.com",
           "heading": "Amazon Prime Video – Watch Movies & Originals",
-          "about": "Stream thousands of movies, TV shows and Amazon Originals. Included with Amazon Prime membership plus shopping benefits.",
+          "about": "Amazon Prime Video coupon codes and deals for streaming films, TV shows and Originals, with every offer currently listed and a link to Prime Video.",
           "offers": {
             "coupons": [
               {
@@ -2326,7 +1917,6 @@
                 "heading": "Prime Membership – ₹1499/Year with Video Included",
                 "description": "Get Amazon Prime membership with Prime Video, free delivery and exclusive shopping deals.",
                 "tags": [
-                  "Verified",
                   "Membership"
                 ],
                 "websiteLink": "https://www.primevideo.com",
@@ -2344,7 +1934,6 @@
                 "heading": "Student Membership – Get Prime at 50% Off",
                 "description": "Students get Amazon Prime at half price. Verify your student status and enjoy all benefits.",
                 "tags": [
-                  "Verified",
                   "Student"
                 ],
                 "websiteLink": "https://www.primevideo.com",
@@ -2373,7 +1962,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://store.steampowered.com",
           "heading": "Steam – Ultimate PC Gaming Platform",
-          "about": "Buy PC games, downloadable content and in-game items. Get exclusive Steam sale deals on thousands of games across all genres.",
+          "about": "Steam coupon codes and deals for PC games, downloadable content and in-game items, with every offer currently listed and a direct link to Steam.",
           "offers": {
             "coupons": [
               {
@@ -2381,7 +1970,6 @@
                 "heading": "Steam Summer Sale – Up to 90% Off on Games",
                 "description": "Steam's biggest sale of the year! Get up to 90% discount on popular AAA and indie games.",
                 "tags": [
-                  "Verified",
                   "Seasonal Sale"
                 ],
                 "websiteLink": "https://store.steampowered.com",
@@ -2397,7 +1985,6 @@
                 "heading": "Steam Winter Sale – Get Your Wishlist Games Cheap",
                 "description": "Year-end sale with massive discounts on your wishlist games. Perfect time to stock up.",
                 "tags": [
-                  "Verified",
                   "Winter Sale"
                 ],
                 "websiteLink": "https://store.steampowered.com",
@@ -2413,7 +2000,6 @@
                 "heading": "Midweek Madness – 50-75% Off Selected Games",
                 "description": "Every week Steam features different games with special midweek discounts.",
                 "tags": [
-                  "Verified",
                   "Weekly Deal"
                 ],
                 "websiteLink": "https://store.steampowered.com",
@@ -2431,7 +2017,6 @@
                 "heading": "Free to Play Games – No Payment Required",
                 "description": "Hundreds of free-to-play games available on Steam. Download and play without spending anything.",
                 "tags": [
-                  "Verified",
                   "Free"
                 ],
                 "websiteLink": "https://store.steampowered.com",
@@ -2447,7 +2032,6 @@
                 "heading": "Publisher Sales – Up to 80% Off on Specific Publishers",
                 "description": "Weekly publisher-specific sales with massive discounts on their entire catalog.",
                 "tags": [
-                  "Verified",
                   "Publisher Sale"
                 ],
                 "websiteLink": "https://store.steampowered.com",
@@ -2463,7 +2047,6 @@
                 "heading": "Indie Game Festival – Discover Hidden Gems at 70% Off",
                 "description": "Celebrate indie developers with special discounts on innovative indie titles.",
                 "tags": [
-                  "Verified",
                   "Indie"
                 ],
                 "websiteLink": "https://store.steampowered.com",
@@ -2479,7 +2062,6 @@
                 "heading": "Steam Deck Verified Games – Optimized for Handheld",
                 "description": "Games verified to work perfectly on Steam Deck, often with special bundle discounts.",
                 "tags": [
-                  "Verified",
                   "Steam Deck"
                 ],
                 "websiteLink": "https://store.steampowered.com",
@@ -2499,7 +2081,7 @@
           "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
           "website": "https://store.playstation.com",
           "heading": "PlayStation Store – PS5 & PS4 Games",
-          "about": "Download PS5 and PS4 games digitally. Get exclusive PlayStation Store deals, PS Plus benefits and special discounts on popular titles.",
+          "about": "PlayStation Store coupon codes and deals for PS5 and PS4 digital games, with every offer currently listed and a link to the PlayStation Store.",
           "offers": {
             "coupons": [
               {
@@ -2507,7 +2089,6 @@
                 "heading": "PS Plus Extra – Get 400+ Games for ₹699/Month",
                 "description": "Subscribe to PS Plus Extra and access hundreds of games included in your membership.",
                 "tags": [
-                  "Verified",
                   "Subscription"
                 ],
                 "websiteLink": "https://store.playstation.com",
@@ -2525,7 +2106,6 @@
                 "heading": "Big in Japan Sale – Up to 70% Off Japanese Games",
                 "description": "Celebrate Japanese gaming with special discounts on JRPG and action titles.",
                 "tags": [
-                  "Verified",
                   "Regional Sale"
                 ],
                 "websiteLink": "https://store.playstation.com",
@@ -2551,12 +2131,12 @@
         "brands": [
           {
             "id": 1,
-            "brandName": "Amazon",
-            "brandLogo": "/dealImg/Button → Amazon India.png",
+            "brandName": "boAt",
+            "brandLogo": "/dealImg/boat-logo-png_seeklogo-379185 1.png",
             "website": "https://www.boat-lifestyle.com",
             "discount": "40%",
             "heading": "boAt India – Audio & Wearable Electronics",
-            "about": "Get the latest boAt coupon codes & offers for 2025. Save up to 70% on headphones, smartwatches, speakers & more. Grab the best discounts today!",
+            "about": "boAt coupon codes and deals for headphones, earbuds, smartwatches and speakers, with every offer currently listed and a direct link to the boAt store.",
             "offers": {
      "coupons": [
     {
@@ -2569,7 +2149,7 @@
           "description": "Save big on premium audio products with boAt's exclusive coupon code. Apply BOAT15 at checkout for instant discount.",
           "couponCode": "BOAT15",
           "userType": "all",
-          "tags": ["Verified", "Flash Sale"],
+          "tags": ["Flash Sale"],
           "websiteLink": "https://www.amazon.in",
           "viewDetail": {
             "discount": "15% instant discount on headphones & earbuds",
@@ -2585,7 +2165,7 @@
           "description": "Upgrade your wrist with boAt smartwatches at amazing discounts. Use code WATCH20 during checkout.",
           "couponCode": "WATCH20",
           "userType": "all",
-          "tags": ["Verified", "Flash Sale"],
+          "tags": ["Flash Sale"],
           "websiteLink": "https://www.amazon.in",
           "viewDetail": {
             "discount": "20% instant discount on smartwatch category",
@@ -2607,7 +2187,7 @@
           "description": "Rock your parties with boAt portable speakers. Enjoy 10% off on all speaker models with code SPEAKER10.",
           "couponCode": "SPEAKER10",
           "userType": "new",
-          "tags": ["Verified", "Flash Sale"],
+          "tags": ["Flash Sale"],
           "websiteLink": "https://www.amazon.in",
           "viewDetail": {
             "discount": "Instant 10% discount with code SPEAKER10",
@@ -2629,7 +2209,7 @@
           "id": 1,
           "heading": "Flash Deals on boAt Products | Up to 70% Off",
           "description": "Shop boAt's Flash Deals now and save big on audio accessories.",
-          "tags": ["Verified", "Flash Sale"],
+          "tags": ["Flash Sale"],
           "websiteLink": "https://www.boat-lifestyle.com",
           "viewDetail": {
             "discount": "Up to 70% off on selected products",
@@ -2649,7 +2229,7 @@
           "id": 2,
           "heading": "boAt Airdopes 141 with Up to 40% Off",
           "description": "True wireless earbuds with long battery and fast charging.",
-          "tags": ["Verified", "Best Seller"],
+          "tags": ["Best Seller"],
           "websiteLink": "https://www.boat-lifestyle.com",
           "viewDetail": {
             "discount": "Up to 40% off on Airdopes 141",
@@ -2669,7 +2249,7 @@
           "id": 3,
           "heading": "boAt Wave Call Smartwatch with Up to 50% Off",
           "description": "Smartwatch with Bluetooth calling and health tracking.",
-          "tags": ["Verified", "Trending"],
+          "tags": ["Trending"],
           "websiteLink": "https://www.boat-lifestyle.com",
           "viewDetail": {
             "discount": "Up to 50% off on Wave Call smartwatch",
@@ -2689,7 +2269,7 @@
           "id": 4,
           "heading": "boAt Stone 350 Bluetooth Speaker with Up to 35% Off",
           "description": "Portable speaker with powerful sound and waterproof design.",
-          "tags": ["Verified", "Hot Deal"],
+          "tags": ["Hot Deal"],
           "websiteLink": "https://www.boat-lifestyle.com",
           "viewDetail": {
             "discount": "Up to 35% off on Stone 350 speaker",
@@ -2711,7 +2291,7 @@
             "website": "https://www.samsung.com/in",
             "discount": "30%",
             "heading": "Samsung India – Leading Electronics Brand",
-            "about": "Discover Samsung's latest smartphones, TVs, home appliances & wearables. Get exclusive deals and cashback offers on premium electronics.",
+            "about": "Samsung coupon codes and deals for smartphones, TVs, home appliances and wearables, with every offer currently listed and a direct link to the Samsung store.",
             "offers": {
 "coupons": [
     {
@@ -2724,7 +2304,7 @@
           "description": "Upgrade to the latest Samsung Galaxy with instant discount. Use code GALAXY5000 at checkout.",
           "couponCode": "GALAXY5000",
           "userType": "all",
-          "tags": ["Verified", "Exclusive"],
+          "tags": ["Exclusive"],
           "websiteLink": "https://www.samsung.com/in",
           "viewDetail": {
             "discount": "₹5000 instant discount on Galaxy series",
@@ -2746,7 +2326,7 @@
           "description": "Save on Samsung original accessories including earbuds, chargers & cables.",
           "couponCode": "ACCESSORY25",
           "userType": "all",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.samsung.com/in",
           "viewDetail": {
             "discount": "Flat 25% off on accessories",
@@ -2768,7 +2348,7 @@
           "id": 1,
           "heading": "Samsung Smart TV Sale | Up to 40% Off",
           "description": "Upgrade your home entertainment with Samsung Smart TVs.",
-          "tags": ["Verified", "Mega Sale"],
+          "tags": ["Mega Sale"],
           "websiteLink": "https://www.samsung.com/in",
           "viewDetail": {
             "discount": "Up to 40% off on Smart TVs",
@@ -2788,7 +2368,7 @@
           "id": 2,
           "heading": "Samsung Electronics Sale – Save Big on Gadgets",
           "description": "Explore deals across Samsung electronics including TVs, appliances and more.",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.samsung.com/in",
           "viewDetail": {
             "discount": "Up to 30% off on electronics",
@@ -2810,7 +2390,7 @@
             "website": "https://www.apple.com/in",
             "discount": "20%",
             "heading": "Apple India – Premium Electronics & Devices",
-            "about": "Shop the latest iPhone, iPad, MacBook, Apple Watch & AirPods. Get exclusive student discounts and exchange offers on Apple products.",
+            "about": "Apple coupon codes and deals for iPhone, iPad, MacBook, Apple Watch and AirPods, with every offer currently listed and a direct link to the Apple store.",
             "offers": {
   "coupons": [
     {
@@ -2823,7 +2403,7 @@
           "description": "Buy iPhone 15 and get instant cashback on credit card purchases. Limited period offer.",
           "couponCode": "APPLE10K",
           "userType": "all",
-          "tags": ["Verified", "Flash Sale"],
+          "tags": ["Flash Sale"],
           "websiteLink": "https://www.apple.com/in",
           "viewDetail": {
             "discount": "₹10,000 cashback on select bank cards",
@@ -2845,7 +2425,7 @@
           "description": "Get discounts on AirPods, chargers, and other Apple accessories.",
           "couponCode": "APPLE15OFF",
           "userType": "all",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.apple.com/in",
           "viewDetail": {
             "discount": "Flat 15% off on accessories",
@@ -2867,7 +2447,7 @@
           "id": 1,
           "heading": "Apple AirPods Pro (2nd Gen) with Up to 15% Off",
           "description": "Experience immersive sound with AirPods Pro and advanced features.",
-          "tags": ["Verified", "Premium"],
+          "tags": ["Premium"],
           "websiteLink": "https://www.apple.com/in",
           "viewDetail": {
             "discount": "Up to 15% off on AirPods Pro",
@@ -2887,7 +2467,7 @@
           "id": 2,
           "heading": "Save on Apple Accessories & Devices",
           "description": "Explore deals on Apple accessories and selected devices.",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.apple.com/in",
           "viewDetail": {
             "discount": "Up to 10% off on selected products",
@@ -2900,305 +2480,6 @@
       ]
     }
   ]
-            }
-          },
-          {
-            "id": 4,
-            "brandName": "Meesho",
-            "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
-            "website": "https://www.apple.com/in",
-            "discount":"50%",
-            "heading": "Apple India – Premium Electronics & Devices",
-            "about": "Shop the latest iPhone, iPad, MacBook, Apple Watch & AirPods. Get exclusive student discounts and exchange offers on Apple products.",
-            "offers": {
-  "coupons": [
-    {
-      "categoryId": "smartphones",
-      "categoryName": "iPhone",
-      "items": [
-        {
-          "id": 1,
-          "heading": "Get ₹10,000 Cashback on iPhone 15 Series",
-          "description": "Buy iPhone 15 and get instant cashback on credit card purchases. Limited period offer.",
-          "couponCode": "APPLE10K",
-          "userType": "new",
-          "tags": ["Verified", "Flash Sale"],
-          "websiteLink": "https://www.apple.com/in",
-          "viewDetail": {
-            "discount": "₹10,000 cashback on select bank cards",
-            "discountPercentage": "20%",
-            "more": "Valid on iPhone 15, 15 Plus, 15 Pro & 15 Pro Max",
-            "redem": "Automatic cashback on eligible cards",
-            "offer": "Combine with exchange for maximum savings"
-          }
-        }
-      ]
-    },
-    {
-      "categoryId": "accessories",
-      "categoryName": "Accessories Offers",
-      "items": [
-        {
-          "id": 2,
-          "heading": "Save 15% on Apple Accessories",
-          "description": "Get discounts on AirPods, chargers, and other Apple accessories.",
-          "couponCode": "APPLE15OFF",
-          "userType": "all",
-          "tags": ["Verified"],
-          "websiteLink": "https://www.apple.com/in",
-          "viewDetail": {
-            "discount": "Flat 15% off on accessories",
-            "discountPercentage": "15%",
-            "more": "Includes AirPods, MagSafe chargers & cables",
-            "redem": "Auto-applied at checkout",
-            "offer": "Limited-time offer"
-          }
-        }
-      ]
-    }
-  ],
-  "deals": [
-    {
-      "categoryId": "audio",
-      "categoryName": "Audio Devices",
-      "items": [
-        {
-          "id": 1,
-          "heading": "Apple AirPods Pro (2nd Gen) with Up to 15% Off",
-          "description": "Experience immersive sound with AirPods Pro and advanced features.",
-          "tags": ["Verified", "Premium"],
-          "websiteLink": "https://www.apple.com/in",
-          "viewDetail": {
-            "discount": "Up to 15% off on AirPods Pro",
-            "discountPercentage": "15%",
-            "more": "Active noise cancellation & transparency mode",
-            "redem": "Direct discount—no code needed",
-            "offer": "Free engraving available"
-          }
-        }
-      ]
-    },
-    {
-      "categoryId": "apple-products",
-      "categoryName": "Apple Products Deals",
-      "items": [
-        {
-          "id": 2,
-          "heading": "Save on Apple Accessories & Devices",
-          "description": "Explore deals on Apple accessories and selected devices.",
-          "tags": ["Verified"],
-          "websiteLink": "https://www.apple.com/in",
-          "viewDetail": {
-            "discount": "Up to 10% off on selected products",
-            "discountPercentage": "10%",
-            "more": "AirPods, accessories, and select Apple devices",
-            "redem": "Discount auto-applied on product page",
-            "offer": "Limited-time premium deals"
-          }
-        }
-      ]
-    }
-  ]
-            }
-          },
-          {
-            "id": 5,
-            "brandName": "Savana",
-            "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
-            "website": "https://www.apple.com/in",
-            "discount":"10%",
-            "heading": "Apple India – Premium Electronics & Devices",
-            "about": "Shop the latest iPhone, iPad, MacBook, Apple Watch & AirPods. Get exclusive student discounts and exchange offers on Apple products.",
-            "offers": {
-  "coupons": [
-    {
-      "categoryId": "smartphones",
-      "categoryName": "iPhone",
-      "items": [
-        {
-          "id": 1,
-          "heading": "Get ₹10,000 Cashback on iPhone 15 Series",
-          "description": "Buy iPhone 15 and get instant cashback on credit card purchases. Limited period offer.",
-          "couponCode": "APPLE10",
-          "userType": "new",
-          "tags": ["Verified", "Flash Sale"],
-          "websiteLink": "https://www.apple.com/in",
-          "viewDetail": {
-            "discount": "₹10,000 cashback on select bank cards",
-            "discountPercentage": "20%",
-            "more": "Valid on iPhone 15, 15 Plus, 15 Pro & 15 Pro Max",
-            "redem": "Automatic cashback on eligible cards",
-            "offer": "Combine with exchange for maximum savings"
-          }
-        }
-      ]
-    },
-    {
-      "categoryId": "accessories",
-      "categoryName": "Accessories Offers",
-      "items": [
-        {
-          "id": 2,
-          "heading": "Save 15% on Apple Accessories",
-          "description": "Get discounts on AirPods, chargers, and other Apple accessories.",
-          "couponCode": "APPLE15",
-          "userType": "all",
-          "tags": ["Verified"],
-          "websiteLink": "https://www.apple.com/in",
-          "viewDetail": {
-            "discount": "Flat 15% off on accessories",
-            "discountPercentage": "15%",
-            "more": "Includes AirPods, MagSafe chargers & cables",
-            "redem": "Auto-applied at checkout",
-            "offer": "Limited-time offer"
-          }
-        }
-      ]
-    }
-  ],
-  "deals": [
-    {
-      "categoryId": "audio",
-      "categoryName": "Audio Devices",
-      "items": [
-        {
-          "id": 1,
-          "heading": "Apple AirPods Pro (2nd Gen) with Up to 15% Off",
-          "description": "Experience immersive sound with AirPods Pro and advanced features.",
-          "tags": ["Verified", "Premium"],
-          "websiteLink": "https://www.apple.com/in",
-          "viewDetail": {
-            "discount": "Up to 15% off on AirPods Pro",
-            "discountPercentage": "15%",
-            "more": "Active noise cancellation & transparency mode",
-            "redem": "Direct discount—no code needed",
-            "offer": "Free engraving available"
-          }
-        }
-      ]
-    },
-    {
-      "categoryId": "apple-products",
-      "categoryName": "Apple Products Deals",
-      "items": [
-        {
-          "id": 2,
-          "heading": "Save on Apple Accessories & Devices",
-          "description": "Explore deals on Apple accessories and selected devices.",
-          "tags": ["Verified"],
-          "websiteLink": "https://www.apple.com/in",
-          "viewDetail": {
-            "discount": "Up to 10% off on selected products",
-            "discountPercentage": "10%",
-            "more": "AirPods, accessories, and select Apple devices",
-            "redem": "Discount auto-applied on product page",
-            "offer": "Limited-time premium deals"
-          }
-        }
-      ]
-    }
-  ]
-
-            }
-          },
-          {
-            "id": 6,
-            "brandName": "first-cry",
-            "brandLogo": "https://cdn.worldvectorlogo.com/logos/lg-1.svg",
-            "website": "https://www.apple.com/in",
-            "discount":"25%",
-            "heading": "Apple India – Premium Electronics & Devices",
-            "about": "Shop the latest iPhone, iPad, MacBook, Apple Watch & AirPods. Get exclusive student discounts and exchange offers on Apple products.",
-            "offers": {
-  "coupons": [
-    {
-      "categoryId": "smartphones",
-      "categoryName": "iPhone",
-      "items": [
-        {
-          "id": 1,
-          "heading": "Get ₹10,000 Cashback on iPhone 15 Series",
-          "description": "Buy iPhone 15 and get instant cashback on credit card purchases. Limited period offer.",
-          "couponCode": "APPLE10K",
-          "userType": "new",
-          "tags": ["Verified", "Flash Sale"],
-          "websiteLink": "https://www.apple.com/in",
-          "viewDetail": {
-            "discount": "₹10,000 cashback on select bank cards",
-            "discountPercentage": "20%",
-            "more": "Valid on iPhone 15, 15 Plus, 15 Pro & 15 Pro Max",
-            "redem": "Automatic cashback on eligible cards",
-            "offer": "Combine with exchange for maximum savings"
-          }
-        }
-      ]
-    },
-    {
-      "categoryId": "accessories",
-      "categoryName": "Accessories Offers",
-      "items": [
-        {
-          "id": 2,
-          "heading": "Save 15% on Apple Accessories",
-          "description": "Get discounts on AirPods, chargers, and other Apple accessories.",
-          "couponCode": "APPLE15OFF",
-          "userType": "all",
-          "tags": ["Verified"],
-          "websiteLink": "https://www.apple.com/in",
-          "viewDetail": {
-            "discount": "Flat 15% off on accessories",
-            "discountPercentage": "15%",
-            "more": "Includes AirPods, MagSafe chargers & cables",
-            "redem": "Auto-applied at checkout",
-            "offer": "Limited-time offer"
-          }
-        }
-      ]
-    }
-  ],
-  "deals": [
-    {
-      "categoryId": "audio",
-      "categoryName": "Audio Devices",
-      "items": [
-        {
-          "id": 1,
-          "heading": "Apple AirPods Pro (2nd Gen) with Up to 15% Off",
-          "description": "Experience immersive sound with AirPods Pro and advanced features.",
-          "tags": ["Verified", "Premium"],
-          "websiteLink": "https://www.apple.com/in",
-          "viewDetail": {
-            "discount": "Up to 15% off on AirPods Pro",
-            "discountPercentage": "15%",
-            "more": "Active noise cancellation & transparency mode",
-            "redem": "Direct discount—no code needed",
-            "offer": "Free engraving available"
-          }
-        }
-      ]
-    },
-    {
-      "categoryId": "apple-products",
-      "categoryName": "Apple Products Deals",
-      "items": [
-        {
-          "id": 2,
-          "heading": "Save on Apple Accessories & Devices",
-          "description": "Explore deals on Apple accessories and selected devices.",
-          "tags": ["Verified"],
-          "websiteLink": "https://www.apple.com/in",
-          "viewDetail": {
-            "discount": "Up to 10% off on selected products",
-            "discountPercentage": "10%",
-            "more": "AirPods, accessories, and select Apple devices",
-            "redem": "Discount auto-applied on product page",
-            "offer": "Limited-time premium deals"
-          }
-        }
-      ]
-    }
-  ]
-
             }
           }
         ]
@@ -3216,7 +2497,7 @@
             "website": "https://www.myntra.com",
             "discount":"35%",
             "heading": "Myntra – India's Fashion Destination",
-            "about": "Save big on clothing, footwear & accessories with Myntra coupons. Enjoy up to 80% OFF on top brands like Nike, Puma, H&M & more.",
+            "about": "Myntra coupon codes and deals for clothing, footwear and accessories, with every offer currently listed and a direct link to the Myntra store.",
             "offers": {
 "coupons": [
     {
@@ -3229,7 +2510,7 @@
           "description": "New to Myntra? Get flat 20% discount on your first order.",
           "couponCode": "MYNTRA20",
           "userType": "new",
-          "tags": ["Verified", "New User"],
+          "tags": ["New User"],
           "websiteLink": "https://www.myntra.com",
           "viewDetail": {
             "discount": "20% instant discount on first purchase",
@@ -3251,7 +2532,7 @@
           "description": "Shop from premium brands and save extra 15%.",
           "couponCode": "BRAND15",
           "userType": "all",
-          "tags": ["Verified", "Premium"],
+          "tags": ["Premium"],
           "websiteLink": "https://www.myntra.com",
           "viewDetail": {
             "discount": "15% extra discount on branded products",
@@ -3267,7 +2548,7 @@
           "description": "Shop more, save more with flat ₹500 discount.",
           "couponCode": "SAVE500",
           "userType": "new",
-          "tags": ["Verified", "Flash Sale"],
+          "tags": ["Flash Sale"],
           "websiteLink": "https://www.myntra.com",
           "viewDetail": {
             "discount": "Flat ₹500 discount on cart value ₹2999+",
@@ -3289,7 +2570,7 @@
           "id": 1,
           "heading": "End of Season Sale | Up to 80% Off on Fashion",
           "description": "Myntra's biggest fashion sale with massive discounts across categories.",
-          "tags": ["Verified", "Mega Sale"],
+          "tags": ["Mega Sale"],
           "websiteLink": "https://www.myntra.com",
           "viewDetail": {
             "discount": "Up to 80% off on fashion products",
@@ -3309,7 +2590,7 @@
           "id": 2,
           "heading": "Nike Shoes Starting at Just ₹1999",
           "description": "Grab stylish and performance footwear at great prices.",
-          "tags": ["Verified", "Hot Deal"],
+          "tags": ["Hot Deal"],
           "websiteLink": "https://www.myntra.com",
           "viewDetail": {
             "discount": "Nike shoes starting from ₹1999",
@@ -3329,7 +2610,7 @@
           "id": 3,
           "heading": "H&M Fashion Collection with Up to 50% Off",
           "description": "Upgrade your wardrobe with trendy H&M styles.",
-          "tags": ["Verified", "Trending"],
+          "tags": ["Trending"],
           "websiteLink": "https://www.myntra.com",
           "viewDetail": {
             "discount": "Up to 50% off on H&M apparel",
@@ -3349,7 +2630,7 @@
           "id": 4,
           "heading": "Buy 3 Get 30% Off on All Products",
           "description": "Shop more and save more across categories.",
-          "tags": ["Verified", "Bundle Offer"],
+          "tags": ["Bundle Offer"],
           "websiteLink": "https://www.myntra.com",
           "viewDetail": {
             "discount": "30% off on 3+ items",
@@ -3372,7 +2653,7 @@
             "website": "https://www.ajio.com",
             "discount":"40%",
             "heading": "Ajio – Fashion & Lifestyle Store",
-            "about": "Discover latest fashion trends with Ajio. Get exclusive deals on ethnic wear, western wear, footwear and accessories.",
+            "about": "Ajio coupon codes and deals for ethnic wear, western wear, footwear and accessories, with every offer currently listed and a direct link to the Ajio store.",
             "offers": {
   "coupons": [
     {
@@ -3385,7 +2666,7 @@
           "description": "Shop from top fashion brands and save an extra 25%.",
           "couponCode": "AJIO25",
           "userType": "all",
-          "tags": ["Verified", "Flash Sale"],
+          "tags": ["Flash Sale"],
           "websiteLink": "https://www.ajio.com",
           "viewDetail": {
             "discount": "25% additional discount on branded fashion",
@@ -3407,7 +2688,7 @@
           "description": "Grab stylish sneakers, heels & casual shoes at discounted prices.",
           "couponCode": "SHOES20",
           "userType": "new",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.ajio.com",
           "viewDetail": {
             "discount": "Flat 20% off on footwear",
@@ -3429,7 +2710,7 @@
           "id": 1,
           "heading": "Ethnic Wear Sale | Up to 70% Off",
           "description": "Shop festive styles with huge discounts on ethnic collections.",
-          "tags": ["Verified", "Festive Sale"],
+          "tags": ["Festive Sale"],
           "websiteLink": "https://www.ajio.com",
           "viewDetail": {
             "discount": "Up to 70% off on ethnic wear",
@@ -3449,7 +2730,7 @@
           "id": 2,
           "heading": "Ajio Fashion Sale – Up to 60% Off on Top Brands",
           "description": "Explore stylish collections across categories with great discounts.",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.ajio.com",
           "viewDetail": {
             "discount": "Up to 60% off on fashion products",
@@ -3479,7 +2760,7 @@
             "website": "https://paytm.com",
             "discount":"35%",
             "heading": "Paytm – Mobile Recharge & Bill Payments",
-            "about": "Get instant cashback and discount offers on mobile recharge, DTH recharge & bill payments. Save more with Paytm wallet cashback.",
+            "about": "Paytm coupon codes and deals for mobile recharge, DTH recharge and bill payments, with every offer currently listed and a direct link to Paytm.",
             "offers": {
 "coupons": [
     {
@@ -3492,7 +2773,7 @@
           "description": "New users get flat ₹50 cashback on first mobile recharge of ₹149 or more.",
           "couponCode": "MOBILE50",
           "userType": "new",
-          "tags": ["Verified", "New User"],
+          "tags": ["New User"],
           "websiteLink": "https://paytm.com",
           "viewDetail": {
             "discount": "₹50 Paytm wallet cashback on first recharge",
@@ -3508,7 +2789,7 @@
           "description": "Recharge your DTH and earn guaranteed cashback.",
           "couponCode": "DTH30",
           "userType": "all",
-          "tags": ["Verified", "Cashback"],
+          "tags": ["Cashback"],
           "websiteLink": "https://paytm.com",
           "viewDetail": {
             "discount": "₹30 cashback on DTH recharge of ₹300+",
@@ -3530,7 +2811,7 @@
           "description": "Pay your electricity bill and get ₹100 cashback on payments above ₹1000.",
           "couponCode": "BILL100",
           "userType": "all",
-          "tags": ["Verified", "Utility"],
+          "tags": ["Utility"],
           "websiteLink": "https://paytm.com",
           "viewDetail": {
             "discount": "₹100 cashback on electricity bill payment",
@@ -3552,7 +2833,7 @@
           "id": 1,
           "heading": "Paytm Postpaid – Get ₹500 Instant Credit",
           "description": "Activate Paytm Postpaid and enjoy buy now, pay later सुविधा.",
-          "tags": ["Verified", "Credit"],
+          "tags": ["Credit"],
           "websiteLink": "https://paytm.com",
           "viewDetail": {
             "discount": "₹500 instant credit on activation",
@@ -3572,7 +2853,7 @@
           "id": 2,
           "heading": "Broadband Bill Payment – Flat 5% Cashback",
           "description": "Pay your broadband bills and earn cashback instantly.",
-          "tags": ["Verified", "Recurring"],
+          "tags": ["Recurring"],
           "websiteLink": "https://paytm.com",
           "viewDetail": {
             "discount": "5% cashback up to ₹200",
@@ -3586,7 +2867,7 @@
           "id": 4,
           "heading": "Gas Cylinder Booking – ₹50 Cashback",
           "description": "Book LPG cylinders and save on every refill.",
-          "tags": ["Verified", "Essential"],
+          "tags": ["Essential"],
           "websiteLink": "https://paytm.com",
           "viewDetail": {
             "discount": "₹50 cashback on gas booking",
@@ -3606,7 +2887,7 @@
           "id": 3,
           "heading": "FASTag Recharge – Get ₹75 Cashback",
           "description": "Recharge FASTag and save instantly on toll payments.",
-          "tags": ["Verified", "Transport"],
+          "tags": ["Transport"],
           "websiteLink": "https://paytm.com",
           "viewDetail": {
             "discount": "₹75 cashback on recharge ₹500+",
@@ -3628,7 +2909,7 @@
             "website": "https://www.phonepe.com",
             "discount":"28%",
             "heading": "PhonePe – Recharge & Payments",
-            "about": "Recharge mobile, pay bills and earn cashback with PhonePe. Get instant discounts on every transaction.",
+            "about": "PhonePe coupon codes and deals for mobile recharge and bill payments, with every offer currently listed and a direct link to PhonePe.",
             "offers": {
   "coupons": [
     {
@@ -3641,7 +2922,7 @@
           "description": "Recharge your mobile on PhonePe and earn guaranteed cashback on every recharge.",
           "couponCode": "PHN40",
           "userType": "new",
-          "tags": ["Verified", "Cashback"],
+          "tags": ["Cashback"],
           "websiteLink": "https://www.phonepe.com",
           "viewDetail": {
             "discount": "₹40 cashback on mobile recharge",
@@ -3663,7 +2944,7 @@
           "description": "Pay electricity bills via PhonePe and get instant cashback.",
           "couponCode": "BILL75",
           "userType": "all",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.phonepe.com",
           "viewDetail": {
             "discount": "₹75 cashback on bill payments",
@@ -3685,7 +2966,7 @@
           "id": 1,
           "heading": "Switch to PhonePe – Get ₹100 Sign-Up Bonus",
           "description": "New users can earn a bonus after completing their first transaction.",
-          "tags": ["Verified", "Welcome Offer"],
+          "tags": ["Welcome Offer"],
           "websiteLink": "https://www.phonepe.com",
           "viewDetail": {
             "discount": "₹100 welcome bonus",
@@ -3705,7 +2986,7 @@
           "id": 2,
           "heading": "Recharge Offers – Earn Cashback on Payments",
           "description": "Get rewards and cashback on mobile recharges and bill payments.",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.phonepe.com",
           "viewDetail": {
             "discount": "Up to 10% cashback on transactions",
@@ -3735,7 +3016,7 @@
             "website": "https://www.makemytrip.com",
             "discount":"45%",
             "heading": "MakeMyTrip – Flights, Hotels & Holiday Packages",
-            "about": "Book flights, hotels and holiday packages with exclusive MakeMyTrip coupons. Get instant discounts and cashback on domestic & international travel.",
+            "about": "MakeMyTrip coupon codes and deals for flights, hotels and holiday packages, with every offer currently listed and a direct link to MakeMyTrip.",
             "offers": {
  "coupons": [
     {
@@ -3748,7 +3029,7 @@
           "description": "Book domestic flights and save instantly on your travel bookings.",
           "couponCode": "FLYMMT",
           "userType": "all",
-          "tags": ["Verified", "Flight Deal"],
+          "tags": ["Flight Deal"],
           "websiteLink": "https://www.makemytrip.com",
           "viewDetail": {
             "discount": "₹3000 instant discount on domestic flights",
@@ -3764,7 +3045,7 @@
           "description": "Planning international travel? Save big on flight bookings.",
           "couponCode": "INTFLY",
           "userType": "new",
-          "tags": ["Verified", "International"],
+          "tags": ["International"],
           "websiteLink": "https://www.makemytrip.com",
           "viewDetail": {
             "discount": "₹5000 off on international flight bookings",
@@ -3786,7 +3067,7 @@
           "description": "Book hotels and get huge discounts on stays worldwide.",
           "couponCode": "MMTHOTEL",
           "userType": "all",
-          "tags": ["Verified", "Hotel Deal"],
+          "tags": ["Hotel Deal"],
           "websiteLink": "https://www.makemytrip.com",
           "viewDetail": {
             "discount": "Up to 60% + extra 15% on hotel bookings",
@@ -3808,7 +3089,7 @@
           "id": 1,
           "heading": "Weekend Getaway Packages Starting at ₹4999",
           "description": "Plan quick trips with curated travel packages.",
-          "tags": ["Verified", "Package Deal"],
+          "tags": ["Package Deal"],
           "websiteLink": "https://www.makemytrip.com",
           "viewDetail": {
             "discount": "Packages starting from ₹4999/person",
@@ -3828,7 +3109,7 @@
           "id": 2,
           "heading": "Visa Services – Get ₹500 Off on Processing",
           "description": "Apply for visas with expert assistance and save on fees.",
-          "tags": ["Verified", "Service"],
+          "tags": ["Service"],
           "websiteLink": "https://www.makemytrip.com",
           "viewDetail": {
             "discount": "₹500 off on visa processing",
@@ -3848,7 +3129,7 @@
           "id": 3,
           "heading": "Rail Booking – Flat ₹150 Cashback",
           "description": "Book train tickets and earn cashback.",
-          "tags": ["Verified", "Rail"],
+          "tags": ["Rail"],
           "websiteLink": "https://www.makemytrip.com",
           "viewDetail": {
             "discount": "₹150 cashback on train booking",
@@ -3868,7 +3149,7 @@
           "id": 4,
           "heading": "Bus Booking – Get 25% Off on Tickets",
           "description": "Travel across India with discounted bus tickets.",
-          "tags": ["Verified", "Bus Deal"],
+          "tags": ["Bus Deal"],
           "websiteLink": "https://www.makemytrip.com",
           "viewDetail": {
             "discount": "25% off on bus bookings",
@@ -3891,7 +3172,7 @@
             "website": "https://www.goibibo.com",
             "discount":"30%",
             "heading": "Goibibo – Smart Travel Booking",
-            "about": "Book cheap flights, hotels and buses with Goibibo. Earn GoCash on every booking and save more on your next trip.",
+            "about": "Goibibo coupon codes and deals for flights, hotels and bus bookings, with every offer currently listed and a direct link to Goibibo.",
             "offers": {
   "coupons": [
     {
@@ -3904,7 +3185,7 @@
           "description": "Book domestic or international flights and save instantly with Goibibo.",
           "couponCode": "GOFLIGHT",
           "userType": "all",
-          "tags": ["Verified", "Flight"],
+          "tags": ["Flight"],
           "websiteLink": "https://www.goibibo.com",
           "viewDetail": {
             "discount": "₹2500 instant discount on flight bookings",
@@ -3926,7 +3207,7 @@
           "description": "Book hotels at discounted prices across India.",
           "couponCode": "GOHOTEL",
           "userType": "all",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.goibibo.com",
           "viewDetail": {
             "discount": "Up to 50% off on hotels",
@@ -3948,7 +3229,7 @@
           "id": 1,
           "heading": "Hotel Booking – Flat 25% Off + GoCash Rewards",
           "description": "Book hotels at discounted prices and earn rewards.",
-          "tags": ["Verified", "Hotel"],
+          "tags": ["Hotel"],
           "websiteLink": "https://www.goibibo.com",
           "viewDetail": {
             "discount": "25% off on hotel bookings",
@@ -3968,7 +3249,7 @@
           "id": 2,
           "heading": "Earn GoCash on Every Booking",
           "description": "Book flights, hotels or buses and earn GoCash for future savings.",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.goibibo.com",
           "viewDetail": {
             "discount": "Earn reward points on bookings",
@@ -3994,11 +3275,11 @@
           {
             "id": 1,
             "brandName": "PharmEasy",
-            "brandLogo": "/dealImg/boat-logo-png_seeklogo-379185 1.png",
+            "brandLogo": "/dealImg/PharmEasy_logo.png",
             "website": "https://pharmeasy.in",
             "discount":"55%",
             "heading": "PharmEasy – India's Leading Online Pharmacy",
-            "about": "Order medicines online and save with PharmEasy coupons. Get up to 30% off on medicines, healthcare products, and diagnostic tests with doorstep delivery.",
+            "about": "PharmEasy coupon codes and deals for medicines, health products and diagnostic tests, with every offer currently listed and a direct link to PharmEasy.",
             "offers": {
   "coupons": [
     {
@@ -4011,7 +3292,7 @@
           "description": "New to PharmEasy? Get 25% discount on your first medicine order.",
           "couponCode": "FIRST25",
           "userType": "new",
-          "tags": ["Verified", "New User"],
+          "tags": ["New User"],
           "websiteLink": "https://pharmeasy.in",
           "viewDetail": {
             "discount": "25% instant discount on first order",
@@ -4027,7 +3308,7 @@
           "description": "Shop vitamins, supplements and health products with exclusive discount.",
           "couponCode": "HEALTH20",
           "userType": "all",
-          "tags": ["Verified", "Wellness"],
+          "tags": ["Wellness"],
           "websiteLink": "https://pharmeasy.in",
           "viewDetail": {
             "discount": "20% off on health supplements category",
@@ -4049,7 +3330,7 @@
           "description": "Book comprehensive health packages and save on lab tests at home.",
           "couponCode": "LAB500",
           "userType": "new",
-          "tags": ["Verified", "Diagnostics"],
+          "tags": ["Diagnostics"],
           "websiteLink": "https://pharmeasy.in",
           "viewDetail": {
             "discount": "Flat ₹500 off on diagnostic packages",
@@ -4071,7 +3352,7 @@
           "id": 1,
           "heading": "PharmEasy Plus Membership – Save Up to 30% on All Orders",
           "description": "Subscribe and unlock extra savings with free delivery.",
-          "tags": ["Verified", "Membership"],
+          "tags": ["Membership"],
           "websiteLink": "https://pharmeasy.in",
           "viewDetail": {
             "discount": "Up to 30% off on all orders",
@@ -4091,7 +3372,7 @@
           "id": 2,
           "heading": "Healthcare Devices – Up to 50% Off",
           "description": "Shop essential medical devices at discounted prices.",
-          "tags": ["Verified", "Devices"],
+          "tags": ["Devices"],
           "websiteLink": "https://pharmeasy.in",
           "viewDetail": {
             "discount": "Up to 50% off on devices",
@@ -4111,7 +3392,7 @@
           "id": 3,
           "heading": "Diabetes Care Products – Flat 30% Off",
           "description": "Special discounts on diabetes management products.",
-          "tags": ["Verified", "Special Care"],
+          "tags": ["Special Care"],
           "websiteLink": "https://pharmeasy.in",
           "viewDetail": {
             "discount": "30% off on diabetes care",
@@ -4131,7 +3412,7 @@
           "id": 4,
           "heading": "Baby Care Products – Buy 2 Get 1 Free",
           "description": "Save more on baby essentials with bundle offers.",
-          "tags": ["Verified", "Baby Care"],
+          "tags": ["Baby Care"],
           "websiteLink": "https://pharmeasy.in",
           "viewDetail": {
             "discount": "Buy 2 Get 1 Free",
@@ -4153,7 +3434,7 @@
             "website": "https://www.1mg.com",
             "discount":"15%",
             "heading": "1mg – Online Medicine & Healthcare",
-            "about": "India's trusted online pharmacy. Order medicines, book lab tests and consult doctors online. Get genuine medicines at discounted prices.",
+            "about": "1mg coupon codes and deals for medicines, lab tests and online doctor consultations, with every offer currently listed and a direct link to 1mg.",
             "offers": {
 "coupons": [
     {
@@ -4166,7 +3447,7 @@
           "description": "Save on prescription medicines with instant discount.",
           "couponCode": "MED20",
           "userType": "all",
-          "tags": ["Verified", "Medicine"],
+          "tags": ["Medicine"],
           "websiteLink": "https://www.1mg.com",
           "viewDetail": {
             "discount": "20% instant discount on medicines",
@@ -4188,7 +3469,7 @@
           "description": "Book lab tests from home and save on diagnostics.",
           "couponCode": "LAB400",
           "userType": "all",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.1mg.com",
           "viewDetail": {
             "discount": "₹400 off on lab test bookings",
@@ -4210,7 +3491,7 @@
           "id": 1,
           "heading": "Health Checkup Packages Starting at ₹399",
           "description": "Book affordable health checkups with home sample collection.",
-          "tags": ["Verified", "Lab Tests"],
+          "tags": ["Lab Tests"],
           "websiteLink": "https://www.1mg.com",
           "viewDetail": {
             "discount": "Packages starting from ₹399",
@@ -4230,7 +3511,7 @@
           "id": 2,
           "heading": "Online Doctor Consultation – Starting at ₹199",
           "description": "Consult certified doctors online from the comfort of your home.",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.1mg.com",
           "viewDetail": {
             "discount": "Consultation starting from ₹199",
@@ -4260,7 +3541,7 @@
             "website": "https://www.decathlon.in",
             "discount":"43%",
             "heading": "Decathlon India – Sports & Fitness Equipment",
-            "about": "Shop sports gear, fitness equipment and sportswear at Decathlon. Get best deals on cycling, running, swimming, gym equipment & outdoor sports.",
+            "about": "Decathlon coupon codes and deals for sports gear, fitness equipment and sportswear, with every offer currently listed and a direct link to Decathlon.",
             "offers": {
   "coupons": [
     {
@@ -4273,7 +3554,7 @@
           "description": "Upgrade your ride! Get instant discount on all bicycles.",
           "couponCode": "CYCLE500",
           "userType": "new",
-          "tags": ["Verified", "Cycling"],
+          "tags": ["Cycling"],
           "websiteLink": "https://www.decathlon.in",
           "viewDetail": {
             "discount": "₹500 instant discount on all cycles",
@@ -4295,7 +3576,7 @@
           "description": "Build your home gym with discounts on essential equipment.",
           "couponCode": "FIT20",
           "userType": "all",
-          "tags": ["Verified", "Fitness"],
+          "tags": ["Fitness"],
           "websiteLink": "https://www.decathlon.in",
           "viewDetail": {
             "discount": "20% off on fitness equipment category",
@@ -4317,7 +3598,7 @@
           "description": "Shop performance sportswear and athleisure at discounted prices.",
           "couponCode": "SPORT15",
           "userType": "new",
-          "tags": ["Verified", "Apparel"],
+          "tags": ["Apparel"],
           "websiteLink": "https://www.decathlon.in",
           "viewDetail": {
             "discount": "Extra 15% off on sportswear",
@@ -4339,7 +3620,7 @@
           "id": 1,
           "heading": "Camping Equipment – Up to 50% Off",
           "description": "Get ready for outdoor adventures with discounted camping gear.",
-          "tags": ["Verified", "Outdoor"],
+          "tags": ["Outdoor"],
           "websiteLink": "https://www.decathlon.in",
           "viewDetail": {
             "discount": "Up to 50% off on camping gear",
@@ -4359,7 +3640,7 @@
           "id": 2,
           "heading": "Swimming Essentials Starting at ₹199",
           "description": "Affordable swimming gear for beginners and pros.",
-          "tags": ["Verified", "Swimming"],
+          "tags": ["Swimming"],
           "websiteLink": "https://www.decathlon.in",
           "viewDetail": {
             "discount": "Products starting from ₹199",
@@ -4379,7 +3660,7 @@
           "id": 3,
           "heading": "Badminton Rackets – Buy 1 Get 1 at 50% Off",
           "description": "Ideal deal for badminton enthusiasts.",
-          "tags": ["Verified", "Racquet Sports"],
+          "tags": ["Racquet Sports"],
           "websiteLink": "https://www.decathlon.in",
           "viewDetail": {
             "discount": "Buy 1 Get 1 at 50% off",
@@ -4399,7 +3680,7 @@
           "id": 4,
           "heading": "Football & Cricket Gear – Flat 30% Off",
           "description": "Shop essential gear for team sports at great prices.",
-          "tags": ["Verified", "Team Sports"],
+          "tags": ["Team Sports"],
           "websiteLink": "https://www.decathlon.in",
           "viewDetail": {
             "discount": "Flat 30% off on sports gear",
@@ -4421,7 +3702,7 @@
             "website": "https://www.nike.com/in",
             "discount":"20%",
             "heading": "Nike India – Athletic Footwear & Apparel",
-            "about": "Just Do It with Nike. Shop the latest sneakers, sportswear and athletic gear. Get exclusive deals on running shoes, basketball shoes & training apparel.",
+            "about": "Nike coupon codes and deals for sneakers, sportswear and training apparel, with every offer currently listed and a direct link to the Nike store.",
             "offers": {
   "coupons": [
     {
@@ -4434,7 +3715,7 @@
           "description": "Step up your game with premium Nike shoes and save instantly.",
           "couponCode": "NIKE1000",
           "userType": "all",
-          "tags": ["Verified", "Footwear"],
+          "tags": ["Footwear"],
           "websiteLink": "https://www.nike.com/in",
           "viewDetail": {
             "discount": "₹1000 instant discount on shoes",
@@ -4456,7 +3737,7 @@
           "description": "Shop Nike t-shirts, shorts, hoodies & activewear at discounted prices.",
           "couponCode": "NIKE15",
           "userType": "new",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.nike.com/in",
           "viewDetail": {
             "discount": "15% off on apparel",
@@ -4478,7 +3759,7 @@
           "id": 1,
           "heading": "Nike Sale – Up to 40% Off on Select Styles",
           "description": "Grab premium Nike footwear at discounted prices.",
-          "tags": ["Verified", "Sale"],
+          "tags": ["Sale"],
           "websiteLink": "https://www.nike.com/in",
           "viewDetail": {
             "discount": "Up to 40% off on sale items",
@@ -4498,7 +3779,7 @@
           "id": 2,
           "heading": "Nike Apparel Sale – Up to 35% Off",
           "description": "Upgrade your sportswear collection with stylish Nike apparel.",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.nike.com/in",
           "viewDetail": {
             "discount": "Up to 35% off on apparel",
@@ -4524,11 +3805,11 @@
           {
             "id": 1,
             "brandName": "Netflix",
-            "brandLogo": "/dealImg/decathlon-logo 1.png",
+            "brandLogo": "/dealImg/netflix-vector-flat-logo-735811696261671nhzlvgcmyf.png",
             "website": "https://www.netflix.com",
             "discount":"10%",
             "heading": "Netflix – Watch Unlimited Movies & TV Shows",
-            "about": "Stream award-winning series, movies, documentaries and more. Get Netflix subscription deals and offers for unlimited entertainment.",
+            "about": "Netflix coupon codes and deals for streaming subscriptions covering series, films and documentaries, with every offer currently listed and a link to Netflix.",
             "offers": {
   "coupons": [
     {
@@ -4541,7 +3822,7 @@
           "description": "Unlimited streaming on your mobile device at an affordable price.",
           "couponCode": null,
           "userType": "all",
-          "tags": ["Verified", "Mobile Plan"],
+          "tags": ["Mobile Plan"],
           "websiteLink": "https://www.netflix.com",
           "viewDetail": {
             "discount": "Starts at ₹149/month",
@@ -4557,7 +3838,7 @@
           "description": "Enjoy Ultra HD streaming on multiple devices.",
           "couponCode": null,
           "userType": "all",
-          "tags": ["Verified", "Premium"],
+          "tags": ["Premium"],
           "websiteLink": "https://www.netflix.com",
           "viewDetail": {
             "discount": "Premium plan for ₹649/month",
@@ -4579,7 +3860,7 @@
           "description": "Jio users can get Netflix subscription included with eligible plans.",
           "couponCode": null,
           "userType": "all",
-          "tags": ["Verified", "Telecom Offer"],
+          "tags": ["Telecom Offer"],
           "websiteLink": "https://www.netflix.com",
           "viewDetail": {
             "discount": "Free Netflix with Jio plans",
@@ -4601,7 +3882,7 @@
           "id": 1,
           "heading": "First Month Free – Try Netflix Risk-Free",
           "description": "Explore all content with a free trial for new users.",
-          "tags": ["Verified", "Trial"],
+          "tags": ["Trial"],
           "websiteLink": "https://www.netflix.com",
           "viewDetail": {
             "discount": "30-day free trial",
@@ -4621,7 +3902,7 @@
           "id": 2,
           "heading": "Student Discount – Save 20% on Subscription",
           "description": "Exclusive pricing for students on select plans.",
-          "tags": ["Verified", "Student"],
+          "tags": ["Student"],
           "websiteLink": "https://www.netflix.com",
           "viewDetail": {
             "discount": "20% off on subscription",
@@ -4641,7 +3922,7 @@
           "id": 3,
           "heading": "Prepaid Annual Plan – Pay Yearly & Save 15%",
           "description": "Save more with yearly subscription billing.",
-          "tags": ["Verified", "Annual"],
+          "tags": ["Annual"],
           "websiteLink": "https://www.netflix.com",
           "viewDetail": {
             "discount": "15% savings on annual plan",
@@ -4661,7 +3942,7 @@
           "id": 4,
           "heading": "Gift Cards Available – Perfect Gift for Entertainment Lovers",
           "description": "Gift Netflix subscriptions easily with prepaid cards.",
-          "tags": ["Verified", "Gift"],
+          "tags": ["Gift"],
           "websiteLink": "https://www.netflix.com",
           "viewDetail": {
             "discount": "Gift cards available from ₹500",
@@ -4683,7 +3964,7 @@
             "website": "https://www.primevideo.com",
             "discount":"5%",
             "heading": "Amazon Prime Video – Watch Movies & Originals",
-            "about": "Stream thousands of movies, TV shows and Amazon Originals. Included with Amazon Prime membership plus shopping benefits.",
+            "about": "Amazon Prime Video coupon codes and deals for streaming films, TV shows and Originals, with every offer currently listed and a link to Prime Video.",
             "offers": {
   "coupons": [
     {
@@ -4696,7 +3977,7 @@
           "description": "Get Amazon Prime membership with Prime Video, free delivery and exclusive shopping deals.",
           "couponCode": null,
           "userType": "all",
-          "tags": ["Verified", "Membership"],
+          "tags": ["Membership"],
           "websiteLink": "https://www.primevideo.com",
           "viewDetail": {
             "discount": "Annual membership for ₹1499",
@@ -4718,7 +3999,7 @@
           "description": "Select Airtel prepaid and postpaid plans include Amazon Prime Video subscription.",
           "couponCode": null,
           "userType": "all",
-          "tags": ["Verified", "Telecom Offer"],
+          "tags": ["Telecom Offer"],
           "websiteLink": "https://www.primevideo.com",
           "viewDetail": {
             "discount": "Free Prime Video with Airtel plans",
@@ -4740,7 +4021,7 @@
           "id": 1,
           "heading": "Student Membership – Get Prime at 50% Off",
           "description": "Students can enjoy Prime membership at discounted pricing.",
-          "tags": ["Verified", "Student"],
+          "tags": ["Student"],
           "websiteLink": "https://www.primevideo.com",
           "viewDetail": {
             "discount": "50% off Prime membership",
@@ -4760,7 +4041,7 @@
           "id": 2,
           "heading": "Amazon Prime – Annual Membership ₹1499",
           "description": "Enjoy full Prime benefits including video streaming and fast delivery.",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.primevideo.com",
           "viewDetail": {
             "discount": "Full membership access at ₹1499/year",
@@ -4790,7 +4071,7 @@
             "website": "https://www.nykaa.com",
             "discount":"45%",
             "heading": "Nykaa – Beauty & Cosmetics Destination",
-            "about": "Shop makeup, skincare, haircare and personal care products from top brands. Get exclusive Nykaa coupons on cosmetics, fragrances and beauty tools.",
+            "about": "Nykaa coupon codes and deals for makeup, skincare, haircare and fragrances, with every offer currently listed and a direct link to the Nykaa store.",
             "offers": {
 
   "coupons": [
@@ -4804,7 +4085,7 @@
           "description": "New to Nykaa? Get 20% discount on your first beauty purchase.",
           "couponCode": "BEAUTY20",
           "userType": "new",
-          "tags": ["Verified", "New User"],
+          "tags": ["New User"],
           "websiteLink": "https://www.nykaa.com",
           "viewDetail": {
             "discount": "20% instant discount on first order",
@@ -4826,7 +4107,7 @@
           "description": "Shop premium international brands with extra discount.",
           "couponCode": "LUXURY15",
           "userType": "new",
-          "tags": ["Verified", "Premium"],
+          "tags": ["Premium"],
           "websiteLink": "https://www.nykaa.com",
           "viewDetail": {
             "discount": "15% additional discount on luxury brands",
@@ -4842,7 +4123,7 @@
           "description": "Pamper your skin with premium skincare products.",
           "couponCode": "SKIN300",
           "userType": "new",
-          "tags": ["Verified", "Skincare"],
+          "tags": ["Skincare"],
           "websiteLink": "https://www.nykaa.com",
           "viewDetail": {
             "discount": "Flat ₹300 off on skincare products",
@@ -4864,7 +4145,7 @@
           "id": 1,
           "heading": "Nykaa Hot Pink Sale – Up to 50% Off + Free Gifts",
           "description": "Shop Nykaa’s biggest beauty sale with huge discounts and freebies.",
-          "tags": ["Verified", "Mega Sale"],
+          "tags": ["Mega Sale"],
           "websiteLink": "https://www.nykaa.com",
           "viewDetail": {
             "discount": "Up to 50% off on beauty products",
@@ -4884,7 +4165,7 @@
           "id": 2,
           "heading": "Lipstick Mania – Buy 2 Get 1 Free",
           "description": "Grab your favorite lipsticks with bundle savings.",
-          "tags": ["Verified", "Makeup"],
+          "tags": ["Makeup"],
           "websiteLink": "https://www.nykaa.com",
           "viewDetail": {
             "discount": "Buy 2 Get 1 Free",
@@ -4904,7 +4185,7 @@
           "id": 3,
           "heading": "Fragrance Festival – Perfumes Starting at ₹299",
           "description": "Affordable luxury fragrances for every occasion.",
-          "tags": ["Verified", "Fragrance"],
+          "tags": ["Fragrance"],
           "websiteLink": "https://www.nykaa.com",
           "viewDetail": {
             "discount": "Starting at ₹299",
@@ -4924,7 +4205,7 @@
           "id": 4,
           "heading": "Haircare Combo Deals – Save Up to 40%",
           "description": "Salon-quality haircare at discounted combo prices.",
-          "tags": ["Verified", "Haircare"],
+          "tags": ["Haircare"],
           "websiteLink": "https://www.nykaa.com",
           "viewDetail": {
             "discount": "Up to 40% off on combos",
@@ -4946,7 +4227,7 @@
             "website": "https://www.sugarcosmetics.com",
             "discount":"5%",
             "heading": "Sugar Cosmetics – Makeup That Performs",
-            "about": "India's leading makeup brand. Shop long-lasting lipsticks, foundations, eyeliners and more. Cruelty-free and dermatologically tested products.",
+            "about": "Sugar Cosmetics coupon codes and deals for lipsticks, foundations, eyeliners and other makeup, with every offer currently listed and a link to Sugar.",
             "offers": {
   "coupons": [
     {
@@ -4959,7 +4240,7 @@
           "description": "Get your Sugar favorites at discounted prices.",
           "couponCode": "SUGAR25",
           "userType": "all",
-          "tags": ["Verified", "Sitewide"],
+          "tags": ["Sitewide"],
           "websiteLink": "https://www.sugarcosmetics.com",
           "viewDetail": {
             "discount": "25% instant discount on all products",
@@ -4981,7 +4262,7 @@
           "description": "Save more when you shop curated makeup combos.",
           "couponCode": "MAKEUP15",
           "userType": "all",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.sugarcosmetics.com",
           "viewDetail": {
             "discount": "15% extra discount on combo products",
@@ -5003,7 +4284,7 @@
           "id": 1,
           "heading": "Mini Makeup Kits Starting at ₹499",
           "description": "Complete makeup kits perfect for gifting or travel. Includes lipstick, kajal and more.",
-          "tags": ["Verified", "Kit"],
+          "tags": ["Kit"],
           "websiteLink": "https://www.sugarcosmetics.com",
           "viewDetail": {
             "discount": "Makeup kits from ₹499 only",
@@ -5033,7 +4314,7 @@
             "website": "https://www.swiggy.com",
             "discount":"100%",
             "heading": "Swiggy – Food Delivery & Grocery",
-            "about": "Order food from your favorite restaurants with Swiggy. Get instant discounts, free delivery and exclusive bank offers on food delivery and grocery.",
+            "about": "Swiggy coupon codes and deals for food delivery and grocery orders, with every offer currently listed and a direct link to Swiggy.",
             "offers": {
   "coupons": [
     {
@@ -5046,7 +4327,7 @@
           "description": "New to Swiggy? Get big savings on your first food order.",
           "couponCode": "WELCOME60",
           "userType": "new",
-          "tags": ["Verified", "New User"],
+          "tags": ["New User"],
           "websiteLink": "https://www.swiggy.com",
           "viewDetail": {
             "discount": "60% off up to ₹100 on first order",
@@ -5068,7 +4349,7 @@
           "description": "Order your favorite meal and save instantly.",
           "couponCode": "FEAST125",
           "userType": "new",
-          "tags": ["Verified", "Food"],
+          "tags": ["Food"],
           "websiteLink": "https://www.swiggy.com",
           "viewDetail": {
             "discount": "Flat ₹125 off on food orders",
@@ -5090,7 +4371,7 @@
           "description": "Get groceries delivered in minutes with instant savings.",
           "couponCode": "INSTA100",
           "userType": "new",
-          "tags": ["Verified", "Grocery"],
+          "tags": ["Grocery"],
           "websiteLink": "https://www.swiggy.com",
           "viewDetail": {
             "discount": "₹100 instant discount on groceries",
@@ -5112,7 +4393,7 @@
           "id": 1,
           "heading": "Swiggy One Membership – Free Delivery + Extra Discounts",
           "description": "Subscribe to Swiggy One and get unlimited free delivery plus exclusive discounts on every order.",
-          "tags": ["Verified", "Membership"],
+          "tags": ["Membership"],
           "websiteLink": "https://www.swiggy.com",
           "viewDetail": {
             "discount": "Free delivery on all orders",
@@ -5132,7 +4413,7 @@
           "id": 2,
           "heading": "Flash Deals – Up to 50% Off on Select Restaurants",
           "description": "Limited time flash deals on popular restaurants. Get up to 50% off on meals.",
-          "tags": ["Verified", "Flash Deal"],
+          "tags": ["Flash Deal"],
           "websiteLink": "https://www.swiggy.com",
           "viewDetail": {
             "discount": "Up to 50% off on flash deal restaurants",
@@ -5152,7 +4433,7 @@
           "id": 3,
           "heading": "Bank Offers – Flat ₹150 Cashback",
           "description": "Pay with select bank cards and get ₹150 cashback on food orders above ₹500.",
-          "tags": ["Verified", "Bank Offer"],
+          "tags": ["Bank Offer"],
           "websiteLink": "https://www.swiggy.com",
           "viewDetail": {
             "discount": "₹150 cashback on card payments",
@@ -5172,7 +4453,7 @@
           "id": 4,
           "heading": "Late Night Cravings – Extra 20% Off After 11 PM",
           "description": "Satisfy midnight hunger with extra 20% discount on late-night orders.",
-          "tags": ["Verified", "Night Offer"],
+          "tags": ["Night Offer"],
           "websiteLink": "https://www.swiggy.com",
           "viewDetail": {
             "discount": "20% extra off on orders after 11 PM",
@@ -5194,7 +4475,7 @@
             "website": "https://www.bigbasket.com",
             "discount":"25%",
             "heading": "BigBasket – Online Grocery Shopping",
-            "about": "India's largest online supermarket. Order groceries, fruits, vegetables, dairy and household essentials with doorstep delivery.",
+            "about": "BigBasket coupon codes and deals for groceries, fresh produce, dairy and household essentials, with every offer currently listed and a link to BigBasket.",
             "offers": {
   "coupons": [
     {
@@ -5207,7 +4488,7 @@
           "description": "New customer? Save on your first BigBasket order.",
           "couponCode": "BB200",
           "userType": "new",
-          "tags": ["Verified", "New User"],
+          "tags": ["New User"],
           "websiteLink": "https://www.bigbasket.com",
           "viewDetail": {
             "discount": "₹200 instant discount on first order",
@@ -5229,7 +4510,7 @@
           "description": "Save on everyday grocery items and household needs.",
           "couponCode": "GROCERY10",
           "userType": "all",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.bigbasket.com",
           "viewDetail": {
             "discount": "10% off on grocery items",
@@ -5251,7 +4532,7 @@
           "id": 1,
           "heading": "Weekly Essentials – Up to 30% Off",
           "description": "Stock up on weekly groceries with up to 30% discount on staples and essentials.",
-          "tags": ["Verified", "Grocery"],
+          "tags": ["Grocery"],
           "websiteLink": "https://www.bigbasket.com",
           "viewDetail": {
             "discount": "Up to 30% off on grocery essentials",
@@ -5277,11 +4558,11 @@
           {
             "id": 1,
             "brandName": "Udemy",
-            "brandLogo": "/public/dealImg/Udemy_logo.svg.png",
+            "brandLogo": "/dealImg/Udemy_logo.svg.png",
             "website": "https://www.udemy.com",
             "discount":"15%",
             "heading": "Udemy – Learn Anything, Anytime",
-            "about": "Master new skills with Udemy online courses. Get discount coupons on programming, business, design, marketing and personal development courses.",
+            "about": "Udemy coupon codes and deals for online courses across development, business and design, with every offer currently listed and a direct link to Udemy.",
             "offers": {
   "coupons": [
     {
@@ -5294,7 +4575,7 @@
           "description": "Learn from industry experts with massive discounts on courses.",
           "couponCode": "LEARN80",
           "userType": "all",
-          "tags": ["Verified", "Flash Sale"],
+          "tags": ["Flash Sale"],
           "websiteLink": "https://www.udemy.com",
           "viewDetail": {
             "discount": "80% instant discount on all courses",
@@ -5316,7 +4597,7 @@
           "description": "Advance your career with business and entrepreneurship courses.",
           "couponCode": "BIZ15",
           "userType": "all",
-          "tags": ["Verified", "Business"],
+          "tags": ["Business"],
           "websiteLink": "https://www.udemy.com",
           "viewDetail": {
             "discount": "15% additional discount on business courses",
@@ -5338,7 +4619,7 @@
           "description": "Master programming with curated course bundles.",
           "couponCode": "BUNDLE1999",
           "userType": "all",
-          "tags": ["Verified", "Bundle"],
+          "tags": ["Bundle"],
           "websiteLink": "https://www.udemy.com",
           "viewDetail": {
             "discount": "3 programming courses for ₹1999",
@@ -5360,7 +4641,7 @@
           "id": 1,
           "heading": "Free Courses – Learn Without Paying",
           "description": "Explore thousands of free Udemy courses and start learning today without any cost.",
-          "tags": ["Verified", "Free"],
+          "tags": ["Free"],
           "websiteLink": "https://www.udemy.com",
           "viewDetail": {
             "discount": "100% free courses available",
@@ -5380,7 +4661,7 @@
           "id": 2,
           "heading": "Udemy Pro Subscription – All-Access Learning",
           "description": "Get unlimited access to 7000+ top courses with Udemy Pro subscription.",
-          "tags": ["Verified", "Subscription"],
+          "tags": ["Subscription"],
           "websiteLink": "https://www.udemy.com",
           "viewDetail": {
             "discount": "Subscribe for ₹850/month unlimited learning",
@@ -5400,7 +4681,7 @@
           "id": 3,
           "heading": "IT Certification Prep – Up to 70% Off",
           "description": "Prepare for IT certifications with expert-led courses at up to 70% discount.",
-          "tags": ["Verified", "Certification"],
+          "tags": ["Certification"],
           "websiteLink": "https://www.udemy.com",
           "viewDetail": {
             "discount": "Up to 70% off on certification courses",
@@ -5420,7 +4701,7 @@
           "id": 4,
           "heading": "Personal Development – Courses Starting at ₹449",
           "description": "Invest in yourself! Personal development and productivity courses starting at just ₹449.",
-          "tags": ["Verified", "Self Growth"],
+          "tags": ["Self Growth"],
           "websiteLink": "https://www.udemy.com",
           "viewDetail": {
             "discount": "Courses from ₹449 onwards",
@@ -5442,7 +4723,7 @@
             "website": "https://www.coursera.org",
             "discount":"56%",
             "heading": "Coursera – Learn from Top Universities",
-            "about": "Access courses from Stanford, Yale, Google and more. Earn certificates and degrees from world-class institutions online.",
+            "about": "Coursera coupon codes and deals for online courses and certificates from universities, with every offer currently listed and a link to Coursera.",
             "offers": {
   "coupons": [
     {
@@ -5455,7 +4736,7 @@
           "description": "Try Coursera Plus free and access thousands of courses.",
           "couponCode": null,
           "userType": "new",
-          "tags": ["Verified", "Trial"],
+          "tags": ["Trial"],
           "websiteLink": "https://www.coursera.org",
           "viewDetail": {
             "discount": "7-day free trial—no commitment",
@@ -5477,7 +4758,7 @@
           "description": "Unlock full access to thousands of courses with one subscription.",
           "couponCode": null,
           "userType": "all",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.coursera.org",
           "viewDetail": {
             "discount": "Subscription starting from approx ₹3999/year",
@@ -5499,7 +4780,7 @@
           "id": 1,
           "heading": "Professional Certificates – Start Your Tech Career",
           "description": "Google, IBM and Meta professional certificates to launch your tech career. Financial aid available.",
-          "tags": ["Verified", "Career"],
+          "tags": ["Career"],
           "websiteLink": "https://www.coursera.org",
           "viewDetail": {
             "discount": "Professional certificates from ₹3999/month",
@@ -5529,7 +4810,7 @@
             "website": "https://www.amazon.in",
             "discount":"42%",
             "heading": "Amazon India – Home & Kitchen Essentials",
-            "about": "Shop home appliances, kitchen essentials, furniture and home decor with Amazon deals. Get instant discounts on electronics, cookware and home improvement.",
+            "about": "Amazon India coupon codes and deals for home appliances, kitchen essentials, furniture and decor, with every offer currently listed and a link to Amazon.",
             "offers": {
   "coupons": [
     {
@@ -5542,7 +4823,7 @@
           "description": "Upgrade your home with premium appliances at discounted prices.",
           "couponCode": "APPLIANCE2000",
           "userType": "all",
-          "tags": ["Verified", "Appliances"],
+          "tags": ["Appliances"],
           "websiteLink": "https://www.amazon.in",
           "viewDetail": {
             "discount": "₹2000 instant discount on large appliances",
@@ -5564,7 +4845,7 @@
           "description": "Make cooking easier with modern kitchen appliances.",
           "couponCode": "KITCHEN20",
           "userType": "all",
-          "tags": ["Verified", "Kitchen"],
+          "tags": ["Kitchen"],
           "websiteLink": "https://www.amazon.in",
           "viewDetail": {
             "discount": "20% additional discount on kitchen appliances",
@@ -5586,7 +4867,7 @@
           "description": "Beautify your home with decor essentials and save more.",
           "couponCode": "DECOR500",
           "userType": "all",
-          "tags": ["Verified", "Decor"],
+          "tags": ["Decor"],
           "websiteLink": "https://www.amazon.in",
           "viewDetail": {
             "discount": "Flat ₹500 off on cart value ₹2999+",
@@ -5608,7 +4889,7 @@
           "id": 1,
           "heading": "Great Indian Festival – Up to 60% Off on Home & Kitchen",
           "description": "Amazon's biggest sale is here! Get up to 60% off on home and kitchen products from top brands.",
-          "tags": ["Verified", "Mega Sale"],
+          "tags": ["Mega Sale"],
           "websiteLink": "https://www.amazon.in",
           "viewDetail": {
             "discount": "Up to 60% off on thousands of products",
@@ -5628,7 +4909,7 @@
           "id": 2,
           "heading": "Furniture Deals – Starting at ₹999",
           "description": "Furnish your home on a budget! Chairs, tables, beds and storage starting at just ₹999.",
-          "tags": ["Verified", "Furniture"],
+          "tags": ["Furniture"],
           "websiteLink": "https://www.amazon.in",
           "viewDetail": {
             "discount": "Furniture starting from ₹999 only",
@@ -5648,7 +4929,7 @@
           "id": 3,
           "heading": "Cookware Sets – Buy 1 Get 1 Free",
           "description": "Stock your kitchen! Buy one cookware set and get another absolutely free.",
-          "tags": ["Verified", "Bundle"],
+          "tags": ["Bundle"],
           "websiteLink": "https://www.amazon.in",
           "viewDetail": {
             "discount": "Buy 1 Get 1 Free on cookware sets",
@@ -5668,7 +4949,7 @@
           "id": 4,
           "heading": "Smart Home Devices – Up to 50% Off",
           "description": "Make your home smarter with Alexa devices, smart bulbs, cameras and automation at half price.",
-          "tags": ["Verified", "Smart Home"],
+          "tags": ["Smart Home"],
           "websiteLink": "https://www.amazon.in",
           "viewDetail": {
             "discount": "Up to 50% off on smart home devices",
@@ -5690,7 +4971,7 @@
             "website": "https://www.pepperfry.com",
             "discount":"12%",
             "heading": "Pepperfry – Furniture & Home Decor",
-            "about": "India's largest furniture marketplace. Shop sofas, beds, dining tables, wardrobes and home decor with attractive discounts and EMI options.",
+            "about": "Pepperfry coupon codes and deals for sofas, beds, dining tables, wardrobes and home decor, with every offer currently listed and a link to Pepperfry.",
             "offers": {
   "coupons": [
     {
@@ -5703,7 +4984,7 @@
           "description": "Revamp your home with premium furniture at discounted prices.",
           "couponCode": "FURNISH5000",
           "userType": "all",
-          "tags": ["Verified", "Furniture"],
+          "tags": ["Furniture"],
           "websiteLink": "https://www.pepperfry.com",
           "viewDetail": {
             "discount": "₹5000 off on furniture purchases",
@@ -5725,7 +5006,7 @@
           "description": "Upgrade your interiors with stylish decor items.",
           "couponCode": "DECOR15",
           "userType": "all",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://www.pepperfry.com",
           "viewDetail": {
             "discount": "15% discount on home decor items",
@@ -5747,7 +5028,7 @@
           "id": 1,
           "heading": "End of Season Sale – Up to 70% Off",
           "description": "Pepperfry's biggest furniture sale! Get up to 70% off on all categories.",
-          "tags": ["Verified", "Clearance"],
+          "tags": ["Clearance"],
           "websiteLink": "https://www.pepperfry.com",
           "viewDetail": {
             "discount": "Up to 70% off on furniture & decor",
@@ -5777,7 +5058,7 @@
             "website": "https://store.steampowered.com",
             "discount":"33%",
             "heading": "Steam – Ultimate PC Gaming Platform",
-            "about": "Buy PC games, downloadable content and in-game items. Get exclusive Steam sale deals on thousands of games across all genres.",
+            "about": "Steam coupon codes and deals for PC games, downloadable content and in-game items, with every offer currently listed and a direct link to Steam.",
             "offers": {
   "coupons": [
     {
@@ -5790,7 +5071,7 @@
           "description": "Steam's biggest sale with massive discounts on thousands of games.",
           "couponCode": null,
           "userType": "all",
-          "tags": ["Verified", "Seasonal Sale"],
+          "tags": ["Seasonal Sale"],
           "websiteLink": "https://store.steampowered.com",
           "viewDetail": {
             "discount": "Up to 90% off on games",
@@ -5806,7 +5087,7 @@
           "description": "Year-end sale with huge discounts across popular titles.",
           "couponCode": null,
           "userType": "all",
-          "tags": ["Verified", "Winter Sale"],
+          "tags": ["Winter Sale"],
           "websiteLink": "https://store.steampowered.com",
           "viewDetail": {
             "discount": "Up to 85% off during winter sale",
@@ -5828,7 +5109,7 @@
           "description": "Weekly rotating deals on featured games.",
           "couponCode": null,
           "userType": "new",
-          "tags": ["Verified", "Weekly Deal"],
+          "tags": ["Weekly Deal"],
           "websiteLink": "https://store.steampowered.com",
           "viewDetail": {
             "discount": "50-75% off on featured games",
@@ -5850,7 +5131,7 @@
           "id": 1,
           "heading": "Free to Play Games – No Payment Required",
           "description": "Hundreds of free-to-play games available on Steam. Download and play without spending anything.",
-          "tags": ["Verified", "Free"],
+          "tags": ["Free"],
           "websiteLink": "https://store.steampowered.com",
           "viewDetail": {
             "discount": "100% free games—no hidden charges",
@@ -5870,7 +5151,7 @@
           "id": 2,
           "heading": "Publisher Sales – Up to 80% Off on Specific Publishers",
           "description": "Weekly publisher-specific sales with massive discounts on their entire catalog.",
-          "tags": ["Verified", "Publisher Sale"],
+          "tags": ["Publisher Sale"],
           "websiteLink": "https://store.steampowered.com",
           "viewDetail": {
             "discount": "Up to 80% off on publisher catalogs",
@@ -5890,7 +5171,7 @@
           "id": 3,
           "heading": "Indie Game Festival – Discover Hidden Gems at 70% Off",
           "description": "Celebrate indie developers with special discounts on innovative indie titles.",
-          "tags": ["Verified", "Indie"],
+          "tags": ["Indie"],
           "websiteLink": "https://store.steampowered.com",
           "viewDetail": {
             "discount": "Up to 70% off on indie games",
@@ -5910,7 +5191,7 @@
           "id": 4,
           "heading": "Steam Deck Verified Games – Optimized for Handheld",
           "description": "Games verified to work perfectly on Steam Deck, often with special bundle discounts.",
-          "tags": ["Verified", "Steam Deck"],
+          "tags": ["Steam Deck"],
           "websiteLink": "https://store.steampowered.com",
           "viewDetail": {
             "discount": "Bundle discounts on Deck-verified games",
@@ -5932,7 +5213,7 @@
             "website": "https://store.playstation.com",
             "discount":"45%",
             "heading": "PlayStation Store – PS5 & PS4 Games",
-            "about": "Download PS5 and PS4 games digitally. Get exclusive PlayStation Store deals, PS Plus benefits and special discounts on popular titles.",
+            "about": "PlayStation Store coupon codes and deals for PS5 and PS4 digital games, with every offer currently listed and a link to the PlayStation Store.",
             "offers": {
   "coupons": [
     {
@@ -5945,7 +5226,7 @@
           "description": "Subscribe to PS Plus Extra and access hundreds of games.",
           "couponCode": null,
           "userType": "all",
-          "tags": ["Verified", "Subscription"],
+          "tags": ["Subscription"],
           "websiteLink": "https://store.playstation.com",
           "viewDetail": {
             "discount": "Access 400+ games for ₹699/month",
@@ -5967,7 +5248,7 @@
           "description": "Get free games every month with PlayStation Plus membership.",
           "couponCode": null,
           "userType": "all",
-          "tags": ["Verified"],
+          "tags": [],
           "websiteLink": "https://store.playstation.com",
           "viewDetail": {
             "discount": "Free monthly games with subscription",
@@ -5990,7 +5271,6 @@
         "heading": "Big in Japan Sale – Up to 70% Off Japanese Games",
         "description": "Celebrate Japanese gaming with special discounts on JRPG and action titles.",
         "tags": [
-          "Verified",
           "Regional Sale"
         ],
         "websiteLink": "https://store.playstation.com",
@@ -6607,69 +5887,39 @@
       "logo": "https://cdn.worldvectorlogo.com/logos/uber-2.svg"
     }
   ],
-  "statsSection": {
-    "title": "MyExclusiveDeals: Smarter Savings.",
-    "description": "MyExclusiveDeals makes saving simple. We handpick the best deals and promo codes across top categories, helping shoppers save effortlessly. Trusted by thousands, we’re your go-to partner for smart, everyday savings.",
-    "stats": [
-      {
-        "id": 1,
-        "label": "User Satisfaction",
-        "value": "95%",
-        "description": "Helping users find reliable deals to save instantly."
-      },
-      {
-        "id": 2,
-        "label": "Deals Listed",
-        "value": "6,000+",
-        "description": "Verified deals from top brands and categories."
-      },
-      {
-        "id": 3,
-        "label": "Monthly Users",
-        "value": "30,000+",
-        "description": "A trusted community built on smart savings."
-      },
-      {
-        "id": 4,
-        "label": "Verified Deals",
-        "value": "90%",
-        "description": "All deals verified, tested, and updated regularly."
-      }
-    ]
-  },
   "faq": {
     "title": "Frequently Asked Questions",
-    "subtitle": "Find answers to common questions about shopping, payments, and orders.",
+    "subtitle": "Find answers about browsing listed offers and visiting store websites.",
     "items": [
       {
         "id": 1,
-        "question": "What is this eCommerce platform about?",
-        "answer": "Our platform helps users discover the best deals, discounts, and verified offers from top online stores, making online shopping smarter and more affordable."
+        "question": "What does this deals directory provide?",
+        "answer": "It organizes deal and coupon listings by store and category, with links that let you review the offer on the listed store's website."
       },
       {
         "id": 2,
-        "question": "Do I need to create an account to shop?",
-        "answer": "No, you can browse deals freely. However, creating an account allows you to save favorites, track deals, and receive personalized offers."
+        "question": "Do I need an account to browse?",
+        "answer": "No. You can browse the directory and open listed store links without creating an AltFTool account."
       },
       {
         "id": 3,
-        "question": "Are all deals and coupons verified?",
-        "answer": "Yes, all deals and coupons are manually verified to ensure they are valid, up to date, and work as expected."
+        "question": "Are listed deals guaranteed to work?",
+        "answer": "No. Prices, coupon terms and availability can change on the store's website, so confirm the current terms there before buying."
       },
       {
         "id": 4,
-        "question": "Is it safe to make purchases through listed stores?",
-        "answer": "Absolutely. We only partner with trusted and well-known eCommerce brands that follow industry-standard security practices."
+        "question": "Does AltFTool process purchases?",
+        "answer": "No. AltFTool lists information and links; checkout, payment, delivery, returns and support are handled by the destination store under its own terms."
       },
       {
         "id": 5,
         "question": "Can I use this platform on mobile devices?",
-        "answer": "Yes, our website is fully responsive and works seamlessly on mobile, tablet, and desktop devices."
+        "answer": "Yes. The directory is designed to work on mobile, tablet and desktop screens."
       },
       {
         "id": 6,
-        "question": "How often are deals updated?",
-        "answer": "Deals are updated daily to ensure you always have access to the latest discounts and offers."
+        "question": "How should I check an offer's current status?",
+        "answer": "Open the listed store page and review its current price, dates, exclusions and coupon requirements before checkout."
       }
     ]
   },

@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Supported Aadhaar QR locally decode aur signature status dikhaye.",
+  "description": "Decode a supported Aadhaar QR code locally and show its signature status.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

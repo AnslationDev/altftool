@@ -74,7 +74,7 @@ export default function Home() {
 
       <section className="fn-home-section">
         <div className="fn-section-rule">
-          <h1>Latest Facts</h1>
+          <h1>Latest facts and original topic guides</h1>
         </div>
 
         <FeatureCarousel articles={carouselArticles} />

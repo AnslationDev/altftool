@@ -30,7 +30,7 @@ export default function CategoryGrid() {
                     <Icon size={20} />
                   </span>
                   <h3>{category.name}</h3>
-                  <p>{count}+ festivals</p>
+                  <p>{count} festivals</p>
                 </Link>
               </Reveal>
             );

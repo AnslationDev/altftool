@@ -33,12 +33,12 @@ export const PACKS = PACK_SEEDS.map((p, i) => {
 });
 
 const COLLECTION_SEEDS = [
-  { title: "Editor's Picks: July", description: "The 40 highest-scoring prompts our editors couldn't stop rendering.", count: 40, curator: "Imaginnex Editors", gradient: ["#8b5cf6", "#3b82f6"] },
-  { title: "Hyperreal Portraits", description: "Skin, eyes and light so real it's uncanny.", count: 32, curator: "Aria Snow", gradient: ["#ec4899", "#8b5cf6"] },
-  { title: "Neon & Nightlife", description: "Cyberpunk streets, neon signs and rain-soaked reflections.", count: 28, curator: "Theo Laurent", gradient: ["#22d3ee", "#6366f1"] },
-  { title: "Clean Product Studio", description: "Minimal, bright, license-ready product shots.", count: 36, curator: "Marcus Cole", gradient: ["#f59e0b", "#ef4444"] },
-  { title: "Dreamlike Landscapes", description: "Otherworldly vistas and impossible skies.", count: 30, curator: "Yuki Tanaka", gradient: ["#10b981", "#14b8a6"] },
-  { title: "Motion & Cinematics", description: "The best text-to-video prompts for Runway, Luma & Kling.", count: 24, curator: "Lucia Ferreira", gradient: ["#f43f5e", "#f59e0b"] },
+  { title: "Portrait Studies", description: "Sample portrait patterns for experimenting with skin, eyes, framing and light." },
+  { title: "Neon & Nightlife", description: "Sample cyberpunk street, neon-sign and rain-reflection prompt patterns." },
+  { title: "Clean Product Studio", description: "Sample minimal product-shot structures with editable lighting and surfaces." },
+  { title: "Dreamlike Landscapes", description: "Sample structures for otherworldly vistas and imaginative skies." },
+  { title: "Motion & Cinematics", description: "Sample text-to-video structures to adapt for Runway, Luma or Kling." },
+  { title: "Festival Concepts", description: "Sample celebratory scene structures with editable subjects, palettes and settings." },
 ];
 
 export const COLLECTIONS = COLLECTION_SEEDS.map((c, i) => ({
@@ -46,8 +46,5 @@ export const COLLECTIONS = COLLECTION_SEEDS.map((c, i) => ({
   title: c.title,
   slug: c.title.toLowerCase().replace(/[^\w]+/g, "-").replace(/^-|-$/g, ""),
   description: c.description,
-  promptCount: c.count,
-  curator: c.curator,
   seed: `col${i}`,
-  gradient: c.gradient,
 }));

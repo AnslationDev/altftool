@@ -1,181 +1,88 @@
-/**
- * Enterprise Footer Component (Reference Match)
- * Location: src/app/altflinking/components/landing/EnterpriseFooter.jsx
- */
-
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
-import { ShieldCheck, Send, Twitter, Linkedin, Facebook, Instagram } from "lucide-react";
+import { Mail } from "lucide-react";
+
+const CONTACT_EMAIL = "altftool@gmail.com";
 
 export default function EnterpriseFooter({ setActiveTab }) {
-  const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
-
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    if (!email) return;
-    // No newsletter delivery backend exists yet — persist locally instead
-    // of discarding the signup.
-    try {
-      window.localStorage.setItem("ALTFT_ALTFLINKING_NEWSLETTER_OPTIN", email.trim());
-    } catch {
-      // localStorage can be unavailable in private browsing; UI still succeeds.
-    }
-    setSubscribed(true);
-    setTimeout(() => setSubscribed(false), 3000);
-    setEmail("");
+  const navigateTo = (tab) => {
+    if (setActiveTab) setActiveTab(tab);
   };
 
   return (
-    <footer className="border-t border-slate-200 bg-white pt-12 pb-6 px-4 sm:px-6 lg:px-8 text-xs text-slate-600 ">
-      <div className="max-w-7xl mx-auto space-y-10">
-
-        {/* Main Footer Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8">
-
-          {/* Brand Info (2 cols) */}
-          <div className="lg:col-span-2 space-y-4">
-            <div className="flex items-center gap-2">
-              <span className="text-xl font-black tracking-tight text-slate-900 ">
-                ALTFTool
-              </span>
-              <span className="rounded-full bg-blue-50 border border-blue-200 px-2.5 py-0.5 text-[10px] font-bold text-blue-700">
-                Backlink Marketplace
+    <footer className="border-t border-border bg-surface px-4 py-10 text-xs text-muted sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl space-y-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="space-y-3">
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xl font-black tracking-tight text-foreground">ALTFTool</span>
+              <span className="rounded-full border border-primary/30 bg-primary/10 px-2.5 py-1 text-[10px] font-bold text-primary">
+                AltFLinking
               </span>
             </div>
-
-            <p className="text-xs text-slate-500 max-w-sm leading-relaxed">
-              The most trusted marketplace for buying and selling high-quality backlinks.
+            <p className="max-w-sm leading-relaxed">
+              A directory and placement-request workflow built from publisher-submitted listings and admin review. Metrics may be unavailable.
             </p>
-
-            {/* Social Icons */}
-            <div className="flex items-center gap-3 text-slate-500 pt-1">
-              <a href="#" className="p-1.5 rounded-lg border border-slate-200 hover:text-indigo-600 dark:hover:text-indigo-600 transition">
-                <Twitter className="h-4 w-4" />
-              </a>
-              <a href="#" className="p-1.5 rounded-lg border border-slate-200 hover:text-indigo-600 dark:hover:text-indigo-600 transition">
-                <Linkedin className="h-4 w-4" />
-              </a>
-              <a href="#" className="p-1.5 rounded-lg border border-slate-200 hover:text-indigo-600 dark:hover:text-indigo-600 transition">
-                <Facebook className="h-4 w-4" />
-              </a>
-              <a href="#" className="p-1.5 rounded-lg border border-slate-200 hover:text-indigo-600 dark:hover:text-indigo-600 transition">
-                <Instagram className="h-4 w-4" />
-              </a>
-            </div>
           </div>
 
-          {/* Marketplace Column */}
-          <div className="space-y-3">
-            <h4 className="font-extrabold text-slate-900 text-xs">Marketplace</h4>
+          <nav aria-label="AltFLinking" className="space-y-3">
+            <h2 className="font-bold text-foreground">Marketplace</h2>
             <ul className="space-y-2">
               <li>
-                <button onClick={() => setActiveTab && setActiveTab("marketplace")} className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">
-                  All Websites
+                <button type="button" onClick={() => navigateTo("marketplace")} className="transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                  Browse listings
                 </button>
               </li>
               <li>
-                <button onClick={() => setActiveTab && setActiveTab("guest-posts")} className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">
-                  Guest Posts
+                <button type="button" onClick={() => navigateTo("guest-posts")} className="transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                  Guest-post listings
                 </button>
               </li>
               <li>
-                <button onClick={() => setActiveTab && setActiveTab("link-insertions")} className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">
-                  Link Insertions
+                <button type="button" onClick={() => navigateTo("link-insertions")} className="transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                  Link-insertion listings
                 </button>
               </li>
               <li>
-                <button onClick={() => setActiveTab && setActiveTab("campaigns")} className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">
-                  Link Exchange
-                </button>
-              </li>
-              <li>
-                <button onClick={() => setActiveTab && setActiveTab("landing")} className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">
-                  How It Works
+                <button type="button" onClick={() => navigateTo("publisher")} className="transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+                  Submit a website
                 </button>
               </li>
             </ul>
-          </div>
+          </nav>
 
-          {/* For Publishers Column */}
           <div className="space-y-3">
-            <h4 className="font-extrabold text-slate-900 text-xs">For Publishers</h4>
-            <ul className="space-y-2">
-              <li>
-                <button onClick={() => setActiveTab && setActiveTab("publisher")} className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">
-                  Become a Publisher
-                </button>
-              </li>
-              <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">Publisher Guidelines</a></li>
-              <li>
-                <button onClick={() => setActiveTab && setActiveTab("wallet")} className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">
-                  Earnings &amp; Payouts
-                </button>
-              </li>
-              <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">Resources</a></li>
-              <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">Help Center</a></li>
-            </ul>
-          </div>
-
-          {/* Company Column */}
-          <div className="space-y-3">
-            <h4 className="font-extrabold text-slate-900 text-xs">Company</h4>
-            <ul className="space-y-2">
-              <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">About Us</a></li>
-              <li>
-                <button onClick={() => setActiveTab && setActiveTab("contact")} className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">
-                  Contact Us
-                </button>
-              </li>
-              <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">Careers</a></li>
-              <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">Blog</a></li>
-              <li><a href="#" className="hover:text-indigo-600 dark:hover:text-indigo-600 transition">Press</a></li>
-            </ul>
-          </div>
-
-          {/* Newsletter Column */}
-          <div className="space-y-3">
-            <h4 className="font-extrabold text-slate-900 text-xs">Subscribe to our newsletter</h4>
-            <p className="text-[11px] text-slate-500">Get the latest SEO tips and marketplace updates delivered to your inbox.</p>
-
-            <form onSubmit={handleSubscribe} className="flex items-center gap-1.5">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full py-2 px-3 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-indigo-500"
-              />
-              <button
-                type="submit"
-                className="p-2 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-500 transition shrink-0"
-              >
-                <Send className="h-4 w-4" />
-              </button>
-            </form>
-            {subscribed && <span className="text-[10px] text-emerald-500 font-bold">Subscribed successfully!</span>}
-          </div>
-
-        </div>
-
-        {/* Bottom Rights & Status Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between border-t border-slate-200 pt-6 text-[11px] text-slate-500 gap-4">
-          <p>© 2024 ALTFTool. All rights reserved.</p>
-
-          <div className="flex items-center gap-4">
-            <Link href="/policypages/termsandconditions" className="hover:underline">Terms of Service</Link>
-            <Link href="/policypages/privacy" className="hover:underline">Privacy Policy</Link>
-            <Link href="/site-map" className="hover:underline">Sitemap</Link>
-            <span className="flex items-center gap-1 text-emerald-500 font-semibold">
-              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-              Status
-            </span>
+            <h2 className="font-bold text-foreground">Contact</h2>
+            <p>Questions about a listing or placement request can be sent by email.</p>
+            <a
+              href={`mailto:${CONTACT_EMAIL}`}
+              className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-border px-3 py-2 font-bold text-foreground transition hover:border-primary hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            >
+              <Mail className="h-4 w-4" aria-hidden="true" />
+              {CONTACT_EMAIL}
+            </a>
+            <button type="button" onClick={() => navigateTo("contact")} className="block transition hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+              Open contact form
+            </button>
           </div>
         </div>
 
+        <div className="flex flex-col gap-4 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p>© ALTFTool. All rights reserved.</p>
+          <div className="flex flex-wrap items-center gap-4">
+            <Link href="/policypages/termsandconditions" className="hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+              Terms of Service
+            </Link>
+            <Link href="/policypages/privacy" className="hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+              Privacy Policy
+            </Link>
+            <Link href="/site-map" className="hover:text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary">
+              Sitemap
+            </Link>
+          </div>
+        </div>
       </div>
     </footer>
   );

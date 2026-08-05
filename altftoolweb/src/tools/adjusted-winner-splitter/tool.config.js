@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "adjusted-winner-splitter",
   name: "Adjusted-Winner Splitter",
   category: ["Productivity","Business"],
-  description: "Two-person point allocation se shared assets fairly divide kare.",
+  description: "Divide shared assets fairly between two people using point allocation.",
   icon: "users-round",
   iconColor: "text-primary",
 };

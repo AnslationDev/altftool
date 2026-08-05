@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "User-owned photos ke dates aur coordinates bulk-edit kare.",
+  "description": "Bulk-edit the dates and GPS coordinates stored in photos you own.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

@@ -6,8 +6,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Plus, ShoppingBag, TrendingUp, CheckCircle2, Clock, ExternalLink, ShieldCheck, AlertCircle } from "lucide-react";
+import { Plus, Clock, ExternalLink, ShieldCheck } from "lucide-react";
 import OrderStatusStepperVisual from "../visuals/OrderStatusStepperVisual";
+import { formatPrice, normalizePrice } from "../../lib/pricing";
 
 export default function BuyerDashboard({ orders = [], campaigns = [], onCreateCampaign, onFileDispute }) {
   const [showCampaignModal, setShowCampaignModal] = useState(false);
@@ -15,9 +16,16 @@ export default function BuyerDashboard({ orders = [], campaigns = [], onCreateCa
   const [campDomain, setCampDomain] = useState("");
   const [campBudget, setCampBudget] = useState("2000");
 
-  const totalSpent = orders.reduce((acc, o) => acc + (o.price || 0), 0);
+  const totalRecorded = orders.reduce((acc, order) => acc + (normalizePrice(order.price) ?? 0), 0);
   const verifiedCount = orders.filter((o) => o.status === "VERIFIED_LIVE").length;
   const pendingCount = orders.filter((o) => o.status !== "VERIFIED_LIVE").length;
+  const latestOrderStep = (() => {
+    const status = orders[0]?.status;
+    if (status === "VERIFIED_LIVE") return 4;
+    if (status === "PUBLISHED") return 3;
+    if (status === "ACCEPTED") return 2;
+    return 1;
+  })();
 
   const handleCampaignSubmit = (e) => {
     e.preventDefault();
@@ -38,7 +46,7 @@ export default function BuyerDashboard({ orders = [], campaigns = [], onCreateCa
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 pb-4">
         <div>
           <h1 className="text-2xl font-bold text-white">Buyer Campaign Dashboard</h1>
-          <p className="text-xs text-slate-500">Track active backlink orders, campaign budgets, and live indexation status</p>
+          <p className="text-xs text-slate-500">Track placement requests, campaign budgets, and recorded review status</p>
         </div>
 
         <button
@@ -53,9 +61,9 @@ export default function BuyerDashboard({ orders = [], campaigns = [], onCreateCa
       {/* Analytics Metric Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="altf-card p-5 space-y-1">
-          <p className="text-xs font-medium text-slate-500">Total Backlink Spend</p>
-          <p className="text-2xl font-extrabold text-white font-mono">${totalSpent.toLocaleString()}</p>
-          <span className="text-[10px] text-emerald-400 font-semibold">Protected via Escrow</span>
+          <p className="text-xs font-medium text-slate-500">Recorded Listed Value</p>
+          <p className="text-2xl font-extrabold text-white font-mono">{formatPrice(totalRecorded)}</p>
+          <span className="text-[10px] text-slate-500 font-semibold">Not a payment receipt</span>
         </div>
 
         <div className="altf-card p-5 space-y-1">
@@ -65,9 +73,9 @@ export default function BuyerDashboard({ orders = [], campaigns = [], onCreateCa
         </div>
 
         <div className="altf-card p-5 space-y-1">
-          <p className="text-xs font-medium text-slate-500">Verified Live Links</p>
+          <p className="text-xs font-medium text-slate-500">Admin-Reviewed Live Links</p>
           <p className="text-2xl font-extrabold text-emerald-400 font-mono">{verifiedCount}</p>
-          <span className="text-[10px] text-emerald-400 font-semibold">Confirmed dofollow & indexed</span>
+          <span className="text-[10px] text-slate-500 font-semibold">Based on recorded review evidence</span>
         </div>
 
         <div className="altf-card p-5 space-y-1">
@@ -79,8 +87,8 @@ export default function BuyerDashboard({ orders = [], campaigns = [], onCreateCa
 
       {/* Order Fulfillment Milestone Stepper Visual */}
       <div className="space-y-2">
-        <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider font-mono">Standard Escrow Milestone Workflow</h3>
-        <OrderStatusStepperVisual currentStep={3} />
+        <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider font-mono">Latest Order Workflow</h3>
+        <OrderStatusStepperVisual currentStep={latestOrderStep} />
       </div>
 
       {/* Active Campaigns Section */}
@@ -112,7 +120,7 @@ export default function BuyerDashboard({ orders = [], campaigns = [], onCreateCa
 
       {/* Orders Table */}
       <div className="altf-card p-6 space-y-4">
-        <h3 className="text-base font-bold text-white">Escrow Backlink Orders</h3>
+        <h3 className="text-base font-bold text-white">Placement Requests</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs border-collapse">
             <thead>
@@ -122,7 +130,7 @@ export default function BuyerDashboard({ orders = [], campaigns = [], onCreateCa
                 <th className="p-3">Type</th>
                 <th className="p-3">Target URL</th>
                 <th className="p-3">Price</th>
-                <th className="p-3">Escrow Status</th>
+                <th className="p-3">Order Status</th>
                 <th className="p-3 text-right">Actions</th>
               </tr>
             </thead>
@@ -133,15 +141,15 @@ export default function BuyerDashboard({ orders = [], campaigns = [], onCreateCa
                   <td className="p-3 font-bold text-white font-mono">{ord.websiteDomain}</td>
                   <td className="p-3 text-slate-600">{ord.type}</td>
                   <td className="p-3 text-slate-500 font-mono truncate max-w-[150px]">{ord.targetUrl}</td>
-                  <td className="p-3 font-mono font-bold text-white">${ord.price}</td>
+                  <td className="p-3 font-mono font-bold text-white">{formatPrice(ord.price)}</td>
                   <td className="p-3">
                     {ord.status === "VERIFIED_LIVE" ? (
                       <span className="altf-badge altf-badge-verified">
-                        <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" /> Released
+                        <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" /> Admin Reviewed
                       </span>
                     ) : (
                       <span className="altf-badge altf-badge-pending">
-                        <Clock className="h-3.5 w-3.5 text-amber-400" /> Held in Escrow
+                        <Clock className="h-3.5 w-3.5 text-amber-400" /> {String(ord.status || "PENDING").replaceAll("_", " ")}
                       </span>
                     )}
                   </td>
@@ -171,6 +179,13 @@ export default function BuyerDashboard({ orders = [], campaigns = [], onCreateCa
                   </td>
                 </tr>
               ))}
+              {orders.length === 0 ? (
+                <tr>
+                  <td colSpan="7" className="p-6 text-center text-slate-500">
+                    No placement requests have been recorded for this account.
+                  </td>
+                </tr>
+              ) : null}
             </tbody>
           </table>
         </div>

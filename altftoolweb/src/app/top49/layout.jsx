@@ -24,7 +24,7 @@ export default function Top49Layout({ children }) {
       <SubNav />
       <div className="border-y border-warning/40 bg-warning-soft px-4 py-3 text-sm text-warning-text" role="note">
         <p className="mx-auto max-w-7xl">
-          Preview data: rankings, scores, reader votes, and refresh labels in Top 49 are illustrative editorial demo content, not live measurements.
+          Preview data: all rankings, scores, votes, refresh labels, methodology, testing and editorial-process statements in Top 49 are illustrative demo content, not live measurements or documented reviews.
         </p>
       </div>
       {children}

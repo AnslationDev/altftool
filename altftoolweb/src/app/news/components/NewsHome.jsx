@@ -10,6 +10,7 @@ import ManagedImage from "@/components/ui/ManagedImage";
 import NewsCard from "./ui/NewsCard";
 import CategoriesSection from "./CategoriesSection";
 import NewsUnavailable from "./NewsUnavailable";
+import { compareNewsNewestFirst } from "../lib/time";
 
 // ─── helpers ──────────────────────────────────────────────────────────────
 function timeAgo(h) {
@@ -18,6 +19,17 @@ function timeAgo(h) {
   if (h < 24) return `${h}h ago`;
   const d = Math.floor(h / 24);
   return d === 1 ? "1 day ago" : `${d} days ago`;
+}
+
+function PublishedAge({ article, className }) {
+  const label = timeAgo(article?.published_hours_ago);
+  if (!article?.published_at || !label) return null;
+
+  return (
+    <time className={className} dateTime={article.published_at}>
+      {label}
+    </time>
+  );
 }
 
 function slugify(value = "") {
@@ -61,7 +73,7 @@ function HeroSlider({ stories, timeAgo }) {
                 {story.category}
               </span>
             )}
-            <span className="text-[13px] text-white/75 drop-shadow">{timeAgo(story.published_hours_ago)}</span>
+            <PublishedAge article={story} className="text-[13px] text-white/75 drop-shadow" />
           </div>
           <h2 className="mt-2 text-[40px] font-bold leading-[1.2] text-white drop-shadow-md line-clamp-2">
             {story.headline}
@@ -120,7 +132,7 @@ function TrendingHeadlines({ stories, timeAgo }) {
               <span className="text-[12px] font-bold uppercase tracking-wider text-[var(--primary)]">
                 {s.category || "General"}
               </span>
-              <span className="text-[12px] text-[var(--muted-foreground)]">{timeAgo(s.published_hours_ago)}</span>
+              <PublishedAge article={s} className="text-[12px] text-[var(--muted-foreground)]" />
             </div>
             <p className="mt-1 text-[18px] font-semibold leading-[1.4] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
               {s.headline}
@@ -152,7 +164,7 @@ function LatestNewsWidget({ stories, timeAgo }) {
                 <Plus size={13} />
               </span>
               <div>
-                <span className="text-[12px] text-[var(--muted-foreground)]">{timeAgo(s.published_hours_ago)}</span>
+                <PublishedAge article={s} className="text-[12px] text-[var(--muted-foreground)]" />
                 <p className="mt-0.5 text-[15px] font-medium leading-snug text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
                   {s.headline}
                 </p>
@@ -223,7 +235,7 @@ function NewsletterWidget() {
             Subscribe to Newsletter
           </h3>
           <p className="mt-[6px] max-w-[240px] text-[14px] leading-[1.6] text-[var(--muted-foreground)]">
-            Get the latest news delivered to your inbox daily.
+            Leave your email and we&apos;ll be in touch when the newsletter launches.
           </p>
         </div>
       </div>
@@ -302,7 +314,7 @@ export default function NewsHome({ initialNewsData }) {
 
   // Sort by published_hours_ago for a consistent order
   const sorted = useMemo(() => {
-    return [...articles].sort((a, b) => a.published_hours_ago - b.published_hours_ago);
+    return [...articles].sort(compareNewsNewestFirst);
   }, [articles]);
 
   const topStory = sorted[0];
@@ -348,7 +360,7 @@ export default function NewsHome({ initialNewsData }) {
         <div className="mx-auto flex items-center gap-6 px-4 md:px-8 lg:px-12">
           <span className="flex shrink-0 items-center gap-1.5 text-[13px] font-bold uppercase tracking-[1px] text-[var(--primary)]">
             <Zap size={16} />
-            Trending Now
+            Popular Topics
           </span>
           <div className="flex items-center gap-6 overflow-x-auto scrollbar-thin">
             {[
@@ -514,9 +526,7 @@ function TopNewsCard({ news }) {
           <span className="text-[12px] font-bold uppercase tracking-wider text-[var(--primary)]">
             {news.category || "General"}
           </span>
-          <span className="text-[12px] text-[var(--muted-foreground)]">
-            {timeAgo(news.published_hours_ago)}
-          </span>
+          <PublishedAge article={news} className="text-[12px] text-[var(--muted-foreground)]" />
         </div>
         <Link href={`/news/${news.slug}`}>
           <h3 className="mt-[6px] text-xl font-bold leading-[1.35] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
@@ -544,7 +554,6 @@ function TopNewsCard({ news }) {
 
 // ─── Trending Item (sidebar) ──────────────────────────────────────────────
 function TrendingItem({ news, rank }) {
-  const readTime = Math.max(3, Math.ceil(news.headline.length / 100) * 3);
 
   return (
     <Link href={`/news/${news.slug}`} className="group flex items-center gap-[14px]">
@@ -569,7 +578,7 @@ function TrendingItem({ news, rank }) {
           {news.headline}
         </p>
         <span className="text-[13px] font-medium text-[var(--muted-foreground)]">
-          {readTime} min read
+          {news.source}
         </span>
       </div>
       <span className="shrink-0 text-base text-[var(--muted-foreground)] transition group-hover:translate-x-0.5 group-hover:text-[var(--primary)]">
@@ -604,9 +613,7 @@ function MoreNewsRow({ news }) {
             <span className="text-[11px] font-bold uppercase tracking-wider text-[var(--primary)]">
               {news.category || "General"}
             </span>
-            <span className="text-xs text-[var(--muted-foreground)]">
-              {timeAgo(news.published_hours_ago)}
-            </span>
+            <PublishedAge article={news} className="text-xs text-[var(--muted-foreground)]" />
           </div>
           <p className="mt-[4px] text-lg font-bold leading-[1.3] text-[var(--foreground)] transition-colors group-hover:text-[var(--primary)] line-clamp-2">
             {news.headline}

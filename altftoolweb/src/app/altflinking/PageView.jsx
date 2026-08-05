@@ -33,14 +33,12 @@ const ProtectedSectionGuard = ({ title, description, onOpenAuth }) => (
 
 // Landing Section Imports
 import LandingHero from "./components/landing/LandingHero";
-import LandingStatsBar from "./components/landing/LandingStatsBar";
 import PlatformArchitectureShowcase from "./components/landing/PlatformArchitectureShowcase";
 import MarketplaceCategories from "./components/landing/MarketplaceCategories";
 import FeaturedPublishers from "./components/landing/FeaturedPublishers";
 import RecentOpportunitiesTable from "./components/landing/RecentOpportunitiesTable";
 import WhyChooseAltF from "./components/landing/WhyChooseAltF";
 import FeatureHighlights from "./components/landing/FeatureHighlights";
-import CustomerTestimonials from "./components/landing/CustomerTestimonials";
 import PricingPreview from "./components/landing/PricingPreview";
 import FaqAccordion from "./components/landing/FaqAccordion";
 import FinalCtaBanner from "./components/landing/FinalCtaBanner";
@@ -57,9 +55,6 @@ import PublisherDashboard from "./components/publisher/PublisherDashboard";
 import AdminDashboard from "./components/admin/AdminDashboard";
 import UTMBuilder from "./components/tools/UTMBuilder";
 import LinkInspector from "./components/tools/LinkInspector";
-import BulkDomainSearchModal from "./components/marketplace/BulkDomainSearchModal";
-import RoiCalculatorModal from "./components/tools/RoiCalculatorModal";
-import WithdrawalModal from "./components/publisher/WithdrawalModal";
 import DisputeResolutionModal from "./components/buyer/DisputeResolutionModal";
 import CartCheckoutDrawer from "./components/marketplace/CartCheckoutDrawer";
 import SubmitListingModal from "./components/publisher/SubmitListingModal";
@@ -67,13 +62,6 @@ import AuthLoginModal from "./components/common/AuthLoginModal";
 import { LoadingState, EmptyState, ErrorState } from "./components/common/UIStateComponents";
 
 import {
-  fetchWebsites,
-  fetchOrders,
-  fetchCampaigns,
-  submitWebsiteListing as firebaseSubmitWebsite,
-  createOrder as firebaseCreateOrder,
-  createCampaign as firebaseCreateCampaign,
-  updateOrderStatus as firebaseUpdateOrderStatus,
   subscribeToAuthState,
   logoutUser,
 } from "./services/firebaseService";
@@ -82,6 +70,7 @@ import * as apiClient from "./services/apiClient";
 
 import "./altflinking.css";
 
+import { resolveGuestPostPrice } from "./lib/pricing";
 const DEFAULT_FILTERS = {
   search: "",
   niche: "All",
@@ -147,9 +136,6 @@ export default function AltfLinkingPageView() {
   const [showCompareModal, setShowCompareModal] = useState(false);
 
   // Enterprise Tool Modals & Drawers
-  const [bulkSearchOpen, setBulkSearchOpen] = useState(false);
-  const [roiCalcOpen, setRoiCalcOpen] = useState(false);
-  const [withdrawalOpen, setWithdrawalOpen] = useState(false);
   const [disputeOpen, setDisputeOpen] = useState(false);
   const [disputeOrder, setDisputeOrder] = useState(null);
   const [cartOpen, setCartOpen] = useState(false);
@@ -179,60 +165,39 @@ export default function AltfLinkingPageView() {
   const handleAcceptOrder = async (orderId) => {
     try {
       await apiClient.updateOrderStatus(orderId, "ACCEPTED");
-    } catch {
-      await firebaseUpdateOrderStatus(orderId, "ACCEPTED");
+      setOrders((current) =>
+        current.map((order) => (order.id === orderId ? { ...order, status: "ACCEPTED" } : order))
+      );
+      showToast("Request accepted. Submit the published URL when it is ready for review.");
+    } catch (error) {
+      showToast(error.message || "Failed to accept order", "error");
     }
-    const updatedOrders = orders.map((o) => (o.id === orderId ? { ...o, status: "ACCEPTED" } : o));
-    setOrders(updatedOrders);
-    showToast("Request Accepted! Submit live published URL once ready.");
   };
 
   const handleSubmitLiveLink = async (orderId, liveLinkUrl) => {
     try {
-      await apiClient.updateOrderStatus(orderId, "VERIFIED_LIVE", { liveLinkUrl, isIndexed: true, isDofollow: true });
-    } catch {
-      await firebaseUpdateOrderStatus(orderId, "VERIFIED_LIVE", {
-        liveLinkUrl,
-        isIndexed: true,
-        isDofollow: true,
-        crawledAt: new Date().toISOString(),
-      });
+      await apiClient.updateOrderStatus(orderId, "PUBLISHED", { liveLinkUrl });
+      setOrders((current) =>
+        current.map((order) =>
+          order.id === orderId ? { ...order, status: "PUBLISHED", liveLinkUrl } : order
+        )
+      );
+      showToast("Published URL submitted for admin review.");
+    } catch (error) {
+      showToast(error.message || "Failed to submit published URL", "error");
     }
-    const updatedOrders = orders.map((o) =>
-      o.id === orderId ? { ...o, status: "VERIFIED_LIVE", liveLinkUrl } : o
-    );
-    setOrders(updatedOrders);
-    showToast("Live link submitted and verified! Order marked LIVE.");
   };
 
-  // Data Fetch with API Route priority and Firestore fallback
+  // Production data comes only from the authenticated API. API failures must
+  // remain visible instead of silently substituting demo inventory or orders.
   const loadData = useCallback(async () => {
     setLoading(true);
     setDataError(null);
     try {
-      // 1. Fetch APPROVED marketplace listings
-      let sitesData = [];
-      try {
-        sitesData = await apiClient.fetchMarketplaceListings(filters);
-      } catch (apiErr) {
-        sitesData = await fetchWebsites(filters);
-      }
-
-      // 2. Fetch User Orders (authenticated)
-      let ordersData = [];
-      try {
-        ordersData = await apiClient.fetchUserOrders();
-      } catch (apiErr) {
-        ordersData = await fetchOrders();
-      }
-
-      // 3. Fetch User Campaigns (authenticated)
-      let campaignsData = [];
-      try {
-        campaignsData = await apiClient.fetchUserCampaigns();
-      } catch (apiErr) {
-        campaignsData = await fetchCampaigns();
-      }
+      const sitesData = await apiClient.fetchMarketplaceListings(filters);
+      const [ordersData, campaignsData] = userSession
+        ? await Promise.all([apiClient.fetchUserOrders(), apiClient.fetchUserCampaigns()])
+        : [[], []];
 
       setWebsites(sitesData || []);
       setOrders(ordersData || []);
@@ -243,7 +208,7 @@ export default function AltfLinkingPageView() {
     } finally {
       setLoading(false);
     }
-  }, [filters]);
+  }, [filters, userSession]);
 
   useEffect(() => {
     loadData();
@@ -258,17 +223,14 @@ export default function AltfLinkingPageView() {
     }
 
     try {
-      let newOrder;
-      try {
-        newOrder = await apiClient.placeOrder(orderPayload);
-      } catch (apiErr) {
-        newOrder = await firebaseCreateOrder(orderPayload);
-      }
+      const newOrder = await apiClient.placeOrder(orderPayload);
       setOrders((prev) => [newOrder, ...prev]);
       setPreviewSite(null);
-      showToast("Order submitted! Enters Pending Admin Review before fulfillment.");
+      showToast("Order request submitted for admin review.");
+      return newOrder;
     } catch (err) {
       showToast(err.message || "Failed to place order", "error");
+      return null;
     }
   };
 
@@ -280,16 +242,15 @@ export default function AltfLinkingPageView() {
       return;
     }
 
-    let newSite;
     try {
-      newSite = await apiClient.submitWebsiteListing(sitePayload);
-    } catch (apiErr) {
-      newSite = await firebaseSubmitWebsite(sitePayload);
+      const newSite = await apiClient.submitWebsiteListing(sitePayload);
+      showToast(`Website ${newSite.domain || sitePayload.domain} submitted for admin review.`);
+      setWebsites((prev) => [newSite, ...prev]);
+      return newSite;
+    } catch (error) {
+      showToast(error.message || "Failed to submit website", "error");
+      throw error;
     }
-    // Note: Submitted website is PENDING_REVIEW, so it won't appear on public marketplace until admin approves
-    showToast(`Website ${newSite.domain || sitePayload.domain} submitted! Enters Pending Admin Review.`);
-    setWebsites((prev) => [newSite, ...prev]);
-    return newSite;
   };
 
   // Publisher edits their own listing's pricing/guidelines/TAT
@@ -313,12 +274,7 @@ export default function AltfLinkingPageView() {
     }
 
     try {
-      let newCamp;
-      try {
-        newCamp = await apiClient.createCampaign(campPayload);
-      } catch (apiErr) {
-        newCamp = await firebaseCreateCampaign(campPayload);
-      }
+      const newCamp = await apiClient.createCampaign(campPayload);
       setCampaigns((prev) => [newCamp, ...prev]);
       showToast(`Campaign "${newCamp.name}" created!`);
     } catch (err) {
@@ -333,9 +289,9 @@ export default function AltfLinkingPageView() {
       const q = filters.search.toLowerCase();
       result = result.filter(
         (s) =>
-          s.domain.toLowerCase().includes(q) ||
-          s.name.toLowerCase().includes(q) ||
-          s.niche.toLowerCase().includes(q)
+          String(s.domain || "").toLowerCase().includes(q) ||
+          String(s.name || "").toLowerCase().includes(q) ||
+          String(s.niche || "").toLowerCase().includes(q)
       );
     }
     if (filters.niche && filters.niche !== "All") {
@@ -348,7 +304,10 @@ export default function AltfLinkingPageView() {
       result = result.filter((s) => s.traffic >= Number(filters.minTraffic));
     }
     if (filters.maxPrice) {
-      result = result.filter((s) => s.prices.guestPost <= filters.maxPrice);
+      result = result.filter((site) => {
+        const price = resolveGuestPostPrice(site);
+        return price !== null && price <= filters.maxPrice;
+      });
     }
 
     switch (filters.sortBy) {
@@ -359,7 +318,13 @@ export default function AltfLinkingPageView() {
         result.sort((a, b) => b.traffic - a.traffic);
         break;
       case "price_asc":
-        result.sort((a, b) => a.prices.guestPost - b.prices.guestPost);
+        result.sort((a, b) => {
+          const aPrice = resolveGuestPostPrice(a);
+          const bPrice = resolveGuestPostPrice(b);
+          if (aPrice === null) return bPrice === null ? 0 : 1;
+          if (bPrice === null) return -1;
+          return aPrice - bPrice;
+        });
         break;
       case "tat_asc":
         result.sort((a, b) => a.tatDays - b.tatDays);
@@ -413,8 +378,6 @@ export default function AltfLinkingPageView() {
           onOpenSearch={() => setSearchModalOpen(true)}
           cartCount={cartItems.length}
           onOpenCart={() => setCartOpen(true)}
-          onOpenBulkSearch={() => setBulkSearchOpen(true)}
-          onOpenRoiCalc={() => setRoiCalcOpen(true)}
           onOpenAuth={() => setAuthModalOpen(true)}
           userSession={userSession}
           onLogout={async () => {
@@ -427,6 +390,19 @@ export default function AltfLinkingPageView() {
 
         {/* Content Body Area */}
         <main className="flex-1 p-4 sm:p-6 lg:p-8 w-full space-y-12">
+          {loading ? (
+            <LoadingState
+              title="Loading marketplace listings"
+              message="Fetching publisher-submitted listings from the ALTFTool service."
+            />
+          ) : dataError ? (
+            <ErrorState
+              title="Marketplace service unavailable"
+              error={`${dataError}. No demo listings or local order data have been substituted.`}
+              onRetry={loadData}
+            />
+          ) : null}
+
           {/* OVERVIEW / ENTERPRISE HOMEPAGE */}
           {activeTab === "landing" && (
             <div className="space-y-10 max-w-7xl mx-auto">
@@ -441,7 +417,6 @@ export default function AltfLinkingPageView() {
               />
 
               {/* 2. 4-Card Stats Metric Bar */}
-              <LandingStatsBar />
 
               {/* 3. Marketplace Categories Pills */}
               <MarketplaceCategories
@@ -453,12 +428,14 @@ export default function AltfLinkingPageView() {
 
               {/* 4. Featured Publishers Grid (5 Cards) */}
               <FeaturedPublishers
+                publishers={websites}
                 onSelectSite={(site) => setPreviewSite(site)}
                 onExploreMarketplace={() => setActiveTab("marketplace")}
               />
 
               {/* 5. Recent Backlink Opportunities Table */}
               <RecentOpportunitiesTable
+                websites={websites}
                 onSelectSite={(site) => setPreviewSite(site)}
                 onExploreMarketplace={() => setActiveTab("marketplace")}
               />
@@ -473,7 +450,6 @@ export default function AltfLinkingPageView() {
               <FeatureHighlights />
 
               {/* 8. Customer Testimonials */}
-              <CustomerTestimonials />
 
               {/* 9. FAQ Accordion */}
               <FaqAccordion />
@@ -539,8 +515,8 @@ export default function AltfLinkingPageView() {
                   </h1>
                   <p className="text-xs text-slate-500 mt-0.5">
                     {activeTab === "link-exchange"
-                      ? "Discover & trade verified reciprocal backlinks directly with DNS-verified website publishers with $0 commission fees."
-                      : "Discover & order verified backlinks from high-authority media domains"}
+                      ? "Review publisher-submitted reciprocal-link listings and their stated terms."
+                      : "Review approved listings and submit a placement request to the publisher."}
                   </p>
                 </div>
 
@@ -566,27 +542,18 @@ export default function AltfLinkingPageView() {
 
                 <div className="lg:col-span-3">
                   {filteredWebsites.length === 0 ? (
-                    <div className="altf-card p-12 text-center space-y-3 bg-white border border-slate-200">
-                      <p className="text-lg font-bold text-slate-800">
-                        No websites match your exact filter criteria
-                      </p>
-                      <p className="text-xs text-slate-500">
-                        Try widening search terms, reducing minimum DR, or selecting All Niches.
-                      </p>
-                      <button
-                        onClick={() => setFilters(DEFAULT_FILTERS)}
-                        className="altf-btn-secondary py-2 px-5 text-xs font-bold mt-2"
-                      >
-                        Reset All Filters
-                      </button>
-                    </div>
+                    <EmptyState
+                      title="No approved listings found"
+                      message="No live marketplace listing matches these filters. Metrics and prices are shown only when supplied on an approved listing."
+                      actionLabel="Reset filters"
+                      onAction={() => setFilters(DEFAULT_FILTERS)}
+                    />
                   ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
                       {filteredWebsites.map((site) => (
                         <WebsiteCard
                           key={site.id}
                           site={site}
-                          isLinkExchange={activeTab === "link-exchange"}
                           onQuickPreview={setPreviewSite}
                           onSelectOrder={setPreviewSite}
                           isCompared={compareList.some((s) => s.id === site.id)}
@@ -616,7 +583,7 @@ export default function AltfLinkingPageView() {
             (!userSession ? (
               <ProtectedSectionGuard
                 title="Sign In to Access Buyer Portal"
-                description="Track your guest post orders, 5-step milestone steppers, escrow dispute claims, and SEO campaign budgets."
+                description="Track placement requests, recorded order statuses, disputes, and campaign budgets."
                 onOpenAuth={() => setAuthModalOpen(true)}
               />
             ) : (
@@ -636,7 +603,7 @@ export default function AltfLinkingPageView() {
             (!userSession ? (
               <ProtectedSectionGuard
                 title="Sign In to Access Publisher Studio"
-                description="List your high-DR websites, perform DNS TXT verification, accept buyer requests, and request payout withdrawals."
+                description="Submit website listings, perform DNS TXT verification, and respond to recorded placement requests."
                 onOpenAuth={() => setAuthModalOpen(true)}
               />
             ) : (
@@ -644,7 +611,6 @@ export default function AltfLinkingPageView() {
                 websites={websites}
                 onSubmitWebsite={handleSubmitWebsite}
                 onOpenSubmitModal={() => setSubmitListingOpen(true)}
-                onOpenWithdrawal={() => setWithdrawalOpen(true)}
                 incomingOrders={orders}
                 onAcceptOrder={handleAcceptOrder}
                 onSubmitLiveLink={handleSubmitLiveLink}
@@ -657,7 +623,7 @@ export default function AltfLinkingPageView() {
             (!userSession || (userSession.role !== "ADMIN" && userSession.role !== "SUPERADMIN") ? (
               <ProtectedSectionGuard
                 title="Admin & Superadmin Access Only"
-                description="This section is restricted to Platform Administrators and Superadmins for domain moderation and escrow approvals."
+                description="This section is restricted to Platform Administrators and Superadmins for listing and order moderation."
                 onOpenAuth={() => setAuthModalOpen(true)}
               />
             ) : (
@@ -746,42 +712,7 @@ export default function AltfLinkingPageView() {
         />
       )}
 
-      {/* Bulk Domain Search & CSV Match Modal */}
-      <BulkDomainSearchModal
-        isOpen={bulkSearchOpen}
-        onClose={() => setBulkSearchOpen(false)}
-        onBulkMatch={(list) => {
-          showToast(`Matched ${list.length} target domains against marketplace inventory!`);
-          setActiveTab("marketplace");
-        }}
-      />
-
-      {/* Backlink ROI Calculator & Growth Simulator Modal */}
-      <RoiCalculatorModal
-        isOpen={roiCalcOpen}
-        onClose={() => setRoiCalcOpen(false)}
-        onApplyTarget={({ minDr, maxPrice }) => {
-          setFilters((prev) => ({ ...prev, minDr, maxPrice }));
-          showToast(`Filtered marketplace inventory for DR ${minDr}+ and max price $${maxPrice}`);
-          setActiveTab("marketplace");
-        }}
-      />
-
-      {/* Publisher Payout Withdrawal Modal */}
-      <WithdrawalModal
-        isOpen={withdrawalOpen}
-        onClose={() => setWithdrawalOpen(false)}
-        onConfirmWithdrawal={async (payout) => {
-          try {
-            await apiClient.requestWithdrawal(payout);
-            showToast(`Payout request of $${payout.amount} submitted via ${payout.method.toUpperCase()}`);
-          } catch (e) {
-            showToast(e.message || "Failed to submit withdrawal request", "error");
-          }
-        }}
-      />
-
-      {/* Escrow Dispute Resolution Modal */}
+      {/* Order Dispute Resolution Modal */}
       <DisputeResolutionModal
         isOpen={disputeOpen}
         onClose={() => {
@@ -797,13 +728,14 @@ export default function AltfLinkingPageView() {
           const note = `Dispute: ${dispute.reason}${dispute.description ? ` — ${dispute.description}` : ""}`;
           try {
             await apiClient.updateOrderStatus(dispute.orderId, "DISPUTED", { note });
-          } catch {
-            await firebaseUpdateOrderStatus(dispute.orderId, "DISPUTED", { note });
+            setOrders((current) =>
+              current.map((o) => (o.id === dispute.orderId ? { ...o, status: "DISPUTED" } : o))
+            );
+            showToast(`Dispute filed for Order ${dispute.orderId} for admin review.`);
+          } catch (error) {
+            showToast(error.message || "Failed to file dispute", "error");
+            throw error;
           }
-          setOrders((current) =>
-            current.map((o) => (o.id === dispute.orderId ? { ...o, status: "DISPUTED" } : o))
-          );
-          showToast(`Dispute filed for Order ${dispute.orderId}. Escrow locked for crawler re-verification.`);
         }}
       />
 
@@ -813,22 +745,47 @@ export default function AltfLinkingPageView() {
         onClose={() => setCartOpen(false)}
         cartItems={cartItems}
         onRemoveCartItem={(itemId) => setCartItems(cartItems.filter((i) => i.id !== itemId))}
-        onCheckoutEscrow={({ items, totalPrice, targetUrl, anchorText }) => {
-          items.forEach((item) => {
-            handlePlaceOrder({
-              websiteId: item.id,
-              websiteDomain: item.domain,
-              publisherId: item.publisherId || "pub_1",
-              publisherName: item.publisherName || "Verified Media",
-              type: "GUEST_POST",
-              targetUrl,
-              anchorText,
-              campaignName: "Bulk Agency Campaign",
-              price: item.prices?.guestPost || 180,
-            });
-          });
-          setCartItems([]);
-          showToast(`Bulk Escrow Vault locked for ${items.length} publisher placements ($${totalPrice})!`);
+        onCheckout={async ({ items, targetUrl, anchorText }) => {
+          if (!userSession) {
+            setAuthModalOpen(true);
+            throw new Error("Please sign in to submit order requests");
+          }
+          const results = await Promise.allSettled(
+            items.map((item) =>
+              apiClient.placeOrder({
+                listingId: item.id,
+                type: "GUEST_POST",
+                targetUrl,
+                anchorText,
+                campaignName: "Bulk Agency Campaign",
+              })
+            )
+          );
+
+          const createdOrders = results
+            .filter((result) => result.status === "fulfilled")
+            .map((result) => result.value);
+          const successfulListingIds = new Set(
+            results.flatMap((result, index) =>
+              result.status === "fulfilled" ? [items[index].id] : []
+            )
+          );
+          const failedCount = results.length - createdOrders.length;
+
+          if (createdOrders.length > 0) {
+            setOrders((current) => [...createdOrders, ...current]);
+            setCartItems((current) =>
+              current.filter((item) => !successfulListingIds.has(item.id))
+            );
+          }
+
+          if (failedCount > 0) {
+            const message = `${createdOrders.length} request${createdOrders.length === 1 ? "" : "s"} submitted; ${failedCount} failed and remain in the cart.`;
+            showToast(message, "error");
+            throw new Error(message);
+          }
+
+          showToast(`${createdOrders.length} order requests submitted for admin review.`);
           setActiveTab("buyer");
         }}
       />

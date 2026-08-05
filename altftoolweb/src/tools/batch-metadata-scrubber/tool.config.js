@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "Images/documents se EXIF, GPS, author aur revision data remove kare.",
+  "description": "Remove EXIF, GPS, author and revision data from images and documents in bulk.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

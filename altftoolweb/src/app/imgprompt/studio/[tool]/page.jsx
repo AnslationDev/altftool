@@ -25,9 +25,8 @@ const INDEXABLE_KINDS = new Set(["core", "model", "category"]);
 // the first is a 28-34 character sidebar subtitle and the second is a seeded
 // template ("X prompts engineered for stunning, consistent AI results.")
 // repeated verbatim across all ~120 categories. Nothing here publishes a
-// rating, a user count or a price — data/reviews.js testimonials and the
-// seeded `category.count` are placeholder values, so they stay out of the
-// markup.
+// rating, a user count or a price — the seeded `category.count` is a
+// placeholder value, so it stays out of the markup.
 
 export default async function StudioToolPage({ params }) {
   const { tool } = await params;

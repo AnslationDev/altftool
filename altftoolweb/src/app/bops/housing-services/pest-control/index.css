@@ -1,6 +1,9 @@
-@import "tailwindcss" source("./");
+/* Scoped to .pest-control-page for the same reason as the plumber sheet:
+   route CSS stays attached after navigation, so every authored selector in
+   this file is limited to that wrapper. Global Tailwind already scans this
+   source tree; importing it here emitted a second document-wide Preflight. */
 
-:root {
+.pest-control-page {
   --primary: #1D7A43;
   --secondary: #14532D;
   --accent: #4ADE80;
@@ -13,21 +16,21 @@
   --radius-input: 12px;
 }
 
-body {
+.pest-control-page {
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   overflow-x: hidden;
 }
 
-html {
+html:has(.pest-control-page) {
   scroll-behavior: smooth;
 }
 
-img {
+.pest-control-page img {
   max-width: 100%;
 }
 
 /* Custom Shadcn-like styles */
-.btn {
+.pest-control-page .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -41,52 +44,52 @@ img {
   text-decoration: none;
 }
 
-.btn-primary {
+.pest-control-page .btn-primary {
   background-color: var(--primary);
   color: white;
   border: 1px solid var(--primary);
 }
 
-.btn-primary:hover {
+.pest-control-page .btn-primary:hover {
   background-color: var(--secondary);
   border-color: var(--secondary);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(29, 122, 67, 0.3);
 }
 
-.btn-secondary {
+.pest-control-page .btn-secondary {
   background-color: white;
   color: var(--text);
   border: 1px solid var(--border);
 }
 
-.btn-secondary:hover {
+.pest-control-page .btn-secondary:hover {
   background-color: var(--muted);
   border-color: var(--primary);
 }
 
-.btn-accent {
+.pest-control-page .btn-accent {
   background-color: var(--accent);
   color: var(--secondary);
   border: 1px solid var(--accent);
 }
 
-.btn-accent:hover {
+.pest-control-page .btn-accent:hover {
   background-color: #22c55e;
 }
 
-.btn-outline {
+.pest-control-page .btn-outline {
   background-color: transparent;
   color: var(--primary);
   border: 2px solid var(--primary);
 }
 
-.btn-outline:hover {
+.pest-control-page .btn-outline:hover {
   background-color: var(--primary);
   color: white;
 }
 
-.card {
+.pest-control-page .card {
   background: white;
   border-radius: var(--radius-card);
   border: 1px solid var(--border);
@@ -94,25 +97,25 @@ img {
 }
 
 @media (hover: hover) {
-  .card:hover {
+  .pest-control-page .card:hover {
     transform: translateY(-4px);
     box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
   }
 }
 
-.service-card {
+.pest-control-page .service-card {
   overflow: hidden;
 }
 
-.service-card img {
+.pest-control-page .service-card img {
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.service-card:hover img {
+.pest-control-page .service-card:hover img {
   transform: scale(1.08);
 }
 
-.input {
+.pest-control-page .input {
   width: 100%;
   padding: 0.75rem 1rem;
   border: 1px solid var(--border);
@@ -122,17 +125,17 @@ img {
   background: white;
 }
 
-.input:focus {
+.pest-control-page .input:focus {
   outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(29, 122, 67, 0.1);
 }
 
-.input.error {
+.pest-control-page .input.error {
   border-color: #ef4444;
 }
 
-.label {
+.pest-control-page .label {
   display: block;
   font-size: 0.875rem;
   font-weight: 600;
@@ -140,7 +143,7 @@ img {
   margin-bottom: 0.375rem;
 }
 
-.section-title {
+.pest-control-page .section-title {
   font-size: 2.25rem;
   line-height: 1.1;
   font-weight: 700;
@@ -148,32 +151,32 @@ img {
 }
 
 @media (max-width: 768px) {
-  body {
+  .pest-control-page {
     padding-bottom: 76px;
   }
 
-  .section-title {
+  .pest-control-page .section-title {
     font-size: 1.875rem;
   }
 
-  h1 {
+  .pest-control-page h1 {
     overflow-wrap: anywhere;
   }
 
-  .btn {
+  .pest-control-page .btn {
     min-height: 44px;
   }
 }
 
-.accordion-content {
+.pest-control-page .accordion-content {
   overflow: hidden;
 }
 
-.mega-menu {
-  animation: fadeInDown 0.2s ease-out forwards;
+.pest-control-page .mega-menu {
+  animation: pest-fade-in-down 0.2s ease-out forwards;
 }
 
-@keyframes fadeInDown {
+@keyframes pest-fade-in-down {
   from {
     opacity: 0;
     transform: translateY(-10px);
@@ -186,22 +189,22 @@ img {
 }
 
 /* Swiper custom */
-.swiper {
+.pest-control-page .swiper {
   padding-bottom: 3rem !important;
 }
 
-.swiper-pagination-bullet {
+.pest-control-page .swiper-pagination-bullet {
   background: var(--primary) !important;
   opacity: 0.4;
 }
 
-.swiper-pagination-bullet-active {
+.pest-control-page .swiper-pagination-bullet-active {
   opacity: 1;
 }
 
 /* Sticky CTA Mobile */
 @media (max-width: 768px) {
-  .sticky-cta {
+  .pest-control-page .sticky-cta {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -215,13 +218,13 @@ img {
 }
 
 /* Progress Steps */
-.step {
+.pest-control-page .step {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-.step-dot {
+.pest-control-page .step-dot {
   width: 28px;
   height: 28px;
   border-radius: 9999px;
@@ -233,24 +236,24 @@ img {
   transition: all 0.2s;
 }
 
-.step-dot.active {
+.pest-control-page .step-dot.active {
   background-color: var(--primary);
   color: white;
 }
 
-.step-dot.completed {
+.pest-control-page .step-dot.completed {
   background-color: var(--accent);
   color: var(--secondary);
 }
 
-.step-dot.inactive {
+.pest-control-page .step-dot.inactive {
   background-color: var(--muted);
   color: #64748b;
   border: 1px solid var(--border);
 }
 
 /* Trust Badges */
-.trust-badge {
+.pest-control-page .trust-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -263,7 +266,7 @@ img {
 }
 
 /* FAQ */
-.faq-question {
+.pest-control-page .faq-question {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -277,17 +280,17 @@ img {
   transition: all 0.2s;
 }
 
-.faq-question:hover {
+.pest-control-page .faq-question:hover {
   border-color: var(--primary);
 }
 
-.faq-question.open {
+.pest-control-page .faq-question.open {
   border-color: var(--primary);
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.faq-answer {
+.pest-control-page .faq-answer {
   padding: 0 1.25rem 1.25rem;
   background: white;
   border: 1px solid var(--border);
@@ -299,11 +302,11 @@ img {
 }
 
 /* Form Steps */
-.form-step {
-  animation: fadeIn 0.3s ease-out;
+.pest-control-page .form-step {
+  animation: pest-fade-in 0.3s ease-out;
 }
 
-@keyframes fadeIn {
+@keyframes pest-fade-in {
   from {
     opacity: 0;
     transform: translateY(10px);
@@ -316,31 +319,31 @@ img {
 }
 
 /* Service Areas Cards */
-.area-card {
+.pest-control-page .area-card {
   transition: all 0.25s cubic-bezier(0.4, 0.0, 0.2, 1);
 }
 
-.area-card:hover {
+.pest-control-page .area-card:hover {
   border-color: var(--primary);
   transform: translateY(-2px);
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
 }
 
 /* Blog Cards */
-.blog-card {
+.pest-control-page .blog-card {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.blog-card:hover {
+.pest-control-page .blog-card:hover {
   transform: translateY(-6px);
 }
 
 /* Modal */
-.modal {
-  animation: modalPop 0.2s cubic-bezier(0.32, 0.72, 0, 1);
+.pest-control-page .modal {
+  animation: pest-modal-pop 0.2s cubic-bezier(0.32, 0.72, 0, 1);
 }
 
-@keyframes modalPop {
+@keyframes pest-modal-pop {
   from {
     opacity: 0;
     transform: scale(0.96) translateY(10px);
@@ -353,14 +356,14 @@ img {
 }
 
 /* Accessibility */
-:focus-visible {
+.pest-control-page :focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
 
 /* Print styles */
 @media print {
-  .no-print {
+  .pest-control-page .no-print {
     display: none !important;
   }
 }

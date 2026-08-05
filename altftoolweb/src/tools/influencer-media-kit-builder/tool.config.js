@@ -5,7 +5,7 @@ const toolConfig = {
     "Marketing & Social",
     "Productivity"
   ],
-  "description": "Creator metrics se professional media-kit PDF banaye.",
+  "description": "Build a professional media-kit PDF from your creator metrics and audience data.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

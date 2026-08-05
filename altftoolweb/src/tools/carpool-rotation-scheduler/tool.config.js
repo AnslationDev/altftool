@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "carpool-rotation-scheduler",
   name: "Carpool Rotation Scheduler",
   category: ["Productivity","Business"],
-  description: "Drivers aur passengers ka recurring fair rota banaye.",
+  description: "Build a recurring, fair driving rota across your carpool's drivers and passengers.",
   icon: "users-round",
   iconColor: "text-primary",
 };

@@ -124,7 +124,7 @@ function ToolRuntimeRecoveryFallback({ slug, tool, category, error, retryCount, 
   const [relatedTools, setRelatedTools] = useState([]);
   useEffect(() => {
     let active = true;
-    import("@/platform/registry/toolMetaMap")
+    import("@/platform/registry/clientToolMetaMap")
       .then(({ toolMetaMap }) => {
         if (active) setRelatedTools(getRecoveryRelatedTools(toolMetaMap, slug));
       })

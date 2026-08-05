@@ -10,17 +10,8 @@ import {
 } from "lucide-react";
 import { cn } from "../../lib/utils";
 import { Badge } from "../ui/badge";
-import { AnimatedCounter } from "../shared/animated-counter";
 import { HeroGraphic } from "./hero-graphic";
-import { TOTAL_PROMPTS, CATEGORIES } from "../../data/categories";
-import { AI_MODELS } from "../../data/models";
-
-const STATS = [
-  { label: "Pro Prompts", value: TOTAL_PROMPTS, compact: true, suffix: "+" },
-  { label: "Categories", value: CATEGORIES.length, suffix: "+" },
-  { label: "AI Models", value: AI_MODELS.length },
-  { label: "Avg. Score", value: 94, suffix: "/100" },
-];
+import { CATEGORIES } from "../../data/categories";
 
 /** Rotates through the input's placeholder — purely a hint of what's
  *  possible; typing anything (or nothing) still works. */
@@ -250,7 +241,7 @@ export function Hero() {
               <span className="grid h-5 w-5 place-items-center rounded-full bg-brand-gradient">
                 <Sparkles className="h-3 w-3 text-white" />
               </span>
-              AI Prompt Intelligence · {CATEGORIES.length}+ categories
+              AI Prompt Studio · {CATEGORIES.length} categories
             </Badge>
           </motion.div>
 
@@ -269,8 +260,8 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.12 }}
             className="mx-auto mt-6 max-w-2xl text-lg text-muted-foreground"
           >
-            Generate breathtaking Image, Video, Cinematic &amp; Story Prompts — powered by AI Prompt
-            Intelligence that scores, explains and perfects every idea instantly.
+            Draft and refine image, video, cinematic and story prompts, then adapt them for the model
+            and creative workflow you use.
           </motion.p>
         </div>
 

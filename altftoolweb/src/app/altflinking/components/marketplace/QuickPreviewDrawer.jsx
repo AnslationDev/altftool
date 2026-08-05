@@ -23,8 +23,12 @@ import {
 } from "lucide-react";
 import TrafficSparklineSvg from "../visuals/TrafficSparklineSvg";
 
+import { formatPrice, resolveGuestPostPrice, resolveLinkInsertionPrice } from "../../lib/pricing";
+import { trafficTrendPercent } from "../visuals/TrafficSparklineSvg";
 export default function QuickPreviewDrawer({ site, onClose, onPlaceOrder }) {
-  const [selectedType, setSelectedType] = useState("GUEST_POST");
+  const [selectedType, setSelectedType] = useState(() =>
+    resolveGuestPostPrice(site) !== null ? "GUEST_POST" : "LINK_INSERTION"
+  );
   const [targetUrl, setTargetUrl] = useState("");
   const [anchorText, setAnchorText] = useState("");
   const [campaignName, setCampaignName] = useState("Main Campaign");
@@ -34,31 +38,29 @@ export default function QuickPreviewDrawer({ site, onClose, onPlaceOrder }) {
 
   if (!site) return null;
 
-  const guestPostPrice = site.prices?.guestPost ?? site.price ?? 180;
-  const linkInsertionPrice = site.prices?.linkInsertion ?? Math.round((site.price || 180) * 0.65);
+  const guestPostPrice = resolveGuestPostPrice(site);
+  const linkInsertionPrice = resolveLinkInsertionPrice(site);
   const currentPrice = selectedType === "GUEST_POST" ? guestPostPrice : linkInsertionPrice;
   const isFree = currentPrice === 0;
+  const trafficTrend = trafficTrendPercent(site.trafficHistory);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!targetUrl || !anchorText) return;
+    if (!targetUrl || !anchorText || currentPrice === null) return;
     setIsSubmitting(true);
-    setTimeout(() => {
-      onPlaceOrder({
-        websiteId: site.id,
-        websiteDomain: site.domain,
-        publisherId: site.publisherId,
-        publisherName: site.publisherName,
+    try {
+      await onPlaceOrder({
+        listingId: site.id,
         type: selectedType,
         targetUrl,
         anchorText,
         articleContent,
         articleDocUrl,
         campaignName,
-        price: currentPrice,
       });
+    } finally {
       setIsSubmitting(false);
-    }, 600);
+    }
   };
 
   return (
@@ -99,22 +101,27 @@ export default function QuickPreviewDrawer({ site, onClose, onPlaceOrder }) {
         <div className="grid grid-cols-3 gap-3">
           <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 text-center">
             <p className="text-[10px] text-slate-500 uppercase font-extrabold tracking-wider">Domain Rating</p>
-            <p className="text-xl font-black text-indigo-600 font-mono mt-1">DR {site.dr || 50}</p>
-            <p className="text-[10px] text-slate-400 font-mono mt-0.5">DA {site.da || Math.round((site.dr || 50) * 0.95)}</p>
+            <p className="text-xl font-black text-indigo-600 font-mono mt-1">DR {site.dr ?? "—"}</p>
+            <p className="text-[10px] text-slate-400 font-mono mt-0.5">DA {site.da ?? "—"}</p>
           </div>
 
           <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 text-center">
             <p className="text-[10px] text-slate-500 uppercase font-extrabold tracking-wider">Organic Traffic</p>
             <p className="text-xl font-black text-slate-900 font-mono mt-1">
-              {typeof site.traffic === "number" ? `${(site.traffic / 1000).toFixed(0)}k/mo` : site.traffic || "50k/mo"}
+              {typeof site.traffic === "number" ? `${(site.traffic / 1000).toFixed(0)}k/mo` : site.traffic || "—"}
             </p>
-            <p className="text-[10px] text-indigo-600 font-mono font-bold mt-0.5">+28% Growth</p>
+            {trafficTrend === null ? null : (
+                <p className="text-[10px] text-indigo-600 font-mono font-bold mt-0.5">
+                  {trafficTrend > 0 ? "+" : ""}
+                  {trafficTrend}% Growth
+                </p>
+              )}
           </div>
 
           <div className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80 text-center">
             <p className="text-[10px] text-slate-500 uppercase font-extrabold tracking-wider">Turnaround</p>
-            <p className="text-xl font-black text-slate-900 font-mono mt-1">{site.tatDays || 3} Days</p>
-            <p className="text-[10px] text-slate-400 font-mono mt-0.5">Guaranteed</p>
+            <p className="text-xl font-black text-slate-900 font-mono mt-1">{site.tatDays ? `${site.tatDays} Days` : "—"}</p>
+            <p className="text-[10px] text-slate-400 font-mono mt-0.5">Publisher-provided</p>
           </div>
         </div>
 
@@ -124,9 +131,6 @@ export default function QuickPreviewDrawer({ site, onClose, onPlaceOrder }) {
             <span className="font-bold text-slate-700 flex items-center gap-1.5">
               <TrendingUp className="h-4 w-4 text-indigo-600" />
               6-Month Organic Traffic Trend
-            </span>
-            <span className="text-indigo-600 font-mono font-extrabold text-xs bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100">
-              Verified Ahrefs Data
             </span>
           </div>
 
@@ -143,7 +147,7 @@ export default function QuickPreviewDrawer({ site, onClose, onPlaceOrder }) {
             Editorial &amp; Content Guidelines
           </h4>
           <p className="text-xs text-slate-600 leading-relaxed font-normal">
-            {site.guidelines || "Articles must be 1,000+ words of original, high-quality content. Maximum 2 dofollow links per post. No gambling, adult, or predatory niches accepted."}
+            {site.guidelines || "No publisher guidelines have been provided for this listing."}
           </p>
         </div>
 
@@ -183,7 +187,7 @@ export default function QuickPreviewDrawer({ site, onClose, onPlaceOrder }) {
                 ? "bg-indigo-50 text-indigo-700 border-indigo-200"
                 : "bg-slate-100 text-indigo-600 border-slate-200"
             }`}>
-              {isFree ? "FREE ($0)" : `$${currentPrice}`}
+              {formatPrice(currentPrice)}
             </span>
           </div>
 
@@ -192,6 +196,7 @@ export default function QuickPreviewDrawer({ site, onClose, onPlaceOrder }) {
             <button
               type="button"
               onClick={() => setSelectedType("GUEST_POST")}
+              disabled={guestPostPrice === null}
               className={`py-2.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 border ${
                 selectedType === "GUEST_POST"
                   ? "bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-600/20"
@@ -199,12 +204,13 @@ export default function QuickPreviewDrawer({ site, onClose, onPlaceOrder }) {
               }`}
             >
               <span>Guest Post</span>
-              <span className="font-mono opacity-90">{guestPostPrice === 0 ? "($0)" : `($${guestPostPrice})`}</span>
+              <span className="font-mono opacity-90">({formatPrice(guestPostPrice)})</span>
             </button>
 
             <button
               type="button"
               onClick={() => setSelectedType("LINK_INSERTION")}
+              disabled={linkInsertionPrice === null}
               className={`py-2.5 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 border ${
                 selectedType === "LINK_INSERTION"
                   ? "bg-indigo-600 text-white border-indigo-600 shadow-md shadow-indigo-600/20"
@@ -212,7 +218,7 @@ export default function QuickPreviewDrawer({ site, onClose, onPlaceOrder }) {
               }`}
             >
               <span>Link Insertion</span>
-              <span className="font-mono opacity-90">{linkInsertionPrice === 0 ? "($0)" : `($${linkInsertionPrice})`}</span>
+              <span className="font-mono opacity-90">({formatPrice(linkInsertionPrice)})</span>
             </button>
           </div>
 
@@ -269,7 +275,7 @@ export default function QuickPreviewDrawer({ site, onClose, onPlaceOrder }) {
           {/* Submit Action Button */}
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || currentPrice === null}
             className="altf-btn-primary w-full py-3 text-xs font-black flex items-center justify-center gap-2 rounded-xl shadow-lg shadow-indigo-600/25 active:scale-[0.98] transition-all"
           >
             {isSubmitting ? (
@@ -277,7 +283,7 @@ export default function QuickPreviewDrawer({ site, onClose, onPlaceOrder }) {
             ) : (
               <>
                 <Send className="h-4 w-4" />
-                <span>Submit Order {isFree ? "($0 Free)" : `($${currentPrice})`}</span>
+                <span>{currentPrice === null ? "Price unavailable" : `Submit Order (${formatPrice(currentPrice)})`}</span>
               </>
             )}
           </button>

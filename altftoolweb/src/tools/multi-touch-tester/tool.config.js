@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Simultaneous touch points aur digitizer response visualize kare.",
+  "description": "Visualize the simultaneous touch points your screen registers and the digitizer's response.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

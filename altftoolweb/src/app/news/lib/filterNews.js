@@ -1,10 +1,10 @@
 // Articles carry no engagement data (we do not measure likes/comments/shares
 // for syndicated feed items), so every "most popular" style view falls back to
+import { compareNewsNewestFirst } from "./time.js";
+
 // recency — the only signal we actually have.
 function byNewestFirst(news) {
-  return [...news].sort(
-    (a, b) => (a.published_hours_ago ?? 0) - (b.published_hours_ago ?? 0)
-  );
+  return [...news].sort(compareNewsNewestFirst);
 }
 
 export function filterNews(news, type) {

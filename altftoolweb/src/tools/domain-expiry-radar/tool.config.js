@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "RDAP data se expiry aur renewal windows track kare.",
+  "description": "Track domain expiry and renewal windows using RDAP registration data.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

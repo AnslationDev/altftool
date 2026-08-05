@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { Check, Zap, ChevronDown, ChevronUp, Copy, Users } from "lucide-react";
+import { Zap, ChevronDown, ChevronUp, Copy, Users } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import badge from "../../../(assets)/bluebadge.png";
@@ -13,7 +13,6 @@ function AllBrand({ data }) {
   const [copied, setCopied] = useState(false);
   const [isCopiedOnce, setIsCopiedOnce] = useState(false);
 
-  const hasVerified = data?.tags?.includes("Verified");
   const hasFlashSale = data?.tags?.includes("Flash Sale");
   const isCoupon = !!data?.code;
 
@@ -92,16 +91,15 @@ function AllBrand({ data }) {
 
           <div className="flex flex-col items-end gap-2 flex-shrink-0">
             <div className="flex items-center gap-5 text-xs">
-              {hasVerified && (
-                <span className="flex items-center gap-1 font-medium">
-                  <Check size={13} strokeWidth={2.5} className="text-green-600" />
-                  Verified
+              {/* `uses` is absent on every offer the live feed returns, so this
+                  fallback fired every time and published "2969 Uses Today" as a
+                  measured figure. Rendered only when the feed supplies it. */}
+              {data?.uses ? (
+                <span className="flex items-center gap-1 text-xs">
+                  <Users size={13} />
+                  {data.uses} Uses Today
                 </span>
-              )}
-              <span className="flex items-center gap-1 text-xs">
-                <Users size={13} />
-                {data?.uses ?? "2969"} Uses Today
-              </span>
+              ) : null}
             </div>
 
             {isCoupon ? (
@@ -187,20 +185,15 @@ function AllBrand({ data }) {
               </span>
             )}
             <div className="flex items-center gap-3 text-xs text-(--foreground)">
-              {hasVerified && (
-                <span className="flex items-center gap-1 font-medium">
-                  <Check
-                    size={12}
-                    strokeWidth={2.5}
-                    className="text-green-600"
-                  />
-                  Verified
+              {/* `uses` is absent on every offer the live feed returns, so this
+                  fallback fired every time and published "2969 Uses Today" as a
+                  measured figure. Rendered only when the feed supplies it. */}
+              {data?.uses ? (
+                <span className="flex items-center gap-1">
+                  <Users size={12} />
+                  {data.uses} Uses Today
                 </span>
-              )}
-              <span className="flex items-center gap-1">
-                <Users size={12} />
-                {data?.uses ?? "2969"} Uses Today
-              </span>
+              ) : null}
             </div>
           </div>
         </div>

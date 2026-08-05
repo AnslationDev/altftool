@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "loan-fee-extractor",
   name: "Loan Fee Extractor",
   category: ["Finance","Security & Privacy"],
-  description: "Agreement se fees, penalties, reset clauses aur hidden charges extract kare.",
+  description: "Extract fees, penalties, reset clauses and hidden charges from a loan agreement.",
   icon: "scan-text",
   iconColor: "text-primary",
 };

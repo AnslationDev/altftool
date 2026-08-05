@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Selected GitHub projects ke new releases monitor kare.",
+  "description": "Monitor new releases across the GitHub projects you choose to follow.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

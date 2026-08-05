@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Microphone se note aur cents sharp/flat dikhaye.",
+  "description": "Tune any instrument by microphone, showing the note and how many cents sharp or flat.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

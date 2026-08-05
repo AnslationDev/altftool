@@ -30,7 +30,10 @@ export async function generateMetadata({ params }) {
   const withCount = `${blurb} ${formatCount(category.count)} ${guideWord} in the AltFTool Fact Hub.`;
 
   return createPageMetadata({
-    title: `${category.name} Fact Hub`,
+    // Branded in the string — the /fact-net layout consumes the root layout's
+    // "%s | AltFTool" template, so these shipped unbranded at 22 characters.
+    // Longest live category makes 37 ("Design & Wellness Fact Hub | AltFTool").
+    title: `${category.name} Fact Hub | AltFTool`,
     description: withCount.length <= 158 ? withCount : blurb,
     path: `/fact-net/categories/${category.categoryPath}`,
   });

@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "analytics-pii-checker",
   name: "Analytics PII Checker",
   category: ["Security & Privacy","Developer"],
-  description: "Analytics payloads me accidentally transmitted personal data detect kare.",
+  description: "Detect personal data accidentally transmitted inside your analytics payloads.",
   icon: "shield-alert",
   iconColor: "text-primary",
 };

@@ -127,9 +127,9 @@ export default function TrendingSection({ items = [] }) {
         <Reveal>
           <SectionHeading
             index="01"
-            eyebrow="TRENDING NOW"
-            heading="What the world is exploring."
-            description="The rankings attracting the most attention, recalculated from editorial updates and community activity."
+            eyebrow="PREVIEW HIGHLIGHTS"
+            heading="Explore the authored catalogue."
+            description="A stable selection ordered from the illustrative activity fields in this preview dataset."
           />
         </Reveal>
 

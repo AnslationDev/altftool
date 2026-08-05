@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "User-owned audio ko vocals, bass, drums aur instrumental stems me split kare.",
+  "description": "Split audio you own into vocals, bass, drums and instrumental stems.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

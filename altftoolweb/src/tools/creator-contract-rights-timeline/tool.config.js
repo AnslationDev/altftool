@@ -2,7 +2,7 @@ const toolConfig = {
   slug: "creator-contract-rights-timeline",
   name: "Creator Contract Rights Timeline",
   category: ["Business","Text & Writing"],
-  description: "Usage, exclusivity, whitelisting aur renewal dates extract kare.",
+  description: "Extract usage, exclusivity, whitelisting and renewal dates from a creator contract.",
   icon: "calendar-range",
   iconColor: "text-primary",
 };

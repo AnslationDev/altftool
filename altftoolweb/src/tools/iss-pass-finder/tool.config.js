@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "User location ke liye next visible ISS flyover calculate kare.",
+  "description": "Calculate the next visible International Space Station flyover for your location.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

@@ -39,12 +39,12 @@ const STEPS = [
   {
     n: '04',
     title: 'Combine and rank',
-    body: 'The four criterion scores are multiplied by their weights and summed into a single number out of 100. Positions follow from the arithmetic. Where two entries land within a tenth of a point, the tie is broken on the highest-weighted criterion.',
+    body: 'The four criterion scores are multiplied by their weights and summed into a single number out of 100. Positions follow from the arithmetic.',
   },
   {
     n: '05',
     title: 'Re-score, never inherit',
-    body: 'On each refresh the list is recalculated from scratch rather than adjusted from the previous edition. This is why an entry can move without changing — the field around it did.',
+    body: 'When a list is revised, every entry is scored again from the criteria rather than adjusted from the previous edition. This is why an entry can move without changing — the field around it did.',
   },
 ];
 
@@ -58,8 +58,8 @@ const PRINCIPLES = [
     body: 'Criteria and weights are fixed before scoring begins. Adjusting the weighting after seeing the outcome is the most common way rankings get quietly rigged, so it is the thing we hold hardest against.',
   },
   {
-    title: 'Popularity is an input, not the answer',
-    body: 'Audience data carries real weight because it captures something experts miss. It is outlier-trimmed and capped so that a coordinated push cannot move a position.',
+    title: 'Audience scoring is one input',
+    body: 'Where a preview list includes an audience score, it appears as one illustrative criterion alongside the other published weights rather than as a live popularity signal.',
   },
   {
     title: 'Age is adjusted, not rewarded',
@@ -89,7 +89,7 @@ const FAQS = [
   {
     question: 'How often does a list change?',
     answer:
-      'Each list states its own cadence — monthly, quarterly or annually depending on how quickly the field moves. Smartphones are re-scored far more often than historical events, for obvious reasons.',
+      'Each demonstration list stores an intended cadence, but this preview is not connected to a live review schedule. Dates and figures remain illustrative until sourced editorial records replace them.',
   },
   {
     question: 'What is an editor’s pick?',

@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Camera rolling bands se approximate flicker pattern estimate kare.",
+  "description": "Estimate an LED's PWM flicker pattern from the rolling bands your camera picks up.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

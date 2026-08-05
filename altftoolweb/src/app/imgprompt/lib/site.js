@@ -3,7 +3,7 @@ export const SITE = {
   fullName: "Imaginnex AI Prompt Studio",
   tagline: "Create Professional AI Prompts in Seconds",
   description:
-    "The world's best AI prompt-engineering platform. Generate better AI image, video & story prompts with Prompt Intelligence.",
+    "Draft, review and adapt AI image, video and story prompts with an editable local structure checklist.",
 };
 
 /** Every generated prompt's final destination. */

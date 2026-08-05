@@ -158,8 +158,10 @@ if (loading) return <PopularSalesSkeleton />
           <h2 className="section-title">
             Unlock the Best Coupons & Deals Across Top Brands
           </h2>
+          {/* "Handpicked" claimed an editorial selection step. This row is
+              whatever the popular-sales feed returned, in feed order. */}
           <p className="section-subtitle !mx-0 text-left">
-            Handpicked deals from top brands just for you
+            Popular deals from brands listed on AltFTool
           </p>
         </div>
 

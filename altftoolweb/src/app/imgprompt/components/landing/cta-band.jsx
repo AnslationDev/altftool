@@ -47,7 +47,7 @@ export function CtaBand() {
               Your next masterpiece starts with a <span className="text-gradient-brand">better prompt</span>
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-muted-foreground">
-              Generate, score and optimize prompts in seconds — then copy straight into OpenArt and render.
+              Draft, review and adapt a prompt, then copy it into your preferred rendering workflow.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button size="lg" onClick={handleOpenStudio}>

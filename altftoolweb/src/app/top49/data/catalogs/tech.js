@@ -164,7 +164,7 @@ export const techCatalogs = [
             b: 'The A18 — not A18 Pro — is still faster than almost anything Android ships at this price, and Apple Intelligence rolls out here on the same schedule as the Pro models.',
             a: { price: 799, released: 2024, battery: 3561, weight: 170, rating: 8.4 },
             t: ['Flagship', 'Compact'],
-            pros: ['Same core AI features as the Pro at $400 less', 'Excellent one-day battery life for its size'],
+            pros: ['Same core AI features as the Pro at $200 less', 'Excellent one-day battery life for its size'],
             cons: ['48MP main camera lacks the Pro’s telephoto lens'],
           },
           {

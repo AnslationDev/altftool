@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Chosen asset target cross kare toh browser notification de.",
+  "description": "Get a browser notification when your chosen crypto asset crosses a target price.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

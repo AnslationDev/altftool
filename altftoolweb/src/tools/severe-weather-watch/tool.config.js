@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Official nearby weather warnings aggregate kare.",
+  "description": "Aggregate official severe weather warnings issued near your location.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

@@ -493,6 +493,21 @@ const nextConfig = {
       config.resolve.alias["@/platform/registry/toolRuntimeMap$"] =
         toolRuntimeMapServerStub;
 
+      // Client-only catalogue consumers (directory search, global search and
+      // the home assistant) used to make the server compiler emit another
+      // complete toolMetaMap async chunk even though none can run during SSR.
+      // Keep the canonical map for real server pages and sever only this
+      // explicitly client-only access point.
+      const clientToolMetaMapServerStub = path.join(
+        workspaceRoot,
+        "src",
+        "platform",
+        "registry",
+        "clientToolMetaMap.server-stub.js"
+      );
+      config.resolve.alias["@/platform/registry/clientToolMetaMap$"] =
+        clientToolMetaMapServerStub;
+
       // Braces: if the jsconfig paths plugin wins the resolve race, catch the
       // resolved file instead. Both point at the same stub, so whichever fires
       // first produces the same module.
@@ -501,6 +516,12 @@ const nextConfig = {
         new webpack.NormalModuleReplacementPlugin(
           /[\\/]platform[\\/]registry[\\/]toolRuntimeMap\.js(\?.*)?$/,
           toolRuntimeMapServerStub
+        )
+      );
+      config.plugins.push(
+        new webpack.NormalModuleReplacementPlugin(
+          /[\\/]platform[\\/]registry[\\/]clientToolMetaMap\.js(\?.*)?$/,
+          clientToolMetaMapServerStub
         )
       );
     }

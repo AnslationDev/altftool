@@ -12,8 +12,8 @@ function jitter(seed, spread = 6) {
 }
 
 /**
- * Compute the full Prompt Intelligence panel from a composed prompt.
- * Heuristic today; swap for a model-scored payload once OpenAI is wired.
+ * Compute the local prompt-structure checklist from a composed prompt.
+ * These deterministic heuristics are editing cues, not outcome predictions.
  */
 export function computeScores(prompt, negative, input) {
   const words = prompt.trim().split(/\s+/).filter(Boolean).length;

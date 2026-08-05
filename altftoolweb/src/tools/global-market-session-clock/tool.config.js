@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Major exchanges ka open/closed status aur countdown dikhaye.",
+  "description": "See which major exchanges are open or closed, with a countdown to each change.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

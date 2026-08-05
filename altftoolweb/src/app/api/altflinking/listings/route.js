@@ -10,6 +10,7 @@ import dns from "node:dns/promises";
 import { initAdmin }    from "@/lib/altflinking/firebaseAdmin";
 import { verifyToken, getUserRole, ok, err } from "@/lib/altflinking/authMiddleware";
 import { FieldValue }   from "firebase-admin/firestore";
+import { resolveGuestPostPrice, validateListingPrices } from "@/app/altflinking/lib/pricing";
 
 // Re-checks the TXT record server-side rather than trusting a client-supplied
 // "verified" flag — the publisher dashboard's own DNS check is only a
@@ -96,7 +97,15 @@ export async function GET(request) {
     // Sort
     if (sortBy === "dr_desc")      listings.sort((a, b) => (b.dr || 0) - (a.dr || 0));
     else if (sortBy === "traffic_desc") listings.sort((a, b) => (b.traffic || 0) - (a.traffic || 0));
-    else if (sortBy === "price_asc")    listings.sort((a, b) => (a.prices?.guestPost || 0) - (b.prices?.guestPost || 0));
+    else if (sortBy === "price_asc") {
+      listings.sort((a, b) => {
+        const aPrice = resolveGuestPostPrice(a);
+        const bPrice = resolveGuestPostPrice(b);
+        if (aPrice === null) return bPrice === null ? 0 : 1;
+        if (bPrice === null) return -1;
+        return aPrice - bPrice;
+      });
+    }
     else if (sortBy === "tat_asc")      listings.sort((a, b) => (a.tatDays || 99) - (b.tatDays || 99));
     else if (sortBy === "newest")       listings.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
@@ -135,9 +144,8 @@ export async function POST(request) {
     for (const f of required) {
       if (!body[f]) return err(`Missing required field: ${f}`, 400);
     }
-    if (!body.prices?.guestPost && !body.prices?.linkInsertion) {
-      return err("At least one price (guestPost or linkInsertion) is required", 400);
-    }
+    const validatedPrices = validateListingPrices(body.prices);
+    if (validatedPrices.error) return err(validatedPrices.error, 400);
     if (body.domain && !/^[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]\.[a-zA-Z]{2,}/.test(body.domain)) {
       return err("Invalid domain format", 400);
     }
@@ -173,10 +181,7 @@ export async function POST(request) {
       spamScore:      Number(body.spamScore) || 0,
       indexRate:      Number(body.indexRate) || 0,
       tatDays:        Number(body.tatDays) || 7,
-      prices: {
-        guestPost:     Number(body.prices?.guestPost)     || 0,
-        linkInsertion: Number(body.prices?.linkInsertion) || 0,
-      },
+      prices:          validatedPrices.value,
       guidelines:     body.guidelines  || "",
       sampleUrls:     Array.isArray(body.sampleUrls) ? body.sampleUrls.filter(Boolean) : [],
       trafficHistory: body.trafficHistory || [],

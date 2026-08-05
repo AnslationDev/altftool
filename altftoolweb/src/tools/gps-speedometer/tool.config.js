@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "GPS readings se speed aur private trip log dikhaye.",
+  "description": "Show your speed from GPS readings and keep a private trip log.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

@@ -101,11 +101,37 @@ export function clampHeadline(headline, budget = NEWS_HEADLINE_BUDGET) {
 
   // Last resort: the longest word-boundary prefix, with any dangling
   // preposition, conjunction, article or auxiliary peeled off the end.
+  //
+  // Peeling only the LAST word was not enough, because the fallback competes on
+  // raw length and routinely outscored a clean phrase boundary. Measured on
+  // production: "Buttler breaks T20 runs record in Super Giants win" shipped as
+  // "Buttler breaks T20 runs record in Super" (the phrase-boundary candidate
+  // "…runs record" scored 29 and lost to the 39-character fragment), and
+  // "PSA: Apple's Private Relay can leak your real IP address" shipped as
+  // "PSA: Apple's Private Relay can leak". Neither final word is itself a
+  // dangling one — "Super" and "leak" are ordinary words — but each sits alone
+  // inside a phrase its opener just started, so the title stops mid-thought.
+  //
+  // So the peel also drops a trailing PAIR when the second-to-last word opens a
+  // phrase: a preposition or auxiliary followed by a single word is an opened
+  // phrase with one item in it. The 3-word floor keeps a short headline like
+  // "Report on Gaza" from being peeled down to "Report".
+  const MIN_FALLBACK_WORDS = 3;
   let fallback = prefix;
   while (fallback.includes(" ")) {
-    const cut = fallback.lastIndexOf(" ");
-    if (!DANGLING_TAIL.has(bareWord(fallback.slice(cut + 1)))) break;
-    fallback = tidyEnd(fallback.slice(0, cut));
+    const words = fallback.split(" ");
+    if (DANGLING_TAIL.has(bareWord(words[words.length - 1]))) {
+      fallback = tidyEnd(words.slice(0, -1).join(" "));
+      continue;
+    }
+    if (
+      words.length > MIN_FALLBACK_WORDS &&
+      DANGLING_TAIL.has(bareWord(words[words.length - 2]))
+    ) {
+      fallback = tidyEnd(words.slice(0, -2).join(" "));
+      continue;
+    }
+    break;
   }
   fallback = tidyEnd(fallback);
   if (fallback) candidates.push({ text: fallback, score: fallback.length });

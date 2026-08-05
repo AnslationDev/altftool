@@ -7,9 +7,19 @@ export async function generateMetadata({ searchParams }) {
   const params = await searchParams;
   const query = params?.q || "";
 
+  // Clamped for the same reason as /fact-net/listings — ?q= reaches <title>
+  // verbatim. This page is already noindex, so only the length matters here.
+  // Branded in the string: the /fact-net layout consumes the root layout's
+  // "%s | AltFTool" template, so this shipped unbranded at 15 characters.
+  const clamped =
+    query.length > 30 ? `${String(query).slice(0, 29).trimEnd()}…` : query;
+
   return createPageMetadata({
-    title: query ? `Fact Hub Search - ${query}` : "Fact Hub Search",
-    description: "Search original Fact Hub titles, descriptions, categories, and topic records.",
+    title: clamped
+      ? `Fact Hub Search - ${clamped} | AltFTool`
+      : "Fact Hub Search | AltFTool",
+    description:
+      "Search the original Fact Hub by title, description, category, or topic record, and open any matching guide straight from the results.",
     path: "/fact-net/search",
     noindex: true,
     follow: true,

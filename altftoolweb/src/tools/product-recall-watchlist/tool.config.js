@@ -5,7 +5,7 @@ const toolConfig = {
     "Lifestyle",
     "Productivity"
   ],
-  "description": "Owned products ke official recall notices monitor kare.",
+  "description": "Monitor official recall notices for the products you own.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

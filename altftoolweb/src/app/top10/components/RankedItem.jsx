@@ -25,6 +25,22 @@ export default function RankedItem({ rank, title, subtitle, image, rating, descr
   const safeImage = safeExternalUrl(image);
   const safeUrl = safeExternalUrl(url);
 
+  // `rating != null` let an empty string through, and Number("") is 0, so a
+  // provider that returns "" for an unrated item rendered a "0.0" star badge
+  // labelled "Rating 0.0" — a score no provider supplied, shown against that
+  // item's name. A non-numeric string got worse: Number("N/A") is NaN and the
+  // badge read "NaN". Ratings here come from provider payloads at runtime
+  // (data/productRegistry.js maps `rating: item.rating` straight through), so
+  // neither value is hypothetical. Same guard top1/PickCard.jsx and
+  // top6/RankedRow.jsx already use: check absence before coercion, and let a
+  // genuine 0 still render.
+  const resolvedRating =
+    rating === null || rating === undefined || rating === ""
+      ? null
+      : Number.isFinite(Number(rating))
+        ? Number(rating)
+        : null;
+
   const trimmedDescription = (description || "").trim();
   const isLong = trimmedDescription.length > DESCRIPTION_LONG_THRESHOLD;
 
@@ -76,13 +92,13 @@ export default function RankedItem({ rank, title, subtitle, image, rating, descr
           <h3 className="font-primary text-base font-extrabold text-(--foreground) transition-colors duration-150 group-hover:text-(--primary-text) motion-reduce:transition-none sm:text-lg">
             {title}
           </h3>
-          {rating != null && (
+          {resolvedRating !== null && (
             <span
               className="inline-flex shrink-0 items-center gap-1 rounded-full bg-(--muted) px-2.5 py-1 text-xs font-bold text-(--foreground) font-secondary transition-transform duration-150 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-              aria-label={`Rating ${Number(rating).toFixed(1)}`}
+              aria-label={`Rating ${resolvedRating.toFixed(1)}`}
             >
               <Star className="h-3.5 w-3.5 fill-warning-text text-warning-text" aria-hidden="true" />
-              <span aria-hidden="true">{Number(rating).toFixed(1)}</span>
+              <span aria-hidden="true">{resolvedRating.toFixed(1)}</span>
             </span>
           )}
         </div>

@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "Palette aur dithering tune karke GIF size reduce kare.",
+  "description": "Reduce GIF file size by tuning its color palette and dithering.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

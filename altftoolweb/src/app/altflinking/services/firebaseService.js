@@ -6,8 +6,6 @@
  * Users are saved to Firestore `users/{uid}` on every login/signup
  */
 
-import { INITIAL_WEBSITES, INITIAL_ORDERS, INITIAL_CAMPAIGNS } from "../data/mockMarketplaceData";
-
 // ---------------------------------------------------------------------------
 // Firebase imports — lazy so SSR doesn't break when env vars are missing
 // ---------------------------------------------------------------------------
@@ -30,27 +28,11 @@ async function getFirebaseModules() {
 }
 
 // ---------------------------------------------------------------------------
-// LocalStorage keys — shared with admin backend (knadmintiertwoanslation)
+// LocalStorage key used only to restore the authenticated UI session.
 // ---------------------------------------------------------------------------
 const STORAGE_KEYS = {
-  WEBSITES:     "altf_linking_websites_v1",
-  ORDERS:       "altf_linking_orders_v1",
-  CAMPAIGNS:    "altf_linking_campaigns_v1",
   USER_SESSION: "altf_linking_user_session_v1",
 };
-
-// ---------------------------------------------------------------------------
-// Local Storage initialization
-// ---------------------------------------------------------------------------
-function initializeStorage() {
-  if (typeof window === "undefined") return;
-  if (!localStorage.getItem(STORAGE_KEYS.WEBSITES))
-    localStorage.setItem(STORAGE_KEYS.WEBSITES,   JSON.stringify(INITIAL_WEBSITES));
-  if (!localStorage.getItem(STORAGE_KEYS.ORDERS))
-    localStorage.setItem(STORAGE_KEYS.ORDERS,     JSON.stringify(INITIAL_ORDERS));
-  if (!localStorage.getItem(STORAGE_KEYS.CAMPAIGNS))
-    localStorage.setItem(STORAGE_KEYS.CAMPAIGNS,  JSON.stringify(INITIAL_CAMPAIGNS));
-}
 
 // ---------------------------------------------------------------------------
 // Firestore helper — save/update user document on every login
@@ -255,150 +237,4 @@ export function subscribeToAuthState(callback) {
   });
   // Return cleanup function
   return () => unsubscribe();
-}
-
-// ===========================================================================
-// Marketplace Data — Websites, Orders, Campaigns (LocalStorage-backed)
-// ===========================================================================
-
-export async function fetchWebsites(filters = {}) {
-  initializeStorage();
-  let sites = INITIAL_WEBSITES;
-  if (typeof window !== "undefined") {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEYS.WEBSITES);
-      if (stored) sites = JSON.parse(stored);
-    } catch (e) { console.warn("Storage fetch error:", e); }
-  }
-
-  let filtered = [...sites];
-  if (filters.search) {
-    const q = filters.search.toLowerCase();
-    filtered = filtered.filter(
-      (s) => s.domain.toLowerCase().includes(q) ||
-             s.name.toLowerCase().includes(q) ||
-             s.niche.toLowerCase().includes(q)
-    );
-  }
-  if (filters.niche && filters.niche !== "All") {
-    filtered = filtered.filter((s) => s.niche === filters.niche);
-  }
-  if (filters.minDr)      filtered = filtered.filter((s) => s.dr      >= Number(filters.minDr));
-  if (filters.minTraffic) filtered = filtered.filter((s) => s.traffic >= Number(filters.minTraffic));
-
-  if (filters.sortBy) {
-    switch (filters.sortBy) {
-      case "dr_desc":      filtered.sort((a, b) => b.dr - a.dr);                          break;
-      case "traffic_desc": filtered.sort((a, b) => b.traffic - a.traffic);                break;
-      case "price_asc":    filtered.sort((a, b) => a.prices.guestPost - b.prices.guestPost); break;
-      case "tat_asc":      filtered.sort((a, b) => a.tatDays - b.tatDays);                break;
-    }
-  }
-  return filtered;
-}
-
-export async function submitWebsiteListing(websiteData) {
-  initializeStorage();
-  const newSite = {
-    id: `site_${Date.now()}`,
-    ...websiteData,
-    dr:          Math.floor(Math.random() * 40) + 45,
-    da:          Math.floor(Math.random() * 40) + 40,
-    traffic:     Math.floor(Math.random() * 100000) + 10000,
-    spamScore:   Math.floor(Math.random() * 3),
-    status:      "APPROVED",
-    verified:    true,
-    indexRate:   98,
-    reviewCount: 1,
-    rating:      5.0,
-    createdAt:   new Date().toISOString(),
-  };
-  if (typeof window !== "undefined") {
-    const existing = JSON.parse(localStorage.getItem(STORAGE_KEYS.WEBSITES) || "[]");
-    localStorage.setItem(STORAGE_KEYS.WEBSITES, JSON.stringify([newSite, ...existing]));
-  }
-  return newSite;
-}
-
-export async function createOrder(orderPayload) {
-  initializeStorage();
-  const newOrder = {
-    id:             `ord_${Date.now()}`,
-    ...orderPayload,
-    price:          0,
-    status:         "PENDING_ACCEPTANCE",
-    createdAt:      new Date().toISOString(),
-    liveLinkUrl:    null,
-    crawledAt:      null,
-    isDofollow:     null,
-    isIndexed:      null,
-    articleContent: orderPayload.articleContent || "",
-    articleDocUrl:  orderPayload.articleDocUrl  || "",
-  };
-  if (typeof window !== "undefined") {
-    const existing = JSON.parse(localStorage.getItem(STORAGE_KEYS.ORDERS) || "[]");
-    localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify([newOrder, ...existing]));
-  }
-  return newOrder;
-}
-
-export async function fetchOrders() {
-  initializeStorage();
-  if (typeof window !== "undefined") {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEYS.ORDERS);
-      if (stored) return JSON.parse(stored);
-    } catch (e) { console.warn("Storage fetch orders error:", e); }
-  }
-  return INITIAL_ORDERS;
-}
-
-export async function updateOrderStatus(orderId, newStatus, extraData = {}) {
-  let orders = await fetchOrders();
-  const updated = orders.map((ord) =>
-    ord.id === orderId
-      ? { ...ord, status: newStatus, ...extraData, updatedAt: new Date().toISOString() }
-      : ord
-  );
-  if (typeof window !== "undefined") {
-    localStorage.setItem(STORAGE_KEYS.ORDERS, JSON.stringify(updated));
-  }
-  return updated;
-}
-
-export async function fetchCampaigns() {
-  initializeStorage();
-  if (typeof window !== "undefined") {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEYS.CAMPAIGNS);
-      if (stored) return JSON.parse(stored);
-    } catch (e) { console.warn("Storage fetch campaigns error:", e); }
-  }
-  return INITIAL_CAMPAIGNS;
-}
-
-export async function createCampaign(campaignData) {
-  initializeStorage();
-  const newCampaign = {
-    id:         `camp_${Date.now()}`,
-    ...campaignData,
-    spent:      0,
-    totalLinks: 0,
-    avgDr:      0,
-    status:     "ACTIVE",
-  };
-  if (typeof window !== "undefined") {
-    const existing = JSON.parse(localStorage.getItem(STORAGE_KEYS.CAMPAIGNS) || "[]");
-    localStorage.setItem(STORAGE_KEYS.CAMPAIGNS, JSON.stringify([newCampaign, ...existing]));
-  }
-  return newCampaign;
-}
-
-export async function verifyDnsToken(domain) {
-  await new Promise((res) => setTimeout(res, 800));
-  return {
-    verified:   true,
-    token:      `altftool-verify-${Math.random().toString(36).substring(2, 9)}`,
-    verifiedAt: new Date().toISOString(),
-  };
 }

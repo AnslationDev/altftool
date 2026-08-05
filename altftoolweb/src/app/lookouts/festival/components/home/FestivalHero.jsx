@@ -85,8 +85,10 @@ export default function FestivalHero({ stats, upcoming = [] }) {
   // Value and suffix are separate so CountUp can animate the number while the
   // "+" stays put instead of being parsed out of a string every frame.
   const statTiles = [
-    { value: stats.countries, suffix: "+", label: "Countries" },
-    { value: stats.festivals, suffix: "+", label: "Festivals" },
+    // These are exact counts from the dataset, not floors — a "+" would
+    // advertise festivals and countries this route does not have.
+    { value: stats.countries, label: "Countries" },
+    { value: stats.festivals, label: "Festivals" },
     { value: stats.religions, suffix: "", label: "Religions" },
     { value: stats.categories, suffix: "", label: "Categories" },
   ];
@@ -133,7 +135,7 @@ export default function FestivalHero({ stats, upcoming = [] }) {
           variants={heroItemVariants}
           className="max-w-[600px] text-base leading-[1.65] text-[var(--f-muted-fg)]"
         >
-          Discover traditions, history, rituals, foods, and celebrations from {stats.countries}+ countries — all in
+          Discover traditions, history, rituals, foods, and celebrations from {stats.countries} countries — all in
           one place.
         </motion.p>
 

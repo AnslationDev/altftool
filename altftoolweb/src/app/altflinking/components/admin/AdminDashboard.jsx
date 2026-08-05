@@ -6,9 +6,9 @@
 "use client";
 
 import React, { useState } from "react";
-import { Shield, ShieldAlert, CheckCircle2, XCircle, DollarSign, Activity, FileCheck, RefreshCw } from "lucide-react";
-import { MOCK_ADMIN_METRICS } from "../../data/mockMarketplaceData";
+import { Shield } from "lucide-react";
 import * as apiClient from "../../services/apiClient";
+import { formatPrice, normalizePrice } from "../../lib/pricing";
 
 const STATUS_BADGE_CLASS = {
   APPROVED: "altf-badge altf-badge-verified",
@@ -20,6 +20,13 @@ const STATUS_BADGE_CLASS = {
 export default function AdminDashboard({ websites, orders }) {
   const [siteOverrides, setSiteOverrides] = useState({});
   const [pendingAction, setPendingAction] = useState(null);
+  const approvedListings = websites.filter((site) => site.status === "APPROVED").length;
+  const pendingListings = websites.filter((site) => site.status === "PENDING_REVIEW").length;
+  const openOrders = orders.filter((order) => !["COMPLETED", "CANCELLED"].includes(order.status)).length;
+  const recordedOrderValue = orders.reduce(
+    (total, order) => total + (normalizePrice(order.price) ?? 0),
+    0,
+  );
 
   const handleModerate = async (siteId, action) => {
     setPendingAction(`${siteId}:${action}`);
@@ -45,46 +52,46 @@ export default function AdminDashboard({ websites, orders }) {
             <Shield className="h-6 w-6 text-indigo-400" />
             <span>ALTFTool Admin Console</span>
           </h1>
-          <p className="text-xs text-slate-500">Governance center for domain approvals, escrow payouts, and link auditing</p>
+          <p className="text-xs text-slate-500">Review listing submissions and marketplace order requests</p>
         </div>
 
         <span className="rounded-full bg-emerald-500/20 px-3 py-1 text-xs font-bold text-emerald-400 border border-emerald-500/30">
-          SYSTEM HEALTH: 100%
+          LIVE API DATA
         </span>
       </div>
 
       {/* Admin Key Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="altf-card p-5 space-y-1">
-          <p className="text-xs font-medium text-slate-500">Total Escrow Volume</p>
+          <p className="text-xs font-medium text-slate-500">Recorded Order Value</p>
           <p className="text-2xl font-extrabold text-white font-mono">
-            ${MOCK_ADMIN_METRICS.totalVolumeEscrow.toLocaleString()}
+            {formatPrice(recordedOrderValue)}
           </p>
-          <span className="text-[10px] text-indigo-300 font-semibold">Active market capital</span>
+          <span className="text-[10px] text-indigo-300 font-semibold">Order records, not captured payments</span>
         </div>
 
         <div className="altf-card p-5 space-y-1">
           <p className="text-xs font-medium text-slate-500">Active Listings</p>
           <p className="text-2xl font-extrabold text-emerald-400 font-mono">
-            {websites.length} Verified
+            {approvedListings} Approved
           </p>
-          <span className="text-[10px] text-emerald-400 font-semibold">All DNS verified</span>
+          <span className="text-[10px] text-emerald-400 font-semibold">Public marketplace listings</span>
         </div>
 
         <div className="altf-card p-5 space-y-1">
           <p className="text-xs font-medium text-slate-500">Pending Approvals</p>
           <p className="text-2xl font-extrabold text-amber-400 font-mono">
-            {MOCK_ADMIN_METRICS.pendingVerificationCount} Queue
+            {pendingListings} Queue
           </p>
           <span className="text-[10px] text-amber-300 font-semibold">Needs admin audit</span>
         </div>
 
         <div className="altf-card p-5 space-y-1">
-          <p className="text-xs font-medium text-slate-500">Platform Commission (15%)</p>
+          <p className="text-xs font-medium text-slate-500">Open Order Requests</p>
           <p className="text-2xl font-extrabold text-cyan-400 font-mono">
-            ${MOCK_ADMIN_METRICS.platformRevenueCommission.toLocaleString()}
+            {openOrders}
           </p>
-          <span className="text-[10px] text-cyan-300 font-semibold">Net platform profit</span>
+          <span className="text-[10px] text-cyan-300 font-semibold">Excludes completed and cancelled</span>
         </div>
       </div>
 
@@ -116,8 +123,12 @@ export default function AdminDashboard({ websites, orders }) {
                   <tr key={site.id} className="hover:bg-white">
                     <td className="py-3 font-bold text-white">{site.domain}</td>
                     <td className="py-3 text-slate-600">{site.niche}</td>
-                    <td className="py-3 font-mono text-indigo-300">DR {site.dr} ({site.traffic.toLocaleString()}/mo)</td>
-                    <td className="py-3 font-mono text-emerald-400 font-bold">${site.prices.guestPost}</td>
+                    <td className="py-3 font-mono text-indigo-300">
+                      DR {site.dr ?? "—"} ({Number.isFinite(site.traffic) ? site.traffic.toLocaleString() : "—"}/mo)
+                    </td>
+                    <td className="py-3 font-mono text-emerald-400 font-bold">
+                      {formatPrice(normalizePrice(site.prices?.guestPost))}
+                    </td>
                     <td className="py-3">
                       <span className={STATUS_BADGE_CLASS[status] || STATUS_BADGE_CLASS.PENDING_REVIEW}>
                         {status.replace(/_/g, " ")}

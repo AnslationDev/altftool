@@ -9,6 +9,7 @@ import { enforceRateLimit } from "@altftool/core/http";
 import { initAdmin }    from "@/lib/altflinking/firebaseAdmin";
 import { verifyToken, getUserRole, ok, err } from "@/lib/altflinking/authMiddleware";
 import { FieldValue }   from "firebase-admin/firestore";
+import { resolveOrderPrice } from "@/app/altflinking/lib/pricing";
 
 export async function GET(request) {
   const limited = enforceRateLimit(NextResponse, request, {
@@ -103,9 +104,10 @@ export async function POST(request) {
       }
     }
 
-    const price = body.type === "GUEST_POST"
-      ? listing.prices?.guestPost || 0
-      : listing.prices?.linkInsertion || 0;
+    const price = resolveOrderPrice(listing, body.type);
+    if (price === null) {
+      return err(`This listing has no explicit ${body.type.toLowerCase()} price`, 400);
+    }
 
     const now = FieldValue.serverTimestamp();
     const orderData = {

@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Live camera object ka approximate HEX/RGB color sample kare.",
+  "description": "Sample the approximate HEX and RGB color of an object through your live camera.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

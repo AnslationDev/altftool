@@ -69,19 +69,42 @@ export async function generateMetadata({ params }) {
 
   // The description must not imply a USD figure the vendor never quoted, so a
   // geo-localised price is described rather than stated.
-  let priceLine = "The closest alternatives are free too, and this page says so.";
+  //
+  // The regional branch used to append the vendor's whole localised headline.
+  // That pushed the string past 160 and trimMetaDescription cut it, which on
+  // /deals/bg-remover shipped the literal meta description
+  // "…served Lite ₹539.10/month (₹6,469.20 billed." — a severed parenthetical
+  // presented as a price. The figure belongs in the table on the page, where it
+  // is dated and linked; the description now only says a USD price is absent.
+  let priceLine = "The closest alternatives are free too.";
   if (lead && !isFreeProduct(lead)) {
     priceLine =
       lead.price.status === "regional"
-        ? `${lead.name} has no USD price we could verify; its storefront served ${lead.price.headline}.`
+        ? `${lead.name} quotes no USD price for its paid plan.`
         : `${lead.name} charges ${lead.price.headline}.`;
   }
 
+  // Sized against the real pipeline, not by eye. Both title forms exceeded the
+  // 49-char budget the root layout's " | AltFTool" suffix leaves: the longest
+  // rendered at 68. The shorter form is used when the tool's own name does not
+  // leave room, which is the case for the two 24-character names.
+  const titleFull = allFree
+    ? `${deal.name}: what the alternatives cost`
+    : `${deal.name}: what you would pay elsewhere`;
+  const titleShort = allFree
+    ? `${deal.name}: alternatives are free`
+    : `${deal.name}: paid vs free prices`;
+
   return createPageMetadata({
-    title: allFree
-      ? `${deal.name}: what the alternatives cost`
-      : `${deal.name}: what the paid alternative costs`,
-    description: `${deal.job} is free here. ${priceLine} Verified entry prices, free-tier limits, and what the other tools still do better. Checked ${checkedOn}.`,
+    title: titleFull.length <= 49 ? titleFull : titleShort,
+    // The old string appended "Verified entry prices, free-tier limits, and
+    // what the other tools still do better." before the date, which pushed
+    // every one of the 16 descriptions past 160. trimMetaDescription then cut
+    // back to the last sentence boundary, and the clause it dropped was always
+    // "Checked <date>" — the one claim that makes these pages citable. Measured
+    // over the corpus: 0 of 16 kept the date before this change, 16 of 16 now
+    // pass through verbatim (108-146 chars).
+    description: `${deal.job} is free here. ${priceLine} Checked ${checkedOn}.`,
     path: `/deals/${slug}`,
     canonical: `/deals/${slug}`,
     keywords: [

@@ -2,7 +2,7 @@
 import React, { useState, useMemo, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
 import AllBrand from "./AllBrand";
-import { Star, X, SlidersHorizontal } from "lucide-react";
+import { X, SlidersHorizontal } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import EmptyState from "./EmptyState";
@@ -166,7 +166,7 @@ const SidebarContent = ({
 };
 
 // ─── Main Component ───────────────────────────────────────────────────────────
-function BrandDetail() {
+function BrandDetail({ brandName }) {
   const pathname = usePathname();
   const urlBrand = pathname.split("/").pop();
 
@@ -241,14 +241,27 @@ function BrandDetail() {
   // selectedBrand only becomes a brand once the visitor clicks the sidebar.
   // urlBrand is the canonical brand slug from the path and is known during SSR,
   // so the heading names the brand this URL is for from the first byte.
+  //
+  // Title-casing the slug is only a fallback. It got the brand's own spelling
+  // wrong ("boat" -> "Boat", not "boAt") and, on the numeric-id URLs that still
+  // resolve, it printed the id itself: /exclusivedeals/most-popular/1 shipped
+  // <h1>1 Coupons & Promo Codes</h1> while <title> correctly said "boAt".
+  // `brandName` is the name from db.json, resolved on the server by page.jsx
+  // through the same findBrandByUrlKey the layout's metadata uses, so the
+  // heading and the title now agree on every URL shape.
   const brandHeading = useMemo(() => {
     const source = selectedBrand && selectedBrand !== "all" ? selectedBrand : urlBrand;
-    return String(source || "")
+    const titleCased = String(source || "")
       .split("-")
       .filter(Boolean)
       .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
       .join(" ");
-  }, [selectedBrand, urlBrand]);
+    const isUrlBrand = !selectedBrand || selectedBrand === "all";
+    if (isUrlBrand && typeof brandName === "string" && brandName.trim()) {
+      return brandName.trim();
+    }
+    return titleCased;
+  }, [selectedBrand, urlBrand, brandName]);
 
   const offers = useMemo(() => {
     if (selectedBrand === "all") {
@@ -370,20 +383,19 @@ function BrandDetail() {
             <div className="flex items-start justify-between gap-4 flex-wrap">
               <div>
                 <h1 className="text-xl sm:text-3xl font-bold text-(--foreground)">
-                  {brandHeading} Coupons &amp; Promo Codes
+                  {`${brandHeading} Coupons & Promo Codes`}
                 </h1>
+                {/* Was "Best N Coupons & Offers last validated on April 20th,
+                    2026" — a hardcoded date, identical on every brand URL, that
+                    no validation job produces. Nothing checks these codes, so
+                    the page now states only what it can count: how many offers
+                    the feed returned. */}
                 <p className="text-sm text-(--foreground) mt-2 font-normal">
                   {loading
                     ? <span className="inline-block w-48 h-4 bg-gray-200 animate-pulse rounded" />
-                    : <>Best {totalOffers} Coupons &amp; Offers last validated on April 20th, 2026</>
+                    : <>{totalOffers} coupons &amp; offers listed</>
                   }
                 </p>
-              </div>
-              <div className="flex flex-col items-end gap-2">
-                <div className="hidden lg:flex gap-3">
-                  {[1, 2, 3, 4, 5].map((i) => <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400" />)}
-                </div>
-                <span className="text-xs text-(--foreground) font-medium">5 / 5 · (2,000 Rating)</span>
               </div>
             </div>
           </div>

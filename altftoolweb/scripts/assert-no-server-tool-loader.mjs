@@ -18,6 +18,7 @@ const srcRoot = path.join(projectRoot, "src");
 const GUARDED_SPECIFIERS = [
   "toolLoaderResolver",
   "platform/registry/toolRuntimeMap",
+  "platform/registry/clientToolMetaMap",
 ];
 
 // The stub itself and the generated map are allowed to mention the names.
@@ -25,6 +26,8 @@ const ALLOWLIST = new Set(
   [
     "src/platform/registry/toolRuntimeMap.js",
     "src/platform/registry/toolRuntimeMap.server-stub.js",
+    "src/platform/registry/clientToolMetaMap.js",
+    "src/platform/registry/clientToolMetaMap.server-stub.js",
     "src/app/tools/toolLoaderResolver.js",
   ].map((relativePath) => path.join(projectRoot, relativePath))
 );
@@ -68,8 +71,8 @@ if (fs.existsSync(srcRoot)) {
 
 if (violations.length > 0) {
   console.error(
-    "Server-side tool loader guard failed. These non-client modules reference " +
-      "the tool runtime map or its resolver, but next.config.mjs stubs the map " +
+    "Server-side tool registry guard failed. These non-client modules reference " +
+      "a client-only tool map or loader, but next.config.mjs stubs that access " +
       "out of the server compilation, so they would read an empty map:\n" +
       violations.map((file) => `  - ${file}`).join("\n") +
       "\n\nEither mark the module \"use client\", or remove the server stub in " +
@@ -79,5 +82,5 @@ if (violations.length > 0) {
 }
 
 console.log(
-  `Server tool-loader guard: OK (no non-client importer of the tool runtime map).`
+  `Server tool-registry guard: OK (no non-client importer of client-only tool maps).`
 );

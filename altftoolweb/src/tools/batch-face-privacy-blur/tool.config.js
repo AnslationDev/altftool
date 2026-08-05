@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "Photos me detected bystander faces locally blur kare.",
+  "description": "Blur bystander faces detected in your photos, in batches.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

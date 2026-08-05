@@ -52,7 +52,7 @@ export const toolMetaMap = {
   },
   "3d-mesh-repair-inspector": {
     "name": "3D Mesh Repair Inspector",
-    "description": "Holes, non-manifold edges aur inverted normals detect kare.",
+    "description": "Detect holes, non-manifold edges and inverted normals in a 3D mesh.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -63,7 +63,7 @@ export const toolMetaMap = {
   },
   "3d-model-format-converter": {
     "name": "3D Model Format Converter",
-    "description": "OBJ, STL aur GLB convert karke mesh statistics dikhaye.",
+    "description": "Convert between OBJ, STL and GLB, and see the mesh statistics for each.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -81,7 +81,7 @@ export const toolMetaMap = {
   },
   "a-b-test-significance-calculator": {
     "name": "A/B Test Significance Calculator",
-    "description": "Conversion data se p-value aur confidence calculate kare.",
+    "description": "Calculate the p-value and confidence level from your A/B test conversion data.",
     "category": [
       "Business",
       "Finance Calculators"
@@ -101,7 +101,7 @@ export const toolMetaMap = {
   },
   "aac-phrase-board": {
     "name": "AAC Phrase Board",
-    "description": "Custom picture/text tiles ko tap karke speech output de.",
+    "description": "Tap custom picture or text tiles to speak them aloud through your device.",
     "category": [
       "Developer",
       "Productivity"
@@ -130,7 +130,7 @@ export const toolMetaMap = {
   },
   "aadhaar-secure-qr-verifier": {
     "name": "Aadhaar Secure QR Verifier",
-    "description": "Supported Aadhaar QR locally decode aur signature status dikhaye.",
+    "description": "Decode a supported Aadhaar QR code locally and show its signature status.",
     "category": [
       "Developer",
       "Productivity"
@@ -355,7 +355,7 @@ export const toolMetaMap = {
   },
   "adjustable-reading-reformatter": {
     "name": "Adjustable Reading Reformatter",
-    "description": "Font, spacing, line width aur contrast user preference ke according tune kare.",
+    "description": "Tune font, spacing, line width and contrast to match your own reading preferences.",
     "category": [
       "Developer",
       "Productivity"
@@ -369,7 +369,7 @@ export const toolMetaMap = {
   },
   "adjusted-winner-splitter": {
     "name": "Adjusted-Winner Splitter",
-    "description": "Two-person point allocation se shared assets fairly divide kare.",
+    "description": "Divide shared assets fairly between two people using point allocation.",
     "category": [
       "Productivity",
       "Business"
@@ -386,7 +386,7 @@ export const toolMetaMap = {
   },
   "advance-tax-installment-planner": {
     "name": "Advance Tax Installment Planner",
-    "description": "Estimated tax ko applicable installments me schedule kare.",
+    "description": "Schedule your estimated advance tax across the applicable installment dates.",
     "category": [
       "Finance Calculators",
       "Lifestyle"
@@ -1261,7 +1261,7 @@ export const toolMetaMap = {
   },
   "analytics-pii-checker": {
     "name": "Analytics PII Checker",
-    "description": "Analytics payloads me accidentally transmitted personal data detect kare.",
+    "description": "Detect personal data accidentally transmitted inside your analytics payloads.",
     "category": [
       "Security & Privacy",
       "Developer"
@@ -1289,7 +1289,7 @@ export const toolMetaMap = {
   },
   "animated-webp-apng-builder": {
     "name": "Animated WebP/APNG Builder",
-    "description": "Image frames ko custom timing ke saath optimized animation me combine kare.",
+    "description": "Combine image frames into an optimized animated WebP or APNG with custom timing.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -1590,7 +1590,7 @@ export const toolMetaMap = {
   },
   "apple-health-export-explorer": {
     "name": "Apple Health Export Explorer",
-    "description": "Health export ko readable local charts me convert kare.",
+    "description": "Turn an Apple Health export into readable charts on your own device.",
     "category": [
       "Health & Fitness",
       "Developer"
@@ -1607,7 +1607,7 @@ export const toolMetaMap = {
   },
   "appliance-load-shift-planner": {
     "name": "Appliance Load-Shift Planner",
-    "description": "Flexible loads ko cheaper tariff windows me schedule kare.",
+    "description": "Shift flexible appliance loads into your cheaper electricity tariff windows.",
     "category": [
       "Lifestyle",
       "Productivity"
@@ -1666,7 +1666,7 @@ export const toolMetaMap = {
   },
   "aqi-live-dashboard": {
     "name": "AQI Live Dashboard",
-    "description": "Current AQI aur pollutant-wise breakdown dikhaye.",
+    "description": "See the current air quality index with a pollutant-by-pollutant breakdown.",
     "category": [
       "Developer",
       "Productivity"
@@ -1965,7 +1965,7 @@ export const toolMetaMap = {
   },
   "audio-video-sync-meter": {
     "name": "Audio-Video Sync Meter",
-    "description": "Flash/clap recording se audio lead/lag milliseconds calculate kare.",
+    "description": "Calculate audio lead or lag in milliseconds from a flash or clap recording.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -1990,7 +1990,7 @@ export const toolMetaMap = {
   },
   "aurora-visibility-forecast": {
     "name": "Aurora Visibility Forecast",
-    "description": "Kp index aur location se possible visibility estimate kare.",
+    "description": "Estimate possible aurora visibility from the Kp index and your location.",
     "category": [
       "Developer",
       "Productivity"
@@ -2029,7 +2029,7 @@ export const toolMetaMap = {
   },
   "availability-time-zone-finder": {
     "name": "Availability & Time-Zone Finder",
-    "description": "Multiple schedules se common meeting windows dhoonde.",
+    "description": "Finds meeting windows that work across several schedules.",
     "category": [
       "Productivity",
       "Business"
@@ -2190,7 +2190,7 @@ export const toolMetaMap = {
   },
   "backup-restore-verifier": {
     "name": "Backup Restore Verifier",
-    "description": "Check kare backup files actually decrypt, extract aur open ho rahe hain.",
+    "description": "Check that your backup files really do decrypt, extract and open before you need them.",
     "category": [
       "Security & Privacy",
       "Productivity"
@@ -2577,7 +2577,7 @@ export const toolMetaMap = {
   },
   "batch-face-privacy-blur": {
     "name": "Batch Face Privacy Blur",
-    "description": "Photos me detected bystander faces locally blur kare.",
+    "description": "Blur bystander faces detected in your photos, in batches.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -2602,7 +2602,7 @@ export const toolMetaMap = {
   },
   "batch-image-workflow-runner": {
     "name": "Batch Image Workflow Runner",
-    "description": "Resize, crop, recolor aur watermark steps ko reusable pipeline banaye.",
+    "description": "Build resize, crop, recolor and watermark steps into a reusable image pipeline.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -2613,7 +2613,7 @@ export const toolMetaMap = {
   },
   "batch-metadata-scrubber": {
     "name": "Batch Metadata Scrubber",
-    "description": "Images/documents se EXIF, GPS, author aur revision data remove kare.",
+    "description": "Remove EXIF, GPS, author and revision data from images and documents in bulk.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -2892,7 +2892,7 @@ export const toolMetaMap = {
   },
   "big-button-medical-info-card": {
     "name": "Big-Button Medical Info Card",
-    "description": "Large-text medicines, allergies aur emergency-contact card banaye.",
+    "description": "Build a large-text card listing medicines, allergies and emergency contacts.",
     "category": [
       "Developer",
       "Productivity"
@@ -3035,7 +3035,7 @@ export const toolMetaMap = {
   },
   "bionic-reading-converter": {
     "name": "Bionic Reading Converter",
-    "description": "Word beginnings ko optional visual emphasis de.",
+    "description": "Adds optional visual emphasis to the start of each word.",
     "category": [
       "Developer",
       "Productivity"
@@ -3614,7 +3614,7 @@ export const toolMetaMap = {
   },
   "braille-embosser-sheet-maker": {
     "name": "Braille Embosser Sheet Maker",
-    "description": "Text ko embosser-ready Braille/BRF layout me convert kare.",
+    "description": "Convert text into an embosser-ready Braille or BRF sheet layout.",
     "category": [
       "Developer",
       "Productivity"
@@ -3668,7 +3668,7 @@ export const toolMetaMap = {
   },
   "brand-deal-rate-calculator": {
     "name": "Brand Deal Rate Calculator",
-    "description": "Reach, CPM aur deliverables se pricing range estimate kare.",
+    "description": "Estimate a brand deal pricing range from your reach, CPM and deliverables.",
     "category": [
       "Business",
       "Marketing & Social"
@@ -3761,7 +3761,7 @@ export const toolMetaMap = {
   },
   "breach-notification-timeline-planner": {
     "name": "Breach Notification Timeline Planner",
-    "description": "Incident discovery se required review aur notification milestones map kare.",
+    "description": "Map the review and notification milestones required from the date a breach is discovered.",
     "category": [
       "Security & Privacy",
       "Productivity"
@@ -4055,7 +4055,7 @@ export const toolMetaMap = {
   },
   "burn-in-subtitle-encoder": {
     "name": "Burn-In Subtitle Encoder",
-    "description": "Styled subtitles permanently video me embed kare.",
+    "description": "Burn styled subtitles permanently into a video file.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -4367,7 +4367,7 @@ export const toolMetaMap = {
   },
   "camera-color-eyedropper": {
     "name": "Camera Color Eyedropper",
-    "description": "Live camera object ka approximate HEX/RGB color sample kare.",
+    "description": "Sample the approximate HEX and RGB color of an object through your live camera.",
     "category": [
       "Developer",
       "Productivity"
@@ -4682,7 +4682,7 @@ export const toolMetaMap = {
   },
   "carpool-rotation-scheduler": {
     "name": "Carpool Rotation Scheduler",
-    "description": "Drivers aur passengers ka recurring fair rota banaye.",
+    "description": "Build a recurring, fair driving rota across your carpool's drivers and passengers.",
     "category": [
       "Productivity",
       "Business"
@@ -5269,7 +5269,7 @@ export const toolMetaMap = {
   },
   "chromatic-instrument-tuner": {
     "name": "Chromatic Instrument Tuner",
-    "description": "Microphone se note aur cents sharp/flat dikhaye.",
+    "description": "Tune any instrument by microphone, showing the note and how many cents sharp or flat.",
     "category": [
       "Developer",
       "Productivity"
@@ -5489,7 +5489,7 @@ export const toolMetaMap = {
   },
   "cloud-status-board": {
     "name": "Cloud Status Board",
-    "description": "Major cloud aur SaaS incidents ek dashboard par dikhaye.",
+    "description": "See incidents across major cloud and SaaS providers on one dashboard.",
     "category": [
       "Developer",
       "Productivity"
@@ -5743,7 +5743,7 @@ export const toolMetaMap = {
   },
   "color-grade-lut-applier": {
     "name": "Color-Grade LUT Applier",
-    "description": ".cube LUT ko photos aur video frames par locally apply kare.",
+    "description": "Apply a .cube LUT to photos and video frames locally in your browser.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -6014,7 +6014,7 @@ export const toolMetaMap = {
   },
   "condorcet-election-judge": {
     "name": "Condorcet Election Judge",
-    "description": "Pairwise comparison se winner ya voting cycle dikhaye.",
+    "description": "Find the Condorcet winner from pairwise comparisons, or expose a voting cycle.",
     "category": [
       "Productivity",
       "Business"
@@ -6051,7 +6051,7 @@ export const toolMetaMap = {
   },
   "consent-inventory-mapper": {
     "name": "Consent Inventory Mapper",
-    "description": "Business ke consent collection aur withdrawal points map kare.",
+    "description": "Map every point where your business collects consent and where it can be withdrawn.",
     "category": [
       "Productivity",
       "Business"
@@ -6107,7 +6107,7 @@ export const toolMetaMap = {
   },
   "consumer-complaint-draft-builder": {
     "name": "Consumer Complaint Draft Builder",
-    "description": "Facts, relief aur evidence se complaint format banaye.",
+    "description": "Build a formatted consumer complaint from your facts, the relief sought and evidence.",
     "category": [
       "Text & Writing",
       "Lifestyle",
@@ -6268,7 +6268,7 @@ export const toolMetaMap = {
   },
   "cookie-gpc-behavior-auditor": {
     "name": "Cookie & GPC Behavior Auditor",
-    "description": "Reject action aur Global Privacy Control response test kare.",
+    "description": "Test how a site responds to a cookie reject action and to Global Privacy Control.",
     "category": [
       "Security & Privacy",
       "Business"
@@ -6608,7 +6608,7 @@ export const toolMetaMap = {
   },
   "creator-contract-rights-timeline": {
     "name": "Creator Contract Rights Timeline",
-    "description": "Usage, exclusivity, whitelisting aur renewal dates extract kare.",
+    "description": "Extract usage, exclusivity, whitelisting and renewal dates from a creator contract.",
     "category": [
       "Business",
       "Text & Writing"
@@ -6618,7 +6618,7 @@ export const toolMetaMap = {
   },
   "creator-income-tracker": {
     "name": "Creator Income Tracker",
-    "description": "Sponsorship, affiliate aur platform payouts locally track kare.",
+    "description": "Track sponsorship, affiliate and platform payouts in one place, stored locally.",
     "category": [
       "Business",
       "Finance Calculators"
@@ -6799,7 +6799,7 @@ export const toolMetaMap = {
   },
   "crypto-price-alarm": {
     "name": "Crypto Price Alarm",
-    "description": "Chosen asset target cross kare toh browser notification de.",
+    "description": "Get a browser notification when your chosen crypto asset crosses a target price.",
     "category": [
       "Developer",
       "Productivity"
@@ -6956,7 +6956,7 @@ export const toolMetaMap = {
   },
   "csv-carbon-footprint-analyzer": {
     "name": "CSV Carbon Footprint Analyzer",
-    "description": "Utility aur travel exports se estimated footprint calculate kare.",
+    "description": "Calculate an estimated carbon footprint from your utility and travel CSV exports.",
     "category": [
       "Lifestyle",
       "Calculators"
@@ -7329,7 +7329,7 @@ export const toolMetaMap = {
   },
   "dark-pattern-self-audit": {
     "name": "Dark-Pattern Self-Audit",
-    "description": "Manipulative consent, checkout aur cancellation UX flag kare.",
+    "description": "Flag manipulative consent, checkout and cancellation patterns in your own product.",
     "category": [
       "Security & Privacy",
       "Business"
@@ -7360,7 +7360,7 @@ export const toolMetaMap = {
   },
   "data-deletion-proof-log": {
     "name": "Data Deletion Proof Log",
-    "description": "Deletion requests aur system-wise completion evidence record kare.",
+    "description": "Record deletion requests and the system-by-system evidence that each one completed.",
     "category": [
       "Security & Privacy",
       "Productivity"
@@ -7482,7 +7482,7 @@ export const toolMetaMap = {
   },
   "data-retention-schedule-builder": {
     "name": "Data Retention Schedule Builder",
-    "description": "Data categories ke review aur deletion periods define kare.",
+    "description": "Define review and deletion periods for each of your data categories.",
     "category": [
       "Productivity",
       "Business"
@@ -7578,7 +7578,7 @@ export const toolMetaMap = {
   },
   "dead-pixel-screen-test": {
     "name": "Dead-Pixel Screen Test",
-    "description": "Full-screen patterns se dead ya stuck pixels locate kare.",
+    "description": "Locate dead or stuck pixels using full-screen solid color test patterns.",
     "category": [
       "Developer",
       "Productivity"
@@ -7781,7 +7781,7 @@ export const toolMetaMap = {
   },
   "deliverable-revision-ledger": {
     "name": "Deliverable Revision Ledger",
-    "description": "Versions, feedback, approvals aur included revision count record kare.",
+    "description": "Record versions, feedback, approvals and how many included revisions remain.",
     "category": [
       "Business",
       "Productivity"
@@ -7972,7 +7972,7 @@ export const toolMetaMap = {
   },
   "devanagari-transliteration-keyboard": {
     "name": "Devanagari Transliteration Keyboard",
-    "description": "Roman Hindi aur Devanagari ke beech live transliteration kare.",
+    "description": "Transliterate live between Roman Hindi and Devanagari as you type.",
     "category": [
       "Text & Writing",
       "Lifestyle"
@@ -8013,7 +8013,7 @@ export const toolMetaMap = {
   },
   "device-sensor-calibration-checker": {
     "name": "Device Sensor Calibration Checker",
-    "description": "Accelerometer, gyroscope aur magnetometer bias sanity-check kare.",
+    "description": "Sanity-check the bias in your device's accelerometer, gyroscope and magnetometer.",
     "category": [
       "Developer",
       "Productivity"
@@ -8122,7 +8122,7 @@ export const toolMetaMap = {
   },
   "digital-compass": {
     "name": "Digital Compass",
-    "description": "Supported magnetometer se heading aur bearing dikhaye.",
+    "description": "Show heading and bearing from your device's magnetometer where supported.",
     "category": [
       "Developer",
       "Productivity"
@@ -8158,7 +8158,7 @@ export const toolMetaMap = {
   },
   "digital-level-inclinometer": {
     "name": "Digital Level & Inclinometer",
-    "description": "Supported orientation sensor se tilt aur slope measure kare.",
+    "description": "Measure tilt and slope using your device's orientation sensor where supported.",
     "category": [
       "Developer",
       "Productivity"
@@ -8445,7 +8445,7 @@ export const toolMetaMap = {
   },
   "dns-propagation-checker": {
     "name": "DNS Propagation Checker",
-    "description": "Multiple global resolvers par DNS record changes compare kare.",
+    "description": "Compare a DNS record across multiple global resolvers to track propagation.",
     "category": [
       "Developer",
       "Productivity"
@@ -8658,7 +8658,7 @@ export const toolMetaMap = {
   },
   "domain-expiry-radar": {
     "name": "Domain Expiry Radar",
-    "description": "RDAP data se expiry aur renewal windows track kare.",
+    "description": "Track domain expiry and renewal windows using RDAP registration data.",
     "category": [
       "Developer",
       "Productivity"
@@ -8763,7 +8763,7 @@ export const toolMetaMap = {
   },
   "dpdp-consent-notice-checker": {
     "name": "DPDP Consent Notice Checker",
-    "description": "Versioned India DPDP checklist ke against notice completeness inspect kare.",
+    "description": "Inspect a consent notice for completeness against a versioned India DPDP checklist.",
     "category": [
       "Security & Privacy",
       "Business"
@@ -8960,7 +8960,7 @@ export const toolMetaMap = {
   },
   "dsar-request-tracker": {
     "name": "DSAR Request Tracker",
-    "description": "Data-access requests, deadlines, responses aur evidence manage kare.",
+    "description": "Manage data-access requests with their deadlines, responses and supporting evidence.",
     "category": [
       "Security & Privacy",
       "Productivity"
@@ -9071,7 +9071,7 @@ export const toolMetaMap = {
   },
   "dwell-click-keyboard": {
     "name": "Dwell-Click Keyboard",
-    "description": "Pointer hover duration se clicking aur typing enable kare.",
+    "description": "Click and type using pointer dwell time alone, with no button press needed.",
     "category": [
       "Developer",
       "Productivity"
@@ -9106,7 +9106,7 @@ export const toolMetaMap = {
   },
   "e-series-component-finder": {
     "name": "E-Series Component Finder",
-    "description": "Nearest standard resistor/capacitor value suggest kare.",
+    "description": "Find the nearest standard E-series resistor or capacitor value.",
     "category": "Calculators",
     "topics": [
       "Electronics",
@@ -9117,7 +9117,7 @@ export const toolMetaMap = {
   },
   "e-way-bill-validity-calculator": {
     "name": "E-Way Bill Validity Calculator",
-    "description": "Distance aur generation time se validity window calculate kare.",
+    "description": "Calculate an e-way bill's validity window from the distance and generation time.",
     "category": [
       "Business",
       "Lifestyle",
@@ -9295,7 +9295,7 @@ export const toolMetaMap = {
   },
   "elimination-diet-correlation-log": {
     "name": "Elimination Diet Correlation Log",
-    "description": "Foods aur reactions ke possible patterns dikhaye.",
+    "description": "Log foods and reactions, and surface the possible patterns between them.",
     "category": [
       "Health & Fitness",
       "Productivity"
@@ -9838,7 +9838,7 @@ export const toolMetaMap = {
   },
   "envy-free-rent-splitter": {
     "name": "Envy-Free Rent Splitter",
-    "description": "Room preferences aur total rent se fair shares optimize kare.",
+    "description": "Split rent into envy-free shares from each housemate's room preferences and the total.",
     "category": [
       "Productivity",
       "Business"
@@ -9946,7 +9946,7 @@ export const toolMetaMap = {
   },
   "eth-gas-now": {
     "name": "ETH Gas Now",
-    "description": "Ethereum gas fees slow, normal aur fast tiers me dikhaye.",
+    "description": "See current Ethereum gas fees across slow, normal and fast tiers.",
     "category": [
       "Developer",
       "Productivity"
@@ -9985,7 +9985,7 @@ export const toolMetaMap = {
   },
   "ev-battery-degradation-analyzer": {
     "name": "EV Battery Degradation Analyzer",
-    "description": "Charge logs se range aur capacity trend estimate kare.",
+    "description": "Estimate range and battery capacity trends from your EV's charge logs.",
     "category": [
       "Lifestyle",
       "Calculators"
@@ -9998,7 +9998,7 @@ export const toolMetaMap = {
   },
   "ev-charging-tou-optimizer": {
     "name": "EV Charging TOU Optimizer",
-    "description": "Tariff windows se lower-cost charging schedule calculate kare.",
+    "description": "Calculate a lower-cost EV charging schedule around your time-of-use tariff windows.",
     "category": [
       "Lifestyle",
       "Calculators"
@@ -10011,7 +10011,7 @@ export const toolMetaMap = {
   },
   "ev-road-trip-charge-planner": {
     "name": "EV Road-Trip Charge Planner",
-    "description": "Battery, range aur route legs se charging stops plan kare.",
+    "description": "Plan charging stops along a route from your battery size, range and each leg.",
     "category": [
       "Lifestyle",
       "Calculators"
@@ -10353,7 +10353,7 @@ export const toolMetaMap = {
   },
   "exif-timestamp-geotag-editor": {
     "name": "EXIF Timestamp & Geotag Editor",
-    "description": "User-owned photos ke dates aur coordinates bulk-edit kare.",
+    "description": "Bulk-edit the dates and GPS coordinates stored in photos you own.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -10636,7 +10636,7 @@ export const toolMetaMap = {
   },
   "family-emergency-contact-tree": {
     "name": "Family Emergency Contact Tree",
-    "description": "Contact priority, responsibilities aur offline printable tree banaye.",
+    "description": "Build a printable family contact tree with call priority and who does what.",
     "category": [
       "Lifestyle",
       "Productivity"
@@ -11275,7 +11275,7 @@ export const toolMetaMap = {
   },
   "focus-reading-mask": {
     "name": "Focus Reading Mask",
-    "description": "Current line ke alawa remaining content dim kare.",
+    "description": "Dim everything except the line you are reading to hold your focus.",
     "category": [
       "Developer",
       "Productivity"
@@ -11338,7 +11338,7 @@ export const toolMetaMap = {
   },
   "font-glyph-kerning-inspector": {
     "name": "Font Glyph & Kerning Inspector",
-    "description": "Glyph coverage, kerning pairs aur OpenType features inspect kare.",
+    "description": "Inspect a font's glyph coverage, kerning pairs and OpenType feature tables.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -11455,7 +11455,7 @@ export const toolMetaMap = {
   },
   "font-subsetter-woff2-converter": {
     "name": "Font Subsetter & WOFF2 Converter",
-    "description": "Unused glyphs remove karke web-optimized font banaye.",
+    "description": "Remove unused glyphs and build a web-optimized WOFF2 font subset.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -11703,7 +11703,7 @@ export const toolMetaMap = {
   },
   "freelance-payment-late-fee-tracker": {
     "name": "Freelance Payment & Late-Fee Tracker",
-    "description": "Due dates, payments aur agreed late fees track kare.",
+    "description": "Track invoice due dates, payments received and the late fees you agreed.",
     "category": [
       "Finance Calculators",
       "Business"
@@ -11974,7 +11974,7 @@ export const toolMetaMap = {
   },
   "fx-rate-alerter": {
     "name": "FX Rate Alerter",
-    "description": "Selected currency rate cross hone par alert de.",
+    "description": "Alerts you when a selected currency rate crosses your threshold.",
     "category": [
       "Developer",
       "Productivity"
@@ -12209,7 +12209,7 @@ export const toolMetaMap = {
   },
   "gif-palette-optimizer": {
     "name": "GIF Palette Optimizer",
-    "description": "Palette aur dithering tune karke GIF size reduce kare.",
+    "description": "Reduce GIF file size by tuning its color palette and dithering.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -12255,7 +12255,7 @@ export const toolMetaMap = {
   },
   "gig-earnings-mileage-analyzer": {
     "name": "Gig Earnings & Mileage Analyzer",
-    "description": "Expenses ke baad effective hourly earnings calculate kare.",
+    "description": "Calculate what you really earn per hour once mileage and expenses come out.",
     "category": [
       "Finance Calculators",
       "Business"
@@ -12268,7 +12268,7 @@ export const toolMetaMap = {
   },
   "gig-platform-fee-normalizer": {
     "name": "Gig Platform Fee Normalizer",
-    "description": "Fees, travel aur admin time ke baad effective hourly pay compare kare.",
+    "description": "Compare effective hourly pay across gig platforms after fees, travel and admin time.",
     "category": [
       "Finance Calculators",
       "Business"
@@ -12474,7 +12474,7 @@ export const toolMetaMap = {
   },
   "global-market-session-clock": {
     "name": "Global Market Session Clock",
-    "description": "Major exchanges ka open/closed status aur countdown dikhaye.",
+    "description": "See which major exchanges are open or closed, with a countdown to each change.",
     "category": [
       "Developer",
       "Productivity"
@@ -12621,7 +12621,7 @@ export const toolMetaMap = {
   },
   "gps-speedometer": {
     "name": "GPS Speedometer",
-    "description": "GPS readings se speed aur private trip log dikhaye.",
+    "description": "Show your speed from GPS readings and keep a private trip log.",
     "category": [
       "Developer",
       "Productivity"
@@ -12639,7 +12639,7 @@ export const toolMetaMap = {
   },
   "gpx-home-zone-privacy-scrubber": {
     "name": "GPX Home-Zone Privacy Scrubber",
-    "description": "Route ke home-area start/end points remove kare.",
+    "description": "Trim the start and end of a GPX route so it no longer reveals your home.",
     "category": [
       "Security & Privacy",
       "Developer"
@@ -12829,7 +12829,7 @@ export const toolMetaMap = {
   },
   "group-veto-picker": {
     "name": "Group Veto Picker",
-    "description": "Member vetoes se options progressively narrow kare.",
+    "description": "Narrow a shortlist down to one choice as each member spends their vetoes.",
     "category": [
       "Productivity",
       "Business"
@@ -13258,7 +13258,7 @@ export const toolMetaMap = {
   },
   "headphone-balance-test": {
     "name": "Headphone Balance Test",
-    "description": "Left/right stereo placement aur channel balance check karne ke liye hard-panned tone alternate kare.",
+    "description": "Alternate a hard-panned tone between channels to check stereo placement and balance.",
     "category": [
       "Developer",
       "Productivity"
@@ -13391,7 +13391,7 @@ export const toolMetaMap = {
   },
   "heat-pump-vs-furnace-estimator": {
     "name": "Heat Pump vs Furnace Estimator",
-    "description": "Climate, efficiency aur tariffs se running cost compare kare.",
+    "description": "Compare heat pump and furnace running costs for your climate, efficiency and tariffs.",
     "category": [
       "Lifestyle",
       "Calculators"
@@ -13527,7 +13527,7 @@ export const toolMetaMap = {
   },
   "high-contrast-document-recolor": {
     "name": "High-Contrast Document Recolor",
-    "description": "Scanned documents ko custom accessible palettes me convert kare.",
+    "description": "Recolor scanned documents into high-contrast, accessible color palettes.",
     "category": [
       "Developer",
       "Productivity"
@@ -13646,7 +13646,7 @@ export const toolMetaMap = {
   },
   "home-battery-tou-simulator": {
     "name": "Home Battery TOU Simulator",
-    "description": "Tariffs aur load profile se charging/discharging scenarios compare kare.",
+    "description": "Compare home battery charge and discharge scenarios against your tariffs and load profile.",
     "category": [
       "Lifestyle",
       "Calculators"
@@ -13666,7 +13666,7 @@ export const toolMetaMap = {
   },
   "home-heat-loss-retrofit-estimator": {
     "name": "Home Heat-Loss & Retrofit Estimator",
-    "description": "Room dimensions aur insulation se improvement scenarios compare kare.",
+    "description": "Compare insulation retrofit scenarios using your room dimensions and current insulation.",
     "category": [
       "Lifestyle",
       "Calculators"
@@ -13916,7 +13916,7 @@ export const toolMetaMap = {
   },
   "hrv-readiness-trend-tracker": {
     "name": "HRV Readiness Trend Tracker",
-    "description": "Personal HRV baseline aur deviations track kare.",
+    "description": "Track your personal HRV baseline and how far each morning deviates from it.",
     "category": [
       "Health & Fitness",
       "Productivity"
@@ -14229,7 +14229,7 @@ export const toolMetaMap = {
   },
   "identity-minimizing-dsar-planner": {
     "name": "Identity-Minimizing DSAR Planner",
-    "description": "Privacy request verify karte waqt minimum necessary identity proof plan kare.",
+    "description": "Plan the minimum identity proof needed to verify a privacy request.",
     "category": [
       "Security & Privacy",
       "Productivity"
@@ -14373,7 +14373,7 @@ export const toolMetaMap = {
   },
   "ifsc-decoder-validator": {
     "name": "IFSC Decoder & Validator",
-    "description": "IFSC format validate karke bank aur branch identifier decode kare.",
+    "description": "Validate an IFSC code's format and decode its bank and branch identifiers.",
     "category": [
       "Finance Calculators",
       "Lifestyle"
@@ -14750,7 +14750,7 @@ export const toolMetaMap = {
   },
   "indian-mobile-number-validator": {
     "name": "Indian Mobile Number Validator",
-    "description": "Country code aur numbering-series sanity checks kare.",
+    "description": "Run country code and numbering-series sanity checks on an Indian mobile number.",
     "category": [
       "Lifestyle",
       "Productivity"
@@ -14919,7 +14919,7 @@ export const toolMetaMap = {
   },
   "influencer-media-kit-builder": {
     "name": "Influencer Media Kit Builder",
-    "description": "Creator metrics se professional media-kit PDF banaye.",
+    "description": "Build a professional media-kit PDF from your creator metrics and audience data.",
     "category": [
       "Marketing & Social",
       "Productivity"
@@ -15083,7 +15083,7 @@ export const toolMetaMap = {
   },
   "insurance-policy-comparator": {
     "name": "Insurance Policy Comparator",
-    "description": "Coverage, exclusions, waiting periods aur limits compare kare.",
+    "description": "Compare insurance policies on coverage, exclusions, waiting periods and limits.",
     "category": [
       "Finance Calculators",
       "Lifestyle"
@@ -15324,7 +15324,7 @@ export const toolMetaMap = {
   },
   "invoice-to-time-log-reconciler": {
     "name": "Invoice-to-Time-Log Reconciler",
-    "description": "Billable hours aur invoice line items ke mismatches dikhaye.",
+    "description": "Surface mismatches between your billable hours and the invoice line items.",
     "category": [
       "Finance Calculators",
       "Business"
@@ -15514,7 +15514,7 @@ export const toolMetaMap = {
   },
   "isitdown-now": {
     "name": "IsItDown Now",
-    "description": "Check kare website globally down hai ya sirf user ke network par.",
+    "description": "Check whether a website is down globally or only on your own network.",
     "category": [
       "Developer",
       "Productivity"
@@ -15532,7 +15532,7 @@ export const toolMetaMap = {
   },
   "iss-pass-finder": {
     "name": "ISS Pass Finder",
-    "description": "User location ke liye next visible ISS flyover calculate kare.",
+    "description": "Calculate the next visible International Space Station flyover for your location.",
     "category": [
       "Developer",
       "Productivity"
@@ -16685,7 +16685,7 @@ export const toolMetaMap = {
   },
   "led-pwm-flicker-detector": {
     "name": "LED PWM Flicker Detector",
-    "description": "Camera rolling bands se approximate flicker pattern estimate kare.",
+    "description": "Estimate an LED's PWM flicker pattern from the rolling bands your camera picks up.",
     "category": [
       "Developer",
       "Productivity"
@@ -17003,7 +17003,7 @@ export const toolMetaMap = {
   },
   "lip-read-practice-mirror": {
     "name": "Lip-Read Practice Mirror",
-    "description": "Webcam mouth zoom aur slow replay ke saath practice provide kare.",
+    "description": "Practice lip reading with a zoomed webcam view of the mouth and slow replay.",
     "category": [
       "Developer",
       "Productivity"
@@ -17082,7 +17082,7 @@ export const toolMetaMap = {
   },
   "live-caption-overlay": {
     "name": "Live Caption Overlay",
-    "description": "Browser/local speech engine se adjustable live captions dikhaye.",
+    "description": "Show adjustable live captions using your browser's own speech engine.",
     "category": [
       "Developer",
       "Productivity"
@@ -17182,7 +17182,7 @@ export const toolMetaMap = {
   },
   "loan-fee-extractor": {
     "name": "Loan Fee Extractor",
-    "description": "Agreement se fees, penalties, reset clauses aur hidden charges extract kare.",
+    "description": "Extract fees, penalties, reset clauses and hidden charges from a loan agreement.",
     "category": [
       "Finance Calculators",
       "Security & Privacy"
@@ -17301,7 +17301,7 @@ export const toolMetaMap = {
   },
   "local-sound-event-logger": {
     "name": "Local Sound-Event Logger",
-    "description": "Loud audio events ko locally timestamped timeline me log kare.",
+    "description": "Log loud sound events to a timestamped timeline kept on your own device.",
     "category": [
       "Developer",
       "Productivity"
@@ -17478,7 +17478,7 @@ export const toolMetaMap = {
   },
   "lost-phone-response-planner": {
     "name": "Lost Phone Response Planner",
-    "description": "Device loss ke immediate account-security steps prioritize kare.",
+    "description": "Prioritize the account-security steps to take in the first hour after losing a phone.",
     "category": [
       "Security & Privacy",
       "Productivity"
@@ -17488,7 +17488,7 @@ export const toolMetaMap = {
   },
   "loudness-true-peak-normalizer": {
     "name": "Loudness & True-Peak Normalizer",
-    "description": "LUFS, peak aur clipping analysis ke saath audio normalize kare.",
+    "description": "Normalize audio loudness with LUFS, true-peak and clipping analysis.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -17520,7 +17520,7 @@ export const toolMetaMap = {
   },
   "low-vision-camera-magnifier": {
     "name": "Low-Vision Camera Magnifier",
-    "description": "Zoom, invert, contrast aur grayscale modes provide kare.",
+    "description": "Magnify what your camera sees with zoom, invert, contrast and grayscale modes.",
     "category": [
       "Developer",
       "Productivity"
@@ -18499,7 +18499,7 @@ export const toolMetaMap = {
   },
   "micr-cheque-code-decoder": {
     "name": "MICR Cheque Code Decoder",
-    "description": "MICR city, bank aur branch fields explain kare.",
+    "description": "Decode and explain the city, bank and branch fields in a cheque's MICR code.",
     "category": [
       "Finance Calculators",
       "Lifestyle"
@@ -19105,7 +19105,7 @@ export const toolMetaMap = {
   },
   "multi-currency-payout-reconciler": {
     "name": "Multi-Currency Payout Reconciler",
-    "description": "Payout CSVs ko invoices, FX, fees aur withholding se match kare.",
+    "description": "Match payout CSVs against invoices, allowing for FX, fees and withholding.",
     "category": [
       "Finance Calculators",
       "Business"
@@ -19118,7 +19118,7 @@ export const toolMetaMap = {
   },
   "multi-touch-tester": {
     "name": "Multi-Touch Tester",
-    "description": "Simultaneous touch points aur digitizer response visualize kare.",
+    "description": "Visualize the simultaneous touch points your screen registers and the digitizer's response.",
     "category": [
       "Developer",
       "Productivity"
@@ -19129,7 +19129,7 @@ export const toolMetaMap = {
   },
   "multichannel-audio-mapper": {
     "name": "Multichannel Audio Mapper",
-    "description": "Stereo/surround channels inspect, reorder aur individually preview kare.",
+    "description": "Inspect, reorder and individually preview the channels in a stereo or surround file.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -20299,7 +20299,7 @@ export const toolMetaMap = {
   },
   "one-handed-keyboard-trainer": {
     "name": "One-Handed Keyboard Trainer",
-    "description": "Single-hand layouts aur typing exercises provide kare.",
+    "description": "Practice single-handed keyboard layouts with typing exercises built for one hand.",
     "category": [
       "Developer",
       "Productivity"
@@ -21356,7 +21356,7 @@ export const toolMetaMap = {
   },
   "personal-crisis-safety-plan": {
     "name": "Personal Crisis Safety Plan",
-    "description": "Coping steps, trusted contacts aur user-selected actions organize kare.",
+    "description": "Organize coping steps, trusted contacts and the actions you choose in advance.",
     "category": [
       "Health & Fitness",
       "Productivity"
@@ -21380,7 +21380,7 @@ export const toolMetaMap = {
   },
   "personal-data-flow-mapper": {
     "name": "Personal Data Flow Mapper",
-    "description": "Collection se storage, processor aur deletion tak data-flow diagram banaye.",
+    "description": "Diagram how personal data flows from collection through storage and processors to deletion.",
     "category": [
       "Security & Privacy",
       "Business"
@@ -21702,7 +21702,7 @@ export const toolMetaMap = {
   },
   "pin-code-region-lookup": {
     "name": "PIN Code Region Lookup",
-    "description": "Six-digit PIN se postal circle, state aur district lookup kare.",
+    "description": "Look up the postal circle, state and district behind any six-digit Indian PIN code.",
     "category": [
       "Developer",
       "Productivity"
@@ -21891,7 +21891,7 @@ export const toolMetaMap = {
   },
   "podcast-de-noiser-echo-reducer": {
     "name": "Podcast De-noiser & Echo Reducer",
-    "description": "Hiss, hum aur room echo locally reduce kare.",
+    "description": "Reduce hiss, hum and room echo in a podcast recording.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -22136,7 +22136,7 @@ export const toolMetaMap = {
   },
   "post-office-scheme-calculator": {
     "name": "Post Office Scheme Calculator",
-    "description": "NSC, KVP aur MIS maturity estimates compare kare.",
+    "description": "Compare maturity estimates across post office NSC, KVP and MIS savings schemes.",
     "category": [
       "Finance Calculators",
       "Lifestyle"
@@ -22242,7 +22242,7 @@ export const toolMetaMap = {
   },
   "potluck-dish-assigner": {
     "name": "Potluck Dish Assigner",
-    "description": "Dietary constraints aur course balance ke saath dishes assign kare.",
+    "description": "Assign potluck dishes across guests, balancing courses and dietary constraints.",
     "category": [
       "Productivity",
       "Business"
@@ -22446,7 +22446,7 @@ export const toolMetaMap = {
   },
   "price-evidence-locker": {
     "name": "Price Evidence Locker",
-    "description": "Product price aur offer claims ka timestamped evidence save kare.",
+    "description": "Save timestamped evidence of a product's price and the offer claims made about it.",
     "category": [
       "Lifestyle",
       "Security & Privacy"
@@ -22514,7 +22514,7 @@ export const toolMetaMap = {
   },
   "privacy-policy-version-diff": {
     "name": "Privacy Policy Version Diff",
-    "description": "Policy updates ke meaningful privacy changes highlight kare.",
+    "description": "Highlight the privacy changes that actually matter between two policy versions.",
     "category": [
       "Security & Privacy",
       "Text & Writing"
@@ -22781,7 +22781,7 @@ export const toolMetaMap = {
   },
   "product-recall-watchlist": {
     "name": "Product Recall Watchlist",
-    "description": "Owned products ke official recall notices monitor kare.",
+    "description": "Monitor official recall notices for the products you own.",
     "category": [
       "Lifestyle",
       "Productivity"
@@ -23222,7 +23222,7 @@ export const toolMetaMap = {
   },
   "quake-near-me": {
     "name": "Quake Near Me",
-    "description": "Recent earthquakes ko distance aur magnitude se filter kare.",
+    "description": "Filter recent earthquakes by distance from you and by magnitude.",
     "category": [
       "Developer",
       "Productivity"
@@ -23554,7 +23554,7 @@ export const toolMetaMap = {
   },
   "ranked-choice-vote-tabulator": {
     "name": "Ranked-Choice Vote Tabulator",
-    "description": "Instant-runoff rounds transparently calculate kare.",
+    "description": "Tabulate ranked-choice voting with every instant-runoff round shown.",
     "category": [
       "Productivity",
       "Business"
@@ -23595,7 +23595,7 @@ export const toolMetaMap = {
   },
   "raw-photo-developer": {
     "name": "RAW Photo Developer",
-    "description": "RAW exposure, white balance aur JPEG export controls provide kare.",
+    "description": "Develop RAW photos with exposure and white balance controls, then export to JPEG.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -24024,7 +24024,7 @@ export const toolMetaMap = {
   },
   "release-watchtower": {
     "name": "Release Watchtower",
-    "description": "Selected GitHub projects ke new releases monitor kare.",
+    "description": "Monitor new releases across the GitHub projects you choose to follow.",
     "category": [
       "Developer",
       "Productivity"
@@ -24205,7 +24205,7 @@ export const toolMetaMap = {
   },
   "repair-quote-comparator": {
     "name": "Repair Quote Comparator",
-    "description": "Parts, labour, warranty aur exclusions across repair quotes compare kare.",
+    "description": "Compare repair quotes on parts, labour, warranty and what each one excludes.",
     "category": [
       "Lifestyle",
       "Business"
@@ -24527,7 +24527,7 @@ export const toolMetaMap = {
   },
   "road-roughness-logger": {
     "name": "Road Roughness Logger",
-    "description": "Accelerometer aur GPS data se speed-normalized road jolts record kare.",
+    "description": "Record speed-normalized road jolts from your device's accelerometer and GPS.",
     "category": [
       "Developer",
       "Productivity"
@@ -24745,7 +24745,7 @@ export const toolMetaMap = {
   },
   "room-rt60-echo-meter": {
     "name": "Room RT60 Echo Meter",
-    "description": "Clap/sweep response se room reverberation estimate kare.",
+    "description": "Estimate a room's RT60 reverberation time from a clap or sweep response.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -24763,7 +24763,7 @@ export const toolMetaMap = {
   },
   "ropa-builder": {
     "name": "ROPA Builder",
-    "description": "Personal-data processing activities ka structured register banaye.",
+    "description": "Build a structured register of your personal-data processing activities.",
     "category": [
       "Productivity",
       "Business"
@@ -24881,7 +24881,7 @@ export const toolMetaMap = {
   },
   "royalty-split-waterfall-calculator": {
     "name": "Royalty Split Waterfall Calculator",
-    "description": "Fees, recoupment aur collaborator splits exact cents tak reconcile kare.",
+    "description": "Reconcile fees, recoupment and collaborator splits down to the exact cent.",
     "category": [
       "Finance Calculators",
       "Business"
@@ -25133,7 +25133,7 @@ export const toolMetaMap = {
   },
   "salary-slip-anomaly-checker": {
     "name": "Salary Slip Anomaly Checker",
-    "description": "Totals, deductions aur month-to-month changes verify kare.",
+    "description": "Verify the totals and deductions on a salary slip and flag month-to-month changes.",
     "category": [
       "Finance Calculators",
       "Productivity"
@@ -25566,7 +25566,7 @@ export const toolMetaMap = {
   },
   "scope-creep-change-order-builder": {
     "name": "Scope-Creep Change-Order Builder",
-    "description": "Original scope aur new request ka price/deadline delta banaye.",
+    "description": "Turn a new request into a change order showing the price and deadline delta.",
     "category": [
       "Business",
       "Productivity"
@@ -25772,7 +25772,7 @@ export const toolMetaMap = {
   },
   "section-138-notice-draft-assistant": {
     "name": "Section 138 Notice Draft Assistant",
-    "description": "Versioned checklist ke saath cheque-bounce notice draft structure kare.",
+    "description": "Structure a Section 138 cheque-bounce notice draft against a versioned checklist.",
     "category": [
       "Text & Writing",
       "Lifestyle",
@@ -25966,7 +25966,7 @@ export const toolMetaMap = {
   },
   "senior-device-permission-audit": {
     "name": "Senior Device Permission Audit",
-    "description": "Phone permissions cleanup ka senior-friendly guide provide kare.",
+    "description": "A senior-friendly walkthrough for reviewing and cleaning up phone app permissions.",
     "category": [
       "Security & Privacy",
       "Lifestyle"
@@ -26061,7 +26061,7 @@ export const toolMetaMap = {
   },
   "severe-weather-watch": {
     "name": "Severe Weather Watch",
-    "description": "Official nearby weather warnings aggregate kare.",
+    "description": "Aggregate official severe weather warnings issued near your location.",
     "category": [
       "Developer",
       "Productivity"
@@ -26072,7 +26072,7 @@ export const toolMetaMap = {
   },
   "sexual-health-test-tracker": {
     "name": "Sexual Health Test Tracker",
-    "description": "Test dates, results aur reminders privately manage kare.",
+    "description": "Keep test dates, results and retest reminders in one private place.",
     "category": [
       "Health & Fitness",
       "Productivity"
@@ -26133,7 +26133,7 @@ export const toolMetaMap = {
   },
   "shared-resource-conflict-resolver": {
     "name": "Shared-Resource Conflict Resolver",
-    "description": "Rooms, vehicles ya equipment ke booking conflicts resolve kare.",
+    "description": "Resolve booking conflicts over shared rooms, vehicles or equipment.",
     "category": [
       "Productivity",
       "Business"
@@ -26154,7 +26154,7 @@ export const toolMetaMap = {
   },
   "shift-rotation-fairness-auditor": {
     "name": "Shift-Rotation Fairness Auditor",
-    "description": "Nights, weekends aur workload ka member-wise fairness score dikhaye.",
+    "description": "Score how fairly nights, weekends and workload are split across team members.",
     "category": [
       "Productivity",
       "Business"
@@ -26216,7 +26216,7 @@ export const toolMetaMap = {
   },
   "short-video-hook-marker": {
     "name": "Short-Video Hook Marker",
-    "description": "Clip timeline par hook, beat aur review timestamps mark kare.",
+    "description": "Mark hook, beat and review timestamps along a short video's timeline.",
     "category": [
       "Marketing & Social",
       "Productivity"
@@ -26687,7 +26687,7 @@ export const toolMetaMap = {
   },
   "slow-speech-playback-trainer": {
     "name": "Slow Speech Playback Trainer",
-    "description": "Pitch preserve karke speech slow, loop aur segment kare.",
+    "description": "Slow, loop and segment speech for practice while preserving the original pitch.",
     "category": [
       "Developer",
       "Productivity"
@@ -26729,7 +26729,7 @@ export const toolMetaMap = {
   },
   "smart-meter-interval-analyzer": {
     "name": "Smart-Meter Interval Analyzer",
-    "description": "Energy CSV me peaks aur time-of-use opportunities dikhaye.",
+    "description": "Find demand peaks and time-of-use savings in your smart meter CSV export.",
     "category": [
       "Lifestyle",
       "Calculators"
@@ -26742,7 +26742,7 @@ export const toolMetaMap = {
   },
   "smart-vertical-video-reframer": {
     "name": "Smart Vertical Video Reframer",
-    "description": "Landscape footage ko subject-aware 9:16 framing me convert kare.",
+    "description": "Reframe landscape footage into 9:16 vertical video that follows the subject.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -26791,7 +26791,7 @@ export const toolMetaMap = {
   },
   "snake-draft-board": {
     "name": "Snake Draft Board",
-    "description": "Serpentine pick order aur live selections manage kare.",
+    "description": "Run a snake draft with serpentine pick order and live selection tracking.",
     "category": [
       "Productivity",
       "Business"
@@ -26835,7 +26835,7 @@ export const toolMetaMap = {
   },
   "sobriety-recovery-journal": {
     "name": "Sobriety Recovery Journal",
-    "description": "Sober days, urges, triggers aur coping wins privately track kare.",
+    "description": "Privately track sober days, urges, triggers and the coping wins in between.",
     "category": [
       "Health & Fitness",
       "Productivity"
@@ -26994,7 +26994,7 @@ export const toolMetaMap = {
   },
   "solar-self-consumption-optimizer": {
     "name": "Solar Self-Consumption Optimizer",
-    "description": "Generation aur usage CSV se best appliance timing dikhaye.",
+    "description": "Find the best appliance timing from your solar generation and usage CSV exports.",
     "category": [
       "Lifestyle",
       "Calculators"
@@ -27181,7 +27181,7 @@ export const toolMetaMap = {
   },
   "speed-date-rotation-planner": {
     "name": "Speed-Date Rotation Planner",
-    "description": "Non-repeating round-robin meeting schedule banaye.",
+    "description": "Build a non-repeating round-robin meeting schedule for a speed dating event.",
     "category": [
       "Productivity",
       "Business"
@@ -27311,7 +27311,7 @@ export const toolMetaMap = {
   },
   "sponsored-disclosure-placement-checker": {
     "name": "Sponsored Disclosure Placement Checker",
-    "description": "Disclosure contrast, size, duration aur placement test kare.",
+    "description": "Test a sponsored disclosure's contrast, size, on-screen duration and placement.",
     "category": [
       "Marketing & Social",
       "Productivity"
@@ -28316,7 +28316,7 @@ export const toolMetaMap = {
   },
   "surface-vibration-recorder": {
     "name": "Surface Vibration Recorder",
-    "description": "Accelerometer readings ka vibration timeline banaye.",
+    "description": "Build a vibration timeline for any surface from your device's accelerometer.",
     "category": [
       "Developer",
       "Productivity"
@@ -28382,7 +28382,7 @@ export const toolMetaMap = {
   },
   "svg-optimizer-cleaner": {
     "name": "SVG Optimizer & Cleaner",
-    "description": "Unnecessary markup, editor data aur metadata safely remove kare.",
+    "description": "Safely strip unnecessary markup, editor data and metadata from an SVG file.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -28445,7 +28445,7 @@ export const toolMetaMap = {
   },
   "swiss-pairing-engine": {
     "name": "Swiss Pairing Engine",
-    "description": "Scores se pairings banaye aur rematches avoid kare.",
+    "description": "Build Swiss tournament pairings from current scores while avoiding rematches.",
     "category": [
       "Productivity",
       "Business"
@@ -28455,7 +28455,7 @@ export const toolMetaMap = {
   },
   "switch-scanning-communicator": {
     "name": "Switch-Scanning Communicator",
-    "description": "Single-switch scanning se phrases select aur speak kare.",
+    "description": "Select and speak phrases using single-switch scanning input.",
     "category": [
       "Developer",
       "Productivity"
@@ -28805,7 +28805,7 @@ export const toolMetaMap = {
   },
   "tds-calculator-by-section": {
     "name": "TDS Calculator by Section",
-    "description": "Selected section, threshold aur rate se TDS calculate kare.",
+    "description": "Calculate TDS from the section you select, its threshold and the applicable rate.",
     "category": [
       "Finance Calculators",
       "Lifestyle"
@@ -29852,7 +29852,7 @@ export const toolMetaMap = {
   },
   "tournament-bracket-builder": {
     "name": "Tournament Bracket Builder",
-    "description": "Single/double elimination brackets aur byes generate kare.",
+    "description": "Generate single or double elimination brackets, with byes placed automatically.",
     "category": [
       "Productivity",
       "Business"
@@ -30005,7 +30005,7 @@ export const toolMetaMap = {
   },
   "travel-disruption-evidence-pack": {
     "name": "Travel Disruption Evidence Pack",
-    "description": "Delays, bookings, receipts aur claim evidence organize kare.",
+    "description": "Organize delays, bookings, receipts and claim evidence into one travel pack.",
     "category": [
       "Lifestyle",
       "Productivity"
@@ -31077,7 +31077,7 @@ export const toolMetaMap = {
   },
   "utility-tariff-csv-comparator": {
     "name": "Utility Tariff CSV Comparator",
-    "description": "Same usage profile ko multiple electricity plans par compare kare.",
+    "description": "Compare the same electricity usage profile across multiple tariff plans.",
     "category": [
       "Lifestyle",
       "Calculators"
@@ -31122,7 +31122,7 @@ export const toolMetaMap = {
   },
   "uv-safety-window": {
     "name": "UV Safety Window",
-    "description": "Forecast se comparatively lower-UV outdoor windows dikhaye.",
+    "description": "Find the comparatively lower-UV windows for going outdoors from the forecast.",
     "category": [
       "Developer",
       "Productivity"
@@ -31305,7 +31305,7 @@ export const toolMetaMap = {
   },
   "vehicle-document-reminder": {
     "name": "Vehicle Document Reminder",
-    "description": "RC, insurance, PUC aur licence expiry track kare.",
+    "description": "Track RC, insurance, PUC and driving licence expiry dates in one place.",
     "category": [
       "Lifestyle",
       "Productivity"
@@ -31346,7 +31346,7 @@ export const toolMetaMap = {
   },
   "vendor-data-processing-inventory": {
     "name": "Vendor Data Processing Inventory",
-    "description": "Vendors, purposes, data categories aur retention terms track kare.",
+    "description": "Track vendors with their processing purposes, data categories and retention terms.",
     "category": [
       "Security & Privacy",
       "Business"
@@ -31363,7 +31363,7 @@ export const toolMetaMap = {
   },
   "vertical-video-safe-zone-previewer": {
     "name": "Vertical Video Safe-Zone Previewer",
-    "description": "Reels, Shorts aur TikTok obstruction areas overlay kare.",
+    "description": "Overlay the UI safe zones for Reels, Shorts and TikTok on your vertical video.",
     "category": [
       "Marketing & Social",
       "Productivity"
@@ -31477,7 +31477,7 @@ export const toolMetaMap = {
   },
   "video-frame-to-sprite-extractor": {
     "name": "Video Frame-to-Sprite Extractor",
-    "description": "Selected frames ko PNG sequence ya sprite sheet me export kare.",
+    "description": "Export selected video frames as a PNG sequence or a single sprite sheet.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -31792,7 +31792,7 @@ export const toolMetaMap = {
   },
   "vocal-remover-stem-splitter": {
     "name": "Vocal Remover & Stem Splitter",
-    "description": "User-owned audio ko vocals, bass, drums aur instrumental stems me split kare.",
+    "description": "Split audio you own into vocals, bass, drums and instrumental stems.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -31803,7 +31803,7 @@ export const toolMetaMap = {
   },
   "voice-steadiness-visualizer": {
     "name": "Voice Steadiness Visualizer",
-    "description": "Non-diagnostic pitch aur volume consistency feedback dikhaye.",
+    "description": "See non-diagnostic feedback on how steady your pitch and volume stay.",
     "category": [
       "Developer",
       "Productivity"
@@ -31855,7 +31855,7 @@ export const toolMetaMap = {
   },
   "voiceprint-anonymizer": {
     "name": "Voiceprint Anonymizer",
-    "description": "Speech readable rakhte hue speaker-identifying vocal cues neutralize kare.",
+    "description": "Neutralize speaker-identifying vocal cues while keeping the speech intelligible.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -31916,7 +31916,7 @@ export const toolMetaMap = {
   },
   "voter-id-format-validator": {
     "name": "Voter ID Format Validator",
-    "description": "EPIC number pattern validate aur normalize kare.",
+    "description": "Validate and normalize the EPIC number pattern on an Indian voter ID.",
     "category": [
       "Lifestyle",
       "Productivity"
@@ -32229,7 +32229,7 @@ export const toolMetaMap = {
   },
   "wearable-sleep-csv-analyzer": {
     "name": "Wearable Sleep CSV Analyzer",
-    "description": "Oura, Whoop aur Fitbit exports ke sleep trends dikhaye.",
+    "description": "See sleep trends from your Oura, Whoop or Fitbit CSV exports.",
     "category": [
       "Health & Fitness",
       "Developer"
@@ -33197,7 +33197,7 @@ export const toolMetaMap = {
   },
   "zip-tar-archive-surgeon": {
     "name": "ZIP/TAR Archive Surgeon",
-    "description": "Archive entries selectively remove, reorder aur recompress kare.",
+    "description": "Selectively remove, reorder and recompress entries inside a ZIP or TAR archive.",
     "category": [
       "Image & Photo",
       "Productivity"

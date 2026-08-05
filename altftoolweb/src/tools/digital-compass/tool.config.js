@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Supported magnetometer se heading aur bearing dikhaye.",
+  "description": "Show heading and bearing from your device's magnetometer where supported.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

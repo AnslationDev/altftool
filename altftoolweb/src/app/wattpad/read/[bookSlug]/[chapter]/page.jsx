@@ -32,10 +32,21 @@ export async function generateMetadata({ params }) {
     : null;
 
   if (!book || !currentChapter) {
-    return {
+    // Measured on production before this change:
+    // /wattpad/read/midnight-desires/1 returned 200 with
+    // <link rel="canonical" href="https://www.altftool.com"> and the sitewide
+    // boilerplate as its description. Returning a bare {title, robots} object
+    // skips createPageMetadata, so no canonical and no description were ever
+    // built and Next fell back to the site root — pointing every missing
+    // chapter at the homepage as its canonical. 7 of the 8 books have no
+    // chapters at all, so this branch is the common case, not the edge.
+    return createPageMetadata({
       title: "Chapter Not Found",
-      robots: { index: false, follow: true },
-    };
+      description:
+        "This story chapter is not available on AltFTool. Browse the story's published parts or explore other Wattpad-style reads in the library.",
+      path: `/wattpad/read/${encodeURIComponent(bookSlug)}/${encodeURIComponent(chapter)}`,
+      noindex: true,
+    });
   }
 
   return createPageMetadata({

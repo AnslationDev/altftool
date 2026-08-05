@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "Holes, non-manifold edges aur inverted normals detect kare.",
+  "description": "Detect holes, non-manifold edges and inverted normals in a 3D mesh.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

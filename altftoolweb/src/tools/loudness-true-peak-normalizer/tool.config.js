@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "LUFS, peak aur clipping analysis ke saath audio normalize kare.",
+  "description": "Normalize audio loudness with LUFS, true-peak and clipping analysis.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

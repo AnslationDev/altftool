@@ -56,7 +56,7 @@ export default function ReligionGrid() {
                     >
                       <Icon size={20} aria-hidden="true" />
                     </span>
-                    <span className="text-sm text-muted-foreground">{festivals.length}+</span>
+                    <span className="text-sm text-muted-foreground">{festivals.length}</span>
                   </div>
 
                   <h3 className="mb-2 text-xl font-extrabold text-foreground">{religion.name}</h3>

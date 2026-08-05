@@ -5,7 +5,7 @@ const toolConfig = {
     "Marketing & Social",
     "Productivity"
   ],
-  "description": "Disclosure contrast, size, duration aur placement test kare.",
+  "description": "Test a sponsored disclosure's contrast, size, on-screen duration and placement.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

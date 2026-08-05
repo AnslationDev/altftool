@@ -50,9 +50,9 @@ export default function ClosingCta() {
 
         <Reveal delay={0.3} className="mt-8 sm:mt-12">
           <p className="max-w-lg text-sm sm:text-base text-white/60 leading-relaxed">
-            Every list on Top5 is free to browse, scored the same way, and
-            updated on a fixed schedule. Start with a category, or jump
-            straight into whatever you're curious about.
+            Every preview list on Top5 is free to browse and keeps its authored
+            criteria, scores, and tradeoffs visible. Start with a category, or
+            jump straight into whatever you&apos;re curious about.
           </p>
           <motion.div whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }} className="mt-5 sm:mt-6 inline-block">
             <Link

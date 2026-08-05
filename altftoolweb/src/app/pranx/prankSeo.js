@@ -1,6 +1,5 @@
 import {
   createBreadcrumbJsonLd,
-  createPageMetadata,
   createToolJsonLd,
 } from "@/platform/seo/generateMetadata";
 import { findPrank } from "./data/pranxData";
@@ -352,19 +351,16 @@ export function getPrankMetadataArgs(slug, path) {
   const prank = findPrank(slug);
 
   if (!prank) {
-    // `path` and `noindex` are not fields Next's metadata API reads, so on a
-    // bare object like this they were inert and the page inherited the layout's
-    // `index, follow`. These routes are statically generated, so notFound() is
-    // served with a 200 rather than a 404 — every unknown slug was an
-    // indexable soft 404. createPageMetadata turns noindex into a real robots
-    // directive and sets the canonical from path.
-    return createPageMetadata({
+    // Callers pass these arguments through createPageMetadata(). Returning
+    // resolved metadata here would wrap the result a second time and lose the
+    // path/noindex inputs that the generator expects.
+    return {
       title: "Prank Not Found",
       description:
         "This Pranx page is not available. Browse the full library of browser prank simulators, screensavers, fake terminals, and mini games instead.",
       path,
       noindex: true,
-    });
+    };
   }
 
   const seo = prankSeo[prank.slug];

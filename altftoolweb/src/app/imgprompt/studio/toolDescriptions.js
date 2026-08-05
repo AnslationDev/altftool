@@ -15,7 +15,7 @@
  * code: the idea box, the Studio Controls its `controls` array unlocks
  * (Creative Direction, Image Parameters, Advanced chaos/stylize, Video &
  * Motion, Voice & Music, Negative Prompt), and the Copy Prompt / negative
- * prompt / Prompt Intelligence output. Controls are not claimed for a tool
+ * prompt / local structure-checklist output. Controls are not claimed for a tool
  * that does not have them — Pika has no Creative Direction panel, Hailuo has
  * neither that nor Voice & Music, and Story/Script Generator expose only the
  * negative prompt.
@@ -29,7 +29,7 @@ export const STUDIO_TOOL_DESCRIPTIONS = {
   "prompt-generator":
     "Turn a one-line idea into a full AI image prompt. Set art style, camera, lens, lighting and mood, then copy the prompt and its negative prompt.",
   "prompt-optimizer":
-    "Paste a rough prompt and rebuild it with camera, lighting and quality detail, then read the Prompt Intelligence score before you spend a generation.",
+    "Paste a rough prompt and rebuild it with camera, lighting and quality detail, then review the local structure checklist before you render.",
   "image-prompt":
     "Write still-image prompts for Midjourney, Flux, DALL-E and Stable Diffusion. Set style, lens, lighting, aspect ratio and seed, then copy the result.",
   "video-prompt":

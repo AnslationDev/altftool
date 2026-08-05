@@ -48,7 +48,7 @@ export const moviesCatalog = {
         { key: 'year', label: 'Year', format: 'year', sortable: true, showOn: 'always', align: 'left' },
         { key: 'director', label: 'Director', format: 'text', sortable: true, showOn: 'md', align: 'left' },
         { key: 'runtime', label: 'Runtime', format: 'duration', sortable: true, showOn: 'lg', align: 'right' },
-        { key: 'rating', label: 'IMDb', format: 'rating', sortable: true, showOn: 'always', align: 'right' },
+        { key: 'rating', label: 'Score', format: 'rating', sortable: true, showOn: 'always', align: 'right' },
       ],
       filters: [
         {
@@ -400,7 +400,7 @@ export const moviesCatalog = {
         { key: 'year', label: 'Year', format: 'year', sortable: true, showOn: 'always', align: 'left' },
         { key: 'director', label: 'Director', format: 'text', sortable: true, showOn: 'md', align: 'left' },
         { key: 'runtime', label: 'Runtime', format: 'duration', sortable: true, showOn: 'lg', align: 'right' },
-        { key: 'rating', label: 'IMDb', format: 'rating', sortable: true, showOn: 'always', align: 'right' },
+        { key: 'rating', label: 'Score', format: 'rating', sortable: true, showOn: 'always', align: 'right' },
       ],
       filters: [
         {
@@ -653,7 +653,7 @@ export const moviesCatalog = {
         { key: 'director', label: 'Director', format: 'text', sortable: true, showOn: 'md', align: 'left' },
         { key: 'country', label: 'Country', format: 'text', sortable: true, showOn: 'lg', align: 'left' },
         { key: 'runtime', label: 'Runtime', format: 'duration', sortable: true, showOn: 'lg', align: 'right' },
-        { key: 'rating', label: 'IMDb', format: 'rating', sortable: true, showOn: 'always', align: 'right' },
+        { key: 'rating', label: 'Score', format: 'rating', sortable: true, showOn: 'always', align: 'right' },
       ],
       filters: [
         {

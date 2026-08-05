@@ -28,7 +28,14 @@ export async function generateMetadata({ params }) {
   const description = getStudioToolDescription(item);
 
   return createPageMetadata({
-    title: `${item.label} - AI Prompt Studio`,
+    // Branded in the string. The /imgprompt/studio layout sets a plain-string
+    // title, which consumes the root layout's "%s | AltFTool" template, so all
+    // 60 of these shipped with no site name at all (22-39 characters). Writing
+    // the brand in makes resolveDocumentTitle mark the title absolute, so it
+    // renders the same whether or not that template reaches this segment.
+    // Measured across every NAV_ITEMS_BY_SLUG entry: 33-50 characters, none
+    // over 60.
+    title: `${item.label} - AI Prompt Studio | AltFTool`,
     description,
     path,
     keywords: [

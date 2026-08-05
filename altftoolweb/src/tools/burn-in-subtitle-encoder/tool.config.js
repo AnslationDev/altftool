@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "Styled subtitles permanently video me embed kare.",
+  "description": "Burn styled subtitles permanently into a video file.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

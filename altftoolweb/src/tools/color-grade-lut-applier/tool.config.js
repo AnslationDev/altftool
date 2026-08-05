@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": ".cube LUT ko photos aur video frames par locally apply kare.",
+  "description": "Apply a .cube LUT to photos and video frames locally in your browser.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

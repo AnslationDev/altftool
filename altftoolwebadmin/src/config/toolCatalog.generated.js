@@ -44,7 +44,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "Holes, non-manifold edges aur inverted normals detect kare."
+    "description": "Detect holes, non-manifold edges and inverted normals in a 3D mesh."
   },
   {
     "slug": "3d-model-format-converter",
@@ -53,7 +53,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "OBJ, STL aur GLB convert karke mesh statistics dikhaye."
+    "description": "Convert between OBJ, STL and GLB, and see the mesh statistics for each."
   },
   {
     "slug": "80tta-vs-80ttb-calculator",
@@ -70,7 +70,7 @@ export const TOOL_CATALOG = [
       "Business",
       "Finance Calculators"
     ],
-    "description": "Conversion data se p-value aur confidence calculate kare."
+    "description": "Calculate the p-value and confidence level from your A/B test conversion data."
   },
   {
     "slug": "a4-flyer-bleed-template",
@@ -87,7 +87,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Custom picture/text tiles ko tap karke speech output de."
+    "description": "Tap custom picture or text tiles to speak them aloud through your device."
   },
   {
     "slug": "aadhaar-masking-tool",
@@ -105,7 +105,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Supported Aadhaar QR locally decode aur signature status dikhaye."
+    "description": "Decode a supported Aadhaar QR code locally and show its signature status."
   },
   {
     "slug": "absolute-vs-annualised-return",
@@ -320,7 +320,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Font, spacing, line width aur contrast user preference ke according tune kare."
+    "description": "Tune font, spacing, line width and contrast to match your own reading preferences."
   },
   {
     "slug": "adjusted-winner-splitter",
@@ -329,7 +329,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Two-person point allocation se shared assets fairly divide kare."
+    "description": "Divide shared assets fairly between two people using point allocation."
   },
   {
     "slug": "adr-generator",
@@ -346,7 +346,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Lifestyle"
     ],
-    "description": "Estimated tax ko applicable installments me schedule kare."
+    "description": "Schedule your estimated advance tax across the applicable installment dates."
   },
   {
     "slug": "advance-tax-interest-234b-234c-calculator",
@@ -1177,7 +1177,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Developer"
     ],
-    "description": "Analytics payloads me accidentally transmitted personal data detect kare."
+    "description": "Detect personal data accidentally transmitted inside your analytics payloads."
   },
   {
     "slug": "anger-test",
@@ -1203,7 +1203,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "Image frames ko custom timing ke saath optimized animation me combine kare."
+    "description": "Combine image frames into an optimized animated WebP or APNG with custom timing."
   },
   {
     "slug": "animation-generator",
@@ -1532,7 +1532,7 @@ export const TOOL_CATALOG = [
       "Health & Fitness",
       "Developer"
     ],
-    "description": "Health export ko readable local charts me convert kare."
+    "description": "Turn an Apple Health export into readable charts on your own device."
   },
   {
     "slug": "appliance-electricity-cost-estimator",
@@ -1549,7 +1549,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Productivity"
     ],
-    "description": "Flexible loads ko cheaper tariff windows me schedule kare."
+    "description": "Shift flexible appliance loads into your cheaper electricity tariff windows."
   },
   {
     "slug": "appliance-power-usage-estimator",
@@ -1606,7 +1606,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Current AQI aur pollutant-wise breakdown dikhaye."
+    "description": "See the current air quality index with a pollutant-by-pollutant breakdown."
   },
   {
     "slug": "aqi-today",
@@ -1868,7 +1868,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "Flash/clap recording se audio lead/lag milliseconds calculate kare."
+    "description": "Calculate audio lead or lag in milliseconds from a flash or clap recording."
   },
   {
     "slug": "audiobook-reading-rate-calculator",
@@ -1893,7 +1893,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Kp index aur location se possible visibility estimate kare."
+    "description": "Estimate possible aurora visibility from the Kp index and your location."
   },
   {
     "slug": "australia-visa-cost-estimator",
@@ -1934,7 +1934,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Multiple schedules se common meeting windows dhoonde."
+    "description": "Finds meeting windows that work across several schedules."
   },
   {
     "slug": "avatar-generator",
@@ -2097,7 +2097,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Productivity"
     ],
-    "description": "Check kare backup files actually decrypt, extract aur open ho rahe hain."
+    "description": "Check that your backup files really do decrypt, extract and open before you need them."
   },
   {
     "slug": "badminton-calorie-burn-calculator",
@@ -2487,7 +2487,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "Photos me detected bystander faces locally blur kare."
+    "description": "Blur bystander faces detected in your photos, in batches."
   },
   {
     "slug": "batch-generation-tool",
@@ -2505,7 +2505,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "Resize, crop, recolor aur watermark steps ko reusable pipeline banaye."
+    "description": "Build resize, crop, recolor and watermark steps into a reusable image pipeline."
   },
   {
     "slug": "batch-metadata-scrubber",
@@ -2514,7 +2514,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "Images/documents se EXIF, GPS, author aur revision data remove kare."
+    "description": "Remove EXIF, GPS, author and revision data from images and documents in bulk."
   },
   {
     "slug": "batch-timestamp-conversion-tool",
@@ -2771,7 +2771,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Large-text medicines, allergies aur emergency-contact card banaye."
+    "description": "Build a large-text card listing medicines, allergies and emergency contacts."
   },
   {
     "slug": "bihar-board-percentage-calculator",
@@ -2898,7 +2898,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Word beginnings ko optional visual emphasis de."
+    "description": "Adds optional visual emphasis to the start of each word."
   },
   {
     "slug": "birthday-analyzer",
@@ -3441,7 +3441,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Text ko embosser-ready Braille/BRF layout me convert kare."
+    "description": "Convert text into an embosser-ready Braille or BRF sheet layout."
   },
   {
     "slug": "braille-learning-tool",
@@ -3484,7 +3484,7 @@ export const TOOL_CATALOG = [
       "Business",
       "Marketing & Social"
     ],
-    "description": "Reach, CPM aur deliverables se pricing range estimate kare."
+    "description": "Estimate a brand deal pricing range from your reach, CPM and deliverables."
   },
   {
     "slug": "brand-kit-manager",
@@ -3582,7 +3582,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Productivity"
     ],
-    "description": "Incident discovery se required review aur notification milestones map kare."
+    "description": "Map the review and notification milestones required from the date a breach is discovered."
   },
   {
     "slug": "breach-prefix-checker",
@@ -3869,7 +3869,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "Styled subtitles permanently video me embed kare."
+    "description": "Burn styled subtitles permanently into a video file."
   },
   {
     "slug": "burnout-self-check",
@@ -4152,7 +4152,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Live camera object ka approximate HEX/RGB color sample kare."
+    "description": "Sample the approximate HEX and RGB color of an object through your live camera."
   },
   {
     "slug": "campaign-budget-planner",
@@ -4461,7 +4461,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Drivers aur passengers ka recurring fair rota banaye."
+    "description": "Build a recurring, fair driving rota across your carpool's drivers and passengers."
   },
   {
     "slug": "carry-on-only-trip-planner",
@@ -5055,7 +5055,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Microphone se note aur cents sharp/flat dikhaye."
+    "description": "Tune any instrument by microphone, showing the note and how many cents sharp or flat."
   },
   {
     "slug": "chronotype-finder-quiz",
@@ -5275,7 +5275,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Major cloud aur SaaS incidents ek dashboard par dikhaye."
+    "description": "See incidents across major cloud and SaaS providers on one dashboard."
   },
   {
     "slug": "cloud-tagging-policy-generator",
@@ -5516,7 +5516,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": ".cube LUT ko photos aur video frames par locally apply kare."
+    "description": "Apply a .cube LUT to photos and video frames locally in your browser."
   },
   {
     "slug": "color-match-game",
@@ -5766,7 +5766,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Pairwise comparison se winner ya voting cycle dikhaye."
+    "description": "Find the Condorcet winner from pairwise comparisons, or expose a voting cycle."
   },
   {
     "slug": "confidence-interval-calculator",
@@ -5800,7 +5800,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Business ke consent collection aur withdrawal points map kare."
+    "description": "Map every point where your business collects consent and where it can be withdrawn."
   },
   {
     "slug": "consent-receipt-wallet",
@@ -5852,7 +5852,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Business"
     ],
-    "description": "Facts, relief aur evidence se complaint format banaye."
+    "description": "Build a formatted consumer complaint from your facts, the relief sought and evidence."
   },
   {
     "slug": "consumer-complaint-ecommerce-order",
@@ -6007,7 +6007,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Business"
     ],
-    "description": "Reject action aur Global Privacy Control response test kare."
+    "description": "Test how a site responds to a cookie reject action and to Global Privacy Control."
   },
   {
     "slug": "cookie-viewer",
@@ -6350,7 +6350,7 @@ export const TOOL_CATALOG = [
       "Business",
       "Text & Writing"
     ],
-    "description": "Usage, exclusivity, whitelisting aur renewal dates extract kare."
+    "description": "Extract usage, exclusivity, whitelisting and renewal dates from a creator contract."
   },
   {
     "slug": "creator-income-tracker",
@@ -6359,7 +6359,7 @@ export const TOOL_CATALOG = [
       "Business",
       "Finance Calculators"
     ],
-    "description": "Sponsorship, affiliate aur platform payouts locally track kare."
+    "description": "Track sponsorship, affiliate and platform payouts in one place, stored locally."
   },
   {
     "slug": "creator-posting-time-planner-india",
@@ -6546,7 +6546,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Chosen asset target cross kare toh browser notification de."
+    "description": "Get a browser notification when your chosen crypto asset crosses a target price."
   },
   {
     "slug": "crypto-tax-calculator-india",
@@ -6678,7 +6678,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Calculators"
     ],
-    "description": "Utility aur travel exports se estimated footprint calculate kare."
+    "description": "Calculate an estimated carbon footprint from your utility and travel CSV exports."
   },
   {
     "slug": "csv-converter",
@@ -7031,7 +7031,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Business"
     ],
-    "description": "Manipulative consent, checkout aur cancellation UX flag kare."
+    "description": "Flag manipulative consent, checkout and cancellation patterns in your own product."
   },
   {
     "slug": "dashboard-panel-layout-planner",
@@ -7064,7 +7064,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Productivity"
     ],
-    "description": "Deletion requests aur system-wise completion evidence record kare."
+    "description": "Record deletion requests and the system-by-system evidence that each one completed."
   },
   {
     "slug": "data-deletion-request-letter-generator",
@@ -7194,7 +7194,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Data categories ke review aur deletion periods define kare."
+    "description": "Define review and deletion periods for each of your data categories."
   },
   {
     "slug": "data-structure-visualizer",
@@ -7278,7 +7278,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Full-screen patterns se dead ya stuck pixels locate kare."
+    "description": "Locate dead or stuck pixels using full-screen solid color test patterns."
   },
   {
     "slug": "debt-payoff-calculator",
@@ -7482,7 +7482,7 @@ export const TOOL_CATALOG = [
       "Business",
       "Productivity"
     ],
-    "description": "Versions, feedback, approvals aur included revision count record kare."
+    "description": "Record versions, feedback, approvals and how many included revisions remain."
   },
   {
     "slug": "delivery-challan-format-generator",
@@ -7663,7 +7663,7 @@ export const TOOL_CATALOG = [
       "Text & Writing",
       "Lifestyle"
     ],
-    "description": "Roman Hindi aur Devanagari ke beech live transliteration kare."
+    "description": "Transliterate live between Roman Hindi and Devanagari as you type."
   },
   {
     "slug": "developer-portfolio-readme-generator",
@@ -7704,7 +7704,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Accelerometer, gyroscope aur magnetometer bias sanity-check kare."
+    "description": "Sanity-check the bias in your device's accelerometer, gyroscope and magnetometer."
   },
   {
     "slug": "diabetes-dashboard",
@@ -7790,7 +7790,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Supported magnetometer se heading aur bearing dikhaye."
+    "description": "Show heading and bearing from your device's magnetometer where supported."
   },
   {
     "slug": "digital-detox-study-planner",
@@ -7824,7 +7824,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Supported orientation sensor se tilt aur slope measure kare."
+    "description": "Measure tilt and slope using your device's orientation sensor where supported."
   },
   {
     "slug": "digital-product-refund-policy-generator",
@@ -8096,7 +8096,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Multiple global resolvers par DNS record changes compare kare."
+    "description": "Compare a DNS record across multiple global resolvers to track propagation."
   },
   {
     "slug": "dns-propagation-timeline-explainer",
@@ -8304,7 +8304,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "RDAP data se expiry aur renewal windows track kare."
+    "description": "Track domain expiry and renewal windows using RDAP registration data."
   },
   {
     "slug": "domain-expiry-renewal-planner",
@@ -8403,7 +8403,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Business"
     ],
-    "description": "Versioned India DPDP checklist ke against notice completeness inspect kare."
+    "description": "Inspect a consent notice for completeness against a versioned India DPDP checklist."
   },
   {
     "slug": "dpdp-grievance-officer-page-generator",
@@ -8608,7 +8608,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Productivity"
     ],
-    "description": "Data-access requests, deadlines, responses aur evidence manage kare."
+    "description": "Manage data-access requests with their deadlines, responses and supporting evidence."
   },
   {
     "slug": "dsc-requirement-checker",
@@ -8715,7 +8715,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Pointer hover duration se clicking aur typing enable kare."
+    "description": "Click and type using pointer dwell time alone, with no button press needed."
   },
   {
     "slug": "dyslexia-friendly-text-preview",
@@ -8747,7 +8747,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Calculators"
     ],
-    "description": "Nearest standard resistor/capacitor value suggest kare."
+    "description": "Find the nearest standard E-series resistor or capacitor value."
   },
   {
     "slug": "e-way-bill-validity-calculator",
@@ -8757,7 +8757,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Finance Calculators"
     ],
-    "description": "Distance aur generation time se validity window calculate kare."
+    "description": "Calculate an e-way bill's validity window from the distance and generation time."
   },
   {
     "slug": "early-morning-shift-sleep-planner",
@@ -8942,7 +8942,7 @@ export const TOOL_CATALOG = [
       "Health & Fitness",
       "Productivity"
     ],
-    "description": "Foods aur reactions ke possible patterns dikhaye."
+    "description": "Log foods and reactions, and surface the possible patterns between them."
   },
   {
     "slug": "elliptical-calorie-burn-calculator",
@@ -9471,7 +9471,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Room preferences aur total rent se fair shares optimize kare."
+    "description": "Split rent into envy-free shares from each housemate's room preferences and the total."
   },
   {
     "slug": "epf-calculator",
@@ -9578,7 +9578,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Ethereum gas fees slow, normal aur fast tiers me dikhaye."
+    "description": "See current Ethereum gas fees across slow, normal and fast tiers."
   },
   {
     "slug": "etihad-baggage-allowance-checker",
@@ -9619,7 +9619,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Calculators"
     ],
-    "description": "Charge logs se range aur capacity trend estimate kare."
+    "description": "Estimate range and battery capacity trends from your EV's charge logs."
   },
   {
     "slug": "ev-charging-tou-optimizer",
@@ -9628,7 +9628,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Calculators"
     ],
-    "description": "Tariff windows se lower-cost charging schedule calculate kare."
+    "description": "Calculate a lower-cost EV charging schedule around your time-of-use tariff windows."
   },
   {
     "slug": "ev-road-trip-charge-planner",
@@ -9637,7 +9637,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Calculators"
     ],
-    "description": "Battery, range aur route legs se charging stops plan kare."
+    "description": "Plan charging stops along a route from your battery size, range and each leg."
   },
   {
     "slug": "ev-vs-diesel-running-cost",
@@ -9981,7 +9981,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "User-owned photos ke dates aur coordinates bulk-edit kare."
+    "description": "Bulk-edit the dates and GPS coordinates stored in photos you own."
   },
   {
     "slug": "exit-code-reference-explorer",
@@ -10254,7 +10254,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Productivity"
     ],
-    "description": "Contact priority, responsibilities aur offline printable tree banaye."
+    "description": "Build a printable family contact tree with call priority and who does what."
   },
   {
     "slug": "family-medical-history-tree",
@@ -10877,7 +10877,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Current line ke alawa remaining content dim kare."
+    "description": "Dim everything except the line you are reading to hold your focus."
   },
   {
     "slug": "focus-score-calculator",
@@ -10929,7 +10929,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "Glyph coverage, kerning pairs aur OpenType features inspect kare."
+    "description": "Inspect a font's glyph coverage, kerning pairs and OpenType feature tables."
   },
   {
     "slug": "font-legibility-comparator",
@@ -11051,7 +11051,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "Unused glyphs remove karke web-optimized font banaye."
+    "description": "Remove unused glyphs and build a web-optimized WOFF2 font subset."
   },
   {
     "slug": "food-shelf-life-guide",
@@ -11275,7 +11275,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Business"
     ],
-    "description": "Due dates, payments aur agreed late fees track kare."
+    "description": "Track invoice due dates, payments received and the late fees you agreed."
   },
   {
     "slug": "freelance-rate-calculator",
@@ -11539,7 +11539,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Selected currency rate cross hone par alert de."
+    "description": "Alerts you when a selected currency rate crosses your threshold."
   },
   {
     "slug": "gain-staging-calculator",
@@ -11797,7 +11797,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "Palette aur dithering tune karke GIF size reduce kare."
+    "description": "Reduce GIF file size by tuning its color palette and dithering."
   },
   {
     "slug": "gif-size-budget-estimator",
@@ -11846,7 +11846,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Business"
     ],
-    "description": "Expenses ke baad effective hourly earnings calculate kare."
+    "description": "Calculate what you really earn per hour once mileage and expenses come out."
   },
   {
     "slug": "gig-platform-fee-normalizer",
@@ -11855,7 +11855,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Business"
     ],
-    "description": "Fees, travel aur admin time ke baad effective hourly pay compare kare."
+    "description": "Compare effective hourly pay across gig platforms after fees, travel and admin time."
   },
   {
     "slug": "girl-child-scholarship-finder",
@@ -12059,7 +12059,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Major exchanges ka open/closed status aur countdown dikhaye."
+    "description": "See which major exchanges are open or closed, with a countdown to each change."
   },
   {
     "slug": "glossary-prompt-builder",
@@ -12193,7 +12193,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "GPS readings se speed aur private trip log dikhaye."
+    "description": "Show your speed from GPS readings and keep a private trip log."
   },
   {
     "slug": "gpt-api-cost-calculator",
@@ -12210,7 +12210,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Developer"
     ],
-    "description": "Route ke home-area start/end points remove kare."
+    "description": "Trim the start and end of a GPX route so it no longer reveals your home."
   },
   {
     "slug": "grade-percentage-calculator",
@@ -12383,7 +12383,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Member vetoes se options progressively narrow kare."
+    "description": "Narrow a shortlist down to one choice as each member spends their vetoes."
   },
   {
     "slug": "group-viva-preparation-planner",
@@ -12808,7 +12808,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Left/right stereo placement aur channel balance check karne ke liye hard-panned tone alternate kare."
+    "description": "Alternate a hard-panned tone between channels to check stereo placement and balance."
   },
   {
     "slug": "headphone-listening-break-timer",
@@ -12945,7 +12945,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Calculators"
     ],
-    "description": "Climate, efficiency aur tariffs se running cost compare kare."
+    "description": "Compare heat pump and furnace running costs for your climate, efficiency and tariffs."
   },
   {
     "slug": "heat-stroke-response-checklist",
@@ -13072,7 +13072,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Scanned documents ko custom accessible palettes me convert kare."
+    "description": "Recolor scanned documents into high-contrast, accessible color palettes."
   },
   {
     "slug": "high-protein-macro-calculator",
@@ -13193,7 +13193,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Calculators"
     ],
-    "description": "Tariffs aur load profile se charging/discharging scenarios compare kare."
+    "description": "Compare home battery charge and discharge scenarios against your tariffs and load profile."
   },
   {
     "slug": "home-fire-safety-checklist",
@@ -13210,7 +13210,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Calculators"
     ],
-    "description": "Room dimensions aur insulation se improvement scenarios compare kare."
+    "description": "Compare insulation retrofit scenarios using your room dimensions and current insulation."
   },
   {
     "slug": "home-insurance-inventory",
@@ -13469,7 +13469,7 @@ export const TOOL_CATALOG = [
       "Health & Fitness",
       "Productivity"
     ],
-    "description": "Personal HRV baseline aur deviations track kare."
+    "description": "Track your personal HRV baseline and how far each morning deviates from it."
   },
   {
     "slug": "hsa-contribution-calculator",
@@ -13760,7 +13760,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Productivity"
     ],
-    "description": "Privacy request verify karte waqt minimum necessary identity proof plan kare."
+    "description": "Plan the minimum identity proof needed to verify a privacy request."
   },
   {
     "slug": "idiom-explorer",
@@ -13914,7 +13914,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Lifestyle"
     ],
-    "description": "IFSC format validate karke bank aur branch identifier decode kare."
+    "description": "Validate an IFSC code's format and decode its bank and branch identifiers."
   },
   {
     "slug": "illegal-entry-objection-letter",
@@ -14233,7 +14233,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Productivity"
     ],
-    "description": "Country code aur numbering-series sanity checks kare."
+    "description": "Run country code and numbering-series sanity checks on an Indian mobile number."
   },
   {
     "slug": "indian-number-format-converter",
@@ -14405,7 +14405,7 @@ export const TOOL_CATALOG = [
       "Marketing & Social",
       "Productivity"
     ],
-    "description": "Creator metrics se professional media-kit PDF banaye."
+    "description": "Build a professional media-kit PDF from your creator metrics and audience data."
   },
   {
     "slug": "ingredient-substitute-finder",
@@ -14576,7 +14576,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Lifestyle"
     ],
-    "description": "Coverage, exclusions, waiting periods aur limits compare kare."
+    "description": "Compare insurance policies on coverage, exclusions, waiting periods and limits."
   },
   {
     "slug": "insurance-policy-renewal-tracker",
@@ -14799,7 +14799,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Business"
     ],
-    "description": "Billable hours aur invoice line items ke mismatches dikhaye."
+    "description": "Surface mismatches between your billable hours and the invoice line items."
   },
   {
     "slug": "iot-privacy-guide-baby-monitor",
@@ -14979,7 +14979,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Check kare website globally down hai ya sirf user ke network par."
+    "description": "Check whether a website is down globally or only on your own network."
   },
   {
     "slug": "iso-8601-formatter",
@@ -14996,7 +14996,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "User location ke liye next visible ISS flyover calculate kare."
+    "description": "Calculate the next visible International Space Station flyover for your location."
   },
   {
     "slug": "istanbul-trip-budget-breakdown",
@@ -16164,7 +16164,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Camera rolling bands se approximate flicker pattern estimate kare."
+    "description": "Estimate an LED's PWM flicker pattern from the rolling bands your camera picks up."
   },
   {
     "slug": "led-vs-cfl-bulb-savings",
@@ -16489,7 +16489,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Webcam mouth zoom aur slow replay ke saath practice provide kare."
+    "description": "Practice lip reading with a zoomed webcam view of the mouth and slow replay."
   },
   {
     "slug": "lipid-profile-analyzer",
@@ -16555,7 +16555,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Browser/local speech engine se adjustable live captions dikhaye."
+    "description": "Show adjustable live captions using your browser's own speech engine."
   },
   {
     "slug": "living-room-ac-tonnage-calculator",
@@ -16654,7 +16654,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Security & Privacy"
     ],
-    "description": "Agreement se fees, penalties, reset clauses aur hidden charges extract kare."
+    "description": "Extract fees, penalties, reset clauses and hidden charges from a loan agreement."
   },
   {
     "slug": "loan-foreclosure-request-generator",
@@ -16756,7 +16756,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Loud audio events ko locally timestamped timeline me log kare."
+    "description": "Log loud sound events to a timestamped timeline kept on your own device."
   },
   {
     "slug": "localstorage-explorer",
@@ -16923,7 +16923,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Productivity"
     ],
-    "description": "Device loss ke immediate account-security steps prioritize kare."
+    "description": "Prioritize the account-security steps to take in the first hour after losing a phone."
   },
   {
     "slug": "loudness-true-peak-normalizer",
@@ -16932,7 +16932,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "LUFS, peak aur clipping analysis ke saath audio normalize kare."
+    "description": "Normalize audio loudness with LUFS, true-peak and clipping analysis."
   },
   {
     "slug": "love-calculator",
@@ -16965,7 +16965,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Zoom, invert, contrast aur grayscale modes provide kare."
+    "description": "Magnify what your camera sees with zoom, invert, contrast and grayscale modes."
   },
   {
     "slug": "lpg-cylinder-usage-estimator",
@@ -17875,7 +17875,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Lifestyle"
     ],
-    "description": "MICR city, bank aur branch fields explain kare."
+    "description": "Decode and explain the city, bank and branch fields in a cheque's MICR code."
   },
   {
     "slug": "microwave-running-cost-calculator",
@@ -18452,7 +18452,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Business"
     ],
-    "description": "Payout CSVs ko invoices, FX, fees aur withholding se match kare."
+    "description": "Match payout CSVs against invoices, allowing for FX, fees and withholding."
   },
   {
     "slug": "multi-touch-tester",
@@ -18461,7 +18461,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Simultaneous touch points aur digitizer response visualize kare."
+    "description": "Visualize the simultaneous touch points your screen registers and the digitizer's response."
   },
   {
     "slug": "multichannel-audio-mapper",
@@ -18470,7 +18470,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "Stereo/surround channels inspect, reorder aur individually preview kare."
+    "description": "Inspect, reorder and individually preview the channels in a stereo or surround file."
   },
   {
     "slug": "multiline-prompt-joiner",
@@ -19666,7 +19666,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Single-hand layouts aur typing exercises provide kare."
+    "description": "Practice single-handed keyboard layouts with typing exercises built for one hand."
   },
   {
     "slug": "one-rep-max-calculator",
@@ -20626,7 +20626,7 @@ export const TOOL_CATALOG = [
       "Health & Fitness",
       "Productivity"
     ],
-    "description": "Coping steps, trusted contacts aur user-selected actions organize kare."
+    "description": "Organize coping steps, trusted contacts and the actions you choose in advance."
   },
   {
     "slug": "personal-data-export-auditor",
@@ -20644,7 +20644,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Business"
     ],
-    "description": "Collection se storage, processor aur deletion tak data-flow diagram banaye."
+    "description": "Diagram how personal data flows from collection through storage and processors to deletion."
   },
   {
     "slug": "personal-incident-log",
@@ -20964,7 +20964,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Six-digit PIN se postal circle, state aur district lookup kare."
+    "description": "Look up the postal circle, state and district behind any six-digit Indian PIN code."
   },
   {
     "slug": "pinned-comment-generator",
@@ -21158,7 +21158,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "Hiss, hum aur room echo locally reduce kare."
+    "description": "Reduce hiss, hum and room echo in a podcast recording."
   },
   {
     "slug": "podcast-episode-cost-calculator",
@@ -21423,7 +21423,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Lifestyle"
     ],
-    "description": "NSC, KVP aur MIS maturity estimates compare kare."
+    "description": "Compare maturity estimates across post office NSC, KVP and MIS savings schemes."
   },
   {
     "slug": "post-office-time-deposit-calculator",
@@ -21522,7 +21522,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Dietary constraints aur course balance ke saath dishes assign kare."
+    "description": "Assign potluck dishes across guests, balancing courses and dietary constraints."
   },
   {
     "slug": "potting-mix-ratio-calculator",
@@ -21733,7 +21733,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Security & Privacy"
     ],
-    "description": "Product price aur offer claims ka timestamped evidence save kare."
+    "description": "Save timestamped evidence of a product's price and the offer claims made about it."
   },
   {
     "slug": "pricing-calculator",
@@ -21791,7 +21791,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Text & Writing"
     ],
-    "description": "Policy updates ke meaningful privacy changes highlight kare."
+    "description": "Highlight the privacy changes that actually matter between two policy versions."
   },
   {
     "slug": "privacy-settings-checklist-android",
@@ -22065,7 +22065,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Productivity"
     ],
-    "description": "Owned products ke official recall notices monitor kare."
+    "description": "Monitor official recall notices for the products you own."
   },
   {
     "slug": "professional-tax-andhra-pradesh",
@@ -22513,7 +22513,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Recent earthquakes ko distance aur magnitude se filter kare."
+    "description": "Filter recent earthquakes by distance from you and by magnitude."
   },
   {
     "slug": "quantization-size-calculator",
@@ -22829,7 +22829,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Instant-runoff rounds transparently calculate kare."
+    "description": "Tabulate ranked-choice voting with every instant-runoff round shown."
   },
   {
     "slug": "rashi-finder",
@@ -22871,7 +22871,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "RAW exposure, white balance aur JPEG export controls provide kare."
+    "description": "Develop RAW photos with exposure and white balance controls, then export to JPEG."
   },
   {
     "slug": "rd-maturity-calculator",
@@ -23276,7 +23276,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Selected GitHub projects ke new releases monitor kare."
+    "description": "Monitor new releases across the GitHub projects you choose to follow."
   },
   {
     "slug": "relieving-letter-request-generator",
@@ -23448,7 +23448,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Business"
     ],
-    "description": "Parts, labour, warranty aur exclusions across repair quotes compare kare."
+    "description": "Compare repair quotes on parts, labour, warranty and what each one excludes."
   },
   {
     "slug": "repair-request-letter-to-landlord",
@@ -23760,7 +23760,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Accelerometer aur GPS data se speed-normalized road jolts record kare."
+    "description": "Record speed-normalized road jolts from your device's accelerometer and GPS."
   },
   {
     "slug": "road-trip-fuel-cost-calculator",
@@ -23973,7 +23973,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "Clap/sweep response se room reverberation estimate kare."
+    "description": "Estimate a room's RT60 reverberation time from a clap or sweep response."
   },
   {
     "slug": "roommate-agreement-generator",
@@ -23990,7 +23990,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Personal-data processing activities ka structured register banaye."
+    "description": "Build a structured register of your personal-data processing activities."
   },
   {
     "slug": "rot13-encoder-decoder",
@@ -24119,7 +24119,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Business"
     ],
-    "description": "Fees, recoupment aur collaborator splits exact cents tak reconcile kare."
+    "description": "Reconcile fees, recoupment and collaborator splits down to the exact cent."
   },
   {
     "slug": "rti-application-electricity-board",
@@ -24356,7 +24356,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Productivity"
     ],
-    "description": "Totals, deductions aur month-to-month changes verify kare."
+    "description": "Verify the totals and deductions on a salary slip and flag month-to-month changes."
   },
   {
     "slug": "salary-slip-anonymizer",
@@ -24796,7 +24796,7 @@ export const TOOL_CATALOG = [
       "Business",
       "Productivity"
     ],
-    "description": "Original scope aur new request ka price/deadline delta banaye."
+    "description": "Turn a new request into a change order showing the price and deadline delta."
   },
   {
     "slug": "screen-reader-landmark-map",
@@ -24975,7 +24975,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Business"
     ],
-    "description": "Versioned checklist ke saath cheque-bounce notice draft structure kare."
+    "description": "Structure a Section 138 cheque-bounce notice draft against a versioned checklist."
   },
   {
     "slug": "section-234f-late-fee-calculator",
@@ -25185,7 +25185,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Lifestyle"
     ],
-    "description": "Phone permissions cleanup ka senior-friendly guide provide kare."
+    "description": "A senior-friendly walkthrough for reviewing and cleaning up phone app permissions."
   },
   {
     "slug": "senior-hydration-reminder-planner",
@@ -25283,7 +25283,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Official nearby weather warnings aggregate kare."
+    "description": "Aggregate official severe weather warnings issued near your location."
   },
   {
     "slug": "sexual-health-test-tracker",
@@ -25292,7 +25292,7 @@ export const TOOL_CATALOG = [
       "Health & Fitness",
       "Productivity"
     ],
-    "description": "Test dates, results aur reminders privately manage kare."
+    "description": "Keep test dates, results and retest reminders in one private place."
   },
   {
     "slug": "sgpa-to-cgpa-calculator",
@@ -25350,7 +25350,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Rooms, vehicles ya equipment ke booking conflicts resolve kare."
+    "description": "Resolve booking conflicts over shared rooms, vehicles or equipment."
   },
   {
     "slug": "sharpe-sortino-calculator",
@@ -25367,7 +25367,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Nights, weekends aur workload ka member-wise fairness score dikhaye."
+    "description": "Score how fairly nights, weekends and workload are split across team members."
   },
   {
     "slug": "shipping-and-delivery-policy-generator",
@@ -25432,7 +25432,7 @@ export const TOOL_CATALOG = [
       "Marketing & Social",
       "Productivity"
     ],
-    "description": "Clip timeline par hook, beat aur review timestamps mark kare."
+    "description": "Mark hook, beat and review timestamps along a short video's timeline."
   },
   {
     "slug": "shorts-vs-long-form-time-planner",
@@ -25899,7 +25899,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Pitch preserve karke speech slow, loop aur segment kare."
+    "description": "Slow, loop and segment speech for practice while preserving the original pitch."
   },
   {
     "slug": "slug-generator",
@@ -25940,7 +25940,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Calculators"
     ],
-    "description": "Energy CSV me peaks aur time-of-use opportunities dikhaye."
+    "description": "Find demand peaks and time-of-use savings in your smart meter CSV export."
   },
   {
     "slug": "smart-vertical-video-reframer",
@@ -25949,7 +25949,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "Landscape footage ko subject-aware 9:16 framing me convert kare."
+    "description": "Reframe landscape footage into 9:16 vertical video that follows the subject."
   },
   {
     "slug": "smartphone-resale-value-estimator",
@@ -25993,7 +25993,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Serpentine pick order aur live selections manage kare."
+    "description": "Run a snake draft with serpentine pick order and live selection tracking."
   },
   {
     "slug": "snake-game",
@@ -26036,7 +26036,7 @@ export const TOOL_CATALOG = [
       "Health & Fitness",
       "Productivity"
     ],
-    "description": "Sober days, urges, triggers aur coping wins privately track kare."
+    "description": "Privately track sober days, urges, triggers and the coping wins in between."
   },
   {
     "slug": "social-battery-tracker",
@@ -26197,7 +26197,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Calculators"
     ],
-    "description": "Generation aur usage CSV se best appliance timing dikhaye."
+    "description": "Find the best appliance timing from your solar generation and usage CSV exports."
   },
   {
     "slug": "solar-system-explorer",
@@ -26376,7 +26376,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Non-repeating round-robin meeting schedule banaye."
+    "description": "Build a non-repeating round-robin meeting schedule for a speed dating event."
   },
   {
     "slug": "speed-distance-time-calculator",
@@ -26500,7 +26500,7 @@ export const TOOL_CATALOG = [
       "Marketing & Social",
       "Productivity"
     ],
-    "description": "Disclosure contrast, size, duration aur placement test kare."
+    "description": "Test a sponsored disclosure's contrast, size, on-screen duration and placement."
   },
   {
     "slug": "sports-current-affairs-tracker",
@@ -27549,7 +27549,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Accelerometer readings ka vibration timeline banaye."
+    "description": "Build a vibration timeline for any surface from your device's accelerometer."
   },
   {
     "slug": "surname-change-after-marriage-checklist",
@@ -27615,7 +27615,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "Unnecessary markup, editor data aur metadata safely remove kare."
+    "description": "Safely strip unnecessary markup, editor data and metadata from an SVG file."
   },
   {
     "slug": "svg-path-editor",
@@ -27681,7 +27681,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Scores se pairings banaye aur rematches avoid kare."
+    "description": "Build Swiss tournament pairings from current scores while avoiding rematches."
   },
   {
     "slug": "switch-scanning-communicator",
@@ -27690,7 +27690,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Single-switch scanning se phrases select aur speak kare."
+    "description": "Select and speak phrases using single-switch scanning input."
   },
   {
     "slug": "swolf-score-calculator",
@@ -28043,7 +28043,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Lifestyle"
     ],
-    "description": "Selected section, threshold aur rate se TDS calculate kare."
+    "description": "Calculate TDS from the section you select, its threshold and the applicable rate."
   },
   {
     "slug": "tds-on-fd-interest-calculator",
@@ -29102,7 +29102,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Single/double elimination brackets aur byes generate kare."
+    "description": "Generate single or double elimination brackets, with byes placed automatically."
   },
   {
     "slug": "tournament-bracket-maker",
@@ -29259,7 +29259,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Productivity"
     ],
-    "description": "Delays, bookings, receipts aur claim evidence organize kare."
+    "description": "Organize delays, bookings, receipts and claim evidence into one travel pack."
   },
   {
     "slug": "travel-document-checklist",
@@ -30359,7 +30359,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Calculators"
     ],
-    "description": "Same usage profile ko multiple electricity plans par compare kare."
+    "description": "Compare the same electricity usage profile across multiple tariff plans."
   },
   {
     "slug": "utility-transfer-checklist",
@@ -30400,7 +30400,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Forecast se comparatively lower-UV outdoor windows dikhaye."
+    "description": "Find the comparatively lower-UV windows for going outdoors from the forecast."
   },
   {
     "slug": "vacuum-cleaner-selector",
@@ -30588,7 +30588,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Productivity"
     ],
-    "description": "RC, insurance, PUC aur licence expiry track kare."
+    "description": "Track RC, insurance, PUC and driving licence expiry dates in one place."
   },
   {
     "slug": "vehicle-downsizing-savings",
@@ -30629,7 +30629,7 @@ export const TOOL_CATALOG = [
       "Security & Privacy",
       "Business"
     ],
-    "description": "Vendors, purposes, data categories aur retention terms track kare."
+    "description": "Track vendors with their processing purposes, data categories and retention terms."
   },
   {
     "slug": "vercel-usage-cost-estimator",
@@ -30646,7 +30646,7 @@ export const TOOL_CATALOG = [
       "Marketing & Social",
       "Productivity"
     ],
-    "description": "Reels, Shorts aur TikTok obstruction areas overlay kare."
+    "description": "Overlay the UI safe zones for Reels, Shorts and TikTok on your vertical video."
   },
   {
     "slug": "vfs-global-appointment-day-checklist",
@@ -30760,7 +30760,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "Selected frames ko PNG sequence ya sprite sheet me export kare."
+    "description": "Export selected video frames as a PNG sequence or a single sprite sheet."
   },
   {
     "slug": "video-lecture-speed-planner",
@@ -31051,7 +31051,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "User-owned audio ko vocals, bass, drums aur instrumental stems me split kare."
+    "description": "Split audio you own into vocals, bass, drums and instrumental stems."
   },
   {
     "slug": "voice-steadiness-visualizer",
@@ -31060,7 +31060,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "Non-diagnostic pitch aur volume consistency feedback dikhaye."
+    "description": "See non-diagnostic feedback on how steady your pitch and volume stay."
   },
   {
     "slug": "voice-to-text",
@@ -31109,7 +31109,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "Speech readable rakhte hue speaker-identifying vocal cues neutralize kare."
+    "description": "Neutralize speaker-identifying vocal cues while keeping the speech intelligible."
   },
   {
     "slug": "volleyball-calorie-burn-calculator",
@@ -31166,7 +31166,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Productivity"
     ],
-    "description": "EPIC number pattern validate aur normalize kare."
+    "description": "Validate and normalize the EPIC number pattern on an Indian voter ID."
   },
   {
     "slug": "vtt-to-srt-converter",
@@ -31456,7 +31456,7 @@ export const TOOL_CATALOG = [
       "Health & Fitness",
       "Developer"
     ],
-    "description": "Oura, Whoop aur Fitbit exports ke sleep trends dikhaye."
+    "description": "See sleep trends from your Oura, Whoop or Fitbit CSV exports."
   },
   {
     "slug": "weather-checker",
@@ -32368,7 +32368,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "Archive entries selectively remove, reorder aur recompress kare."
+    "description": "Selectively remove, reorder and recompress entries inside a ZIP or TAR archive."
   },
   {
     "slug": "zodiac-compatibility-checker",

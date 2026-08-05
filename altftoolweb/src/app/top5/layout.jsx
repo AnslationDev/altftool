@@ -39,6 +39,11 @@ export default function Top5Layout({ children }) {
     <Top5MotionProvider>
       <div className={`top5-root bg-page text-foreground ${fraunces.variable}`}>
         <Top5Bar />
+        <div className="border-y border-warning/40 bg-warning-soft px-4 py-3 text-sm text-warning-text" role="note">
+          <p className="mx-auto max-w-7xl">
+            Preview data: rankings, scores, activity counts, reviewer bylines, update times, and process descriptions in Top5 are illustrative editorial demo content—not live measurements or proof of independent review.
+          </p>
+        </div>
         <main>{children}</main>
         <Footer />
       </div>

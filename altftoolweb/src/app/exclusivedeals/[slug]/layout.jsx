@@ -1,11 +1,5 @@
 import dealData from "../(data)/db.json";
-import JsonLd from "@/platform/seo/JsonLd";
-import {
-  createBreadcrumbJsonLd,
-  createCollectionPageJsonLd,
-  createItemListJsonLd,
-  createPageMetadata,
-} from "@/platform/seo/generateMetadata";
+import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 function findCategory(slug) {
   return (dealData.categories || []).find((category) => category.slug === slug);
@@ -24,7 +18,11 @@ export async function generateMetadata({ params }) {
 
   return createPageMetadata({
     title: `${category.categoryName} Deals, Coupons & Offers`,
-    description: `Browse ${category.categoryName} deals, verified coupons, sale picks, and brand offers curated by AltFTool.`,
+    // "verified coupons" was the claim here, and on /exclusivedeals/store. No
+    // job tests these codes and none of them carries a checked-on date, so the
+    // word asserted a process that does not exist. The description now says
+    // only what the page does: list the stores and open their current offers.
+    description: `Browse ${category.categoryName} stores on AltFTool and open any brand to see the coupon codes, promo codes and deals currently listed for it.`,
     path: `/exclusivedeals/${category.slug}`,
     image: category.image || category.img,
     keywords: [
@@ -36,43 +34,17 @@ export async function generateMetadata({ params }) {
   });
 }
 
-export default async function ExclusiveDealsCategoryLayout({ children, params }) {
-  const { slug } = await params;
-  const category = findCategory(slug);
-
-  if (!category) return children;
-
-  const path = `/exclusivedeals/${category.slug}`;
-  const brandItems = (category.brands || [])
-    .filter((brand) => brand?.id && brand?.brandName)
-    .map((brand) => ({
-      name: brand.brandName,
-      path: `${path}/${brand.id}`,
-    }));
-
-  return (
-    <>
-      <JsonLd
-        id={`exclusive-deals-category-schema-${category.slug}`}
-        data={[
-          createCollectionPageJsonLd({
-            path,
-            name: `${category.categoryName} Deals`,
-            description: `Browse ${category.categoryName} deals, coupons, and brand offers on AltFTool.`,
-          }),
-          createItemListJsonLd({
-            path,
-            name: `${category.categoryName} brand offers`,
-            items: brandItems,
-          }),
-          createBreadcrumbJsonLd([
-            { name: "Home", path: "/" },
-            { name: "Exclusive Deals", path: "/exclusivedeals" },
-            { name: category.categoryName, path },
-          ]),
-        ]}
-      />
-      {children}
-    </>
-  );
+/**
+ * Layout renders no schema on purpose.
+ *
+ * The CollectionPage/ItemList/BreadcrumbList block that used to live here ran
+ * on every descendant route too, so each /exclusivedeals/<category>/<brand>
+ * URL shipped TWO BreadcrumbList nodes — this one ending at the category and
+ * the brand layout's ending at the brand — plus a CollectionPage and ItemList
+ * describing the parent, all carrying the parent's @id. It now lives in
+ * page.jsx so it renders on the category URL only. Verified live before the
+ * move: /exclusivedeals/most-popular/boat served BreadcrumbList twice.
+ */
+export default async function ExclusiveDealsCategoryLayout({ children }) {
+  return children;
 }

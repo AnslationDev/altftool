@@ -19,9 +19,18 @@ export async function generateMetadata() {
   // Both figures are counted from the list data, and they are counted
   // separately: the description used to call all of them "ranked Top9 lists"
   // when only a few publish a ranking. The hub matches the hero copy.
+  //
+  // LENGTH: trimMetaDescription() hard-cuts at 160. The topic list used to read
+  // "entertainment, sports, business, tools, lifestyle, and trending topics",
+  // which put this string at 163 with the live counts (49/3) — so production
+  // shipped it cut at "…with their ranked picks published in." The closing
+  // "full." was gone and the sentence read as a fragment. Two list items are
+  // dropped to bring the whole sentence inside the cap; verified at 145 with
+  // the current counts, and the counts would have to reach four digits to push
+  // it past 160.
   return createPageMetadata({
     title: "Top9 Lists - Entertainment, Sports & Tools",
-    description: `${items.length} Top9 topic pages across entertainment, sports, business, tools, lifestyle, and trending topics on AltFTool, ${rankedCount} of them with their ranked picks published in full.`,
+    description: `${items.length} Top9 topic pages across entertainment, sports, business, tools and lifestyle on AltFTool, ${rankedCount} of them with their ranked picks published in full.`,
     path: "/top9",
   });
 }

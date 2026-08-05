@@ -93,13 +93,13 @@ export async function generateMetadata({ params }) {
   const blog = await getBlogDetailBySlug(slug);
 
   if (!blog) {
+    // This route can resolve its fallback before notFound() is rendered. Keep
+    // arbitrary slugs out of the index instead of publishing duplicate copy.
     return createPageMetadata({
-      title: "AltFTool Blog Article",
-      description: "Read practical AltFTool guides, tool tutorials, and digital productivity articles.",
+      title: "Blog article not found",
+      description: "This article is not available. Browse the AltFTool blog for tool guides and digital productivity articles.",
       path: `/blogs/${slug}`,
-      image: `/blogs/${slug}/opengraph-image`,
-      keywords: ["AltFTool blog", "tool guides", "digital productivity"],
-      type: "article",
+      noindex: true,
     });
   }
 

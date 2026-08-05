@@ -2,10 +2,10 @@
 
 import * as React from "react";
 import { toast } from "sonner";
-import { Copy, Download, Share2, ArrowUpRight, Eye, ThumbsUp, Ban } from "lucide-react";
+import { Copy, Download, Share2, ArrowUpRight, Ban } from "lucide-react";
 import { getModel } from "../../data/models";
 import { getCategory } from "../../data/categories";
-import { copyToClipboard, downloadJson, formatCompact, formatDate } from "../../lib/utils";
+import { copyToClipboard, downloadJson } from "../../lib/utils";
 import { useCopyPrompt } from "../../hooks/use-copy-prompt";
 import { useRedirectConfig } from "../../store/redirect-config";
 import { Dialog, DialogContent, DialogTitle } from "../ui/dialog";
@@ -13,7 +13,6 @@ import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
 import { PromptThumb } from "./prompt-thumb";
-import { ScoreRing } from "./score-ring";
 
 export function PromptDetailDialog({ prompt, open, onOpenChange }) {
   const copyPrompt = useCopyPrompt();
@@ -44,7 +43,6 @@ export function PromptDetailDialog({ prompt, open, onOpenChange }) {
             seed={prompt.seed}
             emoji={category?.emoji}
             gradient={category?.gradient}
-            count={prompt.images}
             rounded="rounded-none"
             className="h-44 w-full"
           />
@@ -57,19 +55,12 @@ export function PromptDetailDialog({ prompt, open, onOpenChange }) {
         </div>
 
         <div className="max-h-[68vh] overflow-y-auto app-scroll p-6 pt-4">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <DialogTitle className="text-2xl">{prompt.title}</DialogTitle>
-              <p className="mt-1.5 text-sm text-muted-foreground">{prompt.description}</p>
-            </div>
-            <ScoreRing score={prompt.score} size={68} label="Score" />
+          <div>
+            <DialogTitle className="text-2xl">{prompt.title}</DialogTitle>
+            <p className="mt-1.5 text-sm text-muted-foreground">{prompt.description}</p>
           </div>
 
           <div className="mt-4 flex flex-wrap items-center gap-4 text-xs text-muted-foreground">
-            <span className="inline-flex items-center gap-1"><Eye className="h-3.5 w-3.5" /> {formatCompact(prompt.views)} views</span>
-            <span className="inline-flex items-center gap-1"><ThumbsUp className="h-3.5 w-3.5" /> {formatCompact(prompt.likes)} likes</span>
-            <span className="inline-flex items-center gap-1"><Download className="h-3.5 w-3.5" /> {formatCompact(prompt.downloads)} downloads</span>
-            <span>{formatDate(prompt.createdAt)}</span>
             <Badge variant="secondary">{prompt.difficulty}</Badge>
           </div>
 
@@ -113,7 +104,7 @@ export function PromptDetailDialog({ prompt, open, onOpenChange }) {
             </Button>
             <Button variant="outline" onClick={() => downloadJson(prompt.slug, {
               title: prompt.title, prompt: prompt.prompt, negativePrompt: prompt.negativePrompt,
-              model: model.name, category: category?.name, score: prompt.score, tags: prompt.tags,
+              model: model.name, category: category?.name, tags: prompt.tags,
             })}>
               <Download className="h-4 w-4" /> JSON
             </Button>

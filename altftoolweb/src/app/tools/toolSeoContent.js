@@ -1,21 +1,28 @@
 import "server-only";
 
 import { cache } from "react";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import { brotliDecompressSync } from "node:zlib";
-import { toolContentOverrides } from "./toolContentOverrides";
-import { generatedToolSeoBrotliBase64 } from "./generated/toolSeoMap";
 import { toolNetworkDestinations } from "./generated/toolNetworkMap";
 import { getSeoConfigSnapshot } from "@/platform/seo/seoConfigSource";
 import { resolveContent } from "@altftool/core/seo/resolver";
 import { buildMetaDescription } from "./toolMetaDescription";
 
 let decodedGeneratedToolSeo = null;
+const generatedToolSeoPath = path.join(
+  process.cwd(),
+  "src",
+  "app",
+  "tools",
+  "generated",
+  "toolSeoMap.br",
+);
 
 function getGeneratedToolSeo(slug) {
   if (!decodedGeneratedToolSeo) {
-    const compressed = Buffer.from(generatedToolSeoBrotliBase64, "base64");
     decodedGeneratedToolSeo = JSON.parse(
-      brotliDecompressSync(compressed).toString("utf8"),
+      brotliDecompressSync(readFileSync(generatedToolSeoPath)).toString("utf8"),
     );
   }
 
@@ -279,14 +286,9 @@ export const buildToolSeoContent = cache(function buildToolSeoContent(slug, tool
       ? primaryCategory.toUpperCase()
       : primaryCategory.toLowerCase()
     : "online";
-  // Per-tool src/tools/<slug>/seo.js wins over the legacy shared map: newer
-  // tools ship their own file, older ones still live in toolContentOverrides.
-  const generatedOverride = getGeneratedToolSeo(slug);
-  const legacyOverride = toolContentOverrides[slug] || null;
-  const override =
-    generatedOverride || legacyOverride
-      ? { ...(legacyOverride || {}), ...(generatedOverride || {}) }
-      : null;
+  // The build generator folds the legacy shared map and per-tool seo.js files
+  // into one compressed payload with the same per-tool precedence as before.
+  const override = getGeneratedToolSeo(slug);
   // ALTF Engine: admin-managed per-page content override (highest precedence).
   // Empty/disabled => {} so behavior is identical to before.
   const central = resolveContent(getSeoConfigSnapshot(), `/tools/all/${slug}`);

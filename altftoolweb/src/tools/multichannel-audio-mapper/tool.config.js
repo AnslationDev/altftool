@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "Stereo/surround channels inspect, reorder aur individually preview kare.",
+  "description": "Inspect, reorder and individually preview the channels in a stereo or surround file.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

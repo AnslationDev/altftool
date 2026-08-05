@@ -1,10 +1,7 @@
-import { CREATORS } from "./creators";
 import { CATEGORIES } from "./categories";
 import { seededPick, seededRandom, slugify } from "../lib/utils";
 import { ART_STYLES, CAMERAS, LENSES, LIGHTING, MOODS, PALETTES, QUALITY_BOOSTERS } from "../lib/modifiers";
 
-/** Fixed reference date so generated dates are identical on server & client. */
-const BASE = Date.parse("2026-07-19T00:00:00Z");
 const ASPECTS = ["1:1", "3:4", "4:3", "16:9", "9:16", "3:2", "2:3"];
 const DIFFICULTIES = ["Beginner", "Intermediate", "Advanced", "Pro"];
 
@@ -35,10 +32,6 @@ const CONCEPTS = [
 function makeCard(concept, i) {
   const seed = slugify(concept.title) + i;
   const r = (k) => seededRandom(seed + k);
-  const author = CREATORS[Math.floor(r("a") * CREATORS.length)];
-  const days = Math.floor(r("d") * 45);
-  const date = new Date(BASE - days * 86400000).toISOString().slice(0, 10);
-  const score = 78 + Math.floor(r("s") * 21);
   return {
     id: `p-${i}`,
     title: concept.title,
@@ -49,17 +42,9 @@ function makeCard(concept, i) {
     tags: concept.tags,
     categorySlug: concept.category,
     modelId: concept.model,
-    score,
-    views: 800 + Math.floor(r("v") * 240000),
-    likes: 20 + Math.floor(r("l") * 9800),
-    downloads: 5 + Math.floor(r("dl") * 4200),
-    author,
-    createdAt: date,
     difficulty: DIFFICULTIES[Math.floor(r("df") * DIFFICULTIES.length)],
     aspectRatio: concept.aspect ?? seededPick(seed + "ar", ASPECTS),
-    featured: r("f") > 0.72,
     seed,
-    images: 1 + Math.floor(r("im") * 4),
   };
 }
 
@@ -97,13 +82,11 @@ const ALL_CONCEPTS = [...CONCEPTS, ...synthesize()];
 
 export const PROMPTS = ALL_CONCEPTS.map(makeCard);
 
-export const FEATURED_PROMPTS = PROMPTS.filter((p) => p.featured).slice(0, 8);
-
-export const TRENDING_PROMPTS = [...PROMPTS]
-  .sort((a, b) => b.views + b.likes * 10 - (a.views + a.likes * 10))
-  .slice(0, 12);
-
-export const TOP_PROMPTS = [...PROMPTS].sort((a, b) => b.score - a.score).slice(0, 12);
+// Compatibility aliases for existing routes. These are stable curated slices,
+// not popularity, engagement or quality rankings.
+export const FEATURED_PROMPTS = PROMPTS.slice(0, 8);
+export const TRENDING_PROMPTS = PROMPTS.slice(0, 12);
+export const TOP_PROMPTS = PROMPTS.slice(0, 12);
 
 export function getPromptsByCategory(slug) {
   return PROMPTS.filter((p) => p.categorySlug === slug);

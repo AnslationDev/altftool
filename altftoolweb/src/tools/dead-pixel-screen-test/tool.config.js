@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Full-screen patterns se dead ya stuck pixels locate kare.",
+  "description": "Locate dead or stuck pixels using full-screen solid color test patterns.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

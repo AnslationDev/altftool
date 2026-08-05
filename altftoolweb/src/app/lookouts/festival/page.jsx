@@ -16,7 +16,10 @@ import "../festival.css";
 
 const STATS = computeRealStats();
 
-const PAGE_DESCRIPTION = `Explore ${STATS.festivals}+ real festivals across ${STATS.countries}+ countries and ${STATS.religions} religions — live countdowns, traditions, foods, and history sourced from Nager.Date, REST Countries, and Wikipedia.`;
+// STATS values are exact dataset counts, so no "+". REST Countries is not
+// named here: fetchCountryInfo returns [] unless RESTCOUNTRIES_API_KEY is set,
+// and it is not configured in production, so nothing on the page comes from it.
+const PAGE_DESCRIPTION = `Explore ${STATS.festivals} real festivals across ${STATS.countries} countries and ${STATS.religions} religions — live countdowns, traditions, foods, and history sourced from Nager.Date and Wikipedia.`;
 
 export async function generateMetadata() {
   return createPageMetadata({

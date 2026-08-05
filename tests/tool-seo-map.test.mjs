@@ -1,10 +1,12 @@
 import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
 import { readFile, readdir, stat } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
+import { pathToFileURL } from "node:url";
 import { brotliDecompressSync } from "node:zlib";
 
-import { generatedToolSeoBrotliBase64 } from "../altftoolweb/src/app/tools/generated/toolSeoMap.js";
+import { toolContentOverrides } from "../altftoolweb/src/app/tools/toolContentOverrides.js";
 import {
   buildMetaDescription,
   TOOL_META_DESCRIPTION_BOUNDS,
@@ -14,7 +16,7 @@ const toolsDirectory = path.resolve("altftoolweb/src/tools");
 const generatedDirectory = path.resolve(
   "altftoolweb/src/app/tools/generated",
 );
-const generatedMapPath = path.join(generatedDirectory, "toolSeoMap.js");
+const generatedMapPath = path.join(generatedDirectory, "toolSeoMap.br");
 const toolSeoContentPath = path.resolve(
   "altftoolweb/src/app/tools/toolSeoContent.js",
 );
@@ -24,33 +26,53 @@ const toolMetaMapPath = path.resolve(
 
 function decodeGeneratedSeo() {
   return JSON.parse(
-    brotliDecompressSync(
-      Buffer.from(generatedToolSeoBrotliBase64, "base64"),
-    ).toString("utf8"),
+    brotliDecompressSync(readFileSync(generatedMapPath)).toString("utf8"),
   );
 }
 
-test("compressed tool SEO lookup covers every authored SEO module", async () => {
-  const toolEntries = await readdir(toolsDirectory, { withFileTypes: true });
-  const seoSlugs = (
-    await Promise.all(
-      toolEntries
-        .filter((entry) => entry.isDirectory() && !entry.name.startsWith("_"))
-        .map(async (entry) => {
-          try {
-            await stat(path.join(toolsDirectory, entry.name, "seo.js"));
-            return entry.name;
-          } catch {
-            return null;
-          }
-        }),
-    )
-  )
-    .filter(Boolean)
-    .sort();
+let authoredSeoPromise;
 
+async function loadAuthoredSeo() {
+  if (!authoredSeoPromise) {
+    authoredSeoPromise = (async () => {
+      const toolEntries = await readdir(toolsDirectory, { withFileTypes: true });
+      const seoEntries = await Promise.all(
+        toolEntries
+          .filter((entry) => entry.isDirectory() && !entry.name.startsWith("_"))
+          .map(async (entry) => {
+            const seoPath = path.join(toolsDirectory, entry.name, "seo.js");
+            try {
+              await stat(seoPath);
+            } catch {
+              return null;
+            }
+            const module = await import(pathToFileURL(seoPath).href);
+            return [entry.name, module.default ?? module.seo];
+          }),
+      );
+      return Object.fromEntries(seoEntries.filter(Boolean));
+    })();
+  }
+  return authoredSeoPromise;
+}
+
+test("compressed tool SEO lookup preserves legacy and per-tool content", async () => {
+  const authoredSeo = await loadAuthoredSeo();
   const generatedSeo = decodeGeneratedSeo();
-  assert.deepEqual(Object.keys(generatedSeo).sort(), seoSlugs);
+  const expectedSlugs = [
+    ...new Set([
+      ...Object.keys(toolContentOverrides),
+      ...Object.keys(authoredSeo),
+    ]),
+  ].sort();
+
+  assert.deepEqual(Object.keys(generatedSeo).sort(), expectedSlugs);
+  for (const slug of expectedSlugs) {
+    assert.deepEqual(generatedSeo[slug], {
+      ...(toolContentOverrides[slug] || {}),
+      ...(authoredSeo[slug] || {}),
+    });
+  }
   assert.equal(typeof generatedSeo["age-calculator"]?.intro, "string");
   assert.equal(
     typeof generatedSeo["audio-edit-boundary-visualizer"]?.intro,
@@ -61,12 +83,12 @@ test("compressed tool SEO lookup covers every authored SEO module", async () => 
 
 test("generated tool lookups stay limited to deployable server modules", async () => {
   const generatedFiles = await readdir(generatedDirectory);
-  assert.deepEqual(generatedFiles.sort(), ["toolNetworkMap.js", "toolSeoMap.js"]);
+  assert.deepEqual(generatedFiles.sort(), ["toolNetworkMap.js", "toolSeoMap.br"]);
 
   const generatedMapSize = (await stat(generatedMapPath)).size;
   assert.ok(
-    generatedMapSize < 6 * 1024 * 1024,
-    `generated SEO module is ${(generatedMapSize / (1024 * 1024)).toFixed(2)} MiB`,
+    generatedMapSize < 4 * 1024 * 1024,
+    `generated SEO payload is ${(generatedMapSize / (1024 * 1024)).toFixed(2)} MiB`,
   );
 });
 

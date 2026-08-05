@@ -15,7 +15,6 @@ import {
   Repeat,
   Target,
   ShoppingCart,
-  Wallet,
   MessageSquare,
   BookOpen,
   HelpCircle,
@@ -44,19 +43,19 @@ export default function AppSidebar({
       title: "MARKETPLACE",
       items: [
         { id: "landing", label: "Dashboard", icon: LayoutGrid },
-        { id: "marketplace", label: "Marketplace", icon: Store, badge: "1.4k+" },
+        { id: "marketplace", label: "Marketplace", icon: Store },
         { id: "publisher", label: "Websites", icon: Globe },
         { id: "categories", label: "Categories", icon: FolderTree },
         { id: "guest-posts", label: "Guest Posts", icon: FileEdit },
         { id: "link-insertions", label: "Link Insertions", icon: Link2 },
-        { id: "link-exchange", label: "Link Exchange", icon: Repeat, badge: "New" },
+        { id: "link-exchange", label: "Link Exchange", icon: Repeat },
       ],
     },
     {
       title: "CAMPAIGNS & ORDERS",
       items: [
         { id: "campaigns", label: "Campaigns", icon: Target },
-        { id: "orders", label: "Orders", icon: ShoppingCart, badge: "3" },
+        { id: "orders", label: "Orders", icon: ShoppingCart },
         { id: "buyer", label: "Buyer Portal", icon: UserCheck },
         { id: "analytics", label: "Analytics", icon: TrendingUp },
       ],
@@ -64,7 +63,6 @@ export default function AppSidebar({
     {
       title: "USER & ACCOUNT",
       items: [
-        { id: "wallet", label: "Wallet", icon: Wallet },
         { id: "messages", label: "Messages", icon: MessageSquare },
         { id: "settings", label: "Settings", icon: Settings },
       ],

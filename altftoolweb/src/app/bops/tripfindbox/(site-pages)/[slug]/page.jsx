@@ -1316,21 +1316,14 @@ export default async function SitemapRoutePage({ params }) {
             <p className="site-route-kicker">{page.section}</p>
             <h1>{page.title}</h1>
             <FlightSearchBox compact />
-            <div className="site-route-trust" aria-label="TripFindBox customer trust rating">
-              <p>Trusted by <strong>100,000+</strong> customers every year</p>
-              <div>
-                <span>Excellent</span>
-                <span className="site-route-stars" aria-label="3.9 out of 5 stars">
-                  <i>★</i>
-                  <i>★</i>
-                  <i>★</i>
-                  <i>★</i>
-                  <i className="is-muted">★</i>
-                </span>
-                <span>(3.9) 89 Reviews on</span>
-                <strong>★ Trustpilot</strong>
-              </div>
-            </div>
+            {/* Removed: "Trusted by 100,000+ customers every year" and a
+                four-star "(3.9) 89 Reviews on ★ Trustpilot" mark, hardcoded
+                here and therefore identical on all 109 indexable
+                /bops/tripfindbox/<slug> URLs. There is no Trustpilot profile
+                behind the score and no source for the customer count; naming
+                the review platform made it a false attribution rather than
+                loose marketing copy. The same strip was removed from the
+                TripFindBox home hero (components/HeroSection.jsx). */}
           </div>
         </section>
       ) : null}

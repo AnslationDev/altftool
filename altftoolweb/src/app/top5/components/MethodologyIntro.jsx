@@ -7,8 +7,8 @@ import { Reveal, PetalBurst } from "./motion";
 
 // The reference video's "What We Do" beat: a parens-bracketed eyebrow, a
 // two-tone statement headline, and a spinning flower mark beside the copy.
-// Mock copy only — describes the (fictional) Top5 methodology, nothing here
-// is fetched.
+// Preview copy only — describes the structure the finished editorial workflow
+// is intended to use. Nothing here claims that independent review has occurred.
 export default function MethodologyIntro() {
   return (
     <section className="w-full overflow-hidden bg-white py-14 sm:py-20 md:py-28">
@@ -22,10 +22,10 @@ export default function MethodologyIntro() {
         <Reveal delay={0.08}>
           <h2 className="mt-6 sm:mt-8 max-w-3xl text-3xl leading-[1.1] tracking-tight sm:text-4xl md:text-5xl lg:text-6xl">
             <span className="font-semibold text-[#0b1120]">
-              We rank with the same rigor,{" "}
+              A clear structure,{" "}
             </span>
             <span className="font-[family-name:var(--font-top5-display)] italic text-[#9ca3af]">
-              every single time.
+              visible every time.
             </span>
           </h2>
         </Reveal>
@@ -40,17 +40,16 @@ export default function MethodologyIntro() {
           <div className="grid gap-6 sm:gap-8 sm:grid-cols-2">
             <Reveal delay={0.2}>
               <p className="text-[#4b5563] leading-relaxed">
-                Every Top5 list is built from the same repeatable process —
-                candidate sourcing, weighted scoring, and independent
-                verification — so a ranking published today holds up the same
-                way next year.
+                This preview demonstrates a repeatable structure for candidate
+                sourcing, weighted scoring, and review notes. It does not
+                represent completed independent verification.
               </p>
             </Reveal>
             <Reveal delay={0.28}>
               <p className="text-[#4b5563] leading-relaxed">
-                No pay-to-rank placements and no sponsored positions. Every
-                entry earns its spot on the list, and every score is
-                published alongside the reasoning behind it.
+                Each demo entry keeps its authored score, strengths, tradeoffs,
+                and reasoning visible so sourced editorial records can replace
+                the preview data without changing the page structure.
               </p>
             </Reveal>
           </div>

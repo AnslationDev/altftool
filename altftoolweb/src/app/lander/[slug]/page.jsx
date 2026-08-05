@@ -42,7 +42,14 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const lander = await getLander(slug);
-  if (!lander) return { title: "Landing page not found" };
+  if (!lander) {
+    return createPageMetadata({
+      title: "Landing page not found",
+      description: "This landing page is not available.",
+      path: `/lander/${slug}`,
+      noindex: true,
+    });
+  }
 
   const seo = lander.seo || {};
   const path = `/lander/${lander.slug}`;

@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "Archive entries selectively remove, reorder aur recompress kare.",
+  "description": "Selectively remove, reorder and recompress entries inside a ZIP or TAR archive.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

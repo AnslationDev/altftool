@@ -19,7 +19,7 @@ export async function generateMetadata() {
   return createPageMetadata({
     title: "Open Data — Free JSON APIs With Attribution",
     description:
-      "Two read-only JSON endpoints anyone may use: Indian exam photo and signature upload specs with the notification each figure was read from, and the AltFTool format converter index. Free with attribution, no key, CORS open.",
+      "Two free read-only JSON endpoints: Indian exam photo and signature specs, plus the AltFTool format converter index. Attribution only, no key, CORS open.",
     path: "/open-data",
     keywords: [
       "open data api",

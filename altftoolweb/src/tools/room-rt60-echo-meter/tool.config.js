@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "Clap/sweep response se room reverberation estimate kare.",
+  "description": "Estimate a room's RT60 reverberation time from a clap or sweep response.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

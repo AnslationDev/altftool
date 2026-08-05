@@ -22,7 +22,13 @@ const ACCENTS = [
 // ─── Single Card ──────────────────────────────────────────────────────────────
 function DealCard({ item, index }) {
   const accent = ACCENTS[index % ACCENTS.length];
-  const cashback = item.cashback || item.highestDiscount || item.discount;
+  // Only item.cashback is cash back; the other two are discounts. Labelling a
+  // discount "Cash Back" — and appending a % to a flat rupee amount, so 500 read
+  // as 500% — published two things the feed never said.
+  const cashback = item.cashback;
+  const discount = item.highestDiscount || item.discount;
+  const headline = cashback || discount;
+  const headlineLabel = cashback ? "Cash Back" : "Discount";
   const hasUpTo = item.hasUpTo || false;
 
   return (
@@ -77,16 +83,15 @@ function DealCard({ item, index }) {
           {hasUpTo && (
             <p className="text-sm text-gray-500 font-medium mb-0.5">Up to</p>
           )}
-          {cashback ? (
+          {headline ? (
             <>
               <p
                 className="text-4xl font-extrabold leading-none"
                 style={{ color: accent.header }}
               >
-                {cashback}
-                {!String(cashback).includes("%") ? "%" : ""}
+                {headline}
               </p>
-              <p className="text-2xl text-gray-700 font-medium mt-2">Cash Back</p>
+              <p className="text-2xl text-gray-700 font-medium mt-2">{headlineLabel}</p>
             </>
           ) : (
             <p className="text-sm text-gray-500 font-medium">Special Offer</p>

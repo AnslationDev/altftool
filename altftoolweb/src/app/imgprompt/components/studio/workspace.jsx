@@ -300,9 +300,9 @@ function EmptyState({ onGenerate, model }) {
       <div className="grid h-14 w-14 place-items-center rounded-2xl bg-brand-gradient shadow-glow animate-pulse-glow">
         <Wand2 className="h-6 w-6 text-white" />
       </div>
-      <h3 className="mt-4 font-display text-lg font-semibold">Your prompt intelligence appears here</h3>
+      <h3 className="mt-4 font-display text-lg font-semibold">Your prompt draft appears here</h3>
       <p className="mt-1.5 max-w-xs text-sm text-muted-foreground">
-        Describe an idea and hit generate. You&apos;ll get a {model}-tuned prompt, a 0–100 score, and a full explanation of why it works.
+        Describe an idea and generate a {model}-oriented draft with an editable local structure checklist.
       </p>
       <Button className="mt-5" onClick={onGenerate}>
         <Sparkles className="h-4 w-4" /> Generate my first prompt <ArrowRight className="h-4 w-4" />

@@ -10,7 +10,13 @@ import WorkflowCard from "../components/WorkflowCard";
 import Markdown from "../components/Markdown";
 import { getWorkflowBySlug, getRelated, getAllWorkflows } from "../data/service";
 import { deriveNodeDetails } from "../data/nodeInfo";
-import { shortIntro, cleanDescription, metaTitle, stripEmojis } from "../data/text";
+import {
+  shortIntro,
+  cleanDescription,
+  metaTitle,
+  stripEmojis,
+  workflowMetaDescription,
+} from "../data/text";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
   absoluteUrl,
@@ -41,8 +47,12 @@ export async function generateMetadata({ params }) {
     });
   }
   return createPageMetadata({
-    title: `${metaTitle(wf.title, 44)} | n8n Workflow`,
-    description: shortIntro(wf.description, 200),
+    // 34, not 44. The rendered title is metaTitle(N) + " | n8n Workflow" (15)
+    // + the root layout's " | AltFTool" (11), so N=44 shipped 52 of the 59
+    // workflow pages at 61-68 characters. 34 keeps every one of them at or
+    // under 60 — measured across the whole imported set, max 58.
+    title: `${metaTitle(wf.title, 34)} | n8n Workflow`,
+    description: workflowMetaDescription(wf.description),
     path: `/n8n/${slug}`,
   });
 }

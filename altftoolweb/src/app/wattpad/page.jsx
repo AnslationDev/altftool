@@ -4,7 +4,6 @@ import TrendingSection from './components/TrendingSection'
 import data from "./data/bookData.json";
 import MustReadFanfiction from './components/MustReadFanfiction';
 import BookCategorySection from './components/BookCategorySection';
-import UserReview from './components/UserReview';
 import Faqs from './components/Faqs';
 import books from './data/books.json';
 import chapters from './data/chapters.json';
@@ -78,7 +77,6 @@ export default function WattpadPage() {
     <TrendingSection trendingData={data.trending}/>
 
     <MustReadFanfiction mustReadData={data.mustRead} />
-    <UserReview feedback={data.reviews} />
     <Faqs faq={data.faq} />
     </div>
   )

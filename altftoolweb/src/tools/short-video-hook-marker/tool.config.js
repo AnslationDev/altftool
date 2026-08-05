@@ -5,7 +5,7 @@ const toolConfig = {
     "Marketing & Social",
     "Productivity"
   ],
-  "description": "Clip timeline par hook, beat aur review timestamps mark kare.",
+  "description": "Mark hook, beat and review timestamps along a short video's timeline.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

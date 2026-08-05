@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Check kare website globally down hai ya sirf user ke network par.",
+  "description": "Check whether a website is down globally or only on your own network.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

@@ -49,7 +49,7 @@ let toolLoaderPromise;
 // visitor types a search or asks to page beyond the slice.
 const loadFullToolCatalog = () => {
   if (!fullCatalogPromise) {
-    fullCatalogPromise = import("@/platform/registry/toolMetaMap")
+    fullCatalogPromise = import("@/platform/registry/clientToolMetaMap")
       .then((module) => module.toolMetaMap)
       .catch((error) => {
         // Let a later interaction retry rather than poisoning the session,
@@ -647,9 +647,21 @@ export default function ToolsClient({
       : "Every AltFTool tool";
   const headingTotal =
     categoryname && categoryname !== "all" ? activeCategoryTotal : catalogTotal;
+  // Two things this count line used to get wrong, both visible in the rendered
+  // h1 rather than in source.
+  //
+  // /tools/other holds exactly one tool and the heading read "Other — 1 free
+  // online tools". And /tools/games — a search vertical whose own <title> and
+  // description sell it as "Free Online Games", and which /games 301s into —
+  // called its 62 entries "tools" in the one element a search engine reads as
+  // the page's subject. The noun follows the category; the number agrees with
+  // itself.
+  const headingNoun = categoryname === "games" ? "game" : "tool";
   const headingCountLabel = headingTotal
-    ? `— ${headingTotal.toLocaleString()} free online tools`
-    : "— free online tools";
+    ? `— ${headingTotal.toLocaleString()} free online ${headingNoun}${
+        headingTotal === 1 ? "" : "s"
+      }`
+    : `— free online ${headingNoun}s`;
 
   const isSearchMode = Boolean(search.trim());
   const searchResultSlugs = useMemo(() => filteredSlugs.filter((slug) => meta[slug]).slice(0, 12), [filteredSlugs, meta]);

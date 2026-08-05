@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "Image frames ko custom timing ke saath optimized animation me combine kare.",
+  "description": "Combine image frames into an optimized animated WebP or APNG with custom timing.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true
