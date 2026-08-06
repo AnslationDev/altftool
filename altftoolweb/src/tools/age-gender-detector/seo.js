@@ -62,11 +62,6 @@ const seo = {
       "Yes. It runs in any modern mobile or desktop browser, and you can either upload a photo or use your device's camera directly — detection works the same way either way.",
     ],
   ],
-  steps: [
-    "Click \"Upload Photo\" (or turn on your webcam) and choose a clear, front-facing image.",
-    "The AI detects every face in the photo and analyzes it entirely in your browser — nothing is uploaded.",
-    "Read the estimated age range and gender for each face, shown in seconds.",
-  ],
 };
 
 export default seo;
