@@ -1,10 +1,13 @@
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { readRenderedSitemapXml } from "./lib/rendered-sitemap.mjs";
 
 const workspaceRoot = path.resolve(import.meta.dirname, "..");
-const appOutput = path.join(workspaceRoot, "altftoolweb/.next/server/app");
+const webRoot = path.join(workspaceRoot, "altftoolweb");
+const appOutput = path.join(webRoot, ".next/server/app");
 const sitemapOutput = path.join(appOutput, "sitemap.xml.body");
-const buildIdPath = path.join(workspaceRoot, "altftoolweb/.next/BUILD_ID");
+const sitemapRouteOutput = path.join(appOutput, "sitemap.xml/route.js");
+const buildIdPath = path.join(webRoot, ".next/BUILD_ID");
 const excludedRoutes = new Set(["/_global-error", "/_not-found"]);
 const args = process.argv.slice(2);
 const strict = args.includes("--strict");
@@ -180,14 +183,11 @@ function percentile(values, percentileValue) {
 }
 
 async function readSitemapPaths() {
-  let xml;
-  try {
-    xml = await readFile(sitemapOutput, "utf8");
-  } catch {
-    throw new Error(
-      "Rendered sitemap output is missing. Run npm run build:web before generating route quality.",
-    );
-  }
+  const xml = await readRenderedSitemapXml({
+    staticOutputPath: sitemapOutput,
+    dynamicRoutePath: sitemapRouteOutput,
+    dynamicRouteWorkingDirectory: webRoot,
+  });
 
   const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/gi)].map((match) =>
     decodeHtml(match[1]),
