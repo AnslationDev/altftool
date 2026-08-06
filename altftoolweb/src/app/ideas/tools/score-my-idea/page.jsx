@@ -1,6 +1,7 @@
 import Link from "next/link";
 import JsonLd from "@/platform/seo/JsonLd";
 import {
+  absoluteUrl,
   createBreadcrumbJsonLd,
   createFaqJsonLd,
   createPageMetadata,
@@ -65,6 +66,7 @@ export default async function ScorerPage() {
             applicationCategory: "BusinessApplication",
             operatingSystem: "Any",
             description,
+            url: absoluteUrl("/ideas/tools/score-my-idea"),
             offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
           },
           createFaqJsonLd({ path: "/ideas/tools/score-my-idea", questions: FAQS }),

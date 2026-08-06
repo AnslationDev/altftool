@@ -39,7 +39,7 @@ export async function generateMetadata({ params }) {
 
   const { idea, published } = resolved;
   return createPageMetadata({
-    title: `${idea.title} — startup idea scored ${idea.aos}/100`,
+    title: `${idea.title} — startup idea #${idea.id}: ${idea.aos}/100`,
     description: `${idea.oneLiner} Scored ${idea.aos}/100 on demand, moat, monetisation, feasibility, timing and open field, with market size, competitors, risks and a first move.`,
     path: `/ideas/idea/${idea.slug}`,
     keywords: [idea.dna.vertical, idea.dna.job, "startup idea", idea.dna.model, idea.title],
@@ -140,7 +140,7 @@ export default async function IdeaDossierPage({ params }) {
         data={[
           createArticleJsonLd({
             path: `/ideas/idea/${idea.slug}`,
-            headline: `${idea.title} — startup idea scored ${idea.aos}/100`,
+            headline: `${idea.title} — startup idea #${idea.id}: ${idea.aos}/100`,
             description: idea.oneLiner,
             datePublished: "2026-03-14",
             dateModified: manifest.builtAt ?? "2026-07-29",
