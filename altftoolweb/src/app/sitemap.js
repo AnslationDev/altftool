@@ -486,34 +486,16 @@ async function getLiveSitemapCollections() {
   const [
     firebaseBlogs,
     extensions,
-    brandCategories,
-    brandSubcategories,
-    brands,
     landers,
   ] = await Promise.all([
     fetchFirebaseBlogsForSeo(),
     listPublicFirestoreDocs(`${FIREBASE_PROJECT_ROOT}/extensions`, 100),
-    listPublicFirestoreDocs(
-      `${FIREBASE_PROJECT_ROOT}/consumerrating/data/categories`,
-      100,
-    ),
-    listPublicFirestoreDocs(
-      `${FIREBASE_PROJECT_ROOT}/consumerrating/data/subcategories`,
-      100,
-    ),
-    listPublicFirestoreDocs(
-      `${FIREBASE_PROJECT_ROOT}/consumerrating/data/brands`,
-      100,
-    ),
     fetchAllPublishedLanderSlugs(),
   ]);
 
   return {
     firebaseBlogs,
     extensions,
-    brandCategories,
-    brandSubcategories,
-    brands,
     landers,
   };
 }
@@ -521,9 +503,6 @@ async function getLiveSitemapCollections() {
 const EMPTY_LIVE_COLLECTIONS = Object.freeze({
   firebaseBlogs: [],
   extensions: [],
-  brandCategories: [],
-  brandSubcategories: [],
-  brands: [],
   landers: [],
 });
 
@@ -594,6 +573,7 @@ async function buildSitemapEntries({
     // are intentionally noindexed. Apply the KYM family's indexing policy here
     // too so the catalogue loop cannot silently re-add its hub after the
     // dedicated, policy-gated KYM loop below excludes it.
+    if (experience.noindex) continue;
     if (experience.href === "/kym" && !isKymIndexable(experience.href)) continue;
     pushUnique(entries, seen, experience.href, {
       priority: experience.priority,
@@ -949,63 +929,6 @@ async function buildSitemapEntries({
         priority: 0.66,
         changeFrequency: "monthly",
       });
-    }
-  }
-
-  const brandCategoryById = new Map(
-    liveCollections.brandCategories
-      .filter((category) => category?.id && category?.name)
-      .map((category) => [category.id, category]),
-  );
-  const brandSubcategoryById = new Map(
-    liveCollections.brandSubcategories
-      .filter((subcategory) => subcategory?.id && subcategory?.name)
-      .map((subcategory) => [subcategory.id, subcategory]),
-  );
-
-  for (const subcategory of liveCollections.brandSubcategories) {
-    const category = brandCategoryById.get(subcategory.categoryId);
-    const categorySlug = normalizeSlug(category?.name);
-    const subcategorySlug = normalizeSlug(subcategory?.name);
-
-    if (categorySlug && subcategorySlug) {
-      pushUnique(
-        entries,
-        seen,
-        `/brandrating/${categorySlug}/${subcategorySlug}`,
-        {
-          lastModified:
-            subcategory.updatedAt || subcategory.createdAt
-              ? new Date(subcategory.updatedAt || subcategory.createdAt)
-              : undefined,
-          priority: 0.62,
-          changeFrequency: "weekly",
-        },
-      );
-    }
-  }
-
-  for (const brand of liveCollections.brands) {
-    const category = brandCategoryById.get(brand.categoryId);
-    const subcategory = brandSubcategoryById.get(brand.subCategoryId);
-    const categorySlug = normalizeSlug(category?.name);
-    const subcategorySlug = normalizeSlug(subcategory?.name);
-    const brandSlug = normalizeSlug(brand?.name);
-
-    if (categorySlug && subcategorySlug && brandSlug) {
-      pushUnique(
-        entries,
-        seen,
-        `/brandrating/${categorySlug}/${subcategorySlug}/${brandSlug}`,
-        {
-          lastModified:
-            brand.updatedAt || brand.createdAt
-              ? new Date(brand.updatedAt || brand.createdAt)
-              : undefined,
-          priority: 0.58,
-          changeFrequency: "weekly",
-        },
-      );
     }
   }
 

@@ -1,31 +1,18 @@
-import PageView from "./PageView";
 import JsonLd from "@/platform/seo/JsonLd";
+import VerificationPreview from "@/app/brandrating/(components)/VerificationPreview";
 import {
   createBreadcrumbJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
 import { resolveBrandDetailRoute } from "../../catalog";
 
-function formatBrandName(slug) {
-  return String(slug || "Brand")
-    .split("-")
-    .filter(Boolean)
-    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-    .join(" ");
-}
-
-// Path segments the UI hard-codes in its own links (/brandrating/categories/…).
-// They are not category names, so they never become a breadcrumb level.
-const LINK_SEGMENTS = new Set(["categories", "subcategories", "pdetail"]);
-
 /**
  * Both leading segments were decorative, so one brand had unlimited indexable
- * URLs: /brandrating/home-and-lifestyle/mattresses/nectar (the sitemap URL) and
+ * URLs: /brandrating/home-and-lifestyle/mattresses/nectar (the canonical URL) and
  * /brandrating/mattresses/pdetail/nectar (what the hub actually links) shipped
  * byte-identical titles, descriptions and bodies, each with its own
  * self-referencing canonical, and /brandrating/zzz/pdetail/nectar minted
- * another. catalog.js exists to resolve a brand to the single path the sitemap
- * advertises; nothing had imported it.
+ * another. catalog.js resolves a brand to one stable canonical path.
  *
  * Resolved URLs now all canonicalise onto that one path, and anything the
  * catalogue does not recognise is noindex. Nothing 404s — the legacy shapes are
@@ -39,50 +26,47 @@ async function resolve(params) {
     category,
     pdetail,
     status,
-    brandName: brand?.name || formatBrandName(pdetail),
+    brandName: brand?.name || "Brand",
+    subcategoryName: brand?.subcategoryName || "",
+    subcategoryPath: brand
+      ? `/brandrating/${brand.categorySlug}/${brand.subcategorySlug}`
+      : "",
     path: brand?.canonicalPath || `/brandrating/${slug}/${category}/${pdetail}`,
   };
 }
 
 export async function generateMetadata({ params }) {
-  const { status, brandName, path } = await resolve(params);
+  const { brandName, path } = await resolve(params);
 
   return createPageMetadata({
-    title: `${brandName} Review, Rating & Alternatives | AltFTool`,
-    description: `Review ${brandName} ratings, features, comparisons, alternatives, and FAQs on AltFTool before you choose.`,
+    title: `${brandName} Source Verification Preview | AltFTool`,
+    description: `Source verification preview for ${brandName} brand information on AltFTool.`,
     path,
-    // "unavailable" means the catalogue could not be read, so a real brand and
-    // a made-up one are indistinguishable here — noindex covers both.
-    noindex: status !== "ok",
+    // The route stays out of search until its source pipeline is complete.
+    noindex: true,
+    follow: true,
   });
 }
 
 export default async function Page(props) {
-  const { slug, category, pdetail, brandName, path } = await resolve(props.params);
+  const { pdetail, brandName, subcategoryName, subcategoryPath, path } = await resolve(props.params);
 
   return (
     <>
-      {/* Breadcrumb only. Everything this page shows about the brand — score,
-          features, comparison table — is fetched client-side from Firestore and
-          is editorial, and the review strip is the same static
-          (data)/reviews.json used by every brand route. Emitting Product,
-          Review or AggregateRating here would be markup we cannot substantiate.
-          The first path segment is skipped: /brandrating/[slug] has no page. */}
+      {/* Breadcrumb only. The compatibility screen intentionally exposes no
+          Product, Review, AggregateRating, offer, or recommendation data. */}
       <JsonLd
         id={`brandrating-${pdetail}-schema`}
         data={createBreadcrumbJsonLd([
           { name: "Home", path: "/" },
           { name: "Brand Rating", path: "/brandrating" },
-          LINK_SEGMENTS.has(String(category).toLowerCase())
-            ? null
-            : {
-                name: formatBrandName(category),
-                path: `/brandrating/${slug}/${category}`,
-              },
+          subcategoryName
+            ? { name: subcategoryName, path: subcategoryPath }
+            : null,
           { name: brandName, path },
         ])}
       />
-      <PageView {...props} />
+      <VerificationPreview entityName={brandName} entityType="brand" />
     </>
   );
 }

@@ -28,6 +28,17 @@ const eslintConfig = defineConfig([
       "@next/next/no-img-element": "off",
     },
   },
+  {
+    // Top3 is hard-404 quarantined while its mock rankings are replaced with
+    // sourced content. Keep structural linting active, but do not require an
+    // image/text migration for code that cannot be served. Remove this block
+    // together with the quarantine before reactivating the product family.
+    files: ["src/app/top3/**/*.{js,jsx,ts,tsx}"],
+    rules: {
+      "@next/next/no-img-element": "off",
+      "react/no-unescaped-entities": "off",
+    },
+  },
   // Override default ignores of eslint-config-next.
   globalIgnores([
     // Default ignores of eslint-config-next:

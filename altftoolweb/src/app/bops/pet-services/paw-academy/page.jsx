@@ -3,7 +3,7 @@
 import "./paw-academy.css";
 import {
   PawPrint, Phone, ArrowRight, Medal, Target, Megaphone, Trophy,
-  GraduationCap, Users, ShieldCheck, Dog, Bone, Star, BadgeCheck,
+  GraduationCap, Users, ShieldCheck, Dog, Bone, BadgeCheck,
 } from "lucide-react";
 
 const QUOTE_URL = "#demo-only";
@@ -17,28 +17,28 @@ const WALL_IMG =
 
 const PROGRAMS = [
   {
-    icon: Dog, title: "Puppy School", meta: "6-week group course",
-    text: "Socialisation, name response, crate comfort and bite inhibition for pups aged 8 weeks to 6 months.",
+    icon: Dog, title: "Puppy School", meta: "Example group-course card",
+    text: "Illustrative copy showing where a provider could describe puppy-training topics and age guidance.",
     img: "https://images.unsplash.com/photo-1531531534025-0b78da954d21?auto=format&fit=crop&w=900&q=80",
-    alt: "Young puppy sitting attentively during a training session",
+    alt: "Licensed stock photo of a young puppy sitting attentively",
   },
   {
-    icon: Megaphone, title: "Obedience Basics", meta: "Group or private",
-    text: "Sit, stay, recall and loose-lead walking drilled with positive reinforcement until they stick anywhere.",
+    icon: Megaphone, title: "Obedience Basics", meta: "Example format options",
+    text: "Illustrative copy showing where a provider could describe foundational training topics.",
     img: "https://images.unsplash.com/photo-1581753418434-51c11169a3c1?auto=format&fit=crop&w=900&q=80",
-    alt: "Dog practising obedience commands with a trainer outdoors",
+    alt: "Licensed stock photo of a dog and handler outdoors",
   },
   {
-    icon: Target, title: "Behaviour Correction", meta: "One-on-one plans",
-    text: "Structured plans for pulling, jumping, reactivity and separation stress — built around your dog.",
+    icon: Target, title: "Behaviour Support", meta: "Example individual-plan card",
+    text: "Illustrative copy showing where a qualified provider could explain assessment and support boundaries.",
     img: "https://images.unsplash.com/photo-1599397101162-7305f6cf8db1?auto=format&fit=crop&w=900&q=80",
-    alt: "Trainer working closely with a dog on focused behaviour exercises",
+    alt: "Licensed stock photo of a person working with a dog",
   },
   {
-    icon: Trophy, title: "Private Coaching", meta: "Flexible scheduling",
-    text: "Fast-track one-on-one sessions at your home or our field, tailored to your goals and schedule.",
+    icon: Trophy, title: "Private Coaching", meta: "Example scheduling card",
+    text: "Illustrative copy showing where a provider could describe individual sessions and locations.",
     img: "https://images.unsplash.com/photo-1596278852720-141ba859bbbf?auto=format&fit=crop&w=900&q=80",
-    alt: "Handler rewarding a well-behaved dog during a private lesson",
+    alt: "Licensed stock photo of a handler rewarding a dog",
   },
 ];
 
@@ -50,12 +50,12 @@ const LADDER = [
 ];
 
 const FEATURES = [
-  { icon: BadgeCheck, title: "Certified Trainers", text: "Every coach is accredited in force-free, reward-based methods and insured for group and in-home work." },
-  { icon: Medal, title: "Graded Curriculum", text: "Dogs move through four clear levels with a report card after every session — no vague promises." },
-  { icon: Target, title: "Behaviour Specialists", text: "Reactivity, anxiety and resource guarding handled with structured, humane protocols." },
-  { icon: Users, title: "Small Groups", text: "Maximum six dogs per class so every handler gets real coaching time, not a lecture." },
-  { icon: GraduationCap, title: "Owner Coaching", text: "We train you as much as the dog — every technique is demonstrated, practised and sent home in notes." },
-  { icon: ShieldCheck, title: "Guaranteed Progress", text: "If your dog hasn't progressed a level by course end, the next block of sessions is on us." },
+  { icon: BadgeCheck, title: "Credential Placeholder", text: "A real provider could publish verifiable qualifications and insurance details here." },
+  { icon: Medal, title: "Example Curriculum", text: "This card illustrates how levels and progress notes could be explained." },
+  { icon: Target, title: "Scope and Safety", text: "A qualified provider could state assessment methods, boundaries, and referral policies here." },
+  { icon: Users, title: "Example Group Format", text: "This card demonstrates where verified class-size information could appear." },
+  { icon: GraduationCap, title: "Example Owner Guidance", text: "Illustrative copy shows how practice instructions could be described." },
+  { icon: ShieldCheck, title: "Policy Placeholder", text: "A real provider could publish documented cancellation or progress-support terms here; no guarantee is offered." },
 ];
 
 function QuoteLink({ className, children }) {
@@ -86,7 +86,7 @@ export default function PawAcademyPage() {
             <ul className="pawacademy-nav-links">
               <li><a href="#pawacademy-programs">Programs</a></li>
               <li><a href="#pawacademy-ladder">Levels</a></li>
-              <li><a href="#pawacademy-why">Why Us</a></li>
+              <li><a href="#pawacademy-why">Design Principles</a></li>
             </ul>
           </nav>
           <div className="pawacademy-nav-cta">
@@ -95,7 +95,7 @@ export default function PawAcademyPage() {
               {TEL_TEXT}
             </a>
             <QuoteLink className="pawacademy-btn pawacademy-btn-lime">
-              Get a Free Quote
+              Preview Quote CTA
             </QuoteLink>
           </div>
         </div>
@@ -107,20 +107,19 @@ export default function PawAcademyPage() {
             <div>
               <p className="pawacademy-kicker">
                 <Megaphone size={14} aria-hidden="true" />
-                Certified Dog Training Academy
+                Fictional dog-training layout
               </p>
               <h1 className="pawacademy-hd pawacademy-hero-title">
                 Train Hard. <em>Wag Harder.</em>
               </h1>
               <p className="pawacademy-hero-sub">
-                From chaotic puppy to calm champion — PawAcademy's certified
-                coaches run structured, reward-based programs in small groups
-                or one-on-one. Puppy basics, obedience and behaviour fixes
-                that actually hold up in the real world.
+                A design demonstration showing how group, individual, puppy,
+                obedience, and behaviour-support information could be organized
+                for a verified provider.
               </p>
               <div className="pawacademy-hero-actions">
                 <QuoteLink className="pawacademy-btn pawacademy-btn-lime">
-                  Get a Free Quote
+                  Preview Quote CTA
                   <ArrowRight size={18} aria-hidden="true" />
                 </QuoteLink>
                 <a className="pawacademy-btn pawacademy-btn-ghost" href={TEL_HREF}>
@@ -129,20 +128,18 @@ export default function PawAcademyPage() {
                 </a>
               </div>
               <ul className="pawacademy-stats">
-                <li className="pawacademy-chip"><strong>98%</strong><span>Pass rate</span></li>
-                <li className="pawacademy-chip"><strong>500+</strong><span>Graduates</span></li>
-                <li className="pawacademy-chip"><strong>4</strong><span>Training levels</span></li>
+                <li className="pawacademy-chip"><strong>{LADDER.length}</strong><span>Illustrative training levels</span></li>
               </ul>
             </div>
             <div className="pawacademy-hero-media">
               <div className="pawacademy-frame">
                 <img
                   src={HERO_IMG}
-                  alt="Focused dog training with a handler on an outdoor field"
+                  alt="Licensed stock photo of a dog and handler on an outdoor field"
                 />
                 <span className="pawacademy-hero-badge">
                   <Medal size={16} aria-hidden="true" />
-                  Certified Coaches
+                  Credential placeholder
                 </span>
               </div>
             </div>
@@ -155,8 +152,8 @@ export default function PawAcademyPage() {
               <hr className="pawacademy-rule" />
               <h2 className="pawacademy-hd">Pick Your Program</h2>
               <p>
-                Four tracks, one goal: a dog you can take anywhere. Every
-                program starts with a free assessment call.
+                Four illustrative cards demonstrate how program information
+                could be presented. No assessment call or training is offered.
               </p>
             </div>
             <div className="pawacademy-cards">
@@ -185,8 +182,8 @@ export default function PawAcademyPage() {
               <hr className="pawacademy-rule" />
               <h2 className="pawacademy-hd">The PawAcademy Ladder</h2>
               <p>
-                Dogs climb four graded levels. Each one ends with an
-                assessment day — and a medal for the collar.
+                This fictional ladder demonstrates how progressive levels and
+                assessment information could be presented.
               </p>
             </div>
             <ol className="pawacademy-ladder">
@@ -211,10 +208,10 @@ export default function PawAcademyPage() {
           <div className="pawacademy-wrap">
             <div className="pawacademy-sec-head">
               <hr className="pawacademy-rule" />
-              <h2 className="pawacademy-hd">Why Handlers Choose Us</h2>
+              <h2 className="pawacademy-hd">Training design principles</h2>
               <p>
-                Sporty structure, science-based methods and zero shortcuts —
-                that's how 500+ dogs made the grade.
+                This fictional academy layout illustrates structured levels, reward-based practice,
+                and clearly explained program options.
               </p>
             </div>
             <ul className="pawacademy-features">
@@ -234,12 +231,12 @@ export default function PawAcademyPage() {
         <section className="pawacademy-band">
           <div className="pawacademy-wrap pawacademy-band-inner">
             <div>
-              <h2 className="pawacademy-hd">Ready For A Better-Behaved Dog?</h2>
-              <p>Tell us about your dog — quotes are free and zero pressure.</p>
+              <h2 className="pawacademy-hd">Preview a training-service CTA</h2>
+              <p>This disabled component does not request a quote or contact a trainer.</p>
             </div>
             <div className="pawacademy-band-actions">
               <QuoteLink className="pawacademy-btn pawacademy-btn-navy">
-                Get a Free Quote
+                Preview Quote CTA
                 <ArrowRight size={18} aria-hidden="true" />
               </QuoteLink>
               <a className="pawacademy-tel" href={TEL_HREF}>
@@ -255,37 +252,19 @@ export default function PawAcademyPage() {
             <div className="pawacademy-frame">
               <img
                 src={WALL_IMG}
-                alt="Happy graduate dog posing proudly after completing training"
+                alt="Licensed stock photo of a dog used in an illustrative program layout"
                 loading="lazy"
               />
             </div>
             <div>
               <div className="pawacademy-sec-head">
                 <hr className="pawacademy-rule" />
-                <h2 className="pawacademy-hd">Fresh Off The Grad Wall</h2>
+                <h2 className="pawacademy-hd">Illustrative program image</h2>
               </div>
-              <blockquote className="pawacademy-quote">
-                <span
-                  className="pawacademy-stars"
-                  role="img"
-                  aria-label="Rated 5 out of 5 stars"
-                >
-                  {[1, 2, 3, 4, 5].map((n) => <Star key={n} size={16} />)}
-                </span>
-                <p>
-                  "Biscuit went from dragging me down the street to a Level 3
-                  off-lead recall in ten weeks. The graded levels kept us both
-                  motivated."
-                </p>
-                <footer>— Priya M., Champion-level graduate</footer>
-              </blockquote>
-              <blockquote className="pawacademy-quote">
-                <p>
-                  "Small classes, real coaching, and homework that actually
-                  works. Our rescue finally relaxes around other dogs."
-                </p>
-                <footer>— Daniel K., Behaviour Correction</footer>
-              </blockquote>
+              <p>
+                The photo is licensed stock imagery used only to demonstrate the page composition;
+                it is not a real graduate, provider location, or customer result.
+              </p>
             </div>
           </div>
         </section>
@@ -293,16 +272,15 @@ export default function PawAcademyPage() {
         <section className="pawacademy-final">
           <div className="pawacademy-wrap">
             <h2 className="pawacademy-hd">
-              Enrol Today. <em>Graduate Proud.</em>
+              Preview an enrolment <em>call to action.</em>
             </h2>
             <p>
-              Spots in each cohort are capped at six dogs. Grab a free quote
-              or call the academy line and we'll match your dog to the right
-              level.
+              This fictional page has no cohorts, availability, trainer matching,
+              enrolment, or live academy line.
             </p>
             <div className="pawacademy-final-actions">
               <QuoteLink className="pawacademy-btn pawacademy-btn-lime">
-                Get a Free Quote
+                Preview Quote CTA
                 <ArrowRight size={18} aria-hidden="true" />
               </QuoteLink>
               <a className="pawacademy-btn pawacademy-btn-ghost" href={TEL_HREF}>
@@ -327,7 +305,7 @@ export default function PawAcademyPage() {
             {TEL_TEXT}
           </a>
           <p className="pawacademy-footer-note">
-            Independent service provider listing
+            Design demonstration, not a provider listing
           </p>
         </div>
       </footer>

@@ -21,48 +21,48 @@ const IMG = {
 
 const BENEFITS = [
   { icon: Armchair, title: "Stairlifts, straight or curved",
-    text: "Slim-profile seats that fold away neatly, with gentle starts and stops and simple, easy-to-reach controls." },
+    text: "Illustrative copy showing where a provider could describe product types and controls." },
   { icon: Layers, title: "Modular ramps",
-    text: "Sturdy, slip-resistant ramps for porches, thresholds and garden steps — sized to your doorway, not the other way round." },
+    text: "Illustrative copy showing where a provider could describe ramp options and assessment requirements." },
   { icon: Hand, title: "Grab rails & handrails",
-    text: "Solidly anchored rails exactly where a steady hand helps most: bathrooms, hallways, entrances and stairs." },
-  { icon: Clock, title: "Fitted in a day",
-    text: "Most straight-stair installations are measured, fitted and demonstrated within a single visit." },
-  { icon: ShieldCheck, title: "Safety-checked installs",
-    text: "Every fitting is load-tested and walked through with you before our fitters pack up a single tool." },
-  { icon: Sparkles, title: "Tidy, respectful fitters",
-    text: "Dust sheets down, shoes covered, furniture back where it was. Your home is treated like our own." },
+    text: "Illustrative copy showing where placement, materials, and installation scope could be explained." },
+  { icon: Clock, title: "Timeline placeholder",
+    text: "A verified provider could publish assessment, manufacture, and installation timing here." },
+  { icon: ShieldCheck, title: "Safety-policy placeholder",
+    text: "A real provider could document applicable standards, checks, and handover procedures here." },
+  { icon: Sparkles, title: "Home-care policy example",
+    text: "This card demonstrates where site-protection and cleanup policies could appear." },
 ];
 
 const SERVICES = [
-  { img: IMG.cardStairlift, alt: "A comfortable armchair-style seat beside a sunlit home staircase", title: "Stairlifts",
-    text: "Rail-mounted seats fitted to the stair treads — no wall damage — so both floors of home stay yours to enjoy." },
-  { img: IMG.cardRamp, alt: "A gently sloped accessible entryway leading to a home's front door", title: "Ramps",
-    text: "Permanent or portable ramps with grippy surfaces and guarded edges, matched to the entrance you use every day." },
-  { img: IMG.cardRails, alt: "A sturdy handrail fixed along a bright home hallway wall", title: "Grab rails",
-    text: "Discreet, well-made rails in finishes that suit your décor — support that doesn't shout about itself." },
+  { img: IMG.cardStairlift, alt: "Licensed stock photo illustrating a seat near a home staircase", title: "Stairlifts",
+    text: "Example copy showing where product configuration and property-assessment details could appear." },
+  { img: IMG.cardRamp, alt: "Licensed stock photo illustrating an accessible home entryway", title: "Ramps",
+    text: "Example copy showing where a provider could explain permanent and portable ramp options." },
+  { img: IMG.cardRails, alt: "Licensed stock photo illustrating a handrail in a home hallway", title: "Grab rails",
+    text: "Example copy showing where rail placement, finishes, and installation scope could appear." },
 ];
 
 const TIMELINE = [
-  { time: "9:00 AM", icon: ClipboardCheck, title: "Friendly walk-through",
-    text: "A local surveyor measures your stairs and listens to how you actually use your home." },
-  { time: "10:30 AM", icon: Wrench, title: "Careful installation",
-    text: "The rail and seat are fitted to your stair treads. Dust sheets stay down the whole time." },
-  { time: "2:00 PM", icon: CheckCircle2, title: "Test & demonstration",
-    text: "We run full safety checks, then show you every control until it feels like second nature." },
-  { time: "By evening", icon: Heart, title: "Home, as you like it",
-    text: "Kettle on, feet up — the whole house within easy reach again, the very same day." },
+  { time: "Step 1", icon: ClipboardCheck, title: "Example assessment",
+    text: "A verified provider could explain measurement and needs-assessment procedures here." },
+  { time: "Step 2", icon: Wrench, title: "Example installation",
+    text: "This card demonstrates where fitting scope and property-protection policies could appear." },
+  { time: "Step 3", icon: CheckCircle2, title: "Example handover",
+    text: "A provider could document applicable checks and user guidance here." },
+  { time: "Step 4", icon: Heart, title: "Example follow-up",
+    text: "This final step shows where support and maintenance information could be presented." },
 ];
 
 const FAQS = [
   { q: "Will a stairlift fit my staircase?",
-    a: "Almost certainly. Straight, curved, narrow and split-level staircases can all be fitted with the right rail. A free home visit confirms the exact fit before you decide anything." },
+    a: "This demo cannot assess a property. A qualified mobility-equipment provider must inspect the staircase and the user's needs before recommending any product." },
   { q: "How long does fitting take?",
-    a: "Most straight-stair fittings are completed in a single day. Curved rails are made to measure and usually fitted within a couple of weeks of your survey." },
+    a: "This demo does not promise a timeline. Assessment, product availability, customization, and installation timing vary by provider and property." },
   { q: "Will it damage my walls or carpets?",
-    a: "No. Stairlift rails mount to the stair treads rather than the wall, and our fitters protect carpets and banisters throughout the installation." },
+    a: "Installation methods and property impact depend on the selected equipment and staircase. Ask a qualified installer for a written property-protection plan." },
   { q: "What if my needs change later?",
-    a: "Equipment can be adjusted, added to or removed as life changes. Your consultation covers options for the future as well as today, with no obligation either way." },
+    a: "A qualified professional should reassess changing mobility needs. This page does not recommend equipment or arrange consultations." },
 ];
 
 function StepsMotif({ className = "" }) {
@@ -76,7 +76,7 @@ function StepsMotif({ className = "" }) {
 function QuoteButton({ className = "stairlift-btn stairlift-btn-primary" }) {
   return (
     <a className={className} href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">
-      Get a Free Consultation
+      Preview Consultation CTA
       <ArrowRight size={20} aria-hidden="true" />
     </a>
   );
@@ -104,9 +104,9 @@ export default function StairLiftSolutionsPage() {
           </a>
           <nav aria-label="Main">
             <ul className="stairlift-nav-links">
-              <li><a href="#benefits">Why us</a></li>
-              <li><a href="#services">What we fit</a></li>
-              <li><a href="#how">Fitted in a day</a></li>
+              <li><a href="#benefits">Example details</a></li>
+              <li><a href="#services">Product cards</a></li>
+              <li><a href="#how">Example workflow</a></li>
               <li><a href="#faq">Questions</a></li>
             </ul>
           </nav>
@@ -126,47 +126,45 @@ export default function StairLiftSolutionsPage() {
                 Stay in the home <em>you love</em> — every floor of it.
               </h1>
               <p className="stairlift-hero-sub">
-                Thoughtfully fitted stairlifts, ramps and grab rails that keep the whole
-                house comfortable and within reach. Measured, fitted and demonstrated —
-                often in a single day.
+                A design demonstration showing how a verified mobility-equipment provider
+                could organize product, assessment, installation, and support information.
               </p>
               <div className="stairlift-hero-actions">
                 <QuoteButton />
                 <PhoneLink className="stairlift-phone stairlift-phone-xl" iconSize={30} />
               </div>
               <ul className="stairlift-chips">
-                <li><CheckCircle2 size={20} aria-hidden="true" /> Free home assessment</li>
-                <li><CheckCircle2 size={20} aria-hidden="true" /> No-obligation quote</li>
-                <li><CheckCircle2 size={20} aria-hidden="true" /> Local, vetted fitters</li>
+                <li><CheckCircle2 size={20} aria-hidden="true" /> Example assessment section</li>
+                <li><CheckCircle2 size={20} aria-hidden="true" /> Disabled consultation control</li>
+                <li><CheckCircle2 size={20} aria-hidden="true" /> Credential placeholder</li>
               </ul>
             </div>
             <div className="stairlift-hero-media">
               <img
                 src={IMG.hero}
-                alt="A warm, sunlit staircase with a wooden banister in a welcoming family home"
+                alt="Licensed stock photo of a warm, sunlit home staircase"
               />
               <StepsMotif />
             </div>
           </div>
         </section>
 
-        <section className="stairlift-trustbar" aria-label="Why families choose us">
+        <section className="stairlift-trustbar" aria-label="Design demonstration overview">
           <div className="stairlift-shell stairlift-trustbar-grid">
-            <div><strong>12,000+</strong><span>homes fitted</span></div>
-            <div><strong>1 day</strong><span>typical straight-stair fit</span></div>
-            <div><strong>4.9 / 5</strong><span>average family rating</span></div>
-            <div><strong>Free</strong><span>home assessment &amp; quote</span></div>
+            <div><strong>Options</strong><span>straight and curved stair layouts</span></div>
+            <div><strong>Planning</strong><span>illustrative home-assessment flow</span></div>
+            <div><strong>Demo</strong><span>quotes and provider matching disabled</span></div>
           </div>
         </section>
 
         <section id="benefits" className="stairlift-section" aria-labelledby="stairlift-benefits-title">
           <div className="stairlift-shell">
             <div className="stairlift-section-head">
-              <p className="stairlift-kicker">Practical reassurance</p>
-              <h2 id="stairlift-benefits-title">Small changes, whole home back</h2>
+              <p className="stairlift-kicker">Example information cards</p>
+              <h2 id="stairlift-benefits-title">Preview a mobility-product overview</h2>
               <p>
-                No pressure and no jargon — just well-made equipment, fitted properly,
-                so familiar routines stay exactly that.
+                Illustrative content only; no product, fitting, credential, or suitability
+                claim is made by this fictional page.
               </p>
             </div>
             <div className="stairlift-benefits-grid">
@@ -186,8 +184,8 @@ export default function StairLiftSolutionsPage() {
         <section id="services" className="stairlift-section stairlift-section-alt" aria-labelledby="stairlift-services-title">
           <div className="stairlift-shell">
             <div className="stairlift-section-head">
-              <p className="stairlift-kicker">What we fit</p>
-              <h2 id="stairlift-services-title">Three ways to make home easier</h2>
+              <p className="stairlift-kicker">Example product categories</p>
+              <h2 id="stairlift-services-title">Three illustrative service cards</h2>
             </div>
             <div className="stairlift-services-grid">
               {SERVICES.map(({ img, alt, title, text }) => (
@@ -205,10 +203,10 @@ export default function StairLiftSolutionsPage() {
           </div>
         </section>
 
-        <section className="stairlift-midband" aria-label="Call for a free consultation">
+        <section className="stairlift-midband" aria-label="Preview consultation call to action">
           <div className="stairlift-shell">
-            <h2>Prefer to talk it through?</h2>
-            <p>Our friendly team answers seven days a week — real people, happy to take their time.</p>
+            <h2>Preview a consultation call to action</h2>
+            <p>No team, phone service, assessment, or provider matching is available from this demo.</p>
             <div className="stairlift-band-actions">
               <PhoneLink className="stairlift-phone stairlift-phone-xl" iconSize={32} />
               <QuoteButton className="stairlift-btn stairlift-btn-ghost" />
@@ -219,9 +217,9 @@ export default function StairLiftSolutionsPage() {
         <section id="how" className="stairlift-section" aria-labelledby="stairlift-how-title">
           <div className="stairlift-shell">
             <div className="stairlift-section-head">
-              <p className="stairlift-kicker">Fitted in a day</p>
-              <h2 id="stairlift-how-title">From first knock to feet up</h2>
-              <p>A typical straight-stair fitting, start to finish.</p>
+              <p className="stairlift-kicker">Example workflow</p>
+              <h2 id="stairlift-how-title">Preview an assessment-to-follow-up flow</h2>
+              <p>No installation timing or availability is promised.</p>
             </div>
             <ol className="stairlift-timeline">
               {TIMELINE.map(({ time, icon: Icon, title, text }) => (
@@ -244,21 +242,21 @@ export default function StairLiftSolutionsPage() {
               <p className="stairlift-kicker">Why it matters</p>
               <h2 id="stairlift-home-title">The garden you planted. The kitchen you know by heart.</h2>
               <p>
-                Home is more than an address — it's decades of memories in every room.
+                Home is more than an address — it&apos;s decades of memories in every room.
                 The right equipment simply keeps those rooms easy to reach, so moving
                 out never has to be the first option considered.
               </p>
               <ul className="stairlift-checklist">
                 <li><CheckCircle2 size={22} aria-hidden="true" /> Keep your own bedroom, bathroom and routines</li>
                 <li><CheckCircle2 size={22} aria-hidden="true" /> Welcome family upstairs and down, just as always</li>
-                <li><CheckCircle2 size={22} aria-hidden="true" /> A fraction of the upheaval — and cost — of moving house</li>
+                <li><CheckCircle2 size={22} aria-hidden="true" /> Compare suitability, disruption, and full costs with qualified professionals</li>
               </ul>
               <QuoteButton />
             </div>
             <div className="stairlift-split-media">
               <img
                 src={IMG.wide}
-                alt="A senior couple relaxing together at home in a bright, comfortable living room"
+                alt="Licensed stock photo of a couple relaxing in a bright living room"
                 loading="lazy"
               />
             </div>
@@ -298,10 +296,10 @@ export default function StairLiftSolutionsPage() {
         <section className="stairlift-band-dark" aria-label="Get started">
           <div className="stairlift-shell">
             <div className="stairlift-divider"><StepsMotif /></div>
-            <h2>Ready when you are — no rush, no pressure.</h2>
+            <h2>Preview the final consultation band</h2>
             <p>
-              Book a free consultation online, or call and chat with a real person
-              about what would suit your home.
+              This disabled component does not book an assessment, contact a provider,
+              or recommend mobility equipment.
             </p>
             <div className="stairlift-band-actions">
               <QuoteButton className="stairlift-btn stairlift-btn-cream" />
@@ -318,10 +316,10 @@ export default function StairLiftSolutionsPage() {
             <PhoneLink />
           </div>
           <div className="stairlift-footer-legal">
-            <strong>Independent provider listing. Not medical advice.</strong>
+            <strong>Design demonstration, not a provider listing or medical advice.</strong>
             <span>
-              StairLift Solutions connects homeowners with local mobility-equipment
-              fitters. Availability, products and timelines vary by area and home layout.
+              StairLift Solutions is fictional and does not connect homeowners with
+              fitters, collect enquiries, or offer products or consultations.
             </span>
             <span>© 2026 StairLift Solutions. All rights reserved.</span>
           </div>

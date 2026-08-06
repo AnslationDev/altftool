@@ -1,10 +1,11 @@
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export const metadata = createPageMetadata({
-  title: "AltF Pulse | Stories, Quizzes and Culture",
-  description: "Browse quick stories, playful quizzes, and culture picks in the AltF Pulse editorial feed.",
+  title: "AltF Pulse Editorial Preview",
+  description: "AltF Pulse is paused while its editorial sourcing and publishing workflow is rebuilt.",
   path: "/buzzfeed",
-  keywords: ["culture stories", "online quizzes", "internet culture", "AltF Pulse"],
+  noindex: true,
+  follow: true,
   pageType: "editorial",
 });
 

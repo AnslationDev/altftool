@@ -435,7 +435,7 @@ export const SITES = [
     vibes: ["funny", "chaotic"],
     timeToJoy: "coffee-break",
     blurb:
-      "Lists, quizzes and the sort of low-stakes internet reading that fills a break without requiring anything of you.",
+      "A paused editorial preview that explains the sourcing and publishing controls required before stories return.",
     bestOn: "both",
     sfw: true,
     needsSound: false,

@@ -25,6 +25,7 @@ const testRoots = [
   path.join(webRoot, "src/app/lookouts"),
   path.join(webRoot, "src/app/n8n/data"),
   path.join(webRoot, "src/app/news/lib"),
+  path.join(webRoot, "src/app/search"),
   path.join(webRoot, "src/app/top10/data"),
   path.join(webRoot, "src/app/tools"),
   path.join(webRoot, "src/app/tradeon/lib"),

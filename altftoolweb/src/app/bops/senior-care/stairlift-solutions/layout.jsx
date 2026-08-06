@@ -1,6 +1,6 @@
 export const metadata = {
   title: "StairLift Solutions — Stairlifts & Home Mobility",
-  description: "Stairlifts, ramps and grab rails fitted fast — stay safely in the home you love.",
+  description: "Design demonstration for a fictional mobility-equipment page; no fitter, assessment, consultation, product, timeline, or medical advice is offered.",
   robots: { index: false, follow: true, googleBot: { index: false, follow: true } },
   alternates: { canonical: "/bops/senior-care/stairlift-solutions" },
 };

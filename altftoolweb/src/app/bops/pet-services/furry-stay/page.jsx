@@ -10,7 +10,6 @@ import {
   ClipboardCheck,
   Moon,
   Check,
-  Star,
   Heart,
   ShieldCheck,
   Clock,
@@ -22,7 +21,7 @@ const QUOTE_URL = "#demo-only";
 const PHONE_DISPLAY = "Demo only";
 const PHONE_HREF = "#demo-only";
 
-function QuoteButton({ className = "furrystay-btn furrystay-btn-solid", label = "Get a Free Quote" }) {
+function QuoteButton({ className = "furrystay-btn furrystay-btn-solid", label = "Preview Quote CTA" }) {
   return (
     <a href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer" className={className}>
       {label} <ArrowRight size={18} aria-hidden="true" />
@@ -32,16 +31,16 @@ function QuoteButton({ className = "furrystay-btn furrystay-btn-solid", label = 
 
 const AMENITIES = {
   boarding: [
-    { icon: Moon, title: "Overnight staff, always awake", text: "A caregiver stays on-site all night, so someone is steps away at 3 a.m." },
-    { icon: Camera, title: "Live suite cameras", text: "Peek in on your pup anytime from the lodge's streaming cams." },
-    { icon: Heart, title: "Cage-free cabin suites", text: "Cozy bedded rooms with lodge warmth — never wire crates or concrete runs." },
-    { icon: ClipboardCheck, title: "Evening report card", text: "Meals, naps, play minutes and mood — texted to you before bedtime." },
+    { icon: Moon, title: "Example overnight-care detail", text: "A real provider could explain staffing coverage and supervision policies here." },
+    { icon: Camera, title: "Example camera feature", text: "This card demonstrates where verified camera access and privacy terms could appear." },
+    { icon: Heart, title: "Example suite description", text: "Illustrative copy shows how accommodation details could be organized." },
+    { icon: ClipboardCheck, title: "Example report card", text: "A provider could document what an update contains and how it is delivered." },
   ],
   daycare: [
-    { icon: Sun, title: "Half-acre play yards", text: "Small, temperament-matched groups romp on turf and shaded decks." },
-    { icon: ShieldCheck, title: "Certified play supervisors", text: "One trained handler for every eight dogs, pet-CPR certified." },
-    { icon: Clock, title: "Structured nap breaks", text: "Every zoomie session is balanced with quiet den time to recharge." },
-    { icon: Bone, title: "Enrichment stations", text: "Sniff walls, puzzle feeders and splash pools rotate through the day." },
+    { icon: Sun, title: "Example play-area detail", text: "Illustrative copy shows where a real facility could describe its spaces." },
+    { icon: ShieldCheck, title: "Credential placeholder", text: "A verified provider could publish current training, staffing, and safety credentials here." },
+    { icon: Clock, title: "Example daily schedule", text: "This item demonstrates how activity and rest periods could be explained." },
+    { icon: Bone, title: "Example enrichment detail", text: "A real provider could list verified activities and supervision policies here." },
   ],
 };
 
@@ -72,19 +71,19 @@ export default function FurryStayPage() {
           <div className="furrystay-hero-media">
             <img
               src="https://images.unsplash.com/photo-1597046835715-16f81ac132c0?auto=format&fit=crop&w=1600&q=80"
-              alt="Happy golden retriever relaxing in a warm, sunlit boarding lodge"
+              alt="Licensed stock photo of a golden retriever in a warm indoor setting"
             />
           </div>
           <div className="furrystay-wrap">
             <div className="furrystay-hero-inner">
               <div>
-                <p className="furrystay-hero-kicker"><PawPrint size={15} aria-hidden="true" /> Cage-free boarding &amp; daycare</p>
+                <p className="furrystay-hero-kicker"><PawPrint size={15} aria-hidden="true" /> Fictional boarding &amp; daycare layout</p>
                 <h1 id="furrystay-hero-title">
                   A cozy lodge stay for the <em>goodest</em> guests in town
                 </h1>
                 <p className="furrystay-hero-sub">
-                  Cabin-style suites, half-acre play yards, live cameras and a daily report card —
-                  so your best friend vacations while you do.
+                  A design demonstration showing how suites, play areas, cameras, and pet updates
+                  could be presented by a verified provider.
                 </p>
                 <div className="furrystay-hero-ctas">
                   <QuoteButton />
@@ -92,26 +91,26 @@ export default function FurryStayPage() {
                     <Phone size={18} aria-hidden="true" /> {PHONE_DISPLAY}
                   </a>
                 </div>
-                <p className="furrystay-hero-note">Free meet-and-sniff tours daily · Overnight staff on-site</p>
+                <p className="furrystay-hero-note">Preview content only · No tours, bookings, or live facility</p>
               </div>
               <div className="furrystay-report" aria-label="Sample daily report card">
                 <div className="furrystay-report-head">
                   <div>
                     <div className="furrystay-report-title">Biscuit&rsquo;s Report Card</div>
-                    <div className="furrystay-report-date">Golden Retriever · Today</div>
+                    <div className="furrystay-report-date">Sample pet · Example date</div>
                   </div>
-                  <span className="furrystay-live"><span className="furrystay-live-dot" aria-hidden="true" /> LIVE</span>
+                  <span className="furrystay-live"><span className="furrystay-live-dot" aria-hidden="true" /> SAMPLE</span>
                 </div>
                 <div className="furrystay-report-row">
-                  <span className="furrystay-report-check"><Check size={15} aria-hidden="true" /></span> Played 2h in the maple yard
+                  <span className="furrystay-report-check"><Check size={15} aria-hidden="true" /></span> Example activity update
                 </div>
                 <div className="furrystay-report-row">
-                  <span className="furrystay-report-check"><Check size={15} aria-hidden="true" /></span> Ate well — cleaned the bowl
+                  <span className="furrystay-report-check"><Check size={15} aria-hidden="true" /></span> Example meal update
                 </div>
                 <div className="furrystay-report-row">
-                  <span className="furrystay-report-check"><Check size={15} aria-hidden="true" /></span> Nap 90min by the fireplace
+                  <span className="furrystay-report-check"><Check size={15} aria-hidden="true" /></span> Example rest update
                 </div>
-                <p className="furrystay-report-foot">Sent to your phone every evening, tail-wag guaranteed.</p>
+                <p className="furrystay-report-foot">Illustrative report-card component; nothing is sent or stored.</p>
               </div>
             </div>
           </div>
@@ -121,10 +120,10 @@ export default function FurryStayPage() {
         <section className="furrystay-section" aria-label="FurryStay at a glance" style={{ paddingBottom: 0 }}>
           <div className="furrystay-wrap">
             <div className="furrystay-stats">
-              <div className="furrystay-stat"><div className="furrystay-stat-num">100%</div><div className="furrystay-stat-label">Cage-free suites</div></div>
-              <div className="furrystay-stat"><div className="furrystay-stat-num">24/7</div><div className="furrystay-stat-label">Overnight staff</div></div>
-              <div className="furrystay-stat"><div className="furrystay-stat-num">1:8</div><div className="furrystay-stat-label">Handler-to-dog ratio</div></div>
-              <div className="furrystay-stat"><div className="furrystay-stat-num">4.9★</div><div className="furrystay-stat-label">Average pet-parent rating</div></div>
+              <div className="furrystay-stat"><div className="furrystay-stat-num">Suites</div><div className="furrystay-stat-label">Illustrative accommodation copy</div></div>
+              <div className="furrystay-stat"><div className="furrystay-stat-num">Staffing</div><div className="furrystay-stat-label">Placeholder policy area</div></div>
+              <div className="furrystay-stat"><div className="furrystay-stat-num">Safety</div><div className="furrystay-stat-label">Placeholder credential area</div></div>
+              <div className="furrystay-stat"><div className="furrystay-stat-num">Demo</div><div className="furrystay-stat-label">Fictional brand page</div></div>
             </div>
           </div>
         </section>
@@ -132,50 +131,50 @@ export default function FurryStayPage() {
         {/* Services */}
         <section className="furrystay-section" aria-labelledby="furrystay-services-title">
           <div className="furrystay-wrap">
-            <p className="furrystay-eyebrow"><Bone size={15} aria-hidden="true" /> What we do</p>
-            <h2 className="furrystay-h2" id="furrystay-services-title">Boarding, daycare and everything in between</h2>
+            <p className="furrystay-eyebrow"><Bone size={15} aria-hidden="true" /> Example service cards</p>
+            <h2 className="furrystay-h2" id="furrystay-services-title">Illustrative boarding and daycare layout</h2>
             <p className="furrystay-lede">
-              Whether it&rsquo;s one wiggly afternoon or a two-week getaway, every guest gets lodge-level comfort and a full itinerary of fun.
+              These cards demonstrate page structure; they do not describe bookable stays or an operating facility.
             </p>
             <div className="furrystay-grid-3">
               <article className="furrystay-card">
                 <div className="furrystay-card-media">
                   <img
                     src="https://images.unsplash.com/photo-1558929996-da64ba858215?auto=format&fit=crop&w=900&q=80"
-                    alt="Dogs playing together in an open grass play yard"
+                    alt="Licensed stock photo of dogs playing in an open grass area"
                     loading="lazy"
                   />
                 </div>
                 <div className="furrystay-card-body">
                   <h3><Sun size={19} aria-hidden="true" /> Play-all-day daycare</h3>
-                  <p>Temperament-matched playgroups, splash pools and enrichment stations, with structured naps so pups come home happy — not frazzled.</p>
+                  <p>Example copy showing where a provider could describe supervised play, rest, and enrichment.</p>
                 </div>
               </article>
               <article className="furrystay-card">
                 <div className="furrystay-card-media">
                   <img
                     src="https://images.unsplash.com/photo-1689202067146-7854a4d4ba41?auto=format&fit=crop&w=900&q=80"
-                    alt="Contented dog snuggled into soft bedding in a cabin suite"
+                    alt="Licensed stock photo of a dog resting on soft bedding"
                     loading="lazy"
                   />
-                  <span className="furrystay-card-badge furrystay-live"><span className="furrystay-live-dot" aria-hidden="true" /> LIVE</span>
+                  <span className="furrystay-card-badge furrystay-live"><span className="furrystay-live-dot" aria-hidden="true" /> SAMPLE</span>
                 </div>
                 <div className="furrystay-card-body">
                   <h3><Moon size={19} aria-hidden="true" /> Cage-free boarding</h3>
-                  <p>Cabin suites with real beds, bedtime biscuits and an awake overnight caregiver. Watch your pup snooze on our live suite cameras.</p>
+                  <p>Example copy showing where accommodation, supervision, and optional camera policies could appear.</p>
                 </div>
               </article>
               <article className="furrystay-card">
                 <div className="furrystay-card-media">
                   <img
                     src="https://images.unsplash.com/photo-1518882174711-1de40238921b?auto=format&fit=crop&w=900&q=80"
-                    alt="Caregiver gently brushing a relaxed dog during a spa session"
+                    alt="Licensed stock photo of a relaxed dog being brushed"
                     loading="lazy"
                   />
                 </div>
                 <div className="furrystay-card-body">
                   <h3><Heart size={19} aria-hidden="true" /> Cuddle &amp; care add-ons</h3>
-                  <p>Fireside cuddle sessions, brush-outs, sniffari walks and medication care — tailored to seniors, shy pups and puppies alike.</p>
+                  <p>Example copy showing where a verified provider could describe optional care services.</p>
                 </div>
               </article>
             </div>
@@ -187,9 +186,9 @@ export default function FurryStayPage() {
           <div className="furrystay-wrap">
             <div className="furrystay-split">
               <div>
-                <p className="furrystay-eyebrow"><Camera size={15} aria-hidden="true" /> Inside the lodge</p>
-                <h2 className="furrystay-h2" id="furrystay-lodge-title">Watch the wag from anywhere</h2>
-                <p className="furrystay-lede">Pick a stay style to see what&rsquo;s included — every option comes with live cameras and a nightly report card.</p>
+                <p className="furrystay-eyebrow"><Camera size={15} aria-hidden="true" /> Example amenity selector</p>
+                <h2 className="furrystay-h2" id="furrystay-lodge-title">Preview two service-detail states</h2>
+                <p className="furrystay-lede">Switch between illustrative boarding and daycare content; no live service is offered.</p>
                 <div className="furrystay-hero-ctas" role="group" aria-label="Choose a stay style" style={{ marginBottom: 28 }}>
                   <button
                     type="button"
@@ -221,43 +220,9 @@ export default function FurryStayPage() {
               <div className="furrystay-photo-frame">
                 <img
                   src="https://images.unsplash.com/photo-1717616729494-10c4c47c1e23?auto=format&fit=crop&w=900&q=80"
-                  alt="Dog looking toward the camera inside a warm, wood-toned lodge suite"
+                  alt="Licensed stock photo of a dog in a warm indoor setting"
                   loading="lazy"
                 />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Testimonials + photo */}
-        <section className="furrystay-section" aria-labelledby="furrystay-tails-title">
-          <div className="furrystay-wrap">
-            <p className="furrystay-eyebrow"><Star size={15} aria-hidden="true" /> Happy tails</p>
-            <h2 className="furrystay-h2" id="furrystay-tails-title">Pet parents rest easy too</h2>
-            <p className="furrystay-lede">Real notes from the humans who check the live cams a little too often.</p>
-            <div className="furrystay-grid-3">
-              <blockquote className="furrystay-quote">
-                <div className="furrystay-quote-stars" aria-label="5 out of 5 stars">
-                  <Star size={16} fill="currentColor" /><Star size={16} fill="currentColor" /><Star size={16} fill="currentColor" /><Star size={16} fill="currentColor" /><Star size={16} fill="currentColor" />
-                </div>
-                <p>&ldquo;The nightly report card is my favorite text of the day. Biscuit comes home tired, happy and smelling like cedar.&rdquo;</p>
-                <footer>— Priya M., boards monthly</footer>
-              </blockquote>
-              <blockquote className="furrystay-quote">
-                <div className="furrystay-quote-stars" aria-label="5 out of 5 stars">
-                  <Star size={16} fill="currentColor" /><Star size={16} fill="currentColor" /><Star size={16} fill="currentColor" /><Star size={16} fill="currentColor" /><Star size={16} fill="currentColor" />
-                </div>
-                <p>&ldquo;Our anxious rescue actually pulls toward the door at drop-off now. The small playgroups made all the difference.&rdquo;</p>
-                <footer>— Daniel R., daycare regular</footer>
-              </blockquote>
-              <div className="furrystay-card">
-                <div className="furrystay-card-media" style={{ aspectRatio: "4 / 5" }}>
-                  <img
-                    src="https://images.unsplash.com/photo-1645910155173-888eef2f2ade?auto=format&fit=crop&w=900&q=80"
-                    alt="Joyful dog mid-play outdoors at the FurryStay play yard"
-                    loading="lazy"
-                  />
-                </div>
               </div>
             </div>
           </div>
@@ -268,13 +233,13 @@ export default function FurryStayPage() {
           <div className="furrystay-wrap">
             <div className="furrystay-cta-band furrystay-wood">
               <div>
-                <h2 id="furrystay-cta-title">Ready for their best sleepover yet?</h2>
-                <p>Get a personalized stay quote in minutes — no account, no obligation, lots of tail wags.</p>
+                <h2 id="furrystay-cta-title">Preview a pet-service call to action</h2>
+                <p>This disabled component does not request a quote, create an account, or contact a provider.</p>
               </div>
               <div className="furrystay-cta-actions">
                 <QuoteButton />
                 <a href={PHONE_HREF} className="furrystay-btn furrystay-btn-ghost">
-                  <Phone size={18} aria-hidden="true" /> Call {PHONE_DISPLAY}
+                  <Phone size={18} aria-hidden="true" /> Demo Call · {PHONE_DISPLAY}
                 </a>
               </div>
             </div>
@@ -292,11 +257,11 @@ export default function FurryStayPage() {
             </a>
             <div className="furrystay-footer-links">
               <a href={PHONE_HREF}><Phone size={14} aria-hidden="true" style={{ display: "inline", verticalAlign: "-2px", marginRight: 6 }} />{PHONE_DISPLAY}</a>
-              <a href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">Get a Free Quote</a>
+              <a href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">Preview Quote CTA</a>
             </div>
           </div>
           <p className="furrystay-fineprint">
-            FurryStay is a fictional brand shown for illustration. Independent service provider listing.
+            FurryStay is a fictional brand shown for illustration, not a provider listing.
             © {new Date().getFullYear()} FurryStay Lodge. All tails reserved.
           </p>
         </div>

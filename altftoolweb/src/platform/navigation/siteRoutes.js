@@ -53,6 +53,8 @@ import {
   Sparkles,
   Tags,
   TextCursorInput,
+  Trophy,
+  Users,
   Video,
   Waves,
   Workflow,
@@ -119,12 +121,14 @@ const EXPERIENCE_ICONS = {
   LayoutGrid,
   Library,
   Music4,
+  PawPrint,
   PenTool,
   Plane,
   Puzzle,
   Radio,
   ScrollText,
   Sparkles,
+  Users,
   Waves,
 };
 
@@ -452,10 +456,23 @@ export const SITE_ROUTES = {
   // Every entry here must have a page.jsx under src/app — a nav link to a
   // missing route resolves to the global not-found document served with a
   // 200, which is the soft 404 these routes exist to stop producing.
-  top1: { label: "Top1", href: "/top1" },
-  top6: { label: "Top6", href: "/top6" },
-  top9: { label: "Top9", href: "/top9" },
-  top10: { label: "Top10", href: "/top10" },
+  // Labels below match each page's own title exactly (including which ones
+  // do and don't space "TopN"), pulled from each route's own metadata -
+  // not generic placeholders. top1/top6/top10 cover the same category set
+  // (books, music, food, dogs, cats, AI tools, anime, Pokemon, etc.) at
+  // one/six/ten picks per category respectively; top5 and top9 are
+  // unrelated products (world rankings by category+country; topic pages
+  // across entertainment/sports/business/tools/lifestyle).
+  top1: { label: "Top 1 Picks", href: "/top1" },
+  top5: { label: "Top 5 Rankings", href: "/top5" },
+  top6: { label: "Top 6 Lists", href: "/top6" },
+  top9: { label: "Top9 Lists", href: "/top9" },
+  top10: { label: "Top 10 Lists", href: "/top10" },
+  top49: { label: "Top 49 Lists", href: "/top49" },
+  // top8 and top11 are deliberately excluded: both are in
+  // QUARANTINED_ROUTE_PREFIXES (src/proxy.js) and return a hard 404 for
+  // everyone until their unsourced rankings are replaced. Do not add them
+  // back here or link them from nav until that quarantine is lifted.
   about: { label: "About AltFTool", href: "/policypages/about" },
   contact: { label: "Contact", href: "/policypages/contact" },
   privacy: { label: "Privacy", href: "/policypages/privacy" },
@@ -600,10 +617,22 @@ export const PUBLIC_NAV_ITEMS = [
       { ...SITE_ROUTES.buySmart, group: "Find deals", icon: ShoppingBag },
       { ...SITE_ROUTES.saleLocator, group: "Find deals", icon: MapPin },
       { ...SITE_ROUTES.brandRatings, group: "Research", icon: ShieldCheck },
-      { ...SITE_ROUTES.top1, group: "Research", icon: LayoutGrid },
-      { ...SITE_ROUTES.top6, group: "Research", icon: LayoutGrid },
-      { ...SITE_ROUTES.top9, group: "Research", icon: LayoutGrid },
-      { ...SITE_ROUTES.top10, group: "Research", icon: LayoutGrid },
+    ],
+  },
+  {
+    label: "Top Picks",
+    href: "/top1",
+    icon: Trophy,
+    menuColumns: 2,
+    // Top3, Top8 and Top11 are excluded while their unsourced rankings remain
+    // quarantined by src/proxy.js (hard 404 for everyone).
+    options: [
+      { ...SITE_ROUTES.top1, group: "Rankings", icon: Trophy },
+      { ...SITE_ROUTES.top5, group: "Rankings", icon: Trophy },
+      { ...SITE_ROUTES.top6, group: "Rankings", icon: Trophy },
+      { ...SITE_ROUTES.top9, group: "Rankings", icon: Trophy },
+      { ...SITE_ROUTES.top10, group: "Rankings", icon: Trophy },
+      { ...SITE_ROUTES.top49, group: "Rankings", icon: Trophy },
     ],
   },
   {
@@ -849,9 +878,11 @@ export const FOOTER_ROUTE_GROUPS = [
       SITE_ROUTES.buySmart,
       SITE_ROUTES.brandRatings,
       SITE_ROUTES.top1,
+      SITE_ROUTES.top5,
       SITE_ROUTES.top6,
       SITE_ROUTES.top9,
       SITE_ROUTES.top10,
+      SITE_ROUTES.top49,
     ],
   },
   {
@@ -921,7 +952,7 @@ export const POPULAR_TOOL_LINKS = [
   { label: "Compliment Generator", href: "/tools/all/compliment-generator" },
 ];
 
-const HIDDEN_PUBLIC_SHELL_PREFIXES = ["/search-eng"];
+const HIDDEN_PUBLIC_SHELL_PREFIXES = ["/search-eng", "/top8", "/top3"];
 const HIDDEN_PUBLIC_SHELL_PATTERNS = [];
 
 export function isPublicShellHidden(pathname = "") {

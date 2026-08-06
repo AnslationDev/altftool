@@ -1,6 +1,6 @@
 export const metadata = {
   title: "PawAcademy — Dog Training & Obedience",
-  description: "Certified trainers for puppy basics, obedience and behaviour fixes — group or one-on-one. Get a training quote.",
+  description: "Design demonstration for a fictional dog-training academy page; no trainer, credential, enrolment, quote, course, or guarantee is offered.",
   robots: { index: false, follow: true, googleBot: { index: false, follow: true } },
   alternates: { canonical: "/bops/pet-services/paw-academy" },
 };

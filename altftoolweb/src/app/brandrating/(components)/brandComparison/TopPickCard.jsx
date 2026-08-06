@@ -30,6 +30,9 @@ const CardContent = ({ brand, isActive, getImage, normalizedFeatures }) => {
         }
         return link;
     })();
+    // A brand with no rating gets no star row. Rendering five empty stars and
+    // "0/5" for an unrated brand states a score just as loudly as inventing one.
+    const hasRating = Number(brand?.rating) > 0;
     const renderStars = (rating = 0) => {
         const safeRating = Math.max(0, Math.min(5, Number(rating)));
 
@@ -73,9 +76,11 @@ const CardContent = ({ brand, isActive, getImage, normalizedFeatures }) => {
                     <h3 className="text-[22px] sm:text-[26px] lg:text-[22px] xl:text-[24px] font-bold leading-tight flex-1 min-w-0">
                         {brand.name}
                     </h3>
-                    <div className="flex lg:hidden items-center gap-1 mt-1 flex-shrink-0">
-                        {renderStars(brand.rating)}
-                    </div>
+                    {hasRating ? (
+                        <div className="flex lg:hidden items-center gap-1 mt-1 flex-shrink-0">
+                            {renderStars(brand.rating)}
+                        </div>
+                    ) : null}
                 </div>
 
 
@@ -84,12 +89,14 @@ const CardContent = ({ brand, isActive, getImage, normalizedFeatures }) => {
                 </p>
 
                 {/* DESKTOP RATING */}
-                <div className="hidden lg:flex items-center gap-1">
-                    {renderStars(brand.rating)}
-                    <span className="text-[13px] text-[var(--muted-foreground)] ml-1">
-                        {brand.rating || "0"}/5
-                    </span>
-                </div>
+                {hasRating ? (
+                    <div className="hidden lg:flex items-center gap-1">
+                        {renderStars(brand.rating)}
+                        <span className="text-[13px] text-[var(--muted-foreground)] ml-1">
+                            {brand.rating}/5
+                        </span>
+                    </div>
+                ) : null}
 
                 {/* SHORT DESCRIPTION */}
                 {brand.description ? (

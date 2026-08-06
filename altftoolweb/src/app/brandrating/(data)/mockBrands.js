@@ -11,7 +11,7 @@
 // TO DISABLE ALL MOCK DATA: set MOCK_DATA_ENABLED = false (or delete this file
 // and its imports in service/service.js).
 
-export const MOCK_DATA_ENABLED = true;
+export const MOCK_DATA_ENABLED = false;
 
 // Obvious test entries hidden from the UI until cleaned up in the admin panel.
 export const MOCK_HIDDEN_BRAND_NAMES = ["google abshj"];
@@ -114,6 +114,18 @@ export const MOCK_BRAND_ENRICH = {
     },
 };
 
+// NO RATINGS HERE, DELIBERATELY. Every entry below used to carry a "rating"
+// literal between 4.1 and 4.7 — NordVPN 4.7, Saatva 4.5, Ooni Koda 16 4.7 and
+// so on. applyMockBrands() merges these straight into the Firestore brand list
+// (when MOCK_DATA_ENABLED was true), so those numbers rendered as star rows on
+// /brandrating/<category> and each brand's detail page, visually identical to a
+// rating an editor actually entered in the admin panel. Nobody scored them and
+// no source was cited, so a reader had no way to tell the difference.
+//
+// A mock brand may describe a real product; it may not publish a verdict on it.
+// If a brand should carry a rating, enter it in the admin panel — the real
+// record replaces its mock twin by name (see the merge rule above), and the
+// cards render stars only when a rating is present.
 export const MOCK_BRANDS = [
     {
         "id": "mock-nordvpn",
@@ -123,7 +135,6 @@ export const MOCK_BRANDS = [
         "name": "NordVPN",
         "heading": "NordVPN — Fast, Audited No-Logs VPN",
         "description": "NordVPN is one of the most widely used VPN services, with thousands of servers in 100+ countries, independently audited no-logs policy, and consistently fast WireGuard-based speeds. Threat Protection blocks ads, trackers, and malicious sites even when the VPN is off.",
-        "rating": 4.7,
         "ranking": 1,
         "brandLink": "https://nordvpn.com",
         "country": "US",
@@ -194,7 +205,6 @@ export const MOCK_BRANDS = [
         "name": "Ooni Koda 16",
         "heading": "Ooni Koda 16 — Gas-Powered 16\" Pizza Oven",
         "description": "The Ooni Koda 16 is a gas-powered outdoor pizza oven that reaches 500°C in about 20 minutes and cooks a 16-inch Neapolitan-style pizza in roughly 60 seconds. Its fold-flat legs and one-piece shell make it easy to move, while the L-shaped burner delivers even edge-to-edge heat.",
-        "rating": 4.7,
         "ranking": 2,
         "brandLink": "https://ooni.com",
         "country": "US",
@@ -257,9 +267,8 @@ export const MOCK_BRANDS = [
         "categoryId": "L1s8qQYMeNH9Ft3P9XJp",
         "subCategoryId": "FuMw8OZRhGeAjrWZxdka",
         "name": "Helix Midnight",
-        "heading": "Helix Midnight — Best Hybrid for Side Sleepers",
-        "description": "The Helix Midnight is a medium-feel hybrid mattress built around zoned pocket coils and pressure-relieving memory foam. It is consistently rated a top pick for side sleepers, balancing cushioning at the shoulders with support at the hips, and ships free with a 100-night trial.",
-        "rating": 4.4,
+        "heading": "Helix Midnight — Hybrid Mattress Example",
+        "description": "The Helix Midnight is shown here as an illustrative catalogue entry. Verify its current construction, trial, shipping, and warranty terms on the official product page before making a decision.",
         "ranking": 3,
         "brandLink": "https://helixsleep.com",
         "country": "US",
@@ -324,7 +333,6 @@ export const MOCK_BRANDS = [
         "name": "Purple Mattress",
         "heading": "Purple — GelFlex Grid for Cool, Pressure-Free Sleep",
         "description": "Purple's signature GelFlex Grid flexes under shoulders and hips while staying supportive everywhere else, and its open channels let air move freely so hot sleepers stay cool. The grid instantly adapts as you change positions, which makes Purple a favorite for combination sleepers.",
-        "rating": 4.2,
         "ranking": 4,
         "brandLink": "https://purple.com",
         "country": "US",
@@ -389,7 +397,6 @@ export const MOCK_BRANDS = [
         "name": "Noom",
         "heading": "Noom — Psychology-Based Weight Loss Program",
         "description": "Noom pairs daily 5-10 minute psychology lessons with food logging, a color-based food system, and optional 1:1 coaching to build sustainable habits instead of crash dieting. No foods are off-limits — the program focuses on calorie density and behavior change backed by CBT principles.",
-        "rating": 4.5,
         "ranking": 2,
         "brandLink": "https://noom.com",
         "country": "US",
@@ -454,7 +461,6 @@ export const MOCK_BRANDS = [
         "name": "WeightWatchers",
         "heading": "WeightWatchers (WW) — Points-Based Flexible Dieting",
         "description": "WeightWatchers assigns every food a Points value based on calories, protein, fiber, and added sugar, giving you a daily budget that flexes around real life. With decades of published results, workshops, and a large member community, WW remains one of the most proven structured diet programs.",
-        "rating": 4.4,
         "ranking": 3,
         "brandLink": "https://weightwatchers.com",
         "country": "US",
@@ -519,7 +525,6 @@ export const MOCK_BRANDS = [
         "name": "Factor",
         "heading": "Factor — Chef-Prepared Ready-to-Eat Meal Plans",
         "description": "Factor delivers fully cooked, dietitian-designed meals that go from fridge to table in about two minutes — no prep, no cleanup. Weekly menus cover keto, calorie-smart, protein-plus, and vegan options, making it a practical choice for people who want results without cooking.",
-        "rating": 4.3,
         "ranking": 4,
         "brandLink": "https://factor75.com",
         "country": "US",
@@ -584,7 +589,6 @@ export const MOCK_BRANDS = [
         "name": "Trifecta Nutrition",
         "heading": "Trifecta — Organic Macro-Balanced Meal Delivery",
         "description": "Trifecta ships organic, macro-balanced meals nationwide with plans for keto, paleo, high-protein, and plant-based eating. Popular with athletes and fitness-focused users, it combines clean ingredients with an app that tracks macros, weight, and progress photos.",
-        "rating": 4.1,
         "ranking": 5,
         "brandLink": "https://trifectanutrition.com",
         "country": "US",
@@ -649,7 +653,6 @@ export const MOCK_BRANDS = [
         "name": "ExpressVPN",
         "heading": "ExpressVPN — Premium Speed with TrustedServer",
         "description": "ExpressVPN runs its entire network on RAM-only TrustedServer technology, so no data ever touches a hard drive, and its Lightway protocol connects in a fraction of a second. With apps for every platform and consistently reliable streaming access, it is the go-to premium pick.",
-        "rating": 4.6,
         "ranking": 2,
         "brandLink": "https://expressvpn.com",
         "country": "US",
@@ -714,7 +717,6 @@ export const MOCK_BRANDS = [
         "name": "Surfshark",
         "heading": "Surfshark — Unlimited Devices, Best Value",
         "description": "Surfshark is the value leader among premium VPNs: one subscription covers unlimited devices, and features like CleanWeb ad-blocking, MultiHop double-VPN, and rotating IP come standard. Independent audits and RAM-only servers back up the low price with real security.",
-        "rating": 4.5,
         "ranking": 3,
         "brandLink": "https://surfshark.com",
         "country": "US",
@@ -779,7 +781,6 @@ export const MOCK_BRANDS = [
         "name": "Proton VPN",
         "heading": "Proton VPN — Swiss Privacy with a Real Free Tier",
         "description": "Built by the CERN-born team behind Proton Mail, Proton VPN pairs strict Swiss privacy law with open-source, independently audited apps. Its Secure Core routing defends against network attacks, and it remains the only top-tier VPN with a genuinely unlimited free plan.",
-        "rating": 4.4,
         "ranking": 4,
         "brandLink": "https://protonvpn.com",
         "country": "US",
@@ -844,7 +845,6 @@ export const MOCK_BRANDS = [
         "name": "CyberGhost",
         "heading": "CyberGhost — Streaming-Optimized Server Network",
         "description": "CyberGhost operates one of the largest VPN networks with 11,000+ servers, including dedicated streaming and gaming servers labeled by platform. Long-term plans are among the cheapest in the industry and come with a generous 45-day money-back guarantee.",
-        "rating": 4.2,
         "ranking": 5,
         "brandLink": "https://cyberghostvpn.com",
         "country": "US",
@@ -907,9 +907,8 @@ export const MOCK_BRANDS = [
         "categoryId": "ufsoUl4G6ZrrBUc9KSTC",
         "subCategoryId": "t5DLO1iiL5lLEWhu8UrA",
         "name": "Liberty Home Guard",
-        "heading": "Liberty Home Guard — Top-Rated Service Quality",
-        "description": "Liberty Home Guard pairs systems and appliance coverage with 40+ optional add-ons — from pool equipment to pest control — and consistently earns the highest customer-service marks in the industry. Claims are filed in minutes online and technicians are vetted nationwide.",
-        "rating": 4.5,
+        "heading": "Liberty Home Guard — Coverage Example",
+        "description": "Liberty Home Guard is shown here as an illustrative catalogue entry. Verify current plan coverage, add-ons, service fees, availability, and claims terms on the official provider site.",
         "ranking": 2,
         "brandLink": "https://libertyhomeguard.com",
         "country": "US",
@@ -931,7 +930,7 @@ export const MOCK_BRANDS = [
             {
                 "id": 13001,
                 "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"8\" r=\"6\"/><path d=\"M15.477 12.89 17 22l-5-3-5 3 1.523-9.11\"/></svg>",
-                "text": "Top-rated service"
+                "text": "Plan details available"
             },
             {
                 "id": 13002,
@@ -948,8 +947,8 @@ export const MOCK_BRANDS = [
             {
                 "id": 13101,
                 "icon": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"8\" r=\"6\"/><path d=\"M15.477 12.89 17 22l-5-3-5 3 1.523-9.11\"/></svg>",
-                "heading": "Service Excellence",
-                "description": "Industry-leading customer satisfaction scores"
+                "heading": "Service Terms",
+                "description": "Review current service and claims terms before purchase"
             },
             {
                 "id": 13102,
@@ -974,7 +973,6 @@ export const MOCK_BRANDS = [
         "name": "American Home Shield",
         "heading": "American Home Shield — Most Experienced Provider",
         "description": "American Home Shield founded the home warranty industry in 1971 and still leads it, covering breakdowns from normal wear, rust, and even improper past installs that many rivals exclude. Flexible service fees let you trade a higher monthly premium for cheaper claim visits.",
-        "rating": 4.4,
         "ranking": 3,
         "brandLink": "https://ahs.com",
         "country": "US",
@@ -1039,7 +1037,6 @@ export const MOCK_BRANDS = [
         "name": "Choice Home Warranty",
         "heading": "Choice Home Warranty — Simple Plans, Fair Prices",
         "description": "Choice Home Warranty keeps things simple with two straightforward plans and a flat $100 service fee, making budgeting easy. Its large contractor network dispatches technicians quickly, and new members frequently get the first month free on annual plans.",
-        "rating": 4.2,
         "ranking": 4,
         "brandLink": "https://choicehomewarranty.com",
         "country": "US",
@@ -1104,7 +1101,6 @@ export const MOCK_BRANDS = [
         "name": "First American Home Warranty",
         "heading": "First American — Best for Older Appliances",
         "description": "First American Home Warranty stands out for covering appliances regardless of age and including improper installation or maintenance issues that void other contracts. Backed by a Fortune 500 title-insurance parent, it offers strong upgrade options like First Class Service.",
-        "rating": 4.1,
         "ranking": 5,
         "brandLink": "https://homewarranty.firstam.com",
         "country": "US",

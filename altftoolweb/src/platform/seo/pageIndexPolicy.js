@@ -2,8 +2,12 @@
  * Central indexing policy for product previews with generated catalogue data.
  */
 const NOINDEX_ROUTE_PREFIXES = Object.freeze([
+  "/animalhub",
   "/bazaar",
+  "/altfworld",
+  "/buzzfeed",
   "/lookouts",
+  "/top3",
   "/top5",
   "/top8",
   "/top49",
