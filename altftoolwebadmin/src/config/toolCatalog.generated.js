@@ -5363,7 +5363,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Developer"
     ],
-    "description": "Convert chatbot chat logs and conversational arrays between OpenAI, Anthropic, and Markdown formats instantly."
+    "description": "Convert message arrays or Markdown transcripts into OpenAI, Anthropic, Gemini, Cohere, Llama, or Markdown output."
   },
   {
     "slug": "coding-model-picker",
@@ -12149,10 +12149,9 @@ export const TOOL_CATALOG = [
     "slug": "google-ads-description-writer",
     "name": "Google Ads Writer",
     "categories": [
-      "Business",
-      "AI Tools"
+      "Business"
     ],
-    "description": "Generate highly converting Google Ads descriptions using AI."
+    "description": "Generate ready-to-paste Google Ads descriptions from proven ad-copy templates."
   },
   {
     "slug": "google-meet-background-maker",
@@ -23973,7 +23972,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "Estimate a room's RT60 reverberation time from a clap or sweep response."
+    "description": "Log decay and silence diagnostics from a clap or sweep recording — not a calibrated RT60 estimate."
   },
   {
     "slug": "roommate-agreement-generator",
@@ -25415,7 +25414,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Marketing & Social"
     ],
-    "description": "Check Shopify product photos against the 20 megapixel and 20 MB limits, the 800 px zoom threshold and your store's standard aspect ratio."
+    "description": "Check Shopify product photos against the 25 megapixel, 5000 px and under-20-MB limits, plus a theme-dependent detail heuristic and your store's standard aspect "
   },
   {
     "slug": "short-modern-indian-baby-names",
