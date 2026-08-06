@@ -297,12 +297,9 @@ function encodeCommonWebpackShape(manifest, route) {
     !hasCommonClientShape ||
     !hasCommonMappingShape(ssr) ||
     !hasCommonMappingShape(rsc) ||
-    // Amplify's Node/webpack output has no edge mapping. Keeping that as an
-    // explicit invariant lets the compact form omit a fourth value from every
-    // RSC row. If Next starts emitting edge rows, the fully general encoder is
-    // used instead and the semantic comparison below remains the final gate.
-    Object.keys(edgeRsc).length > 0 ||
+    !hasCommonMappingShape(edgeRsc) ||
     Object.keys(ssr).some((moduleId) => !(moduleId in rsc)) ||
+    Object.keys(edgeRsc).some((moduleId) => !(moduleId in rsc)) ||
     Object.keys(manifest.edgeSSRModuleMapping || {}).length > 0
   ) {
     return null;
@@ -311,15 +308,31 @@ function encodeCommonWebpackShape(manifest, route) {
   const checkoutPrefix = `${process.cwd().replaceAll("\\", "/")}/`;
   let pathPrefix = checkoutPrefix;
 
-  // Deriving the prefix as a fallback also makes the encoder testable against
-  // a copied build artifact. Production builds take the checkoutPrefix branch.
+  // A workspace build can resolve hoisted dependencies from the monorepo root
+  // while resolving application modules from this package. In that case cwd
+  // is not a prefix of every module, so derive the shared directory prefix
+  // across all client paths. This also keeps the encoder testable against a
+  // copied build artifact.
   if (!clientEntries.every(([key]) => key.startsWith(pathPrefix))) {
-    const firstKey = clientEntries[0]?.[0] || "";
-    const markerAt = ["node_modules/", "src/", "packages/"]
-      .map((marker) => firstKey.indexOf(marker))
-      .filter((index) => index >= 0)
-      .sort((left, right) => left - right)[0];
-    pathPrefix = markerAt === undefined ? "" : firstKey.slice(0, markerAt);
+    const keys = clientEntries.map(([key]) => key);
+    let commonLength = keys[0]?.length || 0;
+    for (let index = 1; index < keys.length && commonLength > 0; index += 1) {
+      let cursor = 0;
+      while (
+        cursor < commonLength &&
+        cursor < keys[index].length &&
+        keys[0][cursor] === keys[index][cursor]
+      ) {
+        cursor += 1;
+      }
+      commonLength = cursor;
+    }
+    const commonPrefix = (keys[0] || "").slice(0, commonLength);
+    const lastDirectorySeparator = commonPrefix.lastIndexOf("/");
+    pathPrefix =
+      lastDirectorySeparator === -1
+        ? ""
+        : commonPrefix.slice(0, lastDirectorySeparator + 1);
   }
 
   if (
@@ -379,7 +392,8 @@ function encodeCommonWebpackShape(manifest, route) {
   }
 
   // RSC is the superset, so each row carries the delta from the previous
-  // module id, its RSC target id, and its SSR target id (-1 when absent).
+  // module id, its RSC target id, and its SSR/edge-RSC target ids (-1 when
+  // absent).
   // Numeric object keys enumerate in ascending order, making the delta both
   // deterministic and materially smaller than repeating six-digit ids.
   const mappingRows = [];
@@ -390,6 +404,7 @@ function encodeCommonWebpackShape(manifest, route) {
       numericModuleId - previousModuleId,
       Number(byExport["*"].id),
       ssr[moduleId] ? Number(ssr[moduleId]["*"].id) : -1,
+      edgeRsc[moduleId] ? Number(edgeRsc[moduleId]["*"].id) : -1,
     );
     previousModuleId = numericModuleId;
   }
@@ -448,9 +463,9 @@ var T=u(${j(packedDirectoryNodes)});
 for(var i=0;i<T.length;i+=2)D.push(D[T[i]]+S[T[i+1]]+"/");
 function q(i,c){return {id:i,name:"*",chunks:C[c],async:false}}
 function o(v){var t={};for(var i=0;i<v.length;i+=4)t[P+D[v[i]]+B[v[i+1]]]=q(v[i+2],v[i+3]);return t}
-function m(v){var a={},b={},k=0;for(var i=0;i<v.length;i+=3){k+=v[i];b[k]={"*":q(String(v[i+1]),0)};if(v[i+2]>=0)a[k]={"*":q(String(v[i+2]),0)}}return [a,b]}
+function m(v){var a={},b={},e={},k=0;for(var i=0;i<v.length;i+=4){k+=v[i];b[k]={"*":q(String(v[i+1]),0)};if(v[i+2]>=0)a[k]={"*":q(String(v[i+2]),0)};if(v[i+3]>=0)e[k]={"*":q(String(v[i+3]),0)}}return [a,b,e]}
 var X=m(u(${j(packedMappingRows)}));
-globalThis.__RSC_MANIFEST[${j(route)}]={moduleLoading:${j(manifest.moduleLoading)},ssrModuleMapping:X[0],edgeSSRModuleMapping:{},clientModules:o(u(${j(packedClientRows)})),entryCSSFiles:${j(manifest.entryCSSFiles)},rscModuleMapping:X[1],edgeRscModuleMapping:{}};
+globalThis.__RSC_MANIFEST[${j(route)}]={moduleLoading:${j(manifest.moduleLoading)},ssrModuleMapping:X[0],edgeSSRModuleMapping:{},clientModules:o(u(${j(packedClientRows)})),entryCSSFiles:${j(manifest.entryCSSFiles)},rscModuleMapping:X[1],edgeRscModuleMapping:X[2]};
 })();
 `;
 }
