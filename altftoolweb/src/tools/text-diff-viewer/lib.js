@@ -17,6 +17,13 @@
 /** Line cap. The LCS table is (m+1)×(n+1) Int32 cells; 1500² stays under 9 MB. */
 export const MAX_LINES = 1500;
 
+/**
+ * Shared memory budget for every exact LCS pass. The table stores one Int32
+ * per cell, so this keeps each pass near the same ~9 MiB ceiling as the
+ * 1500-line comparison instead of relying on a one-dimensional token cap.
+ */
+export const MAX_LCS_CELLS = (MAX_LINES + 1) * (MAX_LINES + 1);
+
 /** Row kinds the viewer renders. */
 export const ROW_EQUAL = "equal";
 export const ROW_CHANGED = "changed";
@@ -56,6 +63,21 @@ export function countWords(value) {
   return asText(value).split(/\s+/).filter(Boolean).length;
 }
 
+function sharedBoundaryCount(a, b) {
+  const limit = Math.min(a.length, b.length);
+  let prefix = 0;
+  while (prefix < limit && a[prefix] === b[prefix]) prefix += 1;
+
+  let suffix = 0;
+  while (
+    suffix < limit - prefix &&
+    a[a.length - 1 - suffix] === b[b.length - 1 - suffix]
+  ) {
+    suffix += 1;
+  }
+  return prefix + suffix;
+}
+
 /**
  * Generic longest common subsequence over two arrays of strings.
  * @returns {{ ops: Array<{type:string,aIndex:number|null,bIndex:number|null}>, lcs:number }}
@@ -64,6 +86,17 @@ export function lcsOps(a, b) {
   const m = a.length;
   const n = b.length;
   const width = n + 1;
+  const cellCount = (m + 1) * width;
+  if (!Number.isSafeInteger(cellCount) || cellCount > MAX_LCS_CELLS) {
+    return {
+      ops: [
+        ...a.map((_, aIndex) => ({ type: "delete", aIndex, bIndex: null })),
+        ...b.map((_, bIndex) => ({ type: "insert", aIndex: null, bIndex })),
+      ],
+      lcs: sharedBoundaryCount(a, b),
+      exact: false,
+    };
+  }
   const table = new Int32Array((m + 1) * width);
   for (let i = m - 1; i >= 0; i -= 1) {
     for (let j = n - 1; j >= 0; j -= 1) {
@@ -97,7 +130,7 @@ export function lcsOps(a, b) {
     ops.push({ type: "insert", aIndex: null, bIndex: j });
     j += 1;
   }
-  return { ops, lcs: table[0] };
+  return { ops, lcs: table[0], exact: true };
 }
 
 /**
@@ -108,10 +141,29 @@ export function lcsOps(a, b) {
 export function diffWords(leftLine, rightLine) {
   const a = tokenizeWords(leftLine);
   const b = tokenizeWords(rightLine);
-  const { ops, lcs } = lcsOps(a, b);
+  const { ops, exact } = lcsOps(a, b);
+
+  if (!exact) {
+    const leftWordTokens = a.filter((token) => token.trim() !== "");
+    const rightWordTokens = b.filter((token) => token.trim() !== "");
+    const leftWords = leftWordTokens.length;
+    const rightWords = rightWordTokens.length;
+    // Use a conservative, linear common prefix/suffix estimate for stats,
+    // while deliberately rendering the visual row as a full replacement.
+    const sharedWords = sharedBoundaryCount(leftWordTokens, rightWordTokens);
+    return {
+      left: asText(leftLine) === "" ? [] : [{ type: SEG_REMOVE, text: asText(leftLine) }],
+      right: asText(rightLine) === "" ? [] : [{ type: SEG_ADD, text: asText(rightLine) }],
+      shared: sharedWords,
+      added: Math.max(0, rightWords - sharedWords),
+      removed: Math.max(0, leftWords - sharedWords),
+      exact: false,
+    };
+  }
 
   const left = [];
   const right = [];
+  let shared = 0;
   let added = 0;
   let removed = 0;
 
@@ -125,6 +177,7 @@ export function diffWords(leftLine, rightLine) {
     if (op.type === "equal") {
       push(left, SEG_SAME, a[op.aIndex]);
       push(right, SEG_SAME, b[op.bIndex]);
+      if (a[op.aIndex].trim() !== "") shared += 1;
     } else if (op.type === "delete") {
       push(left, SEG_REMOVE, a[op.aIndex]);
       if (a[op.aIndex].trim() !== "") removed += 1;
@@ -134,7 +187,7 @@ export function diffWords(leftLine, rightLine) {
     }
   }
 
-  return { left, right, shared: lcs, added, removed };
+  return { left, right, shared, added, removed, exact };
 }
 
 const wholeLineSegments = (line, type) =>
@@ -176,6 +229,7 @@ export function buildSideBySide(leftText, rightText, options = {}) {
 
   // Group runs of deletes and inserts so a replacement becomes one aligned row.
   const rows = [];
+  let wordHighlightsExact = true;
   let cursor = 0;
   while (cursor < ops.length) {
     const op = ops[cursor];
@@ -206,9 +260,19 @@ export function buildSideBySide(leftText, rightText, options = {}) {
     for (let k = 0; k < pairs; k += 1) {
       const leftLine = leftLines[deletes[k]];
       const rightLine = rightLines[inserts[k]];
+      const leftLineWords = countWords(leftLine);
+      const rightLineWords = countWords(rightLine);
+      // diffWords applies the same cell budget as every other LCS pass. Its
+      // token arrays include whitespace runs as well as words, so gating by
+      // the actual table size avoids under-counting a long unwrapped line.
       const words = diffWords(leftLine, rightLine);
-      const totalWords = countWords(leftLine) + countWords(rightLine);
-      const similar = totalWords === 0 ? 1 : (2 * words.shared) / Math.max(1, totalWords);
+      if (!words.exact) wordHighlightsExact = false;
+      const totalWords = leftLineWords + rightLineWords;
+      const similar = !words.exact
+        ? 0
+        : totalWords === 0
+          ? 1
+          : (2 * words.shared) / Math.max(1, totalWords);
       const worthWordDiff = similar >= WORD_DIFF_MIN_SIMILARITY;
       rows.push({
         type: ROW_CHANGED,
@@ -216,8 +280,8 @@ export function buildSideBySide(leftText, rightText, options = {}) {
         rightNo: inserts[k] + 1,
         leftSegments: worthWordDiff ? words.left : wholeLineSegments(leftLine, SEG_REMOVE),
         rightSegments: worthWordDiff ? words.right : wholeLineSegments(rightLine, SEG_ADD),
-        wordsAdded: worthWordDiff ? words.added : countWords(rightLine),
-        wordsRemoved: worthWordDiff ? words.removed : countWords(leftLine),
+        wordsAdded: worthWordDiff ? words.added : rightLineWords,
+        wordsRemoved: worthWordDiff ? words.removed : leftLineWords,
       });
     }
     for (let k = pairs; k < deletes.length; k += 1) {
@@ -244,14 +308,20 @@ export function buildSideBySide(leftText, rightText, options = {}) {
     }
   }
 
-  const leftWords = countWords(leftRaw);
-  const rightWords = countWords(rightRaw);
+  const leftWordList = leftRaw.split(/\s+/).filter(Boolean);
+  const rightWordList = rightRaw.split(/\s+/).filter(Boolean);
+  const leftWords = leftWordList.length;
+  const rightWords = rightWordList.length;
 
-  const wordDiff = lcsOps(
-    leftRaw.split(/\s+/).filter(Boolean),
-    rightRaw.split(/\s+/).filter(Boolean),
+  // The headline Similarity/Churn stats need a whole-document word-level LCS.
+  // lcsOps enforces the shared cell budget and reports whether the answer is
+  // exact; beyond it, reuse the bounded row pass rather than freezing the tab.
+  const normaliseWord = options.ignoreCase ? (word) => word.toLowerCase() : (word) => word;
+  const wholeDocumentWords = lcsOps(
+    leftWordList.map(normaliseWord),
+    rightWordList.map(normaliseWord),
   );
-  const sharedWords = wordDiff.lcs;
+  const sharedWords = wholeDocumentWords.lcs;
   const totalWords = leftWords + rightWords;
   const similarityPct =
     totalWords === 0 ? 100 : Math.round(((2 * sharedWords) / totalWords) * 1000) / 10;
@@ -285,6 +355,8 @@ export function buildSideBySide(leftText, rightText, options = {}) {
     wordsRemoved,
     churnPct,
     similarityPct,
+    statsExact: wholeDocumentWords.exact,
+    wordHighlightsExact,
     identical: counts[ROW_CHANGED] + counts[ROW_ADDED] + counts[ROW_REMOVED] === 0,
     leftChars: leftRaw.length,
     rightChars: rightRaw.length,
@@ -320,7 +392,12 @@ export function toMarkdownTable(result, { leftLabel = "Before", rightLabel = "Af
         `| ${marks[row.type]} | ${row.leftNo ?? ""} | ${flatten(row.leftSegments)} | ${row.rightNo ?? ""} | ${flatten(row.rightSegments)} |`,
     ),
     "",
-    `Similarity ${result.similarityPct}% · churn ${result.churnPct}% · +${result.wordsAdded} / -${result.wordsRemoved} words`,
+    `${result.statsExact ? "Similarity" : "Approximate similarity"} ${result.similarityPct}% · ${result.statsExact ? "churn" : "approximate churn"} ${result.churnPct}% · +${result.wordsAdded} / -${result.wordsRemoved} words`,
+    ...(!result.statsExact || !result.wordHighlightsExact
+      ? [
+          "Bounded mode: headline word statistics are estimates and oversized changed lines are shown as full-line replacements.",
+        ]
+      : []),
     "",
   ];
   return lines.join("\n");

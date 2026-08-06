@@ -110,7 +110,9 @@ export default function ToolHome() {
       `Distance: ${NUM0.format(result.metres)} m / ${NUM3.format(result.kilometres)} km / ${NUM0.format(result.yards)} yd / ${NUM2.format(result.miles)} mi`,
       result.pace
         ? `Pace: ${formatSeconds(result.pace.secondsPer100m)} per 100 m (${NUM2.format(result.pace.kmPerHour)} km/h)`
-        : "Pace: not entered",
+        : result.paceBlockedReason === "distance"
+          ? "Pace: add laps swum"
+          : "Pace: not entered",
       result.targetMetres > 0
         ? `Goal ${NUM2.format(toNumber(target))} ${targetUnit}: ${NUM0.format(result.goalPercent)}% done, ${NUM1.format(result.lapsRemaining)} laps to go`
         : "Goal: none set",
@@ -158,6 +160,7 @@ export default function ToolHome() {
         ["Yards", DASH],
         ["Miles", DASH],
         ["Metric swim miles (1500 m)", DASH],
+        ["Swimmer's mile (1650 yd)", DASH],
         ["Pace per 100 m", DASH],
       ]
     : [
@@ -167,9 +170,14 @@ export default function ToolHome() {
         ["Yards", `${NUM0.format(result.yards)} yd`],
         ["Miles", `${NUM2.format(result.miles)} mi`],
         ["Metric swim miles (1500 m)", NUM2.format(result.metricSwimMiles)],
+        ["Swimmer's mile (1650 yd)", NUM2.format(result.swimmersMiles)],
         [
           "Pace per 100 m",
-          result.pace ? `${formatSeconds(result.pace.secondsPer100m)} min` : "add a time",
+          result.pace
+            ? `${formatSeconds(result.pace.secondsPer100m)} min`
+            : result.paceBlockedReason === "distance"
+              ? "add laps swum"
+              : "add a time",
         ],
       ];
 
@@ -378,7 +386,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy swim distance result"
+              aria-label="Copy result to the clipboard"
               className={GHOST_BTN}
               disabled={hasError}
             >

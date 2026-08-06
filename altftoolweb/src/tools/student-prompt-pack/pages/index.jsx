@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, BookOpen, RotateCcw, Search } from "lucide-react";
 
-import { CATEGORIES, PROMPTS, fillPrompt, searchPrompts } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+import { CATEGORIES, PROMPTS, fillPrompt, getPrompt, searchPrompts } from "../lib";
 
 const PACK = {
   kicker: "Study prompts",
@@ -16,6 +17,8 @@ const NUM = new Intl.NumberFormat("en-IN");
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
+const TEXTAREA_CLASS =
+  "min-h-24 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
 const LABEL_CLASS = "block text-sm font-semibold text-[var(--foreground)]";
 const PRIMARY_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
@@ -32,49 +35,63 @@ export default function ToolHome() {
   const [category, setCategory] = useState("All");
   const [activeId, setActiveId] = useState(FIRST.id);
   const [values, setValues] = useState(() => exampleValues(FIRST));
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
+  const copied = isCopied("prompt");
 
   const results = useMemo(() => searchPrompts({ query, category }), [query, category]);
-  const active = useMemo(() => PROMPTS.find((p) => p.id === activeId) || null, [activeId]);
+  const active = useMemo(() => getPrompt(activeId), [activeId]);
   const filled = useMemo(
     () => fillPrompt({ template: active ? active.template : "", values }),
     [active, values],
   );
 
+  const hasTypedValues = (candidate) =>
+    Object.entries(candidate || {}).some(([key, value]) => {
+      const example = active ? exampleValues(active)[key] : undefined;
+      return String(value ?? "").trim() !== "" && value !== example;
+    });
+
   const selectPrompt = (prompt) => {
+    if (hasTypedValues(values)) {
+      const message =
+        activeId === prompt.id
+          ? "Reset this prompt's fields to the example values? This will discard what you've filled in."
+          : "Switch prompts? This will discard what you've filled in for the current one.";
+      if (!window.confirm(message)) return;
+    }
     setActiveId(prompt.id);
     setValues(exampleValues(prompt));
-    setCopied(false);
+    resetCopyState();
   };
 
   const updateValue = (key, value) => {
     setValues((previous) => ({ ...previous, [key]: value }));
-    setCopied(false);
+    resetCopyState();
   };
 
   const clearFields = () => {
     if (!active) return;
+    if (hasTypedValues(values) && !window.confirm("Clear all fields for this prompt? This cannot be undone.")) {
+      return;
+    }
     setValues(Object.fromEntries(active.variables.map((v) => [v.key, ""])));
-    setCopied(false);
+    resetCopyState();
   };
 
   const reset = () => {
+    if (!window.confirm("Reset the pack? This will discard everything you've filled in and return to the first prompt.")) {
+      return;
+    }
     setQuery("");
     setCategory("All");
     setActiveId(FIRST.id);
     setValues(exampleValues(FIRST));
-    setCopied(false);
+    resetCopyState();
   };
 
   const copyResult = async () => {
     if (filled.error) return;
-    try {
-      await navigator.clipboard.writeText(filled.text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    await copy("prompt", filled.text, { label: "finished prompt" });
   };
 
   const dash = "—";
@@ -174,18 +191,32 @@ export default function ToolHome() {
           <p className="mt-1 text-sm text-[var(--muted-foreground)]">{active.tip}</p>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             {active.variables.map((variable) => (
-              <div key={variable.key}>
+              <div
+                key={variable.key}
+                className={variable.type === "textarea" ? "sm:col-span-2" : undefined}
+              >
                 <label className={LABEL_CLASS} htmlFor={`var-${variable.key}`}>
                   {variable.label}
                 </label>
-                <input
-                  id={`var-${variable.key}`}
-                  type="text"
-                  className={`mt-2 ${INPUT_CLASS}`}
-                  placeholder={variable.placeholder}
-                  value={values[variable.key] ?? ""}
-                  onChange={(event) => updateValue(variable.key, event.target.value)}
-                />
+                {variable.type === "textarea" ? (
+                  <textarea
+                    id={`var-${variable.key}`}
+                    rows={4}
+                    className={`mt-2 ${TEXTAREA_CLASS}`}
+                    placeholder={variable.placeholder}
+                    value={values[variable.key] ?? ""}
+                    onChange={(event) => updateValue(variable.key, event.target.value)}
+                  />
+                ) : (
+                  <input
+                    id={`var-${variable.key}`}
+                    type="text"
+                    className={`mt-2 ${INPUT_CLASS}`}
+                    placeholder={variable.placeholder}
+                    value={values[variable.key] ?? ""}
+                    onChange={(event) => updateValue(variable.key, event.target.value)}
+                  />
+                )}
               </div>
             ))}
           </div>
@@ -219,7 +250,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the finished prompt to the clipboard"
+              aria-label={copied ? "Copied the finished prompt to the clipboard" : "Copy the finished prompt to the clipboard"}
               className={GHOST_BTN}
               disabled={Boolean(filled.error)}
             >
@@ -232,6 +263,9 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
 
         {filled.error ? (
           <p

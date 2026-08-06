@@ -208,7 +208,6 @@ export function computeCarDepreciation({
       lossThisYear: round(lossThisYear, 0),
       cumulativeLoss: round(exShowroomPrice - value, 0),
       retainedPct: round((value / exShowroomPrice) * 100, 1),
-      atFloor: value <= floor + 0.5,
     });
     previous = value;
   }
@@ -217,7 +216,13 @@ export function computeCarDepreciation({
   const kmAdjust = applyKmAdjustment
     ? kmAdjustmentPct({ kmDriven, ageYears })
     : 0;
-  const adjustedValue = Math.max(floor, curveValue * (1 - kmAdjust / 100));
+  // A negative kmAdjust (well-below-benchmark mileage) raises the value, but a car can never be
+  // worth more than it was bought for — clamp the upper bound at the ex-showroom price so
+  // totalLoss/perYearLoss/effectiveAnnualPct can never go negative.
+  const adjustedValue = Math.min(
+    exShowroomPrice,
+    Math.max(floor, curveValue * (1 - kmAdjust / 100)),
+  );
 
   const totalLoss = exShowroomPrice - adjustedValue;
   const perYearLoss = ageYears > 0 ? totalLoss / ageYears : 0;

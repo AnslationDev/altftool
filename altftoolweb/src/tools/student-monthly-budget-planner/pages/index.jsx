@@ -82,6 +82,10 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    const confirmed = window.confirm(
+      "Reset the budget? This replaces your income and all 8 expense fields with the sample plan — anything you entered will be lost.",
+    );
+    if (!confirmed) return;
     setIncome(DEFAULT_INCOME);
     setExpenses(DEFAULT_EXPENSES);
     setCopied(false);
@@ -144,7 +148,7 @@ export default function ToolHome() {
       {hasError ? (
         <p
           role="alert"
-          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
         >
           {result.error}
         </p>
@@ -152,13 +156,13 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               {hasError ? "Left over" : result.isDeficit ? "Monthly deficit" : "Left over each month"}
             </p>
             <p
               className={`mt-1 text-4xl font-semibold ${
-                !hasError && result.isDeficit ? "text-[var(--danger)]" : "text-[var(--primary)]"
+                !hasError && result.isDeficit ? "text-[var(--danger-text)]" : "text-[var(--primary)]"
               }`}
             >
               {hasError ? DASH : money(Math.abs(result.surplus))}
@@ -276,7 +280,7 @@ export default function ToolHome() {
                   {label} ({kind === "cap" ? "cap" : "target"} {money(ref)})
                 </dt>
                 <dd
-                  className={`text-right font-semibold ${ok ? "text-[var(--success)]" : "text-[var(--danger)]"}`}
+                  className={`text-right font-semibold ${ok ? "text-[var(--success-text)]" : "text-[var(--danger-text)]"}`}
                 >
                   {money(actual)} {ok ? "· on track" : kind === "cap" ? "· over" : "· short"}
                 </dd>

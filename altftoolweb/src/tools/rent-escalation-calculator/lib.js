@@ -111,13 +111,20 @@ export function projectRentEscalation({
   const flatTotal = baseMonthlyRent * termMonths;
   const escalationCost = totalRent - flatTotal;
 
-  // Annualise an interval that is not twelve months long.
+  const escalationCount = periods.length - 1;
+
+  // Annualise an interval that is not twelve months long. Only meaningful once the lease term is
+  // long enough for at least one escalation step to actually fire — otherwise the clause never
+  // takes effect during this lease, so an annualised rate here would contradict the 0 escalations
+  // / 0% total increase shown alongside it.
   const effectiveAnnualRate =
-    factor > 0 ? (Math.pow(factor, MONTHS_PER_YEAR / escalationEveryMonths) - 1) * 100 : 0;
+    escalationCount > 0 && factor > 0
+      ? (Math.pow(factor, MONTHS_PER_YEAR / escalationEveryMonths) - 1) * 100
+      : 0;
 
   const result = {
     periods,
-    escalationCount: periods.length - 1,
+    escalationCount,
     termMonths,
     baseMonthlyRent,
     finalMonthlyRent,

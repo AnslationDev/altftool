@@ -108,10 +108,13 @@ export function buildPmPrompt(config = {}) {
     ? config.rigorRules.filter((key) => RIGOR_RULES[key])
     : [];
 
-  const budget = Number(config.tokenBudget ?? DEFAULT_TOKEN_BUDGET);
-  if (!Number.isFinite(budget) || budget <= 0) {
-    return { error: "The token budget must be a positive number." };
-  }
+  // Warn-only budget (see header comment): an empty, zero or otherwise invalid
+  // budget must never hard-fail the whole prompt — it should silently fall
+  // back to the default and only surface as a warning below.
+  const budgetInput = Number(config.tokenBudget);
+  const budgetProvided = config.tokenBudget !== undefined && config.tokenBudget !== null && config.tokenBudget !== "";
+  const budgetIsValid = Number.isFinite(budgetInput) && budgetInput > 0;
+  const budget = budgetIsValid ? budgetInput : DEFAULT_TOKEN_BUDGET;
 
   const sections = [];
 
@@ -158,6 +161,11 @@ export function buildPmPrompt(config = {}) {
   const tokens = estimateTokens(prompt);
 
   const warnings = [];
+  if (budgetProvided && !budgetIsValid) {
+    warnings.push(
+      `The token budget must be a positive number, so ${DEFAULT_TOKEN_BUDGET} tokens (the default) was used instead.`,
+    );
+  }
   if (rules.length === 0) {
     warnings.push("No working rules selected. At minimum, forbid invented user data and require assumptions to be labelled.");
   } else if (!rules.includes("askDontInvent")) {

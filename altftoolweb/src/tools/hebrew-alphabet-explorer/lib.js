@@ -49,13 +49,27 @@ export const NIQQUD = [
   { id: "hirik", mark: "ִ", name: "Hirik", sound: "i", note: "'ee' as in machine. A single dot underneath." },
   { id: "holam", mark: "ֹ", name: "Holam", sound: "o", note: "'o' as in more. A dot above and to the left." },
   { id: "kubutz", mark: "ֻ", name: "Kubutz", sound: "u", note: "'oo' as in boot. Three diagonal dots." },
-  { id: "shuruk", mark: "ּ", name: "Shuruk", sound: "u", note: "'oo' written as a vav with a dot inside it (וּ)." },
+  {
+    id: "shuruk",
+    mark: "ּ",
+    name: "Shuruk",
+    sound: "u",
+    note: "'oo' written as a vav with a dot inside it (וּ).",
+    // Unlike the other marks, shuruk only ever attaches to vav — showing it on
+    // bet would be indistinguishable from dagesh (same combining dot, U+05BC).
+    host: "ו",
+  },
   { id: "sheva", mark: "ְ", name: "Sheva", sound: "ə or silent", note: "Two vertical dots. Either a very short vowel or no vowel at all." },
   { id: "dagesh", mark: "ּ", name: "Dagesh", sound: "—", note: "Not a vowel: a dot inside a letter that hardens bet, kaf and pe." },
 ];
 
-/** Every combining mark in the Hebrew block, used to strip pointing. */
-const NIQQUD_RANGE = /[֑-ׇ]/g;
+/**
+ * Every combining mark in the Hebrew block, used to strip pointing — plus the
+ * geresh (U+05F3) and gershayim (U+05F4) punctuation marks, which sit outside
+ * the U+0591-U+05C7 diacritic range but are documented as stripped by
+ * stripNiqqud() below (abbreviations like צה"ל, בג"ץ use them).
+ */
+const NIQQUD_RANGE = /[֑-ׇ׳״]/g;
 
 export const GEMATRIA_METHODS = [
   { id: "hechrachi", label: "Mispar hechrachi (standard)", note: "Final forms carry the same value as the ordinary letter." },

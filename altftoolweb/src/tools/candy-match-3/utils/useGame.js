@@ -11,8 +11,7 @@ import {
   clearCells,
   applyGravity,
   refill,
-  hasPossibleMoves,
-  shuffleBoard,
+  replaceDeadBoard,
 } from "./board";
 import { scoreForClear } from "./scoring";
 import { CANDY_COUNT } from "./candies";
@@ -194,9 +193,10 @@ export function useGame() {
         setBoard(current);
         await delay(160);
       }
-      if (!hasPossibleMoves(current)) {
-        const shuffled = shuffleBoard(ROWS, COLS, CANDY_COUNT);
-        setBoard(shuffled);
+      const playable = replaceDeadBoard(current);
+      if (playable.replaced) {
+        current = playable.board;
+        setBoard(current);
         sound("swap");
         try {
           const m = await import("sonner");

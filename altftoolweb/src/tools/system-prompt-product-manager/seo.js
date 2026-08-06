@@ -1,13 +1,13 @@
 const seo = {
   intro:
-    "This builder assembles a system prompt for a product-management assistant that writes PRDs with explicit non-goals, user stories in the Connextra format meeting the INVEST checklist with Given/When/Then acceptance criteria, and backlog priorities scored with a real framework — RICE, ICE, MoSCoW or WSJF — with the arithmetic shown. It is for product managers and founders who want AI drafting help that argues from evidence instead of inventing metrics.",
+    "This builder assembles a system prompt for a product-management assistant that writes PRDs with explicit non-goals, user stories in the Connextra format meeting the INVEST checklist with Given/When/Then acceptance criteria, and a backlog run through a real prioritisation framework — RICE, ICE and WSJF with the scoring arithmetic shown, or MoSCoW's Must/Should/Could/Won't categories — instead of vague priority labels. It is for product managers and founders who want AI drafting help that argues from evidence instead of inventing metrics.",
   useCases: [
     "A PM standardising spec quality so every AI-drafted PRD has a problem statement, success metrics, non-goals and open questions",
     "A founder turning a feature idea into INVEST-compliant user stories with acceptance criteria before briefing engineers",
     "A product team running a RICE pass over a 30-item backlog with the reach, impact, confidence and effort numbers visible for debate",
   ],
   benefits: [
-    ["Real frameworks, cited", "RICE (Intercom), ICE, MoSCoW and WSJF (SAFe) are written into the prompt with their actual scoring formulas."],
+    ["Real frameworks, cited", "RICE (Intercom), ICE and WSJF (SAFe) are written into the prompt with their actual scoring formulas; MoSCoW gets its real Must/Should/Could/Won't categories rather than a made-up score."],
     ["Anti-hallucination rules", "One-click rules force assumptions to be labelled and ban invented user research, quotes and metrics."],
     ["Specs with teeth", "Every spec must name non-goals and define success as a measurable number with a baseline and date."],
   ],

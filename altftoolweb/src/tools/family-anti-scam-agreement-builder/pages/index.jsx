@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Plus, RotateCcw, Trash2, Users } from "lucide-react";
 import { RULES, buildFamilyAgreement } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -48,7 +49,8 @@ export default function ToolHome() {
   const [coolingOffHours, setCoolingOffHours] = useState(DEFAULTS.coolingOffHours);
   const [threshold, setThreshold] = useState(DEFAULTS.threshold);
   const [helperName, setHelperName] = useState(DEFAULTS.helperName);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -70,12 +72,12 @@ export default function ToolHome() {
     setRules((current) =>
       current.includes(id) ? current.filter((value) => value !== id) : [...current, id],
     );
-    setCopied(false);
+    resetCopyState();
   };
 
   const updateMember = (id, name) => {
     setMembers((current) => current.map((member) => (member.id === id ? { ...member, name } : member)));
-    setCopied(false);
+    resetCopyState();
   };
 
   const addMember = () => {
@@ -83,26 +85,28 @@ export default function ToolHome() {
       const nextId = current.reduce((max, member) => Math.max(max, member.id), 0) + 1;
       return [...current, { id: nextId, name: "" }];
     });
-    setCopied(false);
+    resetCopyState();
   };
 
   const removeMember = (id) => {
     setMembers((current) => current.filter((member) => member.id !== id));
-    setCopied(false);
+    resetCopyState();
   };
 
   const copyResult = async () => {
     if (failed) return;
-    try {
-      await navigator.clipboard.writeText(result.text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    await copyToClipboard("agreement", result.text, { label: "the agreement" });
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset the builder? This clears the household name, every member's name, the safe word and all chosen clauses — anything you entered will be lost.",
+      )
+    ) {
+      return;
+    }
     setHouseholdName(DEFAULTS.householdName);
     setMembers(DEFAULTS.members);
     setRules(DEFAULTS.rules);
@@ -111,7 +115,7 @@ export default function ToolHome() {
     setCoolingOffHours(DEFAULTS.coolingOffHours);
     setThreshold(DEFAULTS.threshold);
     setHelperName(DEFAULTS.helperName);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -145,7 +149,7 @@ export default function ToolHome() {
               placeholder="e.g. Sharma"
               onChange={(event) => {
                 setHouseholdName(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             />
           </div>
@@ -161,7 +165,7 @@ export default function ToolHome() {
               placeholder="e.g. Meena"
               onChange={(event) => {
                 setHelperName(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             />
           </div>
@@ -180,7 +184,7 @@ export default function ToolHome() {
               value={coolingOffHours}
               onChange={(event) => {
                 setCoolingOffHours(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             />
           </div>
@@ -199,7 +203,7 @@ export default function ToolHome() {
               value={threshold}
               onChange={(event) => {
                 setThreshold(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             />
           </div>
@@ -215,7 +219,7 @@ export default function ToolHome() {
               placeholder="two unrelated words work best"
               onChange={(event) => {
                 setSafeWord(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             />
             {!failed && (
@@ -236,7 +240,7 @@ export default function ToolHome() {
                 checked={includeSafeWord}
                 onChange={(event) => {
                   setIncludeSafeWord(event.target.checked);
-                  setCopied(false);
+                  resetCopyState();
                 }}
               />
               <span>Print the safe word inside the agreement</span>
@@ -320,7 +324,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Scam coverage score
             </p>
@@ -341,9 +345,16 @@ export default function ToolHome() {
               className={GHOST_BTN}
               disabled={failed}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy agreement"}
+              {isCopied("agreement") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("agreement") ? "Copied!" : "Copy agreement"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset the builder" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset

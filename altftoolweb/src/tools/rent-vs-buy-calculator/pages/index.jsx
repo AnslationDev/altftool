@@ -11,7 +11,7 @@ import {
   TrendingDown,
   TrendingUp,
 } from "lucide-react";
-import { safeCopyText } from "@/shared/utils/clipboard";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const inr = new Intl.NumberFormat("en-IN", {
   style: "currency",
@@ -54,6 +54,23 @@ const presets = [
 ];
 
 const clamp = (value, min, max) => Math.min(Math.max(Number(value) || 0, min), max);
+
+// Mirrors the bounds simulate() clamps each field to internally. Applied to
+// the state itself (not just at simulate time) so the number shown in the
+// input, the stat tiles and the copied summary can never disagree with what
+// was actually simulated.
+const FIELD_BOUNDS = {
+  price: [0, 1e12],
+  downPct: [0, 100],
+  loanRate: [0, 30],
+  tenureYears: [1, 40],
+  rent: [0, 1e9],
+  rentInflation: [0, 30],
+  appreciation: [-10, 30],
+  invReturn: [0, 30],
+  maintPct: [0, 10],
+  horizonYears: [1, 30],
+};
 
 function emiFor(principal, annualRate, months) {
   if (principal <= 0 || months <= 0) return 0;
@@ -154,7 +171,7 @@ function simulate(raw) {
   return { emi, down, reg, loan, rows, last, crossover, totalTaxSaved, horizonYears };
 }
 
-function NumField({ label, value, onChange, step = 1, min = 0, hint }) {
+function NumField({ label, value, onChange, step = 1, min = 0, max, hint }) {
   return (
     <label className="block">
       <span className="flex items-baseline justify-between gap-2 text-sm font-semibold">
@@ -163,7 +180,15 @@ function NumField({ label, value, onChange, step = 1, min = 0, hint }) {
           <span className="text-xs font-medium text-[var(--muted-foreground)]">{hint}</span>
         ) : null}
       </span>
-      <input type="number" value={value} onChange={onChange} step={step} min={min} className={inputClass} />
+      <input
+        type="number"
+        value={value}
+        onChange={onChange}
+        step={step}
+        min={min}
+        max={max}
+        className={inputClass}
+      />
     </label>
   );
 }
@@ -200,9 +225,14 @@ function ToggleRow({ label, hint, checked, onChange }) {
 
 export default function ToolHome() {
   const [inp, setInp] = useState(DEFAULTS);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard({ resetMs: 1200 });
 
-  const num = (key) => (event) => setInp((prev) => ({ ...prev, [key]: Number(event.target.value) }));
+  const num = (key) => (event) => {
+    const bounds = FIELD_BOUNDS[key];
+    const raw = Number(event.target.value);
+    const value = bounds ? clamp(raw, bounds[0], bounds[1]) : raw;
+    setInp((prev) => ({ ...prev, [key]: value }));
+  };
   const toggle = (key) => () => setInp((prev) => ({ ...prev, [key]: !prev[key] }));
 
   const sim = useMemo(() => simulate(inp), [inp]);
@@ -246,10 +276,7 @@ export default function ToolHome() {
         .join("; ")}`,
       `Generated: ${new Date().toLocaleString()}`,
     ];
-    const success = await safeCopyText(lines.join("\n"));
-    if (!success) return;
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1200);
+    await copyToClipboard("summary", lines.join("\n"), { label: "Rent vs buy summary" });
   };
 
   return (
@@ -270,15 +297,15 @@ export default function ToolHome() {
         <section className="mt-6 grid gap-6 2xl:grid-cols-[390px_1fr]">
           <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
             <div className="grid gap-4 sm:grid-cols-2 2xl:grid-cols-1">
-              <NumField label="Home price" hint="INR" value={inp.price} onChange={num("price")} step={100000} />
-              <NumField label="Down payment" hint="% of price" value={inp.downPct} onChange={num("downPct")} step={1} />
-              <NumField label="Loan interest rate" hint="% / year" value={inp.loanRate} onChange={num("loanRate")} step={0.1} />
-              <NumField label="Loan tenure" hint="years" value={inp.tenureYears} onChange={num("tenureYears")} step={1} min={1} />
-              <NumField label="Monthly rent (same home)" hint="INR" value={inp.rent} onChange={num("rent")} step={1000} />
-              <NumField label="Rent inflation" hint="% / year" value={inp.rentInflation} onChange={num("rentInflation")} step={0.5} />
-              <NumField label="Home appreciation" hint="% / year" value={inp.appreciation} onChange={num("appreciation")} step={0.5} />
-              <NumField label="Investment return on savings" hint="% / year" value={inp.invReturn} onChange={num("invReturn")} step={0.5} />
-              <NumField label="Maintenance + property tax" hint="% of value / year" value={inp.maintPct} onChange={num("maintPct")} step={0.1} />
+              <NumField label="Home price" hint="INR" value={inp.price} onChange={num("price")} step={100000} min={FIELD_BOUNDS.price[0]} max={FIELD_BOUNDS.price[1]} />
+              <NumField label="Down payment" hint="% of price" value={inp.downPct} onChange={num("downPct")} step={1} min={FIELD_BOUNDS.downPct[0]} max={FIELD_BOUNDS.downPct[1]} />
+              <NumField label="Loan interest rate" hint="% / year" value={inp.loanRate} onChange={num("loanRate")} step={0.1} min={FIELD_BOUNDS.loanRate[0]} max={FIELD_BOUNDS.loanRate[1]} />
+              <NumField label="Loan tenure" hint="years" value={inp.tenureYears} onChange={num("tenureYears")} step={1} min={FIELD_BOUNDS.tenureYears[0]} max={FIELD_BOUNDS.tenureYears[1]} />
+              <NumField label="Monthly rent (same home)" hint="INR" value={inp.rent} onChange={num("rent")} step={1000} min={FIELD_BOUNDS.rent[0]} max={FIELD_BOUNDS.rent[1]} />
+              <NumField label="Rent inflation" hint="% / year" value={inp.rentInflation} onChange={num("rentInflation")} step={0.5} min={FIELD_BOUNDS.rentInflation[0]} max={FIELD_BOUNDS.rentInflation[1]} />
+              <NumField label="Home appreciation" hint="% / year" value={inp.appreciation} onChange={num("appreciation")} step={0.5} min={FIELD_BOUNDS.appreciation[0]} max={FIELD_BOUNDS.appreciation[1]} />
+              <NumField label="Investment return on savings" hint="% / year" value={inp.invReturn} onChange={num("invReturn")} step={0.5} min={FIELD_BOUNDS.invReturn[0]} max={FIELD_BOUNDS.invReturn[1]} />
+              <NumField label="Maintenance + property tax" hint="% of value / year" value={inp.maintPct} onChange={num("maintPct")} step={0.1} min={FIELD_BOUNDS.maintPct[0]} max={FIELD_BOUNDS.maintPct[1]} />
             </div>
 
             <label className="mt-5 block">
@@ -317,7 +344,11 @@ export default function ToolHome() {
                 <span className="text-sm font-semibold">Quick presets</span>
                 <button
                   type="button"
-                  onClick={() => setInp(DEFAULTS)}
+                  onClick={() => {
+                    if (window.confirm("Reset all inputs to the defaults? This clears everything you've entered.")) {
+                      setInp(DEFAULTS);
+                    }
+                  }}
                   className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--primary)]"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
@@ -340,17 +371,25 @@ export default function ToolHome() {
           </div>
 
           <div className="grid content-start gap-6">
-            <div aria-live="polite" className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)]">
+            <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)]">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">
                   Verdict at year {sim.horizonYears}
                 </p>
-                <button type="button" onClick={copySummary} className="btn-secondary min-h-9 px-3 py-1.5 text-sm">
+                <button
+                  type="button"
+                  onClick={copySummary}
+                  aria-label={isCopied("summary") ? "Copied the rent vs buy summary to clipboard" : "Copy summary"}
+                  className="btn-secondary min-h-9 px-3 py-1.5 text-sm"
+                >
                   <Copy className="h-4 w-4" />
-                  {copied ? "Copied" : "Copy summary"}
+                  {isCopied("summary") ? "Copied" : "Copy summary"}
                 </button>
+                <span className="sr-only" role="status" aria-live="polite">
+                  {announcement}
+                </span>
               </div>
-              <div className="mt-4 flex flex-wrap items-center gap-4">
+              <div aria-live="polite" role="status" className="mt-4 flex flex-wrap items-center gap-4">
                 <div className="rounded-lg bg-[var(--muted)] p-5">
                   <p className="text-sm font-semibold text-[var(--muted-foreground)]">
                     {buyAhead ? "Buying comes out ahead" : "Renting comes out ahead"}

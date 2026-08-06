@@ -43,17 +43,42 @@ export const spec = {
     {
       "label": "src/**/*.ts",
       "values": {
-        "pattern": "src/*/*.ts",
+        "pattern": "src/**/*.ts",
         "input_string": "src/lib/index.ts"
       }
     }
   ],
-  "note": "Supports * (any run of characters) and ? (single character)."
+  "note": "Supports * within one path segment, ** across directories, and ? for one non-slash character."
 },
-  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+  compilePattern: (pattern) => {
+      const pat = String(pattern || "");
+      let source = "^";
+      for (let index = 0; index < pat.length; index += 1) {
+        const char = pat[index];
+        if (char === "*") {
+          let starCount = 1;
+          while (pat[index + 1] === "*") {
+            starCount += 1;
+            index += 1;
+          }
+          if (starCount > 1 && pat[index + 1] === "/") {
+            source += "(?:[^/]+/)*";
+            index += 1;
+          } else {
+            source += starCount > 1 ? ".*" : "[^/]*";
+          }
+        } else if (char === "?") {
+          source += "[^/]";
+        } else {
+          source += /[.+^${}()|[\]\\]/.test(char) ? `\\${char}` : char;
+        }
+      }
+      return `${source}$`;
+    },
+  compute: (values) => {
       const pat = String(values.pattern || "");
       if (!pat) return { result: "—", caption: "Enter a glob pattern" };
-      const re = new RegExp("^" + pat.replace(/[.+^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*").replace(/\?/g, ".") + "$", values.case_insensitive ? "i" : "");
+      const re = new RegExp(spec.compilePattern(pat), values.case_insensitive ? "i" : "");
       const match = re.test(String(values.input_string || ""));
       return { result: match ? "✓ Match" : "✗ No match", caption: match ? "the string matches the pattern" : "no match", rows: [["Matches", match ? "yes" : "no"], ["Compiled regex", re.source]] };
     },

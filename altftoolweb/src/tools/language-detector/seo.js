@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The Language Detector identifies what language a piece of text is written in by combining two signals: Unicode script detection across 21 script blocks (Latin, Cyrillic, Arabic, Devanagari, Han, Hangul, Tamil, Thai and more) and per-language character-frequency profiles that separate the 14 Latin-script languages it distinguishes. It returns up to five ranked candidates with a confidence score for each, a breakdown of which scripts appear and in what proportion, and character statistics — total characters, words, letters and unique characters. When more than one script is present it flags the text as possibly mixed-language rather than forcing a single answer.",
+    "The Language Detector identifies what language a piece of text is written in by combining two signals: Unicode script detection across 19 script blocks (Latin, Cyrillic, Arabic, Devanagari, Chinese, Hangul, Tamil, Thai and more) and per-language character-frequency profiles that separate the 14 Latin-script languages it distinguishes. It returns up to five ranked candidates with a confidence score for each, a breakdown of which scripts appear and in what proportion, and character statistics — total characters, words, letters and unique characters. When more than one script is present it flags the text as possibly mixed-language rather than forcing a single answer.",
   useCases: [
     "A support ticket or form submission arrives with no language field and you need to know which team to route it to before you can reply.",
     "You have a spreadsheet column of user-generated comments and want to spot-check whether an entry is Spanish or Portuguese — the two share most letters, so you want to see the confidence gap rather than a single label.",
@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How does the language detection work?",
-      "Two passes. First, every character is matched against 21 Unicode script ranges, and a dominant non-Latin script maps straight to a language — Hangul to Korean, Thai to Thai, Hiragana or Katakana to Japanese. Second, Latin-script text is scored against character profiles for 14 languages, weighting distinctive letters like ñ, ß, ğ, ł and ă more heavily than shared ones.",
+      "Two passes. First, every character is matched against 19 Unicode script blocks, and a dominant non-Latin script maps straight to a language — Hangul to Korean, Thai to Thai, Hiragana or Katakana to Japanese. Second, Latin-script text is scored against character profiles for 14 languages, weighting distinctive letters like ñ, ß, ğ, ł and ă more heavily than shared ones.",
     ],
     [
       "How much text does it need to be accurate?",
@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "Can it tell Hindi from Marathi, or Urdu from Arabic?",
-      "Not reliably, because those pairs share a script. Devanagari text is reported as Hindi and Arabic-script text as Arabic or Urdu based on the script block alone, so languages that use the same writing system without distinguishing characters will be grouped. Script-level detection is exact; the language label within a shared script is a best guess.",
+      "Not reliably, because those pairs share a script. Devanagari text is reported as Hindi, and Arabic-script text — including Urdu, which is written in the same Arabic script — is always reported as Arabic, since detection works at the script-block level and has no way to distinguish languages that share a writing system. Script-block classification is deterministic for the ranges this tool covers, but the inferred language is only a heuristic — especially for shared scripts.",
     ],
     [
       "Is my text sent anywhere?",

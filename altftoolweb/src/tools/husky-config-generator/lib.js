@@ -139,7 +139,24 @@ export function generateHuskySetup({
 
   const packageJson = { scripts: { prepare: "husky" } };
   if (preCommit) {
-    packageJson["lint-staged"] = Object.fromEntries(rows.map((r) => [r.pattern, r.command]));
+    // lint-staged supports more than one command per glob via its array
+    // syntax (["eslint --fix", "prettier --write"]). Two rows that share a
+    // pattern are a natural way to ask for that in this UI — since there is
+    // no way to add a second command to an existing row — so merge same-glob
+    // rows into an array instead of letting the later row silently clobber
+    // the earlier one's command.
+    const byPattern = new Map();
+    for (const row of rows) {
+      const commands = byPattern.get(row.pattern);
+      if (commands) commands.push(row.command);
+      else byPattern.set(row.pattern, [row.command]);
+    }
+    packageJson["lint-staged"] = Object.fromEntries(
+      Array.from(byPattern, ([pattern, commands]) => [
+        pattern,
+        commands.length === 1 ? commands[0] : commands,
+      ]),
+    );
   }
   const packageJsonSnippet = JSON.stringify(packageJson, null, 2);
 

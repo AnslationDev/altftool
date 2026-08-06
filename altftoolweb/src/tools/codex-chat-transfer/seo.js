@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "Codex Chat Transfer converts a conversation between the six message formats used by today's chat models: OpenAI JSON, Anthropic JSON, Google Gemini, Cohere, the Llama 2/3 prompt string, and plain Markdown. Paste an array of role/content objects, a payload with a messages array, or a Markdown transcript with **User:** and **Assistant:** headings, and the converted output appears as you type. It is built for developers porting prompts, evaluations, or saved chat logs from one provider's API shape to another.",
+    "Codex Chat Transfer emits a conversation in six target formats used by today's chat models: OpenAI JSON, Anthropic JSON, Google Gemini, Cohere, the Llama 2/3 prompt string, and plain Markdown. Paste an array of role/content objects, a payload with a messages array, a headed Markdown transcript, or one unheaded plain-text user turn, and the selected output appears as you type. It is built for developers reshaping prompts, evaluations or saved chat logs for another target API.",
   useCases: [
     "You have a working prompt as an OpenAI messages array and need the Anthropic shape, where the system prompt is hoisted into its own top-level system field instead of sitting in the array.",
     "You are moving an evaluation set to Gemini and need every assistant turn relabelled as role \"model\" with the text wrapped in parts, plus a systemInstruction block.",
@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "Can it parse a chat log that is not JSON?",
-      "Yes. If the input does not start with [ or {, it is read line by line as a Markdown transcript, splitting on **User:**, **Assistant:**, **Bot:** and **System:** headings and turning each block into a message.",
+      "Yes. Recognised **User:**, **Assistant:**, **Bot:** and **System:** headings split Markdown into messages. Unheaded plain text is accepted as one user message; malformed JSON that begins with [ or { produces a parse error instead of falling back to text.",
     ],
     [
       "What does the Llama output look like?",

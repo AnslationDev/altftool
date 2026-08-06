@@ -152,6 +152,12 @@ export const BANDS = [
 
 const cleanText = (value) => String(value === undefined || value === null ? "" : value).trim();
 
+const normaliseSpokenToken = (value) =>
+  String(value)
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, "");
+
 /**
  * Assess a chosen safe word. Pure, no dictionary lookups.
  *
@@ -169,6 +175,24 @@ export function checkSafeWord(word) {
     return { ok: false, level: "weak", message: "Digits alone are easy to guess. Use a word or a short phrase." };
   }
   const words = value.split(/\s+/).filter(Boolean);
+  const weakWord = words.find((single) => {
+    // Punctuation is not a secret when the phrase is spoken aloud. Strip it
+    // before the weak-word and digits-only checks so `password!`, `secret,`
+    // and `1234!` cannot bypass the guard.
+    const spoken = normaliseSpokenToken(single);
+    return (
+      spoken.length < 4 ||
+      WEAK_SAFE_WORDS.includes(spoken) ||
+      /^\p{N}+$/u.test(spoken)
+    );
+  });
+  if (weakWord) {
+    return {
+      ok: false,
+      level: "weak",
+      message: `"${weakWord}" is too easy to guess on its own, even inside a phrase. Use words that are not on a common list, each at least four characters.`,
+    };
+  }
   if (words.length >= 2) {
     return { ok: true, level: "strong", message: "A two-word phrase is ideal — easy to say aloud, hard to guess." };
   }
@@ -240,12 +264,15 @@ export function buildFamilyAgreement({
     number: index + 1,
     id: rule.id,
     title: rule.label,
+    // Replacement values come from user input, so pass them via a replacer function rather than
+    // as the string argument to `.replace` — a string replacement still interprets $&, $$, $1 etc,
+    // which would let a household/helper name or safe word corrupt neighbouring placeholder text.
     text: rule.text
-      .replace("{household}", household)
-      .replace("{safeWordLine}", safeWordLine)
-      .replace("{coolingOff}", coolingText)
-      .replace("{threshold}", INR.format(Math.round(threshold)))
-      .replace("{helper}", helper),
+      .replace("{household}", () => household)
+      .replace("{safeWordLine}", () => safeWordLine)
+      .replace("{coolingOff}", () => coolingText)
+      .replace("{threshold}", () => INR.format(Math.round(threshold)))
+      .replace("{helper}", () => helper),
   }));
 
   const earned = chosen.reduce((sum, rule) => sum + rule.weight, 0);
@@ -268,7 +295,12 @@ export function buildFamilyAgreement({
   const warnings = [];
   if (namedMembers.length < 2) warnings.push("An agreement needs at least two people. Add everyone who shares money decisions.");
   if (selectedRules.includes("safeWord") && !safeWordCheck.ok) warnings.push(`Safe word: ${safeWordCheck.message}`);
-  if (includeSafeWord) warnings.push("You chose to print the safe word inside the agreement. Keep that copy at home and do not photograph or message it.");
+  // Only warn about the printed safe word when it actually ends up in the generated text: the
+  // safeWord clause has to be selected (the word is only ever substituted into that clause) and
+  // the word itself has to pass validation, matching the condition used to build safeWordLine above.
+  if (selectedRules.includes("safeWord") && includeSafeWord && safeWordCheck.ok) {
+    warnings.push("You chose to print the safe word inside the agreement. Keep that copy at home and do not photograph or message it.");
+  }
   if (!selectedRules.includes("noOtp")) warnings.push("The OTP clause is missing, and it is the single rule that prevents the most loss.");
 
   const lines = [

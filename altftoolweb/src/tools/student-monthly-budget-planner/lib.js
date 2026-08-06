@@ -65,11 +65,10 @@ export function planBudget({ income, expenses }) {
 
   const surplus = monthlyIncome - totalExpense;
 
-  // Percent shares; null when the divisor is zero so the UI can show a dash.
+  // Percent share of total spend; null when the divisor is zero so the UI can show a dash.
   const withShares = items.map((item) => ({
     ...item,
     shareOfExpense: totalExpense > 0 ? (item.amount / totalExpense) * 100 : null,
-    shareOfIncome: monthlyIncome > 0 ? (item.amount / monthlyIncome) * 100 : null,
   }));
 
   const rule = monthlyIncome > 0

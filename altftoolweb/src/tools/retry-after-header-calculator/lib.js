@@ -106,6 +106,151 @@ const isInteger = (value) => Number.isFinite(value) && Math.floor(value) === val
 const pad2 = (value) => String(value).padStart(2, "0");
 
 /**
+ * asctime-date, RFC 9110 section 5.6.7 (accepted by recipients for legacy
+ * reasons): `Sun Nov  6 08:49:37 1994`. Unlike IMF-fixdate and rfc850-date it
+ * carries no "GMT"/offset marker at all, so it is always implicitly GMT — but
+ * the native Date.parse has no way to know that and falls back to parsing it
+ * in the host's local time zone. Matched and built with Date.UTC here so the
+ * result does not drift with the visitor's own time zone.
+ */
+const ASCTIME_SHAPE_RE =
+  /^[A-Za-z]{3} [A-Za-z]{3} {1,2}\d{1,2} \d{2}:\d{2}:\d{2} \d{4}$/;
+const ASCTIME_RE =
+  /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (?: ([1-9])|([0-2]\d|3[01])) (\d{2}):(\d{2}):(\d{2}) (\d{4})$/;
+
+const IMF_FIXDATE_RE =
+  /^(Sun|Mon|Tue|Wed|Thu|Fri|Sat), (\d{2}) (Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec) (\d{4}) (\d{2}):(\d{2}):(\d{2}) GMT$/;
+
+const RFC850_DAY_NAMES = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+const RFC850_DATE_RE =
+  /^(Sunday|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday), (\d{2})-(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)-(\d{2}) (\d{2}):(\d{2}):(\d{2}) GMT$/;
+
+/**
+ * Build a UTC instant only when every parsed HTTP-date field is semantically
+ * valid. JavaScript's native Date parser silently rolls impossible dates such
+ * as 31 February into March and accepts misspelled weekdays, so it cannot be
+ * used as the validator for a protocol field.
+ */
+function buildHttpDate({ dayIndex, year, month, day, hour, minute, second }) {
+  if (
+    !Number.isInteger(dayIndex) ||
+    dayIndex < 0 ||
+    dayIndex > 6 ||
+    !Number.isInteger(year) ||
+    year < 1900 ||
+    year > 9999 ||
+    !Number.isInteger(month) ||
+    month < 0 ||
+    month > 11 ||
+    !Number.isInteger(day) ||
+    day < 1 ||
+    day > 31 ||
+    !Number.isInteger(hour) ||
+    hour < 0 ||
+    hour > 23 ||
+    !Number.isInteger(minute) ||
+    minute < 0 ||
+    minute > 59 ||
+    !Number.isInteger(second) ||
+    second < 0 ||
+    second > 60
+  ) {
+    return null;
+  }
+
+  // setUTCFullYear avoids Date.UTC's special 1900 offset for years 0000-0099.
+  // Build with second 59 and add one second afterwards for the RFC's allowed
+  // leap-second value, 60, because JavaScript Date has no leap-second field.
+  const comparableSecond = Math.min(second, 59);
+  const date = new Date(0);
+  date.setUTCFullYear(year, month, day);
+  date.setUTCHours(hour, minute, comparableSecond, 0);
+  if (
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== month ||
+    date.getUTCDate() !== day ||
+    date.getUTCHours() !== hour ||
+    date.getUTCMinutes() !== minute ||
+    date.getUTCSeconds() !== comparableSecond ||
+    date.getUTCDay() !== dayIndex
+  ) {
+    return null;
+  }
+
+  const epochMs = date.getTime() + (second === 60 ? 1000 : 0);
+  return Number.isFinite(epochMs) ? epochMs : null;
+}
+
+function parseImfFixdate(text) {
+  const match = IMF_FIXDATE_RE.exec(text);
+  if (!match) return null;
+  const [, dayName, dayText, monthName, yearText, hh, mm, ss] = match;
+  return buildHttpDate({
+    dayIndex: IMF_DAY_NAMES.indexOf(dayName),
+    year: Number(yearText),
+    month: IMF_MONTH_NAMES.indexOf(monthName),
+    day: Number(dayText),
+    hour: Number(hh),
+    minute: Number(mm),
+    second: Number(ss),
+  });
+}
+
+function parseRfc850Date(text, nowMs) {
+  const match = RFC850_DATE_RE.exec(text);
+  if (!match) return null;
+  const [, dayName, dayText, monthName, shortYearText, hh, mm, ss] = match;
+  const currentYear = new Date(nowMs).getUTCFullYear();
+  let year = Math.floor(currentYear / 100) * 100 + Number(shortYearText);
+  // RFC 9110 section 5.6.7: an obsolete two-digit year that appears more than
+  // 50 years in the future is interpreted as the most recent matching year in
+  // the past.
+  if (year > currentYear + 50) year -= 100;
+
+  return buildHttpDate({
+    dayIndex: RFC850_DAY_NAMES.indexOf(dayName),
+    year,
+    month: IMF_MONTH_NAMES.indexOf(monthName),
+    day: Number(dayText),
+    hour: Number(hh),
+    minute: Number(mm),
+    second: Number(ss),
+  });
+}
+
+function parseAsctimeAsGmt(text) {
+  if (!ASCTIME_SHAPE_RE.test(text)) return { matched: false, epochMs: null };
+  const match = ASCTIME_RE.exec(text);
+  if (!match) return { matched: true, epochMs: null };
+
+  const [, dayName, monthName, oneDigitDay, twoDigitDay, hh, mm, ss, yearText] = match;
+  const year = Number(yearText);
+  const month = IMF_MONTH_NAMES.indexOf(monthName);
+  const day = Number(oneDigitDay || twoDigitDay);
+  const hour = Number(hh);
+  const minute = Number(mm);
+  const second = Number(ss);
+  const epochMs = buildHttpDate({
+    dayIndex: IMF_DAY_NAMES.indexOf(dayName),
+    year,
+    month,
+    day,
+    hour,
+    minute,
+    second,
+  });
+  return { matched: true, epochMs };
+}
+
+/**
  * Format an epoch-milliseconds instant as an IMF-fixdate string in GMT.
  * Built from fixed English tables rather than a locale so the output can never
  * drift with the host locale or time zone.
@@ -120,7 +265,8 @@ export function formatImfFixdate(epochMs) {
   const day = IMF_DAY_NAMES[date.getUTCDay()];
   const month = IMF_MONTH_NAMES[date.getUTCMonth()];
   const year = date.getUTCFullYear();
-  if (year < 0 || year > 9999) return null;
+  // RFC 9110 applies RFC 5322 date semantics, whose year starts at 1900.
+  if (year < 1900 || year > 9999) return null;
   return (
     `${day}, ${pad2(date.getUTCDate())} ${month} ${String(year).padStart(4, "0")} ` +
     `${pad2(date.getUTCHours())}:${pad2(date.getUTCMinutes())}:${pad2(date.getUTCSeconds())} GMT`
@@ -278,8 +424,15 @@ export function backoffSchedule({
     // Guard the overflow that a large factor and attempt count can produce.
     const capped = Number.isFinite(uncapped) ? Math.min(uncapped, cap) : cap;
 
-    let low = capped;
-    let high = capped;
+    // A Retry-After value must be a whole number, so this is what you would send.
+    const headerSeconds = Math.ceil(capped);
+
+    // With no jitter there is no range to draw from — the client waits exactly
+    // the whole-second value that goes in the header, so these columns must
+    // report that (not the raw, un-rounded `capped` delay) or they contradict
+    // the Retry-After value shown in the same row.
+    let low = headerSeconds;
+    let high = headerSeconds;
     if (jitter === "full") {
       low = 0;
       high = capped;
@@ -287,9 +440,6 @@ export function backoffSchedule({
       low = capped / 2;
       high = capped;
     }
-
-    // A Retry-After value must be a whole number, so this is what you would send.
-    const headerSeconds = Math.ceil(capped);
 
     totalMin += low;
     totalMax += high;
@@ -346,7 +496,10 @@ export function parseRetryAfter(raw, nowMs) {
     };
   }
 
-  const parsed = Date.parse(text);
+  const asctime = parseAsctimeAsGmt(text);
+  const parsed = asctime.matched
+    ? asctime.epochMs
+    : (parseImfFixdate(text) ?? parseRfc850Date(text, now));
   if (!Number.isFinite(parsed)) {
     return {
       error:

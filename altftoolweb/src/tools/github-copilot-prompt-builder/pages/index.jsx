@@ -90,8 +90,8 @@ export default function ToolHome() {
           GitHub Copilot Prompt Builder
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-          Structure a coding task the way GitHub's own guidance recommends — goal, inputs, output,
-          constraints, then a concrete example — rendered as a comment block in your language's
+          Structure a coding task the way GitHub’s own guidance recommends — goal, inputs, output,
+          constraints, then a concrete example — rendered as a comment block in your language’s
           syntax, ready to paste above your cursor.
         </p>
       </header>
@@ -255,7 +255,7 @@ export default function ToolHome() {
         </div>
 
         <div className="mt-4 overflow-x-auto rounded-md border border-[var(--border)] bg-[var(--background)] p-4">
-          <pre className="font-mono text-sm leading-6 text-[var(--primary)]">
+          <pre className="font-mono text-sm leading-6 text-[var(--foreground)]">
             {hasError ? DASH : result.prompt}
           </pre>
         </div>

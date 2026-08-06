@@ -44,7 +44,7 @@ export default function CurrencyProfitLossCalculator() {
             </div>
 
             {/* Results */}
-            <ResultsPanel result={result} showDetails={showDetails} slug={SLUG} name={NAME} />
+            <ResultsPanel result={result} showDetails={showDetails} setShowDetails={setShowDetails} slug={SLUG} name={NAME} />
           </div>
         </div>
 
@@ -153,7 +153,7 @@ function CalculatorContent({ slug, pascal, icon, iconColor, name, result, setRes
   );
 }
 
-function ResultsPanel({ result, showDetails, slug, name }) {
+function ResultsPanel({ result, showDetails, setShowDetails, slug, name }) {
   if (!result) {
     return (
       <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-(--border) bg-(--background)/50 p-8 text-center">

@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, School } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   CONCESSION_GROUNDS,
   CONCESSION_MODES,
@@ -77,7 +78,7 @@ export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [requestKind, setRequestKind] = useState(REQUEST_KINDS.BOTH);
   const [concessionMode, setConcessionMode] = useState(CONCESSION_MODES.PERCENT);
-  const [copied, setCopied] = useState("");
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const set = (key) => (event) => setForm((prev) => ({ ...prev, [key]: event.target.value }));
 
@@ -120,7 +121,7 @@ export default function ToolHome() {
 
   const affordability = useMemo(() => {
     if (concession.error) return { error: concession.error };
-    return computeAffordability({ payable: concession.payable, monthlyIncome: Number(form.monthlyIncome) });
+    return computeAffordability({ payable: concession.payable, monthlyIncome: form.monthlyIncome });
   }, [concession, form.monthlyIncome]);
 
   const letter = useMemo(
@@ -159,22 +160,14 @@ export default function ToolHome() {
     letter.error ||
     "";
 
-  const copy = async (text, key) => {
-    if (!text) return;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(key);
-      setTimeout(() => setCopied(""), 1500);
-    } catch {
-      setCopied("");
-    }
-  };
-
   const reset = () => {
+    if (!window.confirm("Reset all fields? This will discard everything you've entered, including any typed circumstances.")) {
+      return;
+    }
     setForm(DEFAULTS);
     setRequestKind(REQUEST_KINDS.BOTH);
     setConcessionMode(CONCESSION_MODES.PERCENT);
-    setCopied("");
+    resetCopyState();
   };
 
   return (
@@ -391,9 +384,10 @@ export default function ToolHome() {
             <button
               type="button"
               className={GHOST_BTN}
-              aria-label="Copy the fee concession summary"
+              aria-label={isCopied("summary") ? "Copied the fee concession summary to clipboard" : "Copy the fee concession summary"}
               onClick={() =>
                 copy(
+                  "summary",
                   error
                     ? ""
                     : [
@@ -409,12 +403,12 @@ export default function ToolHome() {
                       ]
                         .filter(Boolean)
                         .join("\n"),
-                  "summary",
+                  { label: "fee concession summary" },
                 )
               }
             >
-              {copied === "summary" ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied === "summary" ? "Copied!" : "Copy summary"}
+              {isCopied("summary") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+              {isCopied("summary") ? "Copied!" : "Copy summary"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all fields" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
@@ -567,11 +561,11 @@ export default function ToolHome() {
           <button
             type="button"
             className={PRIMARY_BTN}
-            aria-label="Copy the fee concession request letter"
-            onClick={() => copy(letter.error ? "" : letter.body, "letter")}
+            aria-label={isCopied("letter") ? "Copied the fee concession request letter to clipboard" : "Copy the fee concession request letter"}
+            onClick={() => copy("letter", letter.error ? "" : letter.body, { label: "fee concession request letter" })}
           >
-            {copied === "letter" ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-            {copied === "letter" ? "Copied!" : "Copy letter"}
+            {isCopied("letter") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+            {isCopied("letter") ? "Copied!" : "Copy letter"}
           </button>
         </div>
         {error ? (
@@ -594,6 +588,9 @@ export default function ToolHome() {
         regulatory committee that hears parent representations. Deliver the letter in person if you
         can and ask for a receipt.
       </p>
+      <span className="sr-only" role="status" aria-live="polite">
+        {announcement}
+      </span>
     </main>
   );
 }

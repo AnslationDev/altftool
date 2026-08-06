@@ -25,8 +25,6 @@
 
 /* ------------------------------------------------------------------ dates */
 
-const MS_PER_DAY = 86_400_000;
-
 export function parseISODate(value) {
   if (typeof value !== "string") return null;
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value.trim());
@@ -50,13 +48,6 @@ export function addMonthsISO(isoDate, months) {
   const d = date.getUTCDate();
   const lastDay = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
   return toISO(new Date(Date.UTC(y, m, Math.min(d, lastDay))));
-}
-
-export function daysBetweenISO(fromISO, toISODate) {
-  const from = parseISODate(fromISO);
-  const to = parseISODate(toISODate);
-  if (!from || !to) return null;
-  return Math.round((to.getTime() - from.getTime()) / MS_PER_DAY);
 }
 
 export function formatLongDate(isoDate) {
@@ -120,8 +111,8 @@ export const CONCESSION_GROUNDS = [
   {
     id: "sibling",
     label: "More than one child in the school",
-    line: "two of my children study in this school and the combined fee is beyond what I can meet",
-    proof: "Fee receipts for both children and the admission numbers of each",
+    line: "more than one of my children study in this school and the combined fee is beyond what I can meet",
+    proof: "Fee receipts for each child and their admission numbers",
   },
   {
     id: "merit",
@@ -300,8 +291,17 @@ export function buildInstalmentPlan({ payable, instalments, firstDueISO, interva
  * makes an affordability case concrete.
  */
 export function computeAffordability({ payable, monthlyIncome }) {
+  const blank =
+    monthlyIncome === undefined ||
+    monthlyIncome === null ||
+    (typeof monthlyIncome === "string" && monthlyIncome.trim() === "");
+  if (blank) return { annualIncome: 0, feeShare: null };
+
   const income = Number(monthlyIncome);
-  if (!Number.isFinite(income) || income < 0) return { error: "Monthly household income cannot be negative." };
+  if (!Number.isFinite(income)) {
+    return { error: "Monthly household income must be a valid number." };
+  }
+  if (income < 0) return { error: "Monthly household income cannot be negative." };
   if (income === 0) return { annualIncome: 0, feeShare: null };
   const annualIncome = income * 12;
   const amount = Number(payable);
@@ -313,6 +313,72 @@ export function computeAffordability({ payable, monthlyIncome }) {
 
 const clean = (value) => (typeof value === "string" ? value.trim() : "");
 const or = (value, fallback) => clean(value) || fallback;
+
+/** Roman-numeral class labels mapped to their numeric level, I-XII. */
+const ROMAN_CLASS_LEVELS = {
+  I: 1,
+  II: 2,
+  III: 3,
+  IV: 4,
+  V: 5,
+  VI: 6,
+  VII: 7,
+  VIII: 8,
+  IX: 9,
+  X: 10,
+  XI: 11,
+  XII: 12,
+};
+
+/**
+ * Best-effort numeric class level from a free-text class label ("VIII", "8",
+ * "Class 8", "8th"). Returns null when the label can't be confidently parsed
+ * (e.g. "Nursery", "LKG") so callers can fall back to their default.
+ */
+function normaliseClassLabel(className) {
+  return clean(className)
+    .toUpperCase()
+    .replace(/^CLASS(?:\s+|[-:/]\s*)/, "")
+    .trim();
+}
+
+function parseClassLevel(className) {
+  const raw = normaliseClassLabel(className);
+  if (!raw) return null;
+
+  const roman = /^(XII|XI|X|IX|VIII|VII|VI|V|IV|III|II|I)(?=$|[\s./_-])/.exec(raw)?.[1];
+  if (roman && Object.prototype.hasOwnProperty.call(ROMAN_CLASS_LEVELS, roman)) {
+    return ROMAN_CLASS_LEVELS[roman];
+  }
+
+  const numeric = /^(\d{1,2})(?:ST|ND|RD|TH)?(?=$|[\s./_-])/.exec(raw)?.[1];
+  const level = Number(numeric);
+  return Number.isFinite(level) && level > 0 ? level : null;
+}
+
+export function classifyRteClass(className) {
+  const raw = normaliseClassLabel(className);
+  if (/^(?:PRE[-\s]?PRIMARY|NURSERY|LKG|UKG|KG(?:[-\s]?[12])?|KINDERGARTEN(?:[-\s]?[12])?)(?:$|[\s./_-])/.test(raw)) {
+    return "pre-primary";
+  }
+  const level = parseClassLevel(className);
+  if (level === null) return "unknown";
+  return level <= 8 ? "elementary" : "post-elementary";
+}
+
+function rteParagraphForClass(className, displayClass) {
+  const category = classifyRteClass(className);
+  if (category === "elementary") {
+    return `My child belongs to a weaker section or disadvantaged group. Section 12(1)(c) of the Right of Children to Free and Compulsory Education Act, 2009 requires specified schools to admit at least ${RTE_RESERVED_SHARE_PERCENT} per cent of their class I intake from those groups and provide the children admitted under that provision free and compulsory elementary education till completion. Section 3(2) protects a covered child from fees or charges that may prevent completion of elementary education. I request that the school verify my child's eligibility and admission status under the applicable RTE and State rules and, if covered, apply those protections.`;
+  }
+  if (category === "pre-primary") {
+    return `My child belongs to a weaker section or disadvantaged group. The proviso to section 12(1) of the Right of Children to Free and Compulsory Education Act, 2009 applies the entry-level provisions to pre-school admission where the school imparts pre-school education. I request that the school verify whether this provision and the applicable State rules cover my child's admission and, if so, apply the corresponding protections.`;
+  }
+  if (category === "post-elementary") {
+    return `My child belongs to a weaker section or disadvantaged group. As ${displayClass} is beyond elementary education, which the Right of Children to Free and Compulsory Education Act, 2009 defines as Class I to Class VIII, this request does not claim an RTE fee entitlement for the current class. I ask that the school consider our circumstances under its own concession policy and any applicable State rules.`;
+  }
+  return `My child belongs to a weaker section or disadvantaged group. Because the class or entry level is not clear, I ask that the school verify whether section 12(1)(c) of the Right of Children to Free and Compulsory Education Act, 2009 and the applicable State rules cover this admission. If they do not, please consider our circumstances under the school's own concession policy.`;
+}
 
 export function buildFeeConcessionLetter({
   parentName,
@@ -338,6 +404,9 @@ export function buildFeeConcessionLetter({
   email,
   assessment,
 }) {
+  if (affordability?.error) return { error: affordability.error };
+  // Preserve the legacy alias for direct callers while the page uses
+  // `affordability` consistently.
   if (assessment?.error) return { error: assessment.error };
   if (fee?.error) return { error: fee.error };
   if (concession?.error) return { error: concession.error };
@@ -382,9 +451,7 @@ export function buildFeeConcessionLetter({
       ? `Our declared household income is about ${formatINR(affordability.annualIncome)} a year, so the amount now payable is ${formatPercent(affordability.feeShare)} of it.`
       : "";
 
-  const rteLine = ground.rte
-    ? `My child falls in the weaker section and disadvantaged group category. Section 12(1)(c) of the Right of Children to Free and Compulsory Education Act, 2009 requires a private unaided school to admit at least ${RTE_RESERVED_SHARE_PERCENT} per cent of the strength of class I from that category and to provide free and compulsory elementary education till its completion, with reimbursement by the government under section 12(2). Section 3(2) of the same Act says no child shall be liable to pay any fee or charge that may prevent them from completing elementary education. I request that our case be considered under those provisions.`
-    : "";
+  const rteLine = ground.rte ? rteParagraphForClass(className, `Class ${cls}`) : "";
 
   const subject = `Request for ${requestKind === REQUEST_KINDS.INSTALMENTS ? "permission to pay the fee in instalments" : requestKind === REQUEST_KINDS.CONCESSION ? "fee concession" : "fee concession and payment in instalments"} — ${student}, Class ${cls}${sec ? `-${sec}` : ""} (Admission No. ${admission})`;
 

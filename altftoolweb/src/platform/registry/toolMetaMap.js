@@ -5570,7 +5570,7 @@ export const toolMetaMap = {
   },
   "codex-chat-transfer": {
     "name": "Codex Chat Transfer",
-    "description": "Convert chatbot chat logs and conversational arrays between OpenAI, Anthropic, and Markdown formats instantly.",
+    "description": "Convert message arrays or Markdown transcripts into OpenAI, Anthropic, Gemini, Cohere, Llama, or Markdown output.",
     "category": "Developer",
     "topics": [
       "Developers",

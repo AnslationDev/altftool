@@ -75,8 +75,12 @@ export function sanitizeFileName({ name, replacement = "_", lowercase = false, m
   if (original !== stripDiacritics(original)) issues.push("Accented letters were transliterated to plain letters.");
   if (/^\./.test(original)) issues.push("Starts with a dot, which hides the file on Unix servers.");
 
+  // Track whether a genuinely unsafe character (not just an accent that
+  // transliterates away cleanly) was ever substituted with `replacement`.
+  let unsafeCharsReplaced = false;
   const transform = (part) => {
     let value = stripDiacritics(part);
+    if (HAS_UNSAFE_CHAR.test(value)) unsafeCharsReplaced = true;
     value = value.replace(UNSAFE_CHARS, replacement);
     return value;
   };
@@ -84,25 +88,26 @@ export function sanitizeFileName({ name, replacement = "_", lowercase = false, m
   base = transform(base);
   extension = transform(extension).replace(/[._-]/g, ""); // extension keeps letters/digits only
 
-  // Collapse runs of separators and dots introduced by replacement.
+  if (unsafeCharsReplaced) {
+    issues.push("Symbols outside A-Z, 0-9, dot, hyphen and underscore were replaced.");
+  }
+
+  // Collapse runs of separators and dots, whether they pre-existed in the
+  // original name or were introduced by the replacement above — a portal is
+  // just as likely to choke on ".." as on "__".
+  const beforeCollapse = base;
   const runPattern = new RegExp(`[${replacement}]{2,}`, "g");
   base = base
     .replace(/\.{2,}/g, ".")
     .replace(runPattern, replacement)
     .replace(new RegExp(`^[.${replacement}]+|[.${replacement}]+$`, "g"), "");
-  if (HAS_UNSAFE_CHAR.test(original.replace(/\s/g, ""))) {
-    issues.push("Symbols outside A-Z, 0-9, dot, hyphen and underscore were replaced.");
+  if (base !== beforeCollapse) {
+    issues.push("Repeated dots or separators were collapsed to a single character.");
   }
 
   if (base === "") {
     base = "file";
     issues.push("Nothing usable remained of the base name, so it became \"file\".");
-  }
-
-  // Windows reserved device names are invalid regardless of extension.
-  if (WINDOWS_RESERVED.includes(base.toUpperCase())) {
-    base = `${base}${replacement}`;
-    issues.push("The base name is a reserved Windows device name (e.g. CON, PRN) and was suffixed.");
   }
 
   if (lowercase) base = base.toLowerCase();
@@ -111,12 +116,33 @@ export function sanitizeFileName({ name, replacement = "_", lowercase = false, m
     issues.push("The extension was lowercased — case-sensitive validators expect lowercase extensions.");
   }
 
-  // Truncate the BASE so the extension always survives.
-  const extensionPart = extension === "" ? "" : `.${extension}`;
+  // Truncate the BASE so the extension always survives — but if the extension
+  // alone is long relative to the cap, shrink the extension too. The output
+  // must never exceed `cap`, no matter how long the original extension was.
+  let extensionPart = extension === "" ? "" : `.${extension}`;
   if (base.length + extensionPart.length > cap) {
+    if (extensionPart.length > cap - 1) {
+      // Reserve 1 char for the base name and 1 for the dot, then trim the extension.
+      const maxExtensionChars = Math.max(0, cap - 2);
+      extension = maxExtensionChars > 0 ? extension.slice(0, maxExtensionChars) : "";
+      extensionPart = extension === "" ? "" : `.${extension}`;
+    }
     base = base.slice(0, Math.max(1, cap - extensionPart.length));
     base = base.replace(new RegExp(`[.${replacement}]+$`, "g"), "") || "file";
     issues.push(`The name was longer than ${cap} characters and was truncated.`);
+  }
+
+  // Windows reserved device names are invalid regardless of extension — checked on the
+  // FINAL base, since truncation above can turn an otherwise-safe name into a reserved one.
+  if (WINDOWS_RESERVED.includes(base.toUpperCase())) {
+    if (base.length + replacement.length + extensionPart.length <= cap) {
+      base = `${base}${replacement}`;
+    } else {
+      // No room to grow within the cap — swap the last character instead so the
+      // total length never exceeds the cap the user asked for.
+      base = `${base.slice(0, -1)}${replacement}`;
+    }
+    issues.push("The base name is a reserved Windows device name (e.g. CON, PRN) and was suffixed.");
   }
 
   const sanitized = `${base}${extensionPart}`;

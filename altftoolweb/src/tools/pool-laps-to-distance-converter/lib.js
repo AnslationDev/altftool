@@ -87,7 +87,6 @@ export function convertLaps({
   }
   if (laps < 0) return { error: "Lap count cannot be negative." };
   if (poolLength <= 0) return { error: "Pool length must be greater than zero." };
-  if (poolLength > 1000) return { error: "Pool length looks wrong — enter the length of one lane, not the whole session." };
   if (targetDistance < 0) return { error: "Goal distance cannot be negative." };
   if (totalSeconds < 0) return { error: "Swim time cannot be negative." };
   if (lengthsPerLap !== 1 && lengthsPerLap !== 2) {
@@ -99,7 +98,13 @@ export function convertLaps({
   const unitFactor = DISTANCE_UNITS[targetUnit];
   if (!unitFactor) return { error: "Choose a goal unit of m, km, yd or mi." };
 
+  // Bound the real-world (metres-equivalent) length, not the raw input, so the
+  // cutoff is the same regardless of whether the pool was entered in metres or yards.
   const poolLengthMetres = poolLengthToMetres(poolLength, poolUnit);
+  if (poolLengthMetres > 1000) {
+    return { error: "Pool length looks wrong — enter the length of one lane, not the whole session." };
+  }
+
   const lengths = laps * lengthsPerLap;
   const metres = lengths * poolLengthMetres;
 
@@ -108,15 +113,21 @@ export function convertLaps({
   const metresPerLap = poolLengthMetres * lengthsPerLap;
   const lapsRemaining = metresPerLap > 0 ? remainingMetres / metresPerLap : 0;
 
+  // Pace needs both a time and a non-zero distance. Track which one is
+  // missing so the caller can tell the user the real blocker instead of
+  // always blaming a missing time.
   let pace = null;
+  let paceBlockedReason = null;
   if (totalSeconds > 0 && metres > 0) {
     const secondsPer100m = (totalSeconds / metres) * 100;
     pace = {
       secondsPer100m,
-      secondsPerLength: totalSeconds / lengths,
-      metresPerMinute: (metres / totalSeconds) * 60,
       kmPerHour: (metres / totalSeconds) * 3.6,
     };
+  } else if (totalSeconds <= 0) {
+    paceBlockedReason = "time";
+  } else {
+    paceBlockedReason = "distance";
   }
 
   return {
@@ -136,6 +147,7 @@ export function convertLaps({
     goalReached: targetMetres > 0 && metres >= targetMetres,
     goalPercent: targetMetres > 0 ? Math.min(100, (metres / targetMetres) * 100) : 0,
     pace,
+    paceBlockedReason,
   };
 }
 
@@ -158,7 +170,15 @@ export function lapsForDistance({
   const unitFactor = DISTANCE_UNITS[distanceUnit];
   if (!unitFactor) return { error: "Choose a distance unit of m, km, yd or mi." };
 
+  // Same unit-aware sanity bound as convertLaps() — a pool length that looks
+  // like a whole session's distance rather than one lane is rejected here
+  // too, so this table can't show numbers built on a value the tool itself
+  // considers invalid.
   const poolLengthMetres = poolLengthToMetres(poolLength, poolUnit);
+  if (poolLengthMetres > 1000) {
+    return { error: "Pool length looks wrong — enter the length of one lane, not the whole session." };
+  }
+
   const metres = distance * unitFactor;
   const lengths = metres / poolLengthMetres;
   const laps = lengths / lengthsPerLap;
@@ -167,8 +187,6 @@ export function lapsForDistance({
     metres,
     lengths,
     laps,
-    wholeLaps: Math.floor(laps),
-    partialLength: (lengths % lengthsPerLap).toFixed(2) * 1,
   };
 }
 

@@ -111,6 +111,17 @@ export function toLocalISODate(date) {
   return `${year}-${month}-${day}`;
 }
 
+/** Add whole civil days to a YYYY-MM-DD date. Returns null on invalid input. */
+export function addDaysISO(iso, days) {
+  const stamp = parseISODate(iso);
+  if (stamp === null || !Number.isFinite(days)) return null;
+  const next = new Date(stamp + days * MS_PER_DAY);
+  const year = String(next.getUTCFullYear()).padStart(4, "0");
+  const month = String(next.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(next.getUTCDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+}
+
 /**
  * Countdown to the written paper and, when known, to the SSB window.
  *
@@ -148,12 +159,14 @@ export function buildDefenceCountdown({ todayISO, writtenISO, ssbStartISO = "", 
     if (writtenToSsb < 0) {
       return { error: "The SSB reporting date cannot be before the written exam." };
     }
+    // Conference day is reporting day + 4 (five days inclusive).
+    const conferenceOffsetDays = SSB_PROCESS_DAYS - 1;
     ssb = {
       daysToSsb,
       writtenToSsb,
       processDays: SSB_PROCESS_DAYS,
-      // Conference day is reporting day + 4 (five days inclusive).
-      conferenceOffsetDays: SSB_PROCESS_DAYS - 1,
+      conferenceOffsetDays,
+      conferenceISO: addDaysISO(ssbStartISO, conferenceOffsetDays),
     };
   }
 

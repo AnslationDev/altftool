@@ -35,7 +35,7 @@ export const LANGUAGES = [
   { id: "php", label: "PHP", comment: "//", stub: (n) => `function ${n}() {` },
   { id: "swift", label: "Swift", comment: "//", stub: (n) => `func ${n}() {` },
   { id: "kotlin", label: "Kotlin", comment: "//", stub: (n) => `fun ${n}() {` },
-  { id: "sql", label: "SQL", comment: "--", stub: () => "" },
+  { id: "sql", label: "SQL", comment: "--", stub: (n) => (n ? `-- Query: ${n}` : "") },
   { id: "shell", label: "Shell / Bash", comment: "#", stub: (n) => `${n}() {` },
 ];
 
@@ -110,9 +110,9 @@ export function buildCopilotPrompt({
   const content = [];
   content.push(taskText.endsWith(".") ? taskText : `${taskText}.`);
   const inputText = String(inputs ?? "").trim();
-  if (inputText) content.push(`Input: ${inputText}.`);
+  if (inputText) content.push(`Input: ${inputText.replace(/\.+$/, "")}.`);
   const outputText = String(outputs ?? "").trim();
-  if (outputText) content.push(`Output: ${outputText}.`);
+  if (outputText) content.push(`Output: ${outputText.replace(/\.+$/, "")}.`);
   constraintLines.forEach((line) => content.push(`Constraint: ${line.replace(/\.+$/, "")}.`));
   if (exampleLines.length) {
     content.push("Example:");

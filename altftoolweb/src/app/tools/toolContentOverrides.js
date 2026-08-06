@@ -8706,12 +8706,12 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Drag a channel's slider or type into its budget box under Channel Budget Allocation — Paid Search (Google Ads), Paid Social (Meta/TikTok), Influencer Marketing, Email Marketing, SEO & Content Creation and Offline & Events, each running 0 to 20,000 in steps of 100 — or press the Lead Generation, Brand Awareness or Product Launch preset to redistribute the same total by percentage. Total Budget, Projected Conversions and Projected ROAS recompute as you move; there is no calculate step.",
+      "Drag a channel's slider or type into its budget box under Channel Budget Allocation — Paid Search (Google Ads), Paid Social (Meta/TikTok), Influencer Marketing, Email Marketing, SEO & Content Creation and Offline & Events, each slider running 0 to 20,000 in steps of 100 — or press the Lead Generation, Brand Awareness or Product Launch preset to redistribute the same total by percentage. Total Budget, Projected Conversions and Projected ROAS recompute as you move; there is no calculate step.",
       "Fill in the CPC ($), CTR (%) and Conv. (%) cells for each row of the ROI & Customer Acquisition Estimator, then set Target CPA and Cust. LTV ($) in the bar above. Every channel whose Projected CPA lands at or below your target is drawn in the primary colour, which is the reallocation signal.",
       "Add work under Action Items & Next Steps: type into Task Description, choose Creative Setup (D1-10), Tracking Setup (D11-15), Campaign Launch (D16-25) or Scale & Optimize (D26-30) under Assign Phase, then press Append Task. Drag the day slider on the 30-Day Campaign Phase Timeline to see which phase is live, and use Reset Default in the Task Progress tile to restore the starting allocations and tasks."
     ]
   },
-  "candy-crush": {
+  "candy-match-3": {
     "intro": "Candy Crush is a free online match-3 game where players can swap candies, trigger combos, and beat level targets to chase their high score. It's perfect for casual gamers looking for a fun and challenging puzzle experience. With its colorful graphics and addictive gameplay, Candy Crush is ideal for anyone seeking a lighthearted gaming experience.",
     "useCases": [
       "Playing Candy Crush during a daily commute to pass the time and relieve stress",
@@ -8735,11 +8735,11 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What is the objective of the game?",
-        "The objective of Candy Crush is to swap candies to create sets of three or more in a row, either horizontally or vertically, to clear the board and achieve the level targets."
+        "Swap two neighbouring candies to line up three or more of the same kind horizontally or vertically. Matched candies clear, the ones above drop in and the board refills — the level is won the moment your Score reaches the Target shown above the board."
       ],
       [
         "How do I trigger combos in the game?",
-        "Combos are triggered by swapping candies to create multiple matches in a single move, which can help clear the board more efficiently and achieve higher scores."
+        "Combo counts cascades, not matches made in one move: when the refilled candies fall into a fresh match the payout is multiplied again and a Combo x2! 🔥 line appears above the board. Each further cascade step raises the multiplier."
       ],
       [
         "Can I play Candy Crush for free?",
@@ -8747,9 +8747,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Play' button to start a new game of Candy Crush and begin swapping candies to create matches",
-      "Use the mouse to drag and drop candies into adjacent positions to trigger combos and clear the board",
-      "Keep an eye on the level targets and try to beat them before running out of moves"
+      "The 8x8 board deals itself as soon as the page loads — there is no start button. Swap two neighbouring candies by dragging one towards the other, or by tapping one and then tapping an adjacent one; arrow keys move focus and Enter or Space selects. A swap that makes no run of three is undone and costs you no move.",
+      "Watch the stats above the board — Level, Score, Target, Moves (or Time in Timed mode) and Best — with the % to target bar underneath. The three levels ask for 500, 1000 and 1500 points and give you 25, 22 and 20 moves in Classic mode, or 60, 55 and 50 seconds in Timed mode.",
+      "Use Pause / Resume, Restart, the speaker button and the Classic mode / Timed mode toggle in that same bar. Beating the target opens Level Complete! with Next Level and Replay Level (the last level reads You Win! 🎉 with Play Again); running out shows Out of moves or Out of time with Try Again, and when no legal swap is left the replacement board stays in play after a No moves left — board shuffled! toast."
     ]
   },
   "captcha-generator": {
@@ -8776,7 +8776,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I generate a captcha?",
-        "Click the 'Generate' button and customize the settings to create your captcha."
+        "One is drawn the moment the page loads. Press Generate New CAPTCHA at the bottom, or the round refresh button under the preview, for a fresh code — and every change you make in Settings redraws it too."
       ],
       [
         "Can I use this for commercial purposes?",
@@ -8784,13 +8784,13 @@ export const toolContentOverrides = {
       ],
       [
         "What types of customizations are available?",
-        "You can choose from image noise, curved lines, and stylized text modes."
+        "Settings holds Length (4 to 10), Complexity, the A-Z / a-z / 0-9 / !@# character sets, the Noise and Lines sliders and four Font Styles; Advanced holds Case Sensitive and Exclude Ambiguous; Appearance holds Text Color and Background."
       ]
     ],
     "steps": [
-      "Click the 'Generate' button to create a captcha tailored to your needs.",
-      "Customize the captcha by selecting image noise, curved lines, and stylized text modes.",
-      "Verify the captcha on your website or application with ease."
+      "Shape the code on the Settings tab: Length steps from 4 to 10 with the minus and plus buttons, Complexity is Easy, Medium or Hard, the Characters row toggles A-Z, a-z, 0-9 and !@#, the Noise and Lines sliders run from 0% to 100%, and Font Style offers Distorted, Clean, Bold or Monospace. The CAPTCHA Preview canvas redraws on every change.",
+      "Open Advanced to set the Case Sensitive and Exclude Ambiguous switches, then solve your own code under Test Verification: type it into Enter captcha text... and press Verify for either Correct — verification passed! or Incorrect — please try again. The Appearance tab sets Text Color (Multicolor, Navy, Black or Blue) and Background (Gradient, Plain White or Soft Gray).",
+      "Take the result with Copy Text, with Download — which saves the canvas as captcha-<code>.png — or with Copy Image, and press Generate New CAPTCHA for a fresh one. Generation and checking happen entirely in your browser, so for production you still generate and validate on the server."
     ]
   },
   "car-ownership-cost-analyzer": {
@@ -8857,7 +8857,7 @@ export const toolContentOverrides = {
     ],
     "steps": [
       "Click Pick Card. The card panel opens on a Ready to Pick placeholder, and the button is disabled and reads Picking... while the 3D flip animation plays.",
-      "Read the draw in the panel beside the card, which shows No card picked yet until your first pick: a miniature card carrying the rank and the suit pip — red for hearts and diamonds, black for clubs and spades — with the result written out in full underneath, Queen of Spades for instance.",
+      "Read the draw in the panel beside the card, which shows No card picked yet until your first pick: a miniature card carrying the rank and the suit pip — red for hearts and diamonds, black for clubs and spades — with the result written out in full beside it, Queen of Spades for instance.",
       "Click Pick Card again for another draw. Cards are never removed, so all 52 stay in play and the same card can come up twice in a row."
     ]
   },
@@ -8885,7 +8885,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I shuffle the deck?",
-        "Simply click the 'Shuffle' button to mix up the cards."
+        "In Free Play press Shuffle in the action bar, or click the deck stack itself — both riffle the same deck. Pick a Card, Prediction and Memory each deal from their own freshly shuffled deck, so there you use New spread, New prediction or New round instead."
       ],
       [
         "Can I perform this trick for others online?",
@@ -8897,9 +8897,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Shuffle' button to mix up the deck.",
-      "Draw a card from the shuffled pile.",
-      "Pick any card you like, then watch as it magically reveals itself with smooth animations."
+      "Choose a mode from the tabs at the top — Pick a Card, Prediction, Memory or Free Play, which is the one that opens. Free Play gives you Shuffle, Draw 1, Draw 5 and Random card, the deck badge counting down from 52 cards left, and a Drawn cards (0) panel that fills as you draw.",
+      "Pick a Card starts with Deal the cards: memorise one of the seven face-up cards, press I memorised it to turn them down, then tap the one you memorised for a confetti reveal titled Your card! Prediction runs Begin the prediction then Reveal the test — whichever of the six face-down cards you choose becomes the sealed one under I knew it! Memory starts with Start memory round, flashes a card, then hides it in a grid of eight; Streak, Best and Attempts track your hunt and a wrong tap warns Not quite — study the spread and try again.",
+      "Below the stage the replay button reads New spread, New prediction or New round for the trick you are in, the speaker button mutes the sound effects and the circular arrow resets the deck and the streak. Card style switches the artwork between Classic, Neon and Minimal."
     ]
   },
   "cartoon-yourself": {
@@ -9002,7 +9002,7 @@ export const toolContentOverrides = {
       ],
       [
         "Time-Saving",
-        "Quickly find information about any organelle or metabolic function with the search bar feature."
+        "Quickly switch between structures with the organelle list and read the selected function and fact in one card."
       ]
     ],
     "faqs": [
@@ -9016,13 +9016,13 @@ export const toolContentOverrides = {
       ],
       [
         "How does Cell Explorer help with studying metabolic functions?",
-        "Cell Explorer allows users to explore the different pathways and processes involved in metabolic functions within cells."
+        "Every organelle carries a Metabolic Function line and a Biological Fact, shown in the card under the Organelles list as soon as you select it — the mitochondria entry, for example, describes generating ATP through oxidative phosphorylation."
       ]
     ],
     "steps": [
-      "Click on any organelle within the cell diagram to learn about its function and role in cellular processes.",
-      "Navigate through different sections to explore metabolic functions, cellular structures, and more.",
-      "Use the search bar to quickly find specific information or organelles."
+      "Pick Animal Cell or Plant Cell under Cell Type Selector. Animal draws the Nucleus, Mitochondria, Endoplasmic Reticulum, Golgi Apparatus and Lysosomes inside an oval Cell Membrane; Plant draws the Nucleus, Chloroplast, Central Vacuole and Mitochondria inside a rounded rectangular Cell Wall.",
+      "Click a coloured internal organelle on the diagram — the badge over it reads Click any organelle on diagram to inspect function — or choose any structure from the Organelles list on the left. A selected internal organelle gets a white stroke and coloured glow; selecting the Cell Membrane or Cell Wall updates the Metabolic Function and Biological Fact card but does not add a selection effect to the outline. The two outlines are list-only selections.",
+      "Read the Educational Principles: Eukaryotic Cells note under the diagram for how the two cell types differ, and press Reset at the top right to return to the Animal Cell with the Nucleus selected."
     ]
   },
   "chatgpt-chat-export": {
@@ -9049,21 +9049,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What file types can I export my ChatGPT conversations to?",
-        "You can export your conversations to PDF, DOCX, Markdown, and HTML."
+        "Seven, each its own button on the Export tab: PDF, DOCX, Markdown, HTML, TXT, JSON and CSV. The file is saved under the conversation title with the matching extension, or as chat-export if the title has no usable characters."
       ],
       [
         "How do I use ChatGPT Chat Export?",
-        "Simply click the 'Export' button in ChatGPT, upload the file to ChatGPT Chat Export, select your desired format, and click 'Convert'."
+        "Drop your saved conversation on the Drag & drop your chat export panel — it accepts .json, .md, .markdown, .txt, .html, .htm and .csv — or click Paste your chat conversation and press Parse Conversation. The Viewer tab opens on its own, and each button on the Export tab downloads straight away; there is no separate convert step."
       ],
       [
         "Is there a limit on the size of files I can convert?",
-        "There is no size limit for files you can convert with ChatGPT Chat Export."
+        "No size check is applied — the file is read in the browser with FileReader and never uploaded, so the practical limit is your device's memory rather than a fixed cap."
       ]
     ],
     "steps": [
-      "Click the 'Export' button in ChatGPT to generate a conversation file.",
-      "Upload the exported file to ChatGPT Chat Export using the tool's interface.",
-      "Select your desired output format (PDF, DOCX, Markdown, HTML) and click 'Convert'."
+      "Drop a saved conversation onto the Drag & drop your chat export panel or click to browse files — the picker accepts .json, .md, .markdown, .txt, .html, .htm and .csv — or click Paste your chat conversation and press Parse Conversation on the text you paste in.",
+      "A Parsed <n> messages toast confirms the thread and the Viewer tab opens; Search filters by role and code block, and Settings holds Theme, Font Family, Font Size, Line Height, the Show Avatars, Show Timestamps, Hide User Messages and Hide Assistant Messages toggles plus Page Size (A4 or Letter), Orientation and Light PDF / Dark PDF.",
+      "Open the Export tab and click PDF, DOCX, Markdown, HTML, TXT, JSON or CSV — each one downloads immediately under the conversation title with that extension, or chat-export if the title has no usable characters. Copy to Clipboard, Print and Share sit beside them, and Clear empties the workspace."
     ]
   },
   "chemical-reaction-explorer": {
@@ -9172,21 +9172,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How many puzzles are available?",
-        "The Chess Puzzle Trainer offers a vast library of over 1000 puzzles across various difficulty levels."
+        "Eighteen, and the counter beside the board reads 1 / 18 with no filters applied. They cover six motifs — Forks, Pins, Skewers, Discovered, Checkmates and Endgames — with one Easy, one Medium and one Hard puzzle in each, and every one is solved by a single correct move."
       ],
       [
         "Can I track my progress?",
-        "Yes, you can monitor your performance and track improvements through the built-in analytics dashboard."
+        "Yes. The Stats card in the sidebar keeps Solved, Total Attempts, Streak, Best Streak and Total Score, and the row above the board repeats solved, streak and score next to a running clock. Scoring is 10 points for an Easy puzzle, 20 for Medium and 30 for Hard, saved in your browser rather than to an account."
       ],
       [
         "Is it suitable for beginners?",
-        "Absolutely! The tool includes beginner-friendly puzzles to help players of all skill levels improve."
+        "Yes. Set the difficulty filter to Easy, and use Hint — it pulses the square the correct piece is standing on for two seconds without giving away the destination. Three wrong moves end the puzzle with Failed — 3 wrong attempts, and Show Solution then plays the answer out on the board."
       ]
     ],
     "steps": [
-      "Click the 'Start' button to begin your puzzle session.",
-      "Select from multiple difficulty levels to match your skill level.",
-      "Review each puzzle solution for in-depth learning."
+      "Pick a motif in the Filter row — Forks, Pins, Skewers, Discovered, Checkmates or Endgames — and a difficulty of Easy, Medium or Hard. The first matching puzzle is already on the board and the clock is running, so there is no start button.",
+      "White is to move. Click a white piece and then its destination square; the badge above the board shows the puzzle's difficulty and motif, and the counter beside it your place in the filtered set — 1 / 18 with the filters left on All. Hint pulses the square the right piece stands on for two seconds, and Give Up plays the solution out instead.",
+      "A correct move ends the puzzle with Solved! +10 pts on Easy, +20 on Medium or +30 on Hard, above the explanation of the tactic; three wrong moves give Failed — 3 wrong attempts and a Show Solution link. Retry restores the starting position, Next Puzzle moves on, and the Stats card holds Solved, Total Attempts, Streak, Best Streak and Total Score in your browser."
     ]
   },
   "chinese-character-generator": {
@@ -9213,21 +9213,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I generate a specific type of Chinese character?",
-        "Select the desired category from the tool's interface and click 'Generate' to see examples."
+        "Pick a category chip on the Search tab — Lucky Characters, Zodiac, Japanese Kanji-style and twelve more — and the grid narrows to that category's twelve characters; Random results then opens one of them at random. The Generator tab's Random Generate and Generate 5 buttons reshuffle the characters already on screen."
       ],
       [
         "Can I save my favorite characters?",
-        "Yes, you can mark your favorites directly within the tool for easy access later."
+        "Yes. Save on any card files it under the Favorites tab and the button switches to Saved with a filled heart. Favorites and the History list are written to your browser's local storage, so they survive a reload but stay on that one device."
       ],
       [
         "Is the data accurate?",
-        "All information provided is based on authoritative sources to ensure accuracy and reliability."
+        "The 180 characters are a fixed, hand-checked list shipped with the page — glyph, pinyin with tone marks, English meaning, stroke count and U+ codepoint. 龙 is listed at 5 strokes, U+9F99, with 龍 (U+9F8D) as its traditional form. Nothing is fetched or generated at run time."
       ]
     ],
     "steps": [
-      "Click on the 'Generate' button to select a category of Chinese characters such as radicals, common phrases, or historical scripts.",
-      "Explore the details provided for each character, including its meaning, pinyin pronunciation, stroke count, and Unicode code point.",
-      "Copy, favorite, or download any character in PNG or SVG format to use in your projects, presentations, or personal learning materials."
+      "Open the Search tab and type an English meaning, a pinyin syllable or the exact glyph — the field suggests dragon, love, 福 — or pick one of the category chips (All, Common Characters, Lucky Characters, Love, Peace, Strength, Wisdom, Nature, Zodiac, Family, Success, Business, Happiness, Japanese Kanji-style, Traditional Chinese, Simplified Chinese). The count above the grid reads 12 results for a single category, and Random results opens one card at random.",
+      "Each card shows the glyph with its pinyin and English meaning, plus Strokes, Unicode and Category tiles, a row of visually similar characters, and the Traditional or Simplified counterpart where the entry has one. Clicking a card opens it on the Generator tab and records it in History, which keeps the last 60.",
+      "Save keeps a card in the Favorites tab; the icon buttons beside it are Copy character, Download PNG and Download SVG — saved as character-<glyph>-<codepoint>.png and .svg — and Share, which copies the glyph, pinyin, meaning and codepoint when the browser has no share sheet."
     ]
   },
   "chinese-word-segmentation": {
@@ -9254,21 +9254,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How does the tool detect mixed languages?",
-        "The tool uses advanced natural language processing algorithms to accurately identify and separate different languages within a single text input."
+        "By script, character by character: Unicode ranges pick out Chinese, Devanagari for Hindi, A-Z for English and 0-9 for numbers. When more than one of those scripts is present the Language Detection panel reads Mixed language; with a single script it names Chinese, English or Hindi, and text with none of them reads Unsupported or symbolic."
       ],
       [
         "Can I use this tool with other languages besides English and Hindi?",
-        "Yes, our tool supports multiple languages including Chinese, making it versatile for various multilingual needs."
+        "Chinese, English, Hindi and numbers are the four scripts it knows. Chinese runs are cut with the zh-Hans word segmenter, Hindi with hi-IN and English with en-US; anything else, such as Cyrillic, Arabic or Japanese kana, is grouped under the Unknown label rather than segmented by a language rule."
       ],
       [
         "Is the data processed locally on my device or sent to a server?",
-        "All processing occurs locally in your browser, ensuring your data remains secure and private."
+        "Segmentation, language detection and both exports run entirely in the browser with no backend. The Auto Translation Split panel is the exception: it sends your text to Google's public translate endpoint automatically, roughly half a second after you stop typing, so that text does leave your device."
       ]
     ],
     "steps": [
-      "Click the button to upload your text file or paste your content into the designated area.",
-      "Our tool will automatically analyze and process your input, segmenting Chinese words, splitting English and Hindi, and detecting any mixed language present.",
-      "View the live NLP-style token results directly in your browser for immediate analysis and review."
+      "Type or paste into the Input Panel — it takes Chinese, English, Hindi or mixed-language text, and there is no file upload. Anything past 12000 characters is trimmed, with the note Input limited to 12000 characters for responsive parsing; otherwise the panel reads Updates as you type. No backend required.",
+      "Nothing needs to be run. Language Detection names the script and counts Chinese, English, Hindi and Number characters, Comparison View sets Original Text against the Segmented Version whose tokens are joined by a pipe, and Segmentation Output lists each token with its script label — narrow that list with Search tokens, scripts, or meanings, or add your own glosses under Meaning Layer as one mapping per line (中文 = Chinese language).",
+      "Copy puts the segmented text on the clipboard, TXT and JSON save language-segmentation-result.txt and language-segmentation-result.json, and Save files a snapshot under History, which keeps the last 12 and reloads one when you click it. Clear empties the input; Clear history empties the list."
     ]
   },
   "chit-fund-calculator": {
@@ -9313,7 +9313,7 @@ export const toolContentOverrides = {
     ]
   },
   "circled-text-generator": {
-    "intro": "The Circled Text Generator is a unique browser tool designed for individuals looking to add a creative touch to their text, such as designers, social media managers, and content creators. It converts letters and numbers into circled Unicode characters with multiple styles, including filled, double, and parenthesized. By using this tool, users can enhance the visual appeal of their text and make it stand out.",
+    "intro": "The Circled Text Generator is a browser tool for adding an enclosed Unicode treatment to text. It converts letters across Circled, Filled Circle, Filled Square and Parenthesized styles; Filled Square uses Unicode's Negative Squared letters. Circled and Filled Circle map digits 0-9, Parenthesized maps 1-9, and Filled Square leaves digits unchanged. Unsupported characters pass through as typed.",
     "useCases": [
       "Use the Circled Text Generator to create eye-catching headings for your blog posts or articles, such as circled numbers for a countdown or circled letters for a title.",
       "Add a touch of personality to your social media profiles by using circled text in your bio or post descriptions.",
@@ -9336,7 +9336,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What styles of circled text can I generate with this tool?",
-        "The Circled Text Generator offers filled, double, and parenthesized styles, allowing you to choose the one that best suits your needs."
+        "The Circled Text Generator offers Circled, Filled Circle, Filled Square and Parenthesized letters. Circled and Filled Circle map digits 0-9; Parenthesized maps 1-9 and leaves zero unchanged; Filled Square passes every digit through unchanged."
       ],
       [
         "Can I use the generated circled text in any application?",
@@ -9348,13 +9348,13 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to generate circled text in various styles, including filled, double, and parenthesized, to give your text a distinctive look.",
-      "Choose the desired style and input the text you want to convert, whether it's a single character, a word, or a phrase.",
-      "Copy the generated circled text and use it in your desired application, such as social media posts, blog titles, or design projects."
+      "Pick a style from the Circled, Filled Circle, Filled Square and Parenthesized buttons above the input. The highlighted style drives the panel below, whose heading reads that style's name followed by Output.",
+      "Type or paste into the Input Text box. There is no generate step — the output rewrites as you type, a counter under the box shows how many characters you entered, Reset empties it, and any character the chosen style has no mapping for is passed through unchanged.",
+      "Click Copy in the output panel to put the converted text on your clipboard; the button reads Copied! for about a second and a half. Paste it into a social bio, a blog title or a design file."
     ]
   },
   "citation-generator": {
-    "intro": "Effortlessly generate accurate citations in APA, MLA, Chicago, Harvard, IEEE, and Vancouver styles with just a click using the Citation Generator.",
+    "intro": "Effortlessly generate accurate citations in APA 7, MLA 9, Chicago, Harvard, IEEE, and Vancouver styles with the Citation Generator, which rewrites the preview as you type instead of making you press a generate button.",
     "useCases": [
       "Students writing essays or research papers need to quickly format citations for their sources.",
       "Academics preparing conference papers require precise citations in IEEE style.",
@@ -9377,7 +9377,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use the Citation Generator?",
-        "Pick a source type and a style, then fill in the fields. There is no Generate button — the preview panel rewrites the citation as you type. Use the Copy Citation button, or export it with TXT, PDF or DOCX."
+        "Pick a source type and a style, then fill in the fields. There is no Generate button — the preview panel rewrites the citation as you type. Use the Copy Citation button, download TXT or a Word-openable .doc, or open the print dialog to print or save a PDF."
       ],
       [
         "What citation styles are supported?",
@@ -9385,13 +9385,13 @@ export const toolContentOverrides = {
       ],
       [
         "Is it free to use?",
-        "Yes, the basic features of the Citation Generator are free. Premium plans offer additional customization options."
+        "Yes. Every feature is free — all nine source types, all six styles, TXT download, Word-openable .doc download and the print / save-PDF flow. Saved citations stay in your own browser's storage, which keeps the 50 most recent entries."
       ]
     ],
     "steps": [
       "Pick a source type from the Book, Website, Journal Article, Newspaper, Magazine, YouTube Video, Podcast, Thesis and Research Paper buttons, then pick a style from the six style buttons: APA 7, MLA 9, Chicago, Harvard, IEEE and Vancouver.",
       "Fill in Author(s), Title and whichever fields that source type adds — Publisher, Year, Edition and City for a book, or Journal Name, Volume, Issue, Pages and DOI for a journal article. There is no Generate button: the preview panel below, headed with the style name, rewrites the citation as you type, and a Website source also offers a URL box with an Auto-fill button.",
-      "Use the Copy Citation button for the clipboard, or the TXT, PDF and DOCX buttons to export, and press Save Citation to push the entry into History, where each row has Reuse and Copy and the panel has a Clear All."
+      "Use Copy Citation for the clipboard, TXT for a text download, Print / Save PDF for the browser print dialog, or Word .doc for an HTML-based file that Word can open. Press Save Citation to push the entry into History, where each row has Reuse and Copy and the panel has a Clear All."
     ]
   },
   "cleaning-schedule-planner": {
@@ -9436,7 +9436,7 @@ export const toolContentOverrides = {
     ]
   },
   "clipboard-capsule": {
-    "intro": "Clipboard Capsule is a powerful browser extension that allows you to save, manage, categorize, and retrieve your clipboard history seamlessly. Perfect for anyone who frequently copies and pastes information.",
+    "intro": "Clipboard Capsule is a browser-based snippet library that lets you save, manage, categorize, and retrieve your clipboard history seamlessly. Perfect for anyone who frequently copies and pastes information.",
     "useCases": [
       "A student preparing for an exam and needing to save multiple formulas and equations.",
       "A writer working on a long article and wanting to quickly access previously copied paragraphs.",
@@ -9459,11 +9459,11 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I save text from my clipboard?",
-        "Click the Clipboard Capsule icon, then select 'Save' from the dropdown menu."
+        "Press Add Snippet, then use Paste from Clipboard to drop what you last copied into the Content box, and press Save Snippet."
       ],
       [
         "Can I search for specific clips?",
-        "Yes, you can use the search bar in the extension to find saved clips quickly."
+        "Yes. The Search snippets box matches a snippet's title, its content and its category, and it narrows whichever tab you are on."
       ],
       [
         "Is my data secure?",
@@ -9471,13 +9471,13 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the Clipboard Capsule icon in your browser toolbar to open the extension.",
-      "Select 'Save' from the dropdown menu to capture any text currently in your clipboard.",
-      "Organize your saved clips by creating categories or tags directly within the extension."
+      "Click Add Snippet to open the Add Snippet dialog, then press Paste from Clipboard to pull whatever you last copied into the Content box, or type it in yourself. Content is the only required field; Title (Optional) falls back to the first 20 characters of the content.",
+      "Choose a Category from Text, Code, Links, Emails and Other, or click Add New beside the Category label and name your own — All and Favorites are reserved by the tab bar and are rejected. Press Save Snippet and a Snippet added successfully toast confirms it.",
+      "Find a snippet through the tab row — All, Favorites ❤️ and one tab per category — or the Search snippets box. Each card carries a copy button, a star for favourites and a ⋮ menu with Edit, Copy Content, Pin and Delete; deleting asks 'Delete this snippet? This cannot be undone.' Snippets are kept in this browser's local storage only, so they do not follow you to another device."
     ]
   },
   "clipboard-history": {
-    "intro": "Clipboard History is a powerful browser extension that tracks, saves, and manages your clipboard history with auto-detection and smart categorization. Perfect for power users who need quick access to copied text across different devices.",
+    "intro": "Clipboard History is a browser-based tracker that saves and manages what you copy, auto-detecting URLs, code, emails, JSON, numbers and colours. It keeps the 500 most recent entries in this browser's local storage, so your history stays on the device that captured it.",
     "useCases": [
       "A journalist quickly needs to reference information copied from different sources throughout the day.",
       "A student wants to easily access important notes or formulas copied during lectures.",
@@ -9498,9 +9498,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the Clipboard History icon in your browser toolbar to open the history panel.",
-      "Select the text you want to save from the list of recent clips.",
-      "Organize your clips into categories by dragging and dropping them into the desired folder."
+      "Click Start Monitor and allow the clipboard permission — the button changes to Monitoring… and the tool re-reads your clipboard every time this tab regains focus, so you can copy in another app and come back. Capture grabs the clipboard once on demand, and if the browser refuses you get Permission denied. Paste content manually below.",
+      "Or paste straight into the box above the list and press Add, or hit Ctrl+Enter to quick-add. Each entry is typed automatically as Text, URL, Code, Email, JSON, Number or Color, and its card shows that type, how long ago it was captured and its character count.",
+      "Filter with the tab row — All, those seven types and Favorites — or the Search history box, which matches entry content. A card's copy button puts the entry back on your clipboard (Copied to clipboard! confirms it), the star pins it under Favorites, and the ⋮ menu holds Copy and Delete. The Clear button offers Clear non-favorites or Clear everything; everything lives in this browser's local storage, capped at 500 entries with duplicates moved back to the top."
     ]
   },
   "clothing-body-measurements": {
@@ -9526,26 +9526,21 @@ export const toolContentOverrides = {
     ],
     "faqs": [
       [
-        "How do I convert a US women's size to UK men's size?",
-        "Enter the US women's size in the designated field, select 'US Women' and 'UK Men' as the units, then click 'Convert.'"
+        "How do I convert a US women's size to a UK size?",
+        "Click Women's, pick the Clothing type, set From system to 'US Size' and To system to 'UK Size', then click your size in the 'Your size' row. The Converted size card updates straight away — there is no Convert button."
       ],
       [
         "Can I convert body measurements too?",
-        "Yes! Simply enter your measurement (e.g., 5'3\"), select the current unit (feet+inches), and choose the desired output unit (cm or inches)."
+        "Yes! Stay on Body Measurements, type your measurement (e.g., 5'3\"), set the From unit to ft+in, and choose cm or in as the To unit."
       ],
       [
         "Is this tool free to use?",
         "Absolutely, it's a free service designed to help with clothing and body measurements."
       ]
-    ],
-    "steps": [
-      "Click the button to open the Clothing / Body Measurement Conversions tool.",
-      "Select the type of measurement you want to convert (e.g., US women's size to UK men's size).",
-      "Enter the value in the designated field and click 'Convert' to see the result."
     ]
   },
   "code-complexity-analyzer": {
-    "intro": "The Code Complexity Analyzer is a powerful tool designed for developers to assess the complexity of their codebase, providing actionable suggestions for improvement. By clicking the 'Analyze' button, users can gain valuable insights into their code's structure and performance. This tool is ideal for software engineers, DevOps teams, and technical leads seeking to optimize their code and enhance maintainability.",
+    "intro": "The Code Complexity Analyzer is a browser tool for developers to assess the complexity of code pasted into its Studio Editor, providing actionable suggestions for improvement. There is no Analyze button — the analysis re-runs on its own a moment after you stop typing, scoring the code out of 100 and listing the functions and issues behind that score. This tool is ideal for software engineers, DevOps teams, and technical leads seeking to optimize their code and enhance maintainability.",
     "useCases": [
       "Refactoring a legacy codebase to improve maintainability and reduce technical debt",
       "Evaluating the complexity of a newly developed feature to ensure it meets coding standards",
@@ -9568,7 +9563,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What types of code does the Code Complexity Analyzer support?",
-        "The tool currently supports analysis of code written in popular programming languages such as Java, Python, and C++."
+        "The editor runs in JavaScript mode — the badge above it reads javascript and the status bar reads JavaScript Core — and both built-in samples, Simple Calculator and Complex Processor, are JavaScript. The analyzer also ships keyword and function patterns for Python and Java; C++ is not supported."
       ],
       [
         "How does the tool determine code complexity?",
@@ -9576,17 +9571,17 @@ export const toolContentOverrides = {
       ],
       [
         "Can I use the Code Complexity Analyzer for both personal and commercial projects?",
-        "Yes, the tool is available for use in both personal and commercial projects, with flexible pricing plans to accommodate different needs and use cases."
+        "Yes, the tool is available for use in both personal and commercial projects. It is free and the analysis runs entirely in your browser, so nothing you paste into the editor is uploaded."
       ]
     ],
     "steps": [
-      "Click the 'Analyze' button to upload your code and initiate the complexity analysis",
-      "Review the generated report highlighting areas of high complexity and potential bottlenecks",
-      "Implement the suggested improvements to simplify your code and enhance its overall quality"
+      "Paste your code into the Studio Editor, or pick Simple Calculator or Complex Processor from the 'Select Sample...' dropdown above it — there is no Analyze button, and the synchronous run starts on its own about a third of a second after you stop typing before the result panels refresh",
+      "Read the Overview tab: the Overall Quality Score ring with its Complexity, Readability and Stability numbers, then the Total Lines, Functions, Maintainability and Issues cards and the Halstead Difficulty and Estimated Bugs bars",
+      "Open Functions for a card per function, or Issues to search the detected smells and filter them by HIGH, MEDIUM or LOW and read each Refactoring Tip; click a line number to open the Line Inspector, and press Reset to put the default sample code back once you confirm the prompt"
     ]
   },
   "codex-chat-transfer": {
-    "intro": "Codex Chat Transfer is a powerful browser tool that instantly converts chatbot logs between OpenAI, Anthropic, and Markdown formats. Perfect for developers, content creators, and anyone managing multiple chat platforms.",
+    "intro": "Codex Chat Transfer is a powerful browser tool that converts chatbot logs into OpenAI JSON, Anthropic JSON, Google Gemini, Cohere JSON, Llama 2/3 Prompt or Markdown Text as you type. Perfect for developers, content creators, and anyone managing multiple chat platforms.",
     "useCases": [
       "A developer needs to integrate chat logs from OpenAI into a Markdown document for documentation purposes.",
       "A content creator wants to convert Anthropic chat logs into a more readable Markdown format for blog posts.",
@@ -9609,7 +9604,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What formats does Codex Chat Transfer support?",
-        "Codex Chat Transfer supports OpenAI, Anthropic, and Markdown formats."
+        "The output tabs are OpenAI JSON, Anthropic JSON, Google Gemini, Cohere JSON, Llama 2/3 Prompt and Markdown Text. Input can be a JSON array of messages, an object containing a messages array, or a Markdown log."
       ],
       [
         "Is my data safe when using Codex Chat Transfer?",
@@ -9621,9 +9616,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the Codex Chat Transfer button in your browser to open the conversion interface.",
-      "Select the source format (OpenAI, Anthropic, or Markdown) from the dropdown menu.",
-      "Choose the target format you need for your project."
+      "Paste your chat log into the Input (JSON/Markdown) panel, or press Load Sample JSON to drop in a three-message example — the banner then reads 'Sample chat structure loaded into input box.'",
+      "The source format is worked out for you: a JSON array of messages, an object with a messages array, Markdown lines headed **User:**, **Assistant:** or **System:**, or unheaded plain text treated as one user turn. There is no source dropdown; malformed JSON that begins with [ or { shows a Failed to parse input message under the editor.",
+      "Choose the target on the tab row under Transpiled Output — OpenAI JSON, Anthropic JSON, Google Gemini, Cohere JSON, Llama 2/3 Prompt or Markdown Text — then press Copy, or Download to save it as chat-transfer-<format>-<timestamp>.json (.txt for Markdown Text and Llama 2/3 Prompt)."
     ]
   },
   "coffee-brew-ratio": {
@@ -9690,7 +9685,7 @@ export const toolContentOverrides = {
     ],
     "steps": [
       "The tool opens straight onto the Dashboard tab; click Check-In and set the Date at the top of the Daily Check-In card.",
-      "Log Sleep Hours, Water Intake, Study Hours, Work Hours, Exercise and Meditation on their sliders, tap a Mood rating from Terrible to Great and an Energy Level from Exhausted to Peak, add Notes (optional), then press Save Check-In; the button reads Update Check-In when that date already has an entry.",
+      "Log Sleep Hours, Water Intake, Study Hours, Work Hours, Exercise and Meditation on their sliders, tap a Mood rating from Terrible to Great and an Energy Level from Exhausted to Peak, add Notes (optional), then press Save Check-In; the button reads Update Check-In once today already has an entry, and flashes Saved! after each save.",
       "Use the Dashboard tab for Today's Score, Streak, Weekly Avg, Total Check-ins and the Performance Timeline chart, and the Charts, Goals, Insights and History tabs alongside it — Insights breaks your data into Performance Trend, Strengths, Areas for Improvement and Recommendations."
     ]
   },
@@ -10317,9 +10312,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on 'Start Quiz' to begin.",
-      "Select an answer from multiple-choice options.",
-      "Review your results at the end."
+      "The first question is on screen when the page loads \u2014 the header counts Question 1 of N, so there is nothing to press to begin.",
+      "Pick one of the multiple-choice answers and the quiz advances to the next question on its own.",
+      "After the last question the Quiz Complete screen shows your score out of N, and Try Again restarts from question one."
     ]
   },
   "constellation-finder": {
@@ -11548,7 +11543,7 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button labeled 'Calculate Profit/Loss' to start using the tool.",
+      "Fill in Buy Rate (Entry), Sell Rate (Exit) and Amount in Foreign Currency \u2014 the three fields the form renders.",
       "Enter your trade details including the base currency, quote currency, buy rate, sell rate, position size, and any swap fees.",
       "Review the calculated profit or loss based on the inputs provided."
     ]
@@ -11589,9 +11584,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to open the Cute Text Generator interface.",
-      "Enter or paste your text in the designated field.",
-      "Select a style from the variety of cute options available, then click 'Generate'."
+      "Type into the box that reads Type something cute... \u2014 the styled versions appear as you type, with no button to press.",
+      "Narrow the list with the Search styles... box, or scroll the Kaomoji & Cute Symbols section for faces and decorations.",
+      "Click a result to copy it, or press Reset to clear the box and start again."
     ]
   },
   "html-email-checker": {
