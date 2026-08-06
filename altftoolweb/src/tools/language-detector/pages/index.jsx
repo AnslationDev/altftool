@@ -9,28 +9,24 @@ import {
   BarChart3,
 } from "lucide-react";
 import { detectLanguage } from "../utils/detect";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const SAMPLE = "Bonjour, comment allez-vous aujourd'hui ?";
 
 export default function ToolHome() {
   const [text, setText] = useState(SAMPLE);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(() => detectLanguage(text), [text]);
+  const copied = isCopied("result");
 
   const copyResult = useCallback(async () => {
     if (!result.candidates.length) return;
-    try {
-      const summary = result.candidates
-        .map((c) => `${c.lang} (${c.confidence}%)`)
-        .join(", ");
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      /* ignore */
-    }
-  }, [result.candidates]);
+    const summary = result.candidates
+      .map((c) => `${c.lang} (${c.confidence}%)`)
+      .join(", ");
+    await copy("result", summary, { label: "Detected language results" });
+  }, [result.candidates, copy]);
 
   return (
     <div className="min-h-screen bg-(--background) p-4 sm:p-6 lg:p-8 transition-colors">
@@ -67,7 +63,10 @@ export default function ToolHome() {
           {/* Input */}
           <div className="rounded-2xl border border-(--border) bg-(--card) p-5 shadow-sm">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-bold text-(--foreground) uppercase tracking-wider">
+              <label
+                htmlFor="language-detector-text"
+                className="text-xs font-bold text-(--foreground) uppercase tracking-wider"
+              >
                 Text to analyze
               </label>
               <button
@@ -78,6 +77,7 @@ export default function ToolHome() {
               </button>
             </div>
             <textarea
+              id="language-detector-text"
               value={text}
               onChange={(e) => setText(e.target.value)}
               placeholder="Paste text in any language…"
@@ -110,17 +110,23 @@ export default function ToolHome() {
               <button
                 onClick={copyResult}
                 disabled={!result.candidates.length}
+                aria-label={copied ? "Copied detected language results to clipboard" : "Copy detected language results"}
                 className="inline-flex items-center gap-1 text-[11px] font-bold text-(--foreground) bg-(--background) border border-(--border) rounded-lg px-2.5 py-1.5 hover:border-(--primary) transition disabled:opacity-40"
               >
                 {copied ? <Sparkles size={12} className="text-(--primary)" /> : <Copy size={12} />}
                 {copied ? "Copied" : "Copy"}
               </button>
+              <span className="sr-only" role="status" aria-live="polite">
+                {announcement}
+              </span>
             </div>
 
             <div className="mt-3 space-y-3">
               {result.candidates.length === 0 ? (
                 <p className="py-8 text-center text-xs italic text-(--muted-foreground)">
-                  Type some text to detect its language.
+                  {result.stats
+                    ? "No language patterns detected — this text may be numbers, symbols, or too short to score."
+                    : "Type some text to detect its language."}
                 </p>
               ) : (
                 result.candidates.map((c, idx) => (

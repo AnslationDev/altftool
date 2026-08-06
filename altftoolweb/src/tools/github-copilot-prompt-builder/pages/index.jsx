@@ -255,7 +255,7 @@ export default function ToolHome() {
         </div>
 
         <div className="mt-4 overflow-x-auto rounded-md border border-[var(--border)] bg-[var(--background)] p-4">
-          <pre className="font-mono text-sm leading-6 text-[var(--primary)]">
+          <pre className="font-mono text-sm leading-6 text-[var(--foreground)]">
             {hasError ? DASH : result.prompt}
           </pre>
         </div>

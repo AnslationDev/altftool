@@ -86,7 +86,7 @@ export default function ToolHome() {
       `Rent in the final month: ${money(result.finalMonthlyRent)}`,
       `Total rent over the term: ${money(result.totalRent)}`,
       `Average monthly rent: ${money(result.averageMonthlyRent)}`,
-      `Extra paid because of escalation: ${money(result.escalationCost)}`,
+      `${result.escalationCost < 0 ? "Saved because of de-escalation" : "Extra paid because of escalation"}: ${money(Math.abs(result.escalationCost))}`,
       `Effective annual escalation: ${pct(result.effectiveAnnualRate)}`,
     ].join("\n");
   }, [hasError, result]);
@@ -219,7 +219,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Total rent over the lease
             </p>
@@ -254,18 +254,30 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {[
             ["Rent in the final month", hasError ? "—" : money(result.finalMonthlyRent)],
             [
-              "Total increase over the base rent",
-              hasError ? "—" : `${money(result.totalIncrease)} (${pct(result.totalIncreasePercent)})`,
+              !hasError && result.totalIncrease < 0
+                ? "Total decrease from the base rent"
+                : "Total increase over the base rent",
+              hasError
+                ? "—"
+                : `${money(Math.abs(result.totalIncrease))} (${pct(Math.abs(result.totalIncreasePercent))})`,
             ],
             ["Average monthly rent across the term", hasError ? "—" : money(result.averageMonthlyRent)],
             ["Rent if it never escalated", hasError ? "—" : money(result.flatTotal)],
             [
-              "Extra paid because of escalation",
-              hasError ? "—" : `${money(result.escalationCost)} (${pct(result.escalationCostPercent)})`,
+              !hasError && result.escalationCost < 0
+                ? "Saved because of de-escalation"
+                : "Extra paid because of escalation",
+              hasError
+                ? "—"
+                : `${money(Math.abs(result.escalationCost))} (${pct(Math.abs(result.escalationCostPercent))})`,
             ],
             ["Number of escalations in the term", hasError ? "—" : String(result.escalationCount)],
             ["Effective annual escalation", hasError ? "—" : pct(result.effectiveAnnualRate)],

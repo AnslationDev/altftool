@@ -162,6 +162,9 @@ export function toneStats(pixels) {
   let sumSquares = 0;
   let counted = 0;
   for (let offset = 0; offset < pixels.length; offset += 4) {
+    // Skip fully transparent pixels, same as colourHistogram() — otherwise tone
+    // and colour would be measured over two different pixel populations.
+    if (pixels[offset + 3] === 0) continue;
     const value = luma(pixels[offset], pixels[offset + 1], pixels[offset + 2]);
     sum += value;
     sumSquares += value * value;

@@ -106,6 +106,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the tracker? This clears every section's topic status, your reading log and your score inputs.",
+      )
+    ) {
+      return;
+    }
     setStatusMap({});
     setLog(emptyLog());
     setAttempted(DEFAULT_ATTEMPTED);
@@ -287,7 +294,12 @@ export default function ToolHome() {
 
         <dl className="mt-4 divide-y divide-[var(--border)] text-sm">
           {[
-            ["Projected marks", score.error ? DASH : `${NUM2.format(score.marks)} / ${TOTAL_QUESTIONS}`],
+            [
+              "Projected marks",
+              score.error
+                ? DASH
+                : `${NUM2.format(score.marks)} / ${TOTAL_QUESTIONS} (${pct(score.percentOfTotal)})`,
+            ],
             ["Correct answers", score.error ? DASH : NUM1.format(score.correct)],
             ["Wrong answers", score.error ? DASH : NUM1.format(score.wrong)],
             [
@@ -384,7 +396,16 @@ export default function ToolHome() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setWholeSection(section.id, "not-started")}
+                    onClick={() => {
+                      if (
+                        !window.confirm(
+                          `Clear all topics in ${section.name}? This resets every topic in this section back to "Not started".`,
+                        )
+                      ) {
+                        return;
+                      }
+                      setWholeSection(section.id, "not-started");
+                    }}
                     className={GHOST_BTN}
                   >
                     Clear this section

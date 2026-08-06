@@ -42,42 +42,36 @@ export const CHANNELS = [
     label: "Email",
     verb: "email me",
     noun: "emails",
-    needsExpressConsent: true,
   },
   {
     id: "sms",
     label: "SMS / text message",
     verb: "text me",
     noun: "text messages",
-    needsExpressConsent: true,
   },
   {
     id: "whatsapp",
     label: "WhatsApp",
     verb: "message me on WhatsApp",
     noun: "WhatsApp messages",
-    needsExpressConsent: true,
   },
   {
     id: "phone",
     label: "Phone call",
     verb: "call me",
     noun: "phone calls",
-    needsExpressConsent: true,
   },
   {
     id: "push",
     label: "App push notification",
     verb: "send me push notifications",
     noun: "push notifications",
-    needsExpressConsent: true,
   },
   {
     id: "post",
     label: "Postal mail",
     verb: "post me",
     noun: "letters",
-    needsExpressConsent: false,
   },
 ];
 
@@ -178,7 +172,10 @@ export function buildConsentCopy({
   const policy = clean(privacyUrl);
   const address = clean(postalAddress);
 
-  const messagesPerYear = selected.length * freq.perYear;
+  // Granular mode gives each channel its own checkbox, each promising freq.perYear
+  // messages, so the promises sum across channels. Bundled mode emits ONE combined
+  // checkbox with a single cadence promise, so the total is just freq.perYear.
+  const messagesPerYear = granular ? selected.length * freq.perYear : freq.perYear;
 
   const sharingClause = partners ? ` We share your details with ${partners} for this purpose only.` : "";
 
@@ -198,7 +195,7 @@ export function buildConsentCopy({
         },
       ];
 
-  const helperText = `${brand} will use your contact details only to send what you have ticked above, ${freq.phrase} per channel.${sharingClause} Full detail is in our privacy policy${policy ? ` at ${policy}` : ""}.`;
+  const helperText = `${brand} will use your contact details only to send what you have ticked above, ${freq.phrase}${granular ? " per channel" : ""}.${sharingClause} Full detail is in our privacy policy${policy ? ` at ${policy}` : ""}.`;
 
   const submitNote = requiredToSubmit
     ? `You must tick at least one box to continue.`
@@ -243,7 +240,7 @@ export function buildConsentCopy({
   }
   if (!granular && selected.length > 1) {
     warnings.push(
-      `One checkbox covering ${selected.length} channels is not "specific" consent. Split it into one box per channel so a person can accept email without also accepting ${selected.filter((item) => item.id !== "email")[0]?.label.toLowerCase() || "the rest"}.`,
+      `One checkbox covering ${selected.length} channels is not "specific" consent. Split it into one box per channel so a person can accept ${selected[0].label.toLowerCase()} without also accepting ${selected[1].label.toLowerCase()}.`,
     );
   }
   if (!policy) {
@@ -306,6 +303,7 @@ export function buildConsentCopy({
       channelCount: selected.length,
       messagesPerYear,
       perChannelPerYear: freq.perYear,
+      granular: Boolean(granular),
     },
   };
 }

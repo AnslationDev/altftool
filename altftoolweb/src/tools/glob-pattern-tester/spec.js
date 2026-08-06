@@ -43,16 +43,15 @@ export const spec = {
     {
       "label": "src/**/*.ts",
       "values": {
-        "pattern": "src/*/*.ts",
+        "pattern": "src/**/*.ts",
         "input_string": "src/lib/index.ts"
       }
     }
   ],
   "note": "Supports * (any run of characters) and ? (single character)."
 },
-  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
+  compute: (values) => {
       const pat = String(values.pattern || "");
-      if (!pat) return { result: "—", caption: "Enter a glob pattern" };
       const re = new RegExp("^" + pat.replace(/[.+^${}()|[\]\\]/g, "\\$&").replace(/\*/g, ".*").replace(/\?/g, ".") + "$", values.case_insensitive ? "i" : "");
       const match = re.test(String(values.input_string || ""));
       return { result: match ? "✓ Match" : "✗ No match", caption: match ? "the string matches the pattern" : "no match", rows: [["Matches", match ? "yes" : "no"], ["Compiled regex", re.source]] };

@@ -356,7 +356,12 @@ export function attemptsForTarget({ examKey, targetMarks, accuracyPct }) {
     };
   }
 
-  const correct = Math.round(attempts * a);
+  // Round the correct-answer count UP rather than to the nearest integer. attempts was itself
+  // computed as ceil(target / marksPerAttempt), which only guarantees the target is met in the
+  // continuous (fractional-correct-count) model; rounding correct down here could realise fewer
+  // correct answers than that fraction implies and land the integer-valued net score below the
+  // target the user asked to reach. Rounding up preserves attempts*marksPerAttempt >= target.
+  const correct = Math.ceil(attempts * a);
   const wrong = attempts - correct;
 
   return {
@@ -401,12 +406,16 @@ export function buildSscPrompt({
   const languageLabel = LANGUAGES[language];
   if (!languageLabel) return { error: "Pick an output language." };
 
+  // Pacing/marking metrics depend only on the exam, which is already known to be valid at this
+  // point — compute them before validating the item count so an out-of-range item count (which
+  // has no bearing on the paper's own stats) doesn't blank that panel out too.
+  const metrics = sscPaperMetrics(examKey);
+
   const count = Number(itemCount);
   if (!Number.isFinite(count) || count < 1 || count > 50) {
-    return { error: "Number of items must be between 1 and 50." };
+    return { error: "Number of items must be between 1 and 50.", metrics };
   }
 
-  const metrics = sscPaperMetrics(examKey);
   const items = Math.round(count);
   const sectionQuestions = exam.sections[section];
 

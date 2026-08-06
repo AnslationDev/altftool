@@ -40,9 +40,18 @@ const ROW_STYLES = {
 const DASH = "—";
 const num = new Intl.NumberFormat("en-IN");
 
-function Segments({ segments }) {
+function Segments({ segments, hasLine }) {
   if (!segments || segments.length === 0) {
-    return <span className="text-[var(--muted-foreground)]">{DASH}</span>;
+    // A blank line that matches on both sides still has a real line number
+    // (hasLine) — render it as an empty cell rather than the "no counterpart
+    // line" dash, so the two cases don't look identical.
+    return hasLine ? (
+      <span className="text-[var(--muted-foreground)]">
+        <span className="sr-only">Blank line</span>
+      </span>
+    ) : (
+      <span className="text-[var(--muted-foreground)]">{DASH}</span>
+    );
   }
   return (
     <span className="whitespace-pre-wrap break-words">
@@ -103,6 +112,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the diff viewer? This clears both text boxes and discards any saved version history.",
+      )
+    ) {
+      return;
+    }
     setLeft(SAMPLE_LEFT);
     setRight(SAMPLE_RIGHT);
     setIgnoreCase(false);
@@ -294,13 +310,13 @@ export default function ToolHome() {
                       {row.leftNo ?? ""}
                     </td>
                     <td className="px-2 py-1.5 align-top">
-                      <Segments segments={row.leftSegments} />
+                      <Segments segments={row.leftSegments} hasLine={row.leftNo != null} />
                     </td>
                     <td className="px-2 py-1.5 text-right align-top text-[var(--muted-foreground)]">
                       {row.rightNo ?? ""}
                     </td>
                     <td className="px-2 py-1.5 align-top">
-                      <Segments segments={row.rightSegments} />
+                      <Segments segments={row.rightSegments} hasLine={row.rightNo != null} />
                     </td>
                   </tr>
                 ))}

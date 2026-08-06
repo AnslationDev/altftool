@@ -3,7 +3,7 @@ const seo = {
     "The Marketing Consent Checkbox Copy Generator writes the checkbox labels, helper text and unsubscribe wording for a signup form, producing one unticked box per channel so consent stays specific as GDPR Art. 4(11) and Recital 32 require. It names the send frequency in the label, calculates how many messages a year that actually promises, and flags the three patterns that invalidate consent: pre-ticked boxes, bundled channels, and a marketing tick made mandatory contrary to Art. 7(4). Written for growth and product teams who need copy their legal reviewer will pass.",
   useCases: [
     "Replace a single 'I agree to receive marketing' box with separate email, SMS and WhatsApp checkboxes before a signup form goes live in the EU.",
-    "Add the frequency promise to a newsletter opt-in so subscribers know they are agreeing to twelve emails a year rather than an unbounded stream.",
+    "Check how many emails a year your chosen frequency really adds up to before it goes on a newsletter opt-in, so you never end up promising an unbounded stream.",
     "Prepare the consent wording and DLT-aware unsubscribe lines for an Indian SMS campaign governed by the TRAI TCCCP Regulations, 2018.",
   ],
   benefits: [

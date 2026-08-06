@@ -4,7 +4,7 @@
 
 // Script ranges (as [start, end] code points).
 const SCRIPTS = [
-  { name: "Latin", ranges: [[0x0041, 0x007a], [0x00c0, 0x024f], [0x1e00, 0x1eff]] },
+  { name: "Latin", ranges: [[0x0041, 0x005a], [0x0061, 0x007a], [0x00c0, 0x024f], [0x1e00, 0x1eff]] },
   { name: "Cyrillic", ranges: [[0x0400, 0x04ff], [0x0500, 0x052f]] },
   { name: "Greek", ranges: [[0x0370, 0x03ff]] },
   { name: "Arabic", ranges: [[0x0600, 0x06ff], [0x0750, 0x077f]] },
@@ -22,7 +22,6 @@ const SCRIPTS = [
   { name: "Kannada", ranges: [[0x0c80, 0x0cff]] },
   { name: "Malayalam", ranges: [[0x0d00, 0x0d7f]] },
   { name: "Odia", ranges: [[0x0b00, 0x0b7f]] },
-  { name: "Urdu", ranges: [[0x0600, 0x06ff]] },
   { name: "Chinese", ranges: [[0x4e00, 0x9fff], [0x3400, 0x4dbf]] },
 ];
 
@@ -55,7 +54,7 @@ const PROFILES = [
   { lang: "Portuguese", chars: "ãõáéíóúâêôç", extra: "aeosrnidt", weight: 1.15 },
   { lang: "Turkish", chars: "çğışöü", extra: "aeinrldk", weight: 1.2 },
   { lang: "Polish", chars: "ąćęłńóśźż", extra: "aeioznsrwt", weight: 1.2 },
-  { lang: "Dutch", chars: "ij", extra: "eenartios", weight: 1.0 },
+  { lang: "Dutch", chars: "ij", extra: "enartios", weight: 1.0 },
   { lang: "Swedish", chars: "åäö", extra: "eantrslid", weight: 1.15 },
   { lang: "Vietnamese", chars: "ăâđêôơưàèìòùấ", extra: "eaintrlu", weight: 1.25 },
   { lang: "Romanian", chars: "ăâîșț", extra: "eaoristcn", weight: 1.2 },
@@ -82,7 +81,6 @@ const SCRIPT_LANG = {
   Kannada: "Kannada",
   Malayalam: "Malayalam",
   Odia: "Odia",
-  Urdu: "Urdu",
   Chinese: "Chinese",
 };
 
@@ -96,7 +94,7 @@ export function detectLanguage(text) {
     .sort((a, b) => b.count - a.count);
 
   const lower = clean.toLowerCase();
-  const letters = lower.replace(/[^a-zà-ÿ]/g, "");
+  const letters = lower.replace(/[^a-zà-öø-ÿ]/g, "");
   const letterCount = letters.length || 1;
 
   // Score Latin-script languages by distinctive characters + common letters.
@@ -155,7 +153,7 @@ export function detectLanguage(text) {
       length: clean.length,
       words,
       uniqueChars,
-      letters: clean.replace(/[^A-Za-zÀ-ÿ]/g, "").length,
+      letters: clean.replace(/[^A-Za-zÀ-ÖØ-öø-ÿ]/g, "").length,
     },
   };
 }

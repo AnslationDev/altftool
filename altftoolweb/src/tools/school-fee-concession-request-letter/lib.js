@@ -25,8 +25,6 @@
 
 /* ------------------------------------------------------------------ dates */
 
-const MS_PER_DAY = 86_400_000;
-
 export function parseISODate(value) {
   if (typeof value !== "string") return null;
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value.trim());
@@ -50,13 +48,6 @@ export function addMonthsISO(isoDate, months) {
   const d = date.getUTCDate();
   const lastDay = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
   return toISO(new Date(Date.UTC(y, m, Math.min(d, lastDay))));
-}
-
-export function daysBetweenISO(fromISO, toISODate) {
-  const from = parseISODate(fromISO);
-  const to = parseISODate(toISODate);
-  if (!from || !to) return null;
-  return Math.round((to.getTime() - from.getTime()) / MS_PER_DAY);
 }
 
 export function formatLongDate(isoDate) {
@@ -120,8 +111,8 @@ export const CONCESSION_GROUNDS = [
   {
     id: "sibling",
     label: "More than one child in the school",
-    line: "two of my children study in this school and the combined fee is beyond what I can meet",
-    proof: "Fee receipts for both children and the admission numbers of each",
+    line: "more than one of my children study in this school and the combined fee is beyond what I can meet",
+    proof: "Fee receipts for each child and their admission numbers",
   },
   {
     id: "merit",
@@ -301,8 +292,10 @@ export function buildInstalmentPlan({ payable, instalments, firstDueISO, interva
  */
 export function computeAffordability({ payable, monthlyIncome }) {
   const income = Number(monthlyIncome);
-  if (!Number.isFinite(income) || income < 0) return { error: "Monthly household income cannot be negative." };
-  if (income === 0) return { annualIncome: 0, feeShare: null };
+  // Income only feeds one optional sentence in the letter, so an invalid or
+  // negative figure is treated the same as "not entered" rather than
+  // blocking the whole letter with a fatal error.
+  if (!Number.isFinite(income) || income <= 0) return { annualIncome: 0, feeShare: null };
   const annualIncome = income * 12;
   const amount = Number(payable);
   if (!Number.isFinite(amount) || amount < 0) return { error: "The payable amount is not a valid number." };
@@ -313,6 +306,51 @@ export function computeAffordability({ payable, monthlyIncome }) {
 
 const clean = (value) => (typeof value === "string" ? value.trim() : "");
 const or = (value, fallback) => clean(value) || fallback;
+
+/** Roman-numeral class labels mapped to their numeric level, I-XII. */
+const ROMAN_CLASS_LEVELS = {
+  I: 1,
+  II: 2,
+  III: 3,
+  IV: 4,
+  V: 5,
+  VI: 6,
+  VII: 7,
+  VIII: 8,
+  IX: 9,
+  X: 10,
+  XI: 11,
+  XII: 12,
+};
+
+/**
+ * Best-effort numeric class level from a free-text class label ("VIII", "8",
+ * "Class 8", "8th"). Returns null when the label can't be confidently parsed
+ * (e.g. "Nursery", "LKG") so callers can fall back to their default.
+ */
+function parseClassLevel(className) {
+  const raw = clean(className)
+    .toUpperCase()
+    .replace(/^CLASS\s+/, "")
+    .replace(/(ST|ND|RD|TH)$/, "")
+    .trim();
+  if (!raw) return null;
+  if (Object.prototype.hasOwnProperty.call(ROMAN_CLASS_LEVELS, raw)) return ROMAN_CLASS_LEVELS[raw];
+  const numeric = Number(raw);
+  return Number.isFinite(numeric) && numeric > 0 ? numeric : null;
+}
+
+/**
+ * The RTE Act's free-education guarantee (s.3(2)/s.12(1)(c)) covers only
+ * elementary education, Class I-VIII. Classes below Class I (Nursery, LKG,
+ * UKG) and unparseable labels are treated as elementary/uncertain so the
+ * citation still appears by default, matching prior behaviour.
+ */
+function isElementaryClass(className) {
+  const level = parseClassLevel(className);
+  if (level === null) return true;
+  return level <= 8;
+}
 
 export function buildFeeConcessionLetter({
   parentName,
@@ -336,9 +374,7 @@ export function buildFeeConcessionLetter({
   affordability,
   phone,
   email,
-  assessment,
 }) {
-  if (assessment?.error) return { error: assessment.error };
   if (fee?.error) return { error: fee.error };
   if (concession?.error) return { error: concession.error };
   if (requestKind !== REQUEST_KINDS.CONCESSION && plan?.error) return { error: plan.error };
@@ -383,7 +419,9 @@ export function buildFeeConcessionLetter({
       : "";
 
   const rteLine = ground.rte
-    ? `My child falls in the weaker section and disadvantaged group category. Section 12(1)(c) of the Right of Children to Free and Compulsory Education Act, 2009 requires a private unaided school to admit at least ${RTE_RESERVED_SHARE_PERCENT} per cent of the strength of class I from that category and to provide free and compulsory elementary education till its completion, with reimbursement by the government under section 12(2). Section 3(2) of the same Act says no child shall be liable to pay any fee or charge that may prevent them from completing elementary education. I request that our case be considered under those provisions.`
+    ? isElementaryClass(className)
+      ? `My child falls in the weaker section and disadvantaged group category. Section 12(1)(c) of the Right of Children to Free and Compulsory Education Act, 2009 requires a private unaided school to admit at least ${RTE_RESERVED_SHARE_PERCENT} per cent of the strength of class I from that category and to provide free and compulsory elementary education till its completion, with reimbursement by the government under section 12(2). Section 3(2) of the same Act says no child shall be liable to pay any fee or charge that may prevent them from completing elementary education. I request that our case be considered under those provisions.`
+      : `My child belongs to the weaker section and disadvantaged group category recognised under the Right of Children to Free and Compulsory Education Act, 2009. As Class ${cls} falls outside the Act's free elementary-education entitlement, which covers Class I to Class VIII, I ask that the school consider our circumstances under its own concession policy for this category.`
     : "";
 
   const subject = `Request for ${requestKind === REQUEST_KINDS.INSTALMENTS ? "permission to pay the fee in instalments" : requestKind === REQUEST_KINDS.CONCESSION ? "fee concession" : "fee concession and payment in instalments"} — ${student}, Class ${cls}${sec ? `-${sec}` : ""} (Admission No. ${admission})`;

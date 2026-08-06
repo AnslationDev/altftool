@@ -241,7 +241,7 @@ export const REQUEST_STEPS = [
   ],
   [
     "Escalate in writing if the export is incomplete",
-    `If a category you are entitled to is missing, send a written access request; a controller generally has ${GDPR_RESPONSE_DAYS} days to respond.`,
+    `If a category you are entitled to is missing, send a written access request; a controller generally has one calendar month (about ${GDPR_RESPONSE_DAYS} days) to respond.`,
   ],
 ];
 
@@ -269,10 +269,14 @@ export function sensitivityBand(score) {
  * Estimate a health and fitness data export.
  *
  * Volume model:
- *   hrSamples     = wearHours * 3600 / 5      per day  * 365 * years
- *   activityRows  = wearHours * 60            per day  * 365 * years
- *   sleepEpochs   = 7 * 3600 / 30             per night * 365 * years
+ *   hrSamples     = wearHours * 3600 / 5                per day  * 365 * years
+ *   activityRows  = wearHours * 60                      per day  * 365 * years
+ *   sleepEpochs   = min(wearHours, 7) * 3600 / 30        per night * 365 * years
  *   gpsPoints     = workoutsPerWeek * 52 * years * workoutMinutes * 60 * 1
+ *
+ * Sleep tracking cannot exceed the hours the device is actually worn, so the
+ * nightly sleep window is capped at wearHours (a device worn 2 hours a day
+ * cannot have logged a full 7-hour night of sleep staging).
  *
  * Size model per category: baseMb + mbPerYear * years, plus each per-record term
  * multiplied by its record count and converted from bytes to megabytes.
@@ -331,21 +335,28 @@ export function estimateExport({
     return { error: "More than 21 recorded workouts a week is outside this estimate." };
   }
 
-  const perWorkoutMinutes = Number(workoutMinutes);
-  if (!Number.isFinite(perWorkoutMinutes)) {
-    return { error: "Enter your average workout length in minutes as a number." };
+  // Average workout length only feeds the GPS-points estimate, which is already
+  // zero when there are no weekly workouts — so it need not be validated then.
+  const workoutMinutesRequired = weeklyWorkouts > 0;
+  const perWorkoutMinutesRaw = Number(workoutMinutes);
+  if (workoutMinutesRequired) {
+    if (!Number.isFinite(perWorkoutMinutesRaw)) {
+      return { error: "Enter your average workout length in minutes as a number." };
+    }
+    if (perWorkoutMinutesRaw <= 0) {
+      return { error: "Average workout length must be greater than zero minutes." };
+    }
+    if (perWorkoutMinutesRaw > 600) {
+      return { error: "An average workout longer than 600 minutes is outside this estimate." };
+    }
   }
-  if (perWorkoutMinutes <= 0) {
-    return { error: "Average workout length must be greater than zero minutes." };
-  }
-  if (perWorkoutMinutes > 600) {
-    return { error: "An average workout longer than 600 minutes is outside this estimate." };
-  }
+  const perWorkoutMinutes = workoutMinutesRequired ? perWorkoutMinutesRaw : 0;
 
   const days = DAYS_PER_YEAR * useYears;
   const hrSamples = ((wearHours * 3600) / HR_SAMPLE_SECONDS) * days;
   const activityRows = wearHours * ACTIVITY_RECORDS_PER_HOUR * days;
-  const sleepEpochs = ((SLEEP_HOURS_TRACKED * 3600) / SLEEP_EPOCH_SECONDS) * days;
+  const sleepHours = Math.min(wearHours, SLEEP_HOURS_TRACKED);
+  const sleepEpochs = ((sleepHours * 3600) / SLEEP_EPOCH_SECONDS) * days;
   const gpsPoints =
     weeklyWorkouts * WEEKS_PER_YEAR * useYears * perWorkoutMinutes * 60 * GPS_POINTS_PER_SECOND;
 

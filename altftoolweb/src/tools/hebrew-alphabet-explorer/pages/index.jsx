@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { BookA, Check, Copy, RotateCcw, Search } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   GEMATRIA_METHODS,
   HEBREW_LETTERS,
@@ -49,7 +51,7 @@ export default function ToolHome() {
   const [numeralInput, setNumeralInput] = useState(DEFAULTS.numeralInput);
   const [query, setQuery] = useState(DEFAULTS.query);
   const [openId, setOpenId] = useState(null);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const sum = useMemo(() => gematria(word, method), [word, method]);
   const numeral = useMemo(() => toHebrewNumeral(toInt(numberInput)), [numberInput]);
@@ -78,15 +80,9 @@ export default function ToolHome() {
       .join("\n");
   }, [hasError, word, latin, activeMethod, sum, numeral]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "gematria result" });
   };
 
   const reset = () => {
@@ -96,7 +92,7 @@ export default function ToolHome() {
     setNumeralInput(DEFAULTS.numeralInput);
     setQuery(DEFAULTS.query);
     setOpenId(null);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -178,20 +174,23 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the gematria result"
+              aria-label={isCopied("result") ? "Copied the gematria result to clipboard" : "Copy the gematria result"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset everything" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -374,7 +373,8 @@ export default function ToolHome() {
         <h2 className="text-base font-semibold">Niqqud — the vowel points</h2>
         <p className="mt-1 text-sm text-[var(--muted-foreground)]">
           Everyday Hebrew is written without vowels. Niqqud marks are added in children&rsquo;s
-          books, poetry and scripture, shown here on the letter bet.
+          books, poetry and scripture, shown here on the letter bet &mdash; except shuruk, which
+          only ever attaches to vav.
         </p>
         <div className="mt-3 overflow-x-auto">
           <table className="w-full min-w-[340px] text-left text-sm">
@@ -389,7 +389,7 @@ export default function ToolHome() {
             <tbody>
               {NIQQUD.map((mark) => (
                 <tr key={mark.id} className="border-b border-[var(--border)] last:border-0">
-                  <td className="py-2 pr-3 text-xl" lang="he">{`ב${mark.mark}`}</td>
+                  <td className="py-2 pr-3 text-xl" lang="he">{`${mark.host || "ב"}${mark.mark}`}</td>
                   <td className="py-2 pr-3 font-semibold">{mark.name}</td>
                   <td className="py-2 pr-3">{mark.sound}</td>
                   <td className="py-2 text-[var(--muted-foreground)]">{mark.note}</td>

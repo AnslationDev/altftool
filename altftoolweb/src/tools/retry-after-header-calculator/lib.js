@@ -106,6 +106,27 @@ const isInteger = (value) => Number.isFinite(value) && Math.floor(value) === val
 const pad2 = (value) => String(value).padStart(2, "0");
 
 /**
+ * asctime-date, RFC 9110 section 5.6.7 (accepted by recipients for legacy
+ * reasons): `Sun Nov  6 08:49:37 1994`. Unlike IMF-fixdate and rfc850-date it
+ * carries no "GMT"/offset marker at all, so it is always implicitly GMT — but
+ * the native Date.parse has no way to know that and falls back to parsing it
+ * in the host's local time zone. Matched and built with Date.UTC here so the
+ * result does not drift with the visitor's own time zone.
+ */
+const ASCTIME_RE =
+  /^[A-Za-z]{3}\s+([A-Za-z]{3})\s+(\d{1,2})\s+(\d{2}):(\d{2}):(\d{2})\s+(\d{4})$/;
+
+function parseAsctimeAsGmt(text) {
+  const match = ASCTIME_RE.exec(text);
+  if (!match) return null;
+  const [, monthName, day, hh, mm, ss, year] = match;
+  const month = IMF_MONTH_NAMES.findIndex((name) => name.toLowerCase() === monthName.toLowerCase());
+  if (month === -1) return null;
+  const epochMs = Date.UTC(Number(year), month, Number(day), Number(hh), Number(mm), Number(ss));
+  return Number.isFinite(epochMs) ? epochMs : null;
+}
+
+/**
  * Format an epoch-milliseconds instant as an IMF-fixdate string in GMT.
  * Built from fixed English tables rather than a locale so the output can never
  * drift with the host locale or time zone.
@@ -278,8 +299,15 @@ export function backoffSchedule({
     // Guard the overflow that a large factor and attempt count can produce.
     const capped = Number.isFinite(uncapped) ? Math.min(uncapped, cap) : cap;
 
-    let low = capped;
-    let high = capped;
+    // A Retry-After value must be a whole number, so this is what you would send.
+    const headerSeconds = Math.ceil(capped);
+
+    // With no jitter there is no range to draw from — the client waits exactly
+    // the whole-second value that goes in the header, so these columns must
+    // report that (not the raw, un-rounded `capped` delay) or they contradict
+    // the Retry-After value shown in the same row.
+    let low = headerSeconds;
+    let high = headerSeconds;
     if (jitter === "full") {
       low = 0;
       high = capped;
@@ -287,9 +315,6 @@ export function backoffSchedule({
       low = capped / 2;
       high = capped;
     }
-
-    // A Retry-After value must be a whole number, so this is what you would send.
-    const headerSeconds = Math.ceil(capped);
 
     totalMin += low;
     totalMax += high;
@@ -346,7 +371,7 @@ export function parseRetryAfter(raw, nowMs) {
     };
   }
 
-  const parsed = Date.parse(text);
+  const parsed = parseAsctimeAsGmt(text) ?? Date.parse(text);
   if (!Number.isFinite(parsed)) {
     return {
       error:

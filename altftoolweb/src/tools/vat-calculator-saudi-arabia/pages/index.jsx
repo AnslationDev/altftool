@@ -4,10 +4,12 @@ import { useMemo, useState } from "react";
 import { Check, Copy, Receipt, RotateCcw } from "lucide-react";
 
 import {
+  KSA_LEGACY_VAT_RATE,
   KSA_MANDATORY_REGISTRATION_THRESHOLD,
   KSA_SIMPLIFIED_INVOICE_LIMIT,
   KSA_STANDARD_VAT_RATE,
   KSA_VOLUNTARY_REGISTRATION_THRESHOLD,
+  KSA_ZERO_VAT_RATE,
   calculateKsaVat,
   ksaRegistrationStatus,
 } from "../lib";
@@ -40,9 +42,9 @@ const GHOST_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 
 const RATE_OPTIONS = [
-  { value: "15", label: "15% standard (from 1 July 2020)" },
-  { value: "5", label: "5% legacy (Jan 2018 - Jun 2020)" },
-  { value: "0", label: "0% zero-rated supply" },
+  { value: String(KSA_STANDARD_VAT_RATE), label: "15% standard (from 1 July 2020)" },
+  { value: String(KSA_LEGACY_VAT_RATE), label: "5% legacy (Jan 2018 - Jun 2020)" },
+  { value: String(KSA_ZERO_VAT_RATE), label: "0% zero-rated supply" },
 ];
 
 const MODES = [
@@ -240,7 +242,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               {mode === "inclusive" ? "VAT inside the price" : "Total including VAT"}
             </p>
@@ -328,7 +330,7 @@ export default function ToolHome() {
             {registration.error}
           </p>
         ) : (
-          <div className="mt-3">
+          <div className="mt-3" aria-live="polite" role="status">
             <p
               className={`text-sm font-semibold ${
                 registration.status === "mandatory" ? "text-[var(--danger)]" : "text-[var(--success)]"

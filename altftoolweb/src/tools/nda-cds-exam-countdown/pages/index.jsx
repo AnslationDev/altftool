@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, Shield } from "lucide-react";
 
 import {
@@ -47,6 +47,13 @@ export default function ToolHome() {
   const [attempted, setAttempted] = useState(DEFAULTS.attempted);
   const [accuracy, setAccuracy] = useState(DEFAULTS.accuracy);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    };
+  }, []);
 
   const preset = presetById(presetId) ?? EXAM_PRESETS[0];
   const paper = preset.papers.find((entry) => entry.id === paperId) ?? preset.papers[0];
@@ -87,25 +94,50 @@ export default function ToolHome() {
       lines.push(`SSB reporting: ${ssbStartISO} (${NUM.format(plan.ssb.daysToSsb)} days away)`);
       lines.push(`Written-to-SSB prep window: ${NUM.format(plan.ssb.writtenToSsb)} days`);
       lines.push(`SSB process: ${SSB_PROCESS_DAYS} days, conference on day ${SSB_PROCESS_DAYS}`);
+      if (plan.ssb.conferenceISO) {
+        lines.push(`Board conference (expected): ${plan.ssb.conferenceISO}`);
+      }
     }
     preset.papers.forEach((entry) => {
       lines.push(`${entry.label}: ${entry.questions} questions, ${entry.marks} marks, ${entry.minutes} minutes`);
     });
+
+    lines.push("");
+    lines.push(
+      `Attempt plan — ${paper.label}: ${NUM.format(Number(attempted))} of ${paper.questions} attempted at ${NUM.format(Number(accuracy))}% accuracy`,
+    );
+    if (projection.error) {
+      lines.push(`Attempt projection: ${projection.error}`);
+    } else {
+      lines.push(`Projected marks: ${NUM1.format(projection.marks)} / ${projection.maxMarks}`);
+      lines.push(`Marks per question: ${NUM2.format(projection.marksPerQuestion)}`);
+      lines.push(`Penalty per wrong answer: ${NUM2.format(projection.penaltyPerWrong)}`);
+      lines.push(`Accuracy at which a guess breaks even: ${NUM.format(projection.breakEvenAccuracy)}%`);
+    }
+
     return lines.join("\n");
-  }, [hasError, plan, preset, writtenISO, ssbStartISO, studyHours]);
+  }, [hasError, plan, preset, writtenISO, ssbStartISO, studyHours, paper, attempted, accuracy, projection]);
 
   const copyResult = async () => {
     if (!summary) return;
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => {
+        setCopied(false);
+        copiedTimeoutRef.current = null;
+      }, 1500);
     } catch {
       setCopied(false);
     }
   };
 
   const reset = () => {
+    if (copiedTimeoutRef.current) {
+      clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = null;
+    }
     setPresetId(DEFAULTS.presetId);
     setWrittenISO(DEFAULTS.writtenISO);
     setSsbStartISO(DEFAULTS.ssbStartISO);
@@ -261,6 +293,14 @@ export default function ToolHome() {
             [
               "SSB process length",
               `${SSB_PROCESS_DAYS} days — conference on day ${SSB_PROCESS_DAYS}`,
+            ],
+            [
+              "Board conference (expected)",
+              hasError || !plan.ssb
+                ? hasError
+                  ? DASH
+                  : "Add your SSB date to see it"
+                : plan.ssb.conferenceISO || DASH,
             ],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">

@@ -278,7 +278,7 @@ export default function ToolHome() {
 
       <section className={`mt-6 ${CARD}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Estimated value today
             </p>
@@ -312,7 +312,11 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {[
             ["Total depreciation so far", ok ? INR.format(result.totalLoss) : DASH],
             ["Average loss per year", ok ? INR.format(result.perYearLoss) : DASH],

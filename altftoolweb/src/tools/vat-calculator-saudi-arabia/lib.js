@@ -88,12 +88,18 @@ export function calculateKsaVat({
   if (amt < 0) return { error: "Amount cannot be negative." };
   if (amt > MAX_AMOUNT) return { error: "Amount is too large to calculate reliably." };
   if (rt < 0 || rt > 100) return { error: "VAT rate must be between 0% and 100%." };
-  if (qty <= 0) return { error: "Quantity must be at least 1." };
+  if (qty <= 0) return { error: "Quantity must be greater than 0." };
   if (qty > 1e6) return { error: "Quantity is too large to calculate reliably." };
   if (disc < 0 || disc > 100) return { error: "Discount must be between 0% and 100%." };
 
   const normalisedMode = VAT_MODES.includes(mode) ? mode : "inclusive";
   const lineBeforeDiscount = amt * qty;
+  // MAX_AMOUNT alone only bounds the per-unit amount; amount x quantity can
+  // still land outside safe double precision even when both individually
+  // pass, so bound the line total too.
+  if (lineBeforeDiscount > MAX_AMOUNT) {
+    return { error: "Amount × quantity is too large to calculate reliably." };
+  }
   const discountAmount = (lineBeforeDiscount * disc) / 100;
   const lineAmount = lineBeforeDiscount - discountAmount;
 

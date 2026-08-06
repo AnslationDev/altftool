@@ -87,7 +87,7 @@ Do not explain parts I said I am comfortable with. End with the rule of thumb fo
     tags: ["active recall", "quiz", "testing", "notes"],
     tip: "Testing yourself beats re-reading — paste notes you have already read once and let the quiz find the holes.",
     variables: [
-      { key: "notes", label: "Your notes (paste them)", placeholder: "The French Revolution: causes — fiscal crisis, estates system..." },
+      { key: "notes", label: "Your notes (paste them)", placeholder: "The French Revolution: causes — fiscal crisis, estates system...", type: "textarea" },
       { key: "exam_format", label: "How you will be examined", placeholder: "short answer and one essay, closed book" },
       { key: "count", label: "Number of questions", placeholder: "10" },
     ],
@@ -157,7 +157,7 @@ Do not write the introduction or any paragraph. If my thesis does not actually a
     tags: ["feedback", "draft", "marking", "rubric"],
     tip: "Paste the assignment's real criteria — feedback against imagined criteria is a different assignment.",
     variables: [
-      { key: "draft", label: "Your draft (paste it)", placeholder: "paste the full draft or the section you want reviewed" },
+      { key: "draft", label: "Your draft (paste it)", placeholder: "paste the full draft or the section you want reviewed", type: "textarea" },
       { key: "criteria", label: "The grading criteria", placeholder: "argument 40%, evidence 30%, structure 20%, style 10%" },
       { key: "worry", label: "What you are most unsure about", placeholder: "whether my paragraphs actually link back to the question" },
     ],
@@ -180,7 +180,7 @@ Then: mark the one paragraph that least earns its place and say why; list any cl
     tip: "Paste the official mark scheme if you have it — examiner marking is scheme-driven, not impression-driven.",
     variables: [
       { key: "question", label: "The exam question and total marks", placeholder: "Explain how vaccination leads to long-term immunity. [6 marks]" },
-      { key: "my_answer", label: "Your answer, exactly as written", placeholder: "paste your answer without fixing it up" },
+      { key: "my_answer", label: "Your answer, exactly as written", placeholder: "paste your answer without fixing it up", type: "textarea" },
       { key: "mark_scheme", label: "Mark scheme (paste if available)", placeholder: "1 mark each: antigen, memory cells, faster secondary response..." },
     ],
     template: `Mark my practice answer like an examiner. Be strict — generous marking now costs me marks later.
@@ -201,7 +201,7 @@ End with the single habit change that would recover the most marks across simila
     tags: ["summary", "cheat sheet", "condensed", "revision"],
     tip: "The sheet is for the final pass, not for learning — make it after you have studied, from your own material.",
     variables: [
-      { key: "material", label: "Your material (paste notes/list)", placeholder: "kinematics: v=u+at, s=ut+half at squared... common errors: sign of g..." },
+      { key: "material", label: "Your material (paste notes/list)", placeholder: "kinematics: v=u+at, s=ut+half at squared... common errors: sign of g...", type: "textarea" },
       { key: "exam_type", label: "Exam and what is provided", placeholder: "physics final, formula sheet NOT provided, calculator allowed" },
       { key: "trouble", label: "What you keep forgetting", placeholder: "when to use energy methods instead of kinematics" },
     ],
@@ -223,9 +223,9 @@ Rules: only content from my material — list anything that looks missing as "ch
     tags: ["planning", "deadlines", "workload", "time management"],
     tip: "Include the fixed commitments you cannot move — plans that ignore your job or training always fail.",
     variables: [
-      { key: "deadlines", label: "Everything due (with dates and weights)", placeholder: "essay Fri 40% of module; lab report Wed 10%; quiz Thu; reading for Mon seminar" },
-      { key: "fixed", label: "Fixed commitments", placeholder: "lectures 9-12 daily, work Tue/Thu evenings, sport Sat morning" },
-      { key: "state", label: "Current state of each task", placeholder: "essay: research done no outline; lab: data collected; quiz: not started" },
+      { key: "deadlines", label: "Everything due (with dates and weights)", placeholder: "essay Fri 40% of module; lab report Wed 10%; quiz Thu; reading for Mon seminar", type: "textarea" },
+      { key: "fixed", label: "Fixed commitments", placeholder: "lectures 9-12 daily, work Tue/Thu evenings, sport Sat morning", type: "textarea" },
+      { key: "state", label: "Current state of each task", placeholder: "essay: research done no outline; lab: data collected; quiz: not started", type: "textarea" },
     ],
     template: `Triage my week. Everything feels urgent — make the priorities explicit and the plan concrete.
 

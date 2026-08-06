@@ -17,6 +17,14 @@
 /** Line cap. The LCS table is (m+1)×(n+1) Int32 cells; 1500² stays under 9 MB. */
 export const MAX_LINES = 1500;
 
+/**
+ * Word cap for the exact whole-document Similarity/Churn LCS (see
+ * buildSideBySide). MAX_LINES bounds the number of lines, not how many words
+ * sit on any one of them, so a single very long line can still blow this pass
+ * up on its own; 6000×6000 words stays comfortably under 150ms.
+ */
+export const MAX_WORDS_FOR_EXACT_STATS = 6000;
+
 /** Row kinds the viewer renders. */
 export const ROW_EQUAL = "equal";
 export const ROW_CHANGED = "changed";
@@ -206,9 +214,24 @@ export function buildSideBySide(leftText, rightText, options = {}) {
     for (let k = 0; k < pairs; k += 1) {
       const leftLine = leftLines[deletes[k]];
       const rightLine = rightLines[inserts[k]];
-      const words = diffWords(leftLine, rightLine);
-      const totalWords = countWords(leftLine) + countWords(rightLine);
-      const similar = totalWords === 0 ? 1 : (2 * words.shared) / Math.max(1, totalWords);
+      const leftLineWords = countWords(leftLine);
+      const rightLineWords = countWords(rightLine);
+      // Word-diffing a replaced line is itself an O(wordsA x wordsB) LCS.
+      // MAX_LINES bounds how many lines there are, not how many words sit on
+      // one of them, so a single very long replaced line (e.g. an unwrapped
+      // paragraph) can be just as expensive as the whole-document stats pass
+      // above — skip it past the same threshold and fall back to marking the
+      // line fully replaced, exactly as already happens below that
+      // threshold when the two lines are too dissimilar to bother aligning.
+      const tooLongToWordDiff =
+        leftLineWords > MAX_WORDS_FOR_EXACT_STATS || rightLineWords > MAX_WORDS_FOR_EXACT_STATS;
+      const words = tooLongToWordDiff ? null : diffWords(leftLine, rightLine);
+      const totalWords = leftLineWords + rightLineWords;
+      const similar = tooLongToWordDiff
+        ? 0
+        : totalWords === 0
+          ? 1
+          : (2 * words.shared) / Math.max(1, totalWords);
       const worthWordDiff = similar >= WORD_DIFF_MIN_SIMILARITY;
       rows.push({
         type: ROW_CHANGED,
@@ -216,8 +239,8 @@ export function buildSideBySide(leftText, rightText, options = {}) {
         rightNo: inserts[k] + 1,
         leftSegments: worthWordDiff ? words.left : wholeLineSegments(leftLine, SEG_REMOVE),
         rightSegments: worthWordDiff ? words.right : wholeLineSegments(rightLine, SEG_ADD),
-        wordsAdded: worthWordDiff ? words.added : countWords(rightLine),
-        wordsRemoved: worthWordDiff ? words.removed : countWords(leftLine),
+        wordsAdded: worthWordDiff ? words.added : rightLineWords,
+        wordsRemoved: worthWordDiff ? words.removed : leftLineWords,
       });
     }
     for (let k = pairs; k < deletes.length; k += 1) {
@@ -244,14 +267,27 @@ export function buildSideBySide(leftText, rightText, options = {}) {
     }
   }
 
-  const leftWords = countWords(leftRaw);
-  const rightWords = countWords(rightRaw);
+  const leftWordList = leftRaw.split(/\s+/).filter(Boolean);
+  const rightWordList = rightRaw.split(/\s+/).filter(Boolean);
+  const leftWords = leftWordList.length;
+  const rightWords = rightWordList.length;
 
-  const wordDiff = lcsOps(
-    leftRaw.split(/\s+/).filter(Boolean),
-    rightRaw.split(/\s+/).filter(Boolean),
-  );
-  const sharedWords = wordDiff.lcs;
+  // The headline Similarity/Churn stats need a whole-document word-level LCS,
+  // which is O(leftWords x rightWords) — cheap for prose-sized documents but a
+  // single very long, unwrapped line (well under MAX_LINES) can still carry
+  // tens of thousands of words, and that cost isn't bounded by the line cap
+  // above. Keep it exact for realistic documents; past the threshold, fall
+  // back to the counts already produced while building the rows above (exact
+  // per row, just blind to a word that matched across a row boundary) rather
+  // than freezing the tab on every keystroke.
+  let sharedWords;
+  if (leftWords <= MAX_WORDS_FOR_EXACT_STATS && rightWords <= MAX_WORDS_FOR_EXACT_STATS) {
+    const normaliseWord = options.ignoreCase ? (word) => word.toLowerCase() : (word) => word;
+    sharedWords = lcsOps(leftWordList.map(normaliseWord), rightWordList.map(normaliseWord)).lcs;
+  } else {
+    const rowWordsRemoved = rows.reduce((sum, row) => sum + (row.wordsRemoved || 0), 0);
+    sharedWords = Math.max(0, leftWords - rowWordsRemoved);
+  }
   const totalWords = leftWords + rightWords;
   const similarityPct =
     totalWords === 0 ? 100 : Math.round(((2 * sharedWords) / totalWords) * 1000) / 10;

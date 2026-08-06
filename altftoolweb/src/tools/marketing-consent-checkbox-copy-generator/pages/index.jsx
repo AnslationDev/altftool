@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, SquareCheckBig, TriangleAlert } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import { CHANNELS, FREQUENCIES, REGIMES, buildConsentCopy } from "../lib";
 
 const INPUT_CLASS =
@@ -40,7 +42,7 @@ export default function ToolHome() {
   const [thirdParties, setThirdParties] = useState(DEFAULTS.thirdParties);
   const [privacyUrl, setPrivacyUrl] = useState(DEFAULTS.privacyUrl);
   const [postalAddress, setPostalAddress] = useState(DEFAULTS.postalAddress);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -78,15 +80,9 @@ export default function ToolHome() {
     );
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.plainText);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", result.plainText, { label: "consent checkbox copy" });
   };
 
   const reset = () => {
@@ -100,7 +96,7 @@ export default function ToolHome() {
     setThirdParties(DEFAULTS.thirdParties);
     setPrivacyUrl(DEFAULTS.privacyUrl);
     setPostalAddress(DEFAULTS.postalAddress);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -283,7 +279,9 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? "Fix the inputs above to generate the copy."
-                : `${result.stats.perChannelPerYear} per channel across ${result.stats.channelCount} channel${result.stats.channelCount === 1 ? "" : "s"}`}
+                : result.stats.granular
+                  ? `${result.stats.perChannelPerYear} per channel across ${result.stats.channelCount} channel${result.stats.channelCount === 1 ? "" : "s"}`
+                  : `One combined checkbox covering ${result.stats.channelCount} channel${result.stats.channelCount === 1 ? "" : "s"}`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -291,20 +289,27 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the generated consent checkbox copy"
+              aria-label={
+                isCopied("result")
+                  ? "Copied the generated consent checkbox copy to clipboard"
+                  : "Copy the generated consent checkbox copy"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy copy"}
+              {isCopied("result") ? "Copied!" : "Copy copy"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

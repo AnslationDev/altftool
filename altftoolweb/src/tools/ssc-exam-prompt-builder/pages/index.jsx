@@ -11,6 +11,7 @@ import {
   SSC_EXAMS,
   attemptsForTarget,
   buildSscPrompt,
+  scoreSscAttempt,
   topicBankFor,
 } from "../lib";
 
@@ -42,6 +43,8 @@ const DEFAULTS = {
   notes: "",
   targetMarks: "140",
   accuracyPct: "80",
+  attemptCorrect: "",
+  attemptWrong: "",
 };
 
 const DASH = "—";
@@ -60,6 +63,8 @@ export default function ToolHome() {
   const [notes, setNotes] = useState(DEFAULTS.notes);
   const [targetMarks, setTargetMarks] = useState(DEFAULTS.targetMarks);
   const [accuracyPct, setAccuracyPct] = useState(DEFAULTS.accuracyPct);
+  const [attemptCorrect, setAttemptCorrect] = useState(DEFAULTS.attemptCorrect);
+  const [attemptWrong, setAttemptWrong] = useState(DEFAULTS.attemptWrong);
   const [copied, setCopied] = useState(false);
 
   const result = useMemo(
@@ -82,8 +87,25 @@ export default function ToolHome() {
     [examKey, targetMarks, accuracyPct],
   );
 
+  const attemptScoreInput = useMemo(
+    () => ({
+      examKey,
+      correct: attemptCorrect === "" ? Number.NaN : Number(attemptCorrect),
+      wrong: attemptWrong === "" ? Number.NaN : Number(attemptWrong),
+    }),
+    [examKey, attemptCorrect, attemptWrong],
+  );
+  const attemptScoreEntered = attemptCorrect !== "" || attemptWrong !== "";
+  const attemptScore = useMemo(
+    () => (attemptScoreEntered ? scoreSscAttempt(attemptScoreInput) : null),
+    [attemptScoreEntered, attemptScoreInput],
+  );
+
   const ok = !result.error;
-  const metrics = ok ? result.metrics : null;
+  // Paper pacing/marking metrics depend only on the exam, so buildSscPrompt returns them even
+  // when a separate field (like item count) is out of range — read them directly rather than
+  // gating on the overall `ok` flag.
+  const metrics = result.metrics || null;
   const topics = SECTION_TOPICS[topicBankFor(section)];
 
   const onExamChange = (next) => {
@@ -110,6 +132,14 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset all fields? This clears your weak-spots notes and every other field back to the defaults — anything you entered will be lost.",
+      )
+    ) {
+      return;
+    }
     setExamKey(DEFAULTS.examKey);
     setSection(DEFAULTS.section);
     setTopic(DEFAULTS.topic);
@@ -120,6 +150,8 @@ export default function ToolHome() {
     setNotes(DEFAULTS.notes);
     setTargetMarks(DEFAULTS.targetMarks);
     setAccuracyPct(DEFAULTS.accuracyPct);
+    setAttemptCorrect(DEFAULTS.attemptCorrect);
+    setAttemptWrong(DEFAULTS.attemptWrong);
     setCopied(false);
   };
 
@@ -301,7 +333,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyPrompt}
               aria-label="Copy the generated SSC study prompt"
-              className={PRIMARY_BTN}
+              className={GHOST_BTN}
               disabled={!ok}
             >
               {copied ? (
@@ -311,7 +343,7 @@ export default function ToolHome() {
               )}
               {copied ? "Copied!" : "Copy prompt"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all fields" className={GHOST_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all fields" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
@@ -411,6 +443,87 @@ export default function ToolHome() {
             <dt className="text-xs text-[var(--muted-foreground)]">Time per attempted question</dt>
             <dd className="text-base font-semibold">
               {plan.error ? DASH : `${NUM.format(plan.secondsAvailablePerAttempt)} s`}
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+        <h2 className="text-lg font-semibold">Score a completed attempt</h2>
+        <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+          Already sat a real or mock paper? Enter how many you got right and wrong to see the net
+          score under {SSC_EXAMS[examKey].label}&rsquo;s own marking scheme. Optional — leave both
+          blank to skip.
+        </p>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className={LABEL_CLASS} htmlFor="ssc-attempt-correct">
+              Correct answers
+            </label>
+            <input
+              id="ssc-attempt-correct"
+              className={`mt-2 ${INPUT_CLASS}`}
+              type="number"
+              inputMode="numeric"
+              min="0"
+              step="1"
+              value={attemptCorrect}
+              placeholder="e.g. 62"
+              onChange={(event) => setAttemptCorrect(event.target.value)}
+            />
+          </div>
+          <div>
+            <label className={LABEL_CLASS} htmlFor="ssc-attempt-wrong">
+              Wrong answers
+            </label>
+            <input
+              id="ssc-attempt-wrong"
+              className={`mt-2 ${INPUT_CLASS}`}
+              type="number"
+              inputMode="numeric"
+              min="0"
+              step="1"
+              value={attemptWrong}
+              placeholder="e.g. 18"
+              onChange={(event) => setAttemptWrong(event.target.value)}
+            />
+          </div>
+        </div>
+
+        {attemptScore?.error ? (
+          <p
+            role="alert"
+            className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
+          >
+            {attemptScore.error}
+          </p>
+        ) : null}
+
+        <dl className="mt-4 grid gap-3 sm:grid-cols-2" role="status" aria-live="polite">
+          <div className="rounded-md bg-[var(--muted)] px-3 py-2">
+            <dt className="text-xs text-[var(--muted-foreground)]">Net score</dt>
+            <dd className="text-base font-semibold text-[var(--primary)]">
+              {attemptScore && !attemptScore.error
+                ? `${attemptScore.net} / ${attemptScore.maxMarks}`
+                : DASH}
+            </dd>
+          </div>
+          <div className="rounded-md bg-[var(--muted)] px-3 py-2">
+            <dt className="text-xs text-[var(--muted-foreground)]">Percent of max marks</dt>
+            <dd className="text-base font-semibold">
+              {attemptScore && !attemptScore.error ? `${NUM.format(attemptScore.percentOfMax)}%` : DASH}
+            </dd>
+          </div>
+          <div className="rounded-md bg-[var(--muted)] px-3 py-2">
+            <dt className="text-xs text-[var(--muted-foreground)]">Accuracy on attempted</dt>
+            <dd className="text-base font-semibold">
+              {attemptScore && !attemptScore.error ? `${NUM.format(attemptScore.accuracyPct)}%` : DASH}
+            </dd>
+          </div>
+          <div className="rounded-md bg-[var(--muted)] px-3 py-2">
+            <dt className="text-xs text-[var(--muted-foreground)]">Left unattempted</dt>
+            <dd className="text-base font-semibold">
+              {attemptScore && !attemptScore.error ? attemptScore.unattempted : DASH}
             </dd>
           </div>
         </dl>

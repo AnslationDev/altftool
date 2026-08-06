@@ -47,7 +47,7 @@ function readImageFile(file) {
           reject(new Error("This browser blocked canvas access, so the photo cannot be measured."));
           return;
         }
-        resolve({ ...sampled, name: file.name, previewUrl: reader.result });
+        resolve({ ...sampled, name: file.name, previewUrl: reader.result, isDemo: false });
       };
       image.src = reader.result;
     };
@@ -91,6 +91,7 @@ function makeDemoImage(hueShift, tilt) {
     dataUrl: canvas.toDataURL("image/png"),
     previewUrl: canvas.toDataURL("image/png"),
     name: "Demo photo",
+    isDemo: true,
   };
 }
 
@@ -99,7 +100,6 @@ export default function ToolHome() {
   const [photoB, setPhotoB] = useState(null);
   const [loadError, setLoadError] = useState("");
   const [copied, setCopied] = useState(false);
-  const [demoLoaded, setDemoLoaded] = useState(false);
 
   useEffect(() => {
     const first = makeDemoImage(0, 0);
@@ -107,7 +107,6 @@ export default function ToolHome() {
     if (first && second) {
       setPhotoA({ ...first, name: "Demo photo A" });
       setPhotoB({ ...second, name: "Demo photo B" });
-      setDemoLoaded(true);
     }
   }, []);
 
@@ -142,7 +141,6 @@ export default function ToolHome() {
     try {
       const loaded = await readImageFile(file);
       setLoadError("");
-      setDemoLoaded(false);
       setter(loaded);
     } catch (readError) {
       setLoadError(readError.message);
@@ -161,17 +159,29 @@ export default function ToolHome() {
   };
 
   const handleReset = () => {
+    if (!window.confirm("Reset to the demo photos? This clears both photo slots and cannot be undone.")) {
+      return;
+    }
     const first = makeDemoImage(0, 0);
     const second = makeDemoImage(24, 6);
     setPhotoA(first ? { ...first, name: "Demo photo A" } : null);
     setPhotoB(second ? { ...second, name: "Demo photo B" } : null);
     setLoadError("");
     setCopied(false);
-    setDemoLoaded(Boolean(first && second));
   };
 
   const dash = "—";
   const percentFmt = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
+  const demoA = Boolean(photoA?.isDemo);
+  const demoB = Boolean(photoB?.isDemo);
+  const demoNotice =
+    demoA && demoB
+      ? "Showing two generated demo photos — upload your own to replace them. "
+      : demoA
+        ? "The first photo is still a generated demo — upload a photo to replace it. "
+        : demoB
+          ? "The second photo is still a generated demo — upload a photo to replace it. "
+          : "";
 
   return (
     <div className="mx-auto w-full max-w-3xl px-4 py-6">
@@ -338,7 +348,7 @@ export default function ToolHome() {
       <div className="mt-4 flex flex-wrap gap-3">
         <button
           type="button"
-          className={PRIMARY_BTN}
+          className={GHOST_BTN}
           onClick={handleCopy}
           aria-label="Copy the similarity result to clipboard"
           disabled={Boolean(share.error)}
@@ -346,14 +356,14 @@ export default function ToolHome() {
           {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
           {copied ? "Copied!" : "Copy result"}
         </button>
-        <button type="button" className={GHOST_BTN} onClick={handleReset} aria-label="Reset to the demo photos">
+        <button type="button" className={PRIMARY_BTN} onClick={handleReset} aria-label="Reset to the demo photos">
           <RotateCcw className="h-4 w-4" aria-hidden="true" />
           Reset
         </button>
       </div>
 
       <p className="mt-4 text-xs text-[var(--muted-foreground)]">
-        {demoLoaded ? "Showing two generated demo photos — upload your own to replace them. " : ""}
+        {demoNotice}
         Photos are resampled to {WORK_SIZE}×{WORK_SIZE} in your browser and never uploaded. This is
         a party trick, not face recognition, and it says nothing about who anyone is related to.
       </p>

@@ -242,7 +242,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Sensor records in the export
             </p>
@@ -282,7 +282,11 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          role="status"
+          aria-live="polite"
+        >
           {[
             ["Estimated archive size", hasError ? DASH : result.totalLabel],
             ["Heart-rate samples", hasError ? DASH : NUM.format(result.hrSamples)],
@@ -398,8 +402,8 @@ export default function ToolHome() {
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
         Record counts assume typical consumer-wearable sampling rates and are planning estimates,
         not a measurement of your device. Nothing here is medical or legal advice — a controller
-        generally has {GDPR_RESPONSE_DAYS} days to answer a formal access request, and you should
-        consult a qualified professional about your own situation.
+        generally has one calendar month (about {GDPR_RESPONSE_DAYS} days) to answer a formal
+        access request, and you should consult a qualified professional about your own situation.
       </p>
     </main>
   );
