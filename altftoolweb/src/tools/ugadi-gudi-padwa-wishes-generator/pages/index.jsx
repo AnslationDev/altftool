@@ -247,7 +247,7 @@ export default function ToolHome() {
           <button
             type="button"
             onClick={() => copy("bundle", bundle)}
-            aria-label="Copy every generated greeting"
+            aria-label={copiedId === "bundle" ? "Copied" : "Copy every generated greeting"}
             className={PRIMARY_BTN}
             disabled={!bundle}
           >
@@ -304,7 +304,7 @@ export default function ToolHome() {
                   <button
                     type="button"
                     onClick={() => copy(item.id, item.text)}
-                    aria-label="Copy this greeting"
+                    aria-label={copiedId === item.id ? "Copied" : "Copy this greeting"}
                     className={GHOST_BTN}
                   >
                     {copiedId === item.id ? (

@@ -203,7 +203,7 @@ export const advancedCatalog = {
     "id": 181,
     "slug": "exif-timestamp-geotag-editor",
     "name": "EXIF Timestamp & Geotag Editor",
-    "description": "User-owned photos ke dates aur coordinates bulk-edit kare.",
+    "description": "Write a sidecar file with corrected dates and coordinates for your own photos — originals are left unchanged.",
     "category": "Image, Font, Archive & 3D Tools",
     "priority": "P2"
   },

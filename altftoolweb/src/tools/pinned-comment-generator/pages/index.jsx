@@ -85,7 +85,7 @@ export default function ToolHome() {
   const reset = () => {
     if (
       !window.confirm(
-        "Reset the generator? This will replace your topic, correction, links, timestamps and next-up with the demo example values and cannot be undone.",
+        "Reset the generator? This clears every field — topic, platform, prompt style, opening line, correction, links, timestamps, affiliate disclosure and next-up — back to the demo example and cannot be undone.",
       )
     ) {
       return;

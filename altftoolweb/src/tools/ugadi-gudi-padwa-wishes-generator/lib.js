@@ -204,7 +204,8 @@ export const TEMPLATES = {
   },
 };
 
-export const MAX_MESSAGES = 4;
+/** Every tradition/language/audience combination has exactly two tagged templates. */
+export const MAX_MESSAGES = 2;
 
 /**
  * GSM 03.38 fits 160 characters in one SMS and 153 per concatenated part.
@@ -326,7 +327,7 @@ export function generateWishes({
 
   const messages = picked.map((item, index) => {
     const parts = [];
-    if (name) parts.push(salutation.replace("{name}", name));
+    if (name) parts.push(salutation.replace("{name}", () => name));
     parts.push(item.text);
     if (sender) parts.push(`— ${sender}`);
     const text = parts.join("\n");

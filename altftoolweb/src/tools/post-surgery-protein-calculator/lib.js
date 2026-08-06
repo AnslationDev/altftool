@@ -55,7 +55,7 @@ export const SURGERY_TYPES = [
     id: "minor",
     label: "Minor day-case procedure (skin lesion, dental, arthroscopy)",
     low: 1.0,
-    target: 1.2,
+    target: 1.0,
     high: 1.3,
     source: "ESPEN hospital nutrition band for low-stress recovery.",
   },
@@ -191,6 +191,10 @@ export function computePostSurgeryProtein({
   const perMeal = proteinTarget / mealCount;
   const shortfall = eatenToday === null ? null : Math.max(0, proteinTarget - eatenToday);
   const percentOfTarget = eatenToday === null ? null : (eatenToday / proteinTarget) * 100;
+  // Compare the ROUNDED shortfall (what the UI actually displays) so the note
+  // text never contradicts the on-screen number, e.g. "0 g short" alongside
+  // a "still short" message when the raw difference rounds down to zero.
+  const shortfallRounded = shortfall === null ? null : round(shortfall);
 
   const notes = [];
   if (usesAdjustedWeight) {
@@ -203,12 +207,12 @@ export function computePostSurgeryProtein({
       `Age ${round(age)} applies the ESPEN geriatric floor of ${OLDER_ADULT_FLOOR_G_PER_KG} g/kg for acutely ill older adults.`,
     );
   }
-  if (shortfall !== null && shortfall > 0) {
+  if (shortfallRounded !== null && shortfallRounded > 0) {
     notes.push(
-      `Currently ${round(shortfall)} g short of the estimate — about ${round(percentOfTarget)}% of the target so far today.`,
+      `Currently ${shortfallRounded} g short of the estimate — about ${round(percentOfTarget)}% of the target so far today.`,
     );
   }
-  if (shortfall === 0) {
+  if (shortfallRounded === 0) {
     notes.push("Today's intake already meets this estimate.");
   }
   notes.push(
@@ -242,7 +246,7 @@ export function computePostSurgeryProtein({
     meals: mealCount,
     perMeal: round(perMeal),
     currentProteinG: eatenToday === null ? null : round(eatenToday),
-    shortfall: shortfall === null ? null : round(shortfall),
+    shortfall: shortfallRounded,
     percentOfTarget: percentOfTarget === null ? null : round(percentOfTarget),
     notes,
   };

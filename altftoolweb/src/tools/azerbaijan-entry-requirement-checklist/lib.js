@@ -99,11 +99,12 @@ export const ROUTES = [
     id: "embassy",
     label: "Visa from an Azerbaijani embassy or consulate",
     maxStayDays: 30,
-    feeUsd: 0,
+    feeUsd: null,
+    feeUnknown: true,
     processingText: "Weeks, not days",
     appliedInAdvance: true,
     singleEntry: true,
-    note: "For nationalities outside the ASAN system, and for categories the e-visa does not cover. Fees are set by the mission.",
+    note: "For nationalities outside the ASAN system, and for categories the e-visa does not cover. Fees are set by the mission — contact them directly.",
   },
 ];
 
@@ -306,7 +307,7 @@ export function buildAzerbaijanChecklist({
     return { error: "Enter 365 days or fewer; a longer stay needs a temporary residence permit." };
   }
 
-  const partySize = Number(travellers);
+  const partySize = Math.round(Number(travellers));
   const childCount = Number(children);
   if (!Number.isFinite(partySize) || !Number.isFinite(childCount)) {
     return { error: "Enter the number of travellers as whole numbers." };
@@ -334,11 +335,16 @@ export function buildAzerbaijanChecklist({
   const needsRegistration = wholeDays > REGISTRATION_THRESHOLD_DAYS;
   const registrationDeadline = addDays(arrival, REGISTRATION_DEADLINE_DAYS);
 
-  // Visa fee, per traveller including children.
-  const visaFeeTotalUsd = round2(route.feeUsd * partySize);
-
-  // A single-entry visa cannot cover a trip out and back.
+  // A single-entry visa cannot cover a trip out and back — a second visa is needed for it.
   const needsSecondVisa = Boolean(leavingAndReturning) && route.singleEntry;
+
+  // Visa fee, per traveller including children, doubled if a second visa is required.
+  // The embassy route's fee is set by the mission and is not a known figure — it is
+  // never reported as a computed dollar amount, "$0" included.
+  const feeUnknown = Boolean(route.feeUnknown);
+  const visaFeeTotalUsd = feeUnknown
+    ? null
+    : round2(route.feeUsd * partySize * (needsSecondVisa ? 2 : 1));
 
   const documents = buildDocuments({
     route,
@@ -378,9 +384,14 @@ export function buildAzerbaijanChecklist({
     );
   }
 
+  const secondVisaNote = needsSecondVisa ? ", including a second visa for the return leg" : "";
+  const feeText = feeUnknown
+    ? `fee varies by mission — contact the embassy directly${needsSecondVisa ? " (a second visa is also needed for the return leg)" : ""}`
+    : `visa cost USD ${visaFeeTotalUsd.toLocaleString("en-US")} for ${partySize} traveller(s)${secondVisaNote}`;
+
   const verdict = passportOk
     ? stayWithinLimit
-      ? `Route works — visa cost USD ${visaFeeTotalUsd.toLocaleString("en-US")} for ${partySize} traveller(s).`
+      ? `Route works — ${feeText}.`
       : "Planned stay is longer than this route allows."
     : "Passport validity fails the three-month rule counted from departure.";
 
@@ -399,10 +410,11 @@ export function buildAzerbaijanChecklist({
     daysOverLimit,
     needsRegistration,
     registrationDeadline: toIso(registrationDeadline),
-    travellers: Math.round(partySize),
+    travellers: partySize,
     children: Math.round(childCount),
     visaFeePerPersonUsd: route.feeUsd,
     visaFeeTotalUsd,
+    feeUnknown,
     needsSecondVisa,
     documents,
     requiredDocuments,

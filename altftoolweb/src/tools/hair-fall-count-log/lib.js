@@ -157,6 +157,24 @@ export function analyseShedding(input) {
     return { ms: entry.ms, average: mean(window), windowSize: window.length };
   });
 
+  // Calendar-day-normalised rate per entry, so an infrequent wash day's
+  // accumulated count is spread over the days it actually represents
+  // instead of being compared raw against a per-day threshold (which would
+  // make normal, infrequent washing look like a shedding problem). The
+  // first entry has no prior log to measure a gap from, so it borrows the
+  // gap to the next entry when one exists.
+  const rated = sorted.map((entry, index) => {
+    let effectiveDays;
+    if (sorted.length === 1) {
+      effectiveDays = 1;
+    } else if (index === 0) {
+      effectiveDays = Math.max(1, Math.round((sorted[1].ms - sorted[0].ms) / MS_PER_DAY));
+    } else {
+      effectiveDays = Math.max(1, Math.round((sorted[index].ms - sorted[index - 1].ms) / MS_PER_DAY));
+    }
+    return { ...entry, effectiveDays, dailyRate: entry.count / effectiveDays };
+  });
+
   let trend = null;
   if (daysLogged >= ROLLING_WINDOW_DAYS * 2) {
     const recent = counts.slice(-ROLLING_WINDOW_DAYS);
@@ -199,12 +217,12 @@ export function analyseShedding(input) {
     washDayCount: washDays.length,
     washDayAverage: mean(washDays.map((entry) => entry.count)),
     nonWashDayAverage: mean(nonWashDays.map((entry) => entry.count)),
-    daysAboveNormal: counts.filter((count) => count > NORMAL_DAILY_MAX).length,
+    daysAboveNormal: rated.filter((entry) => entry.dailyRate > NORMAL_DAILY_MAX).length,
     peak: { ms: peak.ms, count: peak.count, washDay: peak.washDay },
     lowest: { ms: lowest.ms, count: lowest.count, washDay: lowest.washDay },
     rolling,
     trend,
     telogen,
-    entries: sorted,
+    entries: rated,
   };
 }

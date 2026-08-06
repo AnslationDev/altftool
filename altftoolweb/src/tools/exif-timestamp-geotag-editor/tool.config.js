@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "Bulk-edit the dates and GPS coordinates stored in photos you own.",
+  "description": "Write a sidecar file recording corrected dates and GPS coordinates for photos you own, without changing the originals.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

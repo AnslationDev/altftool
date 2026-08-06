@@ -1524,6 +1524,15 @@ function FileLab({ slug }) {
           <Notice>{fileModeMeta[slug] || "Inspect and transform the selected user-owned file locally."}</Notice>
           <Label htmlFor="file-lab-input">Local file(s)</Label>
           <input id="file-lab-input" type="file" multiple className={input} onChange={(event) => setFiles([...event.target.files])} />
+          {files.length > 1 && (
+            <p className="text-xs text-[var(--muted-foreground)]">
+              Processing: {files[0].name}. Only the first selected file is used — the other{" "}
+              {files.length - 1} selection{files.length - 1 === 1 ? "" : "s"} will be ignored.
+            </p>
+          )}
+          {files.length === 1 && (
+            <p className="text-xs text-[var(--muted-foreground)]">Processing: {files[0].name}.</p>
+          )}
           <Label htmlFor="file-lab-text">Characters, metadata edits, or processing notes</Label>
           <textarea id="file-lab-text" className={`${input} min-h-28`} value={text} onChange={(event) => setText(event.target.value)} placeholder="Optional tool-specific values" />
           {(slug === "zip-tar-archive-surgeon" || slug === "backup-restore-verifier") && (
@@ -1546,7 +1555,7 @@ function FileLab({ slug }) {
         )}
         {result?.error && <div className="mt-4"><Notice tone="error">{result.error}</Notice></div>}
         {result?.summary && (
-          <div className="mt-4 grid gap-3">
+          <div className="mt-4 grid gap-3" role="status" aria-live="polite" aria-atomic="true">
             <p className="text-lg font-semibold">{result.summary}</p>
             <ResultTable rows={result.rows || []} />
           </div>

@@ -100,7 +100,7 @@ export function convertNumber({ value, unit = "one" }) {
   const absolute = numeric * meta.multiplier;
   if (!Number.isFinite(absolute) || Math.abs(absolute) > MAX_ABS_VALUE) {
     return {
-      error: "That is beyond 10 lakh crore (1,000 trillion) — too large to convert exactly.",
+      error: "That is beyond 1,000 lakh crore (1,000 trillion) — too large to convert exactly.",
     };
   }
 

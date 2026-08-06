@@ -257,7 +257,10 @@ export function joinPromptLines({
   // Normalise CRLF and lone CR first so the line count is stable.
   let lines = text.replace(/\r\n?/g, "\n").split("\n");
   if (trimLines) lines = lines.map((line) => line.trim());
-  if (dropEmptyLines) lines = lines.filter((line) => line.length > 0);
+  // "Drop blank lines" means whitespace-only lines too, regardless of whether
+  // trimLines itself is on - the filter check is independent of whether the
+  // surviving line content gets trimmed.
+  if (dropEmptyLines) lines = lines.filter((line) => line.trim().length > 0);
   if (lines.length === 0) {
     return { error: "Every line was blank after trimming." };
   }
@@ -275,8 +278,15 @@ export function joinPromptLines({
   }
 
   const output = wrapInQuotes ? `${target.open}${body}${target.close}` : body;
-  const joinedRaw = lines.join(newlineMode === "space" ? " " : "\n");
-  const escapedCount = Math.max(0, body.length - joinedRaw.length);
+  // Count escape characters directly from what each per-line escape() call
+  // inserted (escaped line length minus original line length), summed across
+  // all lines. Diffing the final joined strings doesn't work because body and
+  // the old joinedRaw comparator go through different whitespace transforms
+  // (e.g. newlineMode "space" collapses runs of spaces in body only).
+  const escapedCount = escapedLines.reduce(
+    (sum, escapedLine, i) => sum + Math.max(0, escapedLine.length - lines[i].length),
+    0
+  );
 
   return {
     output,

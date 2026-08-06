@@ -108,7 +108,10 @@ export default function QuickToolPage({
 
           <section className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
             <h2 className="text-lg font-semibold">{outputLabel}</h2>
-            <pre className="mt-4 max-h-[600px] overflow-auto whitespace-pre-wrap rounded-lg bg-[var(--background)] p-4 text-xs leading-5 ring-1 ring-[var(--border)]">
+            <pre
+              aria-live="polite"
+              className="mt-4 max-h-[600px] overflow-auto whitespace-pre-wrap rounded-lg bg-[var(--background)] p-4 text-xs leading-5 ring-1 ring-[var(--border)]"
+            >
               {output}
             </pre>
           </section>

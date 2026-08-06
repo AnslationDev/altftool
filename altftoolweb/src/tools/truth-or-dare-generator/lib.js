@@ -241,7 +241,13 @@ export function buildRoundList({
       if (prompt.error) return prompt;
       if (prompt.recycled) {
         recycles += 1;
-        used.length = 0;
+        // Only the sub-pool that was actually exhausted (truth or dare) gets forgotten —
+        // clearing the whole `used` list would also wipe tracking for the other type,
+        // making it repeat prompts long before it has actually been drawn out.
+        const prefix = `${level}-${prompt.type}-`;
+        for (let i = used.length - 1; i >= 0; i -= 1) {
+          if (used[i].startsWith(prefix)) used.splice(i, 1);
+        }
       }
       used.push(prompt.id);
       turns.push({

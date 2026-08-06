@@ -191,6 +191,7 @@ export default function ToolHome() {
               max="100"
               value={comparePos}
               onChange={(e) => setComparePos(parseInt(e.target.value))}
+              aria-label="Comparison slider position"
               className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20"
             />
 
@@ -238,6 +239,7 @@ export default function ToolHome() {
                   max="20"
                   value={blur}
                   onChange={(e) => setBlur(parseInt(e.target.value))}
+                  aria-label="Blur level"
                   className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                 />
               </div>
@@ -254,6 +256,7 @@ export default function ToolHome() {
                   max="200"
                   value={brightness}
                   onChange={(e) => setBrightness(parseInt(e.target.value))}
+                  aria-label="Brightness level"
                   className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                 />
               </div>
@@ -270,6 +273,7 @@ export default function ToolHome() {
                   max="200"
                   value={contrast}
                   onChange={(e) => setContrast(parseInt(e.target.value))}
+                  aria-label="Contrast level"
                   className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                 />
               </div>
@@ -286,6 +290,7 @@ export default function ToolHome() {
                   max="100"
                   value={grayscale}
                   onChange={(e) => setGrayscale(parseInt(e.target.value))}
+                  aria-label="Grayscale level"
                   className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                 />
               </div>
@@ -302,6 +307,7 @@ export default function ToolHome() {
                   max="360"
                   value={hueRotate}
                   onChange={(e) => setHueRotate(parseInt(e.target.value))}
+                  aria-label="Hue-rotate level"
                   className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                 />
               </div>
@@ -318,6 +324,24 @@ export default function ToolHome() {
                   max="100"
                   value={invert}
                   onChange={(e) => setInvert(parseInt(e.target.value))}
+                  aria-label="Invert level"
+                  className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
+                />
+              </div>
+
+              {/* Opacity */}
+              <div className="space-y-1">
+                <div className="flex justify-between text-xs text-foreground font-semibold">
+                  <span>Opacity</span>
+                  <span className="text-primary font-mono">{opacity}%</span>
+                </div>
+                <input
+                  type="range"
+                  min="0"
+                  max="100"
+                  value={opacity}
+                  onChange={(e) => setOpacity(parseInt(e.target.value))}
+                  aria-label="Opacity level"
                   className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                 />
               </div>
@@ -334,6 +358,7 @@ export default function ToolHome() {
                   max="200"
                   value={saturate}
                   onChange={(e) => setSaturate(parseInt(e.target.value))}
+                  aria-label="Saturate level"
                   className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                 />
               </div>
@@ -350,6 +375,7 @@ export default function ToolHome() {
                   max="100"
                   value={sepia}
                   onChange={(e) => setSepia(parseInt(e.target.value))}
+                  aria-label="Sepia level"
                   className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                 />
               </div>

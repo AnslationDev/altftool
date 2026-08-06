@@ -23,7 +23,7 @@ const seo = {
   faqs: [
     [
       "What do the alignment settings control?",
-      "Five values. Activity threshold (default -40 dBFS, range -80 to -6) decides what counts as speech; window size (default 50 ms, range 20-200) sets the measurement resolution; minimum uncovered length (default 250 ms) suppresses trivial gaps; timing tolerance (default 500 ms) is how far a cue boundary may drift before it is flagged; text similarity threshold (default 0.85) is the score below which two cue texts are reported as different.",
+      "Two are adjustable in this tool. Activity threshold (default -40 dBFS, presets -50/-40/-30/-20) decides what counts as speech; timing tolerance (default 500 ms, presets 250 ms/500 ms/1 s/2 s) is how far a cue boundary may drift before it is flagged. Three more settings — window size (50 ms), minimum uncovered length (250 ms) and text similarity threshold (0.85) — are fixed at their defaults for this hosted tool; the underlying library supports tuning them across a wider range, but this page does not expose controls for them.",
     ],
     [
       "How is text similarity between two cues scored?",
