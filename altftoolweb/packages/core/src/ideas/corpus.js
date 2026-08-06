@@ -12,27 +12,35 @@
  * needs one vertical never pays for the whole corpus.
  */
 
-import { readFile } from "node:fs/promises";
-import path from "node:path";
 import { rehydrate } from "./compose.js";
+import { readIdeasCorpusFile } from "./corpus-source.js";
 
-const DATA_DIR = path.join(process.cwd(), "public", "data", "ideas");
+export function createIdeasJsonLoader({
+  readCorpusFileImpl = readIdeasCorpusFile,
+} = {}) {
+  const cache = new Map();
 
-const cache = new Map();
+  return function loadJson(relativePath) {
+    if (cache.has(relativePath)) return cache.get(relativePath);
 
-async function loadJson(relativePath) {
-  if (cache.has(relativePath)) return cache.get(relativePath);
-  const promise = readFile(path.join(DATA_DIR, relativePath), "utf8")
-    .then(JSON.parse)
-    .catch((error) => {
-      cache.delete(relativePath);
-      throw new Error(
-        `AltF Ideas corpus missing "${relativePath}". Run "npm run generate:ideas" first. (${error.message})`,
-      );
-    });
-  cache.set(relativePath, promise);
-  return promise;
+    const promise = readCorpusFileImpl(relativePath)
+      .then((bytes) => JSON.parse(Buffer.from(bytes).toString("utf8")))
+      .catch((error) => {
+        cache.delete(relativePath);
+        const wrapped = new Error(
+          `AltF Ideas corpus missing "${relativePath}". Run "npm run generate:ideas" first. (${error.message})`,
+          { cause: error },
+        );
+        wrapped.code = error?.code;
+        throw wrapped;
+      });
+
+    cache.set(relativePath, promise);
+    return promise;
+  };
 }
+
+const loadJson = createIdeasJsonLoader();
 
 export const getManifest = () => loadJson("manifest.json");
 export const getFacets = () => loadJson("facets.json");

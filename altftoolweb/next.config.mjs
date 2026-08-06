@@ -29,7 +29,10 @@ const amplifyIncompatibleNativePackages = [
   "node_modules/@img/sharp-libvips-linuxmusl-x64/**/*",
   "node_modules/@img/sharp-linuxmusl-x64/**/*",
 ];
-const amplifyCdnCorpusFiles = ["public/data/lexicon/**/*.gz"];
+const amplifyCdnCorpusFiles = [
+  "public/data/ideas/**/*.json",
+  "public/data/lexicon/**/*.gz",
+];
 const amplifyTraceExcludes = [
   ...amplifyIncompatibleNativePackages,
   ...amplifyCdnCorpusFiles,
@@ -45,12 +48,12 @@ const nextConfig = {
         // musl alternatives that can never load there; excluding them at trace
         // time is essential because Amplify rebuilds its compute bundle from
         // the NFT files. `/**` covers every route trace (including `/`) and
-        // `next-server` covers Next's shared trace. Lexicon corpus objects are
-        // deployed from `public/` as immutable CDN assets; the server loader
-        // reads them locally while building and falls back to that public URL
-        // in Amplify's compute runtime. Keeping all 2,708 objects in every
-        // Lexicon route trace duplicates thousands of path entries and also
-        // makes Amplify copy the same 25 MiB corpus into the compute bundle.
+        // `next-server` covers Next's shared trace. Ideas and Lexicon corpus
+        // objects are deployed from `public/` as immutable CDN assets; their
+        // server loaders read locally while building and fall back to those
+        // public URLs in Amplify's compute runtime. Keeping the generated
+        // corpora in route traces makes Amplify copy the same large static
+        // datasets into the compute bundle as well as the CDN deployment.
         outputFileTracingExcludes: {
           "/**": amplifyTraceExcludes,
           "next-server": amplifyTraceExcludes,

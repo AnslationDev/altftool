@@ -7,6 +7,7 @@ const testRoots = [
   path.join(webRoot, "packages/core/src/seo"),
   path.join(webRoot, "packages/core/src/atlas"),
   path.join(webRoot, "packages/core/src/detour"),
+  path.join(webRoot, "packages/core/src/ideas"),
   path.join(webRoot, "packages/core/src/lexicon"),
   path.join(webRoot, "packages/core/src/persona"),
   path.join(webRoot, "packages/core/src/rabbithole"),
