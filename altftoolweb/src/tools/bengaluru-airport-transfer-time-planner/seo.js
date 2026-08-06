@@ -1,8 +1,8 @@
 const seo = {
   intro:
-    "This planner gives the clock time to walk out of your door for a flight from Kempegowda International Airport (BLR), by working backwards from the scheduled departure through the strictest of three deadlines: the airline's bag-drop close, the boarding gate close, and the airport's reporting advice of two hours for a domestic flight and three for an international one. BLR sits about 35 km north of the city at Devanahalli, so the road leg is usually the largest block in the plan — and the one that swings most. Free-flow time is multiplied by a congestion factor for the hour you actually travel, and Bengaluru's peaks are the steepest of any Indian metro, which is why the same run from Koramangala can differ by well over an hour depending on when you set off.",
+    "This planner gives the clock time to walk out of your door for a flight from Kempegowda International Airport (BLR), by working backwards from the scheduled departure through the strictest of three deadlines: the airline's bag-drop close, the boarding gate close, and the airport's reporting advice of two hours for a domestic flight and three for an international one. BLR sits about 35 km north of the city at Devanahalli, so the road leg is usually the largest block in the plan — and the one that swings most. Free-flow time is multiplied by a congestion factor for the hour you actually travel, and Bengaluru's peaks are the steepest of any Indian metro, which is why the same run from Koramangala can differ by close to fifty minutes depending on when you set off, and by nearly an hour if you hit a severe delay.",
   useCases: [
-    "Work out whether a 09:30 departure from T1 means leaving Whitefield at 05:00 to clear the morning peak.",
+    "Work out whether a 09:30 departure from T1 means leaving Whitefield around 06:10 by app cab, or as early as 05:22 by bus, to clear the morning peak.",
     "Compare the Vayu Vajra bus against a cab from MG Road once the toll road and the congestion factor are both accounted for.",
     "Check whether travelling hand-baggage only changes your leave-home time, by seeing whether bag drop was the binding deadline.",
   ],
@@ -23,7 +23,7 @@ const seo = {
   faqs: [
     [
       "How long does it take to reach Bengaluru airport from the city?",
-      "MG Road to BLR is about 35 km, which is roughly 50 minutes on a clear night and can pass 100 minutes through the evening peak. From Electronic City the same trip is around 55 km and the peak-hour spread is wider still, because the congestion factor compounds over every kilometre of the run.",
+      "MG Road to BLR is about 35 km, which is roughly 50 minutes on a clear night and can stretch to about 90 minutes through the evening peak on the typical weekday profile, or over 100 minutes if you hit a severe delay like heavy rain or a diversion. From Electronic City the same trip is around 55 km and the peak-hour spread is wider still, because the congestion factor compounds over every kilometre of the run.",
     ],
     [
       "How early should I reach BLR airport?",

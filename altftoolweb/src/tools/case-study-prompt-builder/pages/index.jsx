@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Briefcase, Check, Copy, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   AUDIENCE_OPTIONS,
   FRAMEWORK_OPTIONS,
@@ -46,7 +48,7 @@ const DEFAULTS = {
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard();
 
   const set = (key) => (event) =>
     setForm((prev) => ({ ...prev, [key]: event.target.value }));
@@ -56,20 +58,19 @@ export default function ToolHome() {
   const result = useMemo(() => buildCaseStudyPrompt(form), [form]);
   const hasError = Boolean(result.error);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.prompt);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", result.prompt, { label: "the case study prompt" });
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset all case study facts and settings to the sample defaults?")
+    ) {
+      return;
+    }
     setForm(DEFAULTS);
-    setCopied(false);
   };
 
   const rows = hasError
@@ -318,15 +319,19 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the generated case study prompt"
+              aria-label={
+                isCopied("result")
+                  ? "Copied the generated case study prompt to clipboard"
+                  : "Copy the generated case study prompt"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy prompt"}
+              {isCopied("result") ? "Copied!" : "Copy prompt"}
             </button>
             <button
               type="button"
@@ -337,6 +342,9 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

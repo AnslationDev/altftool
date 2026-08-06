@@ -441,7 +441,9 @@ export function auditPermissions(input = {}) {
     .filter((row) => row.necessity === "optional")
     .sort((a, b) => b.weight - a.weight);
   const keep = grantedRows.filter((row) => row.necessity === "core");
-  const missingCore = rows.filter((row) => !row.granted && row.necessity === "core");
+  // Not returned: nothing in this tool consumes a per-audit list of missing
+  // core permissions or the raw restricted-grant rows, only their counts and
+  // the derived overreach list below.
   const restrictedGranted = grantedRows.filter((row) => row.tier === "restricted");
   const restrictedOverreach = restrictedGranted.filter((row) => row.necessity !== "core");
 
@@ -464,8 +466,6 @@ export function auditPermissions(input = {}) {
     revoke,
     review,
     keep,
-    missingCore,
-    restrictedGranted,
     restrictedOverreach,
     revokeCount: revoke.length,
     reviewCount: review.length,
@@ -475,6 +475,11 @@ export function auditPermissions(input = {}) {
 }
 
 /* ------------------------------ text parsing ------------------------------ */
+
+/** Escape a string for safe use inside a `RegExp` literal. */
+function escapeRegExp(value) {
+  return String(value).replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
 
 /**
  * Match a pasted permission list (the Play Store "See more" dialog, or the
@@ -491,7 +496,16 @@ export function parsePermissionText(text, permissions = PERMISSIONS) {
   const pairs = [];
   list.forEach((permission) => {
     (permission.aliases ?? []).forEach((alias) => {
-      pairs.push({ id: permission.id, alias: String(alias).toLowerCase() });
+      const aliasLower = String(alias).toLowerCase();
+      // Word-boundary match: short aliases like "mic" or "led" must stand on
+      // their own, not just appear as a substring of an unrelated word (e.g.
+      // "invoice" or "installed"), or ordinary pasted text would fabricate
+      // permission grants.
+      pairs.push({
+        id: permission.id,
+        alias: aliasLower,
+        regex: new RegExp(`\\b${escapeRegExp(aliasLower)}\\b`, "i"),
+      });
     });
   });
   // Longest alias wins so "background location" beats "location".
@@ -506,7 +520,7 @@ export function parsePermissionText(text, permissions = PERMISSIONS) {
   const unrecognised = [];
   lines.forEach((line) => {
     const haystack = line.toLowerCase();
-    const hit = pairs.find((pair) => haystack.includes(pair.alias));
+    const hit = pairs.find((pair) => pair.regex.test(haystack));
     if (hit) {
       if (!matched.includes(hit.id)) matched.push(hit.id);
     } else {

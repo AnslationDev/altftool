@@ -71,6 +71,10 @@ export default function FourInARowGame() {
   const aiTimerRef = useRef(null);
   const soundRef = useRef(null);
   const dropDiscRef = useRef(null);
+  const boardHandleRef = useRef(null);
+  // Holds the {next, row, col, player} args for a disc's win/draw check when
+  // its settle timer had to be suspended because the game was paused mid-drop.
+  const pendingSettleRef = useRef(null);
 
   useEffect(() => {
     modeRef.current = mode;
@@ -198,7 +202,10 @@ export default function FourInARowGame() {
       playSound("drop");
       lockRef.current = true;
       const settleMs = reducedRef.current ? 50 : 220 + row * 50;
+      pendingSettleRef.current = { next, row, col, player };
       dropTimerRef.current = setTimeout(() => {
+        dropTimerRef.current = null;
+        pendingSettleRef.current = null;
         lockRef.current = false;
         settleMove(next, row, col, player);
       }, settleMs);
@@ -214,6 +221,7 @@ export default function FourInARowGame() {
     (starter) => {
       clearTimers();
       lockRef.current = false;
+      pendingSettleRef.current = null;
       const fresh = createBoard();
       boardRef.current = fresh;
       setBoard(fresh);
@@ -245,6 +253,7 @@ export default function FourInARowGame() {
   const goToReady = useCallback(() => {
     clearTimers();
     lockRef.current = false;
+    pendingSettleRef.current = null;
     streakRef.current = 0;
     starterRef.current = 1;
     const fresh = createBoard();
@@ -260,22 +269,40 @@ export default function FourInARowGame() {
 
   const togglePause = useCallback(() => {
     if (phaseRef.current === "playing") {
+      // A disc that hasn't finished settling yet must not resolve (win/draw
+      // detection, turn switch, tally update, win/lose sound) while the
+      // overlay shows "Paused" — suspend the pending settle instead of
+      // letting its timer fire in the background, and pick it up explicitly
+      // when the player resumes.
+      if (dropTimerRef.current) {
+        clearTimeout(dropTimerRef.current);
+        dropTimerRef.current = null;
+      }
       setPhaseBoth("paused");
     } else if (phaseRef.current === "paused") {
       setPhaseBoth("playing");
-      // If the AI's move was skipped while paused, reschedule it.
-      if (modeRef.current === "ai" && turnRef.current === 2 && !lockRef.current) {
+      const pending = pendingSettleRef.current;
+      if (pending) {
+        pendingSettleRef.current = null;
+        lockRef.current = false;
+        settleMove(pending.next, pending.row, pending.col, pending.player);
+      } else if (modeRef.current === "ai" && turnRef.current === 2 && !lockRef.current) {
+        // If the AI's move was skipped while paused, reschedule it.
         scheduleAiMove();
       }
     }
-  }, [scheduleAiMove, setPhaseBoth]);
+  }, [scheduleAiMove, setPhaseBoth, settleMove]);
 
   const moveCursor = useCallback((delta) => {
-    setActiveCol((c) => {
-      const next = Math.min(COLS - 1, Math.max(0, c + delta));
-      activeColRef.current = next;
-      return next;
-    });
+    // Read from the ref (not the c passed into a functional setState updater)
+    // so the DOM focus move below always targets the same "next" column that
+    // gets rendered as the aim indicator — keeping keyboard focus and the
+    // visual aim in sync so Enter/Space's native button activation always
+    // drops into the column the indicator is pointing at.
+    const next = Math.min(COLS - 1, Math.max(0, activeColRef.current + delta));
+    activeColRef.current = next;
+    setActiveCol(next);
+    boardHandleRef.current?.focusColumn(next);
   }, []);
 
   const setCursor = useCallback((col) => {
@@ -354,11 +381,34 @@ export default function FourInARowGame() {
   const boardDisabled =
     phase !== "playing" || (mode === "ai" && currentPlayer === 2);
 
+  // The GameShell header restart icon is visible on every phase, including
+  // mid-round or mid-session, and goToReady() silently wipes both the current
+  // board and the accumulated win/loss/draw tally with no undo. Guard it with
+  // a confirmation whenever there's actually something to lose; the in-flow
+  // "Change mode" button on the round-over screen is left as an immediate
+  // action since picking a new mode after a round ends is its whole purpose.
+  const confirmRestart = useCallback(() => {
+    const hasProgress =
+      phaseRef.current === "playing" ||
+      phaseRef.current === "paused" ||
+      tally.p1 > 0 ||
+      tally.p2 > 0 ||
+      tally.draws > 0;
+    if (
+      hasProgress &&
+      typeof window !== "undefined" &&
+      !window.confirm("Restart the game? This clears the board and your win/loss tally.")
+    ) {
+      return;
+    }
+    goToReady();
+  }, [goToReady, tally]);
+
   return (
     <GameShell
       title="Four in a Row"
       stats={stats}
-      onRestart={goToReady}
+      onRestart={confirmRestart}
       paused={phase === "paused"}
       onTogglePause={phase === "playing" || phase === "paused" ? togglePause : undefined}
       soundOn={soundOn}
@@ -466,6 +516,7 @@ export default function FourInARowGame() {
           </div>
 
           <Board
+            ref={boardHandleRef}
             board={board}
             lastMove={lastMove}
             winLine={result?.line}

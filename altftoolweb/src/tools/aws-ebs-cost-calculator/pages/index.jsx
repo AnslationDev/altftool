@@ -67,10 +67,10 @@ export default function ToolHome() {
       `Storage: ${money(result.storageCost)}`,
       `Provisioned IOPS: ${money(result.iopsCost)}`,
       `Provisioned throughput: ${money(result.throughputCost)}`,
-      `Snapshots: ${money(result.snapshotCost)}`,
+      `Snapshots: ${result.volumeCount} × ${NUM.format(Number(snapshotGb))} GB standard tier = ${money(result.snapshotCost)}`,
       `Total per month: ${money(result.total)}`,
     ].join("\n");
-  }, [hasError, result, sizeGb]);
+  }, [hasError, result, sizeGb, snapshotGb]);
 
   const copyResult = async () => {
     if (!summary) return;
@@ -219,7 +219,7 @@ export default function ToolHome() {
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="ebs-snapshot">
-              Snapshot storage (GB, standard tier)
+              Snapshot storage per volume (GB, standard tier)
             </label>
             <input
               id="ebs-snapshot"
@@ -231,6 +231,9 @@ export default function ToolHome() {
               value={snapshotGb}
               onChange={(event) => setSnapshotGb(event.target.value)}
             />
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+              Per volume, like volume size — multiplied by the number of identical volumes above.
+            </p>
           </div>
         </div>
       </section>
@@ -246,7 +249,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Estimated monthly EBS cost
             </p>
@@ -286,7 +289,11 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

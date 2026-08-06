@@ -30,7 +30,15 @@ const TONE_CLASS = {
   success: "bg-[var(--success-soft)] text-[var(--success-text)]",
 };
 
-const todayIso = () => new Date().toISOString().slice(0, 10);
+// Local calendar date (not UTC) - a UTC-based date can already read as
+// tomorrow or yesterday depending on the visitor's timezone and time of day.
+const todayIso = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
 
 const prettyDate = (iso) => {
   if (!iso) return DASH;
@@ -67,6 +75,7 @@ export default function ToolHome() {
         departureDate,
         ageYears: Number(ageYears),
         stayPurpose,
+        referenceDate: todayIso(),
       }),
     [licenceOrigin, idpHeld, arrivalDate, departureDate, ageYears, stayPurpose],
   );
@@ -244,7 +253,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className={`mt-6 ${CARD}`}>
+      <section className={`mt-6 ${CARD}`} aria-live="polite" role="status">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
@@ -295,7 +304,11 @@ export default function ToolHome() {
               "Window closes",
               hasError || !result.windowEndDate
                 ? DASH
-                : `${prettyDate(result.windowEndDate)} (${result.daysRemaining} days)`,
+                : `${prettyDate(result.windowEndDate)} (${
+                    result.daysRemaining < 0
+                      ? `closed ${Math.abs(result.daysRemaining)} days ago`
+                      : `${result.daysRemaining} days left`
+                  })`,
             ],
             [
               "Exchange application due by",

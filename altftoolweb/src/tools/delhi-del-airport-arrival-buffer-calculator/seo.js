@@ -7,7 +7,7 @@ const seo = {
     "Sharing an exact pickup time with a driver or family member instead of a vague 'leave around five'.",
   ],
   benefits: [
-    ["Three deadlines, one answer", "Compares gate close, bag-drop cut-off and airport advice, and reports which one is binding."],
+    ["Three deadlines, one answer", "Weighs your own gate, security and bag-drop estimate against the airport's published reporting time, and tells you which one actually sets your leave-by time."],
     ["Traffic modelled separately", "Free-flow drive time is multiplied by a road-condition factor, so rush hour and clear roads give different answers."],
     ["Full timeline", "Shows the clock time each step starts, from leaving home to the aircraft door shutting."],
   ],

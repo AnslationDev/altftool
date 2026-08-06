@@ -46,6 +46,25 @@ export default function ToolHome() {
     setCopied(false);
   };
 
+  // Title/source/year are TASL-only fields (hidden for "pattern" platforms
+  // like Unsplash). Without clearing them on switch, a stale override typed
+  // for one platform silently carries into another platform's credit line —
+  // e.g. a custom Source name/link stays applied after switching away from
+  // the platform it was typed for, even though the field is no longer shown.
+  const setPlatform = (event) => {
+    const value = event.target.value;
+    setForm((prev) => ({
+      ...prev,
+      platform: value,
+      title: "",
+      titleUrl: "",
+      sourceName: "",
+      sourceUrl: "",
+      year: "",
+    }));
+    setCopied(false);
+  };
+
   const result = useMemo(() => buildAttribution(form), [form]);
   const output = result.error ? "" : result[format === "markdown" ? "markdown" : format];
 
@@ -96,7 +115,7 @@ export default function ToolHome() {
               id="attr-platform"
               className={`mt-2 ${INPUT_CLASS}`}
               value={form.platform}
-              onChange={set("platform")}
+              onChange={setPlatform}
             >
               {Object.entries(PLATFORMS).map(([key, value]) => (
                 <option key={key} value={key}>
@@ -278,7 +297,11 @@ export default function ToolHome() {
           </section>
         </>
       ) : (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          aria-live="polite"
+          role="status"
+        >
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div className="min-w-0">
               <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

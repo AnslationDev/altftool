@@ -3,13 +3,13 @@ export const spec = {
   ...{
   "slug": "data-deletion-proof-log",
   "title": "Data Deletion Proof Log",
-  "description": "Deletion requests aur system-wise completion evidence record kare.",
+  "description": "Record deletion requests and the system-by-system evidence that each one completed.",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Security & Privacy",
     "Productivity"
   ],
-  "icon": "file-check-2",
+  "icon": "list-checks",
   "iconColor": "text-primary",
   "fields": [
     {
@@ -36,20 +36,36 @@ export const spec = {
       }
     }
   ],
-  "outputLabel": "Structured inventory"
+  "outputLabel": "Structured inventory",
+  "confirmReset": "Reset the deletion proof log? This clears every pasted record and cannot be undone."
 },
   compute: (values) => {
       const headers = ["Request ID","System","Record scope","Action","Completed at","Evidence reference","Reviewer"];
+      const rowLimit = 100;
       const lines = String(values.records || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
       const parsed = lines.map((line) => line.split("|").map((cell) => cell.trim()));
-      const incomplete = parsed.filter((row) => row.length < headers.length || row.slice(0, headers.length).some((cell) => !cell)).length;
+      // A row is malformed if it has anything other than exactly one cell per
+      // header — too few cells (missing columns) *or* too many (a stray "|"
+      // inside a field value, which would otherwise silently shift every
+      // later column) — or any of its cells is blank.
+      const isIncomplete = (row) => row.length !== headers.length || row.some((cell) => !cell);
+      const incomplete = values.required ? parsed.filter(isIncomplete).length : 0;
       const tableRows = parsed.map((row) => headers.map((_, index) => row[index] || "—"));
+      const truncated = tableRows.length > rowLimit;
+      const list = [];
+      if (!lines.length) list.push("Add one record per line and separate fields with |.");
+      if (truncated) {
+        list.push(
+          "Showing the first " + rowLimit + " of " + tableRows.length +
+            " records. Copy and download only include what's shown here — split larger logs into multiple exports."
+        );
+      }
       return {
         result: lines.length + " record" + (lines.length === 1 ? "" : "s") + " mapped",
         caption: values.required ? incomplete + " incomplete row(s)" : headers.length + " tracked fields",
         rows: [["Complete rows", Math.max(0, lines.length - incomplete)], ["Needs review", incomplete], ["Columns", headers.length]],
-        table: { headers, rows: tableRows.slice(0, 100) },
-        list: lines.length ? [] : ["Add one record per line and separate fields with |."],
+        table: { headers, rows: tableRows.slice(0, rowLimit) },
+        list,
       };
     },
 };

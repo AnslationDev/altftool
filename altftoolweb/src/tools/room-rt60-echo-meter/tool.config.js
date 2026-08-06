@@ -5,7 +5,7 @@ const toolConfig = {
     "Video & Audio",
     "Productivity"
   ],
-  "description": "Estimate a room's RT60 reverberation time from a clap or sweep response.",
+  "description": "Log decay and silence diagnostics from a clap or sweep recording — not a calibrated RT60 estimate.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

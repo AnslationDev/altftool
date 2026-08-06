@@ -13,6 +13,7 @@ import {
   computeArrivalPlan,
   formatClock,
   formatDuration,
+  suggestTrafficLevel,
 } from "../lib";
 
 const INPUT_CLASS =
@@ -55,6 +56,15 @@ export default function ToolHome() {
 
   const failed = Boolean(plan.error);
 
+  // Suggest a traffic level from the hour the drive is expected to start (the
+  // computed "leave home by" time), so the road-conditions default has a
+  // useful starting point instead of always sitting on "Typical daytime".
+  const suggestedTrafficId = failed ? null : suggestTrafficLevel(plan.leaveByMinutes);
+  const suggestedTraffic =
+    suggestedTrafficId && suggestedTrafficId !== trafficId
+      ? TRAFFIC_LEVELS.find((item) => item.id === suggestedTrafficId)
+      : null;
+
   const summary = useMemo(() => {
     if (failed) return "";
     return [
@@ -62,7 +72,7 @@ export default function ToolHome() {
       `Flight departs: ${formatClock(plan.departureMinutes)}`,
       `Leave home by: ${formatClock(plan.leaveByMinutes)}${dayLabel(plan.leaveByDayOffset)}`,
       `Be at the terminal by: ${formatClock(plan.arriveTerminalMinutes)}${dayLabel(plan.arriveTerminalDayOffset)}`,
-      `Bag drop closes: ${formatClock(plan.checkInCloseMinutes)}`,
+      `Bag drop / check-in closes: ${plan.hasBags ? formatClock(plan.checkInCloseMinutes) : "Not needed"}`,
       `Boarding gate closes: ${formatClock(plan.gateCloseMinutes)}`,
       `Road time with traffic: ${formatDuration(plan.roadMinutes)}`,
       `Time inside the terminal: ${formatDuration(plan.terminalLeadMinutes)}`,
@@ -93,6 +103,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset all inputs back to the defaults? This clears everything you've entered.")) {
+      return;
+    }
     setDepartureTime(DEFAULTS.departureTime);
     setJourneyId(DEFAULTS.journeyId);
     setBags(DEFAULTS.bags);
@@ -224,6 +237,15 @@ export default function ToolHome() {
                 </option>
               ))}
             </select>
+            {suggestedTraffic && (
+              <button
+                type="button"
+                onClick={() => setTrafficId(suggestedTrafficId)}
+                className="mt-1 text-xs font-medium text-[var(--primary-text)] hover:underline"
+              >
+                {`Leaving around ${formatClock(plan.leaveByMinutes)}? Roads are usually "${suggestedTraffic.label}" then — use it`}
+              </button>
+            )}
           </div>
 
           <div>
@@ -291,7 +313,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Leave home by
             </p>
@@ -322,7 +344,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
           {[
             [
               "Be inside the terminal by",
@@ -345,7 +367,7 @@ export default function ToolHome() {
       </section>
 
       {!failed && plan.warnings.length > 0 && (
-        <ul className="mt-4 space-y-2">
+        <ul className="mt-4 space-y-2" role="status" aria-live="polite">
           {plan.warnings.map((warning) => (
             <li
               key={warning}

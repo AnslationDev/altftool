@@ -99,7 +99,7 @@ export const advancedCatalog = {
     "id": 168,
     "slug": "room-rt60-echo-meter",
     "name": "Room RT60 Echo Meter",
-    "description": "Clap/sweep response se room reverberation estimate kare.",
+    "description": "Clap/sweep response ka decay aur silence diagnostics log kare — calibrated RT60 estimate nahi.",
     "category": "Audio & Video Processing",
     "priority": "P2"
   },

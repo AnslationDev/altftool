@@ -195,6 +195,7 @@ function lexInterestingNames(source) {
   let streamsSkipped = 0;
   let unclosedLiteralStrings = 0;
   let literalDepthLimitHits = 0;
+  let unclosedHexStrings = 0;
   let unterminatedStream = false;
 
   while (index < source.length && tokens < PDF_ACTIVE_CONTENT_LIMITS.tokens) {
@@ -225,11 +226,27 @@ function lexInterestingNames(source) {
     }
     if (code === 0x3c && source.charCodeAt(index + 1) !== 0x3c) {
       hexStringsSkipped += 1;
-      index += 1;
-      while (index < source.length && source.charCodeAt(index) !== 0x3e) {
+      let cursor = index + 1;
+      while (cursor < source.length && source.charCodeAt(cursor) !== 0x3e) {
+        cursor += 1;
+      }
+      if (cursor < source.length) {
+        // Closing '>' found: the hex string body is well-bounded, skip it.
+        index = cursor + 1;
+      } else {
+        // No terminating '>' exists anywhere in the remainder of the file,
+        // so the true extent of this "hex string" is unknown. Silently
+        // treating everything up to EOF as skipped string content would
+        // hide every real marker that follows it — the same class of bug
+        // already fixed above for an unterminated "stream" token. Instead,
+        // treat the stray '<' as a lone delimiter and resume normal lexing
+        // right after it so the rest of the file is still inspected. This
+        // can surface false-positive marker matches from whatever the
+        // malformed content actually contains, which is preferable to a
+        // false negative in a security-triage tool.
+        unclosedHexStrings += 1;
         index += 1;
       }
-      if (index < source.length) index += 1;
       continue;
     }
     if (
@@ -316,6 +333,7 @@ function lexInterestingNames(source) {
     streamsSkipped,
     unclosedLiteralStrings,
     literalDepthLimitHits,
+    unclosedHexStrings,
     unterminatedStream,
   };
 }
@@ -403,6 +421,11 @@ export function inspectPdfActiveContentBytes(bytesInput, options = {}) {
           "An unclosed literal string was observed; malformed syntax may affect subsequent cue visibility.",
         ]
       : []),
+    ...(lexical.unclosedHexStrings
+      ? [
+          "An unclosed hex string ('<' with no matching '>') was observed; the remaining bytes were scanned as regular syntax instead of being skipped as string data, which may produce false-positive marker matches.",
+        ]
+      : []),
     ...(lexical.literalDepthLimitHits
       ? [
           "Literal-string nesting exceeded the review depth; malformed or adversarial syntax may affect results.",
@@ -413,7 +436,6 @@ export function inspectPdfActiveContentBytes(bytesInput, options = {}) {
   return {
     ok: true,
     groups,
-    findings: groups.filter((group) => group.count > 0),
     summary: {
       groupsWithCues: groups.filter((group) => group.count > 0).length,
       selectedMarkerCount,

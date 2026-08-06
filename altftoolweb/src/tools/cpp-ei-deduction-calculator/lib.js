@@ -126,18 +126,33 @@ export function computeCppEi(input = {}) {
     return { error: "There must be at least one pay period in the year." };
   }
 
-  const { ympe, yampe, cpp2Rate, qpp2Rate, eiMaxInsurableEarnings } = parameters;
+  const { ympe, yampe, cpp2Rate, qpp2Rate, eiMaxInsurableEarnings, cppEmployeeRate, qppEmployeeRate, eiRateOutsideQuebec, eiRateQuebec } =
+    parameters;
 
-  if (
-    isBadNumber(ympe) ||
-    isBadNumber(yampe) ||
-    isBadNumber(eiMaxInsurableEarnings) ||
-    ympe <= CPP_BASIC_EXEMPTION
-  ) {
-    return { error: "The YMPE, YAMPE and maximum insurable earnings must be valid amounts above the $3,500 exemption." };
+  if (isBadNumber(ympe) || isBadNumber(yampe) || ympe <= CPP_BASIC_EXEMPTION) {
+    return { error: "The YMPE and YAMPE must be valid amounts above the $3,500 exemption." };
   }
   if (yampe < ympe) {
     return { error: "The YAMPE cannot be lower than the YMPE." };
+  }
+  if (isBadNumber(eiMaxInsurableEarnings) || eiMaxInsurableEarnings <= 0) {
+    return { error: "The EI maximum insurable earnings must be a valid amount greater than zero." };
+  }
+  if (
+    isBadNumber(cppEmployeeRate) ||
+    cppEmployeeRate < 0 ||
+    isBadNumber(qppEmployeeRate) ||
+    qppEmployeeRate < 0 ||
+    isBadNumber(cpp2Rate) ||
+    cpp2Rate < 0 ||
+    isBadNumber(qpp2Rate) ||
+    qpp2Rate < 0 ||
+    isBadNumber(eiRateOutsideQuebec) ||
+    eiRateOutsideQuebec < 0 ||
+    isBadNumber(eiRateQuebec) ||
+    eiRateQuebec < 0
+  ) {
+    return { error: "CPP/QPP and EI contribution rates must be valid numbers of zero or more." };
   }
 
   const pensionRate = inQuebec ? parameters.qppEmployeeRate : parameters.cppEmployeeRate;

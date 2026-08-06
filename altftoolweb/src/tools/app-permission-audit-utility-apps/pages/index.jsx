@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Wrench, Check, Copy, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   PERMISSIONS,
   auditPermissions,
@@ -37,9 +39,9 @@ const TYPICAL_GRANTED = [
 ];
 
 const NECESSITY_STYLE = {
-  core: "text-[var(--success)]",
+  core: "text-[var(--success-text)]",
   optional: "text-[var(--muted-foreground)]",
-  unnecessary: "text-[var(--danger)]",
+  unnecessary: "text-[var(--danger-text)]",
 };
 
 const NECESSITY_TEXT = {
@@ -55,7 +57,8 @@ export default function ToolHome() {
   const [mode, setMode] = useState("checklist");
   const [granted, setGranted] = useState(TYPICAL_GRANTED);
   const [pasted, setPasted] = useState("");
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(() => {
     if (mode === "paste") {
@@ -77,23 +80,24 @@ export default function ToolHome() {
     );
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "the permission audit result" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the audit? This clears the app name and the pasted permission list and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setAppName("My cleaner app");
     setMode("checklist");
     setGranted(TYPICAL_GRANTED);
     setPasted("");
-    setCopied(false);
+    resetCopyState();
   };
 
   const hasResult = !result.error;
@@ -233,7 +237,7 @@ export default function ToolHome() {
       {result.error ? (
         <p
           role="alert"
-          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
         >
           {result.error}
         </p>
@@ -241,7 +245,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Privacy score
             </p>
@@ -258,16 +262,20 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the permission audit result"
+              aria-label={
+                isCopied("result")
+                  ? "Copied the permission audit result to clipboard"
+                  : "Copy the permission audit result"
+              }
               className={GHOST_BTN}
               disabled={!hasResult}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
@@ -279,6 +287,9 @@ export default function ToolHome() {
               Reset
             </button>
           </div>
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
 
         <div className="mt-5">
@@ -296,7 +307,11 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          role="status"
+          aria-live="polite"
+        >
           {[
             ["Verdict", hasResult ? result.bandLabel : EM_DASH],
             [
@@ -328,7 +343,7 @@ export default function ToolHome() {
 
       {hasResult && result.revoke.length > 0 ? (
         <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
-          <h2 className="text-base font-semibold text-[var(--danger)]">Revoke these first</h2>
+          <h2 className="text-base font-semibold text-[var(--danger-text)]">Revoke these first</h2>
           <ul className="mt-3 space-y-3">
             {result.revoke.map((row) => (
               <li key={row.id} className="text-sm">

@@ -7365,7 +7365,7 @@ export const toolMetaMap = {
       "Security & Privacy",
       "Productivity"
     ],
-    "icon": "file-check-2",
+    "icon": "list-checks",
     "iconColor": "text-primary"
   },
   "data-deletion-request-letter-generator": {
@@ -12577,14 +12577,8 @@ export const toolMetaMap = {
   },
   "google-ads-description-writer": {
     "name": "Google Ads Writer",
-    "description": "Generate highly converting Google Ads descriptions using AI.",
-    "category": [
-      "Business",
-      "AI Tools"
-    ],
-    "topics": [
-      "AI"
-    ],
+    "description": "Generate ready-to-paste Google Ads descriptions from proven ad-copy templates.",
+    "category": "Business",
     "icon": "megaphone",
     "iconColor": "text-green-500"
   },
@@ -21459,8 +21453,7 @@ export const toolMetaMap = {
       "Productivity"
     ],
     "icon": "lock-keyhole",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
+    "iconColor": "text-primary"
   },
   "pet-name-generator": {
     "name": "Pet Name Generator",
@@ -24745,7 +24738,7 @@ export const toolMetaMap = {
   },
   "room-rt60-echo-meter": {
     "name": "Room RT60 Echo Meter",
-    "description": "Estimate a room's RT60 reverberation time from a clap or sweep response.",
+    "description": "Log decay and silence diagnostics from a clap or sweep recording — not a calibrated RT60 estimate.",
     "category": [
       "Video & Audio",
       "Productivity"

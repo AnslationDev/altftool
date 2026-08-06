@@ -151,6 +151,7 @@ export const VERDICTS = {
   "not-required": { label: "No IDP needed", tone: "success" },
   recommended: { label: "No IDP needed, but hire desks may ask", tone: "warning" },
   "test-required": { label: "GB licence and tests required", tone: "danger" },
+  "eu-age-check": { label: "No IDP needed, but check your licence is still valid here", tone: "warning" },
 };
 
 const DATE_PATTERN = /^(\d{4})-(\d{2})-(\d{2})$/;
@@ -210,6 +211,10 @@ export function daysBetweenISO(fromISO, toISO) {
  * @param {string} [input.departureDate] YYYY-MM-DD, optional planned exit
  * @param {number} input.ageYears        driver's age in whole years
  * @param {string} input.stayPurpose     id from STAY_PURPOSES
+ * @param {string} [input.referenceDate] YYYY-MM-DD, "today" for countdown
+ *   purposes. Defaults to the current UTC date when omitted or invalid -
+ *   callers that care about the visitor's local calendar day (e.g. the UI)
+ *   should pass their own locally-computed today.
  * @returns {object} verdict object, or { error }
  */
 export function checkIdpRequirement({
@@ -219,6 +224,7 @@ export function checkIdpRequirement({
   departureDate,
   ageYears,
   stayPurpose,
+  referenceDate,
 } = {}) {
   const origin = LICENCE_ORIGINS.find((entry) => entry.id === licenceOrigin);
   if (!origin) return { error: "Choose the country that issued your driving licence." };
@@ -249,6 +255,7 @@ export function checkIdpRequirement({
 
   const isResident = purpose.id === "residence";
   const holdsGbLicence = idpHeld === "gb-licence" || origin.rule === "gb";
+  const today = parseISODate(referenceDate) !== null ? referenceDate : toISODate(Date.now());
 
   let verdict;
   let reason;
@@ -264,6 +271,19 @@ export function checkIdpRequirement({
     verdict = "recommended";
     reason =
       "British law does not require an International Driving Permit from any visitor, and a police officer will accept your licence. The practical problem is different: a rental company that cannot read the licence may refuse the booking or insist on a translation, so a permit is worth carrying even though nothing obliges you to.";
+  } else if (isResident && origin.rule === "eu-eea") {
+    // Residents on an EU/EEA licence are not bound by the 12-month visitor
+    // window at all - they may drive until EU_LICENCE_VALID_TO_AGE (or three
+    // years from residency if already over 67 when issued). Keep this in
+    // step with the matching windowLabel/warning below so the two pieces of
+    // copy never disagree on how long the licence actually works.
+    if (age >= EU_LICENCE_VALID_TO_AGE) {
+      verdict = "eu-age-check";
+      reason = `As an EU or EEA licence holder living in the UK, you may normally keep driving on it until you turn ${EU_LICENCE_VALID_TO_AGE} - well past the ${VISITOR_WINDOW_MONTHS}-month window that applies to other licences. At ${age} you are already past that age, so check with the DVLA whether the three-year exception for licences issued after age 67 applies to you, and exchange it for a GB licence without a test as soon as you can.`;
+    } else {
+      verdict = "not-required";
+      reason = `As an EU or EEA licence holder living in the UK, you are not limited to the ${VISITOR_WINDOW_MONTHS}-month visitor window - you may keep driving on it until you turn ${EU_LICENCE_VALID_TO_AGE}, and you can exchange it for a GB licence without a test at any time before then.`;
+    }
   } else {
     verdict = "not-required";
     reason = `No International Driving Permit is needed to drive in the UK. A visitor may drive any small vehicle shown on a full, valid licence from any country for ${VISITOR_WINDOW_MONTHS} months from the date they last entered Great Britain, and the permit adds nothing to that.`;
@@ -279,16 +299,27 @@ export function checkIdpRequirement({
   } else if (!isResident) {
     windowEndDate = addMonthsISO(arrivalDate, VISITOR_WINDOW_MONTHS);
     windowLabel = `${VISITOR_WINDOW_MONTHS} months from the date you last entered Great Britain`;
-    if (stayDays !== null && stayDays > 365) {
+    // Compare against the real, leap-year-aware window length rather than a
+    // hardcoded 365 so a stay that lands exactly on the computed boundary
+    // (e.g. a 366-day window spanning 29 February) is not falsely flagged.
+    const windowLengthDays = daysBetweenISO(arrivalDate, windowEndDate);
+    if (stayDays !== null && windowLengthDays !== null && stayDays > windowLengthDays) {
       warnings.push(
         `A ${stayDays}-day stay runs past the ${VISITOR_WINDOW_MONTHS}-month visitor window, so what happens next depends on where the licence was issued rather than on the trip.`,
       );
     }
   } else if (origin.rule === "eu-eea") {
-    windowLabel = `Until you turn ${EU_LICENCE_VALID_TO_AGE}`;
-    warnings.push(
-      `An EU or EEA licence can be used in Great Britain until you turn ${EU_LICENCE_VALID_TO_AGE}. If you were already over 67 when it was issued, you get three years from becoming resident instead. Either way you can exchange it for a GB licence without a test.`,
-    );
+    if (age >= EU_LICENCE_VALID_TO_AGE) {
+      windowLabel = `Past the age-${EU_LICENCE_VALID_TO_AGE} cut-off - check the three-year exception`;
+      warnings.push(
+        `At ${age} you are past the age ${EU_LICENCE_VALID_TO_AGE} cut-off for driving on an EU or EEA licence, unless you were already over 67 when it was issued, which gives three years from becoming resident instead. Check your exact position with the DVLA, and exchange the licence for a GB one without a test as soon as you can.`,
+      );
+    } else {
+      windowLabel = `Until you turn ${EU_LICENCE_VALID_TO_AGE}`;
+      warnings.push(
+        `An EU or EEA licence can be used in Great Britain until you turn ${EU_LICENCE_VALID_TO_AGE}. If you were already over 67 when it was issued, you get three years from becoming resident instead. Either way you can exchange it for a GB licence without a test.`,
+      );
+    }
   } else if (origin.rule === "designated") {
     windowEndDate = addMonthsISO(arrivalDate, VISITOR_WINDOW_MONTHS);
     exchangeDeadline = addMonthsISO(arrivalDate, DESIGNATED_EXCHANGE_YEARS * 12);
@@ -310,7 +341,11 @@ export function checkIdpRequirement({
     );
   }
 
-  const daysRemaining = windowEndDate === null ? null : daysBetweenISO(arrivalDate, windowEndDate);
+  // Counted from "today" (or the caller-supplied reference date), not from
+  // arrivalDate - this is a live countdown to the window closing, not a
+  // restatement of the window's fixed length. Can be negative if the window
+  // has already closed.
+  const daysRemaining = windowEndDate === null ? null : daysBetweenISO(today, windowEndDate);
 
   if (idpHeld !== "none" && idpHeld !== "gb-licence") {
     warnings.push(
@@ -345,6 +380,11 @@ export function checkIdpRequirement({
   if (verdict === "recommended") {
     checklist.unshift(
       "An International Driving Permit or translation, for the hire desk rather than the law",
+    );
+  }
+  if (verdict === "eu-age-check") {
+    checklist.unshift(
+      "Confirmation from the DVLA that you still qualify to drive on the EU/EEA licence, or your GB exchange application",
     );
   }
   if (verdict === "test-required") {

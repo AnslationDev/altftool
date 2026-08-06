@@ -190,13 +190,10 @@ export function computeHouseholdBudget({
 
   return {
     totalIncome: round2(totalIncome),
-    primaryIncome: round2(primary),
-    otherIncome: round2(other),
     needs: round2(buckets.needs),
     wants: round2(buckets.wants),
     savings: round2(buckets.savings),
     totalSpending: round2(totalSpending),
-    totalAllocated: round2(totalAllocated),
     unallocated: round2(unallocated),
     surplus: round2(totalIncome - totalSpending),
     housing: round2(housing),

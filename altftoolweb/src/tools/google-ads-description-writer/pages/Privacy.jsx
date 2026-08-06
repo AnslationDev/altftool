@@ -11,32 +11,33 @@ const Privacy = () => {
                     <section className="space-y-3">
                         <h2 className="text-2xl font-semibold text-(--foreground)">Information We Collect</h2>
                         <p className="text-(--muted-foreground) leading-relaxed">
-                            We collect only the information necessary to provide our Google Ads description generation service.
-                            This includes the product or service descriptions you input into our tool.
+                            We do not collect the product or service descriptions you type into this tool. Nothing you enter
+                            is sent to a server or stored anywhere.
                         </p>
                     </section>
 
                     <section className="space-y-3">
                         <h2 className="text-2xl font-semibold text-(--foreground)">How We Use Your Information</h2>
                         <p className="text-(--muted-foreground) leading-relaxed">
-                            Your input data is used solely to generate ad descriptions using AI technology.
-                            We do not store your input data permanently, and it is only processed temporarily to deliver results.
+                            Your input is used solely to generate ad descriptions, and that generation happens entirely in
+                            your own browser by slotting your text into pre-written templates. It is never transmitted
+                            anywhere and is discarded the moment you close or refresh the page.
                         </p>
                     </section>
 
                     <section className="space-y-3">
                         <h2 className="text-2xl font-semibold text-(--foreground)">Data Security</h2>
                         <p className="text-(--muted-foreground) leading-relaxed">
-                            We implement industry-standard security measures to protect your data during transmission and processing.
-                            All connections are encrypted using HTTPS.
+                            Because your input never leaves your device, there is no transmission to secure. The page itself
+                            is served over HTTPS like the rest of the site.
                         </p>
                     </section>
 
                     <section className="space-y-3">
                         <h2 className="text-2xl font-semibold text-(--foreground)">Third-Party Services</h2>
                         <p className="text-(--muted-foreground) leading-relaxed">
-                            We use third-party AI services (HuggingFace/Cohere) to generate descriptions.
-                            These services process your input according to their respective privacy policies.
+                            This tool does not call any third-party AI or generation service. No third party ever receives
+                            the text you type in.
                         </p>
                     </section>
 

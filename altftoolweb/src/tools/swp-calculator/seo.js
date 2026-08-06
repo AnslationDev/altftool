@@ -35,7 +35,7 @@ const seo = {
     ],
     [
       "How much can I safely withdraw every month from my corpus?",
-      "The Safe Monthly SWP card gives that figure. A 44-step binary search re-runs the entire simulation between zero and your full corpus, converging on the highest first-month withdrawal that still survives the tenure you set, with your step-up percentage applied on top of it each year.",
+      "The Safe Monthly SWP card gives that figure. A 44-step binary search re-runs the entire simulation between zero and an upper bound set to whichever is larger of your full corpus or six times your current monthly withdrawal — so the search range stays wide enough even when the withdrawal you typed is large relative to a small corpus — converging on the highest first-month withdrawal that still survives the tenure you set, with your step-up percentage applied on top of it each year.",
     ],
     [
       "How is tax on an SWP calculated in this tool?",

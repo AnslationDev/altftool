@@ -26,12 +26,16 @@
 /** Weight given to an outstanding item when scoring residual risk. */
 export const SEVERITY_WEIGHT = { required: 10, recommended: 4 };
 
-/** Risk bands, expressed as the percentage of weighted items still outstanding. */
+/**
+ * Risk bands, expressed as the percentage of weighted items still
+ * outstanding. `tone` drives the UI colour independently of `safeToPublish`
+ * so the note's colour always matches what the note actually says.
+ */
 export const RISK_BANDS = [
-  { max: 0, label: "Cleared", note: "Nothing outstanding on this checklist." },
-  { max: 20, label: "Low", note: "Only minor items left; finish them before wide release." },
-  { max: 50, label: "Medium", note: "Several clearances outstanding — do not publish yet." },
-  { max: 100, label: "High", note: "Core releases are missing. Publishing now carries real exposure." },
+  { max: 0, label: "Cleared", tone: "success", note: "Nothing outstanding on this checklist." },
+  { max: 20, label: "Low", tone: "success", note: "Only minor items left; finish them before wide release." },
+  { max: 50, label: "Medium", tone: "warning", note: "Several clearances outstanding — do not publish yet." },
+  { max: 100, label: "High", tone: "danger", note: "Core releases are missing. Publishing now carries real exposure." },
 ];
 
 /** Distribution channels offered. */
@@ -59,8 +63,12 @@ export const MUSIC_OPTIONS = [
   { id: "original", label: "Composed for this project" },
 ];
 
-const isCommercial = (a) => a.usage === "commercial" || a.channels.includes("ads");
 const isPublished = (a) => a.usage !== "internal";
+// Gated on isPublished: internal-only material needs no release regardless
+// of what is left ticked in Channels (the checkboxes are not cleared when
+// Type of use switches to "Internal only", so a stray leftover "Paid
+// advertising" channel must not keep commercial-only rules active).
+const isCommercial = (a) => isPublished(a) && (a.usage === "commercial" || a.channels.includes("ads"));
 
 /**
  * The full rule set. `applies` is a pure predicate over the normalised answers.
@@ -308,6 +316,7 @@ export function assessReadiness({ items, done } = {}) {
       riskScore: 0,
       band: RISK_BANDS[0],
       outstanding: [],
+      safeToPublish: true,
     };
   }
 
@@ -334,7 +343,22 @@ export function assessReadiness({ items, done } = {}) {
   }
 
   const riskScore = totalWeight > 0 ? (openWeight / totalWeight) * 100 : 0;
-  const band = RISK_BANDS.find((entry) => riskScore <= entry.max) || RISK_BANDS[RISK_BANDS.length - 1];
+  const safeToPublish = requiredTotal > 0 ? requiredDone === requiredTotal : true;
+
+  // The blended required+recommended score can contradict safeToPublish,
+  // which is the real legal-exposure signal: one open required item can be
+  // diluted by many completed recommended ones into reading as "Low" risk,
+  // or a fully-cleared required set can be outweighed by open recommended
+  // items into reading as "High" ("core releases missing") when none are.
+  // Reconcile the two: any open required item floors the band at "High";
+  // a fully-cleared required set caps it at "Medium" (one below "High") so
+  // the headline never claims a core release is missing when it is not.
+  const rawIndex = RISK_BANDS.findIndex((entry) => riskScore <= entry.max);
+  let bandIndex = rawIndex === -1 ? RISK_BANDS.length - 1 : rawIndex;
+  const highIndex = RISK_BANDS.length - 1;
+  const mediumIndex = Math.max(0, RISK_BANDS.length - 2);
+  bandIndex = safeToPublish ? Math.min(bandIndex, mediumIndex) : Math.max(bandIndex, highIndex);
+  const band = RISK_BANDS[bandIndex];
 
   return {
     total: items.length,
@@ -345,7 +369,7 @@ export function assessReadiness({ items, done } = {}) {
     riskScore: Math.round(riskScore * 10) / 10,
     band,
     outstanding,
-    safeToPublish: requiredTotal > 0 ? requiredDone === requiredTotal : true,
+    safeToPublish,
   };
 }
 

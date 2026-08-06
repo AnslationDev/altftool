@@ -7,6 +7,7 @@ import {
   ADULT_BANDS,
   ADULT_USUAL_PI,
   HEALTHY_BMI,
+  LIMITS,
   NEWBORN_BANDS,
   REFERENCE_HEIGHT_M,
   adultPonderalIndex,
@@ -14,6 +15,22 @@ import {
   newbornPonderalIndex,
   poundsToKg,
 } from "../lib";
+
+// Feet/inches bounds derived from LIMITS.heightCm so the imperial inputs never
+// advertise a min/max the metric validator (adultPonderalIndex) would reject.
+// Feet alone can legitimately be as low as 3 or as high as 8 (there exists a
+// valid inches value for each), but the inches bound at those two extremes
+// depends on which feet value is currently entered — see inchesBoundsForFeet.
+const HEIGHT_MIN_IN = LIMITS.heightCm.min / 2.54;
+const HEIGHT_MAX_IN = LIMITS.heightCm.max / 2.54;
+const FEET_MIN = Math.floor(HEIGHT_MIN_IN / 12);
+const FEET_MAX = Math.floor(HEIGHT_MAX_IN / 12);
+
+const inchesBoundsForFeet = (feetValue) => {
+  const min = Math.max(0, Math.ceil((HEIGHT_MIN_IN - feetValue * 12) * 10) / 10);
+  const max = Math.min(11.9, Math.floor((HEIGHT_MAX_IN - feetValue * 12) * 10) / 10);
+  return { min, max: Math.max(min, max) };
+};
 
 const NUM1 = new Intl.NumberFormat("en-IN", {
   minimumFractionDigits: 1,
@@ -80,6 +97,7 @@ export default function ToolHome() {
   const [copied, setCopied] = useState(false);
 
   const adult = mode === "adult";
+  const { min: inchesMin, max: inchesMax } = inchesBoundsForFeet(toNum(feet) || FEET_MIN);
 
   const result = useMemo(() => {
     if (!adult) {
@@ -238,8 +256,8 @@ export default function ToolHome() {
                       className={INPUT}
                       type="number"
                       inputMode="numeric"
-                      min="3"
-                      max="8"
+                      min={String(FEET_MIN)}
+                      max={String(FEET_MAX)}
                       step="1"
                       value={feet}
                       onChange={(event) => setFeet(event.target.value)}
@@ -254,8 +272,8 @@ export default function ToolHome() {
                       className={INPUT}
                       type="number"
                       inputMode="decimal"
-                      min="0"
-                      max="11.9"
+                      min={String(inchesMin)}
+                      max={String(inchesMax)}
                       step="0.5"
                       value={inches}
                       onChange={(event) => setInches(event.target.value)}

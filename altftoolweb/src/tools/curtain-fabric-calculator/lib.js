@@ -188,13 +188,20 @@ export function calculateCurtainFabric({
   const liningCutLengthCm = lined ? dropCm + LINING_HEADING_CM + LINING_HEM_CM : 0;
   const totalLiningM = lined ? (drops * liningCutLengthCm) / 100 : 0;
 
-  // Trimmings.
-  const tapeMetres = (drops * fabricWidthCm) / 100;
+  // Trimmings. Tape is sewn across the joined, post-selvedge flat width, the
+  // same usableWidthCm used for the across-the-window take-off above - not
+  // the raw roll width, which would overstate the tape needed.
+  const tapeMetres = (drops * usableWidthCm) / 100;
   const hooks = Math.ceil(trackCm / HOOK_SPACING_CM) + 2 * panels;
 
   const fabricCost = totalFabricM * fabricPricePerMetre;
   const liningCost = totalLiningM * liningPricePerMetre;
-  const totalCost = fabricCost + liningCost;
+  // Round each displayed line item once, then sum the rounded values so the
+  // "Total" row always reconciles with "Fabric cost" + "Lining cost" as
+  // shown on screen, instead of independently rounding the unrounded total.
+  const fabricCostRounded = Math.round(fabricCost);
+  const liningCostRounded = Math.round(liningCost);
+  const totalCost = fabricCostRounded + liningCostRounded;
 
   return {
     headingLabel: heading.label,
@@ -233,8 +240,8 @@ export function calculateCurtainFabric({
     tapeMetres: round2(tapeMetres),
     hooks,
 
-    fabricCost: Math.round(fabricCost),
-    liningCost: Math.round(liningCost),
-    totalCost: Math.round(totalCost),
+    fabricCost: fabricCostRounded,
+    liningCost: liningCostRounded,
+    totalCost,
   };
 }

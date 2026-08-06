@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { forwardRef, useImperativeHandle, useMemo, useRef } from "react";
 import { COLS, ROWS, landingRow } from "../lib/engine";
 
 // Fixed vivid palette below is intentional game art (board frame + disc faces).
@@ -50,21 +50,36 @@ export const DISC_ART = {
   },
 };
 
-export default function Board({
-  board,
-  lastMove,
-  winLine,
-  activeCol,
-  currentPlayer,
-  disabled,
-  reducedMotion,
-  onColumnEnter,
-  onColumnClick,
-}) {
+const Board = forwardRef(function Board(
+  {
+    board,
+    lastMove,
+    winLine,
+    activeCol,
+    currentPlayer,
+    disabled,
+    reducedMotion,
+    onColumnEnter,
+    onColumnClick,
+  },
+  ref,
+) {
   const winSet = useMemo(
     () => new Set((winLine || []).map(([r, c]) => `${r},${c}`)),
     [winLine],
   );
+
+  // Column drop buttons, indexed by column, so keyboard aiming (Left/Right in
+  // pages/index.jsx) can move real DOM focus to match the visual aim indicator
+  // instead of leaving focus on a stale column while the indicator moves —
+  // otherwise a native Enter/Space activation on the still-focused button
+  // drops into the wrong column.
+  const buttonRefs = useRef([]);
+  useImperativeHandle(ref, () => ({
+    focusColumn(col) {
+      buttonRefs.current[col]?.focus();
+    },
+  }));
 
   return (
     <div className="mx-auto w-full max-w-md touch-manipulation select-none">
@@ -95,6 +110,9 @@ export default function Board({
           return (
             <button
               key={c}
+              ref={(el) => {
+                buttonRefs.current[c] = el;
+              }}
               type="button"
               onClick={() => onColumnClick(c)}
               onMouseEnter={() => onColumnEnter(c)}
@@ -136,4 +154,6 @@ export default function Board({
       </div>
     </div>
   );
-}
+});
+
+export default Board;

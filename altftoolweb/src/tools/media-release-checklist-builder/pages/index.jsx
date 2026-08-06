@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, ListChecks, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   CHANNEL_OPTIONS,
   MUSIC_OPTIONS,
@@ -15,6 +17,14 @@ import {
 const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 const NUM1 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
 const DASH = "—";
+
+// Keyed by RISK_BANDS[].tone — the note's colour reflects what the band note
+// actually says, independent of the separate safeToPublish verdict above it.
+const NOTE_TONE_CLASS = {
+  success: "text-[var(--success-text)]",
+  warning: "text-[var(--warning-text)]",
+  danger: "text-[var(--danger-text)]",
+};
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -71,7 +81,8 @@ const DEFAULT_ANSWERS = {
 export default function ToolHome() {
   const [answers, setAnswers] = useState(DEFAULT_ANSWERS);
   const [done, setDone] = useState({});
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const checklist = useMemo(() => buildChecklist(answers), [answers]);
 
@@ -96,23 +107,26 @@ export default function ToolHome() {
     }));
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (checklist.error) return;
-    try {
-      await navigator.clipboard.writeText(
-        checklistToText({ items: checklist.items, done, title: "Media release checklist" }),
-      );
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard(
+      "checklist",
+      checklistToText({ items: checklist.items, done, title: "Media release checklist" }),
+      { label: "the release checklist" },
+    );
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the checklist? This clears every answer above and every item you've ticked as done, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setAnswers(DEFAULT_ANSWERS);
     setDone({});
-    setCopied(false);
+    resetCopyState();
   };
 
   const required = checklist.error ? [] : checklist.items.filter((i) => i.severity === "required");
@@ -229,7 +243,7 @@ export default function ToolHome() {
       {checklist.error ? (
         <p
           role="alert"
-          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
         >
           {checklist.error}
         </p>
@@ -237,7 +251,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Clearance readiness
             </p>
@@ -254,21 +268,30 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the release checklist"
+              aria-label={
+                isCopied("checklist") ? "Copied the release checklist to clipboard" : "Copy the release checklist"
+              }
               className={GHOST_BTN}
               disabled={Boolean(checklist.error)}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy checklist"}
+              {isCopied("checklist") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("checklist") ? "Copied!" : "Copy checklist"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all answers" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
           {[
             ["Required releases", readiness.error ? DASH : NUM.format(readiness.requiredTotal)],
             [
@@ -292,7 +315,9 @@ export default function ToolHome() {
 
         {!readiness.error ? (
           <p
-            className={`mt-4 text-xs leading-5 ${readiness.safeToPublish ? "text-[var(--success)]" : "text-[var(--danger)]"}`}
+            role="status"
+            aria-live="polite"
+            className={`mt-4 text-xs leading-5 ${NOTE_TONE_CLASS[readiness.band.tone] || "text-[var(--muted-foreground)]"}`}
           >
             {readiness.band.note}
           </p>

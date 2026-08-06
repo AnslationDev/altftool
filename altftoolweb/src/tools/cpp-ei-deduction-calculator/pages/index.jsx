@@ -382,7 +382,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Employee deductions for the year
             </p>
@@ -424,11 +424,15 @@ export default function ToolHome() {
 
         {!hasError && (result.atPensionMaximum || result.atEiMaximum) ? (
           <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm text-[var(--foreground)]">
-            {result.atSecondMaximum
+            {result.atSecondMaximum && result.atEiMaximum
               ? `Earnings are above the YAMPE of ${money0(result.yampe)}, so both ${result.planName} tiers and EI are at their annual maximums.`
-              : result.atPensionMaximum
-                ? `Earnings are above the YMPE of ${money0(result.ympe)}, so the first ${result.planName} tier is maxed out and the 4% second tier has started.`
-                : `Earnings are above the EI ceiling of ${money0(result.eiMaxInsurableEarnings)}, so EI premiums stop for the year.`}
+              : result.atSecondMaximum
+                ? `Earnings are above the YAMPE of ${money0(result.yampe)}, so both ${result.planName} tiers are at their annual maximums. EI premiums continue until the maximum insurable earnings of ${money0(result.eiMaxInsurableEarnings)}.`
+                : result.atPensionMaximum && result.atEiMaximum
+                  ? `Earnings are above the YMPE of ${money0(result.ympe)}, so the first ${result.planName} tier is maxed out, the 4% second tier has started, and EI premiums have stopped at the maximum insurable earnings of ${money0(result.eiMaxInsurableEarnings)}.`
+                  : result.atPensionMaximum
+                    ? `Earnings are above the YMPE of ${money0(result.ympe)}, so the first ${result.planName} tier is maxed out and the 4% second tier has started.`
+                    : `Earnings are above the EI ceiling of ${money0(result.eiMaxInsurableEarnings)}, so EI premiums stop for the year.`}
           </p>
         ) : null}
 

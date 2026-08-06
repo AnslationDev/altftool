@@ -53,6 +53,16 @@ const MODE_OPTIONS = [
 ];
 
 const BITRATE_OPTIONS = [96, 128, 192, 256, 320];
+// Only these codecs are actually driven by the bitrate picker in
+// getCodecArgs(); OGG is fixed at libvorbis -q:a 5 and FLAC is lossless, so
+// showing a bitrate control for them would change a value that has no
+// effect on the export.
+const BITRATE_FORMATS = ["mp3", "m4a", "aac"];
+// Rough size-estimate constants for formats the export doesn't drive by an
+// explicit bitrate.
+const WAV_BYTES_PER_SECOND = 44100 * 2 * 2; // 44.1kHz, 16-bit, stereo PCM
+const OGG_APPROX_KBPS = 160; // typical output of libvorbis -q:a 5
+const FLAC_APPROX_KBPS = 700; // typical lossless-compressed rate, varies with source
 
 function formatBytes(bytes = 0) {
   if (!bytes) return "0 B";
@@ -67,10 +77,16 @@ function formatBytes(bytes = 0) {
 
 function formatTime(seconds = 0, withMs = false) {
   const safe = Math.max(0, Number.isFinite(seconds) ? seconds : 0);
-  const hours = Math.floor(safe / 3600);
-  const minutes = Math.floor((safe % 3600) / 60);
-  const secs = Math.floor(safe % 60);
-  const ms = Math.round((safe - Math.floor(safe)) * 1000);
+  // Round to whole milliseconds first, then derive hours/minutes/secs/ms from
+  // that single integer so a fractional part that rounds up to 1000ms (e.g.
+  // 12.9996s) carries into the seconds field instead of overflowing into a
+  // malformed 4-digit ms suffix like "12.1000".
+  const totalMs = Math.round(safe * 1000);
+  const ms = totalMs % 1000;
+  const totalSecs = Math.floor(totalMs / 1000);
+  const hours = Math.floor(totalSecs / 3600);
+  const minutes = Math.floor((totalSecs % 3600) / 60);
+  const secs = totalSecs % 60;
   const base = [hours, minutes, secs]
     .map((part) => String(part).padStart(2, "0"))
     .join(":");
@@ -99,7 +115,11 @@ function sanitizeFileName(name = "audio") {
 function getMimeType(ext) {
   if (ext === "mp3") return "audio/mpeg";
   if (ext === "wav") return "audio/wav";
-  if (ext === "m4a" || ext === "aac") return "audio/mp4";
+  // m4a is an MP4/ISO-BMFF container; a raw .aac export is a bare ADTS
+  // stream, not an MP4 container, so it needs its own MIME type or the
+  // in-page <audio> preview can fail to demux it.
+  if (ext === "m4a") return "audio/mp4";
+  if (ext === "aac") return "audio/aac";
   if (ext === "ogg") return "audio/ogg";
   if (ext === "flac") return "audio/flac";
   return "audio/mpeg";
@@ -163,17 +183,48 @@ export default function MainComponent() {
   const ffmpegRef = useRef(null);
   const sourceUrlRef = useRef("");
   const resultUrlRef = useRef("");
+  // Tracks whether a real duration has already been captured for the
+  // *current* file, independent of React's batched state updates - see
+  // loadAudioFile/handleMetadata/buildWaveform.
+  const durationKnownRef = useRef(false);
 
-  const selectedDuration = Math.max(0, endTime - startTime);
+  // Rounded to milliseconds so float noise from subtracting two
+  // already-rounded times (e.g. 0.06 - 0.01) can't nudge a UI-selected
+  // 0.05s gap a hair under the actual minimum checked in handleTrim.
+  const selectedDuration = Math.max(0, Math.round((endTime - startTime) * 1000) / 1000);
   const sourceExt = file ? getExtension(file.name) : "mp3";
   const effectiveOutputFormat =
     outputFormat === "same" ? sourceExt : outputFormat;
   const hasAudioFilters =
     fadeIn > 0 || fadeOut > 0 || volumeGain !== 0 || normalize;
+  // "Fast Cut" should skip re-encoding whenever the output format matches
+  // the source, whether the user reached that state via the "Original"
+  // sentinel or by manually picking the same concrete format - not only
+  // when outputFormat is literally the "same" string, which loadAudioFile
+  // never sets after upload.
   const needsEncoding =
-    trimMode === "processed" || outputFormat !== "same" || hasAudioFilters;
-  const estimatedSize =
-    file && duration ? Math.round(file.size * (selectedDuration / duration)) : 0;
+    trimMode === "processed" || effectiveOutputFormat !== sourceExt || hasAudioFilters;
+  const usesBitrate = needsEncoding && BITRATE_FORMATS.includes(effectiveOutputFormat);
+  const estimatedSize = (() => {
+    if (!file || !duration || selectedDuration <= 0) return 0;
+    if (!needsEncoding) {
+      // Stream copy: output bytes scale with the fraction of the source kept.
+      return Math.round(file.size * (selectedDuration / duration));
+    }
+    if (usesBitrate) {
+      return Math.round(((bitrate * 1000) / 8) * selectedDuration);
+    }
+    if (effectiveOutputFormat === "wav") {
+      return Math.round(WAV_BYTES_PER_SECOND * selectedDuration);
+    }
+    if (effectiveOutputFormat === "ogg") {
+      return Math.round(((OGG_APPROX_KBPS * 1000) / 8) * selectedDuration);
+    }
+    if (effectiveOutputFormat === "flac") {
+      return Math.round(((FLAC_APPROX_KBPS * 1000) / 8) * selectedDuration);
+    }
+    return Math.round(file.size * (selectedDuration / duration));
+  })();
   const selectionLeft = duration ? (startTime / duration) * 100 : 0;
   const selectionWidth = duration
     ? ((endTime - startTime) / duration) * 100
@@ -182,8 +233,18 @@ export default function MainComponent() {
   const outputSummary = useMemo(() => {
     if (!file) return "Upload an audio file to configure the cut.";
     if (selectedDuration <= 0) return "Select a valid audio range.";
-    return `${formatTime(selectedDuration, true)} clip · ${effectiveOutputFormat.toUpperCase()} · ${needsEncoding ? `${bitrate} kbps` : "stream copy"}`;
-  }, [bitrate, effectiveOutputFormat, file, needsEncoding, selectedDuration]);
+    // Only mp3/m4a/aac are actually driven by the bitrate picker - naming a
+    // bitrate for ogg/flac/wav would misreport what the export really does.
+    let detail = "stream copy";
+    if (needsEncoding) {
+      if (usesBitrate) detail = `${bitrate} kbps`;
+      else if (effectiveOutputFormat === "wav") detail = "16-bit PCM";
+      else if (effectiveOutputFormat === "ogg") detail = "quality 5 VBR";
+      else if (effectiveOutputFormat === "flac") detail = "lossless";
+      else detail = "re-encoded";
+    }
+    return `${formatTime(selectedDuration, true)} clip · ${effectiveOutputFormat.toUpperCase()} · ${detail}`;
+  }, [bitrate, effectiveOutputFormat, file, needsEncoding, usesBitrate, selectedDuration]);
 
   useEffect(() => {
     return () => {
@@ -203,9 +264,16 @@ export default function MainComponent() {
   };
 
   const resetTool = () => {
+    if (typeof window !== "undefined" && (file || resultBlob)) {
+      const confirmMessage = resultBlob
+        ? "Clear the loaded audio and the finished clip you haven't downloaded yet?"
+        : "Clear the loaded audio?";
+      if (!window.confirm(confirmMessage)) return;
+    }
     clearResult();
     if (sourceUrlRef.current) URL.revokeObjectURL(sourceUrlRef.current);
     sourceUrlRef.current = "";
+    durationKnownRef.current = false;
     setFile(null);
     setSourceUrl("");
     setDuration(0);
@@ -254,7 +322,13 @@ export default function MainComponent() {
       });
 
       setPeaks(nextPeaks);
-      if (audioBuffer.duration && !duration) {
+      // Use the ref, not the `duration` state closed over at call time:
+      // loadAudioFile's setDuration(0) for a new file hasn't been applied to
+      // this render yet when buildWaveform runs, so `duration` here would
+      // still read the *previous* file's non-zero value and skip this
+      // fallback for every file after the first.
+      if (audioBuffer.duration && !durationKnownRef.current) {
+        durationKnownRef.current = true;
         const length = Number(audioBuffer.duration.toFixed(3));
         setDuration(length);
         setEndTime(length);
@@ -287,6 +361,7 @@ export default function MainComponent() {
     const url = URL.createObjectURL(selectedFile);
     sourceUrlRef.current = url;
 
+    durationKnownRef.current = false;
     setFile(selectedFile);
     setSourceUrl(url);
     setDuration(0);
@@ -299,8 +374,13 @@ export default function MainComponent() {
 
   const handleMetadata = () => {
     const audio = audioRef.current;
+    // Some browsers (notably Chrome, for certain MP3 files) report
+    // Infinity here until the media is seeked - bail out without marking
+    // the duration known so the WebAudio-decode fallback in buildWaveform
+    // can still supply it.
     if (!audio?.duration || !Number.isFinite(audio.duration)) return;
 
+    durationKnownRef.current = true;
     const length = Number(audio.duration.toFixed(3));
     setDuration(length);
     setEndTime(length);
@@ -475,8 +555,13 @@ export default function MainComponent() {
       return;
     }
 
-    if (!duration || selectedDuration <= 0.05) {
-      setError("Select an audio clip longer than 0.05 seconds.");
+    // Exclusive of the boundary the UI itself can't reach (updateStart/
+    // updateEnd clamp to a 0.05s gap, never less), so the tightest
+    // selection the sliders and second inputs allow is always accepted -
+    // matching the FAQ's "shortest clip the tool will export is 0.05
+    // seconds" claim instead of silently requiring something longer.
+    if (!duration || selectedDuration < 0.05) {
+      setError("Select an audio clip of at least 0.05 seconds.");
       return;
     }
 
@@ -705,15 +790,15 @@ export default function MainComponent() {
                     )}
                   </div>
                   <div
-                    className="absolute bottom-0 top-0 w-0.5 bg-green-500"
+                    className="absolute bottom-0 top-0 w-0.5 bg-(--success)"
                     style={{ left: `${selectionLeft}%` }}
                   />
                   <div
-                    className="absolute bottom-0 top-0 w-0.5 bg-red-500"
+                    className="absolute bottom-0 top-0 w-0.5 bg-(--danger)"
                     style={{ left: `${selectionLeft + selectionWidth}%` }}
                   />
                   <div
-                    className="absolute bottom-0 top-0 w-0.5 bg-yellow-500"
+                    className="absolute bottom-0 top-0 w-0.5 bg-(--warning)"
                     style={{
                       left: `${duration ? (currentTime / duration) * 100 : 0}%`,
                     }}
@@ -723,31 +808,38 @@ export default function MainComponent() {
                 <div className="tool-form-grid">
                   <div>
                     <div className="mb-2 flex items-center justify-between text-sm">
-                      <span className="font-medium text-(--foreground)">
+                      <label
+                        className="font-medium text-(--foreground)"
+                        htmlFor="mp3-start-range"
+                      >
                         Start
-                      </span>
+                      </label>
                       <span className="font-mono text-(--muted-foreground)">
                         {formatTime(startTime, true)}
                       </span>
                     </div>
                     <input
+                      id="mp3-start-range"
                       type="range"
                       min="0"
                       max={duration || 0}
                       step="0.01"
                       value={startTime}
                       onChange={(event) => updateStart(event.target.value)}
-                      className="w-full accent-green-600"
+                      className="w-full accent-[var(--primary)]"
                     />
                   </div>
                   <div>
                     <div className="mb-2 flex items-center justify-between text-sm">
-                      <span className="font-medium text-(--foreground)">End</span>
+                      <label className="font-medium text-(--foreground)" htmlFor="mp3-end-range">
+                        End
+                      </label>
                       <span className="font-mono text-(--muted-foreground)">
                         {formatTime(endTime, true)}
                       </span>
                     </div>
                     <input
+                      id="mp3-end-range"
                       type="range"
                       min="0"
                       max={duration || 0}
@@ -839,10 +931,12 @@ export default function MainComponent() {
 
           {(error || status) && (
             <div
+              role={error ? "alert" : "status"}
+              aria-live="polite"
               className={`flex items-start gap-3 rounded-lg border p-4 ${
                 error
-                  ? "border-red-500/40 bg-red-500/10 text-red-600"
-                  : "border-green-500/40 bg-green-500/10 text-green-700"
+                  ? "border-(--danger)/40 bg-(--danger-soft) text-(--danger-text)"
+                  : "border-(--success)/40 bg-(--success-soft) text-(--success-text)"
               }`}
             >
               {error ? (
@@ -902,7 +996,14 @@ export default function MainComponent() {
                     </span>
                     <span>{progress}%</span>
                   </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-(--background)">
+                  <div
+                    role="progressbar"
+                    aria-label="Audio cut progress"
+                    aria-valuenow={progress}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    className="h-2 overflow-hidden rounded-full bg-(--background)"
+                  >
                     <div
                       className="h-full rounded-full bg-(--primary) transition-all"
                       style={{ width: `${progress}%` }}
@@ -994,7 +1095,7 @@ export default function MainComponent() {
                 </p>
               </div>
 
-              {needsEncoding && effectiveOutputFormat !== "wav" && (
+              {usesBitrate && (
                 <div>
                   <label className="mb-2 block text-sm font-medium text-(--foreground)">
                     Bitrate
@@ -1021,7 +1122,10 @@ export default function MainComponent() {
               <div className="space-y-4">
                 <div>
                   <div className="mb-2 flex items-center justify-between">
-                    <label className="text-sm font-medium text-(--foreground)">
+                    <label
+                      className="text-sm font-medium text-(--foreground)"
+                      htmlFor="mp3-fadein-range"
+                    >
                       Fade in
                     </label>
                     <span className="text-sm font-semibold text-(--foreground)">
@@ -1029,6 +1133,7 @@ export default function MainComponent() {
                     </span>
                   </div>
                   <input
+                    id="mp3-fadein-range"
                     type="range"
                     min="0"
                     max="10"
@@ -1040,7 +1145,10 @@ export default function MainComponent() {
                 </div>
                 <div>
                   <div className="mb-2 flex items-center justify-between">
-                    <label className="text-sm font-medium text-(--foreground)">
+                    <label
+                      className="text-sm font-medium text-(--foreground)"
+                      htmlFor="mp3-fadeout-range"
+                    >
                       Fade out
                     </label>
                     <span className="text-sm font-semibold text-(--foreground)">
@@ -1048,6 +1156,7 @@ export default function MainComponent() {
                     </span>
                   </div>
                   <input
+                    id="mp3-fadeout-range"
                     type="range"
                     min="0"
                     max="10"
@@ -1059,7 +1168,10 @@ export default function MainComponent() {
                 </div>
                 <div>
                   <div className="mb-2 flex items-center justify-between">
-                    <label className="text-sm font-medium text-(--foreground)">
+                    <label
+                      className="text-sm font-medium text-(--foreground)"
+                      htmlFor="mp3-volume-range"
+                    >
                       Volume gain
                     </label>
                     <span className="text-sm font-semibold text-(--foreground)">
@@ -1068,6 +1180,7 @@ export default function MainComponent() {
                     </span>
                   </div>
                   <input
+                    id="mp3-volume-range"
                     type="range"
                     min="-12"
                     max="12"

@@ -537,7 +537,16 @@ function MediaLab({ slug }) {
           setProgress(Math.max(0, Math.min(100, Math.round(value * 100)))),
         );
         ffmpeg.on("log", ({ message: value }) => {
-          logsRef.current = [...logsRef.current.slice(-199), value];
+          // Tools with `analyze: true` export logsRef.current verbatim as
+          // the user's downloaded diagnostic report (see `config.analyze`
+          // below), so capping it at 200 lines can silently evict the
+          // earliest lines — e.g. the first silence_start marker a decay
+          // reading depends on — with no indication anything was dropped.
+          // Non-analyze tools never read logsRef.current for anything but
+          // memory bookkeeping, so their behavior is unchanged.
+          logsRef.current = config.analyze
+            ? [...logsRef.current, value]
+            : [...logsRef.current.slice(-199), value];
           setLogs((current) => [...current.slice(-79), value]);
         });
         const base =

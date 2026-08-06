@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Clock, Copy, PlaneTakeoff, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   AIRPORT,
   COPY,
@@ -62,7 +64,17 @@ const toNum = (raw) => {
   return Number.isFinite(value) ? value : NaN;
 };
 
-const dayLabel = (offset) => (offset < 0 ? " (the day before)" : "");
+const dayLabel = (offset) => {
+  if (offset === 0) return "";
+  if (offset === -1) return " (the day before)";
+  if (offset < -1) return ` (${Math.abs(offset)} days before)`;
+  // Leave-by/terminal-arrival can only fall on or before the departure day
+  // given how planTransfer computes them, so positive offsets are not
+  // currently reachable — handled anyway so this never mislabels a value it
+  // wasn't expecting.
+  if (offset === 1) return " (the day after)";
+  return ` (${offset} days after)`;
+};
 
 export default function ToolHome() {
   const [flightTypeId, setFlightTypeId] = useState(DEFAULT_FLIGHT_TYPE);
@@ -76,14 +88,15 @@ export default function ToolHome() {
   const [personalBufferMinutes, setPersonalBufferMinutes] = useState(
     TRIP_DEFAULTS.personalBufferMinutes,
   );
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const mode = getMode(modeId);
 
   const selectFlightType = (nextId) => {
     setFlightTypeId(nextId);
     setLeadInputs(leadsToStrings(getFlightType(nextId)));
-    setCopied(false);
+    resetCopyState();
   };
 
   const result = useMemo(
@@ -133,15 +146,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result, distanceKm]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "the transfer plan" });
   };
 
   const reset = () => {
@@ -154,7 +161,7 @@ export default function ToolHome() {
     setIsWeekend(TRIP_DEFAULTS.isWeekend);
     setCheckedBag(TRIP_DEFAULTS.checkedBag);
     setPersonalBufferMinutes(TRIP_DEFAULTS.personalBufferMinutes);
-    setCopied(false);
+    resetCopyState();
   };
 
   const rows = [
@@ -397,7 +404,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -409,7 +420,13 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? "Fix the input above to see a departure time."
-                : `${result.leaveByDayOffset < 0 ? "The day before your flight. " : ""}That is ${formatDuration(result.totalDoorToDepartureMinutes)} before the ${result.departureTime} departure.`}
+                : `${
+                    result.leaveByDayOffset === 0
+                      ? ""
+                      : result.leaveByDayOffset === -1
+                        ? "The day before your flight. "
+                        : `${Math.abs(result.leaveByDayOffset)} days before your flight. `
+                  }That is ${formatDuration(result.totalDoorToDepartureMinutes)} before the ${result.departureTime} departure.`}
             </p>
             {!hasError && (
               <p className="mt-2 inline-flex items-center gap-1.5 rounded-md bg-[var(--muted)] px-2.5 py-1 text-xs font-semibold text-[var(--foreground)]">
@@ -417,26 +434,40 @@ export default function ToolHome() {
                 Deadline set by: {result.bindingConstraint}
               </p>
             )}
+            {!hasError && !result.converged && (
+              <p className="mt-2 max-w-md text-xs leading-5 text-[var(--warning-text)]">
+                Your departure sits right at an hourly traffic-profile boundary, so this leave-by
+                time uses the safer (earlier) of two close estimates — check a live map before you
+                go.
+              </p>
+            )}
           </div>
           <div className="flex flex-wrap gap-2">
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the airport transfer plan"
+              aria-label={
+                isCopied("result")
+                  ? "Copied the airport transfer plan to clipboard"
+                  : "Copy the airport transfer plan"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy plan"}
+              {isCopied("result") ? "Copied!" : "Copy plan"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
