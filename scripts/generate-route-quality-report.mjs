@@ -1,12 +1,27 @@
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { readRenderedSitemapXml } from "./lib/rendered-sitemap.mjs";
+import {
+  collectSitemapPaths,
+  extractAdvertisedSitemapUrls,
+  readRenderedSitemapXml,
+} from "./lib/rendered-sitemap.mjs";
+import {
+  compileNoindexResponseHeaderRules,
+  hasNoindexResponseHeader,
+} from "./lib/rendered-route-policies.mjs";
+import {
+  classifyRenderedContentQuality,
+  passesStrictQuality,
+} from "./lib/route-quality-policy.mjs";
+import { isIntentionalSitemapOmission } from "./lib/sitemap-coverage-policy.mjs";
 
 const workspaceRoot = path.resolve(import.meta.dirname, "..");
 const webRoot = path.join(workspaceRoot, "altftoolweb");
 const appOutput = path.join(webRoot, ".next/server/app");
-const sitemapOutput = path.join(appOutput, "sitemap.xml.body");
-const sitemapRouteOutput = path.join(appOutput, "sitemap.xml/route.js");
+const serverOutput = path.join(webRoot, ".next/server");
+const robotsOutput = path.join(appOutput, "robots.txt.body");
+const appPathsManifestPath = path.join(serverOutput, "app-paths-manifest.json");
+const routesManifestPath = path.join(webRoot, ".next/routes-manifest.json");
 const buildIdPath = path.join(webRoot, ".next/BUILD_ID");
 const excludedRoutes = new Set(["/_global-error", "/_not-found"]);
 const args = process.argv.slice(2);
@@ -32,7 +47,10 @@ function decodeHtml(value = "") {
     .replace(/&#(\d+);/g, (_, code) =>
       String.fromCodePoint(Number.parseInt(code, 10)),
     )
-    .replace(/&([a-z]+);/gi, (match, name) => named[name.toLowerCase()] ?? match);
+    .replace(
+      /&([a-z]+);/gi,
+      (match, name) => named[name.toLowerCase()] ?? match,
+    );
 }
 
 function parseAttributes(tag = "") {
@@ -84,7 +102,12 @@ function getCanonicalValues(html) {
 function getTitleValues(html) {
   return [...html.matchAll(/<title\b[^>]*>([\s\S]*?)<\/title>/gi)]
     .map((match) =>
-      decodeHtml(match[1].replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim()),
+      decodeHtml(
+        match[1]
+          .replace(/<[^>]*>/g, " ")
+          .replace(/\s+/g, " ")
+          .trim(),
+      ),
     )
     .filter(Boolean);
 }
@@ -164,7 +187,12 @@ function routeGroup(route) {
     tools: "Tools",
     wattpad: "Stories",
   };
-  return labels[segment] || segment.replace(/[-_]+/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+  return (
+    labels[segment] ||
+    segment
+      .replace(/[-_]+/g, " ")
+      .replace(/\b\w/g, (char) => char.toUpperCase())
+  );
 }
 
 function clampScore(score) {
@@ -182,38 +210,112 @@ function percentile(values, percentileValue) {
   return sorted[index];
 }
 
+function matchAppRoute(routeKey, pathname) {
+  const routePath = routeKey.replace(/\/route$/, "");
+  const routeParts = routePath.split("/").filter(Boolean);
+  const pathParts = pathname.split("/").filter(Boolean);
+  const params = {};
+  let pathIndex = 0;
+
+  for (const routePart of routeParts) {
+    const optionalCatchAll = routePart.match(/^\[\[\.\.\.(.+)\]\]$/);
+    const catchAll = routePart.match(/^\[\.\.\.(.+)\]$/);
+    const dynamic = routePart.match(/^\[(.+)\]$/);
+
+    if (optionalCatchAll || catchAll) {
+      const name = (optionalCatchAll || catchAll)[1];
+      const remaining = pathParts.slice(pathIndex).map(decodeURIComponent);
+      if (!remaining.length && catchAll) return null;
+      if (remaining.length) params[name] = remaining;
+      pathIndex = pathParts.length;
+      continue;
+    }
+
+    if (dynamic) {
+      if (pathIndex >= pathParts.length) return null;
+      params[dynamic[1]] = decodeURIComponent(pathParts[pathIndex]);
+      pathIndex += 1;
+      continue;
+    }
+
+    if (routePart !== pathParts[pathIndex]) return null;
+    pathIndex += 1;
+  }
+
+  return pathIndex === pathParts.length ? params : null;
+}
+
+function resolveCompiledAppRoute(appPathsManifest, pathname) {
+  const matches = [];
+
+  for (const [routeKey, compiledPath] of Object.entries(appPathsManifest)) {
+    const params = matchAppRoute(routeKey, pathname);
+    if (!params) continue;
+    matches.push({
+      compiledPath: path.join(serverOutput, compiledPath),
+      params,
+      dynamicSegments: (routeKey.match(/\[/g) || []).length,
+    });
+  }
+
+  matches.sort((left, right) => left.dynamicSegments - right.dynamicSegments);
+  return matches[0] || null;
+}
+
 async function readSitemapPaths() {
-  const xml = await readRenderedSitemapXml({
-    staticOutputPath: sitemapOutput,
-    dynamicRoutePath: sitemapRouteOutput,
-    dynamicRouteWorkingDirectory: webRoot,
+  const [robots, appPathsManifest] = await Promise.all([
+    readFile(robotsOutput, "utf8"),
+    readFile(appPathsManifestPath, "utf8").then(JSON.parse),
+  ]);
+  const advertised = extractAdvertisedSitemapUrls(robots);
+  if (!advertised.length) {
+    throw new Error("Rendered robots.txt does not advertise a sitemap.");
+  }
+
+  const { paths } = await collectSitemapPaths({
+    sitemapUrls: advertised,
+    readSitemap: async (sitemapUrl) => {
+      const url = new URL(sitemapUrl);
+      const pathname = normalizePathname(url.pathname);
+      const relativePath = pathname.replace(/^\/+/, "");
+      const compiledRoute = resolveCompiledAppRoute(appPathsManifest, pathname);
+      if (!compiledRoute) {
+        throw new Error(`No compiled app route owns sitemap ${pathname}.`);
+      }
+
+      return readRenderedSitemapXml({
+        staticOutputPath: path.join(appOutput, `${relativePath}.body`),
+        dynamicRoutePath: compiledRoute.compiledPath,
+        dynamicRouteWorkingDirectory: webRoot,
+        dynamicRouteRequest: new Request(sitemapUrl),
+        dynamicRouteContext: { params: Promise.resolve(compiledRoute.params) },
+      });
+    },
   });
 
-  const urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/gi)].map((match) =>
-    decodeHtml(match[1]),
+  return paths;
+}
+
+async function readNoindexResponseHeaderRules() {
+  const routesManifest = await readFile(routesManifestPath, "utf8").then(
+    JSON.parse,
   );
-  return new Set(
-    urls
-      .map((value) => {
-        try {
-          return normalizePathname(new URL(value).pathname);
-        } catch {
-          return "";
-        }
-      })
-      .filter(Boolean),
-  );
+  return compileNoindexResponseHeaderRules(routesManifest);
 }
 
 function addIssue(items, message) {
   if (!items.includes(message)) items.push(message);
 }
 
-const [files, sitemapPaths, buildId] = await Promise.all([
-  collectHtmlFiles(appOutput),
-  readSitemapPaths(),
-  readFile(buildIdPath, "utf8").then((value) => value.trim()).catch(() => null),
-]);
+const [files, sitemapPaths, buildId, noindexResponseHeaderRules] =
+  await Promise.all([
+    collectHtmlFiles(appOutput),
+    readSitemapPaths(),
+    readFile(buildIdPath, "utf8")
+      .then((value) => value.trim())
+      .catch(() => null),
+    readNoindexResponseHeaderRules(),
+  ]);
 
 const routes = [];
 const canonicalOwners = new Map();
@@ -227,17 +329,31 @@ for (const file of files) {
   const descriptions = getMetaValues(html, "name", "description");
   const canonicals = getCanonicalValues(html);
   const robots = getMetaValues(html, "name", "robots").join(",").toLowerCase();
-  const googlebot = getMetaValues(html, "name", "googlebot").join(",").toLowerCase();
-  const noindex = /\bnoindex\b/.test(`${robots},${googlebot}`);
+  const googlebot = getMetaValues(html, "name", "googlebot")
+    .join(",")
+    .toLowerCase();
+  const metaNoindex = /\bnoindex\b/.test(`${robots},${googlebot}`);
+  const responseHeaderNoindex = hasNoindexResponseHeader(
+    route,
+    noindexResponseHeaderRules,
+  );
+  const noindex = metaNoindex || responseHeaderNoindex;
   const canonical = canonicals[0] || "";
   const canonicalPath = canonicalPathname(canonical);
   const sitemapIncluded = sitemapPaths.has(route);
-  const canonicalInSitemap = canonicalPath ? sitemapPaths.has(canonicalPath) : false;
+  const canonicalInSitemap = canonicalPath
+    ? sitemapPaths.has(canonicalPath)
+    : false;
   const ownsCanonical = Boolean(canonicalPath && canonicalPath === route);
   const issues = [];
   const advisories = [];
   const title = titles[0] || "";
   const description = descriptions[0] || "";
+  const intentionalSitemapOmission = Boolean(
+    canonical &&
+    !canonicalInSitemap &&
+    isIntentionalSitemapOmission({ route: canonicalPath || route, title }),
+  );
   const h1Count = (html.match(/<h1\b/gi) || []).length;
   const schemaCount = findTags(html, "script").filter(
     (tag) =>
@@ -249,21 +365,31 @@ for (const file of files) {
   }
 
   if (!noindex) {
-    if (titles.length !== 1) addIssue(issues, `Expected one title; rendered ${titles.length}`);
+    if (titles.length !== 1)
+      addIssue(issues, `Expected one title; rendered ${titles.length}`);
     if (descriptions.length !== 1) {
-      addIssue(issues, `Expected one description; rendered ${descriptions.length}`);
+      addIssue(
+        issues,
+        `Expected one description; rendered ${descriptions.length}`,
+      );
     }
     if (canonicals.length !== 1) {
       addIssue(issues, `Expected one canonical; rendered ${canonicals.length}`);
     }
-    if (canonical && !canonicalInSitemap) {
+    if (canonical && !canonicalInSitemap && !intentionalSitemapOmission) {
       addIssue(issues, "Canonical target is missing from sitemap");
     }
-    if (title.length > 70) addIssue(advisories, `Long title (${title.length})`);
-    if (description.length && (description.length < 70 || description.length > 165)) {
-      addIssue(advisories, `Non-ideal description (${description.length})`);
+    const quality = classifyRenderedContentQuality({
+      title,
+      titleCount: titles.length,
+      description,
+      descriptionCount: descriptions.length,
+      h1Count,
+    });
+    for (const issue of quality.issues) addIssue(issues, issue);
+    for (const advisory of quality.advisories) {
+      addIssue(advisories, advisory);
     }
-    if (h1Count === 0) addIssue(advisories, "No rendered H1");
   }
 
   if (canonical) {
@@ -290,6 +416,9 @@ for (const file of files) {
     route,
     group: routeGroup(route),
     indexState: noindex ? "noindex" : "index",
+    indexDirectiveSource: responseHeaderNoindex
+      ? "response-header"
+      : "metadata",
     title,
     descriptionLength: description.length,
     canonical,
@@ -297,6 +426,7 @@ for (const file of files) {
     ownsCanonical,
     sitemapIncluded,
     canonicalInSitemap,
+    intentionalSitemapOmission,
     h1Count,
     schemaCount,
     issues,
@@ -306,7 +436,9 @@ for (const file of files) {
 }
 
 for (const [canonicalPath, owners] of canonicalOwners) {
-  const canonicalOwnerRoutes = owners.filter((route) => route === canonicalPath);
+  const canonicalOwnerRoutes = owners.filter(
+    (route) => route === canonicalPath,
+  );
   if (canonicalOwnerRoutes.length <= 1) continue;
   for (const route of owners) {
     const item = routes.find((candidate) => candidate.route === route);
@@ -347,7 +479,8 @@ const groups = [...groupsByName.values()]
   .map(({ scores, ...group }) => ({
     ...group,
     score: clampScore(
-      scores.reduce((sum, value) => sum + value, 0) / Math.max(1, scores.length),
+      scores.reduce((sum, value) => sum + value, 0) /
+        Math.max(1, scores.length),
     ),
     sitemapCoverage: group.indexable
       ? Math.round((group.sitemapCovered / group.indexable) * 100)
@@ -359,7 +492,13 @@ const indexable = routes.filter((route) => route.indexState === "index");
 const noindex = routes.filter((route) => route.indexState === "noindex");
 const indexConflicts = noindex.filter((route) => route.sitemapIncluded);
 const missingCanonicalTargets = indexable.filter(
-  (route) => route.canonical && !route.canonicalInSitemap,
+  (route) =>
+    route.canonical &&
+    !route.canonicalInSitemap &&
+    !route.intentionalSitemapOmission,
+);
+const intentionalSitemapOmissions = indexable.filter(
+  (route) => route.canonical && route.intentionalSitemapOmission,
 );
 const routesWithIssues = routes.filter((route) => route.issues.length > 0);
 const routesWithAdvisories = routes.filter(
@@ -388,11 +527,11 @@ const report = {
     missingCanonicalTargets.length === 0,
   indexControlOk:
     indexConflicts.length === 0 && missingCanonicalTargets.length === 0,
-  qualityOk:
-    routesWithIssues.length === 0 &&
-    routesWithAdvisories.length === 0 &&
-    indexConflicts.length === 0 &&
-    missingCanonicalTargets.length === 0,
+  qualityOk: passesStrictQuality({
+    routesWithIssues: routesWithIssues.length,
+    indexConflicts: indexConflicts.length,
+    missingCanonicalTargets: missingCanonicalTargets.length,
+  }),
   score: clampScore(
     routeScores.reduce((sum, value) => sum + value, 0) /
       Math.max(1, routeScores.length),
@@ -428,7 +567,11 @@ const report = {
 if (outputPath) {
   const absoluteOutput = path.resolve(workspaceRoot, outputPath);
   await mkdir(path.dirname(absoluteOutput), { recursive: true });
-  await writeFile(absoluteOutput, `${JSON.stringify(report, null, 2)}\n`, "utf8");
+  await writeFile(
+    absoluteOutput,
+    `${JSON.stringify(report, null, 2)}\n`,
+    "utf8",
+  );
 }
 
 console.log(

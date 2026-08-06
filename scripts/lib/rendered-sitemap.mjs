@@ -20,7 +20,7 @@ function createNoStoreIncrementalCache() {
 
 export async function renderCompiledSitemapRoute(
   routePath,
-  { loadModule = require, workingDirectory = "" } = {},
+  { loadModule = require, workingDirectory = "", request, routeContext } = {},
 ) {
   const previousWorkingDirectory = process.cwd();
   const hadIncrementalCache = Object.hasOwn(globalThis, "__incrementalCache");
@@ -35,7 +35,7 @@ export async function renderCompiledSitemapRoute(
       throw new Error("Compiled sitemap route does not export a GET handler.");
     }
 
-    const response = await get();
+    const response = await get(request, routeContext);
     if (!response || typeof response.text !== "function") {
       throw new Error(
         "Compiled sitemap GET handler did not return a Response.",
@@ -66,6 +66,8 @@ export async function readRenderedSitemapXml({
   staticOutputPath,
   dynamicRoutePath,
   dynamicRouteWorkingDirectory = "",
+  dynamicRouteRequest,
+  dynamicRouteContext,
   readText = (filePath) => readFile(filePath, "utf8"),
   renderDynamicRoute = renderCompiledSitemapRoute,
 }) {
@@ -78,6 +80,8 @@ export async function readRenderedSitemapXml({
   try {
     return await renderDynamicRoute(dynamicRoutePath, {
       workingDirectory: dynamicRouteWorkingDirectory,
+      request: dynamicRouteRequest,
+      routeContext: dynamicRouteContext,
     });
   } catch (error) {
     throw new Error(
@@ -85,4 +89,77 @@ export async function readRenderedSitemapXml({
       { cause: error },
     );
   }
+}
+
+function decodeXml(value = "") {
+  return String(value)
+    .replace(/&amp;/gi, "&")
+    .replace(/&apos;/gi, "'")
+    .replace(/&quot;/gi, '"')
+    .replace(/&lt;/gi, "<")
+    .replace(/&gt;/gi, ">");
+}
+
+export function extractSitemapLocations(xml = "") {
+  return [...String(xml).matchAll(/<loc>([\s\S]*?)<\/loc>/gi)]
+    .map((match) => decodeXml(match[1]).trim())
+    .filter(Boolean);
+}
+
+export function extractAdvertisedSitemapUrls(robots = "") {
+  return [...String(robots).matchAll(/^\s*Sitemap:\s*(\S+)\s*$/gim)]
+    .map((match) => match[1].trim())
+    .filter(Boolean);
+}
+
+/**
+ * Resolve every URL submitted through the sitemap documents advertised by
+ * robots.txt. A document may be a regular urlset or a sitemap index; indexes
+ * are followed recursively and cycles are ignored.
+ */
+export async function collectSitemapPaths({
+  sitemapUrls,
+  readSitemap,
+  maxDocuments = 100,
+}) {
+  const queue = [...new Set((sitemapUrls || []).filter(Boolean))];
+  const documents = new Set();
+  const paths = new Set();
+
+  while (queue.length) {
+    const sitemapUrl = queue.shift();
+    if (documents.has(sitemapUrl)) continue;
+    if (documents.size >= maxDocuments) {
+      throw new Error(
+        `Rendered sitemap graph exceeds the ${maxDocuments}-document safety limit.`,
+      );
+    }
+
+    documents.add(sitemapUrl);
+    const xml = await readSitemap(sitemapUrl);
+    const locations = extractSitemapLocations(xml);
+    const isSitemapIndex = /<sitemapindex\b/i.test(xml);
+
+    if (isSitemapIndex) {
+      for (const location of locations) {
+        if (!documents.has(location)) queue.push(location);
+      }
+      continue;
+    }
+
+    for (const location of locations) {
+      try {
+        const url = new URL(location);
+        const pathname =
+          url.pathname !== "/" ? url.pathname.replace(/\/+$/, "") : "/";
+        paths.add(pathname);
+      } catch {
+        throw new Error(
+          `Sitemap contains an invalid absolute URL: ${location}`,
+        );
+      }
+    }
+  }
+
+  return { paths, documents };
 }
