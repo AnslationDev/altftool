@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Fails the build when a file calls a React hook it never imported.
+ * Fails the build when a file calls a React or framer-motion hook it never imported.
  *
  * This exists because /brandrating shipped broken twice in one day. Removing
  * invented ratings also pruned four icons and two hooks from its import lists
@@ -26,10 +26,26 @@ import fs from "node:fs";
 import path from "node:path";
 
 const ROOTS = ["src/app", "src/tools", "src/platform", "src/components"];
-const HOOKS = [
-  "useRef", "useState", "useEffect", "useMemo", "useCallback", "useId",
-  "useReducer", "useContext", "useLayoutEffect", "useTransition",
-];
+/**
+ * Hooks checked per source module. framer-motion is here because /brandrating
+ * broke a THIRD time on `useInView is not defined` after the React hooks were
+ * restored — the same pruning had cut it from the framer-motion import, and a
+ * React-only guard could not see it. Any module whose hooks are called bare is
+ * a candidate for this list.
+ */
+const HOOKS_BY_MODULE = {
+  react: [
+    "useRef", "useState", "useEffect", "useMemo", "useCallback", "useId",
+    "useReducer", "useContext", "useLayoutEffect", "useTransition",
+  ],
+  "framer-motion": [
+    "useInView", "useScroll", "useTransform", "useAnimation", "useMotionValue",
+    "useSpring", "useAnimationControls", "useMotionTemplate", "useReducedMotion",
+    "useDragControls", "useAnimate", "useVelocity",
+  ],
+};
+
+const ALL_HOOKS = Object.values(HOOKS_BY_MODULE).flat();
 
 /** Named bindings of `import ... { a, b as c } from "<mod>"`, either quote style. */
 function namedImports(source, mod) {
@@ -75,16 +91,24 @@ for (const root of ROOTS) {
       .replace(/(^|[^:])\/\/[^\n]*/g, "$1");
     const missing = [];
 
-    const reactNames = namedImports(source, "react");
-    for (const hook of HOOKS) {
+    // Names bound by ANY import in this file. Checking only `from "react"` or
+    // only `from "framer-motion"` was wrong twice over: several files re-export
+    // useReducedMotion from a local lib/motion, and flagging those called eight
+    // working files broken. What matters is whether the identifier is bound at
+    // all, not which module it came from.
+    const bound = new Set();
+    for (const m of code.matchAll(/import\s+([^;]*?)\s+from\s*['"][^'"]+['"]/g)) {
+      for (const part of m[1].replace(/[{}]/g, ",").split(",")) {
+        const name = part.trim().split(/\s+as\s+/).pop()?.trim();
+        if (name && /^[A-Za-z_$][\w$]*$/.test(name)) bound.add(name);
+      }
+    }
+
+    for (const hook of ALL_HOOKS) {
       // A bare call only — `React.useRef(...)` is fine with a default import.
       if (!new RegExp(String.raw`(?<![.\w])${hook}\s*\(`).test(code)) continue;
-      if (reactNames.has(hook)) continue;
-      // `const { useState } = React` and a local `function useRef()` also count.
-      // The first version of this line was `(const|let|var|function)\s[^\n]*\bhook\b`,
-      // which matched `const ref = useRef(null)` — the call site itself — so the
-      // guard excused every file it was meant to catch and reported a clean run
-      // against the exact commit that broke production.
+      if (bound.has(hook)) continue;
+      // A local `function useThing()` or `const { useThing } = X` also counts.
       if (new RegExp(String.raw`(?:const|let|var|function)\s+${hook}\b`).test(code)) continue;
       if (new RegExp(String.raw`(?:const|let|var)\s*\{[^}]*\b${hook}\b[^}]*\}\s*=`).test(code)) continue;
       missing.push(hook);
