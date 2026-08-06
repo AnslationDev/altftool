@@ -125,11 +125,11 @@ export const PROPS = [
 export const ZONES = [
   {
     id: "z-meet", x: 12, y: 22, w: 20, h: 22, role: "hr", label: "Meeting",
-    dur: 13, delay: 3.1, tagX: 12, tagY: 9, walls: ["back", "right"], table: true,
+    dur: 13, delay: 3.1, tagX: 13, tagY: 36, walls: ["back", "right"], table: true,
   },
   {
     id: "z-exec", x: 34, y: 20, w: 18, h: 18, role: "exec", label: "Exec",
-    dur: 11, delay: 0, tagX: 34, tagY: 8, walls: ["back", "left", "right"],
+    dur: 11, delay: 0, tagX: 36, tagY: 34, walls: ["back", "left", "right"],
   },
   {
     id: "z-dev", x: 18, y: 64, w: 30, h: 24, role: "dev", label: "Engineering",

@@ -35,16 +35,27 @@
 
 :root,
 html[data-theme="light"] {
-  --fl-floor: #eef1f6;
-  --fl-floor-line: #dbe1ea;
-  --fl-wall: #e3e8ef;
-  --fl-wall-line: #cfd7e2;
-  --fl-glass: #cfe3ef;
+  /* Toned down from near-white on purpose. These were floor L=0.88, wall L=0.80,
+     desk-top L=0.95, desk L=1.00 — four surfaces inside twenty points of white,
+     with no headroom above them. A 22% light pool physically cannot move a 0.88
+     floor by more than about three points, so all five pools, the daylight and
+     the corner shading were present in the DOM and invisible on screen. The
+     lighting only exists if there is somewhere darker for it to sit against.
+
+     The wall is kept lighter than the floor so it recedes, and --fl-shadow is
+     nearly doubled: at 16% the corner shading landed at ~9% alpha in light
+     against ~30% in dark, so the same rule that reads in one theme did nothing
+     in the other. */
+  --fl-floor: #dbe2ec;
+  --fl-floor-line: #c6d0de;
+  --fl-wall: #e9edf3;
+  --fl-wall-line: #d3dbe6;
+  --fl-glass: #c3dcea;
   --fl-desk: #ffffff;
-  --fl-desk-edge: #cbd5e1;
-  --fl-desk-top: #f8fafc;
+  --fl-desk-edge: #bcc9d9;
+  --fl-desk-top: #f6f9fc;
   --fl-ink: #0f172a;
-  --fl-shadow: rgb(15 23 42 / 16%);
+  --fl-shadow: rgb(15 23 42 / 30%);
 
   /* Five accent slots. One per team, reused by that team's zone, desks, people
      and output, so colour alone tells you which team made a thing.
@@ -244,9 +255,9 @@ html[data-theme="dark"] {
 
 .fl-board {
   position: absolute;
-  left: 76%;
-  top: 30%;
-  width: 20%;
+  left: 24%;
+  top: 2%;
+  width: 15%;
   padding: 0.5rem 0.5rem 0.5625rem;
   border-radius: 4px;
   background: color-mix(in srgb, var(--fl-floor) 92%, var(--fl-ink));
@@ -284,8 +295,8 @@ html[data-theme="dark"] {
 /* The brand, sized like real office signage: present, not shouting. */
 .fl-signage {
   position: absolute;
-  left: 58%;
-  top: 14%;
+  left: 4%;
+  top: 19%;
   font-family: var(--anslation-ds-font-mono, monospace);
   font-size: clamp(0.75rem, 3cqw, 2rem);
   font-weight: 700;
@@ -841,16 +852,36 @@ html[data-theme="dark"] {
   background: var(--fl-hair, #3b2b20);
 }
 
-.fl-person--long .fl-person__head::after {
-  content: "";
+/* The long-hair silhouette is a REAL ELEMENT rendered before .fl-person__head,
+ * not a pseudo-element behind it.
+ *
+ * It was `.fl-person--long .fl-person__head::after { z-index: -1 }`, which does
+ * not do what it looks like it does. .fl-person__head carries
+ * `transform: translateX(-50%)`; a transform creates a stacking context; and
+ * within a stacking context the painting order is the element's own background
+ * FIRST, negative-z children SECOND. So the hair — larger than the head in both
+ * dimensions, and opaque — painted straight over the face.
+ *
+ * Nine of the fifteen figures had no visible skin at all. The deliberate spread
+ * of skin tones in cast.js was invisible across most of the floor, and the faces
+ * read as features stamped onto a dark blob.
+ *
+ * DOM order alone puts this behind the head, with no z-index for the next
+ * stacking context to defeat. It must stay the first child of .fl-person.
+ *
+ * If a head turn is ever added, rotate .fl-person or a wrapper around both of
+ * these — never .fl-person__head itself, which would re-create the stacking
+ * context and bring the blob back, silently.
+ */
+.fl-hairlong {
+  display: block;
   position: absolute;
-  left: -11%;
-  top: 4%;
-  width: 122%;
-  height: 104%;
+  left: 2.4%;
+  top: 1.6%;
+  width: 95%;
+  height: 43%;
   border-radius: 46% 46% 42% 42%;
   background: var(--fl-hair, #3b2b20);
-  z-index: -1;
 }
 
 /* A gentle idle bob so the room never looks frozen. Per-person delays stop the

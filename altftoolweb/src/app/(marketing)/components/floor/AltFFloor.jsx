@@ -35,6 +35,8 @@ function Person({ p }) {
           "--delay": `${p.delay}s`,
         }}
       >
+        {/* First child on purpose — see .fl-hairlong in floor.css. */}
+        {p.long ? <i className="fl-hairlong" /> : null}
         <span className="fl-person__head">
           <i className="fl-eye fl-eye--l" style={{ "--delay": `${p.delay}s` }} />
           <i className="fl-eye fl-eye--r" style={{ "--delay": `${p.delay}s` }} />
@@ -211,7 +213,7 @@ export default function AltFFloor({ className = "", scene = OFFICE_SCENE, expand
             style={{
               "--x": `${z.tagX}%`,
               "--y": `${z.tagY}%`,
-              "--z": "86px",
+              "--z": "150px",
               "--fl-pod": `var(${ROLE_VAR[z.role]})`,
             }}
           >
