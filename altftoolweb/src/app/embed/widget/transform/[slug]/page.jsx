@@ -35,7 +35,15 @@ export default async function TransformWidgetPage({ params, searchParams }) {
   const id = `transform/${slug}`;
   if (!isEmbeddable(id)) notFound();
 
-  const tool = getToolBySlug(slug);
+  // isEmbeddable() answers on a normalised id — parseWidgetId trims and
+  // lowercases — so a slug differing only in case or trailing whitespace passes
+  // the gate. The lookup below must be given the same normalised value, or it
+  // misses and the next line dereferences null: an error page where a 404
+  // belongs. Normalise once, here, rather than relying on each lookup's own
+  // habits (getExamBySlug lowercases but does not trim; getToolBySlug does
+  // neither).
+  const tool = getToolBySlug(String(slug).trim().toLowerCase());
+  if (!tool) notFound();
   const { theme } = (await searchParams) || {};
 
   // Only serialisable fields cross into the client shell — the same subset the

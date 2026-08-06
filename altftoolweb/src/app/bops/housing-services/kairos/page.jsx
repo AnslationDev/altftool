@@ -29,13 +29,19 @@ const phoneHref = "#demo-only";
 
 const trustPoints = [
   {
-    // Was "Licensed & Insured": no licence or cover exists behind this sample.
+    // Was "Licensed & Insured" over a body that published a state licence
+    // number — "Florida Certified Operator (#JB19283) with full general
+    // liability protection". Neutralising the heading left the number, which is
+    // the more specific and more damaging half of the claim: an invented
+    // operator ID against a named state regulator.
     title: "Template preview",
-    desc: "Florida Certified Operator (#JB19283) with full general liability protection."
+    desc: "A sample provider page. No licence, certification or insurance stands behind it."
   },
   {
-    title: "34 Years of Experience",
-    desc: "Proudly protecting Miami-Dade and Coral Gables homes since 1992."
+    // Was "34 Years of Experience / ...since 1992" for a company that does not
+    // exist.
+    title: "No trading history",
+    desc: "Nothing here has served a customer; the page demonstrates a layout."
   },
   {
     title: "Eco-Friendly & Pet Safe",
