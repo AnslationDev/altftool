@@ -1,6 +1,6 @@
-import { JEE_ADVANCED_PATTERN } from "./lib";
-
-const mainQualifiersCap = JEE_ADVANCED_PATTERN.mainQualifiersCap.toLocaleString("en-IN");
+// Kept in sync with JEE_ADVANCED_PATTERN.mainQualifiersCap in ./lib.js — not imported
+// directly because seo.js files are loaded in isolation by the SEO map generator script.
+const mainQualifiersCap = (250000).toLocaleString("en-IN");
 
 const seo = {
   intro:
