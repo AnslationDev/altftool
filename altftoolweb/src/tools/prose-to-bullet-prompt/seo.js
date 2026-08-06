@@ -23,7 +23,7 @@ const seo = {
     ],
     [
       "How many bullets should a list have?",
-      "Keep a flat list at or under about seven items; beyond that, group them under two to four short headings. The seven-item guideline comes from Miller's 1956 paper on short-term memory span, and while the original claim is often over-applied, the practical effect on scannability is real.",
+      "Keep a flat list at or under about seven items; beyond that, group them under two to four short headings — unless you chose to keep the original order, in which case the prompt leaves the list flat rather than re-clustering it out of sequence. The seven-item guideline comes from Miller's 1956 paper on short-term memory span, and while the original claim is often over-applied, the practical effect on scannability is real.",
     ],
     [
       "Will converting prose to bullets lose information?",

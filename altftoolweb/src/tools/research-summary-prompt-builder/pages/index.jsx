@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Microscope, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   AUDIENCES,
   MAX_TOTAL_WORDS,
@@ -40,7 +41,7 @@ export default function ToolHome() {
   const [audienceId, setAudienceId] = useState(DEFAULTS.audienceId);
   const [requireQuotes, setRequireQuotes] = useState(DEFAULTS.requireQuotes);
   const [glossary, setGlossary] = useState(DEFAULTS.glossary);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopy } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -61,28 +62,53 @@ export default function ToolHome() {
     setSectionIds((current) =>
       current.includes(id) ? current.filter((item) => item !== id) : [...current, id],
     );
-    setCopied(false);
+    resetCopy();
   };
 
-  const copyPrompt = async () => {
+  const handleFieldChange = (event) => {
+    setField(event.target.value);
+    resetCopy();
+  };
+
+  const handleTotalWordsChange = (event) => {
+    setTotalWords(event.target.value);
+    resetCopy();
+  };
+
+  const handleAudienceChange = (event) => {
+    setAudienceId(event.target.value);
+    resetCopy();
+  };
+
+  const handleRequireQuotesChange = (event) => {
+    setRequireQuotes(event.target.checked);
+    resetCopy();
+  };
+
+  const handleGlossaryChange = (event) => {
+    setGlossary(event.target.checked);
+    resetCopy();
+  };
+
+  const copyPrompt = () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.prompt);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("prompt", result.prompt, { label: "the research summary prompt" });
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset all inputs to defaults? This clears the research field, sections and other choices you've made.")
+    ) {
+      return;
+    }
     setField(DEFAULTS.field);
     setTotalWords(DEFAULTS.totalWords);
     setSectionIds(DEFAULTS.sectionIds);
     setAudienceId(DEFAULTS.audienceId);
     setRequireQuotes(DEFAULTS.requireQuotes);
     setGlossary(DEFAULTS.glossary);
-    setCopied(false);
+    resetCopy();
   };
 
   const rows = hasError
@@ -127,7 +153,7 @@ export default function ToolHome() {
               type="text"
               placeholder="e.g. materials science"
               value={field}
-              onChange={(event) => setField(event.target.value)}
+              onChange={handleFieldChange}
             />
           </div>
           <div>
@@ -143,7 +169,7 @@ export default function ToolHome() {
               max={MAX_TOTAL_WORDS}
               step="50"
               value={totalWords}
-              onChange={(event) => setTotalWords(event.target.value)}
+              onChange={handleTotalWordsChange}
             />
           </div>
           <div className="sm:col-span-2">
@@ -154,7 +180,7 @@ export default function ToolHome() {
               id="rs-audience"
               className={`mt-2 ${INPUT_CLASS}`}
               value={audienceId}
-              onChange={(event) => setAudienceId(event.target.value)}
+              onChange={handleAudienceChange}
             >
               {AUDIENCES.map((audience) => (
                 <option key={audience.id} value={audience.id}>
@@ -196,7 +222,7 @@ export default function ToolHome() {
               type="checkbox"
               className={CHECKBOX_CLASS}
               checked={requireQuotes}
-              onChange={(event) => setRequireQuotes(event.target.checked)}
+              onChange={handleRequireQuotesChange}
             />
             Cite the section or page for each claim
           </label>
@@ -206,7 +232,7 @@ export default function ToolHome() {
               type="checkbox"
               className={CHECKBOX_CLASS}
               checked={glossary}
-              onChange={(event) => setGlossary(event.target.checked)}
+              onChange={handleGlossaryChange}
             />
             Add a jargon glossary
           </label>
@@ -242,15 +268,15 @@ export default function ToolHome() {
               type="button"
               onClick={copyPrompt}
               disabled={hasError}
-              aria-label="Copy the generated research summary prompt"
+              aria-label={isCopied("prompt") ? "Copied the research summary prompt to clipboard" : "Copy the generated research summary prompt"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("prompt") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy prompt"}
+              {isCopied("prompt") ? "Copied!" : "Copy prompt"}
             </button>
             <button
               type="button"
@@ -261,6 +287,9 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

@@ -74,9 +74,17 @@ function gcd(a, b) {
  */
 export function vatFraction(ratePercent) {
   if (!isNum(ratePercent) || ratePercent <= 0) return null;
-  // Scale by 10 so one decimal place (e.g. 12.5%) still gives whole numbers.
-  const numerator = Math.round(ratePercent * 10);
-  const denominator = Math.round((100 + ratePercent) * 10);
+  // Scale by enough powers of 10 to capture the rate's own decimal
+  // precision — a fixed x10 only works for rates with at most one decimal
+  // place (e.g. 12.5%); a custom rate like 12.34% needs x100 or the
+  // fraction comes out mathematically wrong. JS's number-to-string
+  // conversion gives the shortest round-tripping decimal, so this reads the
+  // precision the user actually typed rather than binary floating-point
+  // noise; capped at 6 decimal places to keep the denominator sane.
+  const [, decimalDigits = ""] = String(ratePercent).split(".");
+  const scale = 10 ** Math.min(decimalDigits.length, 6);
+  const numerator = Math.round(ratePercent * scale);
+  const denominator = Math.round((100 + ratePercent) * scale);
   const divisor = gcd(numerator, denominator);
   return {
     numerator: numerator / divisor,
@@ -161,7 +169,6 @@ export function checkRegistration(annualTurnover) {
   const mustRegister = annualTurnover > REGISTRATION_THRESHOLD;
   return {
     turnover: roundMoney(annualTurnover),
-    threshold: REGISTRATION_THRESHOLD,
     deregistrationThreshold: DEREGISTRATION_THRESHOLD,
     mustRegister,
     headroom: roundMoney(REGISTRATION_THRESHOLD - annualTurnover),

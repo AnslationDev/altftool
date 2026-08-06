@@ -2,6 +2,9 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Thermometer } from "lucide-react";
+
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   FEVER_EXTRA_PCT_PER_DEG_C,
   INFANT_URGENT_AGE_MONTHS,
@@ -41,7 +44,7 @@ export default function ToolHome() {
   const [temperature, setTemperature] = useState(DEFAULTS.temperature);
   const [unit, setUnit] = useState(DEFAULTS.unit);
   const [hours, setHours] = useState(DEFAULTS.hours);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard();
 
   const num = (value) => (value === "" ? NaN : Number(value));
 
@@ -61,7 +64,10 @@ export default function ToolHome() {
 
   const switchUnit = (nextUnit) => {
     if (nextUnit === unit) return;
-    const value = Number(temperature);
+    // Use the same num() helper the calculation uses, so a blank field stays
+    // blank instead of being read as 0 and silently filled in with a converted
+    // value the user never typed.
+    const value = num(temperature);
     if (Number.isFinite(value)) {
       const converted =
         nextUnit === "F" ? (value * 9) / 5 + 32 : ((value - 32) * 5) / 9;
@@ -83,15 +89,8 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+  const copyResult = () => {
+    copyToClipboard("result", summary, { label: "the fever fluid replacement result" });
   };
 
   const reset = () => {
@@ -100,7 +99,6 @@ export default function ToolHome() {
     setTemperature(DEFAULTS.temperature);
     setUnit(DEFAULTS.unit);
     setHours(DEFAULTS.hours);
-    setCopied(false);
   };
 
   const rows = [
@@ -240,7 +238,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -259,17 +261,24 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy fever fluid replacement result"
+              aria-label={
+                isCopied("result")
+                  ? "Copied the fever fluid replacement result to clipboard"
+                  : "Copy fever fluid replacement result"
+              }
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button
               type="button"
               onClick={reset}
@@ -292,10 +301,18 @@ export default function ToolHome() {
           </p>
         )}
 
-        {!hasError && !result.isFever && (
+        {!hasError && !result.isFever && result.degreesAbove <= 0 && (
           <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm text-[var(--foreground)]">
-            This reading is below the 38 °C fever threshold, so the figure shown is ordinary
-            maintenance fluid with little or no surcharge.
+            This reading is at or below the 37 °C baseline, so the figure shown is ordinary
+            maintenance fluid with no fever surcharge.
+          </p>
+        )}
+
+        {!hasError && !result.isFever && result.degreesAbove > 0 && (
+          <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm text-[var(--foreground)]">
+            This reading is below the 38 °C fever threshold, but it is still {result.degreesAbove} °C
+            above the 37 °C baseline, so the figure already includes a +{result.surchargePct}%
+            surcharge on top of ordinary maintenance fluid.
           </p>
         )}
 

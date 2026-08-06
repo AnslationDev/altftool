@@ -9,7 +9,7 @@ export const spec = {
     "Electronics",
     "Calculator"
   ],
-  "icon": "cable",
+  "icon": "zap",
   "iconColor": "text-primary",
   "fields": [
     {
@@ -99,7 +99,7 @@ export const spec = {
   compute: (values) => {
       const V = Number(values.voltage), I = Math.max(0, Number(values.current) || 0), L = Math.max(0, Number(values.length) || 0), area = Number(values.area), rho = values.material === "aluminum" ? 0.0282 : 0.0175, factor = values.system === "three" ? Math.sqrt(3) : 2;
       if (!(V > 0 && area > 0)) return { result: "—", caption: "Voltage and conductor area must be positive" };
-      const resistance = rho * factor * L / area, drop = I * resistance, percent = drop / V * 100, limit = Math.max(0.1, Number(values.limit) || 3), requiredArea = rho * factor * L * I / (V * limit / 100);
+      const rawLimit = Number(values.limit), resistance = rho * factor * L / area, drop = I * resistance, percent = drop / V * 100, limit = Math.max(0.1, Number.isFinite(rawLimit) ? rawLimit : 3), requiredArea = rho * factor * L * I / (V * limit / 100);
       return { result: drop.toFixed(4) + " V drop", caption: percent.toFixed(3) + "% · " + (percent <= limit ? "within entered target" : "above entered target"), rows: [["Loop/equivalent resistance", resistance.toFixed(6) + " Ω"], ["Load voltage", (V - drop).toFixed(4) + " V"], ["Entered area", area + " mm²"], ["Minimum area for target (resistance only)", requiredArea.toFixed(3) + " mm²"], ["Target", limit + "%"]] };
     },
 };

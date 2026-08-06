@@ -3,7 +3,7 @@ const toolConfig = {
   name: "Voltage Drop & Wire Gauge Calculator",
   category: ["Electronics","Calculator"],
   description: "Estimate voltage loss along a wire run from its length, current, and conductor type or gauge.",
-  icon: "cable",
+  icon: "zap",
   iconColor: "text-primary",
 };
 

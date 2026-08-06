@@ -32,10 +32,14 @@
  * times running current.
  */
 
-/** Headroom multipliers applied to nameplate watts to size a converter. */
-export const RESISTIVE_HEADROOM = 1.25;
-export const ELECTRONIC_HEADROOM = 1.5;
-export const MOTOR_HEADROOM = 3;
+/**
+ * Headroom multipliers applied to nameplate watts to size a converter.
+ * Internal only — consumers read the resolved value off DEVICE_CLASSES'
+ * own `headroom` field instead of importing these directly.
+ */
+const RESISTIVE_HEADROOM = 1.25;
+const ELECTRONIC_HEADROOM = 1.5;
+const MOTOR_HEADROOM = 3;
 
 export const DEVICE_CLASSES = [
   {
@@ -79,7 +83,8 @@ export const CARRY_LIMIT_W = 500;
 const MAX_REASONABLE_WATTS = 20000;
 const MAX_REASONABLE_VOLTS = 1000;
 
-export function findDeviceClass(id) {
+/** Internal only — decideConverterOrAdapter() below is the public lookup surface. */
+function findDeviceClass(id) {
   return DEVICE_CLASSES.find((c) => c.id === id) || null;
 }
 
@@ -170,7 +175,9 @@ export function decideConverterOrAdapter({
     );
   } else {
     actions.push(
-      `Single voltage: you need a ${converterDirection} unit rated at least ${Math.ceil(requiredVA)} VA (${Math.round(deviceWatts)} W nameplate times ${cls.headroom}).`,
+      dualVoltage
+        ? `The label spans ${deviceMinVoltageV}-${deviceMaxVoltageV} V, which still doesn't reach ${destinationVoltageV} V: you need a ${converterDirection} unit rated at least ${Math.ceil(requiredVA)} VA (${Math.round(deviceWatts)} W nameplate times ${cls.headroom}).`
+        : `Single voltage: you need a ${converterDirection} unit rated at least ${Math.ceil(requiredVA)} VA (${Math.round(deviceWatts)} W nameplate times ${cls.headroom}).`,
     );
     if (converterType === "transformer-only") {
       actions.push(

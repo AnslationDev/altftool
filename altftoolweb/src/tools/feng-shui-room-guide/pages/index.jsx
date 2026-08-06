@@ -3,7 +3,9 @@
 import { useMemo, useState } from "react";
 import { AlertTriangle, Check, Copy, RotateCcw, Wind } from "lucide-react";
 
-import { BAGUA, ELEMENT_INFO, ELEMENTS, ROOMS, roomGuidance } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
+import { BAGUA, ELEMENT_INFO, ELEMENTS, ROOMS, baguaByGrid, roomGuidance } from "../lib";
 
 const DEFAULTS = { room: "kitchen", area: "kan" };
 
@@ -27,7 +29,7 @@ const GRID_ROWS = [3, 2, 1];
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard();
 
   const set = (key) => (event) => {
     const { value } = event.target;
@@ -59,20 +61,12 @@ export default function ToolHome() {
     ].join("\n");
   }, [ok, result]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+  const copyResult = () => {
+    copyToClipboard("guidance", summary, { label: "the feng shui guidance" });
   };
 
   const reset = () => {
     setForm(DEFAULTS);
-    setCopied(false);
   };
 
   const swatchStyle = (hex) => ({ backgroundColor: hex });
@@ -156,7 +150,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -176,12 +174,23 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={!ok}
-              aria-label="Copy the feng shui guidance for this room"
+              aria-label={
+                isCopied("guidance")
+                  ? "Copied the feng shui guidance to clipboard"
+                  : "Copy the feng shui guidance for this room"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("guidance") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("guidance") ? "Copied!" : "Copy result"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
@@ -263,7 +272,7 @@ export default function ToolHome() {
           <div className="grid min-w-[320px] grid-cols-3 gap-2">
             {GRID_ROWS.map((row) =>
               [1, 2, 3].map((col) => {
-                const cell = BAGUA.find((b) => b.gridRow === row && b.gridCol === col);
+                const cell = baguaByGrid(row, col);
                 const active = ok && cell.id === result.areaId;
                 return (
                   <button

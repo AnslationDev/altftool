@@ -270,18 +270,6 @@ export function generates(element) {
   return i < 0 ? null : ELEMENTS[(i + 1) % ELEMENTS.length];
 }
 
-/** The element that feeds this one. */
-export function generatedBy(element) {
-  const i = elementIndex(element);
-  return i < 0 ? null : ELEMENTS[(i + ELEMENTS.length - 1) % ELEMENTS.length];
-}
-
-/** The element this one controls in the ke cycle (two steps forward). */
-export function controls(element) {
-  const i = elementIndex(element);
-  return i < 0 ? null : ELEMENTS[(i + 2) % ELEMENTS.length];
-}
-
 /** The element that controls this one. */
 export function controlledBy(element) {
   const i = elementIndex(element);
@@ -312,11 +300,6 @@ export function elementRelationship(a, b) {
 export function mediatingElement(a, b) {
   if (elementRelationship(a, b) !== "a-controls-b") return null;
   return generates(a);
-}
-
-/** Bagua area for a classical compass direction name, or null. */
-export function baguaByDirection(direction) {
-  return BAGUA.find((area) => area.direction === direction) || null;
 }
 
 /** Bagua area for a Black Sect grid cell (row 1-3 from the door wall). */
@@ -374,15 +357,41 @@ export function roomGuidance({ room, area } = {}) {
     advice = `The position works against the room's activity. Introduce ${ELEMENT_INFO[mediator].label}, which ${ELEMENT_INFO[areaElement].label.toLowerCase()} feeds and which in turn feeds ${ELEMENT_INFO[roomElement].label.toLowerCase()}, and keep the area's own colours to a supporting role rather than covering whole walls.`;
   }
 
-  // Lead colour: the area's element when the room already feeds it or matches
-  // it, otherwise the room's own element. Support: the mediator where there is
-  // a clash, the element the shared one feeds where both agree, and the other
-  // of the pair otherwise. Reduce: whatever attacks the area's element.
-  const leadElement = relation === "a-generates-b" || relation === "same" ? areaElement : roomElement;
+  // Lead colour: the area's element whenever the room already feeds, matches or
+  // (per the advice above) has to stand down in favour of it — i.e. every
+  // relation except "b-generates-a" and "b-controls-a", where the room's own
+  // element leads instead. Support and Reduce are then picked per relation so
+  // that all three slots are always three distinct elements — see the a-controls-b
+  // and b-controls-a cases below, where naively reusing the generic rules made
+  // Lead and Reduce (or Support and the promised "area's own colour") collide.
+  const leadElement =
+    relation === "a-generates-b" || relation === "same" || relation === "a-controls-b"
+      ? areaElement
+      : roomElement;
+
   let supportElement;
-  if (mediator) supportElement = mediator;
-  else if (relation === "same") supportElement = generates(areaElement);
-  else supportElement = leadElement === areaElement ? roomElement : areaElement;
+  if (relation === "same") {
+    supportElement = generates(areaElement);
+  } else if (relation === "a-generates-b") {
+    // Lead is the area's element here, so the room's own element is the support.
+    supportElement = roomElement;
+  } else if (relation === "b-generates-a") {
+    // Lead is the room's own element here, so the area's element supports it.
+    supportElement = areaElement;
+  } else if (relation === "a-controls-b") {
+    // The room's element is being pushed down to an accent (see reduceElement
+    // below), so the mediator being introduced is the supporting colour.
+    supportElement = mediator;
+  } else {
+    // b-controls-a: the advice explicitly promises the area's own colours "a
+    // supporting role", so that is what has to render here.
+    supportElement = areaElement;
+  }
+
+  // Reduce ("keep to accents only"): the element that controls the area's own
+  // element. In the a-controls-b clash this is, by definition, the room's own
+  // element (the aggressor) — which is exactly what the advice tells you to
+  // keep to accents, and is why leadElement above must not also be roomElement.
   const reduceElement = controlledBy(areaElement);
 
   return {

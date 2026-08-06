@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ArrowLeftRight, Copy, RotateCcw, Users } from "lucide-react";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
@@ -30,10 +30,23 @@ function parseISO(value) {
   return { y, m, d, date: probe };
 }
 
-const daysInMonth = (year, month) => new Date(year, month, 0).getDate();
+// new Date(y, m, d) / Date.UTC(y, m, d) reinterpret a two-digit year (0-99) as
+// 1900+y. setFullYear/setUTCFullYear do not apply that legacy shorthand, so
+// every helper below that needs to build a Date from a raw {y, m, d} uses
+// them instead — matching the workaround parseISO() already uses above.
+const daysInMonth = (year, month) => {
+  const probe = new Date(0, 0, 1);
+  probe.setFullYear(year, month, 0);
+  return probe.getDate();
+};
 
-const totalDaysBetween = (a, b) =>
-  Math.round((Date.UTC(b.y, b.m - 1, b.d) - Date.UTC(a.y, a.m - 1, a.d)) / 86400000);
+const utcTimestamp = (parts) => {
+  const probe = new Date(0);
+  probe.setUTCFullYear(parts.y, parts.m - 1, parts.d);
+  return probe.getTime();
+};
+
+const totalDaysBetween = (a, b) => Math.round((utcTimestamp(b) - utcTimestamp(a)) / 86400000);
 
 // Adds whole months, clamping to the last valid day of the target month
 // (31 Jan + 1 month = 28/29 Feb).
@@ -59,12 +72,15 @@ function calendarDiff(earlier, later) {
   };
 }
 
-const formatLong = (parts) =>
-  new Date(parts.y, parts.m - 1, parts.d).toLocaleDateString(undefined, {
+const formatLong = (parts) => {
+  const probe = new Date(0, 0, 1);
+  probe.setFullYear(parts.y, parts.m - 1, parts.d);
+  return probe.toLocaleDateString(undefined, {
     day: "numeric",
     month: "long",
     year: "numeric",
   });
+};
 
 const phrase = ({ years, months, days }) => {
   const bits = [];
@@ -81,9 +97,16 @@ export default function ToolHome() {
   const [dateB, setDateB] = useState(DEFAULT_B);
   const [refDate, setRefDate] = useState("");
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
 
   useEffect(() => {
     setRefDate(toISO(new Date()));
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    };
   }, []);
 
   const parsedA = useMemo(() => parseISO(dateA), [dateA]);
@@ -170,7 +193,7 @@ export default function ToolHome() {
       `Total weeks: ${num.format(result.totalWeeks)} weeks and ${result.remainderDays} day(s)`,
       `Total months: ${num.format(result.totalMonths)}`,
     ];
-    if (parsedRef && (result.ages?.older || result.ages?.younger)) {
+    if (result.ages) {
       lines.push(
         "",
         `As of ${formatLong(parsedRef)}:`,
@@ -190,7 +213,11 @@ export default function ToolHome() {
     const ok = await safeCopyText(report);
     if (!ok) return;
     setCopied(true);
-    setTimeout(() => setCopied(false), 1400);
+    if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    copiedTimeoutRef.current = setTimeout(() => {
+      setCopied(false);
+      copiedTimeoutRef.current = null;
+    }, 1400);
   };
 
   const inputClass =
@@ -344,7 +371,7 @@ export default function ToolHome() {
                 ))}
               </dl>
 
-              {parsedRef && (result.ages?.older || result.ages?.younger) && (
+              {result.ages && (
                 <div className="mt-5 rounded-md border border-[var(--border)] bg-[var(--background)] p-3 text-sm">
                   <p className="font-semibold">Ages on {formatLong(parsedRef)}</p>
                   <p className="mt-1 text-[var(--muted-foreground)]">

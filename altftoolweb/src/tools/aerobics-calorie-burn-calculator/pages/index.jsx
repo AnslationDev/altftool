@@ -3,7 +3,13 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, HeartPulse, RotateCcw } from "lucide-react";
 
-import { AEROBICS_CLASSES, computeAerobicsBurn } from "../lib";
+import {
+  AEROBICS_CLASSES,
+  computeAerobicsBurn,
+  LB_TO_KG,
+  MIN_WEIGHT_KG,
+  MAX_WEIGHT_KG,
+} from "../lib";
 
 const NUM0 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 const NUM1 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
@@ -54,6 +60,11 @@ export default function ToolHome() {
   );
 
   const hasError = Boolean(result.error);
+
+  const weightBounds =
+    weightUnit === "lb"
+      ? { min: (MIN_WEIGHT_KG / LB_TO_KG).toFixed(1), max: (MAX_WEIGHT_KG / LB_TO_KG).toFixed(1) }
+      : { min: String(MIN_WEIGHT_KG), max: String(MAX_WEIGHT_KG) };
 
   const summary = useMemo(() => {
     if (hasError) return "";
@@ -133,7 +144,8 @@ export default function ToolHome() {
                 className={INPUT_CLASS}
                 type="number"
                 inputMode="decimal"
-                min="25"
+                min={weightBounds.min}
+                max={weightBounds.max}
                 step="0.5"
                 value={weight}
                 onChange={(event) => setWeight(event.target.value)}
@@ -209,7 +221,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

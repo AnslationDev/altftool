@@ -13,6 +13,13 @@ export const UMOL_PER_MGDL = 88.4;
 /** Outside this the value is not a serum creatinine result. */
 export const MAX_MGDL = 30;
 
+/**
+ * Below this the value is not a plausible serum creatinine result — even
+ * severe muscle wasting rarely reads below ~0.2-0.3 mg/dL, and anything
+ * lower is almost always a misplaced decimal (e.g. "0.12" typed for "1.2").
+ */
+export const MIN_MGDL = 0.2;
+
 export const UNITS = [
   { id: "mgdl", label: "mg/dL" },
   { id: "umoll", label: "micromol/L (µmol/L)" },
@@ -111,9 +118,10 @@ export function convertCreatinine({ value, unit = "mgdl", sex = "male", age } = 
   if (raw <= 0) return { error: "Serum creatinine must be greater than zero." };
 
   const mgdl = unit === "mgdl" ? raw : umollToMgdl(raw);
-  if (!Number.isFinite(mgdl) || mgdl > MAX_MGDL) {
+  if (!Number.isFinite(mgdl) || mgdl > MAX_MGDL || mgdl < MIN_MGDL) {
+    const direction = mgdl > MAX_MGDL ? "above" : "below";
     return {
-      error: `That works out to ${mgdl.toFixed(1)} mg/dL (${mgdlToUmoll(mgdl).toFixed(0)} µmol/L), above anything a serum creatinine assay reports — check the unit you selected.`,
+      error: `That works out to ${mgdl.toFixed(2)} mg/dL (${mgdlToUmoll(mgdl).toFixed(0)} µmol/L), ${direction} anything a serum creatinine assay reports — check the unit and value you entered.`,
     };
   }
 

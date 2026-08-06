@@ -5,6 +5,7 @@ import { Check, Copy, Pause, Play, RotateCcw, Waves } from "lucide-react";
 
 import {
   amplitudeAt,
+  DEFAULT_CROSSFADE_SECONDS,
   DEFAULT_LOOP_SECONDS,
   formatClock,
   generateNoise,
@@ -70,6 +71,15 @@ export default function ToolHome() {
   const currentPercent = hasError ? 0 : percentAt(plan, elapsed);
   const finished = !hasError && elapsed >= totalSeconds;
 
+  // The actual playable/looped buffer is shorter than DEFAULT_LOOP_SECONDS —
+  // generateNoise trims a crossfade tail so the loop point is inaudible.
+  // Compute the real length once (it does not depend on noise colour or
+  // sample rate) instead of displaying the raw requested length.
+  const loopSeconds = useMemo(() => {
+    const noise = generateNoise({ seconds: DEFAULT_LOOP_SECONDS, seed: 1, sampleRate: 44100 });
+    return noise.error ? DEFAULT_LOOP_SECONDS - DEFAULT_CROSSFADE_SECONDS : noise.seconds;
+  }, []);
+
   useEffect(() => {
     planRef.current = plan.error ? null : plan;
   }, [plan]);
@@ -110,7 +120,12 @@ export default function ToolHome() {
     source.buffer = buffer;
     source.loop = true;
     const gain = ctx.createGain();
-    gain.gain.value = 0;
+    // Seed the new gain node at the envelope's current amplitude (not 0) so
+    // switching noise colour mid-session doesn't dip to silence and ramp
+    // back up — the audio graph is torn down and rebuilt on every colour
+    // change, but playback position (anchor/elapsed) is untouched.
+    const liveElapsed = Math.min(totalSeconds, (Date.now() - anchor) / 1000);
+    gain.gain.value = amplitudeAt(planRef.current, liveElapsed);
     source.connect(gain);
     gain.connect(ctx.destination);
     source.start();
@@ -127,6 +142,10 @@ export default function ToolHome() {
       gain.disconnect();
       gainRef.current = null;
     };
+    // anchor/totalSeconds are intentionally read live (not as deps): this
+    // effect should only rebuild the audio graph when playback starts, the
+    // noise colour changes, or an error state flips — not on every tick.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playing, type, hasError]);
 
   // Clock and volume-envelope tick.
@@ -437,7 +456,7 @@ export default function ToolHome() {
             ["Hold at target", hasError ? DASH : formatClock(plan.holdSeconds)],
             ["Fade out", hasError ? DASH : formatClock(plan.fadeSeconds)],
             ["Current volume", hasError ? DASH : `${Math.round(currentPercent)}%`],
-            ["Loop length", hasError ? DASH : `${DEFAULT_LOOP_SECONDS} s, seamlessly crossfaded`],
+            ["Loop length", hasError ? DASH : `~${loopSeconds.toFixed(2)} s, seamlessly crossfaded`],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

@@ -138,13 +138,15 @@ export function computeVdaTax({
 
   const netEconomicResult = lines.reduce((sum, line) => sum + line.economicResult, 0);
   const tdsThreshold = isSpecifiedPerson ? TDS_194S_THRESHOLD_SPECIFIED : TDS_194S_THRESHOLD_OTHERS;
-  const tds194s = (totalConsideration * TDS_194S_RATE) / 100;
+  // Section 194S only obliges TDS once aggregate consideration crosses the threshold. Below
+  // that, no tax was ever withheld, so the TDS figures must be zero, not just unmentioned.
+  const tdsApplies = totalConsideration > tdsThreshold;
+  const tds194s = tdsApplies ? (totalConsideration * TDS_194S_RATE) / 100 : 0;
 
   return {
     lines,
     totalGains: round2(totalGains),
     totalLosses: round2(totalLosses),
-    lossesWasted: round2(totalLosses),
     disallowedExpenses: round2(disallowedExpenses),
     taxableIncome: round2(taxableIncome),
     baseTax: round2(baseTax),
@@ -162,7 +164,7 @@ export function computeVdaTax({
     totalConsideration: round2(totalConsideration),
     tds194s: round2(tds194s),
     tdsThreshold,
-    tdsApplies: totalConsideration > tdsThreshold,
+    tdsApplies,
     taxPayableAfterTds: round2(Math.max(0, totalTax - tds194s)),
     tdsRefundable: round2(Math.max(0, tds194s - totalTax)),
   };

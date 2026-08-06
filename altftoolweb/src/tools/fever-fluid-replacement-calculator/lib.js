@@ -116,7 +116,7 @@ export function computeFeverFluid({
     return { error: "Enter a number for age, weight, temperature and hours." };
   }
   if (age < 0 || age > 120) return { error: "Enter an age between 0 and 120 years." };
-  if (weight <= 0 || weight > 300) return { error: "Enter a weight between 1 kg and 300 kg." };
+  if (weight < 1 || weight > 300) return { error: "Enter a weight between 1 kg and 300 kg." };
   if (hours < 0 || hours > 24) return { error: "Hours with a fever must be between 0 and 24." };
 
   const tempC = unit === "F" ? fahrenheitToCelsius(rawTemp) : rawTemp;
@@ -143,11 +143,16 @@ export function computeFeverFluid({
   const fullDayExtraMl = baseMaintenanceMl * (surchargePct / 100);
   const feverExtraMl = fullDayExtraMl * (hours / 24);
 
-  const totalMl = baseMaintenanceMl + feverExtraMl;
-  const hourlyMl = totalMl / WAKING_HOURS;
-
   const ageMonths = age * 12;
   const infantUrgent = ageMonths < INFANT_URGENT_AGE_MONTHS && tempC >= FEVER_THRESHOLD_C;
+
+  // Round the two components that are actually displayed first, then derive the
+  // headline total as their sum — rather than rounding an independently-computed
+  // total — so the on-screen breakdown always adds up to the on-screen total.
+  const baseMaintenanceMlRounded = round(baseMaintenanceMl, 5);
+  const feverExtraMlRounded = round(feverExtraMl, 5);
+  const totalMl = baseMaintenanceMlRounded + feverExtraMlRounded;
+  const hourlyMl = totalMl / WAKING_HOURS;
 
   return {
     tempC: Math.round(tempC * 10) / 10,
@@ -155,17 +160,15 @@ export function computeFeverFluid({
     isFever: tempC >= FEVER_THRESHOLD_C,
     degreesAbove: Math.round(degreesAbove * 10) / 10,
     maintenanceRule: rule,
-    baseMaintenanceMl: round(baseMaintenanceMl, 5),
+    baseMaintenanceMl: baseMaintenanceMlRounded,
     surchargePct: Math.round(surchargePct * 10) / 10,
     fullDayExtraMl: round(fullDayExtraMl, 5),
     hoursFebrile: hours,
-    feverExtraMl: round(feverExtraMl, 5),
+    feverExtraMl: feverExtraMlRounded,
     totalMl: round(totalMl, 5),
     hourlyMl: round(hourlyMl, 5),
     glasses200: Math.round(totalMl / 200),
     infantUrgent,
-    isChild: age < ADULT_AGE_YEARS,
-    isOlderAdult: age >= OLDER_ADULT_AGE_YEARS,
   };
 }
 

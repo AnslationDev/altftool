@@ -13,6 +13,7 @@ import {
   RECIPIENTS,
   REGIONS,
   TIMINGS,
+  cleanName,
   generateJapaneseNewYearWishes,
   greetingWindow,
   nextSeed,
@@ -132,7 +133,7 @@ export default function ToolHome() {
       ]
     : [
         ["Register", POLITENESS_LEVELS.find((item) => item.id === result.politeness)?.label || DASH],
-        ["Addressed as", name.trim() ? `${name.trim()}${result.honorific.suffix}` : "No name line"],
+        ["Addressed as", cleanName(name) ? `${cleanName(name)}${result.honorific.suffix}` : "No name line"],
         ["Era line", result.dateLine ? result.dateLine.native : "Not used before 1 January"],
         ["Wordings available", `${result.delivered} of ${result.poolSize} openings`],
         ["Correct card on that date", season.error ? DASH : season.label],

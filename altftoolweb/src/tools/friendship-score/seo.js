@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How is the friendship score calculated?",
-      "The five sliders are averaged and rescaled to 0-100, that value is weighted 65%, and a name-based score weighted 35% is added; the total is clamped to the 15-100 range. So a pair who rate every slider 10/10 will always land near the top regardless of their names.",
+      "The five sliders are averaged and rescaled to 0-100, that value is weighted 65%, and a name-based score weighted 35% is added; the total is clamped to the 15-100 range. So a pair who rate every slider 10/10 is guaranteed at least a 70 (Silver tier or higher), but the exact score — and whether it reaches Platinum or Gold — still depends on the name-based component.",
     ],
     [
       "What are the badge levels?",

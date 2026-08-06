@@ -134,9 +134,9 @@ export default function ToolHome() {
     };
   }, [altMult, category, customMinutes, food, mode]);
 
-  const showAltitude = altMult > 1;
+  const showAltitude = altPct !== 0;
 
-  const report = useMemo(
+  const reportLines = useMemo(
     () =>
       [
         "Pressure Cooker Conversion",
@@ -149,15 +149,14 @@ export default function ToolHome() {
         `Release: ${result.release === "natural" ? "Natural release" : "Quick release"}`,
         `Water: ${result.water}`,
         result.formula,
-        `Generated: ${new Date().toLocaleString()}`,
-      ]
-        .filter(Boolean)
-        .join("\n"),
+      ].filter(Boolean),
     [altPct, altitude, result, showAltitude]
   );
 
+  const buildReport = () => [...reportLines, `Generated: ${new Date().toLocaleString()}`].join("\n");
+
   const copyReport = async () => {
-    const success = await safeCopyText(report);
+    const success = await safeCopyText(buildReport());
     if (!success) return;
     setCopied(true);
     setTimeout(() => setCopied(false), 1200);
@@ -314,7 +313,7 @@ export default function ToolHome() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => downloadTextFile("pressure-cooker-conversion.txt", report)}
+                  onClick={() => downloadTextFile("pressure-cooker-conversion.txt", buildReport())}
                   className="btn-secondary min-h-9 px-3 py-1.5 text-sm"
                 >
                   <FileDown className="h-4 w-4" />

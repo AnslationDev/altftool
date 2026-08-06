@@ -355,6 +355,7 @@ export const IMIKOTOBA = [
   ["忙しい", "多用", "The kanji 忙 contains 亡, 'to perish'."],
   ["終わる", "結ぶ", "Words for ending are avoided in a celebratory message."],
   ["落ちる・倒れる", "leave the sentence out", "Words about falling or collapsing are unlucky on a New Year card."],
+  ["病む", "leave the sentence out", "Words about illness are inauspicious on a card meant to wish for good health."],
   ["、。 (punctuation)", "a space or a line break", "Nengajo are traditionally written without full stops, which suggest an ending."],
 ];
 
@@ -378,13 +379,18 @@ export const MAX_YEAR = 2100;
 /**
  * Japanese era year for 1 January of a Gregorian year.
  * 1 January 2019 was still Heisei 31 because Reiwa began on 1 May 2019.
+ * 1 January 1989 was still Showa 64: Emperor Showa died 7 January 1989 and
+ * Heisei only began the next day, so New Year's Day 1989 predates Heisei.
  */
 export function japaneseEraYear(year) {
   if (!Number.isInteger(year)) return null;
   if (year >= 2020 && year <= MAX_YEAR) {
     return { era: "令和", eraRomaji: "Reiwa", eraYear: year - 2018 };
   }
-  if (year >= 1989 && year <= 2019) {
+  if (year === 1989) {
+    return { era: "昭和", eraRomaji: "Showa", eraYear: 64 };
+  }
+  if (year >= 1990 && year <= 2019) {
     return { era: "平成", eraRomaji: "Heisei", eraYear: year - 1988 };
   }
   return null;
@@ -473,7 +479,7 @@ export function nextSeed(seed) {
   return (current * 1664525 + 1013904223) % 2147483647 || 1;
 }
 
-function cleanName(raw) {
+export function cleanName(raw) {
   if (raw === undefined || raw === null) return "";
   return String(raw).replace(/\s+/g, " ").trim();
 }

@@ -18241,7 +18241,7 @@ export const toolMetaMap = {
   },
   "meeting-notes-prompt-builder": {
     "name": "Meeting Notes Prompt Builder",
-    "description": "Scan raw meeting notes for decisions, actions, owners and due dates, then build a prompt that fills the gaps it found.",
+    "description": "Scan raw meeting notes for decisions, actions, owners and due dates, then build a prompt that flags the gaps it found instead of inventing them.",
     "category": "Productivity",
     "icon": "clipboard-list",
     "iconColor": "text-[var(--primary)]"

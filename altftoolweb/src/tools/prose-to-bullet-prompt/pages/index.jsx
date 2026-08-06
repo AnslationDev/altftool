@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, List, RotateCcw } from "lucide-react";
-import { BULLET_STYLES, MAX_WORDS_PER_BULLET, ORDERINGS, buildProseToBulletPrompt } from "../lib";
+import { BULLET_STYLES, MAX_BULLETS, ORDERINGS, buildProseToBulletPrompt } from "../lib";
 
 const DEFAULT_PROSE = `The migration moved the billing service onto a managed queue over four weeks. Latency at the ninety-fifth percentile fell from 840 milliseconds to 210 milliseconds, measured across production traffic rather than a synthetic benchmark. Two incidents occurred during the rollout, both traced to stale configuration rather than the queue itself. The runbook was rewritten and handed to the on-call rota before the final cutover.`;
 
@@ -93,7 +93,7 @@ export default function ToolHome() {
       "Words per bullet",
       failed
         ? DASH
-        : `${result.actualWordsPerBullet}${result.wordsPerBulletOverMax ? ` (above the ${MAX_WORDS_PER_BULLET}-word guideline)` : ""}`,
+        : `${result.actualWordsPerBullet}${result.bulletCountCapped ? ` (overriding your ${form.wordsPerBullet}-word setting — capped at ${MAX_BULLETS} bullets)` : ""}`,
     ],
     ["Prompt length", failed ? DASH : `${result.promptWordCount} words · ~${result.tokenEstimate} tokens`],
   ];

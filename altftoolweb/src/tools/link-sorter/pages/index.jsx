@@ -1,27 +1,37 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Copy, ExternalLink, Link as LinkIcon, Check, RefreshCw, Trash2 } from 'lucide-react';
 import { Button } from '@/shared/ui/Button';
+import { useCopyToClipboard } from '@/hooks/useCopyToClipboard';
 import Features from '../components/Features';
 
 export default function ToolHome() {
   const [longUrl, setLongUrl] = useState('');
   const [shortUrl, setShortUrl] = useState('');
+  const [originalUrl, setOriginalUrl] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const [copiedId, setCopiedId] = useState(null);
   const [recentUrls, setRecentUrls] = useState([]);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
+  const abortControllerRef = useRef(null);
 
   const normalizeUrl = (url) => {
     const trimmed = url.trim();
-    if (!trimmed) return null;
-    if (/^https?:\/\//i.test(trimmed)) return trimmed;
-    if (!trimmed.includes(' ') && trimmed.includes('.')) {
-      return 'https://' + trimmed;
+    if (!trimmed || trimmed.includes(' ')) return null;
+
+    // Anything that looks like `scheme:...` (mailto:, tel:, ftp:, etc.) is only
+    // acceptable when the scheme is http/https - other schemes are rejected
+    // outright instead of getting a nonsensical "https://" prepended to them.
+    const schemeMatch = trimmed.match(/^([a-z][a-z0-9+-]*):/i);
+    if (schemeMatch) {
+      const scheme = schemeMatch[1].toLowerCase();
+      if (scheme !== 'http' && scheme !== 'https') return null;
+      const rest = trimmed.slice(schemeMatch[0].length).replace(/^\/\//, '');
+      return rest.includes('.') ? trimmed : null;
     }
-    return null;
+
+    return trimmed.includes('.') ? 'https://' + trimmed : null;
   };
 
   const handleSubmit = async (e) => {
@@ -33,9 +43,16 @@ export default function ToolHome() {
       return;
     }
 
+    // Cancel any still-in-flight request before starting a new one, and let
+    // Clear cancel this one too so a resolved response can never resurrect a
+    // result the user already dismissed.
+    if (abortControllerRef.current) abortControllerRef.current.abort();
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     setLoading(true);
     setError('');
-    setCopied(false);
+    resetCopyState();
     setShortUrl('');
 
     const trimmed = normalized;
@@ -44,7 +61,8 @@ export default function ToolHome() {
       const response = await fetch(`https://cleanuri.com/api/v1/shorten`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: `url=${encodeURIComponent(trimmed)}`
+        body: `url=${encodeURIComponent(trimmed)}`,
+        signal: controller.signal
       });
 
       const data = await response.json();
@@ -54,7 +72,12 @@ export default function ToolHome() {
       }
 
       const shortened = data.result_url;
+      if (typeof shortened !== 'string' || !shortened.startsWith('http')) {
+        throw new Error('Invalid response');
+      }
+
       setShortUrl(shortened);
+      setOriginalUrl(trimmed);
 
       setRecentUrls(prev => [
         {
@@ -66,13 +89,17 @@ export default function ToolHome() {
         ...prev.slice(0, 4)
       ]);
     } catch (err) {
+      if (err.name === 'AbortError') return;
       try {
-        const res = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(trimmed)}`);
+        const res = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(trimmed)}`, {
+          signal: controller.signal
+        });
         if (!res.ok) throw new Error('something went wrong');
         const tiny = await res.text();
         if (!tiny.startsWith('https://')) throw new Error('Invalid response');
 
         setShortUrl(tiny);
+        setOriginalUrl(trimmed);
         setRecentUrls(prev => [
           {
             original: trimmed,
@@ -82,31 +109,32 @@ export default function ToolHome() {
           },
           ...prev.slice(0, 4)
         ]);
-      } catch {
+      } catch (fallbackErr) {
+        if (fallbackErr.name === 'AbortError') return;
         setError('Could not shorten URL. Please check your internet connection and try again.');
       }
     } finally {
-      setLoading(false);
+      if (abortControllerRef.current === controller) {
+        setLoading(false);
+      }
     }
   };
 
   const handleCopy = (url, id = 'main') => {
-    navigator.clipboard.writeText(url).then(() => {
-      if (id === 'main') {
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      } else {
-        setCopiedId(id);
-        setTimeout(() => setCopiedId(null), 2000);
-      }
-    });
+    copy(id, url, { label: 'shortened URL' });
   };
 
   const handleClear = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
     setLongUrl('');
     setShortUrl('');
+    setOriginalUrl('');
     setError('');
-    setCopied(false);
+    resetCopyState();
+    setLoading(false);
   };
 
   return (
@@ -122,13 +150,14 @@ export default function ToolHome() {
         {/* Main Card */}
         <div className="bg-(--card) rounded-2xl p-4 sm:p-6 md:p-8 mb-6">
           <form onSubmit={handleSubmit}>
-            <label className="block text-sm font-medium text-(--foreground) mb-2 tag tracking-widest subheading">
+            <label htmlFor="link-sorter-url" className="block text-sm font-medium text-(--foreground) mb-2 tag tracking-widest subheading">
               Enter Your URL
             </label>
 
             {/* Input + Buttons: stacked on mobile, row on sm+ */}
             <div className="flex flex-col gap-3 mb-3">
               <input
+                id="link-sorter-url"
                 type="text"
                 value={longUrl}
                 onChange={(e) => { setLongUrl(e.target.value); setError(''); }}
@@ -160,7 +189,7 @@ export default function ToolHome() {
             </div>
 
             {error && (
-              <div className="mt-3 text-red-400 text-sm bg-red-500/10 border border-red-500/20 px-4 py-3 rounded-lg fade-in">
+              <div role="alert" className="mt-3 text-red-400 text-sm bg-red-500/10 border border-red-500/20 px-4 py-3 rounded-lg fade-in">
                 ⚠️ {error}
               </div>
             )}
@@ -168,7 +197,7 @@ export default function ToolHome() {
 
           {/* Result */}
           {shortUrl && (
-            <div className="mt-6 fade-in">
+            <div className="mt-6 fade-in" aria-live="polite" role="status">
               <div className="bg-(--background) border border-indigo-500/30 rounded-xl p-4">
                 {/* Result header: label + action buttons */}
                 <div className="flex flex-col gap-3 mb-3">
@@ -176,9 +205,10 @@ export default function ToolHome() {
                   <div className="flex gap-2 w-full">
                     <button
                       onClick={() => handleCopy(shortUrl)}
+                      aria-label={isCopied('main') ? 'Copied the shortened URL to clipboard' : 'Copy shortened URL'}
                       className="flex items-center justify-center gap-1.5 px-3 py-2 flex-1 bg-gray-300 text-gray-800 rounded-lg text-sm font-medium transition-colors hover:bg-gray-400"
                     >
-                      {copied
+                      {isCopied('main')
                         ? <><Check className="w-3.5 h-3.5 shrink-0" /> <span>Copied!</span></>
                         : <><Copy className="w-3.5 h-3.5 shrink-0" /> <span>Copy</span></>
                       }
@@ -204,11 +234,14 @@ export default function ToolHome() {
                   {shortUrl}
                 </a>
                 <p className="text-slate-500 text-xs mt-2 break-all">
-                  Original: {longUrl.trim()}
+                  Original: {originalUrl}
                 </p>
               </div>
             </div>
           )}
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
 
         {/* History */}
@@ -217,8 +250,9 @@ export default function ToolHome() {
             <div className="flex justify-between items-center mb-4">
               <h2 className="subheading">Recent URLs</h2>
               <Button
+                variant="danger"
                 onClick={() => setRecentUrls([])}
-                className="flex cursor-pointer items-center gap-1.5 text-red-400 hover:text-red-400 text-sm font-medium transition-colors bg-white shrink-0"
+                className="flex cursor-pointer items-center gap-1.5 shrink-0"
               >
                 <Trash2 className="w-3.5 h-3.5" /> Clear all
               </Button>
@@ -251,10 +285,11 @@ export default function ToolHome() {
                     <div className="flex items-center gap-1">
                       <button
                         onClick={() => handleCopy(url.shortened, url.id)}
+                        aria-label={isCopied(url.id) ? 'Copied shortened URL to clipboard' : 'Copy shortened URL'}
                         className="text-(--foreground) transition-colors p-1.5 rounded-lg hover:bg-white/10 cursor-pointer"
                         title="Copy"
                       >
-                        {copiedId === url.id
+                        {isCopied(url.id)
                           ? <Check className="w-4 h-4 text-emerald-400" />
                           : <Copy className="w-4 h-4" />
                         }
