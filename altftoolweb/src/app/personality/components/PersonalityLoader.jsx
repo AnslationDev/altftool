@@ -149,7 +149,7 @@ px-2 font-normal max-w-[520px] leading-[1.8]">
                     {/* Footer */}
                     <div className="mt-12 flex items-center justify-center gap-2 text-(--muted-foreground) text-sm md:text-base">
                         <ShieldCheck className="w-5 h-5 text-(--primary)" />
-                        <span>Secure • Private • Confidential</span>
+                        <span>Answer choices stay in this browser</span>
                     </div>
                 </div>
             </div>

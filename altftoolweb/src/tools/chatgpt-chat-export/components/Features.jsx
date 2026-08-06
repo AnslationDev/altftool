@@ -9,22 +9,10 @@ import {
   Palette,
   BarChart3,
   Shield,
-  MessageSquare,
   Code,
-  FileText,
   Table2,
-  Image,
-  Link2,
-  Clock,
-  Bookmark,
-  Trash2,
-  Merge,
-  Split,
-  PenLine,
-  Star,
   Settings2,
   Printer,
-  Share2,
   Clipboard,
   History,
   Zap,
@@ -65,7 +53,7 @@ const features = [
   {
     icon: Code,
     title: "Syntax Highlighting",
-    description: "Beautiful code blocks with syntax highlighting for 25+ languages.",
+    description: "Beautiful code blocks with 25 syntax labels covering popular code and markup formats.",
   },
   {
     icon: BarChart3,
@@ -75,7 +63,7 @@ const features = [
   {
     icon: Settings2,
     title: "Full Customization",
-    description: "Font size, font family, line height, avatar visibility, and page breaks.",
+    description: "Font size, font family, line height, avatar visibility, and PDF page options.",
   },
   {
     icon: Printer,
@@ -89,23 +77,13 @@ const features = [
   },
   {
     icon: History,
-    title: "Local Storage",
-    description: "Recent files, history, favorites, and settings are saved locally.",
+    title: "Local Import Summaries",
+    description: "Viewer and PDF options plus recent titles, dates, and message counts are saved locally; chat content is not retained.",
   },
   {
     icon: Table2,
     title: "Table Support",
-    description: "Preserve and render tables from your ChatGPT conversations.",
-  },
-  {
-    icon: Image,
-    title: "Image Support",
-    description: "Display images embedded in conversations.",
-  },
-  {
-    icon: Link2,
-    title: "Link Preservation",
-    description: "Keep all links intact in your exported documents.",
+    description: "Detect Markdown tables for the viewer and structured DOCX, Markdown, and HTML exports.",
   },
   {
     icon: Zap,
@@ -114,13 +92,13 @@ const features = [
   },
   {
     icon: Shield,
-    title: "100% Private",
-    description: "Your conversations never leave your device. Zero data collection.",
+    title: "Local Conversation Processing",
+    description: "The tool reads and exports conversation content in your browser without uploading it to AltFTool.",
   },
   {
     icon: Sparkles,
-    title: "Premium Quality",
-    description: "Production-ready exports with professional formatting.",
+    title: "Readable Output",
+    description: "Choose presentation-oriented or data-oriented formats for the way you plan to use the conversation.",
   },
 ];
 
@@ -142,9 +120,9 @@ export default function Features() {
             return (
               <div
                 key={i}
-                className="group rounded-xl border border-[--border] bg-[--surface] p-4 transition-all hover:border-primary/30 hover:shadow-md"
+                className="group rounded-xl border border-[--border] bg-[--surface] p-4 transition-all hover:border-primary/30 hover:shadow-[var(--anslation-ds-shadow-md)]"
               >
-                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary group-hover:text-(--primary-foreground)">
                   <Icon className="h-5 w-5" />
                 </div>
                 <h3 className="text-sm font-semibold text-[--foreground]">

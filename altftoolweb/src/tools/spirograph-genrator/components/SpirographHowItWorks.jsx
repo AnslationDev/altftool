@@ -5,7 +5,7 @@ export default function SpirographHowItWorks() {
         {
             num: "1",
             title: "Choose a Pattern",
-            desc: "Start by selecting from 20+ presets or customize parameters like radius, loops, and pen distance to create your unique spirograph."
+            desc: "Start by selecting from 20 presets or customize parameters like radius, loops, and pen distance to create your unique spirograph."
         },
         {
             num: "2",

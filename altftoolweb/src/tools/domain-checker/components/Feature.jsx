@@ -28,9 +28,9 @@ const Features = () => {
         "Enter your domain name easily and get results with a clean, simple, and responsive design.",
     },
     {
-      title: "Secure & Private Search",
+      title: "Sent Only to Cloudflare DNS",
       description:
-        "Your domain searches are not stored or tracked. Browse safely and confidently.",
+        "The domain you type goes over HTTPS to Cloudflare's public DNS resolver, which runs the lookup. Nothing is sent to an AltFTool server and the search is not saved on this page.",
     },
   ];
 

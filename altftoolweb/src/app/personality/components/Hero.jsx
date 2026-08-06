@@ -67,7 +67,7 @@ export default function Hero() {
           <Sparkles className="w-5 h-5 text-[var(--primary)]" />
 
           <span className="text-[13px] sm:text-[14px] md:text-[15px]">
-            Discover Your Real Personality
+            Four-Trait Self-Reflection
           </span>
         </div>
         <div className="section-header px-4 sm:px-6 lg:px-0 ">
@@ -75,21 +75,20 @@ export default function Hero() {
             {/*
               The {" "} entries are load-bearing. <br /> adds nothing to
               textContent and JSX drops the surrounding newlines, so this H1
-              extracted as "Understand Yourself BetterWith Scientifically
-              InspiredPersonality Tests" — the exact string /personality serves
-              today. Whitespace before a line break collapses, so the three
-              rendered lines are unchanged.
+              extracted without spaces between its visual lines. Whitespace
+              before each line break keeps the rendered heading readable while
+              preserving the three-line layout.
             */}
-            Understand Yourself Better{" "}
+            Understand Your Answers Better{" "}
             <br />
-            With Scientifically Inspired{" "}
+            With a Simple Four-Question{" "}
             <br />
-            <span className="personality-gradient-text">Personality Tests</span>
+            <span className="personality-gradient-text">Personality Snapshot</span>
           </h1>
 
           <p className="section-subtitle max-w-[520px] sm:max-w-xl">
-            Take insightful personality assessments to uncover your strengths,
-            communication style, career fit, and emotional traits.
+            Answer four self-reflection questions and compare your structure,
+            leadership, social-energy, and planning preferences.
           </p>
         </div>
 
@@ -104,7 +103,7 @@ export default function Hero() {
             <span
               className="text-(--muted-foreground) font-semibold "
             >
-              Takes - 60 seconds
+              4 short questions
             </span>
           </div>
 

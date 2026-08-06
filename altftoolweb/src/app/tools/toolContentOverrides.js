@@ -254,42 +254,6 @@ export const toolContentOverrides = {
       ]
     ]
   },
-  "link-sorter": {
-    "intro": "Link Sorter cleans up a messy list of URLs — sorting them alphabetically, removing duplicates, and tidying the formatting so you can paste a long, jumbled list and get an organised one back. Great for research, outreach lists and bookmarks.",
-    "useCases": [
-      "De-duplicate and sort a long list of research links.",
-      "Clean an outreach or backlink URL list before import.",
-      "Organise exported bookmarks into a tidy list."
-    ],
-    "benefits": [
-      [
-        "Sort & de-dupe",
-        "Alphabetise and remove repeated URLs in one go."
-      ],
-      [
-        "Handles big lists",
-        "Paste hundreds of links at once."
-      ],
-      [
-        "Browser-only",
-        "Your links are processed locally, not uploaded."
-      ]
-    ],
-    "faqs": [
-      [
-        "Can it remove duplicate links?",
-        "Yes — duplicates are detected and removed while sorting."
-      ],
-      [
-        "How many links can I paste?",
-        "It comfortably handles long lists of hundreds of URLs."
-      ],
-      [
-        "Are my links uploaded?",
-        "No, sorting runs entirely in your browser."
-      ]
-    ]
-  },
   "emoji-hub": {
     "intro": "Emoji Hub is a fast, searchable library of emojis you can browse by category and copy with a single click. Find the right emoji for a message, post or document without hunting through your keyboard picker.",
     "useCases": [
@@ -5150,7 +5114,7 @@ export const toolContentOverrides = {
       ],
       [
         "Support for Multiple Object Categories",
-        "With over 90 supported object categories, the AI Object Counter can handle a wide range of detection tasks"
+        "With 80 supported object categories, the AI Object Counter can handle a wide range of detection tasks"
       ],
       [
         "Confidence Scoring and Visualization",

@@ -11,8 +11,8 @@ const ClockGrid = ({ selectedTimezones, onRemoveTimezone, hour12 = true }) => {
           <h2 className="heading">⏰ No Clocks Added Yet</h2>
 
           <p className="description">
-            Use the search bar above to add countries or cities to track their
-            local time.
+            Use the search bar above to add IANA city or region zones and track
+            their local time.
           </p>
         </div>
       </section>

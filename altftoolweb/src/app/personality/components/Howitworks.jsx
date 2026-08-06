@@ -3,30 +3,23 @@
 import Image from "next/image";
 
 import { ClipboardList, Brain, ChartNoAxesColumn } from "lucide-react";
+// Same array the page's HowTo JSON-LD is built from (see ../page.jsx). Only
+// the icon is held here — it is presentation, not step content.
+import {
+  HOW_IT_WORKS_HEADING,
+  HOW_IT_WORKS_STEPS,
+} from "../data/pageContent";
 
-const steps = [
-  {
-    num: "01",
-    title: "Answer Questions",
-    desc: "Respond to carefully designed personality-based scenarios in just a few minutes.",
-    imgSrc: "/personality/how-it-works/Answer.png",
-    icon: <ClipboardList />,
-  },
-  {
-    num: "02",
-    title: "AI-Powered Analysis",
-    desc: "Our advanced system analyzes your responses, behavioral patterns and emotional traits.",
-    imgSrc: "/personality/how-it-works/Ai.png",
-    icon: <Brain />,
-  },
-  {
-    num: "03",
-    title: "Get Personalized Insights",
-    desc: "Receive detailed personality insights, strengths, and growth recommendations instantly.",
-    imgSrc: "/personality/how-it-works/Get.png",
-    icon: <ChartNoAxesColumn />,
-  },
-];
+const STEP_ICONS = {
+  "01": <ClipboardList />,
+  "02": <Brain />,
+  "03": <ChartNoAxesColumn />,
+};
+
+const steps = HOW_IT_WORKS_STEPS.map((step) => ({
+  ...step,
+  icon: STEP_ICONS[step.num] ?? null,
+}));
 
 export default function HowItWorks() {
   return (
@@ -35,10 +28,10 @@ export default function HowItWorks() {
         {/* Heading */}
         <div className="text-center max-w-4xl mx-auto justify-center items-center mb-10 sm:mb-12 lg:mb-14">
           <h2 className="section-title max-w-2xl mx-auto text-center" >
-            Discover Your Personality In Just Easy 3 Steps
+            {HOW_IT_WORKS_HEADING}
           </h2>
           <p className="section-subtitle max-w-xl  text-center" >
-            Our science-backed assessments and advanced AI deliver deep insights in just a few simple steps.
+            A lightweight browser-based reflection turns four answers into four transparent scores.
           </p>
         </div>
 

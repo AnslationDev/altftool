@@ -11,7 +11,7 @@ const TOPIC_CATEGORIES = [
     text: 'home decor idea',
     accentColor: '#0D9488', // Teal Accent
     bgGradient: 'from-teal-500/10 via-white to-gray-50 dark:from-teal-950/40 dark:via-zinc-950 dark:to-black',
-    badge: 'Trending Interior Design',
+    badge: 'Interior Design',
     images: [
       '/pins/Campfire comfort.webp',
       '/pins/Full Moon Tea Towels (cotton, Poly) - Etsy Canada.jpg',
@@ -340,7 +340,7 @@ export default function HeroSection({ onExplore }) {
                 <div className="relative w-72 sm:w-96 rounded-3xl overflow-hidden shadow-2xl border-4 border-gray-200 dark:border-white/20 bg-white dark:bg-zinc-900 group transform-gpu hover:scale-105 transition-transform duration-500">
                   <img
                     src="/pins/MIDJOURNEY promt Eye.webp"
-                    alt="Pinterest Featured Pin"
+                    alt="Featured generative-art visual"
                     className="w-full h-[450px] object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-6 flex flex-col justify-end">
@@ -348,7 +348,7 @@ export default function HeroSection({ onExplore }) {
                       Spotlight Collection
                     </span>
                     <h3 className="text-xl font-bold text-white">Generative Art & Visual Prompts</h3>
-                    <p className="text-xs text-gray-200 mt-1">Curated by top global creators on AltPinterest.</p>
+                    <p className="text-xs text-gray-200 mt-1">A curated collection of generative-art prompts and visual ideas.</p>
                   </div>
                 </div>
               </motion.div>
@@ -373,7 +373,7 @@ export default function HeroSection({ onExplore }) {
                 </h2>
 
                 <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-                  Pinterest is where people explore possibilities, organize inspiration into digital boards, and purchase products that bring their visions to life. From aesthetic living room makeovers to step-by-step coding guides, discover it all in one unified experience.
+                  Browse visual ideas on AltF Pinboard, save favorites locally on this device, and download available images for personal inspiration.
                 </p>
 
                 <div className="pt-4 flex flex-wrap gap-4">
@@ -381,7 +381,7 @@ export default function HeroSection({ onExplore }) {
                     onClick={() => onExplore('')}
                     className="px-8 py-4 rounded-full bg-[#0D9488] hover:bg-teal-700 text-white font-extrabold text-base shadow-xl shadow-teal-500/20 hover:scale-105 transition-all flex items-center gap-3 cursor-pointer"
                   >
-                    <span>Browse All Live Pins</span>
+                    <span>Browse All Pins</span>
                     <ArrowRight size={20} />
                   </button>
 

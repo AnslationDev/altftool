@@ -17,17 +17,17 @@ const stats = [
   },
   {
     value: "Free",
-    label: "Every test, always",
+    label: "This reflection",
     icon: BarChart3,
   },
   {
-    value: "100%",
-    label: "Data Privacy",
+    value: "Local",
+    label: "Answers stay in this browser",
     icon: Lock,
   },
   {
-    value: "Client-side",
-    label: "Nothing sent to a server",
+    value: "Browser storage",
+    label: "Answer choices stay in this browser",
     icon: Globe,
   },
 ];
@@ -39,12 +39,12 @@ export default function Trust() {
         {/* Heading */}
         <div className="text-center mb-10 md:mb-14">
           <h2 className="section-title max-w-[700px] mx-auto mb-4">
-            Trusted, Secure & Loved Worldwide
+            Free, Local Self-Reflection
           </h2>
 
           <p className="section-subtitle max-w-[580px] mx-auto">
-            Free, private personality tests for meaningful self-reflection and
-            personal growth — no account required.
+            A four-question snapshot with transparent local scoring and no
+            account requirement.
           </p>
         </div>
 

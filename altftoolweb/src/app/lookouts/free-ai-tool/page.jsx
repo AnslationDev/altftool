@@ -16,7 +16,7 @@ export async function generateMetadata() {
   return createPageMetadata({
     title: `Free AI Tools – ${TOTAL_TOOLS}+ Best Free AI Tools by Category`,
     description: PAGE_DESCRIPTION,
-    path: "/free-ai-tool",
+    path: "/lookouts/free-ai-tool",
     keywords: [
       "free AI tools",
       "best free AI tools",
@@ -33,9 +33,9 @@ function createFreeAiToolJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "@id": `${absoluteUrl("/free-ai-tool")}#webpage`,
+    "@id": `${absoluteUrl("/lookouts/free-ai-tool")}#webpage`,
     name: "Free AI Tools",
-    url: absoluteUrl("/free-ai-tool"),
+    url: absoluteUrl("/lookouts/free-ai-tool"),
     description: PAGE_DESCRIPTION,
     isPartOf: {
       "@id": `${getSiteUrl()}/#website`,
@@ -50,14 +50,14 @@ function createCategoryListJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "ItemList",
-    "@id": `${absoluteUrl("/free-ai-tool")}#categories`,
+    "@id": `${absoluteUrl("/lookouts/free-ai-tool")}#categories`,
     name: "Free AI Tool Categories",
     numberOfItems: TOOL_CATEGORIES.length,
     itemListElement: TOOL_CATEGORIES.map((category, index) => ({
       "@type": "ListItem",
       position: index + 1,
       name: category.label,
-      url: `${absoluteUrl("/free-ai-tool")}#explore`,
+      url: `${absoluteUrl("/lookouts/free-ai-tool")}#explore`,
     })),
   };
 }
@@ -66,7 +66,7 @@ function createFaqJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
-    "@id": `${absoluteUrl("/free-ai-tool")}#faq`,
+    "@id": `${absoluteUrl("/lookouts/free-ai-tool")}#faq`,
     mainEntity: FAQS.map((faq) => ({
       "@type": "Question",
       name: faq.question,
@@ -89,7 +89,8 @@ export default function FreeAiToolPage() {
           createFaqJsonLd(),
           createBreadcrumbJsonLd([
             { name: siteConfig.name, path: "/" },
-            { name: "Free AI Tools", path: "/free-ai-tool" },
+            { name: "Lookouts", path: "/lookouts" },
+            { name: "Free AI Tools", path: "/lookouts/free-ai-tool" },
           ]),
         ]}
       />

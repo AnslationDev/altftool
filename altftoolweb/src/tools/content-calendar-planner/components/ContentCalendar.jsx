@@ -938,7 +938,7 @@ export default function ContentCalendar() {
 
                     <button
                       type="button"
-                      onClick={() => handleFormRemoveTask(task.id)}
+                      onClick={() => handleRemoveFormTask(task.id)}
                       className="opacity-0 group-hover:opacity-100 text-rose-500 hover:text-rose-400 p-0.5 transition cursor-pointer shrink-0"
                       title="Delete task"
                     >

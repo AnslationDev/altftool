@@ -3,9 +3,9 @@ import { createPageMetadata } from "@/platform/seo/generateMetadata";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "WindowSwap Pricing – Free & All-Access Plans",
+    title: "WindowSwap All-Access Preview – Not Yet Available",
     description:
-      "Compare WindowSwap free viewing with the All-Access plan to unlock search, bookmarks, custom playlists, and ad-free window views.",
+      "Preview possible WindowSwap features. Memberships, billing, waitlists, and creator payouts are not available.",
     path: "/windowswap/pricing",
   });
 }

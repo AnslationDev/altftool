@@ -450,6 +450,13 @@ const nextConfig = {
         hostname: "upload.wikimedia.org",
         pathname: "/**",
       },
+      {
+        // Festival photo search can return Pexels CDN images. Restrict the
+        // optimizer to that exact HTTPS hostname and path space.
+        protocol: "https",
+        hostname: "images.pexels.com",
+        pathname: "/**",
+      },
 
     ],
   },

@@ -26,6 +26,7 @@ const PdfPreviewTool = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewHD, setPreviewHD] = useState(null);
   const [currentPage, setCurrentPage] = useState(null);
+  const [dragActive, setDragActive] = useState(false);
   const renderPDF = async (file) => {
     setLoading(true);
     setPages([]);
@@ -57,6 +58,25 @@ const PdfPreviewTool = () => {
     }
     setLoading(false);
   };
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setDragActive(true);
+  };
+  const handleDragLeave = (e) => {
+    e.preventDefault();
+    setDragActive(false);
+  };
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragActive(false);
+    const file = e.dataTransfer?.files?.[0];
+    if (!file) return;
+    if (file.type !== "application/pdf" && !/\.pdf$/i.test(file.name)) {
+      alert("Please drop a PDF file.");
+      return;
+    }
+    renderPDF(file);
+  };
   const handleFullPreview = async (pageNum) => {
     if (!pdfInstance) return;
     setCurrentPage(pageNum);
@@ -87,7 +107,12 @@ const PdfPreviewTool = () => {
     {
       /* Upload Section */
     }
-    {pages.length === 0 && !loading && <Card className="p-8 text-center border-2 border-dashed rounded-lg hover:border-primary/50 transition-colors">
+    {pages.length === 0 && !loading && <Card
+      className={`p-8 text-center border-2 border-dashed rounded-lg transition-colors ${dragActive ? "border-primary/50" : "hover:border-primary/50"}`}
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+      onDrop={handleDrop}
+    >
       <FileText className="mx-auto h-12 w-12 text-(--muted-foreground)" />
       <h3 className="mt-4 text-lg font-medium">Drop your PDF here</h3>
       <p className="mt-2 text-sm text-(--muted-foreground)">

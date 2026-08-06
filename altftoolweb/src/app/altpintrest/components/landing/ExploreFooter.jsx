@@ -23,7 +23,7 @@ export default function ExploreFooter({ onExplore }) {
           <button onClick={() => onExplore('Design')} className="hover:text-[#0D9488] transition-colors">UI Design</button>
           <button onClick={() => onExplore('Productivity')} className="hover:text-[#0D9488] transition-colors">Productivity</button>
           <button onClick={() => onExplore('Development')} className="hover:text-[#0D9488] transition-colors">Development</button>
-          <button onClick={() => onExplore()} className="hover:text-[#0D9488] transition-colors font-bold text-[#0D9488]">Live Feed</button>
+          <button onClick={() => onExplore()} className="hover:text-[#0D9488] transition-colors font-bold text-[#0D9488]">Explore Feed</button>
         </div>
 
         {/* Copyright */}

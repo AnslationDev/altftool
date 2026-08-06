@@ -109,12 +109,12 @@
       {
         "id": 3,
         "question": "Are the deals and offers updated regularly?",
-        "answer": "Yes, deals are updated frequently to make sure you always see the latest flash sales, seasonal discounts, and active store promotions."
+        "answer": "Deals are requested when the page loads and when you search. Results come from third-party providers and merchants, so availability and freshness can change; verify the final price and promotion on the merchant page."
       },
       {
         "id": 4,
         "question": "Do I need to create an account to use Sale Locator?",
-        "answer": "No, you can browse sales and explore offers without creating an account. Subscribing with email helps you receive deal alerts."
+        "answer": "No, you can browse sales and explore offers without creating an account. The deal-alert form is a coming-soon preview and does not collect or submit an email address."
       },
       {
         "id": 5,

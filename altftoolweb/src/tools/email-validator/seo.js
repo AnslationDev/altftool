@@ -51,7 +51,7 @@ const seo = {
     ],
     [
       "is my email list uploaded to a server?",
-      "The addresses themselves are not. Syntax parsing, scoring, typo detection and CSV generation all run in your browser. The one network request is a DNS-over-HTTPS query to dns.google that contains only the domain part — the name before the @ never leaves your device. No account or signup is required.",
+      "The addresses themselves are not. Syntax parsing, scoring, typo detection and CSV generation all run in your browser. The only requests are DNS-over-HTTPS queries to dns.google — three per address, for MX, A and AAAA records — and each one carries just the domain part, so the name before the @ never leaves your device. Validating a 100-address list therefore shows Google Public DNS every distinct domain in that list, but none of the mailboxes. No account or signup is required.",
     ],
     [
       "why does it say \"possible typo\" on my domain?",

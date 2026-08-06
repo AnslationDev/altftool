@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import { X, Upload, CheckCircle2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import confetti from "canvas-confetti";
 import "../style/SubmitDrawer.css";
 
 export default function SubmitDrawer({ isOpen, onClose }) {
@@ -12,45 +11,51 @@ export default function SubmitDrawer({ isOpen, onClose }) {
   const [submitUrl, setSubmitUrl] = useState("");
   const [submitNotes, setSubmitNotes] = useState("");
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+  const [saveError, setSaveError] = useState("");
+
+  const resetDraft = () => {
+    setIsFormSubmitted(false);
+    setSaveError("");
+    setSubmitName("");
+    setSubmitLocation("");
+    setSubmitUrl("");
+    setSubmitNotes("");
+  };
+
+  const closeDrawer = () => {
+    onClose();
+    if (isFormSubmitted) resetDraft();
+  };
 
   const handleSubmitWindow = (e) => {
     e.preventDefault();
     if (!submitName || !submitLocation || !submitUrl) return;
+    setSaveError("");
 
-    // No moderation/review backend exists yet — persist locally instead of
-    // discarding the submission.
+    // There is deliberately no submission or moderation request here. This is
+    // a private browser draft and only counts as saved if localStorage accepts
+    // the write.
     try {
-      const submissions = JSON.parse(window.localStorage.getItem("windowswap_submissions") || "[]");
-      submissions.push({
+      const stored = JSON.parse(
+        window.localStorage.getItem("windowswap_window_drafts") || "[]",
+      );
+      const drafts = Array.isArray(stored) ? stored : [];
+      drafts.push({
         name: submitName,
         location: submitLocation,
         url: submitUrl,
         notes: submitNotes,
-        submittedAt: new Date().toISOString(),
+        savedAt: new Date().toISOString(),
       });
-      window.localStorage.setItem("windowswap_submissions", JSON.stringify(submissions));
+      window.localStorage.setItem("windowswap_window_drafts", JSON.stringify(drafts));
     } catch {
-      // localStorage can be unavailable in private browsing; UI still succeeds.
+      setSaveError(
+        "This browser blocked local storage, so the draft was not saved. Nothing was sent anywhere.",
+      );
+      return;
     }
 
     setIsFormSubmitted(true);
-
-    // Burst beautiful confetti
-    confetti({
-      particleCount: 120,
-      spread: 70,
-      origin: { y: 0.6 }
-    });
-
-    // Reset drawer state after brief delay
-    setTimeout(() => {
-      onClose();
-      setIsFormSubmitted(false);
-      setSubmitName("");
-      setSubmitLocation("");
-      setSubmitUrl("");
-      setSubmitNotes("");
-    }, 3500);
   };
 
   return (
@@ -63,7 +68,7 @@ export default function SubmitDrawer({ isOpen, onClose }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={onClose}
+            onClick={closeDrawer}
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
           />
 
@@ -80,10 +85,11 @@ export default function SubmitDrawer({ isOpen, onClose }) {
             <div className="windowswap-submit-header flex items-center justify-between pb-6 border-b border-teal-950">
               <div className="flex items-center gap-2">
                 <Upload className="h-5 w-5 text-windowswap-cream" />
-                <span className="font-serif text-xl font-bold tracking-wide">Submit a window</span>
+                <span className="font-serif text-xl font-bold tracking-wide">Window draft</span>
               </div>
               <button
-                onClick={onClose}
+                onClick={closeDrawer}
+                aria-label="Close window draft"
                 className="text-zinc-400 hover:text-white p-2 hover:bg-white/5 rounded-full transition cursor-pointer"
               >
                 <X className="h-5 w-5" />
@@ -93,6 +99,15 @@ export default function SubmitDrawer({ isOpen, onClose }) {
             {/* Form state coordination */}
             {!isFormSubmitted ? (
               <form onSubmit={handleSubmitWindow} className="windowswap-submit-form mt-8 flex-1 flex flex-col gap-6 text-sm">
+
+                <div className="rounded-xl border border-border bg-surface-soft p-4 text-sm leading-relaxed text-foreground">
+                  <p className="font-semibold">Local draft only</p>
+                  <p className="mt-1 text-muted-foreground">
+                    Saving this form writes a private draft to this browser. It
+                    does not upload the video, contact AltFTool, or enter a
+                    review queue.
+                  </p>
+                </div>
 
                 <div className="flex flex-col gap-1.5">
                   <label className="text-windowswap-cream font-semibold tracking-wider uppercase text-[10px]">Your Name</label>
@@ -119,7 +134,7 @@ export default function SubmitDrawer({ isOpen, onClose }) {
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-windowswap-cream font-semibold tracking-wider uppercase text-[10px]">Raw Video URL (GDrive/Vimeo/Dropbox)</label>
+                  <label className="text-windowswap-cream font-semibold tracking-wider uppercase text-[10px]">Video URL for this draft</label>
                   <input
                     type="url"
                     required
@@ -142,17 +157,23 @@ export default function SubmitDrawer({ isOpen, onClose }) {
                 </div>
 
                 <div className="bg-black/35 rounded-2xl p-4 border border-teal-950/30 text-xs text-zinc-300 leading-relaxed font-light mt-2">
-                  <span className="font-semibold text-white uppercase tracking-wider text-[9px] block mb-1">submission checklist</span>
+                  <span className="font-semibold text-white uppercase tracking-wider text-[9px] block mb-1">Suggested recording notes</span>
                   • Horizontal video, locked camera position (tripod is required).<br />
                   • Exactly 10 minutes long, showing window frame boundaries.<br />
                   • Sound: Keep native ambient noise (birds, wind, city traffic).
                 </div>
 
+                {saveError ? (
+                  <p role="alert" className="rounded-xl border border-danger bg-danger-soft p-3 text-sm text-foreground">
+                    {saveError}
+                  </p>
+                ) : null}
+
                 <button
                   type="submit"
                   className="w-full windowswap-primary-button py-4 rounded-xl font-bold tracking-wider uppercase transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] mt-auto flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  Submit Window View
+                  Save Draft in This Browser
                 </button>
 
               </form>
@@ -162,11 +183,27 @@ export default function SubmitDrawer({ isOpen, onClose }) {
                 animate={{ opacity: 1, scale: 1 }}
                 className="flex-1 flex flex-col items-center justify-center text-center p-6"
               >
-                <CheckCircle2 className="h-16 w-16 text-emerald-400 mb-4 animate-bounce" />
-                <h3 className="font-serif text-2xl font-bold text-white mb-2">Thank you, {submitName}!</h3>
+                <CheckCircle2 className="h-16 w-16 text-success mb-4" />
+                <h3 className="font-serif text-2xl font-bold text-white mb-2">Draft saved on this device</h3>
                 <p className="text-zinc-300 leading-relaxed font-light text-sm max-w-sm">
-                  This is a demonstration copy: your scenic window view from <span className="font-semibold text-white">{submitLocation}</span> has been saved only in this browser&rsquo;s local storage. It hasn&rsquo;t been sent to AltFTool or anyone else, so there&rsquo;s nothing yet for us to review.
+                  {submitName}, your private draft for <span className="font-semibold text-white">{submitLocation}</span> is stored only in this browser. It has not been sent to AltFTool or anyone else, and there is no review or follow-up.
                 </p>
+                <div className="mt-6 flex flex-wrap justify-center gap-3">
+                  <button
+                    type="button"
+                    onClick={resetDraft}
+                    className="windowswap-secondary-button rounded-full px-5 py-2.5 text-xs font-semibold"
+                  >
+                    Save another local draft
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closeDrawer}
+                    className="windowswap-primary-button rounded-full px-5 py-2.5 text-xs font-semibold"
+                  >
+                    Done
+                  </button>
+                </div>
               </motion.div>
             )}
 

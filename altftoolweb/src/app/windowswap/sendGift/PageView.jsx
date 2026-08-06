@@ -16,7 +16,7 @@ export default function SendGiftPage() {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [saveError, setSaveError] = useState("");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -29,26 +29,21 @@ export default function SendGiftPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSaveError("");
     if (!formData.senderName || !formData.senderEmail || !formData.recipientName || !formData.recipientEmail) {
-      alert("Please fill in all required fields.");
+      setSaveError("Please fill in all required fields.");
       return;
     }
 
-    // No payment or gift-delivery backend exists yet — save the request
-    // locally instead of claiming a purchase and an email delivery that
-    // never happen.
-    setLoading(true);
-    setTimeout(() => {
-      try {
-        const requests = JSON.parse(window.localStorage.getItem("windowswap_gift_requests") || "[]");
-        requests.push({ ...formData, requestedAt: new Date().toISOString() });
-        window.localStorage.setItem("windowswap_gift_requests", JSON.stringify(requests));
-      } catch {
-        // localStorage can be unavailable in private browsing; UI still succeeds.
-      }
-      setLoading(false);
+    try {
+      const storedDrafts = JSON.parse(window.localStorage.getItem("windowswap_gift_drafts") || "[]");
+      const drafts = Array.isArray(storedDrafts) ? storedDrafts : [];
+      drafts.push({ ...formData, savedAt: new Date().toISOString() });
+      window.localStorage.setItem("windowswap_gift_drafts", JSON.stringify(drafts));
       setIsSubmitted(true);
-    }, 800);
+    } catch {
+      setSaveError("This browser could not save the draft. Check local-storage permissions and try again.");
+    }
   };
 
   return (
@@ -114,25 +109,25 @@ export default function SendGiftPage() {
                 The classes carry the size, so nothing changes visually.
               */}
               <h1 className="font-serif text-3xl font-bold leading-tight mb-4 text-white">
-                Gift WindowSwap
+                Gift Draft Preview
               </h1>
               <p className="text-sm text-white/90 font-light leading-relaxed max-w-xs">
-                Share infinite travel, slow rain over Tokyo, snowy mountains in Oslo, and beautiful gardens in Edinburgh with someone special.
+                Plan a WindowSwap gift idea privately. No subscription, purchase, email, or gift delivery is available.
               </p>
             </div>
 
             <div className="relative z-10 mt-8 space-y-4 text-xs font-semibold text-white/80">
               <div className="flex items-center gap-3">
                 <Sparkles className="h-4 w-4 text-windowswap-cream shrink-0" />
-                <span>Unlimited bookmarks & playlists</span>
+                <span>Saved only in this browser</span>
               </div>
               <div className="flex items-center gap-3">
                 <Gift className="h-4 w-4 text-windowswap-cream shrink-0" />
-                <span>Custom gift email & message</span>
+                <span>No email is sent</span>
               </div>
               <div className="flex items-center gap-3">
                 <CheckCircle2 className="h-4 w-4 text-windowswap-cream shrink-0" />
-                <span>Zero commercials, ever</span>
+                <span>No payment or subscription</span>
               </div>
             </div>
           </div>
@@ -143,10 +138,10 @@ export default function SendGiftPage() {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="space-y-1">
                   <h3 className="font-serif text-2xl font-semibold text-white">
-                    Send All-Access Gift
+                    Save a Local Gift Draft
                   </h3>
                   <p className="text-xs text-windowswap-cream/70">
-                    Gift subscriptions aren&rsquo;t live yet — tell us who you&rsquo;d gift and we&rsquo;ll reach out when it launches.
+                    This form only stores a private draft on this device. AltFTool and the recipient are not contacted.
                   </p>
                 </div>
 
@@ -208,7 +203,7 @@ export default function SendGiftPage() {
 
                 {/* GIFT PLAN RADIO */}
                 <div className="space-y-2">
-                  <label className="text-[10px] tracking-wider uppercase font-bold text-windowswap-cream/80">Choose Subscription Tier</label>
+                  <label className="text-[10px] tracking-wider uppercase font-bold text-windowswap-cream/80">Choose a concept duration (not available)</label>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
 
                     <button
@@ -220,7 +215,7 @@ export default function SendGiftPage() {
                         }`}
                     >
                       <span className="text-xs font-bold">6 Months</span>
-                      <span className="text-lg font-serif font-semibold mt-1">$15</span>
+                      <span className="text-xs mt-1">Concept only</span>
                     </button>
 
                     <button
@@ -231,9 +226,8 @@ export default function SendGiftPage() {
                           : "border-teal-950/70 bg-[#0b2c30]/40 text-windowswap-cream hover:border-windowswap-cream/35"
                         }`}
                     >
-                      <div className="absolute -top-2.5 px-2 py-0.5 bg-windowswap-terracotta text-[8px] tracking-wider uppercase rounded-full text-white font-bold">Best Value</div>
                       <span className="text-xs font-bold">1 Year</span>
-                      <span className="text-lg font-serif font-semibold mt-1">$25</span>
+                      <span className="text-xs mt-1">Concept only</span>
                     </button>
 
                     <button
@@ -245,7 +239,7 @@ export default function SendGiftPage() {
                         }`}
                     >
                       <span className="text-xs font-bold">Lifetime</span>
-                      <span className="text-lg font-serif font-semibold mt-1">$60</span>
+                      <span className="text-xs mt-1">Concept only</span>
                     </button>
 
                   </div>
@@ -264,19 +258,18 @@ export default function SendGiftPage() {
                   />
                 </div>
 
+                {saveError && (
+                  <p role="alert" className="text-xs text-destructive">
+                    {saveError}
+                  </p>
+                )}
+
                 <button
                   type="submit"
-                  disabled={loading}
-                  className="w-full windowswap-primary-button py-4 rounded-full font-semibold transition hover:scale-101 active:scale-99 text-sm flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="w-full windowswap-primary-button py-4 rounded-full font-semibold transition hover:scale-101 active:scale-99 text-sm flex items-center justify-center gap-2 cursor-pointer"
                 >
-                  {loading ? (
-                    <span className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  ) : (
-                    <>
-                      <Gift className="h-4 w-4" />
-                      Request This Gift
-                    </>
-                  )}
+                  <Gift className="h-4 w-4" />
+                  Save Local Gift Draft
                 </button>
               </form>
             ) : (
@@ -288,25 +281,29 @@ export default function SendGiftPage() {
 
                 <div className="space-y-2">
                   <h3 className="font-serif text-3xl font-bold text-white">
-                    Request Saved!
+                    Local Gift Draft Saved
                   </h3>
                   <p className="text-sm text-windowswap-cream/80 leading-relaxed max-w-sm">
-                    This is a demonstration copy: gift subscriptions are still in development, and this request has been saved only in this browser&rsquo;s local storage. Nothing has been charged, and nothing has been sent to AltFTool or to <span className="text-white font-semibold">{formData.recipientEmail}</span> — there is no follow-up to expect.
+                    The draft is stored only in this browser. Nothing was charged, purchased, or sent to AltFTool or to <span className="text-white font-semibold">{formData.recipientEmail}</span>.
                   </p>
                 </div>
 
                 <div className="bg-[#0b2c30]/40 rounded-2xl p-4 border border-teal-950 text-left w-full max-w-md text-xs space-y-2">
                   <div><span className="text-windowswap-cream/60">Sender:</span> <span className="text-white font-medium">{formData.senderName}</span></div>
                   <div><span className="text-windowswap-cream/60">Recipient:</span> <span className="text-white font-medium">{formData.recipientName} ({formData.recipientEmail})</span></div>
-                  <div><span className="text-windowswap-cream/60">Selected Plan:</span> <span className="text-white font-medium capitalize">{formData.plan === "1year" ? "1 Year All-Access ($25)" : formData.plan === "6months" ? "6 Months All-Access ($15)" : "Lifetime All-Access ($60)"}</span></div>
+                  <div><span className="text-windowswap-cream/60">Concept Duration:</span> <span className="text-white font-medium capitalize">{formData.plan === "1year" ? "1 year concept" : formData.plan === "6months" ? "6 month concept" : "Lifetime concept"}</span></div>
                   {formData.message && <div><span className="text-windowswap-cream/60">Personal Message:</span> <span className="text-white italic">&quot;{formData.message}&quot;</span></div>}
                 </div>
 
                 <button
-                  onClick={() => setIsSubmitted(false)}
+                  type="button"
+                  onClick={() => {
+                    setSaveError("");
+                    setIsSubmitted(false);
+                  }}
                   className="bg-transparent border border-white/20 hover:border-white/50 text-white px-6 py-2.5 rounded-full text-xs font-semibold tracking-wide transition cursor-pointer"
                 >
-                  Send another gift
+                  Create another local draft
                 </button>
               </div>
             )}

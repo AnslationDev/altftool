@@ -194,7 +194,7 @@ export default function QuestionPage() {
                         <ShieldCheck className="w-5 h-5 text-(--primary)" />
 
                         <span className="text-sm md:text-base">
-                            Your responses are private and secure
+                            Your choice is stored in this browser
                         </span>
                     </div>
                 </div>

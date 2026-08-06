@@ -570,7 +570,7 @@ export default function CryptoWalletChecker() {
                 Crypto Wallet Checker
               </h1>
               <p style={{ color: "#484f58", fontSize: 13, marginTop: 4 }}>
-                Validate & identify wallet addresses across 10+ blockchains
+                Validate & identify wallet addresses across 10 blockchains
               </p>
             </div>
           </div>

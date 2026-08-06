@@ -331,16 +331,31 @@ export default function VideoPlayer({
       {showChrome && (
         <div className="windowswap-player-actions absolute bottom-6 right-5 z-20 flex items-center gap-3 text-white">
 
-          <button
-            onClick={() => {
-              onToggleMute();
-              setShowUnmuteHint(false);
-            }}
-            className="h-11 w-11 rounded-full border border-white/40 bg-white/10 backdrop-blur-md text-white flex items-center justify-center transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer"
-            title={isMuted ? "Unmute sound" : "Mute sound"}
-          >
-            {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
-          </button>
+          {isActiveVideoVimeo ? (
+            <div
+              className="h-11 rounded-full border border-white/40 bg-white/10 px-4 backdrop-blur-md text-white/80 flex items-center justify-center gap-2 shadow-md"
+              title="Audio controls are unavailable for this embedded Vimeo view"
+              role="status"
+            >
+              <VolumeX className="h-5 w-5" aria-hidden="true" />
+              <span className="hidden text-xs font-semibold sm:inline">
+                Audio unavailable
+              </span>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => {
+                onToggleMute();
+                setShowUnmuteHint(false);
+              }}
+              className="h-11 w-11 rounded-full border border-white/40 bg-white/10 backdrop-blur-md text-white flex items-center justify-center transition-all hover:scale-105 active:scale-95 shadow-md cursor-pointer"
+              title={isMuted ? "Unmute sound" : "Mute sound"}
+              aria-label={isMuted ? "Unmute sound" : "Mute sound"}
+            >
+              {isMuted ? <VolumeX className="h-5 w-5" /> : <Volume2 className="h-5 w-5" />}
+            </button>
+          )}
 
           <button
             onClick={handleFullscreenToggle}

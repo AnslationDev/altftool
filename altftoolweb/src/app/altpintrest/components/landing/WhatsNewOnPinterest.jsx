@@ -155,10 +155,10 @@ export default function WhatsNewOnPinterest({ onExplorePin, onSelectPin, pinsDat
       <div className="mb-6 sm:mb-8 text-left flex items-center justify-between">
         <div>
           <h2 className="text-4xl sm:text-[44px] lg:text-[48px] font-bold text-[#111111] dark:text-white tracking-tight leading-tight">
-            What's new on Pinterest
+            Visual ideas to explore
           </h2>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Real-time live visual feed powered by community pins
+            Browse this board&rsquo;s available pins and save the ones worth revisiting.
           </p>
         </div>
       </div>

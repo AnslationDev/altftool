@@ -1,13 +1,18 @@
 import { AdsProvider } from '@/ads/AdsProvider';
 import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import {
+    MAKER_STUDIO_DESCRIPTION,
+    MAKER_STUDIO_TITLE,
+    MAKER_STUDIO_TOPICS,
+} from "./seo";
 
 import AltfLauncher from "@/app/_altf/AltfLauncher";
 import "@/app/_altf/altf-brand.css";
 export const metadata = createPageMetadata({
-    title: 'AltF Maker Studio | Creative Generators',
-    description: 'Create vintage newspaper clippings, movie clapper boards, wanted posters, character graphics, and stylized text.',
+    title: MAKER_STUDIO_TITLE,
+    description: MAKER_STUDIO_DESCRIPTION,
     path: '/fodey-new',
-    keywords: ["creative generators", "newspaper generator", "poster maker", "text generator"],
+    keywords: MAKER_STUDIO_TOPICS,
     pageType: "creative-experience",
 });
 

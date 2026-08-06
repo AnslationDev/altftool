@@ -1,5 +1,15 @@
 import PageView from "./PageView";
-import { createPageMetadata } from "@/platform/seo/generateMetadata";
+import JsonLd from "@/platform/seo/JsonLd";
+import {
+  createBreadcrumbJsonLd,
+  createCollectionPageJsonLd,
+  createPageMetadata,
+} from "@/platform/seo/generateMetadata";
+
+// The description is shared with the JSON-LD below so the snippet and the
+// schema cannot drift.
+const DESCRIPTION =
+  "Free quizzes — personality, trivia, love, movies, music and more. Pick one, answer a few questions, get your result. No signup, no app.";
 
 export async function generateMetadata() {
   return createPageMetadata({
@@ -7,8 +17,7 @@ export async function generateMetadata() {
     // The categories are the ones components/NavMenu.jsx actually renders.
     // Nothing here cites a play count or creator because those details are
     // absent unless backed by real data.
-    description:
-      "Free quizzes — personality, trivia, love, movies, music and more. Pick one, answer a few questions, get your result. No signup, no app.",
+    description: DESCRIPTION,
     path: "/playbuzz",
   });
 }
@@ -38,9 +47,40 @@ function PageHeading() {
 }
 
 export default function Page(props) {
+  // CollectionPage + BreadcrumbList only. This URL lists the quiz cards, so
+  // CollectionPage is what it is.
+  //
+  // An ItemList of the quizzes was considered and dropped for the same reason
+  // /top10 dropped its own: every card links to /playbuzz/quiz-play?id=N, one
+  // route serving all of them from a query string — quiz-play/page.jsx says so
+  // itself — so the list would assert one URL per quiz for a set the site
+  // treats as a single indexable page. The NavMenu categories are client-side
+  // filter buttons, not URLs, so they cannot back a list either.
+  //
+  // No aggregateRating and no interactionStatistic: articlesData maps a `plays`
+  // field through (data.js), but not one quiz record defines it, so no card
+  // renders a play count and there is no number here to publish.
   return (
-    <PageView {...props}>
-      <PageHeading />
-    </PageView>
+    <>
+      <JsonLd
+        id="playbuzz-schema"
+        data={[
+          createCollectionPageJsonLd({
+            path: "/playbuzz",
+            // The name /labs and site search already publish for this route
+            // (packages/core/src/experienceCatalog.js), matching the h1 above.
+            name: "Quiz Studio",
+            description: DESCRIPTION,
+          }),
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Quiz Studio", path: "/playbuzz" },
+          ]),
+        ]}
+      />
+      <PageView {...props}>
+        <PageHeading />
+      </PageView>
+    </>
   );
 }

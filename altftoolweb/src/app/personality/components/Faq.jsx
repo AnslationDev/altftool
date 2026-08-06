@@ -2,33 +2,9 @@
 
 import { useState } from "react";
 import { Plus, Minus } from "lucide-react";
-
-const faqs = [
-  {
-    q: "How long does the personality test take?",
-    a: "Our personality tests are designed to be quick yet thorough. Most assessments take between 3–7 minutes to complete, depending on the specific test you choose.",
-  },
-  {
-    q: "Are the personality tests scientifically inspired?",
-    a: "Yes, our assessments are designed using proven psychological concepts, behavioral analysis, and AI-powered insights.",
-  },
-  {
-    q: "Do I need to sign up to take the test?",
-    a: "No sign-up is required! You can take any of our personality tests immediately without creating an account. Your results are displayed instantly.",
-  },
-  {
-    q: "What kind of insights will I receive?",
-    a: "You'll receive a comprehensive personality profile including your core traits, strengths, communication style, career alignment, and personalized growth recommendations.",
-  },
-  {
-    q: "Is my personal data secure?",
-    a: "Absolutely. We take data privacy seriously and never share your personal information with third parties. All data is encrypted and stored securely.",
-  },
-  {
-    q: "Are the results accurate?",
-    a: "Our assessments are built on validated psychological frameworks combined with advanced AI analysis. While no test is perfect, users consistently report high accuracy in their results.",
-  },
-];
+// Same array the page's FAQPage JSON-LD is built from (see ../page.jsx), so
+// the markup and the rendered accordion can never disagree.
+import { FAQ_ITEMS as faqs } from "../data/pageContent";
 
 export default function Faq() {
   const [open, setOpen] = useState(0);
@@ -42,9 +18,8 @@ export default function Faq() {
         </h2>
 
         <p className="section-subtitle max-w-[620px] mx-auto">
-          Everything you need to know about our
-          personality tests and how they help you
-          better understand yourself.
+          What this four-question reflection does, how its scores work, and
+          where your answer choices are stored.
         </p>
       </div>
 

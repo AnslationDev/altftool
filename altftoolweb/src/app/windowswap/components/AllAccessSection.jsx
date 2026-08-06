@@ -37,18 +37,18 @@ export default function AllAccessSection() {
         {/* Right Panel: Text and details */}
         <div className="windowswap-all-access-copy flex flex-col items-start lg:pl-4 text-left max-w-[620px] mx-auto lg:mx-0">
 
-          <span className="text-[10px] tracking-[0.2em] font-semibold uppercase" style={{color: 'var(--windowswap-muted)'}}>WINDOWSWAP ALL-ACCESS</span>
+          <span className="text-[10px] tracking-[0.2em] font-semibold uppercase" style={{color: 'var(--windowswap-muted)'}}>ALL-ACCESS CONCEPT — NOT AVAILABLE</span>
           <div className="windowswap-rule h-[2px] w-14 mt-3 mb-8 rounded-full" />
 
           <p className="font-display text-xl md:text-[22px] leading-relaxed font-bold mb-8 max-w-sm" style={{color: 'var(--windowswap-foreground)'}}>
-            Get access to all windows ever uploaded, unlimited bookmarks, playlists and even a back button.
+            Preview features that could be part of a future membership. There is no account, subscription, billing, or creator payout system today.
           </p>
 
           <Link
             href="/windowswap/pricing"
             className="windowswap-all-access-cta windowswap-primary-button px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 font-semibold tracking-wide text-xs cursor-pointer inline-block"
           >
-            Upgrade for $5 monthly
+            View the concept — no purchase
           </Link>
 
         </div>

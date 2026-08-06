@@ -527,8 +527,8 @@ const DINOSAURS = [
   },
 ];
 
-const PERIODS = ["All", "Triassic", "Jurassic", "Cretaceous"];
-const DIETS = ["All", "Carnivore", "Herbivore", "Omnivore"];
+const PERIODS = ["All", "Jurassic", "Cretaceous"];
+const DIETS = ["All", "Carnivore", "Herbivore"];
 const SIZES = ["All", "Small", "Medium", "Large"];
 
 const PERIOD_COLORS = {
@@ -946,7 +946,7 @@ export default function ToolHome() {
         <div>
           <h1 className="text-2xl font-bold text-(--foreground)">Dinosaur Explorer</h1>
           <p className="mt-1 text-sm text-(--muted-foreground)">
-            Discover 20+ prehistoric species with search, filters, timeline, and size comparisons.
+            Discover 20 prehistoric species with search, filters, timeline, and size comparisons.
           </p>
         </div>
 

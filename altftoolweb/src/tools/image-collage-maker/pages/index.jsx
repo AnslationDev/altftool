@@ -24,12 +24,15 @@ export default function ToolHome() {
   const [spacing, setSpacing] = useState(10);
   const [layout, setLayout] = useState("grid");
   const [selectedGalleryItem, setSelectedGalleryItem] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
 
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
+  // Single intake point shared by the file picker and the drop zone, so the
+  // image/* check below is the only place either path is validated.
+  const addFiles = (fileList) => {
+    const files = Array.from(fileList || []);
     files.forEach(file => {
       if (file.type.startsWith("image/")) {
         const reader = new FileReader();
@@ -48,6 +51,31 @@ export default function ToolHome() {
         reader.readAsDataURL(file);
       }
     });
+  };
+
+  const handleImageUpload = (e) => {
+    addFiles(e.target.files);
+  };
+
+  // The page copy says photos are "dropped in", so the workspace has to accept
+  // a drop. preventDefault is required on dragover as well as drop — without it
+  // the browser navigates away to the dropped file and the collage is lost.
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    // Ignore the dragleave fired when the cursor crosses onto a child element.
+    if (e.currentTarget.contains(e.relatedTarget)) return;
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    // The input is multiple + accept="image/*", so take the whole list.
+    addFiles(e.dataTransfer?.files);
   };
 
   const removeImage = (id) => {
@@ -239,7 +267,13 @@ export default function ToolHome() {
         />
 
         {/* Workspace Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6"
+          onDragEnter={handleDragOver}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
           
           {/* Sidebar Editor */}
           <div className="lg:col-span-1 space-y-6">
@@ -305,7 +339,7 @@ export default function ToolHome() {
                 {images.length === 0 ? (
                   <div 
                     onClick={() => fileInputRef.current?.click()}
-                    className="border-2 border-dashed border-border hover:border-primary rounded-xl p-6 text-center cursor-pointer hover:bg-surface-soft/40 transition-colors"
+                    className={`border-2 border-dashed hover:border-primary rounded-xl p-6 text-center cursor-pointer hover:bg-surface-soft/40 transition-colors ${isDragging ? "border-primary" : "border-border"}`}
                   >
                     <Upload className="h-5 w-5 text-muted mx-auto mb-2" />
                     <span className="text-[10px] font-bold text-foreground uppercase tracking-wider">Select Photos</span>
@@ -359,7 +393,7 @@ export default function ToolHome() {
               </div>
 
               {/* Responsive Canvas Container */}
-              <div className="flex items-center justify-center p-4 bg-surface-soft rounded-2xl border border-border max-w-full overflow-hidden">
+              <div className={`flex items-center justify-center p-4 bg-surface-soft rounded-2xl border max-w-full overflow-hidden transition-colors ${isDragging ? "border-primary" : "border-border"}`}>
                 {images.length === 0 ? (
                   <div 
                     onClick={() => fileInputRef.current?.click()}

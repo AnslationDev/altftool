@@ -10,7 +10,7 @@ const faqItems = [
   {
     question: "How does the Photo Stylizer mode work?",
     answer:
-      "If you upload a local photograph or enter an image link, the tool loads it onto a canvas and applies custom 3D emboss/depth shaders and cinema bloom layers client-side. You can then overlay glassy Pixar eye stickers.",
+      "If you upload a local photograph or enter an image link, the tool does two things: it sends the picture to image.pollinations.ai for the AI render, and it loads it onto a canvas where the 3D emboss/depth shaders and cinema bloom layers are applied client-side. Only the canvas half stays on your device.",
   },
   {
     question: "Is there any cost or limit to generating images?",
@@ -18,9 +18,9 @@ const faqItems = [
       "No! The Pollinations AI API and the client-side canvas stylizer are completely free to use with no generation limits.",
   },
   {
-    question: "Where are my uploaded photos stored?",
+    question: "Where do my uploaded photos go?",
     answer:
-      "Your uploaded photos never leave your device. The canvas rendering and sticker overlays run 100% locally in your browser memory.",
+      "They are sent to a third party. Uploading a file or entering an image link sends the picture straight to image.pollinations.ai — an uploaded file is POSTed as image data, a pasted link is passed along as an image URL — because that service runs the Flux model that produces the render. AltFTool never receives or stores your photo, but what Pollinations does with it is covered by its terms, not ours. Only the emboss, bloom and vibrancy sliders work on a local canvas without sending anything.",
   },
 ];
 

@@ -1,15 +1,15 @@
 const seo = {
   intro:
-    "This tool turns a saved ChatGPT conversation into a readable, shareable document: it parses the export, rebuilds the message thread with code blocks, tables and links intact, and writes it back out as PDF, DOCX, Markdown, HTML, JSON, TXT or CSV. It accepts JSON exports, Markdown, plain text, HTML and CSV, or content pasted straight into the page, and detects the format from the file extension or the first characters. Eight visual themes and adjustable fonts, sizes and page settings control how the finished document looks.",
+    "This tool turns saved ChatGPT text into a readable document: it parses message roles and content, detects fenced code and Markdown tables, and writes the conversation as PDF, DOCX, Markdown, HTML, JSON, TXT or CSV. It accepts JSON exports, Markdown, plain text, HTML and CSV, or content pasted straight into the page. Formatting support varies by output: DOCX, Markdown and HTML keep the richest detected structure, while PDF is a plain message-text layout.",
   useCases: [
     "You worked out a solution with ChatGPT and need it as a PDF to attach to a ticket, a client email or a piece of coursework",
-    "You want a long conversation as a DOCX you can edit into a report, with the assistant's tables preserved as real Word tables rather than pipe characters",
-    "You exported your full ChatGPT history as JSON and need one specific thread pulled out, searched and saved as Markdown for your notes app",
+    "You want a long conversation as a DOCX you can edit into a report, with detected Markdown tables written as Word tables",
+    "You have a supported JSON conversation export and want to search its imported messages before saving them as Markdown for your notes app",
   ],
   benefits: [
-    ["Keeps code and tables as structure", "Fenced code blocks keep their language and syntax highlighting across 25 recognised languages, and Markdown tables become real tables in DOCX and PDF."],
+    ["Detects code and Markdown tables", "The viewer labels fenced code with one of 25 syntax labels. DOCX uses monospaced code and real tables; Markdown and HTML also retain detected blocks and tables. PDF writes message content as plain text."],
     ["Reads whatever shape your export is in", "Nested JSON is walked recursively for role/content pairs, so both single-conversation files and full history dumps resolve into a message list."],
-    ["Shows what is actually in the thread", "A stats panel counts messages by role, words, characters, code blocks, tables, images and links, with reading time at 200 words per minute."],
+    ["Summarizes the imported text", "A stats panel counts messages by role, words, characters, detected code blocks and Markdown tables, with an estimated reading time at 200 words per minute."],
   ],
   steps: [
     "Drop a saved conversation onto the Drag & drop your chat export panel, or click to browse files — the picker accepts .json, .md, .markdown, .txt, .html, .htm and .csv — or click Paste your chat conversation and press Parse Conversation on the text you paste in.",
@@ -23,7 +23,7 @@ const seo = {
     ],
     [
       "Which output formats can I export to?",
-      "Seven: PDF, DOCX, Markdown, HTML, JSON, plain TXT and CSV. PDF and DOCX are the presentation formats with themes and page settings; Markdown and JSON are the ones to pick if you plan to re-import the conversation somewhere else.",
+      "Seven: PDF, DOCX, Markdown, HTML, JSON, plain TXT and CSV. PDF uses the selected light/dark and page options. DOCX uses a fixed document style while retaining detected headings, code blocks and tables. Markdown and JSON are better suited to later text processing.",
     ],
     [
       "Does my conversation get uploaded to a server?",
@@ -31,7 +31,7 @@ const seo = {
     ],
     [
       "Will my code snippets survive the export?",
-      "Yes. Fenced blocks are detected with their language tag, mapped through aliases (js to javascript, py to python, rs to rust and so on), and rendered in a monospace block in every output format rather than being flattened into prose.",
+      "Their text survives, but presentation depends on the format. The viewer labels fenced blocks, DOCX uses a monospaced block, and Markdown and HTML keep a code-block representation. PDF, TXT and CSV carry the message text without promising syntax styling.",
     ],
   ],
 };

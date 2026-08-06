@@ -11,19 +11,26 @@ const TIME_FORMATS = [
 ];
 
 const HeroSection = ({ hour12 = true, onHour12Change }) => {
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentTime, setCurrentTime] = useState(null);
 
   useEffect(() => {
+    const frame = window.requestAnimationFrame(() => {
+      setCurrentTime(new Date());
+    });
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => {
+      window.cancelAnimationFrame(frame);
+      clearInterval(timer);
+    };
   }, []);
 
   const formatTime = (date) => formatClockTime(date, hour12);
 
   const formatDate = (date) => {
+    if (!date) return "Loading local date…";
     return date.toLocaleDateString("en-US", {
       weekday: "long",
       year: "numeric",
@@ -44,11 +51,11 @@ const HeroSection = ({ hour12 = true, onHour12Change }) => {
         </div>
 
         {/* Heading */}
-        <h1 className="heading">World Multi-Country Clock</h1>
+        <h1 className="heading">World Time Zone Clock</h1>
 
         {/* Subheading */}
         <p className="description max-w-2xl mx-auto">
-          Track time across multiple countries in real time — perfect for remote
+          Compare browser-supported time zones in real time — useful for remote
           teams, travelers, global meetings, and international businesses.
         </p>
 
@@ -108,7 +115,7 @@ const HeroSection = ({ hour12 = true, onHour12Change }) => {
         {/* Feature Chips */}
         <div className="flex flex-wrap justify-center gap-3 pt-4">
           {[
-            "🌍 200+ Countries",
+            "🌍 Browser-Supported Time Zones",
             "⏰ Live Updates",
             "🆓 Completely Free",
             "📱 Responsive",

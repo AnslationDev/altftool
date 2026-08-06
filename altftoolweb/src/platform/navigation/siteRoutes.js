@@ -34,6 +34,7 @@ import {
   Monitor,
   Music4,
   Newspaper,
+  Package,
   Palette,
   PawPrint,
   PenTool,
@@ -407,10 +408,30 @@ export const SITE_ROUTES = {
   saleLocator: { label: "Sale Locator", href: "/sale" },
   imgPrompt: { label: "Img Prompt", href: "/imgprompt" },
   freeAiTool: { label: "Free-Ai-Tool", href: "/free-ai-tool" },
-  // Hub over the two routes directly above. It links to those two and
-  // nothing else — see LOOKOUTS_PRODUCTS in src/app/lookouts/lookouts.js,
-  // which must only ever name routes that exist in this tree.
+  // Keep this group aligned with LOOKOUTS_PRODUCTS in
+  // src/app/lookouts/lookouts.js. The nested Free AI Tool is a distinct route
+  // from the top-level directory above.
   lookouts: { label: "Lookouts", href: "/lookouts" },
+  festival: {
+    label: "Festival",
+    href: "/lookouts/festival",
+    match: ["/lookouts/festival"],
+  },
+  topDiscountProducts: {
+    label: "Top Discount Products",
+    href: "/lookouts/top-discount-products",
+    match: ["/lookouts/top-discount-products"],
+  },
+  aiBundles: {
+    label: "AI Bundle",
+    href: "/lookouts/ai-bundles",
+    match: ["/lookouts/ai-bundles"],
+  },
+  lookoutsFreeAiTool: {
+    label: "Free AI Tool",
+    href: "/lookouts/free-ai-tool",
+    match: ["/lookouts/free-ai-tool"],
+  },
   academy: { label: "Academy", href: "/academy" },
   blogs: { label: "Blog", href: "/blogs" },
   brandRatings: { label: "Brand Ratings", href: "/brandrating" },
@@ -583,6 +604,18 @@ export const PUBLIC_NAV_ITEMS = [
       { ...SITE_ROUTES.top6, group: "Research", icon: LayoutGrid },
       { ...SITE_ROUTES.top9, group: "Research", icon: LayoutGrid },
       { ...SITE_ROUTES.top10, group: "Research", icon: LayoutGrid },
+    ],
+  },
+  {
+    ...SITE_ROUTES.lookouts,
+    icon: Music4,
+    menuColumns: 2,
+    options: [
+      { ...SITE_ROUTES.festival, group: "Discover", icon: Music4 },
+      { ...SITE_ROUTES.topDiscountProducts, group: "Discover", icon: Tags },
+      { ...SITE_ROUTES.imgPrompt, group: "AI tools", icon: Sparkles },
+      { ...SITE_ROUTES.aiBundles, group: "AI tools", icon: Package },
+      { ...SITE_ROUTES.lookoutsFreeAiTool, group: "AI tools", icon: Bot },
     ],
   },
   {

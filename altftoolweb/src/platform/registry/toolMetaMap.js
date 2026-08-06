@@ -797,7 +797,7 @@ export const toolMetaMap = {
   },
   "ai-object-counter": {
     "name": "AI Object Counter",
-    "description": "Detect and count objects in images using TensorFlow.js COCO-SSD. Supports 90+ object categories with confidence scoring and visualization.",
+    "description": "Detect and count objects in images using TensorFlow.js COCO-SSD. Supports 80 object categories with confidence scoring and visualization.",
     "category": [
       "AI Tools",
       "Image & Photo",
@@ -6206,7 +6206,7 @@ export const toolMetaMap = {
   },
   "continent-challenge": {
     "name": "Continent Challenge",
-    "description": "Test your knowledge of the 7 continents — identify countries, capitals, flags, and geographic facts with timed quizzes and scoring.",
+    "description": "Test your knowledge of the 6 inhabited continents — identify countries, capitals, flags, and geographic facts with timed quizzes and scoring.",
     "category": "Education & Science",
     "topics": [
       "Education"
@@ -6817,7 +6817,7 @@ export const toolMetaMap = {
   },
   "crypto-wallet-checker": {
     "name": "Crypto Wallet Checker",
-    "description": "Validate and identify crypto wallet addresses across 10+ major blockchains.",
+    "description": "Validate and identify crypto wallet addresses across 10 major blockchains.",
     "category": [
       "Security & Privacy",
       "Finance Calculators",
@@ -8252,7 +8252,7 @@ export const toolMetaMap = {
   },
   "dinosaur-explorer": {
     "name": "Dinosaur Explorer",
-    "description": "Explore 20+ dinosaur species with search, filter, timeline view, size comparison, and detailed cards.",
+    "description": "Explore 20 dinosaur species with search, filter, timeline view, size comparison, and detailed cards.",
     "category": [
       "Education & Science",
       "Fun"
@@ -13087,7 +13087,7 @@ export const toolMetaMap = {
   },
   "hair-color-preview": {
     "name": "Hair Color Preview",
-    "description": "Preview 30+ hair colors on your photo instantly. Try natural shades, fashion colors, highlights, and balayage with realistic in-browser simulation.",
+    "description": "Preview 16 hair colors on your photo instantly. Try natural shades, warm tones, blondes, fashion colors, and highlights with realistic in-browser simulation.",
     "category": [
       "Lifestyle",
       "Image & Photo"
@@ -18210,7 +18210,7 @@ export const toolMetaMap = {
   },
   "meeting-agenda-builder": {
     "name": "Meeting Agenda Builder",
-    "description": "Create meetings, manage attendees, build real-time draggable agendas, track actions, reminders, and export meeting summaries.",
+    "description": "Turn agenda topics with owners and durations into a timed running order — reorder items with move up and down controls, then copy the schedule with clock slots, a 10% buffer, end time and meeting cost.",
     "category": [
       "Productivity",
       "Business"
@@ -18971,7 +18971,7 @@ export const toolMetaMap = {
     "iconColor": "text-[var(--primary)]"
   },
   "moving-checklist": {
-    "name": "40-Task Moving Checklist",
+    "name": "42-Task Moving Checklist",
     "description": "Build your moving checklist step by step. 40+ preset tasks across 6 timeline categories, custom items, progress tracking, and export.",
     "category": [
       "Lifestyle",
@@ -19081,14 +19081,14 @@ export const toolMetaMap = {
     "iconColor": "text-[var(--primary)]"
   },
   "multi-country-clock": {
-    "name": "Multi Country Clock Tool",
-    "description": "View current time across multiple countries simultaneously.",
+    "name": "Multi Time Zone Clock Tool",
+    "description": "Compare current time across multiple browser-supported IANA zones.",
     "category": "Developer",
     "topics": [
       "Web"
     ],
     "icon": "clock",
-    "iconColor": "text-blue-600"
+    "iconColor": "text-[var(--primary)]"
   },
   "multi-currency-invoice-calculator": {
     "name": "Multi Currency Invoice Total Calculator",
@@ -32912,7 +32912,7 @@ export const toolMetaMap = {
   },
   "world-facts-explorer": {
     "name": "World Facts Explorer",
-    "description": "Explore fascinating world facts — population, area, GDP, HDI, and more with interactive comparisons and filtering across 195+ countries.",
+    "description": "Explore fascinating world facts — population, area, GDP, HDI, and more with interactive comparisons and filtering across 121 countries.",
     "category": "Education & Science",
     "topics": [
       "Education"

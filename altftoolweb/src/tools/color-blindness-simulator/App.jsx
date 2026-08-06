@@ -117,7 +117,8 @@ export default function ColorBlindnessSimulator() {
     contrast: 0,
     saturation: 1.0
   });
-  
+  const [isDragging, setIsDragging] = useState(false);
+
   const fileInputRef = useRef(null);
 
   // Handle Paste
@@ -145,19 +146,47 @@ export default function ColorBlindnessSimulator() {
     return () => window.removeEventListener("paste", handlePaste);
   }, []);
 
-  const handleUpload = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        const img = new Image();
-        img.onload = () => {
-          setImage(img);
-        };
-        img.src = event.target.result;
+  // Single loader shared by the file picker and the drop zone, so both paths
+  // decode the file identically.
+  const loadImageFile = (file) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new Image();
+      img.onload = () => {
+        setImage(img);
       };
-      reader.readAsDataURL(file);
-    }
+      img.src = event.target.result;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleUpload = (e) => {
+    loadImageFile(e.target.files?.[0]);
+  };
+
+  // The card reads "Drop Image to Analyze", so the drop has to be handled here.
+  // preventDefault is required on dragover as well as drop — without it the
+  // browser navigates away to the dropped file and the session is lost.
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e) => {
+    // Ignore the dragleave fired when the cursor crosses onto a child element.
+    if (e.currentTarget.contains(e.relatedTarget)) return;
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    // The input is single-file and accept="image/*"; mirror both here.
+    const file = Array.from(e.dataTransfer?.files || []).find((item) =>
+      item.type.startsWith("image/")
+    );
+    loadImageFile(file);
   };
 
   const handleReset = () => {
@@ -186,9 +215,13 @@ export default function ColorBlindnessSimulator() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             onClick={() => fileInputRef.current.click()}
+            onDragEnter={handleDragOver}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
             className="relative group cursor-pointer"
           >
-            <div className="relative bg-(--card) border-2 border-dashed border-(--border) rounded-3xl p-6 md:p-10 flex flex-col items-center justify-center text-center transition-all hover:border-blue-500/50 max-w-xl mx-auto overflow-hidden">
+            <div className={`relative bg-(--card) border-2 border-dashed rounded-3xl p-6 md:p-10 flex flex-col items-center justify-center text-center transition-all hover:border-blue-500/50 max-w-xl mx-auto overflow-hidden ${isDragging ? "border-blue-500/50" : "border-(--border)"}`}>
               {/* Background Glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent pointer-events-none"></div>
               

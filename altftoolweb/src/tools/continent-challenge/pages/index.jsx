@@ -423,7 +423,7 @@ Continent Challenge — Educational tool
         <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-800 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-200">
           <div className="flex items-start gap-2">
             <Info className="h-4 w-4 mt-0.5 shrink-0" />
-            <p>This quiz covers 195+ countries across all 7 continents with capitals, flags, and multiple question types.</p>
+            <p>This quiz covers 195+ countries across all 6 inhabited continents with capitals, flags, and multiple question types.</p>
           </div>
         </div>
 
