@@ -19,8 +19,8 @@ import {
   Sparkles,
 } from "lucide-react";
 
-const PHONE_DISPLAY = "(844) 555-0198";
-const PHONE_TEL = "tel:+18445550198";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const NAV_LINKS = [
   { href: "#guardnest-features", label: "Made for families" },

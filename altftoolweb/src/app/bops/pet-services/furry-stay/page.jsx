@@ -18,9 +18,9 @@ import {
   Sun,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/furry-stay";
-const PHONE_DISPLAY = "(822) 555-0144";
-const PHONE_HREF = "tel:+18225550144";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_HREF = "#demo-only";
 
 function QuoteButton({ className = "furrystay-btn furrystay-btn-solid", label = "Get a Free Quote" }) {
   return (

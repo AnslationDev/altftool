@@ -17,9 +17,9 @@ import {
   Home,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/rainright-gutters";
-const PHONE_DISPLAY = "(833) 555-0132";
-const PHONE_TEL = "tel:+18335550132";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1567361808976-260065224468?auto=format&fit=crop&w=1600&q=80",

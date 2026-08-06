@@ -26,6 +26,8 @@ const DEFAULTS = {
   track: "200",
   drop: "220",
   headingId: "pencil",
+  customFullness: false,
+  fullness: "2.5",
   isPair: true,
   fabricWidth: "137",
   repeat: "32",
@@ -61,6 +63,8 @@ export default function ToolHome() {
   const [track, setTrack] = useState(DEFAULTS.track);
   const [drop, setDrop] = useState(DEFAULTS.drop);
   const [headingId, setHeadingId] = useState(DEFAULTS.headingId);
+  const [customFullness, setCustomFullness] = useState(DEFAULTS.customFullness);
+  const [fullness, setFullness] = useState(DEFAULTS.fullness);
   const [isPair, setIsPair] = useState(DEFAULTS.isPair);
   const [fabricWidth, setFabricWidth] = useState(DEFAULTS.fabricWidth);
   const [repeat, setRepeat] = useState(DEFAULTS.repeat);
@@ -79,6 +83,7 @@ export default function ToolHome() {
         finishedDrop: toNumber(drop),
         unit,
         headingId,
+        fullnessOverride: customFullness ? toNumber(fullness) : undefined,
         isPair,
         fabricWidthCm: toNumber(fabricWidth),
         patternRepeatCm: toNumber(repeat),
@@ -89,7 +94,23 @@ export default function ToolHome() {
         fabricPricePerMetre: toNumber(price),
         liningPricePerMetre: toNumber(liningPrice),
       }),
-    [track, drop, unit, headingId, isPair, fabricWidth, repeat, hem, ret, overlap, lined, price, liningPrice],
+    [
+      track,
+      drop,
+      unit,
+      headingId,
+      customFullness,
+      fullness,
+      isPair,
+      fabricWidth,
+      repeat,
+      hem,
+      ret,
+      overlap,
+      lined,
+      price,
+      liningPrice,
+    ],
   );
 
   const failed = Boolean(result.error);
@@ -122,10 +143,18 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset all curtain measurements, fabric and pricing to the defaults?")
+    ) {
+      return;
+    }
     setUnit(DEFAULTS.unit);
     setTrack(DEFAULTS.track);
     setDrop(DEFAULTS.drop);
     setHeadingId(DEFAULTS.headingId);
+    setCustomFullness(DEFAULTS.customFullness);
+    setFullness(DEFAULTS.fullness);
     setIsPair(DEFAULTS.isPair);
     setFabricWidth(DEFAULTS.fabricWidth);
     setRepeat(DEFAULTS.repeat);
@@ -270,6 +299,32 @@ export default function ToolHome() {
                 </option>
               ))}
             </select>
+          </div>
+          <div>
+            <label className="mt-2 flex min-h-11 items-center gap-3 text-sm font-semibold sm:mt-8">
+              <input
+                id="cf-custom-fullness"
+                type="checkbox"
+                className="h-5 w-5 rounded border-[var(--border)] accent-[var(--primary)]"
+                checked={customFullness}
+                onChange={(event) => setCustomFullness(event.target.checked)}
+              />
+              Use a custom fullness instead
+            </label>
+            {customFullness ? (
+              <input
+                id="cf-fullness"
+                aria-label="Custom fullness ratio"
+                className={`${FIELD} mt-2`}
+                type="number"
+                inputMode="decimal"
+                min="1"
+                max="4"
+                step="0.05"
+                value={fullness}
+                onChange={(event) => setFullness(event.target.value)}
+              />
+            ) : null}
           </div>
           <div>
             <label className={LABEL} htmlFor="cf-fabricwidth">
@@ -421,7 +476,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">

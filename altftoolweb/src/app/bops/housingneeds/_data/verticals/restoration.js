@@ -32,7 +32,7 @@ const restoration = {
     "Insurance claim documentation help"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/restoration",
+  "quoteUrl": "#demo-only",
   "seo": {
     "title": "Water Damage Restoration: Categories & Drying",
     "description": "Learn how water damage restoration works: the 24-48 hour mold window, clean vs gray vs black water, structural drying, insurance claims, and what drives cost."

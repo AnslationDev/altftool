@@ -7365,7 +7365,7 @@ export const toolMetaMap = {
       "Security & Privacy",
       "Productivity"
     ],
-    "icon": "file-check-2",
+    "icon": "list-checks",
     "iconColor": "text-primary"
   },
   "data-deletion-request-letter-generator": {
@@ -12577,14 +12577,8 @@ export const toolMetaMap = {
   },
   "google-ads-description-writer": {
     "name": "Google Ads Writer",
-    "description": "Generate highly converting Google Ads descriptions using AI.",
-    "category": [
-      "Business",
-      "AI Tools"
-    ],
-    "topics": [
-      "AI"
-    ],
+    "description": "Generate ready-to-paste Google Ads descriptions from proven ad-copy templates.",
+    "category": "Business",
     "icon": "megaphone",
     "iconColor": "text-green-500"
   },
@@ -21459,8 +21453,7 @@ export const toolMetaMap = {
       "Productivity"
     ],
     "icon": "lock-keyhole",
-    "iconColor": "text-primary",
-    "wideWorkspace": true
+    "iconColor": "text-primary"
   },
   "pet-name-generator": {
     "name": "Pet Name Generator",
@@ -24745,7 +24738,7 @@ export const toolMetaMap = {
   },
   "room-rt60-echo-meter": {
     "name": "Room RT60 Echo Meter",
-    "description": "Estimate a room's RT60 reverberation time from a clap or sweep response.",
+    "description": "Log decay and silence diagnostics from a clap or sweep recording — not a calibrated RT60 estimate.",
     "category": [
       "Video & Audio",
       "Productivity"
@@ -26202,7 +26195,7 @@ export const toolMetaMap = {
   },
   "shopify-product-image-spec-checker": {
     "name": "Shopify Product Image Spec Checker",
-    "description": "Check Shopify product photos against the 20 megapixel and 20 MB limits, the 800 px zoom threshold and your store's standard aspect ratio.",
+    "description": "Check Shopify product photos against the 25 megapixel, 5000 px and under-20-MB limits, plus a theme-dependent detail heuristic and your store's standard aspect ratio.",
     "category": "Marketing & Social",
     "icon": "store",
     "iconColor": "text-[var(--primary)]"

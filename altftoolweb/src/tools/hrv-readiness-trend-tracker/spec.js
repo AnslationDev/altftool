@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "hrv-readiness-trend-tracker",
   "title": "HRV Readiness Trend Tracker",
-  "description": "Personal HRV baseline aur deviations track kare.",
+  "description": "Track your personal HRV baseline and how far each morning deviates from it.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Health & Fitness",

@@ -35,7 +35,7 @@ const bathroom = {
     "Aging-in-place upgrades covered"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/bathroom",
+  "quoteUrl": "#demo-only",
   "seo": {
     "title": "Bathroom Remodeling Guide: Showers & Costs",
     "description": "Learn how bathroom remodels work: walk-in showers, tub-to-shower conversions, tile and waterproofing, accessibility upgrades, and what drives the cost."

@@ -37,13 +37,21 @@ export default function InsuranceQuoteButton({
 }) {
   if (!href) return null;
 
-  if (mode === "phone") {
+  if (href === "#demo-only") {
     return (
-      <a className={`${className} ${size}`.trim()} href={href}>
-        <Phone size={15} strokeWidth={2.4} aria-hidden="true" />
+      <button
+        type="button"
+        className={`${className} ${size}`.trim()}
+        disabled
+        title="Demo only"
+      >
         {label}
-      </a>
+      </button>
     );
+  }
+
+  if (mode === "phone") {
+    return <button type="button" className={`${className} ${size}`.trim()} disabled title="Demo only"><Phone size={15} strokeWidth={2.4} aria-hidden="true" />{label}</button>;
   }
 
   if (isPlaceholderQuoteUrl(href)) {

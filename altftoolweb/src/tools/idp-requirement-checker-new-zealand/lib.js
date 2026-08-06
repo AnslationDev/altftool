@@ -254,6 +254,8 @@ function holdsIdp(idpHeld) {
  * @param {string} [input.departureDate] YYYY-MM-DD, optional planned exit
  * @param {number} input.ageYears        driver's age in whole years
  * @param {string} input.stayPurpose     id from STAY_PURPOSES
+ * @param {string} [input.today]        YYYY-MM-DD, defaults to the real current date;
+ *   only ever overridden by tests, never by the UI.
  * @returns {object} verdict object, or { error }
  */
 export function checkIdpRequirement({
@@ -263,6 +265,7 @@ export function checkIdpRequirement({
   departureDate,
   ageYears,
   stayPurpose,
+  today,
 } = {}) {
   const origin = LICENCE_ORIGINS.find((entry) => entry.id === licenceOrigin);
   if (!origin) return { error: "Choose the country that issued your driving licence." };
@@ -275,6 +278,9 @@ export function checkIdpRequirement({
 
   const arrival = parseISODate(arrivalDate);
   if (arrival === null) return { error: "Enter a valid arrival date as year, month and day." };
+
+  const todayIso = today ?? toISODate(Date.now());
+  const todayStamp = parseISODate(todayIso) ?? Date.now();
 
   let stayDays = null;
   if (departureDate) {
@@ -325,84 +331,131 @@ export function checkIdpRequirement({
       "Your licence is not in English, so you must carry either an accurate English translation - from an NZ Transport Agency approved translator, your country's diplomatic mission, or the issuing authority - or an International Driving Permit alongside the licence. The permit has to be issued at home before you travel.";
   }
 
+  // Which IDP format(s) New Zealand actually accepts for this licence -
+  // derived from origin.convention/englishLicence rather than a fixed string,
+  // since a permit is only relevant at all for the non-English Geneva/Vienna
+  // origins. For every other origin (domestic, English-language, or a state
+  // in neither convention) a fixed "either format" answer directly
+  // contradicted the reason shown lower on the same result card.
+  let acceptedFormats;
+  if (origin.convention === "domestic") {
+    acceptedFormats = "Not applicable - a New Zealand licence needs nothing else";
+  } else if (englishLicence) {
+    acceptedFormats = "Not applicable - your licence is already in English";
+  } else if (origin.convention === "none") {
+    acceptedFormats = "Neither format exists for this licence - an approved English translation is the only route";
+  } else {
+    acceptedFormats = "Either format, as the English translation";
+  }
+
   const warnings = [];
   let windowLabel;
   let windowEndDate = null;
+  let windowExpired = false;
+  let daysRemaining = null;
+  let checklist = [];
 
-  if (origin.convention === "domestic") {
-    windowLabel = "No limit - you hold a New Zealand licence";
+  if (verdict === "not-permitted") {
+    // Below the minimum driving age: none of the visitor-window, translation,
+    // drink-driving or rental guidance below is relevant, and showing it
+    // anyway reads as the tool instructing someone it just said may not
+    // drive on how to drive. Give age-appropriate guidance only.
+    windowLabel = "Not applicable - you are below the minimum driving age";
+    warnings.push(
+      `You must be at least ${MINIMUM_DRIVING_AGE} to hold or use any driving licence in ${COUNTRY_NAME}, overseas or domestic. Come back to this checker once you meet the minimum age.`,
+    );
   } else {
-    windowEndDate = addMonthsISO(arrivalDate, VISITOR_WINDOW_MONTHS);
-    windowLabel = `${VISITOR_WINDOW_MONTHS} months from the date you last arrived`;
-    warnings.push(
-      `The ${VISITOR_WINDOW_MONTHS}-month window runs from the date you last arrived in New Zealand, and it starts again each time you arrive - so a trip to Australia and back resets it. What it does not do is stack: you cannot bank unused months.`,
-    );
-    if (stayDays !== null && stayDays > 365) {
-      warnings.push(
-        `A ${stayDays}-day continuous stay runs past the ${VISITOR_WINDOW_MONTHS}-month window, so plan to convert to a New Zealand licence during the trip.`,
-      );
-    }
-  }
-
-  const daysRemaining = windowEndDate === null ? null : daysBetweenISO(arrivalDate, windowEndDate);
-
-  if (purpose.id === "residence" && origin.convention !== "domestic") {
-    if (origin.exempt === true) {
-      warnings.push(
-        "Your country is on the Transport Agency's exempt list, so converting to a New Zealand licence needs an application, an eyesight check and the fee - no theory test and no practical test.",
-      );
-    } else if (origin.exempt === false) {
-      warnings.push(
-        "Your country is not on the Transport Agency's exempt list, so converting means sitting both the theory test and a practical driving test, however long you have held the overseas licence. Book early - practical test slots are often weeks out.",
-      );
+    if (origin.convention === "domestic") {
+      windowLabel = "No limit - you hold a New Zealand licence";
     } else {
+      windowEndDate = addMonthsISO(arrivalDate, VISITOR_WINDOW_MONTHS);
+      windowLabel = `${VISITOR_WINDOW_MONTHS} months from the date you last arrived`;
       warnings.push(
-        "Whether you convert without a test depends on the Transport Agency's exempt-country list. Check it before assuming either way, because the difference is two tests.",
+        `The ${VISITOR_WINDOW_MONTHS}-month window runs from the date you last arrived in New Zealand, and it starts again each time you arrive - so a trip to Australia and back resets it. What it does not do is stack: you cannot bank unused months.`,
+      );
+
+      // The true window length (365 or 366 days, depending on whether it
+      // spans a leap-year February) rather than a hardcoded 365 - a stay
+      // that lands exactly on the window's closing day must not be flagged
+      // as running past it.
+      const windowLengthDays = daysBetweenISO(arrivalDate, windowEndDate);
+      if (stayDays !== null && windowLengthDays !== null && stayDays > windowLengthDays) {
+        warnings.push(
+          `A ${stayDays}-day continuous stay runs past the ${VISITOR_WINDOW_MONTHS}-month window (${windowLengthDays} days for this arrival date), so plan to convert to a New Zealand licence during the trip.`,
+        );
+      }
+
+      // Compare the window's end date against TODAY, not just the arrival
+      // date - a window dated years in the past is not a live "closes in N
+      // days" countdown, it is already over.
+      const endStamp = parseISODate(windowEndDate);
+      windowExpired = endStamp !== null && endStamp < todayStamp;
+      daysRemaining = daysBetweenISO(todayIso, windowEndDate);
+      if (windowExpired) {
+        warnings.unshift(
+          `This ${VISITOR_WINDOW_MONTHS}-month visitor window closed on ${windowEndDate}. Driving in ${COUNTRY_NAME} on this overseas licence today is no longer lawful unless you have since converted to a New Zealand licence, or this reflects an arrival date you have since renewed by leaving and re-entering the country.`,
+        );
+      }
+    }
+
+    if (purpose.id === "residence" && origin.convention !== "domestic") {
+      if (origin.exempt === true) {
+        warnings.push(
+          "Your country is on the Transport Agency's exempt list, so converting to a New Zealand licence needs an application, an eyesight check and the fee - no theory test and no practical test.",
+        );
+      } else if (origin.exempt === false) {
+        warnings.push(
+          "Your country is not on the Transport Agency's exempt list, so converting means sitting both the theory test and a practical driving test, however long you have held the overseas licence. Book early - practical test slots are often weeks out.",
+        );
+      } else {
+        warnings.push(
+          "Whether you convert without a test depends on the Transport Agency's exempt-country list. Check it before assuming either way, because the difference is two tests.",
+        );
+      }
+    }
+
+    if (idpHeld === "geneva-1949") {
+      warnings.push(
+        "A 1949 Geneva permit runs for one year from the date of issue and cannot be renewed from abroad, so make sure the expiry outlasts your trip.",
       );
     }
-  }
+    if (origin.convention !== "domestic") {
+      warnings.push(
+        "New Zealand drives on the left, with the steering wheel on the right. Rural roads are narrow, winding and mostly single carriageway, and the driving times on maps are optimistic - budget more than the distance suggests.",
+      );
+      warnings.push(
+        `The alcohol limit is ${BREATH_LIMIT_MCG_PER_L} micrograms per litre of breath, or ${BLOOD_LIMIT_MG_PER_100ML} milligrams per 100 millilitres of blood, for drivers aged ${ZERO_ALCOHOL_UNDER_AGE} and over. Under ${ZERO_ALCOHOL_UNDER_AGE} the limit is zero.`,
+      );
+      warnings.push(
+        "You may only drive the classes of vehicle your overseas licence actually covers. A car licence does not let you hire a campervan above its weight class.",
+      );
+    }
+    if (age < RENTAL_MIN_AGE) {
+      warnings.push(
+        `New Zealand rental companies will not normally release a car below ${RENTAL_MIN_AGE}, and a young-driver surcharge applies under ${RENTAL_SURCHARGE_UNDER_AGE}. That is company policy rather than law.`,
+      );
+    } else if (age < RENTAL_SURCHARGE_UNDER_AGE) {
+      warnings.push(
+        `Expect a young-driver surcharge at the hire desk below age ${RENTAL_SURCHARGE_UNDER_AGE}.`,
+      );
+    }
 
-  if (idpHeld === "geneva-1949") {
-    warnings.push(
-      "A 1949 Geneva permit runs for one year from the date of issue and cannot be renewed from abroad, so make sure the expiry outlasts your trip.",
-    );
-  }
-  if (origin.convention !== "domestic") {
-    warnings.push(
-      "New Zealand drives on the left, with the steering wheel on the right. Rural roads are narrow, winding and mostly single carriageway, and the driving times on maps are optimistic - budget more than the distance suggests.",
-    );
-    warnings.push(
-      `The alcohol limit is ${BREATH_LIMIT_MCG_PER_L} micrograms per litre of breath, or ${BLOOD_LIMIT_MG_PER_100ML} milligrams per 100 millilitres of blood, for drivers aged ${ZERO_ALCOHOL_UNDER_AGE} and over. Under ${ZERO_ALCOHOL_UNDER_AGE} the limit is zero.`,
-    );
-    warnings.push(
-      "You may only drive the classes of vehicle your overseas licence actually covers. A car licence does not let you hire a campervan above its weight class.",
-    );
-  }
-  if (age < RENTAL_MIN_AGE) {
-    warnings.push(
-      `New Zealand rental companies will not normally release a car below ${RENTAL_MIN_AGE}, and a young-driver surcharge applies under ${RENTAL_SURCHARGE_UNDER_AGE}. That is company policy rather than law.`,
-    );
-  } else if (age < RENTAL_SURCHARGE_UNDER_AGE) {
-    warnings.push(
-      `Expect a young-driver surcharge at the hire desk below age ${RENTAL_SURCHARGE_UNDER_AGE}.`,
-    );
-  }
-
-  const checklist = [
-    "Your original overseas driving licence - it must be in the vehicle whenever you drive",
-    "Passport, with the arrival stamp or electronic record that dates your 12-month window",
-    "The rental agreement or proof of insurance",
-    "A plan for fuel and phone coverage on rural roads, where both run out sooner than you expect",
-  ];
-  if (verdict === "required" || verdict === "satisfied") {
-    checklist.unshift(
-      hasTranslation && !hasIdp
-        ? "Your approved English translation of the licence"
-        : "Your International Driving Permit, issued in the country that issued your licence",
-    );
-  }
-  if (verdict === "translation-required") {
-    checklist.unshift("An English translation from an NZ Transport Agency approved translator");
+    checklist = [
+      "Your original overseas driving licence - it must be in the vehicle whenever you drive",
+      "Passport, with the arrival stamp or electronic record that dates your 12-month window",
+      "The rental agreement or proof of insurance",
+      "A plan for fuel and phone coverage on rural roads, where both run out sooner than you expect",
+    ];
+    if (verdict === "required" || verdict === "satisfied") {
+      checklist.unshift(
+        hasTranslation && !hasIdp
+          ? "Your approved English translation of the licence"
+          : "Your International Driving Permit, issued in the country that issued your licence",
+      );
+    }
+    if (verdict === "translation-required") {
+      checklist.unshift("An English translation from an NZ Transport Agency approved translator");
+    }
   }
 
   return {
@@ -416,7 +469,7 @@ export function checkIdpRequirement({
     originNote: origin.note,
     exempt: origin.exempt,
     idpLabel: idp.label,
-    acceptedFormats: "Either format, as the English translation",
+    acceptedFormats,
     minimumAge: MINIMUM_DRIVING_AGE,
     ageOk: age >= MINIMUM_DRIVING_AGE,
     breathLimit: BREATH_LIMIT_MCG_PER_L,
@@ -425,6 +478,7 @@ export function checkIdpRequirement({
     windowLabel,
     windowEndDate,
     daysRemaining,
+    windowExpired,
     warnings,
     checklist,
     legalBasis:

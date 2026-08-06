@@ -5,9 +5,12 @@ import { Keyboard, Check, Copy, RotateCcw } from "lucide-react";
 
 import {
   PERMISSIONS,
+  SENSITIVITY_TIERS,
+  NECESSITY_LABEL,
   auditPermissions,
   parsePermissionText,
   resultToText,
+  bandForScore,
 } from "../lib";
 
 const INPUT_CLASS =
@@ -59,7 +62,11 @@ export default function ToolHome() {
     if (mode === "paste") {
       const parsed = parsePermissionText(pasted);
       if (parsed.error) return parsed;
-      return { ...auditPermissions({ granted: parsed.granted }), unrecognised: parsed.unrecognised };
+      return {
+        ...auditPermissions({ granted: parsed.granted }),
+        unrecognised: parsed.unrecognised,
+        denied: parsed.denied,
+      };
     }
     return auditPermissions({ granted });
   }, [mode, granted, pasted]);
@@ -87,6 +94,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the audit? This clears the app name and the pasted permission list and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setAppName("My keyboard app");
     setMode("checklist");
     setGranted(TYPICAL_GRANTED);
@@ -95,6 +109,8 @@ export default function ToolHome() {
   };
 
   const hasResult = !result.error;
+  const naiveBand = hasResult ? bandForScore(result.score) : null;
+  const verdictHeldBack = hasResult && naiveBand && naiveBand.id !== result.band;
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -239,7 +255,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Privacy score
             </p>
@@ -294,7 +310,25 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        {verdictHeldBack ? (
+          <p className="mt-3 rounded-md border border-[var(--warning)] bg-[var(--warning-soft)] px-3 py-2 text-xs text-[var(--warning-text)]">
+            The {result.score}/100 score alone would read as &ldquo;{naiveBand.label}&rdquo;, but the
+            verdict is held at &ldquo;{result.bandLabel}&rdquo; because this app holds{" "}
+            {[
+              ...result.restrictedOverreach.map(
+                (row) => `${row.label} (restricted / special access, not core to typing)`,
+              ),
+              ...result.revoke.map((row) => `${row.label} (not needed by a keyboard)`),
+            ].join(", ")}
+            . A high score can still hide one bad grant — see the breakdown below.
+          </p>
+        ) : null}
+
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          role="status"
+          aria-live="polite"
+        >
           {[
             ["Verdict", hasResult ? result.bandLabel : EM_DASH],
             [
@@ -321,6 +355,15 @@ export default function ToolHome() {
       {hasResult && result.unrecognised && result.unrecognised.length > 0 ? (
         <p className="mt-4 rounded-md border border-[var(--border)] px-3 py-2 text-xs text-[var(--muted-foreground)]">
           Not matched to a checklist item: {result.unrecognised.join(", ")}
+        </p>
+      ) : null}
+
+      {hasResult && mode === "paste" && result.denied && result.denied.length > 0 ? (
+        <p className="mt-4 rounded-md border border-[var(--border)] px-3 py-2 text-xs text-[var(--muted-foreground)]">
+          Listed under a &ldquo;Denied&rdquo; heading in the pasted text, so not counted as granted:{" "}
+          {result.denied
+            .map((id) => PERMISSIONS.find((permission) => permission.id === id)?.label ?? id)
+            .join(", ")}
         </p>
       ) : null}
 
@@ -400,12 +443,12 @@ export default function ToolHome() {
                     {permission.ios}
                   </td>
                   <td className="py-2 pr-3 text-xs text-[var(--muted-foreground)]">
-                    {permission.tier}
+                    {SENSITIVITY_TIERS[permission.tier]?.label ?? permission.tier}
                   </td>
                   <td
                     className={`py-2 text-xs font-semibold ${NECESSITY_STYLE[permission.necessity]}`}
                   >
-                    {permission.necessity}
+                    {NECESSITY_LABEL[permission.necessity] ?? permission.necessity}
                   </td>
                 </tr>
               ))}
@@ -415,7 +458,7 @@ export default function ToolHome() {
       </section>
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
-        Informational only. Android warns that an input method may collect everything you type; iOS keyboards can only reach the network once you enable Allow Full Access. Check the vendor's privacy policy for how long typed text is retained.
+        Informational only. Android warns that an input method may collect everything you type; iOS keyboards can only reach the network once you enable Allow Full Access. Check the vendor&apos;s privacy policy for how long typed text is retained.
       </p>
     </main>
   );

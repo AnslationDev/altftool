@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "A high-protein macro split is one where protein is set first — high enough to defend lean tissue while you are eating below maintenance — and the remaining calories are divided between a fat floor and carbohydrate. This calculator sizes the deficit from a target weight-loss rate (1 kg of body fat carries about 7,700 kcal), sets protein from either body weight or lean body mass, and flags the two mistakes that cost people muscle: dieting faster than 1% of body weight a week, and dropping fat below a fifth of calories. Ranges follow the ISSN protein position stand (1.4–2.0 g/kg for people who train) and the Helms review of dieting athletes (2.3–3.1 g/kg fat-free mass).",
+    "A high-protein macro split is one where protein is set first — high enough to defend lean tissue while you are eating below maintenance — and the remaining calories are divided between a fat floor and carbohydrate. This calculator sizes the deficit from a target weight-loss rate (1 kg of body fat carries about 7,700 kcal), sets protein from either body weight or lean body mass, and flags the two mistakes that cost people muscle: dieting faster than 1% of body weight a week, and dropping fat below a fifth of calories. The body-weight protein input runs 1.4–3.0 g/kg, built around the ISSN protein position stand (1.4–2.0 g/kg for people who train, with the calculator's own higher end reflecting that intakes above 2.0 g/kg are appropriate during energy restriction). The lean-mass input runs 1.8–3.1 g/kg fat-free mass, built around the Helms review of dieting resistance-trained athletes (2.3–3.1 g/kg fat-free mass), with the floor extended down to 1.8 g/kg for people dieting less aggressively than that reviewed cohort.",
   useCases: [
     "Setting macros for a 12-week cut where the goal is to hold a bench press number, not just the scale number",
     "Converting a body-fat scan result into a protein target based on lean mass instead of total body weight",
@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How much protein do I need to keep muscle in a calorie deficit?",
-      "Around 1.6–2.4 g per kilogram of body weight a day, and toward the top of that range the leaner you are and the steeper the deficit. Expressed on lean mass, the reviewed range for dieting resistance-trained athletes is 2.3–3.1 g per kilogram of fat-free mass.",
+      "This calculator accepts 1.4–3.0 g per kilogram of body weight a day, with 2.2 g/kg as a sane default — toward the top of that range the leaner you are and the steeper the deficit. Expressed on lean mass instead, it accepts 1.8–3.1 g per kilogram of fat-free mass (2.6 g/kg default); the top of that range, 2.3–3.1 g/kg, is the range specifically reviewed for dieting resistance-trained athletes.",
     ],
     [
       "How fast can I lose weight without losing muscle?",

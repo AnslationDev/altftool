@@ -19,7 +19,7 @@ const seo = {
     ],
     [
       "What is the six-month passport rule?",
-      "Many countries require a passport to remain valid for at least six months beyond the date you enter. The Schengen area applies a different test — validity of at least three months beyond your intended departure, with the passport issued within the previous ten years. Airlines enforce these at check-in, so a technically valid passport can still stop you boarding.",
+      "Many countries require a passport to remain valid for at least six months beyond the date you enter. The Schengen area applies a different test — validity of at least three months beyond your intended departure, plus a rule that the passport was issued within the previous ten years. This board's travel check only tests the expiry-date side of these rules (the six-month and three-month validity windows) against the expiry date you entered — it doesn't collect a passport's issue date, so a clean 'Before you travel' section doesn't confirm the ten-year-issuance part of the Schengen rule. Check that yourself, and remember airlines enforce all of this at check-in, so a technically valid passport can still stop you boarding.",
     ],
     [
       "When can a driving licence be renewed in India?",

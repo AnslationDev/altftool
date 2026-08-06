@@ -19,8 +19,8 @@ import {
   Star,
 } from "lucide-react";
 
-const PHONE_DISPLAY = "(855) 555-0142";
-const PHONE_TEL = "tel:+18555550142";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const NAV_LINKS = [
   { href: "#protect", label: "Protection" },

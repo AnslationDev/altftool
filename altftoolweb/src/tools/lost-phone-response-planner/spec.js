@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "lost-phone-response-planner",
   "title": "Lost Phone Response Planner",
-  "description": "Device loss ke immediate account-security steps prioritize kare.",
+  "description": "Prioritize the account-security steps to take in the first hour after losing a phone.",
   "badge": "Consumer, Family & Personal Resilience",
   "category": [
     "Security & Privacy",

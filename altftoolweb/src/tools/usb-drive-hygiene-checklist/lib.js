@@ -88,13 +88,11 @@ export const CONTROLS = [
     id: "avScanning",
     label: "I scan drives with antivirus before opening them",
     reduces: { malware: 0.5 },
-    blindTo: ["firmware", "power", "dataloss", "remanence"],
   },
   {
     id: "inspectInVm",
     label: "I inspect unknown media in a throwaway virtual machine or live system",
     reduces: { malware: 0.85, firmware: 0.25 },
-    blindTo: ["power"],
     note: "A virtual machine contains the files, but the host still enumerates the device before the VM sees it, so a keyboard emulator can act on the host first.",
   },
   {
@@ -106,13 +104,11 @@ export const CONTROLS = [
     id: "fullDiskEncryption",
     label: "The drive is encrypted with software full-disk encryption",
     reduces: { dataloss: 0.9, remanence: 0.9 },
-    blindTo: ["firmware", "malware"],
   },
   {
     id: "hardwareEncrypted",
     label: "It is a hardware-encrypted drive with its own keypad or reader",
     reduces: { dataloss: 0.95, remanence: 0.9 },
-    blindTo: ["firmware", "malware"],
   },
   {
     id: "usbBlockedByPolicy",
@@ -124,7 +120,6 @@ export const CONTROLS = [
     id: "dataBlocker",
     label: "I only charge through a data blocker or a charge-only cable",
     reduces: { firmware: 0.9 },
-    blindTo: ["power"],
   },
   {
     id: "physicalCustody",
@@ -132,8 +127,6 @@ export const CONTROLS = [
     reduces: { dataloss: 0.4, exfiltration: 0.3 },
   },
 ];
-
-export const CONTROL_IDS = CONTROLS.map((item) => item.id);
 
 /** Scenarios, each with the threats that actually apply and their weights. */
 export const SCENARIOS = [
@@ -211,15 +204,13 @@ export const SCENARIOS = [
   },
 ];
 
-export const SCENARIO_IDS = SCENARIOS.map((item) => item.id);
-
 const clamp = (value, low, high) => Math.min(high, Math.max(low, value));
 
 /**
  * Score residual risk for one scenario given the controls in place.
  *
  * @param {object} input
- * @param {string} input.scenario  One of SCENARIO_IDS.
+ * @param {string} input.scenario  One of SCENARIOS[].id.
  * @param {string[]} input.controls  Control ids in place.
  * @returns {object} assessment, or { error }.
  */
@@ -269,11 +260,12 @@ export function assessUsbScenario({ scenario, controls = [] } = {}) {
           ? { id: "moderate", label: "Workable, with the gaps below closed", tone: "warning" }
           : { id: "low", label: "Well covered for this situation", tone: "success" };
 
-  // A control counts as false comfort when it is in place but blind to the
-  // scenario's largest remaining threat.
+  // A control counts as false comfort when it is in place but its `reduces`
+  // map has no entry for the scenario's largest remaining threat — i.e. it
+  // does nothing against it, regardless of what it protects elsewhere.
   const topThreat = rows[0];
   const falseComfort = active
-    .filter((control) => (control.blindTo ?? []).includes(topThreat.id))
+    .filter((control) => !control.reduces[topThreat.id])
     .map((control) => ({
       id: control.id,
       label: control.label,

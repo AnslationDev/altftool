@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "home-heat-loss-retrofit-estimator",
   "title": "Home Heat-Loss & Retrofit Estimator",
-  "description": "Room dimensions aur insulation se improvement scenarios compare kare.",
+  "description": "Compare insulation retrofit scenarios using your room dimensions and current insulation.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Lifestyle",

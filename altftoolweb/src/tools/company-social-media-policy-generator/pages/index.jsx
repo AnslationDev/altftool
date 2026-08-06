@@ -89,6 +89,14 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset the company name, escalation owner, effective date and your clause selections back to the demo example values? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setCompanyName(DEFAULTS.companyName);
     setSpokesperson(DEFAULTS.spokesperson);
     setEffectiveDate(DEFAULTS.effectiveDate);
@@ -200,7 +208,7 @@ export default function ToolHome() {
       {hasError ? (
         <p
           role="alert"
-          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
         >
           {result.error}
         </p>
@@ -208,7 +216,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Required coverage
             </p>
@@ -246,14 +254,14 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 space-y-4 text-sm">
+        <dl className="mt-5 space-y-4 text-sm" aria-live="polite" role="status">
           <div>
             <dt className="font-semibold text-[var(--muted-foreground)]">Required clauses missing</dt>
             <dd className="mt-1">
               {hasError ? (
                 DASH
               ) : result.missing.length === 0 ? (
-                <span className="text-[var(--success)]">
+                <span className="text-[var(--success-text)]">
                   None — every clause your profile requires is included.
                 </span>
               ) : (
@@ -261,7 +269,7 @@ export default function ToolHome() {
                   {result.missing.map((gap) => (
                     <li
                       key={gap.id}
-                      className="rounded-md bg-[var(--warning-soft)] px-3 py-2 text-[var(--warning)]"
+                      className="rounded-md bg-[var(--warning-soft)] px-3 py-2 text-[var(--warning-text)]"
                     >
                       <span className="font-semibold">{gap.title}</span> — {gap.why}
                     </li>

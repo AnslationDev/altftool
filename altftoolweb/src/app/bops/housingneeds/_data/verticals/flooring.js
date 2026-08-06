@@ -32,7 +32,7 @@ const flooring = {
     "Pet and kid durability rated"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/flooring",
+  "quoteUrl": "#demo-only",
   "seo": {
     "title": "Flooring Guide: Materials and Install Costs",
     "description": "Compare hardwood, LVP, laminate, tile, and carpet flooring: durability, waterproof options, subfloor prep, refinishing, and what drives installation costs."

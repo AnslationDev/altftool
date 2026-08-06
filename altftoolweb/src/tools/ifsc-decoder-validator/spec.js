@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "ifsc-decoder-validator",
   "title": "IFSC Decoder & Validator",
-  "description": "IFSC format validate karke bank aur branch identifier decode kare.",
+  "description": "Validate an IFSC code's format and decode its bank and branch identifiers.",
   "badge": "India-Specific Utilities",
   "category": [
     "Finance",

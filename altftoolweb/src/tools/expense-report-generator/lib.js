@@ -13,8 +13,11 @@
  * 2. CASH PAYMENT LIMIT — Section 40A(3) of the Income-tax Act, 1961 disallows a
  *    business expenditure where payment to a single person in a single day exceeds
  *    ₹10,000 otherwise than by account payee cheque, bank draft or an electronic mode.
- *    The limit is ₹35,000 for payments to a transporter for plying, hiring or leasing
- *    goods carriages (Rule 6DD carve-outs apart).
+ *    This module applies that flat ₹10,000 limit only. The Act carries a higher
+ *    ₹35,000 proviso for payments to a transporter for plying, hiring or leasing
+ *    goods carriages, plus further Rule 6DD carve-outs — there is no "transporter"
+ *    or "goods carriage" line item here, so check those exceptions yourself for any
+ *    freight payment rather than relying on the flag below.
  *
  * 3. ADVANCE SETTLEMENT — the amount actually payable to the employee is the
  *    reimbursable total minus any advance already drawn; a negative figure is cash the
@@ -27,8 +30,6 @@
 
 /** Section 40A(3), Income-tax Act 1961 — cash payment ceiling per person per day. */
 export const CASH_LIMIT = 10000;
-/** Section 40A(3) proviso — higher ceiling for payments to goods-carriage operators. */
-export const CASH_LIMIT_TRANSPORT = 35000;
 
 /**
  * Expense heads, with whether input tax credit is available on them.
@@ -36,7 +37,17 @@ export const CASH_LIMIT_TRANSPORT = 35000;
  */
 export const CATEGORIES = [
   { key: "air", label: "Air / rail / bus fare", itcBlocked: false },
-  { key: "hotel", label: "Hotel & lodging", itcBlocked: false, note: "Credit only if the hotel is in the state where you are registered — place of supply is the hotel's location." },
+  {
+    key: "hotel",
+    label: "Hotel & lodging",
+    itcBlocked: false,
+    // Place of supply for a hotel stay is the hotel's own location (Section 12(3),
+    // IGST Act, 2017), not the guest's billing address. Credit is only available
+    // when that location matches the state the employer is GST-registered in, so
+    // this cannot be a flat itcBlocked flag — it needs a per-line signal.
+    placeOfSupplySensitive: true,
+    note: "Credit only if the hotel is in the state where you are registered — place of supply is the hotel's location.",
+  },
   { key: "cab", label: "Local conveyance & cabs", itcBlocked: true, note: "Section 17(5)(b) blocks credit on hiring motor vehicles seating up to 13 persons." },
   { key: "meals", label: "Meals & refreshments", itcBlocked: true, note: "Section 17(5)(b) blocks credit on food and beverages." },
   { key: "entertainment", label: "Client entertainment", itcBlocked: true, note: "Outdoor catering and club membership are blocked under Section 17(5)(b)." },
@@ -101,7 +112,20 @@ export function buildExpenseReport({
     if (amount < 0) return { error: `Line ${i + 1} is negative. Enter refunds as a separate credit line.` };
     if (amount === 0) continue;
 
-    const tax = isNum(item.tax) && item.tax > 0 ? item.tax : 0;
+    // Tax is optional (undefined/null/blank means "no GST on this bill"), but
+    // once a value is actually supplied it is validated the same way amount
+    // is — a stray non-numeric character or a negative figure is an error,
+    // not something to be silently discarded as zero.
+    let tax = 0;
+    if (item.tax !== undefined && item.tax !== null && item.tax !== "") {
+      if (!isNum(item.tax)) {
+        return { error: `Line ${i + 1}: enter a valid GST amount, or leave it blank.` };
+      }
+      if (item.tax < 0) {
+        return { error: `Line ${i + 1}: the GST amount cannot be negative.` };
+      }
+      tax = item.tax;
+    }
     if (tax > amount) {
       return { error: `Line ${i + 1}: the GST shown is larger than the bill total.` };
     }
@@ -109,7 +133,12 @@ export function buildExpenseReport({
     const category = categoryFor(item.category);
     const mode = PAYMENT_MODES.some((m) => m.key === item.mode) ? item.mode : "cash";
     const paidByCompany = mode === "company";
-    const creditAvailable = gstRegistered && !category.itcBlocked && tax > 0;
+    const requiresSameState = category.placeOfSupplySensitive === true;
+    // Conservative by design: unless the same-state box is explicitly ticked,
+    // a place-of-supply-sensitive line (hotel) is treated as not creditable,
+    // since claiming ITC you are not entitled to is the costlier mistake.
+    const sameStateConfirmed = requiresSameState ? item.hotelSameState === true : true;
+    const creditAvailable = gstRegistered && !category.itcBlocked && tax > 0 && sameStateConfirmed;
 
     gross = round2(gross + amount);
     taxTotal = round2(taxTotal + tax);
@@ -135,7 +164,15 @@ export function buildExpenseReport({
       paidByCompany,
       billable: Boolean(item.billable),
       creditAvailable,
-      itcNote: category.itcBlocked ? category.note || "Input tax credit is blocked on this head." : category.note || "",
+      requiresSameState,
+      sameStateConfirmed,
+      itcNote: category.itcBlocked
+        ? category.note || "Input tax credit is blocked on this head."
+        : requiresSameState && !sameStateConfirmed
+          ? category.note || "Credit only if the hotel is in the state where you are registered."
+          : requiresSameState && sameStateConfirmed
+            ? "Hotel confirmed in your registered state, so the GST shown is creditable."
+            : category.note || "",
       /** Section 40A(3): a cash payment above ₹10,000 in a day risks disallowance. */
       cashLimitBreach: mode === "cash" && amount > CASH_LIMIT,
       missingReceipt: item.hasReceipt === false,

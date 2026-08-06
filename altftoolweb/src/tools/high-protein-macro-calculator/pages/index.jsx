@@ -24,6 +24,8 @@ const pct = (v) => (Number.isFinite(v) ? `${NUM0.format(v * 100)}%` : DASH);
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
+const INPUT_INVALID_CLASS =
+  "border-[var(--danger)] focus:border-[var(--danger)] focus:ring-[var(--danger)]/25";
 const LABEL_CLASS = "block text-sm font-semibold text-[var(--foreground)]";
 const PRIMARY_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
@@ -43,7 +45,10 @@ const DEFAULTS = {
   proteinPerKg: "2.6",
   bodyFatPercent: "20",
   fatPerKg: "0.8",
-  meals: "4",
+  // 6 meals keeps the default 2.6 g/kg lean-mass target under the per-meal
+  // ceiling (0.4 g/kg body weight) so the demo values don't trip the tool's
+  // own "spread it across more meals" warning on first load.
+  meals: "6",
 };
 
 const toNumber = (raw) => {
@@ -94,6 +99,35 @@ export default function ToolHome() {
 
   const ok = !plan.error;
   const range = form.proteinBasis === "lean" ? PROTEIN_PER_KG_LEAN : PROTEIN_PER_KG_BODYWEIGHT;
+
+  // Mirrors the bound checks in highProteinMacros() so the specific offending
+  // field(s) can be highlighted - lib.js only returns one error string, not a
+  // field key, so this is recomputed here from the same LIMITS/range values.
+  const invalidFields = useMemo(() => {
+    const invalid = new Set();
+    const check = (key, value, min, max) => {
+      if (!Number.isFinite(value) || value < min || value > max) invalid.add(key);
+    };
+    check("age", toNumber(form.age), LIMITS.age.min, LIMITS.age.max);
+    check("weightKg", toNumber(form.weightKg), LIMITS.weightKg.min, LIMITS.weightKg.max);
+    check("heightCm", toNumber(form.heightCm), LIMITS.heightCm.min, LIMITS.heightCm.max);
+    check("weeklyLossKg", toNumber(form.weeklyLossKg), 0, LIMITS.weeklyLossKg.max);
+    check("meals", toNumber(form.meals), LIMITS.meals.min, LIMITS.meals.max);
+    check("fatPerKg", toNumber(form.fatPerKg), FAT_PER_KG.min, FAT_PER_KG.max);
+    check("proteinPerKg", toNumber(form.proteinPerKg), range.min, range.max);
+    if (form.proteinBasis === "lean") {
+      check(
+        "bodyFatPercent",
+        toNumber(form.bodyFatPercent),
+        LIMITS.bodyFatPercent.min,
+        LIMITS.bodyFatPercent.max,
+      );
+    }
+    return invalid;
+  }, [form, range]);
+
+  const inputClass = (key) =>
+    `mt-2 ${INPUT_CLASS} ${invalidFields.has(key) ? INPUT_INVALID_CLASS : ""}`;
 
   const summary = useMemo(() => {
     if (!ok) return "";
@@ -174,7 +208,7 @@ export default function ToolHome() {
             </label>
             <input
               id="hp-age"
-              className={`mt-2 ${INPUT_CLASS}`}
+              className={inputClass("age")}
               type="number"
               inputMode="numeric"
               min={LIMITS.age.min}
@@ -182,6 +216,7 @@ export default function ToolHome() {
               step="1"
               value={form.age}
               onChange={set("age")}
+              aria-invalid={invalidFields.has("age")}
             />
           </div>
           <div>
@@ -190,7 +225,7 @@ export default function ToolHome() {
             </label>
             <input
               id="hp-weight"
-              className={`mt-2 ${INPUT_CLASS}`}
+              className={inputClass("weightKg")}
               type="number"
               inputMode="decimal"
               min={LIMITS.weightKg.min}
@@ -198,6 +233,7 @@ export default function ToolHome() {
               step="0.5"
               value={form.weightKg}
               onChange={set("weightKg")}
+              aria-invalid={invalidFields.has("weightKg")}
             />
           </div>
           <div>
@@ -206,7 +242,7 @@ export default function ToolHome() {
             </label>
             <input
               id="hp-height"
-              className={`mt-2 ${INPUT_CLASS}`}
+              className={inputClass("heightCm")}
               type="number"
               inputMode="decimal"
               min={LIMITS.heightCm.min}
@@ -214,6 +250,7 @@ export default function ToolHome() {
               step="1"
               value={form.heightCm}
               onChange={set("heightCm")}
+              aria-invalid={invalidFields.has("heightCm")}
             />
           </div>
           <div>
@@ -239,7 +276,7 @@ export default function ToolHome() {
             </label>
             <input
               id="hp-rate"
-              className={`mt-2 ${INPUT_CLASS}`}
+              className={inputClass("weeklyLossKg")}
               type="number"
               inputMode="decimal"
               min="0"
@@ -247,6 +284,7 @@ export default function ToolHome() {
               step="0.1"
               value={form.weeklyLossKg}
               onChange={set("weeklyLossKg")}
+              aria-invalid={invalidFields.has("weeklyLossKg")}
             />
           </div>
           <div className="sm:col-span-2">
@@ -278,7 +316,7 @@ export default function ToolHome() {
             </label>
             <input
               id="hp-protein"
-              className={`mt-2 ${INPUT_CLASS}`}
+              className={inputClass("proteinPerKg")}
               type="number"
               inputMode="decimal"
               min={range.min}
@@ -286,6 +324,7 @@ export default function ToolHome() {
               step="0.1"
               value={form.proteinPerKg}
               onChange={set("proteinPerKg")}
+              aria-invalid={invalidFields.has("proteinPerKg")}
             />
           </div>
           {form.proteinBasis === "lean" ? (
@@ -295,7 +334,7 @@ export default function ToolHome() {
               </label>
               <input
                 id="hp-bf"
-                className={`mt-2 ${INPUT_CLASS}`}
+                className={inputClass("bodyFatPercent")}
                 type="number"
                 inputMode="decimal"
                 min={LIMITS.bodyFatPercent.min}
@@ -303,6 +342,7 @@ export default function ToolHome() {
                 step="0.5"
                 value={form.bodyFatPercent}
                 onChange={set("bodyFatPercent")}
+                aria-invalid={invalidFields.has("bodyFatPercent")}
               />
             </div>
           ) : null}
@@ -312,7 +352,7 @@ export default function ToolHome() {
             </label>
             <input
               id="hp-fat"
-              className={`mt-2 ${INPUT_CLASS}`}
+              className={inputClass("fatPerKg")}
               type="number"
               inputMode="decimal"
               min={FAT_PER_KG.min}
@@ -320,6 +360,7 @@ export default function ToolHome() {
               step="0.05"
               value={form.fatPerKg}
               onChange={set("fatPerKg")}
+              aria-invalid={invalidFields.has("fatPerKg")}
             />
           </div>
           <div>
@@ -328,7 +369,7 @@ export default function ToolHome() {
             </label>
             <input
               id="hp-meals"
-              className={`mt-2 ${INPUT_CLASS}`}
+              className={inputClass("meals")}
               type="number"
               inputMode="numeric"
               min={LIMITS.meals.min}
@@ -336,6 +377,7 @@ export default function ToolHome() {
               step="1"
               value={form.meals}
               onChange={set("meals")}
+              aria-invalid={invalidFields.has("meals")}
             />
           </div>
         </div>
@@ -362,7 +404,9 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {ok
                 ? `On ${NUM0.format(plan.calories)} kcal a day, ${NUM0.format(plan.carbGrams)} g carbs and ${NUM0.format(plan.fatGrams)} g fat`
-                : "Fix the highlighted input to see your targets."}
+                : invalidFields.size > 0
+                  ? "Fix the highlighted input to see your targets."
+                  : "Adjust the inputs above to see your targets."}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -413,43 +457,45 @@ export default function ToolHome() {
           </div>
         ) : null}
 
-        {ok && plan.aggressiveLoss ? (
-          <p className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">
-            {NUM1.format(plan.weeklyLossKg)} kg a week is more than 1% of your body weight. Losing
-            faster than that costs disproportionately more muscle — even at this protein intake.
-          </p>
-        ) : null}
-        {ok && plan.belowCalorieFloor ? (
-          <p className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">
-            This lands below {plan.calorieFloor} kcal a day. Intakes that low should be medically
-            supervised — slow the target loss rate.
-          </p>
-        ) : null}
-        {ok && !plan.belowCalorieFloor && plan.belowBmr ? (
-          <p className={NOTE_CLASS}>
-            The target is under your estimated resting metabolic rate of {kcal(plan.bmr)}. That is
-            survivable short-term but hard to sustain; a slower rate usually holds better.
-          </p>
-        ) : null}
-        {ok && plan.lowFat ? (
-          <p className={NOTE_CLASS}>
-            Fat is under 20% of calories. Nudge fat per kg up — very low fat intakes are hard to
-            stick to and hurt absorption of vitamins A, D, E and K.
-          </p>
-        ) : null}
-        {ok && plan.lowCarb ? (
-          <p className={NOTE_CLASS}>
-            Carbohydrate is under {LOW_CARB_FLAG_G} g a day, which is effectively ketogenic. Expect
-            heavy training sessions to feel flat until you adapt.
-          </p>
-        ) : null}
-        {ok && plan.perMealAboveCeiling ? (
-          <p className={NOTE_CLASS}>
-            {g0(plan.perMealProtein)} in one sitting is above the roughly {g0(plan.perMealCeiling)}{" "}
-            per meal that maximally stimulates muscle protein synthesis. Adding a meal spreads it
-            better.
-          </p>
-        ) : null}
+        <div aria-live="polite" role="status">
+          {ok && plan.aggressiveLoss ? (
+            <p className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">
+              {NUM1.format(plan.weeklyLossKg)} kg a week is more than 1% of your body weight. Losing
+              faster than that costs disproportionately more muscle — even at this protein intake.
+            </p>
+          ) : null}
+          {ok && plan.belowCalorieFloor ? (
+            <p className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">
+              This lands below {plan.calorieFloor} kcal a day. Intakes that low should be medically
+              supervised — slow the target loss rate.
+            </p>
+          ) : null}
+          {ok && !plan.belowCalorieFloor && plan.belowBmr ? (
+            <p className={NOTE_CLASS}>
+              The target is under your estimated resting metabolic rate of {kcal(plan.bmr)}. That is
+              survivable short-term but hard to sustain; a slower rate usually holds better.
+            </p>
+          ) : null}
+          {ok && plan.lowFat ? (
+            <p className={NOTE_CLASS}>
+              Fat is under 20% of calories. Nudge fat per kg up — very low fat intakes are hard to
+              stick to and hurt absorption of vitamins A, D, E and K.
+            </p>
+          ) : null}
+          {ok && plan.lowCarb ? (
+            <p className={NOTE_CLASS}>
+              Carbohydrate is under {LOW_CARB_FLAG_G} g a day, which is effectively ketogenic. Expect
+              heavy training sessions to feel flat until you adapt.
+            </p>
+          ) : null}
+          {ok && plan.perMealAboveCeiling ? (
+            <p className={NOTE_CLASS}>
+              {g0(plan.perMealProtein)} in one sitting is above the roughly {g0(plan.perMealCeiling)}{" "}
+              per meal that maximally stimulates muscle protein synthesis. Adding a meal spreads it
+              better.
+            </p>
+          ) : null}
+        </div>
       </section>
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">

@@ -177,7 +177,8 @@ export function pitchFinancials({ cashInBank, monthlyBurn, raiseAmount, dilution
   if (![cash, burn, raise, dilution].every(Number.isFinite)) {
     return { error: "Enter numbers for cash, burn, raise size and dilution." };
   }
-  if (cash < 0 || raise < 0) return { error: "Cash and raise amount cannot be negative." };
+  if (cash < 0) return { error: "Cash in bank cannot be negative." };
+  if (raise <= 0) return { error: "Raise amount must be greater than zero." };
   if (burn <= 0) return { error: "Monthly net burn must be greater than zero to compute runway." };
   if (dilution <= 0 || dilution >= 100) {
     return { error: "Dilution must be greater than 0% and less than 100%." };
@@ -189,10 +190,20 @@ export function pitchFinancials({ cashInBank, monthlyBurn, raiseAmount, dilution
   const preMoney = postMoney - raise;
   const startNextRaiseInMonths = postRaiseRunwayMonths - RAISE_LEAD_MONTHS;
 
+  // Round the current-runway and months-bought figures first, then derive
+  // the post-raise runway from those already-rounded parts (rather than
+  // rounding all three independently from raw division). Because
+  // cash/burn + raise/burn === (cash+raise)/burn exactly, this guarantees
+  // the three numbers shown to the user — and echoed into the AI prompt —
+  // always add up: current + bought === after.
+  const currentRunwayMonthsRounded = round(currentRunwayMonths, 1);
+  const monthsBoughtRounded = round(raise / burn, 1);
+  const postRaiseRunwayMonthsRounded = round(currentRunwayMonthsRounded + monthsBoughtRounded, 1);
+
   return {
-    currentRunwayMonths: round(currentRunwayMonths, 1),
-    postRaiseRunwayMonths: round(postRaiseRunwayMonths, 1),
-    monthsBought: round(raise / burn, 1),
+    currentRunwayMonths: currentRunwayMonthsRounded,
+    postRaiseRunwayMonths: postRaiseRunwayMonthsRounded,
+    monthsBought: monthsBoughtRounded,
     postMoney: round(postMoney, 0),
     preMoney: round(preMoney, 0),
     startNextRaiseInMonths: round(Math.max(0, startNextRaiseInMonths), 1),
@@ -300,7 +311,7 @@ export function buildPitchPrompt({
     `Evidence they expect to see: ${stageSpec.proof}`,
     `Sector questions they will ask: ${sectorSpec.questions}`,
     "",
-    `Timing — the pitch runs ${Math.round(timing.totalSeconds / 60)} minutes (${timing.totalSeconds} seconds). Budget it like this:`,
+    `Timing — the pitch runs ${round(timing.totalSeconds / 60, 1)} minutes (${timing.totalSeconds} seconds). Budget it like this:`,
     ...slideLines,
     "",
     "Rules:",

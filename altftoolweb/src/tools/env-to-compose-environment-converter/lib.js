@@ -38,12 +38,15 @@ function findClosingQuote(text, q) {
   return -1;
 }
 
+// dotenv (motdotla/dotenv, the format this parser follows per the file-header
+// comment) only ever unescapes \n and \r inside a double-quoted value - never
+// \t, \" or \\. Adding those would corrupt perfectly ordinary content that
+// merely contains a backslash followed by that letter (e.g. a Windows path
+// like "C:\temp\node_modules"), since each rule is a blanket regex over the
+// whole value, not scoped to a deliberately-typed escape sequence.
 const DOUBLE_QUOTE_ESCAPES = [
   [/\\n/g, "\n"],
   [/\\r/g, "\r"],
-  [/\\t/g, "\t"],
-  [/\\"/g, '"'],
-  [/\\\\/g, "\\"],
 ];
 
 /** Parse .env text into an ordered key->value map (dotenv rules, last wins). */
@@ -90,9 +93,12 @@ function needsYamlQuoting(value) {
   if (value === "") return true;
   if (YAML_AMBIGUOUS_PATTERN.test(value)) return true;
   if (/^[-+]?[0-9]/.test(value)) return true; // numbers, dates, versions like 1.10
+  if (/^[-+]?\.[0-9]/.test(value)) return true; // leading-dot decimals: .5, .75, -.5
+  if (/^[-+]?\.(?:inf|nan)$/i.test(value)) return true; // YAML 1.1 special floats: .inf, -.inf, +.inf, .nan
   if (/[\n\r\t]/.test(value)) return true;
   if (/^[\s]|[\s]$/.test(value)) return true;
   if (/[:#{}[\],&*!|>'"%@`]/.test(value)) return true;
+  if (/^[-?](\s|$)/.test(value)) return true; // YAML block-sequence/mapping-key indicators: "-", "- foo", "?", "? foo"
   return false;
 }
 

@@ -120,7 +120,7 @@ export default function BlogArticle({ slug }) {
                   <button className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-50 text-slate-600 text-sm font-semibold hover:bg-[#0D3B66] hover:text-white transition">
                     <Share2 className="w-4 h-4" /> Copy Link
                   </button>
-                  <a href="tel:+18005551234" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00AEEF]/10 text-[#0D3B66] text-sm font-semibold hover:bg-[#00AEEF] hover:text-white transition">
+                  <a href="#demo-only" className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00AEEF]/10 text-[#0D3B66] text-sm font-semibold hover:bg-[#00AEEF] hover:text-white transition">
                     <Phone className="w-4 h-4" /> Call an Expert
                   </a>
                 </div>

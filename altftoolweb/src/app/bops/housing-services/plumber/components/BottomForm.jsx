@@ -152,8 +152,8 @@ function EstimateForm() {
         <span className="fp-bform__divider-text">or</span>
         <span className="fp-bform__divider-line" />
       </div>
-      <a href="tel:8005550100" className="fp-bform__alt">
-        <Phone size={16} /> Call (800) 555-0100
+      <a href="#demo-only" className="fp-bform__alt">
+        <Phone size={16} /> Call Demo only
       </a>
       <p className="fp-bform__note">No credit card required · 100% free · No obligation</p>
     </form>

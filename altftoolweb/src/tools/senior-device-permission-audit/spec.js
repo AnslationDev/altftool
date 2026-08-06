@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "senior-device-permission-audit",
   "title": "Senior Device Permission Audit",
-  "description": "Phone permissions cleanup ka senior-friendly guide provide kare.",
+  "description": "A senior-friendly walkthrough for reviewing and cleaning up phone app permissions.",
   "badge": "Consumer, Family & Personal Resilience",
   "category": [
     "Security & Privacy",

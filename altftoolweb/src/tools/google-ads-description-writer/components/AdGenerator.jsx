@@ -1,22 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Button } from './ui/button';
 import { Textarea } from './ui/textarea';
 import { Card } from './ui/card';
-import { Copy, Sparkles, Loader2 } from "lucide-react";
+import { Copy, Check, Sparkles, Loader2 } from "lucide-react";
 import { toast } from "sonner";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
+// Fisher-Yates shuffle: sort(() => Math.random() - 0.5) is a well-known
+// biased "shuffle" whose output isn't a uniform random permutation.
+function shuffleArray(items) {
+  const result = [...items];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
 const AdGenerator = () => {
   const [input, setInput] = useState("");
   const [descriptions, setDescriptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const generateTimeoutRef = useRef(null);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
+
+  useEffect(() => {
+    return () => {
+      if (generateTimeoutRef.current) {
+        clearTimeout(generateTimeoutRef.current);
+      }
+    };
+  }, []);
+
   const handleGenerate = async () => {
     if (!input.trim()) {
       toast.error("Please enter a product or service description");
       return;
     }
     setIsLoading(true);
-    setTimeout(() => {
+    if (generateTimeoutRef.current) {
+      clearTimeout(generateTimeoutRef.current);
+    }
+    generateTimeoutRef.current = setTimeout(() => {
+      generateTimeoutRef.current = null;
       const mockDescriptions = [
         `Buy ${input.slice(0, 30)} at the best price. Shop now!`,
         `Get premium ${input.slice(0, 32)} with fast delivery.`,
@@ -59,18 +87,28 @@ const AdGenerator = () => {
         `Shop ${input.slice(0, 34)} & enjoy great savings.`,
         `${input.slice(0, 36)} made to last. Buy today!`
       ].map((desc) => desc.slice(0, 90));
-      const shuffled = [...mockDescriptions].sort(() => Math.random() - 0.5);
+      const shuffled = shuffleArray(mockDescriptions);
       const randomFive = shuffled.slice(0, 5);
       setDescriptions(randomFive);
       setIsLoading(false);
       toast.success(" Google Ad descriptions generated successfully!");
     }, 2e3);
   };
-  const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text);
-    toast.success("Copied to clipboard!");
+  const copyToClipboard = (text, index) => {
+    copy(index, text, { label: "Description" });
   };
   const handelReset = () => {
+    if (
+      (input.trim() || descriptions.length > 0) &&
+      typeof window !== "undefined" &&
+      !window.confirm("Reset will clear your input and generated descriptions. Continue?")
+    ) {
+      return;
+    }
+    if (generateTimeoutRef.current) {
+      clearTimeout(generateTimeoutRef.current);
+      generateTimeoutRef.current = null;
+    }
     setInput("");
     setDescriptions([]);
     setIsLoading(false);
@@ -109,7 +147,7 @@ const AdGenerator = () => {
                 <Button
     onClick={handleGenerate}
     disabled={isLoading || !input.trim() || isOverLimit}
-    className="w-full hover:bg-blue-600"
+    className="w-full"
     size="lg"
   >
                     {isLoading ? <>
@@ -144,16 +182,20 @@ const AdGenerator = () => {
                                 <Button
     variant="ghost"
     size="icon"
-    onClick={() => copyToClipboard(desc)}
+    onClick={() => copyToClipboard(desc, index)}
     className="shrink-0"
+    aria-label={`Copy description ${index + 1} to clipboard`}
   >
-                                    <Copy className="w-4 h-4" />
+                                    {isCopied(index) ? <Check className="w-4 h-4 text-(--primary-text)" /> : <Copy className="w-4 h-4" />}
                                 </Button>
 
 
 
                             </div>
                         </Card>)}
+                    <span aria-live="polite" role="status" className="sr-only">
+                        {announcement}
+                    </span>
                 </div>}
         </div>;
 };

@@ -54,7 +54,7 @@ export function computeCommuteCost({
   if (oneWayKm > MAX_ONE_WAY_KM) {
     return { error: `One-way distance above ${MAX_ONE_WAY_KM} km is not a daily commute.` };
   }
-  if (daysPerWeek <= 0 || daysPerWeek > 7) {
+  if (daysPerWeek < 1 || daysPerWeek > 7) {
     return { error: "Commute days must be between 1 and 7 per week." };
   }
   if (mileageKmpl <= 0) {

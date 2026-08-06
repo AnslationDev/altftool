@@ -367,6 +367,10 @@ let activeSeoConfig = null;
 
 function pushUnique(entries, seen, path, options) {
   if (!path || seen.has(path)) return;
+  // Business Ops pages are design demonstrations, not operating providers or
+  // live quote flows. Their responses carry X-Robots-Tag: noindex, nofollow;
+  // keep the central sitemap unable to advertise one through any future loop.
+  if (path === "/bops" || path.startsWith("/bops/")) return;
 
   let opts = options;
   if (activeSeoConfig) {

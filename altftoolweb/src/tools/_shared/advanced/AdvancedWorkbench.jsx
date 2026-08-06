@@ -18,6 +18,16 @@ import {
   Upload,
   Wrench,
 } from "lucide-react";
+
+import {
+  captureMediaAnalysisLine,
+  createMediaAnalysisLog,
+  formatMediaAnalysisLog,
+} from "./mediaAnalysisLog.js";
+import {
+  buildVoiceprintPitchShiftCommand,
+  probeAudioSampleRate,
+} from "./voiceprintPitchShift.js";
 import { advancedCatalog } from "./catalog";
 import { sanitizeSvgSource } from "./svgSanitizer";
 
@@ -329,16 +339,23 @@ const mediaOptions = {
     label: "Voice shift",
     choices: ["subtle-up", "subtle-down", "strong-up", "strong-down"],
     extension: "wav",
-    command: (input, output, choice) => {
-      const factor = choice.includes("strong") ? 1.18 : 1.08;
-      const actual = choice.includes("down") ? 1 / factor : factor;
-      return [
-        "-i",
-        input,
-        "-af",
-        `asetrate=48000*${actual},aresample=48000,atempo=${1 / actual},highpass=f=100,lowpass=f=8500`,
-        output,
-      ];
+    // `asetrate=R` relabels the decoded PCM as if it had been captured at
+    // rate R without resampling, so the true pitch multiplier it produces
+    // is R / R_in, where R_in is the *actual* native sample rate of the
+    // uploaded file. This entry used to hardcode R_in as 48000, which only
+    // gave the advertised 1.08x/1.18x factor (and a duration-preserving
+    // result) when the source happened to already be 48kHz. Any other
+    // input (e.g. 8kHz telephony audio, 44.1kHz WAV/MP3, 96kHz field
+    // recordings) got a silently wrong shift magnitude/direction and a
+    // wrong output duration. We now probe the real input sample rate with
+    // ffprobe before building the filter graph and use that instead of the
+    // 48000 literal. `ffmpeg` is passed in as an extra 6th argument by the
+    // MediaLab runner below; every other entry in this file still declares
+    // `command` with 3-5 params and simply ignores the extra argument, so
+    // this is scoped to this one tool only.
+    command: async (input, output, choice, _second, _fontPath, ffmpeg) => {
+      const sourceRate = await probeAudioSampleRate(ffmpeg, input);
+      return buildVoiceprintPitchShiftCommand({ input, output, choice, sourceRate });
     },
     note: "Changes obvious pitch cues but cannot guarantee biometric anonymity. Do not rely on it against determined speaker recognition.",
   },
@@ -513,7 +530,8 @@ function MediaLab({ slug }) {
   const [messageTone, setMessageTone] = useState("info");
   const [logs, setLogs] = useState([]);
   const engine = useRef(null);
-  const logsRef = useRef([]);
+  const analysisLogRef = useRef(createMediaAnalysisLog());
+  const analyzeRef = useRef(Boolean(config.analyze));
 
   useEffect(() => () => engine.current?.terminate?.(), []);
 
@@ -523,7 +541,11 @@ function MediaLab({ slug }) {
     setMessage("");
     setMessageTone("info");
     setLogs([]);
-    logsRef.current = [];
+    analysisLogRef.current = createMediaAnalysisLog();
+    // The FFmpeg listener is installed only once with the engine. Refresh
+    // this ref for every run so a reused engine never reads the slug/config
+    // that happened to create it.
+    analyzeRef.current = Boolean(config.analyze);
     setProgress(0);
     try {
       const [{ FFmpeg }, { fetchFile, toBlobURL }] = await Promise.all([
@@ -537,7 +559,9 @@ function MediaLab({ slug }) {
           setProgress(Math.max(0, Math.min(100, Math.round(value * 100)))),
         );
         ffmpeg.on("log", ({ message: value }) => {
-          logsRef.current = [...logsRef.current.slice(-199), value];
+          if (analyzeRef.current) {
+            captureMediaAnalysisLine(analysisLogRef.current, value);
+          }
           setLogs((current) => [...current.slice(-79), value]);
         });
         const base =
@@ -568,11 +592,24 @@ function MediaLab({ slug }) {
           ? config.extension(choice)
           : config.extension;
       const output = `altftool-${slug}.${extension}`;
-      const command = config.command(input, output, choice, secondName, fontName);
+      // `await` here is a no-op for the synchronous array every other
+      // entry's `command()` returns; it only matters for entries (like
+      // voiceprint-anonymizer) whose `command()` needs to run an async
+      // pre-pass (e.g. ffprobe) before the ffmpeg args can be built. The
+      // trailing `ffmpeg` argument is likewise ignored by every command()
+      // that doesn't declare a 6th parameter.
+      const command = await config.command(
+        input,
+        output,
+        choice,
+        secondName,
+        fontName,
+        ffmpeg,
+      );
       const exitCode = await ffmpeg.exec(command);
       if (exitCode !== 0) throw new Error(`Processing exited with code ${exitCode}`);
       if (config.analyze) {
-        const report = logsRef.current.join("\n");
+        const report = formatMediaAnalysisLog(analysisLogRef.current);
         downloadBlob(
           new Blob([report], { type: "text/plain;charset=utf-8" }),
           `altftool-${slug}-analysis.txt`,

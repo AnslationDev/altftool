@@ -15,6 +15,7 @@ import {
   createFaqJsonLd,
   createPageMetadata,
 } from "@/platform/seo/generateMetadata";
+import { createAtlasEntryJsonLd } from "@/platform/seo/atlasEntrySchema";
 import {
   ACCESS_LEVELS,
   CATEGORY_BY_SLUG,
@@ -76,49 +77,6 @@ export async function generateMetadata({ params }) {
       retired ? `${entry.name} alternative` : `${entry.name} free`,
     ].filter(Boolean),
   });
-}
-
-/**
- * The entry itself as a WebApplication node, pointed at the external URL.
- *
- * `isPartOf` deliberately does NOT claim the site as part of AltFTool — it is
- * a third-party application that this page describes. The AltFTool
- * relationship is `mainEntityOfPage` on the review page, not ownership of the
- * software. Getting this backwards is how directories end up with schema
- * warnings for misrepresenting entities they do not control.
- */
-function createEntryJsonLd(entry, category) {
-  const pagePath = `/altfatlas/site/${entry.slug}`;
-  const node = {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "@id": `${absoluteUrl(pagePath)}#application`,
-    name: entry.name,
-    description: entry.tagline,
-    applicationCategory: category?.name || "WebApplication",
-    operatingSystem: "Web",
-    browserRequirements:
-      "Requires a modern web browser with JavaScript enabled",
-    isAccessibleForFree: entry.access !== "freemium",
-    inLanguage: "en",
-    keywords: (entry.tags || []).join(", "),
-    mainEntityOfPage: { "@type": "WebPage", "@id": absoluteUrl(pagePath) },
-  };
-
-  if (entry.url) node.url = entry.url;
-  // Freshness signal: when this description was last verified against the
-  // live site, not when the site itself changed.
-  if (entry.checked) node.dateModified = entry.checked;
-  if (entry.access !== "freemium") {
-    node.offers = {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
-    };
-  }
-
-  return node;
 }
 
 function Fact({ label, children }) {
@@ -183,7 +141,12 @@ export default async function AtlasSitePage({ params }) {
       <JsonLd
         id={`altf-atlas-site-${slug}-schema`}
         data={[
-          createEntryJsonLd(entry, category),
+          createAtlasEntryJsonLd({
+            entry,
+            category,
+            pageUrl: absoluteUrl(`/altfatlas/site/${slug}`),
+            atlasUrl: absoluteUrl("/altfatlas"),
+          }),
           createFaqJsonLd({ path: `/altfatlas/site/${slug}`, questions: faqs }),
           createBreadcrumbJsonLd([
             { name: "Home", path: "/" },

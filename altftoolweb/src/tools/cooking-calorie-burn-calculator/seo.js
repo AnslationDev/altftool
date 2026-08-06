@@ -23,7 +23,7 @@ const seo = {
   faqs: [
     [
       "How many calories do you burn cooking for an hour?",
-      "Roughly 120 to 200 kcal for a 70 kg adult, depending on how active the hour is. Light standing prep is 2.0 METs (about 147 kcal an hour at 70 kg), while general kitchen activity that mixes cooking, washing and tidying is 3.3 METs (about 242 kcal an hour at the same weight).",
+      "Roughly 130 to 245 kcal for a 70 kg adult, depending on how active the hour is. Light standing prep is 2.0 METs (about 147 kcal an hour at 70 kg), while general kitchen activity that mixes cooking, washing and tidying is 3.3 METs (about 243 kcal an hour at the same weight).",
     ],
     [
       "Is cooking counted as exercise?",

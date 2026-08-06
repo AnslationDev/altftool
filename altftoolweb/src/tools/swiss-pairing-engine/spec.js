@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "swiss-pairing-engine",
   "title": "Swiss Pairing Engine",
-  "description": "Scores se pairings banaye aur rematches avoid kare.",
+  "description": "Build Swiss tournament pairings from current scores while avoiding rematches.",
   "badge": "Fair Decisions & Group Scheduling",
   "category": [
     "Productivity",

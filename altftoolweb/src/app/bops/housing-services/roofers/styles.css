@@ -1129,7 +1129,7 @@ body {
 }
 
 .hero-bg {
-  background-image: url("https://maspethroofing.com/wp-content/uploads/2025/04/DJI_0241-1-scaled.webp");
+  background-image: url("/assets/og-default.png");
   background-size: cover;
   background-position: center;
 }
@@ -1623,7 +1623,7 @@ body {
   position: absolute;
   inset: 0;
   z-index: -3;
-  background-image: url("https://maspethroofing.com/wp-content/uploads/2025/04/img2.webp");
+  background-image: url("/assets/og-default.png");
   background-size: cover;
   background-position: center center;
   filter: brightness(0.9);

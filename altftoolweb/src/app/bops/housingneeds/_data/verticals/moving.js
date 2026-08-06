@@ -35,7 +35,7 @@ const moving = {
     "Full-service, container, and DIY compared"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/moving",
+  "quoteUrl": "#demo-only",
   "seo": {
     "title": "Moving & Storage Guide: Movers, Costs & Tips",
     "description": "Learn how moving works: local vs long-distance pricing, full-service vs labor-only vs pods vs DIY, packing, storage, and the real cost drivers."

@@ -267,9 +267,13 @@ function renderCredit(format, ctx) {
   const { platform, license, title, titleUrl, author, authorUrl, sourceName, sourceUrl, year, modified, modificationNote } = ctx;
 
   if (platform.style === "pattern") {
+    // Replacement-string form: if author/source ever contains a "$"-pattern
+    // ($&, $$, $`, $'), String.replace() reinterprets it even though the
+    // search term is a plain string, corrupting the credit line. The
+    // function form returns its result verbatim with no re-interpretation.
     const line = platform.pattern
-      .replace("{author}", linkify(author, authorUrl, format))
-      .replace("{source}", linkify(sourceName, sourceUrl, format));
+      .replace("{author}", () => linkify(author, authorUrl, format))
+      .replace("{source}", () => linkify(sourceName, sourceUrl, format));
     const suffix = modified
       ? ` (${plainOrEscaped(modificationNote || "modified from the original", format)})`
       : "";
@@ -342,9 +346,14 @@ export function buildAttribution(input = {}) {
   if (!author && !title && !sourceName) {
     return { error: "Enter at least a creator name, an image title or a source so the credit says something." };
   }
-  if (year && !/^\d{4}$/.test(year)) {
-    return { error: "Year should be four digits, for example 2024." };
-  }
+
+  // Year is optional and only ever rendered inside the TASL sentence (the
+  // "pattern" platforms never read it at all), so a partially-typed or
+  // stale value must not blank out the whole credit line while the user is
+  // still typing — an invalid year is silently dropped and surfaced as a
+  // soft warning below, the same way a malformed URL is.
+  const yearIsValid = !year || /^\d{4}$/.test(year);
+  const effectiveYear = yearIsValid ? year : "";
 
   const ctx = {
     platform,
@@ -355,7 +364,7 @@ export function buildAttribution(input = {}) {
     authorUrl,
     sourceName,
     sourceUrl,
-    year,
+    year: effectiveYear,
     modified,
     modificationNote,
   };
@@ -392,6 +401,9 @@ export function buildAttribution(input = {}) {
   }
 
   const ignoredUrls = [];
+  if (year && !yearIsValid) {
+    ignoredUrls.push("Year ignored — must be four digits, for example 2024.");
+  }
   [
     ["Title link", titleUrl],
     ["Author link", authorUrl],

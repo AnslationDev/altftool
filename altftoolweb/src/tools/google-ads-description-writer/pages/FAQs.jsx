@@ -9,15 +9,15 @@ const FAQs = () => {
   const faqs = [
     {
       question: "What is the Google Ads Description Writer?",
-      answer: "It's a free AI-powered tool that helps you create compelling Google Ads descriptions under 90 characters, optimized for maximum impact and engagement."
+      answer: "It's a free tool that helps you create compelling Google Ads descriptions under 90 characters, optimized for maximum impact and engagement."
     },
     {
       question: "How does the tool work?",
-      answer: "Simply enter your product or service description, and our AI will generate multiple optimized ad descriptions that comply with Google Ads character limits."
+      answer: "Simply enter your product or service description, and the tool slots it into a set of proven direct-response ad-copy templates that comply with Google Ads character limits."
     },
     {
       question: "Is this tool free to use?",
-      answer: "Yes! Our tool is completely free to use. We utilize free-tier APIs from HuggingFace and Cohere to provide this service at no cost."
+      answer: "Yes! Our tool is completely free to use. Everything runs directly in your browser, so there's no server-side processing cost to pass on."
     },
     {
       question: "What is the character limit for Google Ads descriptions?",
@@ -29,15 +29,15 @@ const FAQs = () => {
     },
     {
       question: "How many descriptions are generated at once?",
-      answer: "We generate 3 unique descriptions per request, giving you variety and options to choose from for your ad campaigns."
+      answer: "We generate 5 unique descriptions per request, giving you variety and options to choose from for your ad campaigns."
     },
     {
       question: "Do you store my input data?",
-      answer: "No, we do not store your input data. All processing is done in real-time, and data is not retained after generating your descriptions."
+      answer: "No, we do not store your input data. Your description never leaves your browser — everything is generated locally, and nothing is retained after you navigate away."
     },
     {
-      question: "Which AI models power this tool?",
-      answer: "We use state-of-the-art language models from HuggingFace and Cohere, specifically chosen for their ability to generate concise, compelling marketing copy."
+      question: "What powers this tool?",
+      answer: "The tool draws from a bank of 40 proven direct-response ad-copy templates and slots your product or service description into them. There's no AI model or external service involved — it all runs instantly in your browser."
     },
     {
       question: "Can I use these descriptions commercially?",
@@ -45,7 +45,7 @@ const FAQs = () => {
     },
     {
       question: "What makes a good ad description?",
-      answer: "Good ad descriptions are concise, highlight key benefits, include a call-to-action, and appeal to your target audience's needs. Our AI is trained to incorporate these elements."
+      answer: "Good ad descriptions are concise, highlight key benefits, include a call-to-action, and appeal to your target audience's needs. These templates are built around those principles, but you should always tailor the final wording to your own brand voice."
     }
   ];
   return <div className="min-h-screen bg-(--background)">

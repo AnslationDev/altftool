@@ -77,8 +77,12 @@ function simulateSWP(input, override = {}) {
   let totalReturns = 0;
   let depletedMonth = null;
   const rows = [];
+  // Driven by `months`, not the raw (possibly fractional) tenureYears — a
+  // trailing partial year (e.g. tenureYears = 25.5) still gets its own row
+  // instead of being dropped by a whole-year loop bound.
+  const totalYears = Math.max(1, Math.ceil(months / 12));
 
-  for (let year = 1; year <= config.tenureYears; year += 1) {
+  for (let year = 1; year <= totalYears; year += 1) {
     const openingCorpus = corpus;
     const openingWithdrawal = withdrawal;
     let yearlyWithdrawn = 0;
@@ -139,7 +143,7 @@ function simulateSWP(input, override = {}) {
     withdrawal *= 1 + config.withdrawalStepUp / 100;
 
     if (corpus <= 0) {
-      for (let blankYear = year + 1; blankYear <= config.tenureYears; blankYear += 1) {
+      for (let blankYear = year + 1; blankYear <= totalYears; blankYear += 1) {
         rows.push({
           year: blankYear,
           openingCorpus: 0,
@@ -413,7 +417,11 @@ export default function MainComponent() {
             </div>
           </div>
 
-          <div className="rounded-lg border border-(--border) bg-(--background) p-4">
+          <div
+            className="rounded-lg border border-(--border) bg-(--background) p-4"
+            role="status"
+            aria-live="polite"
+          >
             <p className="text-xs font-semibold uppercase text-(--muted-foreground)">
               Corpus status
             </p>
@@ -487,7 +495,12 @@ export default function MainComponent() {
             max={45}
             step={1}
             suffix=" yr"
-            onChange={(value) => updateForm("tenureYears", value)}
+            // Tenure is whole years (step is 1, and the schedule below is
+            // keyed one row per year) — clampNumber only bounds the range,
+            // it does not round to the step, so a typed value like "25.5"
+            // must be rounded here or the yearly simulation silently drops
+            // the fractional remainder.
+            onChange={(value) => updateForm("tenureYears", Math.round(value))}
           />
           <Field
             label="Tax Rate on Gains"

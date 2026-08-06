@@ -111,6 +111,14 @@ export function computeCookingCalories({ weight, weightUnit = "kg", minutes = {}
   const weightKg = toKilograms(weight, weightUnit);
   if (weightKg === null) return { error: "Enter your body weight." };
   if (weightKg < WEIGHT_MIN_KG || weightKg > WEIGHT_MAX_KG) {
+    if (weightUnit === "lb") {
+      // The displayed inclusive bounds must themselves pass the kilogram
+      // validator. Rounding the lower edge used to advertise 44 lb even
+      // though 44 lb converts to less than the 20 kg minimum.
+      const minLb = Math.ceil(WEIGHT_MIN_KG / KG_PER_LB);
+      const maxLb = Math.floor(WEIGHT_MAX_KG / KG_PER_LB);
+      return { error: `Body weight should be between ${minLb} and ${maxLb} lb.` };
+    }
     return { error: `Body weight should be between ${WEIGHT_MIN_KG} and ${WEIGHT_MAX_KG} kg.` };
   }
 

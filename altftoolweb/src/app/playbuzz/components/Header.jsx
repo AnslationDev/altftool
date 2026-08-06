@@ -34,7 +34,7 @@ const Header = () => {
             className="text-5xl max-md:text-4xl font-extrabold no-underline leading-none tracking-tight"
             style={{ color: 'var(--anslation-ds-footer-text)' }}
           >
-            <span style={{ color: 'var(--secondary)' }}>play</span>buzz
+            <span style={{ color: 'var(--secondary)' }}>Quiz</span> Studio
           </Link>
           <div
             className="relative"

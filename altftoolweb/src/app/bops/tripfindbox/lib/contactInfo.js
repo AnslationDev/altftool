@@ -18,7 +18,8 @@ export function normalizePhoneForTel(phone = DEFAULT_TRIPFINDBOX_CONTACT.phone) 
 }
 
 export function telHref(phone) {
-  return `tel:${normalizePhoneForTel(phone)}`;
+  normalizePhoneForTel(phone);
+  return "#demo-only";
 }
 
 export async function getTripFindBoxContactInfo() {

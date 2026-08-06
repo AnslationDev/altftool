@@ -6,9 +6,9 @@ import {
   ShowerHead, Hammer, ShieldCheck, BadgeCheck, Truck, Star, AlertTriangle, ArrowRight,
 } from "lucide-react";
 
-const PHONE_DISPLAY = "(833) 555-0165";
-const PHONE_TEL = "tel:+18335550165";
-const QUOTE_URL = "https://example.com/quote/pipeworks-pro";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
+const QUOTE_URL = "#demo-only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1526898943670-92bfa9f94c12?auto=format&fit=crop&w=1600&q=80",

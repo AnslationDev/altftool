@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "sexual-health-test-tracker",
   "title": "Sexual Health Test Tracker",
-  "description": "Test dates, results aur reminders privately manage kare.",
+  "description": "Keep test dates, results and retest reminders in one private place.",
   "badge": "Consumer, Family & Personal Resilience",
   "category": [
     "Health & Wellness",

@@ -16,9 +16,9 @@ import {
   FileX2,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/lendleap";
-const PHONE_DISPLAY = "(811) 555-0201";
-const PHONE_TEL = "tel:+18115550201";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1681826292838-c37fbd22263a?auto=format&fit=crop&w=1600&q=80",

@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "devanagari-transliteration-keyboard",
   "title": "Devanagari Transliteration Keyboard",
-  "description": "Roman Hindi aur Devanagari ke beech live transliteration kare.",
+  "description": "Transliterate live between Roman Hindi and Devanagari as you type.",
   "badge": "India-Specific Utilities",
   "category": [
     "Text & Writing",

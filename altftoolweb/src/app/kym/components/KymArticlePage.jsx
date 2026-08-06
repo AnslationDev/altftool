@@ -48,7 +48,6 @@ export default function KymArticlePage() {
           <h1>{article.title}</h1>
           <img className="kym-article-hero" src={article.heroImage.src} alt="" />
           <div className="kym-article-meta">
-            <span>By {article.author}</span>
             <span>{article.date}</span>
 
           </div>

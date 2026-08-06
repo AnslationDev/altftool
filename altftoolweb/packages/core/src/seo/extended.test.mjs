@@ -158,6 +158,123 @@ test("resolveInjectedCode returns global + per-page blocks, inert when disabled"
   assert.deepEqual(off, { global: {}, page: {} });
 });
 
+test("resolveInjectedCode strips navigation from global and per-page code", () => {
+  const safeAnalytics =
+    '<script>window.dataLayer=window.dataLayer||[];dataLayer.push({event:"page_view",page:window.location.href})</script>';
+  const unsafeRedirect = '<script>window.location.replace("https://redirect.invalid")</script>';
+  const safeVerification = '<meta name="google-site-verification" content="token">';
+  const unsafeRefresh = '<meta http-equiv="refresh" content="0;url=https://redirect.invalid">';
+
+  const resolved = resolveInjectedCode(
+    {
+      enabled: true,
+      global: {
+        code: {
+          head: `${safeVerification}${unsafeRefresh}${safeAnalytics}`,
+          bodyEnd: '<script>window["loc\\u0061tion"]["href"]="https://redirect.invalid"</script>',
+        },
+      },
+      pages: {
+        "/deal": {
+          code: {
+            head: `${safeAnalytics}${unsafeRedirect}`,
+            bodyStart: '<a href="https://redirect.invalid">Leave</a><script>pixel()</script>',
+          },
+        },
+      },
+    },
+    "/deal",
+  );
+
+  assert.equal(resolved.global.head, `${safeVerification}${safeAnalytics}`);
+  assert.equal(resolved.global.bodyEnd, undefined);
+  assert.equal(resolved.page.head, safeAnalytics);
+  assert.equal(resolved.page.bodyStart, "<script>pixel()</script>");
+});
+
+test("resolveInjectedCode preserves common analytics and verification snippets", () => {
+  const gtm = `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TEST');</script>`;
+  const verification = '<meta name="google-site-verification" content="verify-token">';
+  const pixel = '<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TEST"></iframe></noscript>';
+  const resolved = resolveInjectedCode({
+    enabled: true,
+    global: { code: { head: `${verification}${gtm}`, bodyStart: pixel } },
+  });
+
+  assert.equal(resolved.global.head, `${verification}${gtm}`);
+  assert.equal(resolved.global.bodyStart, pixel);
+  assert.deepEqual(resolved.page, {});
+});
+
+test("resolveInjectedCode rejects other URL-changing primitives without throwing on malformed entities", () => {
+  const safe = '<script>analytics.track("view")</script>';
+  const malformedButSafe = '<meta name="note" content="&#999999999999999999999;">';
+  const resolved = resolveInjectedCode({
+    enabled: true,
+    global: {
+      code: {
+        head: `<script>history.pushState({}, "", "/different")</script>${safe}`,
+        bodyStart: `<form action="https://redirect.invalid"></form>${malformedButSafe}`,
+      },
+    },
+    pages: {
+      "/deal": {
+        code: {
+          head: '<base href="https://redirect.invalid/">',
+          bodyEnd: `<script>window.open("https://redirect.invalid")</script>${safe}`,
+        },
+      },
+    },
+  }, "/deal");
+
+  assert.equal(resolved.global.head, safe);
+  assert.equal(resolved.global.bodyStart, malformedButSafe);
+  assert.equal(resolved.page.head, undefined);
+  assert.equal(resolved.page.bodyEnd, safe);
+});
+
+test("resolveInjectedCode rejects direct navigation syntax variants and page replacement", () => {
+  const unsafe = [
+    '<script>window.location?.assign("https://redirect.invalid")</script>',
+    '<script>location.replace.call(location,"https://redirect.invalid")</script>',
+    '<script>document.defaultView.location.assign("https://redirect.invalid")</script>',
+    '<script>window.frames[0].location="https://redirect.invalid"</script>',
+    '<script>window.open.call(window,"https://redirect.invalid")</script>',
+    '<script>navigation?.navigate("https://redirect.invalid")</script>',
+    '<script>history?.replaceState({},"","/different")</script>',
+    '<script>window["loca"+"tion"].href="https://redirect.invalid"</script>',
+    '<script>window["op"+"en"]("https://redirect.invalid")</script>',
+    '<script>document.write("replacement content")</script>',
+    '<script>document.body.innerHTML="replacement content"</script>',
+    '<script>document.documentElement.replaceChildren()</script>',
+  ];
+
+  const resolved = resolveInjectedCode({
+    enabled: true,
+    global: { code: { head: unsafe.join("") } },
+    pages: { "/deal": { code: { bodyEnd: unsafe.join("") } } },
+  }, "/deal");
+
+  assert.deepEqual(resolved, { global: {}, page: {} });
+});
+
+test("resolveInjectedCode keeps non-navigation location reads and XHR open calls", () => {
+  const safe = [
+    '<script>fetch("/collect?p="+encodeURIComponent(location.href))</script>',
+    '<script>const xhr=new XMLHttpRequest();xhr.open("GET","/collect")</script>',
+    '<script>analytics.track("page_view")</script>',
+  ].join("");
+
+  const resolved = resolveInjectedCode({
+    enabled: true,
+    global: { code: { bodyEnd: safe } },
+    pages: { "/deal": { code: { head: safe } } },
+  }, "/deal");
+
+  assert.equal(resolved.global.bodyEnd, safe);
+  assert.equal(resolved.page.head, safe);
+});
+
 test("resolveExtendedMeta is inert when disabled", () => {
   const meta = resolveExtendedMeta({ enabled: false, global: { favicon: "/x" } }, { path: "/" });
   assert.equal(meta.favicon, null);

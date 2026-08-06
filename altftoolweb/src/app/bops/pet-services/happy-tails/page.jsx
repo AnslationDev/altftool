@@ -20,9 +20,9 @@ import {
 } from "lucide-react";
 import "./happy-tails.css";
 
-const QUOTE_URL = "https://example.com/quote/happy-tails";
-const TEL = "tel:+18225550133";
-const PHONE = "(822) 555-0133";
+const QUOTE_URL = "#demo-only";
+const TEL = "#demo-only";
+const PHONE = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1530700131180-d43d9b8cc41f?auto=format&fit=crop&w=1600&q=80",

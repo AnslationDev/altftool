@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "brand-deal-rate-calculator",
   "title": "Brand Deal Rate Calculator",
-  "description": "Reach, CPM aur deliverables se pricing range estimate kare.",
+  "description": "Estimate a brand deal pricing range from your reach, CPM and deliverables.",
   "badge": "Creator & Gig-Business Tools",
   "category": [
     "Business",

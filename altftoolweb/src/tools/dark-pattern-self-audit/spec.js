@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "dark-pattern-self-audit",
   "title": "Dark-Pattern Self-Audit",
-  "description": "Manipulative consent, checkout aur cancellation UX flag kare.",
+  "description": "Flag manipulative consent, checkout and cancellation patterns in your own product.",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Security & Privacy",

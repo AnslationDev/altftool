@@ -335,10 +335,19 @@ export function buildExpiryBoard({ documents = [], today, travelDate = "" } = {}
     return { error: `This board holds up to ${MAX_DOCUMENTS} documents.` };
   }
 
+  // Score every document independently. One row with transient/invalid
+  // input (a date field mid-edit, a blank name, an out-of-range reminder
+  // stage) must not blank the results for the other, perfectly valid,
+  // documents on the board -- so invalid documents are set aside in
+  // `rowErrors` instead of aborting the whole build.
   const rows = [];
+  const rowErrors = [];
   for (const document of documents) {
     const scored = scoreDocument(document, todayMs, travelMs);
-    if (scored.error) return { error: scored.error };
+    if (scored.error) {
+      rowErrors.push({ id: document.id, error: scored.error });
+      continue;
+    }
     rows.push(scored);
   }
 
@@ -361,6 +370,7 @@ export function buildExpiryBoard({ documents = [], today, travelDate = "" } = {}
 
   return {
     rows,
+    rowErrors,
     counts,
     total: rows.length,
     expiredCount: counts.expired,

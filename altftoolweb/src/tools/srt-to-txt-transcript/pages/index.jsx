@@ -2,6 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import { AlignLeft, Check, Copy, Download, RotateCcw, Upload } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { srtToTranscript } from "../lib";
 
 const NUM = new Intl.NumberFormat("en-IN");
@@ -51,7 +52,7 @@ export default function ToolHome() {
   const [dedupeLines, setDedupeLines] = useState(true);
   const [keepSpeakerMarkers, setKeepSpeakerMarkers] = useState(false);
   const [includeTimestamps, setIncludeTimestamps] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
   const fileInput = useRef(null);
 
   const result = useMemo(
@@ -70,21 +71,19 @@ export default function ToolHome() {
 
   const onFile = async (event) => {
     const file = event.target.files && event.target.files[0];
+    // Reset the input value regardless of outcome so re-selecting the exact
+    // same file path (e.g. after editing it externally) still fires a change
+    // event next time, instead of silently no-op'ing.
+    event.target.value = "";
     if (!file) return;
     const text = await file.text();
     setSource(text);
     setFileName(`${file.name.replace(/\.[^.]+$/, "") || "transcript"}-transcript`);
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (failed) return;
-    try {
-      await navigator.clipboard.writeText(result.transcript);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("transcript", result.transcript, { label: "the transcript" });
   };
 
   const download = () => {
@@ -99,6 +98,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the pasted SRT contents and all options back to the example? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setSource(SAMPLE_SRT);
     setFileName("transcript");
     setGap("2000");
@@ -106,7 +112,7 @@ export default function ToolHome() {
     setDedupeLines(true);
     setKeepSpeakerMarkers(false);
     setIncludeTimestamps(false);
-    setCopied(false);
+    resetCopyState();
     if (fileInput.current) fileInput.current.value = "";
   };
 
@@ -231,7 +237,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Words in the transcript
             </p>
@@ -252,12 +258,12 @@ export default function ToolHome() {
               className={GHOST_BTN}
               disabled={failed}
             >
-              {copied ? (
+              {isCopied("transcript") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy text"}
+              {isCopied("transcript") ? "Copied!" : "Copy text"}
             </button>
             <button
               type="button"
@@ -273,6 +279,9 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

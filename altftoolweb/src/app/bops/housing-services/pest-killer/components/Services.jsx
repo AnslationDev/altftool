@@ -29,7 +29,7 @@ export default function Services() {
           </div>
           <div className="services-desc">
             <p>We provide safe, effective, and long-lasting pest control services to protect your home and workplace from all types of pests.</p>
-            <a href="tel:+919711177747" className="btn-green">Get Free Quote</a>
+            <a href="#demo-only" className="btn-green">Get Free Quote</a>
           </div>
         </div>
 
@@ -42,7 +42,7 @@ export default function Services() {
               <div className="service-card-body">
                 <h3>{s.title}</h3>
                 <p>{s.desc}</p>
-                <a href="tel:+919711177747" className="btn-green">
+                <a href="#demo-only" className="btn-green">
                   <i className="fa-solid fa-shield-heart" style={{marginRight:'7px'}}></i> Book Service
                 </a>
               </div>

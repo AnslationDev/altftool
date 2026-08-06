@@ -22,9 +22,9 @@ import {
 } from "lucide-react";
 import "./sunyield-solar.css";
 
-const QUOTE_URL = "https://example.com/quote/sunyield-solar";
-const PHONE_DISPLAY = "(833) 555-0154";
-const PHONE_HREF = "tel:+18335550154";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_HREF = "#demo-only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1509389928833-fe62aef36deb?auto=format&fit=crop&w=1600&q=80",

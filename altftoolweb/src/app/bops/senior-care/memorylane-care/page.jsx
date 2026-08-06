@@ -17,9 +17,9 @@ import {
 } from "lucide-react";
 import "./memorylane-care.css";
 
-const QUOTE_URL = "https://example.com/quote/memorylane-care";
-const PHONE_TEL = "tel:+18885550565";
-const PHONE_DISPLAY = "(888) 555-0565";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const REASSURE = [
   { icon: Clock, title: "At your pace", text: "No rushed decisions. Explore options over days, weeks, or months." },

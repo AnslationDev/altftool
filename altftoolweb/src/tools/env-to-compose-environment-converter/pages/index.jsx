@@ -49,6 +49,14 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset the pasted .env contents and all options back to the example? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setSource(DEFAULT_ENV);
     setStyle("list");
     setServiceName("app");

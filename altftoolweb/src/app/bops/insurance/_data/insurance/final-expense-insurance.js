@@ -24,7 +24,7 @@ export const finalExpenseInsurance = {
   ],
 
   quoteLabel: "Compare plans",
-  quoteUrl: "https://example.com/quote/final-expense-insurance",
+  quoteUrl: "#demo-only",
 
   coverageTitle: "What final expense insurance helps pay for",
   coverageIntro:

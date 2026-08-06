@@ -1,12 +1,13 @@
 /**
  * Shopify Product Image Spec Checker.
  *
- * Rules encoded here are Shopify's published product image requirements:
- *  - Maximum resolution: 20 megapixels (width x height).
- *  - Maximum file size: 20 MB.
+ * Rules encoded here are Shopify's published product image requirements
+ * (help.shopify.com/en/manual/products/product-media/product-media-types):
+ *  - Maximum resolution: 25 megapixels, up to 5000 x 5000 px per side.
+ *  - File size must be smaller than 20 MB.
  *  - Recommended size for square product photos: 2048 x 2048 px.
  *  - Zoom on the product page needs at least 800 x 800 px.
- *  - Supported file types: JPEG, PNG, GIF, WebP and HEIC.
+ *  - Supported file types: JPEG, PNG, PSD, TIFF, BMP, GIF, SVG, HEIC and WebP.
  *  - Shopify recommends using one aspect ratio across every product image in a
  *    store so collection grids line up; this checker compares your image to a
  *    store standard you pick and reports how much a crop to that shape removes.
@@ -15,18 +16,24 @@
  */
 
 /** Shopify rejects anything above this many megapixels. */
-export const MAX_MEGAPIXELS = 20;
+export const MAX_MEGAPIXELS = 25;
+
+/** Shopify rejects anything with a side longer than this, even under the MP ceiling. */
+export const MAX_SIDE_PX = 5000;
 
 /** Shopify's per-file upload ceiling. */
 export const MAX_FILE_SIZE_MB = 20;
 
-/** Below this the product-page zoom does not engage usefully. */
+/**
+ * A conservative detail heuristic, not a Shopify upload rule. Themes decide
+ * whether and how product zoom is enabled.
+ */
 export const ZOOM_MIN_SIDE_PX = 800;
 
 /** Shopify's recommended square product photo. */
 export const RECOMMENDED_SIDE_PX = 2048;
 
-export const ALLOWED_FORMATS = ["jpg", "jpeg", "png", "gif", "webp", "heic"];
+export const ALLOWED_FORMATS = ["jpg", "jpeg", "png", "psd", "tiff", "bmp", "gif", "svg", "heic", "webp"];
 
 export const STORE_RATIOS = [
   { id: "square", label: "1:1 square", value: 1 },
@@ -82,6 +89,7 @@ export function checkShopifyImage({
   if (!target) return { error: "Choose a store standard aspect ratio." };
 
   const megapixels = (width * height) / 1000000;
+  const longest = Math.max(width, height);
   const shortest = Math.min(width, height);
   const ratio = width / height;
   const ext = normaliseFormat(format);
@@ -101,23 +109,33 @@ export function checkShopifyImage({
   });
 
   checks.push({
+    id: "maxside",
+    label: "Maximum dimension",
+    status: longest > MAX_SIDE_PX ? "fail" : "pass",
+    detail:
+      longest > MAX_SIDE_PX
+        ? `${longest} px is over Shopify's ${MAX_SIDE_PX} px per-side ceiling — the upload will be refused.`
+        : `${longest} px is within the ${MAX_SIDE_PX} px per-side ceiling.`,
+  });
+
+  checks.push({
     id: "filesize",
     label: "File size",
-    status: fileSizeMB > MAX_FILE_SIZE_MB ? "fail" : "pass",
+    status: fileSizeMB >= MAX_FILE_SIZE_MB ? "fail" : "pass",
     detail:
-      fileSizeMB > MAX_FILE_SIZE_MB
-        ? `${fileSizeMB} MB is over the ${MAX_FILE_SIZE_MB} MB per-file limit.`
-        : `${fileSizeMB} MB is within the ${MAX_FILE_SIZE_MB} MB per-file limit.`,
+      fileSizeMB >= MAX_FILE_SIZE_MB
+        ? `${fileSizeMB} MB is not smaller than Shopify's ${MAX_FILE_SIZE_MB} MB per-file limit.`
+        : `${fileSizeMB} MB is under Shopify's ${MAX_FILE_SIZE_MB} MB per-file limit.`,
   });
 
   const zoomReady = shortest >= ZOOM_MIN_SIDE_PX;
   checks.push({
     id: "zoom",
-    label: "Zoom",
+    label: "Detail / zoom heuristic",
     status: zoomReady ? "pass" : "warn",
     detail: zoomReady
-      ? `Shortest side is ${shortest} px, above the ${ZOOM_MIN_SIDE_PX} px zoom threshold.`
-      : `Zoom needs at least ${ZOOM_MIN_SIDE_PX} px on the shortest side; this image is ${shortest} px.`,
+      ? `Shortest side is ${shortest} px, so there is useful detail for themes that provide product zoom.`
+      : `Shortest side is ${shortest} px. Your theme controls zoom, but an image below ${ZOOM_MIN_SIDE_PX} px may show little extra detail when enlarged.`,
   });
 
   checks.push({

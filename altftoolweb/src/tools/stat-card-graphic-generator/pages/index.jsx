@@ -3,7 +3,16 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, ChartColumn, Copy, Download, Plus, RotateCcw, Trash2 } from "lucide-react";
 
-import { CARD_PRESETS, MAX_STATS, PALETTES, VALUE_FORMATS, buildStatCard, hslToHex } from "../lib";
+import {
+  CARD_PRESETS,
+  LABEL_TEXT_OPACITY,
+  MAX_STATS,
+  PALETTES,
+  SOURCE_TEXT_OPACITY,
+  VALUE_FORMATS,
+  buildStatCard,
+  hslToHex,
+} from "../lib";
 
 const FONT_STACK = 'system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
 
@@ -123,7 +132,7 @@ export default function ToolHome() {
       if (item.label) {
         ctx.fillStyle = spec.foreground;
         ctx.save();
-        ctx.globalAlpha = 0.72;
+        ctx.globalAlpha = LABEL_TEXT_OPACITY;
         ctx.font = `600 ${item.labelSize}px ${FONT_STACK}`;
         ctx.fillText(item.label, item.centreX, item.labelY);
         ctx.restore();
@@ -138,7 +147,7 @@ export default function ToolHome() {
 
     if (spec.source) {
       ctx.save();
-      ctx.globalAlpha = 0.6;
+      ctx.globalAlpha = SOURCE_TEXT_OPACITY;
       ctx.fillStyle = spec.foreground;
       ctx.font = `500 ${spec.source.size}px ${FONT_STACK}`;
       ctx.fillText(spec.source.text, spec.source.x, spec.source.y);
@@ -183,6 +192,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset all inputs? This clears the headline, source line and every stat you have entered and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setMeta(DEFAULTS);
     setStats(DEFAULT_STATS);
     setCopied(false);
@@ -369,7 +385,15 @@ export default function ToolHome() {
             ["Export size", spec ? `${spec.width}×${spec.height} (${spec.preset.note})` : dash],
             ["Largest number set at", spec ? `${spec.stats.largestNumberSize}px` : dash],
             ["Change shown", spec ? spec.items.map((item) => item.deltaText || "none").join(" · ") : dash],
-            ["Text contrast", spec ? `${spec.contrast.ratio}:1 — ${spec.contrast.verdict.label}` : dash],
+            ["Number contrast", spec ? `${spec.contrast.ratio}:1 — ${spec.contrast.verdict.label}` : dash],
+            ["Caption contrast", spec ? `${spec.contrast.labelRatio}:1 — ${spec.contrast.labelVerdict.label}` : dash],
+            ["Source line contrast", spec ? `${spec.contrast.sourceRatio}:1 — ${spec.contrast.sourceVerdict.label}` : dash],
+            [
+              "Trend colour contrast",
+              spec
+                ? `▲ ${spec.contrast.positiveRatio}:1 (${spec.contrast.positiveVerdict.label}) · ▼ ${spec.contrast.negativeRatio}:1 (${spec.contrast.negativeVerdict.label})`
+                : dash,
+            ],
             ["Headline contrast", spec ? `${spec.contrast.accentRatio}:1` : dash],
             ["Story safe area", spec ? (spec.safeArea ? `${spec.safeArea.top}px top, ${spec.safeArea.bottom}px bottom kept clear` : "Not applicable") : dash],
           ].map(([label, value]) => (

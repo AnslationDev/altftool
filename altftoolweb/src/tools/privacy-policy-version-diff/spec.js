@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "privacy-policy-version-diff",
   "title": "Privacy Policy Version Diff",
-  "description": "Policy updates ke meaningful privacy changes highlight kare.",
+  "description": "Highlight the privacy changes that actually matter between two policy versions.",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Security & Privacy",

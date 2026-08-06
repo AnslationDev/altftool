@@ -16,9 +16,9 @@ import {
 } from "lucide-react";
 import "./bizfund-capital.css";
 
-const QUOTE_URL = "https://example.com/quote/bizfund-capital";
-const PHONE_TEL = "tel:+18115550234";
-const PHONE_DISPLAY = "(811) 555-0234";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 const IMG = {
   hero: "https://images.unsplash.com/photo-1608613304899-ea8098577e38?auto=format&fit=crop&w=1600&q=80",
   workshop: "https://images.unsplash.com/photo-1547609434-b732edfee020?auto=format&fit=crop&w=900&q=80",

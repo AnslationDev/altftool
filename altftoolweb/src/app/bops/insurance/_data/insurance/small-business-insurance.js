@@ -24,7 +24,7 @@ export const smallBusinessInsurance = {
   ],
 
   quoteLabel: "Compare quotes",
-  quoteUrl: "https://example.com/quote/small-business-insurance",
+  quoteUrl: "#demo-only",
 
   coverageTitle: "What small business insurance covers",
   coverageIntro:

@@ -130,6 +130,18 @@ const nextConfig = {
   async headers() {
     return [
       {
+        // BOPS contains interface demonstrations, not operating providers or
+        // live quote flows. A response header guarantees noindex even when a
+        // nested legacy page exports its own metadata object.
+        source: "/bops/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
+      {
         // `/sitemap.xml` is generated on demand so its 1.2 MiB response body
         // does not live in the Amplify compute artifact. Preserve the cache
         // contract of the former static metadata route; getSitemapEntries()

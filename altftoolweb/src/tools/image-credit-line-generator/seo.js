@@ -8,7 +8,7 @@ const seo = {
     "Fill the IPTC fields before an image goes into a shared asset library so the credit survives reuse.",
   ],
   benefits: [
-    ["Every house style at once", "See the same credit in seven formats and copy whichever the outlet expects."],
+    ["Every house style at once", "See the same credit in nine formats and copy whichever the outlet expects."],
     ["IPTC fields done properly", "Creator, Credit Line, Source and Copyright Notice each get their own correct value."],
     ["Catches the usual errors", "Flags a missing photographer, a duplicated Credit and Source, and editorial-only limits."],
   ],

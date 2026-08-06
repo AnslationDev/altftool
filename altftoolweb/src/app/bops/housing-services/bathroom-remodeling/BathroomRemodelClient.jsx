@@ -24,8 +24,7 @@ import {
 } from "lucide-react";
 
 const phoneDisplay = "(833) 400-6110";
-const phoneHref = "tel:8334006110";
-const formSrc = "https://api.leadconnectorhq.com/widget/form/YZr1FGoPxQjSdeBdbOjL";
+const phoneHref = "#demo-only";
 const bathroomGallery = [
   "https://images.unsplash.com/photo-1756079664354-34944e001f6d?auto=format&fit=crop&w=1200&q=82",
   "https://images.unsplash.com/photo-1754522711595-84428937b07a?auto=format&fit=crop&w=1200&q=82",
@@ -265,90 +264,16 @@ const footerLinks = {
 };
 
 function LeadFormFrame({ title }) {
-  const [isLoaded, setIsLoaded] = useState(false);
   return (
-    <div style={{ position: "relative", minHeight: "350px", width: "100%" }}>
-      {!isLoaded && (
-        <div
-          style={{
-            position: "absolute",
-            inset: 0,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "flex-start",
-            backgroundColor: "#ffffff",
-            zIndex: 2,
-            borderRadius: "8px",
-          }}
-        >
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              gap: "18px",
-              padding: "8px 0",
-            }}
-          >
-            <div
-              className="remodel-skeleton-pulse"
-              style={{
-                height: "44px",
-                backgroundColor: "#f1f5f9",
-                borderRadius: "6px",
-                width: "100%",
-              }}
-            />
-            <div
-              className="remodel-skeleton-pulse"
-              style={{
-                height: "44px",
-                backgroundColor: "#f1f5f9",
-                borderRadius: "6px",
-                width: "100%",
-              }}
-            />
-            <div
-              className="remodel-skeleton-pulse"
-              style={{
-                height: "44px",
-                backgroundColor: "#f1f5f9",
-                borderRadius: "6px",
-                width: "100%",
-              }}
-            />
-            <div
-              className="remodel-skeleton-pulse"
-              style={{
-                height: "44px",
-                backgroundColor: "#f1f5f9",
-                borderRadius: "6px",
-                width: "100%",
-              }}
-            />
-            <div
-              className="remodel-skeleton-pulse"
-              style={{
-                height: "48px",
-                backgroundColor: "#f1f5f9",
-                borderRadius: "6px",
-                width: "100%",
-                marginTop: "8px",
-              }}
-            />
-          </div>
-        </div>
-      )}
-      <iframe
-        src={formSrc}
-        title={title}
-        className="bathroom-remodel-formFrame"
-        loading="lazy"
-        scrolling="no"
-        onLoad={() => setIsLoaded(true)}
-        style={{ opacity: isLoaded ? 1 : 0 }}
-      />
+    <div
+      className="bathroom-remodel-formFrame flex items-center justify-center border border-border bg-muted/40 p-6 text-center text-muted-foreground"
+      role="note"
+      aria-label={title}
+    >
+      <p>
+        <strong className="text-foreground">Demo form disabled.</strong>{" "}
+        This interface does not collect or send consultation requests.
+      </p>
     </div>
   );
 }

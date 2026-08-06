@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "invoice-to-time-log-reconciler",
   "title": "Invoice-to-Time-Log Reconciler",
-  "description": "Billable hours aur invoice line items ke mismatches dikhaye.",
+  "description": "Surface mismatches between your billable hours and the invoice line items.",
   "badge": "Creator & Gig-Business Tools",
   "category": [
     "Finance",

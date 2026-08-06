@@ -33,9 +33,9 @@ import "@/app/_altf/altf-brand.css";
 // legal-services layouts).
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Business Ops — Travel, Home Services & Insurance",
+    title: "Business Interface Demos — ALTFTool",
     description:
-      "Compare travel deals, connect with home-improvement pros and find better insurance — the everyday services worth getting right, in one place.",
+      "Explore non-transactional interface demonstrations for travel, home services, insurance, loans, and other service categories.",
     path: "/bops",
     noindex: true,
   });
@@ -50,18 +50,18 @@ const PRODUCT_ICONS = {
 const VALUE_PROPS = [
   {
     icon: Wallet,
-    title: "Free to use",
-    text: "Compare deals and request quotes at no cost — you only pay if you decide to buy.",
+    title: "Design examples",
+    text: "Review interface patterns and sample content without submitting a quote request or starting a transaction.",
   },
   {
     icon: ShieldCheck,
-    title: "Options you can trust",
-    text: "We surface established providers so you can weigh your choices with confidence.",
+    title: "No provider claims",
+    text: "Names, offers, ratings, phone numbers, and forms shown in these demonstrations are placeholders, not verified providers.",
   },
   {
     icon: Sparkles,
-    title: "All in one place",
-    text: "Travel, home services and insurance — the essentials, sorted from a single hub.",
+    title: "One prototype hub",
+    text: "Explore several service-interface concepts while all quote, call, and purchase actions remain disabled.",
   },
 ];
 
@@ -75,20 +75,20 @@ export default function BusinessOpsLanding() {
         <div className="biz-lp-hero-inner">
           <p className="biz-lp-eyebrow">
             <LayoutGrid size={13} strokeWidth={2.4} />
-            Everyday savings
+            Interface demonstrations
           </p>
           <h1 className="biz-lp-title">
-            Save on the things <span className="accent">that matter</span>
+            Explore service <span className="accent">interface concepts</span>
           </h1>
           <p className="biz-lp-lede">
-            Compare travel deals, get matched with home-improvement pros, and
-            find better insurance — the everyday services worth getting right,
-            all in one place.
+            Browse sample layouts for travel, home services, insurance, and other
+            categories. These are design demonstrations, not live marketplaces,
+            providers, offers, or quote services.
           </p>
 
           <div className="biz-lp-cta">
             <a href="#services" className="biz-btn biz-btn--primary">
-              Explore services
+              Explore demos
               <ArrowRight size={17} strokeWidth={2.3} />
             </a>
           </div>
@@ -99,11 +99,11 @@ export default function BusinessOpsLanding() {
       <section id="services" className="biz-lp-section">
         <div className="biz-lp-inner">
           <div className="biz-lp-head">
-            <p className="biz-lp-head-eyebrow">What we offer</p>
-            <h2 className="biz-lp-head-title">Everything, in one place</h2>
+            <p className="biz-lp-head-eyebrow">Prototype catalogue</p>
+            <h2 className="biz-lp-head-title">Sample service experiences</h2>
             <p className="biz-lp-head-sub">
-              Pick a service to compare your options and get started — it's free,
-              and there's no obligation.
+              Pick a category to inspect its interface. Quote, call, and purchase
+              controls are placeholders and do not submit information.
             </p>
           </div>
 
@@ -124,7 +124,7 @@ export default function BusinessOpsLanding() {
                   <p className="biz-lp-product-tag">{product.tagline}</p>
                   <p>{product.description}</p>
                   <span className="biz-lp-product-go">
-                    Explore
+                    View demo
                     <ArrowRight size={15} strokeWidth={2.3} />
                   </span>
                 </a>
@@ -138,8 +138,8 @@ export default function BusinessOpsLanding() {
       <section className="biz-lp-section biz-lp-section--tint">
         <div className="biz-lp-inner">
           <div className="biz-lp-head">
-            <p className="biz-lp-head-eyebrow">Why AltFTool</p>
-            <h2 className="biz-lp-head-title">Made to save you time and money</h2>
+            <p className="biz-lp-head-eyebrow">How this area works</p>
+            <h2 className="biz-lp-head-title">Clearly separated from live tools</h2>
           </div>
           <div className="biz-lp-features">
             {VALUE_PROPS.map((prop) => {
@@ -161,13 +161,13 @@ export default function BusinessOpsLanding() {
       {/* CTA band */}
       <div className="biz-lp-band-wrap">
         <section className="biz-lp-band">
-          <h2>Start saving today</h2>
+          <h2>Review the demonstrations</h2>
           <p>
-            Compare your options across travel, home services and insurance —
-            free, fast and in one place.
+            Browse interface ideas without entering personal details or relying
+            on placeholder business claims.
           </p>
           <a href="#services" className="biz-btn biz-btn--primary">
-            Get started
+            Explore demos
             <ArrowRight size={17} strokeWidth={2.3} />
           </a>
         </section>

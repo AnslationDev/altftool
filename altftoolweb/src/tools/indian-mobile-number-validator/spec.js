@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "indian-mobile-number-validator",
   "title": "Indian Mobile Number Validator",
-  "description": "Country code aur numbering-series sanity checks kare.",
+  "description": "Run country code and numbering-series sanity checks on an Indian mobile number.",
   "badge": "India-Specific Utilities",
   "category": [
     "India",

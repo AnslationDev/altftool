@@ -18,9 +18,9 @@ import {
 import DemoBrandNotice from "../_components/DemoBrandNotice";
 import "./medibright-health.css";
 
-const QUOTE_URL = "https://example.com/quote/medibright-health";
-const PHONE_TEL = "tel:+18665550334";
-const PHONE_DISPLAY = "(866) 555-0334";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const PLANS = [
   {

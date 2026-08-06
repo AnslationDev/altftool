@@ -28,7 +28,20 @@ import { ALL_SITES, getRelatedSites, getSite } from "@altftool/core/detour";
 import { shouldDeferBulkPrerendering } from "@/lib/buildPrerenderPolicy";
 import SiteCard from "../../_components/SiteCard";
 
+/**
+ * Amplify defers these pages to the first request, so they must override the
+ * root layout's connection() call and use on-demand static generation. Without
+ * this literal the Amplify runtime attempts a dynamic Server Components render
+ * and returns DYNAMIC_SERVER_USAGE for every site detail page.
+ */
+export const dynamic = "force-static";
 export const revalidate = 86400;
+
+/**
+ * Keep catalogued slugs available when generateStaticParams returns [].
+ * Unknown slugs still enter the not-found boundary through getSite below.
+ */
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   if (shouldDeferBulkPrerendering()) return [];

@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Presentation, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import { DECK_TYPES, SECTORS, STAGES, buildPitchPrompt, toCroreLakh } from "../lib";
 
 const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
@@ -52,7 +54,7 @@ export default function ToolHome() {
   const [raiseAmount, setRaiseAmount] = useState(DEFAULTS.raiseAmount);
   const [dilutionPct, setDilutionPct] = useState(DEFAULTS.dilutionPct);
   const [audience, setAudience] = useState(DEFAULTS.audience);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -87,18 +89,19 @@ export default function ToolHome() {
   const ok = !result.error;
   const fin = ok ? result.financials : null;
 
-  const copyPrompt = async () => {
+  const copyPrompt = () => {
     if (!ok) return;
-    try {
-      await navigator.clipboard.writeText(result.prompt);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("prompt", result.prompt, { label: "Startup pitch prompt" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset all fields back to the demo example? This replaces your startup name, description and financials with the sample data.",
+      )
+    ) {
+      return;
+    }
     setStartupName(DEFAULTS.startupName);
     setStage(DEFAULTS.stage);
     setSector(DEFAULTS.sector);
@@ -110,7 +113,6 @@ export default function ToolHome() {
     setRaiseAmount(DEFAULTS.raiseAmount);
     setDilutionPct(DEFAULTS.dilutionPct);
     setAudience(DEFAULTS.audience);
-    setCopied(false);
   };
 
   return (
@@ -277,7 +279,7 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               type="number"
               inputMode="decimal"
-              min="0"
+              min="1"
               step="500000"
               value={raiseAmount}
               onChange={(event) => setRaiseAmount(event.target.value)}
@@ -323,7 +325,7 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {fin
                 ? fin.raiseIsUrgent
-                  ? "Under six months of cash — a priced round usually takes that long to close."
+                  ? "Six months of cash or less — a priced round usually takes that long to close."
                   : `Start the next raise in about ${NUM.format(fin.startNextRaiseInMonths)} months.`
                 : "Fix the inputs above to see the numbers."}
             </p>
@@ -336,18 +338,21 @@ export default function ToolHome() {
               className={PRIMARY_BTN}
               disabled={!ok}
             >
-              {copied ? (
+              {isCopied("prompt") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy prompt"}
+              {isCopied("prompt") ? "Copied!" : "Copy prompt"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all fields" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
+          <span aria-live="polite" role="status" className="sr-only">
+            {announcement}
+          </span>
         </div>
 
         <dl className="mt-5 grid gap-3 sm:grid-cols-2">

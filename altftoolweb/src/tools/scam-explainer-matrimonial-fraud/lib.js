@@ -148,7 +148,11 @@ export function categoryTotals(selectedIds) {
 /* Verification: the other half of the picture                         */
 /* ------------------------------------------------------------------ */
 
-/** Checks that are actually independent — each one an outsider cannot fake. */
+/**
+ * Checks gathered through a different channel. Each can still be staged,
+ * manipulated or compromised, so coverage reduces uncertainty rather than
+ * proving identity.
+ */
 export const VERIFICATION_CHECKS = [
   { id: "video", label: "A live video call where you saw and spoke to them", weight: 2 },
   { id: "in-person", label: "Met in person, more than once", weight: 3 },
@@ -178,15 +182,61 @@ export function verificationCoverage(selectedIds) {
 /* What has already gone                                               */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Sum whatever transfer amounts parse as zero-or-more whole-INR values.
+ *
+ * A single bad entry (a stray minus sign, a paste that overflows to
+ * Infinity, empty-but-not-yet-typed) is excluded from the total rather than
+ * failing the whole calculation — one field being wrong should not blank out
+ * an otherwise-complete assessment. `invalidCount` reports how many entries
+ * were excluded so callers can still surface that as a hint.
+ */
 export function exposureTotal(amounts) {
-  const list = Array.isArray(amounts) ? amounts.map(Number) : [];
-  if (list.some((value) => !Number.isFinite(value) || value < 0)) {
-    return { error: "Every amount must be zero or more." };
-  }
+  const list = Array.isArray(amounts) ? amounts : [];
   if (list.length > 50) return { error: "Fifty entries is enough to make the point." };
-  const total = list.reduce((sum, value) => sum + value, 0);
-  const largest = list.length ? Math.max(...list) : 0;
-  return { total, count: list.length, largest, average: list.length ? total / list.length : 0 };
+  let total = 0;
+  let largest = 0;
+  let count = 0;
+  let invalidCount = 0;
+  for (const raw of list) {
+    // A blank input is an unfinished row, not a zero-value transfer.
+    if (raw === null || raw === undefined || String(raw).trim() === "") continue;
+    const value = Number(raw);
+    if (Number.isSafeInteger(value) && value >= 0 && value <= Number.MAX_SAFE_INTEGER) {
+      const nextTotal = total + value;
+      // Individually safe values can still overflow the precise integer range
+      // when combined. Leave that row out rather than returning a rounded sum.
+      if (!Number.isSafeInteger(nextTotal)) {
+        invalidCount += 1;
+        continue;
+      }
+      total = nextTotal;
+      if (value > largest) largest = value;
+      count += 1;
+    } else {
+      invalidCount += 1;
+    }
+  }
+  return { total, count, largest, invalidCount };
+}
+
+/**
+ * Per-field validation message for a single "amount" input's raw value, or
+ * null when it is fine (including blank — an in-progress entry, not an
+ * error). Distinguishes unparseable text from a value that overflows to
+ * Infinity from a value that is simply negative, since each needs a
+ * different correction from the user.
+ */
+export function describeAmountIssue(raw) {
+  if (raw === "" || raw === null || raw === undefined) return null;
+  const value = Number(raw);
+  if (Number.isNaN(value)) return "Enter a valid amount, or leave it blank.";
+  if (!Number.isFinite(value) || value > Number.MAX_SAFE_INTEGER) {
+    return "That amount is too large to use.";
+  }
+  if (value < 0) return "Amount must be zero or more.";
+  if (!Number.isSafeInteger(value)) return "Enter a whole-INR amount.";
+  return null;
 }
 
 /* ------------------------------------------------------------------ */
@@ -228,7 +278,9 @@ export function assess({ flagIds, verifiedIds, amountsSent }) {
     0,
   );
   const metInPerson = Array.isArray(verifiedIds) && verifiedIds.includes("in-person");
-  const moneyLayer = totals.money.score > 0;
+  // Money already transferred is itself a financial-risk signal even when the
+  // user did not separately tick a money-request red flag.
+  const moneyLayer = totals.money.score > 0 || exposure.total > 0;
 
   let verdict = VERDICTS.PROCEED_CAREFULLY;
   let reason =
@@ -249,7 +301,7 @@ export function assess({ flagIds, verifiedIds, amountsSent }) {
   } else if (score >= 4) {
     verdict = VERDICTS.VERIFY_FIRST;
     reason =
-      "There are warning signs worth resolving. A live video call and a conversation with their family will settle most of them quickly.";
+      "There are warning signs worth resolving. Use several independently sourced checks before going further; a video call or family contact can also be staged.";
   }
 
   return {
@@ -272,7 +324,7 @@ export function assess({ flagIds, verifiedIds, amountsSent }) {
 
 export const SAFER_PRACTICE = [
   "Keep the conversation on the matrimonial platform until you have met — off-platform chat removes every record and safeguard.",
-  "Insist on a live video call early. It costs nothing and it is the check that fraud cannot pass.",
+  "Request a live video call early. It can reveal inconsistencies, but it can also be staged or manipulated, so never treat it as identity proof.",
   "Reverse image search the photos before the second conversation.",
   "Verify the workplace through the employer's own published contact details, not a document or an email they sent you.",
   "Involve family in the money question specifically, since secrecy about money is a required step in this fraud.",
@@ -306,7 +358,8 @@ export function formatBriefing(result) {
   });
   lines.push(
     "",
-    `Independent verification: ${result.coverage.count} of ${result.coverage.total} checks done (${result.coverage.percent.toFixed(0)}%)`,
+    `Independent verification: ${result.coverage.count} of ${result.coverage.total} checks done` +
+      ` — weighted coverage ${result.coverage.score} of ${result.coverage.max} (${result.coverage.percent.toFixed(0)}%)`,
   );
   if (result.exposure.count > 0) {
     lines.push(

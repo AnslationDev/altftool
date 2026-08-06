@@ -119,20 +119,28 @@ export function convertPitch({
   overhangFt = 0,
 } = {}) {
   if (!PITCH_MODES.includes(mode)) return { error: "Pick one of the supported pitch notations." };
-  if (!isNum(spanFt) || !isNum(overhangFt)) {
+
+  const normalizedSpan = spanFt === "" || spanFt === null || spanFt === undefined ? 0 : spanFt;
+  const normalizedOverhang =
+    overhangFt === "" || overhangFt === null || overhangFt === undefined
+      ? 0
+      : overhangFt;
+  if (!isNum(normalizedSpan) || !isNum(normalizedOverhang)) {
     return { error: "Enter a valid number for span and overhang." };
   }
-  if (spanFt < 0) return { error: "Span cannot be negative." };
-  if (overhangFt < 0) return { error: "Overhang cannot be negative." };
+  if (normalizedSpan < 0) return { error: "Span cannot be negative." };
+  if (normalizedOverhang < 0) return { error: "Overhang cannot be negative." };
 
   const tangent = toTangent({ mode, value, rise, run });
   if (!isNum(tangent)) {
-    return {
-      error:
-        mode === "degrees"
-          ? "Enter an angle of 0 or more but below 90 degrees."
-          : "Enter a positive pitch — run and ratio figures must be above zero.",
+    const invalidPitchMessage = {
+      degrees: "Enter an angle of 0 or more but below 90 degrees.",
+      riseIn12: "Enter a rise-in-12 figure of zero or more.",
+      percent: "Enter a percent grade of zero or more.",
+      ratio: "Enter the n in 1 : n as a number above zero.",
+      riseRun: "Enter a rise of zero or more and a run above zero.",
     };
+    return { error: invalidPitchMessage[mode] || "Enter a positive pitch." };
   }
   const riseIn12 = tangent * STANDARD_RUN;
   if (riseIn12 > MAX_RISE_IN_12) {
@@ -147,14 +155,12 @@ export function convertPitch({
   const hipFactor = Math.sqrt(2 + tangent * tangent);
 
   // Rafter geometry. Half the span is the common rafter run on a gable or hip.
-  const commonRunFt = spanFt / 2;
+  const commonRunFt = normalizedSpan / 2;
   const riseFt = commonRunFt * tangent;
   const rafterFt = commonRunFt * slopeFactor;
-  const overhangRafterFt = overhangFt * slopeFactor;
+  const overhangRafterFt = normalizedOverhang * slopeFactor;
   const totalRafterFt = rafterFt + overhangRafterFt;
   const hipRafterFt = commonRunFt * hipFactor;
-  // Extra area a square foot of plan turns into.
-  const areaMultiplier = slopeFactor;
 
   return {
     tangent: round4(tangent),
@@ -164,10 +170,11 @@ export function convertPitch({
     ratioRunPerRise: Number.isFinite(ratioRunPerRise) ? round2(ratioRunPerRise) : NaN,
     slopeFactor: round4(slopeFactor),
     hipFactor: round4(hipFactor),
-    areaMultiplier: round4(areaMultiplier),
+    // Backward-compatible public alias used by existing callers.
+    areaMultiplier: round4(slopeFactor),
     pitchName: pitchName(riseIn12),
 
-    spanFt: round2(spanFt),
+    spanFt: round2(normalizedSpan),
     commonRunFt: round2(commonRunFt),
     riseFt: round2(riseFt),
     rafterFt: round2(rafterFt),

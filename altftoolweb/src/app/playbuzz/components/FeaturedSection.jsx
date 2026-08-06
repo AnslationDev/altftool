@@ -23,8 +23,6 @@ const FeaturedSection = ({ category }) => {
           id={article.id}
           image={article.image}
           title={article.title}
-          author={article.author}
-          plays={article.plays}
         />
       ))}
     </div>

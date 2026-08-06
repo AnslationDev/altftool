@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, FileText, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   MAX_BODY_PARAGRAPHS,
   MIN_BODY_PARAGRAPHS,
@@ -39,7 +40,7 @@ export default function ToolHome() {
   const [draftingWpm, setDraftingWpm] = useState(DEFAULTS.draftingWpm);
   const [thesis, setThesis] = useState(DEFAULTS.thesis);
   const [points, setPoints] = useState(DEFAULTS.points);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const bodies = Math.max(
     MIN_BODY_PARAGRAPHS,
@@ -70,24 +71,25 @@ export default function ToolHome() {
     });
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!outline) return;
-    try {
-      await navigator.clipboard.writeText(outline);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("outline", outline, { label: "essay outline" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the essay plan? This will clear your thesis statement, body paragraph reasons and all settings, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setTotalWords(DEFAULTS.totalWords);
     setBodyParagraphs(DEFAULTS.bodyParagraphs);
     setDraftingWpm(DEFAULTS.draftingWpm);
     setThesis(DEFAULTS.thesis);
     setPoints(DEFAULTS.points);
-    setCopied(false);
+    resetCopyState();
   };
 
   const stats = hasError
@@ -265,7 +267,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Total time to write
             </p>
@@ -283,24 +285,27 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the essay outline"
-              className={`${GHOST_BTN} disabled:opacity-50`}
+              aria-label={isCopied("outline") ? "Copied the essay outline to clipboard" : "Copy the essay outline"}
+              className={`${PRIMARY_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("outline") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy outline"}
+              {isCopied("outline") ? "Copied!" : "Copy outline"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {stats.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

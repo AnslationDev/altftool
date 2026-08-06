@@ -16,8 +16,8 @@ import {
 } from "lucide-react";
 import "./packngo.css";
 
-const PHONE_DISPLAY = "(877) 555-0163";
-const PHONE_HREF = "tel:+18775550163";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_HREF = "#demo-only";
 
 const STEPS = [
   {
@@ -147,7 +147,7 @@ function QuoteForm() {
           id="packngo-input-phone"
           name="phone"
           type="tel"
-          placeholder="(555) 000-0000"
+          placeholder="Demo only"
           autoComplete="off"
         />
       </div>

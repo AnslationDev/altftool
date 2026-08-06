@@ -7,9 +7,9 @@ import {
 } from "lucide-react";
 import "./vetcare-plus.css";
 
-const QUOTE_URL = "https://example.com/quote/vetcare-plus";
-const PHONE_TEL = "tel:+18225550122";
-const PHONE_DISPLAY = "(822) 555-0122";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1644675443401-ea4c14bad0e6?auto=format&fit=crop&w=1600&q=80",

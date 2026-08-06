@@ -75,16 +75,23 @@ export default function Main() {
     sentences.forEach((sentence, index) => {
       if (sentence.match(/[.!?]/)) return; // Skip punctuation
 
-      let words = sentence.split(/\s+/);
+      // Split while capturing whitespace runs as their own tokens so
+      // multi-space gaps (e.g. a double space some writers still put
+      // after a period) survive untouched when no substitution happens —
+      // a plain `split(/\s+/)` + `join(" ")` used to collapse every run
+      // of whitespace down to a single space.
+      const tokens = sentence.split(/(\s+)/);
 
-      words = words.map((word) => {
+      const words = tokens.map((token) => {
+        if (token === "" || /^\s+$/.test(token)) return token;
+
         // Strip only the leading/trailing punctuation (comma, quote,
         // parenthesis, colon, etc.) so it can be reattached after
         // substitution — a bare `replace(/[^\w]/g, "")` used to discard it
         // entirely, turning "good," into "excellent" with the comma gone.
-        const leadingPunct = (word.match(/^[^\w]*/) || [""])[0];
-        const trailingPunct = (word.match(/[^\w]*$/) || [""])[0];
-        const core = word.slice(leadingPunct.length, word.length - trailingPunct.length);
+        const leadingPunct = (token.match(/^[^\w]*/) || [""])[0];
+        const trailingPunct = (token.match(/[^\w]*$/) || [""])[0];
+        const core = token.slice(leadingPunct.length, token.length - trailingPunct.length);
         const lowerWord = core.toLowerCase();
 
         if (synonymMap[lowerWord]) {
@@ -99,31 +106,44 @@ export default function Main() {
               : randomSynonym;
           return leadingPunct + cased + trailingPunct;
         }
-        return word;
+        return token;
       });
 
-      sentences[index] = words.join(" ");
+      sentences[index] = words.join("");
     });
 
     result = sentences.join("");
 
+    // Case-insensitive word/contraction replacement that preserves the
+    // capitalization of whatever was actually matched, so sentence-initial
+    // occurrences ("Can't...", "Utilize...") are rewritten the same as
+    // mid-sentence ones instead of being silently skipped.
+    const replaceCaseInsensitive = (str, word, replacement) =>
+      str.replace(new RegExp(word, "gi"), (match) =>
+        match[0] === match[0].toUpperCase()
+          ? replacement.charAt(0).toUpperCase() + replacement.slice(1)
+          : replacement,
+      );
+
     // Mode-specific modifications
     if (mode === "formal") {
-      result = result.replace(/can't/g, "cannot");
-      result = result.replace(/won't/g, "will not");
-      result = result.replace(/don't/g, "do not");
-      result = result.replace(/doesn't/g, "does not");
-      result = result.replace(/isn't/g, "is not");
-      result = result.replace(/aren't/g, "are not");
+      result = replaceCaseInsensitive(result, "can't", "cannot");
+      result = replaceCaseInsensitive(result, "won't", "will not");
+      result = replaceCaseInsensitive(result, "don't", "do not");
+      result = replaceCaseInsensitive(result, "doesn't", "does not");
+      result = replaceCaseInsensitive(result, "isn't", "is not");
+      result = replaceCaseInsensitive(result, "aren't", "are not");
     } else if (mode === "simple") {
-      result = result.replace(/utilize/g, "use");
-      result = result.replace(/facilitate/g, "help");
-      result = result.replace(/implement/g, "use");
-      result = result.replace(/consequently/g, "so");
-      result = result.replace(/additionally/g, "also");
+      result = replaceCaseInsensitive(result, "utilize", "use");
+      result = replaceCaseInsensitive(result, "facilitate", "help");
+      result = replaceCaseInsensitive(result, "implement", "use");
+      result = replaceCaseInsensitive(result, "consequently", "so");
+      result = replaceCaseInsensitive(result, "additionally", "also");
     } else if (mode === "creative") {
-      // Add some variety
-      result = result.replace(/\. /g, ". Furthermore, ");
+      // Add some variety after ., ! or ? sentence endings alike, not just
+      // periods, so exclamatory/interrogative writing gets the same
+      // connective treatment as declarative sentences.
+      result = result.replace(/([.!?]) /g, "$1 Furthermore, ");
       result = result.replace(/Furthermore, Furthermore, /g, "Moreover, ");
     }
 
@@ -148,9 +168,21 @@ export default function Main() {
   };
 
   const loadSample = () => {
+    if (
+      typeof window !== "undefined" &&
+      inputText.trim() &&
+      !window.confirm("Load the sample text? This will replace your current text and cannot be undone.")
+    ) {
+      return;
+    }
     setInputText(
       "Artificial intelligence is becoming increasingly important in today's world. Many companies are using AI to improve their business operations and make better decisions. This technology can help solve complex problems and create new opportunities for growth.",
     );
+    // Clear any existing output so Original Text and Paraphrased Text don't
+    // end up showing a mismatched pair (sample text on the left, a
+    // paraphrase of the discarded draft still on the right).
+    setParaphrasedText("");
+    resetCopyState();
   };
 
   return (

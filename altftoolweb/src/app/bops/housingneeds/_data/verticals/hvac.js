@@ -35,7 +35,7 @@ const hvac = {
     "Rebates and tax credits worth checking"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/hvac",
+  "quoteUrl": "#demo-only",
   "seo": {
     "title": "HVAC Guide: AC, Furnaces & Heat Pump Costs",
     "description": "Learn how HVAC systems work: central AC, furnaces, heat pumps, and mini-splits, plus SEER2 efficiency, proper sizing, rebates, and what drives install costs."

@@ -26,7 +26,7 @@ export const travelInsurance = {
   ],
 
   quoteLabel: "Compare quotes",
-  quoteUrl: "https://example.com/quote/travel-insurance",
+  quoteUrl: "#demo-only",
 
   coverageTitle: "What travel insurance covers",
   coverageIntro:

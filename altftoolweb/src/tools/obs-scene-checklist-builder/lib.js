@@ -174,6 +174,7 @@ export function buildPreLiveChecklist(options = {}) {
     hasChatOverlay = false,
     recordsLocally = false,
     hasSecondScreen = false,
+    hasCaptureCard = false,
     platformLabel = "your platform",
     keyframeSeconds = KEYFRAME_INTERVAL_SECONDS,
     videoKbps = 0,
@@ -208,8 +209,8 @@ export function buildPreLiveChecklist(options = {}) {
     "Camera is in focus, exposure is locked, and white balance is not drifting between scenes.",
     "Framing checked at 1080p and at a phone-sized preview — most viewers are on a small screen.",
     "Overlays and webcam frames sit inside the safe area and do not cover the platform's own UI.",
-    "Capture card input is confirmed at the right resolution and frame rate, with no HDR mismatch.",
   ];
+  if (hasCaptureCard) video.push("Capture card input is confirmed at the right resolution and frame rate, with no HDR mismatch.");
 
   const encoder = [
     `Output bitrate set${videoKbps ? ` to ${videoKbps} kbps` : ""} and the encoder preset matches your GPU or CPU headroom.`,

@@ -143,7 +143,7 @@ const BookingForm = ({ initialService = '' }) => {
           </div>
         </div>
 
-        <p className="text-sm text-[#64748b] mb-6">Nothing has been sent — call us for a real booking at <a href="tel:7865679554" className="font-semibold text-[#1D7A43] hover:underline">(786) 567-9554</a>.</p>
+        <p className="text-sm text-[#64748b] mb-6">Nothing has been sent — call us for a real booking at <a href="#demo-only" className="font-semibold text-[#1D7A43] hover:underline">(786) 567-9554</a>.</p>
 
         <div className="flex gap-3 justify-center">
           <button onClick={resetForm} className="btn btn-secondary px-8">Book Another</button>
@@ -300,7 +300,7 @@ const BookingForm = ({ initialService = '' }) => {
                   </div>
                   <div>
                     <label className="label">Phone Number</label>
-                    <input {...register('phone')} placeholder="(305) 555-0192" className={`input ${errors.phone ? 'error' : ''}`} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? 'phone-error' : undefined} />
+                    <input {...register('phone')} placeholder="Demo only" className={`input ${errors.phone ? 'error' : ''}`} aria-invalid={!!errors.phone} aria-describedby={errors.phone ? 'phone-error' : undefined} />
                     {errors.phone && <p id="phone-error" role="alert" className="text-red-500 text-sm mt-1">{errors.phone.message}</p>}
                   </div>
                 </div>

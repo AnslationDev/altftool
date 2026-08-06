@@ -3,7 +3,7 @@ const toolConfig = {
   name: "Data Deletion Proof Log",
   category: ["Security & Privacy","Productivity"],
   description: "Record deletion requests and the system-by-system evidence that each one completed.",
-  icon: "file-check-2",
+  icon: "list-checks",
   iconColor: "text-primary",
 };
 

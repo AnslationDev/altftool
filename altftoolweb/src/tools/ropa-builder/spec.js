@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "ropa-builder",
   "title": "ROPA Builder",
-  "description": "Personal-data processing activities ka structured register banaye.",
+  "description": "Build a structured register of your personal-data processing activities.",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Productivity",

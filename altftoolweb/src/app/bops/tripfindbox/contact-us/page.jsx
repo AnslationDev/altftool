@@ -25,12 +25,9 @@ export default function ContactUsPage() {
           <ContactForm />
         </div>
         <div className="tripnest-map-panel" aria-label="TripFindBox office map">
-          <iframe
-            title="TripFindBox office location"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps?q=Gurugram%20Haryana%20India&output=embed"
-          />
+          <div className="flex h-full min-h-64 items-center justify-center bg-muted/40 p-6 text-center text-muted-foreground" role="note">
+            Location map unavailable in this design demonstration.
+          </div>
         </div>
       </div>
     </InfoPage>

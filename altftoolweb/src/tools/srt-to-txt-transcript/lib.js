@@ -134,6 +134,16 @@ export function parseSrt(raw) {
     index = timingLine + 1;
     const body = [];
     while (index < lines.length && lines[index].trim() !== "") {
+      // A source SRT missing the blank line between cues would otherwise have
+      // the next cue's index number and raw timing line swallowed as if they
+      // were part of this cue's dialogue. Recognise the start of the next cue
+      // the same way the outer loop does, and stop before consuming it.
+      const looksLikeNextCueNumber =
+        /^\s*\d+\s*$/.test(lines[index]) &&
+        index + 1 < lines.length &&
+        SRT_TIMING_RE.test(lines[index + 1]);
+      const looksLikeNextCueTiming = SRT_TIMING_RE.test(lines[index]);
+      if (looksLikeNextCueNumber || looksLikeNextCueTiming) break;
       body.push(lines[index]);
       index += 1;
     }
@@ -190,8 +200,13 @@ export function srtToTranscript(raw, options = {}) {
   let soundCuesRemoved = 0;
   let duplicatesRemoved = 0;
   let usedCues = 0;
+  // Track the span of only the cues that actually survived filtering, so a
+  // filtered-out [MUSIC]/non-speech cue at the start or end of the file does
+  // not stretch the runtime used for the speaking-rate calculation.
+  let firstUsedStartMs = null;
+  let lastUsedEndMs = null;
 
-  cues.forEach((cue, position) => {
+  cues.forEach((cue) => {
     const kept = [];
     cue.lines.forEach((rawLine) => {
       let line = stripMarkup(rawLine);
@@ -215,9 +230,14 @@ export function srtToTranscript(raw, options = {}) {
     });
 
     if (kept.length === 0) return;
+    // Paragraph boundaries must compare with the previous cue that survived
+    // filtering. A filtered [MUSIC] cue in between must not hide a long gap.
+    const silenceBefore =
+      lastUsedEndMs === null ? Infinity : cue.startMs - lastUsedEndMs;
     usedCues += 1;
+    if (firstUsedStartMs === null) firstUsedStartMs = cue.startMs;
+    lastUsedEndMs = cue.endMs;
 
-    const silenceBefore = position === 0 ? Infinity : cue.startMs - cues[position - 1].endMs;
     if (current === null || silenceBefore > gap) {
       current = { startMs: cue.startMs, parts: [] };
       paragraphs.push(current);
@@ -241,7 +261,9 @@ export function srtToTranscript(raw, options = {}) {
     0,
   );
 
-  const durationMs = Math.max(0, cues[cues.length - 1].endMs - cues[0].startMs);
+  // paragraphs.length > 0 (checked above) guarantees at least one cue was kept,
+  // so firstUsedStartMs/lastUsedEndMs are set here.
+  const durationMs = Math.max(0, lastUsedEndMs - firstUsedStartMs);
   const durationMinutes = durationMs / 60000;
 
   return {

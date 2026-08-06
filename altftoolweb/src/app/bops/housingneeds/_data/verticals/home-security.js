@@ -35,7 +35,7 @@ const homeSecurity = {
     "Renter-friendly and no-contract options"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/home-security",
+  "quoteUrl": "#demo-only",
   "seo": {
     "title": "Home Security Guide: Cameras & Monitoring",
     "description": "How home security systems work: cameras, video doorbells, smart locks, sensors, DIY vs professional monitoring, and what really drives the cost."

@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "vendor-data-processing-inventory",
   "title": "Vendor Data Processing Inventory",
-  "description": "Vendors, purposes, data categories aur retention terms track kare.",
+  "description": "Track vendors with their processing purposes, data categories and retention terms.",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Security & Privacy",

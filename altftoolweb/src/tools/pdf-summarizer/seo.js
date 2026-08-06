@@ -8,7 +8,7 @@ const seo = {
   ],
   benefits: [
     ["Sentences are quoted, not invented", "Extractive scoring selects real sentences from your file, so the summary cannot hallucinate a claim the document never made."],
-    ["Five lengths from the same ranking", "Short returns the 2 highest-scoring sentences, bullets about 25% of them, and detailed about 35%, so you can trade depth for brevity without re-running the analysis."],
+    ["Five lengths from the same ranking", "Short returns the 2 highest-scoring sentences; bullets returns about a quarter of them (minimum 5) and detailed about a third (minimum 6), so short documents still get a substantive summary and you can trade depth for brevity without re-running the analysis."],
     ["Context beyond the summary", "Keywords, word count and a reading-time estimate come with every run, so you can judge document size and subject at a glance."],
   ],
   faqs: [

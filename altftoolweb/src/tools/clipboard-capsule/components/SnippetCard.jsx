@@ -115,7 +115,7 @@ export default function SnippetCard({ snippet, onEdit, onDelete, onToggleFavorit
                 <Pin size={14} /> {snippet.isPinned ? "Unpin" : "Pin"}
               </button>
               <div className="my-1 h-px bg-[var(--border)]"></div>
-              <button type="button" role="menuitem" onClick={() => { onDelete(snippet.id); closeMenu(); }} className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm text-[var(--danger)] hover:bg-[var(--danger-soft)]">
+              <button type="button" role="menuitem" onClick={() => { onDelete(snippet.id); closeMenu(); }} className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm text-[var(--danger-text)] hover:bg-[var(--danger-soft)]">
                 <Trash2 size={14} /> Delete
               </button>
             </div>

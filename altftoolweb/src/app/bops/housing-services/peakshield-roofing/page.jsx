@@ -15,9 +15,9 @@ import {
   AlertTriangle,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/peakshield-roofing";
-const PHONE_DISPLAY = "(833) 555-0110";
-const PHONE_TEL = "tel:+18335550110";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1635424709961-f3a150459ad4?auto=format&fit=crop&w=1600&q=80",

@@ -158,6 +158,16 @@ export default function ToolHome() {
     return null;
   }, [numberInput, romanInput]);
 
+  // Each Copy button must only ever copy what its OWN field currently, validly
+  // shows — never activeNumber's cross-field fallback — otherwise an invalid
+  // edit in one field leaves its Copy button silently copying stale text from
+  // the other field instead of erroring or copying nothing.
+  const numberFieldValue = useMemo(() => parseYear(numberInput), [numberInput]);
+  const romanFieldValue = useMemo(() => {
+    const up = romanInput.trim();
+    return up && STRICT_RE.test(up) ? up : null;
+  }, [romanInput]);
+
   const breakdown = useMemo(
     () => (activeNumber === null ? [] : getBreakdown(activeNumber)),
     [activeNumber]
@@ -231,8 +241,10 @@ export default function ToolHome() {
                 />
                 <button
                   type="button"
-                  onClick={() => activeNumber !== null && copyValue("number", String(activeNumber))}
-                  disabled={activeNumber === null}
+                  onClick={() =>
+                    numberFieldValue !== null && copyValue("number", String(numberFieldValue))
+                  }
+                  disabled={numberFieldValue === null}
                   className="btn-secondary min-h-12 shrink-0 px-3 text-sm disabled:opacity-50"
                 >
                   <Copy className="h-4 w-4" />
@@ -262,10 +274,8 @@ export default function ToolHome() {
                 />
                 <button
                   type="button"
-                  onClick={() =>
-                    activeNumber !== null && copyValue("roman", toRoman(activeNumber))
-                  }
-                  disabled={activeNumber === null}
+                  onClick={() => romanFieldValue !== null && copyValue("roman", romanFieldValue)}
+                  disabled={romanFieldValue === null}
                   className="btn-secondary min-h-12 shrink-0 px-3 text-sm disabled:opacity-50"
                 >
                   <Copy className="h-4 w-4" />

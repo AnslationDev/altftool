@@ -146,6 +146,56 @@ test("keeps scanning past an unterminated stream instead of aborting the file", 
   );
 });
 
+test("keeps scanning past an unterminated hex string instead of swallowing the rest of the file", () => {
+  // Regression test: a stray '<' with no matching '>' anywhere in the file
+  // must not silently consume every byte that follows as "hex string
+  // content". Real active-content markers placed after the stray '<' have
+  // to still be found, and the result must not claim a clean file.
+  const bytes = pdfBytes(
+    "1 0 obj\nstray <\n2 0 obj obj << /S /JavaScript /JS (evil()) /Launch true /EmbeddedFile true",
+  );
+  const result = inspectPdfActiveContentBytes(bytes, {
+    fileName: "broken-hex.pdf",
+    fileSize: bytes.byteLength,
+  });
+
+  assert.equal(result.ok, true);
+  // /S /JavaScript /JS ... — both the "JavaScript" and abbreviated "JS"
+  // names fall under the javascript group, so this counts as 2.
+  assert.equal(group(result, "javascript").count, 2);
+  assert.equal(group(result, "launchActions").count, 1);
+  assert.equal(group(result, "attachments").count, 1);
+  assert.equal(result.summary.selectedMarkerCount, 4);
+  assert.equal(
+    result.warnings.some((item) => /unclosed hex string/iu.test(item)),
+    true,
+  );
+});
+
+test("keeps scanning after invalid hex syntax before a later dictionary close", () => {
+  // Regression: the later dictionary's first '>' used to terminate the stray
+  // '<' as if everything between them were a hex string, hiding every cue.
+  const bytes = pdfBytes(
+    "1 0 obj\nstray <\n2 0 obj << /S /JavaScript /JS (evil()) /Launch true /EmbeddedFile true >>",
+  );
+  const result = inspectPdfActiveContentBytes(bytes, {
+    fileName: "invalid-hex.pdf",
+    fileSize: bytes.byteLength,
+  });
+
+  assert.equal(result.ok, true);
+  assert.equal(group(result, "javascript").count, 2);
+  assert.equal(group(result, "launchActions").count, 1);
+  assert.equal(group(result, "attachments").count, 1);
+  assert.equal(result.summary.groupsWithCues, 3);
+  assert.equal(result.summary.selectedMarkerCount, 4);
+  assert.equal(result.summary.invalidHexStrings, 1);
+  assert.equal(
+    result.warnings.some((item) => /invalid hex-string syntax/iu.test(item)),
+    true,
+  );
+});
+
 test("rejects renamed input, empty input, missing PDF header, and oversize metadata", () => {
   assert.equal(
     validatePdfActiveContentFile({ name: "sample.txt", size: 1 }).ok,

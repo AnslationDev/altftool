@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "freelance-payment-late-fee-tracker",
   "title": "Freelance Payment & Late-Fee Tracker",
-  "description": "Due dates, payments aur agreed late fees track kare.",
+  "description": "Track invoice due dates, payments received and the late fees you agreed.",
   "badge": "Creator & Gig-Business Tools",
   "category": [
     "Finance",

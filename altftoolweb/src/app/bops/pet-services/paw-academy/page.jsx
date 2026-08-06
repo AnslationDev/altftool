@@ -6,9 +6,9 @@ import {
   GraduationCap, Users, ShieldCheck, Dog, Bone, Star, BadgeCheck,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/paw-academy";
-const TEL_HREF = "tel:+18225550155";
-const TEL_TEXT = "(822) 555-0155";
+const QUOTE_URL = "#demo-only";
+const TEL_HREF = "#demo-only";
+const TEL_TEXT = "Demo only";
 
 const HERO_IMG =
   "https://images.unsplash.com/photo-1620289052446-202137ffa876?auto=format&fit=crop&w=1600&q=80";

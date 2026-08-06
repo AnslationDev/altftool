@@ -7,7 +7,7 @@ const seo = {
     "A CLI author choosing structured failure codes and checking what sysexits.h reserves 64 through 78 for",
   ],
   benefits: [
-    ["Signal maths done for you", "Any code above 128 is decomposed into 128 + N and named from the Linux signal table."],
+    ["Signal maths done for you", "Codes 129 through 159 that correspond to a signal that actually terminates a process are decomposed into 128 + N and named from the Linux signal table. Codes above that band, or above 128 with no matching signal death, are flagged as application-defined instead of being guessed at."],
     ["Container context", "Codes like 137, 139 and 143 include what they mean specifically in Docker and Kubernetes."],
     ["Out-of-range handling", "Enter exit(-1) or exit(300) and the tool shows the wrapped mod-256 value the shell actually reports."],
   ],

@@ -60,13 +60,18 @@ export const COOL_HUE_END = 240;
 /**
  * Colour families keyed by hue range on the 0-360 wheel. Ranges follow the
  * conventional 12-part wheel grouping; red wraps past 360.
+ *
+ * Each range is half-open [from, to) and `to` is exactly the next family's
+ * `from`, so every hue value — including the fractional degrees rgbToHsl
+ * produces — falls in exactly one family with no gap and no overlap. See
+ * familyForHue below, which matches with `h < to` rather than `h <= to`.
  */
 export const COLOR_FAMILIES = [
   {
     key: "red",
     label: "Red",
     from: 345,
-    to: 14,
+    to: 15,
     emotions: ["urgency", "appetite", "passion", "alarm"],
     brand:
       "Grabs attention faster than any other hue, which is why it is the default for sale badges, clearance pricing and error states. Overuse reads as shouting.",
@@ -83,7 +88,7 @@ export const COLOR_FAMILIES = [
     key: "orange",
     label: "Orange",
     from: 15,
-    to: 44,
+    to: 45,
     emotions: ["energy", "friendliness", "affordability", "playfulness"],
     brand:
       "Reads as approachable and good value. A common call-to-action colour because it is high-visibility without red's warning connotation.",
@@ -100,7 +105,7 @@ export const COLOR_FAMILIES = [
     key: "yellow",
     label: "Yellow",
     from: 45,
-    to: 69,
+    to: 70,
     emotions: ["optimism", "caution", "clarity", "youth"],
     brand:
       "The most visible hue in daylight, which is why it is used for warning signage. On screen it needs a dark foreground: yellow rarely passes contrast against white.",
@@ -117,7 +122,7 @@ export const COLOR_FAMILIES = [
     key: "green",
     label: "Green",
     from: 70,
-    to: 164,
+    to: 165,
     emotions: ["growth", "safety", "health", "permission"],
     brand:
       "Carries the strongest 'go ahead' signal in interfaces and the strongest sustainability claim in marketing. Also the default for gains in finance.",
@@ -134,7 +139,7 @@ export const COLOR_FAMILIES = [
     key: "teal",
     label: "Teal / Cyan",
     from: 165,
-    to: 194,
+    to: 195,
     emotions: ["calm", "clarity", "modernity", "trustworthy competence"],
     brand:
       "Sits between blue's authority and green's reassurance, which is why it dominates health-tech and fintech interfaces built after 2015.",
@@ -151,10 +156,10 @@ export const COLOR_FAMILIES = [
     key: "blue",
     label: "Blue",
     from: 195,
-    to: 255,
+    to: 256,
     emotions: ["trust", "stability", "competence", "distance"],
     brand:
-      "The most used brand colour worldwide and the safest cross-cultural choice: no major culture treats blue as taboo. The cost is that it is unmemorable.",
+      "The most used brand colour worldwide and one of the safer cross-cultural choices, though not a universal one: it reads as trust and calm almost everywhere, but is a traditional mourning colour in China and South Korea. The cost is that it is unmemorable.",
     industries: ["Banking", "Enterprise software", "Insurance", "Healthcare"],
     cultures: [
       ["Western Europe / North America", "Corporate trust, calm, and sadness ('feeling blue')."],
@@ -168,7 +173,7 @@ export const COLOR_FAMILIES = [
     key: "purple",
     label: "Purple",
     from: 256,
-    to: 284,
+    to: 285,
     emotions: ["luxury", "creativity", "mystery", "spirituality"],
     brand:
       "Historically expensive to dye, so it still signals premium and craft. Rare enough in most categories that it differentiates immediately.",
@@ -185,7 +190,7 @@ export const COLOR_FAMILIES = [
     key: "pink",
     label: "Pink / Magenta",
     from: 285,
-    to: 344,
+    to: 345,
     emotions: ["warmth", "playfulness", "care", "modern femininity"],
     brand:
       "Highly memorable and increasingly gender-neutral in tech branding, though it still carries strong gendered coding in toys and personal care.",
@@ -338,18 +343,27 @@ export function contrastRatio(rgbA, rgbB) {
 /* Classification                                                      */
 /* ------------------------------------------------------------------ */
 
-/** Return the colour family for a hue in degrees. Handles the red wrap. */
+/**
+ * Return the colour family for a hue in degrees. Handles the red wrap.
+ * Ranges are half-open [from, to) — see the comment on COLOR_FAMILIES — so
+ * every hue, including the fractional degrees rgbToHsl produces, matches
+ * exactly one family. There is deliberately no fallback to COLOR_FAMILIES[0]:
+ * the ranges are contiguous and exhaustive over 0-360, so reaching the end of
+ * the loop would mean a boundary was edited to leave a gap.
+ */
 export function familyForHue(hue) {
   const h = ((Number(hue) % 360) + 360) % 360;
   for (const family of COLOR_FAMILIES) {
     if (family.from <= family.to) {
-      if (h >= family.from && h <= family.to) return family;
-    } else if (h >= family.from || h <= family.to) {
+      if (h >= family.from && h < family.to) return family;
+    } else if (h >= family.from || h < family.to) {
       // wrapping range (red)
       return family;
     }
   }
-  return COLOR_FAMILIES[0];
+  // Unreachable if COLOR_FAMILIES stays contiguous; fail loud rather than
+  // silently mislabel a colour as red.
+  throw new Error(`familyForHue: no family covers hue ${h}`);
 }
 
 /** "Warm" or "Cool" using the standard 60-240 degree split. */

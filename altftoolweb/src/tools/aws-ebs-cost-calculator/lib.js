@@ -77,8 +77,9 @@ export const VOLUME_TYPES = [
 /**
  * io2 tiered IOPS rates (us-east-1): first 32,000 IOPS at $0.065/IOPS-month,
  * 32,001–64,000 at $0.046, above 64,000 at $0.032 (AWS EBS pricing page).
+ * Not exported — only io2IopsCost() in this file consumes it.
  */
-export const IO2_IOPS_TIERS = [
+const IO2_IOPS_TIERS = [
   { uptoIops: 32000, ratePerIopsMonth: 0.065 },
   { uptoIops: 64000, ratePerIopsMonth: 0.046 },
   { uptoIops: Infinity, ratePerIopsMonth: 0.032 },
@@ -134,10 +135,15 @@ export function computeEbsCost({
   if (!Number.isFinite(count) || count < 1 || !Number.isInteger(count)) {
     return { error: "Number of volumes must be a whole number of at least 1." };
   }
-  if (!Number.isFinite(iops) || iops < 0) {
+  // Only validate IOPS/throughput for volume types that actually use them —
+  // matching the max-value checks below. Otherwise a stale negative value
+  // left over from a previously selected type (its input field is hidden
+  // for types that don't support it, so there is nothing on screen to fix)
+  // would permanently block the calculator.
+  if (type.supportsProvisionedIops && (!Number.isFinite(iops) || iops < 0)) {
     return { error: "Provisioned IOPS cannot be negative." };
   }
-  if (!Number.isFinite(throughput) || throughput < 0) {
+  if (type.supportsProvisionedThroughput && (!Number.isFinite(throughput) || throughput < 0)) {
     return { error: "Provisioned throughput cannot be negative." };
   }
   if (!Number.isFinite(snapshot) || snapshot < 0) {
@@ -176,6 +182,9 @@ export function computeEbsCost({
     throughputCostPerVolume = billableMbps * (type.throughputPerMbpsMonth ?? 0);
   }
 
+  // snapshotGb is the total incremental snapshot data stored across the
+  // fleet, not a per-volume allocation. Keep it outside `perVolume` so the
+  // documented contract cannot multiply the same snapshot bytes by count.
   const perVolume = storageCostPerVolume + iopsCostPerVolume + throughputCostPerVolume;
   const storageCost = storageCostPerVolume * count;
   const iopsCost = iopsCostPerVolume * count;
@@ -190,6 +199,7 @@ export function computeEbsCost({
     iopsCost,
     throughputCost,
     snapshotCost,
+    snapshotGbTotal: snapshot,
     perVolume,
     volumeCount: count,
     total,

@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "utility-tariff-csv-comparator",
   "title": "Utility Tariff CSV Comparator",
-  "description": "Same usage profile ko multiple electricity plans par compare kare.",
+  "description": "Compare the same electricity usage profile across multiple tariff plans.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Lifestyle",

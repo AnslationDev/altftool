@@ -74,7 +74,7 @@ const Home = () => {
               <Link to="/book" className="btn btn-primary w-full px-9 py-4 text-base sm:w-auto">
                 Get Free Quote <ArrowRight size={19} />
               </Link>
-              <a href="tel:7865679554" className="btn w-full border border-white/30 bg-white/10 px-8 py-4 text-base text-white hover:bg-white/15 sm:w-auto">
+              <a href="#demo-only" className="btn w-full border border-white/30 bg-white/10 px-8 py-4 text-base text-white hover:bg-white/15 sm:w-auto">
                 <Phone size={18} /> Call Now
               </a>
             </motion.div>

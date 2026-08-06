@@ -20,9 +20,9 @@ import {
 import DemoBrandNotice from "../_components/DemoBrandNotice";
 import "./shieldsure-auto.css";
 
-const QUOTE_URL = "https://example.com/quote/shieldsure-auto";
-const PHONE_TEL = "tel:+18665550301";
-const PHONE_DISPLAY = "(866) 555-0301";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const COVERAGE_CARDS = [
   {

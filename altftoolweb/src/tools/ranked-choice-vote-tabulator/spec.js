@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "ranked-choice-vote-tabulator",
   "title": "Ranked-Choice Vote Tabulator",
-  "description": "Instant-runoff rounds transparently calculate kare.",
+  "description": "Tabulate ranked-choice voting with every instant-runoff round shown.",
   "badge": "Fair Decisions & Group Scheduling",
   "category": [
     "Productivity",

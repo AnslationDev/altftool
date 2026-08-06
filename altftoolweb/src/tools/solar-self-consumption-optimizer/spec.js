@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "solar-self-consumption-optimizer",
   "title": "Solar Self-Consumption Optimizer",
-  "description": "Generation aur usage CSV se best appliance timing dikhaye.",
+  "description": "Find the best appliance timing from your solar generation and usage CSV exports.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Lifestyle",

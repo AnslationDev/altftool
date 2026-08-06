@@ -7,9 +7,9 @@ import {
 } from "lucide-react";
 import "./stairlift-solutions.css";
 
-const QUOTE_URL = "https://example.com/quote/stairlift-solutions";
-const PHONE_TEL = "tel:+18885550543";
-const PHONE_DISPLAY = "(888) 555-0543";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1766325941906-37298f6180be?auto=format&fit=crop&w=1600&q=80",

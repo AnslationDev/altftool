@@ -14,9 +14,9 @@ import {
 } from "lucide-react";
 import "./serenebaths.css";
 
-const QUOTE_URL = "https://example.com/quote/serenebaths";
-const PHONE_DISPLAY = "(888) 555-0554";
-const PHONE_TEL = "tel:+18885550554";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const HERO_IMG =
   "https://images.unsplash.com/photo-1521783593447-5702b9bfd267?auto=format&fit=crop&w=1600&q=80";

@@ -20,9 +20,9 @@ import {
 } from "lucide-react";
 import "./injuryadvocates.css";
 
-const QUOTE_URL = "https://example.com/quote/injuryadvocates";
-const PHONE_TEL = "tel:+18775550410";
-const PHONE_DISPLAY = "(877) 555-0410";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const IMG = {
   heroScales:

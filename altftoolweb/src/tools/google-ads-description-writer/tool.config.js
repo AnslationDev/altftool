@@ -1,8 +1,8 @@
 const toolConfig = {
   slug: "google-ads-description-writer",
   name: "Google Ads Writer",
-  category: ["Business", "AI"],
-  description: "Generate highly converting Google Ads descriptions using AI.",
+  category: ["Business"],
+  description: "Generate ready-to-paste Google Ads descriptions from proven ad-copy templates.",
   icon: "megaphone",
   iconColor: "text-green-500",
 };

@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "How long should a case study be?",
-      "Published guidance across B2B content marketing generally puts case studies at roughly 500 to 1,500 words. This builder offers three targets: a brief one-pager around 500 words, a standard piece around 1,000 words, and a deep dive around 1,800 words for technical evaluators.",
+      "Published guidance across B2B content marketing generally puts case studies at roughly 500 to 1,500 words. This builder offers three targets — a brief one-pager around 500 words, a standard piece around 1,000 words, and a deep dive around 1,800 words for the most detail-heavy write-ups — chosen separately from who the case study is written for, so you can pair any length with any audience.",
     ],
     [
       "Can I write a case study without naming the client?",

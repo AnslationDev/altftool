@@ -464,10 +464,22 @@ export function auditPermissions(input = {}) {
 /* ------------------------------ text parsing ------------------------------ */
 
 /**
+ * Section headers used by Android's Settings > Apps > Permissions screen.
+ * That screen (one of the two paste sources this tool's own copy points
+ * users at) renders an "Allowed" section followed by a "Denied" (or "Not
+ * allowed") section, with no other per-line marker distinguishing a granted
+ * permission name from a revoked one. Without tracking these headers, a
+ * verbatim paste of that screen would match permission names under "Denied"
+ * exactly like ones under "Allowed" and silently report them as granted.
+ */
+const ALLOWED_SECTION_RE = /^allowed\b/i;
+const DENIED_SECTION_RE = /^(denied|not allowed)\b/i;
+
+/**
  * Match a pasted permission list (the Play Store "See more" dialog, or the
  * Android Settings > Apps > Permissions screen) against the catalogue.
  *
- * @returns {{granted: string[], unrecognised: string[]}} or { error }
+ * @returns {{granted: string[], denied: string[], unrecognised: string[]}} or { error }
  */
 export function parsePermissionText(text, permissions = PERMISSIONS) {
   if (typeof text !== "string" || text.trim() === "") {
@@ -490,21 +502,38 @@ export function parsePermissionText(text, permissions = PERMISSIONS) {
     .filter(Boolean);
 
   const matched = [];
+  const denied = [];
   const unrecognised = [];
+  // A flat list with no section headers at all — e.g. the Play Store
+  // "See more" dialog, which only ever lists permissions the app requests —
+  // is assumed "allowed" throughout, exactly like before this fix.
+  let section = "allowed";
   lines.forEach((line) => {
+    if (ALLOWED_SECTION_RE.test(line)) {
+      section = "allowed";
+      return;
+    }
+    if (DENIED_SECTION_RE.test(line)) {
+      section = "denied";
+      return;
+    }
     const haystack = line.toLowerCase();
     const hit = pairs.find((pair) => haystack.includes(pair.alias));
-    if (hit) {
-      if (!matched.includes(hit.id)) matched.push(hit.id);
-    } else {
+    if (!hit) {
       unrecognised.push(line);
+      return;
     }
+    if (section === "denied") {
+      if (!denied.includes(hit.id)) denied.push(hit.id);
+      return;
+    }
+    if (!matched.includes(hit.id)) matched.push(hit.id);
   });
 
-  if (matched.length === 0) {
+  if (matched.length === 0 && denied.length === 0) {
     return { error: "No permission in that text matched this checklist. Tick the boxes instead." };
   }
-  return { granted: matched, unrecognised };
+  return { granted: matched, denied, unrecognised };
 }
 
 /* -------------------------------- reporting ------------------------------- */

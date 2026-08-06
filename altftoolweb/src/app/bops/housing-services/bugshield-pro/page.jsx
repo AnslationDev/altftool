@@ -20,9 +20,9 @@ import {
 } from "lucide-react";
 import "./bugshield-pro.css";
 
-const QUOTE_URL = "https://example.com/quote/bugshield-pro";
-const PHONE_DISPLAY = "(833) 555-0119";
-const PHONE_TEL = "tel:+18335550119";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 function QuoteButton({ className = "bugshield-btn bugshield-btn-solid", children = "Get a Free Quote" }) {
   return (

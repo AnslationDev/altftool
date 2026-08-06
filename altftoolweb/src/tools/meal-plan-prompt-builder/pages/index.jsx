@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Utensils } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   ACTIVITY_LEVELS,
   CUISINES,
@@ -60,9 +61,21 @@ export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [allergens, setAllergens] = useState(["Peanuts"]);
   const [includeLeftovers, setIncludeLeftovers] = useState(true);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const set = (key) => (event) => setForm((prev) => ({ ...prev, [key]: event.target.value }));
+
+  // Rounds an integer-only field to match the whole number the calculation
+  // actually uses, so the visible input never disagrees with the generated
+  // prompt (e.g. typing "2.5" people would otherwise still show "2.5" while
+  // the prompt silently used 3).
+  const roundFieldOnBlur = (key) => () =>
+    setForm((prev) => {
+      const num = Number(prev[key]);
+      if (!Number.isFinite(num)) return prev;
+      const rounded = String(Math.round(num));
+      return rounded === prev[key] ? prev : { ...prev, [key]: rounded };
+    });
 
   const toggleAllergen = (name) =>
     setAllergens((prev) => (prev.includes(name) ? prev.filter((item) => item !== name) : [...prev, name]));
@@ -82,22 +95,19 @@ export default function ToolHome() {
     });
   }, [result.currency]);
 
-  const copyPrompt = async () => {
+  const copyPrompt = () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.prompt);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("prompt", result.prompt, { label: "meal plan prompt" });
   };
 
   const reset = () => {
+    if (typeof window !== "undefined" && !window.confirm("Reset all fields to the defaults? This clears everything you've entered.")) {
+      return;
+    }
     setForm(DEFAULTS);
     setAllergens(["Peanuts"]);
     setIncludeLeftovers(true);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -261,6 +271,7 @@ export default function ToolHome() {
               step="1"
               value={form.people}
               onChange={set("people")}
+              onBlur={roundFieldOnBlur("people")}
             />
           </div>
           <div>
@@ -277,6 +288,7 @@ export default function ToolHome() {
               step="1"
               value={form.mealsPerDay}
               onChange={set("mealsPerDay")}
+              onBlur={roundFieldOnBlur("mealsPerDay")}
             />
           </div>
           <div>
@@ -293,6 +305,7 @@ export default function ToolHome() {
               step="1"
               value={form.days}
               onChange={set("days")}
+              onBlur={roundFieldOnBlur("days")}
             />
           </div>
           <div>
@@ -309,6 +322,7 @@ export default function ToolHome() {
               step="5"
               value={form.maxCookMinutes}
               onChange={set("maxCookMinutes")}
+              onBlur={roundFieldOnBlur("maxCookMinutes")}
             />
           </div>
           <div>
@@ -409,7 +423,14 @@ export default function ToolHome() {
               rows={3}
               value={form.dislikesRaw}
               onChange={set("dislikesRaw")}
+              aria-describedby={!hasError && result.dislikesTruncated ? "mp-dislikes-truncated" : undefined}
             />
+            {!hasError && result.dislikesTruncated ? (
+              <p id="mp-dislikes-truncated" role="alert" className="mt-1 text-xs font-medium text-[var(--danger-text)]">
+                Only the first 25 items are used in the prompt — {result.dislikesTotal - 25} more{" "}
+                {result.dislikesTotal - 25 === 1 ? "item was" : "items were"} dropped.
+              </p>
+            ) : null}
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="mp-equipment">
@@ -421,7 +442,14 @@ export default function ToolHome() {
               rows={3}
               value={form.equipmentRaw}
               onChange={set("equipmentRaw")}
+              aria-describedby={!hasError && result.equipmentTruncated ? "mp-equipment-truncated" : undefined}
             />
+            {!hasError && result.equipmentTruncated ? (
+              <p id="mp-equipment-truncated" role="alert" className="mt-1 text-xs font-medium text-[var(--danger-text)]">
+                Only the first 25 items are used in the prompt — {result.equipmentTotal - 25} more{" "}
+                {result.equipmentTotal - 25 === 1 ? "item was" : "items were"} dropped.
+              </p>
+            ) : null}
           </div>
           <div className="sm:col-span-2">
             <label className="flex min-h-11 items-center gap-3 text-sm font-semibold" htmlFor="mp-leftovers">
@@ -470,17 +498,20 @@ export default function ToolHome() {
               aria-label="Copy the generated meal plan prompt"
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("prompt") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy prompt"}
+              {isCopied("prompt") ? "Copied!" : "Copy prompt"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span aria-live="polite" role="status" className="sr-only">
+              {announcement}
+            </span>
           </div>
         </div>
 

@@ -19,9 +19,9 @@ import {
 } from "lucide-react";
 import "./airflow-masters.css";
 
-const QUOTE_URL = "https://example.com/quote/airflow-masters";
-const PHONE_DISPLAY = "(833) 555-0198";
-const PHONE_HREF = "tel:+18335550198";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_HREF = "#demo-only";
 
 const img = (id, w) =>
   `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=${w}&q=80`;

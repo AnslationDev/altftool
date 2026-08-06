@@ -57,7 +57,7 @@ const ContactForm = () => {
         </div>
         <div>
           <label className="label">Phone</label>
-          <input {...register('phone')} className={`input ${errors.phone ? 'error' : ''}`} placeholder="(786) 555-1212" />
+          <input {...register('phone')} className={`input ${errors.phone ? 'error' : ''}`} placeholder="Demo only" />
           {errors.phone && <p className="text-red-500 mt-1 text-sm">{errors.phone.message}</p>}
         </div>
       </div>

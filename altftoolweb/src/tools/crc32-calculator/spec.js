@@ -15,12 +15,13 @@ export const spec = {
       "key": "text",
       "label": "Text",
       "type": "textarea",
-      "default": "hello world"
+      "default": "hello world",
+      "required": false
     }
   ]
 },
-  compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
-      const t = String(values.text);
+  compute: (values) => {
+      const t = String(values.text ?? "");
       let c; const table = [];
       for (let n = 0; n < 256; n++) { c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; table[n] = c >>> 0; }
       let crc = 0xffffffff;

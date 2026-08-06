@@ -119,7 +119,7 @@ export default function ToolHome() {
         {suggestions.matches && suggestions.matches.length > 0 && (
           <div className="mt-4">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
-              Closest matching grounds
+              Keyword suggestions — verify against your notice
             </p>
             <div className="mt-2 flex flex-wrap gap-2">
               {suggestions.matches.map((match) => (
@@ -133,7 +133,8 @@ export default function ToolHome() {
                 >
                   {match.title}
                   <span className="ml-2 font-normal text-[var(--muted-foreground)]">
-                    {match.confidence}% match
+                    {match.matchedTerms.length} matching term
+                    {match.matchedTerms.length === 1 ? "" : "s"}
                   </span>
                 </button>
               ))}
@@ -188,7 +189,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Reapplication readiness
             </p>
@@ -220,7 +221,10 @@ export default function ToolHome() {
 
         <div
           className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
-          role="img"
+          role="progressbar"
+          aria-valuenow={plan.error ? 0 : plan.readiness}
+          aria-valuemin={0}
+          aria-valuemax={100}
           aria-label={plan.error ? "No readiness score yet" : `${plan.readiness}% of the fixes are done`}
         >
           <span
@@ -229,7 +233,7 @@ export default function ToolHome() {
           />
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
           {[
             ["Grounds selected", plan.error ? DASH : LIST.format(plan.grounds.map((g) => g.title))],
             ["How serious", plan.error ? DASH : SEVERITY_LABELS[plan.severity]],

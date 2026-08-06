@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "royalty-split-waterfall-calculator",
   "title": "Royalty Split Waterfall Calculator",
-  "description": "Fees, recoupment aur collaborator splits exact cents tak reconcile kare.",
+  "description": "Reconcile fees, recoupment and collaborator splits down to the exact cent.",
   "badge": "Creator & Gig-Business Tools",
   "category": [
     "Finance",

@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "repair-quote-comparator",
   "title": "Repair Quote Comparator",
-  "description": "Parts, labour, warranty aur exclusions across repair quotes compare kare.",
+  "description": "Compare repair quotes on parts, labour, warranty and what each one excludes.",
   "badge": "Consumer, Family & Personal Resilience",
   "category": [
     "Lifestyle",

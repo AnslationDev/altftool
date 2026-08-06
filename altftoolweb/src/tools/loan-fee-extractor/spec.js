@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "loan-fee-extractor",
   "title": "Loan Fee Extractor",
-  "description": "Agreement se fees, penalties, reset clauses aur hidden charges extract kare.",
+  "description": "Extract fees, penalties, reset clauses and hidden charges from a loan agreement.",
   "badge": "Consumer, Family & Personal Resilience",
   "category": [
     "Finance",

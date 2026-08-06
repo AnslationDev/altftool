@@ -38,7 +38,7 @@ const foundation = {
     "Drainage and waterproofing addressed too"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/foundation",
+  "quoteUrl": "#demo-only",
   "seo": {
     "title": "Foundation Repair Guide: Cracks and Piers",
     "description": "Learn how foundation problems really start, when cracks and settling turn serious, and how piering, slab jacking, wall anchors, and waterproofing fix them."

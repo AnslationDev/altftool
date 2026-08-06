@@ -1,11 +1,11 @@
 import React from "react";
-import { Youtube, Sliders, Shield, Zap, Sparkles, Image } from "lucide-react";
+import { Youtube, Sliders, Shield } from "lucide-react";
 
 const faqItems = [
   {
     question: "How does the Viral Thumbnail Maker generate thumbnails?",
     answer:
-      "Describe your video topic, pick a visual style and color theme. The tool translates your inputs into a highly optimized AI prompt and generates 4 unique high-quality 16:9 thumbnail variations instantly.",
+      "Describe your video topic, pick a visual style and color theme. The tool translates your inputs into a highly optimized AI prompt and generates 4 unique high-quality 16:9 thumbnail variations, typically in well under a minute.",
   },
   {
     question: "Can I customize the generated thumbnail?",

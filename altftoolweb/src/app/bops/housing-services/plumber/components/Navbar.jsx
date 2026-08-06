@@ -93,7 +93,7 @@ export default function Navbar() {
         </div>
 
         <div className="fp-nav__right">
-          <a href="tel:8005550100" className="fp-nav__phone" aria-label="Emergency plumber phone number">
+          <a href="#demo-only" className="fp-nav__phone" aria-label="Emergency plumber phone number">
             <span className="fp-nav__phone-icon" aria-hidden="true">
               <PhoneCall size={19} strokeWidth={2.4} />
             </span>

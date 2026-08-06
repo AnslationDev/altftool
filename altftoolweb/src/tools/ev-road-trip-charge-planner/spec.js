@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "ev-road-trip-charge-planner",
   "title": "EV Road-Trip Charge Planner",
-  "description": "Battery, range aur route legs se charging stops plan kare.",
+  "description": "Plan charging stops along a route from your battery size, range and each leg.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Lifestyle",

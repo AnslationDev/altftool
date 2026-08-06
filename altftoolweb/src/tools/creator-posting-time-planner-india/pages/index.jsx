@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Clock, Copy, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   AUDIENCE_PROFILES,
   DEFAULT_ZONE_IDS,
@@ -43,7 +45,7 @@ export default function ToolHome() {
   const [slotsPerWeek, setSlotsPerWeek] = useState(DEFAULTS.slotsPerWeek);
   const [zoneIds, setZoneIds] = useState(DEFAULTS.zoneIds);
   const [weekStartDate, setWeekStartDate] = useState(todayIso);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -79,15 +81,9 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [result, hasError]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("plan", summary, { label: "the weekly posting plan" });
   };
 
   const reset = () => {
@@ -95,7 +91,7 @@ export default function ToolHome() {
     setSlotsPerWeek(DEFAULTS.slotsPerWeek);
     setZoneIds(DEFAULTS.zoneIds);
     setWeekStartDate(todayIso());
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -213,15 +209,15 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the weekly posting plan"
+              aria-label={isCopied("plan") ? "Copied the weekly posting plan to the clipboard" : "Copy the weekly posting plan"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("plan") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy plan"}
+              {isCopied("plan") ? "Copied!" : "Copy plan"}
             </button>
             <button
               type="button"
@@ -232,6 +228,9 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status">
+              {announcement}
+            </span>
           </div>
         </div>
 

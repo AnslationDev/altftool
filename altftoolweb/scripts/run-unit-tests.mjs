@@ -18,6 +18,7 @@ const testRoots = [
   path.join(webRoot, "src/app/api/download-image"),
   path.join(webRoot, "src/app/blogs/data"),
   path.join(webRoot, "src/app/blogs/utils"),
+  path.join(webRoot, "src/app/detour"),
   path.join(webRoot, "src/app/bazaar/data"),
   path.join(webRoot, "src/app/altflinking/lib"),
   path.join(webRoot, "src/app/kym/data"),

@@ -171,6 +171,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the checklist? This clears every ticked item and all form inputs and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setScheme(DEFAULTS.scheme);
     setAge(DEFAULTS.age);
     setBiometricsBooked(DEFAULTS.biometricsBooked);
@@ -323,7 +330,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -347,7 +358,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={listFailed}
-              aria-label="Copy the BLS appointment day checklist"
+              aria-label={copied ? "Checklist copied" : "Copy the BLS appointment day checklist"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? (
@@ -392,7 +403,11 @@ export default function ToolHome() {
           </div>
           <div className="flex items-center justify-between gap-4 py-2.5">
             <dt className="text-[var(--muted-foreground)]">At the centre by</dt>
-            <dd className="text-right font-semibold">{timingFailed ? EM_DASH : timing.arriveBy}</dd>
+            <dd className="text-right font-semibold">
+              {timingFailed
+                ? EM_DASH
+                : `${timing.arriveBy}${timing.arriveByPreviousDay ? " (previous day)" : ""}`}
+            </dd>
           </div>
           <div className="flex items-center justify-between gap-4 py-2.5">
             <dt className="text-[var(--muted-foreground)]">Leave home by</dt>

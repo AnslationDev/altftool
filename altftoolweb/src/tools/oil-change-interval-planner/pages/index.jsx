@@ -44,6 +44,12 @@ const STATUS_TEXT = {
   overdue: "Overdue — change it now",
 };
 
+// A negative "months remaining" value means that limit has already passed —
+// print it as "Overdue by N months" instead of the self-contradictory
+// "reached in -N months" (future tense on a negative number).
+const formatMonthsHorizon = (value) =>
+  value >= 0 ? `${NUM.format(value)} months` : `Overdue by ${NUM.format(Math.abs(value))} months`;
+
 export default function ToolHome() {
   const [oilType, setOilType] = useState(DEFAULTS.oilType);
   const [kmSinceChange, setKmSinceChange] = useState(DEFAULTS.kmSinceChange);
@@ -81,8 +87,16 @@ export default function ToolHome() {
       `Normal interval: ${KM.format(plan.baseKm)} km / ${NUM.format(plan.baseMonths)} months`,
       `Adjusted interval: ${KM.format(plan.intervalKm)} km / ${NUM.format(plan.intervalMonths)} months`,
       `Interval life used: ${NUM.format(plan.percentUsed)}%`,
-      `Distance left: ${KM.format(plan.kmRemaining)} km`,
-      `Time left: ${NUM.format(plan.monthsRemaining)} months (limited by ${plan.limitedBy})`,
+      `Distance left: ${
+        plan.kmRemaining >= 0
+          ? `${KM.format(plan.kmRemaining)} km`
+          : `overdue by ${KM.format(Math.abs(plan.kmRemaining))} km`
+      }`,
+      `Time left: ${
+        plan.monthsRemaining >= 0
+          ? `${NUM.format(plan.monthsRemaining)} months`
+          : `overdue by ${NUM.format(Math.abs(plan.monthsRemaining))} months`
+      } (limited by ${plan.limitedBy})`,
       `Status: ${STATUS_TEXT[plan.status]}`,
     ].join("\n");
   }, [plan]);
@@ -260,7 +274,7 @@ export default function ToolHome() {
       {plan.error ? (
         <p
           role="alert"
-          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
         >
           {plan.error}
         </p>
@@ -268,15 +282,19 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Change due in
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p
+              className={`mt-1 text-4xl font-semibold ${
+                ok && plan.status === "overdue" ? "text-[var(--danger-text)]" : "text-[var(--primary)]"
+              }`}
+            >
               {ok
-                ? plan.kmRemaining > 0
-                  ? `${KM.format(plan.kmRemaining)} km`
-                  : "Now"
+                ? plan.status === "overdue" || plan.kmRemaining <= 0
+                  ? "Now"
+                  : `${KM.format(plan.kmRemaining)} km`
                 : DASH}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -329,7 +347,7 @@ export default function ToolHome() {
           </p>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             [
               "Normal (manual) interval",
@@ -349,11 +367,11 @@ export default function ToolHome() {
             ],
             [
               "Distance limit reached in",
-              ok ? `${NUM.format(plan.monthsRemainingByDistance)} months` : DASH,
+              ok ? formatMonthsHorizon(plan.monthsRemainingByDistance) : DASH,
             ],
             [
               "Time limit reached in",
-              ok ? `${NUM.format(plan.monthsRemainingByTime)} months` : DASH,
+              ok ? formatMonthsHorizon(plan.monthsRemainingByTime) : DASH,
             ],
             ["Limit that hits first", ok ? plan.limitedBy : DASH],
             [

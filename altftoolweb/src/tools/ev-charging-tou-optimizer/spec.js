@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "ev-charging-tou-optimizer",
   "title": "EV Charging TOU Optimizer",
-  "description": "Tariff windows se lower-cost charging schedule calculate kare.",
+  "description": "Calculate a lower-cost EV charging schedule around your time-of-use tariff windows.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Lifestyle",

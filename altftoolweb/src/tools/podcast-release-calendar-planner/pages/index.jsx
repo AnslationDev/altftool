@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { CalendarDays, Check, Copy, RotateCcw } from "lucide-react";
 import { CADENCES, planSeason, nextWeekdayOnOrAfter, parseISODate, toISODate } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const DATE_FMT = new Intl.DateTimeFormat("en-GB", {
   day: "2-digit",
@@ -47,15 +48,27 @@ export default function ToolHome() {
   const [batchSize, setBatchSize] = useState(DEFAULTS.batchSize);
   const [today, setToday] = useState("");
   const [touchedStart, setTouchedStart] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   // Rendered on the server with the constant default, then rolled forward to the
   // next Monday after mount, so there is never a hydration mismatch.
   useEffect(() => {
-    const nowIso = new Date().toISOString().slice(0, 10);
-    setToday(nowIso);
-    const ts = parseISODate(nowIso);
-    if (ts !== null) setStartDate((current) => (current === DEFAULTS.startDate ? toISODate(nextWeekdayOnOrAfter(ts, 1)) : current));
+    const timer = window.setTimeout(() => {
+      // The visitor's local calendar day, not the UTC day — otherwise the
+      // overdue flag and the "next Monday" default can land a day early or
+      // late depending on which side of UTC midnight the visitor is on.
+      const now = new Date();
+      const pad = (value) => String(value).padStart(2, "0");
+      const nowIso = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+      setToday(nowIso);
+      const ts = parseISODate(nowIso);
+      if (ts !== null) {
+        setStartDate((current) =>
+          current === DEFAULTS.startDate ? toISODate(nextWeekdayOnOrAfter(ts, 1)) : current,
+        );
+      }
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const plan = useMemo(
@@ -93,15 +106,9 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [plan]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("calendar", summary, { label: "the release calendar" });
   };
 
   const reset = () => {
@@ -114,7 +121,6 @@ export default function ToolHome() {
     setBreakWeeks(DEFAULTS.breakWeeks);
     setBatchSize(DEFAULTS.batchSize);
     setTouchedStart(false);
-    setCopied(false);
   };
 
   const failed = Boolean(plan.error);
@@ -247,6 +253,7 @@ export default function ToolHome() {
               type="number"
               inputMode="numeric"
               min="0"
+              max={Math.max(0, (Number(episodes) || 0) - 1)}
               step="1"
               value={breakAfter}
               onChange={(event) => setBreakAfter(event.target.value)}
@@ -299,21 +306,24 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the release calendar"
+              aria-label={isCopied("calendar") ? "Copied the release calendar to the clipboard" : "Copy the release calendar"}
               className={GHOST_BTN}
               disabled={failed}
             >
-              {copied ? (
+              {isCopied("calendar") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy calendar"}
+              {isCopied("calendar") ? "Copied!" : "Copy calendar"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -383,6 +393,7 @@ export default function ToolHome() {
                         className={`py-2 ${episode.overdue ? "font-semibold text-[var(--danger)]" : ""}`}
                       >
                         {showDate(episode.recordDeadline)}
+                        {episode.overdue ? <span className="sr-only"> (overdue)</span> : null}
                       </td>
                     </tr>
                   ))}
@@ -414,6 +425,7 @@ export default function ToolHome() {
                       </td>
                       <td className={`py-2 ${session.overdue ? "font-semibold text-[var(--danger)]" : ""}`}>
                         {showDate(session.recordBy)}
+                        {session.overdue ? <span className="sr-only"> (overdue)</span> : null}
                         <span className="block text-xs text-[var(--muted-foreground)]">
                           {session.recordWeekday}
                         </span>

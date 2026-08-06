@@ -17,9 +17,9 @@ import {
 } from "lucide-react";
 import "./pawsome-grooming.css";
 
-const QUOTE_URL = "https://example.com/quote/pawsome-grooming";
-const PHONE_HREF = "tel:+18225550111";
-const PHONE_LABEL = "(822) 555-0111";
+const QUOTE_URL = "#demo-only";
+const PHONE_HREF = "#demo-only";
+const PHONE_LABEL = "Demo only";
 
 function QuoteButton({ className = "pawsome-btn pawsome-btn-pink", children }) {
   return (

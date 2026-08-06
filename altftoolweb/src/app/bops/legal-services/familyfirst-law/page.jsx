@@ -17,9 +17,9 @@ import {
 } from "lucide-react";
 import "./familyfirst-law.css";
 
-const QUOTE_URL = "https://example.com/quote/familyfirst-law";
-const PHONE_DISPLAY = "(877) 555-0443";
-const PHONE_TEL = "tel:+18775550443";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1780733064275-d1ade9b83a3d?auto=format&fit=crop&w=1600&q=80",

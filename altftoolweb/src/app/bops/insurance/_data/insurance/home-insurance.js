@@ -52,7 +52,7 @@ export const homeInsurance = {
   ],
 
   quoteLabel: "Get quotes",
-  quoteUrl: "https://example.com/quote/home-insurance",
+  quoteUrl: "#demo-only",
 
   coverageTitle: "What home insurance covers",
   coverageIntro:

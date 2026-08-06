@@ -3,18 +3,33 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Triangle } from "lucide-react";
 
-import { convertPitch } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
+import { convertPitch, MAX_RISE_IN_12 } from "../lib";
 
 const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 3 });
 const NUM2 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 });
+const NUM4 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 4 });
 
 const DASH = "—";
 const num = (value) => (Number.isFinite(value) ? NUM.format(value) : DASH);
 const num2 = (value) => (Number.isFinite(value) ? NUM2.format(value) : DASH);
+// Slope and hip factors are computed to 4 decimals (see lib.js round4) and
+// the tool's own SEO copy promotes that precision, so they get their own
+// formatter instead of the 3-decimal one used for riseIn12/tangent.
+const num4 = (value) => (Number.isFinite(value) ? NUM4.format(value) : DASH);
+
+// atan(MAX_RISE_IN_12 / 12) — the steepest angle the shared "wall, not a
+// roof" cap actually allows, in whichever mode the pitch is entered.
+const MAX_DEGREES = Math.atan(MAX_RISE_IN_12 / 12) * (180 / Math.PI);
 
 const MODES = [
   { id: "riseIn12", label: "Rise in 12", hint: "e.g. 6 for a 6-in-12 roof" },
-  { id: "degrees", label: "Degrees", hint: "0 to just under 90" },
+  {
+    id: "degrees",
+    label: "Degrees",
+    hint: `0 up to about ${NUM2.format(MAX_DEGREES)}° — steeper than that is a wall, not a roof`,
+  },
   { id: "percent", label: "Percent", hint: "rise as a % of run" },
   { id: "ratio", label: "Ratio 1 : n", hint: "enter n, e.g. 3 for 1 in 3" },
   { id: "riseRun", label: "Measured rise & run", hint: "any two matching units" },
@@ -49,6 +64,10 @@ const toNumber = (raw) => {
   const value = Number(trimmed);
   return Number.isFinite(value) ? value : NaN;
 };
+const toOptionalNumber = (raw) => {
+  const trimmed = String(raw).replace(/,/g, "").trim();
+  return trimmed === "" ? 0 : toNumber(trimmed);
+};
 
 export default function ToolHome() {
   const [mode, setMode] = useState(DEFAULTS.mode);
@@ -57,7 +76,8 @@ export default function ToolHome() {
   const [run, setRun] = useState(DEFAULTS.run);
   const [span, setSpan] = useState(DEFAULTS.span);
   const [overhang, setOverhang] = useState(DEFAULTS.overhang);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -66,8 +86,8 @@ export default function ToolHome() {
         value: toNumber(value),
         rise: toNumber(rise),
         run: toNumber(run),
-        spanFt: toNumber(span),
-        overhangFt: toNumber(overhang),
+        spanFt: toOptionalNumber(span),
+        overhangFt: toOptionalNumber(overhang),
       }),
     [mode, value, rise, run, span, overhang],
   );
@@ -81,23 +101,17 @@ export default function ToolHome() {
       "Roof pitch",
       `${num(result.riseIn12)} in 12 · ${num2(result.angleDeg)} degrees · ${num2(result.percent)}% · 1 : ${num2(result.ratioRunPerRise)}`,
       `Band: ${result.pitchName}`,
-      `Slope factor: ${num(result.slopeFactor)} (plan area x this = roof area)`,
-      `Hip and valley factor: ${num(result.hipFactor)}`,
+      `Slope factor: ${num4(result.slopeFactor)} (plan area x this = roof area)`,
+      `Hip and valley factor: ${num4(result.hipFactor)}`,
       `Span ${num2(result.spanFt)} ft: rise ${num2(result.riseFt)} ft, common rafter ${num2(result.rafterFt)} ft`,
       `With overhang: ${num2(result.totalRafterFt)} ft of rafter to cut`,
       `Hip rafter: ${num2(result.hipRafterFt)} ft`,
     ].join("\n");
   }, [failed, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "the pitch conversion" });
   };
 
   const reset = () => {
@@ -107,7 +121,7 @@ export default function ToolHome() {
     setRun(DEFAULTS.run);
     setSpan(DEFAULTS.span);
     setOverhang(DEFAULTS.overhang);
-    setCopied(false);
+    resetCopyState();
   };
 
   const rows = [
@@ -117,8 +131,8 @@ export default function ToolHome() {
     ["Ratio 1 : n", failed ? DASH : `1 : ${num2(result.ratioRunPerRise)}`],
     ["Tangent (rise / run)", failed ? DASH : num(result.tangent)],
     ["Pitch band", failed ? DASH : result.pitchName],
-    ["Slope factor", failed ? DASH : num(result.slopeFactor)],
-    ["Hip and valley factor", failed ? DASH : num(result.hipFactor)],
+    ["Slope factor", failed ? DASH : num4(result.slopeFactor)],
+    ["Hip and valley factor", failed ? DASH : num4(result.hipFactor)],
     ["Common rafter run", failed ? DASH : `${num2(result.commonRunFt)} ft`],
     ["Rise over that run", failed ? DASH : `${num2(result.riseFt)} ft`],
     ["Common rafter length", failed ? DASH : `${num2(result.rafterFt)} ft`],
@@ -262,7 +276,7 @@ export default function ToolHome() {
       {failed && (
         <p
           role="alert"
-          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
         >
           {result.error}
         </p>
@@ -270,7 +284,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Pitch angle
             </p>
@@ -288,24 +302,31 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={failed}
-              aria-label="Copy the pitch conversion"
+              aria-label={
+                isCopied("result")
+                  ? "Copied the pitch conversion to clipboard"
+                  : "Copy the pitch conversion"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
           {rows.map(([label, cell]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -341,7 +362,7 @@ export default function ToolHome() {
                   </td>
                   <td
                     className={`py-2.5 font-semibold ${
-                      item.suitable ? "text-[var(--success)]" : "text-[var(--danger)]"
+                      item.suitable ? "text-[var(--success-text)]" : "text-[var(--danger-text)]"
                     }`}
                   >
                     {item.suitable ? "Suitable" : "Too shallow"}

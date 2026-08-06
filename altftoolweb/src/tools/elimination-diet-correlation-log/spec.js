@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "elimination-diet-correlation-log",
   "title": "Elimination Diet Correlation Log",
-  "description": "Foods aur reactions ke possible patterns dikhaye.",
+  "description": "Log foods and reactions, and surface the possible patterns between them.",
   "badge": "Consumer, Family & Personal Resilience",
   "category": [
     "Health & Wellness",

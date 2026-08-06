@@ -185,8 +185,11 @@ export function planSeason({
 
   const breakAfter = Math.trunc(Number(breakAfterEpisode)) || 0;
   const weeksOff = Math.trunc(Number(breakWeeks)) || 0;
-  if (breakAfter < 0 || breakAfter > count) {
-    return { error: "The break has to fall on an episode inside the season." };
+  // breakAfter must leave at least one episode after it to "return" from the
+  // break to — placing it on (or past) the final episode has no episode left
+  // to shift and would index past the end of the season below.
+  if (breakAfter < 0 || breakAfter >= count) {
+    return { error: "The break has to fall on an episode inside the season, before the last one." };
   }
   if (weeksOff < 0 || weeksOff > MAX_BREAK_WEEKS) {
     return { error: `A mid-season break can run up to ${MAX_BREAK_WEEKS} weeks.` };

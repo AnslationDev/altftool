@@ -15,9 +15,9 @@ import {
   Star,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/clearpath-debt";
-const PHONE_TEL = "tel:+18115550245";
-const PHONE_DISPLAY = "(811) 555-0245";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 function QuoteButton({ className = "clearpath-btn", children = "Get a Free Quote" }) {
   return (

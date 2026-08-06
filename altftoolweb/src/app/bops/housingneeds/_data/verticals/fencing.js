@@ -34,7 +34,7 @@ const fencing = {
     "Posts set to frost depth in cold states"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/fencing",
+  "quoteUrl": "#demo-only",
   "seo": {
     "title": "Fencing Guide: Materials, Styles and Costs",
     "description": "Compare fence materials — wood, vinyl, chain-link, aluminum, and composite — plus gates, permits, property lines, post depth, and what drives fencing costs."

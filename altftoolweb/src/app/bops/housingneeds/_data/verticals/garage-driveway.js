@@ -32,7 +32,7 @@ const garageDriveway = {
     "Freeze-thaw base prep detailed"
   ],
   "quoteLabel": "Get a Free Quote",
-  "quoteUrl": "https://example.com/quote/garage-driveway",
+  "quoteUrl": "#demo-only",
   "seo": {
     "title": "Garage and Driveway Guide: Doors & Paving",
     "description": "How garage doors, openers and driveways really work: repair vs replacement, concrete vs asphalt vs pavers, base prep, and what drives project cost."

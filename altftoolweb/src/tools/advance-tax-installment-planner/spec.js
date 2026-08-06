@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "advance-tax-installment-planner",
   "title": "Advance Tax Installment Planner",
-  "description": "Estimated tax ko applicable installments me schedule kare.",
+  "description": "Schedule your estimated advance tax across the applicable installment dates.",
   "badge": "India-Specific Utilities",
   "category": [
     "Finance",

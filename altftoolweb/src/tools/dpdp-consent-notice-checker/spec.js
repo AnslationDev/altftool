@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "dpdp-consent-notice-checker",
   "title": "DPDP Consent Notice Checker",
-  "description": "Versioned India DPDP checklist ke against notice completeness inspect kare.",
+  "description": "Inspect a consent notice for completeness against a versioned India DPDP checklist.",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Security & Privacy",

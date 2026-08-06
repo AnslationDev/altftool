@@ -306,8 +306,180 @@ export function resolveInjectedCode(config, path) {
     if (entry && isPlainObject(entry.code)) page = entry.code;
   }
   const pick = (o) =>
-    dropCodeUndefined({ head: o.head, bodyStart: o.bodyStart, bodyEnd: o.bodyEnd });
+    dropCodeUndefined({
+      head: sanitizeInjectedMarkup(o.head),
+      bodyStart: sanitizeInjectedMarkup(o.bodyStart),
+      bodyEnd: sanitizeInjectedMarkup(o.bodyEnd),
+    });
   return { global: pick(global), page: pick(page) };
+}
+
+// Admin-authored custom code is intended for analytics, verification, and
+// similar integrations. It must not be able to redirect or replace the page a
+// visitor asked for. Keep the guard in this dependency-free resolver rather
+// than in one HTTP route: the root layout consumes the global block directly,
+// while /api/seo/page-code serves the per-page block. One resolver therefore
+// protects both paths and keeps the engine fully inert when it is disabled.
+const INJECTED_CODE_VOID_ELEMENTS = new Set([
+  "area",
+  "base",
+  "br",
+  "col",
+  "embed",
+  "hr",
+  "img",
+  "input",
+  "link",
+  "meta",
+  "param",
+  "source",
+  "track",
+  "wbr",
+]);
+
+function decodeInjectedCodePoint(raw, radix, fallback) {
+  const codePoint = Number.parseInt(raw, radix);
+  return Number.isInteger(codePoint) && codePoint >= 0 && codePoint <= 0x10ffff
+    ? String.fromCodePoint(codePoint)
+    : fallback;
+}
+
+function injectedCodeInspectionText(value) {
+  return value
+    // Character references are decoded by the HTML parser inside attributes.
+    .replace(/&#x([0-9a-f]+);?/gi, (entity, hex) =>
+      decodeInjectedCodePoint(hex, 16, entity),
+    )
+    .replace(/&#([0-9]+);?/g, (entity, decimal) =>
+      decodeInjectedCodePoint(decimal, 10, entity),
+    )
+    .replace(/&(colon|period|tab|newline|quot|apos);/gi, (entity) => {
+      const decoded = {
+        "&colon;": ":",
+        "&period;": ".",
+        "&tab;": "\t",
+        "&newline;": "\n",
+        "&quot;": '"',
+        "&apos;": "'",
+      };
+      return decoded[entity.toLowerCase()] || entity;
+    })
+    // JavaScript accepts escaped identifier characters such as
+    // `loc\\u0061tion`; inspect their decoded ASCII form as well.
+    .replace(/\\u\{([0-9a-f]{1,6})\}/gi, (escape, hex) =>
+      decodeInjectedCodePoint(hex, 16, escape),
+    )
+    .replace(/\\u([0-9a-f]{4})/gi, (escape, hex) =>
+      decodeInjectedCodePoint(hex, 16, escape),
+    )
+    .replace(/\\x([0-9a-f]{2})/gi, (escape, hex) =>
+      decodeInjectedCodePoint(hex, 16, escape),
+    )
+    .replace(/\/\*[\s\S]*?\*\//g, " ")
+    // Optional chaining does not make a navigation primitive harmless. Treat
+    // it like ordinary member access for inspection so `location?.assign()`
+    // cannot bypass the direct-call rules below.
+    .replace(/\?\s*\./g, ".")
+    // Collapse simple computed-property string concatenation. This is a
+    // common no-eval spelling of `window.location` / `window.open`, e.g.
+    // `window["loca" + "tion"]`, and executes in every supported browser.
+    .replace(
+      /\[\s*((?:["'][a-z]+["']\s*\+\s*)+["'][a-z]+["'])\s*\]/gi,
+      (expression, source) => {
+        const pieces = [...source.matchAll(/["']([a-z]+)["']/gi)];
+        const residue = source
+          .replace(/["'][a-z]+["']/gi, "")
+          .replace(/\+/g, "")
+          .trim();
+        return !residue && pieces.length > 1
+          ? `.${pieces.map((piece) => piece[1]).join("")}`
+          : expression;
+      },
+    )
+    // Normalize simple computed-property notation before applying the rules.
+    .replace(/\[\s*(["'])([a-z]+)\1\s*\]/gi, ".$2");
+}
+
+const INJECTED_NAVIGATION_PATTERNS = [
+  // Direct location assignment, including location.href and nested browsing
+  // contexts such as `frames[0].location`. Matching from the `location`
+  // property itself is intentional: any such assignment can navigate the
+  // current page, an ancestor, or an embedded page.
+  /\blocation(?:\s*\.\s*(?:href|host|hostname|protocol|pathname|search|port))?\s*(?:=|\+=|\|\|=|&&=|\?\?=)(?!=|>)/i,
+  // Navigation methods remain dangerous when invoked through call/apply/bind
+  // or retained for later invocation, so detect the capability reference and
+  // not only the simplest `method(...)` spelling.
+  /\blocation\s*\.\s*(?:assign|replace|reload)\b/i,
+  /\bnavigation\s*\.\s*navigate\b/i,
+  // History methods can silently replace the URL or move the visitor away.
+  /\bhistory\s*\.\s*(?:go|back|forward|pushState|replaceState)\b/i,
+  // Exclude method calls such as xhr.open(...) by rejecting a preceding dot.
+  /(?:^|[^\w$.-])(?:(?:window|self|top|parent|globalThis)\s*\.\s*)?open\s*(?:\.\s*(?:call|apply|bind)\s*)?\(/i,
+  // Direct document replacement primitives are a straightforward cloaking
+  // vector even when the URL itself does not change.
+  /\bdocument\s*\.\s*(?:open|write|writeln)\b/i,
+  /\bdocument\s*\.\s*(?:body|documentElement)\s*\.\s*(?:innerHTML|outerHTML|textContent)\s*(?:=|\+=|\|\|=|&&=|\?\?=)(?!=|>)/i,
+  /\bdocument\s*\.\s*(?:body|documentElement)\s*\.\s*(?:replaceChildren|remove)\b/i,
+  // HTML-level navigation and URL-changing document metadata.
+  /<\s*meta\b[^>]*\bhttp-equiv\s*=\s*["']?\s*refresh\b/i,
+  /<\s*base\b[^>]*\bhref\s*=/i,
+  /<\s*link\b[^>]*\brel\s*=\s*["'][^"']*\bcanonical\b/i,
+  /<\s*(?:a|area)\b[^>]*\bhref\s*=/i,
+  /<\s*(?:form|button|input)\b[^>]*\b(?:action|formaction)\s*=/i,
+  /\bjavascript\s*:/i,
+];
+
+function hasInjectedNavigation(value) {
+  if (typeof value !== "string" || !value) return false;
+  const inspection = injectedCodeInspectionText(value);
+  return INJECTED_NAVIGATION_PATTERNS.some((pattern) => pattern.test(inspection));
+}
+
+/**
+ * Split an HTML-ish custom-code blob into top-level elements and text runs.
+ * Script/style contents are kept with their element, so a navigating script
+ * can be dropped without discarding adjacent analytics or verification tags.
+ */
+function segmentInjectedMarkup(html) {
+  const segments = [];
+  const openingTag = /<([a-zA-Z][\w:-]*)\b[^>]*?(\/?)>/g;
+  let cursor = 0;
+  let match;
+
+  while ((match = openingTag.exec(html))) {
+    if (match.index > cursor) segments.push(html.slice(cursor, match.index));
+
+    const name = match[1].toLowerCase();
+    let end = openingTag.lastIndex;
+    if (!match[2] && !INJECTED_CODE_VOID_ELEMENTS.has(name)) {
+      const safeName = name.replace(/[^\w:-]/g, "");
+      const closingTag = new RegExp(`</${safeName}\\s*>`, "i");
+      const closing = closingTag.exec(html.slice(end));
+      end = closing ? end + closing.index + closing[0].length : html.length;
+    }
+
+    segments.push(html.slice(match.index, end));
+    cursor = end;
+    openingTag.lastIndex = end;
+  }
+
+  if (cursor < html.length) segments.push(html.slice(cursor));
+  return segments;
+}
+
+/**
+ * Remove navigation-capable segments while preserving safe snippets verbatim.
+ * Deliberately emits no log containing the rejected source: custom code can
+ * contain secrets, identifiers, or user data that must not reach build logs.
+ */
+export function sanitizeInjectedMarkup(html) {
+  if (typeof html !== "string" || !html.trim() || !hasInjectedNavigation(html)) {
+    return html;
+  }
+
+  return segmentInjectedMarkup(html)
+    .filter((segment) => !hasInjectedNavigation(segment))
+    .join("");
 }
 
 function dropCodeUndefined(o) {

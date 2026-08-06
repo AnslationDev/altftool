@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "Podcast Intro Outro Script Builder assembles a repeatable opening and closing script from your show details and estimates how long each section takes to read, using the standard narration formula seconds = words ÷ words-per-minute × 60 plus a short pause allowance per section. It splits the intro into hook, show ID, host ID, guest ID, promise, optional sponsor read and transition, and the outro into recap, guest links, call to action and sign-off. Useful for hosts who want every episode to open the same way without rewriting it each time.",
+    "Podcast Intro Outro Script Builder assembles a repeatable opening and closing script from your show details and estimates how long each section takes to read, using the standard narration formula seconds = words ÷ words-per-minute × 60 plus a short pause allowance per section. It splits the intro into hook, show ID, host ID, guest ID, promise, optional sponsor read and transition, and the outro into recap, guest links, call to action, optional sponsor thanks and sign-off. Useful for hosts who want every episode to open the same way without rewriting it each time.",
   useCases: [
     "Lock a 45-second intro that fits under a music bed of a fixed length.",
     "Give a co-host or stand-in the exact wording so the show sounds consistent when you are away.",

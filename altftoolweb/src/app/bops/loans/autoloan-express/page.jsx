@@ -14,9 +14,9 @@ import {
   Zap,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/autoloan-express";
-const PHONE_DISPLAY = "(811) 555-0223";
-const PHONE_HREF = "tel:+18115550223";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_HREF = "#demo-only";
 
 function QuoteButton({ ghost, children }) {
   return (

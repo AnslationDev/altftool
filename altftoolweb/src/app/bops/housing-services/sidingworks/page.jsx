@@ -12,9 +12,9 @@ import {
   Hammer,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/sidingworks";
-const TEL_HREF = "tel:+18555550221";
-const TEL_LABEL = "(855) 555-0221";
+const QUOTE_URL = "#demo-only";
+const TEL_HREF = "#demo-only";
+const TEL_LABEL = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1721815693498-cc28507c0ba2?auto=format&fit=crop&w=1600&q=80",

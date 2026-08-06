@@ -108,6 +108,14 @@ function isWhitespace(code) {
   );
 }
 
+function isHexDigit(code) {
+  return (
+    (code >= 0x30 && code <= 0x39) ||
+    (code >= 0x41 && code <= 0x46) ||
+    (code >= 0x61 && code <= 0x66)
+  );
+}
+
 function isDelimiterOrWhitespace(code) {
   return !Number.isFinite(code) || isWhitespace(code) || DELIMITERS.has(code);
 }
@@ -195,6 +203,8 @@ function lexInterestingNames(source) {
   let streamsSkipped = 0;
   let unclosedLiteralStrings = 0;
   let literalDepthLimitHits = 0;
+  let unclosedHexStrings = 0;
+  let invalidHexStrings = 0;
   let unterminatedStream = false;
 
   while (index < source.length && tokens < PDF_ACTIVE_CONTENT_LIMITS.tokens) {
@@ -224,12 +234,43 @@ function lexInterestingNames(source) {
       continue;
     }
     if (code === 0x3c && source.charCodeAt(index + 1) !== 0x3c) {
-      hexStringsSkipped += 1;
-      index += 1;
-      while (index < source.length && source.charCodeAt(index) !== 0x3e) {
+      let cursor = index + 1;
+      let invalidHexSyntax = false;
+      while (cursor < source.length && source.charCodeAt(cursor) !== 0x3e) {
+        const hexCode = source.charCodeAt(cursor);
+        if (!isWhitespace(hexCode) && !isHexDigit(hexCode)) {
+          invalidHexSyntax = true;
+          break;
+        }
+        cursor += 1;
+      }
+      if (!invalidHexSyntax && cursor < source.length) {
+        // A PDF hex string may contain only hexadecimal digits and
+        // whitespace. Skip it only after validating that grammar through a
+        // closing '>'; otherwise a stray '<' could swallow later dictionaries.
+        hexStringsSkipped += 1;
+        index = cursor + 1;
+      } else if (invalidHexSyntax) {
+        // Treat the opening '<' as a lone delimiter and resume immediately
+        // after it. The invalid byte and all later syntax must still be
+        // inspected so malformed input cannot hide active-content names.
+        invalidHexStrings += 1;
+        if (source.indexOf(">", cursor) < 0) unclosedHexStrings += 1;
+        index += 1;
+      } else {
+        // No terminating '>' exists anywhere in the remainder of the file,
+        // so the true extent of this "hex string" is unknown. Silently
+        // treating everything up to EOF as skipped string content would
+        // hide every real marker that follows it — the same class of bug
+        // already fixed above for an unterminated "stream" token. Instead,
+        // treat the stray '<' as a lone delimiter and resume normal lexing
+        // right after it so the rest of the file is still inspected. This
+        // can surface false-positive marker matches from whatever the
+        // malformed content actually contains, which is preferable to a
+        // false negative in a security-triage tool.
+        unclosedHexStrings += 1;
         index += 1;
       }
-      if (index < source.length) index += 1;
       continue;
     }
     if (
@@ -316,6 +357,8 @@ function lexInterestingNames(source) {
     streamsSkipped,
     unclosedLiteralStrings,
     literalDepthLimitHits,
+    unclosedHexStrings,
+    invalidHexStrings,
     unterminatedStream,
   };
 }
@@ -403,6 +446,16 @@ export function inspectPdfActiveContentBytes(bytesInput, options = {}) {
           "An unclosed literal string was observed; malformed syntax may affect subsequent cue visibility.",
         ]
       : []),
+    ...(lexical.unclosedHexStrings
+      ? [
+          "An unclosed hex string ('<' with no matching '>') was observed; the remaining bytes were scanned as regular syntax instead of being skipped as string data, which may produce false-positive marker matches.",
+        ]
+      : []),
+    ...(lexical.invalidHexStrings
+      ? [
+          "A '<' sequence contained invalid hex-string syntax; it was treated as a delimiter so later bytes remained visible to this lexical inspection.",
+        ]
+      : []),
     ...(lexical.literalDepthLimitHits
       ? [
           "Literal-string nesting exceeded the review depth; malformed or adversarial syntax may affect results.",
@@ -413,7 +466,6 @@ export function inspectPdfActiveContentBytes(bytesInput, options = {}) {
   return {
     ok: true,
     groups,
-    findings: groups.filter((group) => group.count > 0),
     summary: {
       groupsWithCues: groups.filter((group) => group.count > 0).length,
       selectedMarkerCount,
@@ -422,6 +474,7 @@ export function inspectPdfActiveContentBytes(bytesInput, options = {}) {
       commentsSkipped: lexical.commentsSkipped,
       literalStringsSkipped: lexical.literalStringsSkipped,
       hexStringsSkipped: lexical.hexStringsSkipped,
+      invalidHexStrings: lexical.invalidHexStrings,
       encryptedCues,
       objectStreamCues,
     },

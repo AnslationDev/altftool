@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Sparkles,
   Download,
   RotateCcw,
   RefreshCw,
   Video,
-  Image as ImageIcon,
   Trash2,
   Zap,
   Clock,
+  AlertTriangle,
 } from "lucide-react";
 
 const STYLE_OPTIONS = [
@@ -44,6 +44,7 @@ export default function MainComponent() {
 
   const [generatedImages, setGeneratedImages] = useState([]);
   const [history, setHistory] = useState([]);
+  const [genError, setGenError] = useState("");
 
   // Load history from localStorage
   useEffect(() => {
@@ -53,8 +54,23 @@ export default function MainComponent() {
     } catch {}
   }, []);
 
+  // Persist history, gracefully degrading if the array no longer fits the
+  // per-origin localStorage quota (each entry embeds a full-size base64 JPEG).
+  // Drop the oldest entries one at a time until the write succeeds instead of
+  // silently losing the whole write.
   const saveHistory = (items) => {
-    try { localStorage.setItem("altft_thumbnail_history", JSON.stringify(items)); } catch {}
+    let toSave = items;
+    while (toSave.length > 0) {
+      try {
+        localStorage.setItem("altft_thumbnail_history", JSON.stringify(toSave));
+        return;
+      } catch {
+        toSave = toSave.slice(0, toSave.length - 1);
+      }
+    }
+    try {
+      localStorage.removeItem("altft_thumbnail_history");
+    } catch {}
   };
 
   const buildPrompt = () => {
@@ -144,16 +160,19 @@ export default function MainComponent() {
 
   /* ── Main generation handler ── */
   const handleGenerate = async () => {
-    if (!topic.trim()) return;
+    if (!topic.trim() || isGenerating) return;
 
     setIsGenerating(true);
     setProgress(5);
     setGeneratedImages([]);
+    setGenError("");
 
     const prompt = buildPrompt();
     const results = [];
 
-    // Progress animation
+    // Progress animation. Kept in sync with the batch-completion jumps below
+    // (via the shared `progressVal` closure) so the timer's next tick can't
+    // overwrite a just-shown higher value with a stale lower one.
     let progressVal = 5;
     const timer = setInterval(() => {
       progressVal = Math.min(progressVal + Math.random() * 4, 92);
@@ -176,8 +195,9 @@ export default function MainComponent() {
       // Show results as each batch completes
       if (results.length > 0) {
         setGeneratedImages([...results]);
-        setProgress(50 * (batch + 1));
       }
+      progressVal = 50 * (batch + 1);
+      setProgress(progressVal);
     }
 
     clearInterval(timer);
@@ -190,6 +210,10 @@ export default function MainComponent() {
         const newHistory = [...results, ...history].slice(0, 20);
         setHistory(newHistory);
         saveHistory(newHistory);
+      } else {
+        setGenError(
+          "We couldn't generate any thumbnails this time — the image service may be busy or unreachable. Please try again.",
+        );
       }
     }, 300);
   };
@@ -203,6 +227,9 @@ export default function MainComponent() {
   };
 
   const handleClearHistory = () => {
+    if (!window.confirm("Clear all thumbnail history? This cannot be undone.")) {
+      return;
+    }
     setHistory([]);
     saveHistory([]);
   };
@@ -216,7 +243,7 @@ export default function MainComponent() {
           <Video className="h-8 w-8 text-teal-500 shrink-0" /> Viral Thumbnail Maker
         </h1>
         <p className="mt-2 text-md text-slate-600 dark:text-slate-300">
-          Describe your video and let AI generate 4 unique, high-CTR YouTube thumbnails instantly.
+          Describe your video and let AI generate 4 unique, high-CTR YouTube thumbnails in about a minute.
         </p>
       </div>
 
@@ -326,7 +353,11 @@ export default function MainComponent() {
 
       {/* Loading State - shows alongside already-loaded thumbnails */}
       {isGenerating && (
-        <div className="mt-8 rounded-2xl border border-(--border) bg-(--surface) p-6 shadow-md text-center space-y-3">
+        <div
+          className="mt-8 rounded-2xl border border-(--border) bg-(--surface) p-6 shadow-md text-center space-y-3"
+          role="status"
+          aria-live="polite"
+        >
           <div className="flex items-center justify-center gap-3">
             <RefreshCw className="h-5 w-5 text-(--primary) animate-spin" />
             <div className="text-left">
@@ -334,9 +365,27 @@ export default function MainComponent() {
               <p className="text-xs text-(--muted-foreground)">{generatedImages.length}/4 ready · Each image takes ~10-20 seconds</p>
             </div>
           </div>
-          <div className="w-full max-w-sm mx-auto bg-(--border) h-1.5 rounded-full overflow-hidden">
+          <div
+            className="w-full max-w-sm mx-auto bg-(--border) h-1.5 rounded-full overflow-hidden"
+            role="progressbar"
+            aria-label="Thumbnail generation progress"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round(progress)}
+          >
             <div className="bg-(--primary) h-full transition-all duration-500 rounded-full" style={{ width: `${progress}%` }} />
           </div>
+        </div>
+      )}
+
+      {/* Generation error - shown when every image in the batch failed to load */}
+      {!isGenerating && genError && (
+        <div
+          role="alert"
+          className="mt-8 rounded-2xl border border-(--danger)/30 bg-(--danger)/10 p-4 text-sm text-(--danger-text) flex items-center gap-2"
+        >
+          <AlertTriangle className="w-4 h-4 shrink-0" />
+          {genError}
         </div>
       )}
 
@@ -351,7 +400,8 @@ export default function MainComponent() {
             <button
               type="button"
               onClick={handleGenerate}
-              className="flex items-center gap-1.5 px-4 py-2 border border-(--border) rounded-xl text-xs font-semibold text-(--muted-foreground) hover:text-(--foreground) hover:bg-(--page) transition"
+              disabled={isGenerating}
+              className="flex items-center gap-1.5 px-4 py-2 border border-(--border) rounded-xl text-xs font-semibold text-(--muted-foreground) hover:text-(--foreground) hover:bg-(--page) transition disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               Regenerate
@@ -421,8 +471,17 @@ export default function MainComponent() {
             {history.map((item, idx) => (
               <div
                 key={item.id || idx}
-                className="rounded-xl border border-(--border) overflow-hidden bg-(--page) hover:shadow-md transition cursor-pointer group"
+                role="button"
+                tabIndex={0}
+                aria-label={`Download thumbnail: ${item.topic || `history item ${idx + 1}`}`}
+                className="rounded-xl border border-(--border) overflow-hidden bg-(--page) hover:shadow-md transition cursor-pointer group focus-visible:outline focus-visible:outline-2 focus-visible:outline-(--primary) focus-visible:outline-offset-2"
                 onClick={() => handleDownload(item.url, idx)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleDownload(item.url, idx);
+                  }
+                }}
               >
                 <div className="aspect-video bg-slate-900 overflow-hidden">
                   <img
