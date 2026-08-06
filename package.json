@@ -103,6 +103,7 @@
     "test:firebase-admin-write-check": "node --test tests/firebase-admin-write-check.test.mjs",
     "test:firebase-data-integrity": "node --test tests/firebase-data-integrity.test.mjs",
     "test:firebase-live-data-report": "node --test tests/firebase-live-data-report.test.mjs",
+    "test:route-quality-seo": "node --test tests/route-quality-seo.test.mjs",
     "test:resilient-fetch": "node --test tests/resilient-json-fetch.test.mjs",
     "test:smoke": "playwright test tests/smoke.spec.mjs",
     "test:theme": "playwright test tests/theme-system.spec.mjs",
