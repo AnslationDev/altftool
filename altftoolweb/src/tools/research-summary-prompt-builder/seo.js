@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     ["Method and limitations kept", "Method and limitations get 25% and 15% of the word budget by default, the sections generic summarisers usually drop."],
     ["Budgets that add up", "Largest-remainder apportionment splits the total into whole words per section with no rounding drift."],
-    ["Anti-fabrication rule", "The prompt forbids estimating missing details and requires \"not reported\" instead, plus a section or page reference for each key claim."],
+    ["Anti-fabrication rule", "The prompt forbids estimating missing details and requires \"not reported\" instead, plus — while the citation checkbox stays on, which it is by default — a section or page reference for each key claim."],
   ],
   faqs: [
     [
@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "Can AI accurately summarise a scientific paper?",
-      "It can produce a usable draft but not a trustworthy one on its own: large language models routinely soften hedged claims, misread numbers in tables and invent details that were never in the text. That is why the generated prompt requires exact figures with their units, a section or page reference for each key claim, and \"not reported\" for anything missing — so the errors are easy to spot and check.",
+      "It can produce a usable draft but not a trustworthy one on its own: large language models routinely soften hedged claims, misread numbers in tables and invent details that were never in the text. That is why the generated prompt always requires exact figures with their units and \"not reported\" for anything missing, and by default also a section or page reference for each key claim (leave the \"Cite the section or page\" checkbox on) — so the errors are easy to spot and check.",
     ],
     [
       "Does this tool summarise the paper for me?",

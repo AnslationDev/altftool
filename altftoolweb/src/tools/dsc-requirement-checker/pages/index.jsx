@@ -46,6 +46,18 @@ export default function ToolHome() {
     );
   };
 
+  // A DSC is issued per signatory, a whole number of people — truncate decimals as they're
+  // typed so the field never shows a value (e.g. "1.9") that differs from what gets computed.
+  const handleSignatoryCountChange = (event) => {
+    const raw = event.target.value;
+    if (raw === "" || raw === "-") {
+      setSignatoryCount(raw);
+      return;
+    }
+    const num = Number(raw);
+    setSignatoryCount(Number.isFinite(num) ? String(Math.trunc(num)) : raw);
+  };
+
   const result = useMemo(() => {
     const count = Number(String(signatoryCount).trim());
     if (!Number.isFinite(count)) {
@@ -151,7 +163,7 @@ export default function ToolHome() {
               max="50"
               step="1"
               value={signatoryCount}
-              onChange={(event) => setSignatoryCount(event.target.value)}
+              onChange={handleSignatoryCountChange}
             />
           </div>
         </div>
@@ -216,7 +228,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">

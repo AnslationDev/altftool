@@ -2,9 +2,9 @@ const seo = {
   intro:
     "This explainer reads the input range printed on your appliance against the mains at your destination and says whether a plug adapter is enough or a real voltage converter is required. A plug adapter changes only the pin shape; a converter or transformer changes the voltage; neither changes frequency. If the label says 100-240V ~ 50/60Hz the appliance is dual voltage and needs nothing but a shape adapter anywhere, and if it names a single voltage the tool sizes the converter using the standard headroom rules — 1.25× nameplate watts for a heating element, 1.5× for electronics and 3× for a motor.",
   useCases: [
-    "Checking whether a 120 V American hair dryer can be used in Europe, and finding that 1,600 W needs a 2,000 VA step-down unit rather than a travel converter.",
+    "Checking whether a 120 V American hair dryer can be used in Europe, and finding that 1,600 W needs at least a 2,000 VA step-down unit — a chopping travel converter works for the short duty a heating element is rated for, but a wound transformer is the safer choice for a full-length dry.",
     "Confirming a 100-240 V laptop charger only needs a plug adapter in India, with no converter at all.",
-    "Working out that a 100 V 50 Hz Japanese shaver on a 120 V 60 Hz supply needs both a step-up transformer and an acceptance that the motor runs 20% fast.",
+    "Working out that a 100 V 50 Hz Japanese shaver on a 120 V 60 Hz supply needs both a step-down transformer and an acceptance that the motor runs 20% fast.",
   ],
   benefits: [
     [

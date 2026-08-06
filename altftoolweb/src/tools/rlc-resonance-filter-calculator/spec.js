@@ -67,9 +67,14 @@ export const spec = {
       const R = Math.max(0, Number(values.resistance) || 0), L = Number(values.inductance) / 1000, C = Number(values.capacitance) / 1000000;
       if (!(L > 0 && C > 0)) return { result: "—", caption: "L and C must be positive" };
       const f0 = 1 / (2 * Math.PI * Math.sqrt(L * C));
-      const q = values.topology === "parallel" ? (R ? R * Math.sqrt(C / L) : 0) : (R ? Math.sqrt(L / C) / R : 0);
+      // Series Q = √(L/C)/R diverges toward infinity as R→0 (an undamped, maximally
+      // sharp tank) — the opposite of the parallel case, where R→0 shorts the tank
+      // and correctly drives Q to 0. Falling back to 0 for both would silently
+      // mis-rate an ideal series tank as having no selectivity at all.
+      const q = values.topology === "parallel" ? (R ? R * Math.sqrt(C / L) : 0) : (R ? Math.sqrt(L / C) / R : Infinity);
+      const formatQ = (value) => Number.isFinite(value) ? value.toFixed(5) : "∞";
       const bandwidth = q ? f0 / q : 0, lower = Math.max(0, f0 - bandwidth / 2), upper = f0 + bandwidth / 2;
-      return { result: f0.toFixed(4) + " Hz resonance", caption: values.topology + " approximation", rows: [["Angular frequency", (2 * Math.PI * f0).toFixed(4) + " rad/s"], ["Q factor", q.toFixed(5)], ["Bandwidth", bandwidth.toFixed(4) + " Hz"], ["Approx. lower / upper", lower.toFixed(4) + " / " + upper.toFixed(4) + " Hz"], ["Characteristic impedance", Math.sqrt(L / C).toFixed(4) + " Ω"]] };
+      return { result: f0.toFixed(4) + " Hz resonance", caption: values.topology === "parallel" ? "parallel approximation" : "series (exact)", rows: [["Angular frequency", (2 * Math.PI * f0).toFixed(4) + " rad/s"], ["Q factor", formatQ(q)], ["Bandwidth", bandwidth.toFixed(4) + " Hz"], ["Approx. lower / upper", lower.toFixed(4) + " / " + upper.toFixed(4) + " Hz"], ["Characteristic impedance", Math.sqrt(L / C).toFixed(4) + " Ω"]] };
     },
 };
 

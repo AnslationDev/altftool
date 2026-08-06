@@ -340,7 +340,7 @@ export default function ToolHome() {
       </section>
 
       {!hasError && plan.overTime ? (
-        <p className={WARN_CLASS}>
+        <p className={WARN_CLASS} role="status" aria-live="polite">
           {NUM.format(plan.heaviestSession)} sets will not fit in {NUM.format(plan.sessionMinutes)}{" "}
           minutes at {NUM.format(plan.goal.restSec)}-second rests — only about{" "}
           {NUM.format(plan.setsThatFit)} will. Drop a muscle group, add a day, or lengthen the
@@ -349,7 +349,7 @@ export default function ToolHome() {
       ) : null}
 
       {!hasError && plan.overCap ? (
-        <p className={WARN_CLASS}>
+        <p className={WARN_CLASS} role="status" aria-live="polite">
           {NUM.format(plan.heaviestSession)} working sets in one session is past the point where
           quality holds up. Spread the volume over more days.
         </p>

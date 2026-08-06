@@ -1,8 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Check, Copy, Regex, RotateCcw } from "lucide-react";
+import { Check, Copy, Printer, Regex, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { FLAVORS, SECTIONS, buildCheatsheet, toMarkdown } from "../lib";
 
 const INPUT_CLASS =
@@ -24,7 +25,7 @@ const DEFAULTS = {
 export default function ToolHome() {
   const [flavorId, setFlavorId] = useState(DEFAULTS.flavorId);
   const [sectionIds, setSectionIds] = useState(DEFAULTS.sectionIds);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopy } = useCopyToClipboard();
 
   const cheatsheet = useMemo(
     () => buildCheatsheet({ flavorId, sectionIds }),
@@ -41,21 +42,16 @@ export default function ToolHome() {
     );
   };
 
-  const copyMarkdown = async () => {
-    if (!markdown) return;
-    try {
-      await navigator.clipboard.writeText(markdown);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+  const copyMarkdown = () => copy("markdown", markdown, { label: "the cheatsheet Markdown" });
+
+  const printPage = () => {
+    if (typeof window !== "undefined") window.print();
   };
 
   const reset = () => {
     setFlavorId(DEFAULTS.flavorId);
     setSectionIds(DEFAULTS.sectionIds);
-    setCopied(false);
+    resetCopy();
   };
 
   return (
@@ -75,7 +71,7 @@ export default function ToolHome() {
         </p>
       </header>
 
-      <section className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="no-print rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label className={LABEL_CLASS} htmlFor="rcb-flavor">
@@ -136,7 +132,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Cheatsheet size
             </p>
@@ -149,20 +145,30 @@ export default function ToolHome() {
                 : `Filtered for ${cheatsheet.flavor.name}.`}
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="no-print flex flex-wrap gap-2">
             <button
               type="button"
               onClick={copyMarkdown}
               disabled={hasError}
-              aria-label="Copy the cheatsheet as Markdown"
+              aria-label={isCopied("markdown") ? "Copied the cheatsheet Markdown to clipboard" : "Copy the cheatsheet as Markdown"}
               className={`${GHOST_BTN} disabled:cursor-not-allowed disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("markdown") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy Markdown"}
+              {isCopied("markdown") ? "Copied!" : "Copy Markdown"}
+            </button>
+            <button
+              type="button"
+              onClick={printPage}
+              disabled={hasError}
+              aria-label="Print this cheatsheet"
+              className={`${GHOST_BTN} disabled:cursor-not-allowed disabled:opacity-50`}
+            >
+              <Printer className="h-4 w-4" aria-hidden="true" />
+              Print
             </button>
             <button
               type="button"
@@ -173,10 +179,13 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           <div className="flex items-center justify-between gap-4 py-2.5">
             <dt className="text-[var(--muted-foreground)]">Sections included</dt>
             <dd className="text-right font-semibold">
@@ -260,6 +269,14 @@ export default function ToolHome() {
         Python 3 re module docs. Tokens your chosen flavor does not support are hidden
         rather than shown with a warning, so everything on the sheet is safe to paste.
       </p>
+
+      <style jsx global>{`
+        @media print {
+          .no-print {
+            display: none !important;
+          }
+        }
+      `}</style>
     </main>
   );
 }

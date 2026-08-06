@@ -269,7 +269,7 @@ export default function ToolHome() {
 
       <section className={`mt-6 ${CARD}`} aria-labelledby="vc-verdict">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <h2
               id="vc-verdict"
               className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]"
@@ -312,7 +312,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
           {[
             ["Plug adapter needed", ok ? (result.adapterNeeded ? "Yes" : "No") : DASH],
             ["Voltage converter needed", ok ? (result.converterNeeded ? "Yes" : "No") : DASH],
@@ -354,14 +354,18 @@ export default function ToolHome() {
                   : `Label is ${deviceFrequency} Hz on a ${mains.frequencyHz} Hz supply`
                 : DASH,
             ],
-            [
-              "Motor speed on this supply",
-              ok
-                ? result.frequencyOk
-                  ? "Unchanged"
-                  : `${PERCENT.format(result.speedChangePercent)}% versus rated speed`
-                : DASH,
-            ],
+            ...(ok && result.deviceClass.id !== "motor"
+              ? []
+              : [
+                  [
+                    "Motor speed on this supply",
+                    ok
+                      ? result.frequencyOk
+                        ? "Unchanged"
+                        : `${PERCENT.format(result.speedChangePercent)}% versus rated speed`
+                      : DASH,
+                  ],
+                ]),
           ].map(([label, value]) => (
             <div
               key={label}
@@ -374,7 +378,7 @@ export default function ToolHome() {
         </dl>
 
         {ok ? (
-          <ul className="mt-4 space-y-2 text-sm">
+          <ul className="mt-4 space-y-2 text-sm" role="status" aria-live="polite">
             {result.actions.map((action) => (
               <li
                 key={action}

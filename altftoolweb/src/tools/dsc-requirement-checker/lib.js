@@ -36,15 +36,25 @@ export const VALIDITY_YEARS = [1, 2, 3];
 /** Storage requirement under the CCA Interoperability Guidelines. */
 export const TOKEN_STANDARD = "FIPS 140-2 Level 2";
 
-/** Entity types the rules distinguish between. */
+/**
+ * Entity types the rules distinguish between.
+ *
+ * `isBody` marks an entity that is registered with the Registrar of Companies / MCA (a "body
+ * corporate" for these purposes) — company, LLP, OPC and section 8 company all are; a plain
+ * trust, society, firm, proprietorship or HUF is not. A section 8 company is registered with
+ * the MCA like any other company, unlike a plain trust or society, so it is kept as its own
+ * option rather than bundled with them (bundling them previously produced a wrong MCA-e-forms
+ * verdict for anyone who was actually a plain trust or society).
+ */
 export const ENTITY_TYPES = [
   { value: "company", label: "Private or public limited company", isBody: true },
   { value: "llp", label: "Limited liability partnership", isBody: true },
   { value: "opc", label: "One person company", isBody: true },
+  { value: "section8", label: "Section 8 company (registered with MCA)", isBody: true },
   { value: "firm", label: "Partnership firm", isBody: false },
   { value: "proprietor", label: "Proprietorship or individual", isBody: false },
   { value: "huf", label: "Hindu Undivided Family", isBody: false },
-  { value: "trust", label: "Trust, society or section 8 company", isBody: false },
+  { value: "trust", label: "Trust or society (not registered with MCA)", isBody: false },
 ];
 
 /**
@@ -60,7 +70,7 @@ export const FILINGS = [
     holder: "individual signatory in organisational capacity",
     needsEncryption: false,
     decide: ({ entity }) =>
-      entity.isBody || entity.value === "trust"
+      entity.isBody
         ? {
             verdict: "mandatory",
             reason:
@@ -69,7 +79,7 @@ export const FILINGS = [
         : {
             verdict: "notApplicable",
             reason:
-              "A firm, proprietorship or HUF does not file with the Registrar of Companies, so no MCA DSC is needed.",
+              "A firm, proprietorship, HUF, plain trust or society does not file with the Registrar of Companies, so no MCA DSC is needed.",
           },
   },
   {
@@ -140,6 +150,7 @@ export const FILINGS = [
     authority: "Directorate General of Foreign Trade",
     rule: "Foreign Trade Policy procedures and DGFT portal requirements",
     holder: "organisational certificate for the entity",
+    isOrganisational: true,
     needsEncryption: false,
     decide: () => ({
       verdict: "mandatory",
@@ -153,6 +164,7 @@ export const FILINGS = [
     authority: "Central Board of Indirect Taxes and Customs",
     rule: "ICEGATE registration and digital signature requirements",
     holder: "organisational certificate for the entity",
+    isOrganisational: true,
     needsEncryption: false,
     decide: () => ({
       verdict: "mandatory",
@@ -272,6 +284,7 @@ export function checkDscRequirement({
       rule: filing.rule,
       holder: filing.holder,
       needsEncryption: filing.needsEncryption && verdict === "mandatory",
+      isOrganisational: filing.isOrganisational === true,
       verdict,
       reason,
     };
@@ -283,7 +296,11 @@ export function checkDscRequirement({
 
   const required = mandatory.length > 0;
   const needsEncryption = mandatory.some((row) => row.needsEncryption);
-  const needsOrganisational = mandatory.some((row) => row.holder.includes("organisational"));
+  // Only DGFT and ICEGATE issue a certificate in the entity's own name (an "organisational"
+  // certificate). Matching on whether the holder text merely *contains* the word
+  // "organisational" also caught mcaEforms's "individual signatory in organisational capacity"
+  // holder text, which describes an individual's certificate, not an organisational one.
+  const needsOrganisational = mandatory.some((row) => row.isOrganisational);
 
   // A DSC is personal and non-transferable, so one is needed per signatory.
   const certificatesNeeded = required ? signatoryCount : 0;

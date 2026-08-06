@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Clapperboard, Copy, Plus, RotateCcw, Trash2 } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   COMPLEXITY_OPTIONS,
   DEFAULT_CONTINGENCY_PERCENT,
@@ -95,7 +96,7 @@ export default function ToolHome() {
   const [dayHours, setDayHours] = useState(String(DEFAULT_DAY_HOURS));
   const [mealMinutes, setMealMinutes] = useState(String(DEFAULT_MEAL_MINUTES));
   const [contingency, setContingency] = useState(String(DEFAULT_CONTINGENCY_PERCENT));
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard();
 
   const plan = useMemo(
     () =>
@@ -111,38 +112,35 @@ export default function ToolHome() {
 
   const updateShot = (id, key, value) => {
     setShots((prev) => prev.map((shot) => (shot.id === id ? { ...shot, [key]: value } : shot)));
-    setCopied(false);
   };
 
   const addShot = () => {
     setShots((prev) => [...prev, makeShot({ scene: prev.at(-1)?.scene ?? "Scene 1" })]);
-    setCopied(false);
   };
 
   const removeShot = (id) => {
     setShots((prev) => prev.filter((shot) => shot.id !== id));
-    setCopied(false);
   };
 
   const sheet = useMemo(() => (hasError ? "" : buildShootingSheet(plan)), [hasError, plan]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!sheet) return;
-    try {
-      await navigator.clipboard.writeText(sheet);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("sheet", sheet, { label: "printable shooting sheet" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the shot list? This replaces every shot and day setting with the defaults and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setShots(DEFAULT_SHOTS);
     setDayHours(String(DEFAULT_DAY_HOURS));
     setMealMinutes(String(DEFAULT_MEAL_MINUTES));
     setContingency(String(DEFAULT_CONTINGENCY_PERCENT));
-    setCopied(false);
   };
 
   const rows = hasError
@@ -247,7 +245,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Shooting days needed
             </p>
@@ -270,13 +268,16 @@ export default function ToolHome() {
               aria-label="Copy the printable shooting sheet"
               className={GHOST_BTN}
             >
-              {copied ? (
+              {isCopied("sheet") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy sheet"}
+              {isCopied("sheet") ? "Copied!" : "Copy sheet"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button
               type="button"
               onClick={reset}

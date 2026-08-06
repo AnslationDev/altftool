@@ -33,8 +33,8 @@ export const AEROBICS_CLASSES = [
   {
     id: "low",
     label: "Low impact aerobics",
-    met: 5.0,
-    basis: "Compendium value for low-impact aerobic dance (5.0 MET).",
+    met: 4.8,
+    basis: "Compendium value for low-impact aerobic dance, moderate effort (4.8 MET).",
   },
   {
     id: "water",
@@ -51,26 +51,26 @@ export const AEROBICS_CLASSES = [
   {
     id: "general",
     label: "General aerobics, mixed impact",
-    met: 6.5,
-    basis: "Between the low-impact (5.0) and high-impact (7.3 MET) compendium codes.",
+    met: 7.3,
+    basis: "Compendium value for aerobic, general (7.3 MET).",
   },
   {
     id: "high",
     label: "High impact aerobics",
-    met: 7.3,
-    basis: "Compendium value for general and high-impact aerobic dance (7.3 MET).",
+    met: 8.0,
+    basis: "Compendium value for high-impact aerobic dance, vigorous effort (8.0 MET).",
   },
   {
     id: "step6",
-    label: "Bench step class, 6-8 inch step",
-    met: 8.5,
-    basis: "Compendium value for a step class with a 6-8 inch step (8.5 MET).",
+    label: "Step aerobics, 6-8 inch step",
+    met: 7.3,
+    basis: "Compendium value for aerobic step class with a 6-8 inch step (7.3 MET).",
   },
   {
     id: "step10",
     label: "Step aerobics, 10-12 inch step",
-    met: 10.0,
-    basis: "Compendium value for a step class with a 10-12 inch step (10.0 MET).",
+    met: 9.0,
+    basis: "Compendium value for a step class with a 10-12 inch step (9.0 MET).",
   },
 ];
 
@@ -115,6 +115,11 @@ export function computeAerobicsBurn({ weight, weightUnit = "kg", minutes, classI
 
   const weightKg = weightUnit === "lb" ? weight * LB_TO_KG : weight;
   if (weightKg < MIN_WEIGHT_KG || weightKg > MAX_WEIGHT_KG) {
+    if (weightUnit === "lb") {
+      const minLb = round(MIN_WEIGHT_KG / LB_TO_KG, 1);
+      const maxLb = round(MAX_WEIGHT_KG / LB_TO_KG, 1);
+      return { error: `Body weight should be between ${minLb} lb and ${maxLb} lb.` };
+    }
     return { error: `Body weight should be between ${MIN_WEIGHT_KG} kg and ${MAX_WEIGHT_KG} kg.` };
   }
   if (minutes <= 0) return { error: "Class length must be more than zero minutes." };
@@ -133,7 +138,6 @@ export function computeAerobicsBurn({ weight, weightUnit = "kg", minutes, classI
     met: aerobicsClass.met,
     classLabel: aerobicsClass.label,
     basis: aerobicsClass.basis,
-    isVigorous: aerobicsClass.met >= VIGOROUS_MET_THRESHOLD,
     intensityBand: aerobicsClass.met >= VIGOROUS_MET_THRESHOLD ? "Vigorous" : "Moderate",
     kcalPerMinute: round(kcalPerMinute, 2),
     kcalPerHour: round(kcalPerMinute * 60),

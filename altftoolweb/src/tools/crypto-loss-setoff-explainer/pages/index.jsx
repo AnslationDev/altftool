@@ -98,6 +98,7 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset all trades and inputs? This cannot be undone.")) return;
     setTrades(DEFAULT_TRADES);
     setSurcharge("0");
     setIsSpecifiedPerson(true);
@@ -221,6 +222,22 @@ export default function ToolHome() {
                   />
                 </div>
               </div>
+              {ok && result.lines[index] ? (
+                <p className="mt-3 text-sm font-medium">
+                  {result.lines[index].isGain ? (
+                    <span className="text-[var(--success-text)]">
+                      Taxable gain: {money(result.lines[index].taxableResult)}
+                    </span>
+                  ) : (
+                    <span className="text-[var(--danger-text)]">
+                      Loss (no set-off allowed): {money(Math.abs(result.lines[index].taxableResult))}
+                    </span>
+                  )}
+                  <span className="ml-2 font-normal text-[var(--muted-foreground)]">
+                    Actual result after fees: {money(result.lines[index].economicResult)}
+                  </span>
+                </p>
+              ) : null}
             </div>
           ))}
         </div>
@@ -265,7 +282,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -393,8 +414,19 @@ export default function ToolHome() {
         ) : null}
       </section>
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <h2 className="text-base font-semibold">TDS under Section 194S</h2>
+        {ok && !result.tdsApplies ? (
+          <p className="mt-2 text-sm text-[var(--muted-foreground)]">
+            Total consideration of {money(result.totalConsideration)} is below your{" "}
+            {money(result.tdsThreshold)} threshold, so no TDS was withheld on these trades — the
+            figures below are ₹0 rather than a credit.
+          </p>
+        ) : null}
         <dl className="mt-3 divide-y divide-[var(--border)] text-sm">
           {[
             ["Total sale consideration", ok ? money(result.totalConsideration) : DASH],

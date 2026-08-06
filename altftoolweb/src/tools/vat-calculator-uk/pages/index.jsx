@@ -233,7 +233,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               {headlineLabel}
             </p>
@@ -271,7 +271,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
           {[
             ["Net price (excluding VAT)", ok ? money(result.net) : DASH],
             [`VAT at ${ok ? pct(result.ratePercent) : DASH}`, ok ? money(result.vat) : DASH],
@@ -337,7 +337,7 @@ export default function ToolHome() {
               onChange={(event) => setTurnover(event.target.value)}
             />
           </div>
-          <div className="rounded-md bg-[var(--muted)] p-4">
+          <div className="rounded-md bg-[var(--muted)] p-4" role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Threshold {money0(REGISTRATION_THRESHOLD)}
             </p>
@@ -365,9 +365,10 @@ export default function ToolHome() {
             </p>
           </div>
         </div>
-        <p className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]">
-          You can apply to deregister once turnover falls below{" "}
-          {money0(DEREGISTRATION_THRESHOLD)}.
+        <p className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]" role="status" aria-live="polite">
+          {!registration.error && registration.canDeregister
+            ? `Your turnover of ${money0(registration.turnover)} is already below ${money0(registration.deregistrationThreshold)} — you can apply to deregister.`
+            : `You can apply to deregister once turnover falls below ${money0(DEREGISTRATION_THRESHOLD)}.`}
         </p>
       </section>
 

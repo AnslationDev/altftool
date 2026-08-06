@@ -147,23 +147,77 @@ export const SESSION_MINUTES_MAX = 180;
 
 /**
  * Split a weekly set total across sessions so the per-session numbers sum
- * exactly to the total.
+ * exactly to the total. `offset` rotates which sessions receive the +1
+ * remainder set — used when this is called once per muscle group so
+ * repeated remainders spread across different sessions instead of always
+ * stacking on the same one (see allocateSetsPerSession below).
  */
-export function splitSets(weeklyTotal, sessions) {
+export function splitSets(weeklyTotal, sessions, offset = 0) {
   const total = Math.round(Number(weeklyTotal));
   const count = Math.round(Number(sessions));
   if (!Number.isFinite(total) || total < 0) return [];
   if (!Number.isFinite(count) || count < 1) return [];
 
   const base = Math.floor(total / count);
-  let remainder = total - base * count;
-  const out = [];
-  for (let i = 0; i < count; i += 1) {
-    const extra = remainder > 0 ? 1 : 0;
-    remainder -= extra;
-    out.push(base + extra);
+  const remainder = total - base * count;
+  const out = new Array(count).fill(base);
+  const safeOffset = Number.isFinite(Number(offset)) ? Math.round(Number(offset)) : 0;
+  for (let k = 0; k < remainder; k += 1) {
+    const i = ((safeOffset + k) % count + count) % count;
+    out[i] += 1;
   }
   return out;
+}
+
+/**
+ * Which named-session archetypes (by prefix — see SPLITS above) actually
+ * train a given muscle group. Full-body sessions train every group.
+ */
+const MUSCLE_GROUP_SESSION_TYPES = {
+  Chest: ["upper", "push"],
+  Back: ["upper", "pull"],
+  Shoulders: ["upper", "push"],
+  Quadriceps: ["lower", "legs"],
+  "Hamstrings and glutes": ["lower", "legs"],
+  Arms: ["upper", "push", "pull"],
+  Calves: ["lower", "legs"],
+  Core: ["upper", "lower", "push", "pull", "legs"],
+};
+
+function sessionType(sessionName) {
+  if (sessionName.startsWith("Full body")) return "full";
+  if (sessionName.startsWith("Upper")) return "upper";
+  if (sessionName.startsWith("Lower")) return "lower";
+  if (sessionName.startsWith("Push")) return "push";
+  if (sessionName.startsWith("Pull")) return "pull";
+  if (sessionName.startsWith("Legs")) return "legs";
+  return "full";
+}
+
+/**
+ * Distribute each selected muscle group's weekly sets only across the
+ * sessions that actually train it (e.g. on a 4-day Upper/Lower split,
+ * Quadriceps sets only land on the two Lower days), instead of dividing the
+ * whole weekly total evenly across every named session regardless of what
+ * it trains. Full-body sessions train every group, so every group still
+ * lands on every session there — same result as the old uniform split.
+ */
+export function allocateSetsPerSession(sessionNames, groups, weeklySetsPerMuscle) {
+  const names = Array.isArray(sessionNames) ? sessionNames : [];
+  const types = names.map(sessionType);
+  const perSession = names.map(() => 0);
+  (Array.isArray(groups) ? groups : []).forEach((group, groupIndex) => {
+    const applicable = MUSCLE_GROUP_SESSION_TYPES[group] || [];
+    const idxs = types
+      .map((type, i) => (type === "full" || applicable.includes(type) ? i : -1))
+      .filter((i) => i >= 0);
+    const targetIdxs = idxs.length ? idxs : names.map((_, i) => i);
+    const groupSets = splitSets(weeklySetsPerMuscle, targetIdxs.length, groupIndex);
+    targetIdxs.forEach((sessionIdx, k) => {
+      perSession[sessionIdx] += groupSets[k];
+    });
+  });
+  return perSession;
 }
 
 /**
@@ -224,7 +278,7 @@ export function planVolume({
   const split = SPLITS[days];
 
   const weeklyTotal = level.weeklySetsPerMuscle * groups.length;
-  const perSession = splitSets(weeklyTotal, days);
+  const perSession = allocateSetsPerSession(split.sessions, groups, level.weeklySetsPerMuscle);
   const heaviestSession = perSession.length ? Math.max(...perSession) : 0;
 
   const perSet = secondsPerSet(goalEntry);

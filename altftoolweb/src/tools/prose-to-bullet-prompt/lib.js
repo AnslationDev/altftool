@@ -202,9 +202,9 @@ export function buildProseToBulletPrompt({
   lines.push("TARGET");
   lines.push(`- About ${budget.bulletCount} bullets`);
   lines.push(`- About ${budget.targetWords} words in total (${compression}% of the original), averaging ${budget.actualWordsPerBullet} words a bullet`);
-  if (budget.wordsPerBulletOverMax) {
+  if (budget.bulletCountCapped) {
     lines.push(
-      `- Note: hitting ${MAX_BULLETS} bullets forced the average above the usual ${MAX_WORDS_PER_BULLET}-word guideline — favor a lower compression % or a higher words-per-bullet setting next time.`,
+      `- Note: the ${MAX_BULLETS}-bullet cap overrode your ${perBullet}-word-per-bullet setting — expect about ${budget.actualWordsPerBullet} words a bullet instead. Favor a lower compression % or a higher words-per-bullet setting next time.`,
     );
   }
   lines.push(`- Style: ${styleText}`);

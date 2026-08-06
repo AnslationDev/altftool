@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "What are the passing marks in BSEB Matric and Inter?",
-      "30% in each subject — 30 marks out of 100 — plus at least 150 marks in the 500-mark aggregate. A student below 30 in one or two subjects goes to the compartmental exam; below the minimum in more subjects, the result is Fail.",
+      "30% in each subject — 30 marks out of 100 — plus at least 150 marks in the 500-mark aggregate. This calculator marks a result Fail whenever either standard is missed. Separately, BSEB typically allows candidates who fail only one or two subjects to sit a compartmental exam rather than repeat the year — check the official BSEB notice for your session for exact eligibility, since this calculator only reports the aggregate percentage, division and pass/fail from the marks you enter, not compartmental eligibility.",
     ],
     [
       "Does the optional subject increase my Bihar Board percentage?",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Users, Sparkles, RefreshCw, Copy, Download, Info, Check, Award } from "lucide-react";
 import { getDeterministicMatch } from "../../love-calculator/utils/compatibilityUtils";
 
@@ -18,20 +18,37 @@ export default function ToolHome() {
   const [calculating, setCalculating] = useState(false);
   const [result, setResult] = useState(null);
   const [copied, setCopied] = useState(false);
+  const calcTimerRef = useRef(null);
+
+  // Clear any pending "calculating" timer if the component unmounts mid-run,
+  // so we never call setState on an unmounted component.
+  useEffect(() => {
+    return () => {
+      if (calcTimerRef.current) {
+        clearTimeout(calcTimerRef.current);
+        calcTimerRef.current = null;
+      }
+    };
+  }, []);
 
   const handleCalculate = (e) => {
     e.preventDefault();
     if (!yourName.trim() || !friendName.trim()) return;
 
+    if (calcTimerRef.current) {
+      clearTimeout(calcTimerRef.current);
+      calcTimerRef.current = null;
+    }
+
     setCalculating(true);
     setResult(null);
 
-    setTimeout(() => {
+    calcTimerRef.current = setTimeout(() => {
       const baseScore = getDeterministicMatch(yourName, friendName);
-      
+
       // Calculate slider average on 0-100 scale
       const sliderAvg = ((trust + humor + loyalty + communication + historyVal) / 50) * 100;
-      
+
       // Combine base name hash score (35% weight) with slider score (65% weight)
       const finalScore = Math.max(15, Math.min(100, Math.round(baseScore * 0.35 + sliderAvg * 0.65)));
 
@@ -45,6 +62,7 @@ export default function ToolHome() {
         historyPercent: historyVal * 10
       });
       setCalculating(false);
+      calcTimerRef.current = null;
     }, 1500);
   };
 
@@ -52,21 +70,21 @@ export default function ToolHome() {
     if (score >= 95) {
       return {
         badge: "Ride-or-Die Gold Badge 🏆",
-        color: "text-amber-500 bg-amber-500/10 border-amber-500/20",
+        color: "text-amber-700 dark:text-amber-500 bg-amber-500/10 border-amber-500/20",
         text: "Outstanding! Your bond is legendary. You share absolute trust, identical humor, and unmatched loyalty. You've earned the Gold Badge—this friendship is built for a lifetime!"
       };
     }
     if (score >= 80) {
       return {
         badge: "Platinum Confidant Badge 🎖️",
-        color: "text-indigo-500 bg-indigo-500/10 border-indigo-500/20",
+        color: "text-indigo-700 dark:text-indigo-500 bg-indigo-500/10 border-indigo-500/20",
         text: "Incredible bond! You count on each other for everything. Highly supportive, loyal, and communicative. Platinum buddies are rare; keep this connection strong!"
       };
     }
     if (score >= 60) {
       return {
         badge: "Silver Companion Badge 🥈",
-        color: "text-slate-400 bg-slate-400/10 border-slate-400/20",
+        color: "text-slate-600 dark:text-slate-400 bg-slate-400/10 border-slate-400/20",
         text: "Solid connection! You are good pals who have great laughs and can share deep talks. With continued support and more shared memories, this bond has high potential."
       };
     }
@@ -87,6 +105,7 @@ Names: ${yourName} & ${friendName}
 Friendship Score: ${result.score}/100
 Achievement: ${badge.badge}
 ------------------------------------------
+Name Pairing Match: ${result.baseScore}%
 Trust score: ${result.trustPercent}%
 Humor & Jokes: ${result.humorPercent}%
 Loyalty index: ${result.loyaltyPercent}%
@@ -120,6 +139,14 @@ ${badge.text}
   };
 
   const handleReset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset the friendship score calculator? This clears both names and all 5 slider ratings."
+      )
+    ) {
+      return;
+    }
     setYourName("");
     setFriendName("");
     setTrust(5);
@@ -193,15 +220,17 @@ ${badge.text}
                 {/* Slider 1: Trust */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-semibold text-foreground">
-                    <span>Trust & Secret Keeping</span>
+                    <label htmlFor="trust-slider">Trust & Secret Keeping</label>
                     <span className="font-bold text-cyan-500">{trust}/10</span>
                   </div>
                   <input
+                    id="trust-slider"
                     type="range"
                     min="1"
                     max="10"
                     value={trust}
                     onChange={(e) => setTrust(parseInt(e.target.value))}
+                    aria-valuetext={`${trust} out of 10`}
                     className="w-full accent-primary bg-[var(--anslation-ds-soft)] h-2 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
@@ -209,15 +238,17 @@ ${badge.text}
                 {/* Slider 2: Humor */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-semibold text-foreground">
-                    <span>Humor, Laughter & Inside Jokes</span>
+                    <label htmlFor="humor-slider">Humor, Laughter & Inside Jokes</label>
                     <span className="font-bold text-cyan-500">{humor}/10</span>
                   </div>
                   <input
+                    id="humor-slider"
                     type="range"
                     min="1"
                     max="10"
                     value={humor}
                     onChange={(e) => setHumor(parseInt(e.target.value))}
+                    aria-valuetext={`${humor} out of 10`}
                     className="w-full accent-primary bg-[var(--anslation-ds-soft)] h-2 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
@@ -225,15 +256,17 @@ ${badge.text}
                 {/* Slider 3: Loyalty */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-semibold text-foreground">
-                    <span>Loyalty & Standing Up For You</span>
+                    <label htmlFor="loyalty-slider">Loyalty & Standing Up For You</label>
                     <span className="font-bold text-cyan-500">{loyalty}/10</span>
                   </div>
                   <input
+                    id="loyalty-slider"
                     type="range"
                     min="1"
                     max="10"
                     value={loyalty}
                     onChange={(e) => setLoyalty(parseInt(e.target.value))}
+                    aria-valuetext={`${loyalty} out of 10`}
                     className="w-full accent-primary bg-[var(--anslation-ds-soft)] h-2 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
@@ -241,15 +274,17 @@ ${badge.text}
                 {/* Slider 4: Communication */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-semibold text-foreground">
-                    <span>Communication & Deep Conversations</span>
+                    <label htmlFor="communication-slider">Communication & Deep Conversations</label>
                     <span className="font-bold text-cyan-500">{communication}/10</span>
                   </div>
                   <input
+                    id="communication-slider"
                     type="range"
                     min="1"
                     max="10"
                     value={communication}
                     onChange={(e) => setCommunication(parseInt(e.target.value))}
+                    aria-valuetext={`${communication} out of 10`}
                     className="w-full accent-primary bg-[var(--anslation-ds-soft)] h-2 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
@@ -257,15 +292,17 @@ ${badge.text}
                 {/* Slider 5: History */}
                 <div className="space-y-2">
                   <div className="flex justify-between text-xs font-semibold text-foreground">
-                    <span>Shared History & Quality Time</span>
+                    <label htmlFor="history-slider">Shared History & Quality Time</label>
                     <span className="font-bold text-cyan-500">{historyVal}/10</span>
                   </div>
                   <input
+                    id="history-slider"
                     type="range"
                     min="1"
                     max="10"
                     value={historyVal}
                     onChange={(e) => setHistoryVal(parseInt(e.target.value))}
+                    aria-valuetext={`${historyVal} out of 10`}
                     className="w-full accent-primary bg-[var(--anslation-ds-soft)] h-2 rounded-lg appearance-none cursor-pointer"
                   />
                 </div>
@@ -282,14 +319,18 @@ ${badge.text}
 
             </form>
           ) : calculating ? (
-            <div className="flex flex-col items-center justify-center py-12 text-center">
+            <div
+              className="flex flex-col items-center justify-center py-12 text-center"
+              aria-live="polite"
+              role="status"
+            >
               <div className="alt-ui-spinner alt-ui-spinner--lg mb-6 border-t-cyan-500" />
               <h4 className="font-semibold text-lg text-foreground animate-pulse">Running Friendship Calculator...</h4>
               <p className="text-sm text-muted-foreground mt-2">Integrating individual slider metrics with name rolling compatibility values.</p>
             </div>
           ) : (
-            <div className="space-y-8">
-              
+            <div className="space-y-8" aria-live="polite" role="status">
+
               {/* Score Circular progress */}
               <div className="text-center space-y-4">
                 <div className="relative inline-flex items-center justify-center">
@@ -347,6 +388,15 @@ ${badge.text}
                   <Sparkles size={14} className="text-cyan-500" /> Friendship Parameters
                 </h4>
                 <div className="bg-card rounded-2xl p-5 border border-border space-y-4 shadow-sm">
+                  <div className="space-y-1">
+                    <div className="flex justify-between text-xs font-bold text-foreground">
+                      <span>Name Pairing Match</span>
+                      <span>{result.baseScore}%</span>
+                    </div>
+                    <div className="w-full h-2 bg-[var(--anslation-ds-soft)] rounded-full overflow-hidden">
+                      <div className="h-full bg-fuchsia-500 rounded-full" style={{ width: `${result.baseScore}%` }} />
+                    </div>
+                  </div>
                   <div className="space-y-1">
                     <div className="flex justify-between text-xs font-bold text-foreground">
                       <span>Trust Rating</span>

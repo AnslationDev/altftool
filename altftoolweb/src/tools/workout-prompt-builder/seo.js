@@ -28,7 +28,7 @@ const seo = {
     ],
     [
       "What workout split should I use for 3, 4 or 5 days a week?",
-      "One to three days works best as full-body sessions, because each muscle still gets hit two or three times a week. Four days is normally upper/lower twice. Five is upper/lower plus push/pull/legs, and six is push/pull/legs twice. The common thread is training each muscle group about twice a week rather than once.",
+      "One to three days works best as full-body sessions: a single day trains each muscle once a week, while two or three days repeat that same full-body session two or three times, so each muscle group gets hit that many times instead. Four days is normally upper/lower twice. Five is upper/lower plus push/pull/legs, and six is push/pull/legs twice. From four days up, the common thread is training each muscle group about twice a week rather than once.",
     ],
     [
       "How many reps should I do for strength versus muscle size?",

@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "What annual stroke risk does each score correspond to?",
-      "Roughly 1.9% a year at a score of 0, about 2.8% at 1, 4.0% at 2, 5.9% at 3, around 9% in the 4–5 band and 15% or more at 6 and above. These are population estimates from published cohorts, so your personal risk can differ.",
+      "For CHA₂DS₂-VASc: roughly 0% a year at a score of 0, about 1.3% at 1, 2.2% at 2, 3.2% at 3, 4.0% at 4, then 6.7%–15% from 5 upward as more risk factors stack up. The older CHADS₂ model uses a different, generally higher-looking scale that only runs 0–6: about 1.9% at 0, 2.8% at 1, 4.0% at 2, 5.9% at 3, 8.5% at 4, 12.5% at 5 and 18.2% at 6. These are population estimates from each model's own published cohort, so your personal risk can differ.",
     ],
     [
       "What does a HAS-BLED score of 3 mean?",

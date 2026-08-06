@@ -39,6 +39,9 @@ export const PEAK_AMPLITUDE = 0.95;
 /** Default loop length. Long enough that the ear cannot hear the repeat. */
 export const DEFAULT_LOOP_SECONDS = 6;
 
+/** Default equal-power crossfade trimmed from the tail of a generated loop, in seconds. */
+export const DEFAULT_CROSSFADE_SECONDS = 0.25;
+
 export const LIMITS = {
   sessionMinutes: { min: 1, max: 480 },
   rampMinutes: { min: 0, max: 60 },
@@ -108,7 +111,17 @@ export function planSession({
 
   const totalSeconds = Math.round(session * SECONDS_PER_MINUTE);
   const rampSeconds = Math.round(ramp * SECONDS_PER_MINUTE);
-  const fadeSeconds = Math.round(fade * SECONDS_PER_MINUTE);
+  let fadeSeconds = Math.round(fade * SECONDS_PER_MINUTE);
+  // ramp + fade <= session was validated above in unrounded minutes, but each
+  // is independently rounded to whole seconds, so the rounded pair can still
+  // overshoot totalSeconds by a second (e.g. two values that each round up).
+  // Shrink the fade first so rampSeconds + fadeSeconds never exceeds
+  // totalSeconds — otherwise fadeStartSeconds would fall before rampSeconds
+  // and percentAt's ramp/fade branches would briefly disagree about which
+  // phase the session is in.
+  if (rampSeconds + fadeSeconds > totalSeconds) {
+    fadeSeconds = Math.max(0, totalSeconds - rampSeconds);
+  }
   const holdSeconds = Math.max(0, totalSeconds - rampSeconds - fadeSeconds);
 
   return {
@@ -119,8 +132,6 @@ export function planSession({
     startPercent: startPct,
     targetPercent: targetPct,
     fadeStartSeconds: totalSeconds - fadeSeconds,
-    peakAmplitude: amplitudeFromPercent(targetPct),
-    startAmplitude: amplitudeFromPercent(startPct),
   };
 }
 
@@ -157,7 +168,7 @@ export function generateNoise({
   sampleRate = 44100,
   seconds = DEFAULT_LOOP_SECONDS,
   seed = 1,
-  crossfadeSeconds = 0.25,
+  crossfadeSeconds = DEFAULT_CROSSFADE_SECONDS,
 } = {}) {
   if (!NOISE_TYPE_IDS.includes(type)) {
     return { error: `Noise type must be one of: ${NOISE_TYPE_IDS.join(", ")}.` };
@@ -230,17 +241,6 @@ export function generateNoise({
   }
 
   return { samples, length: outLength, seconds: outLength / rate };
-}
-
-/**
- * Crude brightness measure: mean absolute difference between neighbouring samples.
- * Higher means more high-frequency energy. Useful to confirm white > pink > brown.
- */
-export function brightness(samples) {
-  if (!samples || samples.length < 2) return 0;
-  let sum = 0;
-  for (let i = 1; i < samples.length; i += 1) sum += Math.abs(samples[i] - samples[i - 1]);
-  return sum / (samples.length - 1);
 }
 
 /** Seconds -> "MM:SS" or "H:MM:SS". */

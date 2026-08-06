@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This calculator adds UK VAT to a net price or strips it out of a VAT-inclusive one at the 20% standard rate, the 5% reduced rate or the 0% zero rate. Adding VAT multiplies the net figure by 1.20; removing it divides the gross figure by 1.20, which is the same as taking the HMRC VAT fraction of 1/6. It is built for sole traders, small businesses and bookkeepers who need invoice-ready net, VAT and gross lines rounded to the penny.",
+    "This calculator adds UK VAT to a net price or strips it out of a VAT-inclusive one at the 20% standard rate, the 5% reduced rate or the 0% zero rate. At the 20% standard rate, adding VAT multiplies the net figure by 1.20 and removing it divides the gross figure by 1.20 — the same as taking the HMRC VAT fraction of 1/6; the 5% reduced rate instead uses a 1.05 multiplier and a 1/21 fraction, and the 0% zero rate leaves the figure unchanged. It is built for sole traders, small businesses and bookkeepers who need invoice-ready net, VAT and gross lines rounded to the penny.",
   useCases: [
     "Quoting a client a VAT-inclusive price when you only know your net day rate, so the figure on the invoice matches what they will actually pay.",
     "Splitting a supplier receipt that only shows a £240 total into £200 net and £40 VAT for your bookkeeping and Box 4 input tax.",
