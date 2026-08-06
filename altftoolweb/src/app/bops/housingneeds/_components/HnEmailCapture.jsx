@@ -150,17 +150,15 @@ export default function HnEmailCapture({
         We never sell your email. Unsubscribe in one click.
       </p>
 
-      {!compact && (
-        <div className="hn-email-proof">
-          {/*
-            The social-proof block is gone. It showed four initialled avatars —
-            "ER", "MJ", "DS", "AL" — five filled stars, and "Rated 4.9/5 by
-            14,000+ U.S. homeowners". There are no homeowners, no ratings and no
-            people behind those initials. It sat directly above an email field,
-            which is exactly where an invented endorsement does its work.
-          */}
-        </div>
-      )}
+      {/*
+        The social-proof block that sat here is gone, and so is its
+        <div className="hn-email-proof"> wrapper — that class carries its own top
+        border and vertical padding, so keeping an empty one drew a rule against
+        nothing. It showed four initialled avatars ("ER", "MJ", "DS", "AL"), five
+        filled stars and "Rated 4.9/5 by 14,000+ U.S. homeowners", directly above
+        an email field, which is exactly where an invented endorsement does its
+        work.
+      */}
     </form>
   );
 }

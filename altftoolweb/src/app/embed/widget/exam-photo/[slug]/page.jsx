@@ -32,7 +32,15 @@ export default async function ExamPhotoWidgetPage({ params, searchParams }) {
   const id = `exam-photo/${slug}`;
   if (!isEmbeddable(id)) notFound();
 
-  const exam = getExamBySlug(slug);
+  // isEmbeddable() answers on a normalised id — parseWidgetId trims and
+  // lowercases — so a slug differing only in case or trailing whitespace passes
+  // the gate. The lookup below must be given the same normalised value, or it
+  // misses and the next line dereferences null: an error page where a 404
+  // belongs. Normalise once, here, rather than relying on each lookup's own
+  // habits (getExamBySlug lowercases but does not trim; getToolBySlug does
+  // neither).
+  const exam = getExamBySlug(String(slug).trim().toLowerCase());
+  if (!exam) notFound();
   const { theme } = (await searchParams) || {};
 
   return (

@@ -227,25 +227,35 @@ export default function PressPage() {
           <h3 className="mt-4 text-sm font-semibold text-foreground">
             One line
           </h3>
+          {/*
+            This used to read "whose utilities, converters and calculators run in
+            the browser". 34 of the 64 /transform converters carry
+            engine: "server" and POST the pasted input to AltFTool's API, so the
+            sentence a journalist was told to print verbatim was false — and it
+            contradicted this page's own rule eleven lines above, which says to
+            claim "runs in your browser" only for a tool whose page says so.
+          */}
           <blockquote className="mt-2 rounded-xl border-l-4 border-primary bg-surface-soft p-4 text-sm leading-relaxed text-foreground">
-            AltFTool ({host}) is a free online tools site whose utilities,
-            converters and calculators run in the browser.
+            AltFTool ({host}) is a free online tools site. Most of its
+            utilities do their work on the visitor&apos;s own device; the ones
+            that need a server or a model say so on their own page.
           </blockquote>
 
           <h3 className="mt-5 text-sm font-semibold text-foreground">
             Short paragraph
           </h3>
           <blockquote className="mt-2 rounded-xl border-l-4 border-primary bg-surface-soft p-4 text-sm leading-relaxed text-foreground">
-            AltFTool ({host}) is a free online tools site. It publishes{" "}
-            {Number(snapshot.toolCount).toLocaleString("en-US")} browser-based
-            utilities across {snapshot.categoryCounts.length} categories —
-            including {TRANSFORM_TOOLS.length} developer format converters, PDF
-            and image workflows, calculators, privacy and security helpers, and
-            browser games — alongside guides and reference pages such as the
-            photograph and signature upload rules for {EXAM_SPECS.length} Indian
-            exams, each quoted from the conducting body&apos;s own notification.
-            Most of the utilities are free and browser-based, doing their work on
-            the visitor&apos;s own device rather than on a server.
+            AltFTool ({host}) is a free online tools site. Its catalog holds{" "}
+            {Number(snapshot.toolCount).toLocaleString("en-US")} utilities across{" "}
+            {snapshot.categoryCounts.length} categories — PDF and image
+            workflows, calculators, privacy and security helpers, and browser
+            games — with a further {TRANSFORM_TOOLS.length} developer format
+            converters published separately under /transform, alongside guides
+            and reference pages such as the photograph and signature upload rules
+            for {EXAM_SPECS.length} Indian exams, each quoted from the conducting
+            body&apos;s own notification. Most utilities run on the visitor&apos;s
+            own device; those that need a server or a model say so on their own
+            page.
           </blockquote>
           <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
             The site describes itself, in its own metadata, as:{" "}

@@ -1,6 +1,6 @@
 import { motion, useInView, animate } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, PlayCircle, Star, Home, Award, PaintBucket, Ruler, ChevronDown } from "lucide-react";
+import { ArrowRight, PlayCircle, Star, Home, Award, PaintBucket, Ruler, ChevronDown, ShieldCheck } from "lucide-react";
 
 function Counter({ to, suffix = "" }) {
   const ref = useRef(null);

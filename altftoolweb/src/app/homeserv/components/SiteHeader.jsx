@@ -8,7 +8,8 @@ import { useTheme } from "@/contexts/ThemeContext";
 const navItems = [
   { label: "Services", href: "/homeserv#services" },
   { label: "Process", href: "/homeserv#process" },
-  { label: "Reviews", href: "/homeserv#reviews" },
+  // The "Reviews" item is gone with the section it pointed at: #reviews no
+  // longer exists on /homeserv, so this scrolled nowhere.
   { label: "Contact", href: "/homeserv/contact-us" },
 ];
 

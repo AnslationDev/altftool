@@ -40,7 +40,9 @@ const heroChecks = [
   "Master bathrooms, guest bathrooms & powder rooms",
   "3D design before construction begins",
   "Tile, vanities, fixtures, showers, flooring & lighting",
-  "Licensed, bonded, and insured remodeling team",
+  // Was "Licensed, bonded, and insured remodeling team" — no licence, bond
+  // or cover exists behind this sample provider.
+  "A sample provider page, not a contractor",
 ];
 
 const painPoints = [
@@ -80,7 +82,7 @@ const whyItems = [
   },
   {
     icon: ShieldCheck,
-    title: "Licensed, bonded, and insured contractors",
+    title: "A template, not a contractor",
   },
   {
     icon: BadgeCheck,
@@ -209,7 +211,7 @@ const comparisonRows = [
   ["Dedicated project manager, 7 days/week", "yes", "no"],
   ["AI 3D design preview before build starts", "yes", "no"],
   ["Fully itemized, fixed-price quote", "yes", "sometimes"],
-  ["Licensed & insured in Texas", "yes", "maybe"],
+  ["Sample provider page", "yes", "maybe"],
   ["Background-checked crew in your home", "yes", "no"],
   ["Full design + build under one company", "yes", "no"],
   ["Daily progress updates during build", "yes", "no"],
@@ -238,9 +240,9 @@ const faqItems = [
       "Absolutely. Tub-to-shower conversions are one of our most popular services. We handle all plumbing reconfiguration, waterproofing, custom tile work, and frameless glass installation. The result is a spacious, completely custom walk-in shower.",
   },
   {
-    question: "Are you licensed and insured in Texas?",
+    question: "Is this a real remodeling company?",
     answer:
-      "Yes. Together Design & Build is fully licensed and insured in Texas. We carry general liability and workers' compensation coverage. Proof of insurance is available before any work begins.",
+      "No. Together Design & Build is a sample provider used to demonstrate how a remodeler's page could be laid out. It holds no licence, bond or insurance, employs nobody, and the enquiry form does not send anything.",
   },
   {
     question: "What areas near Austin do you serve?",
@@ -742,8 +744,8 @@ export default function BathroomRemodelClient() {
             <div className="bathroom-remodel-eyebrow bathroom-remodel-eyebrowOnDark">Still Have Questions?</div>
             <h3>Talk to an Austin Bathroom Expert</h3>
             <p>
-              No sales script. No pressure. Just a real conversation about your bathroom project
-              with a licensed contractor.
+              This is a sample provider page. The number below is not staffed and
+              the form does not send anything.
             </p>
 
             <a className="bathroom-remodel-sidebarCall" href={phoneHref}>
@@ -784,7 +786,7 @@ export default function BathroomRemodelClient() {
               <li>3D design available</li>
               <li>Financing options</li>
               <li>Austin and Dallas service areas</li>
-              <li>Licensed, bonded, and insured team</li>
+              <li>A layout demonstration, with no company behind it</li>
             </ul>
 
             <a className="bathroom-remodel-finalCall" href={phoneHref}>
@@ -852,7 +854,7 @@ export default function BathroomRemodelClient() {
                 <a href={phoneHref}>{phoneDisplay}</a>
               </li>
               <li>Austin and Dallas service areas</li>
-              <li>Licensed, bonded, and insured</li>
+              <li>A layout demonstration, with no company behind it</li>
             </ul>
           </div>
         </div>
