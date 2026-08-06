@@ -28,11 +28,23 @@ const EXPIRY_OPTIONS = [
   [600, "10 minutes"],
 ];
 
+const MIN_EXPIRY_SECONDS = 10;
+const MAX_EXPIRY_SECONDS = 3600;
+
+// Shared between the real textarea and its masking overlay so the two stay
+// pixel-aligned regardless of what `.input-field` resolves to.
+const TEXTAREA_BOX_CLASS = "input-field min-h-40 w-full resize-y font-mono text-sm";
+
 export default function ClipboardSecretExpiryGuard() {
   const secretRef = useRef("");
   const expiryHandledRef = useRef(false);
+  // Bumped whenever clearNow() or a text edit invalidates an in-flight
+  // copyWithTimer() call, so a slow clipboard write that resolves after the
+  // user already cleared/edited cannot resurrect the discarded secret.
+  const copyGenerationRef = useRef(0);
   const [text, setText] = useState("");
   const [expirySeconds, setExpirySeconds] = useState(60);
+  const [expiryInput, setExpiryInput] = useState("60");
   const [expiresAt, setExpiresAt] = useState(0);
   const [now, setNow] = useState(0);
   const [visible, setVisible] = useState(false);
@@ -98,7 +110,9 @@ export default function ClipboardSecretExpiryGuard() {
 
   const copyWithTimer = async () => {
     if (!text) return;
+    const generation = ++copyGenerationRef.current;
     const didCopy = await safeCopyText(text);
+    if (generation !== copyGenerationRef.current) return; // superseded by a clear or an edit
     if (!didCopy) {
       setStatus({
         tone: "danger",
@@ -120,11 +134,20 @@ export default function ClipboardSecretExpiryGuard() {
   };
 
   const clearNow = async () => {
+    copyGenerationRef.current += 1;
+    const copiedSecret = secretRef.current;
     let clearedClipboard = false;
+    let clipboardUntouched = false;
+
     try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText("");
-        clearedClipboard = true;
+      if (copiedSecret && navigator.clipboard?.readText && navigator.clipboard?.writeText) {
+        const currentClipboard = await navigator.clipboard.readText();
+        if (currentClipboard === copiedSecret) {
+          await navigator.clipboard.writeText("");
+          clearedClipboard = true;
+        } else {
+          clipboardUntouched = true;
+        }
       }
     } catch {
       clearedClipboard = false;
@@ -138,7 +161,11 @@ export default function ClipboardSecretExpiryGuard() {
       tone: clearedClipboard ? "success" : "warning",
       message: clearedClipboard
         ? "The clipboard and in-tab value were cleared."
-        : "The in-tab value was cleared, but the browser did not allow clipboard removal.",
+        : clipboardUntouched
+          ? "A newer clipboard item was detected, so it was left untouched. Only the in-tab value was cleared."
+          : copiedSecret
+            ? "The in-tab value was cleared, but clipboard permission prevented verification or removal."
+            : "The in-tab value was cleared. The system clipboard was left untouched because this tool never copied anything to it.",
     });
   };
 
@@ -206,45 +233,99 @@ export default function ClipboardSecretExpiryGuard() {
 
           <label className="mt-5 block space-y-2 text-sm font-bold text-[var(--foreground)]">
             Value to copy
-            <textarea
-              className={`input-field min-h-40 w-full resize-y font-mono text-sm ${
-                visible ? "" : "[-webkit-text-security:disc]"
-              }`}
-              value={text}
-              onChange={(event) => {
-                setText(event.target.value);
-                if (expiresAt) {
-                  secretRef.current = "";
-                  expiryHandledRef.current = true;
-                  setExpiresAt(0);
-                  setStatus({
-                    tone: "warning",
-                    message:
-                      "The value changed, so the previous expiry timer was cancelled. Copy again to start a new timer.",
-                  });
-                }
-              }}
-              placeholder="Paste a temporary secret"
-              autoComplete="off"
-              autoCapitalize="off"
-              spellCheck="false"
-            />
+            <div className="relative">
+              <textarea
+                className={`${TEXTAREA_BOX_CLASS} ${
+                  !visible && text ? "text-transparent caret-[var(--foreground)]" : ""
+                }`}
+                value={text}
+                onChange={(event) => {
+                  setText(event.target.value);
+                  // Invalidate any in-flight copyWithTimer() so a slow clipboard
+                  // write that resolves after this edit cannot re-apply the
+                  // now-stale secret and restart a timer behind the user's back.
+                  copyGenerationRef.current += 1;
+                  if (expiresAt) {
+                    secretRef.current = "";
+                    expiryHandledRef.current = true;
+                    setExpiresAt(0);
+                    setStatus({
+                      tone: "warning",
+                      message:
+                        "The value changed, so the previous expiry timer was cancelled. Copy again to start a new timer.",
+                    });
+                  }
+                }}
+                placeholder="Paste a temporary secret"
+                autoComplete="off"
+                autoCapitalize="off"
+                spellCheck="false"
+              />
+              {!visible && text ? (
+                // `-webkit-text-security` (the old approach) is WebKit/Blink-only
+                // and does nothing in Firefox, silently leaving the secret in
+                // plain view there. This overlay masks the value with a
+                // browser-agnostic CSS technique instead: the real textarea's
+                // text is made transparent (but stays focusable/editable, with
+                // a visible caret) while an inert, identically-boxed div drawn
+                // on top shows a dot per character.
+                <div
+                  aria-hidden="true"
+                  className={`${TEXTAREA_BOX_CLASS} pointer-events-none absolute inset-0 overflow-hidden border-transparent bg-transparent whitespace-pre-wrap break-all text-[var(--foreground)]`}
+                >
+                  {text.replace(/[^\n]/g, "•")}
+                </div>
+              ) : null}
+            </div>
           </label>
 
           <label className="mt-4 block space-y-2 text-sm font-bold text-[var(--foreground)]">
-            Expiry
-            <select
+            Expiry (seconds)
+            <input
+              type="number"
+              inputMode="numeric"
+              min={MIN_EXPIRY_SECONDS}
+              max={MAX_EXPIRY_SECONDS}
+              step={5}
               className="input-field min-h-11 w-full"
-              value={expirySeconds}
-              onChange={(event) => setExpirySeconds(Number(event.target.value))}
-            >
-              {EXPIRY_OPTIONS.map(([seconds, label]) => (
-                <option key={seconds} value={seconds}>
-                  {label}
-                </option>
-              ))}
-            </select>
+              value={expiryInput}
+              onChange={(event) => {
+                const raw = event.target.value;
+                setExpiryInput(raw);
+                const parsed = Number(raw);
+                if (raw.trim() !== "" && Number.isFinite(parsed)) {
+                  setExpirySeconds(parsed);
+                }
+              }}
+              onBlur={() => {
+                const clamped = normalizeExpirySeconds(expiryInput);
+                setExpirySeconds(clamped);
+                setExpiryInput(String(clamped));
+              }}
+            />
           </label>
+          <p className="text-xs font-normal text-[var(--muted-foreground)]">
+            {MIN_EXPIRY_SECONDS} seconds to {MAX_EXPIRY_SECONDS} seconds (one hour). Values outside
+            that range are clamped, and the countdown displays as mm:ss.
+          </p>
+          <div className="flex flex-wrap gap-2" role="group" aria-label="Quick expiry presets">
+            {EXPIRY_OPTIONS.map(([seconds, label]) => (
+              <button
+                key={seconds}
+                type="button"
+                className={`btn-secondary min-h-9 rounded-md px-3 text-xs ${
+                  expirySeconds === seconds ? "ring-2 ring-[var(--primary)]" : ""
+                }`}
+                onClick={() => {
+                  setExpirySeconds(seconds);
+                  setExpiryInput(String(seconds));
+                }}
+                aria-pressed={expirySeconds === seconds}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
 
           <div className="mt-5 flex flex-wrap gap-3">
             <button
@@ -267,10 +348,7 @@ export default function ClipboardSecretExpiryGuard() {
             </button>
           </div>
 
-          <div
-            className={`mt-5 rounded-lg border p-4 ${statusStyles[status.tone]}`}
-            aria-live="polite"
-          >
+          <div className={`mt-5 rounded-lg border p-4 ${statusStyles[status.tone]}`}>
             <div className="flex items-start gap-3">
               {expiresAt ? (
                 <Clock3 className="mt-0.5 h-5 w-5 shrink-0 text-[var(--primary)]" aria-hidden="true" />
@@ -281,11 +359,21 @@ export default function ClipboardSecretExpiryGuard() {
               )}
               <div>
                 {expiresAt ? (
-                  <p className="font-mono text-2xl font-black text-[var(--foreground)]">
+                  // Visual-only: this text changes every second while the timer
+                  // runs, so it stays out of the aria-live region below and is
+                  // not auto-announced on every tick (ARIA APG warns against
+                  // putting running timers in a live region). It is still
+                  // reachable on demand via its aria-label.
+                  <p
+                    className="font-mono text-2xl font-black text-[var(--foreground)]"
+                    aria-label={`Time remaining: ${formatCountdown(remainingSeconds)}`}
+                  >
                     {formatCountdown(remainingSeconds)}
                   </p>
                 ) : null}
-                <p className="text-sm leading-6 text-[var(--foreground)]">{status.message}</p>
+                <p className="text-sm leading-6 text-[var(--foreground)]" aria-live="polite" role="status">
+                  {status.message}
+                </p>
               </div>
             </div>
           </div>
@@ -298,6 +386,12 @@ export default function ClipboardSecretExpiryGuard() {
               This is a reminder, not a complete secret detector. Matched values are never shown in
               the summary.
             </p>
+            {classification.truncated ? (
+              <p className="mt-2 rounded-lg border border-[var(--warning)] bg-[var(--warning-soft)] p-3 text-sm text-[var(--warning-text)]">
+                Only the first 100,000 characters were scanned for signals — the pasted value is
+                longer than that.
+              </p>
+            ) : null}
             <dl className="mt-4 grid grid-cols-2 gap-3">
               <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-3">
                 <dt className="text-xs font-bold uppercase text-[var(--muted-foreground)]">

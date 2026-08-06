@@ -7,9 +7,9 @@ const seo = {
     "An engineer debugging why $10 in a replacement string inserts group 1 followed by a literal 0 instead of group 10",
   ],
   benefits: [
-    ["Per-match breakdown", "Every occurrence is listed with its index, matched text and expanded replacement — not just the final output."],
+    ["Per-match breakdown", "Every occurrence is listed with its index, matched text and expanded replacement (the first 100 rows — the full output above always reflects every match) — not just the final output."],
     ["Real JS semantics", "Replacement references expand exactly as ECMA-262 specifies, including literal fallback for out-of-range groups."],
-    ["Safe on big inputs", "Text is capped at 100,000 characters and matches at 5,000, so runaway zero-width patterns cannot hang the tab."],
+    ["Guards against runaway patterns", "Text is capped at 100,000 characters and matches at 5,000, and common catastrophic-backtracking shapes like (a+)+ or (a|a)+ are detected and refused before they run, instead of freezing the tab."],
   ],
   faqs: [
     [

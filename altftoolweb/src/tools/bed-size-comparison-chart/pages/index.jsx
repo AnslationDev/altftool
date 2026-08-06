@@ -214,7 +214,11 @@ export default function ToolHome() {
         </label>
       </section>
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -275,7 +279,11 @@ export default function ToolHome() {
         ) : null}
       </section>
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <h2 className="text-base font-semibold">Closest equivalent in each standard</h2>
         <div className="mt-3 overflow-x-auto">
           <table className="w-full min-w-[420px] text-left text-sm">
@@ -317,7 +325,11 @@ export default function ToolHome() {
         </p>
       </section>
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <h2 className="text-base font-semibold">Will it fit your room?</h2>
         {fitError ? (
           <p

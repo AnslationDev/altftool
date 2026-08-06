@@ -22,16 +22,21 @@
  *   supplier's invoice. Paying an advance therefore does create a reverse-charge
  *   liability, for goods as well as for services.
  *
- * DOCUMENTS - section 31(3)(d) and (e) with rule 50 of the CGST Rules
- *   A receipt voucher is issued on every advance. Rule 50 adds two fallbacks: where
- *   the rate of tax is not determinable, tax is paid at 18%; where the nature of
- *   supply is not determinable, it is treated as an inter-State supply. If the deal
- *   falls through and the advance is returned, a refund voucher is issued under
- *   section 31(3)(e).
+ * DOCUMENTS - section 31(3)(d), (f) and (e) with rules 50 and 52 of the CGST Rules
+ *   A supplier issues a receipt voucher under section 31(3)(d) on their own advance.
+ *   Rule 50 adds two fallbacks: where the rate of tax is not determinable, tax is
+ *   paid at 18%; where the nature of supply is not determinable, it is treated as an
+ *   inter-State supply. A recipient paying under reverse charge instead issues a
+ *   PAYMENT voucher under section 31(3)(f)/rule 52 — never a receipt voucher, since
+ *   they are not the supplier. Composition dealers and unregistered persons cannot
+ *   issue a tax invoice or receipt voucher at all. If the deal falls through and the
+ *   advance is returned, a refund voucher is issued under section 31(3)(e).
  *
- * REPORTING - advances on which tax is paid go into Table 11A of GSTR-1 and are
- * included in the outward supplies of Table 3.1(a) of GSTR-3B; the adjustment when
- * the invoice is finally raised goes into Table 11B of GSTR-1.
+ * REPORTING - a supplier reports advances on which tax is paid in Table 11A of
+ * GSTR-1 and includes them in the outward supplies of Table 3.1(a) of GSTR-3B; the
+ * adjustment when the invoice is finally raised goes into Table 11B of GSTR-1. A
+ * recipient paying under reverse charge instead reports the inward supply in GSTR-3B
+ * Table 3.1(d), never in the supplier-side outward-supply tables.
  */
 
 /** Fallback rate under the first proviso to rule 50 when the rate is not determinable. */
@@ -108,7 +113,9 @@ export function checkGstOnAdvance({
   if (!SUPPLY_NATURES.some((option) => option.value === supplyNature)) {
     return { error: "Choose a valid nature of supply." };
   }
-  if (!isNum(gstRate) || gstRate < 0 || gstRate > 100) {
+  // When the rate isn't known yet, rule 50's 18% fallback applies regardless of
+  // whatever (or nothing) sits in gstRate, so only validate it when it will be used.
+  if (rateKnown && (!isNum(gstRate) || gstRate < 0 || gstRate > 100)) {
     return { error: "GST rate must be between 0% and 100%." };
   }
 
@@ -138,14 +145,21 @@ export function checkGstOnAdvance({
     status = "notPayable";
     reasons.push("A zero-rated supply made under a letter of undertaking carries no tax, so no tax is paid on the advance either (section 16 of the IGST Act).");
     reasons.push("A receipt voucher is still issued, and the advance is reported as a zero-rated advance.");
+  } else if (registration === "composition") {
+    // Rule 5(1)(f) of the CGST Rules bars every composition taxpayer, goods or
+    // services, from collecting any tax from the recipient — so neither branch
+    // below can be computed and charged the way a regular taxpayer's can.
+    status = "checkAdviser";
+    reasons.push(
+      supplyType === "goods"
+        ? "Notification 66/2017-Central Tax excludes composition taxpayers from the relief on advances for goods."
+        : "Rule 5(1)(f) of the CGST Rules bars a composition taxpayer from collecting any tax from the recipient, on goods or services alike.",
+    );
+    reasons.push("A composition dealer pays the section 10 levy on turnover rather than transaction-wise GST, so confirm the treatment of this receipt with your practitioner before you file.");
   } else if (supplyType === "services") {
     status = "payable";
     reasons.push("Section 13(2): for services the time of supply is the earlier of the invoice date or the date payment is received, so the advance is taxable now.");
     reasons.push("Issue a receipt voucher under section 31(3)(d) on the day the advance is received.");
-  } else if (registration === "composition") {
-    status = "checkAdviser";
-    reasons.push("Notification 66/2017-Central Tax excludes composition taxpayers from the relief on advances for goods.");
-    reasons.push("A composition dealer pays the section 10 levy on turnover rather than transaction-wise GST, so confirm the treatment of this receipt with your practitioner before you file.");
   } else {
     status = "notPayable";
     reasons.push("Notification No. 66/2017-Central Tax dated 15 November 2017 relieves every registered person outside the composition scheme from paying tax on an advance for goods.");
@@ -177,20 +191,47 @@ export function checkGstOnAdvance({
   const grossOutflow = amountIncludesGst ? advanceAmount : advanceAmount + totalTax;
 
   const documents = [];
-  if (status === "notPayable" && supplyType === "goods" && registration === "regular" && !reverseCharge) {
+  if (reverseCharge) {
+    // Section 31(3)(d) receipt vouchers are issued by the SUPPLIER on their own
+    // advance. A recipient paying under reverse charge issues a payment voucher
+    // instead — the supplier never raises a receipt voucher for this money.
+    documents.push(
+      "Payment voucher under section 31(3)(f), with the particulars listed in rule 52 — the recipient issues this, not a receipt voucher, since the recipient (not the supplier) is liable for the tax.",
+    );
+  } else if (registration === "unregistered") {
+    documents.push(
+      "No GST document — an unregistered person cannot issue a receipt voucher or a tax invoice. Keep your own record of the advance for when you cross the registration threshold.",
+    );
+  } else if (registration === "composition") {
+    documents.push(
+      "No receipt voucher — composition dealers issue a bill of supply, never a tax invoice or receipt voucher with GST, and account for this money through the quarterly CMP-08 turnover statement instead.",
+    );
+  } else if (exportUnderLut) {
+    documents.push(
+      "Receipt voucher under section 31(3)(d), recorded as a zero-rated advance — no tax entry is made since the supply is zero-rated under the LUT.",
+    );
+  } else if (status === "notPayable" && supplyType === "goods") {
     documents.push("No receipt voucher with tax — record the money as an advance in your books and raise a tax invoice when the goods are supplied.");
   } else {
     documents.push("Receipt voucher under section 31(3)(d), with the particulars listed in rule 50.");
   }
   documents.push("Refund voucher under section 31(3)(e) if the advance is returned and no supply happens.");
 
-  const reporting = taxApplies
-    ? [
-        "GSTR-1 Table 11A — advances received on which tax is paid.",
-        "GSTR-3B Table 3.1(a) — include the advance in outward taxable supplies for the month.",
-        "GSTR-1 Table 11B — reverse the advance in the month the tax invoice is finally raised.",
-      ]
-    : ["Nothing to report on this advance; report the supply when the tax invoice is issued."];
+  let reporting;
+  if (taxApplies && liableParty === "recipient") {
+    reporting = [
+      "GSTR-3B Table 3.1(d) — inward supplies liable to reverse charge, self-assessed and paid in cash by the recipient.",
+      "Input tax credit on this reverse-charge tax can be claimed in the same return once it is paid, subject to the usual conditions — it is not reported in Table 11A/11B or Table 3.1(a), which are for the supplier's own outward supplies.",
+    ];
+  } else if (taxApplies) {
+    reporting = [
+      "GSTR-1 Table 11A — advances received on which tax is paid.",
+      "GSTR-3B Table 3.1(a) — include the advance in outward taxable supplies for the month.",
+      "GSTR-1 Table 11B — reverse the advance in the month the tax invoice is finally raised.",
+    ];
+  } else {
+    reporting = ["Nothing to report on this advance; report the supply when the tax invoice is issued."];
+  }
 
   return {
     status,

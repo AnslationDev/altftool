@@ -20,7 +20,3 @@ export function extensionLabel(extension) {
   if (!extension || extension === "(none)") return "—";
   return `.${extension}`;
 }
-
-export function pluralize(count, singular, plural) {
-  return count === 1 ? singular : plural || `${singular}s`;
-}

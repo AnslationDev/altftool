@@ -30,10 +30,6 @@ export function useTreeExpansion(root) {
     });
   }, []);
 
-  const setExpandedIds = useCallback((ids) => {
-    setExpanded(new Set(ids));
-  }, []);
-
   const expandAll = useCallback(() => {
     if (!root) return;
     const all = new Set();
@@ -51,23 +47,10 @@ export function useTreeExpansion(root) {
     setExpanded(new Set());
   }, []);
 
-  const expandIds = useCallback((ids) => {
-    setExpanded((prev) => {
-      const next = new Set(prev);
-      ids.forEach((id) => next.add(id));
-      return next;
-    });
-  }, []);
-
-  const isExpanded = (id) => expanded.has(id);
-
   return {
     expanded,
     toggle,
-    setExpandedIds,
     expandAll,
     collapseAll,
-    expandIds,
-    isExpanded,
   };
 }

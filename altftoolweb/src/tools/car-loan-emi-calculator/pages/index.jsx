@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Car, Check, Copy, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const INR = new Intl.NumberFormat("en-IN", {
   style: "currency",
@@ -84,7 +85,7 @@ export default function ToolHome() {
   const [processingFee, setProcessingFee] = useState(String(DEFAULTS.processingFee));
   const [insurance, setInsurance] = useState(String(DEFAULTS.insurance));
   const [showSchedule, setShowSchedule] = useState(true);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard();
 
   const calc = useMemo(() => {
     const p = toNumber(price);
@@ -143,15 +144,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [calc, rate]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "the car loan EMI result" });
   };
 
   const reset = () => {
@@ -161,7 +156,6 @@ export default function ToolHome() {
     setYears(String(DEFAULTS.years));
     setProcessingFee(String(DEFAULTS.processingFee));
     setInsurance(String(DEFAULTS.insurance));
-    setCopied(false);
   };
 
   return (
@@ -300,7 +294,11 @@ export default function ToolHome() {
         </p>
       ) : (
         <>
-          <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section
+            aria-live="polite"
+            role="status"
+            className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          >
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -315,12 +313,19 @@ export default function ToolHome() {
                 <button
                   type="button"
                   onClick={copyResult}
-                  aria-label="Copy car loan EMI result"
+                  aria-label={isCopied("result") ? "Copied the car loan EMI result" : "Copy car loan EMI result"}
                   className={GHOST_BTN}
                 >
-                  {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-                  {copied ? "Copied!" : "Copy result"}
+                  {isCopied("result") ? (
+                    <Check className="h-4 w-4" aria-hidden="true" />
+                  ) : (
+                    <Copy className="h-4 w-4" aria-hidden="true" />
+                  )}
+                  {isCopied("result") ? "Copied!" : "Copy result"}
                 </button>
+                <span className="sr-only" role="status" aria-live="polite">
+                  {announcement}
+                </span>
                 <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
                   <RotateCcw className="h-4 w-4" aria-hidden="true" />
                   Reset

@@ -105,7 +105,14 @@ function applyCase(parts, caseStyle) {
     if (caseStyle === "lower") return part.toLowerCase();
     if (caseStyle === "upper") return part.toUpperCase();
     if (caseStyle === "preserve") return part;
-    const words = part.split(/[-_.\s]+|(?=[A-Z])/).filter(Boolean);
+    // Split on explicit separators and on a lower/digit -> upper transition
+    // or the tail of an acronym running into a new Titlecase word (XMLParser
+    // -> XML, Parser). A bare lookahead before every uppercase letter would
+    // instead shatter a run of capitals like "RGB" or "USA" into single
+    // letters ("R","G","B"), which then camelCase would render as "rGB".
+    const words = part
+      .split(/[-_.\s]+|(?<=[a-z0-9])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])/)
+      .filter(Boolean);
     const titled = words
       .map((word, wordIndex) => {
         const lower = word.toLowerCase();

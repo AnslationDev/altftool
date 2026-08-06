@@ -57,7 +57,10 @@ export default function ToolHome() {
   const result = useMemo(() => {
     const amount = toNumber(state.advanceAmount);
     const rate = toNumber(state.gstRate);
-    if (Number.isNaN(amount) || Number.isNaN(rate)) {
+    // When the rate isn't known yet, the field is disabled and its value is
+    // irrelevant — checkGstOnAdvance falls back to the rule 50 18% rate, so an
+    // empty/invalid rate field must not block the verdict in that case.
+    if (Number.isNaN(amount) || (state.rateKnown && Number.isNaN(rate))) {
       return { error: "Enter the advance amount and the GST rate as numbers." };
     }
     return checkGstOnAdvance({
@@ -298,7 +301,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Verdict
             </p>

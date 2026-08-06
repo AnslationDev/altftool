@@ -23,13 +23,15 @@ const FLAG_OPTIONS = [
   { id: "i", label: "i — ignore case" },
   { id: "m", label: "m — multiline ^$" },
   { id: "s", label: "s — dot matches newline" },
+  { id: "u", label: "u — unicode (\\p{...}, \\u{...})" },
+  { id: "y", label: "y — sticky (match at lastIndex only)" },
 ];
 
 const DEFAULTS = {
   text: "Order #1024 shipped on 2026-07-20.\nOrder #1025 shipped on 2026-07-24.",
   pattern: "(?<y>\\d{4})-(?<m>\\d{2})-(?<d>\\d{2})",
   replacement: "$<d>/$<m>/$<y>",
-  flags: { g: true, i: false, m: false, s: false },
+  flags: { g: true, i: false, m: false, s: false, u: false, y: false },
 };
 
 export default function ToolHome() {

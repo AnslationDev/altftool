@@ -21,7 +21,6 @@ export const REGIONS = [
     law: "Transplantation of Human Organs and Tissues Act, 1994 (amended 2011, Rules 2014)",
     familyRole:
       "A pledge or donor card is not by itself legally sufficient — the family is asked to give consent at the time, so telling them matters more than the card.",
-    licenceOption: true,
   },
   {
     key: "uk",
@@ -31,7 +30,6 @@ export const REGIONS = [
     law: "Deemed consent: Wales from 1 December 2015, England from 20 May 2020, Scotland from 26 March 2021, Northern Ireland from 1 June 2023",
     familyRole:
       "Even under deemed consent, specialist nurses always speak to the family, and donation would not usually go ahead if the family objects.",
-    licenceOption: false,
   },
   {
     key: "us",
@@ -41,7 +39,6 @@ export const REGIONS = [
     law: "Revised Uniform Anatomical Gift Act — first-person authorisation is legally binding in all 50 states",
     familyRole:
       "Your registered decision is legally sufficient, but families are still informed — telling them in advance avoids distress and delay.",
-    licenceOption: true,
   },
   {
     key: "ca",
@@ -50,7 +47,6 @@ export const REGIONS = [
     registry: "Your provincial or territorial registry (Nova Scotia operates deemed consent)",
     law: "Provincial legislation; Nova Scotia's Human Organ and Tissue Donation Act introduced deemed consent in January 2021",
     familyRole: "Families are consulted at the time of donation in every province.",
-    licenceOption: true,
   },
   {
     key: "au",
@@ -60,7 +56,6 @@ export const REGIONS = [
     law: "State and territory human tissue Acts",
     familyRole:
       "The family is always asked to confirm the donation, so an unregistered or unspoken wish is easily lost.",
-    licenceOption: false,
   },
   {
     key: "es",
@@ -69,7 +64,6 @@ export const REGIONS = [
     registry: "Organización Nacional de Trasplantes (ONT)",
     law: "Ley 30/1979 sobre extracción y trasplante de órganos — presumed consent",
     familyRole: "In practice the family is always consulted before donation proceeds.",
-    licenceOption: false,
   },
   {
     key: "other",
@@ -78,7 +72,6 @@ export const REGIONS = [
     registry: "Your national transplant or health authority",
     law: "Consent law is set nationally and differs widely",
     familyRole: "In almost every country the family is spoken to before donation goes ahead.",
-    licenceOption: false,
   },
 ];
 
@@ -117,9 +110,10 @@ export const CRITICAL_ITEMS = ["register-primary", "family-nextofkin"];
 
 /**
  * Checklist items. `regions` limits an item to specific region keys;
- * `systems` limits it to opt-in or opt-out consent systems.
+ * `systems` limits it to opt-in or opt-out consent systems. `critical` is
+ * derived from CRITICAL_ITEMS below so the two never drift apart.
  */
-export const CHECKLIST = [
+const CHECKLIST_ITEMS = [
   {
     id: "understand-organs",
     stage: "understand",
@@ -161,7 +155,6 @@ export const CHECKLIST = [
     stage: "register",
     label: "Register your decision with the official registry",
     help: "A registry entry is the record clinicians look for. Note that it is the registry, not a card in your wallet, that is checked.",
-    critical: true,
   },
   {
     id: "register-licence",
@@ -194,7 +187,6 @@ export const CHECKLIST = [
     stage: "family",
     label: "Tell your next of kin, in plain words",
     help: "The single most useful thing you can do. Clinicians speak to the family in almost every jurisdiction, including opt-out ones.",
-    critical: true,
   },
   {
     id: "family-second",
@@ -245,6 +237,12 @@ export const CHECKLIST = [
     help: "Marriage, a new diagnosis or a change of next of kin are all good moments to check the entry is still right.",
   },
 ];
+
+/** Checklist items with `critical` derived from CRITICAL_ITEMS — a single source of truth. */
+export const CHECKLIST = CHECKLIST_ITEMS.map((item) => ({
+  ...item,
+  critical: CRITICAL_ITEMS.includes(item.id),
+}));
 
 export function findRegion(key) {
   return REGIONS.find((region) => region.key === key) || REGIONS[REGIONS.length - 1];
@@ -348,6 +346,5 @@ export function summariseChecklist(checkedIds, regionKey) {
     registered,
     familyTold,
     nextSteps,
-    criticalMissing: CRITICAL_ITEMS.filter((id) => valid.has(id) && !checked.has(id)),
   };
 }

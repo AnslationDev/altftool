@@ -18,6 +18,16 @@ function leadingWidth(line) {
   return match ? match[0].length : 0;
 }
 
+// Coerce a JSON `size` value to a valid non-negative byte count. Anything
+// that isn't a finite number (e.g. "245 MB", null, an object) is treated as
+// unknown (0) instead of being carried through as-is, which would otherwise
+// corrupt the numeric size rollup via string concatenation.
+function toByteSize(value) {
+  return typeof value === "number" && Number.isFinite(value) && value >= 0
+    ? value
+    : 0;
+}
+
 export function parseStructureToTree(input) {
   const trimmed = (input || "").trim();
   if (!trimmed) {
@@ -101,14 +111,14 @@ function jsonToEntries(data) {
       if (value && typeof value === "object" && !Array.isArray(value)) {
         const hasChildren = "children" in value || hasObjectChildren(value);
         if (hasChildren) {
-          entries.push({ path, isFolder: true, size: value.size || 0 });
+          entries.push({ path, isFolder: true, size: toByteSize(value.size) });
           if (Array.isArray(value.children)) {
             recurseList(value.children, path);
           } else {
             recurseMap(value, path);
           }
         } else {
-          entries.push({ path, isFolder: false, size: value.size || 0 });
+          entries.push({ path, isFolder: false, size: toByteSize(value.size) });
         }
       } else {
         entries.push({ path, isFolder: false, size: 0 });
@@ -128,12 +138,12 @@ function jsonToEntries(data) {
         if (!name) return;
         const path = parentPath ? `${parentPath}/${name}` : name;
         if (item.children) {
-          entries.push({ path, isFolder: true, size: item.size || 0 });
+          entries.push({ path, isFolder: true, size: toByteSize(item.size) });
           recurseList(item.children, path);
         } else if (item.type === "folder") {
-          entries.push({ path, isFolder: true, size: item.size || 0 });
+          entries.push({ path, isFolder: true, size: toByteSize(item.size) });
         } else {
-          entries.push({ path, isFolder: false, size: item.size || 0 });
+          entries.push({ path, isFolder: false, size: toByteSize(item.size) });
         }
       }
     });

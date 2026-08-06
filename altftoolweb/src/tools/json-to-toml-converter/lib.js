@@ -79,15 +79,18 @@ function formatPath(path) {
 /** Format a number as a TOML integer or float (§ Integer, § Float). */
 function formatNumber(value, stats) {
   if (Number.isNaN(value)) return "nan";
-  if (value === Infinity) return "inf";
-  if (value === -Infinity) return "-inf";
-  if (Number.isInteger(value) && Math.abs(value) <= Number.MAX_SAFE_INTEGER) return String(value);
+  if (!Number.isFinite(value)) {
+    // Overflowed IEEE-754 double range (e.g. a JSON literal like 1e400) — precision is
+    // completely lost, so this counts toward the same "may lose precision" warning.
+    stats.bigIntegers += 1;
+    return value > 0 ? "inf" : "-inf";
+  }
+  const unsafeInteger = Number.isInteger(value) && Math.abs(value) > Number.MAX_SAFE_INTEGER;
+  if (Number.isInteger(value) && !unsafeInteger) return String(value);
+  if (unsafeInteger) stats.bigIntegers += 1;
   const text = String(value);
   // A TOML float needs a fractional or exponent part; 1e21 stringifies as "1e+21" which is fine.
-  if (!/[.eE]/.test(text)) {
-    stats.bigIntegers += 1;
-    return `${text}.0`;
-  }
+  if (!/[.eE]/.test(text)) return `${text}.0`;
   return text;
 }
 
@@ -130,9 +133,17 @@ function formatInline(value, stats, nullMode, keyPath) {
   throw new NullValueError(`"${keyPath}" has a type TOML cannot represent.`);
 }
 
-/** True when the array should be emitted as [[array of tables]]. */
-function isArrayOfTables(value) {
-  return Array.isArray(value) && value.length > 0 && value.every(isPlainObject);
+/**
+ * True when the array should be emitted as [[array of tables]]. In "omit" null mode, null
+ * entries are dropped from the array (elsewhere, per-element) before this array ever reaches
+ * TOML, so they must also be ignored here — otherwise a single null placeholder in an
+ * otherwise-homogeneous array of objects wrongly demotes the whole array to an inline-table
+ * fallback that's meant only for genuinely mixed (object + scalar) arrays.
+ */
+function isArrayOfTables(value, nullMode) {
+  if (!Array.isArray(value) || value.length === 0) return false;
+  const candidates = nullMode === "omit" ? value.filter((entry) => entry !== null) : value;
+  return candidates.length > 0 && candidates.every(isPlainObject);
 }
 
 /** Serialize one table's contents; recurses into sub-tables and arrays of tables. */
@@ -150,7 +161,7 @@ function serializeTable(obj, path, stats, nullMode, lines) {
       continue;
     }
     if (isPlainObject(value)) subTables.push([key, value]);
-    else if (isArrayOfTables(value)) tableArrays.push([key, value]);
+    else if (isArrayOfTables(value, nullMode)) tableArrays.push([key, value]);
     else scalars.push([key, value]);
   }
 
@@ -170,6 +181,12 @@ function serializeTable(obj, path, stats, nullMode, lines) {
   for (const [key, value] of tableArrays) {
     const childPath = [...path, key];
     for (const element of value) {
+      if (element === null) {
+        // Only reachable in "omit" mode — isArrayOfTables() only lets a null-containing
+        // array through when nullMode === "omit" (see its filter above).
+        stats.nullsOmitted += 1;
+        continue;
+      }
       stats.arrayTables += 1;
       if (lines.length > 0) lines.push("");
       lines.push(`[[${formatPath(childPath)}]]`);

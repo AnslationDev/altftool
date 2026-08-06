@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Landmark, Plus, RotateCcw, Trash2 } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import {
   OU_FORMULAS,
@@ -40,7 +41,7 @@ export default function ToolHome() {
   const [percentage, setPercentage] = useState("65");
   const [semesters, setSemesters] = useState(DEFAULT_SEMESTERS);
   const [nextId, setNextId] = useState(3);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const forward = useMemo(() => ouCgpaToPercentage({ cgpa, formula }), [cgpa, formula]);
   const reverse = useMemo(() => ouPercentageToCgpa({ percentage, formula }), [percentage, formula]);
@@ -71,15 +72,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [ok, mode, forward, reverse]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "conversion result" });
   };
 
   const reset = () => {
@@ -89,7 +84,7 @@ export default function ToolHome() {
     setPercentage("65");
     setSemesters(DEFAULT_SEMESTERS);
     setNextId(3);
-    setCopied(false);
+    resetCopyState();
   };
 
   const updateSemester = (id, key, value) =>
@@ -212,7 +207,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               {mode === "toPercent" ? "Equivalent percentage" : "Equivalent CGPA"}
             </p>
@@ -228,20 +223,25 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={!ok}
-              aria-label="Copy the conversion result"
+              aria-label={
+                isCopied("result") ? "Copied the conversion result to clipboard" : "Copy the conversion result"
+              }
               className={`${GHOST_BTN} disabled:opacity-40`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

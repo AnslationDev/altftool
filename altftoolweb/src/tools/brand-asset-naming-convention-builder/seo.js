@@ -8,7 +8,7 @@ const seo = {
     "Check that a deeply nested campaign folder plus filename still fits inside the 260-character Windows path limit.",
   ],
   benefits: [
-    ["Validated, not just generated", "Every example is checked against real filesystem, Windows and S3 limits before you adopt it."],
+    ["Validated, not just generated", "Every token value is sanitized to the portable filename character set as you type, then the finished name is still checked against the reserved-name, length and path limits sanitizing alone can't fix."],
     ["Sortable by design", "ISO 8601 dates and padded versions make an alphabetical file list a chronological one."],
     ["Shareable rules", "Copies out as a Markdown page you can paste straight into a brand book or team wiki."],
   ],
@@ -27,7 +27,7 @@ const seo = {
     ],
     [
       "Why do some filenames break on Windows?",
-      "Windows reserves the device names CON, PRN, AUX, NUL, COM1-COM9 and LPT1-LPT9, and rejects them even with an extension, so CON.png cannot be created. It also silently strips a trailing dot or space, which turns \"logo .png\" into a different file from the one you saved.",
+      "Windows reserves the device names CON, PRN, AUX, NUL, COM1-COM9 and LPT1-LPT9, and rejects them even with an extension, so CON.png cannot be created. It also silently strips a trailing dot or space from the very end of the name, so a file saved as \"logo.png.\" or \"logo.png \" is written to disk as plain \"logo.png\" instead.",
     ],
   ],
 };

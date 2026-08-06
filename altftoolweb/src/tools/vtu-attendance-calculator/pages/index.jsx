@@ -95,6 +95,12 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset all courses back to the sample data? Every course row you entered will be lost.")
+    ) {
+      return;
+    }
     setRows(DEFAULT_ROWS);
     setCopied(false);
   };
@@ -231,7 +237,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Lowest course attendance
             </p>
@@ -296,8 +302,11 @@ export default function ToolHome() {
                   <th scope="col" className="py-2 pr-3 text-right font-semibold">
                     Can still miss
                   </th>
-                  <th scope="col" className="py-2 text-right font-semibold">
+                  <th scope="col" className="py-2 pr-3 text-right font-semibold">
                     Attend in a row for {REQUIRED_PERCENT}%
+                  </th>
+                  <th scope="col" className="py-2 text-right font-semibold">
+                    To reach {CONDONATION_FLOOR_PERCENT}% floor
                   </th>
                 </tr>
               </thead>
@@ -317,19 +326,30 @@ export default function ToolHome() {
                       {row.status.title}
                     </td>
                     <td className="py-2 pr-3 text-right">
-                      {row.status.key === "eligible" ? row.canMiss : DASH}
+                      {row.status.key === "eligible"
+                        ? row.canMiss
+                        : row.status.key === "condonable"
+                          ? row.canMissBeforeCondonationFloor
+                          : DASH}
                     </td>
-                    <td className="py-2 text-right">
+                    <td className="py-2 pr-3 text-right">
                       {row.status.key === "eligible"
                         ? "0"
                         : row.needed === null
                           ? DASH
                           : row.needed}
                     </td>
+                    <td className="py-2 text-right">
+                      {row.status.key === "ineligible" ? row.neededForCondonation : DASH}
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
+            <p className="mt-2 text-xs text-[var(--muted-foreground)]">
+              For courses in the condonation band, &ldquo;Can still miss&rdquo; is the room left
+              above the {CONDONATION_FLOOR_PERCENT}% floor, not the {REQUIRED_PERCENT}% requirement.
+            </p>
           </div>
         ) : null}
       </section>

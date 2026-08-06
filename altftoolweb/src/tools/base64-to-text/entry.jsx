@@ -23,81 +23,29 @@ import {
   Sparkles,
   Timer,
   Trash2,
+  TriangleAlert,
   Upload,
   X,
   Zap,
 } from "lucide-react";
 
+import { decodeBase64Text } from "./lib";
+
 /* ---------------------------------------------------------------------------
-   Decode engine (pure functions)
+   Decode engine
+
+   The actual decode/validate logic (BOM detection, strict UTF-8 checking,
+   binary-content detection, automatic URL-safe/JWT alphabet handling, the
+   8 MB guard, robust `data:` URL parsing) lives in ../lib.js and is shared
+   with pages/index.jsx. Only line-break/whitespace display options — which
+   are cosmetic post-processing, not decode correctness — stay local here.
 --------------------------------------------------------------------------- */
 
 const DEFAULT_OPTS = {
   autoDecode: true,
   preserveBreaks: true,
   trimWhitespace: false,
-  detectInvalid: true,
-  urlSafe: false,
 };
-
-function cleanupBase64(raw, opts) {
-  let s = (raw || "").trim();
-  const dataUrl = s.match(/^data:[^;,]*;base64,([\s\S]*)$/);
-  if (dataUrl) s = dataUrl[1];
-  s = s.replace(/\s+/g, "");
-  const hasUrlSafeChars = /[-_]/.test(s);
-  if (opts.urlSafe && hasUrlSafeChars) {
-    s = s.replace(/-/g, "+").replace(/_/g, "/");
-  }
-  return { s, hasUrlSafeChars };
-}
-
-function decodeBase64(raw, opts) {
-  const t0 = typeof performance !== "undefined" ? performance.now() : 0;
-  const done = (res) => ({
-    ...res,
-    ms: Math.max(1, Math.round((typeof performance !== "undefined" ? performance.now() : 0) - t0)),
-  });
-
-  const { s: cleanedInput, hasUrlSafeChars } = cleanupBase64(raw, opts);
-  let s = cleanedInput;
-  if (!s) return done({ ok: false, message: "Input is empty after cleanup." });
-
-  if (opts.detectInvalid) {
-    if (hasUrlSafeChars && !opts.urlSafe) {
-      return done({
-        ok: false,
-        message: "URL-safe characters (- _) detected — enable “URL-safe Base64 support”.",
-      });
-    }
-    if (s.length % 4 === 1) {
-      return done({ ok: false, message: "Incorrect length — this is not valid Base64." });
-    }
-    const core = s.replace(/=+$/, "");
-    if (!/^[A-Za-z0-9+/]*$/.test(core)) {
-      return done({ ok: false, message: "Invalid characters found in the Base64 string." });
-    }
-  }
-
-  while (s.length % 4 !== 0) s += "=";
-
-  let text;
-  let byteLength = 0;
-  try {
-    const bin = atob(s);
-    byteLength = bin.length;
-    const bytes = new Uint8Array(byteLength);
-    for (let i = 0; i < byteLength; i += 1) bytes[i] = bin.charCodeAt(i);
-    text = new TextDecoder("utf-8").decode(bytes);
-  } catch (err) {
-    return done({ ok: false, message: "Could not decode — the data is not valid Base64." });
-  }
-
-  if (!opts.preserveBreaks) text = text.replace(/\r?\n/g, " ");
-  if (opts.trimWhitespace) text = text.trim();
-
-  return done({ ok: true, text, byteLength });
-}
 
 function encodeUtf8ToBase64(text) {
   const bytes = new TextEncoder().encode(text);
@@ -170,6 +118,7 @@ export default function ToolEntry() {
   const [output, setOutput] = useState("");
   const [status, setStatus] = useState("empty"); // empty | valid | invalid
   const [errorMsg, setErrorMsg] = useState("");
+  const [decodeMeta, setDecodeMeta] = useState(null); // BOM / binary / UTF-8 validity from the last decode
   const [elapsed, setElapsed] = useState(0);
   const [processing, setProcessing] = useState(false);
   const [opts, setOpts] = useState(DEFAULT_OPTS);
@@ -193,23 +142,31 @@ export default function ToolEntry() {
       setOutput("");
       setStatus("empty");
       setErrorMsg("");
+      setDecodeMeta(null);
       setElapsed(0);
       setProcessing(false);
       return;
     }
     setProcessing(true);
     window.setTimeout(() => {
-      const res = decodeBase64(raw, o);
-      if (res.ok) {
-        setOutput(res.text);
-        setStatus("valid");
-        setErrorMsg("");
-      } else {
+      const t0 = typeof performance !== "undefined" ? performance.now() : 0;
+      const res = decodeBase64Text(raw);
+      const ms = Math.max(1, Math.round((typeof performance !== "undefined" ? performance.now() : 0) - t0));
+      if (res.error) {
         setOutput("");
         setStatus("invalid");
-        setErrorMsg(res.message);
+        setErrorMsg(res.error);
+        setDecodeMeta(null);
+      } else {
+        let text = res.text;
+        if (!o.preserveBreaks) text = text.replace(/\r?\n/g, " ");
+        if (o.trimWhitespace) text = text.trim();
+        setOutput(text);
+        setStatus("valid");
+        setErrorMsg("");
+        setDecodeMeta(res);
       }
-      setElapsed(res.ms);
+      setElapsed(ms);
       setProcessing(false);
     }, 90);
   }, []);
@@ -299,6 +256,7 @@ export default function ToolEntry() {
     setOutput("");
     setStatus("empty");
     setErrorMsg("");
+    setDecodeMeta(null);
     setElapsed(0);
     setOpts(DEFAULT_OPTS);
     showToast("Tool reset");
@@ -309,6 +267,7 @@ export default function ToolEntry() {
     setOutput("");
     setStatus("empty");
     setErrorMsg("");
+    setDecodeMeta(null);
     setElapsed(0);
   };
 
@@ -350,8 +309,13 @@ export default function ToolEntry() {
             <h3 className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white">
               <HelpCircle className="h-5 w-5 text-blue-600" /> How it works
             </h3>
-            <button type="button" onClick={() => setHowOpen(false)} className="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800">
-              <X className="h-[18px] w-[18px]" />
+            <button
+              type="button"
+              onClick={() => setHowOpen(false)}
+              aria-label="Close how it works dialog"
+              className="rounded-lg p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-600 dark:hover:bg-slate-800"
+            >
+              <X className="h-[18px] w-[18px]" aria-hidden="true" />
             </button>
           </div>
           <ol className="mt-5 space-y-4">
@@ -466,7 +430,7 @@ export default function ToolEntry() {
               ) : null}
             </div>
             {status === "invalid" && input ? (
-              <p className="mx-4 mt-2 text-xs font-medium text-red-500 sm:mx-5">{errorMsg}</p>
+              <p role="alert" className="mx-4 mt-2 text-xs font-medium text-red-500 sm:mx-5">{errorMsg}</p>
             ) : null}
             <div className="flex items-center justify-between px-4 py-3.5 sm:px-5">
               <span className="text-xs text-slate-400 dark:text-slate-500" suppressHydrationWarning>
@@ -531,6 +495,20 @@ export default function ToolEntry() {
                 className="h-64 w-full resize-none rounded-xl bg-transparent p-4 text-sm leading-relaxed text-slate-800 outline-none placeholder:text-slate-400 dark:text-slate-200 dark:placeholder:text-slate-500"
               />
             </div>
+            {status === "valid" && decodeMeta?.looksBinary ? (
+              <p role="alert" className="mx-4 mt-2 flex items-start gap-1.5 text-xs font-medium text-red-500 sm:mx-5">
+                <TriangleAlert className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                {decodeMeta.controlPercent}% of the decoded bytes are non-printable control codes — this looks like a
+                binary file (image, PDF, archive), not text. The characters above are not meaningful.
+              </p>
+            ) : null}
+            {status === "valid" && decodeMeta && !decodeMeta.looksBinary && !decodeMeta.validUtf8 ? (
+              <p role="alert" className="mx-4 mt-2 flex items-start gap-1.5 text-xs font-medium text-red-500 sm:mx-5">
+                <TriangleAlert className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+                The bytes are not valid {decodeMeta.encoding?.toUpperCase()}. Invalid sequences were replaced with
+                U+FFFD, so some characters above are wrong.
+              </p>
+            ) : null}
             <div className="flex items-center justify-end px-4 py-3.5 sm:px-5">
               <span className="text-xs text-slate-400 dark:text-slate-500" suppressHydrationWarning>
                 {output.length.toLocaleString()} characters&ensp;|&ensp;{words.toLocaleString()} words
@@ -628,12 +606,18 @@ export default function ToolEntry() {
             <ChevronDown className={`h-[18px] w-[18px] text-slate-400 transition-transform ${advOpen ? "rotate-180" : ""}`} />
           </button>
           {advOpen ? (
-            <div className="grid grid-cols-1 gap-x-8 gap-y-3.5 border-t border-slate-100 px-5 pb-5 pt-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 dark:border-slate-800">
-              <OptionCheck checked={opts.autoDecode} onToggle={() => toggleOpt("autoDecode")} label="Auto decode while typing" />
-              <OptionCheck checked={opts.preserveBreaks} onToggle={() => toggleOpt("preserveBreaks")} label="Preserve line breaks" />
-              <OptionCheck checked={opts.trimWhitespace} onToggle={() => toggleOpt("trimWhitespace")} label="Trim whitespace" />
-              <OptionCheck checked={opts.detectInvalid} onToggle={() => toggleOpt("detectInvalid")} label="Detect invalid Base64" />
-              <OptionCheck checked={opts.urlSafe} onToggle={() => toggleOpt("urlSafe")} label="URL-safe Base64 support" />
+            <div className="border-t border-slate-100 px-5 pb-5 pt-4 dark:border-slate-800">
+              <div className="grid grid-cols-1 gap-x-8 gap-y-3.5 sm:grid-cols-2 lg:grid-cols-3">
+                <OptionCheck checked={opts.autoDecode} onToggle={() => toggleOpt("autoDecode")} label="Auto decode while typing" />
+                <OptionCheck checked={opts.preserveBreaks} onToggle={() => toggleOpt("preserveBreaks")} label="Preserve line breaks" />
+                <OptionCheck checked={opts.trimWhitespace} onToggle={() => toggleOpt("trimWhitespace")} label="Trim whitespace" />
+              </div>
+              <p className="mt-4 text-xs leading-relaxed text-slate-400 dark:text-slate-500">
+                URL-safe Base64 (the JWT alphabet — <code>-</code> and <code>_</code> instead of{" "}
+                <code>+</code> and <code>/</code>, missing <code>=</code> padding), a leading UTF-8/UTF-16
+                byte-order mark, and invalid or binary content are all detected and handled automatically —
+                there is nothing to switch on.
+              </p>
             </div>
           ) : null}
         </div>
@@ -652,7 +636,11 @@ export default function ToolEntry() {
 
       {/* toast */}
       {toast ? (
-        <div className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-xl dark:bg-white dark:text-slate-900">
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-full bg-slate-900 px-4 py-2 text-sm font-medium text-white shadow-xl dark:bg-white dark:text-slate-900"
+        >
           {toast}
         </div>
       ) : null}

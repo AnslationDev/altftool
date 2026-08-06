@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, GraduationCap, Plus, RotateCcw, Trash2 } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   BEST_OF_COUNT,
   CBSE_PASS_PERCENT,
@@ -44,7 +45,8 @@ export default function ToolHome() {
   const [rows, setRows] = useState(DEFAULT_ROWS);
   const [targetPercent, setTargetPercent] = useState("90");
   const [nextId, setNextId] = useState(7);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -76,8 +78,11 @@ export default function ToolHome() {
         : [
             ...current,
             {
+              // `nextId` only ever increases, unlike `current.length` (which can repeat a
+              // number after a remove-then-add cycle) — using it here keeps default subject
+              // names unique so two rows never end up sharing a name.
               id: `r${nextId}`,
-              name: `Subject ${current.length + 1}`,
+              name: `Subject ${nextId}`,
               marks: "70",
               isLanguage: false,
               eligible: true,
@@ -101,9 +106,11 @@ export default function ToolHome() {
       lines.push(`Dropped: ${result.excluded.map((row) => `${row.name} ${row.marks}`).join(", ")}`);
     }
     lines.push(
-      `All subjects counted: ${pct(result.allSubjectPercent)} (best of five is ${num(result.bestOfFiveAdvantage)} points higher)`,
+      result.bestOfFiveAdvantage >= 0
+        ? `All subjects counted: ${pct(result.allSubjectPercent)} (best of five is ${num(result.bestOfFiveAdvantage)} points higher)`
+        : `All subjects counted: ${pct(result.allSubjectPercent)} (best of five is ${num(Math.abs(result.bestOfFiveAdvantage))} points lower)`,
     );
-    if (result.target) {
+    if (result.target && !result.target.error) {
       lines.push(
         result.target.met
           ? `Target of ${result.target.percent}% met.`
@@ -114,24 +121,21 @@ export default function ToolHome() {
     return lines.join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copyToClipboard("result", summary, { label: "CBSE best of five result" });
 
   const reset = () => {
+    if (!window.confirm("Reset all subjects and the target percentage? This clears everything you've entered.")) {
+      return;
+    }
     setRows(DEFAULT_ROWS);
     setTargetPercent("90");
-    setCopied(false);
+    resetCopyState();
   };
 
-  const countedIds = new Set(hasError ? [] : result.selected.map((row) => row.name));
+  // Keyed by row index (not name) — subject names are free-text and not guaranteed unique
+  // (e.g. two rows both left at a default "Subject N" name), so a name-based lookup could
+  // show a dropped subject as "counted" whenever two rows share a name.
+  const countedIndexes = new Set(hasError ? [] : result.selected.map((row) => row.index));
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -209,15 +213,21 @@ export default function ToolHome() {
                 <label
                   className="flex min-h-11 items-center gap-2 text-sm"
                   htmlFor={`bo5-elig-${row.id}`}
+                  title={
+                    row.isLanguage
+                      ? "The compulsory language is always counted, whatever it scores — it cannot be dropped."
+                      : undefined
+                  }
                 >
                   <input
                     id={`bo5-elig-${row.id}`}
                     type="checkbox"
-                    className="h-5 w-5 accent-[var(--primary)]"
-                    checked={row.eligible}
+                    className="h-5 w-5 accent-[var(--primary)] disabled:opacity-50"
+                    checked={row.isLanguage ? true : row.eligible}
+                    disabled={row.isLanguage}
                     onChange={(event) => updateRow(row.id, "eligible", event.target.checked)}
                   />
-                  <span>Counts towards the aggregate</span>
+                  <span>{row.isLanguage ? "Always counted (compulsory language)" : "Counts towards the aggregate"}</span>
                 </label>
                 <button
                   type="button"
@@ -258,6 +268,11 @@ export default function ToolHome() {
             value={targetPercent}
             onChange={(event) => setTargetPercent(event.target.value)}
           />
+          {!hasError && result.target?.error ? (
+            <p role="alert" className="mt-2 text-sm font-medium text-[var(--danger)]">
+              {result.target.error} The rest of the result below still reflects your subjects.
+            </p>
+          ) : null}
         </div>
       </section>
 
@@ -270,7 +285,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -289,16 +308,16 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy best of five result"
-              className={GHOST_BTN}
+              aria-label={isCopied("result") ? "Copied best of five result" : "Copy best of five result"}
+              className={`${GHOST_BTN} disabled:cursor-not-allowed disabled:opacity-50`}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
@@ -306,6 +325,9 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span className="sr-only" role="status" aria-live="polite">
+          {announcement}
+        </span>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
@@ -317,7 +339,9 @@ export default function ToolHome() {
                 : `${pct(result.allSubjectPercent)} (${num(result.allSubjectMarks)} of ${num(result.allSubjectMax)})`,
             ],
             [
-              "Gain from dropping the weakest",
+              !hasError && result.bestOfFiveAdvantage < 0
+                ? "Change from dropping the weakest (a loss here)"
+                : "Gain from dropping the weakest",
               hasError ? DASH : `${num(result.bestOfFiveAdvantage)} percentage points`,
             ],
             [
@@ -336,7 +360,7 @@ export default function ToolHome() {
               "Every subject above the pass mark",
               hasError ? DASH : result.allPassed ? `Yes (${CBSE_PASS_PERCENT}% each)` : `No — ${result.failedSubjects.map((row) => row.name).join(", ")}`,
             ],
-            ...(hasError || !result.target
+            ...(hasError || !result.target || result.target.error
               ? []
               : [
                   [
@@ -364,7 +388,11 @@ export default function ToolHome() {
       </section>
 
       {!hasError && (
-        <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+        <section
+          className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+          aria-live="polite"
+          role="status"
+        >
           <h2 className="text-base font-semibold">Which subjects were counted</h2>
           <div className="mt-4 -mx-1 overflow-x-auto">
             <table className="w-full min-w-[28rem] border-collapse text-sm">
@@ -378,7 +406,7 @@ export default function ToolHome() {
               </thead>
               <tbody>
                 {result.rows.map((row) => (
-                  <tr key={row.name} className="border-t border-[var(--border)]">
+                  <tr key={row.index} className="border-t border-[var(--border)]">
                     <th scope="row" className="px-1 py-3 text-left font-semibold">
                       {row.name}
                       {row.isLanguage ? (
@@ -392,12 +420,12 @@ export default function ToolHome() {
                     <td className="px-1 py-3 text-right">
                       <span
                         className={`rounded-md px-2 py-0.5 text-[11px] font-semibold ${
-                          countedIds.has(row.name)
+                          countedIndexes.has(row.index)
                             ? "bg-[var(--success-soft)] text-[var(--success)]"
                             : "bg-[var(--muted)] text-[var(--muted-foreground)]"
                         }`}
                       >
-                        {countedIds.has(row.name) ? "counted" : "dropped"}
+                        {countedIndexes.has(row.index) ? "counted" : "dropped"}
                       </span>
                     </td>
                   </tr>

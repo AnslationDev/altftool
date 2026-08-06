@@ -94,8 +94,10 @@ export default function ToolHome() {
     const totalRepayment = eligibleEmi * months;
     const totalInterest = totalRepayment - eligibleLoan;
 
-    const tenureRows = TENURE_OPTIONS.map((option) => ({
+    const tenureYearsList = Array.from(new Set([...TENURE_OPTIONS, y])).sort((a, b) => a - b);
+    const tenureRows = tenureYearsList.map((option) => ({
       years: option,
+      isSelected: option === y,
       loan: loanFromEmi(eligibleEmi, r, option * 12),
       interest: eligibleEmi * option * 12 - loanFromEmi(eligibleEmi, r, option * 12),
     }));
@@ -125,6 +127,7 @@ export default function ToolHome() {
       foirRows,
       rateUsed: r,
       foirUsed: foirPct,
+      foirAboveLenderRange: foirPct > 60,
     };
   }, [income, otherIncome, otherWeight, obligations, foir, rate, years]);
 
@@ -230,17 +233,24 @@ export default function ToolHome() {
         </div>
 
         <div className="mt-4 flex flex-wrap gap-2">
-          {TENURE_OPTIONS.map((option) => (
-            <button
-              key={option}
-              type="button"
-              onClick={() => setYears(String(option))}
-              aria-pressed={toNumber(years) === option}
-              className="min-h-11 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-sm font-semibold text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--foreground)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
-            >
-              {option}y
-            </button>
-          ))}
+          {TENURE_OPTIONS.map((option) => {
+            const isActive = toNumber(years) === option;
+            return (
+              <button
+                key={option}
+                type="button"
+                onClick={() => setYears(String(option))}
+                aria-pressed={isActive}
+                className={`min-h-11 rounded-md border px-3 text-sm font-semibold transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
+                  isActive
+                    ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
+                    : "border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)] hover:border-[var(--primary)] hover:text-[var(--foreground)]"
+                }`}
+              >
+                {option}y
+              </button>
+            );
+          })}
         </div>
       </section>
 
@@ -253,7 +263,11 @@ export default function ToolHome() {
         </p>
       ) : (
         <>
-          <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section
+            className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+            aria-live="polite"
+            role="status"
+          >
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -310,6 +324,15 @@ export default function ToolHome() {
                 </div>
               ))}
             </dl>
+
+            {calc.foirAboveLenderRange ? (
+              <p className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning-text)]">
+                A {pct(calc.foirUsed)} FOIR is above the 40%&ndash;60% range most Indian banks and
+                NBFCs actually use (see the FAQ below). Treat this figure as a stretch scenario, not
+                what a lender is likely to sanction &mdash; lower the FOIR limit toward 60% or below
+                for a realistic estimate.
+              </p>
+            ) : null}
           </section>
 
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
@@ -328,8 +351,20 @@ export default function ToolHome() {
                 </thead>
                 <tbody>
                   {calc.tenureRows.map((row) => (
-                    <tr key={row.years} className="border-b border-[var(--border)] last:border-0">
-                      <td className="py-2 pr-3 font-semibold">{row.years} years</td>
+                    <tr
+                      key={row.years}
+                      className={`border-b border-[var(--border)] last:border-0 ${
+                        row.isSelected ? "bg-[var(--primary)]/10" : ""
+                      }`}
+                    >
+                      <td className="py-2 pr-3 font-semibold">
+                        {row.years} years
+                        {row.isSelected ? (
+                          <span className="ml-2 rounded-full bg-[var(--primary)]/15 px-2 py-0.5 text-[11px] font-semibold uppercase tracking-wide text-[var(--primary-text)]">
+                            Your tenure
+                          </span>
+                        ) : null}
+                      </td>
                       <td className="py-2 pr-3 text-right">{money(row.loan)}</td>
                       <td className="py-2 text-right text-[var(--muted-foreground)]">
                         {money(row.interest)}

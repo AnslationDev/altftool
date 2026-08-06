@@ -83,6 +83,8 @@ export default function ToolHome() {
   );
 
   const ok = !result.error;
+  const cheaperLabel = ok && result.cheaper === "split" ? "Split AC" : "Window AC";
+  const pricierLabel = ok && result.cheaper === "split" ? "window" : "split";
 
   const summary = ok
     ? [
@@ -91,10 +93,10 @@ export default function ToolHome() {
         `Split: ISEER ${NUM2.format(result.split.iseer)}, ${NUM.format(result.split.annualUnits)} kWh/yr, first-year bill ${money(result.split.firstYearBill)}`,
         `Window: ISEER ${NUM2.format(result.window.iseer)}, ${NUM.format(result.window.annualUnits)} kWh/yr, first-year bill ${money(result.window.firstYearBill)}`,
         `${result.horizon}-year total — split ${money(result.splitTotal)}, window ${money(result.windowTotal)}`,
-        `Cheaper over ${result.horizon} years: ${result.cheaper === "split" ? "Split AC" : "Window AC"} by ${money(result.saving)}`,
+        `Cheaper over ${result.horizon} years: ${cheaperLabel} by ${money(result.saving)}`,
         result.breakevenYear
-          ? `Split overtakes window in year ${result.breakevenYear}`
-          : `Split does not overtake window within ${result.horizon} years`,
+          ? `${cheaperLabel} overtakes ${pricierLabel} in year ${result.breakevenYear} and stays ahead through year ${result.horizon}`
+          : `${cheaperLabel} does not take a lasting lead within ${result.horizon} years`,
       ].join("\n")
     : "";
 
@@ -241,7 +243,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -277,15 +283,25 @@ export default function ToolHome() {
                 ["Window - average input power", `${NUM.format(result.window.inputWatts)} W`],
                 ["Split - units per year", `${NUM.format(result.split.annualUnits)} kWh`],
                 ["Window - units per year", `${NUM.format(result.window.annualUnits)} kWh`],
-                ["Electricity saved per year by the split", `${NUM.format(result.unitsSavedPerYear)} kWh`],
+                [
+                  result.unitsSavedPerYear >= 0
+                    ? "Electricity saved per year by the split"
+                    : "Electricity extra used per year by the split",
+                  `${NUM.format(Math.abs(result.unitsSavedPerYear))} kWh`,
+                ],
                 ["First-year bill difference", money(result.firstYearBillGap)],
                 [`Split total over ${result.horizon} years`, money(result.splitTotal)],
                 [`Window total over ${result.horizon} years`, money(result.windowTotal)],
                 [
-                  "Split overtakes window in",
+                  `${cheaperLabel} overtakes ${pricierLabel} in`,
                   result.breakevenYear ? `year ${result.breakevenYear}` : `not within ${result.horizon} years`,
                 ],
-                ["CO2 avoided per year by the split", `${NUM.format(result.co2SavedPerYear)} kg`],
+                [
+                  result.co2SavedPerYear >= 0
+                    ? "CO2 avoided per year by the split"
+                    : "CO2 extra emitted per year by the split",
+                  `${NUM.format(Math.abs(result.co2SavedPerYear))} kg`,
+                ],
               ]
             : [
                 ["Split - upfront (price + install)", DASH],

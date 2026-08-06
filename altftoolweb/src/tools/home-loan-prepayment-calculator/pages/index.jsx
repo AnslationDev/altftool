@@ -55,11 +55,13 @@ function amortise({ principal, monthlyRate, emi, extraMonthly = 0, lumpsum = 0, 
   let totalPaid = 0;
   let prepaid = 0;
   let months = 0;
+  let lumpsumApplied = false;
 
   for (let month = 1; month <= 1200 && balance > 0.005; month += 1) {
     const interest = balance * monthlyRate;
+    const applyLumpsum = lumpsum > 0 && month === lumpsumMonth;
     let payment = emi + extraMonthly;
-    if (lumpsum > 0 && month === lumpsumMonth) payment += lumpsum;
+    if (applyLumpsum) payment += lumpsum;
 
     const payoff = balance + interest;
     if (payment >= payoff) {
@@ -67,6 +69,7 @@ function amortise({ principal, monthlyRate, emi, extraMonthly = 0, lumpsum = 0, 
       totalInterest += interest;
       totalPaid += payment;
       prepaid += Math.max(0, payment - emi);
+      if (applyLumpsum) lumpsumApplied = true;
       balance = 0;
       months = month;
       break;
@@ -75,11 +78,12 @@ function amortise({ principal, monthlyRate, emi, extraMonthly = 0, lumpsum = 0, 
     balance = payoff - payment;
     totalInterest += interest;
     totalPaid += payment;
-    prepaid += extraMonthly + (lumpsum > 0 && month === lumpsumMonth ? lumpsum : 0);
+    prepaid += extraMonthly + (applyLumpsum ? lumpsum : 0);
+    if (applyLumpsum) lumpsumApplied = true;
     months = month;
   }
 
-  return { months, totalInterest, totalPaid, prepaid, balance };
+  return { months, totalInterest, totalPaid, prepaid, balance, lumpsumApplied };
 }
 
 export default function ToolHome() {
@@ -128,7 +132,7 @@ export default function ToolHome() {
     }
     if (parsed.extraMonthly < 0) return "Extra monthly payment cannot be negative.";
     const totalMonths = Math.round(parsed.years * 12);
-    if (parsed.lumpsumMonth < 1 || parsed.lumpsumMonth > totalMonths) {
+    if (parsed.lumpsum > 0 && (parsed.lumpsumMonth < 1 || parsed.lumpsumMonth > totalMonths)) {
       return `The lump sum month must be between 1 and ${totalMonths}.`;
     }
     return "";
@@ -159,6 +163,7 @@ export default function ToolHome() {
       interestSaved: baseline.totalInterest - withPrepay.totalInterest,
       monthsSaved: baseline.months - withPrepay.months,
       totalPrepaid: withPrepay.prepaid,
+      lumpsumUnused: parsed.lumpsum > 0 && !withPrepay.lumpsumApplied,
     };
   }, [error, parsed]);
 
@@ -178,7 +183,11 @@ export default function ToolHome() {
         result.withPrepay.months
       )}`,
       "",
-      `Lump sum: ${inr(parsed.lumpsum)} in month ${parsed.lumpsumMonth}`,
+      parsed.lumpsum > 0
+        ? result.lumpsumUnused
+          ? `Lump sum: ${inr(parsed.lumpsum)} in month ${parsed.lumpsumMonth} — NOT applied, loan already closes in month ${result.withPrepay.months}`
+          : `Lump sum: ${inr(parsed.lumpsum)} in month ${parsed.lumpsumMonth}`
+        : "Lump sum: none",
       `Extra every month: ${inr(parsed.extraMonthly)}`,
       `Total prepaid: ${inr(result.totalPrepaid)}`,
       "",
@@ -383,7 +392,19 @@ export default function ToolHome() {
                 ? `Loan closes ${monthsToLabel(result.monthsSaved)} earlier — in ${monthsToLabel(
                     result.withPrepay.months
                   )} instead of ${monthsToLabel(result.baseline.months)}.`
+                : result.interestSaved > 0.005
+                ? `Tenure stays ${monthsToLabel(result.baseline.months)}, but you pay ${inr(
+                    result.interestSaved
+                  )} less interest overall.`
                 : "Add a lump sum or extra monthly amount to shorten the loan."}
+            </p>
+          ) : null}
+
+          {result && result.lumpsumUnused ? (
+            <p className="mt-3 rounded-md border border-[var(--warning)] bg-[var(--warning-soft)] p-3 text-sm text-[var(--warning-text)]">
+              Lump sum not applied: with your extra monthly payment, the loan is projected to close
+              in month {result.withPrepay.months} — before your chosen lump-sum month{" "}
+              {parsed.lumpsumMonth}. Choose an earlier lump-sum month to include it.
             </p>
           ) : null}
 

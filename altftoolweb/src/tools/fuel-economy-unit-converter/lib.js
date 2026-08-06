@@ -30,10 +30,6 @@ export const KMPL_TO_MPG_US = LITRES_PER_US_GALLON / KM_PER_MILE;
 /** km/l -> imperial mpg. 4.54609 / 1.609344 = 2.82481... */
 export const KMPL_TO_MPG_IMPERIAL = LITRES_PER_IMPERIAL_GALLON / KM_PER_MILE;
 
-/** The familiar reciprocal constants: l/100 km = CONSTANT / mpg. */
-export const MPG_US_L100KM_CONSTANT = 100 * KMPL_TO_MPG_US; // 235.2145833...
-export const MPG_IMPERIAL_L100KM_CONSTANT = 100 * KMPL_TO_MPG_IMPERIAL; // 282.4809...
-
 export const UNITS = [
   { key: "kmpl", label: "Kilometres per litre (km/l)", short: "km/l", betterWhen: "higher" },
   { key: "l100km", label: "Litres per 100 km (l/100 km)", short: "l/100 km", betterWhen: "lower" },
