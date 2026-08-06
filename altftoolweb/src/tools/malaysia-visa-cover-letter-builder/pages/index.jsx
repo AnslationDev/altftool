@@ -235,12 +235,12 @@ export default function ToolHome() {
               onClick={copyLetter}
               disabled={hasError}
               aria-label="Copy the finished cover letter to the clipboard"
-              className={`${PRIMARY_BTN} disabled:opacity-50`}
+              className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {isCopied("letter") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
               {isCopied("letter") ? "Copied!" : "Copy letter"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset every field to the sample values" className={GHOST_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset every field to the sample values" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>

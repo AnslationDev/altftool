@@ -275,7 +275,7 @@ export default function ToolHome() {
               type="button"
               onClick={reset}
               aria-label="Reset all inputs to defaults"
-              className={GHOST_BTN}
+              className={PRIMARY_BTN}
             >
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset

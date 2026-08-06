@@ -187,7 +187,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               aria-label="Copy the observability plan"
-              className={PRIMARY_BTN}
+              className={GHOST_BTN}
             >
               {isCopied("plan") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
@@ -196,7 +196,7 @@ export default function ToolHome() {
               )}
               {isCopied("plan") ? "Copied!" : "Copy plan"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>

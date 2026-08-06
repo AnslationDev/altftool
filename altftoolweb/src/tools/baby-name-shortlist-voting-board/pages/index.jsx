@@ -373,7 +373,7 @@ export default function ToolHome() {
               )}
               {isCopied("result") ? "Copied!" : "Copy results"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset the whole board" className={GHOST_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset the whole board" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset board
             </button>

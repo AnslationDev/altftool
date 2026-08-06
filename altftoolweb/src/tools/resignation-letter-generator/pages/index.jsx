@@ -309,7 +309,7 @@ export default function ToolHome() {
             />
             Ask for relieving letter and settlement
           </label>
-          <button type="button" onClick={reset} aria-label="Reset all fields" className={GHOST_BTN}>
+          <button type="button" onClick={reset} aria-label="Reset all fields" className={PRIMARY_BTN}>
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Reset
           </button>
