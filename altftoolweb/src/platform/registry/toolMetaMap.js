@@ -5489,7 +5489,7 @@ export const toolMetaMap = {
   },
   "cloud-status-board": {
     "name": "Cloud Status Board",
-    "description": "See incidents across major cloud and SaaS providers on one dashboard.",
+    "description": "See the current status of major cloud and SaaS providers on one dashboard.",
     "category": [
       "Developer",
       "Productivity"
@@ -6117,7 +6117,7 @@ export const toolMetaMap = {
       "India",
       "Legal"
     ],
-    "icon": "file-warning",
+    "icon": "shield-alert",
     "iconColor": "text-primary"
   },
   "consumer-complaint-ecommerce-order": {
@@ -11614,7 +11614,7 @@ export const toolMetaMap = {
       "Science"
     ],
     "icon": "sparkles",
-    "iconColor": "text-teal-500"
+    "iconColor": "text-[var(--primary)]"
   },
   "fraction-calculator": {
     "name": "Fraction Calculator",
