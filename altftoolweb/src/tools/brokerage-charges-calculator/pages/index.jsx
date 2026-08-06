@@ -424,7 +424,7 @@ export default function ToolHome() {
           {calc.error}
         </p>
       ) : (
-        <>
+        <div aria-live="polite" role="status">
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
@@ -507,7 +507,7 @@ export default function ToolHome() {
                 : `This trade loses ${money(Math.abs(calc.netPnl))} once ${money(calc.totalCharges)} of charges are applied.`}
             </p>
           </section>
-        </>
+        </div>
       )}
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">

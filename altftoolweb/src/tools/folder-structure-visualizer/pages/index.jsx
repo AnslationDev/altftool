@@ -116,6 +116,13 @@ export default function ToolHome() {
                 <button
                   type="button"
                   onClick={() => {
+                    if (
+                      !window.confirm(
+                        "Clear the loaded structure and start over? This cannot be undone."
+                      )
+                    ) {
+                      return;
+                    }
                     clear();
                     setSelectedId(null);
                     setFocusedId(null);

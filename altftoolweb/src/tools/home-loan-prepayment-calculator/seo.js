@@ -1,5 +1,5 @@
 const seo = {
-  "intro": "Home Loan Prepayment Calculator amortises your loan month by month, once without prepayments and once with them, so you can see exactly how much interest a bonus or a small monthly top-up saves. It works out your EMI from the outstanding amount, rate and remaining tenure, then applies a lump sum in any month plus any extra you add to every EMI. The result: interest avoided, the new payoff date and how many months you cut.",
+  "intro": "Home Loan Prepayment Calculator amortises your loan month by month, once without prepayments and once with them, so you can see exactly how much interest a bonus or a small monthly top-up saves. It works out your EMI from the outstanding amount, rate and remaining tenure, then applies a lump sum in any month plus any extra you add to every EMI. The result: interest avoided, the new tenure and how many months you cut.",
   "useCases": [
     "Test whether putting an annual bonus into the loan beats leaving it in a deposit.",
     "See what adding just Rs 5,000 to every EMI does to a 20-year home loan.",

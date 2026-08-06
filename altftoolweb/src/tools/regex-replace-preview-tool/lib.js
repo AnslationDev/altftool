@@ -27,6 +27,43 @@ export const MATCH_LIMIT = 5000;
 export const ALLOWED_FLAGS = ["g", "i", "m", "s", "u", "y"];
 
 /**
+ * Heuristic guard against the most common accidental catastrophic-backtracking
+ * shapes: a quantified group that itself contains an inner quantifier
+ * (e.g. `(a+)+`, `(\d*)*`, `(a{2,4})+`), and a repeated group with two
+ * identical alternatives (e.g. `(a|a)+`). Both can make the native regex
+ * engine take exponential time on a near-miss input, freezing the tab —
+ * text/match-count caps alone do not bound that (see MATCH_LIMIT above,
+ * which only stops runaway *counting*, not a single exec() call blowing up).
+ *
+ * This is a heuristic, not a full ReDoS proof: detecting every possible
+ * catastrophic pattern is undecidable in general. It catches the shapes a
+ * developer is most likely to type by accident (and scans for them as a
+ * substring, so nesting like `((a+)+)+` is still caught), so previewReplace
+ * can refuse to run them instead of hanging the page.
+ */
+const NESTED_QUANTIFIER_RE = /\([^()]*(?:[+*]|\{\d+,?\d*\})[^()]*\)(?:[+*]|\{\d+,?\d*\})/;
+const DUPLICATE_ALTERNATION_RE = /\(([^()|]*)\|\1\)(?:[+*]|\{\d+,?\d*\})/;
+
+/** @returns {{risky: false} | {risky: true, reason: string}} */
+export function findCatastrophicRisk(pattern) {
+  if (NESTED_QUANTIFIER_RE.test(pattern)) {
+    return {
+      risky: true,
+      reason:
+        "a repeated group contains its own repetition inside it (like (a+)+), which can take exponential time to fail on a near-miss input",
+    };
+  }
+  if (DUPLICATE_ALTERNATION_RE.test(pattern)) {
+    return {
+      risky: true,
+      reason:
+        "a repeated group has two identical alternatives (like (a|a)+), which can take exponential time to fail on a near-miss input",
+    };
+  }
+  return { risky: false };
+}
+
+/**
  * ECMA-262 GetSubstitution: expand a replacement template for one match.
  * Pure string work — no regex re-execution.
  */
@@ -131,6 +168,13 @@ export function previewReplace({ text, pattern, flags = "g", replacement = "" })
 
   const flagCheck = validateFlags(flags);
   if (flagCheck.error) return { error: flagCheck.error };
+
+  const risk = findCatastrophicRisk(pattern);
+  if (risk.risky) {
+    return {
+      error: `This pattern was not run because ${risk.reason} — simplify it (for example, rewrite (a+)+ as a+) and try again.`,
+    };
+  }
 
   let regex;
   try {

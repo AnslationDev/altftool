@@ -63,7 +63,7 @@ export default function ToolHome() {
         shadowChar: ":",
         letterSpacing: Number(letterSpacing),
         lineSpacing: Number(lineSpacing),
-        maxCharsPerLine: Number(wrapAt),
+        maxCharsPerLine: wrapAt.trim() === "" ? undefined : Number(wrapAt),
         style,
         trimRight: !useDots,
       }),
@@ -74,6 +74,12 @@ export default function ToolHome() {
   const ok = !error;
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the text, ink and style back to defaults? This clears what you typed.")
+    ) {
+      return;
+    }
     setText(DEFAULTS.text);
     setInk(DEFAULTS.ink);
     setCustomInk(DEFAULTS.customInk);
@@ -277,7 +283,11 @@ export default function ToolHome() {
         </div>
 
         {ok && result.unsupported.length > 0 ? (
-          <p className="mt-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+          <p
+            role="status"
+            aria-live="polite"
+            className="mt-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          >
             This font has no glyph for {result.unsupported.join(" ")} — a question mark was drawn instead.
           </p>
         ) : null}
@@ -310,11 +320,11 @@ export default function ToolHome() {
         </dl>
 
         <div className="mt-5 flex flex-wrap gap-3">
-          <button type="button" className={PRIMARY_BTN} onClick={copy} aria-label="Copy the ASCII art to the clipboard">
+          <button type="button" className={GHOST_BTN} onClick={copy} aria-label="Copy the ASCII art to the clipboard">
             {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
             {copied ? "Copied!" : "Copy result"}
           </button>
-          <button type="button" className={GHOST_BTN} onClick={reset} aria-label="Reset all inputs to their defaults">
+          <button type="button" className={PRIMARY_BTN} onClick={reset} aria-label="Reset all inputs to their defaults">
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Reset
           </button>

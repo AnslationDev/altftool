@@ -312,7 +312,10 @@ export function countWords(text) {
 
 function applyName(template, name) {
   if (!template) return "";
-  return template.replace(/\{name\}/g, name);
+  // Use a function replacer so the name is inserted literally — a string replacer treats
+  // sequences like $&, $$, $` and $' in `name` as special replacement patterns instead of
+  // literal text, which can corrupt or drop the {name} placeholder entirely.
+  return template.replace(/\{name\}/g, () => name);
 }
 
 function joinLines(parts) {

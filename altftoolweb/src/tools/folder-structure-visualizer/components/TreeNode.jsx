@@ -55,6 +55,10 @@ function TreeNodeBase({
     >
       <button
         type="button"
+        role="treeitem"
+        aria-expanded={isFolder ? isOpen : undefined}
+        aria-level={node.depth + 1}
+        aria-selected={isSelected}
         data-node-id={node.id}
         tabIndex={isFocused ? 0 : -1}
         onClick={() => {
@@ -98,13 +102,7 @@ function TreeNodeBase({
   );
 
   return (
-    <li
-      role="treeitem"
-      aria-expanded={isFolder ? isOpen : undefined}
-      aria-level={node.depth + 1}
-      aria-selected={isSelected}
-      className="list-none"
-    >
+    <li role="none" className="list-none">
       {row}
       {isFolder && (
         <AnimatePresenceUL open={isOpen} reduce={reduce}>

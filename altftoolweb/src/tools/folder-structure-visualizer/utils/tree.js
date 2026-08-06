@@ -84,8 +84,12 @@ export function buildTreeFromPaths(entries, rootName = "Project Root") {
 }
 
 function getExtension(name) {
-  const match = name.match(/\.([^./\\]+)$/);
-  return match ? match[1].toLowerCase() : "";
+  // A leading dot marks a dotfile (.gitignore, .env, .babelrc, .DS_Store),
+  // not an extension — only a dot that isn't the first character, and isn't
+  // the last character either, counts as an extension separator.
+  const dotIndex = name.lastIndexOf(".");
+  if (dotIndex <= 0 || dotIndex === name.length - 1) return "";
+  return name.slice(dotIndex + 1).toLowerCase();
 }
 
 function sortTree(node) {
@@ -131,42 +135,6 @@ export function findNode(node, id) {
   return null;
 }
 
-// Build the path (array of nodes, root-to-node) for a given id.
-export function findPath(node, id) {
-  const trail = [];
-  const dfs = (current, path) => {
-    const next = [...path, current];
-    if (current.id === id) {
-      trail.push(...next);
-      return true;
-    }
-    for (const child of current.children || []) {
-      if (dfs(child, next)) return true;
-    }
-    return false;
-  };
-  dfs(node, []);
-  return trail;
-}
-
-// Collect ancestor ids for a node path so we can auto-expand on search.
-export function collectAncestorIds(root, targetId) {
-  const ids = [];
-  const dfs = (node, trail) => {
-    const next = [...trail, node];
-    if (node.id === targetId) {
-      next.slice(0, -1).forEach((n) => ids.push(n.id));
-      return true;
-    }
-    for (const child of node.children || []) {
-      if (dfs(child, next)) return true;
-    }
-    return false;
-  };
-  dfs(root, []);
-  return ids;
-}
-
 // Compute statistics for the whole tree.
 export function computeStats(root) {
   let files = 0;
@@ -195,21 +163,6 @@ export function computeStats(root) {
     .slice(0, 8);
 
   return { files, folders, totalSize, maxDepth, topExtensions };
-}
-
-// Collect every folder id so Expand-all can open the whole tree.
-export function collectFolderIds(root) {
-  const ids = [];
-  const walk = (node) => {
-    node.children.forEach((child) => {
-      if (child.type === "folder") {
-        ids.push(child.id);
-        walk(child);
-      }
-    });
-  };
-  walk(root);
-  return ids;
 }
 
 // Collect every extension present in the tree (for filter chips).

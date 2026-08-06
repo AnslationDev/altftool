@@ -133,7 +133,10 @@ export function ouPercentageToCgpa({ percentage, formula = "cbcs" } = {}) {
     cgpa,
     formulaId: rule.id,
     formulaLabel: rule.label,
-    formula: `(${round2(value)} / 10) + ${rule.offset}`,
+    formula:
+      rule.offset === 0
+        ? `${round2(value)} / 10`
+        : `(${round2(value)} / 10) + ${rule.offset}`,
     degreeClass: classForPercentage(value),
     clamped: raw > OU_MAX_CGPA,
   };

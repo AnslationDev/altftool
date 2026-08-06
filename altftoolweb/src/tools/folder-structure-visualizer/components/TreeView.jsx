@@ -21,7 +21,18 @@ export default function TreeView({
 }) {
   const containerRef = useRef(null);
 
-  const visible = getVisibleNodes(root, expanded);
+  // getVisibleNodes only walks the expanded-folder chain; it doesn't know
+  // about the active search/type/extension filter. TreeNode independently
+  // hides any node missing from `visibleIds`, so intersect here too — every
+  // node visibleIds keeps has an ancestor chain that's also in visibleIds
+  // (useTreeFilter only marks a folder visible when it matches or contains a
+  // visible descendant), so a simple filter reproduces exactly what renders.
+  const filterToVisible = useCallback(
+    (nodes) => (visibleIds ? nodes.filter((n) => visibleIds.has(n.id)) : nodes),
+    [visibleIds]
+  );
+
+  const visible = filterToVisible(getVisibleNodes(root, expanded));
 
   // Keep DOM focus in sync with the roving focus id.
   useEffect(() => {
@@ -41,7 +52,7 @@ export default function TreeView({
 
   const onKeyDown = useCallback(
     (e) => {
-      const list = getVisibleNodes(root, expanded);
+      const list = filterToVisible(getVisibleNodes(root, expanded));
       const idx = list.findIndex((n) => n.id === focusedId);
       const current = list[idx];
       if (!current) return;
@@ -96,7 +107,7 @@ export default function TreeView({
           break;
       }
     },
-    [root, expanded, focusedId, toggle, onSelect, moveFocus]
+    [root, expanded, focusedId, toggle, onSelect, moveFocus, filterToVisible]
   );
 
   const handlePointerDown = useCallback(

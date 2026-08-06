@@ -195,10 +195,8 @@ export function analyseSemester({
       attended: totalAttended,
       missed: totalHeld - totalAttended,
       percent: aggregatePercent,
-      status: statusFor(aggregatePercent, required, condonationFloor),
     },
     worst: rows.reduce((low, row) => (!low || row.percent < low.percent ? row : low), null),
     ineligibleCount: rows.filter((row) => row.status.key !== "eligible").length,
-    classesNeededTotal: rows.reduce((sum, row) => sum + (row.needed || 0), 0),
   };
 }

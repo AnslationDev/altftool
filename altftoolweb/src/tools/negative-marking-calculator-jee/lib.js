@@ -35,10 +35,6 @@ export const JEE_MCQ_TOTAL = 60;
 /** Section B numerical-value questions across the three subjects (5 × 3). */
 export const JEE_NVT_TOTAL = 15;
 
-/** Questions and marks in JEE Main Paper 1. */
-export const JEE_TOTAL_QUESTIONS = JEE_MCQ_TOTAL + JEE_NVT_TOTAL;
-export const JEE_TOTAL_MARKS = JEE_TOTAL_QUESTIONS * JEE_MARKS_PER_CORRECT;
-
 /** Subject split published by NTA. */
 export const JEE_SUBJECTS = [
   { key: "maths", label: "Mathematics", mcq: 20, nvt: 5 },
@@ -179,12 +175,16 @@ export function modelJeeScore({
   const expectedScore = marksGained - marksLost;
 
   // Range comes from the guessed block only; known answers are held fixed.
+  // A Section B (numerical) guess can never be correct — NVT_BLIND_GUESS_HIT_RATE
+  // is 0 — so it contributes a fixed -penaltyPerWrong to *both* bounds instead
+  // of swinging between "right" and "wrong" the way an MCQ guess does.
   const knownScore =
     scoreBlock({ correct: mcqKnownCorrect, wrong: mcqKnownWrong, marksPerCorrect, penaltyPerWrong }) +
     scoreBlock({ correct: nvtKnownCorrect, wrong: nvtKnownWrong, marksPerCorrect, penaltyPerWrong });
   const guessCount = mcqGuesses + nvtGuesses;
-  const bestCase = knownScore + guessCount * marksPerCorrect;
-  const worstCase = knownScore - guessCount * penaltyPerWrong;
+  const nvtGuessPenalty = nvtGuesses * penaltyPerWrong;
+  const bestCase = knownScore + mcqGuesses * marksPerCorrect - nvtGuessPenalty;
+  const worstCase = knownScore - mcqGuesses * penaltyPerWrong - nvtGuessPenalty;
 
   const mcqEv = guessExpectedValue({ optionsRemaining: mcqOptionsRemaining, marksPerCorrect, penaltyPerWrong });
   const nvtEv = NVT_BLIND_GUESS_HIT_RATE * marksPerCorrect - (1 - NVT_BLIND_GUESS_HIT_RATE) * penaltyPerWrong;

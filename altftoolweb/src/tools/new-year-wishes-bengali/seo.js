@@ -13,8 +13,8 @@ const seo = {
       "Salutations follow normal Bengali usage — shroddheyo for elders, mananiyo in formal letters, sneher for a younger relative.",
     ],
     [
-      "Three readable forms",
-      "Each greeting is shown in Bengali script, Roman transliteration and English, so nothing is lost when you forward it.",
+      "Script you control",
+      "Every greeting's English meaning is shown underneath so you can check the tone before sending, while the Script selector decides whether the greeting itself — on screen and in whatever you copy — is Bengali, Roman or both.",
     ],
     [
       "Real SMS length",

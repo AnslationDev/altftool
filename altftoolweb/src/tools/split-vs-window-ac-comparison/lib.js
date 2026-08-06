@@ -102,9 +102,9 @@ export function compareSplitVsWindow({
   if (![t, hours, days, rate, esc, horizon].every((v) => Number.isFinite(v))) {
     return { error: "Enter valid numbers in every field." };
   }
-  if (t <= 0 || t > 5) return { error: "Capacity should be between 0.5 and 5 ton." };
-  if (hours <= 0 || hours > 24) return { error: "Hours per day must be between 1 and 24." };
-  if (days <= 0 || days > 365) return { error: "Cooling days per year must be between 1 and 365." };
+  if (t < 0.5 || t > 5) return { error: "Capacity should be between 0.5 and 5 ton." };
+  if (hours < 1 || hours > 24) return { error: "Hours per day must be between 1 and 24." };
+  if (days < 1 || days > 365) return { error: "Cooling days per year must be between 1 and 365." };
   if (rate < 0) return { error: "Electricity tariff cannot be negative." };
   if (esc < -20 || esc > 50) return { error: "Tariff escalation should be between -20% and 50% a year." };
   if (horizon < 1 || horizon > MAX_HORIZON_YEARS) {
@@ -152,8 +152,6 @@ export function compareSplitVsWindow({
   const rows = [];
   let splitCum = splitCalc.upfront;
   let windowCum = windowCalc.upfront;
-  let breakevenYear = null;
-  let splitAheadFrom = null;
 
   for (let year = 1; year <= horizon; year += 1) {
     const factor = Math.pow(growth, year - 1);
@@ -169,16 +167,30 @@ export function compareSplitVsWindow({
       windowCum,
       gap: windowCum - splitCum,
     });
-    if (splitAheadFrom === null && splitCum <= windowCum) {
-      splitAheadFrom = year;
-    }
   }
-  breakevenYear = splitAheadFrom;
 
   const splitTotal = splitCum;
   const windowTotal = windowCum;
   const cheaper = splitTotal <= windowTotal ? "split" : "window";
   const saving = Math.abs(windowTotal - splitTotal);
+
+  // Breakeven year: the earliest year from which the eventual cheaper option's
+  // cumulative lead holds continuously through to the end of the horizon. A
+  // naive "first year the gap flips" can be reversed later — most easily with
+  // negative tariff escalation, where a shrinking electricity gap lets a flat
+  // maintenance disadvantage flip the lead back — which would otherwise report
+  // a "breakeven" year that contradicts the final winner shown above it.
+  let breakevenYear = null;
+  const finalGap = rows.length > 0 ? rows[rows.length - 1].gap : 0;
+  const finalSign = Math.sign(finalGap);
+  if (finalSign !== 0) {
+    for (let i = rows.length - 1; i >= 0; i -= 1) {
+      const sign = Math.sign(rows[i].gap);
+      if (sign !== 0 && sign !== finalSign) break;
+      breakevenYear = rows[i].year;
+    }
+  }
+
   const unitsSavedPerYear = windowCalc.annualUnits - splitCalc.annualUnits;
 
   return {
@@ -192,7 +204,6 @@ export function compareSplitVsWindow({
     cheaper,
     saving,
     breakevenYear,
-    upfrontGap: splitCalc.upfront - windowCalc.upfront,
     firstYearBillGap: windowCalc.firstYearBill - splitCalc.firstYearBill,
     unitsSavedPerYear,
     co2SavedPerYear: unitsSavedPerYear * GRID_CO2_KG_PER_KWH,

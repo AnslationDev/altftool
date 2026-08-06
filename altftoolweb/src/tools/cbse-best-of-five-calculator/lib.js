@@ -48,13 +48,23 @@ function round(value, places = 2) {
   return Math.round((value + Number.EPSILON) * factor) / factor;
 }
 
+/** Join names for prose: "A", "A and B", "A, B and C" (no Oxford comma, matching the rest of the copy). */
+function formatNameList(names) {
+  if (names.length === 0) return "";
+  if (names.length === 1) return names[0];
+  if (names.length === 2) return `${names[0]} and ${names[1]}`;
+  return `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
+}
+
 /**
  * Best-of-five aggregate for a CBSE Class 12 marksheet.
  *
  * @param {object} input
  * @param {Array<{name?: string, marks: number, maxMarks?: number, isLanguage?: boolean, eligible?: boolean}>} input.subjects
  * @param {number} [input.targetPercent] a percentage you are aiming at
- * @returns {object} result, or { error } when the marks cannot be scored
+ * @returns {object} result, or { error } when the marks cannot be scored. An out-of-range
+ *   targetPercent does not blank the result — it is reported as `target.error` instead, so
+ *   the optional target field can never hide an otherwise-valid best-of-five aggregate.
  */
 export function computeBestOfFive({ subjects, targetPercent = null } = {}) {
   if (!Array.isArray(subjects) || subjects.length < BEST_OF_COUNT) {
@@ -152,21 +162,24 @@ export function computeBestOfFive({ subjects, targetPercent = null } = {}) {
 
   const failedSubjects = rows.filter((row) => !row.passed);
 
-  // Target check.
+  // Target check. This is an optional, auxiliary figure — an out-of-range value here must
+  // not blank out the primary (and already fully valid) best-of-five result, so an invalid
+  // target is reported inside `target.error` instead of as a top-level { error }.
   let target = null;
   if (targetPercent !== null && targetPercent !== "") {
     const wanted = Number(targetPercent);
     if (!Number.isFinite(wanted) || wanted < 0 || wanted > 100) {
-      return { error: "The target percentage must be between 0 and 100." };
+      target = { error: "The target percentage must be between 0 and 100." };
+    } else {
+      const marksNeeded = round((wanted / 100) * totalMax, 2);
+      target = {
+        percent: wanted,
+        marksNeeded,
+        shortfall: round(Math.max(0, marksNeeded - totalMarks), 2),
+        met: totalMarks + EPSILON >= marksNeeded,
+        averagePerSubject: round(marksNeeded / BEST_OF_COUNT, 2),
+      };
     }
-    const marksNeeded = round((wanted / 100) * totalMax, 2);
-    target = {
-      percent: wanted,
-      marksNeeded,
-      shortfall: round(Math.max(0, marksNeeded - totalMarks), 2),
-      met: totalMarks + EPSILON >= marksNeeded,
-      averagePerSubject: round(marksNeeded / BEST_OF_COUNT, 2),
-    };
   }
 
   let verdict;
@@ -175,7 +188,19 @@ export function computeBestOfFive({ subjects, targetPercent = null } = {}) {
   } else if (excluded.length === 0) {
     verdict = `All ${rows.length} subjects went into the aggregate, so this is simply your total percentage. Offering a sixth subject is what makes best-of-five worth anything: it lets a weak paper drop out.`;
   } else {
-    verdict = `Dropping ${excluded.map((row) => row.name).join(" and ")} lifts the aggregate by ${bestOfFiveAdvantage} points over counting every subject. ${language.name} is counted at ${language.marks} because the language cannot be dropped.`;
+    const droppedNames = formatNameList(excluded.map((row) => row.name));
+    // The compulsory language is always counted, whatever it scores (rule 1 above), so
+    // dropping the weakest elective(s) is not guaranteed to beat the plain all-subject
+    // average — it only helps when the excluded subjects scored worse than the language.
+    let advantageText;
+    if (bestOfFiveAdvantage > 0) {
+      advantageText = `lifts the aggregate by ${bestOfFiveAdvantage} points over counting every subject`;
+    } else if (bestOfFiveAdvantage < 0) {
+      advantageText = `actually leaves the aggregate ${Math.abs(bestOfFiveAdvantage)} points lower than counting every subject, because the compulsory language cannot be dropped even though it scored below the excluded subject(s)`;
+    } else {
+      advantageText = "makes no difference to the aggregate compared with counting every subject";
+    }
+    verdict = `Dropping ${droppedNames} ${advantageText}. ${language.name} is counted at ${language.marks} because the language cannot be dropped.`;
   }
 
   return {

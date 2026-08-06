@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Percent, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const INR = new Intl.NumberFormat("en-IN", {
   style: "currency",
@@ -75,7 +76,7 @@ export default function ToolHome() {
   const [flatRate, setFlatRate] = useState(String(DEFAULTS.flatRate));
   const [reducingRate, setReducingRate] = useState(String(DEFAULTS.reducingRate));
   const [years, setYears] = useState(String(DEFAULTS.years));
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const calc = useMemo(() => {
     const p = toNumber(principal);
@@ -88,12 +89,16 @@ export default function ToolHome() {
       return { error: "Enter valid numbers in every field." };
     }
     if (p <= 0) return { error: "Loan amount must be greater than zero." };
-    if (y <= 0 || y > 40) return { error: "Tenure should be between 0.5 and 40 years." };
+    if (y < 0.5 || y > 40) return { error: "Tenure should be between 0.5 and 40 years." };
     if (inputRate < 0) return { error: "Interest rate cannot be negative." };
     if (inputRate > 100) return { error: "Interest rate should be below 100% per year." };
 
     const months = Math.round(y * 12);
     if (months < 1) return { error: "Tenure must be at least one month." };
+    // Every downstream figure amortizes over the rounded month count, so the flat-rate
+    // interest must use that same elapsed time — not the raw, possibly fractional `y` —
+    // or the two sides of the conversion silently disagree on how long the loan runs.
+    const tenureYears = months / 12;
 
     let flatUsed;
     let reducingUsed;
@@ -102,19 +107,18 @@ export default function ToolHome() {
 
     if (mode === "flatToReducing") {
       flatUsed = flat;
-      totalInterest = (p * flat * y) / 100;
+      totalInterest = (p * flat * tenureYears) / 100;
       emi = (p + totalInterest) / months;
       reducingUsed = reducingRateForEmi(p, emi, months);
     } else {
       reducingUsed = reducing;
       emi = emiFor(p, reducing, months);
       totalInterest = emi * months - p;
-      flatUsed = y > 0 ? (totalInterest / (p * y)) * 100 : 0;
+      flatUsed = tenureYears > 0 ? (totalInterest / (p * tenureYears)) * 100 : 0;
     }
 
     const totalPayable = p + totalInterest;
     const multiple = flatUsed > 0 ? reducingUsed / flatUsed : 0;
-    const simpleEmi = p / months;
 
     // Same EMI on a genuine reducing loan at the quoted flat rate, for contrast.
     const honestEmi = emiFor(p, flatUsed, months);
@@ -130,7 +134,6 @@ export default function ToolHome() {
       totalInterest,
       totalPayable,
       multiple,
-      simpleEmi,
       honestEmi,
       overpayment,
       interestShare: totalPayable > 0 ? (totalInterest / totalPayable) * 100 : 0,
@@ -151,15 +154,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [calc]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "conversion result" });
   };
 
   const reset = () => {
@@ -168,7 +165,7 @@ export default function ToolHome() {
     setFlatRate(String(DEFAULTS.flatRate));
     setReducingRate(String(DEFAULTS.reducingRate));
     setYears(String(DEFAULTS.years));
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -302,7 +299,7 @@ export default function ToolHome() {
         <>
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
-              <div>
+              <div aria-live="polite" role="status">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                   {mode === "flatToReducing"
                     ? "True reducing-balance rate"
@@ -323,15 +320,19 @@ export default function ToolHome() {
                 <button
                   type="button"
                   onClick={copyResult}
-                  aria-label="Copy flat to reducing rate conversion result"
+                  aria-label={
+                    isCopied("result")
+                      ? "Copied! Flat to reducing rate conversion result copied to clipboard"
+                      : "Copy result — flat to reducing rate conversion"
+                  }
                   className={GHOST_BTN}
                 >
-                  {copied ? (
+                  {isCopied("result") ? (
                     <Check className="h-4 w-4" aria-hidden="true" />
                   ) : (
                     <Copy className="h-4 w-4" aria-hidden="true" />
                   )}
-                  {copied ? "Copied!" : "Copy result"}
+                  {isCopied("result") ? "Copied!" : "Copy result"}
                 </button>
                 <button
                   type="button"
@@ -342,6 +343,9 @@ export default function ToolHome() {
                   <RotateCcw className="h-4 w-4" aria-hidden="true" />
                   Reset
                 </button>
+                <span className="sr-only" role="status" aria-live="polite">
+                  {announcement}
+                </span>
               </div>
             </div>
 

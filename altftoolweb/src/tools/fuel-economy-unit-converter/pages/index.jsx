@@ -86,7 +86,7 @@ export default function ToolHome() {
     ["Miles per US gallon", ok ? `${n2.format(result.mpgUs)} mpg` : DASH],
     ["Miles per imperial gallon", ok ? `${n2.format(result.mpgImperial)} mpg` : DASH],
     ["Miles per litre", ok ? `${n2.format(result.milesPerLitre)} mi/l` : DASH],
-    ["Fuel for the trip below", tripOk ? `${n2.format(trip.litres)} litres` : DASH],
+    ["Fuel for the trip above", tripOk ? `${n2.format(trip.litres)} litres` : DASH],
     ["Same in US gallons", tripOk ? `${n2.format(trip.usGallons)} gal` : DASH],
     ["Same in imperial gallons", tripOk ? `${n2.format(trip.imperialGallons)} gal` : DASH],
   ];
@@ -167,7 +167,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" role="status">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

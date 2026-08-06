@@ -249,6 +249,12 @@ export function textToAsciiArt({
   const blank = String(blankChar ?? " ").slice(0, 1) || " ";
   const shadow = String(shadowChar ?? ".").slice(0, 1) || ".";
 
+  if (ink === blank) {
+    return {
+      error: "Ink and background characters must be different, or the art will be invisible.",
+    };
+  }
+
   const spacing = Number.isFinite(letterSpacing)
     ? Math.min(4, Math.max(0, Math.floor(letterSpacing)))
     : 1;
@@ -289,16 +295,21 @@ export function textToAsciiArt({
     }
   });
 
-  const width = bitmapRows.reduce((max, row) => Math.max(max, row.length), 0);
+  const rawWidth = bitmapRows.reduce((max, row) => Math.max(max, row.length), 0);
 
   const artLines = bitmapRows.map((row) => {
-    const padded = row.padEnd(width, ".");
+    const padded = row.padEnd(rawWidth, ".");
     let out = "";
     for (const cell of padded) {
       out += cell === "#" ? ink : cell === "s" ? shadow : blank;
     }
     return trimRight ? out.replace(/\s+$/, "") : out;
   });
+
+  // Computed from the trimmed lines so it matches what's actually shown/copied,
+  // not the pre-trim bitmap width (narrow glyphs can leave a blank rightmost
+  // column that trimRight strips away).
+  const width = artLines.reduce((max, line) => Math.max(max, line.length), 0);
 
   return {
     art: artLines.join("\n"),

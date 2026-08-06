@@ -4,11 +4,16 @@ import { useState } from "react";
 import { Palette, Columns, Shuffle, Copy, Check } from "lucide-react";
 import { Button } from "@altftool/ui";
 import { toast } from "react-hot-toast";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
-// Helper for contrast ratio
+// Helper for contrast ratio. Returns null for a color that hexToRgb can't
+// parse, instead of silently treating it as pure black (luminance 0) — a
+// caller that ignores the null and feeds it into a ratio would get a
+// misleadingly wrong number, so getContrast below refuses to compute at all
+// when either side is unparseable.
 const getLuminance = (hex) => {
   const rgb = hexToRgb(hex);
-  if (!rgb) return 0;
+  if (!rgb) return null;
   const a = [rgb.r, rgb.g, rgb.b].map((v) => {
     v /= 255;
     return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
@@ -16,15 +21,32 @@ const getLuminance = (hex) => {
   return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
 };
 
+// Raw numeric ratio — NOT rounded. Rounding here (e.g. via toFixed) before
+// comparing against the WCAG cutoffs in getContrastRating would misgrade
+// anything that rounds up across a threshold (4.4962 rounds to "4.50", which
+// reads as passing AA even though the true ratio fails it). Round only at
+// the point of display.
 const getContrast = (hex1, hex2) => {
   const l1 = getLuminance(hex1);
   const l2 = getLuminance(hex2);
-  const ratio = (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
-  return ratio.toFixed(2);
+  if (l1 === null || l2 === null) return null;
+  return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05);
 };
 
+// Accepts both #RGB shorthand and #RRGGBB. A hex field that's mid-typing
+// (e.g. "#12") or otherwise not a complete color intentionally returns null
+// rather than guessing.
 const hexToRgb = (hex) => {
-  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  const value = String(hex ?? "").trim();
+  const shortMatch = /^#?([a-f\d])([a-f\d])([a-f\d])$/i.exec(value);
+  if (shortMatch) {
+    return {
+      r: parseInt(shortMatch[1] + shortMatch[1], 16),
+      g: parseInt(shortMatch[2] + shortMatch[2], 16),
+      b: parseInt(shortMatch[3] + shortMatch[3], 16),
+    };
+  }
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(value);
   return result ? {
     r: parseInt(result[1], 16),
     g: parseInt(result[2], 16),
@@ -32,7 +54,9 @@ const hexToRgb = (hex) => {
   } : null;
 };
 
+// `ratio` is the raw number from getContrast, or null when unparseable.
 const getContrastRating = (ratio) => {
+  if (ratio === null || !Number.isFinite(ratio)) return { label: "—", color: "text-muted-foreground" };
   if (ratio >= 7) return { label: "AAA", color: "text-success" };
   if (ratio >= 4.5) return { label: "AA", color: "text-success" };
   if (ratio >= 3) return { label: "AA (Large Text)", color: "text-warning" };
@@ -41,7 +65,14 @@ const getContrastRating = (ratio) => {
 
 const generateRandomHex = () => '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
 
-const handleRandomize = (palette, setPalette) => {
+const handleRandomize = (title, palette, setPalette) => {
+  if (
+    !window.confirm(
+      `Randomize all five colors in ${title}? This replaces the colors you've set and can't be undone.`
+    )
+  ) {
+    return;
+  }
   setPalette({
     primary: generateRandomHex(),
     secondary: generateRandomHex(),
@@ -51,70 +82,113 @@ const handleRandomize = (palette, setPalette) => {
   });
 };
 
+// One editable swatch row. Kept as its own component (rather than inlined in
+// PaletteEditor's .map) so it can hold local draft text state: the hex text
+// field needs to show whatever the user is mid-typing (e.g. "#12") without
+// committing that incomplete value into the palette, where it would fail to
+// parse and get treated as pure black by the contrast math below.
+function PaletteColorRow({ title, id, keyName, value, onChange, isCopied, onCopy }) {
+  const [draft, setDraft] = useState(value.toUpperCase());
+  // Resync the draft when `value` changes for a reason other than this
+  // row's own onChange (color picker, Randomize) — adjusted during render
+  // rather than in an effect, per React's guidance for deriving state from a
+  // prop change, so it doesn't cost an extra commit.
+  const [prevValue, setPrevValue] = useState(value);
+  if (value !== prevValue) {
+    setPrevValue(value);
+    setDraft(value.toUpperCase());
+  }
+
+  const colorInputId = `${id}-${keyName}-color`;
+  const hexInputId = `${id}-${keyName}-hex`;
+  const fieldKey = `${id}-${keyName}`;
+  const copied = isCopied(fieldKey);
+
+  return (
+    <div className="flex items-center gap-3">
+      <div className="relative h-10 w-10 flex-shrink-0 rounded-lg overflow-hidden border border-[var(--border)] shadow-inner">
+        <input
+          id={colorInputId}
+          type="color"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className="absolute -top-2 -left-2 h-16 w-16 cursor-pointer opacity-0"
+          aria-label={`${title} ${keyName} color picker`}
+        />
+        <div className="h-full w-full pointer-events-none" style={{ backgroundColor: value }} />
+      </div>
+      <div className="flex-1">
+        <label
+          htmlFor={hexInputId}
+          className="text-xs font-semibold uppercase text-[var(--muted-foreground)]"
+        >
+          {keyName}
+        </label>
+        <div className="flex items-center gap-2">
+          <input
+            id={hexInputId}
+            type="text"
+            value={draft}
+            onChange={(e) => {
+              const val = e.target.value.toUpperCase();
+              if (!/^#[0-9A-F]{0,6}$/.test(val)) return;
+              setDraft(val);
+              // Commit to the palette only once the value is a complete
+              // #RGB or #RRGGBB color, so an in-progress value never
+              // reaches getLuminance/getContrast as "the" current color.
+              if (/^#([0-9A-F]{3}|[0-9A-F]{6})$/.test(val)) {
+                onChange(val);
+              }
+            }}
+            aria-label={`${title} ${keyName} hex value`}
+            className="w-24 bg-transparent text-sm font-mono font-medium outline-none focus:text-[var(--primary)]"
+          />
+          <button
+            type="button"
+            onClick={() => onCopy(fieldKey, value)}
+            aria-label={copied ? `Copied ${keyName} hex value` : `Copy ${keyName} hex value`}
+            className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
+          >
+            {copied ? <Check className="h-3.5 w-3.5 text-success" /> : <Copy className="h-3.5 w-3.5" />}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Module-scope component: must NOT be defined inside ColorPaletteCompare's
 // render body, otherwise React sees a new component type on every keystroke
 // (via setPalette -> re-render) and remounts this whole subtree, dropping
 // focus from the hex text input after every character.
-function PaletteEditor({ title, palette, setPalette, id, copiedColor, onCopy }) {
+function PaletteEditor({ title, palette, setPalette, id, isCopied, onCopy }) {
   return (
     <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
       <div className="flex items-center justify-between mb-4 pb-4 border-b border-[var(--border)]">
         <h2 className="text-lg font-semibold">{title}</h2>
-        <Button variant="ghost" size="sm" onClick={() => handleRandomize(palette, setPalette)} className="h-8 gap-2">
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => handleRandomize(title, palette, setPalette)}
+          className="h-8 gap-2"
+        >
           <Shuffle className="h-3.5 w-3.5" /> Randomize
         </Button>
       </div>
 
       <div className="grid gap-4">
-        {Object.entries(palette).map(([key, value]) => {
-          const colorInputId = `${id}-${key}-color`;
-          const hexInputId = `${id}-${key}-hex`;
-          return (
-            <div key={`${id}-${key}`} className="flex items-center gap-3">
-              <div className="relative h-10 w-10 flex-shrink-0 rounded-lg overflow-hidden border border-[var(--border)] shadow-inner">
-                <input
-                  id={colorInputId}
-                  type="color"
-                  value={value}
-                  onChange={(e) => setPalette({ ...palette, [key]: e.target.value })}
-                  className="absolute -top-2 -left-2 h-16 w-16 cursor-pointer opacity-0"
-                  aria-label={`${title} ${key} color picker`}
-                />
-                <div className="h-full w-full pointer-events-none" style={{ backgroundColor: value }} />
-              </div>
-              <div className="flex-1">
-                <label
-                  htmlFor={hexInputId}
-                  className="text-xs font-semibold uppercase text-[var(--muted-foreground)]"
-                >
-                  {key}
-                </label>
-                <div className="flex items-center gap-2">
-                  <input
-                    id={hexInputId}
-                    type="text"
-                    value={value.toUpperCase()}
-                    onChange={(e) => {
-                      const val = e.target.value;
-                      if (/^#[0-9A-F]{0,6}$/i.test(val)) {
-                        setPalette({ ...palette, [key]: val });
-                      }
-                    }}
-                    aria-label={`${title} ${key} hex value`}
-                    className="w-24 bg-transparent text-sm font-mono font-medium outline-none focus:text-[var(--primary)]"
-                  />
-                  <button
-                    onClick={() => onCopy(value)}
-                    aria-label={`Copy ${key} hex value`}
-                    className="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors"
-                  >
-                    {copiedColor === value ? <Check className="h-3.5 w-3.5 text-success" /> : <Copy className="h-3.5 w-3.5" />}
-                  </button>
-                </div>
-              </div>
-            </div>
-          );
-        })}
+        {Object.entries(palette).map(([key, value]) => (
+          <PaletteColorRow
+            key={`${id}-${key}`}
+            title={title}
+            id={id}
+            keyName={key}
+            value={value}
+            onChange={(next) => setPalette({ ...palette, [key]: next })}
+            isCopied={isCopied}
+            onCopy={onCopy}
+          />
+        ))}
       </div>
     </div>
   );
@@ -122,11 +196,12 @@ function PaletteEditor({ title, palette, setPalette, id, copiedColor, onCopy }) 
 
 // Module-scope for the same reason as PaletteEditor above.
 function UIMockup({ palette }) {
-  const textOnPrimary = getContrast(palette.primary, "#FFFFFF") > 4.5 ? "#FFFFFF" : "#000000";
-  const textOnSecondary = getContrast(palette.secondary, "#FFFFFF") > 4.5 ? "#FFFFFF" : "#000000";
+  const textOnPrimary = (getContrast(palette.primary, "#FFFFFF") ?? 0) > 4.5 ? "#FFFFFF" : "#000000";
+  const textOnSecondary = (getContrast(palette.secondary, "#FFFFFF") ?? 0) > 4.5 ? "#FFFFFF" : "#000000";
 
   const contrastRatio = getContrast(palette.background, palette.text);
   const rating = getContrastRating(contrastRatio);
+  const contrastLabel = contrastRatio === null ? "—" : contrastRatio.toFixed(2);
 
   return (
     <div
@@ -178,13 +253,17 @@ function UIMockup({ palette }) {
         </div>
 
         {/* Contrast Stats Panel */}
-        <div className="bg-black/5 dark:bg-white/5 rounded-lg p-4 flex items-center justify-between">
+        <div
+          className="bg-black/5 dark:bg-white/5 rounded-lg p-4 flex items-center justify-between"
+          aria-live="polite"
+          role="status"
+        >
           <div>
             <p className="text-xs font-semibold uppercase opacity-60 mb-1" style={{ color: palette.text }}>
               Bg vs Text Contrast
             </p>
             <p className="font-mono font-medium text-lg" style={{ color: palette.text }}>
-              {contrastRatio}:1
+              {contrastLabel}:1
             </p>
           </div>
           <div className={`px-3 py-1 rounded-full font-bold text-sm bg-white/10 ${rating.color}`}>
@@ -197,7 +276,12 @@ function UIMockup({ palette }) {
 }
 
 export default function ColorPaletteCompare() {
-  const [copiedColor, setCopiedColor] = useState(null);
+  // Keyed by field id (e.g. "A-primary"), not by color value — two fields
+  // holding the same hex, or copying two different fields in quick
+  // succession, used to share one un-keyed "copied" flag and show the
+  // checkmark on the wrong swatch. The hook also only flips the flag once
+  // the clipboard write actually succeeds, and manages its own timer per key.
+  const { copy: copyToClipboard, isCopied } = useCopyToClipboard();
 
   const [paletteA, setPaletteA] = useState({
     primary: "#3B82F6",
@@ -215,11 +299,14 @@ export default function ColorPaletteCompare() {
     text: "#F8FAFC",
   });
 
-  const handleCopy = (color) => {
-    navigator.clipboard.writeText(color.toUpperCase());
-    setCopiedColor(color);
-    toast.success(`Copied ${color.toUpperCase()}`);
-    setTimeout(() => setCopiedColor(null), 2000);
+  const handleCopy = async (fieldKey, color) => {
+    const label = color.toUpperCase();
+    const copied = await copyToClipboard(fieldKey, label, { label: `${label} color value` });
+    if (copied) {
+      toast.success(`Copied ${label}`);
+    } else {
+      toast.error(`Could not copy ${label}`);
+    }
   };
 
   return (
@@ -252,7 +339,7 @@ export default function ColorPaletteCompare() {
               id="A"
               palette={paletteA}
               setPalette={setPaletteA}
-              copiedColor={copiedColor}
+              isCopied={isCopied}
               onCopy={handleCopy}
             />
             <UIMockup palette={paletteA} />
@@ -265,7 +352,7 @@ export default function ColorPaletteCompare() {
               id="B"
               palette={paletteB}
               setPalette={setPaletteB}
-              copiedColor={copiedColor}
+              isCopied={isCopied}
               onCopy={handleCopy}
             />
             <UIMockup palette={paletteB} />

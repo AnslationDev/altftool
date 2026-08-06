@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, FolderTree, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import {
   CASE_STYLES,
@@ -43,7 +44,7 @@ export default function ToolHome() {
   const [version, setVersion] = useState("2");
   const [versionPad, setVersionPad] = useState("2");
   const [folder, setFolder] = useState("brand/2026/spring-sale");
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -64,13 +65,26 @@ export default function ToolHome() {
   const hasError = Boolean(result.error);
   const dash = "—";
 
+  // Active tokens follow the user's `order` (which the ↑/↓ arrows mutate);
+  // inactive tokens trail behind in their canonical TOKENS sequence. Without
+  // this, the checklist rows stayed pinned to TOKENS' fixed order forever,
+  // even though the arrows were correctly reordering `order` underneath.
+  const orderedTokens = useMemo(() => {
+    const active = order
+      .map((key) => TOKENS.find((token) => token.key === key))
+      .filter(Boolean);
+    const inactive = TOKENS.filter((token) => !order.includes(token.key));
+    return [...active, ...inactive];
+  }, [order]);
+
   const toggleToken = (key) => {
     setOrder((current) =>
       current.includes(key)
         ? current.filter((item) => item !== key)
-        : TOKENS.map((token) => token.key).filter(
-            (tokenKey) => current.includes(tokenKey) || tokenKey === key,
-          ),
+        // Append to the end of the user's existing (possibly reordered) list
+        // instead of rebuilding from TOKENS' canonical order, which would
+        // silently discard any manual reordering done with the arrows.
+        : [...current, key],
     );
   };
 
@@ -86,15 +100,9 @@ export default function ToolHome() {
     });
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.markdown);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("rules", result.markdown, { label: "the naming convention rules" });
   };
 
   const reset = () => {
@@ -107,7 +115,6 @@ export default function ToolHome() {
     setVersion("2");
     setVersionPad("2");
     setFolder("brand/2026/spring-sale");
-    setCopied(false);
   };
 
   return (
@@ -129,7 +136,7 @@ export default function ToolHome() {
       <section className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <h2 className="text-base font-semibold">Tokens and order</h2>
         <ul className="mt-3 space-y-2">
-          {TOKENS.map((token) => {
+          {orderedTokens.map((token) => {
             const active = order.includes(token.key);
             const position = order.indexOf(token.key);
             return (
@@ -352,17 +359,24 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the naming convention as Markdown"
+              aria-label={
+                isCopied("rules")
+                  ? "Copied the naming convention as Markdown"
+                  : "Copy the naming convention as Markdown"
+              }
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("rules") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy rules"}
+              {isCopied("rules") ? "Copied!" : "Copy rules"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
@@ -405,7 +419,11 @@ export default function ToolHome() {
           </ul>
         )}
         {!hasError && result.validation.warnings.length > 0 && (
-          <ul className="mt-3 space-y-2 text-sm text-[var(--muted-foreground)]">
+          <ul
+            role="status"
+            aria-live="polite"
+            className="mt-3 space-y-2 text-sm text-[var(--muted-foreground)]"
+          >
             {result.validation.warnings.map((warning) => (
               <li key={warning} className="rounded-md bg-[var(--muted)] px-3 py-2">
                 {warning}
@@ -416,7 +434,11 @@ export default function ToolHome() {
         {!hasError &&
           result.validation.issues.length === 0 &&
           result.validation.warnings.length === 0 && (
-            <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm font-medium text-[var(--success)]">
+            <p
+              role="status"
+              aria-live="polite"
+              className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm font-medium text-[var(--success)]"
+            >
               Passes every filename check for Windows, macOS, Linux and Amazon S3.
             </p>
           )}

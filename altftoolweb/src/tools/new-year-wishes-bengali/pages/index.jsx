@@ -235,12 +235,14 @@ export default function ToolHome() {
               onClick={() =>
                 copyText("featured", featured ? featured.message : "", "Bengali new year greeting")
               }
+              disabled={!featured}
+              aria-disabled={!featured}
               aria-label={
                 isCopied("featured")
                   ? "Copied the selected Bengali new year greeting"
                   : "Copy the selected Bengali new year greeting"
               }
-              className={GHOST_BTN}
+              className={`${GHOST_BTN} disabled:cursor-not-allowed disabled:opacity-50`}
             >
               {isCopied("featured") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
