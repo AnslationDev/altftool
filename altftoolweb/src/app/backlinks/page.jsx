@@ -13,6 +13,8 @@ import FilterRail from "./_components/FilterRail";
 import OpportunityRow from "./_components/OpportunityRow";
 import ImpactBadge from "./_components/ImpactBadge";
 import SheetView from "./_components/SheetView";
+import FloorBand from "@/app/(marketing)/components/floor/FloorBand";
+import { BACKLINKS_SCENE } from "@/app/(marketing)/components/floor/scenes";
 
 export const revalidate = 21600;
 
@@ -368,6 +370,15 @@ export default async function BacklinksPage({ searchParams }) {
         </div>
 
         {/* ---------- categories ---------- */}
+        <FloorBand
+          scene={BACKLINKS_SCENE}
+          kicker="Behind the list"
+          title="A link opportunity is not a link."
+          body="Every row here starts as a line in a sheet, gets normalised into one of 14 groups, scored for cost, effort and impact, and written up with the steps to actually submit. The floor below is that pipeline, running."
+          href="/backlinks?view=sheet"
+          cta="Open the sheet view"
+        />
+
         <section className="border-t border-border py-8">
           <h2 className="mb-4 text-lg font-semibold tracking-tight text-foreground">
             Browse by category

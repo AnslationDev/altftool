@@ -12,6 +12,8 @@ import { SIGNALS } from "@altftool/core/ideas";
 import { VERTICALS, COLLECTION_RULES } from "@altftool/core/ideas/taxonomy";
 import { getFacets, getManifest, getShard } from "@altftool/core/ideas/corpus";
 import IdeaCard from "./_components/IdeaCard";
+import FloorBand from "@/app/(marketing)/components/floor/FloorBand";
+import { IDEAS_SCENE } from "@/app/(marketing)/components/floor/scenes";
 import ScoreRing from "./_components/ScoreRing";
 import { SignalRows } from "./_components/SignalBars";
 import WeightTuner from "./_components/WeightTuner";
@@ -274,6 +276,16 @@ export default async function IdeasHomePage() {
           ))}
         </ul>
       </nav>
+
+      {/* ---------------- How the corpus is built ---------------- */}
+      <FloorBand
+        scene={IDEAS_SCENE}
+        kicker="Behind the corpus"
+        title="Ideas do not arrive scored."
+        body={`Every one of the ${manifest.total.toLocaleString("en-US")} ideas here is sourced against a vertical, run through the six-signal engine, written up as a dossier with its market evidence and first move, then ranked against the rest of the corpus. The floor below is that pipeline, running.`}
+        href="/ideas/browse"
+        cta="Browse the corpus"
+      />
 
       {/* ---------------- Methodology ---------------- */}
       <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:py-24">

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import AltFFloor from "./floor/AltFFloor";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -61,7 +61,7 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-[radial-gradient(color-mix(in_srgb,var(--border)_70%,transparent)_1px,transparent_1px)] bg-[size:26px_26px] [mask-image:radial-gradient(ellipse_60%_60%_at_30%_35%,black,transparent)]" />
       </div>
 
-      <div className="relative mx-auto grid w-full max-w-[var(--anslation-ds-container)] items-center gap-8 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[minmax(0,1fr)_minmax(22rem,0.82fr)] lg:px-8">
+      <div className="relative mx-auto grid w-full max-w-[var(--anslation-ds-container)] items-center gap-8 px-4 pb-8 pt-14 sm:px-6 sm:pb-10 sm:pt-20 lg:px-8">
         <div className="max-w-3xl">
           <p className="inline-flex min-h-8 items-center gap-2 rounded-full border border-border bg-card px-3 text-xs font-semibold text-primary shadow-sm">
             <span className="relative flex h-2 w-2" aria-hidden="true">
@@ -172,18 +172,18 @@ export default function HeroSection() {
           </dl>
         </div>
 
-        <div className="relative mx-auto hidden w-full max-w-xl items-end justify-center lg:flex lg:justify-end">
-          <Image
-            src="/assets/home-hero-team.webp"
-            alt="People using AltFTool workspaces together"
-            width={1100}
-            height={831}
-            loading="eager"
-            fetchPriority="high"
-            sizes="(min-width: 1024px) 42vw, 1px"
-            className="h-auto w-full object-contain"
-          />
-        </div>
+      </div>
+
+      {/* The floor gets the full width of the container rather than a column of
+          the hero grid. It is a widescreen room now, and a room needs a wide
+          frame: in a ~590px column the side walls crop away and it collapses
+          back into a floor with furniture on it.
+
+          Shown at every width. It sheds its labels and squares up its camera on
+          narrow stages rather than disappearing, so phone visitors still get the
+          scene instead of a wall of text. */}
+      <div className="relative mx-auto w-full max-w-[var(--anslation-ds-container)] px-4 pb-14 sm:px-6 sm:pb-20 lg:px-8">
+        <AltFFloor />
       </div>
     </section>
   );

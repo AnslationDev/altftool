@@ -28,6 +28,8 @@ import SiteCard from "./_components/SiteCard";
 import Icon from "./_components/Icon";
 import SearchBox from "./_components/SearchBox";
 import VisitTrail from "./_components/VisitTrail";
+import FloorBand from "@/app/(marketing)/components/floor/FloorBand";
+import { DETOUR_SCENE } from "@/app/(marketing)/components/floor/scenes";
 
 export const revalidate = 86400;
 
@@ -245,6 +247,15 @@ export default async function DetourHomePage() {
           </dl>
         </div>
       </section>
+
+      <FloorBand
+        scene={DETOUR_SCENE}
+        kicker="Behind the directory"
+        title="1,314 links do not stay alive on their own."
+        body="Every site here is scouted, crawled to confirm it still loads, sorted into one of 91 categories, then playtested for how fast it actually gets you to something fun. The floor below is that loop, running."
+        href="/detour/categories"
+        cta="Browse every category"
+      />
 
       <div className="mx-auto w-full max-w-6xl space-y-16 px-4 py-14 sm:px-6 sm:py-16">
         {/* ------------------------------------------------------- moods --- */}

@@ -1,0 +1,1325 @@
+/*
+ * AltF Floor — the animated 3D scene on the home hero.
+ *
+ * WHY CSS AND NOT WEBGL
+ * This sits directly above the fold on the site's most important page, next to
+ * the <h1>. A three.js scene there would mean a multi-hundred-kilobyte bundle, a
+ * canvas that paints nothing until hydration, character models we do not have,
+ * and a measurable Core Web Vitals hit — to say nothing of the 1 MiB prerender
+ * budget this repo enforces.
+ *
+ * A room built from CSS 3D transforms gives real depth, renders on the server,
+ * costs a few KB, animates entirely on the compositor, and still shows something
+ * sensible with JavaScript disabled. That is the right trade for a hero.
+ *
+ * HOW THE ROOM IS BUILT
+ * `.fl-room` is one horizontal plane, tilted back. The wall hinges up from its
+ * back edge, so floor and wall meet at a genuine right angle in 3D rather than
+ * being two flat shapes faked to look joined.
+ *
+ * The Z rotation is small (-14deg) on purpose. A 45-degree isometric turn makes
+ * plan-space run diagonally across the screen, which means every coordinate you
+ * write lands somewhere you did not intend and the scene composes itself into a
+ * scatter. Keeping the room near front-on means x reads left-to-right and y
+ * reads back-to-front, so the layout in cast.js is legible as a floor plan.
+ *
+ * PERFORMANCE RULES OBSERVED THROUGHOUT
+ * - Only `transform` and `opacity` animate. Nothing here triggers layout or
+ *   paint per frame.
+ * - No animation runs on text the user is meant to read.
+ * - Everything stops under prefers-reduced-motion, and the scene stays a legible
+ *   still illustration rather than emptying out.
+ */
+
+/* ---------- tokens ---------- */
+
+:root,
+html[data-theme="light"] {
+  --fl-floor: #eef1f6;
+  --fl-floor-line: #dbe1ea;
+  --fl-wall: #e3e8ef;
+  --fl-wall-line: #cfd7e2;
+  --fl-glass: #cfe3ef;
+  --fl-desk: #ffffff;
+  --fl-desk-edge: #cbd5e1;
+  --fl-desk-top: #f8fafc;
+  --fl-ink: #0f172a;
+  --fl-shadow: rgb(15 23 42 / 16%);
+
+  /* Five accent slots. One per team, reused by that team's zone, desks, people
+     and output, so colour alone tells you which team made a thing.
+
+     A scene overrides --fl-a1..--fl-a5 inline on the stage; everything below
+     reads the slots, never the office names, which is what lets one room serve
+     every product without a second copy of this file. */
+  --fl-a1: #d97706;
+  --fl-a2: #0284c7;
+  --fl-a3: #c026d3;
+  --fl-a4: #059669;
+  --fl-a5: #7c3aed;
+}
+
+html[data-theme="dark"] {
+  --fl-floor: #16202e;
+  --fl-floor-line: #223047;
+  --fl-wall: #101823;
+  --fl-wall-line: #1f2b3c;
+  --fl-glass: #14313f;
+  --fl-desk: #2b3a4e;
+  --fl-desk-edge: #43596f;
+  --fl-desk-top: #35485e;
+  --fl-ink: #f8fafc;
+  --fl-shadow: rgb(0 0 0 / 55%);
+
+  --fl-a1: #fbbf24;
+  --fl-a2: #38bdf8;
+  --fl-a3: #e879f9;
+  --fl-a4: #4ade80;
+  --fl-a5: #a78bfa;
+}
+
+/* No `prefers-color-scheme` fallback here on purpose. The design system resolves
+   the theme from html[data-theme] only, set by the inline script in layout.jsx.
+   An OS-level fallback in this one file made the floor flip to dark tokens while
+   the rest of the page stayed light — which, with JavaScript disabled on a
+   dark-set OS, rendered the ticker as near-white text on a near-white page. */
+
+/* ---------- stage ---------- */
+
+.fl-stage {
+  position: relative;
+  width: 100%;
+  /* Widescreen. The scene is a room you look into, and a room reads as a room
+     when the frame is wider than it is tall — a squarer stage crops the side
+     walls off and it goes back to being a floor with furniture on it. */
+  aspect-ratio: 16 / 9;
+  perspective: 1150px;
+  perspective-origin: 50% 34%;
+  container-type: inline-size;
+  overflow: hidden;
+  border-radius: var(--anslation-ds-radius-xl, 1rem);
+  isolation: isolate;
+}
+
+/* The floor plane. Everything in the room is a child of this, so the room moves
+   as one object and children only have to say where they stand. */
+.fl-room {
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  top: 33%;
+  bottom: -8%;
+  transform-style: preserve-3d;
+  transform: rotateX(57deg) rotateZ(-6deg);
+  background:
+    linear-gradient(var(--fl-floor-line) 1px, transparent 1px) 0 0 / 100% 7.5%,
+    linear-gradient(90deg, var(--fl-floor-line) 1px, transparent 1px) 0 0 / 7.5% 100%,
+    var(--fl-floor);
+}
+
+/* Fades the grid out at the front edge so the plane recedes instead of ending on
+   a hard line. */
+.fl-room::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--fl-wall) 62%, transparent) 0%,
+    transparent 34%,
+    transparent 66%,
+    color-mix(in srgb, var(--fl-wall) 88%, transparent) 100%
+  );
+  pointer-events: none;
+}
+
+/* Ambient occlusion where the walls meet the floor. Two flat planes joined at a
+   right angle read as a fold rather than a corner until the crease is darker
+   than either surface. */
+.fl-room::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, color-mix(in srgb, var(--fl-shadow) 55%, transparent), transparent 12%),
+    linear-gradient(to right, color-mix(in srgb, var(--fl-shadow) 45%, transparent), transparent 9%),
+    linear-gradient(to left, color-mix(in srgb, var(--fl-shadow) 45%, transparent), transparent 9%);
+  pointer-events: none;
+}
+
+/* ---------- the back wall ----------
+   Hinged up from the floor's back edge. This is what makes the scene read as an
+   office interior rather than furniture floating on a plane. */
+
+.fl-wallback {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: var(--fl-wall-h, 15cqw);
+  transform-origin: 50% 100%;
+  transform: rotateX(-90deg);
+  background: linear-gradient(
+    to bottom,
+    var(--fl-wall) 0%,
+    color-mix(in srgb, var(--fl-wall) 78%, var(--fl-floor)) 100%
+  );
+  border-bottom: 1px solid var(--fl-wall-line);
+  overflow: hidden;
+}
+
+/* The side walls, hinged up off the room's left and right edges. Three walls and
+   a floor is what makes this a room rather than a diorama: they give the corners
+   somewhere to meet and they frame the scene at the edges, which is most of why
+   it reads as a space you are looking into. rotateY stands a plane up along the
+   depth axis, the same construction the cabins use. */
+
+.fl-wallside {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: var(--fl-wall-h, 15cqw);
+  background: linear-gradient(
+    to right,
+    color-mix(in srgb, var(--fl-wall) 92%, var(--fl-ink)),
+    var(--fl-wall)
+  );
+  overflow: hidden;
+}
+
+.fl-wallside--left {
+  right: 100%;
+  transform-origin: 100% 50%;
+  transform: rotateY(90deg);
+}
+
+.fl-wallside--right {
+  left: 100%;
+  transform-origin: 0 50%;
+  transform: rotateY(-90deg);
+  background: linear-gradient(
+    to left,
+    color-mix(in srgb, var(--fl-wall) 92%, var(--fl-ink)),
+    var(--fl-wall)
+  );
+}
+
+/* Window bay. The slow light drift across the glass is the only thing in the
+   scene that suggests time of day passing. */
+.fl-window {
+  position: absolute;
+  top: 20%;
+  height: 44%;
+  border-radius: 3px;
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--fl-glass) 88%, white 12%),
+    var(--fl-glass)
+  );
+  border: 1px solid var(--fl-wall-line);
+  overflow: hidden;
+}
+
+.fl-window::after {
+  content: "";
+  position: absolute;
+  inset: -40% -120%;
+  background: linear-gradient(
+    100deg,
+    transparent 42%,
+    color-mix(in srgb, white 24%, transparent) 50%,
+    transparent 58%
+  );
+  animation: fl-glint 9s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes fl-glint {
+  0%, 100% { transform: translateX(-30%); }
+  50%      { transform: translateX(30%); }
+}
+
+/* The planning board. Without it the left half of the wall is dead space, and
+   the room reads as a showroom rather than somewhere work is tracked. */
+
+.fl-board {
+  position: absolute;
+  left: 76%;
+  top: 30%;
+  width: 20%;
+  padding: 0.5rem 0.5rem 0.5625rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--fl-floor) 92%, var(--fl-ink));
+  border: 1px solid color-mix(in srgb, var(--fl-ink) 34%, transparent);
+  box-shadow: 0 6px 16px -10px var(--fl-shadow);
+  display: grid;
+  gap: 0.375rem;
+}
+
+.fl-board__row {
+  display: block;
+  height: 0.4375rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--fl-role, var(--fl-a2)) 30%, transparent);
+  overflow: hidden;
+}
+
+.fl-board__row::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: inherit;
+  background: var(--fl-role, var(--fl-a2));
+  transform-origin: left;
+  animation: fl-board-row 14s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes fl-board-row {
+  0%, 6%    { transform: scaleX(0.12); }
+  46%, 100% { transform: scaleX(var(--fill, 0.7)); }
+}
+
+/* The brand, sized like real office signage: present, not shouting. */
+.fl-signage {
+  position: absolute;
+  left: 58%;
+  top: 14%;
+  font-family: var(--anslation-ds-font-mono, monospace);
+  font-size: clamp(0.75rem, 3cqw, 2rem);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: color-mix(in srgb, var(--fl-ink) 18%, transparent);
+  line-height: 1;
+}
+
+/* EVERY sized box in this file must say `display: block`.
+ *
+ * Most of these are rendered as <span>, and an inline box ignores width, height
+ * and aspect-ratio entirely — it collapses to its (empty) text content. It fails
+ * silently: no error, no warning, just a 0x0 element that never paints. It has
+ * now bitten this file four separate times, most damagingly on .fl-token, where
+ * the markers carrying the founder-to-manager-to-team hand-off — the whole story
+ * the scene exists to tell — rendered at zero size and were never once visible.
+ *
+ * Absolutely positioned boxes (.fl-screen, .fl-product) are blockified by the
+ * position and are safe. Anything else needs it stated.
+ */
+
+/* ---------- objects on the floor ----------
+   `--x` / `--y` place a node in the room's 0-100 plan space; `--z` lifts it off
+   the surface. The counter-rotation stands it upright facing the viewer, and the
+   -100% Y origin means a node's coordinates are where its feet are. */
+
+.fl-node {
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  transform:
+    translate(-50%, -100%)
+    translateZ(var(--z, 0px))
+    rotateZ(14deg)
+    rotateX(-56deg);
+  transform-style: preserve-3d;
+}
+
+/* ---------- light ----------
+   The pool of light over each pod, and daylight from the window bay.
+
+   There were ceiling panels here too, hung at translateZ above each pod. They
+   were removed: the camera looks down into the room, so there is no ceiling for
+   a light to be set into, and a panel floating high above a front-row pod
+   projects up and back onto whatever is behind it. It read as a glowing bar
+   lying on someone else's floor. The pools do the whole lighting job on their
+   own, and they cannot detach from their pod because they ARE the floor.
+
+   A pool is a floor decal, not a billboard: it lies in the plane, so perspective
+   stretches it exactly as a real pool of light would stretch. */
+
+.fl-pool {
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  width: var(--w, 30%);
+  height: var(--h, 26%);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 34%, transparent) 0%,
+    color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 15%, transparent) 42%,
+    transparent 74%
+  );
+  pointer-events: none;
+}
+
+/* Daylight from the window bay, thrown across the back of the floor. Anchored to
+   the wall rather than a pod, so it is the one warm thing in a room otherwise lit
+   by its own accents. */
+.fl-daylight {
+  position: absolute;
+  left: 40%;
+  right: 4%;
+  top: -4%;
+  height: 46%;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--fl-glass) 40%, transparent),
+    transparent 78%
+  );
+  border-radius: 0 0 40% 40%;
+  pointer-events: none;
+}
+
+/* ---------- cabins ----------
+   Each team gets a room, not a tinted rug.
+
+   The walls are real planes hinged up off the floor, the same construction as
+   the back wall. That matters: a partition drawn as a flat gradient sits wrong
+   the moment anything walks past it, whereas these occlude and foreshorten
+   because they genuinely stand in the scene.
+
+   They are kept low — desk-height glass, not full walls — so the cabins read as
+   separate rooms without hiding the people inside them. */
+
+.fl-cabin {
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  width: var(--w, 20%);
+  height: var(--h, 20%);
+  transform: translate(-50%, -50%);
+  transform-style: preserve-3d;
+}
+
+/* The room's own floor: a tint plus a slightly stronger edge, so you can see
+   where one team's space ends even where there is no wall. */
+.fl-cabin__floor {
+  position: absolute;
+  inset: 0;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 34%, transparent);
+}
+
+.fl-cabin__wall {
+  position: absolute;
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 42%, transparent),
+    color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 14%, transparent)
+  );
+  border-top: 2px solid color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 85%, transparent);
+  box-shadow: 0 0 14px -2px color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 40%, transparent);
+}
+
+/* Hinged up from the room's back edge. */
+.fl-cabin__wall--back {
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: var(--wall, 34px);
+  transform-origin: 50% 100%;
+  transform: rotateX(-90deg);
+}
+
+/* Hinged up from a side edge. rotateY stands the plane perpendicular to the
+   floor along the depth axis, which is what makes these corners read as
+   corners rather than as two overlapping rectangles. */
+.fl-cabin__wall--left {
+  top: 0;
+  bottom: 0;
+  right: 100%;
+  width: var(--wall, 34px);
+  transform-origin: 100% 50%;
+  transform: rotateY(90deg);
+}
+
+.fl-cabin__wall--right {
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  width: var(--wall, 34px);
+  transform-origin: 0 50%;
+  transform: rotateY(-90deg);
+}
+
+/* A meeting table, for the room that has one instead of desks. */
+.fl-table {
+  display: block;
+  width: 8.5cqw;
+  min-width: 46px;
+  aspect-ratio: 2 / 1;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, var(--fl-desk-top), var(--fl-desk));
+  border: 1px solid var(--fl-desk-edge);
+  box-shadow: 0 5px 10px -5px var(--fl-shadow);
+}
+
+/* ---------- pod tags ----------
+   A floating panel above each team: who they are and what they are building.
+
+   This started as a progress bar painted on the zone slab. Lying in the floor
+   plane it rendered as a thin diagonal streak — anything meant to be read has to
+   leave the plane. Lifting it into upright space fixed the legibility and turned
+   it into the thing that actually says "a tool is being built here right now".
+
+   It also replaces a separate legend, which had to sit somewhere on the stage
+   and inevitably landed on top of a pod. */
+
+.fl-podtag {
+  --tag-w: 10cqw;
+  pointer-events: none;
+}
+
+.fl-podtag__card {
+  display: block;
+  position: relative;
+  width: var(--tag-w);
+  min-width: 78px;
+  padding: 0.25rem 0.4375rem 0.3125rem;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--fl-wall) 88%, var(--fl-pod, var(--fl-a2)));
+  border: 1px solid color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 60%, transparent);
+  box-shadow: 0 8px 18px -12px var(--fl-shadow);
+  /* No backdrop-filter here. This card lives inside .fl-room, which is a
+     preserve-3d subtree; a backdrop filter in that context forces Chromium to
+     flatten and rasterise the whole 3D group, and on some GPUs the result is an
+     empty layer — the entire scene paints as a black rectangle. The flat
+     overlays outside the room (.fl-ticker, .fl-expand) can still use it safely. */
+}
+
+/* The tether down to the floor, so the tag belongs to its pod rather than
+   hovering in the middle of the room. */
+.fl-podtag__card::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 1px;
+  height: var(--tether, 26px);
+  background: linear-gradient(
+    to bottom,
+    color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 60%, transparent),
+    transparent
+  );
+}
+
+.fl-podtag__name {
+  display: block;
+  font-family: var(--anslation-ds-font-mono, monospace);
+  font-size: clamp(0.4375rem, 0.95cqw, 0.625rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--fl-ink) 88%, transparent);
+  white-space: nowrap;
+}
+
+.fl-podtag__meter {
+  display: block;
+  margin-top: 0.1875rem;
+  height: 3px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 20%, transparent);
+  overflow: hidden;
+}
+
+.fl-podtag__meter::after {
+  content: "";
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--fl-pod, var(--fl-a2));
+  transform-origin: left;
+  animation: fl-meter var(--dur, 9s) cubic-bezier(0.5, 0, 0.3, 1) infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* Fills, completes, resets. The four pods run at different durations so they are
+   never in step — a floor where every bar completes on the same beat looks like
+   a loading screen, not a workplace. */
+@keyframes fl-meter {
+  0%        { transform: scaleX(0); opacity: 0.85; }
+  78%       { transform: scaleX(1); opacity: 1; }
+  90%       { transform: scaleX(1); opacity: 0.2; }
+  91%, 100% { transform: scaleX(0); opacity: 0.85; }
+}
+
+/* ---------- desks ----------
+   A top surface and a monitor. The monitor is deliberately small relative to the
+   person: a screen drawn bigger than the people sitting at it reads as a shop
+   window rather than a workstation, and that was the single worst thing about
+   the first pass at this scene. */
+
+.fl-desk {
+  position: relative;
+  width: 6.6cqw;
+  min-width: 38px;
+  aspect-ratio: 6 / 2;
+  border-radius: 2px 2px 3px 3px;
+  background: linear-gradient(to bottom, var(--fl-desk-top), var(--fl-desk));
+  border: 1px solid var(--fl-desk-edge);
+  box-shadow: 0 5px 10px -5px var(--fl-shadow);
+}
+
+.fl-screen {
+  position: absolute;
+  left: 50%;
+  bottom: 74%;
+  width: 38%;
+  aspect-ratio: 16 / 10;
+  transform: translateX(-50%);
+  border-radius: 1.5px;
+  background: color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 82%, var(--fl-desk));
+  box-shadow: 0 0 10px 1px color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 55%, transparent);
+  animation: fl-screen-pulse 3.2s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+/* The stand, so the monitor sits on the desk rather than hovering above it. */
+.fl-screen::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 100%;
+  width: 16%;
+  height: 36%;
+  transform: translateX(-50%);
+  background: var(--fl-desk-edge);
+}
+
+/* Keyboard. Small, but it is the difference between a desk and a shelf. */
+.fl-desk::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 14%;
+  width: 40%;
+  height: 16%;
+  transform: translateX(-50%);
+  border-radius: 1px;
+  background: color-mix(in srgb, var(--fl-ink) 22%, var(--fl-desk-top));
+}
+
+@keyframes fl-screen-pulse {
+  0%, 100% { opacity: 0.7; }
+  50%      { opacity: 1; }
+}
+
+/* ---------- chairs ----------
+   Drawn behind the person who sits in them. A figure with a desk in front and
+   nothing behind reads as standing at a counter; the chair back is what says
+   "sitting", and it costs one element. */
+
+.fl-chair {
+  display: block;
+  width: calc(var(--fl-person-w, 3cqw) * 1.15);
+  min-width: 38px;
+  aspect-ratio: 1 / 0.9;
+  border-radius: 40% 40% 18% 18% / 52% 52% 14% 14%;
+  background: color-mix(in srgb, var(--fl-role, var(--fl-a2)) 26%, var(--fl-desk));
+  border: 1px solid color-mix(in srgb, var(--fl-role, var(--fl-a2)) 40%, transparent);
+}
+
+/* ---------- props ----------
+   Plants, a cooler, a whiteboard. An office floor is never just desks, and the
+   empty stretches between pods were the clearest tell that this was a diagram
+   rather than a room. */
+
+.fl-plant {
+  display: block;
+  position: relative;
+  width: 2.3cqw;
+  min-width: 16px;
+  aspect-ratio: 1 / 1.7;
+}
+
+/* The pot. */
+.fl-plant::after {
+  content: "";
+  position: absolute;
+  left: 22%;
+  bottom: 0;
+  width: 56%;
+  height: 34%;
+  border-radius: 8% 8% 26% 26%;
+  background: color-mix(in srgb, var(--fl-ink) 34%, var(--fl-desk));
+}
+
+/* The foliage. One shape, three overlapping radial blobs — cheaper than three
+   elements and reads the same at this size. */
+.fl-plant::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 72%;
+  border-radius: 54% 46% 42% 58% / 60% 58% 42% 40%;
+  background: color-mix(in srgb, #4ade80 62%, var(--fl-ink));
+  transform-origin: 50% 100%;
+  animation: fl-sway 6.5s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes fl-sway {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50%      { transform: rotate(2.5deg); }
+}
+
+.fl-cooler {
+  display: block;
+  position: relative;
+  width: 1.9cqw;
+  min-width: 13px;
+  aspect-ratio: 1 / 1.5;
+  border-radius: 12% 12% 8% 8%;
+  background: linear-gradient(to bottom, var(--fl-desk-top), var(--fl-desk));
+  border: 1px solid var(--fl-desk-edge);
+}
+
+/* The bottle on top. */
+.fl-cooler::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  top: -34%;
+  width: 76%;
+  height: 40%;
+  border-radius: 30% 30% 14% 14%;
+  background: color-mix(in srgb, var(--fl-glass) 70%, white);
+  opacity: 0.85;
+}
+
+/* ---------- people ----------
+   Chibi proportions: an oversized round head, a small soft body, and a face
+   that actually reads. A realistic 1:7 figure at this scale is a coloured
+   smudge — the head has to be about half the total height before eyes are big
+   enough to see, which is the same reason the sticker art this is modelled on
+   is drawn that way.
+
+   Everything on the face is sized in percentages of the head, so one set of
+   numbers works from a 26px figure in the hero to a 90px one in the expanded
+   view. */
+
+.fl-person {
+  position: relative;
+  width: var(--fl-person-w, 3cqw);
+  min-width: 34px;
+  aspect-ratio: 1 / 1.78;
+}
+
+/* Contact shadow. Without it every figure floats and the plane stops reading as
+   a surface anyone is standing on. */
+.fl-person::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -4%;
+  width: 96%;
+  height: 9%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--fl-shadow);
+  filter: blur(2px);
+  z-index: -2;
+}
+
+.fl-person__body {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 100%;
+  height: 46%;
+  transform: translateX(-50%);
+  border-radius: 40% 40% 20% 20% / 26% 26% 12% 12%;
+  background: var(--fl-role, var(--fl-a2));
+}
+
+/* Little arms, so the body is not a bare blob and the figure reads as someone
+   sitting at a desk rather than standing behind it. */
+.fl-person__body::before,
+.fl-person__body::after {
+  content: "";
+  position: absolute;
+  top: 26%;
+  width: 22%;
+  height: 46%;
+  border-radius: 999px;
+  background: inherit;
+  filter: brightness(0.92);
+}
+
+.fl-person__body::before { left: -9%; }
+.fl-person__body::after  { right: -9%; }
+
+.fl-person__head {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 78%;
+  aspect-ratio: 1 / 0.94;
+  transform: translateX(-50%);
+  border-radius: 47% 47% 44% 44%;
+  background: var(--fl-skin, #f6d5b8);
+}
+
+/* ---------- the face ---------- */
+
+.fl-eye {
+  position: absolute;
+  top: 46%;
+  width: 16%;
+  aspect-ratio: 1 / 1.3;
+  border-radius: 50%;
+  background: #35271d;
+  animation: fl-blink 5.5s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.fl-eye--l { left: 25%; }
+.fl-eye--r { right: 25%; }
+
+/* The catchlight. One small dot is the whole difference between "eye" and
+   "hole", and it costs nothing. */
+.fl-eye::after {
+  content: "";
+  position: absolute;
+  left: 18%;
+  top: 14%;
+  width: 40%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 88%);
+}
+
+/* Blinking is the cheapest signal that something is alive. Held closed for a
+   fraction of the cycle so it reads as a blink and not a flicker. */
+@keyframes fl-blink {
+  0%, 90%, 100% { transform: scaleY(1); }
+  93%           { transform: scaleY(0.08); }
+  96%           { transform: scaleY(1); }
+}
+
+.fl-blush {
+  position: absolute;
+  top: 62%;
+  width: 19%;
+  aspect-ratio: 1 / 0.62;
+  border-radius: 50%;
+  background: #f79bab;
+  opacity: 0.72;
+}
+
+.fl-blush--l { left: 7%; }
+.fl-blush--r { right: 7%; }
+
+.fl-mouth {
+  position: absolute;
+  left: 50%;
+  top: 66%;
+  width: 15%;
+  aspect-ratio: 1 / 0.62;
+  transform: translateX(-50%);
+  border-radius: 0 0 999px 999px;
+  background: #35271d;
+}
+
+/* ---------- hair ----------
+   Two silhouettes and a fringe. The brief specified the makeup of each team, so
+   that is encoded in the data rather than randomised. */
+
+.fl-person__head::before {
+  content: "";
+  position: absolute;
+  left: -1%;
+  top: -3%;
+  width: 102%;
+  height: 42%;
+  border-radius: 48% 48% 38% 38%;
+  background: var(--fl-hair, #3b2b20);
+}
+
+.fl-person--long .fl-person__head::after {
+  content: "";
+  position: absolute;
+  left: -11%;
+  top: 4%;
+  width: 122%;
+  height: 104%;
+  border-radius: 46% 46% 42% 42%;
+  background: var(--fl-hair, #3b2b20);
+  z-index: -1;
+}
+
+/* A gentle idle bob so the room never looks frozen. Per-person delays stop the
+   floor breathing in unison, which is what kills the illusion. */
+.fl-person--idle {
+  animation: fl-bob 2.8s ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes fl-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3.5%); }
+}
+
+/* ---------- HR walking the floor ----------
+   The only figure that moves between pods, because that is the job: she is not
+   sitting at one desk, she is checking on all of them. */
+
+.fl-walker {
+  animation: fl-walk 24s ease-in-out infinite;
+}
+
+@keyframes fl-walk {
+  0%, 100% { transform: translate(-50%, -100%) translateZ(var(--z, 0px)) rotateZ(14deg) rotateX(-56deg) translate(0, 0); }
+  22%      { transform: translate(-50%, -100%) translateZ(var(--z, 0px)) rotateZ(14deg) rotateX(-56deg) translate(-160%, -50%); }
+  46%      { transform: translate(-50%, -100%) translateZ(var(--z, 0px)) rotateZ(14deg) rotateX(-56deg) translate(10%, -120%); }
+  72%      { transform: translate(-50%, -100%) translateZ(var(--z, 0px)) rotateZ(14deg) rotateX(-56deg) translate(180%, -45%); }
+}
+
+/* ---------- task tokens ----------
+   The story of the scene: work handed down from the founder, through a manager,
+   to a team. Each token is one small square on a fixed path; the path lives in
+   custom properties so a single keyframe serves all of them. */
+
+.fl-token {
+  display: block;
+  width: 1.4cqw;
+  min-width: 6px;
+  aspect-ratio: 1;
+  border-radius: 2px;
+  background: var(--fl-role, var(--fl-a1));
+  box-shadow: 0 0 8px 0 var(--fl-role, var(--fl-a1));
+  animation: fl-token-fly var(--dur, 6s) cubic-bezier(0.4, 0, 0.5, 1) infinite;
+  animation-delay: var(--delay, 0s);
+  opacity: 0;
+}
+
+@keyframes fl-token-fly {
+  0%   { opacity: 0; transform: translate(0, 0) scale(0.5); }
+  8%   { opacity: 1; transform: translate(0, 0) scale(1); }
+  /* an arc rather than a straight line — a handoff, not a wire */
+  50%  { transform: translate(calc(var(--dx) * 0.5), calc(var(--dy) * 0.5 - 3.6cqw)) scale(1.1); }
+  92%  { opacity: 1; transform: translate(var(--dx), var(--dy)) scale(1); }
+  100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.5); }
+}
+
+/* ---------- output conveyor ----------
+   Where finished work leaves the building. Items enter unfinished and leave
+   complete, which is the clearest way to say "things are continuously being
+   built here". */
+
+.fl-belt {
+  position: absolute;
+  left: 4%;
+  right: 4%;
+  bottom: 4.5%;
+  height: 8.5%;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--fl-desk-edge) 60%, transparent) 10%,
+    color-mix(in srgb, var(--fl-desk-edge) 60%, transparent) 90%,
+    transparent
+  );
+  overflow: hidden;
+}
+
+/* Moving hatch marks read as belt travel without animating the belt itself. */
+.fl-belt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 20px,
+    color-mix(in srgb, var(--fl-ink) 10%, transparent) 20px 22px
+  );
+  animation: fl-belt-run 1.2s linear infinite;
+}
+
+@keyframes fl-belt-run {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-22px); }
+}
+
+/* Crates carry no text on purpose. Labelled pills overlap at any spacing that
+   keeps the belt looking busy, and a label sliding past at speed is not
+   something anyone reads. The words live in the ticker, where they hold still. */
+.fl-product {
+  position: absolute;
+  top: 50%;
+  left: -5%;
+  width: 2.6cqw;
+  min-width: 14px;
+  aspect-ratio: 1;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--fl-role, var(--fl-a2)) 18%, var(--fl-desk));
+  border: 1px solid var(--fl-role, var(--fl-a2));
+  overflow: hidden;
+  animation: fl-product-run var(--dur, 13s) linear infinite;
+  animation-delay: var(--delay, 0s);
+  opacity: 0;
+}
+
+/* The crate fills in as it travels: it leaves the floor finished. */
+.fl-product::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--fl-role, var(--fl-a2));
+  transform-origin: bottom;
+  animation: fl-product-fill var(--dur, 13s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes fl-product-fill {
+  0%, 8%    { transform: scaleY(0); }
+  72%, 100% { transform: scaleY(1); }
+}
+
+@keyframes fl-product-run {
+  0%   { opacity: 0; transform: translateY(-50%) translateX(0) scale(0.75); }
+  5%   { opacity: 1; transform: translateY(-50%) translateX(2cqw) scale(0.75); }
+  55%  { transform: translateY(-50%) translateX(52cqw) scale(1); }
+  95%  { opacity: 1; transform: translateY(-50%) translateX(100cqw) scale(1); }
+  100% { opacity: 0; transform: translateY(-50%) translateX(106cqw) scale(1); }
+}
+
+/* ---------- live activity ticker ----------
+   The one part of the scene that carries words. A fixed panel with lines
+   swapping in place, not a moving label, because text that is both small and in
+   motion is text nobody reads.
+
+   Deliberately shaped like a feed: when this is wired to the real build log the
+   markup does not change, only where the lines come from. */
+
+.fl-ticker {
+  position: absolute;
+  left: 4%;
+  top: 5%;
+  width: min(58%, 20rem);
+  padding: 0.5rem 0.6875rem 0.5625rem;
+  border-radius: var(--anslation-ds-radius-lg, 0.75rem);
+  background: color-mix(in srgb, var(--card, #fff) 82%, transparent);
+  border: 1px solid var(--fl-desk-edge);
+  box-shadow: 0 14px 30px -18px var(--fl-shadow);
+  backdrop-filter: blur(8px);
+}
+
+.fl-ticker__head {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: var(--anslation-ds-font-mono, monospace);
+  font-size: 0.5625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--fl-ink) 58%, transparent);
+}
+
+.fl-ticker__pip {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: var(--fl-a4);
+  animation: fl-pip 2s ease-out infinite;
+}
+
+@keyframes fl-pip {
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--fl-a4) 65%, transparent); }
+  100% { box-shadow: 0 0 0 0.5rem transparent; }
+}
+
+/* Fixed height, one line tall. The lines are stacked and cross-fade, so the
+   panel never reflows and never pushes the hero layout around. */
+.fl-ticker__rail {
+  position: relative;
+  height: 1.375rem;
+  margin-top: 0.1875rem;
+  overflow: hidden;
+}
+
+.fl-ticker__line {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4375rem;
+  font-size: clamp(0.6875rem, 1.35cqw, 0.8125rem);
+  color: var(--fl-ink);
+  white-space: nowrap;
+  opacity: 0;
+  animation: fl-ticker-line var(--cycle, 18s) linear infinite;
+  animation-delay: var(--delay, 0s);
+}
+
+.fl-ticker__dot {
+  width: 0.4375rem;
+  height: 0.4375rem;
+  border-radius: 50%;
+  background: var(--fl-role, var(--fl-a2));
+  flex-shrink: 0;
+}
+
+.fl-ticker__meta {
+  margin-left: auto;
+  padding-left: 0.5rem;
+  font-family: var(--anslation-ds-font-mono, monospace);
+  font-size: 0.625rem;
+  color: color-mix(in srgb, var(--fl-ink) 52%, transparent);
+}
+
+/* Each line owns one slot of the cycle. A negative delay per index starts each
+   one already part-way through, so the six hand off without a JS clock. */
+@keyframes fl-ticker-line {
+  0%    { opacity: 0; transform: translateY(90%); }
+  2.5%  { opacity: 1; transform: translateY(0); }
+  14%   { opacity: 1; transform: translateY(0); }
+  16.6% { opacity: 0; transform: translateY(-90%); }
+  100%  { opacity: 0; transform: translateY(-90%); }
+}
+
+/* ---------- pod labels ---------- */
+
+.fl-label {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  margin-bottom: 0.3125rem;
+  transform: translateX(-50%);
+  font-family: var(--anslation-ds-font-mono, monospace);
+  font-size: clamp(0.5rem, 1.1cqw, 0.6875rem);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--fl-ink) 78%, transparent);
+  white-space: nowrap;
+  /* The floor behind a label can be any of five colours; a plate keeps the text
+     legible without having to know which. */
+  padding: 0.0625rem 0.25rem;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--fl-wall) 62%, transparent);
+}
+
+/* ---------- reduced motion ----------
+   Everything stops, but nothing disappears: tokens and crates freeze mid-path at
+   full opacity so the scene still reads as a busy floor. */
+
+@media (prefers-reduced-motion: reduce) {
+  .fl-screen,
+  .fl-eye,
+  .fl-person--idle,
+  .fl-walker,
+  .fl-belt::before,
+  .fl-window::after,
+  .fl-plant::before,
+  .fl-ticker__pip,
+  .fl-product::before,
+  .fl-board__row::after,
+  .fl-podtag__meter::after {
+    animation: none;
+  }
+  /* Frozen part-built rather than empty: the floor is still mid-job. Without
+     these the stopped scene reads as every job finished, which is the opposite
+     of what it is meant to say. */
+  .fl-podtag__meter::after {
+    transform: scaleX(0.62);
+  }
+  .fl-board__row::after {
+    transform: scaleX(var(--fill, 0.7));
+  }
+  .fl-token,
+  .fl-product {
+    animation: none;
+    opacity: 1;
+  }
+  .fl-token {
+    transform: translate(calc(var(--dx) * 0.5), calc(var(--dy) * 0.5));
+  }
+  .fl-product {
+    transform: translateY(-50%) translateX(40cqw);
+  }
+  /* One line stays up permanently rather than the panel reading empty. */
+  .fl-ticker__line {
+    animation: none;
+    opacity: 0;
+  }
+  .fl-ticker__line:first-child {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- narrower stages ----------
+   Detail sheds in two steps as the container narrows. The room, the cast, the
+   conveyor and the ticker survive to the smallest size, because those are what
+   the scene is actually saying; the annotations are what go. */
+
+@container (max-width: 900px) {
+  .fl-stage {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+@container (max-width: 700px) {
+  /* Declared on .fl-room, NOT on .fl-stage. A container query styles the
+     container's DESCENDANTS — a rule whose selector is the container element
+     itself never matches, and does so silently. This was set on .fl-stage at
+     first, so the override never applied and every figure outside the expanded
+     view fell back to the 3.8cqw default: a 20px head, which is below the size
+     at which a face exists at all. */
+  .fl-room {
+    --fl-person-w: 5cqw;
+  }
+  .fl-podtag,
+  .fl-board,
+  .fl-signage {
+    display: none;
+  }
+}
+
+@container (max-width: 480px) {
+  .fl-room {
+    transform: rotateX(50deg) rotateZ(-10deg);
+  }
+  .fl-label {
+    display: none;
+  }
+  .fl-ticker {
+    width: 92%;
+  }
+}
+
+/* ---------- expand control and full-size view ---------- */
+
+.fl-expand {
+  position: absolute;
+  right: 3.5%;
+  top: 5%;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 999px;
+  border: 1px solid var(--fl-desk-edge);
+  background: color-mix(in srgb, var(--card, #fff) 82%, transparent);
+  backdrop-filter: blur(8px);
+  font-family: var(--anslation-ds-font-mono, monospace);
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fl-ink);
+  cursor: pointer;
+}
+
+.fl-expand:hover {
+  border-color: color-mix(in srgb, var(--fl-a2) 60%, transparent);
+}
+
+/* Not a scene accent: those are picked to sit on the floor, and the pale cyans
+   and blues among them fall to ~1.5:1 on a light surface, under the 3:1 WCAG
+   requires of a focus indicator. --fl-ink contrasts with the scene's surfaces in
+   both themes by construction. */
+.fl-expand:focus-visible {
+  outline: 2px solid var(--fl-ink);
+  outline-offset: 2px;
+}
+
+.fl-modal {
+  width: min(96vw, 1400px);
+  max-width: none;
+  max-height: 94vh;
+  /* The UA sheet centres a modal dialog with `margin: auto`; the reset in this
+     project zeroes margins, which pins it to the top-left instead. Restored
+     explicitly rather than relying on the UA default surviving. */
+  margin: auto;
+  padding: 0;
+  border: 1px solid var(--fl-desk-edge);
+  border-radius: var(--anslation-ds-radius-xl, 1rem);
+  background: var(--fl-wall);
+  color: var(--fl-ink);
+  overflow: hidden;
+}
+
+.fl-modal::backdrop {
+  background: rgb(2 6 12 / 72%);
+  backdrop-filter: blur(3px);
+}
+
+.fl-modal__inner {
+  position: relative;
+  padding: 2.5rem 1rem 1rem;
+}
+
+/* The floor inside the dialog gets as much room as there is, which is the
+   point: at this size the faces, the cabin partitions and the pod meters are all
+   legible.
+
+   The width is derived from the available HEIGHT, not the other way round. Sized
+   from width, the 16/10 stage grew taller than `max-height: 94vh` on any laptop
+   shorter than ~900px, and `overflow: hidden` put the conveyor permanently out
+   of reach — the expanded view showed less of the scene than the inline one. */
+.fl-modal__inner .fl-stage {
+  --fl-modal-chrome: 4rem; /* .fl-modal__inner padding + the dialog's border */
+  aspect-ratio: 16 / 10;
+  width: min(100%, calc((94vh - var(--fl-modal-chrome)) * 16 / 10));
+  height: auto;
+  margin-inline: auto;
+  border-radius: var(--anslation-ds-radius-lg, 0.75rem);
+}
+
+/* [6][8] On a phone a 16/10 stage at 96vw is SMALLER than the 5/4 stage already
+   on the page — "expand" made the office shrink. A portrait stage uses the one
+   dimension a phone has plenty of. */
+@media (max-width: 640px) {
+  .fl-modal__inner .fl-stage {
+    aspect-ratio: 3 / 4;
+    width: min(100%, calc((94vh - var(--fl-modal-chrome)) * 3 / 4));
+  }
+}
+
+/* Belt and braces: if any future change makes the content taller than the box
+   again, it stays reachable instead of silently disappearing. */
+.fl-modal {
+  overflow: auto;
+}
+
+/* One expand button per scene is enough — the one in the dialog would reopen
+   what is already open. */
+.fl-modal__inner .fl-expand {
+  display: none;
+}
+
+.fl-modal__close {
+  position: absolute;
+  right: 0.875rem;
+  top: 0.75rem;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4375rem;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 999px;
+  border: 1px solid var(--fl-desk-edge);
+  background: transparent;
+  font-family: var(--anslation-ds-font-mono, monospace);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fl-ink);
+  cursor: pointer;
+}
+
+.fl-modal__close:hover {
+  border-color: color-mix(in srgb, var(--fl-a2) 60%, transparent);
+}
+
+.fl-modal__close:focus-visible {
+  outline: 2px solid var(--fl-ink);
+  outline-offset: 2px;
+}
