@@ -115,6 +115,17 @@ export const PROPS = [
 ];
 
 /**
+ * Everything that casts a shadow on the floor, and how big that shadow is.
+ *
+ * Derived rather than authored so a shadow cannot outlive or drift from the
+ * thing casting it — the same reason desks and chairs are derived.
+ */
+export const CASTS = [
+  ...PEOPLE.map((p) => ({ id: `sh-${p.id}`, x: p.x, y: p.y, w: 3.6, h: 2 })),
+  ...DESKS.map((d) => ({ id: `sh-${d.id}`, x: d.x, y: d.y, w: 8.5, h: 5 })),
+];
+
+/**
  * Cabins — a room per team, plus a meeting room.
  *
  * `walls` says which edges get a partition. Only the edges that read as a corner

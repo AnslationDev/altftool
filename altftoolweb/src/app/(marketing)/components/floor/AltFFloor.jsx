@@ -1,5 +1,5 @@
 import "./floor.css";
-import { ACTIVITY_CYCLE, BOARD, PRODUCTS, ROLE_VAR, SCENE, WINDOWS, ZONES } from "./cast";
+import { ACTIVITY_CYCLE, BOARD, CASTS, PRODUCTS, ROLE_VAR, SCENE, WINDOWS, ZONES } from "./cast";
 import FloorViewer from "./FloorViewer";
 import { OFFICE_SCENE } from "./scenes";
 
@@ -53,14 +53,24 @@ function Person({ p }) {
 
 function Desk({ d }) {
   return (
-    <div className="fl-node" style={{ "--x": `${d.x}%`, "--y": `${d.y}%`, "--z": "2px" }}>
-      <div className="fl-desk">
-        <span
-          className="fl-screen"
-          style={{ "--fl-pod": `var(${ROLE_VAR[d.role]})`, "--delay": `${d.delay}s` }}
-        />
+    <>
+      {/* The box itself lies in the floor plane — no counter-rotation, so its
+          top face foreshortens with the room. */}
+      <div className="fl-deskbox" style={{ "--x": `${d.x}%`, "--y": `${d.y}%`, "--w": "8%", "--h": "4.5%" }}>
+        <span className="fl-deskbox__top" />
+        <span className="fl-deskbox__front" />
       </div>
-    </div>
+      {/* The monitor stands on the desk, so it IS a billboard, lifted to the
+          desk's height. */}
+      <div className="fl-node" style={{ "--x": `${d.x}%`, "--y": `${d.y - 1}%`, "--z": "22px" }}>
+        <span className="fl-monitor">
+          <span
+            className="fl-screen"
+            style={{ "--fl-pod": `var(${ROLE_VAR[d.role]})`, "--delay": `${d.delay}s` }}
+          />
+        </span>
+      </div>
+    </>
   );
 }
 
@@ -148,6 +158,14 @@ export default function AltFFloor({ className = "", scene = OFFICE_SCENE, expand
             top of it: daylight from the window bay, then the pool each ceiling
             panel throws over its pod. */}
         <div className="fl-daylight" />
+        {/* Shadows go down with the light, before anything stands on them. */}
+        {CASTS.map((c) => (
+          <div
+            key={c.id}
+            className="fl-cast"
+            style={{ "--x": `${c.x}%`, "--y": `${c.y}%`, "--w": `${c.w}%`, "--h": `${c.h}%` }}
+          />
+        ))}
         {ZONES.map((z) => (
           <div
             key={`pool-${z.id}`}

@@ -383,6 +383,38 @@ html[data-theme="dark"] {
   pointer-events: none;
 }
 
+/* ---------- cast shadows ----------
+   Shadows that lie on the floor, offset away from the light.
+
+   Every figure and desk used to carry its own shadow as a pseudo-element inside
+   .fl-node — which is counter-rotated to face the camera. So the "contact
+   shadow" was a vertical ellipse standing up behind the figure like a cardboard
+   stand, never a mark on the ground. Combined with flat billboard furniture, it
+   was the main reason the scene read as cutouts arranged on a plane rather than
+   objects in a room.
+
+   These are siblings in the room, NOT counter-rotated, so they lie in the floor
+   plane and foreshorten with it — and they are all offset the same direction, so
+   the room has one light source instead of a hundred. */
+
+.fl-cast {
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  width: var(--w, 4%);
+  height: var(--h, 2.4%);
+  /* Down-left, away from the window bay on the upper right. */
+  transform: translate(-58%, -34%);
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse at 50% 50%,
+    color-mix(in srgb, var(--fl-shadow) 88%, transparent) 0%,
+    color-mix(in srgb, var(--fl-shadow) 40%, transparent) 52%,
+    transparent 76%
+  );
+  pointer-events: none;
+}
+
 /* ---------- cabins ----------
    Each team gets a room, not a tinted rug.
 
@@ -558,29 +590,79 @@ html[data-theme="dark"] {
 }
 
 /* ---------- desks ----------
-   A top surface and a monitor. The monitor is deliberately small relative to the
-   person: a screen drawn bigger than the people sitting at it reads as a shop
-   window rather than a workstation, and that was the single worst thing about
-   the first pass at this scene. */
+   A real box: a top face lying in the floor plane and a front face hanging from
+   its leading edge down to the floor.
 
-.fl-desk {
-  position: relative;
-  width: 6.6cqw;
-  min-width: 38px;
-  aspect-ratio: 6 / 2;
-  border-radius: 2px 2px 3px 3px;
-  background: linear-gradient(to bottom, var(--fl-desk-top), var(--fl-desk));
+   This was one flat rectangle counter-rotated to face the camera. Seen from a
+   camera that is looking down into the room, a desk has to show its top surface
+   receding — a billboard cannot, and twelve of them side by side made the whole
+   floor read as paper cutouts. The box costs one extra element per desk and is
+   the single largest difference between this reading as 3D and not. */
+
+.fl-deskbox {
+  position: absolute;
+  left: var(--x, 50%);
+  top: var(--y, 50%);
+  width: var(--w, 9%);
+  height: var(--h, 5%);
+  transform: translate(-50%, -50%) translateZ(var(--fl-desk-h, 22px));
+  transform-style: preserve-3d;
+}
+
+/* The top surface. It lies in the plane, so it foreshortens exactly as the floor
+   does — which is what sells it as a surface rather than a shape. */
+.fl-deskbox__top {
+  position: absolute;
+  inset: 0;
+  border-radius: 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--fl-desk-top),
+    color-mix(in srgb, var(--fl-desk-top) 70%, var(--fl-desk))
+  );
   border: 1px solid var(--fl-desk-edge);
-  box-shadow: 0 5px 10px -5px var(--fl-shadow);
+}
+
+/* Keyboard, on the top surface and therefore also foreshortened. */
+.fl-deskbox__top::after {
+  content: "";
+  position: absolute;
+  left: 28%;
+  bottom: 12%;
+  width: 44%;
+  height: 30%;
+  border-radius: 1px;
+  background: color-mix(in srgb, var(--fl-ink) 20%, var(--fl-desk-top));
+}
+
+/* The front face, hinged at the top's leading edge and hanging to the floor.
+   rotateX(-90deg) about the top edge sends it to negative z — downward — so the
+   panel's height is exactly the desk's height off the ground. */
+.fl-deskbox__front {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: var(--fl-desk-h, 22px);
+  transform-origin: 50% 0;
+  transform: rotateX(-90deg);
+  border-radius: 0 0 2px 2px;
+  background: linear-gradient(
+    to bottom,
+    var(--fl-desk),
+    color-mix(in srgb, var(--fl-desk) 72%, var(--fl-shadow))
+  );
+  border: 1px solid var(--fl-desk-edge);
+  border-top: none;
 }
 
 .fl-screen {
   position: absolute;
-  left: 50%;
-  bottom: 74%;
-  width: 38%;
-  aspect-ratio: 16 / 10;
-  transform: translateX(-50%);
+  left: 8%;
+  right: 8%;
+  bottom: 28%;
+  top: 8%;
+  transform: none;
   border-radius: 1.5px;
   background: color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 82%, var(--fl-desk));
   box-shadow: 0 0 10px 1px color-mix(in srgb, var(--fl-pod, var(--fl-a2)) 55%, transparent);
@@ -588,16 +670,42 @@ html[data-theme="dark"] {
   animation-delay: var(--delay, 0s);
 }
 
-/* The stand, so the monitor sits on the desk rather than hovering above it. */
-.fl-screen::after {
+/* The monitor's own box, standing on the desk top: a bezel, the panel inside it,
+   and a stand down to the surface. */
+.fl-monitor {
+  display: block;
+  position: relative;
+  width: 3.5cqw;
+  min-width: 22px;
+  aspect-ratio: 16 / 13;
+  padding: 6% 6% 22%;
+  border-radius: 2px;
+}
+
+.fl-monitor::before {
   content: "";
   position: absolute;
-  left: 50%;
-  top: 100%;
-  width: 16%;
-  height: 36%;
-  transform: translateX(-50%);
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 22%;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--fl-ink) 62%, var(--fl-desk));
+  border: 1px solid var(--fl-desk-edge);
+}
+
+/* The stand and its foot, so the monitor sits on the desk rather than hovering
+   above it — the detail that was missing when these read as floating squares. */
+.fl-monitor::after {
+  content: "";
+  position: absolute;
+  left: 44%;
+  bottom: 0;
+  width: 12%;
+  height: 24%;
+  border-radius: 0 0 2px 2px;
   background: var(--fl-desk-edge);
+  box-shadow: 0 0 0 0 transparent;
 }
 
 /* Keyboard. Small, but it is the difference between a desk and a shelf. */
@@ -721,50 +829,6 @@ html[data-theme="dark"] {
   aspect-ratio: 1 / 1.78;
 }
 
-/* Contact shadow. Without it every figure floats and the plane stops reading as
-   a surface anyone is standing on. */
-.fl-person::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  bottom: -4%;
-  width: 96%;
-  height: 9%;
-  transform: translateX(-50%);
-  border-radius: 50%;
-  background: var(--fl-shadow);
-  filter: blur(2px);
-  z-index: -2;
-}
-
-.fl-person__body {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  width: 100%;
-  height: 46%;
-  transform: translateX(-50%);
-  border-radius: 40% 40% 20% 20% / 26% 26% 12% 12%;
-  background: var(--fl-role, var(--fl-a2));
-}
-
-/* Little arms, so the body is not a bare blob and the figure reads as someone
-   sitting at a desk rather than standing behind it. */
-.fl-person__body::before,
-.fl-person__body::after {
-  content: "";
-  position: absolute;
-  top: 26%;
-  width: 22%;
-  height: 46%;
-  border-radius: 999px;
-  background: inherit;
-  filter: brightness(0.92);
-}
-
-.fl-person__body::before { left: -9%; }
-.fl-person__body::after  { right: -9%; }
-
 .fl-person__head {
   position: absolute;
   left: 50%;
@@ -773,7 +837,12 @@ html[data-theme="dark"] {
   aspect-ratio: 1 / 0.94;
   transform: translateX(-50%);
   border-radius: 47% 47% 44% 44%;
-  background: var(--fl-skin, #f6d5b8);
+  background: radial-gradient(
+    circle at 68% 30%,
+    color-mix(in srgb, var(--fl-skin, #f6d5b8) 84%, white),
+    var(--fl-skin, #f6d5b8) 58%,
+    color-mix(in srgb, var(--fl-skin, #f6d5b8) 80%, var(--fl-ink)) 100%
+  );
 }
 
 /* ---------- the face ---------- */
