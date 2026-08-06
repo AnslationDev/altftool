@@ -9431,7 +9431,7 @@ export const toolContentOverrides = {
     ],
     "steps": [
       "Click New Task to open the Add New Task dialog and start organizing your cleaning tasks.",
-      "Set the Room the chore belongs to, tick the Mon to Sun Schedule Days it falls on, choose a High, Medium or Low Priority, type a name into Assigned To, set the Duration in minutes, then press Add Task.",
+      "Give the chore a Task Name — Add Task stays greyed out until you do — then set the Room it belongs to, tick the Mon to Sun Schedule Days it falls on, choose a High, Medium or Low Priority, type a name into Assigned To, set the Duration in minutes (5 to 180), and press Add Task.",
       "Switch between the Board, Weekly and List views, tick each chore's circle as it is done, and click Report for the Cleaning Schedule Report — the list is not stored, so use Print / Save PDF before you close the page."
     ]
   },
@@ -9721,13 +9721,13 @@ export const toolContentOverrides = {
       ],
       [
         "Is Coin Flip free to use?",
-        "Coin Flip is completely free to use for basic features. Some premium features may require a subscription."
+        "Yes, entirely. Every flip mode, all six coin counts, all eight coin skins, the stats and the history are free — there is no premium tier and nothing to subscribe to. Your stats, your Sound On or Sound Off choice and the skin you picked are kept only in your own browser's storage."
       ]
     ],
     "steps": [
-      "Click the 'Flip Coin' button to start your virtual coin toss.",
-      "Watch the 3D animation of the coin flipping in real-time.",
-      "View your best-of series scoring and streaks to track your progress."
+      "Choose a mode under Select Flip Mode — Single Toss, or Best of 3, 5, 7 or 9, each card naming the First to count that settles it — then set Coins to flip anywhere from 1 to 6 and pick one of the eight finishes in Coin Skin Finish, from 5 Rubles to Bitcoin (BTC).",
+      "Press Flip Coin; it reads Flipping... for the 2.2 second spin and then the card resolves to HEADS or TAILS under Fair Toss Result. Auto Flip keeps tossing every 3.6 seconds on its own, and in a series the Heads Wins and Tails Wins scoreboard tracks the round as Toss 2 of up to 5 and puts up Start Rematch Series once one side reaches the target.",
+      "Read Running Stats & Analytics for Total Tosses, Heads Count, Tails Count, Best Streak, Current Streak, Equilibrium Score and Dominant Side, and Recent Toss History for the last 30 tosses as H and T tiles. Reset Stats and Clear History both wipe all of it after a confirm prompt."
     ]
   },
   "color-blindness-simulator": {
@@ -9762,17 +9762,17 @@ export const toolContentOverrides = {
       ],
       [
         "Can I save my simulations?",
-        "Yes, you can capture screenshots or export your simulated content for reference or sharing."
+        "Yes. Export Simulation under the preview, or Download HD in the Quick Export card, saves the simulated image at its original pixel size as altftool-cvd-<mode>-<timestamp>.png. PNG HD is the only format offered."
       ]
     ],
     "steps": [
-      "Click the 'Simulate' button and select the type of color blindness you want to experience (e.g., Protanopia, Deuteranopia, Tritanopia).",
-      "Upload or enter the text or image you want to simulate. The tool will instantly display how it would appear to someone with the selected color vision deficiency.",
-      "Explore different scenarios by switching between various types of color blindness and observing the changes in your content."
+      "Load a picture first: click the Drop Image to Analyze card or press Choose Files, paste one with Ctrl+V, or click one of the six Quick Pick thumbnails such as Ishihara Style or Spectral Chart. The controls only appear once an image is on the canvas.",
+      "Pick a deficiency in Filter Modes — Normal Vision, Protanopia, Protanomaly, Deuteranopia (the one loaded by default), Deuteranomaly, Tritanopia, Tritanomaly or Achromatopsia — then dial Simulation Intensity, Brightness, Contrast and Saturation in Adjustments. The Reset Settings button in that card's corner returns all four sliders to 100% and the mode to Deuteranopia.",
+      "Drag the Slide to Compare handle across the canvas to wipe between Original on the left and Simulated on the right, then keep the result with Export Simulation in the preview footer or Download HD in Quick Export — both write a full-resolution PNG named altftool-cvd-<mode>-<timestamp>.png. The Remove image bin in the header clears the canvas for the next file."
     ]
   },
   "color-code-conversion-tool": {
-    "intro": "The Color Code Conversion Tool is a powerful online utility designed for web developers, designers, and digital artists, allowing them to seamlessly convert between HEX, RGB, RGBA, HSL, HSLA, and CMYK color codes in real-time. With its intuitive interface and live preview feature, users can easily find the perfect color for their projects. By clicking the conversion button, users can instantly switch between different color formats.",
+    "intro": "The Color Code Conversion Tool is a powerful online utility designed for web developers, designers, and digital artists, allowing them to seamlessly convert between HEX, RGBA_HEX, RGB, RGBA, HSL, HSLA, and CMYK color codes in real-time. With its intuitive interface and live preview feature, users can easily find the perfect color for their projects. Conversion runs as you type — there is no convert button — and every output field stays editable and in sync with the rest.",
     "useCases": [
       "A web developer using the Color Code Conversion Tool to convert a client's brand color from CMYK to HEX for use in a website's CSS stylesheet.",
       "A graphic designer utilizing the tool to switch between RGB and HSL color codes while working on a design project that requires precise color control.",
@@ -9795,7 +9795,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I convert a color code using the Color Code Conversion Tool?",
-        "To convert a color code, simply enter the code in one of the supported formats and click the conversion button, or use the copy actions to paste a code from your clipboard."
+        "Type or paste the code into the Color Input Panel in any supported format and the outputs convert as you type — there is no convert button to press. You can also edit any output field directly, or upload a screenshot in the Screenshot Color Picker panel and click a pixel to sample its color."
       ],
       [
         "Can I save my converted color codes for later use?",
@@ -9807,9 +9807,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the conversion button to instantly switch between HEX, RGB, RGBA, HSL, HSLA, and CMYK color codes, with live preview and synced editable outputs.",
-      "Enter a color code in one of the supported formats and watch as the tool automatically converts it to the other formats in real-time.",
-      "Use the copy actions to quickly copy the converted color codes to your clipboard, and utilize the local history feature to revisit previously converted colors."
+      "Type or paste a color into the Color Input Panel — HEX, RGB, RGBA, HSL, HSLA, CMYK or a named color such as rebeccapurple — or open the Pick color swatch beside the field; the line underneath reads 'Detected HEX. Outputs are live and copy-ready.' once it parses, and there is no convert button.",
+      "The Multi-Format Output Panel lists HEX, RGBA_HEX, RGB, RGBA, HSL, HSLA and CMYK in editable fields that all resync when you edit any one of them, Live Color Preview repaints, and Auto Detection Status names the format it detected. You can also load a screenshot in the Screenshot Color Picker panel and click any pixel to sample its color code.",
+      "Copy one value with the clipboard icon on its card, or use Copy all for every format at once and JSON / Export JSON to download color-conversion.json; the History panel keeps your last 14 valid colors in this browser — click one to reload it, or Clear history to empty the list."
     ]
   },
   "color-contrast-checker": {
@@ -9834,9 +9834,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the 'Color Contrast Checker' button to open the tool.",
-      "Select or input the color for your text and background.",
-      "The tool will instantly display the contrast ratio and indicate if it meets WCAG guidelines."
+      "Set the 'Text color' and 'Background' rows in the left card — each has a swatch picker plus a hex box that takes a 3- or 6-digit hex with or without the #; they open on #111827 text over #ffffff.",
+      "The Preview panel repaints as you type, showing the heading 'Readable interface text' over your chosen background, and the Ratio card prints the value to two decimals followed by :1 — it shows a dash until both hex values are valid.",
+      "Read the 'AA normal', 'AA large' and 'AAA normal' cards beside the ratio: each turns green and reads Pass at 4.5:1, 3:1 and 7:1 respectively, and red with Fail below that. 'Copy CSS' puts the color and background-color declarations on your clipboard and the button reads Copied for a second."
     ]
   },
   "color-conversions": {
@@ -9863,7 +9863,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use the Color Conversions tool?",
-        "Simply click the button, enter your color, and view the conversions and harmonies."
+        "Type your color into any of the seven format fields in the 'All formats' grid — HEX, RGB, RGBA, HSL, HSLA, HSV or CMYK — or set it with the 'Color Wheel' picker and the sliders; the conversions, the WCAG readability scores and the harmonies all update as you go, with no convert button to press."
       ],
       [
         "What formats can I convert colors to?",
@@ -9875,9 +9875,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Color Conversions' button to open the tool.",
-      "Enter your desired color in any of the supported formats (HEX, RGB, RGBA, HSL, HSLA, HSV, CMYK).",
-      "View live previews and harmonies of your chosen color."
+      "Set your color in the 'All formats' grid: type into the HEX, RGB, RGBA, HSL, HSLA, HSV or CMYK field of any card and the other six follow, or press 'Color Wheel' to pick one visually. 'Reset' returns everything to #14B8A6.",
+      "Fine-tune with the 'Interactive Color Sliders' — Red, Green and Blue under RGB Parameters, plus Hue, Saturation, Lightness and Alpha / Opacity under HSL & Transparency — each showing its current value beside the label.",
+      "The swatch at the top prints the hex over your live color, and its 'Readability Contrast (WCAG)' panel scores 'On White Text' and 'On Black Text' as AAA Pass, AA Pass, Large Text AA or Fail; the 'Color harmonies' section below lays out Complementary, Analogous, Triadic, Tetradic and five Shades. Hover any format card to reveal its Copy button, which reads Copied once the value is on your clipboard."
     ]
   },
   "color-memory-precision-test": {
@@ -9972,7 +9972,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How many colors can I get from the tool?",
-        "Eight. The tool keeps the eight color buckets that cover the most of your image and shows them as swatches, ranked by coverage rather than chosen for harmony."
+        "Up to eight. The tool keeps the eight color buckets that cover the most of your image and shows them as swatches, ranked by coverage rather than chosen for harmony; an image with fewer distinct buckets than that returns fewer swatches."
       ],
       [
         "Is my image safe?",
@@ -10013,25 +10013,25 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use the Color Picker?",
-        "Simply click the button to open it and start selecting colors."
+        "The page opens straight into the picker, with no button to launch. Set a color with the Select Color swatch or the hex field beside it, adjust the Hue, Saturation, Lightness and Alpha / Opacity sliders, then copy the format you need."
       ],
       [
         "What color formats can I convert?",
-        "You can convert between RGB, HEX, and HSL formats using the tool's built-in options."
+        "The Color Formats panel shows HEX, RGB, RGBA, HSL and CMYK for the current color, each in its own read-only field with a copy button. The preview card also copies a CSS declaration or a Tailwind bg-[#hex] class."
       ],
       [
         "Can I save my palettes?",
-        "Yes, you can easily save and export your custom palettes in various file formats."
+        "There is no palette save or export. The Generated Palettes strips are built from the current color and clicking a swatch copies its hex, while the History row keeps the last 10 colors you used until you reload the page."
       ]
     ],
     "steps": [
-      "Click the button to open the Color Picker interface.",
-      "Select a color from the live preview or use the sliders to adjust RGB, HEX, HSL values.",
-      "Generate custom palettes by adding multiple colors and exporting them in various formats."
+      "Set a color in the Select Color panel: click the swatch to use your system picker, or type into the hex field beside it, which opens on #14B8A6. Fine-tune with the Hue, Saturation, Lightness and Alpha / Opacity sliders.",
+      "Copy what you need from Color Formats, where HEX, RGB, RGBA, HSL and CMYK each sit in a read-only field with its own copy button and a 'HEX copied!' style confirmation; the preview card adds Copy CSS Styles and Copy Tailwind Class.",
+      "Check the two Accessibility panels, which rate White Text and Dark Text on your color with a ratio and a PASS AA or FAIL badge at 4.5:1, then click any swatch in the Analogous, Complementary, Triadic or Monochromatic strips under Generated Palettes to copy its hex and make it the active color."
     ]
   },
   "color-psychology-analyzer": {
-    "intro": "The Color Psychology Analyzer is a cutting-edge tool designed for marketers, designers, and branding experts to uncover the emotional impact, branding psychology, and cultural meanings behind various colors. By clicking the 'Analyze' button, users can gain valuable insights into how different colors influence human emotions and perceptions. This tool is perfect for anyone looking to create a strong brand identity or optimize their visual marketing strategy.",
+    "intro": "The Color Psychology Analyzer takes one hex colour and reports what it signals: its psychological family and temperature, the emotional associations attached to that family, a branding note, market-by-market cultural readings, and its WCAG 2.1 contrast behaviour. The analysis updates as you type, so it suits marketers, designers and branding teams working out a palette they will have to defend.",
     "useCases": [
       "A fashion brand using the Color Psychology Analyzer to determine the most appealing color scheme for their new product line",
       "A marketing agency utilizing the tool to optimize the color palette of a client's website for better user engagement",
@@ -10054,11 +10054,11 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What types of colors can I analyze with this tool?",
-        "You can analyze any color palette, including RGB, HEX, and Pantone colors, to gain insights into their emotional, psychological, and cultural implications."
+        "One colour at a time, given as a 3- or 6-digit hex value in the Colour (hex) field or picked with the swatch beside it. There is no RGB, Pantone or palette-file input; to move on to a related colour, click one of the Palette partners swatches and it becomes the analysed colour."
       ],
       [
         "How accurate is the Color Psychology Analyzer?",
-        "The tool is based on extensive research and data on color psychology, ensuring that the analysis is accurate and reliable."
+        "The colorimetry is exact: HSL, relative luminance and the contrast ratios all follow the WCAG 2.1 formulas. The emotional and cultural readings are editorial summaries of widely reported associations, which is why the page ends with 'Cultural readings are general guidance — validate with people in the market before shipping a rebrand.'"
       ],
       [
         "Can I use the Color Psychology Analyzer for personal projects?",
@@ -10066,13 +10066,13 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Analyze' button to upload your color palette and initiate the analysis process",
-      "Select the specific colors you want to analyze from the palette",
-      "Review the detailed report outlining the emotional, psychological, and cultural implications of your chosen colors"
+      "Type a value into the Colour (hex) field or click the swatch beside it to pick one visually. It opens on #14B8A6, takes 3 or 6 hex digits, and anything else raises 'That is not a hex colour. Use 3 or 6 hex digits, like #14B8A6.'",
+      "Read the analysis, which re-runs on every keystroke: the Psychological family headline and temperature, then rows for Hue / saturation / lightness, RGB, Relative luminance, Contrast on white, Contrast on black, Best text colour on it and the WCAG verdict for body text, followed by What this colour signals and the Cultural meanings table.",
+      "Set Text colour placed on it to test a pairing in the Readability preview, click a swatch under Palette partners — Complementary (+180°), Analogous (±30°), Triadic (+120°, +240°) or Split complementary (+150°, +210°) — to analyse that colour instead, and use Copy summary to put the whole write-up on your clipboard or Reset to go back to #14B8A6."
     ]
   },
   "company-info-tool": {
-    "intro": "Company Info Explorer is a quick and easy-to-use browser tool designed for tech professionals, investors, and anyone interested in staying up-to-date with the latest metrics and information about top tech companies.",
+    "intro": "Company Info Explorer looks a company name up against the DuckDuckGo Instant Answer API and shows the encyclopedic summary, the source it came from, whatever infobox fields that entry carries, and a list of related topics with links. It is a fast first-pass research step for professionals, investors and journalists rather than a feed of live financial metrics.",
     "useCases": [
       "A tech investor wants to quickly compare the revenue growth rates of two major companies before making an investment decision.",
       "A journalist needs to gather data for a story about the latest trends in artificial intelligence startups.",
@@ -10095,21 +10095,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use Company Info Explorer?",
-        "Simply click the 'Company Info Explorer' button, enter the company name, and select the information you need."
+        "Type a company name into the field under Search Company and press Search, or just hit Enter. The summary, its source, a Company Details grid and Related Information appear below; until then the page shows a 'No Results Yet' card."
       ],
       [
         "Is the data always up-to-date?",
-        "Yes, we ensure that the data is refreshed regularly to provide the most current metrics available."
+        "Nothing is stored or cached here — each search queries the DuckDuckGo Instant Answer API live, so you get whatever that index currently holds. It is encyclopedic summary text and infobox fields, not live financial metrics."
       ],
       [
         "Can I use this tool for non-tech companies?",
-        "While primarily designed for tech companies, the tool can be adapted for other industries with similar data requirements."
+        "Yes. Whatever you type is passed straight to the Instant Answer API with no industry filter, so any company or organization that has an entry returns a result."
       ]
     ],
     "steps": [
-      "Click on the 'Company Info Explorer' button to open the tool.",
-      "Enter the name of the tech company you want to look up in the search bar.",
-      "Select the specific information or metric you're interested in from the dropdown menu."
+      "Type a company name into the field under Search Company — it is prompted with 'Enter company name (e.g., Google)' — then press Search or hit Enter. Submitting it empty returns 'Please enter a company name!'.",
+      "The button reads Searching... while the name goes to the DuckDuckGo Instant Answer API; if the request fails you get 'Failed to fetch company information. Please try again.'",
+      "Read the result card for the summary and its Source line, follow Learn More to the cited page, then scan Company Details for the infobox fields that entry carries and Related Information for related entries, each with its own Read more link."
     ]
   },
   "compatibility-quiz": {
@@ -10177,21 +10177,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What does the Component Naming Auditor check?",
-        "It checks React component names, file names, duplicate declarations, and naming convention drift across your project."
+        "It reads the text you paste in and flags component names that are not PascalCase, file names carrying a lower-case hyphenated segment, and any component name declared more than once. It only ever sees what is in the box — it has no access to your repository."
       ],
       [
         "How do I use the tool?",
-        "Simply click the 'Audit' button in the extension to start analyzing your project. The results will be displayed in a detailed report."
+        "Paste file paths and component snippets into the box on the left. There is no run button: the Files, Components and Issues counters and the Naming findings list update as you type."
       ],
       [
         "Is it free?",
-        "Yes, the Component Naming Auditor is available as a browser extension and is free to use."
+        "Yes. It is a free page on ALTFTool, not a browser extension or an install, and the audit runs entirely in your browser."
       ]
     ],
     "steps": [
-      "Click the 'Audit' button in the Component Naming Auditor extension to start analyzing your project.",
-      "The tool will scan all React component names, file names, duplicate declarations, and naming convention drift across your entire project.",
-      "Review the detailed report generated by the auditor, which highlights any issues and provides suggestions for improvement."
+      "Paste your code into the box labelled 'File paths and component snippets'. It opens pre-filled with a sample covering src/components/UserCard.jsx, src/components/profile-card.jsx and src/tools/report/ReportPanel.jsx, so clear that first; there is no run button, the audit re-runs as you type.",
+      "Watch the Files, Components and Issues counters above the results: the auditor picks up paths ending in .jsx, .tsx, .js or .ts, and every name declared with function, const or class.",
+      "Work through the Naming findings list, which tags each problem 'Component should use PascalCase.', 'Consider matching component-style file naming.' or 'Duplicate component declaration.', and reads 'No naming issues found.' once the pasted text is clean."
     ]
   },
   "compound-interest-calculator": {
@@ -10226,13 +10226,13 @@ export const toolContentOverrides = {
       ],
       [
         "Can I use this tool for loans or debts?",
-        "Yes, you can input negative values to see how debt grows over time with compound interest"
+        "The maths is identical, but negative figures are rejected — every field is validated with a minimum of 0, so a negative principal fails with 'Principal Amount must be at least 0'. Enter the outstanding balance as a positive Principal Amount to see what the debt compounds to."
       ]
     ],
     "steps": [
-      "Enter the initial amount you're investing",
-      "Set the annual interest rate",
-      "Choose your compounding frequency (daily, monthly, quarterly, semi-annually, annually)"
+      "Enter the Principal Amount in ₹, the Annual Interest Rate (% p.a.) and the Time Period (Years). All three are required — leaving one blank flags it in red with 'Principal Amount is required' and a negative value with 'must be at least 0'.",
+      "Pick Daily, Monthly, Quarterly, Half-Yearly or Yearly from the Compounding Frequency dropdown and press Calculate. The circular-arrow button beside it restores the defaults — ₹100,000 at 8% for 10 years, compounded monthly — and clears the result.",
+      "The panel swaps 'Enter your details and click Calculate to see results' for the Total Amount, with Total Interest underneath; open Year-by-Year Breakdown for a scrollable Year / Invested / Interest / Balance table with one row per year."
     ]
   },
   "compound-interest-planner": {
@@ -10318,7 +10318,7 @@ export const toolContentOverrides = {
     ]
   },
   "constellation-finder": {
-    "intro": "The Constellation Finder is an interactive browser tool designed for stargazers and astronomy enthusiasts, allowing users to explore over 15 major constellations with a dynamic night sky map. By clicking the interactive button, users can navigate through the celestial landscape and identify constellations with ease. This tool is perfect for educational purposes, backyard astronomers, or anyone fascinated by the night sky.",
+    "intro": "The Constellation Finder is an interactive browser tool designed for stargazers and astronomy enthusiasts, plotting 16 major constellations on a night sky map you can pan, zoom, search and filter by season. Click any star and the side panel opens that constellation's brightest star, magnitudes, distances and mythology. This tool is perfect for educational purposes, backyard astronomers, or anyone fascinated by the night sky.",
     "useCases": [
       "Planning a stargazing trip to a remote location with minimal light pollution to view the constellations identified using the Constellation Finder",
       "Using the Constellation Finder in a classroom setting to teach students about astronomy and the history of constellations",
@@ -10341,11 +10341,11 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How many constellations can I explore with the Constellation Finder?",
-        "The Constellation Finder allows you to explore over 15 major constellations, including Orion, Cassiopeia, and Ursa Major."
+        "The map carries 16: Ursa Major, Ursa Minor, Orion, Cassiopeia, Scorpius, Leo, Cygnus, Taurus, Gemini, Canis Major, Lyra, Crux, Pegasus, Andromeda, Draco and Sagittarius."
       ],
       [
         "Can I use the Constellation Finder on my mobile device?",
-        "Yes, the Constellation Finder is fully optimized for mobile devices, allowing you to take your stargazing experience on the go."
+        "Yes — the canvas resizes with the window, pinching with two fingers zooms the sky, and tapping a star opens its constellation in the details panel. Dragging to pan is bound to the mouse, so on a touch screen use pinch to zoom rather than a one-finger drag."
       ],
       [
         "Is the Constellation Finder suitable for beginners?",
@@ -10353,9 +10353,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the interactive button to activate the Constellation Finder and begin exploring the night sky",
-      "Zoom in and out of the map to view specific constellations in detail",
-      "Hover over a constellation to learn more about its history, mythology, and notable stars"
+      "The star chart draws itself as soon as the page loads — there is nothing to press to start. Narrow it with the 'Search constellations…' box, which matches a constellation's name or meaning, and with the ★ All / Spring / Summer / Fall / Winter season tabs.",
+      "Click a star on the map to select its constellation: its lines light up teal with the name drawn above them, and the panel that read 'Click a star on the sky map to see details' fills with Brightest star, Stars counted, Major stars (each with its magnitude and light-year distance), Mythology and Did you know?",
+      "Drag to pan and scroll to zoom, or use the Zoom in / Zoom out buttons — the readout beside them shows the current zoom between 30% and 600%, and the crosshair Reset view button returns you to 100% centred."
     ]
   },
   "content-calendar-planner": {
@@ -10441,7 +10441,7 @@ export const toolContentOverrides = {
     ]
   },
   "cookie-viewer": {
-    "intro": "Cookie Viewer is a powerful browser extension that allows you to easily view, manage, add, edit, and delete cookies in real-time. Perfect for developers, marketers, and anyone who needs to debug or optimize their website's performance.",
+    "intro": "Cookie Viewer is a browser-based page that lets you inspect, create, edit, and delete cookies for this domain in real time — no extension to install. Perfect for developers, marketers, and anyone who needs to debug or optimize their website's performance.",
     "useCases": [
       "A developer needs to debug a login issue and wants to see all cookies for the user's session.",
       "A marketer wants to track cookie expiration times to ensure ad campaigns are running effectively.",
@@ -10464,11 +10464,11 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I add a new cookie?",
-        "Click the 'Add Cookie' button, enter the name, value, domain, and path, then click 'Save.'"
+        "Press 'Add Cookie' to open the Add New Cookie form, fill in Name, Expires (Days) and Value — there are no domain or path fields, new cookies are written at the root path — then press 'Save'. A 'Cookie added!' toast confirms it."
       ],
       [
         "Can I edit an existing cookie?",
-        "Yes, select the cookie you want to edit from the list, make your changes, and click 'Update.'"
+        "Yes — press the pencil button on its row to reopen it as Edit Cookie, change the Value and press 'Save' (there is no separate Update button). Name is locked while editing, and saving resets the cookie's expiry to the Expires (Days) shown, because the original expiry cannot be read back from the browser."
       ],
       [
         "What happens if I delete a cookie?",
@@ -10476,13 +10476,13 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the Cookie Viewer icon in your browser toolbar to open the tool.",
-      "Select the domain whose cookies you want to view from the dropdown menu.",
-      "Use the intuitive interface to add, edit, or delete cookies as needed."
+      "The page reads the cookies your browser exposes for this domain the moment it loads and lists each one as a Name / Value row, or shows 'No cookies found for this domain.' Press Refresh to re-read them after something else changes a cookie.",
+      "Press Add Cookie to open the Add New Cookie form, fill in Name, Expires (Days) and Value, then press Save — a 'Cookie added!' toast confirms and the row appears in the table.",
+      "On any row, the pencil button reopens the cookie as Edit Cookie with its Name locked, and the trash button deletes it after you confirm 'Delete the cookie ... This cannot be undone.'; Clear All removes every listed cookie in one go."
     ]
   },
   "corporate-tool": {
-    "intro": "The Corporate Tool is a comprehensive platform designed to provide detailed information about companies, products, and services. Ideal for businesses looking to enhance their market intelligence and decision-making processes.",
+    "intro": "The Corporate Tools Directory is a browsable list of 39 business software products — from Slack and Asana to Salesforce, QuickBooks and Tableau — sorted into ten categories, each with a one-line description and a pricing label. Search or filter the grid to shortlist the tools a team might adopt; the whole directory runs in the page with no sign-up and no external lookups.",
     "useCases": [
       "A marketing team wants to understand their competitors' strategies and market positioning.",
       "An investor is looking for a specific technology company's recent product launches and market performance.",
@@ -10504,26 +10504,26 @@ export const toolContentOverrides = {
     ],
     "faqs": [
       [
-        "How do I search for a specific company?",
-        "Simply click the 'Search' button, enter the company name or keyword, and press enter."
+        "How do I search for a specific tool?",
+        "Type into the 'Search tools...' box at the top of the page — it matches the product name, its description and its category, and the grid re-filters as you type."
       ],
       [
         "What types of data does the Corporate Tool provide?",
-        "The tool offers financial data, industry analysis, market trends, and competitive landscape information."
+        "Each card carries the product name, a category badge, a one-line description and a pricing label — Premium, Subscription or Pay-as-you-go. It does not hold financial statements, market share or competitor analysis."
       ],
       [
         "Is there a free trial available?",
-        "Yes, you can access basic features for free. For premium access, contact our sales team."
+        "There is nothing to trial: the directory itself is free and runs entirely in your browser. The Premium, Subscription and Pay-as-you-go labels describe how the listed products charge, not this page."
       ]
     ],
     "steps": [
-      "Click the 'Search' button in the top right corner of the tool.",
-      "Enter the name or keyword of the company, product, or service you're interested in.",
-      "Review the detailed information provided, including financial data, industry analysis, and competitive landscape."
+      "Type a product name, category or description keyword into the 'Search tools...' box to narrow the 39-product directory; the grid re-filters as you type and jumps back to page 1.",
+      "Use the category dropdown beside it (labelled Filter by category) to show a single group — Communication, Project Management, Productivity Suite, CRM, Finance, HR, File Storage, Analytics, Development or Customer Support — or leave it on All.",
+      "Read each card for the product name, its category badge, the one-line description and its pricing label (Premium, Subscription or Pay-as-you-go), and use the numbered buttons under the grid to page through the matches nine at a time; when nothing matches, the page shows 'No tools found matching your criteria'."
     ]
   },
   "countdown-timer": {
-    "intro": "Effortlessly manage multiple countdown timers with precision, including progress rings, alarms, and customizable presets. Perfect for anyone needing accurate timing in their daily tasks.",
+    "intro": "Run several named countdowns side by side, each with its own progress ring, a triple beep at zero and one-tap presets from 1 to 60 minutes. Every timer counts toward a fixed end time and is saved in your browser, so it stays accurate in a background tab and survives a page reload.",
     "useCases": [
       "Preparing for a meeting or event by setting a countdown timer for the remaining time.",
       "Cooking meals by timing cooking times and receiving an alert when done.",
@@ -10550,17 +10550,17 @@ export const toolContentOverrides = {
       ],
       [
         "What happens if I close the browser tab?",
-        "Your timers continue running in the background thanks to our advanced technology."
+        "Nothing keeps running once the tab is closed — the beep and the ⏰ Time's up! tab title only fire while the page is open. Each timer stores its end time in your browser, so on your return a countdown that was still running shows the correct time left, and one that expired while you were away is already marked Time's up!"
       ],
       [
         "Can I set a timer for less than one minute?",
-        "Yes, you can set timers for any duration, including seconds."
+        "Yes — put the value in the Sec field and leave Hours and Min at 0. Add timer is disabled only while the total is zero, and the three fields accept up to 99 hours, 59 minutes and 59 seconds."
       ]
     ],
     "steps": [
-      "Click the button to start a new timer and set its duration and name.",
-      "Customize your timer with a progress ring that visually tracks time elapsed.",
-      "Set an alarm to be notified when your countdown reaches zero."
+      "Name the countdown in the Timer name box (up to 40 characters), set the Hours, Min and Sec fields or tap a Quick preset — 1, 3, 5, 10, 15, 30 or 60 min — then press Add timer; the button stays disabled until the duration is above zero.",
+      "Press Start on the timer card to begin. The ring drains as the time runs down, the card reads Counting down, and its subtitle switches from Total to the clock time it Ends; Pause holds it and the button becomes Resume, while Reset returns the card to its full duration.",
+      "At zero the card turns red, shows Time's up! with a triple beep, and the browser tab flashes ⏰ Time's up! — press Dismiss to clear the alert, Restart to run it again, or the trash button to delete the timer. Timers are stored in your browser, so reloading the page keeps a running countdown on track."
     ]
   },
   "country-greeting-finder": {
@@ -10605,7 +10605,7 @@ export const toolContentOverrides = {
     ]
   },
   "cover-letter": {
-    "intro": "Create a professional cover letter for your next job interview with just one click. Ideal for job seekers looking to impress potential employers.",
+    "intro": "Fill in a twelve-box form — name, phone, email, date, company, job title, experience and skills are the required ones — and the tool drops your answers into a fixed letter template you can copy or save as CoverLetter.txt. Everything is assembled in the page, and nothing is kept once you leave it.",
     "useCases": [
       "Applying for a software developer position at a tech company.",
       "Seeking a marketing coordinator role at an advertising agency.",
@@ -10628,21 +10628,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How long does it take to create a cover letter?",
-        "It takes just a few minutes to use this tool and customize your cover letter."
+        "As long as it takes to type the twelve boxes — the letter is assembled from a fixed template the moment you press Generate Cover Letter, with no server round trip and no waiting."
       ],
       [
         "Can I save my draft for future use?",
-        "Yes, you can save your draft and reuse it or modify it for different job applications."
+        "No. There is no draft list and nothing is kept between visits — Reset & Go to Landing Page wipes every box and navigates away. Press Copy or Download as Text to keep the letter as CoverLetter.txt before you leave the page."
       ],
       [
         "Is the cover letter template professional?",
-        "Yes, our templates are designed to meet industry standards and impress potential employers."
+        "There is one fixed template: your contact block, the date, the hiring manager and company, a 'Subject: Application for <Job Title> Position' line, three paragraphs built from your experience, previous work, skills and reason for applying, and a 'Sincerely' sign-off. The preview is read-only, so reword it after you copy or download it."
       ]
     ],
     "steps": [
-      "Click the button to start creating your cover letter.",
-      "Enter your personal information and details about the job you're applying for.",
-      "Review and customize your cover letter before downloading or sending it."
+      "Press Get Started Free on the opening screen to reach the Fill Your Details form, then complete the twelve boxes: Your Name, Phone Number, Email Address, LinkedIn / Portfolio, Date, Hiring Manager, Company Name, Job Title, Experience (e.g. 1 year / Fresher), Previous Work / Internship, Skills and Why this company.",
+      "Click Generate Cover Letter. Your Name, Phone Number, Email Address, Date, Company Name, Job Title, Experience and Skills are required — leave any of them empty and the form answers 'Please fill all required details before generating the cover letter.' instead of building the letter.",
+      "Read the result under Generated Cover Letter, then press Copy to put it on the clipboard (the button reads Copied ✓) or Download as Text to save it as CoverLetter.txt. Reset & Go to Landing Page clears every box and sends you back to the site home page."
     ]
   },
   "credit-card-interest-calculator": {
@@ -10668,22 +10668,22 @@ export const toolContentOverrides = {
     ],
     "faqs": [
       [
-        "What is the Credit Card Interest & Minimum Payment Trap?",
-        "It's a tool that helps you understand the long-term costs of paying only the minimum due on your credit card and explore faster payoff plans."
+        "What is the minimum payment trap this calculator shows?",
+        "Paying only the minimum keeps the account current while interest compounds on what is left. The calculator simulates that month by month and reports Time to clear, Interest + GST paid and Total you would repay — and when the monthly finance charge is larger than the minimum due it reports 'This balance never clears' instead."
       ],
       [
         "How does the tool calculate the total interest with GST?",
-        "The tool calculates the total interest based on your current balance, minimum payment, and the average interest rate. It then adds GST to provide a comprehensive cost analysis."
+        "Each month it charges interest = balance x APR / 12, adds 18% GST on that interest while the 'Include 18% GST on interest' switch is on, subtracts your payment and carries the rest into the next month. The minimum due is your Minimum % of the new outstanding, never below the Minimum floor, and the same rate is restated as a daily carrying cost of balance x APR / 365."
       ],
       [
         "Can I use this tool for any credit card?",
-        "Yes, you can use this tool for any credit card as long as you have access to your balance and minimum payment information."
+        "Yes, provided you know the outstanding balance, the APR and your bank's minimum-due rule, since you type all three in yourself. Amounts are shown in Indian rupees and the GST switch is fixed at 18%, and late, over-limit and annual fees are not modelled, so a real statement can cost a little more."
       ]
     ],
     "steps": [
-      "Click the button below to input your credit card balance and minimum payment.",
-      "Enter your current credit card balance in the designated field.",
-      "Select a faster payoff plan from the options provided."
+      "Enter your Outstanding balance and Annual rate (APR %), then set the Minimum % and Minimum floor your bank applies and Your fixed monthly payment — or load one of the Quick presets (Small revolve, Festive spend, High-rate card) and use Reset to return to the defaults.",
+      "Leave 'Include 18% GST on interest' switched on to count the tax banks add to every finance charge, then read the minimum-only verdict: Time to clear, Interest + GST paid, Minimum due right now, Total you would repay, and the banner giving what the balance costs per day. If the monthly charge outruns the minimum due, the panel says 'This balance never clears' instead.",
+      "Compare the Payoff comparison table — Minimum due only, your fixed monthly payment, and Clear in 3 months, 6 months and 12 months — across its Monthly, Clears in, Interest + GST, Total paid and Saved vs minimum columns, then press Copy plan to put the whole breakdown on your clipboard as text."
     ]
   },
   "cron-expression-generator": {
@@ -10843,11 +10843,6 @@ export const toolContentOverrides = {
         "Does the Crypto P&L Calculator support calculations for both long and short positions?",
         "Yes, the calculator can handle both long and short positions, providing you with a comprehensive view of your profit or loss regardless of your trading strategy."
       ]
-    ],
-    "steps": [
-      "Click the button to input your transaction details, including the buy price, sell price, and quantity of the cryptocurrency you're trading.",
-      "Enter the exchange fees and slippage percentage to account for additional costs that can affect your profit or loss.",
-      "Apply the relevant tax rate to your transaction to get a comprehensive view of your profit or loss after taxes."
     ]
   },
   "crypto-wallet-checker": {
@@ -10886,9 +10881,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to open Crypto Wallet Checker.",
-      "Enter the crypto wallet address you want to check in the provided input field.",
-      "Click 'Validate' to see if the wallet address is valid and which blockchain it belongs to."
+      "Paste an address into the 'Paste any crypto wallet address here…' box on the 🔍 Checker tab — the character count sits in its corner — then press Check Address, or just hit Enter. Clear empties the box and the 📋 button pastes from your clipboard.",
+      "Read the 'N matching chains found' line and the cards beneath it: each gives the chain name, its symbol badge, the detected format — Legacy (P2PKH), SegWit (Bech32), Taproot (Bech32m), EIP-55 Checksum, Base58, SS58 and the rest — and a Copy button. An address that fits nothing shows 'No matching format found'.",
+      "Use 📋 Batch to check many addresses at once, one per line or comma-separated, with Check All returning a valid/invalid tally; 📖 Formats lists the accepted patterns for all 10 chains, and 🕐 History keeps your last 30 lookups until you press Clear History."
     ]
   },
   "css-beautification-formatting-tool": {
@@ -10927,9 +10922,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to paste your CSS code into the tool's interface.",
-      "The tool will automatically format your CSS for readability, ensuring it adheres to best practices.",
-      "Optionally, validate your CSS to check for errors and ensure compatibility across browsers."
+      "Paste your stylesheet into the CSS Input Editor panel ('Paste or write CSS here...'). There is no format button — the Beautified Output panel beside it rewrites as you type, and the Find box reports how many matches your search term has in the input.",
+      "Shape the output with the controls above: Indent (2 spaces, 4 spaces or Tabs), Line spacing (Compact or Spacious), Brackets (Same line or New line) and the Sort properties checkbox, which alphabetises the declarations inside each rule.",
+      "Press Beautify Mode to flip to Minify Mode — the right panel becomes Minified Output — then use Copy, or the CSS button to download styles.formatted.css (styles.min.css while minifying). The Validation, Statistics and History panels underneath list the syntax messages, Input chars, Output chars, Input lines, Output lines, File size and Minify diff %, and your last six inputs."
     ]
   },
   "css-beautifier": {
@@ -11009,9 +11004,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the 'Generate' button to start creating your custom border-radius rules.",
-      "Adjust the sliders or input fields to fine-tune the radius values for each corner of the element.",
-      "Preview the changes in real-time and copy the generated CSS code."
+      "Pick Simple Mode for a four-corner radius, or Advanced Mode for the 8-value organic shorthand; in Simple Mode you can also switch the unit between % and px.",
+      "Drag the Top-Left, Top-Right, Bottom-Right and Bottom-Left Corner sliders, or apply a Quick Shape Preset such as Soft Card, Circle/Oval or Organic Blob.",
+      "Watch the Live Preview redraw, then press Copy in the Generated CSS Code panel to take the border-radius declaration, or Download to save border-radius-styles.css."
     ]
   },
   "css-button-generator": {
@@ -11050,9 +11045,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Select the type of button you want to create (e.g., flat, raised, outline).",
-      "Customize the button's appearance by adjusting font styles, border thickness, shadow effects, and more.",
-      "Add hover animations and gradients to enhance interactivity and visual appeal."
+      "Type your label into Button Text Content, set Background Mode to Solid Fill or Linear Gradient, then pick Color 1 and Text Color; choose Color 2 when you use Linear Gradient.",
+      "Size the button with the Padding H, Padding V, Font Size and Corner Radius sliders, and type a Border Width in pixels.",
+      "Set Hover Scale between 0.95x and 1.15x and hover the Interactive Preview to test it, then press Copy for the .custom-button CSS or Download to save custom-button-styles.txt."
     ]
   },
   "css-filter-effects": {
@@ -11091,10 +11086,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Upload an image using the button provided in the tool interface.",
-      "Select the desired CSS filter effect from the dropdown menu.",
-      "Adjust the intensity of the filter using the slider or input field.",
-      "Preview the filtered image in real-time to see the changes."
+      "Under Select Preview Target Image, pick Landscape, Portrait or Abstract Neon, or press Upload Custom to load your own image.",
+      "Move the Blur, Brightness, Contrast, Grayscale, Hue-Rotate, Invert, Saturate and Sepia sliders in Filter Values Configuration; Reset Filters puts every slider back to its default.",
+      "Drag the Comparison Split Visualizer to compare Original against Filtered, then press Copy for the filter shorthand or Download to save filter-effects.css."
     ]
   },
   "css-flexbox-generator": {
@@ -11133,9 +11127,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to open the CSS Flexbox Generator interface.",
-      "Drag and drop items into the container to customize your layout.",
-      "Adjust alignment configurations and container properties in real-time."
+      "Set the Flex Container Properties — flex-direction, flex-wrap, justify-content, align-items, align-content — and the Gap spacing slider, which runs up to 40px.",
+      "Press Add Block to add blocks (up to 10), select one, and set its flex-grow, flex-shrink, flex-basis, align-self and order overrides.",
+      "Check the Flex Container Visualizer, then press Copy in the Generated Stylesheet panel or Download to save flexbox-layout.css."
     ]
   },
   "css-grid-generator": {
@@ -11174,9 +11168,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to open the CSS Grid Generator and start designing your grid layout by adjusting the column and row counts to your desired specifications.",
-      "Use the gap settings to define the space between grid cells, ensuring your layout has the perfect balance of content and whitespace.",
-      "Once you're satisfied with your grid layout, simply copy the generated CSS grid-template code and paste it into your project to bring your design to life."
+      "In Grid Structure Controls, set the Columns and Rows sliders — each runs from 1 to 8 tracks.",
+      "Use the Column Gap and Row Gap sliders (0 to 40px) to define the space between grid cells, then click a Col or Row chip under Column Track Sizing or Row Track Sizing to cycle its unit through 1fr, 2fr, auto and a fixed pixel width.",
+      "Once the Grid Container Visualizer looks right, press Copy to take the generated grid-template-columns and grid-template-rows rules, or Download for grid-layout-template.txt with the matching HTML."
     ]
   },
   "css-minifier": {
@@ -11256,9 +11250,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Format' button to clean up your CSS code for better readability.",
-      "Use the 'Minify' button to reduce the size of your CSS files, speeding up page load times.",
-      "Save your optimized CSS directly from the browser."
+      "Paste your stylesheet into the CSS input box — it opens with a sample app.css stylesheet already loaded.",
+      "Choose a Mode: Minify for production, or Format for reading, which enables the Indent (format mode) select for 2, 4 or 8 spaces.",
+      "Tick Keep /*! licence comments or Drop empty rules when minifying, read the Rules, Declarations, Comments found and Bytes saved figures, then press Copy CSS — or Reset to restore the sample."
     ]
   },
   "csv-converter": {
@@ -11379,9 +11373,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to upload your CSV file or enter your CSV text to begin the conversion process",
-      "The tool will automatically detect the CSV format and convert it into a JSON string",
-      "Copy the resulting JSON data to use in your application, database, or other systems"
+      "Drop a file on the Upload CSV File zone or click it to choose a .csv file, or paste rows into the Paste CSV Data box with the header row first",
+      "Review the Total Rows, Issues Found, Unique Entries and Column Detect cards, and fill in any cell the editable table flags as Missing",
+      "Set the Pretty / Minify switch, press Convert to JSON, then Copy the JSON Output or press Download JSON to save pretty_data.json in Pretty mode or minified_data.json in Minify mode"
     ]
   },
   "cups-to-grams": {
@@ -11420,9 +11414,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to open the Cups to Grams Converter interface.",
-      "Enter the amount in cups, tablespoons, or millilitres you need to convert.",
-      "Select the ingredient from the dropdown menu."
+      "Choose your ingredient from the Ingredient dropdown or the shortcut chips under it, then set Cup standard to US cup (240 ml) or Metric cup (250 ml).",
+      "Enter the amount in the Volume box and pick cups, tablespoons, teaspoons, millilitres or fluid ounces — or type into the Weight box instead and the volume updates.",
+      "Read the gram figure with its Ounces, Tablespoons, Teaspoons and Millilitres cards, then press Copy result to take the whole conversion."
     ]
   },
   "curl-to-code-converter": {
@@ -11616,7 +11610,7 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Paste your email's HTML into the code editor, or click Sample to see it in action.",
+      "Paste your email's HTML into the HTML Source editor, or click Sample to load a demo, then click Check to run the audit.",
       "Review the six category scores and the client compatibility matrix for Gmail, Outlook, Apple Mail and Yahoo Mail.",
       "Work through the issues list — each one explains why it matters and how to fix it, with example code where relevant.",
       "Export the full report as PDF or JSON, or download the cleaned HTML once every check passes."
