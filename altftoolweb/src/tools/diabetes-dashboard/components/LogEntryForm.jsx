@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { Field, Input, Select, Button, Textarea, Alert } from "@altftool/ui";
+import { GLUCOSE_BOUNDS, validateGlucoseReading } from "../lib";
 
 export default function LogEntryForm({ onSave }) {
   const [formData, setFormData] = useState({
@@ -28,16 +29,9 @@ export default function LogEntryForm({ onSave }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // formData.reading is coerced to a Number on change, so a literal "0"
-    // entry becomes the number 0. A plain `!formData.reading` falsy check
-    // would reject that as "missing" even though the field's own min="0"
-    // treats 0 as a valid reading -- check for absence explicitly instead.
-    if (formData.reading === "" || formData.reading === null || !Number.isFinite(formData.reading)) {
-      setError("Blood glucose reading is required.");
-      return;
-    }
-    if (formData.reading < 0) {
-      setError("Blood glucose reading cannot be negative.");
+    const validationError = validateGlucoseReading(formData.reading, formData.unit);
+    if (validationError) {
+      setError(validationError);
       return;
     }
     setError(null);
@@ -59,7 +53,16 @@ export default function LogEntryForm({ onSave }) {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Field label="Blood Sugar Reading">
-          <Input type="number" step="0.1" min="0" value={formData.reading} onChange={handleChange("reading")} placeholder="e.g. 110" className="min-h-[56px] px-4 py-3 text-lg" />
+          <Input
+            type="number"
+            step="0.1"
+            min={GLUCOSE_BOUNDS[formData.unit].min}
+            max={GLUCOSE_BOUNDS[formData.unit].max}
+            value={formData.reading}
+            onChange={handleChange("reading")}
+            placeholder={formData.unit === "mmol/L" ? "e.g. 6.1" : "e.g. 110"}
+            className="min-h-[56px] px-4 py-3 text-lg"
+          />
         </Field>
         <Field label="Unit">
           <Select value={formData.unit} onChange={handleChange("unit")} className="min-h-[56px] px-4 py-3 text-lg">

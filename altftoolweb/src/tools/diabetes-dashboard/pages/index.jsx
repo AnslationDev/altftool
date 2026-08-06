@@ -1,14 +1,16 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Card, Tabs, Alert } from "@altftool/ui";
+import { Alert, Button, Card, Tabs } from "@altftool/ui";
 import UserProfile from "../components/UserProfile";
 import LogEntryForm from "../components/LogEntryForm";
 import Dashboard from "../components/Dashboard";
 import EducationalSection from "../components/EducationalSection";
-
-const PROFILE_KEY = "altftool_diabetes_profile";
-const LOGS_KEY = "altftool_diabetes_logs";
+import {
+  clearDiabetesStorage,
+  LOGS_STORAGE_KEY,
+  PROFILE_STORAGE_KEY,
+} from "../lib";
 
 // How long the "Profile saved successfully" confirmation stays mounted on the
 // Profile tab before we auto-navigate to the Dashboard. Must be long enough
@@ -25,10 +27,10 @@ export default function DiabetesDashboardHome() {
   // Load from local storage
   useEffect(() => {
     try {
-      const savedProfile = localStorage.getItem(PROFILE_KEY);
+      const savedProfile = localStorage.getItem(PROFILE_STORAGE_KEY);
       if (savedProfile) setProfile(JSON.parse(savedProfile));
 
-      const savedLogs = localStorage.getItem(LOGS_KEY);
+      const savedLogs = localStorage.getItem(LOGS_STORAGE_KEY);
       if (savedLogs) setLogs(JSON.parse(savedLogs));
     } catch (e) {
       console.error("Failed to load diabetes data", e);
@@ -73,7 +75,7 @@ export default function DiabetesDashboardHome() {
 
   const handleSaveProfile = (newProfile) => {
     setProfile(newProfile);
-    persist(PROFILE_KEY, newProfile);
+    persist(PROFILE_STORAGE_KEY, newProfile);
     // Delay the tab switch so UserProfile's own "Profile saved successfully"
     // confirmation actually gets painted to the screen before we navigate
     // away from it. Switching synchronously unmounts UserProfile (and its
@@ -95,14 +97,37 @@ export default function DiabetesDashboardHome() {
       ...logs,
     ];
     setLogs(updatedLogs);
-    persist(LOGS_KEY, updatedLogs);
+    persist(LOGS_STORAGE_KEY, updatedLogs);
     changeTab("dashboard");
   };
 
   const handleDeleteLog = (id) => {
     const updatedLogs = logs.filter((log) => log.id !== id);
     setLogs(updatedLogs);
-    persist(LOGS_KEY, updatedLogs);
+    persist(LOGS_STORAGE_KEY, updatedLogs);
+  };
+
+  const handleClearAllData = () => {
+    if (
+      !window.confirm(
+        "Permanently clear your diabetes profile and every saved reading from this browser? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
+
+    const removal = clearDiabetesStorage(localStorage);
+    setProfile(null);
+    setLogs([]);
+    changeTab("dashboard");
+
+    if (removal.ok) {
+      setStorageError(null);
+    } else {
+      setStorageError(
+        "The data was cleared from this tab, but this browser blocked part of the storage cleanup. Do not close this warning on a shared device; clear this site's stored data in your browser settings.",
+      );
+    }
   };
 
   const tabs = [
@@ -119,11 +144,25 @@ export default function DiabetesDashboardHome() {
         <p className="text-base text-(--muted-foreground)">
           Monitor your blood glucose readings, track your lifestyle habits, and estimate your HbA1c.
           <br />
-          <span className="text-sm italic mt-1 block">Not a medical device. Data is saved locally.</span>
+          <span className="text-sm italic mt-1 block">Not a medical device. Data is saved locally and is not encrypted.</span>
         </p>
       </header>
 
       <main>
+        <Alert
+          tone="warning"
+          title="Privacy on shared devices"
+          className="mb-6"
+          action={(
+            <Button variant="danger" size="sm" onClick={handleClearAllData}>
+              Clear all saved data
+            </Button>
+          )}
+        >
+          Your profile and readings are stored unencrypted in this browser. Anyone using the same
+          browser profile may be able to view them, so avoid this tool on a shared or public device.
+        </Alert>
+
         {storageError && (
           <Alert tone="danger" title="Storage error" className="mb-6">
             {storageError}

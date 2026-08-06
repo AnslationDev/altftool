@@ -35,7 +35,7 @@ export default function FloorBand({ scene, kicker, title, body, href, cta, class
           {href && cta ? (
             <Link
               href={href}
-              className="mt-6 inline-flex items-center gap-1.5 text-[0.9375rem] font-medium text-primary hover:underline"
+              className="mt-6 inline-flex min-h-11 items-center gap-1.5 rounded-md text-[0.9375rem] font-medium text-primary-text underline-offset-4 hover:underline focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-primary/35"
             >
               {cta}
               <span aria-hidden="true">→</span>

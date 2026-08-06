@@ -8,6 +8,7 @@ import {
   SCENARIOS,
   computeCprTiming,
   cprPhaseAt,
+  cprSessionMetricsAt,
 } from "../lib";
 
 const INPUT_CLASS =
@@ -37,7 +38,10 @@ export default function ToolHome() {
   const [copied, setCopied] = useState(false);
 
   const audioRef = useRef(null);
+  // Pacing time is rebased when BPM/cycle settings change; session time remains
+  // monotonic so the rescuer-swap countdown never restarts during a live edit.
   const startRef = useRef(0);
+  const sessionStartRef = useRef(0);
   const lastBeatRef = useRef(-1);
   // Compressions/cycles delivered under timing regimes prior to the current one —
   // lets a mid-session slider/select edit rebase the clock onto the new rate
@@ -116,12 +120,13 @@ export default function ToolHome() {
       // it had all been paced at the new rate (which both rewrites history shown
       // on screen and fires a spurious click at whatever phase elapsed-since-start
       // now falls on under the new rate).
-      const elapsedUnderOldTiming = (performance.now() - startRef.current) / 1000;
+      const now = performance.now();
+      const elapsedUnderOldTiming = (now - startRef.current) / 1000;
       const oldPhase = cprPhaseAt(elapsedUnderOldTiming, prevTimingRef.current);
       const deliveredSoFar = offsetRef.current + (oldPhase ? oldPhase.totalCompressions : 0);
       offsetRef.current = deliveredSoFar;
       cycleOffsetRef.current += oldPhase ? oldPhase.cycleIndex : 0;
-      startRef.current = performance.now();
+      startRef.current = now;
       const zeroPhase = cprPhaseAt(0, timing);
       // Prime the guard with what the very first tick of the new regime will
       // compute, so the rebase itself doesn't fire an unscheduled beat.
@@ -132,16 +137,20 @@ export default function ToolHome() {
     prevTimingRef.current = timing;
 
     const id = window.setInterval(() => {
-      const elapsed = (performance.now() - startRef.current) / 1000;
+      const now = performance.now();
+      const elapsed = (now - startRef.current) / 1000;
+      const sessionElapsed = (now - sessionStartRef.current) / 1000;
       const phase = cprPhaseAt(elapsed, timing);
       if (!phase) return;
       const totalCompressions = offsetRef.current + phase.totalCompressions;
       const cycleNumber = cycleOffsetRef.current + phase.cycleNumber;
+      const sessionMetrics = cprSessionMetricsAt(sessionElapsed, timing, totalCompressions);
+      if (!sessionMetrics) return;
       if (phase.phase === "compress" && totalCompressions !== lastBeatRef.current) {
         lastBeatRef.current = totalCompressions;
         if (soundOn) playClick(phase.compressionInCycle === 1);
       }
-      setLive({ ...phase, totalCompressions, cycleNumber });
+      setLive({ ...phase, ...sessionMetrics, totalCompressions, cycleNumber });
     }, TICK_MS);
     return () => window.clearInterval(id);
   }, [running, hasError, timing, soundOn, playClick]);
@@ -160,7 +169,9 @@ export default function ToolHome() {
     if (audioRef.current && audioRef.current.state === "suspended") {
       audioRef.current.resume();
     }
-    startRef.current = performance.now();
+    const now = performance.now();
+    startRef.current = now;
+    sessionStartRef.current = now;
     lastBeatRef.current = -1;
     offsetRef.current = 0;
     cycleOffsetRef.current = 0;
@@ -180,6 +191,7 @@ export default function ToolHome() {
     cycleOffsetRef.current = 0;
     prevTimingRef.current = null;
     prevRunningRef.current = false;
+    sessionStartRef.current = 0;
     setCopied(false);
   };
 

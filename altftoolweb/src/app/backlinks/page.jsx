@@ -374,7 +374,7 @@ export default async function BacklinksPage({ searchParams }) {
           scene={BACKLINKS_SCENE}
           kicker="Behind the list"
           title="A link opportunity is not a link."
-          body="Every row here starts as a line in a sheet, gets normalised into one of 14 groups, scored for cost, effort and impact, and written up with the steps to actually submit. The floor below is that pipeline, running."
+          body="Every row here starts as a line in a sheet, gets normalised into one of 14 groups, scored for cost, effort and impact, and written up with the steps to actually submit. The floor below represents that pipeline."
           href="/backlinks?view=sheet"
           cta="Open the sheet view"
         />

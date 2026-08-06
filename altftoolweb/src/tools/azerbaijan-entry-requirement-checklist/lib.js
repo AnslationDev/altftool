@@ -307,9 +307,14 @@ export function buildAzerbaijanChecklist({
     return { error: "Enter 365 days or fewer; a longer stay needs a temporary residence permit." };
   }
 
-  const partySize = Math.round(Number(travellers));
+  const partySize = Number(travellers);
   const childCount = Number(children);
-  if (!Number.isFinite(partySize) || !Number.isFinite(childCount)) {
+  if (
+    !Number.isFinite(partySize) ||
+    !Number.isFinite(childCount) ||
+    !Number.isInteger(partySize) ||
+    !Number.isInteger(childCount)
+  ) {
     return { error: "Enter the number of travellers as whole numbers." };
   }
   if (partySize < 1) return { error: "Add at least one traveller." };
@@ -411,7 +416,7 @@ export function buildAzerbaijanChecklist({
     needsRegistration,
     registrationDeadline: toIso(registrationDeadline),
     travellers: partySize,
-    children: Math.round(childCount),
+    children: childCount,
     visaFeePerPersonUsd: route.feeUsd,
     visaFeeTotalUsd,
     feeUnknown,

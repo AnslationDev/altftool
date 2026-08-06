@@ -10353,7 +10353,7 @@ export const toolMetaMap = {
   },
   "exif-timestamp-geotag-editor": {
     "name": "EXIF Timestamp & Geotag Editor",
-    "description": "Bulk-edit the dates and GPS coordinates stored in photos you own.",
+    "description": "Write a sidecar file recording corrected dates and GPS coordinates for photos you own, without changing the originals.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -23588,7 +23588,7 @@ export const toolMetaMap = {
   },
   "raw-photo-developer": {
     "name": "RAW Photo Developer",
-    "description": "Develop RAW photos with exposure and white balance controls, then export to JPEG.",
+    "description": "Preview RAW photos with a simple exposure control, then export to JPEG.",
     "category": [
       "Image & Photo",
       "Productivity"

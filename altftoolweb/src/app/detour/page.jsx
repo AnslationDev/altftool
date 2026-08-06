@@ -251,8 +251,8 @@ export default async function DetourHomePage() {
       <FloorBand
         scene={DETOUR_SCENE}
         kicker="Behind the directory"
-        title="1,314 links do not stay alive on their own."
-        body="Every site here is scouted, crawled to confirm it still loads, sorted into one of 91 categories, then playtested for how fast it actually gets you to something fun. The floor below is that loop, running."
+        title={`${STATS.sites.toLocaleString("en-GB")} links do not stay alive on their own.`}
+        body={`Every site here is scouted, crawled to confirm it still loads, sorted into one of ${STATS.categories} categories, then playtested for how fast it actually gets you to something fun. The floor below represents that loop.`}
         href="/detour/categories"
         cta="Browse every category"
       />

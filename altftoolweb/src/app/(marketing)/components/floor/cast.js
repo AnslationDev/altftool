@@ -24,8 +24,14 @@
 /* Skin and hair tones vary across the cast on purpose. A floor where everyone is
    the same colour looks like a template; these are drawn from a small spread so
    the room looks like a room. */
-const SKIN = ["#8d5a3c", "#c68642", "#e8b98a", "#f6d5b8", "#a86b3c", "#d29b6e"];
-const HAIR = ["#3b2b20", "#5a4030", "#241a14", "#6b4423", "#2f2119"];
+const SKIN = Array.from(
+  { length: 6 },
+  (_, index) => `var(--fl-skin-${index + 1})`,
+);
+const HAIR = Array.from(
+  { length: 5 },
+  (_, index) => `var(--fl-hair-${index + 1})`,
+);
 
 const skin = (i) => SKIN[i % SKIN.length];
 const hair = (i) => HAIR[i % HAIR.length];

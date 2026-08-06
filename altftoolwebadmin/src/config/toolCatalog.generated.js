@@ -9981,7 +9981,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "Bulk-edit the dates and GPS coordinates stored in photos you own."
+    "description": "Write a sidecar file recording corrected dates and GPS coordinates for photos you own, without changing the originals."
   },
   {
     "slug": "exit-code-reference-explorer",
@@ -22870,7 +22870,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Productivity"
     ],
-    "description": "Develop RAW photos with exposure and white balance controls, then export to JPEG."
+    "description": "Preview RAW photos with a simple exposure control, then export to JPEG."
   },
   {
     "slug": "rd-maturity-calculator",

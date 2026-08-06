@@ -1,6 +1,5 @@
 import "./floor.css";
 import { ACTIVITY_CYCLE, BOARD, CASTS, PRODUCTS, ROLE_VAR, SCENE, WINDOWS, ZONES } from "./cast";
-import FloorViewer from "./FloorViewer";
 import { OFFICE_SCENE } from "./scenes";
 
 /*
@@ -15,9 +14,8 @@ import { OFFICE_SCENE } from "./scenes";
  * announced <div>s would be actively hostile to a screen reader.
  *
  * That description is a visually-hidden paragraph rather than role="img" on the
- * wrapper. role="img" makes ALL descendants presentational, and the Expand
- * button and its dialog live inside this element: with the role in place, the
- * one interactive thing in the scene did not exist for assistive tech at all.
+ * wrapper. role="img" makes all descendants presentational, which makes the
+ * visually hidden description the more reliable screen-reader contract.
  */
 
 function Person({ p }) {
@@ -107,7 +105,7 @@ function Token({ t }) {
   );
 }
 
-export default function AltFFloor({ className = "", scene = OFFICE_SCENE, expandable = true }) {
+export default function AltFFloor({ className = "", scene = OFFICE_SCENE }) {
   /* The scene supplies the five accent slots the stylesheet reads. Everything
      below — room, cast, desks, conveyor — is identical for every product. */
   const palette = Object.fromEntries(scene.accent.map((c, i) => [`--fl-a${i + 1}`, c]));
@@ -263,13 +261,12 @@ export default function AltFFloor({ className = "", scene = OFFICE_SCENE, expand
         ))}
       </div>
 
-      {/* The live feed. Everything else in the scene is atmosphere; this is the
-          part that names what is being built, and it holds still long enough to
-          be read. It is also the seam where the real build log will plug in. */}
+      {/* Illustrative workflow labels. They describe the process represented by
+          the scene; they are not presented as a real-time activity feed. */}
       <div className="fl-ticker" aria-hidden="true">
         <p className="fl-ticker__head">
           <span className="fl-ticker__pip" />
-          Live on the floor
+          Inside the workflow
         </p>
         <div className="fl-ticker__rail">
           {lines.map((a) => (
@@ -290,13 +287,6 @@ export default function AltFFloor({ className = "", scene = OFFICE_SCENE, expand
         </div>
       </div>
 
-      {/* The dialog is handed a second, non-expandable copy of the same scene.
-          It only mounts once opened, so nothing extra animates until asked. */}
-      {expandable ? (
-        <FloorViewer label="Expand">
-          <AltFFloor scene={scene} expandable={false} />
-        </FloorViewer>
-      ) : null}
     </div>
   );
 }

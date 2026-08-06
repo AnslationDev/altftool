@@ -99,11 +99,11 @@ export function computeLateralEntryMerit({
 
   const round2 = (v) => Math.round(v * 100) / 100;
 
-  // Round the diploma/entrance percentages once, up front, and reuse those
-  // rounded values for both what's displayed AND the AICTE floor check.
-  // Checking the floor against the raw (unrounded) percentage while the UI
-  // shows the rounded one could previously display a contradictory pair like
-  // "45.00%" next to "Below the AICTE floor".
+  // Percentages and contribution rows are rounded for display only. Eligibility
+  // and the final weighted merit calculation must keep using the underlying
+  // values: rounding 44.999% to 45.00% must not make an ineligible candidate
+  // eligible, and rounding each contribution independently can move the final
+  // merit by 0.01.
   const diplomaPercent = round2(diplomaPercentRaw);
   const entrancePercent = round2(entrancePercentRaw);
 
@@ -111,16 +111,12 @@ export function computeLateralEntryMerit({
   const entranceShareRaw = (entrancePercentRaw * (100 - weight)) / 100;
   const diplomaShare = round2(diplomaShareRaw);
   const entranceShare = round2(entranceShareRaw);
-  // Derive the headline merit index as the sum of the two *already-rounded*
-  // shares (not the raw shares) so the two displayed contribution rows
-  // always add up to the displayed merit index instead of being off by 0.01
-  // from independent rounding.
-  const merit = round2(diplomaShare + entranceShare);
+  const merit = round2(diplomaShareRaw + entranceShareRaw);
 
   const aicteFloor = isReserved
     ? AICTE_MIN_DIPLOMA_PERCENT_RESERVED
     : AICTE_MIN_DIPLOMA_PERCENT;
-  const meetsAicteFloor = diplomaPercent >= aicteFloor;
+  const meetsAicteFloor = diplomaPercentRaw >= aicteFloor;
 
   return {
     merit,

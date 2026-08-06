@@ -18,8 +18,9 @@
  *  - Passports must be valid for at least six months from the date of entry.
  *  - K-ETA is the travel authorisation for visa-exempt travellers only. If you
  *    hold a visa you do not apply for K-ETA as well.
- *  - Staying beyond the sojourn period stamped on entry requires an extension
- *    applied for through HiKorea before the period expires; it is not automatic.
+ *  - A stated short-term itinerary over 90 days is not eligible for generated
+ *    submit-ready C-3 output. An extension is not presented as a way to make an
+ *    over-limit itinerary compliant at application time.
  *  - Applications are lodged at the Korean embassy or consulate with
  *    jurisdiction over your place of residence, or through the Korea Visa
  *    Portal where that is available.
@@ -278,7 +279,7 @@ export function buildKoreaCoverLetter(input = {}) {
   const warnings = [];
   if (!withinSojourn) {
     warnings.push(
-      `You have described ${plural(stayDays, "day")}. A short-term visit visa permits a sojourn of up to ${SHORT_TERM_MAX_STAY_DAYS} days counting the day of entry, so this trip would end after ${formatLongDate(sojournLimit)}. Shorten the stay or apply through HiKorea for an extension before the period expires.`,
+      `You have described ${plural(stayDays, "day")}. A C-3 short-term visit permits a sojourn of up to ${SHORT_TERM_MAX_STAY_DAYS} days counting the day of entry, so this tool cannot generate a cover letter for these dates. Shorten the itinerary to end by ${formatLongDate(sojournLimit)}, or obtain official advice about the visa category that matches the intended stay.`,
     );
   }
   if (!passportValidityOk) {
@@ -321,14 +322,12 @@ export function buildKoreaCoverLetter(input = {}) {
   const tiesStatement = clean(input.tiesStatement);
   const itineraryLines = splitLines(input.itinerary);
 
-  // withinSojourn distinguishes a normal trip from one whose stated dates already exceed
-  // the 90-day limit. The two must not share one unconditional "I will leave well before
-  // that date" sentence — that claim is only true in the first case, and stating it
-  // alongside a departure date that is in fact after the limit would be a direct,
-  // self-contradicting false statement in a document meant for a consular officer.
+  // Output for an over-limit itinerary is suppressed below. This alternate sentence exists
+  // only to keep the internal draft self-consistent; it is never returned as a submit-ready
+  // letter.
   const sojournSentence = withinSojourn
     ? `I plan to arrive in the Republic of Korea on ${formatLongDate(arrival)} and to depart on ${formatLongDate(departure)}, a sojourn of ${plural(stayDays, "day")} counting the day of entry. I understand that a short-term visit visa permits a stay of up to ninety days, which in my case would end on ${formatLongDate(sojournLimit)}, and I will leave well before that date.`
-    : `I plan to arrive in the Republic of Korea on ${formatLongDate(arrival)} and to depart on ${formatLongDate(departure)}, a sojourn of ${plural(stayDays, "day")} counting the day of entry. I understand that a short-term visit visa permits a stay of only up to ninety days, which in my case would end on ${formatLongDate(sojournLimit)} — ${plural(Math.max(0, stayDays - SHORT_TERM_MAX_STAY_DAYS), "day")} short of the dates above. I will either shorten this visit to fit within the permitted sojourn or apply for an extension through HiKorea before the ninety-day period expires, and will not remain in Korea beyond what is authorised.`;
+    : `The stated itinerary lasts ${plural(stayDays, "day")} and exceeds the ${SHORT_TERM_MAX_STAY_DAYS}-day C-3 limit, so it must be corrected before a cover letter can be prepared.`;
 
   const letterLines = [
     formatLongDate(applied),
@@ -345,7 +344,7 @@ export function buildKoreaCoverLetter(input = {}) {
   ];
 
   if (inviterName) {
-    letterLines.push("", `My host and point of contact in Korea is ${inviterName}, whose invitation letter and identification are enclosed.`);
+    letterLines.push("", `My host and point of contact in Korea is ${inviterName}.`);
   }
 
   if (itineraryLines.length) {
@@ -353,20 +352,20 @@ export function buildKoreaCoverLetter(input = {}) {
   }
 
   if (accommodation) {
-    letterLines.push("", `Accommodation: ${accommodation}. Booking confirmations are enclosed.`);
+    letterLines.push("", `My planned accommodation is ${accommodation}.`);
   }
 
   letterLines.push(
     "",
-    `I have approximately US$${Math.round(budgetUsd).toLocaleString("en-US")} available for the trip${applicants > 1 ? ` for ${plural(applicants, "applicant")}` : ""}, about US$${perPersonPerDayUsd.toFixed(0)} per person per day, evidenced by the enclosed bank statements, and a confirmed return ticket. I am paying the consular fee of US$${feePerApplicantUsd} per applicant${applicants > 1 ? `, US$${totalFeeUsd} in total` : ""}.`,
+    `I have approximately US$${Math.round(budgetUsd).toLocaleString("en-US")} available for the trip${applicants > 1 ? ` for ${plural(applicants, "applicant")}` : ""}, about US$${perPersonPerDayUsd.toFixed(0)} per person per day. The consular fee is US$${feePerApplicantUsd} per applicant${applicants > 1 ? `, US$${totalFeeUsd} in total` : ""}.`,
   );
 
   const tiesParts = [];
   if (occupation) {
     tiesParts.push(
       employer
-        ? `I work as ${occupation} at ${employer}, my leave for these dates is approved, and I return to work immediately afterwards.`
-        : `I am ${occupation}, and the enclosed documents confirm my circumstances at home.`,
+        ? `I work as ${occupation} at ${employer} and plan to return to my work after the trip.`
+        : `I am ${occupation} and plan to return to my circumstances at home after the trip.`,
     );
   }
   if (tiesStatement) tiesParts.push(tiesStatement);
@@ -377,7 +376,7 @@ export function buildKoreaCoverLetter(input = {}) {
 
   letterLines.push(
     "",
-    "Enclosed are the completed visa application form, a recent photograph, my passport and a copy of the data page, flight and hotel confirmations, bank statements, proof of employment and, where relevant, the invitation from my host. I am happy to supply anything further you require.",
+    "I understand that the mission will assess the application against the supporting documents I submit and may request further information.",
     "",
     "Thank you for considering my application.",
     "",
@@ -405,7 +404,11 @@ export function buildKoreaCoverLetter(input = {}) {
   ];
 
   return {
-    letter: letterLines.join("\n"),
+    letter: withinSojourn ? letterLines.join("\n") : "",
+    letterBlocked: !withinSojourn,
+    letterBlockingReason: withinSojourn
+      ? null
+      : `A C-3 cover letter cannot be prepared for a ${stayDays}-day itinerary because the short-term stay limit is ${SHORT_TERM_MAX_STAY_DAYS} days.`,
     stayDays,
     sojournLimit: formatLongDate(sojournLimit),
     withinSojourn,

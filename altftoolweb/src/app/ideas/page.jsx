@@ -282,7 +282,7 @@ export default async function IdeasHomePage() {
         scene={IDEAS_SCENE}
         kicker="Behind the corpus"
         title="Ideas do not arrive scored."
-        body={`Every one of the ${manifest.total.toLocaleString("en-US")} ideas here is sourced against a vertical, run through the six-signal engine, written up as a dossier with its market evidence and first move, then ranked against the rest of the corpus. The floor below is that pipeline, running.`}
+        body={`Every one of the ${manifest.total.toLocaleString("en-US")} ideas here is sourced against a vertical, run through the six-signal engine, written up as a dossier with its market evidence and first move, then ranked against the rest of the corpus. The floor below represents that pipeline.`}
         href="/ideas/browse"
         cta="Browse the corpus"
       />

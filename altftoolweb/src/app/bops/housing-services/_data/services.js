@@ -101,7 +101,7 @@ export const HS_CATEGORIES = [
     pages: [
       { slug: "pest-control", name: "Pest Control", tagline: "Pest management services", description: "Full-service pest control — inspection, treatment, booking and service areas." },
       { slug: "pest-killer", name: "Pest Killer", tagline: "Pest extermination", description: "Ants, bedbugs, cockroaches, mosquitoes and termites, with reveal animations." },
-      { slug: "kairos", name: "Kairos Pest Control", tagline: "Termite & pest control", description: "Branded termite and pest control with a dedicated termite service page." },
+      { slug: "kairos", name: "Kairos Fictional UI Preview", tagline: "Non-operational pest-service concept", description: "A fictional, non-operational landing-page preview with general education and provider-verification prompts." },
       { slug: "bugshield-pro", name: "BugShield Pro", tagline: "Guaranteed pest protection", description: "Quarterly protection plans for ants, roaches, rodents and termites — re-treat free if pests return." },
       { slug: "greenguard-pest", name: "GreenGuard Exterminators", tagline: "Eco-first pest control", description: "Plant-based treatments and exclusion-first methods that are tough on pests, gentle on homes." },
     ],

@@ -53,6 +53,18 @@
   --color-warning-text: var(--anslation-ds-warning-text);
   --color-danger-text: var(--anslation-ds-danger-text);
   --color-info-text: var(--anslation-ds-info-text);
+  --color-illustration-skin-1: var(--anslation-ds-illustration-skin-1);
+  --color-illustration-skin-2: var(--anslation-ds-illustration-skin-2);
+  --color-illustration-skin-3: var(--anslation-ds-illustration-skin-3);
+  --color-illustration-skin-4: var(--anslation-ds-illustration-skin-4);
+  --color-illustration-skin-5: var(--anslation-ds-illustration-skin-5);
+  --color-illustration-skin-6: var(--anslation-ds-illustration-skin-6);
+  --color-illustration-hair-1: var(--anslation-ds-illustration-hair-1);
+  --color-illustration-hair-2: var(--anslation-ds-illustration-hair-2);
+  --color-illustration-hair-3: var(--anslation-ds-illustration-hair-3);
+  --color-illustration-hair-4: var(--anslation-ds-illustration-hair-4);
+  --color-illustration-hair-5: var(--anslation-ds-illustration-hair-5);
+  --color-illustration-blush: var(--anslation-ds-illustration-blush);
 
   --radius-sm: var(--anslation-ds-radius-sm);
   --radius-md: var(--anslation-ds-radius);
