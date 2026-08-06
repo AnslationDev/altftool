@@ -9,6 +9,8 @@ import {
   classify,
   compareRules,
   GRADE_POINTS,
+  MAX_CGPA,
+  MIN_CGPA,
   percentageToCgpa,
   requiredGpaForTarget,
   RULES,
@@ -117,6 +119,12 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset all inputs, including the semester credits table, back to the defaults?")
+    ) {
+      return;
+    }
     setCgpa(DEFAULTS.cgpa);
     setRuleId(DEFAULTS.ruleId);
     setReversePercent(DEFAULTS.reversePercent);
@@ -212,7 +220,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Percentage
             </p>
@@ -222,6 +230,13 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError ? "Fix the CGPA above to see a result." : `using ${result.rule.expression}`}
             </p>
+            {!hasError && result.clamped && (
+              <p className="mt-1 text-sm text-[var(--warning-text)]">
+                {result.rule.m * toNumber(cgpa) + result.rule.c < 0
+                  ? "The formula gives a negative figure here — capped at 0% since a percentage cannot be negative."
+                  : "The formula gives a figure above 100% here — capped at 100%."}
+              </p>
+            )}
           </div>
           <div className="flex flex-wrap gap-2">
             <button
@@ -250,10 +265,7 @@ export default function ToolHome() {
             ["CGPA entered", hasError ? DASH : num(toNumber(cgpa))],
             ["Formula applied", hasError ? DASH : result.rule.expression],
             ["Degree classification", grade.error ? DASH : grade.label],
-            [
-              "Marks out of 100 in a 5-subject sense",
-              hasError ? DASH : `${num(result.percent)} average per 100 marks`,
-            ],
+            ["Capped by the formula", hasError ? DASH : result.clamped ? "Yes" : "No"],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -349,25 +361,34 @@ export default function ToolHome() {
             {built.error}
           </p>
         ) : (
-          <dl className="mt-4 divide-y divide-[var(--border)] text-sm">
-            {[
-              ["Credit-weighted CGPA", num(built.cgpa)],
-              ["Total credits counted", num(built.totalCredits)],
-              ["Total grade points", num(built.totalPoints)],
-              [
-                "That CGPA as a percentage",
-                (() => {
-                  const out = cgpaToPercentage(built.cgpa, ruleId);
-                  return out.error ? DASH : pct(out.percent);
-                })(),
-              ],
-            ].map(([label, value]) => (
-              <div key={label} className="flex items-center justify-between gap-4 py-2.5">
-                <dt className="text-[var(--muted-foreground)]">{label}</dt>
-                <dd className="text-right font-semibold">{value}</dd>
-              </div>
-            ))}
-          </dl>
+          <div aria-live="polite" role="status">
+            {built.counted < semesters.length && (
+              <p className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--foreground)]">
+                Counted {built.counted} of {semesters.length} semesters — the rest are missing credits
+                or a GPA and were left out of the average below.
+              </p>
+            )}
+            <dl className="mt-4 divide-y divide-[var(--border)] text-sm">
+              {[
+                ["Credit-weighted CGPA", num(built.cgpa)],
+                ["Semesters counted", `${built.counted} of ${semesters.length}`],
+                ["Total credits counted", num(built.totalCredits)],
+                ["Total grade points", num(built.totalPoints)],
+                [
+                  "That CGPA as a percentage",
+                  (() => {
+                    const out = cgpaToPercentage(built.cgpa, ruleId);
+                    return out.error ? DASH : pct(out.percent);
+                  })(),
+                ],
+              ].map(([label, value]) => (
+                <div key={label} className="flex items-center justify-between gap-4 py-2.5">
+                  <dt className="text-[var(--muted-foreground)]">{label}</dt>
+                  <dd className="text-right font-semibold">{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
         )}
       </section>
 
@@ -397,7 +418,7 @@ export default function ToolHome() {
             {reverse.error}
           </p>
         ) : (
-          <p className="mt-3 text-sm text-[var(--muted-foreground)]">
+          <p className="mt-3 text-sm text-[var(--muted-foreground)]" aria-live="polite" role="status">
             That is a CGPA of{" "}
             <span className="font-semibold text-[var(--foreground)]">{num(reverse.cgpa)}</span> under
             the selected rule.
@@ -463,15 +484,29 @@ export default function ToolHome() {
             {target.error}
           </p>
         ) : target.achievable ? (
-          <p className="mt-3 text-sm text-[var(--muted-foreground)]">
+          <p className="mt-3 text-sm text-[var(--muted-foreground)]" aria-live="polite" role="status">
             You need an average GPA of{" "}
             <span className="font-semibold text-[var(--foreground)]">{num(target.requiredGpa)}</span>{" "}
             across the remaining credits.
           </p>
+        ) : target.requiredGpa < MIN_CGPA ? (
+          <p
+            className="mt-3 rounded-md bg-[var(--success-soft)] px-3 py-2 text-sm text-[var(--foreground)]"
+            aria-live="polite"
+            role="status"
+          >
+            You have already secured that target from completed credits alone — the required GPA
+            works out negative ({num(target.requiredGpa)}), so any passing score in the remaining
+            credits keeps you there. No need to lower the target.
+          </p>
         ) : (
-          <p className="mt-3 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--foreground)]">
+          <p
+            className="mt-3 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--foreground)]"
+            aria-live="polite"
+            role="status"
+          >
             Reaching that target would need a GPA of {num(target.requiredGpa)} in the remaining
-            credits, which is outside the 0 to 10 scale. Lower the target or spread it over more
+            credits, above the {MAX_CGPA} point scale. Lower the target or spread it over more
             credits.
           </p>
         )}

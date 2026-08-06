@@ -866,7 +866,7 @@ function LiveLab({ slug }) {
           </p>
         )}
         {data && (
-          <div className="mt-4 grid gap-4">
+          <div className="mt-4 grid gap-4" role="status" aria-live="polite" aria-atomic="true">
             <div>
               <p className="text-xl font-semibold">{data.summary}</p>
               <p className="mt-1 text-xs text-[var(--muted-foreground)]">

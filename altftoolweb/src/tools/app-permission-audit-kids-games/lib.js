@@ -318,6 +318,9 @@ export function auditKidsGamePermissions({ granted = [], childAge, features = {}
   if (childAge === "" || childAge === null || childAge === undefined || !Number.isFinite(age)) {
     return { error: "Enter the player's age in whole years." };
   }
+  if (!Number.isInteger(age)) {
+    return { error: "Enter the player's age in whole years." };
+  }
   if (age < MIN_AGE_YEARS) {
     return { error: `Age must be at least ${MIN_AGE_YEARS} year.` };
   }

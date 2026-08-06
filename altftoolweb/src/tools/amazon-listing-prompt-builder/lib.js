@@ -61,11 +61,18 @@ export function byteLength(text) {
   return bytes;
 }
 
-/** Lowercase word tokens with punctuation stripped. */
+/**
+ * Lowercase word tokens with punctuation stripped.
+ *
+ * Unicode-aware: keeps letters and combining marks from any script (\p{L}, \p{M})
+ * plus digits, so accented Latin (café) and non-Latin scripts that use combining
+ * vowel signs (Devanagari, etc.) survive intact instead of being shredded or
+ * dropped by an ASCII-only character class.
+ */
 export function tokenise(text) {
   return String(text ?? "")
     .toLowerCase()
-    .split(/[^a-z0-9%+]+/i)
+    .split(/[^\p{L}\p{N}\p{M}%+]+/u)
     .filter(Boolean);
 }
 

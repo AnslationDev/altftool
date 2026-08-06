@@ -10,8 +10,9 @@ export const spec = {
     "India",
     "Legal"
   ],
-  "icon": "file-warning",
+  "icon": "shield-alert",
   "iconColor": "text-primary",
+  "confirmReset": "Reset all fields? This clears your Facts, Relief and Evidence text and cannot be undone.",
   "fields": [
     {
       "key": "consumer",

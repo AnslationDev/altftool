@@ -6,6 +6,7 @@ export default function RandomPoll({
   setPollQuestion,
   setPollOptions,
   setVotes,
+  disabled = false,
 }) {
   //  Dummy polls
   const polls = [
@@ -45,6 +46,7 @@ export default function RandomPoll({
   ];
 
   const handleRandomPoll = () => {
+    if (disabled) return;
     const random = polls[Math.floor(Math.random() * polls.length)];
 
     setPollQuestion(random.question);
@@ -57,7 +59,8 @@ export default function RandomPoll({
   return (
     <button
       onClick={handleRandomPoll}
-      className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-(--muted) hover:bg-(--primary) hover:text-white transition"
+      disabled={disabled}
+      className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-(--muted) hover:bg-(--primary) hover:text-white transition disabled:cursor-not-allowed disabled:opacity-60"
     >
       <Dices className="text-purple-500" size={18} />
       Show Random Poll

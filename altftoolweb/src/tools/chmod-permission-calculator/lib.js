@@ -118,13 +118,18 @@ export function parseSymbolic(text) {
   const raw = String(text ?? "").trim();
   if (raw === "") return { ok: false, message: "Enter a symbolic mode such as rwxr-xr-x." };
   // Accept an optional leading file-type character from ls -l (e.g. -rwxr-xr-x, drwxr-xr-x).
-  const body = raw.length === 10 && "-dlbcps".includes(raw[0]) ? raw.slice(1) : raw;
+  const hasTypeChar = raw.length === 10 && "-dlbcps".includes(raw[0]);
+  const body = hasTypeChar ? raw.slice(1) : raw;
   if (body.length !== 9) {
     return {
       ok: false,
       message: "A symbolic mode has exactly 9 characters (three rwx triplets), e.g. rw-r--r--.",
     };
   }
+  // Position numbers in error messages below are reported relative to what the
+  // user actually typed (raw), not the stripped body, so a leading type char
+  // (e.g. the "-" in "-rwxr-xrzx") doesn't shift them off by one.
+  const posOffset = hasTypeChar ? 1 : 0;
 
   const bits = emptyBits();
   const groups = [
@@ -136,8 +141,8 @@ export function parseSymbolic(text) {
   for (let index = 0; index < 3; index += 1) {
     const [rc, wc, xc] = body.slice(index * 3, index * 3 + 3);
     const { key, specialKey, specialChar } = groups[index];
-    if (rc !== "r" && rc !== "-") return { ok: false, message: `Position ${index * 3 + 1} must be r or -, got "${rc}".` };
-    if (wc !== "w" && wc !== "-") return { ok: false, message: `Position ${index * 3 + 2} must be w or -, got "${wc}".` };
+    if (rc !== "r" && rc !== "-") return { ok: false, message: `Position ${index * 3 + 1 + posOffset} must be r or -, got "${rc}".` };
+    if (wc !== "w" && wc !== "-") return { ok: false, message: `Position ${index * 3 + 2 + posOffset} must be w or -, got "${wc}".` };
     bits[key].r = rc === "r";
     bits[key].w = wc === "w";
     if (xc === "x") {
@@ -155,7 +160,7 @@ export function parseSymbolic(text) {
     } else {
       return {
         ok: false,
-        message: `Position ${index * 3 + 3} must be x, -, ${specialChar} or ${specialChar.toUpperCase()}, got "${xc}".`,
+        message: `Position ${index * 3 + 3 + posOffset} must be x, -, ${specialChar} or ${specialChar.toUpperCase()}, got "${xc}".`,
       };
     }
   }

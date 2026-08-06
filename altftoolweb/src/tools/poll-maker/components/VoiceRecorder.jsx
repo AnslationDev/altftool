@@ -10,6 +10,7 @@ export default function VoiceRecorder() {
 
   const mediaRecorderRef = useRef(null);
   const audioChunksRef = useRef([]);
+  const streamRef = useRef(null);
 
   const startRecording = async () => {
     try {
@@ -19,6 +20,7 @@ export default function VoiceRecorder() {
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
       });
+      streamRef.current = stream;
 
       const mediaRecorder = new MediaRecorder(stream);
       mediaRecorderRef.current = mediaRecorder;
@@ -53,6 +55,14 @@ export default function VoiceRecorder() {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       setIsRecording(false);
+    }
+
+    // Stopping the MediaRecorder does not release the underlying mic
+    // tracks — without this the browser's mic-in-use indicator stays lit
+    // until the whole tab closes.
+    if (streamRef.current) {
+      streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null;
     }
   };
 

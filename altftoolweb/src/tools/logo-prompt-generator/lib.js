@@ -171,7 +171,10 @@ export function computeLogoSpecs({ smallestPx, printHeightMm, dpi = 300, display
   const rawElements = Math.floor(small / PX_PER_ELEMENT);
   const maxElements = Math.max(1, Math.min(MAX_ELEMENT_BUDGET, rawElements));
   const clearSpacePx = round(display * CLEAR_SPACE_RATIO, 1);
-  const printPx = Math.ceil((mm / MM_PER_INCH) * res);
+  // Round to 6dp before ceiling so IEEE-754 rounding error on exact inch-derived
+  // sizes (e.g. 76.2mm @ 300dpi = 900.0000000000001) doesn't push the raster
+  // height up by a spurious extra pixel.
+  const printPx = Math.ceil(round((mm / MM_PER_INCH) * res, 6));
   const minStrokePxAtDisplay = round((minStrokePct / 100) * display, 1);
 
   return {

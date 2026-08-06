@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     ["Correct threshold by year", "Uses ₹5,000 up to FY 2024-25 and ₹10,000 from FY 2025-26, and withdraws it for cash payouts and non-individual shareholders."],
     ["15G against 15H tested separately", "Applies the Section 197A(1B) basic-exemption ceiling to Form 15G and correctly leaves Form 15H free of it."],
-    ["Order of precedence shown", "Names which rule decided the rate — declaration, Section 197 certificate, threshold, or the standard 10%."],
+    ["Order of precedence shown", "Names which rule decided the rate — declaration, threshold, Section 197 certificate, or the standard 10%."],
   ],
   faqs: [
     [

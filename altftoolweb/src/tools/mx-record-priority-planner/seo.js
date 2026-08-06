@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This planner assigns MX record preference values using the RFC 5321 rule that sending servers try the lowest preference first and load-balance across equal values. It covers three real setups — a single provider, a primary with a backup MX, and a three-phase provider migration — and validates that every target is a hostname rather than an IP or CNAME, as RFC 2181 requires. It is for admins moving mail providers or adding failover without bouncing messages.",
+    "This planner assigns MX record preference values using the RFC 5321 rule that sending servers try the lowest preference first and load-balance across equal values. It covers three real setups — a single provider, a primary with a backup MX, and a three-phase provider migration — and validates that every target is a well-formed hostname rather than an IP address literal, as RFC 5321 requires. It is for admins moving mail providers or adding failover without bouncing messages.",
   useCases: [
     "Adding a backup MX at preference 20 behind a primary at 10 so mail queues elsewhere during an outage",
     "Planning a three-phase migration from an on-premise mail server to a hosted provider without dropping messages mid-cutover",

@@ -7,9 +7,9 @@ const seo = {
     "A brand team converting a 10 mm print requirement at 300 dpi into the minimum raster height before exporting assets",
   ],
   benefits: [
-    ["Constraints, not just adjectives", "Stroke weight, element budget and clear space are computed from your smallest reproduction size."],
+    ["Constraints, not just adjectives", "Stroke weight and element budget are computed from your smallest reproduction size; clear space follows the standard half-mark-height convention at the reference artboard size."],
     ["Mark-type guidance built in", "Each of the seven mark types comes with when-to-use advice and its known trade-off."],
-    ["Model-safe negatives", "The negative prompt blocks photorealism, 3D bevels, mockups and lettering the model would garble."],
+    ["Model-safe negatives", "The negative prompt always blocks photorealism, 3D bevels and mockups, plus lettering the model would garble for symbol-only mark types (pictorial, abstract, mascot) that shouldn't show text."],
   ],
   faqs: [
     [

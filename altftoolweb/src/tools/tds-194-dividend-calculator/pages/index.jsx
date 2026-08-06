@@ -301,7 +301,11 @@ export default function ToolHome() {
         </div>
       </section>
 
-      <section className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         {error ? (
           <p
             className="mb-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-semibold text-[var(--danger)]"

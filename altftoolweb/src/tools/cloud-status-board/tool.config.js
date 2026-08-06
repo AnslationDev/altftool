@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "See incidents across major cloud and SaaS providers on one dashboard.",
+  "description": "See the current status of major cloud and SaaS providers on one dashboard.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

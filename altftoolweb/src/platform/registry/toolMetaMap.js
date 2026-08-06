@@ -31879,7 +31879,7 @@ export const toolMetaMap = {
       "Electronics",
       "Calculator"
     ],
-    "icon": "cable",
+    "icon": "zap",
     "iconColor": "text-primary"
   },
   "voltage-stabilizer-selector": {

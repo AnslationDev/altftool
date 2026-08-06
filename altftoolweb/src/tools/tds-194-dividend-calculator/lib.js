@@ -126,11 +126,17 @@ export function assessDeclaration({
   aggregateCoveredIncome,
 }) {
   const isSenior = age >= SENIOR_CITIZEN_AGE;
-  const form = isSenior ? "15H" : "15G";
+  // Form 15H (Section 197A(1C)) may only be filed by a RESIDENT INDIVIDUAL who
+  // is a senior citizen — it is never available to an HUF, AOP, trust, firm or
+  // company no matter how old the input `age` is. Every other case (including
+  // a senior non-individual) falls back to Form 15G (Section 197A(1)/(1A)),
+  // which has no age ceiling but does carry the Section 197A(1B) income-ceiling
+  // condition evaluated below.
+  const form = isSenior && shareholderType === "individual" ? "15H" : "15G";
   const exemptionLimit = basicExemptionLimit({ financialYear, regime, age });
   const checks = [];
 
-  if (isSenior) {
+  if (form === "15H") {
     checks.push({
       label: "Resident individual aged 60 or above",
       pass: shareholderType === "individual",
@@ -174,8 +180,12 @@ export function assessDeclaration({
  *
  * Order of precedence used, which mirrors the statute:
  *   1. a valid Section 197A declaration (Form 15G / 15H) - nil deduction
- *   2. a Section 197 lower-deduction certificate - certificate rate
- *   3. the Section 194 proviso threshold - nil deduction
+ *   2. the Section 194 proviso threshold - nil deduction (this is an
+ *      unconditional carve-out from the deduction requirement itself, so it
+ *      is evaluated before any Section 197 certificate — a certificate only
+ *      sets the rate for a deduction that is otherwise due, and there is
+ *      nothing for it to modify once the proviso removes that obligation)
+ *   3. a Section 197 lower-deduction certificate - certificate rate
  *   4. 10% with PAN, 20% without PAN (Section 206AA)
  *
  * @returns {object} either { error } or the full breakdown.
@@ -264,18 +274,18 @@ export function computeDividendTds({
     rate = 0;
     basis = `Form ${declaration.form} accepted under Section 197A`;
     exemptReason = `No TDS: a valid Form ${declaration.form} declaration is on record with the company.`;
-  } else if (lowerDeductionCertificate) {
-    rate = certificateRate;
-    basis = "Section 197 lower deduction certificate";
-    if (certificateRate === 0) {
-      exemptReason = "No TDS: a Section 197 nil-deduction certificate is on record.";
-    }
   } else if (withinThreshold) {
     rate = 0;
     basis = "Within the Section 194 proviso threshold";
     exemptReason = `No TDS: dividend of Rs ${grossDividend.toLocaleString(
       "en-IN",
     )} is within the Rs ${threshold.toLocaleString("en-IN")} limit for ${fy.label}.`;
+  } else if (lowerDeductionCertificate) {
+    rate = certificateRate;
+    basis = "Section 197 lower deduction certificate";
+    if (certificateRate === 0) {
+      exemptReason = "No TDS: a Section 197 nil-deduction certificate is on record.";
+    }
   } else if (!hasPan) {
     rate = TDS_RATE_NO_PAN_206AA;
     basis = "Section 206AA - PAN not furnished";

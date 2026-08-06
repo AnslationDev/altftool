@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Gamepad2, RotateCcw, ShieldAlert, TriangleAlert } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   FEATURE_FLAGS,
   KIDS_GAME_PERMISSIONS,
@@ -34,7 +35,8 @@ export default function ToolHome() {
   const [age, setAge] = useState(DEFAULT_AGE);
   const [granted, setGranted] = useState(DEFAULT_GRANTED);
   const [features, setFeatures] = useState({});
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(
     () => auditKidsGamePermissions({ granted, childAge: age, features }),
@@ -49,30 +51,24 @@ export default function ToolHome() {
     setGranted((current) =>
       current.includes(id) ? current.filter((item) => item !== id) : [...current, id],
     );
-    setCopied(false);
+    resetCopyState();
   };
 
   const toggleFeature = (id) => {
     setFeatures((current) => ({ ...current, [id]: !current[id] }));
-    setCopied(false);
+    resetCopyState();
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "permission audit result" });
   };
 
   const reset = () => {
     setAge(DEFAULT_AGE);
     setGranted(DEFAULT_GRANTED);
     setFeatures({});
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -109,7 +105,7 @@ export default function ToolHome() {
               value={age}
               onChange={(event) => {
                 setAge(event.target.value);
-                setCopied(false);
+                resetCopyState();
               }}
             />
             <p className="mt-2 text-xs text-[var(--muted-foreground)]">
@@ -175,7 +171,7 @@ export default function ToolHome() {
             type="button"
             onClick={() => {
               setGranted(KIDS_GAME_PERMISSIONS.map((item) => item.id));
-              setCopied(false);
+              resetCopyState();
             }}
             className={GHOST_BTN}
           >
@@ -185,7 +181,7 @@ export default function ToolHome() {
             type="button"
             onClick={() => {
               setGranted([]);
-              setCopied(false);
+              resetCopyState();
             }}
             className={GHOST_BTN}
           >
@@ -203,7 +199,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -220,17 +220,22 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy permission audit result"
+              aria-label={
+                isCopied("result") ? "Copied permission audit result" : "Copy permission audit result"
+              }
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset the audit" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
@@ -264,7 +269,11 @@ export default function ToolHome() {
       </section>
 
       {!hasError && result.revokeNow.length > 0 && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          aria-live="polite"
+          role="status"
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        >
           <h2 className="flex items-center gap-2 text-base font-semibold">
             <ShieldAlert className="h-4 w-4 text-[var(--danger)]" aria-hidden="true" />
             Revoke these now
@@ -289,7 +298,11 @@ export default function ToolHome() {
       )}
 
       {!hasError && result.reviewCarefully.length > 0 && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          aria-live="polite"
+          role="status"
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        >
           <h2 className="flex items-center gap-2 text-base font-semibold">
             <TriangleAlert className="h-4 w-4 text-[var(--warning-text)]" aria-hidden="true" />
             Justified, but still worth limiting
@@ -303,6 +316,26 @@ export default function ToolHome() {
                   <span className="font-semibold">Tighten it: </span>
                   <span className="text-[var(--muted-foreground)]">{item.how}</span>
                 </p>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {!hasError && result.notGranted.length > 0 && (
+        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <h2 className="flex items-center gap-2 text-base font-semibold">
+            <Check className="h-4 w-4 text-[var(--success)]" aria-hidden="true" />
+            Already correctly withheld
+          </h2>
+          <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+            The game does not have these permissions right now. Keep it that way — don&apos;t grant
+            them unless a feature you actually use genuinely needs one.
+          </p>
+          <ul className="mt-3 grid gap-1 sm:grid-cols-2">
+            {result.notGranted.map((item) => (
+              <li key={item.id} className="text-sm text-[var(--muted-foreground)]">
+                {item.label}
               </li>
             ))}
           </ul>

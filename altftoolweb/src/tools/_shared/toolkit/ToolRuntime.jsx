@@ -279,7 +279,7 @@ export default function ToolRuntime({ spec }) {
                         {result.list.map((item, i) => (
                           <li
                             key={i}
-                            className="rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm font-medium"
+                            className="whitespace-pre-line rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm font-medium"
                           >
                             {item}
                           </li>

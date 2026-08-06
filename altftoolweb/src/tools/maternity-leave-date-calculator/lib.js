@@ -90,11 +90,6 @@ export function addMonths(ts, months) {
   return Date.UTC(probe.getUTCFullYear(), probe.getUTCMonth(), Math.min(day, lastDay));
 }
 
-/** Inclusive day count between two UTC timestamps. */
-export function daysBetween(fromTs, toTs) {
-  return Math.round((toTs - fromTs) / MS_PER_DAY);
-}
-
 /**
  * Entitlement lookup for the pregnancy/childbirth path.
  * Returns weeks of leave and the cap on the pre-delivery portion.
@@ -123,8 +118,11 @@ export function entitlementForChildren(survivingChildren) {
  * @param {string} input.anchorDate        ISO date: due date, handover date or event date
  * @param {number} input.survivingChildren surviving children before this birth (birth mode only)
  * @param {number} input.preDeliveryWeeks  weeks of leave requested before the due date
- * @param {number} input.illnessDays       extra s.10 illness leave, 0-30 days
- * @param {number} input.daysWorked        days worked in the preceding 12 months (0 = skip check)
+ * @param {number} input.illnessDays       extra s.10 illness leave, 0-30 days (ignored for
+ *                                         mode="adoption": s.10 covers illness from pregnancy,
+ *                                         delivery, premature birth, miscarriage, MTP or
+ *                                         tubectomy, not the adoption/commissioning path)
+ * @param {number} input.daysWorked        days worked in the preceding 12 months
  * @returns {object} plan, or { error } when the input cannot produce a valid plan
  */
 export function computeMaternityLeave({
@@ -143,15 +141,19 @@ export function computeMaternityLeave({
     return { error: "Enter a valid date in YYYY-MM-DD form." };
   }
 
-  const illness = Number(illnessDays);
-  if (!Number.isFinite(illness) || illness < 0) {
+  const rawIllness = Number(illnessDays);
+  if (!Number.isFinite(rawIllness) || rawIllness < 0) {
     return { error: "Illness leave cannot be negative." };
   }
-  if (illness > MATERNITY_RULES.ILLNESS_MAX_DAYS) {
+  if (rawIllness > MATERNITY_RULES.ILLNESS_MAX_DAYS) {
     return {
       error: `Section 10 illness leave is capped at ${MATERNITY_RULES.ILLNESS_MAX_DAYS} days (one month).`,
     };
   }
+  // s.10 covers illness arising out of pregnancy, delivery, premature birth,
+  // miscarriage, MTP or tubectomy — it does not cover the adoption/commissioning
+  // path, so that input has no statutory effect in this mode.
+  const illness = mode === "adoption" ? 0 : rawIllness;
 
   const worked = Number(daysWorked);
   if (!Number.isFinite(worked) || worked < 0 || worked > 366) {
@@ -201,7 +203,11 @@ export function computeMaternityLeave({
   const illnessEndTs = illness > 0 ? addDays(rejoinTs, illness - 1) : null;
   const finalRejoinTs = illness > 0 ? addDays(illnessEndTs, 1) : rejoinTs;
 
-  const eligibilityChecked = mode !== "adoption" && worked > 0;
+  // The s.5(2) qualifying-service check applies to every non-adoption mode,
+  // including daysWorked=0 — that is a real, valid input (a brand-new
+  // employee) and is the single clearest case of falling short of the
+  // 80-day threshold, so it must not be treated as "no check requested".
+  const eligibilityChecked = mode !== "adoption";
   const eligible = !eligibilityChecked || worked >= MATERNITY_RULES.MIN_QUALIFYING_DAYS;
 
   const nursingUntilTs =

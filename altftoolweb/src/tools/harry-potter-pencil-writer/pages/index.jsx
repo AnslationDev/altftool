@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Sparkles, Settings2, Download, Copy, Share2, Type, TypeOutline } from "lucide-react";
-import { toast } from "sonner";
+import { Sparkles, Settings2, Download, Copy, Share2, Type } from "lucide-react";
+import { Toaster, toast } from "sonner";
 import html2canvas from "html2canvas";
 
 export default function HarryPotterPencilWriter() {
@@ -21,6 +21,13 @@ export default function HarryPotterPencilWriter() {
   const displayText = text || "Your magical text will appear here...";
 
   const handleDownload = async () => {
+    if (!text) {
+      toast.error("No text to download!", {
+        description: "Please enter some text first",
+      });
+      return;
+    }
+
     const element = document.getElementById("text-display");
     if (!element) return;
 
@@ -83,6 +90,12 @@ export default function HarryPotterPencilWriter() {
 
   return (
     <div className="min-h-screen bg-(--background) py-12 px-4 md:px-6">
+      <Toaster position="top-center" richColors />
+      {/* Fantasy display fonts used by the font selector below */}
+      <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=MedievalSharp&family=UnifrakturMaguntia&display=swap"
+        rel="stylesheet"
+      />
       <div className="max-w-4xl mx-auto space-y-8">
 
         {/* Welcome Section */}
