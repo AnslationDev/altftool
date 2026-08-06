@@ -6,7 +6,6 @@ import {
   CheckCircle,
   ChevronLeft,
   ChevronRight,
-  Clipboard,
   Clock,
   Copy,
   Download,
@@ -42,6 +41,15 @@ function formatBytes(bytes = 0) {
   );
   const value = bytes / 1024 ** index;
   return `${value.toFixed(value >= 10 || index === 0 ? 0 : 1)} ${units[index]}`;
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 function sanitizeFileName(name) {
@@ -410,6 +418,10 @@ export default function MainComponent() {
 
   const fileInputRef = useRef(null);
   const pdfDocRef = useRef(null);
+  // Bumped on every processPdfFile()/resetTool() call so a slow, still-running
+  // extraction can detect it has been superseded and abandon its state updates
+  // instead of clobbering a newer file's results.
+  const processingTokenRef = useRef(0);
 
   useEffect(() => {
     let mounted = true;
@@ -480,6 +492,12 @@ export default function MainComponent() {
         setError("PDF engine is still loading. Try again in a moment.");
         return;
       }
+      if (isLoadingPdf) {
+        setError("Still reading the previous PDF. Wait for it to finish before loading another.");
+        return;
+      }
+
+      const token = ++processingTokenRef.current;
 
       if (pdfDocRef.current?.destroy) {
         pdfDocRef.current.destroy();
@@ -504,6 +522,14 @@ export default function MainComponent() {
         const data = new Uint8Array(await nextFile.arrayBuffer());
         const loadingTask = pdfjsLib.getDocument({ data, useSystemFonts: true });
         const pdf = await loadingTask.promise;
+
+        if (token !== processingTokenRef.current) {
+          // A newer file was dropped/selected while this one was loading —
+          // abandon this run so it cannot overwrite the newer file's state.
+          if (pdf?.destroy) pdf.destroy();
+          return;
+        }
+
         pdfDocRef.current = pdf;
         setPageCount(pdf.numPages);
         setProgress({ done: 0, total: pdf.numPages });
@@ -511,6 +537,7 @@ export default function MainComponent() {
         const extractedPages = [];
 
         for (let pageNumber = 1; pageNumber <= pdf.numPages; pageNumber++) {
+          if (token !== processingTokenRef.current) return;
           const page = await pdf.getPage(pageNumber);
           const textContent = await page.getTextContent();
           const items = textContent.items || [];
@@ -585,6 +612,8 @@ export default function MainComponent() {
           setProgress({ done: pageNumber, total: pdf.numPages });
         }
 
+        if (token !== processingTokenRef.current) return;
+
         setPages(extractedPages);
         const totalWords = extractedPages.reduce((sum, p) => {
           return sum + (p.text.trim() ? p.text.trim().split(/\s+/).length : 0);
@@ -602,6 +631,7 @@ export default function MainComponent() {
           );
         }
       } catch (err) {
+        if (token !== processingTokenRef.current) return;
         console.info("PDF extraction failed:", err);
         setError(
           err?.message ||
@@ -609,20 +639,33 @@ export default function MainComponent() {
         );
         setStatus("");
       } finally {
-        setIsLoadingPdf(false);
-        setIsExtracting(false);
+        if (token === processingTokenRef.current) {
+          setIsLoadingPdf(false);
+          setIsExtracting(false);
+        }
       }
     },
-    [pdfjsLib],
+    [pdfjsLib, isLoadingPdf],
   );
 
   const handleDrop = (event) => {
     event.preventDefault();
     setIsDragging(false);
+    if (isLoadingPdf) return;
     processPdfFile(event.dataTransfer.files?.[0]);
   };
 
   const resetTool = () => {
+    if (
+      (file || summary) &&
+      !window.confirm(
+        "Reset the summarizer? This clears the loaded PDF and any generated summary and cannot be undone.",
+      )
+    ) {
+      return;
+    }
+    // Invalidate any extraction still running so it cannot land after the reset.
+    processingTokenRef.current += 1;
     setFile(null);
     setPages([]);
     setPageCount(0);
@@ -637,6 +680,8 @@ export default function MainComponent() {
     setStatus("");
     setError("");
     setCopied(false);
+    setIsLoadingPdf(false);
+    setIsExtracting(false);
     if (pdfDocRef.current?.destroy) {
       pdfDocRef.current.destroy();
     }
@@ -687,12 +732,12 @@ export default function MainComponent() {
 
   const printSummary = () => {
     if (!summary) return;
-    const win = window.open("", "_blank", "width=640,height=800");
+    const win = window.open("", "_blank", "width=640,height=800,noopener");
     if (!win) return;
     win.document.write(`<!DOCTYPE html><html><head><title>PDF Summary</title>
       <style>body{font-family:system-ui,sans-serif;max-width:700px;margin:2rem auto;padding:0 1rem;color:#111;line-height:1.6}
       h1{font-size:1.25rem;margin-bottom:0.5rem}pre{white-space:pre-wrap;word-wrap:break-word}</style></head>
-      <body><h1>PDF Summary — ${file?.name || "Document"}</h1><pre>${summary.replace(/</g, "&lt;")}</pre></body></html>`);
+      <body><h1>PDF Summary — ${escapeHtml(file?.name || "Document")}</h1><pre>${escapeHtml(summary)}</pre></body></html>`);
     win.document.close();
     win.print();
   };
@@ -852,7 +897,15 @@ export default function MainComponent() {
                       {progress.done}/{progress.total}
                     </span>
                   </div>
-                  <div className="h-2 overflow-hidden rounded-full bg-(--background)">
+                  <div
+                    className="h-2 overflow-hidden rounded-full bg-(--background)"
+                    role="progressbar"
+                    aria-label="Extracting text from PDF"
+                    aria-valuemin={0}
+                    aria-valuemax={progress.total}
+                    aria-valuenow={progress.done}
+                    aria-valuetext={`${progress.done} of ${progress.total} pages`}
+                  >
                     <div
                       className="h-full rounded-full bg-(--primary) transition-all"
                       style={{
@@ -919,6 +972,8 @@ export default function MainComponent() {
           {status && (
             <div
               data-testid="tool-output"
+              aria-live="polite"
+              role="status"
               className="flex items-center gap-3 rounded-lg border border-(--border) bg-(--section-highlight) p-4 text-(--primary)"
             >
               {isExtracting || isGenerating ? (
@@ -931,7 +986,10 @@ export default function MainComponent() {
           )}
 
           {error && (
-            <div className="flex items-start gap-3 rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-red-600">
+            <div
+              role="alert"
+              className="flex items-start gap-3 rounded-lg border border-red-500/30 bg-red-500/10 p-4 text-red-600"
+            >
               <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
               <p className="text-sm font-medium">{error}</p>
             </div>

@@ -62,6 +62,13 @@ const fallback = (value, alt) => {
   return trimmed || alt;
 };
 
+/**
+ * Strip trailing ?/!/. so a value can be safely dropped into a template that
+ * appends its own closing punctuation, without producing "...?." or "...??".
+ */
+const stripTrailingPunctuation = (value) =>
+  typeof value === "string" ? value.replace(/[?!.]+\s*$/u, "").trimEnd() : value;
+
 const INTRO_TEMPLATES = {
   warm: {
     hook: (v) => `Have you ever wondered ${v.hookQuestion}? That is exactly where we are starting today.`,
@@ -149,15 +156,22 @@ export function buildScriptPack({
   const intro = INTRO_TEMPLATES[tone] || INTRO_TEMPLATES.warm;
   const outro = OUTRO_TEMPLATES[tone] || OUTRO_TEMPLATES.warm;
 
+  const hookFallback = "why this is harder than it looks";
+  // Templates append their own closing punctuation after the hook, so strip
+  // any the user already typed (the field literally asks for "the question").
+  // Guard against a stripped result becoming empty (e.g. the user typed only "?").
+  const hookQuestionValue =
+    stripTrailingPunctuation(fallback(hookQuestion, hookFallback)) || hookFallback;
+
   const v = {
-    show: fallback(show, "the show"),
+    show: fallback(show, "the podcast"),
     showSubject: fallback(showSubject, "the work behind the work"),
     host: fallback(host, "your host"),
     guest: fallback(guest, "our guest"),
     guestRole: fallback(guestRole, "someone who has done this the hard way"),
-    guestLink: fallback(guestLink, "the link in the show notes"),
+    guestLink: fallback(guestLink, "their website"),
     topic: fallback(topic, "today's topic"),
-    hookQuestion: fallback(hookQuestion, "why this is harder than it looks"),
+    hookQuestion: hookQuestionValue,
     takeaway: fallback(takeaway, "what to do differently on Monday morning"),
     cta: fallback(cta, "follow the show and leave a rating."),
     sponsor: fallback(sponsor, "our sponsor"),

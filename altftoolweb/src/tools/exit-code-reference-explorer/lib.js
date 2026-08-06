@@ -91,6 +91,16 @@ export const EXIT_CODES = [
   { code: 255, name: "Exit status out of range / ssh failure", source: "convention", meaning: "exit(-1) wraps to 255. ssh also returns 255 when the connection itself failed, as opposed to the remote command's own code." },
 ];
 
+/**
+ * Signal numbers whose default disposition (signal(7)) does not terminate a
+ * process: SIGCHLD/SIGURG/SIGWINCH are ignored by default, SIGCONT resumes
+ * rather than kills, and SIGSTOP/SIGTSTP/SIGTTIN/SIGTTOU merely stop it. A
+ * shell can never organically report 128+N for one of these — nothing
+ * killed the process — so neither the reference table nor a direct lookup
+ * should claim it did.
+ */
+const NON_TERMINATING_SIGNALS = new Set([17, 18, 19, 20, 21, 22, 23, 28]);
+
 /** Container-orchestrator context for common signal-death codes. */
 const CONTAINER_NOTES = {
   9: "In Docker/Kubernetes, 137 almost always means the OOM killer or a forced stop: the kernel or `docker kill` sent SIGKILL. Check `kubectl describe pod` for OOMKilled.",
@@ -129,10 +139,13 @@ export function explainExitCode(raw) {
   const known = EXIT_CODES.find((entry) => entry.code === value);
 
   // 128+N: killed by signal N. Only meaningful for N 1..31 (real-time signals 32+
-  // exist but shells rarely surface them this way).
+  // exist but shells rarely surface them this way), and only for signals whose
+  // default action actually terminates the process (see NON_TERMINATING_SIGNALS) —
+  // a shell cannot report 128+N for a signal that by default is ignored, resumes,
+  // or merely stops the process.
   const signalNumber = value - SIGNAL_EXIT_BASE;
   const signalName = SIGNAL_NAMES[signalNumber];
-  if (value > SIGNAL_EXIT_BASE && signalName) {
+  if (value > SIGNAL_EXIT_BASE && signalName && !NON_TERMINATING_SIGNALS.has(signalNumber)) {
     return {
       code: value,
       isSignal: true,
@@ -141,6 +154,16 @@ export function explainExitCode(raw) {
       source: "POSIX 128+N",
       meaning: `The process was killed by signal ${signalNumber} (${signalName}); the shell reports 128 + ${signalNumber} = ${value}.`,
       containerNote: CONTAINER_NOTES[signalNumber] ?? "",
+    };
+  }
+  if (value > SIGNAL_EXIT_BASE && signalName && NON_TERMINATING_SIGNALS.has(signalNumber)) {
+    return {
+      code: value,
+      isSignal: false,
+      name: "Application-defined (not a signal death)",
+      source: "none",
+      meaning: `128 + ${signalNumber} arithmetically decomposes to signal ${signalNumber} (${signalName}), but ${signalName}'s default action does not terminate a process, so a shell cannot organically produce ${value} this way. If a real program exits with ${value}, treat it as an application-defined code that happens to fall in the 128+N range, not a signal death.`,
+      containerNote: "",
     };
   }
 
@@ -168,10 +191,9 @@ export function referenceRows() {
       source: "POSIX 128+N",
       meaning: `Signal ${num} (${name}) terminated the process.`,
     }))
-    // Only the signals whose default action terminates (signal(7)) — the ignored
-    // (SIGCHLD, SIGURG, SIGWINCH), continue (SIGCONT) and stop (SIGSTOP, SIGTSTP,
-    // SIGTTIN, SIGTTOU) signals do not produce exit codes this way.
-    .filter((row) => ![145, 146, 147, 148, 149, 150, 151, 156].includes(row.code));
+    // Only the signals whose default action terminates (signal(7)) — see
+    // NON_TERMINATING_SIGNALS above for why the rest are excluded.
+    .filter((row) => !NON_TERMINATING_SIGNALS.has(row.code - SIGNAL_EXIT_BASE));
   return [...EXIT_CODES, ...signalRows].sort((a, b) => a.code - b.code);
 }
 

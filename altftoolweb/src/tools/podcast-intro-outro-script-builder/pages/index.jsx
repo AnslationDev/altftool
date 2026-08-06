@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { AudioLines, Check, Copy, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   MAX_WPM,
   MIN_WPM,
@@ -46,12 +47,11 @@ const DASH = "—";
 
 export default function ToolHome() {
   const [fields, setFields] = useState(DEFAULTS);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const set = (key) => (event) => {
     const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
     setFields((prev) => ({ ...prev, [key]: value }));
-    setCopied(false);
   };
 
   const pack = useMemo(
@@ -62,20 +62,21 @@ export default function ToolHome() {
   const hasError = Boolean(pack.error);
   const scriptText = useMemo(() => (hasError ? "" : formatScriptText(pack)), [pack, hasError]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!scriptText) return;
-    try {
-      await navigator.clipboard.writeText(scriptText);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("scripts", scriptText, { label: "both scripts" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will discard everything you have typed and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setFields(DEFAULTS);
-    setCopied(false);
+    resetCopyState();
   };
 
   const renderBlock = (title, block) => (
@@ -293,13 +294,20 @@ export default function ToolHome() {
               aria-label="Copy both scripts"
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy scripts"}
+              {isCopied("scripts") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("scripts") ? "Copied!" : "Copy scripts"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

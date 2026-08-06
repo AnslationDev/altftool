@@ -8,6 +8,7 @@ import {
   CONTRAST_AA_LARGE,
   CONTRAST_AA_NORMAL,
   CONTRAST_AAA_NORMAL,
+  CONTRAST_NON_TEXT,
   analyzeColor,
   analyzePair,
   WHITE_HEX,
@@ -135,7 +136,7 @@ export default function ToolHome() {
             <input
               type="color"
               aria-label="Pick the text colour visually"
-              value={pair.error ? DEFAULT_HEX : pair.foreground}
+              value={pair.error ? WHITE_HEX : pair.foreground}
               onChange={(event) => setTextColor(event.target.value.toUpperCase())}
               className="h-11 w-14 shrink-0 cursor-pointer rounded-md border border-[var(--border)] bg-[var(--background)] p-1"
             />
@@ -215,6 +216,14 @@ export default function ToolHome() {
                       ? `Large text only (>= ${CONTRAST_AA_LARGE}:1)`
                       : "Fails AA at every size",
             ],
+            [
+              "Non-text / UI verdict on white (SC 1.4.11)",
+              result.error
+                ? DASH
+                : result.usableAsUiOnWhite
+                  ? `Passes (>= ${CONTRAST_NON_TEXT}:1)`
+                  : `Fails (>= ${CONTRAST_NON_TEXT}:1)`,
+            ],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -223,6 +232,15 @@ export default function ToolHome() {
           ))}
         </dl>
       </section>
+
+      {!result.error && pair.error && (
+        <p
+          role="alert"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]"
+        >
+          {pair.error}
+        </p>
+      )}
 
       {!result.error && !pair.error && (
         <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">

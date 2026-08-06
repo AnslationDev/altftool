@@ -13,6 +13,7 @@ import {
   SAFER_PRACTICE,
   VERIFICATION_CHECKS,
   assess,
+  describeAmountIssue,
   formatBriefing,
 } from "../lib";
 
@@ -57,7 +58,7 @@ export default function ToolHome() {
       assess({
         flagIds: flags,
         verifiedIds: verified,
-        amountsSent: amounts.map((value) => Number(value) || 0),
+        amountsSent: amounts,
       }),
     [flags, verified, amounts],
   );
@@ -94,6 +95,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the checker? This clears every red flag, verification check and transfer amount you've entered, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setFlags(DEFAULTS.flags);
     setVerified(DEFAULTS.verified);
     setAmounts(DEFAULTS.amounts);
@@ -217,33 +225,43 @@ export default function ToolHome() {
           payment for a gift that never arrived.
         </p>
         <div className="mt-3 space-y-3">
-          {amounts.map((amount, index) => (
-            <div key={`amount-${index}`} className="flex items-end gap-2">
-              <div className="flex-1">
-                <label className={LABEL_CLASS} htmlFor={`amount-${index}`}>
-                  Transfer {index + 1} (INR)
-                </label>
-                <input
-                  id={`amount-${index}`}
-                  type="number"
-                  inputMode="decimal"
-                  min="0"
-                  step="100"
-                  className={`mt-2 ${INPUT_CLASS}`}
-                  value={amount}
-                  onChange={(event) => updateAmount(index, event.target.value)}
-                />
+          {amounts.map((amount, index) => {
+            const issue = describeAmountIssue(amount);
+            return (
+              <div key={`amount-${index}`} className="flex items-end gap-2">
+                <div className="flex-1">
+                  <label className={LABEL_CLASS} htmlFor={`amount-${index}`}>
+                    Transfer {index + 1} (INR)
+                  </label>
+                  <input
+                    id={`amount-${index}`}
+                    type="number"
+                    inputMode="decimal"
+                    min="0"
+                    step="100"
+                    className={`mt-2 ${INPUT_CLASS} ${issue ? "border-[var(--danger)] focus:border-[var(--danger)]" : ""}`}
+                    value={amount}
+                    onChange={(event) => updateAmount(index, event.target.value)}
+                    aria-invalid={issue ? "true" : undefined}
+                    aria-describedby={issue ? `amount-${index}-error` : undefined}
+                  />
+                  {issue && (
+                    <p id={`amount-${index}-error`} role="alert" className="mt-1 text-xs font-medium text-[var(--danger-text)]">
+                      {issue} It is left out of the total below until fixed.
+                    </p>
+                  )}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => removeAmount(index)}
+                  aria-label={`Remove transfer ${index + 1}`}
+                  className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-[var(--border)] text-[var(--muted-foreground)] transition hover:text-[var(--danger)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
+                >
+                  <Trash2 className="h-4 w-4" aria-hidden="true" />
+                </button>
               </div>
-              <button
-                type="button"
-                onClick={() => removeAmount(index)}
-                aria-label={`Remove transfer ${index + 1}`}
-                className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-md border border-[var(--border)] text-[var(--muted-foreground)] transition hover:text-[var(--danger)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
-              >
-                <Trash2 className="h-4 w-4" aria-hidden="true" />
-              </button>
-            </div>
-          ))}
+            );
+          })}
         </div>
         <button type="button" onClick={addAmount} className={`mt-3 ${GHOST_BTN}`}>
           <Plus className="h-4 w-4" aria-hidden="true" />
@@ -269,7 +287,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Verdict
             </p>
@@ -318,7 +336,8 @@ export default function ToolHome() {
             </div>
             <p
               className={`mt-4 rounded-md px-3 py-2 text-sm leading-6 ${TONE_CLASS[result.verdict.tone]}`}
-              {...(result.verdict.tone === "danger" ? { role: "alert" } : {})}
+              role={result.verdict.tone === "danger" ? "alert" : "status"}
+              aria-live={result.verdict.tone === "danger" ? "assertive" : "polite"}
             >
               {result.reason}
             </p>

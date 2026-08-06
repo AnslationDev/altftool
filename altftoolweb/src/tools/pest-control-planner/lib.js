@@ -206,11 +206,21 @@ export function planPestControl({
   );
   const chemistryFactor = herbal ? 1 + HERBAL_PREMIUM : 1;
   const loadFactor = severityLevel.factor * property.factor * chemistryFactor;
+  // Applied only to the per-row *display* price so the on-screen "per
+  // treatment" figure matches every other GST-inclusive number on the page
+  // (headline totals, calendar). `perTreatment` itself stays pre-tax
+  // because it also feeds costInPlan/annualisedCost, which apply GST at the
+  // aggregate level via gstOn() below — taxing it here too would double it.
+  const gstMultiplier = includeGst ? 1 + GST_RATE : 1;
 
   const rows = chosen.map((pest) => {
     const rated = areaSqft * pest.ratePerSqft * pest.rounds * loadFactor;
-    const beforeDiscount = Math.max(rated, pest.minCharge);
-    const perTreatment = beforeDiscount * (1 - bundleDiscount);
+    // The minimum call-out is a floor on what the customer is actually
+    // charged, so it must be applied AFTER the bundle discount, not before —
+    // otherwise a discounted price can land below the pest's own stated
+    // minimum while still being labelled as having that minimum "applied".
+    const discounted = rated * (1 - bundleDiscount);
+    const perTreatment = Math.max(discounted, pest.minCharge);
 
     const dueMonths = [];
     for (let offset = 0; offset < PLAN_MONTHS; offset += 1) {
@@ -230,11 +240,17 @@ export function planPestControl({
       intervalMonths: pest.intervalMonths,
       warrantyMonths: pest.warrantyMonths,
       minCharge: pest.minCharge,
-      minimumApplied: beforeDiscount > rated,
+      minChargeWithTax: round2(pest.minCharge * gstMultiplier),
+      minimumApplied: perTreatment > discounted,
       perTreatment: round2(perTreatment),
+      perTreatmentWithTax: round2(perTreatment * gstMultiplier),
       treatmentsPerYear: round2(treatmentsPerYear),
       annualisedCost: round2(perTreatment * treatmentsPerYear),
-      visitsInPlan: dueMonths.length,
+      // Physical technician visits, not treatment cycles: a multi-round
+      // pest (bed bugs today) needs `pest.rounds` separate site visits for
+      // every cycle in `dueMonths`, even though it is billed and scheduled
+      // as one cycle.
+      visitsInPlan: dueMonths.length * pest.rounds,
       costInPlan: round2(perTreatment * dueMonths.length),
       dueMonths,
     };

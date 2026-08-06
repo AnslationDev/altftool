@@ -26,7 +26,10 @@ const CHIP_CLASS =
 
 const START_ITEMS = [
   { id: 1, date: "2026-07-03", category: "air", description: "Delhi to Mumbai return", amount: "8400", tax: "400", mode: "upi", hasReceipt: true, billable: true },
-  { id: 2, date: "2026-07-03", category: "hotel", description: "Two nights, Andheri", amount: "11800", tax: "1800", mode: "card", hasReceipt: true, billable: false },
+  // Delhi-registered employer, hotel in Mumbai: an interstate stay, so the GST
+  // shown is not creditable unless the hotel happens to share the employer's
+  // registered state — hotelSameState defaults to false here for that reason.
+  { id: 2, date: "2026-07-03", category: "hotel", description: "Two nights, Andheri", amount: "11800", tax: "1800", mode: "card", hasReceipt: true, billable: false, hotelSameState: false },
   { id: 3, date: "2026-07-04", category: "meals", description: "Client dinner", amount: "2360", tax: "360", mode: "cash", hasReceipt: true, billable: false },
   { id: 4, date: "2026-07-04", category: "cab", description: "Airport transfers", amount: "1200", tax: "0", mode: "cash", hasReceipt: false, billable: false },
 ];
@@ -55,7 +58,7 @@ export default function ToolHome() {
       const nextId = current.reduce((max, item) => Math.max(max, item.id), 0) + 1;
       return [
         ...current,
-        { id: nextId, date: "", category: "other", description: "", amount: "", tax: "", mode: "upi", hasReceipt: true, billable: false },
+        { id: nextId, date: "", category: "other", description: "", amount: "", tax: "", mode: "upi", hasReceipt: true, billable: false, hotelSameState: false },
       ];
     });
 
@@ -78,6 +81,7 @@ export default function ToolHome() {
         mode: item.mode,
         hasReceipt: item.hasReceipt,
         billable: item.billable,
+        hotelSameState: item.hotelSameState,
       }));
 
     return buildExpenseReport({
@@ -115,6 +119,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the report? This clears every expense line you have entered and replaces them with the sample data — this cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setSetup(START_SETUP);
     setItems(START_ITEMS);
     setCopied(false);
@@ -308,6 +319,25 @@ export default function ToolHome() {
                     Rebillable to a client
                   </label>
                 </div>
+                {item.category === "hotel" && (
+                  <div className="sm:col-span-2">
+                    <label className={TOGGLE_CLASS} htmlFor={`er-samestate-${item.id}`}>
+                      <input
+                        id={`er-samestate-${item.id}`}
+                        type="checkbox"
+                        className="h-5 w-5 accent-[var(--primary)]"
+                        checked={Boolean(item.hotelSameState)}
+                        onChange={(event) => updateItem(item.id, "hotelSameState", event.target.checked)}
+                      />
+                      Hotel is in the state where the company is GST-registered
+                    </label>
+                    <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                      Place of supply for a hotel stay is the hotel&apos;s own location, not your billing
+                      address. Leave unchecked for an interstate trip — the GST shown is then treated as a
+                      cost, not a credit.
+                    </p>
+                  </div>
+                )}
               </div>
               <div className="mt-3 flex justify-end">
                 <button
@@ -407,14 +437,21 @@ export default function ToolHome() {
           </p>
         )}
         {ok && report.flags.missingReceipts > 0 && (
-          <p className="mt-3 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning)]">
+          <p
+            role="alert"
+            className="mt-3 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning)]"
+          >
             {report.flags.missingReceipts} line{report.flags.missingReceipts > 1 ? "s have" : " has"} no
             receipt attached. Without a bill the payment can be treated as taxable salary rather than a
             reimbursement.
           </p>
         )}
         {ok && report.flags.needsApproval > 0 && (
-          <p className="mt-3 rounded-md bg-[var(--info-soft)] px-3 py-2 text-sm font-medium text-[var(--foreground)]">
+          <p
+            role="status"
+            aria-live="polite"
+            className="mt-3 rounded-md bg-[var(--info-soft)] px-3 py-2 text-sm font-medium text-[var(--foreground)]"
+          >
             {report.flags.needsApproval} line{report.flags.needsApproval > 1 ? "s need" : " needs"} the
             extra sign-off set above.
           </p>
@@ -460,6 +497,11 @@ export default function ToolHome() {
                         {row.paidByCompany && <span className={CHIP_CLASS}>company paid</span>}
                         {row.billable && <span className={CHIP_CLASS}>rebillable</span>}
                       </span>
+                      {row.tax > 0 && row.itcNote && (
+                        <span className="mt-1 block text-xs leading-5 text-[var(--muted-foreground)]">
+                          {row.itcNote}
+                        </span>
+                      )}
                     </td>
                   </tr>
                 ))

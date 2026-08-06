@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Grid, CheckCircle2, Copy, FileDown, Sliders, RefreshCw, LayoutGrid } from "lucide-react";
 
 export default function ToolHome() {
@@ -15,6 +15,18 @@ export default function ToolHome() {
 
   const [copied, setCopied] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
+  const [statusMessage, setStatusMessage] = useState("");
+  const copyTimerRef = useRef(null);
+  const downloadTimerRef = useRef(null);
+
+  // Clear any pending "Copied"/"Downloaded" reset timers on unmount so they
+  // never call setState after this page has gone away.
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+      if (downloadTimerRef.current) clearTimeout(downloadTimerRef.current);
+    };
+  }, []);
 
   // Sync columns size array length
   useEffect(() => {
@@ -75,9 +87,12 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(getCssString());
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setStatusMessage("CSS copied to clipboard.");
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 2000);
     } catch (e) {
       console.error(e);
+      setStatusMessage("Could not copy CSS to clipboard.");
     }
   };
 
@@ -93,7 +108,9 @@ export default function ToolHome() {
     link.remove();
     URL.revokeObjectURL(url);
     setDownloaded(true);
-    setTimeout(() => setDownloaded(false), 2000);
+    setStatusMessage("Grid template file downloaded.");
+    if (downloadTimerRef.current) clearTimeout(downloadTimerRef.current);
+    downloadTimerRef.current = setTimeout(() => setDownloaded(false), 2000);
   };
 
   return (
@@ -141,7 +158,7 @@ export default function ToolHome() {
 
           {/* Grid Playground */}
           <div
-            className="w-full min-h-[220px] rounded-xl border border-border bg-slate-950 p-4 transition-all overflow-auto"
+            className="w-full min-h-[220px] rounded-xl border border-border bg-canvas p-4 transition-all overflow-auto"
             style={{
               display: "grid",
               gridTemplateColumns: getTemplateColumnsString(),
@@ -176,15 +193,17 @@ export default function ToolHome() {
               {/* Column Count */}
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs text-foreground font-semibold">
-                  <span>Columns</span>
-                  <span className="text-primary font-mono">{cols}</span>
+                  <label htmlFor="grid-gen-cols">Columns</label>
+                  <span className="text-primary font-mono" aria-hidden="true">{cols}</span>
                 </div>
                 <input
+                  id="grid-gen-cols"
                   type="range"
                   min="1"
                   max="8"
                   value={cols}
                   onChange={(e) => setCols(parseInt(e.target.value))}
+                  aria-valuetext={`${cols} columns`}
                   className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                 />
               </div>
@@ -192,15 +211,17 @@ export default function ToolHome() {
               {/* Row Count */}
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs text-foreground font-semibold">
-                  <span>Rows</span>
-                  <span className="text-primary font-mono">{rows}</span>
+                  <label htmlFor="grid-gen-rows">Rows</label>
+                  <span className="text-primary font-mono" aria-hidden="true">{rows}</span>
                 </div>
                 <input
+                  id="grid-gen-rows"
                   type="range"
                   min="1"
                   max="8"
                   value={rows}
                   onChange={(e) => setRows(parseInt(e.target.value))}
+                  aria-valuetext={`${rows} rows`}
                   className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                 />
               </div>
@@ -208,15 +229,17 @@ export default function ToolHome() {
               {/* Column Gap */}
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs text-foreground font-semibold">
-                  <span>Column Gap</span>
-                  <span className="text-primary font-mono">{colGap}px</span>
+                  <label htmlFor="grid-gen-col-gap">Column Gap</label>
+                  <span className="text-primary font-mono" aria-hidden="true">{colGap}px</span>
                 </div>
                 <input
+                  id="grid-gen-col-gap"
                   type="range"
                   min="0"
                   max="40"
                   value={colGap}
                   onChange={(e) => setColGap(parseInt(e.target.value))}
+                  aria-valuetext={`${colGap} pixels`}
                   className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                 />
               </div>
@@ -224,15 +247,17 @@ export default function ToolHome() {
               {/* Row Gap */}
               <div className="space-y-1.5">
                 <div className="flex justify-between text-xs text-foreground font-semibold">
-                  <span>Row Gap</span>
-                  <span className="text-primary font-mono">{rowGap}px</span>
+                  <label htmlFor="grid-gen-row-gap">Row Gap</label>
+                  <span className="text-primary font-mono" aria-hidden="true">{rowGap}px</span>
                 </div>
                 <input
+                  id="grid-gen-row-gap"
                   type="range"
                   min="0"
                   max="40"
                   value={rowGap}
                   onChange={(e) => setRowGap(parseInt(e.target.value))}
+                  aria-valuetext={`${rowGap} pixels`}
                   className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                 />
               </div>
@@ -288,6 +313,7 @@ export default function ToolHome() {
               <div className="flex gap-1.5">
                 <button
                   onClick={handleCopy}
+                  aria-label={copied ? "Copied the generated CSS to the clipboard" : "Copy the generated CSS"}
                   className="inline-flex items-center gap-1 text-[10px] font-bold text-foreground bg-background border border-border rounded-lg px-2.5 py-1.5 hover:border-primary transition shrink-0"
                 >
                   {copied ? <CheckCircle2 size={10} className="text-primary" /> : <Copy size={10} />}
@@ -295,11 +321,15 @@ export default function ToolHome() {
                 </button>
                 <button
                   onClick={handleDownload}
+                  aria-label={downloaded ? "Downloaded the grid template file" : "Download the grid template file"}
                   className="inline-flex items-center gap-1 text-[10px] font-bold text-foreground bg-background border border-border rounded-lg px-2.5 py-1.5 hover:border-primary transition shrink-0"
                 >
                   {downloaded ? <CheckCircle2 size={10} className="text-primary" /> : <FileDown size={10} />}
                   {downloaded ? "Downloaded" : "Download"}
                 </button>
+                <span className="sr-only" aria-live="polite" role="status">
+                  {statusMessage}
+                </span>
               </div>
             </div>
 

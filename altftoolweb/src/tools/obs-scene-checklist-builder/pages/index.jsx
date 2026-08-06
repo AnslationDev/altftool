@@ -34,11 +34,13 @@ const DEFAULTS = {
   hasChatOverlay: true,
   recordsLocally: true,
   hasSecondScreen: true,
+  hasCaptureCard: false,
 };
 
 const TOGGLES = [
   ["hasGameplay", "Capturing a game or an app window"],
   ["hasSecondScreen", "Using a second monitor"],
+  ["hasCaptureCard", "Using a capture card for a console or second device"],
   ["hasGuests", "Guests or a co-host on a call"],
   ["hasMusic", "Playing music on stream"],
   ["hasAlerts", "Follow / sub / donation alerts"],
@@ -82,6 +84,7 @@ export default function ToolHome() {
         hasChatOverlay: form.hasChatOverlay,
         recordsLocally: form.recordsLocally,
         hasSecondScreen: form.hasSecondScreen,
+        hasCaptureCard: form.hasCaptureCard,
         platformLabel: settings.error ? "your platform" : settings.platformLabel,
         keyframeSeconds: settings.error ? undefined : settings.keyframeSeconds,
         videoKbps: settings.error ? 0 : settings.videoKbps,
@@ -91,12 +94,13 @@ export default function ToolHome() {
 
   const total = countChecklistItems(sections);
   const completed = sections.reduce(
-    (count, section) => count + section.items.filter((item) => done.includes(item)).length,
+    (count, section) =>
+      count + section.items.filter((_, index) => done.includes(`${section.id}-${index}`)).length,
     0,
   );
 
-  const toggleItem = (item) => {
-    setDone((prev) => (prev.includes(item) ? prev.filter((entry) => entry !== item) : [...prev, item]));
+  const toggleItem = (itemId) => {
+    setDone((prev) => (prev.includes(itemId) ? prev.filter((entry) => entry !== itemId) : [...prev, itemId]));
     setCopied(false);
   };
 
@@ -112,7 +116,9 @@ export default function ToolHome() {
     const body = sections.flatMap((section) => [
       "",
       `## ${section.title}`,
-      ...section.items.map((item) => `${done.includes(item) ? "[x]" : "[ ]"} ${item}`),
+      ...section.items.map(
+        (item, index) => `${done.includes(`${section.id}-${index}`) ? "[x]" : "[ ]"} ${item}`,
+      ),
     ]);
     return [...header, ...body].join("\n");
   }, [settings, sections, done]);
@@ -128,6 +134,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the builder? This clears every setting and every item you've ticked as done, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setForm(DEFAULTS);
     setDone([]);
     setCopied(false);
@@ -280,7 +293,7 @@ export default function ToolHome() {
       ) : (
         <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
           <div className="flex flex-wrap items-start justify-between gap-3">
-            <div>
+            <div aria-live="polite" role="status">
               <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                 Total ingest bitrate
               </p>
@@ -351,24 +364,28 @@ export default function ToolHome() {
         <section key={section.id} className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
           <h2 className="text-base font-semibold">{section.title}</h2>
           <ul className="mt-3 space-y-2">
-            {section.items.map((item, index) => (
-              <li key={item} className="rounded-md bg-[var(--muted)] p-3">
-                <label className="flex cursor-pointer items-start gap-3" htmlFor={`${section.id}-${index}`}>
-                  <input
-                    id={`${section.id}-${index}`}
-                    type="checkbox"
-                    className={`mt-0.5 ${CHECKBOX}`}
-                    checked={done.includes(item)}
-                    onChange={() => toggleItem(item)}
-                  />
-                  <span
-                    className={`text-sm leading-6 ${done.includes(item) ? "text-[var(--muted-foreground)] line-through" : "text-[var(--foreground)]"}`}
-                  >
-                    {item}
-                  </span>
-                </label>
-              </li>
-            ))}
+            {section.items.map((item, index) => {
+              const itemId = `${section.id}-${index}`;
+              const isDone = done.includes(itemId);
+              return (
+                <li key={itemId} className="rounded-md bg-[var(--muted)] p-3">
+                  <label className="flex cursor-pointer items-start gap-3" htmlFor={itemId}>
+                    <input
+                      id={itemId}
+                      type="checkbox"
+                      className={`mt-0.5 ${CHECKBOX}`}
+                      checked={isDone}
+                      onChange={() => toggleItem(itemId)}
+                    />
+                    <span
+                      className={`text-sm leading-6 ${isDone ? "text-[var(--muted-foreground)] line-through" : "text-[var(--foreground)]"}`}
+                    >
+                      {item}
+                    </span>
+                  </label>
+                </li>
+              );
+            })}
           </ul>
         </section>
       ))}

@@ -255,7 +255,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Commute cost per month
             </p>
@@ -295,7 +295,11 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          role="status"
+          aria-live="polite"
+        >
           {[
             ["Distance driven per month", view ? `${num(view.monthlyKm)} km` : "—"],
             ["Fuel burnt per month", view ? `${num(view.monthlyLitres)} litres` : "—"],
@@ -350,8 +354,8 @@ export default function ToolHome() {
       </section>
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
-        Fuel-and-toll running cost only. Insurance, servicing, tyres and depreciation are separate
-        ownership costs and are not included here.
+        Fuel, toll and parking running cost only. Insurance, servicing, tyres and depreciation are
+        separate ownership costs and are not included here.
       </p>
     </main>
   );

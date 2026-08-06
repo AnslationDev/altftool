@@ -15,7 +15,7 @@ const seo = {
   faqs: [
     [
       "How many hours apart should paracetamol doses be?",
-      "At least 4 hours, and 4 to 6 hours is the usual instruction on adult and children's labels. With a 4-hour gap no more than 6 doses fit in a day, and the 24-hour milligram total usually runs out before that.",
+      "At least 4 hours, and 4 to 6 hours is the usual instruction on adult and children's labels. Even with a 4-hour gap, standard labelling still caps the day at 4 doses — spacing alone would allow more, but the 4-dose and 24-hour milligram limits both apply and whichever is reached first is the one you follow.",
     ],
     [
       "What is the maximum paracetamol dose in 24 hours?",

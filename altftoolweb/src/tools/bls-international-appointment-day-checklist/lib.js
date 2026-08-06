@@ -431,6 +431,16 @@ export function buildChecklist(input) {
   const meta = SCHEMES[scheme];
   const booked = input?.biometricsBooked !== false;
   const prints = fingerprintStatus(scheme, age);
+  // The checklist items below are gated on `booked`, so the summary stat and
+  // its explanation must reflect the same booked-adjusted verdict rather than
+  // the raw scheme/age fingerprint rule.
+  const bookedPrints = booked
+    ? prints
+    : {
+        fingerprints: false,
+        reason:
+          "Biometrics booked is unchecked for this visit, so no fingerprints will be captured today — the fingertip rules below do not apply.",
+      };
 
   const context = {
     scheme,
@@ -462,7 +472,7 @@ export function buildChecklist(input) {
     schemeLabel: meta.label,
     age,
     isMinor: age < ADULT_AGE,
-    fingerprints: prints,
+    fingerprints: bookedPrints,
     groups,
     all,
     total: all.length,
@@ -590,6 +600,7 @@ export function computeTiming({ appointmentTime, travelMinutes, contingencyMinut
   return {
     appointment: formatClock(appointment),
     arriveBy: formatClock(arriveByMinutes),
+    arriveByPreviousDay: arriveByMinutes < 0,
     leaveHomeBy: formatClock(leaveHomeMinutes),
     previousDay: leaveHomeMinutes < 0,
     totalLeadMinutes: ARRIVE_BEFORE_MINUTES + travel + contingency,

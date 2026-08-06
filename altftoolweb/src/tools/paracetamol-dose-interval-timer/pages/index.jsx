@@ -381,7 +381,9 @@ export default function ToolHome() {
         <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
           <h2 className="text-base font-semibold">Before you take the next dose</h2>
           <ul className="mt-3 space-y-2 text-sm text-[var(--muted-foreground)]">
-            {result.warnings.map((warning) => (
+            {/* The lead warning is already shown prominently in the alert box above
+                when overLimit is true — do not repeat it here as a routine bullet. */}
+            {(result.overLimit ? result.warnings.slice(1) : result.warnings).map((warning) => (
               <li key={warning} className="flex gap-2">
                 <span aria-hidden="true" className="text-[var(--primary)]">
                   •

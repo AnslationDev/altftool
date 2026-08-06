@@ -14,11 +14,11 @@ const seo = {
   faqs: [
     [
       "How often should pest control be done in a home?",
-      "General cockroach and ant treatment every three to four months, mosquito treatment monthly through the season, rodent baiting every two months until activity stops, and an anti-termite barrier once every five years. Warranties usually match the interval, so a three-month cockroach warranty means a free callback within that window.",
+      "General cockroach and ant treatment every three to four months, mosquito treatment monthly through the season, rodent baiting every two months until activity stops, and an anti-termite barrier once every five years. Warranty length depends on the pest: for cockroaches, mosquitoes, termites and wood borer the free-callback warranty matches the full interval, but for ants, bed bugs, rodents, lizards and houseflies it typically runs out before the next full treatment is due, so check the agency's specific terms.",
     ],
     [
       "How much does pest control cost in India?",
-      "A general cockroach or ant treatment runs roughly ₹1–1.5 per sq ft with a minimum around ₹800, so a 1,000 sq ft flat is about ₹1,000–1,500 per visit. Bed bug treatment costs three to four times that because it needs two rounds, and post-construction termite work runs ₹5–8 per sq ft with a five-year warranty.",
+      "A general cockroach or ant treatment runs roughly ₹1–1.5 per sq ft with a minimum around ₹800, so a 1,000 sq ft flat is about ₹1,000–1,500 per visit. Bed bug treatment costs roughly five to six times that, since it needs a stronger residual chemistry applied across two rounds twelve to fifteen days apart, and post-construction termite work runs ₹5–8 per sq ft with a five-year warranty.",
     ],
     [
       "Is gel baiting better than spraying for cockroaches?",

@@ -14,7 +14,7 @@
  *   i.e. 60 mg/kg/day, and never more than the adult maximum.
  *
  * Times are handled as "HH:MM" strings and minutes past midnight. Nothing here
- * reads the system clock — pass the current time in if you want a countdown.
+ * reads the system clock.
  */
 
 export const MINUTES_PER_DAY = 1440;
@@ -111,7 +111,6 @@ export function childDailyMaxMg(weightKg) {
  * @param {number} input.mgPerDose Milligrams in each of those doses.
  * @param {number} [input.intervalHours] Gap you are using between doses.
  * @param {number} [input.dailyMaxMg] Override the 24-hour ceiling.
- * @param {number|null} [input.nowMinutes] Current time for the countdown.
  * @returns {object} results or { error }
  */
 export function computeParacetamolPlan({
@@ -122,7 +121,6 @@ export function computeParacetamolPlan({
   mgPerDose = 1000,
   intervalHours = MIN_INTERVAL_HOURS,
   dailyMaxMg = null,
-  nowMinutes = null,
 } = {}) {
   if (!MODES.some((entry) => entry.id === mode)) {
     return { error: "Choose whether this is adult or weight-based child dosing." };
@@ -175,18 +173,29 @@ export function computeParacetamolPlan({
   // The spacing rule limits how many doses physically fit in a 24-hour period.
   const slotsPerDay = Math.floor(24 / interval);
   const dosesLeftBySpacing = Math.max(0, slotsPerDay - Math.round(doses));
-  const remainingDoses = Math.min(dosesLeftByMg, dosesLeftBySpacing);
+  // Standard labelling also caps every adult and child dosing schedule at
+  // MAX_DOSES_PER_DAY doses in any 24 hours, regardless of interval or milligram
+  // total — this must always be enforced alongside the other two limits.
+  const dosesLeftByCount = Math.max(0, MAX_DOSES_PER_DAY - Math.round(doses));
+  const remainingDoses = Math.min(dosesLeftByMg, dosesLeftBySpacing, dosesLeftByCount);
+  const bindingLimits = [];
+  if (dosesLeftByMg === remainingDoses) bindingLimits.push("the 24-hour milligram limit");
+  if (dosesLeftBySpacing === remainingDoses) bindingLimits.push("the minimum gap between doses");
+  if (dosesLeftByCount === remainingDoses) {
+    bindingLimits.push(`the ${MAX_DOSES_PER_DAY}-dose daily limit`);
+  }
   const limitingFactor =
-    dosesLeftByMg === dosesLeftBySpacing
-      ? "both the daily limit and the dose spacing"
-      : dosesLeftByMg < dosesLeftBySpacing
-        ? "the 24-hour milligram limit"
-        : "the minimum gap between doses";
+    bindingLimits.length > 1
+      ? `more than one limit (${bindingLimits.join(" and ")})`
+      : bindingLimits[0];
   const overLimit = takenMg > ceiling;
   const atLimit = !overLimit && remainingDoses === 0;
 
   const intervalMinutes = Math.round(interval * 60);
   const nextDoseMinutes = wrapMinutes(lastDose + intervalMinutes);
+  // Doses already taken were not individually timestamped, only the most recent
+  // one — so the soonest this module can say the 24-hour allowance is
+  // guaranteed to have fully rolled over is 24 hours after that last dose.
   const twentyFourHourResetMinutes = wrapMinutes(lastDose);
 
   const schedule = [];
@@ -198,19 +207,6 @@ export function computeParacetamolPlan({
     });
   }
 
-  let countdown = null;
-  if (nowMinutes !== null && Number.isFinite(Number(nowMinutes))) {
-    const now = wrapMinutes(nowMinutes);
-    const untilNext = wrapMinutes(nextDoseMinutes - now);
-    const sinceLast = wrapMinutes(now - lastDose);
-    countdown = {
-      now,
-      minutesUntilNext: sinceLast >= intervalMinutes ? 0 : untilNext,
-      minutesSinceLast: sinceLast,
-      dueNow: sinceLast >= intervalMinutes,
-    };
-  }
-
   const warnings = [];
   if (overLimit) {
     warnings.push(
@@ -218,7 +214,7 @@ export function computeParacetamolPlan({
     );
   } else if (atLimit) {
     warnings.push(
-      `No further doses fit in this 24-hour period — you are limited by ${limitingFactor}. Wait until 24 hours after your first dose before taking any more.`,
+      `No further doses fit in this 24-hour period — you are limited by ${limitingFactor}. Wait until 24 hours after your last dose before taking any more.`,
     );
   }
   if (mode === "adult" && ceiling > OTC_LABEL_DAILY_MAX_MG) {
@@ -255,13 +251,13 @@ export function computeParacetamolPlan({
     remainingDoses,
     dosesLeftByMg,
     dosesLeftBySpacing,
+    dosesLeftByCount,
     limitingFactor,
     overLimit,
     atLimit,
     nextDoseMinutes,
     twentyFourHourResetMinutes,
     schedule,
-    countdown,
     warnings,
     usedShare: (takenMg / ceiling) * 100,
     // Clamped to 0-100 so it can be used directly as a bar width.

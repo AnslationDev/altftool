@@ -23,7 +23,7 @@ const seo = {
     ],
     [
       "What is a normal speaking rate in a video?",
-      "Conversational English runs about 120 to 160 words per minute, presentations and narration a little slower at 100 to 150, and fast podcast conversation can exceed 180. This tool divides the transcript's word count by the runtime between the first and last cue, so you can compare a recording against that range.",
+      "Conversational English runs about 120 to 160 words per minute, presentations and narration a little slower at 100 to 150, and fast podcast conversation can exceed 180. This tool divides the transcript's word count by the runtime between the first and last cue that actually contains dialogue — filtered-out cues like a music intro or outro are excluded — so you can compare a recording against that range.",
     ],
     [
       "Why does my transcript still have [Music] or speaker markers in it?",

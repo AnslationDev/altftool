@@ -26,7 +26,11 @@ export const STORY_SAFE_BOTTOM_PX = 420;
 
 export const MARGIN_RATIO = 0.07;
 export const MAX_STATS = 4;
-export const AVG_GLYPH_WIDTH_RATIO = 0.52;
+
+/** Alpha the caption/label text is actually painted at (see pages/index.jsx canvas draw). */
+export const LABEL_TEXT_OPACITY = 0.72;
+/** Alpha the source line is actually painted at (see pages/index.jsx canvas draw). */
+export const SOURCE_TEXT_OPACITY = 0.6;
 
 /** Digits are near-monospaced in most UI sans faces: roughly 0.58em each. */
 export const DIGIT_WIDTH_RATIO = 0.58;
@@ -35,6 +39,11 @@ export const DIGIT_WIDTH_RATIO = 0.58;
 export const COLUMN_LAYOUT_ASPECT = 1.2;
 
 /* ------------------------------------------------------------------ numbers */
+
+/** Strip thousands separators before parsing, so "1,240,000" reads as a number. */
+function parseNumericInput(value) {
+  return Number(String(value ?? "").replace(/,/g, "").trim());
+}
 
 export const VALUE_FORMATS = [
   { id: "number", label: "Plain number" },
@@ -56,18 +65,32 @@ export function formatStatValue({ value, format = "number", decimals = 0, curren
     return { text: `${prefix}${text}${suffix}` };
   }
 
-  const numeric = Number(String(value).replace(/,/g, "").trim());
+  const numeric = parseNumericInput(value);
   if (!Number.isFinite(numeric)) return { text: "", error: "That value is not a number." };
 
   let body;
-  if (format === "compact") {
-    body = new Intl.NumberFormat(locale, { notation: "compact", maximumFractionDigits: Math.max(1, dp) }).format(numeric);
-  } else if (format === "currency") {
-    body = new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: dp, minimumFractionDigits: dp }).format(numeric);
-  } else if (format === "percent") {
-    body = `${new Intl.NumberFormat(locale, { maximumFractionDigits: dp, minimumFractionDigits: dp }).format(numeric)}%`;
-  } else {
-    body = new Intl.NumberFormat(locale, { maximumFractionDigits: dp, minimumFractionDigits: dp }).format(numeric);
+  try {
+    if (format === "compact") {
+      body = new Intl.NumberFormat(locale, { notation: "compact", maximumFractionDigits: Math.max(1, dp) }).format(numeric);
+    } else if (format === "currency") {
+      body = new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: dp, minimumFractionDigits: dp }).format(numeric);
+    } else if (format === "percent") {
+      body = `${new Intl.NumberFormat(locale, { maximumFractionDigits: dp, minimumFractionDigits: dp }).format(numeric)}%`;
+    } else {
+      body = new Intl.NumberFormat(locale, { maximumFractionDigits: dp, minimumFractionDigits: dp }).format(numeric);
+    }
+  } catch {
+    // Intl.NumberFormat throws a RangeError for a currency code that is not a
+    // real ISO 4217 code (e.g. "US" typed while editing towards "USD"). Turn
+    // that into the same friendly { error } path every other invalid input
+    // already uses, instead of letting it crash the render.
+    return {
+      text: "",
+      error:
+        format === "currency"
+          ? `"${currency}" is not a valid 3-letter currency code, e.g. USD, EUR, INR.`
+          : "That value could not be formatted.",
+    };
   }
   return { text: `${prefix}${body}${suffix}` };
 }
@@ -77,8 +100,8 @@ export function formatStatValue({ value, format = "number", decimals = 0, curren
  * @returns {{ percent: number|null, direction: "up"|"down"|"flat", note?: string }}
  */
 export function relativeChange(previous, current) {
-  const from = Number(previous);
-  const to = Number(current);
+  const from = parseNumericInput(previous);
+  const to = parseNumericInput(current);
   if (!Number.isFinite(from) || !Number.isFinite(to)) {
     return { percent: null, direction: "flat", note: "Enter two numbers to compare." };
   }
@@ -99,8 +122,8 @@ export function relativeChange(previous, current) {
 
 /** Difference in percentage points. Only meaningful when both figures are already percentages. */
 export function percentagePointChange(previous, current) {
-  const from = Number(previous);
-  const to = Number(current);
+  const from = parseNumericInput(previous);
+  const to = parseNumericInput(current);
   if (!Number.isFinite(from) || !Number.isFinite(to)) return null;
   return to - from;
 }
@@ -205,6 +228,20 @@ export function parseHex(value) {
     return { r: parseInt(raw.slice(0, 2), 16), g: parseInt(raw.slice(2, 4), 16), b: parseInt(raw.slice(4, 6), 16) };
   }
   return null;
+}
+
+/**
+ * Alpha-composite `foreground` over `background` in sRGB space — the same
+ * maths a canvas 2D context uses for `ctx.globalAlpha` — so contrast can be
+ * checked against what is actually painted, not the full-opacity colour.
+ */
+export function blendHex(foreground, background, alpha) {
+  const fg = parseHex(foreground);
+  const bg = parseHex(background);
+  if (!fg || !bg) return foreground;
+  const a = clampNumber(Number(alpha), 0, 1);
+  const mix = (channel) => a * fg[channel] + (1 - a) * bg[channel];
+  return `#${toHexPair(mix("r"))}${toHexPair(mix("g"))}${toHexPair(mix("b"))}`;
 }
 
 /** WCAG 2.1 relative luminance. */
@@ -347,7 +384,16 @@ export function buildStatCard(input = {}) {
       labelSize,
       deltaText,
       deltaSize,
-      deltaColour: change && change.direction === "down" ? negative : positive,
+      // A flat/zero change is neither growth nor decline, so it is painted in
+      // the (already contrast-checked) foreground colour rather than the
+      // "positive" green — a stalled metric should not read as good news.
+      deltaColour: !change
+        ? positive
+        : change.direction === "down"
+          ? negative
+          : change.direction === "flat"
+            ? foreground
+            : positive,
       change,
       points,
       numberY: blockTop + numberSize,
@@ -361,6 +407,16 @@ export function buildStatCard(input = {}) {
 
   const ratio = contrastRatio(foreground, background);
   const accentRatio = contrastRatio(accent, background);
+  // The label and source line are painted at reduced opacity (see
+  // LABEL_TEXT_OPACITY / SOURCE_TEXT_OPACITY), which lowers their real
+  // contrast against the background — check the alpha-blended colour that is
+  // actually rendered, not the full-opacity foreground.
+  const labelRatio = contrastRatio(blendHex(foreground, background, LABEL_TEXT_OPACITY), background);
+  const sourceRatio = contrastRatio(blendHex(foreground, background, SOURCE_TEXT_OPACITY), background);
+  // The trend colours are painted at full opacity but were never checked
+  // against the background at all.
+  const positiveRatio = contrastRatio(positive, background);
+  const negativeRatio = contrastRatio(negative, background);
 
   return {
     preset,
@@ -382,6 +438,14 @@ export function buildStatCard(input = {}) {
       ratio: Number.isFinite(ratio) ? Math.round(ratio * 100) / 100 : null,
       accentRatio: Number.isFinite(accentRatio) ? Math.round(accentRatio * 100) / 100 : null,
       verdict: contrastVerdict(ratio),
+      labelRatio: Number.isFinite(labelRatio) ? Math.round(labelRatio * 100) / 100 : null,
+      labelVerdict: contrastVerdict(labelRatio),
+      sourceRatio: Number.isFinite(sourceRatio) ? Math.round(sourceRatio * 100) / 100 : null,
+      sourceVerdict: contrastVerdict(sourceRatio),
+      positiveRatio: Number.isFinite(positiveRatio) ? Math.round(positiveRatio * 100) / 100 : null,
+      positiveVerdict: contrastVerdict(positiveRatio),
+      negativeRatio: Number.isFinite(negativeRatio) ? Math.round(negativeRatio * 100) / 100 : null,
+      negativeVerdict: contrastVerdict(negativeRatio),
     },
     stats: { count: usable.length, largestNumberSize: items.reduce((max, item) => Math.max(max, item.numberSize), 0) },
   };

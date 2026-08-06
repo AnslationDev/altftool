@@ -105,7 +105,7 @@ export const AUDIENCE_PROFILES = [
   {
     id: "professionals",
     label: "Working professionals (metro)",
-    note: "Commute and post-dinner windows carry the week; weekday lunch is a dependable second.",
+    note: "Prime evening and the morning commute carry the week, with late evening a strong third and weekday lunch a dependable fourth.",
     weights: {
       early: 0.35,
       commute: 0.85,
@@ -201,16 +201,6 @@ export function getAudienceProfile(profileId) {
   return AUDIENCE_PROFILES.find((profile) => profile.id === profileId) || AUDIENCE_PROFILES[0];
 }
 
-/** "HH:MM" to minutes past midnight, or null. */
-export function parseClock(raw) {
-  const match = String(raw ?? "").trim().match(/^(\d{1,2}):(\d{2})$/);
-  if (!match) return null;
-  const hours = Number(match[1]);
-  const minutes = Number(match[2]);
-  if (hours > 23 || minutes > 59) return null;
-  return hours * 60 + minutes;
-}
-
 /** Minutes past midnight to "HH:MM", wrapping past 24h. */
 export function formatClock(minutes) {
   const value = ((Math.round(Number(minutes) || 0) % 1440) + 1440) % 1440;
@@ -230,7 +220,21 @@ export function istInstant(isoDate, minuteOfDay) {
   const minutes = Number(minuteOfDay);
   if (!Number.isFinite(minutes)) return null;
   const [, y, m, d] = match;
-  const base = Date.UTC(Number(y), Number(m) - 1, Number(d));
+  const year = Number(y);
+  const month = Number(m);
+  const day = Number(d);
+  const base = Date.UTC(year, month - 1, day);
+  // Date.UTC silently rolls invalid calendar dates (e.g. Feb 30) into the
+  // next valid date instead of erroring, so round-trip the components to
+  // reject them here rather than plan a week from the wrong start date.
+  const check = new Date(base);
+  if (
+    check.getUTCFullYear() !== year ||
+    check.getUTCMonth() !== month - 1 ||
+    check.getUTCDate() !== day
+  ) {
+    return null;
+  }
   const instant = new Date(base + (minutes - IST_OFFSET_MINUTES) * 60000);
   return Number.isNaN(instant.getTime()) ? null : instant;
 }

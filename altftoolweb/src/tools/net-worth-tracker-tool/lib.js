@@ -189,15 +189,19 @@ export function computeNetWorth({
     .sort((a, b) => b.amount - a.amount);
 
   const debtToAssetPct = totalAssets > 0 ? round2((totalLiabilities / totalAssets) * 100) : null;
+  // Build the verdict sentence from the exact same (round2) value the classification
+  // below is compared against — and the same value the itemised "Debt-to-asset ratio"
+  // row on the page displays — so the printed number can never sit on the opposite
+  // side of a threshold from the branch that produced it.
   let debtVerdict;
   if (debtToAssetPct === null) {
     debtVerdict = "You have listed debt but no assets — the ratio cannot be computed.";
   } else if (debtToAssetPct >= DEBT_TO_ASSET_SEVERE_PCT) {
-    debtVerdict = `Debt is ${round0(debtToAssetPct)}% of assets — very little cushion if values fall.`;
+    debtVerdict = `Debt is ${debtToAssetPct}% of assets — very little cushion if values fall.`;
   } else if (debtToAssetPct >= DEBT_TO_ASSET_CAUTION_PCT) {
-    debtVerdict = `Debt is ${round0(debtToAssetPct)}% of assets, above the ${DEBT_TO_ASSET_CAUTION_PCT}% level usually flagged for review.`;
+    debtVerdict = `Debt is ${debtToAssetPct}% of assets, above the ${DEBT_TO_ASSET_CAUTION_PCT}% level usually flagged for review.`;
   } else {
-    debtVerdict = `Debt is ${round0(debtToAssetPct)}% of assets, within the usual comfort range.`;
+    debtVerdict = `Debt is ${debtToAssetPct}% of assets, within the usual comfort range.`;
   }
 
   const liquidityMonths = expenses > 0 ? round2(liquidAssets / expenses) : null;
@@ -205,13 +209,17 @@ export function computeNetWorth({
   let benchmark = null;
   if (ageValue > 0 && income > 0) {
     const expected = (ageValue * income) / WEALTH_FORMULA_DIVISOR;
-    const ratio = expected > 0 ? netWorth / expected : null;
+    const rawRatio = expected > 0 ? netWorth / expected : null;
+    // Classify from the same rounded ratio that gets displayed (not the raw
+    // one), so the printed multiple and the printed band can never disagree
+    // about which side of PAW_MULTIPLE/UAW_MULTIPLE the user is on.
+    const ratio = rawRatio === null ? null : round2(rawRatio);
     let band = "average accumulator of wealth";
     if (ratio !== null && ratio >= PAW_MULTIPLE) band = "prodigious accumulator of wealth";
     else if (ratio !== null && ratio <= UAW_MULTIPLE) band = "under-accumulator of wealth";
     benchmark = {
       expected: round0(expected),
-      ratio: ratio === null ? null : round2(ratio),
+      ratio,
       band,
     };
   }

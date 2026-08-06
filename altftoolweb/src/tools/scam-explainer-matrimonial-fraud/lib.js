@@ -178,15 +178,49 @@ export function verificationCoverage(selectedIds) {
 /* What has already gone                                               */
 /* ------------------------------------------------------------------ */
 
+/**
+ * Sum whatever transfer amounts actually parse as zero-or-more numbers.
+ *
+ * A single bad entry (a stray minus sign, a paste that overflows to
+ * Infinity, empty-but-not-yet-typed) is excluded from the total rather than
+ * failing the whole calculation — one field being wrong should not blank out
+ * an otherwise-complete assessment. `invalidCount` reports how many entries
+ * were excluded so callers can still surface that as a hint.
+ */
 export function exposureTotal(amounts) {
-  const list = Array.isArray(amounts) ? amounts.map(Number) : [];
-  if (list.some((value) => !Number.isFinite(value) || value < 0)) {
-    return { error: "Every amount must be zero or more." };
-  }
+  const list = Array.isArray(amounts) ? amounts : [];
   if (list.length > 50) return { error: "Fifty entries is enough to make the point." };
-  const total = list.reduce((sum, value) => sum + value, 0);
-  const largest = list.length ? Math.max(...list) : 0;
-  return { total, count: list.length, largest, average: list.length ? total / list.length : 0 };
+  let total = 0;
+  let largest = 0;
+  let count = 0;
+  let invalidCount = 0;
+  for (const raw of list) {
+    const value = Number(raw);
+    if (Number.isFinite(value) && value >= 0) {
+      total += value;
+      if (value > largest) largest = value;
+      count += 1;
+    } else {
+      invalidCount += 1;
+    }
+  }
+  return { total, count, largest, invalidCount };
+}
+
+/**
+ * Per-field validation message for a single "amount" input's raw value, or
+ * null when it is fine (including blank — an in-progress entry, not an
+ * error). Distinguishes unparseable text from a value that overflows to
+ * Infinity from a value that is simply negative, since each needs a
+ * different correction from the user.
+ */
+export function describeAmountIssue(raw) {
+  if (raw === "" || raw === null || raw === undefined) return null;
+  const value = Number(raw);
+  if (Number.isNaN(value)) return "Enter a valid amount, or leave it blank.";
+  if (!Number.isFinite(value)) return "That amount is too large to use.";
+  if (value < 0) return "Amount must be zero or more.";
+  return null;
 }
 
 /* ------------------------------------------------------------------ */
@@ -306,7 +340,8 @@ export function formatBriefing(result) {
   });
   lines.push(
     "",
-    `Independent verification: ${result.coverage.count} of ${result.coverage.total} checks done (${result.coverage.percent.toFixed(0)}%)`,
+    `Independent verification: ${result.coverage.count} of ${result.coverage.total} checks done` +
+      ` — weighted coverage ${result.coverage.score} of ${result.coverage.max} (${result.coverage.percent.toFixed(0)}%)`,
   );
   if (result.exposure.count > 0) {
     lines.push(

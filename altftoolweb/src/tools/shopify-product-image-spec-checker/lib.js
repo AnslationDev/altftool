@@ -1,12 +1,13 @@
 /**
  * Shopify Product Image Spec Checker.
  *
- * Rules encoded here are Shopify's published product image requirements:
- *  - Maximum resolution: 20 megapixels (width x height).
+ * Rules encoded here are Shopify's published product image requirements
+ * (help.shopify.com/en/manual/products/product-media/product-media-types):
+ *  - Maximum resolution: 25 megapixels, up to 5000 x 5000 px per side.
  *  - Maximum file size: 20 MB.
  *  - Recommended size for square product photos: 2048 x 2048 px.
  *  - Zoom on the product page needs at least 800 x 800 px.
- *  - Supported file types: JPEG, PNG, GIF, WebP and HEIC.
+ *  - Supported file types: JPEG, PNG, PSD, TIFF, BMP, GIF, SVG, HEIC and WebP.
  *  - Shopify recommends using one aspect ratio across every product image in a
  *    store so collection grids line up; this checker compares your image to a
  *    store standard you pick and reports how much a crop to that shape removes.
@@ -15,7 +16,10 @@
  */
 
 /** Shopify rejects anything above this many megapixels. */
-export const MAX_MEGAPIXELS = 20;
+export const MAX_MEGAPIXELS = 25;
+
+/** Shopify rejects anything with a side longer than this, even under the MP ceiling. */
+export const MAX_SIDE_PX = 5000;
 
 /** Shopify's per-file upload ceiling. */
 export const MAX_FILE_SIZE_MB = 20;
@@ -26,7 +30,7 @@ export const ZOOM_MIN_SIDE_PX = 800;
 /** Shopify's recommended square product photo. */
 export const RECOMMENDED_SIDE_PX = 2048;
 
-export const ALLOWED_FORMATS = ["jpg", "jpeg", "png", "gif", "webp", "heic"];
+export const ALLOWED_FORMATS = ["jpg", "jpeg", "png", "psd", "tiff", "bmp", "gif", "svg", "heic", "webp"];
 
 export const STORE_RATIOS = [
   { id: "square", label: "1:1 square", value: 1 },
@@ -82,6 +86,7 @@ export function checkShopifyImage({
   if (!target) return { error: "Choose a store standard aspect ratio." };
 
   const megapixels = (width * height) / 1000000;
+  const longest = Math.max(width, height);
   const shortest = Math.min(width, height);
   const ratio = width / height;
   const ext = normaliseFormat(format);
@@ -98,6 +103,16 @@ export function checkShopifyImage({
       megapixels > MAX_MEGAPIXELS
         ? `${megapixels.toFixed(1)} MP is over Shopify's ${MAX_MEGAPIXELS} MP ceiling — the upload will be refused.`
         : `${megapixels.toFixed(1)} MP is within the ${MAX_MEGAPIXELS} MP ceiling.`,
+  });
+
+  checks.push({
+    id: "maxside",
+    label: "Maximum dimension",
+    status: longest > MAX_SIDE_PX ? "fail" : "pass",
+    detail:
+      longest > MAX_SIDE_PX
+        ? `${longest} px is over Shopify's ${MAX_SIDE_PX} px per-side ceiling — the upload will be refused.`
+        : `${longest} px is within the ${MAX_SIDE_PX} px per-side ceiling.`,
   });
 
   checks.push({

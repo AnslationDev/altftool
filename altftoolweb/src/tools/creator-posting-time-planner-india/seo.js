@@ -24,7 +24,7 @@ const seo = {
   faqs: [
     [
       "What is the best time to post on Instagram in India?",
-      "For a metro, working-professional audience the densest windows are the 8-10 am commute and 7-9 pm after dinner, with weekday lunch (12:30-2:30 pm) a dependable third. Prime evening is also the most competitive slot, so a slightly later 9-11 pm post often holds attention better for long-form.",
+      "For a metro, working-professional audience the densest windows are the 7-9 pm prime evening slot and the 8-10 am commute, with late evening (9-11 pm) a strong third and weekday lunch (12:30-2:30 pm) a dependable fourth. Prime evening is also the most competitive slot, so a slightly later 9-11 pm post often holds attention better for long-form.",
     ],
     [
       "Does India have daylight saving time?",

@@ -24,7 +24,7 @@ export const spec = {
       if (isNaN(n) || n < 0 || n > 2000) return { result: "—", caption: "Enter a whole number 0–2000" };
       let f = 1n; for (let i = 2n; i <= BigInt(n); i++) f *= i;
       const s = f.toString();
-      return { result: n + "! = " + (s.length > 30 ? s.slice(0, 30) + "…" : s), caption: s.length + " digits", rows: [["Full value", s]] };
+      return { result: n + "! = " + (s.length > 30 ? s.slice(0, 30) + "…" : s), caption: s.length + (s.length === 1 ? " digit" : " digits"), rows: [["Full value", s]] };
     },
 };
 

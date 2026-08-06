@@ -26195,7 +26195,7 @@ export const toolMetaMap = {
   },
   "shopify-product-image-spec-checker": {
     "name": "Shopify Product Image Spec Checker",
-    "description": "Check Shopify product photos against the 20 megapixel and 20 MB limits, the 800 px zoom threshold and your store's standard aspect ratio.",
+    "description": "Check Shopify product photos against the 25 megapixel and 20 MB limits, the 800 px zoom threshold and your store's standard aspect ratio.",
     "category": "Marketing & Social",
     "icon": "store",
     "iconColor": "text-[var(--primary)]"

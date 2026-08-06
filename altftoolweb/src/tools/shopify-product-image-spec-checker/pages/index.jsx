@@ -7,6 +7,7 @@ import {
   ALLOWED_FORMATS,
   MAX_FILE_SIZE_MB,
   MAX_MEGAPIXELS,
+  MAX_SIDE_PX,
   RECOMMENDED_SIDE_PX,
   STORE_RATIOS,
   ZOOM_MIN_SIDE_PX,
@@ -185,7 +186,7 @@ export default function ToolHome() {
               value={values.format}
               onChange={(event) => setField("format", event.target.value)}
             >
-              {["jpg", "png", "webp", "heic", "gif", "tiff", "svg"].map((ext) => (
+              {["jpg", "png", "webp", "heic", "gif", "tiff", "svg", "psd", "bmp"].map((ext) => (
                 <option key={ext} value={ext}>
                   {ext.toUpperCase()}
                   {ALLOWED_FORMATS.includes(ext) ? "" : " (not supported)"}
@@ -238,7 +239,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -297,6 +302,7 @@ export default function ToolHome() {
             <tbody>
               {[
                 ["Maximum resolution", `${MAX_MEGAPIXELS} megapixels`],
+                ["Maximum dimension", `${MAX_SIDE_PX} px per side`],
                 ["Maximum file size", `${MAX_FILE_SIZE_MB} MB`],
                 ["Zoom threshold", `${ZOOM_MIN_SIDE_PX} px on the shortest side`],
                 ["Recommended square", `${RECOMMENDED_SIDE_PX} x ${RECOMMENDED_SIDE_PX} px`],

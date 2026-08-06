@@ -72,7 +72,7 @@ export default function ToolHome() {
     ];
     for (const row of plan.rows) {
       lines.push(
-        `${row.label}: ${row.method}. ${money(row.perTreatment)} per treatment, ${intervalText(row.intervalMonths)}, ${row.warrantyMonths}-month warranty.`,
+        `${row.label}: ${row.method}. ${money(row.perTreatmentWithTax)} per treatment${plan.gstRate > 0 ? " incl. GST" : ""}, ${intervalText(row.intervalMonths)}, ${row.warrantyMonths}-month warranty.`,
       );
     }
     lines.push("");
@@ -329,7 +329,8 @@ export default function ToolHome() {
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <p className="text-sm font-semibold">{row.label}</p>
                     <p className="text-sm font-semibold text-[var(--primary)]">
-                      {money(row.perTreatment)} per treatment
+                      {money(row.perTreatmentWithTax)} per treatment
+                      {plan.gstRate > 0 ? " incl. GST" : ""}
                     </p>
                   </div>
                   <p className="mt-1 text-xs leading-5 text-[var(--muted-foreground)]">{row.method}</p>
@@ -337,7 +338,9 @@ export default function ToolHome() {
                   <p className="mt-2 text-xs text-[var(--muted-foreground)]">
                     {intervalText(row.intervalMonths)} · {row.rounds} round{row.rounds > 1 ? "s" : ""} ·{" "}
                     {row.warrantyMonths}-month warranty
-                    {row.minimumApplied ? ` · minimum call-out ${money(row.minCharge)} applied` : ""}
+                    {row.minimumApplied
+                      ? ` · minimum call-out ${money(row.minChargeWithTax)}${plan.gstRate > 0 ? " incl. GST" : ""} applied`
+                      : ""}
                   </p>
                 </li>
               ))}

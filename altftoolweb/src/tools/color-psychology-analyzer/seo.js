@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "Which colour is safest for a global brand?",
-      "Blue. It is the only hue with no widespread negative or taboo reading across major markets, which is why it dominates banking, insurance and enterprise software. The trade-off is that it is so common it rarely differentiates, and it suppresses appetite cues — which is why almost no food brand uses it as a primary.",
+      "Blue, on balance. It has fewer widespread negative or taboo readings than most hues across major markets — though it is a traditional mourning colour in China and South Korea — which is part of why it dominates banking, insurance and enterprise software. The trade-off is that it is so common it rarely differentiates, and it suppresses appetite cues — which is why almost no food brand uses it as a primary.",
     ],
     [
       "Does colour psychology actually change behaviour?",

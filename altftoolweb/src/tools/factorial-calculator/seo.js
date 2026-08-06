@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "What is the largest number I can enter?",
-      "2000, which produces a 5,736-digit result. The input must be a whole number from 0 to 2000; negative values and decimals are rejected, because the plain factorial is only defined on non-negative integers.",
+      "2000, which produces a 5,736-digit result. The input must be a whole number from 0 to 2000; negative values are rejected, and decimals are floored to a whole number, because the plain factorial is only defined on non-negative integers.",
     ],
     [
       "Why do other calculators give me 9.33e157 for 100!?",
