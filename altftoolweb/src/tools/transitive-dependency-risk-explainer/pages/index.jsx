@@ -37,18 +37,14 @@ export default function ToolHome() {
 
   const model = useMemo(
     () =>
-      modelDependencyRisk({
-        directDeps: Number(form.directDeps),
-        branchingFactor: Number(form.branchingFactor),
-        maxDepth: Number(form.maxDepth),
-        sharingPercent: Number(form.sharingPercent),
-        advisoryRatePerYear: Number(form.advisoryRatePerYear),
-        installScriptPercent: Number(form.installScriptPercent),
-        reviewMinutes: Number(form.reviewMinutes),
-        ...Object.fromEntries(
+      modelDependencyRisk(
+        // Blank fields must become "" (not 0/NaN-from-Number("")) so
+        // lib.js's toNumber() flags them and the "enter a number in every
+        // field" error fires instead of silently modelling a zero.
+        Object.fromEntries(
           Object.entries(form).map(([key, value]) => [key, value.trim() === "" ? "" : Number(value)]),
         ),
-      }),
+      ),
     [form],
   );
   const hasError = Boolean(model.error);
@@ -158,7 +154,11 @@ export default function ToolHome() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

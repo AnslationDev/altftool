@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Check, Copy, Plus, RotateCcw, Ruler, Trash2 } from "lucide-react";
 import {
   MCDONALD_MAX_WEEK,
@@ -51,6 +51,14 @@ export default function ToolHome() {
   const [belowSpines, setBelowSpines] = useState(false);
   const [maternalWeight, setMaternalWeight] = useState("");
   const [copied, setCopied] = useState(false);
+  const entryIdRef = useRef(0);
+
+  const makeEntryId = () => {
+    entryIdRef.current += 1;
+    return typeof crypto !== "undefined" && crypto.randomUUID
+      ? crypto.randomUUID()
+      : `entry-${Date.now()}-${entryIdRef.current}`;
+  };
 
   const draftCheck = useMemo(() => normaliseEntry({ id: "draft", ...draft }), [draft]);
   const draftError = draftCheck.error || "";
@@ -72,13 +80,14 @@ export default function ToolHome() {
     setEntries((current) => [
       ...current,
       {
-        id: `entry-${draftCheck.week}-${current.length}-${draftCheck.fundalHeightCm}`,
+        id: makeEntryId(),
         week: String(draftCheck.week),
         fundalHeightCm: String(draftCheck.fundalHeightCm),
         circumferenceCm:
           draftCheck.circumferenceCm === null ? "" : String(draftCheck.circumferenceCm),
       },
     ]);
+    setDraft(BLANK_DRAFT);
   };
 
   const removeEntry = (id) => {
@@ -99,6 +108,11 @@ export default function ToolHome() {
       lines.push(
         `Growth: ${CM.format(analysis.growth.fundalTotal)} cm over ${analysis.growth.spanWeeks} weeks (${CM.format(analysis.growth.fundalPerWeek)} cm per week)`,
       );
+      if (analysis.growth.circumferenceTotal !== null) {
+        lines.push(
+          `Belly growth: ${CM.format(analysis.growth.circumferenceTotal)} cm over ${analysis.growth.spanWeeks} weeks (${CM.format(analysis.growth.circumferencePerWeek)} cm per week)`,
+        );
+      }
     }
     if (johnson && !johnson.error) {
       lines.push(`Johnson's formula estimate: about ${G.format(johnson.grams)} g`);
@@ -118,6 +132,12 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the log to the sample entries? This clears every measurement you've added.")
+    ) {
+      return;
+    }
     setEntries(SEED_ENTRIES);
     setDraft(BLANK_DRAFT);
     setBelowSpines(false);
@@ -247,17 +267,19 @@ export default function ToolHome() {
       </section>
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
-        <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
-          Latest fundal height
-        </p>
-        <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
-          {latest ? `${CM.format(latest.fundalHeightCm)} cm` : DASH}
-        </p>
-        <p className={`mt-1 text-sm ${latest ? BAND_TEXT[latest.band] : "text-[var(--muted-foreground)]"}`}>
-          {latest ? latest.message : "Add a measurement to see how it compares."}
-        </p>
+        <div aria-live="polite" role="status">
+          <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
+            Latest fundal height
+          </p>
+          <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            {latest ? `${CM.format(latest.fundalHeightCm)} cm` : DASH}
+          </p>
+          <p className={`mt-1 text-sm ${latest ? BAND_TEXT[latest.band] : "text-[var(--muted-foreground)]"}`}>
+            {latest ? latest.message : "Add a measurement to see how it compares."}
+          </p>
+        </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             ["Week of this measurement", latest ? String(latest.week) : DASH],
             ["Expected fundal height", latest ? `${latest.expected} cm` : DASH],
@@ -280,6 +302,18 @@ export default function ToolHome() {
             [
               "Average growth across the log",
               analysis.growth ? `${CM.format(analysis.growth.fundalPerWeek)} cm per week` : DASH,
+            ],
+            [
+              "Belly growth since the previous entry",
+              latest && latest.circumferencePerWeek !== null
+                ? `${signed(latest.circumferencePerWeek)} cm per week`
+                : DASH,
+            ],
+            [
+              "Average belly growth across the log",
+              analysis.growth && analysis.growth.circumferencePerWeek !== null
+                ? `${CM.format(analysis.growth.circumferencePerWeek)} cm per week`
+                : DASH,
             ],
             [
               "Johnson's formula weight estimate",

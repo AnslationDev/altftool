@@ -139,7 +139,13 @@ export function evaluateCriterion(criterion, index = 0) {
   }
 
   const absoluteChange = target - baseline;
-  const relativeChangePct = baseline === 0 ? null : (absoluteChange / baseline) * 100;
+  // Divide by the baseline's magnitude, not its signed value: for a
+  // continuous metric with a negative baseline (e.g. NPS going from -20 to
+  // -5), dividing by the negative baseline flips the sign and reports a
+  // genuine improvement as a decline. Using the magnitude keeps the sign of
+  // relativeChangePct matching the sign of absoluteChange in every case,
+  // and is a no-op for the common positive-baseline case.
+  const relativeChangePct = baseline === 0 ? null : (absoluteChange / Math.abs(baseline)) * 100;
 
   const observedRaw = String(criterion?.observed ?? "").trim();
   let observed = null;

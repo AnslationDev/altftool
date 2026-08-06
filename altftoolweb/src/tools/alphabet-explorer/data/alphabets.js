@@ -4,6 +4,37 @@
 // Each alphabet has metadata plus an array of characters with their
 // name, pronunciation (romanization/IPA), Unicode code point, and example word.
 
+// One common English example word per letter A-Z, for the Latin script
+// entries below (every other script already carries its own example word).
+const LATIN_EXAMPLE_WORDS = [
+  "Apple",
+  "Ball",
+  "Cat",
+  "Dog",
+  "Elephant",
+  "Fish",
+  "Grape",
+  "House",
+  "Igloo",
+  "Jacket",
+  "Kite",
+  "Lion",
+  "Moon",
+  "Nest",
+  "Orange",
+  "Piano",
+  "Queen",
+  "River",
+  "Sun",
+  "Tree",
+  "Umbrella",
+  "Violin",
+  "Water",
+  "Xylophone",
+  "Yellow",
+  "Zebra",
+];
+
 export const ALPHABETS = [
   {
     id: "latin",
@@ -11,12 +42,12 @@ export const ALPHABETS = [
     script: "Latin",
     direction: "LTR",
     note: "The most widely used alphabet, derived from the Etruscan and Greek alphabets. Basis of English and many European languages.",
-    characters: "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((c) => ({
+    characters: "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("").map((c, idx) => ({
       char: c,
       name: c,
       pronunciation: c.toLowerCase(),
       unicode: `U+${c.charCodeAt(0).toString(16).toUpperCase().padStart(4, "0")}`,
-      example: "",
+      example: LATIN_EXAMPLE_WORDS[idx],
     })),
   },
   {
@@ -149,7 +180,7 @@ export const ALPHABETS = [
       { char: "י", name: "Yod", pronunciation: "y / i", unicode: "U+05D9", example: "יד (hand)" },
       { char: "כ", name: "Kaf", pronunciation: "k / kh", unicode: "U+05DB", example: "כסא (chair)" },
       { char: "ל", name: "Lamed", pronunciation: "l", unicode: "U+05DC", example: "לחם (bread)" },
-      { char: "מ", name: "Mem", pronunciation: "m", unicode: "U+05DD", example: "מים (water)" },
+      { char: "מ", name: "Mem", pronunciation: "m", unicode: "U+05DE", example: "מים (water)" },
       { char: "נ", name: "Nun", pronunciation: "n", unicode: "U+05E0", example: "נר (candle)" },
       { char: "ס", name: "Samekh", pronunciation: "s", unicode: "U+05E1", example: "ספר (book)" },
       { char: "ע", name: "Ayin", pronunciation: "ʕ", unicode: "U+05E2", example: "עין (eye)" },
@@ -343,10 +374,10 @@ export const ALPHABETS = [
       { char: "ㅓ", name: "Eo", pronunciation: "eo", unicode: "U+3153", example: "어 (eo)" },
       { char: "ㅕ", name: "Yeo", pronunciation: "yeo", unicode: "U+3155", example: "여 (yeo)" },
       { char: "ㅗ", name: "O", pronunciation: "o", unicode: "U+3157", example: "오 (o)" },
-      { char: "ㅛ", name: "Yo", pronunciation: "yo", unicode: "U+3159", example: "요 (yo)" },
-      { char: "ㅜ", name: "U", pronunciation: "u", unicode: "U+315B", example: "우 (u)" },
-      { char: "ㅠ", name: "Yu", pronunciation: "yu", unicode: "U+315D", example: "유 (yu)" },
-      { char: "ㅡ", name: "Eu", pronunciation: "eu", unicode: "U+315C", example: "으 (eu)" },
+      { char: "ㅛ", name: "Yo", pronunciation: "yo", unicode: "U+315B", example: "요 (yo)" },
+      { char: "ㅜ", name: "U", pronunciation: "u", unicode: "U+315C", example: "우 (u)" },
+      { char: "ㅠ", name: "Yu", pronunciation: "yu", unicode: "U+3160", example: "유 (yu)" },
+      { char: "ㅡ", name: "Eu", pronunciation: "eu", unicode: "U+3161", example: "으 (eu)" },
       { char: "ㅣ", name: "I", pronunciation: "i", unicode: "U+3163", example: "이 (i)" },
     ],
   },

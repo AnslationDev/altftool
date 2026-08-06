@@ -515,14 +515,30 @@ export function buildExamWishes({
   if (todayISO && examISO) {
     const gap = daysUntil(todayISO, examISO);
     if (gap.error) return { error: gap.error };
+    // A negative gap means the exam date is before the message date -- that
+    // is not "the exam is today" (daysLeft === 0), it is an invalid date
+    // combination, and generating "It is today..." text for it would be
+    // factually wrong for an exam that has already happened.
+    if (gap.days < 0) {
+      return { error: "The first exam date can't be before the message date." };
+    }
     daysLeft = gap.days;
   }
 
+  // A bad revision-budget input (e.g. the hours-per-day or subjects field
+  // is momentarily empty while the user retypes it) should not block the
+  // wish messages themselves -- name/exam/tone/dates are independently
+  // valid, so the budget stats just fall back to unavailable instead of
+  // wiping out `variants` entirely.
   let budget = null;
+  let budgetError = null;
   if (daysLeft != null) {
     const plan = revisionBudget({ daysLeft, hoursPerDay, subjects });
-    if (plan.error) return { error: plan.error };
-    budget = plan;
+    if (plan.error) {
+      budgetError = plan.error;
+    } else {
+      budget = plan;
+    }
   }
 
   const senderName = clean(sender);
@@ -547,7 +563,9 @@ export function buildExamWishes({
       fill(rotate(pack.openings, openOffset, step), tokens),
     ];
     if (daysLeft != null) {
-      parts.push(daysLeft <= 0 ? pack.dayOf : fill(pack.countdown, tokens));
+      // daysLeft is guaranteed >= 0 here (a negative gap is rejected above),
+      // so 0 unambiguously means "the exam is today".
+      parts.push(daysLeft === 0 ? pack.dayOf : fill(pack.countdown, tokens));
     }
     parts.push(rotate(pack.tones[toneId], toneOffset, step));
     parts.push(rotate(pack.closings, closeOffset, step));
@@ -567,6 +585,7 @@ export function buildExamWishes({
     variants,
     daysLeft,
     budget,
+    budgetError,
     exam: examName,
     examLabel: examEntry.label,
     relationship: relEntry.label,

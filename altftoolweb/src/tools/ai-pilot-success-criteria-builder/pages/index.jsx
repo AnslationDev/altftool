@@ -100,13 +100,30 @@ export default function ToolHome() {
   const removeCriterion = (index) => {
     setState((prev) => {
       const criteria = prev.criteria.filter((_, i) => i !== index);
-      const primaryIndex = Math.min(prev.primaryIndex, Math.max(0, criteria.length - 1));
+      const lastIndex = Math.max(0, criteria.length - 1);
+      // Deleting a criterion listed before the primary shifts every later
+      // index down by one, so the primary pointer must shift with it or it
+      // silently ends up pointing at a different criterion than the one the
+      // user selected.
+      let primaryIndex = prev.primaryIndex;
+      if (index < prev.primaryIndex) {
+        primaryIndex -= 1;
+      } else if (index === prev.primaryIndex) {
+        primaryIndex = Math.min(prev.primaryIndex, lastIndex);
+      }
+      primaryIndex = Math.min(Math.max(primaryIndex, 0), lastIndex);
       return { ...prev, criteria, primaryIndex };
     });
     setCopied(false);
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the builder? This clears the pilot name, settings and all criteria you've entered.")
+    ) {
+      return;
+    }
     setState(DEFAULT_STATE);
     setCopied(false);
   };
@@ -398,7 +415,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

@@ -81,7 +81,10 @@ export function buildGamerPlan({ sessionMinutes = 120, matchMinutes = 12, lobbyS
   // How many whole matches fit inside one 20 minute near-work window. A single
   // match longer than the window still counts as one — you cannot break inside
   // a live round, so the schedule accepts the overshoot and reports it.
-  const matchesPerBreak = Math.max(1, Math.floor(RULE_INTERVAL_SECONDS / cycleSeconds));
+  // n matches + (n-1) lobbies between them must fit the window, i.e.
+  // n*matchSeconds + (n-1)*lobby <= RULE_INTERVAL_SECONDS, which rearranges to
+  // n <= (RULE_INTERVAL_SECONDS + lobby) / cycleSeconds.
+  const matchesPerBreak = Math.max(1, Math.floor((RULE_INTERVAL_SECONDS + lobby) / cycleSeconds));
   const nominalIntervalSeconds = matchesPerBreak * matchSeconds + (matchesPerBreak - 1) * lobby;
   const overshootSeconds = Math.max(0, nominalIntervalSeconds - RULE_INTERVAL_SECONDS);
   const lobbyCoversBreak = lobby >= MIN_BREAK_SECONDS;
@@ -157,6 +160,11 @@ export function buildGamerPlan({ sessionMinutes = 120, matchMinutes = 12, lobbyS
       if (run > longestRun) longestRun = run;
     }
   }
+  // A live match can never be cut short (you cannot break mid-round), so the
+  // real longest run is never less than one full match — even when the
+  // trimming above clips the final phase's *reported* seconds down to fit the
+  // requested session length exactly.
+  if (matches > 0) longestRun = Math.max(longestRun, matchSeconds);
 
   const hours = totalSeconds / 3600;
 

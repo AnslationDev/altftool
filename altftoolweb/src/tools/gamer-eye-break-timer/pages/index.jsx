@@ -3,6 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { Check, Copy, Gamepad2, Pause, Play, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   BREAK_DISTANCE_METRES,
   FORMAT_PRESETS,
@@ -42,7 +44,7 @@ export default function ToolHome() {
   const [presetId, setPresetId] = useState("shooter");
   const [elapsed, setElapsed] = useState(0);
   const [anchor, setAnchor] = useState(null);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const plan = useMemo(() => {
     const values = {
@@ -112,7 +114,7 @@ export default function ToolHome() {
     return [
       "Gamer eye break plan",
       `Session: ${formatClock(plan.totalSeconds)}`,
-      `Match: ${plan.matchSeconds / 60} minutes, lobby ${plan.lobbySeconds} seconds`,
+      `Match: ${NUM.format(plan.matchSeconds / 60)} minutes, lobby ${plan.lobbySeconds} seconds`,
       `Break after every ${plan.matchesPerBreak} match${plan.matchesPerBreak === 1 ? "" : "es"}`,
       `Matches in the session: ${plan.matches} (${plan.matchesPerHour} per hour)`,
       `Eye breaks: ${plan.breaks}, totalling ${formatClock(plan.breakSecondsTotal)}`,
@@ -124,25 +126,21 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, plan]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("plan", summary, { label: "gamer eye break plan" });
   };
 
   const reset = () => {
+    if (!window.confirm("Reset every setting and stop the current timer? This cannot be undone.")) {
+      return;
+    }
     setSessionMinutes("120");
     setMatchMinutes("12");
     setLobbySeconds("60");
     setPresetId("shooter");
     setAnchor(null);
     setElapsed(0);
-    setCopied(false);
   };
 
   const progressPercent = hasError ? 0 : Math.round(current.overallProgress * 100);
@@ -257,7 +255,11 @@ export default function ToolHome() {
           resting ? "bg-[var(--primary)]/10 ring-[var(--primary)]" : "bg-[var(--card)] ring-[var(--border)]"
         }`}
       >
-        <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
+        <p
+          aria-live="polite"
+          role="status"
+          className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]"
+        >
           {hasError ? "Timer unavailable" : current.phase.label}
         </p>
         <p
@@ -267,7 +269,7 @@ export default function ToolHome() {
         >
           {hasError ? DASH : formatClock(Math.ceil(current.remaining))}
         </p>
-        <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+        <p aria-live="polite" role="status" className="mt-1 text-sm text-[var(--muted-foreground)]">
           {hasError ? "Fix the inputs above to start the timer." : current.phase.hint}
         </p>
 
@@ -305,13 +307,25 @@ export default function ToolHome() {
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Restart
           </button>
-          <button type="button" onClick={copyResult} aria-label="Copy the break plan" className={GHOST_BTN}>
-            {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-            {copied ? "Copied!" : "Copy plan"}
+          <button
+            type="button"
+            onClick={copyResult}
+            aria-label={isCopied("plan") ? "Copied the break plan to clipboard" : "Copy the break plan"}
+            className={GHOST_BTN}
+          >
+            {isCopied("plan") ? (
+              <Check className="h-4 w-4" aria-hidden="true" />
+            ) : (
+              <Copy className="h-4 w-4" aria-hidden="true" />
+            )}
+            {isCopied("plan") ? "Copied!" : "Copy plan"}
           </button>
           <button type="button" onClick={reset} aria-label="Reset every setting" className={GHOST_BTN}>
             Reset all
           </button>
+          <span className="sr-only" role="status" aria-live="polite">
+            {announcement}
+          </span>
         </div>
       </section>
 
@@ -365,6 +379,15 @@ export default function ToolHome() {
             The longest screen run here is {NUM.format(plan.longestRunMinutes)} minutes, over the{" "}
             {RULE_INTERVAL_SECONDS / 60} minute target. Shorten the queue time or break one match
             sooner.
+          </p>
+        )}
+
+        {!hasError && plan.truncated && (
+          <p className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning-text)]">
+            This match and lobby length only build a {formatClock(plan.totalSeconds)} schedule before
+            hitting the tool&apos;s phase limit, short of the {WHOLE.format(Number(sessionMinutes))} minute
+            session you asked for. Increase the match or lobby length, or shorten the session, to fill
+            the full time.
           </p>
         )}
       </section>

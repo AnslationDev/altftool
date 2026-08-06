@@ -7,6 +7,7 @@ import {
   buildExamWishes,
   EXAMS,
   LANGUAGES,
+  MAX_NAME_LENGTH,
   MAX_STUDY_HOURS_PER_DAY,
   MAX_SUBJECTS,
   MAX_VARIANTS,
@@ -91,6 +92,7 @@ export default function ToolHome() {
   const variants = hasError ? [] : result.variants;
   const lead = variants[0];
   const budget = hasError ? null : result.budget;
+  const budgetError = hasError ? null : result.budgetError;
 
   const copyText = async (text, id) => {
     if (!text) return;
@@ -145,6 +147,7 @@ export default function ToolHome() {
               id="ebw-name"
               className={`mt-2 ${INPUT_CLASS}`}
               type="text"
+              maxLength={MAX_NAME_LENGTH}
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -157,6 +160,7 @@ export default function ToolHome() {
               id="ebw-sender"
               className={`mt-2 ${INPUT_CLASS}`}
               type="text"
+              maxLength={MAX_NAME_LENGTH}
               value={sender}
               onChange={(e) => setSender(e.target.value)}
             />
@@ -215,6 +219,7 @@ export default function ToolHome() {
               id="ebw-exam-date"
               className={`mt-2 ${INPUT_CLASS}`}
               type="date"
+              min={todayISO || undefined}
               value={examISO}
               onChange={(e) => setExamISO(e.target.value)}
             />
@@ -349,7 +354,7 @@ export default function ToolHome() {
               type="button"
               onClick={() => copyText(lead?.text, 1)}
               aria-label="Copy the first exam wishes message"
-              className={PRIMARY_BTN}
+              className={GHOST_BTN}
               disabled={hasError}
             >
               {copiedId === 1 ? (
@@ -359,12 +364,22 @@ export default function ToolHome() {
               )}
               {copiedId === 1 ? "Copied!" : "Copy"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all fields" className={GHOST_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all fields" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
         </div>
+
+        {budgetError ? (
+          <p
+            role="status"
+            aria-live="polite"
+            className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning-text)]"
+          >
+            Revision budget unavailable: {budgetError}
+          </p>
+        ) : null}
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[

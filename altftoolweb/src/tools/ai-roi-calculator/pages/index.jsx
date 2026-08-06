@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, TrendingUp } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import { computeAiRoi } from "../lib";
 
 const USD = new Intl.NumberFormat("en-US", {
@@ -12,6 +14,12 @@ const USD = new Intl.NumberFormat("en-US", {
 });
 const NUM1 = new Intl.NumberFormat("en-US", { maximumFractionDigits: 1 });
 const PCT = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
+
+/** Formats a fractional ROI as a whole-number percent, without ever printing "-0%". */
+const pct = (value) => PCT.format(value).replace(/^-(0%?)$/, "$1");
+
+/** Formats break-even hours, matching the on-screen table's "—" for the unreachable/undefined case. */
+const breakEvenText = (value) => (value === null ? DASH : `${NUM1.format(value)} h`);
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -39,7 +47,7 @@ export default function ToolHome() {
   const [hoursSaved, setHoursSaved] = useState(DEFAULTS.hoursSaved);
   const [hourlyRate, setHourlyRate] = useState(DEFAULTS.hourlyRate);
   const [adoption, setAdoption] = useState(DEFAULTS.adoption);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const num = (v) => (v.trim() === "" ? Number.NaN : Number(v));
 
@@ -66,21 +74,15 @@ export default function ToolHome() {
       `Monthly hours saved: ${NUM1.format(result.monthlyHoursSaved)} h`,
       `Monthly value of time saved: ${USD.format(result.monthlyValue)}`,
       `Net monthly benefit: ${USD.format(result.netMonthly)}`,
-      `ROI: ${PCT.format(result.roiPct)}%`,
+      `ROI: ${pct(result.roiPct)}%`,
       `Annual net benefit: ${USD.format(result.annualNet)}`,
-      `Break-even: ${NUM1.format(result.breakEvenHoursPerUserPerWeek)} h saved per active user per week`,
+      `Break-even: ${breakEvenText(result.breakEvenHoursPerUserPerWeek)} saved per active user per week`,
     ].join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "AI ROI result" });
   };
 
   const reset = () => {
@@ -90,7 +92,6 @@ export default function ToolHome() {
     setHoursSaved(DEFAULTS.hoursSaved);
     setHourlyRate(DEFAULTS.hourlyRate);
     setAdoption(DEFAULTS.adoption);
-    setCopied(false);
   };
 
   const rows = hasError
@@ -243,7 +244,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Monthly ROI
             </p>
@@ -256,7 +257,7 @@ export default function ToolHome() {
                     : "text-[var(--danger)]"
               }`}
             >
-              {hasError ? DASH : `${PCT.format(result.roiPct)}%`}
+              {hasError ? DASH : `${pct(result.roiPct)}%`}
             </p>
             <p className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]">
               {hasError
@@ -271,15 +272,15 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the AI ROI result"
+              aria-label={isCopied("result") ? "Copied the AI ROI result to clipboard" : "Copy the AI ROI result"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
@@ -290,10 +291,13 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

@@ -35,9 +35,19 @@ export default function ToolHome() {
     );
   }, [active, query]);
 
+  const didMount = useRef(false);
   useEffect(() => {
     setSelectedIdx(0);
     setQuery("");
+    // Move focus into the character grid whenever the script changes (but
+    // not on first mount) so keyboard users who switch scripts via the
+    // prev/next buttons or the <select> land somewhere arrow-key navigation
+    // actually works, instead of the grid silently having no focus target.
+    if (didMount.current) {
+      gridRef.current?.focus({ preventScroll: true });
+    } else {
+      didMount.current = true;
+    }
   }, [activeId]);
 
   const selected = chars[Math.min(selectedIdx, Math.max(0, chars.length - 1))];
@@ -73,13 +83,15 @@ export default function ToolHome() {
 
   const onKeyDown = useCallback(
     (e) => {
+      // Right = next character, Left = previous, in reading order. For RTL
+      // scripts "next" visually moves leftward, so the deltas flip.
       const rtl = active.direction === "RTL";
       if (e.key === "ArrowRight") {
         e.preventDefault();
-        move(rtl ? 1 : -1);
+        move(rtl ? -1 : 1);
       } else if (e.key === "ArrowLeft") {
         e.preventDefault();
-        move(rtl ? -1 : 1);
+        move(rtl ? 1 : -1);
       }
     },
     [active.direction, move]

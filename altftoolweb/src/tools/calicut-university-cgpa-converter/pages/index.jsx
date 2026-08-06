@@ -187,7 +187,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               {mode === "toPercent" ? "Equivalent percentage" : "Equivalent CGPA"}
             </p>
@@ -220,13 +220,13 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {(mode === "toPercent"
             ? [
                 ["Grade point average", ok ? gp(forward.gpa) : "—"],
                 ["Equivalent percentage", ok ? pct(forward.percentage) : "—"],
                 ["Overall letter grade", ok ? `${forward.grade} — ${forward.gradeLabel}` : "—"],
-                ["At or above the pass point of 4", ok ? (forward.passing ? "Yes" : "No") : "—"],
+                ["At or above the aggregate pass grade (P)", ok ? (forward.passing ? "Yes" : "No") : "—"],
               ]
             : [
                 ["Percentage entered", ok ? pct(reverse.percentage) : "—"],
@@ -311,7 +311,11 @@ export default function ToolHome() {
             {fromGrades.error}
           </p>
         ) : (
-          <dl className="mt-4 divide-y divide-[var(--border)] text-sm">
+          <dl
+            className="mt-4 divide-y divide-[var(--border)] text-sm"
+            aria-live="polite"
+            aria-atomic="true"
+          >
             {[
               ["Credit weighted GPA", gp(fromGrades.gpa)],
               ["Equivalent percentage", pct(fromGrades.percentage)],

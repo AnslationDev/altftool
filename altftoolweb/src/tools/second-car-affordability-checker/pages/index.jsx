@@ -243,7 +243,13 @@ export default function ToolHome() {
         </div>
 
         <p
-          className={`mt-4 text-sm font-semibold ${error || result.verdict === "affordable" ? "text-[var(--success)]" : "text-[var(--danger)]"}`}
+          className={`mt-4 text-sm font-semibold ${
+            error || result.verdict === "affordable"
+              ? "text-[var(--success-text)]"
+              : result.verdict === "tight"
+                ? "text-[var(--warning-text)]"
+                : "text-[var(--danger-text)]"
+          }`}
         >
           {error ? DASH : VERDICT_COPY[result.verdict]}
         </p>

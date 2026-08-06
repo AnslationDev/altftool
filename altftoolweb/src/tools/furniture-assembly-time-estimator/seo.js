@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How long does it take to assemble flat-pack furniture?",
-      "Most single items land between 30 minutes and 3 hours: a dining chair is around 20–30 minutes, a bookshelf 60–90, a desk about an hour and a two-door wardrobe often 2.5–4 hours for one person. Part count and cam-lock count predict it better than the price or the brand.",
+      "Most single items land between 30 minutes and 3 hours: a dining chair is around 35–55 minutes, a bookshelf 60–90, a desk 70–95 minutes and a two-door wardrobe often 2.5–4 hours for one person. Part count and cam-lock count predict it better than the price or the brand.",
     ],
     [
       "Is it faster to assemble furniture with two people?",
@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "Does a power drill speed up flat-pack assembly?",
-      "It typically cuts total time by around 25–35% compared with hand tools, mostly on items with many screws. Set the clutch low and finish by hand — chipboard strips easily, and an over-driven cam bolt or hinge screw is far slower to fix than it was to drive.",
+      "A basic cordless drill-driver typically cuts total time by around 15–25% compared with hand tools — more on items with lots of screws like a bed or TV unit, less on smaller items. Add a clutch and a proper bit set and the saving grows to roughly 25–35%. Set the clutch low and finish by hand — chipboard strips easily, and an over-driven cam bolt or hinge screw is far slower to fix than it was to drive.",
     ],
     [
       "Why is the second identical item quicker to build than the first?",

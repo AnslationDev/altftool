@@ -69,6 +69,11 @@ const LIFESTYLE_SUGGESTIONS = {
   ],
 };
 
+const MIN_SYS = 40;
+const MIN_DIA = 20;
+const MAX_SYS = 300;
+const MAX_DIA = 200;
+
 function classifyBP(sys, dia, guideline) {
   const cats = GUIDELINES[guideline].categories;
   for (const cat of cats) {
@@ -77,11 +82,13 @@ function classifyBP(sys, dia, guideline) {
   return cats[cats.length - 1];
 }
 
-function BpGauge({ sys, dia, category }) {
-  const min = 60;
-  const max = 200;
-  const clampedSys = Math.max(min, Math.min(max, sys));
-  const pct = ((clampedSys - min) / (max - min)) * 100;
+function BpGauge({ sys, dia, category, categories }) {
+  const lastIndex = categories.length - 1;
+  const categoryIndex = Math.max(
+    0,
+    categories.findIndex((c) => c.label === category.label),
+  );
+  const pct = lastIndex > 0 ? (categoryIndex / lastIndex) * 100 : 0;
   const angle = (pct / 100) * 180 - 90;
 
   return (
@@ -137,6 +144,7 @@ export default function ToolHome() {
     }
   });
   const [copied, setCopied] = useState(false);
+  const [error, setError] = useState("");
 
   const stats = useMemo(() => {
     if (history.length === 0) return null;
@@ -156,8 +164,34 @@ export default function ToolHome() {
   const calculate = () => {
     const sys = parseFloat(systolic);
     const dia = parseFloat(diastolic);
-    if (isNaN(sys) || isNaN(dia) || sys <= 0 || dia <= 0 || sys < dia || sys > 300 || dia > 200) return;
 
+    if (isNaN(sys) || isNaN(dia)) {
+      setResult(null);
+      setError("Enter valid numbers for systolic and diastolic pressure.");
+      return;
+    }
+    if (sys <= 0 || dia <= 0) {
+      setResult(null);
+      setError("Systolic and diastolic values must be greater than zero.");
+      return;
+    }
+    if (sys < dia) {
+      setResult(null);
+      setError("Systolic (top number) cannot be lower than diastolic (bottom number). Check for swapped values.");
+      return;
+    }
+    if (sys > MAX_SYS || dia > MAX_DIA) {
+      setResult(null);
+      setError(`Enter a plausible reading (systolic up to ${MAX_SYS}, diastolic up to ${MAX_DIA} mmHg).`);
+      return;
+    }
+    if (sys < MIN_SYS || dia < MIN_DIA) {
+      setResult(null);
+      setError(`This reading is below the physiologically plausible range (systolic ≥ ${MIN_SYS}, diastolic ≥ ${MIN_DIA} mmHg). Double-check for a data-entry error before relying on this result.`);
+      return;
+    }
+
+    setError("");
     const category = classifyBP(sys, dia, guideline);
     const hr = heartRate ? parseFloat(heartRate) : null;
     const reading = { sys, dia, hr, guideline, date: new Date().toISOString(), label: category.label };
@@ -176,9 +210,13 @@ export default function ToolHome() {
     setDiastolic("");
     setHeartRate("");
     setResult(null);
+    setError("");
   };
 
   const clearHistory = () => {
+    if (typeof window !== "undefined" && !window.confirm("Clear all saved readings? This cannot be undone.")) {
+      return;
+    }
     setHistory([]);
     if (typeof window !== "undefined") {
       localStorage.removeItem("bpHistory");
@@ -223,10 +261,12 @@ Clinical decisions should always be made by qualified healthcare professionals.
   const downloadReport = () => {
     if (!result) return;
     const blob = new Blob([buildReportText()], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
+    link.href = url;
     link.download = `BP_Report_${result.sys}_${result.dia}.txt`;
     link.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -284,7 +324,10 @@ Clinical decisions should always be made by qualified healthcare professionals.
                 min="40"
                 max="300"
                 value={systolic}
-                onChange={(e) => setSystolic(e.target.value)}
+                onChange={(e) => {
+                  setSystolic(e.target.value);
+                  if (error) setError("");
+                }}
                 placeholder="120"
                 className="mt-2 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
               />
@@ -297,7 +340,10 @@ Clinical decisions should always be made by qualified healthcare professionals.
                 min="20"
                 max="200"
                 value={diastolic}
-                onChange={(e) => setDiastolic(e.target.value)}
+                onChange={(e) => {
+                  setDiastolic(e.target.value);
+                  if (error) setError("");
+                }}
                 placeholder="80"
                 className="mt-2 w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 outline-none focus:border-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)]/20 transition-all"
               />
@@ -333,6 +379,11 @@ Clinical decisions should always be made by qualified healthcare professionals.
                 Reset
               </button>
             </div>
+            {error && (
+              <p role="alert" className="mt-3 text-sm font-medium text-[var(--danger-text)]">
+                {error}
+              </p>
+            )}
           </div>
 
           {/* Result Card */}
@@ -342,7 +393,12 @@ Clinical decisions should always be made by qualified healthcare professionals.
                 {/* Gauge */}
                 <div className="rounded-lg bg-[var(--muted)]/50 p-6 text-center">
                   <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted)]">Blood Pressure Reading</p>
-                  <BpGauge sys={result.sys} dia={result.dia} category={result.category} />
+                  <BpGauge
+                    sys={result.sys}
+                    dia={result.dia}
+                    category={result.category}
+                    categories={GUIDELINES[result.guideline].categories}
+                  />
                   <p className={`text-2xl font-black mt-2 ${result.category.color}`}>{result.category.label}</p>
                   <p className="text-xs text-[var(--muted)] mt-1">{result.sys}/{result.dia} mmHg &middot; Risk: {result.category.risk}</p>
                 </div>

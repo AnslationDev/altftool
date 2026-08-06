@@ -107,7 +107,9 @@ export function checkAffordability({
   if ([otherEmi, oldEmi, oldRunning, newRunning, liquid, expenses].some((value) => value < 0)) {
     return { error: "Amounts cannot be negative." };
   }
-  if (slots < 0 || slots > 20) return { error: "Parking slots owned should be between 0 and 20." };
+  if (!Number.isInteger(slots) || slots < 0 || slots > 20) {
+    return { error: "Parking slots owned must be a whole number between 0 and 20." };
+  }
   if (!Number.isInteger(vehicles) || vehicles < 1 || vehicles > 20) {
     return { error: "Vehicles after purchase must be a whole number between 1 and 20." };
   }
@@ -128,40 +130,47 @@ export function checkAffordability({
 
   const checks = [];
 
+  // Every check below compares and displays the SAME rounded figure, so the
+  // status shown can never disagree with the number printed next to it (see
+  // wave-28 audit finding 1: comparing raw values against a rounded display
+  // could show e.g. "20% — FAIL" when the raw value was 19.96%).
+  const downPctRounded = round(downPct, 1);
   checks.push({
     id: "down-payment",
     label: "Down payment",
-    value: `${round(downPct, 1)}% of the on-road price`,
+    value: `${downPctRounded}% of the on-road price`,
     benchmark: `at least ${RULE_MIN_DOWN_PAYMENT_PCT}%`,
-    status: downPct >= RULE_MIN_DOWN_PAYMENT_PCT ? "pass" : "fail",
+    status: downPctRounded >= RULE_MIN_DOWN_PAYMENT_PCT ? "pass" : "fail",
     detail:
-      downPct >= RULE_MIN_DOWN_PAYMENT_PCT
+      downPctRounded >= RULE_MIN_DOWN_PAYMENT_PCT
         ? "A fifth down keeps you ahead of the vehicle's depreciation curve."
         : `Put in ${round((price * RULE_MIN_DOWN_PAYMENT_PCT) / 100 - down, 0)} more to reach the 20% mark.`,
   });
 
+  const yearsRounded = round(years, 1);
   checks.push({
     id: "loan-term",
     label: "Loan tenure",
-    value: `${round(years, 1)} years`,
+    value: `${yearsRounded} years`,
     benchmark: `${RULE_MAX_LOAN_YEARS} years or less`,
-    status: years <= RULE_MAX_LOAN_YEARS ? "pass" : "fail",
+    status: yearsRounded <= RULE_MAX_LOAN_YEARS ? "pass" : "fail",
     detail:
-      years <= RULE_MAX_LOAN_YEARS
+      yearsRounded <= RULE_MAX_LOAN_YEARS
         ? "Short enough that the loan is repaid before the big-ticket repairs start."
         : "A longer tenure lowers the EMI but keeps you in negative equity for most of the loan.",
   });
 
+  const transportPctRounded = round(transportPct, 1);
   const transportStatus =
-    transportPct <= RULE_MAX_TRANSPORT_PCT
+    transportPctRounded <= RULE_MAX_TRANSPORT_PCT
       ? "pass"
-      : transportPct <= TRANSPORT_STRETCHED_PCT
+      : transportPctRounded <= TRANSPORT_STRETCHED_PCT
         ? "warn"
         : "fail";
   checks.push({
     id: "transport-share",
     label: "All transport costs",
-    value: `${round(transportPct, 1)}% of gross income`,
+    value: `${transportPctRounded}% of gross income`,
     benchmark: `${RULE_MAX_TRANSPORT_PCT}% or less`,
     status: transportStatus,
     detail:
@@ -170,12 +179,13 @@ export function checkAffordability({
         : `Both vehicles together cost ${round(totalTransport, 0)} a month, against a ${RULE_MAX_TRANSPORT_PCT}% budget of ${round((income * RULE_MAX_TRANSPORT_PCT) / 100, 0)}.`,
   });
 
+  const foirPctRounded = round(foirPct, 1);
   const foirStatus =
-    foirPct <= FOIR_COMFORTABLE_PCT ? "pass" : foirPct <= FOIR_LENDER_LIMIT_PCT ? "warn" : "fail";
+    foirPctRounded <= FOIR_COMFORTABLE_PCT ? "pass" : foirPctRounded <= FOIR_LENDER_LIMIT_PCT ? "warn" : "fail";
   checks.push({
     id: "foir",
     label: "Total EMI to income",
-    value: `${round(foirPct, 1)}% of gross income`,
+    value: `${foirPctRounded}% of gross income`,
     benchmark: `under ${FOIR_COMFORTABLE_PCT}%, lender cap around ${FOIR_LENDER_LIMIT_PCT}%`,
     status: foirStatus,
     detail:
@@ -188,11 +198,12 @@ export function checkAffordability({
   let emergencyValue = "No expense figure entered";
   let emergencyDetail = "Enter your monthly household expenses to test the emergency fund.";
   if (emergencyMonths !== null) {
-    emergencyValue = `${round(emergencyMonths, 1)} months of expenses left`;
+    const emergencyMonthsRounded = round(emergencyMonths, 1);
+    emergencyValue = `${emergencyMonthsRounded} months of expenses left`;
     emergencyStatus =
-      emergencyMonths >= EMERGENCY_FUND_TARGET_MONTHS
+      emergencyMonthsRounded >= EMERGENCY_FUND_TARGET_MONTHS
         ? "pass"
-        : emergencyMonths >= EMERGENCY_FUND_MINIMUM_MONTHS
+        : emergencyMonthsRounded >= EMERGENCY_FUND_MINIMUM_MONTHS
           ? "warn"
           : "fail";
     emergencyDetail =
@@ -209,11 +220,14 @@ export function checkAffordability({
     detail: emergencyDetail,
   });
 
+  // slots and vehicles are both validated as whole numbers above, so this
+  // subtraction can't produce a floating-point artifact (wave-28 audit
+  // finding 2) and the pluralization checks below always match what's shown.
   const parkingShortfall = vehicles - slots;
   checks.push({
     id: "parking",
     label: "Parking",
-    value: `${round(slots, 0)} slot${slots === 1 ? "" : "s"} for ${vehicles} vehicle${vehicles === 1 ? "" : "s"}`,
+    value: `${slots} slot${slots === 1 ? "" : "s"} for ${vehicles} vehicle${vehicles === 1 ? "" : "s"}`,
     benchmark: "one slot per vehicle",
     status: parkingShortfall <= 0 ? "pass" : "fail",
     detail:

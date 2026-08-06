@@ -74,6 +74,11 @@ function toInt(value) {
   return Number.isFinite(number) ? Math.round(number) : NaN;
 }
 
+/** Picks "a"/"an" based on whether `word` starts with a vowel sound. */
+function articleFor(word) {
+  return /^[aeiou]/i.test(word) ? "an" : "a";
+}
+
 /**
  * Split a whole-number budget into `parts` pieces that sum exactly to it;
  * the first (budget mod parts) pieces get one extra.
@@ -159,7 +164,7 @@ export function buildVivaPrompt({
   if (!degree) return { error: "Choose the examination level." };
 
   const lines = [
-    `Act as the external examiner in a ${degree.label.toLowerCase()}. Generate the questions you would actually ask this candidate.`,
+    `Act as the external examiner in ${articleFor(degree.label)} ${degree.label.toLowerCase()}. Generate the questions you would actually ask this candidate.`,
     "",
     `THESIS TITLE: ${thesisTitle}`,
     "",

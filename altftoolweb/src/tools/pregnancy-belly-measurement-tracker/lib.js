@@ -27,9 +27,6 @@ export const NORMAL_TOLERANCE_CM = 2;
 /** Discrepancy at which obstetric practice usually orders a growth scan, in cm. */
 export const REVIEW_TOLERANCE_CM = 3;
 
-/** Typical fundal height growth in the second and third trimesters. */
-export const EXPECTED_GROWTH_CM_PER_WEEK = 1;
-
 /** Johnson's formula constants. */
 export const JOHNSON_MULTIPLIER = 155;
 export const JOHNSON_N_ABOVE_SPINES = 12;

@@ -6,6 +6,12 @@ import { Binary } from 'lucide-react';
 export default function BinaryDisplay({ number, ip }) {
   if (!number) return null;
 
+  // Normalize to an unsigned 32-bit value before formatting. `.toString(2)`/
+  // `.toString(16)` on a negative number prepend a '-' to the magnitude's
+  // digits rather than producing two's-complement bits, which garbles the
+  // output if a negative number is ever passed in.
+  const n = number >>> 0;
+
   const parts = ip ? ip.split('.').map(p => parseInt(p, 10)) : null;
 
   return (
@@ -39,7 +45,7 @@ export default function BinaryDisplay({ number, ip }) {
                 Full Binary (32-bit)
               </p>
               <code className="block break-all font-mono text-sm text-[var(--primary)] leading-relaxed">
-                {number.toString(2).padStart(32, '0')}
+                {n.toString(2).padStart(32, '0')}
               </code>
             </div>
 
@@ -48,7 +54,7 @@ export default function BinaryDisplay({ number, ip }) {
                 Hexadecimal
               </p>
               <code className="block font-mono text-sm text-[var(--primary)]">
-                0x{number.toString(16).toUpperCase().padStart(8, '0')}
+                0x{n.toString(16).toUpperCase().padStart(8, '0')}
               </code>
             </div>
           </>

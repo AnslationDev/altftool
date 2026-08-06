@@ -31,7 +31,7 @@ const seo = {
     ],
     [
       "What if my top number is normal but my bottom number is high?",
-      "You are still classified into the higher category. The tool only assigns a reading to a category when both the systolic and the diastolic value fall inside it, so 118/94 is not Normal — the diastolic of 94 pushes it into Stage 1 under ACC/AHA and Grade 1 under ESC/ESH.",
+      "You are still classified into the higher category. The tool only assigns a reading to a category when both the systolic and the diastolic value fall inside it, so 118/94 is not Normal — the diastolic of 94 pushes it into Stage 2 under ACC/AHA (a diastolic of 90 or above is Stage 2 regardless of systolic) and Grade 1 under ESC/ESH.",
     ],
     [
       "How many readings should I take before deciding anything?",
