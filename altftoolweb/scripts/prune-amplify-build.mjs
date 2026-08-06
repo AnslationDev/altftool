@@ -314,6 +314,17 @@ if (hasStandalone) {
         "Amplify adds opaque packaging overhead before enforcing its 220.00 MiB hard limit."
     );
   }
+} else {
+  // Next only emits .next/standalone when the build asks for it, and this config
+  // sets no `output`, so Amplify has the directory and a developer machine never
+  // does. When it is missing the cap above is skipped in silence, and a local run
+  // prints a clean artifact-gate line and nothing else — which reads as both caps
+  // passing. Job 232 failed at 259.43 MiB against this cap after a local build
+  // had reported everything green.
+  console.log(
+    `  standalone: not produced by this build — the ${(maxStandaloneBytes / (1024 * 1024)).toFixed(2)} MiB cap was NOT checked. ` +
+      "Amplify emits it; read the deployed job's log before trusting a local pass."
+  );
 }
 
 if (artifactBytes > maxArtifactBytes) {

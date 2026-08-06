@@ -469,10 +469,16 @@ export const SITE_ROUTES = {
   top9: { label: "Top9 Lists", href: "/top9" },
   top10: { label: "Top 10 Lists", href: "/top10" },
   top49: { label: "Top 49 Lists", href: "/top49" },
-  // top8 and top11 are deliberately excluded: both are in
-  // QUARANTINED_ROUTE_PREFIXES (src/proxy.js) and return a hard 404 for
-  // everyone until their unsourced rankings are replaced. Do not add them
-  // back here or link them from nav until that quarantine is lifted.
+  // top3, top8 and top11 are deliberately excluded: all three return a hard
+  // 404 for everyone until their unsourced rankings are replaced. Do not add
+  // them back here or link them from nav until that quarantine is lifted.
+  //
+  // top3 arrived here in beta's merge with a comment saying the flag "only
+  // tells search engines not to index it, it doesn't block people from using
+  // it, and the page itself works correctly". That was true of beta's tree and
+  // is not true of this one: src/app/top3/page.jsx calls notFound() outright,
+  // and https://www.altftool.com/top3 answers 404. Adding the entry would have
+  // put a link to a 404 in the Top Picks nav on every page of the site.
   about: { label: "About AltFTool", href: "/policypages/about" },
   contact: { label: "Contact", href: "/policypages/contact" },
   privacy: { label: "Privacy", href: "/policypages/privacy" },
