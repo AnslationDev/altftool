@@ -4,6 +4,7 @@ import path from "node:path";
 
 const webRoot = path.resolve(import.meta.dirname, "..");
 const testRoots = [
+  path.join(webRoot, "scripts"),
   path.join(webRoot, "packages/core/src/seo"),
   path.join(webRoot, "packages/core/src/atlas"),
   path.join(webRoot, "packages/core/src/detour"),
