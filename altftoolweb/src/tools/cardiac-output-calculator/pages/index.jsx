@@ -1,8 +1,17 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { Heart, RotateCcw, Info, Copy, Download, CheckCircle2 } from "lucide-react";
-import { safeCopyText } from "@/shared/utils/clipboard";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
+const HR_MIN = 20;
+const HR_MAX = 300;
+const SV_MIN = 10;
+const SV_MAX = 500;
+const HEIGHT_MIN = 50;
+const HEIGHT_MAX = 250;
+const WEIGHT_MIN = 20;
+const WEIGHT_MAX = 300;
 
 const CO_RANGES = [
   { label: "Low", range: "< 4.0", color: "text-blue-600", bg: "bg-blue-50", border: "border-blue-200", description: "Reduced cardiac output — may indicate heart failure, shock, or severe valvular disease." },
@@ -12,6 +21,7 @@ const CO_RANGES = [
 
 const CI_RANGES = [
   { label: "Low", range: "< 2.2", color: "text-blue-600", bg: "bg-blue-50", border: "border-blue-200", description: "Cardiogenic shock or severe heart failure. Urgent intervention may be required." },
+  { label: "Borderline", range: "2.2 – 2.5", color: "text-amber-600", bg: "bg-amber-50", border: "border-amber-200", description: "Below the normal band but above the shock threshold — mildly reduced perfusion, worth watching in context." },
   { label: "Normal", range: "2.5 – 4.0", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200", description: "Normal cardiac index — adequate for body size." },
   { label: "High", range: "> 4.0", color: "text-orange-600", bg: "bg-orange-50", border: "border-orange-200", description: "Elevated cardiac index — may indicate high-output states." },
 ];
@@ -28,8 +38,9 @@ function getCoCategory(co) {
 
 function getCiCategory(ci) {
   if (ci < 2.2) return CI_RANGES[0];
-  if (ci <= 4.0) return CI_RANGES[1];
-  return CI_RANGES[2];
+  if (ci < 2.5) return CI_RANGES[1];
+  if (ci <= 4.0) return CI_RANGES[2];
+  return CI_RANGES[3];
 }
 
 function CoGauge({ value, category, max = 12 }) {
@@ -81,12 +92,28 @@ export default function ToolHome() {
   const [weight, setWeight] = useState("");
   const [method, setMethod] = useState("co");
   const [result, setResult] = useState(null);
-  const [copied, setCopied] = useState(false);
+  const [error, setError] = useState("");
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const calculate = () => {
     const hr = parseFloat(heartRate);
     const sv = parseFloat(strokeVolume);
-    if (isNaN(hr) || isNaN(sv) || hr <= 0 || hr > 300 || sv <= 0 || sv > 500) return;
+
+    if (isNaN(hr) || isNaN(sv)) {
+      setError("Enter a heart rate and stroke volume to calculate.");
+      setResult(null);
+      return;
+    }
+    if (hr < HR_MIN || hr > HR_MAX) {
+      setError(`Heart rate must be between ${HR_MIN} and ${HR_MAX} bpm.`);
+      setResult(null);
+      return;
+    }
+    if (sv < SV_MIN || sv > SV_MAX) {
+      setError(`Stroke volume must be between ${SV_MIN} and ${SV_MAX} mL.`);
+      setResult(null);
+      return;
+    }
 
     const co = (hr * sv) / 1000;
     const coCategory = getCoCategory(co);
@@ -95,20 +122,32 @@ export default function ToolHome() {
     let ci = null;
     let ciCategory = null;
 
-    const h = parseFloat(height);
-    const w = parseFloat(weight);
-    if (!isNaN(h) && !isNaN(w) && h > 0 && w > 0) {
-      bsa = calculateBSA(h, w);
-      ci = co / bsa;
-      ciCategory = getCiCategory(ci);
+    if (method === "ci") {
+      const h = parseFloat(height);
+      const w = parseFloat(weight);
+      const heightGiven = height.trim() !== "";
+      const weightGiven = weight.trim() !== "";
+      if (heightGiven || weightGiven) {
+        if (isNaN(h) || isNaN(w) || h < HEIGHT_MIN || h > HEIGHT_MAX || w < WEIGHT_MIN || w > WEIGHT_MAX) {
+          setError(`Enter a height between ${HEIGHT_MIN}–${HEIGHT_MAX} cm and a weight between ${WEIGHT_MIN}–${WEIGHT_MAX} kg to calculate the cardiac index.`);
+          setResult(null);
+          return;
+        }
+        bsa = calculateBSA(h, w);
+        ci = co / bsa;
+        ciCategory = getCiCategory(ci);
+      }
     }
 
+    setError("");
     setResult({
       hr,
       sv,
       co: co.toFixed(2),
+      coRaw: co,
       coCategory,
       bsa: bsa ? bsa.toFixed(2) : null,
+      bsaRaw: bsa,
       ci: ci ? ci.toFixed(2) : null,
       ciCategory,
       minuteVolume: (co * 1000).toFixed(0),
@@ -123,6 +162,7 @@ export default function ToolHome() {
     setHeight("");
     setWeight("");
     setResult(null);
+    setError("");
   };
 
   const buildReportText = () => {
@@ -156,21 +196,17 @@ Clinical decisions should always be made by qualified healthcare professionals.
     `.trim();
   };
 
-  const copyReport = async () => {
-    const success = await safeCopyText(buildReportText());
-    if (success) {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1200);
-    }
-  };
+  const copyReport = () => copy("report", buildReportText(), { label: "Cardiac output report" });
 
   const downloadReport = () => {
     if (!result) return;
     const blob = new Blob([buildReportText()], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
+    link.href = url;
     link.download = `CO_Report_${result.co}Lmin.txt`;
     link.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -296,6 +332,11 @@ Clinical decisions should always be made by qualified healthcare professionals.
                 Reset
               </button>
             </div>
+            {error && (
+              <p role="alert" className="mt-3 text-sm font-semibold text-[var(--danger-text)]">
+                {error}
+              </p>
+            )}
           </div>
 
           {/* Result Card */}
@@ -340,7 +381,7 @@ Clinical decisions should always be made by qualified healthcare professionals.
                   </p>
                   {result.ci && (
                     <p className="text-sm font-mono text-[var(--muted-foreground)] mt-1">
-                      CI = {result.co} / {result.bsa} = <span className="font-bold">{result.ci} L/min/m²</span>
+                      CI = {result.coRaw.toFixed(4)} / {result.bsaRaw.toFixed(4)} = <span className="font-bold">{result.ci} L/min/m²</span>
                     </p>
                   )}
                 </div>
@@ -399,13 +440,16 @@ Clinical decisions should always be made by qualified healthcare professionals.
                 {/* Actions */}
                 <div className="flex gap-3">
                   <button onClick={copyReport} className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--card)] px-4 py-2.5 text-sm font-semibold transition-all hover:bg-[var(--muted)]">
-                    {copied ? <CheckCircle2 className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />}
-                    {copied ? "Copied" : "Copy Report"}
+                    {isCopied("report") ? <CheckCircle2 className="h-4 w-4 text-emerald-600" /> : <Copy className="h-4 w-4" />}
+                    {isCopied("report") ? "Copied" : "Copy Report"}
                   </button>
                   <button onClick={downloadReport} className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--card)] px-4 py-2.5 text-sm font-semibold transition-all hover:bg-[var(--muted)]">
                     <Download className="h-4 w-4" />
                     Download
                   </button>
+                  <span aria-live="polite" role="status" className="sr-only">
+                    {announcement}
+                  </span>
                 </div>
               </div>
             ) : (

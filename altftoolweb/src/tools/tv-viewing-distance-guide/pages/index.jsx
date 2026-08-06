@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import {
   AlertTriangle,
   Armchair,
+  Check,
   CheckCircle2,
   Clipboard,
   Download,
@@ -21,6 +22,11 @@ import {
   Tv,
   Video,
 } from "lucide-react";
+
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
+/** Convert between feet and metres so a typed distance keeps its physical meaning across units. */
+const FEET_PER_METRE = 3.28084;
 
 const ASPECT_RATIOS = {
   "16:9": { label: "16:9 Standard TV", w: 16, h: 9 },
@@ -160,9 +166,9 @@ function buildSummary(inputs, results) {
 function MetricCard({ icon: Icon, label, value, detail, tone = "info" }) {
   const toneClass = {
     info: "bg-[var(--section-highlight)] text-[var(--primary)]",
-    good: "tool-status-good",
-    warn: "tool-status-warn",
-    bad: "tool-status-bad",
+    good: "bg-[var(--success-soft)] text-[var(--success-text)]",
+    warn: "bg-[var(--warning-soft)] text-[var(--warning-text)]",
+    bad: "bg-[var(--danger-soft)] text-[var(--danger-text)]",
   }[tone];
 
   return (
@@ -204,12 +210,12 @@ function RangeBar({ current, min, ideal, max, unit }) {
           className="absolute top-6 h-2 rounded-full bg-[var(--primary)]"
           style={{ left: `${minLeft}%`, width: `${Math.max(3, maxLeft - minLeft)}%` }}
         />
-        <div className="absolute top-3 h-8 w-1 rounded-full bg-emerald-500" style={{ left: `${idealLeft}%` }} />
-        <div className="absolute top-1 h-12 w-1.5 rounded-full bg-rose-500 shadow" style={{ left: `${currentLeft}%` }} />
+        <div className="absolute top-3 h-8 w-1 rounded-full bg-[var(--success)]" style={{ left: `${idealLeft}%` }} />
+        <div className="absolute top-1 h-12 w-1.5 rounded-full bg-[var(--danger)] shadow" style={{ left: `${currentLeft}%` }} />
       </div>
       <div className="grid grid-cols-3 gap-2 text-xs font-bold text-[var(--muted-foreground)]">
         <span>Min {formatDistance(min, unit)}</span>
-        <span className="text-center tool-text-good">Ideal {formatDistance(ideal, unit)}</span>
+        <span className="text-center text-[var(--success-text)]">Ideal {formatDistance(ideal, unit)}</span>
         <span className="text-right">Max {formatDistance(max, unit)}</span>
       </div>
     </div>
@@ -250,7 +256,13 @@ export default function TvViewingDistanceGuide() {
     const clarityIdeal = screenSize * resolution.idealMultiplier;
     const maxDistance = screenSize * resolution.maxMultiplier;
     const immersiveDistance = fovDistance(screen.width, useCase.fov);
-    const idealDistance = clarityIdeal * 0.48 + immersiveDistance * 0.52;
+    // The blend of the resolution rule and the FOV rule can land outside the
+    // resolution rule's own comfort range (most notably for HD). Clamp it so
+    // the "ideal" distance is always inside the range it is meant to sit in.
+    const idealDistance = Math.min(
+      maxDistance,
+      Math.max(minDistance, clarityIdeal * 0.48 + immersiveDistance * 0.52),
+    );
     const currentDistance = toDistanceInches(inputs.currentDistance, inputs.unit);
     const roomDepth = toDistanceInches(inputs.roomDepth, inputs.unit);
     const currentFov = fovAtDistance(screen.width, currentDistance);
@@ -302,14 +314,34 @@ export default function TvViewingDistanceGuide() {
     };
   }, [inputs]);
 
+  const { copy, isCopied, announcement } = useCopyToClipboard();
+
   const updateInput = (key, value) => {
     setInputs((current) => ({ ...current, [key]: value }));
   };
 
-  const copySummary = async () => {
-    if (navigator?.clipboard?.writeText) {
-      await navigator.clipboard.writeText(buildSummary(inputs, results));
-    }
+  // Switching feet <-> meters must rescale the already-typed distances so the
+  // same physical measurement is preserved instead of being reinterpreted in
+  // the new unit (e.g. "7" silently becoming 7 metres instead of 7 feet).
+  const changeUnit = (nextUnit) => {
+    setInputs((current) => {
+      if (current.unit === nextUnit) return current;
+      const convert = (value) => {
+        const num = Number(value) || 0;
+        const converted = nextUnit === "m" ? num / FEET_PER_METRE : num * FEET_PER_METRE;
+        return Math.round(converted * 100) / 100;
+      };
+      return {
+        ...current,
+        unit: nextUnit,
+        currentDistance: convert(current.currentDistance),
+        roomDepth: convert(current.roomDepth),
+      };
+    });
+  };
+
+  const copySummary = () => {
+    copy("guide", buildSummary(inputs, results), { label: "TV viewing distance guide" });
   };
 
   const exportCsv = () => {
@@ -332,6 +364,9 @@ export default function TvViewingDistanceGuide() {
   };
 
   const resetSample = () => {
+    if (!window.confirm("Reset all fields to the sample defaults? This will discard your entered measurements.")) {
+      return;
+    }
     setInputs({
       screenSize: 55,
       aspectRatio: "16:9",
@@ -357,7 +392,11 @@ export default function TvViewingDistanceGuide() {
               <Sparkles className="h-4 w-4 shrink-0" />
               <span className="min-w-0 truncate">Home theater planner</span>
             </span>
-            <span className={`inline-flex max-w-full items-center gap-2 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wide ${results.tone === "ideal" ? "tool-status-good" : "tool-status-warn"}`}>
+            <span
+              role="status"
+              aria-live="polite"
+              className={`inline-flex max-w-full items-center gap-2 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wide ${results.tone === "ideal" ? "bg-[var(--success-soft)] text-[var(--success-text)]" : "bg-[var(--warning-soft)] text-[var(--warning-text)]"}`}
+            >
               {results.tone === "ideal" ? <CheckCircle2 className="h-4 w-4 shrink-0" /> : <AlertTriangle className="h-4 w-4 shrink-0" />}
               {results.statusLabel}
             </span>
@@ -464,7 +503,7 @@ export default function TvViewingDistanceGuide() {
                 <span className="mb-2 block text-sm font-semibold text-[var(--foreground)]">Distance unit</span>
                 <select
                   value={inputs.unit}
-                  onChange={(event) => updateInput("unit", event.target.value)}
+                  onChange={(event) => changeUnit(event.target.value)}
                   className="h-11 w-full min-w-0 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-sm font-semibold text-[var(--foreground)] outline-none focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
                 >
                   <option value="ft">Feet</option>
@@ -518,10 +557,18 @@ export default function TvViewingDistanceGuide() {
             </div>
 
             <div className="tool-action-grid mt-7">
-              <button type="button" className="btn-primary" onClick={copySummary}>
-                <Clipboard className="h-4 w-4" />
-                Copy Guide
+              <button
+                type="button"
+                className="btn-primary"
+                onClick={copySummary}
+                aria-label={isCopied("guide") ? "Copied the TV viewing distance guide to clipboard" : "Copy the TV viewing distance guide"}
+              >
+                {isCopied("guide") ? <Check className="h-4 w-4" /> : <Clipboard className="h-4 w-4" />}
+                {isCopied("guide") ? "Copied!" : "Copy Guide"}
               </button>
+              <span className="sr-only" role="status" aria-live="polite">
+                {announcement}
+              </span>
               <button type="button" className="btn-secondary" onClick={exportCsv}>
                 <Download className="h-4 w-4" />
                 CSV
@@ -555,17 +602,21 @@ export default function TvViewingDistanceGuide() {
             />
 
             <div className="mt-5 grid gap-4 md:grid-cols-2">
-              <div className={`rounded-xl border p-4 ${results.tone === "ideal" ? "tool-callout-good" : results.tone === "near-edge" ? "tool-callout-warn" : "tool-callout-bad"}`}>
+              <div
+                role="status"
+                aria-live="polite"
+                className={`rounded-xl border p-4 ${results.tone === "ideal" ? "border-[var(--success)]/30 bg-[var(--success-soft)]" : results.tone === "near-edge" ? "border-[var(--warning)]/30 bg-[var(--warning-soft)]" : "border-[var(--danger)]/30 bg-[var(--danger-soft)]"}`}
+              >
                 <Eye className="h-5 w-5 text-[var(--primary)]" />
                 <p className="mt-3 text-sm font-black text-[var(--foreground)]">{results.statusLabel}</p>
                 <p className="mt-1 break-words text-sm text-[var(--muted-foreground)]">{results.statusDetail}</p>
               </div>
-              <div className={`rounded-xl border p-4 ${results.roomFit ? "tool-callout-good" : "tool-callout-bad"}`}>
+              <div className={`rounded-xl border p-4 ${results.roomFit ? "border-[var(--success)]/30 bg-[var(--success-soft)]" : "border-[var(--danger)]/30 bg-[var(--danger-soft)]"}`}>
                 <Home className="h-5 w-5 text-[var(--primary)]" />
                 <p className="mt-3 text-sm font-black text-[var(--foreground)]">Room Fit</p>
                 <p className="mt-1 break-words text-sm text-[var(--muted-foreground)]">{results.roomFitLabel}</p>
               </div>
-              <div className={`rounded-xl border p-4 ${mountTone === "good" ? "tool-callout-good" : "tool-callout-warn"}`}>
+              <div className={`rounded-xl border p-4 ${mountTone === "good" ? "border-[var(--success)]/30 bg-[var(--success-soft)]" : "border-[var(--warning)]/30 bg-[var(--warning-soft)]"}`}>
                 <Ruler className="h-5 w-5 text-[var(--primary)]" />
                 <p className="mt-3 text-sm font-black text-[var(--foreground)]">Mount Height</p>
                 <p className="mt-1 break-words text-sm text-[var(--muted-foreground)]">
@@ -595,12 +646,12 @@ export default function TvViewingDistanceGuide() {
 
             <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[linear-gradient(180deg,var(--background),var(--section-highlight))] p-4 sm:p-6">
               <div className="mx-auto max-w-2xl">
-                <div className="mx-auto flex h-52 items-center justify-center rounded-xl border border-[var(--border)] tool-preview-frame p-3 shadow-lg sm:h-64">
+                <div className="mx-auto flex h-52 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--muted)] p-3 shadow-lg sm:h-64">
                   <div
-                    className="grid place-items-center rounded-md tool-preview-display shadow-inner"
+                    className="grid place-items-center rounded-md bg-[var(--foreground)] shadow-inner"
                     style={{ width: `${results.widthPercent}%`, height: `${results.heightPercent}%` }}
                   >
-                    <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-black text-white backdrop-blur">
+                    <span className="rounded-full bg-[var(--background)]/15 px-3 py-1 text-xs font-black text-[var(--background)] backdrop-blur">
                       {inputs.screenSize}" {RESOLUTIONS[inputs.resolution].label}
                     </span>
                   </div>

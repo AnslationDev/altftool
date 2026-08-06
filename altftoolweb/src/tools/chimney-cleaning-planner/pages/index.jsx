@@ -30,7 +30,16 @@ const PRIMARY_BTN =
 const GHOST_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 
-const todayIso = () => new Date().toISOString().slice(0, 10);
+// Local calendar date, not UTC — toISOString() reads the UTC date, which is still
+// "yesterday" in IST (UTC+5:30) for the first 5.5 hours of every local day. This
+// tool's audience is Indian kitchens, so the "today" default must track local time.
+const todayIso = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
 
 const prettyDate = (iso) => {
   if (!iso) return DASH;
@@ -338,7 +347,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Clean the filters every
             </p>
@@ -369,7 +378,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite" aria-atomic="true">
           {[
             ["Grease load", ok ? `${NUM1.format(plan.loadPerDay)} load units a day` : DASH],
             [
@@ -405,7 +414,7 @@ export default function ToolHome() {
         <>
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
             <h2 className="text-base font-semibold">Is the chimney powerful enough?</h2>
-            <dl className="mt-3 divide-y divide-[var(--border)] text-sm">
+            <dl className="mt-3 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite" aria-atomic="true">
               {[
                 ["Kitchen volume", `${NUM0.format(plan.volumeCuFt)} cu ft (${NUM1.format(plan.volumeM3)} m³)`],
                 ["Air changes assumed", `${plan.airChangesUsed} per hour`],
@@ -423,6 +432,8 @@ export default function ToolHome() {
             </dl>
             {plan.suctionKnown ? (
               <p
+                role="status"
+                aria-live="polite"
                 className={`mt-4 rounded-md px-3 py-2 text-sm font-medium ${
                   plan.suctionAdequate
                     ? "bg-[var(--muted)] text-[var(--success)]"

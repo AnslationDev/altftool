@@ -113,6 +113,7 @@ export default function WebEvidenceSnapshotCertificate() {
     if (!file) return;
     if (file.size <= 0 || file.size > snapshotCertificateLimits.maxFileBytes) {
       setErrors(["Choose a screenshot larger than 0 bytes and no more than 25 MB."]);
+      setNotice("The selected file was outside the size limit — no screenshot was recorded.");
       return;
     }
 
@@ -210,6 +211,12 @@ export default function WebEvidenceSnapshotCertificate() {
   };
 
   const reset = () => {
+    const hasEnteredData = Boolean(
+      sourceUrl || title || observedAt || notes || screenshot || result,
+    );
+    if (hasEnteredData && !window.confirm("Clear all local data? This discards the hashed screenshot, entered metadata, and any generated certificate.")) {
+      return;
+    }
     operationGenerationRef.current += 1;
     operationBusyRef.current = false;
     setSourceUrl("");
@@ -330,7 +337,7 @@ export default function WebEvidenceSnapshotCertificate() {
                 ref={fileInputRef}
                 id="snapshot-file"
                 type="file"
-                accept=".png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp"
+                accept={`.png,.jpg,.jpeg,.webp,${snapshotCertificateLimits.supportedMediaTypes.join(",")}`}
                 className="sr-only"
                 disabled={hashing || building}
                 aria-describedby="snapshot-file-help"

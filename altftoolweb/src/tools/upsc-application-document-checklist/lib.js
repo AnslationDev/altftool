@@ -39,6 +39,21 @@ export const CATEGORIES = [
 export const APPLICATION_FEE = 100;
 export const FEE_EXEMPT_GROUNDS = ["female", "sc", "st", "pwbd"];
 
+/** Human-readable label shown for each FEE_EXEMPT_GROUNDS entry. */
+const FEE_EXEMPT_GROUND_LABELS = {
+  female: "Woman candidate",
+  sc: "Scheduled Caste",
+  st: "Scheduled Tribe",
+  pwbd: "Person with benchmark disability",
+};
+
+/** Whether a candidate profile satisfies a given FEE_EXEMPT_GROUNDS entry. */
+function meetsFeeExemptGround(profile, ground) {
+  if (ground === "female") return Boolean(profile.female);
+  if (ground === "pwbd") return Boolean(profile.pwbd);
+  return profile.category === ground;
+}
+
 /**
  * Checklist sections. Every item:
  *  { id, label, detail, required, when }
@@ -228,11 +243,12 @@ export function applicableSections(profile = {}) {
 
 /** Whether the profile pays the Rs 100 fee, per the CSE notification's exemptions. */
 export function feeForProfile(profile = {}) {
-  const grounds = [];
-  if (profile.female) grounds.push("Woman candidate");
-  if (profile.category === "sc") grounds.push("Scheduled Caste");
-  if (profile.category === "st") grounds.push("Scheduled Tribe");
-  if (profile.pwbd) grounds.push("Person with benchmark disability");
+  // FEE_EXEMPT_GROUNDS is the source of truth for which grounds waive the
+  // fee — iterate over it instead of re-listing the same four conditions, so
+  // the exported constant can't silently drift from the actual behavior.
+  const grounds = FEE_EXEMPT_GROUNDS.filter((ground) => meetsFeeExemptGround(profile, ground)).map(
+    (ground) => FEE_EXEMPT_GROUND_LABELS[ground],
+  );
   const exempt = grounds.length > 0;
   return { fee: exempt ? 0 : APPLICATION_FEE, exempt, grounds };
 }

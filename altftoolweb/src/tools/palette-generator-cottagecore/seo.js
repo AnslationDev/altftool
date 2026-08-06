@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The Cottagecore Palette Generator produces a soft botanical colour set — cream paper, linen, sage, moss, wild berry, clay rose and honey — from a seed word and a season. What makes it read as cottagecore rather than pastel candy is the saturation ceiling: a softness slider caps every colour between 22% and 52% saturation, and the tool reports the mean saturation so the muting is measurable. It also picks the readable label colour for each fill and darkens each accent until it clears the WCAG 3:1 minimum for borders and icons.",
+    "The Cottagecore Palette Generator produces a soft botanical colour set — cream paper, linen, sage, moss, wild berry, clay rose and honey — from a seed word and a season. What makes it read as cottagecore rather than pastel candy is the saturation ceiling: a softness slider moves a shared saturation ceiling between 22% and 52%, and each colour then takes its own fraction of that ceiling, so the tool reports the resulting mean saturation so the muting is measurable. It also picks the readable label colour for each fill and darkens each accent — where it needs it — until it clears the WCAG 3:1 minimum for borders and icons.",
   useCases: [
     "Set the palette for a small-batch food or candle shop where everything should look sun-faded rather than neon.",
     "Move a spring palette to autumn by switching the season, keeping the same seed and colour relationships.",
@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "Accessible without losing the look",
-      "Button label colours are chosen by contrast, and each accent gets a darkened UI-safe twin at 3:1.",
+      "Button label colours are chosen by contrast, and each accent gets a UI-safe twin adjusted to clear 3:1 — darkened only as far as it needs to be, since some hues already pass as-is.",
     ],
   ],
   faqs: [

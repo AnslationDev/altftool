@@ -256,7 +256,20 @@ export function estimateVo2Max(input) {
   } else if (method === "queens") {
     outcome = queensCollegeTest({ sex, recoveryHeartRate: input.recoveryHeartRate });
   } else if (method === "resting") {
-    const hrMaxInput = isNum(input.maxHeartRate) ? input.maxHeartRate : predictedMaxHeartRate(age).hrMax;
+    // input.maxHeartRate is `null` only when the "use my measured HRmax"
+    // checkbox is unchecked — that's an intentional request to fall back to
+    // the Tanaka prediction. Any other non-numeric value (NaN) means the box
+    // was checked but the field was left blank or unparsable, which must be
+    // reported instead of silently substituting the prediction the user
+    // explicitly opted out of.
+    let hrMaxInput;
+    if (input.maxHeartRate === null || input.maxHeartRate === undefined) {
+      hrMaxInput = predictedMaxHeartRate(age).hrMax;
+    } else if (isNum(input.maxHeartRate)) {
+      hrMaxInput = input.maxHeartRate;
+    } else {
+      return { error: "Enter your measured maximum heart rate, or uncheck the box to use the predicted value." };
+    }
     outcome = restingHeartRateTest({ restingHeartRate: input.restingHeartRate, maxHeartRate: hrMaxInput });
   } else {
     return { error: "Choose one of the five field tests." };
@@ -266,18 +279,22 @@ export function estimateVo2Max(input) {
 
   const vo2max = outcome.vo2max;
   const rating = classifyVo2Max({ vo2max, age, sex });
-  if (rating.error) return rating;
-
   const hrMax = predictedMaxHeartRate(age);
 
+  // A valid, computed VO2 max should still be reported even when the Cooper
+  // Institute norm table has no band for this age (it starts at 13) — the
+  // number and METs are real regardless of whether a category can be
+  // assigned, so only the rating fields fall back to "unavailable" instead
+  // of discarding the whole result.
   return {
     vo2max,
     mets: vo2max / ML_O2_PER_MET,
     absoluteLitresPerMin: isNum(input.weightKg) && input.weightKg > 0 ? (vo2max * input.weightKg) / 1000 : null,
-    category: rating.category,
-    bandLabel: rating.bandLabel,
-    cuts: rating.cuts,
-    toSuperior: rating.toSuperior,
+    category: rating.error ? null : rating.category,
+    bandLabel: rating.error ? null : rating.bandLabel,
+    cuts: rating.error ? null : rating.cuts,
+    toSuperior: rating.error ? null : rating.toSuperior,
+    ratingUnavailable: rating.error || null,
     predictedHrMax: hrMax.error ? null : hrMax.hrMax,
     methodLabel: TEST_METHODS.find((m) => m.id === method)?.label ?? method,
   };

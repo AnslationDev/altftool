@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Dumbbell, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   LEUCINE_FRACTION,
   LEUCINE_TRIGGER_G,
@@ -50,7 +52,7 @@ export default function ToolHome() {
   const [phase, setPhase] = useState(DEFAULTS.phase);
   const [meals, setMeals] = useState(DEFAULTS.meals);
   const [proteinSource, setProteinSource] = useState(DEFAULTS.proteinSource);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -82,15 +84,9 @@ export default function ToolHome() {
       .join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "protein target result" });
   };
 
   const reset = () => {
@@ -99,7 +95,6 @@ export default function ToolHome() {
     setPhase(DEFAULTS.phase);
     setMeals(DEFAULTS.meals);
     setProteinSource(DEFAULTS.proteinSource);
-    setCopied(false);
   };
 
   return (
@@ -113,8 +108,9 @@ export default function ToolHome() {
           Bodybuilder Protein Calculator
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-          Daily protein for a bulk, cut or maintenance block using the ISSN g/kg ranges, then split
-          into per-meal doses that each clear the 0.4 g/kg muscle protein synthesis threshold.
+          Daily protein for a bulk, cut or maintenance block using bodyweight- and fat-free-mass-based
+          g/kg ranges, then split into per-meal doses that each clear the 0.4 g/kg muscle protein
+          synthesis threshold.
         </p>
       </header>
 
@@ -220,7 +216,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Daily protein target
             </p>
@@ -238,15 +234,15 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy protein target result"
+              aria-label={isCopied("result") ? "Copied protein target result to clipboard" : "Copy protein target result"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
@@ -257,10 +253,13 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             [
               "Basis for the g/kg figure",
@@ -321,7 +320,7 @@ export default function ToolHome() {
       </section>
 
       {!hasError && result.warnings.length > 0 && (
-        <section className="mt-4 grid gap-2">
+        <section className="mt-4 grid gap-2" aria-live="polite" role="status">
           {result.warnings.map((warning) => (
             <p
               key={warning}

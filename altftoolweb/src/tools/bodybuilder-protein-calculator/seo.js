@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This calculator turns your bodyweight, body-fat percentage and training phase into a daily protein target and a per-meal dose sized for muscle growth. It applies the ISSN Position Stand range of 1.4-2.0 g per kg bodyweight for building and maintaining muscle, switches to the 2.3-3.1 g per kg fat-free mass range used when dieting down, and then divides the total using the 0.4 g/kg per-meal dose that maximises muscle protein synthesis. It is aimed at lifters running a structured bulk, cut or maintenance block who want the distribution right, not just the daily number.",
+    "This calculator turns your bodyweight, body-fat percentage and training phase into a daily protein target and a per-meal dose sized for muscle growth. It targets 1.6-2.2 g per kg bodyweight while bulking and 1.6-2.0 g per kg while maintaining muscle, switches to the 2.3-3.1 g per kg fat-free mass range used when dieting down, and then divides the total using the 0.4 g/kg per-meal dose that maximises muscle protein synthesis. It is aimed at lifters running a structured bulk, cut or maintenance block who want the distribution right, not just the daily number.",
   useCases: [
     "You are 12 weeks out from a contest at 90 kg and 12% body fat and need a protein floor based on lean mass rather than scale weight.",
     "You eat six times a day out of habit and want to know whether each of those feedings is actually large enough to trigger muscle protein synthesis.",
@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How much protein does a bodybuilder need per day?",
-      "The ISSN Position Stand puts it at 1.4-2.0 g per kg of bodyweight per day to build and maintain muscle, so an 85 kg lifter lands around 120-170 g. Intakes at the top of that band, or above it, mainly help when you are also in a calorie deficit.",
+      "This calculator targets 1.6-2.2 g per kg of bodyweight per day while bulking and 1.6-2.0 g per kg while maintaining, so an 85 kg lifter lands around 136-187 g on a bulk (target 153 g) or 136-170 g at maintenance. Intakes at the top of that band, or above it, mainly help when you are also in a calorie deficit.",
     ],
     [
       "How much protein can the body use in one meal?",

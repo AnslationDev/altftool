@@ -535,14 +535,26 @@ export function studySchedule({ startTime, sessionMinutes, breakMinutes, session
       error: `Plan between ${SESSION_COUNT_LIMITS.min} and ${SESSION_COUNT_LIMITS.max} study blocks.`,
     };
   }
-  if (session < SESSION_LIMITS.minMinutes || session > SESSION_LIMITS.maxMinutes) {
+  // eyeBreaksPerSession below only counts correctly when a block ends exactly on a
+  // whole minute (it relies on the block's length landing on a 20-minute mark), so
+  // fractional session/break minutes are rejected the same way `count` is above —
+  // otherwise a value like 40.5 silently undercounts the eye breaks by one.
+  if (
+    !Number.isInteger(session) ||
+    session < SESSION_LIMITS.minMinutes ||
+    session > SESSION_LIMITS.maxMinutes
+  ) {
     return {
-      error: `A study block should be between ${SESSION_LIMITS.minMinutes} and ${SESSION_LIMITS.maxMinutes} minutes.`,
+      error: `A study block should be a whole number of minutes between ${SESSION_LIMITS.minMinutes} and ${SESSION_LIMITS.maxMinutes}.`,
     };
   }
-  if (pause < BREAK_LIMITS.minMinutes || pause > BREAK_LIMITS.maxMinutes) {
+  if (
+    !Number.isInteger(pause) ||
+    pause < BREAK_LIMITS.minMinutes ||
+    pause > BREAK_LIMITS.maxMinutes
+  ) {
     return {
-      error: `A break should be between ${BREAK_LIMITS.minMinutes} and ${BREAK_LIMITS.maxMinutes} minutes.`,
+      error: `A break should be a whole number of minutes between ${BREAK_LIMITS.minMinutes} and ${BREAK_LIMITS.maxMinutes}.`,
     };
   }
 

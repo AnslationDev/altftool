@@ -296,8 +296,9 @@ export default function ToolHome() {
           <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
             <h2 className="text-base font-semibold">UI-safe variants</h2>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-              Pastels on cream rarely clear the {AA_LARGE}:1 minimum for borders, icons and other
-              non-text UI. These are the same hues darkened until they do.
+              Pastels on cream can fall short of the {AA_LARGE}:1 minimum for borders, icons and other
+              non-text UI. These are the same hues, darkened only as far as needed to clear it — some
+              already pass as-is.
             </p>
             <div className="mt-3 overflow-x-auto">
               <table className="w-full min-w-[360px] text-left text-sm">
@@ -363,7 +364,7 @@ export default function ToolHome() {
                       <td className="py-2 pr-3">{check.label}</td>
                       <td className="py-2 pr-3 text-right font-semibold">{check.ratio}:1</td>
                       <td
-                        className={`py-2 text-right ${check.passes ? "text-[var(--success)]" : "text-[var(--muted-foreground)]"}`}
+                        className={`py-2 text-right ${check.passes ? "text-[var(--success-text)]" : "text-[var(--danger-text)]"}`}
                       >
                         {check.verdict}
                       </td>

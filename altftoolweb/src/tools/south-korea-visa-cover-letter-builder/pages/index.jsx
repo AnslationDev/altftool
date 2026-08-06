@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Flag, RotateCcw } from "lucide-react";
 
 import {
@@ -56,6 +56,14 @@ const DEFAULTS = {
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [copied, setCopied] = useState(false);
+  const copiedTimerRef = useRef(null);
+
+  useEffect(
+    () => () => {
+      if (copiedTimerRef.current) clearTimeout(copiedTimerRef.current);
+    },
+    [],
+  );
 
   const set = (key) => (event) => {
     const { value } = event.target;
@@ -71,13 +79,24 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(result.letter);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1600);
+      if (copiedTimerRef.current) clearTimeout(copiedTimerRef.current);
+      copiedTimerRef.current = setTimeout(() => setCopied(false), 1600);
     } catch {
       setCopied(false);
     }
   };
 
   const reset = () => {
+    const hasRealInput = Object.keys(DEFAULTS).some((key) => form[key] !== DEFAULTS[key]);
+    if (
+      hasRealInput &&
+      !window.confirm(
+        "Reset every field back to the sample values? This discards whatever you've entered, including passport, address and financial details.",
+      )
+    ) {
+      return;
+    }
+    if (copiedTimerRef.current) clearTimeout(copiedTimerRef.current);
     setForm(DEFAULTS);
     setCopied(false);
   };
@@ -229,7 +248,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyLetter}
               disabled={hasError}
-              aria-label="Copy the finished cover letter to the clipboard"
+              aria-label={copied ? "Cover letter copied to the clipboard" : "Copy the finished cover letter to the clipboard"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
@@ -270,7 +289,7 @@ export default function ToolHome() {
         </dl>
 
         {!hasError && result.warnings.length ? (
-          <ul className="mt-4 space-y-2">
+          <ul className="mt-4 space-y-2" aria-live="polite" role="status">
             {result.warnings.map((warning) => (
               <li key={warning} className="rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">
                 {warning}

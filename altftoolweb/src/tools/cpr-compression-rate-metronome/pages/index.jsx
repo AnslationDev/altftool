@@ -39,8 +39,35 @@ export default function ToolHome() {
   const audioRef = useRef(null);
   const startRef = useRef(0);
   const lastBeatRef = useRef(-1);
+  // Compressions/cycles delivered under timing regimes prior to the current one —
+  // lets a mid-session slider/select edit rebase the clock onto the new rate
+  // without retroactively reinterpreting time that already elapsed under the old
+  // rate.
+  const offsetRef = useRef(0);
+  const cycleOffsetRef = useRef(0);
+  const prevTimingRef = useRef(null);
+  const prevRunningRef = useRef(false);
 
-  const update = (key, value) => setForm((prev) => ({ ...prev, [key]: value }));
+  // If a live edit (e.g. clearing the swap-interval field) makes the settings
+  // invalid while the metronome is running, stop it right here in the same event
+  // that caused it — instead of leaving `running` stuck true with a disabled Stop
+  // button and a frozen, stale readout until Reset is clicked.
+  const update = (key, value) => {
+    const next = { ...form, [key]: value };
+    if (running) {
+      const nextTiming = computeCprTiming({
+        bpm: Number(next.bpm),
+        scenarioId: next.scenarioId,
+        breathPauseSeconds: Number(next.breathPauseSeconds),
+        switchMinutes: Number(next.switchMinutes),
+      });
+      if (nextTiming.error) {
+        setRunning(false);
+        setLive(null);
+      }
+    }
+    setForm(next);
+  };
 
   const timing = useMemo(
     () =>
@@ -74,17 +101,47 @@ export default function ToolHome() {
   }, []);
 
   useEffect(() => {
-    if (!running || hasError) return undefined;
-    lastBeatRef.current = -1;
+    if (!running || hasError) {
+      prevRunningRef.current = running;
+      return undefined;
+    }
+
+    const justStarted = !prevRunningRef.current;
+
+    if (!justStarted && prevTimingRef.current && prevTimingRef.current !== timing) {
+      // A control changed while the metronome was already running. Work out how
+      // many compressions had actually been delivered under the OLD timing up to
+      // this instant, then rebase the clock onto the NEW timing from right now —
+      // instead of letting cprPhaseAt reinterpret the entire elapsed session as if
+      // it had all been paced at the new rate (which both rewrites history shown
+      // on screen and fires a spurious click at whatever phase elapsed-since-start
+      // now falls on under the new rate).
+      const elapsedUnderOldTiming = (performance.now() - startRef.current) / 1000;
+      const oldPhase = cprPhaseAt(elapsedUnderOldTiming, prevTimingRef.current);
+      const deliveredSoFar = offsetRef.current + (oldPhase ? oldPhase.totalCompressions : 0);
+      offsetRef.current = deliveredSoFar;
+      cycleOffsetRef.current += oldPhase ? oldPhase.cycleIndex : 0;
+      startRef.current = performance.now();
+      const zeroPhase = cprPhaseAt(0, timing);
+      // Prime the guard with what the very first tick of the new regime will
+      // compute, so the rebase itself doesn't fire an unscheduled beat.
+      lastBeatRef.current = deliveredSoFar + (zeroPhase ? zeroPhase.totalCompressions : 0);
+    }
+
+    prevRunningRef.current = running;
+    prevTimingRef.current = timing;
+
     const id = window.setInterval(() => {
       const elapsed = (performance.now() - startRef.current) / 1000;
       const phase = cprPhaseAt(elapsed, timing);
       if (!phase) return;
-      if (phase.phase === "compress" && phase.totalCompressions !== lastBeatRef.current) {
-        lastBeatRef.current = phase.totalCompressions;
+      const totalCompressions = offsetRef.current + phase.totalCompressions;
+      const cycleNumber = cycleOffsetRef.current + phase.cycleNumber;
+      if (phase.phase === "compress" && totalCompressions !== lastBeatRef.current) {
+        lastBeatRef.current = totalCompressions;
         if (soundOn) playClick(phase.compressionInCycle === 1);
       }
-      setLive(phase);
+      setLive({ ...phase, totalCompressions, cycleNumber });
     }, TICK_MS);
     return () => window.clearInterval(id);
   }, [running, hasError, timing, soundOn, playClick]);
@@ -105,6 +162,9 @@ export default function ToolHome() {
     }
     startRef.current = performance.now();
     lastBeatRef.current = -1;
+    offsetRef.current = 0;
+    cycleOffsetRef.current = 0;
+    prevTimingRef.current = null;
     setLive(null);
     setRunning(true);
   };
@@ -116,6 +176,10 @@ export default function ToolHome() {
     setForm(DEFAULTS);
     setLive(null);
     lastBeatRef.current = -1;
+    offsetRef.current = 0;
+    cycleOffsetRef.current = 0;
+    prevTimingRef.current = null;
+    prevRunningRef.current = false;
     setCopied(false);
   };
 
@@ -316,7 +380,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy CPR pacing settings"
+              aria-label="Copy result — CPR pacing settings"
               className={GHOST_BTN}
               disabled={hasError}
             >
@@ -361,13 +425,17 @@ export default function ToolHome() {
               {live ? live.compressionInCycle : "—"}
             </span>
           </div>
+          {/* Announces once per phase change ("Push hard..." / "Give 2 breaths"), not
+              on every 50ms tick — the live countdown next to it is visual-only so
+              screen readers aren't flooded with a new number ~20 times a second. */}
           <p role="status" aria-live="polite" className="text-sm font-semibold">
-            {!running
-              ? "Stopped"
-              : compressing
-                ? "Push hard, push fast"
-                : `Give 2 breaths — ${NUM.format(live ? live.breathSecondsLeft : 0)} s`}
+            {!running ? "Stopped" : compressing ? "Push hard, push fast" : "Give 2 breaths"}
           </p>
+          {running && !compressing ? (
+            <p aria-hidden="true" className="text-sm text-[var(--muted-foreground)]">
+              {NUM.format(live ? live.breathSecondsLeft : 0)} s
+            </p>
+          ) : null}
         </div>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
@@ -379,7 +447,9 @@ export default function ToolHome() {
             ["Cycle", !running || !live ? DASH : String(live.cycleNumber)],
             [
               "Measured rate",
-              !running || !live ? DASH : `${live.averageRate} /min including pauses`,
+              !running || !live || live.averageRate == null
+                ? DASH
+                : `${live.averageRate} /min including pauses`,
             ],
             [
               "Swap rescuer in",

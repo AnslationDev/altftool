@@ -153,10 +153,14 @@ export function normalizeObservedAt(value) {
     const sign = zone[0] === "+" ? 1 : -1;
     const zoneHour = Number(zone.slice(1, 3));
     const zoneMinute = Number(zone.slice(4, 6));
+    // Real-world UTC offsets range from -12:00 to +14:00 — the ceiling
+    // depends on sign, not just magnitude, or a fabricated offset like
+    // -14:00 (no timezone goes that far west) is silently accepted.
+    const maxHour = sign > 0 ? 14 : 12;
     if (
-      zoneHour > 14 ||
+      zoneHour > maxHour ||
       zoneMinute > 59 ||
-      (zoneHour === 14 && zoneMinute !== 0)
+      (zoneHour === maxHour && zoneMinute !== 0)
     ) {
       return { ok: false, error: "The timezone offset is not valid." };
     }

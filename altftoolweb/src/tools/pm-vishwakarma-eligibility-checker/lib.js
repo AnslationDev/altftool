@@ -88,6 +88,27 @@ function monthlyInstalment(principal, annualRatePercent, months) {
 }
 
 /**
+ * Interest actually paid over the first `monthsToSum` months of a reducing-balance loan
+ * (capped at the loan's own tenure), simulated month by month from the level instalment.
+ * Used to slice a full-tenure interest figure down to a genuine first-year amount instead
+ * of mixing time bases.
+ */
+function interestPaidOverMonths(principal, annualRatePercent, totalMonths, instalment, monthsToSum) {
+  if (!(principal > 0) || !(totalMonths > 0) || !(instalment > 0)) return 0;
+  const r = annualRatePercent / MONTHS_IN_YEAR / 100;
+  let balance = principal;
+  let interest = 0;
+  const n = Math.min(Math.max(0, Math.floor(monthsToSum)), totalMonths);
+  for (let i = 0; i < n; i += 1) {
+    const interestForMonth = r > 0 ? balance * r : 0;
+    interest += interestForMonth;
+    const principalForMonth = instalment - interestForMonth;
+    balance = Math.max(0, balance - principalForMonth);
+  }
+  return interest;
+}
+
+/**
  * Applies the published eligibility conditions.
  * Returns { eligible, blockers, notes, trade } or { error } for unusable input.
  */
@@ -211,7 +232,33 @@ export function estimateVishwakarmaBenefits({
     0,
     unsubsidisedInstalment * tranche.months - tranche.amount,
   );
+  // Full-tenure subvention value (18 or 30 months) — reported on its own as
+  // "interest avoided over the tenure", not folded into a first-year total.
   const interestSubventionValue = Math.max(0, unsubsidisedInterest - interestPaidByArtisan);
+
+  // firstYearBenefit must only count what actually accrues within 12 months, so the
+  // subvention is sliced to the same 12-month window digitalIncentivePerYear already uses —
+  // simulated month by month rather than a full-tenure figure, since reducing-balance
+  // interest is front-loaded and a straight-line prorate would understate it.
+  const firstYearMonths = Math.min(MONTHS_IN_YEAR, tranche.months);
+  const interestPaidFirstYear = interestPaidOverMonths(
+    tranche.amount,
+    CONCESSIONAL_INTEREST_RATE,
+    tranche.months,
+    instalment,
+    firstYearMonths,
+  );
+  const unsubsidisedInterestFirstYear = interestPaidOverMonths(
+    tranche.amount,
+    unsubsidisedRate,
+    tranche.months,
+    unsubsidisedInstalment,
+    firstYearMonths,
+  );
+  const interestSubventionFirstYear = Math.max(
+    0,
+    unsubsidisedInterestFirstYear - interestPaidFirstYear,
+  );
 
   return {
     trancheNumber: tranche.tranche,
@@ -223,13 +270,13 @@ export function estimateVishwakarmaBenefits({
     unsubsidisedRate,
     unsubsidisedInterest,
     interestSubventionValue,
+    interestSubventionFirstYear,
     trainingDays: days,
     stipend,
     toolkitIncentive: TOOLKIT_INCENTIVE,
     digitalTxnsCounted: cappedTxns,
     digitalIncentivePerMonth,
     digitalIncentivePerYear,
-    upfrontBenefit: stipend + TOOLKIT_INCENTIVE,
-    firstYearBenefit: stipend + TOOLKIT_INCENTIVE + digitalIncentivePerYear + interestSubventionValue,
+    firstYearBenefit: stipend + TOOLKIT_INCENTIVE + digitalIncentivePerYear + interestSubventionFirstYear,
   };
 }

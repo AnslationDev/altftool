@@ -97,7 +97,7 @@ export const RELATIONSHIPS = [
     id: "teacher",
     label: "Teacher",
     register: "respectful",
-    salutation: { native: "மதிப்பிற்குரிய ஆசிரியரே,", roman: "Matippiṟkuriya āciriyarē," },
+    salutation: { native: "மதிப்பிற்குரிய {name} ஆசிரியரே,", roman: "Matippiṟkuriya {name} āciriyarē," },
   },
 ];
 

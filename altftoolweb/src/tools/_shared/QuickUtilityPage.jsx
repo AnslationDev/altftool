@@ -119,7 +119,16 @@ export default function QuickUtilityPage({ config }) {
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <pre className="max-h-96 overflow-auto whitespace-pre-wrap rounded-lg bg-[var(--surface-soft)] p-4 text-sm leading-6">{output}</pre>
         <div className="mt-5 flex flex-wrap gap-2">
-          <button className={GHOST_BTN} type="button" onClick={() => { setPrimary(config.name); setAudience("ALTFTool users"); setCount("6"); }}>
+          <button
+            className={GHOST_BTN}
+            type="button"
+            onClick={() => {
+              if (!window.confirm("Reset the main input, audience and items back to their defaults? This can't be undone.")) return;
+              setPrimary(config.name);
+              setAudience("ALTFTool users");
+              setCount("6");
+            }}
+          >
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Reset
           </button>

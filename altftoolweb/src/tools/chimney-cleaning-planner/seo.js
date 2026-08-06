@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How often should kitchen chimney filters be cleaned?",
-      "Baffle filters need cleaning roughly every 30 days at typical Indian cooking loads of about 1.5 hours a day on two burners, dropping to about 15 days with heavy frying. Aluminium mesh or cassette filters clog twice as fast, and a filterless model's oil collector cup needs emptying every 30–40 days.",
+      "Baffle filters need cleaning roughly every 30 days at typical Indian cooking loads of about 1.5 hours a day on two burners, dropping to about 19 days with heavy frying at the same hours and burners. Aluminium mesh or cassette filters clog twice as fast, and a filterless model's oil collector cup needs emptying every 30–40 days.",
     ],
     [
       "How do I clean a baffle filter at home?",

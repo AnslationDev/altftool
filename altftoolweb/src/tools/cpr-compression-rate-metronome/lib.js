@@ -131,7 +131,7 @@ export function computeCprTiming({
   if (!Number.isFinite(pause) || pause < 0 || pause > 30) {
     return { error: "Enter a ventilation pause between 0 and 30 seconds." };
   }
-  if (!Number.isFinite(switchMins) || switchMins <= 0 || switchMins > 10) {
+  if (!Number.isFinite(switchMins) || switchMins < 1 || switchMins > 10) {
     return { error: "Enter a rescuer switch interval between 1 and 10 minutes." };
   }
 
@@ -230,7 +230,6 @@ export function cprPhaseAt(elapsedSeconds, timing) {
     : Math.max(0, timing.cycleSeconds - withinCycle);
 
   const switchElapsed = timing.switchSeconds > 0 ? elapsed % timing.switchSeconds : 0;
-  const switchesDone = timing.switchSeconds > 0 ? Math.floor(elapsed / timing.switchSeconds) : 0;
 
   return {
     cycleIndex,
@@ -240,7 +239,8 @@ export function cprPhaseAt(elapsedSeconds, timing) {
     totalCompressions,
     breathSecondsLeft: round(breathSecondsLeft, 1),
     secondsToSwitch: round(Math.max(0, timing.switchSeconds - switchElapsed), 1),
-    switchesDone,
-    averageRate: elapsed > 0 ? round((totalCompressions / elapsed) * 60) : 0,
+    // Below ~1s of data the ratio is dominated by rounding noise (e.g. 1 compression
+    // over 0.05s reads as 1200/min) — withhold the figure until it means something.
+    averageRate: elapsed >= 1 ? round((totalCompressions / elapsed) * 60) : null,
   };
 }

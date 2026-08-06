@@ -2,8 +2,10 @@
  * Bodybuilder protein targets — daily amount and per-meal distribution.
  *
  * Rules implemented (all published, none invented):
- *  - ISSN Position Stand "Protein and Exercise" (Jager et al., JISSN 2017):
- *    1.4-2.0 g protein per kg bodyweight per day builds and maintains muscle
+ *  - Bulking targets 1.6-2.2 g protein per kg bodyweight per day, and
+ *    maintenance targets 1.6-2.0 g per kg — both within and above the ISSN
+ *    Position Stand's "Protein and Exercise" floor (Jager et al., JISSN 2017)
+ *    of 1.4-2.0 g/kg bodyweight per day for building and maintaining muscle
  *    mass in resistance-trained people.
  *  - Helms et al. 2014 (Int J Sport Nutr Exerc Metab) and the ISSN stand:
  *    while in an energy deficit, lean resistance-trained lifters need
@@ -56,7 +58,7 @@ export const PHASES = {
     low: 1.6,
     target: 1.8,
     high: 2.2,
-    note: "ISSN range for building muscle in a surplus.",
+    note: "Bodyweight-based range for building muscle in a surplus.",
   },
   maintain: {
     id: "maintain",
@@ -65,7 +67,7 @@ export const PHASES = {
     low: 1.6,
     target: 1.8,
     high: 2.0,
-    note: "ISSN range for maintaining muscle mass.",
+    note: "Bodyweight-based range for maintaining muscle mass.",
   },
   cut: {
     id: "cut",
@@ -80,11 +82,12 @@ export const PHASES = {
 
 /**
  * Fallback g/kg of BODYWEIGHT for a cut when body-fat percentage is unknown.
- * 2.3-3.1 g/kg FFM works out near these numbers at a typical 12-20% body fat,
- * so the tool degrades to a defensible bodyweight-based range instead of
- * guessing a body-fat figure.
+ * The 2.3-3.1 g/kg FFM range scaled by a 0.84 fat-free-mass fraction (i.e. 16%
+ * body fat, the midpoint of a typical 12-20% range for resistance-trained
+ * lifters) works out to about 1.9-2.6 g/kg bodyweight, so the tool degrades to
+ * that bodyweight-based range instead of guessing a body-fat figure.
  */
-export const CUT_BODYWEIGHT_FALLBACK = { low: 2.0, target: 2.2, high: 2.4 };
+export const CUT_BODYWEIGHT_FALLBACK = { low: 1.9, target: 2.3, high: 2.6 };
 
 export const MIN_WEIGHT_KG = 30;
 export const MAX_WEIGHT_KG = 250;

@@ -61,7 +61,14 @@ const toNumber = (value) => {
   return Number.isFinite(parsed) ? parsed : NaN;
 };
 
-const round2 = (value) => Math.round(value * 100) / 100;
+// Math.round(value * 100) / 100 misrounds values that land exactly on a two-decimal
+// ".xx5" boundary (e.g. 8.575 * 100 === 857.4999999999999 in IEEE-754, so the naive
+// version rounds down to 8.57 instead of 8.58). Routing the value through decimal
+// (not binary-multiplied) string notation avoids that multiplication error.
+const round2 = (value) => {
+  if (!Number.isFinite(value)) return value;
+  return Number(`${Math.round(Number(`${value}e2`))}e-2`);
+};
 
 const regulationById = (id) =>
   GTU_REGULATIONS.find((row) => row.id === id) || GTU_REGULATIONS[0];

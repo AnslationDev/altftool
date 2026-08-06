@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Card, Tabs } from "@altftool/ui";
+import React, { useState, useEffect, useRef } from "react";
+import { Card, Tabs, Alert } from "@altftool/ui";
 import UserProfile from "../components/UserProfile";
 import LogEntryForm from "../components/LogEntryForm";
 import Dashboard from "../components/Dashboard";
@@ -10,10 +10,17 @@ import EducationalSection from "../components/EducationalSection";
 const PROFILE_KEY = "altftool_diabetes_profile";
 const LOGS_KEY = "altftool_diabetes_logs";
 
+// How long the "Profile saved successfully" confirmation stays mounted on the
+// Profile tab before we auto-navigate to the Dashboard. Must be long enough
+// for a user to actually read it -- see the note on handleSaveProfile below.
+const PROFILE_SAVED_NAVIGATE_DELAY_MS = 1400;
+
 export default function DiabetesDashboardHome() {
   const [profile, setProfile] = useState(null);
   const [logs, setLogs] = useState([]);
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [storageError, setStorageError] = useState(null);
+  const saveNavigateTimeoutRef = useRef(null);
 
   // Load from local storage
   useEffect(() => {
@@ -28,10 +35,54 @@ export default function DiabetesDashboardHome() {
     }
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (saveNavigateTimeoutRef.current) clearTimeout(saveNavigateTimeoutRef.current);
+    };
+  }, []);
+
+  // Any manual tab change (including the user clicking a tab themselves)
+  // cancels a pending post-save auto-navigation, so we never yank a user
+  // back to the Dashboard tab away from wherever they've since clicked.
+  const changeTab = (key) => {
+    if (saveNavigateTimeoutRef.current) {
+      clearTimeout(saveNavigateTimeoutRef.current);
+      saveNavigateTimeoutRef.current = null;
+    }
+    setActiveTab(key);
+  };
+
+  // Persist to localStorage and surface a visible error instead of silently
+  // losing data when the write throws (quota exceeded, private browsing,
+  // storage disabled, etc). React state has already been updated by the
+  // caller by this point, so without this the UI looks like the save
+  // succeeded even though nothing was written to disk.
+  const persist = (key, value) => {
+    try {
+      localStorage.setItem(key, JSON.stringify(value));
+      setStorageError(null);
+      return true;
+    } catch (e) {
+      console.error(`Failed to save diabetes data (${key})`, e);
+      setStorageError(
+        "Your last change couldn't be saved to this browser's storage (it may be full, or private browsing is blocking it). It's only kept in this tab for now -- please export or note it down before you close or reload the page."
+      );
+      return false;
+    }
+  };
+
   const handleSaveProfile = (newProfile) => {
     setProfile(newProfile);
-    localStorage.setItem(PROFILE_KEY, JSON.stringify(newProfile));
-    setActiveTab("dashboard");
+    persist(PROFILE_KEY, newProfile);
+    // Delay the tab switch so UserProfile's own "Profile saved successfully"
+    // confirmation actually gets painted to the screen before we navigate
+    // away from it. Switching synchronously unmounts UserProfile (and its
+    // success Alert) in the very same React commit that sets it visible.
+    if (saveNavigateTimeoutRef.current) clearTimeout(saveNavigateTimeoutRef.current);
+    saveNavigateTimeoutRef.current = setTimeout(() => {
+      saveNavigateTimeoutRef.current = null;
+      setActiveTab("dashboard");
+    }, PROFILE_SAVED_NAVIGATE_DELAY_MS);
   };
 
   const handleAddLog = (newLog) => {
@@ -44,14 +95,14 @@ export default function DiabetesDashboardHome() {
       ...logs,
     ];
     setLogs(updatedLogs);
-    localStorage.setItem(LOGS_KEY, JSON.stringify(updatedLogs));
-    setActiveTab("dashboard");
+    persist(LOGS_KEY, updatedLogs);
+    changeTab("dashboard");
   };
 
   const handleDeleteLog = (id) => {
     const updatedLogs = logs.filter((log) => log.id !== id);
     setLogs(updatedLogs);
-    localStorage.setItem(LOGS_KEY, JSON.stringify(updatedLogs));
+    persist(LOGS_KEY, updatedLogs);
   };
 
   const tabs = [
@@ -73,11 +124,17 @@ export default function DiabetesDashboardHome() {
       </header>
 
       <main>
+        {storageError && (
+          <Alert tone="danger" title="Storage error" className="mb-6">
+            {storageError}
+          </Alert>
+        )}
+
         <Card className="p-6 shadow-sm md:p-8">
           <Tabs
             items={tabs}
             value={activeTab}
-            onChange={setActiveTab}
+            onChange={changeTab}
             className="mb-6"
           />
 
@@ -86,8 +143,8 @@ export default function DiabetesDashboardHome() {
               logs={logs}
               profile={profile}
               onDelete={handleDeleteLog}
-              onGoToLog={() => setActiveTab("log")}
-              onGoToProfile={() => setActiveTab("profile")}
+              onGoToLog={() => changeTab("log")}
+              onGoToProfile={() => changeTab("profile")}
             />
           )}
 
