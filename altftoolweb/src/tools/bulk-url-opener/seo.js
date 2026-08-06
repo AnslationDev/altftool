@@ -4,7 +4,7 @@ const seo = {
   metaDescription:
     "Paste a list of URLs and open every one in its own new tab with a single click. Free, no signup, no extension to install.",
   intro:
-    "The Bulk URL Opener takes a list of links — one per line — and opens each one in its own new browser tab with a single click. No browser extension or account is required; just paste your list and click open.",
+    "The Bulk URL Opener takes a list of links — one per line — and opens each one in its own new browser tab with a single click. No browser extension or account is required; just paste your list and click Open Valid URLs.",
   useCases: [
     "Opening a batch of research links, product pages, or articles saved for later, all at once",
     "Checking a list of URLs (redirects, campaign pages, broken links) without opening them one by one",
@@ -31,7 +31,7 @@ const seo = {
   faqs: [
     [
       "How do I open multiple URLs at once?",
-      "Paste your links into the box, one per line, and click open — each URL opens in its own new tab immediately.",
+      "Paste your links into the box, one per line, and click Open Valid URLs — each link that parses opens in its own new tab immediately, and any line the tool cannot read is listed under Invalid URLs instead.",
     ],
     [
       "Why did only some of my tabs open?",
@@ -51,9 +51,9 @@ const seo = {
     ],
   ],
   steps: [
-    "Paste your list of URLs into the box, one per line.",
-    "Click \"Open All\" to launch every link in its own new tab.",
-    "If prompted, allow popups for this site so every tab can open.",
+    "Paste your list into the box marked \"Paste multiple URLs here (one per line)…\", one URL per line. Any line missing http:// or https:// has https:// added for you before it opens.",
+    "Click \"Open Valid URLs\". Every link that parses opens in its own new tab straight away, and a green \"Opened N tabs successfully\" line confirms how many went through.",
+    "Anything the tool could not parse is listed under an \"Invalid URLs\" heading, and if your browser stopped the tabs a yellow popup-blocker warning appears — allow popups for this site and click \"Open Valid URLs\" again.",
   ],
 };
 

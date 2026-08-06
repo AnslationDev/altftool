@@ -229,7 +229,7 @@ function ResultsPanel({ result, showDetails, slug, name }) {
           {result.summaryItems.map((item, i) => (
             <div key={i} className="rounded-xl border border-(--border) bg-(--background)/50 p-4">
               <p className="text-xs font-medium text-(--muted-foreground)">{item.label}</p>
-              <p className="mt-1 text-lg font-bold text-(--foreground)">{formatCurrency(item.value)}</p>
+              <p className="mt-1 text-lg font-bold text-(--foreground)">{typeof item.value === "string" ? item.value : formatCurrency(item.value)}</p>
             </div>
           ))}
         </div>
@@ -257,7 +257,7 @@ function getDefaultForm(slug) {
     "loan-prepayment-calculator": { amount: 5000000, rate: 9, years: 20, prepayMonthly: 5000, prepayYearly: 0 },
     "debt-payoff-planner": { total: 500000, rate: 18, minPayment: 5000, extraPayment: 2000 },
     "net-worth-calculator": { cash: 50000, investments: 500000, property: 5000000, vehicles: 500000, otherAssets: 100000, homeLoan: 3000000, carLoan: 300000, creditCard: 50000, otherDebt: 0 },
-    "budget-planner": { income: 60000, housing: 15000, food: 8000, transport: 5000, utilities: 4000, insurance: 3000, entertainment: 3000, savings: 10000, other: 5000 },
+    "budget-planner": { income: 60000, housing: 15000, food: 8000, transport: 5000, utilities: 4000, insurance: 3000, entertainment: 3000, savings: 10000 },
     "savings-goal-calculator": { target: 1000000, years: 5, rate: 8, current: 0 },
     "emergency-fund-calculator": { monthlyExpenses: 30000, dependents: 2, incomeStreams: 1, hasInsurance: true, jobStability: "medium" },
     "fire-calculator": { yearlyExpenses: 600000, currentSavings: 1000000, monthlySIP: 30000, rate: 10, swr: 4, inflation: 6 },
@@ -680,7 +680,7 @@ function computeResult(slug, form) {
     }
     case "budget-planner": {
       const income = Number(f.income) || 0;
-      const expenses = (Number(f.housing) || 0) + (Number(f.food) || 0) + (Number(f.transport) || 0) + (Number(f.utilities) || 0) + (Number(f.insurance) || 0) + (Number(f.entertainment) || 0) + (Number(f.savings) || 0) + (Number(f.other) || 0);
+      const expenses = (Number(f.housing) || 0) + (Number(f.food) || 0) + (Number(f.transport) || 0) + (Number(f.utilities) || 0) + (Number(f.insurance) || 0) + (Number(f.entertainment) || 0) + (Number(f.savings) || 0);
       const remaining = income - expenses;
       return {
         primary: Math.round(remaining),

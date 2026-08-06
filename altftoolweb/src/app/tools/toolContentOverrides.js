@@ -6212,7 +6212,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How does the Aura Color Generator work?",
-        "The tool uses a complex algorithm to analyze the colors and patterns in your uploaded photo and generate a unique aura color, along with a fun and quirky description"
+        "The tool scales your photo down, converts the sampled pixels from sRGB to HSL and builds a hue histogram in 10° buckets weighted by saturation; the heaviest bucket picks one of eight aura bands, each of which carries its own fixed reading"
       ],
       [
         "Can I use the Aura Color Generator for free?",
@@ -6220,13 +6220,13 @@ export const toolContentOverrides = {
       ],
       [
         "Can I share my aura color on social media?",
-        "Yes, the tool provides a convenient sharing feature that allows you to post your aura color directly to your social media accounts"
+        "There is no direct posting feature. The Copy result button puts the whole reading — aura name, CSS colour value, hue, intensity, traits and the five palette colours — on your clipboard as plain text, so you can paste it into a post or a message yourself"
       ]
     ],
     "steps": [
-      "Click the 'Upload Photo' button to select a picture from your device, which will be used to generate your unique aura color",
-      "Wait for the tool to process your photo and generate your aura color, which will be displayed on the screen along with a fun and quirky description",
-      "Share your aura color on social media or with friends to see how it compares to theirs and discover new aspects of your personality"
+      "Use the Photo field to pick a JPG, PNG or WebP image from your device — the caption under it reads 'Reading colours…' while the pixels are sampled, then switches to the filename, and the aura appears without any further click",
+      "With no photo, type into the 'Or a name' field instead: the name is hashed with FNV-1a, so the same spelling always returns the same aura. Either way the reading, the dominant hue in degrees, the intensity (Faint through Blazing) and the five-swatch aura palette recompute as you go",
+      "Click Copy result to put the aura name, CSS colour, hue, traits, reading and palette on the clipboard as plain text; Reset — and the 'Use the name instead' button that appears once a photo is loaded — clears the photo and puts the name field back to Alex"
     ]
   },
   "avatar-generator": {
@@ -6676,9 +6676,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Preview & Download' button to convert your Base64 data into an image.",
-      "The tool will immediately display the image in a preview window.",
-      "Optionally, click the download link to save the image to your device."
+      "Paste your data into the 'Base64 image data' box — raw payload or a full data:image/png;base64,… URL. Line breaks, spaces and URL-safe - and _ characters are handled automatically, the box opens with a sample PNG already decoded, and the preview limit is 25 MB.",
+      "There is no convert button: the decode runs as you type. The Decoded image panel shows the pixel dimensions and a live preview, and the table beneath it lists Format, MIME type, Decoded size, Base64 characters, Encoding overhead, Aspect ratio, Megapixels and the Suggested file name — with a red note when the data URL's declared type disagrees with the real bytes.",
+      "Click Download image to save it under the suggested name (base64-image-64x64.png for the sample), Copy data URL or Copy summary to put either on the clipboard, and Reset to bring the sample PNG back."
     ]
   },
   "base64-to-pdf": {
@@ -6699,7 +6699,7 @@ export const toolContentOverrides = {
       ],
       [
         "Flexibility",
-        "Use the tool on-the-go with just a button click, no need for additional software or plugins."
+        "Use the tool on-the-go straight from the browser, no need for additional software or plugins."
       ]
     ],
     "faqs": [
@@ -6717,9 +6717,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Preview & Download' button to convert your Base64 PDF data into a viewable and downloadable file.",
-      "The tool will automatically decode the Base64 string and display the PDF preview for you to review.",
-      "Once satisfied, simply click the download link to save the PDF file to your device."
+      "Paste the payload into the 'Base64 PDF data' box — raw, or a full data:application/pdf;base64,… URL. Every real PDF starts with %PDF-, which is always JVBERi0 in Base64, the box opens with a one-page sample already in it, and the limit is 40 MB decoded.",
+      "There is no convert button: the decode runs as you type. The Decoded PDF panel renders the file in your browser's own PDF viewer, and the table reports PDF version, Decoded bytes, Base64 characters, Encoding overhead, Page objects found, Encrypted, Linearized (fast web view), Interactive form, Ends with %%EOF and Document title — flagging a missing cross-reference table or %%EOF marker as a probable truncation.",
+      "Once satisfied, click Download PDF to save the decoded file as decoded-document.pdf, use Copy data URL or Copy summary for the clipboard, or press Reset to restore the sample PDF."
     ]
   },
   "base64-to-text": {
@@ -6773,7 +6773,7 @@ export const toolContentOverrides = {
     "benefits": [
       [
         "Instant Preview",
-        "No need to decode Base64 manually, just click 'Preview'."
+        "No need to decode Base64 manually — the player updates as you paste."
       ],
       [
         "Easy Download",
@@ -6799,9 +6799,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Preview' button to instantly view the video in your browser.",
-      "Download the video by clicking the 'Download' button to save it locally.",
-      "Enjoy your converted video without leaving your web browser."
+      "Paste the payload into the 'Base64 video data' box — raw or a data:video/…;base64,… URL. MP4, MOV, WebM, MKV, Ogg, AVI, FLV, WMV, MPEG-PS and MPEG-TS are recognised from their magic bytes, and the limit is 60 MB decoded.",
+      "There is no Preview button — the decode runs as you type, and the Decoded video panel plays the clip with the browser's own player controls whenever the container is one your browser supports. The panel also reports Container, MIME type, Duration, Frame size, Average bitrate, Decoded bytes, Base64 characters, Encoding overhead, Brand / doctype and the Suggested file name; when the payload carries no mdat box, or the browser cannot play that container inline, it says so instead of showing an empty player.",
+      "Click Download video to save it locally as decoded-video.mp4 — the extension follows the container that was detected — or use Copy data URL and Copy summary for the clipboard, and Reset to put the sample header back."
     ]
   },
   "base64-url-converter": {
@@ -6950,22 +6950,22 @@ export const toolContentOverrides = {
     ],
     "faqs": [
       [
-        "How do I save my workflow for future use?",
-        "Simply click 'Save Template' and reuse it anytime you need to run a similar batch process."
+        "How do I save my settings for future use?",
+        "Click 'Save Preset' under Quick Actions. The current pattern, range and advanced options are stored in your own browser's local storage, and the button confirms with 'Preset Saved'."
       ],
       [
         "Can I export the results directly from the browser?",
-        "Yes, export your processed data in various formats including CSV, Excel, and PDF right from your browser window."
+        "Yes, export your generated values as TXT, CSV or JSON from the Export As menu right in your browser window — the files are built locally and never uploaded."
       ],
       [
         "Is there any limit on the number of items I can process at once?",
-        "No limits! Process as many items as needed within the tool's capacity."
+        "Each run is capped at 10,000 items, and the results panel says so when a run hits that ceiling."
       ]
     ],
     "steps": [
-      "Click the 'Create Workflow' button to start building your batch processing task.",
-      "Add inputs such as files or URLs directly from your browser.",
-      "Review and execute your workflow with real-time updates on progress."
+      "Under 1. Choose Pattern Type pick Sequential, Text Pattern, Random or Custom List, then set the pattern under 2. Configure Pattern.",
+      "Fill in 3. Set Range and the Add Prefix, Add Suffix, Uppercase and Unique Only switches under 4. Advanced Options, then click Generate Data.",
+      "Review the Generated Results panel — it updates live as you type — then use Copy All, Download or Export As to take the values away."
     ]
   },
   "batch-timestamp-conversion-tool": {
@@ -7291,9 +7291,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Remove Background' button on your image",
-      "Watch as our AI automatically detects and removes the background in real-time",
-      "Download your image with a clean, professional look"
+      "Set the mode toggle to Single or Batch, then drag files onto the drop zone or press Select Image / Select Images — single-image mode refuses anything over 10 MB. The cutout starts on its own, with Removing background... shown while the model runs in the tab.",
+      "Under Choose Background, click White, Office, Beach, Studio or Blur to composite the cutout onto that backdrop, or open the Color tile marked Custom and use Choose Color, then Apply, for a flat hex fill.",
+      "In the After Background Removal panel, open Download the image and pick PNG (Transparent), JPG or WEBP — the file saves as background-removed.png and carries a small AltFTool logo. Export as Profile Picture writes a circular profile-picture.png, Try new image clears both panels, and a batch run finishes with Download All as ZIP producing batch-images.zip."
     ]
   },
   "binary-hex-decimal-converter": {
@@ -7361,7 +7361,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use the Binary Learning Tool?",
-        "Simply click 'Start Conversion' to input a decimal number and see its binary equivalent. Use the visualization tool for deeper understanding, and take quizzes to test your knowledge."
+        "Type a value into Decimal Number and press Convert to Binary to see its 8-bit equivalent. The bit boxes under the result and the Bit Position Reference panel show the place values, and the Binary Quiz panel tests you with New Question and Check Answer."
       ],
       [
         "Is this tool suitable for all levels of learners?",
@@ -7373,9 +7373,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Start Conversion' button to input a decimal number and see its binary equivalent instantly.",
-      "Use the 'Bit Position Visualization' feature to understand how each digit in a binary number corresponds to a power of two.",
-      "Take advantage of the 'Practice Quizzes' to test your knowledge and reinforce learning through interactive questions."
+      "Keep the Decimal → Binary tab selected, type a value into Decimal Number and press Convert to Binary — the answer is padded to a full byte, so 5 reads 00000101. Switch to Binary → Decimal and press Convert to Decimal to go the other way.",
+      "Read the row of bit boxes under the result: the filled boxes are the 1s, and the small numbers beneath them are the place values 128, 64, 32, 16, 8, 4, 2 and 1. The Bit Position Reference panel lists the same weights against 2^7 down to 2^0.",
+      "In the Binary Quiz panel press New Question for a random number from 0 to 255, type its binary form into the answer box and press Check Answer — a wrong try replies Not quite! together with the correct binary for that number."
     ]
   },
   "binaural-beat-generator": {
@@ -7470,21 +7470,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I add social media links?",
-        "Simply click on the 'Add Link' button, select 'Social Media,' and choose the platform you want to link to."
+        "On the Links tab, fill in Button label and URL, pick the platform from the Icon list — Instagram, YouTube, LinkedIn, X / Twitter, WhatsApp, GitHub and five more — then press Add Link."
       ],
       [
         "Can I export my bio page?",
-        "Yes, once your page is complete, you can easily export it as a PDF or HTML file for sharing or printing."
+        "Yes — the Export button downloads the whole project, profile, links and theme together, as a single JSON file named after your username. It is a data export rather than a PDF or a hosted HTML page."
       ],
       [
         "How do I share my bio page via QR code?",
-        "Click on the 'QR Code' button, and download the QR code image to share with others."
+        "Fill in Username, then open the Share tab: the QR code is drawn automatically beside the simulated public URL, and Copy profile link puts that address on your clipboard. Until a username exists the panel reads QR appears after username."
       ]
     ],
     "steps": [
-      "Click the 'Create Bio' button to start building your personalized bio page.",
-      "Add links to your social media profiles, portfolio, or other relevant pages directly from the tool's interface.",
-      "Customize the design with branding controls, including font choices, colors, and layout options."
+      "On the Profile tab fill in Full name, Username, Tagline and Contact, click the image square to upload a PNG, JPG or WEBP avatar, and type a Bio — the panel counts you up to 180 characters and stops there.",
+      "Switch to the Links tab, enter a Button label and URL, choose an entry from the Icon list, then press Add Link. Drag a card by its handle to reorder it, use Duplicate to copy one, and note that a bad address is flagged Enter a valid URL while a bare domain is auto-prefixed with https://.",
+      "Set the look on the Theme tab — four gradient presets, an Accent color, a Border radius from 8 to 32, a Button style and a Typography choice — then open the Share tab, where the QR code and simulated public URL appear once a username exists. Copy profile link copies that address, Preview mode opens the page full screen, and Export downloads the project as <username>-bio-link-page.json."
     ]
   },
   "birthday-analyzer": {
@@ -7579,7 +7579,7 @@ export const toolContentOverrides = {
     "benefits": [
       [
         "Easy Logging",
-        "Simply click the 'Log Reading' button to record your measurements quickly and easily."
+        "Type the two numbers into Systolic (top) and Diastolic (bottom), then press Add reading — pulse, arm, position and a note are optional."
       ],
       [
         "Accurate Categorization",
@@ -7593,7 +7593,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I log my blood pressure reading?",
-        "Click on the 'Log Reading' button and enter your measurement."
+        "Fill in Systolic (top) and Diastolic (bottom) in the Add a reading panel, adjust Date and time if the measurement was not just taken, then press Add reading."
       ],
       [
         "What happens after I log a reading?",
@@ -7601,13 +7601,13 @@ export const toolContentOverrides = {
       ],
       [
         "Can I share the trend summary with my doctor?",
-        "Yes, click on 'Print Summary' to generate a clean report that is easy to share."
+        "Yes — Print produces a plain sheet carrying the averages table, the category spread and every reading, and Copy for doctor puts the same summary on your clipboard as text."
       ]
     ],
     "steps": [
-      "Click on the 'Log Reading' button to enter your latest blood pressure measurement.",
-      "The tool will automatically categorize your reading based on the AHA guidelines.",
-      "Once logged, generate a trend summary by clicking on 'Print Summary'. This clean report is perfect for sharing with your doctor."
+      "In the Add a reading panel enter Systolic (top) and Diastolic (bottom), optionally a Pulse, and set Date and time, Arm and Position — the This reading is box names the AHA/ACC category as you type, so Normal, Elevated, Stage 1, Stage 2 or Hypertensive crisis shows before you commit.",
+      "Press Add reading to save it. The entry joins Your readings newest first, feeds the Trends chart and updates the Last 7 days, Last 30 days, Morning and Evening averages; the pencil icon on any row reloads it as Edit reading, where Update reading saves the change.",
+      "Use Copy for doctor to put the whole log, averages and category spread on the clipboard as text, or Print for the clinic sheet — fill in Name for the printout first if you want your name on it. Clear all asks Delete all N? before wiping the browser copy, and Keep backs out."
     ]
   },
   "blood-sugar-log": {
@@ -7623,8 +7623,8 @@ export const toolContentOverrides = {
         "By logging your glucose readings and meal context, you gain valuable insights that help you make informed decisions to keep your blood sugar levels within the target range."
       ],
       [
-        "Personalized Recommendations",
-        "The tool provides tailored suggestions based on your logged data, helping you optimize your diet and lifestyle for better blood sugar management."
+        "Averages Split By Context",
+        "The Average by context panel scores each tag on its own target band, so a fasting problem and a post-meal problem show up as the different things they are."
       ],
       [
         "Time in Range Tracking",
@@ -7634,7 +7634,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I log my glucose readings?",
-        "Click the 'Log Reading' button and enter your glucose level along with the corresponding meal type from the dropdown menu."
+        "Type the number into Reading, choose a Context button — Fasting, Before meal, 2h after meal, Bedtime or Random — set Date and Time, then press Add reading."
       ],
       [
         "What does time in range mean?",
@@ -7646,9 +7646,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Log Reading' button to enter your latest glucose level and select the corresponding meal type from the dropdown menu.",
-      "View your logged data in a clear, easy-to-understand format, including time in range badges and estimated HbA1c values.",
-      "Receive personalized insights and recommendations based on your logged data, helping you make informed decisions to improve your blood sugar control."
+      "In the Add a reading panel type the number into Reading, pick the unit with the mg/dL or mmol/L toggle, and choose a Context button — Fasting, Before meal, 2h after meal, Bedtime or Random. Each button shows its own target band, and a badge under the form scores your number against that band as you type.",
+      "Set Date, Time and an optional Note, then press Add reading. The row lands in Your readings and refreshes the Readings, Average and Time in range tiles for whichever window the 7 days, 30 days, 90 days or All filter is on, while the Est. HbA1c tile always works from the last 90 days. With nothing logged yet, Load a sample week fills in 20 demo readings across a week.",
+      "Take the log out with Copy log for plain text, CSV for blood-sugar-log.csv, or Print for a one-page sheet — all three follow the window filter. Clear all then Delete everything wipes the browser copy, and Cancel backs out."
     ]
   },
   "blur-comparison": {
@@ -7693,44 +7693,44 @@ export const toolContentOverrides = {
     ]
   },
   "blur-detector": {
-    "intro": "The Blur Detector is a powerful tool designed for photographers, videographers, and anyone who wants to enhance the quality of their images. It quickly identifies motion blur, lens blur, and out-of-focus regions with an intuitive interface.",
+    "intro": "The Blur Detector is a powerful tool designed for photographers, videographers, and anyone who wants to check the quality of their images. It measures the image's luminance gradient as soon as you load it and reports a Sharpness score, a Blur Percentage and a severity verdict that runs from Sharp down to Severe Blur.",
     "useCases": [
       "A professional photographer needs to quickly assess the quality of multiple images before a shoot.",
-      "A videographer wants to ensure every frame in their footage is sharp and clear.",
+      "A videographer exports a still from their footage and wants to confirm the frame is genuinely sharp.",
       "An amateur enthusiast wants to learn more about improving the focus and blur in their photos."
     ],
     "benefits": [
       [
         "Quick Analysis",
-        "Effortlessly detect blur with just one click."
+        "Analysis starts the moment the image loads — there is no button to press."
       ],
       [
         "Heatmap Visualization",
-        "See exactly where your image needs improvement visually."
+        "The Blur Heatmap button shades the softest blocks of the frame in red, so you can see exactly where the detail is missing."
       ],
       [
         "AI Suggestions",
-        "Get tailored advice on how to enhance clarity."
+        "The AI Suggestions panel lists shooting fixes — shutter speed, focus, lighting, aperture and stabilisation — whenever the blur score passes 50."
       ]
     ],
     "faqs": [
       [
         "How does the Blur Detector work?",
-        "It uses advanced AI algorithms to analyze images and identify areas of motion blur, lens blur, and out-of-focus regions."
+        "It converts the image to luminance and averages how much each pixel differs from the pixel on its right and the pixel below. That mean gradient becomes the Sharpness score, Blur Percentage is 100 minus it, and the Blur Type row reports the matching severity band."
       ],
       [
         "Is it free to use?",
-        "Yes, the basic version is free. Premium features are available for a subscription fee."
+        "Yes, all of it. The gauges, Analysis Details, Blur Heatmap and AI Suggestions panel need no account and no payment, and the image is decoded to a canvas in your own browser rather than uploaded anywhere."
       ],
       [
         "Can I upload videos?",
-        "Currently, the tool only supports image uploads. Video analysis is planned for future updates."
+        "No — the uploader takes still images only: JPG, PNG, WEBP or HEIC up to 20MB, from a file, the clipboard or the Camera button. To check a clip, export a frame and analyse that."
       ]
     ],
     "steps": [
-      "Click on the 'Detect Blur' button to upload your image.",
-      "The tool will analyze the image and generate a heatmap highlighting areas of blur.",
-      "Review the heatmap and get AI suggestions for how to improve the clarity."
+      "Drop a photo onto the 'Drop image here or click to browse' panel, click it to pick a file, paste one from the clipboard, or press Camera and then Capture. JPG, PNG, WEBP and HEIC are accepted, up to 20MB.",
+      "Analysis runs on its own as soon as the image loads. The Blur Level, Sharpness and Focus gauges appear beside the preview, and Analysis Details lists Blur Type, Blur Percentage, Edge Density, Focus Area and Focus Confidence.",
+      "Press Blur Heatmap to shade the softest blocks of the frame in red and Original View to switch back, read the AI Suggestions panel for shooting fixes, and use New Image to clear the result and load another photo."
     ]
   },
   "body-fat-calculator": {
@@ -7979,31 +7979,31 @@ export const toolContentOverrides = {
       ],
       [
         "Progress Tracking",
-        "Real-time feedback helps you stay on track and identify areas for improvement."
+        "Every answer updates the Progress Overview panel — Correct, Incorrect, Streak and Mastered — and each character carries its own New, Learning or Mastered dot."
       ],
       [
         "Accessibility",
-        "The tool is designed to be accessible, ensuring an inclusive learning experience."
+        "High Contrast and Large Text toggles, labelled dot patterns and keyboard-reachable controls keep the learning experience inclusive."
       ]
     ],
     "faqs": [
       [
         "How long does it take to learn Braille using this tool?",
-        "It depends on your learning pace, but most users find they can master the basics in a few weeks."
+        "It depends on your learning pace. The tool marks a character Mastered once you have answered it at least five times with 80% or more correct, so the Mastered count out of 49 is a concrete way to see how far along you are."
       ],
       [
         "Is this tool suitable for all levels of learners?",
-        "Yes, it's designed for beginners and includes features that cater to various learning styles."
+        "Yes. Learn and Reference are browsable at any pace, while Quiz and Practice can be narrowed to All, Letters, Numbers or Punctuation so you can drill just the set you are working on."
       ],
       [
         "Can I use this tool offline?",
-        "No, you'll need an internet connection to access the interactive cards and quizzes."
+        "The character set, the questions and the scoring all run in your browser, so once the page has loaded you can keep practising without a connection. Scores, streaks and your High Contrast and Large Text preferences are saved to this browser's local storage rather than to a server."
       ]
     ],
     "steps": [
-      "Click on the 'Start Learning' button to begin your journey through the Braille alphabet.",
-      "Practice by completing interactive cards that test your knowledge of letters, numbers, and punctuation.",
-      "Track your progress with real-time feedback and a detailed progress chart."
+      "Start on the Learn tab, which opens by default, and work through the Alphabet (A–Z), Numbers (0–9) and Punctuation & Symbols cards — each shows the six-dot pattern, the character and a description of which dots are raised.",
+      "Switch to Quiz to name the character behind a pattern, or Practice to pick the pattern for a character. Choose All, Letters, Numbers or Punctuation, press Start Quiz or Start Practice, then use Next Question to move on.",
+      "Watch the Progress Overview panel for your Correct, Incorrect, Streak and Mastered counts — a character turns Mastered after at least five attempts at 80% correct — and switch on High Contrast or Large Text whenever you need them."
     ]
   },
   "brain-processing-speed-test": {
@@ -8065,27 +8065,27 @@ export const toolContentOverrides = {
       ],
       [
         "Accessibility",
-        "Quickly share your brand kit with others, whether it's for client presentations or internal communication."
+        "The Export panel hands the kit to someone else in a click: Copy Summary for a plain-text one-pager, Export JSON for a file, or Print for a hard copy."
       ]
     ],
     "faqs": [
       [
         "How do I create a new brand kit?",
-        "Click the 'Create New Kit' button and start adding your logo, colors, typography, and other assets."
+        "Press New in the header of the Saved Kits panel. A fresh kit appears at the top of the list and becomes the active one, ready for you to fill in its logo, colors, typography and the rest."
       ],
       [
         "Can I export my brand kit?",
-        "Yes, you can easily export your brand kit in various formats for use across different platforms and devices."
+        "Yes. Export JSON downloads the whole kit as a .json file named after the brand, Copy Summary puts a plain-text one-pager on your clipboard (and falls back to a .txt download if the clipboard is blocked), and Print sends the page to your printer or a PDF."
       ],
       [
         "Is Brand Kit Manager compatible with all browsers?",
-        "Brand Kit Manager is designed to work seamlessly across major browsers like Chrome, Firefox, Safari, and Edge."
+        "Brand Kit Manager is designed to work seamlessly across major browsers like Chrome, Firefox, Safari, and Edge. Kits are held in that browser's local storage, so each browser keeps its own copy."
       ]
     ],
     "steps": [
-      "Click the 'Create New Kit' button to start organizing your brand elements.",
-      "Add your logo, color palette, fonts, and other design assets directly from your browser.",
-      "Preview your brand kit in real-time and make adjustments as needed."
+      "Press New in the Saved Kits panel to start a kit, then fill in Brand name, Tagline, Industry, Website, Contact info and Description under Brand Profile. Leaving the name blank shows 'Brand name is required.' and a malformed address shows 'Use a valid website URL.'",
+      "Load artwork from each slot in Logo & Asset Manager — the button reads Upload until a slot is filled and Replace afterwards, and only PNG, JPG, SVG and WEBP are accepted. Build the palette with Color name, HEX and Add, set Heading font and Body font under Typography, and add links with Label, URL and Add Link.",
+      "The Live Brand Preview redraws as you type, and its Validation line switches to Ready for export once the name and website pass. Finish with Copy Summary, Export JSON, Duplicate or Print in the Export panel, or Reset to restore the starter fields."
     ]
   },
   "break-even-calculator": {
@@ -8171,44 +8171,44 @@ export const toolContentOverrides = {
     ]
   },
   "browser-session-analyzer": {
-    "intro": "Browser Session Analyzer is a powerful tool designed to help you clean up your browsing history by analyzing tab sessions, detecting duplicates, categorizing domains, and providing productivity insights.",
+    "intro": "Browser Session Analyzer is a powerful tool designed to help you make sense of a tab session you have exported from your browser — it parses the URLs you paste or import, flags duplicates and broken links, categorizes domains, and scores the session for Health, Focus and Clutter.",
     "useCases": [
-      "A busy professional who wants to streamline their daily browsing and improve focus by removing unnecessary tabs.",
-      "A student looking to clean up their browser history before an important exam or presentation.",
+      "A busy professional who exports their open tabs and wants to see which of them are duplicates before closing anything.",
+      "A student reviewing a saved bookmark export to see how much of it is study material and how much is a distraction.",
       "A digital marketer analyzing competitors' online presence to identify trends and optimize their own strategy."
     ],
     "benefits": [
       [
         "Efficiency",
-        "Spend less time cleaning up your browsing history manually."
+        "One paste turns a wall of URLs into counted domains, categories and duplicate flags instead of an eyeball audit."
       ],
       [
         "Productivity",
-        "Get actionable insights to improve your online productivity."
+        "Focus scores the session by weighing Development, Productivity, Education and Research tabs against Entertainment, Social Media, Shopping and Gaming ones."
       ],
       [
         "Privacy",
-        "Remove duplicate tabs and unnecessary browsing data for a cleaner, more secure browsing experience."
+        "Parsing, scoring and exporting all happen in the page; the only thing kept between visits is a Recent Sessions list of tab and domain counts in your browser's local storage."
       ]
     ],
     "faqs": [
       [
         "How does Browser Session Analyzer work?",
-        "It analyzes all open tabs across all browsers on your device to detect duplicates, categorize domains, and provide productivity insights."
+        "It reads the session data you hand it — pasted JSON, a list of URLs, or an imported .json, .csv, .txt or .html file — and for each URL works out the domain, a category, whether it is HTTPS, whether it looks broken, and whether another entry normalises to the same address. It cannot read your open tabs on its own."
       ],
       [
         "Is my browsing history safe with Browser Session Analyzer?",
-        "Yes, the tool only processes data you've already opened in your browser. It doesn't collect or store any personal information."
+        "Yes. Nothing is uploaded — the URLs you paste or import are parsed by JavaScript in the page. Only a Recent Sessions log of counts and timestamps is written to your browser's local storage, and the Clear button empties the current session."
       ],
       [
         "Can I use Browser Session Analyzer on multiple devices?",
-        "No, it's designed to work specifically on one device at a time. However, you can run it on different devices as needed."
+        "Yes. It analyses whatever export you give it, so you can export a session on one machine and analyse it on another. What does not travel is the Recent Sessions list, which stays in the local storage of the browser that created it."
       ]
     ],
     "steps": [
-      "Click the 'Analyze Sessions' button to start processing your browser tabs.",
-      "The tool will then analyze all open tabs across all browsers on your device.",
-      "Finally, it will provide a detailed report with insights into duplicate sessions, categorized domains, and suggestions for improving productivity."
+      "Paste a JSON tab export, a plain list of URLs or a bookmark export into the Import Session Data box and press Analyze, use Import File for a .json, .csv, .txt or .html file, or type one address into 'Enter URL manually...' and press Add.",
+      "The parse runs immediately and fills the dashboard: Total Tabs, Unique Domains, Duplicates, Broken URLs, HTTP (not HTTPS) and Est. Memory, plus Health, Focus and Clutter meters, with every tab tagged Development, Social Media, Research and so on.",
+      "Filter by clicking a category pill or typing in 'Search URLs, domains, categories...', re-order with the Order / Domain / Category select, and snapshot the current tab list under Groups, where each group can be renamed, collapsed or deleted. Open Export for Export JSON, Export CSV, Export TXT or Copy as JSON — Clear empties the session."
     ]
   },
   "browser-session-exporter": {
@@ -8253,44 +8253,39 @@ export const toolContentOverrides = {
     ]
   },
   "budget-planner": {
-    "intro": "The Budget Planner is a powerful tool designed for individuals and households seeking to manage their finances effectively. It allows users to create a personalized monthly budget by categorizing income and expenses, setting spending limits, and tracking expenditures. By using the Budget Planner, anyone can gain a clearer understanding of their financial health and make informed decisions to improve it.",
+    "intro": "The Budget Planner is a powerful tool designed for individuals and households seeking to manage their finances effectively. You enter one month's income and what you spend under fixed headings — housing, food, transport, utilities, insurance, entertainment and savings — and it returns your total expenses, your surplus or deficit, and the share of income you actually keep. By using the Budget Planner, anyone can gain a clearer understanding of their financial health and make informed decisions to improve it.",
     "useCases": [
       "A college student using the Budget Planner to allocate their scholarship and part-time job income towards tuition, living expenses, and savings.",
       "A family of four utilizing the tool to plan their monthly expenses, including mortgage, utilities, groceries, and entertainment, to ensure they stay within their budget.",
-      "A freelancer employing the Budget Planner to manage irregular income by setting aside funds for taxes, equipment, and software expenses, and planning for retirement."
+      "A freelancer averaging out an irregular month's earnings to see whether the housing, transport and insurance figures still leave a surplus."
     ],
     "benefits": [
       [
         "Financial Clarity",
-        "The Budget Planner provides a comprehensive overview of your income and expenses, helping you understand where your money is going and how you can optimize your spending."
+        "It adds every category you fill in into Total Monthly Expenses and subtracts that from your Monthly Income, so what is left over is a number rather than a feeling."
       ],
       [
         "Customizable Budgeting",
-        "The tool allows you to create a budget that is tailored to your specific financial situation and goals, whether you're saving for a big purchase or paying off debt."
+        "Each category carries its own ₹ figure, so the split between rent, food, transport, insurance and savings reflects your situation instead of a template's."
       ],
       [
         "Spending Control",
-        "By setting spending limits and tracking your expenses, the Budget Planner helps you avoid overspending and develop healthier financial habits."
+        "A negative month is headlined Monthly Deficit rather than buried in a total, and the Savings Rate tile shows what percentage of your income survives it."
       ]
     ],
     "faqs": [
       [
         "How do I set up my income in the Budget Planner?",
-        "To set up your income, click on the 'Add Income' option and enter your monthly income amount, selecting the appropriate income type, such as salary, investments, or freelance work."
+        "Type the amount into the Monthly Income field at the top of the form — a single ₹ box for a month's take-home. There is no income-type picker, so add salary, freelance payments and investment income together and enter the total."
       ],
       [
         "Can I track multiple budgets with the Budget Planner?",
-        "Yes, the Budget Planner allows you to create and manage multiple budgets, which is useful for tracking different financial scenarios, such as a budget for a specific project or a budget for a different household member."
+        "Not side by side. The form holds one set of figures at a time and nothing is stored when you leave the page, so to compare two scenarios note the Surplus and Savings Rate from the first, then enter the second set and press Calculate again."
       ],
       [
         "How often should I review and update my budget in the Budget Planner?",
-        "It's recommended to review and update your budget regularly, ideally on a monthly basis, to reflect changes in your income, expenses, or financial goals, and to ensure you're on track to meet your objectives."
+        "Monthly is a sensible rhythm. Because the planner keeps no history, re-enter your current figures each time and compare the new Savings Rate and Monthly Surplus against the ones you noted last month."
       ]
-    ],
-    "steps": [
-      "Click the 'Create Budget' button to start setting up your monthly budget, where you can input your income and categorize your expenses.",
-      "Assign spending limits to each expense category to ensure you stay within your means and make adjustments as needed.",
-      "Regularly track your spending and compare it against your set limits to visualize your financial progress and identify areas for improvement."
     ]
   },
   "bulk-text-replacer": {
@@ -8344,7 +8339,7 @@ export const toolContentOverrides = {
     "benefits": [
       [
         "Time-Saving",
-        "Effortlessly open up to 100 URLs with just one click, saving you valuable time."
+        "Effortlessly open a whole list of URLs with just one click, saving you valuable time."
       ],
       [
         "Productivity Boost",
@@ -8358,7 +8353,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How many URLs can I open at once with the Bulk URL Opener Tool?",
-        "You can open up to 100 URLs in a single batch using this tool."
+        "The tool sets no limit of its own — every line you paste is opened. Your browser's popup blocker is the practical ceiling, and a warning appears if it stops any tabs."
       ],
       [
         "Is it safe to use the Bulk URL Opener Tool?",
@@ -8370,9 +8365,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the 'Open URLs' button in the Bulk URL Opener Tool interface.",
-      "Enter or paste your list of URLs into the designated input field.",
-      "Hit the 'Submit' button to open all URLs simultaneously."
+      "Paste your list into the box marked 'Paste multiple URLs here (one per line)…', one URL per line.",
+      "Click 'Open Valid URLs' — every link that parses opens in its own new tab and a green 'Opened N tabs successfully' line confirms the count.",
+      "Check the 'Invalid URLs' list for lines that could not be parsed, and allow popups for this site if the yellow popup-blocker warning appears."
     ]
   },
   "business-card": {
@@ -8417,7 +8412,7 @@ export const toolContentOverrides = {
     ]
   },
   "business-name-generator": {
-    "intro": "The Business Name Generator is a powerful tool designed to help entrepreneurs create professional, creative business names that are easy to remember and legally available. Perfect for anyone looking to establish a strong online presence.",
+    "intro": "The Business Name Generator is a powerful tool designed to help entrepreneurs create professional, creative business names that are easy to remember. Perfect for anyone looking to establish a strong online presence.",
     "useCases": [
       "A tech startup looking for a memorable name for their new software product.",
       "An online boutique needing a distinctive name for their unique fashion line.",
@@ -8429,18 +8424,18 @@ export const toolContentOverrides = {
         "Discover creative, original names that stand out from the competition."
       ],
       [
-        "Domain Availability Check",
-        "Ensure your chosen name is available for registration and use online."
+        "Industry-Aware Vocabulary",
+        "Pick Tech, Health, Finance or Creative and that sector's own word set is mixed into the results."
       ],
       [
-        "Logo Style Suggestions",
-        "Get professional logo ideas to complement your business name."
+        "Shortlist and Copy",
+        "Heart any name to pin it to the Shortlisted panel, and copy it to your clipboard in one click."
       ]
     ],
     "faqs": [
       [
         "How many names can I generate at once?",
-        "You can generate up to 10 unique business names with one click."
+        "Anywhere from 1 to 30 per run, set with the 'How Many?' slider, which starts at 10. You can generate again as many times as you like."
       ],
       [
         "What types of industries is the Business Name Generator suitable for?",
@@ -8448,13 +8443,13 @@ export const toolContentOverrides = {
       ],
       [
         "Can I use the generated names for free?",
-        "Yes, you can use the names for free. However, some premium features may require a subscription."
+        "Yes. Every option is free with no signup, and there is no paid tier. The generator produces name candidates only — check domain and trademark availability separately before you commit."
       ]
     ],
     "steps": [
-      "Click the 'Generate Names' button to start creating unique business names tailored to your brand's vision.",
-      "Review the suggested names and select the one that best represents your business values and target audience.",
-      "Check domain availability for your chosen name and explore logo style suggestions to finalize your brand identity."
+      "Pick an Industry (General, Tech, Health, Finance or Creative) and a Style (Modern, Classic, Prefixed or Descriptive), then set the 'How Many?' slider anywhere from 1 to 30.",
+      "Click 'Generate Business Names'. The batch appears under the 'Suggested Names' heading, and clicking again re-draws a different list from the same word bank.",
+      "Hover a name to reveal its heart and copy icons — the heart pins it to the 'Shortlisted' panel below, and the copy icon puts that name on your clipboard."
     ]
   },
   "byte-converter": {
@@ -8530,13 +8525,13 @@ export const toolContentOverrides = {
       ],
       [
         "Can I use the CAC Calculator to track my marketing performance over time?",
-        "Yes, the CAC Calculator provides real-time tracking of your LTV:CAC ratio and channel efficiency, allowing you to monitor your marketing performance and make adjustments as needed."
+        "Every figure recalculates the moment you edit a spend or customer count, so you can compare scenarios side by side in one sitting. Nothing is stored between visits, so use the CSV button to download each period's numbers and compare the snapshots outside the tool."
       ]
     ],
     "steps": [
-      "Click the 'Calculate CAC' button to instantly compute your Customer Acquisition Cost across multiple marketing channels, including social media, email marketing, and paid advertising.",
-      "Analyze the channel efficiency comparison report generated by the CAC Calculator to identify which marketing channels are driving the most cost-effective customer acquisitions.",
-      "Monitor the LTV:CAC ratio tracker in real-time to ensure that your customer lifetime value exceeds your acquisition costs, indicating a profitable marketing strategy."
+      "Fill in the Marketing Channels table — five channels are pre-filled — typing each one's Spend (₹) and Customers, or use the 'Add New Channel' row and its 'Add' button to bring in another. 'Load Sample Data' swaps in a seven-channel example.",
+      "Everything recalculates as you type: each row shows that channel's CAC and Spend Share, BEST and HIGH badges mark the cheapest and most expensive, and the 'Channel Efficiency Ranking' table sorts every channel from lowest CAC upward.",
+      "Enter 'Your Average LTV (₹)' to grade the LTV:CAC Ratio card against the 3:1 benchmark, then use 'Copy' for a plain-text summary or 'CSV' to download cac-calculator.csv."
     ]
   },
   "caffeine-tracker": {
@@ -8567,17 +8562,17 @@ export const toolContentOverrides = {
       ],
       [
         "What if I forget to log a caffeine intake?",
-        "The app will still provide estimates based on the last known caffeine consumption. However, logging accurately helps in getting more precise results."
+        "Log it late and set 'Time of drink' back to when you actually had it — the 'Now' button is only a shortcut, and the decay curve uses whatever time you enter. Anything left out simply never reaches the total, so the closer the log is to reality the more useful the bedtime projection."
       ],
       [
         "Can I use this tool for tracking other substances?",
-        "Currently, Caffeine Intake Tracker is focused solely on caffeine. Future updates may include additional substance tracking features."
+        "It tracks caffeine only. The presets do reach past drinks — dark chocolate at 20 mg, milk chocolate at 8 mg and a 200 mg caffeine tablet or pre-workout dose are all in the list — but there is no way to log anything that is not caffeine."
       ]
     ],
     "steps": [
-      "Click on the 'Log Caffeine' button to add each coffee, tea, or energy drink you consume throughout the day.",
-      "The app will automatically calculate how much caffeine remains in your system based on the type of beverage and time elapsed since consumption.",
-      "Set reminders for when it's time to stop drinking caffeinated beverages to ensure a good night's sleep."
+      "In the 'Log a drink' panel pick a Serving size (0.5x, 1x, 1.5x or 2x) and set 'Time of drink' — the 'Now' button fills in the current time — then tap one of the 20 drink tiles, such as Filter coffee at 120 mg or Cold brew at 155 mg, to add it.",
+      "'Today so far' totals your day against the 400 mg limit, or 200 mg once you tick 'Pregnancy mode', and the cards under it show 'In your body now', 'Peak today' and 'Below 50 mg by', all modelled on a 5-hour half-life.",
+      "Set 'Your bedtime', then choose a drink in the 'Sleep cutoff advisor' to see the latest time you could have it and still be under 50 mg at bedtime. 'Copy summary' puts the whole day on your clipboard and 'Clear day' empties the log."
     ]
   },
   "calender-panchang": {
@@ -8665,8 +8660,8 @@ export const toolContentOverrides = {
         "Simply input your basic metrics, and our tool does the rest."
       ],
       [
-        "Customizable Targets",
-        "Set daily calorie goals for weight loss, maintenance, or muscle gain."
+        "Every Goal at Once",
+        "BMR, Maintenance, Fat loss, Lean gain and a Protein range all appear together from one set of inputs."
       ]
     ],
     "faqs": [
@@ -8684,9 +8679,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Enter your basic body metrics: age, gender, height, weight, and activity level.",
-      "Click the 'Calculate' button to get your BMR (Basal Metabolic Rate) and TDEE (Total Daily Energy Expenditure).",
-      "View your daily calorie targets for maintaining your current weight, losing weight, or gaining muscle."
+      "Choose your Gender, then fill in Age in years, Height in cm and Weight in kg — each number field carries its unit on the right-hand side.",
+      "Pick an Activity level: Sedentary, Light exercise, Moderate exercise, Very active or Athlete. There is no calculate button — every figure updates the moment you change an input.",
+      "Read the five result cards: BMR, Maintenance, Fat loss (500 kcal under maintenance), Lean gain (300 kcal over) and a Protein range of 1.6-2.2 g per kg of your body weight."
     ]
   },
   "campaign-budget-planner": {
@@ -8706,14 +8701,14 @@ export const toolContentOverrides = {
         "Get real-time insights into your campaign's financial health with detailed analytics and visualizations."
       ],
       [
-        "Collaboration",
-        "Assign tasks and set deadlines for team members, ensuring everyone is working towards the same goals."
+        "Phase-tagged checklist",
+        "Every task carries a campaign phase, so the checklist filters down to Creative Setup, Tracking Setup, Campaign Launch or Scale & Optimize and everyone can see what belongs to the phase in flight."
       ]
     ],
     "steps": [
-      "Click the 'Add New Task' button to input detailed budget information, including project costs, timelines, and key performance indicators (KPIs).",
-      "Set up clear next steps by assigning deadlines and responsibilities to team members. The tool automatically generates reminders to keep everyone on track.",
-      "Review and adjust your budget as needed with real-time analytics and visualizations that help you make informed decisions."
+      "Drag a channel's slider or type into its budget box under Channel Budget Allocation — Paid Search (Google Ads), Paid Social (Meta/TikTok), Influencer Marketing, Email Marketing, SEO & Content Creation and Offline & Events, each running 0 to 20,000 in steps of 100 — or press the Lead Generation, Brand Awareness or Product Launch preset to redistribute the same total by percentage. Total Budget, Projected Conversions and Projected ROAS recompute as you move; there is no calculate step.",
+      "Fill in the CPC ($), CTR (%) and Conv. (%) cells for each row of the ROI & Customer Acquisition Estimator, then set Target CPA and Cust. LTV ($) in the bar above. Every channel whose Projected CPA lands at or below your target is drawn in the primary colour, which is the reallocation signal.",
+      "Add work under Action Items & Next Steps: type into Task Description, choose Creative Setup (D1-10), Tracking Setup (D11-15), Campaign Launch (D16-25) or Scale & Optimize (D26-30) under Assign Phase, then press Append Task. Drag the day slider on the 30-Day Campaign Phase Timeline to see which phase is live, and use Reset Default in the Task Progress tile to restore the starting allocations and tasks."
     ]
   },
   "candy-crush": {
@@ -8861,9 +8856,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Pick a Card' button to reveal your randomly selected playing card.",
-      "Watch as the card flips in a realistic 3D animation.",
-      "Enjoy your randomly chosen card!"
+      "Click Pick Card. The card panel opens on a Ready to Pick placeholder, and the button is disabled and reads Picking... while the 3D flip animation plays.",
+      "Read the draw in the panel beside the card, which shows No card picked yet until your first pick: a miniature card carrying the rank and the suit pip — red for hearts and diamonds, black for clubs and spades — with the result written out in full underneath, Queen of Spades for instance.",
+      "Click Pick Card again for another draw. Cards are never removed, so all 52 stay in play and the same card can come up twice in a row."
     ]
   },
   "card-trick": {
@@ -8972,21 +8967,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How accurate is the celebrity lookalike feature?",
-        "Our tool uses advanced facial recognition technology to provide the most accurate matches possible."
+        "It is a novelty, not a recognition system. A face detector and a 68-point landmark model run on your photo, and those landmark coordinates pick one of ten celebrities — your face is never compared against photographs of them, so treat the % Match badge as entertainment."
       ],
       [
         "Can I upload any type of photo?",
-        "Yes, you can upload any photo that shows your face clearly for the best results."
+        "The picker accepts any image type and the ceiling is 10MB — go over and you get 'Image size exceeds the 10MB limit.' A clear, well-lit, front-facing shot of one person gives the steadiest result."
       ],
       [
         "Is my information secure?",
-        "We prioritize user privacy and security. Your uploaded photos are processed locally and not stored on our servers."
+        "We prioritize user privacy and security. The detector and landmark models run inside your browser and the photo is read locally as a data URL, so nothing is uploaded to or stored on our servers."
       ]
     ],
     "steps": [
-      "Click on the 'Upload Photo' button to select an image from your device.",
-      "Our advanced algorithm will analyze your facial features and compare them to our database of celebrities.",
-      "In just moments, you'll see which celebrity most closely matches your appearance."
+      "Drop a photo onto the Upload a Photo to Scan Face panel, or click Select Photo to browse for one — max size 10MB, and anything larger stops with 'Image size exceeds the 10MB limit.'",
+      "The panel switches to Running Face Landmarks Scan... while the face detector and the 68-point landmark model run inside your browser; the photo is read locally and never uploaded.",
+      "Read the result: Your Photo beside Best Match with the celebrity name and a % Match badge, a Facial Alignment Analysis paragraph, then Landmark Correspondence bars for Jawline & Chin Width similarity, Eye spacing & placement match and Nose & Mouth ratio alignment. Download saves celebrity-look-alike-report.txt, Copy Report puts the same text on your clipboard, and Reset clears the photo."
     ]
   },
   "cell-explorer": {
@@ -9136,21 +9131,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I start a new game?",
-        "Click the 'Play Chess' button and follow the prompts to begin."
+        "The New Match card is the first thing you see: click one of its five time controls — Bullet 1 min, Blitz 5 min, Rapid 10 min, Classical 30 min or Unlimited — and the board is dealt straight away. Mid-game, New Game under the move list restarts once you confirm Restart? with Yes."
       ],
       [
         "What happens if I make an illegal move?",
-        "The tool will automatically correct it or alert you that your move is invalid."
+        "It is never offered. Selecting a piece marks only its legal destinations — a dot on an empty square, a ring around a capturable piece — and clicking anywhere else simply deselects, so a pinned piece will not lift at all."
       ],
       [
         "Can we save our game progress?",
-        "Currently, there's no feature to save games, but you can manually record moves for later analysis."
+        "Currently, there's no feature to save games, but the Moves panel keeps the full game in algebraic notation while the tab is open, so you can copy it down for later analysis."
       ]
     ],
     "steps": [
-      "Click the 'Play Chess' button to start a new match.",
-      "Take turns making moves with real-time validation.",
-      "Use the timer for added challenge or set it to zero for casual play."
+      "Pick a time control on the New Match card — Bullet (1 min), Blitz (5 min), Rapid (10 min), Classical (30 min) or Unlimited (no clock). Clicking one starts the match; there is no separate start button.",
+      "Take turns on the one device. Click a piece, or move the focus square with the arrow keys and press Enter, and its legal destinations are marked; click the destination to play it. The banner beside the board reads White to move or Black to move, switching to White is in check and Checkmate as the position demands, and a pawn reaching the last rank opens the Promote to dialog with queen, rook, bishop and knight.",
+      "Work the buttons under the move list: Offer Draw, which the other side answers with Accept or Decline; Resign, which asks Sure? before you confirm Yes, resign; Flip to turn the board around; and New Game to start over. The Moves panel records algebraic notation, with Captured by Black and Captured by White above it and a clock for each side flanking the board."
     ]
   },
   "chess-puzzle-trainer": {
@@ -9304,7 +9299,7 @@ export const toolContentOverrides = {
       ],
       [
         "How does the calculator work?",
-        "You input your chit details, and the calculator simulates the financial outcomes month by month based on those inputs."
+        "You set your chit details in the left panel and the whole term is simulated month by month as you type — there is no calculate step. The Month by month table shows every month's discount, prize to winner, foreman cut, subscription and dividend, and the summary above prices your chosen bidding month."
       ],
       [
         "Is it free to use?",
@@ -9312,9 +9307,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the 'Calculate' button to input your chit details such as bid amount, number of participants, and duration.",
-      "Enter the specific month you want to simulate in the calculator interface.",
-      "Review the detailed breakdown of bids, dividends, and foreman commission for that month."
+      "Enter Chit value (₹) and Members / months in the left panel. The Monthly subscription (auto) tile immediately shows chit value ÷ months, and every figure below recalculates as you type — there is no calculate step.",
+      "Set Foreman commission (%), which the field labels against the Chit Funds Act cap of 5%, then drag the two Discount assumption sliders — Month 1 discount and the last month's discount — anywhere from 0% to 40%. Push either past 30% and a red warning notes that registered chits cannot discount that far.",
+      "Move the Your bidding month slider, or jump with the Earliest, Halfway and Last presets, then read You receive, Total you pay in, Dividends received, the Net gain or Net loss and the Effective annualised rate (XIRR on your monthly cash flows). Your row is flagged You bid in the Month by month table; Copy summary puts the whole breakdown on your clipboard and Reset to defaults restores the starting case."
     ]
   },
   "circled-text-generator": {
@@ -9382,7 +9377,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use the Citation Generator?",
-        "Simply click on 'Generate Citation', enter the details, and copy the formatted citation."
+        "Pick a source type and a style, then fill in the fields. There is no Generate button — the preview panel rewrites the citation as you type. Use the Copy Citation button, or export it with TXT, PDF or DOCX."
       ],
       [
         "What citation styles are supported?",
@@ -9394,9 +9389,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the 'Generate Citation' button.",
-      "Enter the required details such as author name, publication year, title of the work, and other relevant information.",
-      "Copy the generated citation directly from the tool."
+      "Pick a source type from the Book, Website, Journal Article, Newspaper, Magazine, YouTube Video, Podcast, Thesis and Research Paper buttons, then pick a style from the six style buttons: APA 7, MLA 9, Chicago, Harvard, IEEE and Vancouver.",
+      "Fill in Author(s), Title and whichever fields that source type adds — Publisher, Year, Edition and City for a book, or Journal Name, Volume, Issue, Pages and DOI for a journal article. There is no Generate button: the preview panel below, headed with the style name, rewrites the citation as you type, and a Website source also offers a URL box with an Auto-fill button.",
+      "Use the Copy Citation button for the clipboard, or the TXT, PDF and DOCX buttons to export, and press Save Citation to push the entry into History, where each row has Reuse and Copy and the panel has a Clear All."
     ]
   },
   "cleaning-schedule-planner": {
@@ -9423,21 +9418,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I add a new chore?",
-        "Click the 'Add Chore' button, select the room, day, priority, owner, and duration, then save."
+        "Click New Task. In the Add New Task dialog set Task Name, Assigned To, Room, Frequency, Priority, Duration and the Mon to Sun Schedule Days, then press Add Task."
       ],
       [
         "Can I share my schedule with others?",
-        "Yes, you can export your schedule or share it directly within the tool to collaborate with family members or roommates."
+        "There is no share or export link. Click Report to open the Cleaning Schedule Report, then use its Print / Save PDF button to hand family members or roommates a paper or PDF copy."
       ],
       [
         "What if I need to change a chore's details?",
-        "Simply find the chore in your schedule, click on it, and update the necessary information before saving."
+        "Use the Edit task icon on the chore's card, or on its row in the List view, change the fields in the Edit Task dialog, and press Save Changes."
       ]
     ],
     "steps": [
-      "Click on the 'Add Chore' button to start organizing your cleaning tasks.",
-      "Select the room where the chore needs to be done, choose the day of the week, set a priority level, assign it to an owner, and specify the duration.",
-      "Review and save your schedule for easy access whenever you need to check or modify your chores."
+      "Click New Task to open the Add New Task dialog and start organizing your cleaning tasks.",
+      "Set the Room the chore belongs to, tick the Mon to Sun Schedule Days it falls on, choose a High, Medium or Low Priority, type a name into Assigned To, set the Duration in minutes, then press Add Task.",
+      "Switch between the Board, Weekly and List views, tick each chore's circle as it is done, and click Report for the Cleaning Schedule Report — the list is not stored, so use Print / Save PDF before you close the page."
     ]
   },
   "clipboard-capsule": {
@@ -9667,13 +9662,13 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the 'Calculate' button to input your desired brewing method and the amount of coffee you want to brew.",
-      "The tool will then provide you with the precise measurements of coffee grounds and water required for a perfect cup.",
-      "Simply follow these ratios to achieve consistent, delicious results every time."
+      "Pick your brewer from the Brew method list — Pour-over, French press, AeroPress, Espresso, Cold brew concentrate, Moka pot or South Indian filter — and drag the Strength slider between Very mild and Intense to set the ratio.",
+      "Choose 'I have this much coffee' and type a Coffee dose (grams), or choose 'I want this much coffee' and fill in Cups and Cup size (ml) or tap a preset (Espresso 30 ml, Small cup 150 ml, Mug 240 ml, Large mug 350 ml). There is no Calculate button; the Coffee and Water panels recompute the moment anything changes.",
+      "Read off the grams of coffee and millilitres of water, along with the Grind size, Water temperature and Brew time cards and the numbered 'How to brew it' method, then press Copy recipe to take the whole thing with you."
     ]
   },
   "cognitive-performance-tracker": {
-    "intro": "The Cognitive Performance Tracker is a powerful tool designed to help individuals monitor their cognitive health over time. It offers daily check-ins, focus scores, memory trends, and interactive analytics dashboards to provide insights into how your brain functions.",
+    "intro": "The Cognitive Performance Tracker is a self-tracking log designed to help individuals watch their daily habits over time. It offers a Daily Check-In, an Estimated Daily Score as a percentage, a streak count, and Dashboard, Charts and Insights tabs that chart how that score moves.",
     "useCases": [
       "A busy professional wants to ensure they're maintaining optimal brain health while juggling work and personal life.",
       "A student is preparing for exams and needs to track their focus and memory to improve study efficiency.",
@@ -9694,9 +9689,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Start Tracking' button to begin your journey with the Cognitive Performance Tracker.",
-      "Complete daily check-ins by answering a few questions about your mood, energy levels, and any other relevant factors.",
-      "Access your personalized analytics dashboard to view trends in your cognitive performance over time."
+      "The tool opens straight onto the Dashboard tab; click Check-In and set the Date at the top of the Daily Check-In card.",
+      "Log Sleep Hours, Water Intake, Study Hours, Work Hours, Exercise and Meditation on their sliders, tap a Mood rating from Terrible to Great and an Energy Level from Exhausted to Peak, add Notes (optional), then press Save Check-In; the button reads Update Check-In when that date already has an entry.",
+      "Use the Dashboard tab for Today's Score, Streak, Weekly Avg, Total Check-ins and the Performance Timeline chart, and the Charts, Goals, Insights and History tabs alongside it — Insights breaks your data into Performance Trend, Strengths, Areas for Improvement and Recommendations."
     ]
   },
   "coin-flip": {
@@ -9922,13 +9917,13 @@ export const toolContentOverrides = {
       ],
       [
         "How often should I take the test?",
-        "We recommend taking the test once a month to track progress over time."
+        "As often as you like — a round takes under a minute. The Memory History panel keeps only your last five rounds and empties when you reload the page, so note your best precision score down if you want to compare across sessions."
       ]
     ],
     "steps": [
-      "Click the 'Start Test' button to begin.",
-      "Select the shade that best matches the one displayed in your mind.",
-      "Review your results at the end of the test."
+      "Choose easy, medium or hard under Select Difficulty, then click Initialize Neural Test; the Memorize This Color card shows a random shade for 8, 5 or 3 seconds while a countdown ticks down.",
+      "Once it hides, rebuild the shade yourself in the Recreation card using the Neural Color Picker or the Red Channel, Green Channel and Blue Channel sliders under Spectral Fine-Tuning, then click Submit Reconstruction — there is no list of shades to pick from.",
+      "The Neural Comparison panel sets Original Target against Your Reconstruction with a precision percentage, a rating, and RGB Variance and HSL Variance figures; the round drops into Memory History, and Try Another Shade starts a new one."
     ]
   },
   "color-palette-compare": {
@@ -9953,9 +9948,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Compare Palettes' button to start comparing your selected color palettes.",
-      "Upload or select two different color palettes from your project.",
-      "View the side-by-side comparison in real-world UI mockups to see how they look together."
+      "Fill in the five roles of the Palette A card — primary, secondary, background, surface and text — using each row's swatch picker or hex field, or press 'Randomize' to fill all five at once.",
+      "Do the same in the Palette B card on the right. There is no compare button: each column redraws its own Design Preview mockup, including the Dashboard Metrics card and the Primary Action and Secondary buttons, the moment a color changes.",
+      "Read the 'Bg vs Text Contrast' panel under each mockup, which scores that palette's background against its text and labels the pair AAA, AA, AA (Large Text) or Fail, then use the copy icon beside any hex to put that value on your clipboard."
     ]
   },
   "color-palette-from-image": {
@@ -9982,7 +9977,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How many colors can I get from the tool?",
-        "You can extract up to 10 complementary colors from an uploaded image."
+        "Eight. The tool keeps the eight color buckets that cover the most of your image and shows them as swatches, ranked by coverage rather than chosen for harmony."
       ],
       [
         "Is my image safe?",
@@ -9994,9 +9989,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Upload Image' button to select your photo.",
-      "Our advanced algorithm analyzes the image and extracts up to 10 complementary colors.",
-      "View and save your color palette directly from our user-friendly interface."
+      "Click the 'Upload image' panel and choose a PNG, JPG, or WebP file from your device.",
+      "The Palette panel fills with the eight most common colors as soon as the image finishes decoding — there is nothing to press in between.",
+      "Click any swatch to copy its hex code to your clipboard, then paste it into your CSS, design file, or brand doc."
     ]
   },
   "color-picker": {
@@ -10136,7 +10131,7 @@ export const toolContentOverrides = {
       ],
       [
         "Visual Results",
-        "Enjoy attractive charts and graphs that make it easy to understand your compatibility."
+        "The result screen shows your percentage beside a band label such as Perfect Match or Room to Grow, plus tiles for the category, the question count and how many you answered."
       ],
       [
         "Quick Assessment",
@@ -10146,21 +10141,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What categories does the Compatibility Quiz cover?",
-        "The quiz covers a wide range of categories including lifestyle, career, interests, values, and more."
+        "Six: Romance, Friendship, Lifestyle, Intellectual, Travel and Career. Each one has its own set of 10 questions rather than sharing a common bank."
       ],
       [
         "Is my information secure?",
-        "Your personal data is kept confidential and used only for generating your compatibility results."
+        "The quiz never asks for your name, email or any other personal detail, and your answers stay in the page — they are scored in your browser and are gone when you reload."
       ],
       [
         "Can I take the quiz multiple times?",
-        "Yes, you can retake the quiz as many times as you like to see how different scenarios affect your compatibility score."
+        "Yes — 'New Quiz' on the result screen takes you back to the category picker so you can rerun the same set or try a different one."
       ]
     ],
     "steps": [
-      "Click the 'Take Quiz' button to start your assessment.",
-      "Answer a series of questions tailored to specific categories such as lifestyle, career, and interests.",
-      "View your personalized compatibility score and detailed results."
+      "Pick one of the six category cards — Romance, Friendship, Lifestyle, Intellectual, Travel or Career — then press 'Start Quiz'.",
+      "Work through the 10 questions, choosing one of the four answers on each; the counter reads Question X of 10 and 'Back' returns you to an earlier question without erasing what you picked.",
+      "About a second and a half after your last answer the result screen shows your percentage and its band label, with 'Review Answers' to see every question beside the option you chose and 'New Quiz' to start again."
     ]
   },
   "component-naming-auditor": {
@@ -10273,17 +10268,17 @@ export const toolContentOverrides = {
       ],
       [
         "Can I adjust my inflation rate mid-planning period?",
-        "Yes, you can update the inflation rate at any time during your planning process to reflect current economic conditions."
+        "Yes — retype the 'Inflation Rate' field at any point and the whole projection, including the Real Value card and the purple real-value band on the growth chart, redraws on the spot."
       ],
       [
-        "What if I don't have a specific reinvestment frequency?",
-        "You can set the reinvestment frequency to 'None' if you're not planning on reinvesting dividends or capital gains."
+        "What if I don't want to reinvest my yearly gains?",
+        "Tap the reinvestment toggle so it reads 'Withdraw yearly gains' and shows Off. From then on each year's net interest is recorded as withdrawn income instead of compounding, and the balance grows only through your yearly top-ups."
       ]
     ],
     "steps": [
-      "Click on the 'Calculate' button to input your initial investment amount, expected annual return rate, reinvestment frequency, and any additional yearly contributions.",
-      "Enter your tax rate and inflation rate to ensure accurate projections that reflect real-world financial realities.",
-      "Review the year-wise charts generated by the tool to visualize how your investment grows over time, taking into account all factors you've input."
+      "Fill in 'Lumpsum Principal', 'Yearly Top-up', 'Expected Return' and 'Investment Years', then choose Monthly, Quarterly, Half Yearly or Yearly from the 'Compounding' dropdown and whether the top-up lands at the start or end of each year.",
+      "Set 'Tax Rate' and 'Inflation Rate' and leave the toggle on 'Reinvest yearly gains' or switch it to 'Withdraw yearly gains'. There is no calculate button — the metric cards and every chart recompute as you type.",
+      "Read the Final Corpus, Real Value, Effective CAGR and Estimated Tax cards alongside the Reinvestment Growth Chart, Year-wise Returns bars and Corpus Split donut, then use 'Copy Summary' for a plain-text recap or 'Export CSV' for the full year-by-year schedule."
     ]
   },
   "computer-parts-quiz": {
@@ -10392,21 +10387,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I add a new task to the Content Calendar Planner?",
-        "Click the 'Add Task' button and fill in the details such as title, type, and due date."
+        "Fill in the 'Create New Campaign' form — Post Title, Channel, Asset Type and Release Date are the core fields — and press 'Publish to Calendar'. The button flashes 'Added to Calendar!' and the piece appears on the month grid and in the pipeline list."
       ],
       [
         "Can I share my calendar with others?",
-        "Yes, you can invite team members or clients to view your calendar by sharing the link directly from the tool."
+        "Not from the tool. Your calendar is saved to this browser's local storage only, so there is no share link and a teammate opening the same page sees their own entries rather than yours."
       ],
       [
         "What if I need to change a task's timeline?",
-        "Simply drag and drop the task to the new date on the planner to update its timeline."
+        "Press 'Edit Campaign' on the card, which loads it into the form, then set a new 'Release Date' and press 'Update Campaign Details'. Clicking a day in the month grid also drops that date straight into the form's Release Date field."
       ]
     ],
     "steps": [
-      "Click the 'Add Task' button to input your content creation details such as title, type, and due date.",
-      "Set up a timeline by dragging and dropping tasks into specific dates on the planner.",
-      "Review and adjust your calendar regularly to keep your content strategy on track."
+      "Fill in the 'Create New Campaign' form: Post Title, a Channel (YouTube Video, Blog Article, Instagram Post, LinkedIn Post, Twitter/X Post or Email Newsletter), Asset Type, Release Date, Status, and optionally Budget (USD), Target Reach and Strategic Notes.",
+      "Check the Campaign Subtasks checklist, which pre-fills with that channel's production steps — tick any that are done, or type into 'Add custom task...' and press the plus button to add your own — then press 'Publish to Calendar'.",
+      "Use the month grid to click a day and filter to it, narrow further with the platform pills, the status dropdown and the 'Search campaigns...' box, and watch Avg Progress and Subtask Progress update as you tick items off each card's Pipeline Checklist."
     ]
   },
   "conways-game-of-life": {
@@ -10437,7 +10432,7 @@ export const toolContentOverrides = {
       ],
       [
         "Can I save my configurations?",
-        "Yes, most simulators allow you to save and load your configurations for later use."
+        "No. There is no save or load control, so a pattern only exists in the tab you drew it in. Reloading the page brings back the built-in starter pattern, Clear empties the board, and Random reseeds it."
       ],
       [
         "Is this tool free?",
@@ -10445,9 +10440,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the 'Create Configuration' button to start building your initial pattern.",
-      "Use the grid provided to place live cells (represented by black squares) wherever you like.",
-      "Once your configuration is set, click 'Run Simulation' to watch how it evolves over time according to Conway's rules."
+      "Click or drag directly on the grid to draw cells — starting on a dead cell draws for the whole stroke and starting on a live cell erases for the whole stroke, so a pattern can be sketched in one drag.",
+      "Press Start to run the simulation and Pause to stop it, or press Step to advance exactly one generation while it stays paused; the Speed slider covers 1 to 30 generations per second.",
+      "Watch the Live Stats panel for Generation, Population, Grid and Speed, then use Clear to empty the board or Random to reseed it with roughly 28% live cells — both pause the run and reset the generation count to 0."
     ]
   },
   "cookie-viewer": {
@@ -10574,10 +10569,10 @@ export const toolContentOverrides = {
     ]
   },
   "country-greeting-finder": {
-    "intro": "The Country Greeting Finder is a unique browser tool designed for travelers, language learners, and cultural enthusiasts, providing an easy way to discover how to greet people in their native language from any country around the world. With just a click of a button, users can access a wealth of information on greetings, including pronunciation guides, formal and informal variants, and cultural insights. Whether you're planning a trip abroad or simply interested in exploring different cultures, this tool is the perfect companion.",
+    "intro": "The Country Greeting Finder is a unique browser tool designed for travelers, language learners, and cultural enthusiasts, providing an easy way to discover how to greet people in their native language across 34 countries. A single search brings up a wealth of information on greetings, including a written pronunciation guide, formal and informal variants, and cultural insights. Whether you're planning a trip abroad or simply interested in exploring different cultures, this tool is the perfect companion.",
     "useCases": [
-      "Before a business trip to Japan, use the Country Greeting Finder to learn how to greet your clients with a formal 'Konnichiwa' or informal 'Ohayou gozaimasu'",
-      "When traveling to Brazil, use the tool to discover how to say 'hello' in Portuguese, including the common greeting 'Oi, tudo bem?'",
+      "Before a business trip to Japan, use the Country Greeting Finder to learn how to greet your clients with the formal こんにちは (konnichiwa) rather than the informal やあ",
+      "When traveling to Brazil, use the tool to discover how to say 'hello' in Portuguese — the greeting 'Olá', the informal 'Oi', and the reply you are likely to hear back, 'Olá, tudo bem?'",
       "As a language learner, use the Country Greeting Finder to practice greetings in different languages, such as Spanish, French, or Mandarin Chinese"
     ],
     "benefits": [
@@ -10597,11 +10592,11 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How many countries are included in the Country Greeting Finder?",
-        "The tool currently includes greetings from over 200 countries, with more being added regularly"
+        "34, each with a single entry for its main national-language greeting, spanning Europe, Asia, the Middle East, Africa and the Americas"
       ],
       [
         "Can I hear the pronunciation of the greetings?",
-        "Yes, the Country Greeting Finder includes audio pronunciation guides for each greeting, helping you to pronounce the words correctly"
+        "Each card has a speaker button that reads the greeting aloud through your browser's built-in speech synthesis, but it uses an English voice, so treat it as a rough guide — the written pronunciation shown between slashes on the card is the more reliable reference"
       ],
       [
         "Are the greetings formal or informal?",
@@ -10609,9 +10604,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Find Greeting' button to instantly access greetings from over 200 countries",
-      "Browse through the list of countries to find the specific greeting you're looking for, or use the search function to quickly locate a particular country",
-      "Explore the various greeting options, including formal and informal variants, and listen to the pronunciation guides to ensure you're pronouncing the greetings correctly"
+      "Type into the 'Search country or language…' box to filter the list of 34 countries — it matches the country, the language or the greeting itself — then click a country in the list to open its card",
+      "Read the card for the native-script greeting, the written pronunciation between slashes, the Formal and Informal variants, the Common response and the Cultural note, and press the speaker button to hear it read aloud by your browser's English voice",
+      "Press Copy greeting to put the greeting and its language on your clipboard, the star button to keep the country under Favorites, or the shuffle button to jump to a random country"
     ]
   },
   "cover-letter": {
@@ -10724,7 +10719,7 @@ export const toolContentOverrides = {
       ],
       [
         "How do I use this tool?",
-        "Simply click 'Generate Cron', select your desired frequency and timing, and review the preview to finalize your schedule."
+        "Pick a Schedule preset, then set the hour, minute, weekday, month day or interval it uses. There is no generate button — the expression, the plain-English summary and the next estimated runs all recalculate as you change a field."
       ],
       [
         "Is it free to use?",
@@ -10732,9 +10727,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the 'Generate Cron' button to open the expression builder interface.",
-      "Select the desired frequency (e.g., daily, weekly) and set the specific times or dates.",
-      "Review the readable schedule preview to ensure your task will run as intended."
+      "Choose one of the six Schedule preset buttons — Every minute, Hourly, Daily, Weekly, Monthly or Every N minutes. There is no generate button: the expression updates the moment you pick one.",
+      "Fill in the fields your preset uses — Hour (0–23), Minute (0–59), Weekday, Month day (1–31) and Interval minutes (1–59). The page opens on Daily at 09:30, which is the expression 30 9 * * *.",
+      "Read the five-field expression under Cron expression, check the plain-English line beneath it and the five Next estimated runs shown in your browser's local time, then press Copy to put the expression on your clipboard or Reset to return to 30 9 * * *."
     ]
   },
   "crontab-evaluator": {
@@ -10791,8 +10786,8 @@ export const toolContentOverrides = {
         "Take the quiz in just a few minutes without any hassle."
       ],
       [
-        "Personal Insights",
-        "Gain deeper understanding of your own preferences and how they align with your crush's."
+        "Interaction Insights",
+        "See how much four concrete signals — who initiates, whether they remember details, whether one-on-one plans get suggested — move the score up or down."
       ],
       [
         "Fun Experience",
@@ -10802,7 +10797,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What kind of questions will I be asked?",
-        "You'll answer questions about hobbies, beliefs, and lifestyle choices to gauge compatibility."
+        "Four questions about how your crush behaves around you: how they act when you are nearby, who starts your texts or calls, whether they remember small details you mention, and whether they have suggested hanging out one-on-one. Each answer carries a weight between -10 and +20 that shifts the final percentage."
       ],
       [
         "Is my information safe?",
@@ -10814,9 +10809,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Take Quiz' button to start evaluating your chemistry and odds with your crush.",
-      "Answer a series of questions about your interests, values, and personality traits.",
-      "View your results and learn how compatible you are with your crush."
+      "Fill in Your Name and Crush's Name — both are required — then press Start Crush Quiz.",
+      "Answer the 4 questions about how they behave around you: how they act when you are around, who initiates your text chats or calls, whether they remember small details you mention, and whether they have suggested hanging out one-on-one. Back to previous question lets you change an earlier answer.",
+      "Read the score between 15% and 99% with its verdict — Mutual Chemistry, Secret Admirer, Potential Spark or Friendzone Alert — and the Suggested Actions beneath it, then press Download to save crush-percentage-report.txt, Copy Report to take it to your clipboard, or Reset to start over."
     ]
   },
   "crypto-pnl-calculator": {
@@ -10966,11 +10961,11 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use the CSS Beautifier?",
-        "Upload your CSS file or paste your code into the input area, adjust the tab size if needed, then click 'Format CSS' followed by 'Copy Output'."
+        "Paste your code into the Input CSS Code box — there is no file upload — pick 2, 4 or 8 spaces under Indentation Size, then press Beautify CSS Code and take the result with Copy Code."
       ],
       [
         "Can I save my formatted CSS somewhere?",
-        "Unfortunately, the tool does not provide a direct save feature. However, you can copy and paste the output to any desired location."
+        "Yes. Download (.css) in the Beautified CSS Code panel saves the result as styles.beautified.css, and Copy Code puts it on your clipboard. The file is built in your browser, so nothing is uploaded."
       ],
       [
         "Does it support all types of CSS?",
@@ -10978,9 +10973,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the 'Format CSS' button to upload your CSS file or paste your code directly into the input area.",
-      "Adjust the tab indentation size to your preference using the provided dropdown menu.",
-      "Once formatted, click 'Copy Output' to easily copy the cleaned-up CSS code to your clipboard."
+      "Paste your minified or messy CSS into the Input CSS Code box, or press Load Sample CSS to drop in a deliberately messy example that includes a media query.",
+      "As soon as the box has content a Formatting Configuration panel appears: choose 2 Spaces, 4 Spaces or 8 Spaces for Indentation Size, and use the Selector Spacing button to switch between 'Add blank lines between rules' and 'Keep rules compact'.",
+      "Press Beautify CSS Code to fill the Beautified CSS Code panel, then use Copy Code for the clipboard or Download (.css) to save it as styles.beautified.css — Clear Input empties both boxes and starts over."
     ]
   },
   "css-border-radius-generator": {
@@ -11221,13 +11216,13 @@ export const toolContentOverrides = {
       ],
       [
         "Can I minify multiple CSS files at once?",
-        "Absolutely! Simply upload all the CSS files you want to optimize, and our tool will handle the rest."
+        "Not as separate files — there is no file picker or batch queue, just the one Paste CSS Stylesheet box. You can paste several stylesheets one after another into that box and minify them in a single pass, but the Original Size, Minified Size, Bytes Saved and Savings Ratio figures then cover the combined text and the download arrives as one styles.min.css."
       ]
     ],
     "steps": [
-      "Click the 'Select File' button to upload your CSS file.",
-      "Our advanced algorithm will automatically compress and minify your code in seconds.",
-      "View detailed savings statistics and download your optimized CSS file."
+      "Paste your stylesheet into the Paste CSS Stylesheet box, or click Load Sample CSS to drop in a demo stylesheet that carries a /*! licence banner. As soon as the box has text a Compression Options panel appears, holding one toggle that reads Preserve important license comments (/*! ... */); click it to flip to Discard all comments.",
+      "Click Minify CSS Code. A green status line reads CSS minified successfully! and four cards report Original Size, Minified Size, Bytes Saved and Savings Ratio, the last as a percentage to one decimal place; running it on an empty box shows Please paste stylesheet code to execute compression instead.",
+      "Read the compressed stylesheet in the Minified CSS Code panel, then press Copy Code — its label flips to Copied! for 2 seconds — or Download (.min.css) to save the file as styles.min.css. Clear Input empties both boxes after a confirmation prompt."
     ]
   },
   "css-tools": {
