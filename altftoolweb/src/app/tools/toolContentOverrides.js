@@ -7197,21 +7197,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How many images can I compare at once?",
-        "You can upload up to two images for comparison."
+        "Two — one Before dropzone and one After dropzone, each accepting JPG, PNG, WEBP or HEIC up to 20MB."
       ],
       [
         "Is the resolution adjustable?",
-        "Yes, you can adjust the resolution to ensure a clear view of the differences."
+        "No, there is no resolution control. Analyze Differences reports the Before Resolution and After Resolution it read from your files and marks Resolution Match as Match or Different."
       ],
       [
         "Can I save my comparisons?",
-        "Unfortunately, there is no direct feature to save comparisons. However, most browsers allow saving screenshots for your records."
+        "Yes — Export Comparison draws both images onto one canvas, tags them Before and After, and downloads it as before-after-comparison.png."
       ]
     ],
     "steps": [
-      "Upload the 'Before' and 'After' images by clicking on the respective buttons.",
-      "Select your preferred view mode: slider, side-by-side, or fade overlay.",
-      "Adjust the resolution settings to get a clear comparison."
+      "Load one image into the Before dropzone and one into the After dropzone — each reads Drop image here or click to browse and Supports JPG, PNG, WEBP, HEIC (max 20MB), and the comparison view opens as soon as both are in.",
+      "Switch views with the Slider, Side by-side and Fade buttons above the frame: Slider drags a divider across the pair with Before and After tagged in the bottom corners, and Fade adds a 0-100 opacity slider that dissolves the After image over the Before one.",
+      "Press Analyze Differences for a Comparison Analysis panel listing Before Resolution, After Resolution and Resolution Match, Export Comparison to download both frames side by side as before-after-comparison.png, or New to clear the two slots."
     ]
   },
   "before-after-slider": {
@@ -7238,21 +7238,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I upload images to the Before/After Slider?",
-        "To upload images, simply click the button and select two images from your computer or device, ensuring they are in a compatible format such as JPEG or PNG"
+        "Drop a file on the Upload Before Image panel and a second on Upload After Image, or click either panel to browse. Both accept PNG, JPG, WEBP, BMP and GIF, one file at a time"
       ],
       [
         "Can I customize the appearance of the Before/After Slider?",
-        "Yes, the tool allows users to customize the slider's appearance, including the color scheme and layout, to match their brand or website design"
+        "No, there are no colour or layout settings. What you can change is the comparison itself: drag the divider or the range control under the frame, and press Swap Images to trade the Before and After sides"
       ],
       [
         "Is the Before/After Slider compatible with mobile devices?",
-        "Yes, the tool is fully responsive and compatible with mobile devices, allowing users to compare images on the go and share the results with others"
+        "Yes, the layout stacks the two upload panels on small screens and the divider responds to touch as well as mouse drags, so you can compare images on a phone or tablet"
       ]
     ],
     "steps": [
-      "Click the button to upload two images to compare, such as a before and after photo of a restoration project",
-      "Adjust the draggable slider to reveal the differences between the two images, zooming in on specific areas for a closer look",
-      "Share the comparison link or embed the slider on a website to showcase the transformation to clients, colleagues, or social media followers"
+      "Load a file into the Upload Before Image panel and another into Upload After Image — both take PNG, JPG, WEBP, BMP or GIF, and until both are in, the card reads Upload both before and after images to start comparing",
+      "Drag the circular handle on the divider, or the range control under the frame, to wipe between the two pictures; the corners stay tagged Before and After, and Swap Images trades the two sides while Reset clears them and returns the divider to 50%",
+      "Check the Output Summary panel, which prints each filename with its pixel dimensions and the current Slider position as a percentage"
     ]
   },
   "bg-remover": {
@@ -7297,7 +7297,7 @@ export const toolContentOverrides = {
     ]
   },
   "binary-hex-decimal-converter": {
-    "intro": "Effortlessly convert between binary, hexadecimal, decimal, and ASCII values with our Binary / Hex / Decimal Converter. Ideal for developers, programmers, and anyone needing quick value conversions.",
+    "intro": "Type a number as decimal, binary or hex and the Binary / Hex / Decimal Converter shows it in all three at once, plus its Unicode character and bit length. Ideal for developers, programmers, and anyone needing quick value conversions.",
     "useCases": [
       "Converting IP addresses for network configuration.",
       "Debugging code by converting between different number systems.",
@@ -7320,11 +7320,11 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I convert an ASCII value?",
-        "Enter the ASCII character in the input field, select 'ASCII' as the output format, and click 'Convert.'"
+        "Type the code point as a number — 65 in Decimal, or 41 with Hex selected — and the Unicode character card shows the matching character. The box takes numbers only, so a letter typed into it returns Decimal value must be a whole number, and anything above 0x10FFFF reads Outside Unicode range."
       ],
       [
         "Can I convert between different bases?",
-        "Yes, simply enter your value in one base (binary, hexadecimal, or decimal), select the desired output base, and click 'Convert.'"
+        "Yes. Set Input format to Decimal, Binary or Hex to say which base you are typing in; the Decimal, Binary and Hexadecimal cards all update together as you type, so there is no output base to choose."
       ],
       [
         "Is this tool free to use?",
@@ -7332,9 +7332,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Convert' button to input your binary, hexadecimal, or decimal value.",
-      "Select the output format you need from the dropdown menu (binary, hexadecimal, decimal, or ASCII).",
-      "View the converted result instantly in the designated field."
+      "Pick the base you are typing in from the Input format switch — Decimal, Binary or Hex — then edit the box beneath it. The tool opens on Decimal with 255 already filled in and converts as you type, so there is no convert button to press.",
+      "Read the five result cards: Decimal, Binary, Hexadecimal shown with an 0x prefix, Unicode character for that code point, and Bit length. A stray character replaces them with the rule you broke, such as Binary value can only contain 0 and 1.",
+      "Click the clipboard icon on any card to copy that value — Copied flashes in green beside the input box — or press Reset to put the tool back to Decimal 255."
     ]
   },
   "binary-learning-tool": {
@@ -7379,7 +7379,7 @@ export const toolContentOverrides = {
     ]
   },
   "binaural-beat-generator": {
-    "intro": "The Binaural Beat Generator is a powerful browser tool that allows you to create custom binaural beats, isochronic tones, solfeggio tones, and guided audio sessions directly in your web browser. Perfect for anyone looking to enhance their focus, relaxation, or meditation.",
+    "intro": "The Binaural Beat Generator synthesises tones live in your browser across five tabs — Binaural, Isochronic, Solfeggio, Journey and Settings — with six brainwave presets, nine solfeggio frequencies and four staged journey programs. Perfect for anyone looking to enhance their focus, relaxation, or meditation.",
     "useCases": [
       "Improving concentration during work or study sessions.",
       "Relaxing before sleep with soothing guided audio sessions.",
@@ -7400,9 +7400,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Generate' button to start creating your personalized audio session.",
-      "Select the type of sound you want: binaural beats, isochronic tones, solfeggio tones, or guided audio sessions.",
-      "Adjust the frequency and duration settings to tailor your experience."
+      "Press Start Audio in the header to begin and Stop Audio to end. The strip below names the wave band and mode, flips from Standby to Active, and runs an mm:ss timer over a live waveform.",
+      "On the Binaural tab pick a preset card — Deep Sleep, Meditation, Relaxed Focus, Flow State, Peak Focus or Lucid Dream — then trim Base Frequency (60-500Hz), Beat Frequency (0.5-40Hz), Volume and Session Timer, which stays an infinite session at 0 and otherwise auto-stops after the minutes you set. The Solfeggio tab plays one pure tone instead, from UT 174Hz to 963Hz.",
+      "The Journey tab runs a staged program: choose Sleep Induction, Focus Ramp, Meditation Journey or Creativity Boost, press Start Journey, and the button becomes Stop Journey with the current stage and elapsed time. Settings adds Left Ear Gain and Right Ear Gain in dB, white, pink or brown Background Noise, Fade in, Fade out and a Breathing guide, and Save stores the current setup under a name with Load and Delete beside it."
     ]
   },
   "bingo-game": {
@@ -7488,7 +7488,7 @@ export const toolContentOverrides = {
     ]
   },
   "birthday-analyzer": {
-    "intro": "The Birthday Analyzer is a unique browser tool designed for individuals curious about the insights and secrets hidden within their birthdate. By simply clicking the button, users can unlock detailed birthday insights, including zodiac signs, age analytics, milestones, and live countdowns. Whether you're an astrology enthusiast or just looking for a fun way to learn more about yourself, the Birthday Analyzer is the perfect tool for you.",
+    "intro": "The Birthday Analyzer is a unique browser tool designed for individuals curious about the insights and secrets hidden within their birthdate. Pick a date of birth, press Analyze, and it opens Birthday Insights, Life Analytics, Milestones and a Next Birthday Countdown that ticks every second. Whether you're an astrology enthusiast or just looking for a fun way to learn more about yourself, the Birthday Analyzer is the perfect tool for you.",
     "useCases": [
       "Planning a birthday party and wanting to incorporate zodiac-themed decorations and activities",
       "Curious about the astrological compatibility between you and your partner or friends",
@@ -7511,7 +7511,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What will I learn from the Birthday Analyzer?",
-        "You'll discover your zodiac sign, age analytics, milestones, and get a live countdown to your next birthday"
+        "Birthday Insights gives your Western Zodiac, Chinese Zodiac, Birthstone, Birth Flower, Element, Season, Generation, Lucky Numbers and Lucky Colors; Life Analytics estimates Heartbeats, Breaths Taken and Sleep Time; and Next Birthday Countdown counts down in days, hours, minutes and seconds"
       ],
       [
         "Is the Birthday Analyzer free to use?",
@@ -7519,13 +7519,13 @@ export const toolContentOverrides = {
       ],
       [
         "Can I use the Birthday Analyzer for someone else's birthday?",
-        "Yes, you can use the Birthday Analyzer to generate a report for anyone's birthday, making it a great tool for gifts or party planning"
+        "Yes, type any past date into the field and press Analyze. The picker will not go past today, and a year before 1900 is rejected with Please enter a valid year after 1900."
       ]
     ],
     "steps": [
-      "Click the button to instantly generate your personalized birthday report",
-      "Explore your zodiac sign and learn about its associated traits and characteristics",
-      "Discover your age analytics and track your progress towards upcoming milestones"
+      "Pick a date in the Date of birth field — it will not accept anything later than today — and press Analyze. Leaving it empty answers Please select your date of birth. and a year before 1900 answers Please enter a valid year after 1900.",
+      "The four cards count your Years, Months, Weeks and Days; Total Time Lived breaks the same span into Hours, Minutes, Seconds and Months; and Next Birthday Countdown ticks down in Days, Hours, Minutes and Seconds beside your Previous Birthday and the weekday you were born on.",
+      "Read Birthday Insights for Western Zodiac, Chinese Zodiac, Birthstone, Birth Flower, Element, Season, Generation, Lucky Numbers and Lucky Colors, Life Analytics for estimated Heartbeats, Breaths Taken and Sleep Time, then Milestones, which lists everything Achieved with a count and the next three Upcoming ones with the years still to go."
     ]
   },
   "blood-pressure-checker": {
@@ -7552,21 +7552,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How accurate are the readings?",
-        "The Blood Pressure Checker provides accurate readings when used correctly, but it's always a good idea to cross-check with a healthcare professional."
+        "The tool does not measure anything itself — it stores the numbers you type into Systolic (mmHg) and Diastolic (mmHg) and sorts them into Normal, Elevated, Stage 1 Hypertension or Stage 2 Hypertension. Accuracy comes from your own cuff, so cross-check with a healthcare professional."
       ],
       [
         "Can I connect my device?",
-        "Yes, you can connect compatible devices for seamless data input and tracking."
+        "No — there is no device pairing or file import here. Every reading is typed into the Systolic (mmHg) and Diastolic (mmHg) boxes and saved with Add Measurement."
       ],
       [
         "What happens if I miss a reading?",
-        "Simply skip the step and continue monitoring your next reading. The tool will still provide historical data for analysis."
+        "Nothing is lost — Readings History keeps everything you have added and Measurement Trends replots from it. Readings live in the open page only, so refreshing the tab starts again from the two sample rows."
       ]
     ],
     "steps": [
-      "Click the 'Measure' button to start tracking your blood pressure readings.",
-      "Input your systolic and diastolic pressures manually or use a connected device if available.",
-      "View your readings in real-time with detailed charts and historical data."
+      "In the New Reading panel type your figure into Systolic (mmHg) and then Diastolic (mmHg) — leaving either box empty stops the entry with 'Please enter both readings'.",
+      "Press Add Measurement. The reading is stamped with the current time and joins Readings History, and the Latest Status card names its band — Normal, Elevated, Stage 1 Hypertension or Stage 2 Hypertension — above the figure in mmHg.",
+      "Read the Measurement Trends chart, which plots Systolic (mmHg) and Diastolic (mmHg) as two lines across your logged times, and use Clear in the Readings History header to empty the list back to 'No readings recorded yet.'"
     ]
   },
   "blood-pressure-log": {
@@ -7648,7 +7648,7 @@ export const toolContentOverrides = {
     "steps": [
       "In the Add a reading panel type the number into Reading, pick the unit with the mg/dL or mmol/L toggle, and choose a Context button — Fasting, Before meal, 2h after meal, Bedtime or Random. Each button shows its own target band, and a badge under the form scores your number against that band as you type.",
       "Set Date, Time and an optional Note, then press Add reading. The row lands in Your readings and refreshes the Readings, Average and Time in range tiles for whichever window the 7 days, 30 days, 90 days or All filter is on, while the Est. HbA1c tile always works from the last 90 days. With nothing logged yet, Load a sample week fills in 20 demo readings across a week.",
-      "Take the log out with Copy log for plain text, CSV for blood-sugar-log.csv, or Print for a one-page sheet — all three follow the window filter. Clear all then Delete everything wipes the browser copy, and Cancel backs out."
+      "Take the log out with Copy log for plain text, CSV for blood-sugar-log.csv, or Print for a clinic sheet carrying the averages, time in range and every reading — all three follow the window filter and stay disabled while that window is empty. Clear all then Delete everything wipes the browser copy, and Cancel backs out."
     ]
   },
   "blur-comparison": {
@@ -7757,7 +7757,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What is the US Navy tape method and how does it estimate body fat percentage?",
-        "The US Navy tape method is a formula-based approach that uses measurements of neck and waist circumference to estimate body fat percentage"
+        "The US Navy tape method is a formula-based approach that uses your height with neck and waist circumference — plus a Hips measurement when Gender is set to Female — to estimate body fat percentage"
       ],
       [
         "How often should I use the Body Fat Percentage Calculator to track my progress?",
@@ -7769,9 +7769,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Calculate' button to input your measurements and select either the US Navy tape method or BMI formula for estimation",
-      "Enter your height, weight, and other required measurements to get an accurate calculation of your body fat percentage",
-      "Review your results, including your estimated body fat percentage, fat mass, and lean mass, to plan a realistic goal for improvement"
+      "Under Enter Your Details set Estimation Method to US Navy Tape Method or BMI (Deurenberg), pick Male or Female under Gender, and choose Metric (cm, kg) or Imperial (in, lb) under Units — switching units converts the numbers already typed",
+      "Fill Age, Height and Weight, plus Neck and Waist (and Hips for Female) while the Navy method is selected, or press a Quick Presets chip such as Lean male runner, Average male desk job or Active female to load a full set, then press Calculate Body Fat % — an Analyzing Body Composition... spinner runs before the page scrolls to Your Results",
+      "Your Results reports the percentage with its Health Category band alongside Fat Mass, Lean Mass and BMI; set Target Body Fat % in the Goal Planner for Fat to Lose, Weight at Goal, Weekly Loss Target and Estimated Time. Copy puts the report on the clipboard, Download saves body-fat-results.txt, and Reset All restores the default profile after a confirm prompt"
     ]
   },
   "body-fat-estimator": {
@@ -7796,13 +7796,13 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Measure' button to start the process.",
-      "Follow on-screen instructions to input your measurements accurately.",
-      "View your estimated body fat percentage immediately."
+      "Choose Metric (kg/cm) or US Units (lbs/in), then under 1. Core Personal Stats set Biological Gender to Male or Female and fill Age (years), Total Weight and Height — or press an Example Presets chip: Standard Male, Standard Female or Higher BMI.",
+      "Under 2. Choose Estimator Method pick U.S. Navy Tape, BMI Regression or Caliper 3-Site. Navy asks for Waist and Neck, plus Hip when Female is selected; Caliper 3-Site asks for three sites (Chest, Abdomen and Thigh for men, Triceps, Suprailiac and Thigh for women); BMI Regression replies 'No extra measurements required.'",
+      "There is no calculate button — the Computed Dashboard updates as you type, showing Estimated Body Fat Percentage with its band (Essential Fat, Athletic, Fitness, Acceptable or Excess Fat / Obese), Fat Mass and Lean Body Mass. Drag Target Body Fat in the Goal Target Planner, which spans 5% to 40%, to see Goal Weight and Change Required, then press Log Calculation Frame to file the result in the History table."
     ]
   },
   "bookmark-capsule": {
-    "intro": "Bookmark Capsule is a powerful browser extension designed to help you organize, search, categorize, preview, and manage your website bookmarks efficiently.",
+    "intro": "Bookmark Capsule is a browser-based page — not an extension — that helps you organize, search, categorize and manage your website bookmarks. Entries are saved in this browser's local storage rather than in your browser's own bookmark bar, and Export and Import move them as a JSON file.",
     "useCases": [
       "A student organizing all their educational resources in one place.",
       "A professional saving important client links for quick access.",
@@ -7825,21 +7825,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I create a new category?",
-        "Click on the '+' icon in the Bookmark Capsule interface and enter the name of your new category."
+        "Open the Add Bookmark dialog and press Add New beside the Category label, type the name into New Category Name, then save. The new category joins the dropdown and gets its own tab; the seven starting categories are Development, Design, Education, Business, Marketing, Personal and News."
       ],
       [
         "Can I share my bookmarks with others?",
-        "Yes, you can export your bookmarks as a file and share it with anyone who has access to that file."
+        "Yes — Export downloads every bookmark as bookmarks-backup-<date>.json, and anyone with that file can pull it in through Import, which skips entries whose id already exists and reports how many new bookmarks it added."
       ],
       [
         "What if I forget how to use Bookmark Capsule?",
-        "The tool includes a help section with detailed instructions and video tutorials."
+        "There is no separate help section or video tutorial in the tool. The interface is the guide: Add Bookmark opens the form, the tabs and search box narrow the grid, and each card's three-dot menu lists Edit, Copy URL, Pin, Archive and Delete."
       ]
     ],
     "steps": [
-      "Click the Bookmark Capsule icon in your browser toolbar to open the tool.",
-      "Drag and drop websites into categories or create new ones as needed.",
-      "Search for bookmarks using keywords directly from the tool."
+      "Press Add Bookmark to open the Add Bookmark dialog, paste the address into URL * (the only required field), and optionally fill Title (Optional) and Description (Optional).",
+      "Pick a Category from the dropdown — Development, Design, Education, Business, Marketing, Personal and News are there to start — or press Add New and type a New Category Name, then press Add Bookmark. A 'Bookmark added successfully' toast confirms it, the card appears in the grid, and the Total Bookmarks and Categories counters update.",
+      "Narrow the grid with the All, Favorites and Archived tabs or a per-category tab, or type in the search box to match title, URL, description or category. Each card's three-dot menu holds Edit, Copy URL, Pin, Archive and Delete, and Export saves bookmarks-backup-<date>.json that Import reads back."
     ]
   },
   "bookmark-organization-assistant": {
@@ -7866,7 +7866,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I create a new folder?",
-        "Click on 'Add Folder' and give it a name."
+        "Press the Add folder button in the Library header of the sidebar, type a name in the New folder dialog and press Create. Every bookmark starts in General, the one folder you cannot delete."
       ],
       [
         "Can I search by tags?",
@@ -7878,9 +7878,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on 'Add Folder' to create new categories for your bookmarks.",
-      "Drag-and-drop bookmarks into these folders for easy sorting.",
-      "Use the search bar to quickly find specific bookmarks."
+      "Press Add bookmark in the toolbar and fill in Title, URL, Description, Folder and Tags (comma separated). URL is required, and anything that is not an http or https address is rejected with Please enter a valid http(s) URL. Tick Mark as favorite to star it, then press Add bookmark again to save.",
+      "Press Add folder in the Library header of the sidebar, name it in the New folder dialog and press Create, then drag a bookmark card onto a folder row to file it there. Deleting a folder moves its bookmarks back to General.",
+      "Search by title, URL, tag, or description, sort by Name (A-Z), Newest first or Most used, and press Select to open the bulk bar with Favorite, Unfavorite, Move to, Add tag and Delete. Export saves bookmarks.json, and Import accepts a .json or Netscape .html file, then asks whether to Merge or Replace all."
     ]
   },
   "box-breathing": {
@@ -7919,9 +7919,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Start' button to begin the exercise.",
-      "Follow the visual timer as it guides you through inhaling for 4 seconds, holding your breath for 7 seconds, exhaling for 8 seconds, and then repeating the cycle.",
-      "Continue for a set duration or until you feel calm and centered."
+      "Pick a pattern in the left panel: Box 4-4-4-4, Relaxing 4-7-8, Coherent 5-5, Calming 4-6, Energizing 6-2-4-2, or Custom, whose sliders set each phase from 2 to 10 seconds and accept 0 on either hold to skip it.",
+      "Set Session length By rounds (2 to 30) or By minutes (1 to 20) - the line underneath reads out the rounds, the seconds per breath and the total time - switch Phase tones and Second tick On or Off, then press Start breathing.",
+      "Follow Breathe in, Hold and Breathe out as the seconds count down - a dot walks the square on patterns that use both holds, and the circle swells and shrinks on the rest - with the round counter reading Round 3 of 8 above and Pause and End session below. When it finishes, That is the session offers Go again or Back to setup, and the Your practice panel keeps Sessions, Total minutes, Day streak and Avg session in this browser only."
     ]
   },
   "bpm-tap-counter": {
@@ -7952,17 +7952,17 @@ export const toolContentOverrides = {
       ],
       [
         "Can I use this tool offline?",
-        "Yes, once you have downloaded the app, it works offline without needing an internet connection."
+        "There is nothing to download - it is a web page. Every tap is timed and averaged in your browser, so nothing is uploaded and the counter keeps working once the page has loaded."
       ],
       [
         "What genres are supported?",
-        "The app provides genre references to help you understand the typical BPM range for different musical styles."
+        "The Genre BPM reference table lists eleven styles with their typical ranges, from Dub / Reggae at 60-90 up to Drum & Bass at 170-180, and highlights the rows your tapped tempo falls inside."
       ]
     ],
     "steps": [
-      "Tap on the button at the bottom of the BPM Tap Tempo Counter app.",
-      "Start tapping along to the beat of your favorite song as it plays.",
-      "The app will automatically detect the BPM and display it with a tempo marking, steadiness score, and genre reference."
+      "Click the round Tap pad, or press any key, in time with the music. Two taps give a first reading, and the take resets itself after a 2.5 second pause.",
+      "Keep tapping. The big number is the rolling average of your last 8 taps to one decimal place, with the tempo marking beside it (Largo below 60 through Presto at 176+), plus Taps counted, Average BPM (whole take) and a Steadiness score where 100% means perfectly even tapping.",
+      "Read the Nearest whole and Nearest common chips for the closest club tempo, watch the Genre BPM reference table for rows flagged In range, then press Copy BPM to copy the reading as text like 128.0 BPM, or Reset to clear the take."
     ]
   },
   "braille-learning-tool": {
@@ -8034,7 +8034,7 @@ export const toolContentOverrides = {
       ],
       [
         "How long does the Brain Processing Speed Test take to complete?",
-        "The test typically takes around 10-15 minutes to complete, depending on your individual pace and the number of symbols presented."
+        "One run is fixed at 60 seconds - the button reads Start Test (60 seconds) and a countdown bar shows the time left - so a single attempt plus reading your score takes about a minute and a half."
       ],
       [
         "Can I take the Brain Processing Speed Test multiple times to track changes in my cognitive abilities?",
@@ -8042,9 +8042,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Start Test' button to begin the Brain Processing Speed Test, which will present you with a series of symbols and corresponding digits.",
-      "Focus on the symbols and respond as quickly and accurately as possible by selecting the correct digit associated with each symbol.",
-      "Complete the test to receive your results, which will provide an assessment of your visual processing speed and cognitive efficiency."
+      "Read the Instructions card and study the Symbol-to-Number Key, which pairs nine symbols with the digits 1-9, then press Start Test (60 seconds).",
+      "A symbol fills the box on its own. Press the matching number key 1-9, or tap the row of digit buttons underneath, as fast as you can: the frame flashes green for a correct answer and red for a wrong one, the legend strip highlights the pair, and the bar shows the seconds remaining next to your running correct count.",
+      "When the 60 seconds run out you get Processing Speed: Below Average, Average, Above Average or Elite, with Items Processed, Errors and Accuracy cards, a Score Benchmark chart placing you against 25, 38, 52 and 65, and a Retake Test button."
     ]
   },
   "brand-kit-manager": {
@@ -8124,9 +8124,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Calculate' button to input your fixed costs, variable costs per unit, and expected selling price per unit.",
-      "Enter the number of units you plan to sell in a given period to see how many units are needed to break even.",
-      "Review the results for revenue targets, margin of safety, and potential profit scenarios based on your inputs."
+      "Fill in the Cost & Price Inputs panel - Fixed Cost, Variable Cost / Unit and Selling Price / Unit in rupees, then Expected Sales Units, Target Profit, a Tax Rate capped at 80%, and Chart Max Units. There is nothing to submit: every figure on the page recalculates as you type.",
+      "Read Break-even Units and Break-even Revenue at the top, alongside Contribution / Unit, Expected Profit, Target Profit Units, Margin of Safety and Tax Estimate. If the selling price does not clear the variable cost, the badge flips to Price below variable cost and both unit figures read Not possible.",
+      "Compare the Cost Volume Profit Chart, where the revenue and cost areas cross at the dashed break-even line, with the Profit Curve, Expected Sales Split and Scenario Table. Load Sample and Simple Plan swap in preset figures, Copy Summary puts the plain-text breakdown on your clipboard, and Export CSV downloads break-even-scenario.csv."
     ]
   },
   "brokerage-calculator": {
@@ -8153,7 +8153,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What inputs does the Brokerage & Trading Charges Calculator require?",
-        "You need to input the stock symbol, quantity, and transaction type (buy/sell)."
+        "A Segment, a Buy price and a Sell price, and either Quantity (shares) for equity or Lots and Lot size for F&O. There is no stock symbol field and no buy/sell picker — it prices a full round trip, and the charges depend on the segment and the turnover rather than on which scrip you traded."
       ],
       [
         "How often can I use this calculator?",
@@ -8165,9 +8165,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to input your trade details",
-      "Enter the stock symbol, quantity, and transaction type (buy/sell)",
-      "View your total charges including brokerage, STT, GST, stamp duty, and DP fees"
+      "Pick a Segment — Equity Delivery (CNC), Equity Intraday (MIS), F&O Futures (FUT) or F&O Options (OPT) — then fill in Buy price and Sell price, plus Quantity (shares) for equity or Lots and Lot size for F&O",
+      "Choose a Brokerage model: 'Discount broker (Zerodha-style)', or 'Custom broker' to enter your own 'Brokerage %' and 'Max per order (cap)'; the Quick presets buttons load a sample trade and Reset restores the defaults",
+      "Read the Net P&L headline and the Charge-by-charge breakdown table — Brokerage, STT / CTT, Exchange transaction charges, SEBI turnover fees, Stamp duty, GST and, on delivery sells, DP charges — then press Copy breakdown to copy the whole report"
     ]
   },
   "browser-session-analyzer": {
@@ -8212,7 +8212,7 @@ export const toolContentOverrides = {
     ]
   },
   "browser-session-exporter": {
-    "intro": "The Browser Session Exporter is a powerful tool designed to help users easily parse tab logs, bookmark exports, or URL lists and export them as clean Markdown logs, JSON dumps, or HTML links lists. Ideal for digital marketers, content creators, and anyone who needs to organize their online activities efficiently.",
+    "intro": "The Browser Session Exporter is a powerful tool designed to help users paste tab logs, bookmark exports, or URL lists and export them as clean Markdown links lists, HTML link lists or JSON array maps. Ideal for digital marketers, content creators, and anyone who needs to organize their online activities efficiently.",
     "useCases": [
       "A digital marketer wants to organize their client's website traffic data into a structured format for analysis.",
       "A content creator needs to quickly compile all their bookmarked articles and videos into a single, shareable document.",
@@ -8234,8 +8234,8 @@ export const toolContentOverrides = {
     ],
     "faqs": [
       [
-        "What types of files can I import?",
-        "You can import tab logs, bookmark exports, or URL lists."
+        "What can I put into the exporter?",
+        "Paste the text itself — there is no file picker. Tab logs, bookmark exports, Markdown link lists or plain URLs one per line all work: every http:// or https:// link in the box is extracted and repeats are dropped."
       ],
       [
         "How do I know which format to choose?",
@@ -8247,9 +8247,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to select your input file (tab logs, bookmark exports, or URL lists).",
-      "Choose the desired output format: Markdown logs, JSON dumps, or HTML links lists.",
-      "Download your exported session directly from the tool."
+      "Paste your tabs, bookmarks or URL list into the box marked 'Paste URLs on separate lines, bookmarks content, or clipboard text logs containing links...', or press Load Sample Tabs to drop in four example links.",
+      "Under Export Options pick Markdown Links List, HTML link list (ul/li) or JSON Array Map, then click Compile Export Logs — a 'Transpiled N unique tabs successfully!' banner reports how many links survived de-duplication.",
+      "Check the result in Formatted Link Code beside the Extracted URLs list, then use Copy Log to put it on your clipboard or Download to save it as browser-session-<format>-<timestamp>.md, .html or .json."
     ]
   },
   "budget-planner": {
@@ -8324,9 +8324,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Replace Text' button to open the tool interface.",
-      "Enter your target text in the designated field.",
-      "Specify the new text you want to replace it with."
+      "Paste the content you want to change into the Input box marked 'Paste your text here…' — plain text, HTML or JSON all work, and nothing is uploaded.",
+      "Type the string to search for in the 'Find text' box and its replacement in the 'Replace with' box, and tick Case sensitive if 'Name' and 'name' should count as different matches.",
+      "Click 'Replace Text' to swap every match at once into the read-only Output box, then press 'Copy Output' — a 'Copied!' alert confirms the text is on your clipboard."
     ]
   },
   "bulk-url-opener": {
@@ -8394,11 +8394,11 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How many business cards can I create with this tool?",
-        "You can create as many cards as you need, limited only by the number of templates available."
+        "As many as you like — there is no counter, signup or saved gallery. The builder holds one card at a time and keeps nothing after you leave the page, so download each design as a PNG before you start the next."
       ],
       [
         "Can I use my own images on the card?",
-        "Yes, upload any image to use as your background or logo."
+        "Yes. The Assets panel takes a Logo and a Photo, and both land on the card as draggable images. The background itself is not an upload — it is your CARD colour plus whichever pattern you pick from the design dropdown."
       ],
       [
         "Is there a limit to the number of customizations I can make?",
@@ -8406,9 +8406,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Business Card' button to start creating your custom card.",
-      "Select from a variety of pre-designed templates or upload your own image.",
-      "Customize text, colors, and layout to match your brand."
+      "Click 'Create Your Card Now', then fill in Personal Information (Full Name, Job Title, Company Name, Tagline / Motto) and Contact Details (Email Address, Phone, Website URL, Office Address) — the Phone box stops at 10 digits and outlines itself red if you type anything but numbers.",
+      "Under Card Style & Colors set the CARD, SECONDARY and TEXT colours, choose one of the 15 layouts in the design dropdown from Default Classic through Glassmorphism to Modern Geometric, and drag the font-size slider (6px to 60px) for whichever element you last clicked in the preview; the Assets panel adds a Logo and a Photo.",
+      "Drag any name, contact line, logo or photo around the Live Preview to place it, then press 'Download Card' to save <Full Name>_BusinessCard.png, or 'Share Card' to pass the PNG to your device's share sheet."
     ]
   },
   "business-name-generator": {
@@ -8476,7 +8476,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use the Byte Converter?",
-        "Simply enter the value and select the appropriate units to get your conversion result."
+        "Enter a number in the Size box and choose its unit from the Unit menu. There is no second unit to pick and nothing to press: every other unit is filled in for you as you type."
       ],
       [
         "What types of units does it support?",
@@ -8488,9 +8488,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the 'Convert' button to open the input fields.",
-      "Enter the value you want to convert in the designated field (e.g., bytes, bits, KB, MB, GB).",
-      "Select the unit from which you are converting and the unit to which you want to convert."
+      "Type the size into the Size box and pick what it is measured in from the Unit menu, which groups every option under Bits, Decimal (×1000) and Binary (×1024) — from bit (b) and megabit (Mb) through kilobyte (kB) and gigabyte (GB) to pebibyte (PiB).",
+      "There is no convert button: the Total size headline in bytes, the Human readable (binary) and Human readable (decimal) lines, the In bits figure and the 15-row unit table all recalculate as you type, and a size past 9 petabytes is refused rather than rounded.",
+      "Set 'Link speed for transfer time (Mbps)', which starts at 100, to read the Transfer time row in seconds, then press 'Copy result' to put every unit on your clipboard — the button reads Copied! for a moment — or Reset to return to 1 GB at 100 Mbps."
     ]
   },
   "cac-calculator": {
@@ -8576,7 +8576,7 @@ export const toolContentOverrides = {
     ]
   },
   "calender-panchang": {
-    "intro": "Calendar Panchang is a handy browser tool that allows you to view detailed calendar and panchang information for any date, including important festivals and daily planning tips.",
+    "intro": "Panchang Calendar computes the Hindu almanac for any date from 1700 to 2200 entirely in your browser: sunrise and sunset from the NOAA solar algorithm, and tithi, nakshatra, yoga and karana from the Meeus lunar and solar series with the Lahiri (Chitrapaksha) ayanamsa. Festival lists and Amrit Kaal are deliberately left out, because they follow regional convention rather than astronomy.",
     "useCases": [
       "Planning a trip and need to know local festivals and auspicious days for travel.",
       "Preparing for important events like weddings or ceremonies by checking panchang details.",
@@ -8597,9 +8597,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the Calendar Panchang button in your browser toolbar.",
-      "Select the specific date or festival you want to check from the dropdown menu.",
-      "View the comprehensive details such as auspicious times, festivals, and daily activities directly in your browser."
+      "Set the Date field — it opens on today and accepts 1700-01-01 through 2200-12-31 — then choose a Place from the city list, which starts on New Delhi, or press 'Enter coordinates by hand' to type a Latitude (°N positive), Longitude (°E positive) and UTC offset (hours) instead.",
+      "Everything recalculates at once: the Sun card gives Sunrise, Solar noon, Sunset and Day length, the Moon card gives Moonrise, Moonset, Illuminated and Distance, and 'The five limbs' lists the Tithi, Nakshatra, Yoga, Karana and Vaara running at local sunrise, each with the moment it ends.",
+      "Below that, 'Hindu calendar' holds the Masa (amanta), Ritu, Ayana, Samvatsara, Shaka Samvat, Vikram Samvat and the Lahiri ayanamsa; 'Day periods' holds Rahu Kaal, Yamaganda, Gulika Kaal, Abhijit Muhurta and Brahma Muhurta; and 'Day Choghadiya' splits the daylight into eight rows. Press 'Copy result' for the whole reading as text, or Reset to go back to today and New Delhi."
     ]
   },
   "calorie-calculator": {
@@ -8638,9 +8638,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to start using the Calorie & Macro Calculator",
-      "Enter your personal details such as age, weight, height, and activity level",
-      "Select your goals (e.g., lose weight, gain muscle, maintain weight)"
+      "Fill in Age, Gender, Height (cm) and Weight (kg) in the left card. Age, Height and Weight are all required — leave one blank and nothing is calculated.",
+      "Pick an Activity Level, from 'Sedentary (Little or no exercise)' up to 'Very Active (Physical job or 2x training)', then set Your Goal anywhere between 'Aggressive Weight Loss (-500 kcal)' and 'Aggressive Weight Gain (+500 kcal)'.",
+      "Press 'Calculate Macros'. The Daily Target card shows your kcal figure with your BMR and TDEE underneath, and the Protein, Carbs and Fats tiles split it 30% / 40% / 30% beside a Macro Distribution chart."
     ]
   },
   "calorie-tdee-calculator": {

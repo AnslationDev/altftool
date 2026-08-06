@@ -85,11 +85,30 @@ test("compressed tool SEO lookup preserves legacy and per-tool content", async (
       ...withoutUnpublishableHowTo(authoredSeo[slug]),
     });
   }
-  assert.equal(
-    Object.hasOwn(generatedSeo["binary-hex-decimal-converter"], "steps"),
-    false,
-    "generic HowTo steps must not reach the compressed payload",
+  const omittedHowToSlugs = expectedSlugs.filter((slug) => {
+    const sourceHasSteps =
+      Object.hasOwn(toolContentOverrides[slug] || {}, "steps") ||
+      Object.hasOwn(authoredSeo[slug] || {}, "steps");
+    const expectedHasSteps = Object.hasOwn(
+      {
+        ...withoutUnpublishableHowTo(toolContentOverrides[slug]),
+        ...withoutUnpublishableHowTo(authoredSeo[slug]),
+      },
+      "steps",
+    );
+    return sourceHasSteps && !expectedHasSteps;
+  });
+  assert.ok(
+    omittedHowToSlugs.length > 0,
+    "fixture must include at least one generic HowTo step set",
   );
+  for (const slug of omittedHowToSlugs) {
+    assert.equal(
+      Object.hasOwn(generatedSeo[slug], "steps"),
+      false,
+      `${slug}: generic HowTo steps must not reach the compressed payload`,
+    );
+  }
   assert.equal(typeof generatedSeo["age-calculator"]?.intro, "string");
   assert.equal(
     typeof generatedSeo["audio-edit-boundary-visualizer"]?.intro,
