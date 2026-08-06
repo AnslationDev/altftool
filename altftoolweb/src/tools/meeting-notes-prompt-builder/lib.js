@@ -56,8 +56,15 @@ export const WEAK_QUESTION_PATTERN =
  * character or dot the way the "@" in an email address always is.
  */
 export const HANDLE_PATTERN = /(?<![\w.])@([A-Za-z][A-Za-z0-9_-]{1,30})\b/g;
+/**
+ * Captures the whole name — first name plus an optional surname — as a single
+ * group, so "Sarah Connor will send the invoice" reports the owner as "Sarah
+ * Connor" rather than silently dropping the surname (which previously also
+ * meant two different people who share a first name, e.g. "John Carter" and
+ * "John Meyer", collapsed into a single "John" entry after dedupeNames()).
+ */
 export const NAMED_OWNER_PATTERN =
-  /\b([A-Z][a-z]{1,20})(?:\s+[A-Z][a-z]{1,20})?\s+(?:will|to|owns|is going to|takes|shall|has agreed to)\b/g;
+  /\b([A-Z][a-z]{1,20}(?:\s+[A-Z][a-z]{1,20})?)\s+(?:will|to|owns|is going to|takes|shall|has agreed to)\b/g;
 
 /**
  * Capitalised words that start a note line but are not people. Without this,
@@ -198,7 +205,11 @@ export function analyseNotes(text) {
     const handles = [...line.matchAll(HANDLE_PATTERN)].map((match) => match[1]);
     const names = [...line.matchAll(NAMED_OWNER_PATTERN)]
       .map((match) => match[1])
-      .filter((name) => !NOT_A_NAME.has(name.toLowerCase()));
+      // NOT_A_NAME only lists single lowercase words, so check the first
+      // token of the captured name ("Next" of "Next Steps", "Legal" of a
+      // solo "Legal will...") rather than the full (now possibly two-word)
+      // capture, which would never match a single-word set.
+      .filter((name) => !NOT_A_NAME.has(name.split(/\s+/)[0].toLowerCase()));
     const owners = dedupeNames([...handles, ...names]);
 
     let kind = "context";

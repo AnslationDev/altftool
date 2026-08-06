@@ -42,14 +42,24 @@ export const spec = {
   compute: (values) => {
       const source = String(values.text || "");
       const lower = source.toLowerCase();
-      const checks = [{"name":"Equal visual choice","patterns":["equal prominence","same size","balanced"]},{"name":"No preselection","patterns":["not preselected","unchecked"]},{"name":"No confirmshaming","patterns":["neutral copy","no guilt"]},{"name":"No hidden cost","patterns":["total price","all fees"]},{"name":"Cancellation is direct","patterns":["cancel button","self-service cancellation"]},{"name":"No repeated obstruction","patterns":["single prompt","no repeated prompt"]}];
+      // Multi-word phrases only — bare single common words (the old "balanced"
+      // and "unchecked" entries) matched incidental, unrelated uses of those
+      // words elsewhere in the pasted text and produced a false "Found" for a
+      // signal the same text was actually failing.
+      const checks = [{"name":"Equal visual choice","patterns":["equal prominence","same size","equal weight"]},{"name":"No preselection","patterns":["not preselected","not pre-ticked","unchecked by default"]},{"name":"No confirmshaming","patterns":["neutral copy","no guilt"]},{"name":"No hidden cost","patterns":["total price","all fees"]},{"name":"Cancellation is direct","patterns":["cancel button","self-service cancellation"]},{"name":"No repeated obstruction","patterns":["single prompt","no repeated prompt"]}];
       const rows = checks.map((check) => {
         const hit = check.patterns.some((pattern) => lower.includes(String(pattern).toLowerCase()));
         return [check.name, hit ? "Found" : "Missing"];
       });
       const found = rows.filter((row) => row[1] === "Found").length;
-      const score = checks.length ? Math.round((found / checks.length) * 100) : 0;
       const missing = rows.filter((row) => row[1] === "Missing").map((row) => row[0]);
+      // Strict mode refuses partial credit: every signal has to be evidenced
+      // to score as compliant, so one unaddressed item still shows as needing
+      // review instead of being averaged into a comfortable-looking
+      // percentage. With strict off, coverage is the proportional score.
+      const score = values.strict
+        ? (missing.length === 0 ? 100 : 0)
+        : (checks.length ? Math.round((found / checks.length) * 100) : 0);
       return {
         result: score + "% checklist coverage",
         caption: values.strict && missing.length ? missing.length + " required signal(s) need review" : found + " of " + checks.length + " signals found",

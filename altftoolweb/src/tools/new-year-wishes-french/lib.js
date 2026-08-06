@@ -323,11 +323,18 @@ function cleanName(raw) {
  * output never contains a dangling "Cher ,".
  */
 export function buildSalutation({ recipient, gender, name }) {
-  if (!name) {
-    if (recipient.id === "group") return recipient.salutation.neutral.replace("{name}", "").trim();
-    return gender === "masculine" ? "Cher ami," : gender === "feminine" ? "Chère amie," : "Bonjour,";
-  }
   const key = gender === "masculine" || gender === "feminine" ? gender : "neutral";
+  if (!name) {
+    if (recipient.id === "group") {
+      return (recipient.salutation[key] || recipient.salutation.neutral).replace("{name}", "").trim();
+    }
+    if (recipient.address === "vous") {
+      if (key === "masculine") return "Cher Monsieur,";
+      if (key === "feminine") return "Chère Madame,";
+      return "Bonjour,";
+    }
+    return key === "masculine" ? "Cher ami," : key === "feminine" ? "Chère amie," : "Bonjour,";
+  }
   const template = recipient.salutation[key] || recipient.salutation.neutral;
   return template.replaceAll("{name}", name);
 }
@@ -391,8 +398,7 @@ export function generateFrenchNewYearWishes({
 
   let pool = TEMPLATES.filter((item) => item.timing === timing || item.timing === "any");
   if (tone !== "any") {
-    const toned = pool.filter((item) => item.tone === tone);
-    if (toned.length > 0) pool = toned;
+    pool = pool.filter((item) => item.tone === tone);
   }
   if (pool.length === 0) return { error: "No message matches that combination — try another tone." };
 

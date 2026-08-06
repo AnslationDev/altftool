@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Clapperboard, Copy, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import { VIDEO_TYPES, buildProductionPlan, formatDuration } from "../lib";
 
@@ -47,7 +48,7 @@ export default function ToolHome() {
   const [multicam, setMulticam] = useState(DEFAULTS.multicam);
   const [graphics, setGraphics] = useState(DEFAULTS.graphics);
   const [done, setDone] = useState([]);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const plan = useMemo(
     () =>
@@ -112,15 +113,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [plan, done, failed]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("checklist", summary, { label: "Production checklist" });
   };
 
   const reset = () => {
@@ -135,7 +130,7 @@ export default function ToolHome() {
     setMulticam(DEFAULTS.multicam);
     setGraphics(DEFAULTS.graphics);
     setDone([]);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -333,8 +328,12 @@ export default function ToolHome() {
               className={GHOST_BTN}
               disabled={failed}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy checklist"}
+              {isCopied("checklist") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("checklist") ? "Copied!" : "Copy checklist"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
@@ -342,6 +341,9 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span aria-live="polite" role="status" className="sr-only">
+          {announcement}
+        </span>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[

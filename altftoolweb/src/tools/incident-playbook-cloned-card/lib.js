@@ -186,6 +186,19 @@ function toIsoDate(stamp) {
 }
 
 /**
+ * Sane bounds on the two date inputs. Without a bound, a wide gap (e.g. year
+ * 1900 to year 9999) drives `countWorkingDays`/`addWorkingDays` through
+ * millions of day-by-day iterations and can push a projected date past year
+ * 9999, where `toISOString()` switches to an extended-year format whose first
+ * 10 characters are not a valid calendar date. A century is far more than any
+ * real dispute needs.
+ */
+export const MIN_ASSESSMENT_DATE = "2000-01-01";
+export const MAX_ASSESSMENT_DATE = "2100-12-31";
+const MIN_ASSESSMENT_STAMP = parseIsoDate(MIN_ASSESSMENT_DATE);
+const MAX_ASSESSMENT_STAMP = parseIsoDate(MAX_ASSESSMENT_DATE);
+
+/**
  * Indian bank branches are closed on Sundays and on the second and fourth
  * Saturday of every month. A Saturday falling on the 8th to 14th is the second
  * Saturday; the 22nd to 28th is the fourth.
@@ -222,6 +235,30 @@ export function addWorkingDays(fromStamp, days) {
   while (remaining > 0) {
     stamp += MS_PER_DAY;
     if (!isBankHoliday(stamp)) remaining -= 1;
+  }
+  return stamp;
+}
+
+/**
+ * Same as `addWorkingDays`, but also treats the next `extraHolidays` otherwise
+ * working days as non-working before it starts counting `days`. This keeps
+ * every deadline consistent with the same additional branch holidays the
+ * caller already subtracted from `delayWorkingDays` — otherwise a case that
+ * gets a favourable liability band because of those extra holidays can show a
+ * deadline that falls before the user's own notification date.
+ */
+export function addWorkingDaysWithExtraHolidays(fromStamp, days, extraHolidays) {
+  let remainingWorkingDays = days;
+  let remainingExtraHolidays = Math.max(0, extraHolidays);
+  let stamp = fromStamp;
+  while (remainingWorkingDays > 0) {
+    stamp += MS_PER_DAY;
+    if (isBankHoliday(stamp)) continue;
+    if (remainingExtraHolidays > 0) {
+      remainingExtraHolidays -= 1;
+      continue;
+    }
+    remainingWorkingDays -= 1;
   }
   return stamp;
 }
@@ -268,6 +305,16 @@ export function assessLiability({
   if (Number.isNaN(notification)) {
     return { error: "Enter the date you notified the bank as a real calendar date." };
   }
+  if (communication < MIN_ASSESSMENT_STAMP || communication > MAX_ASSESSMENT_STAMP) {
+    return {
+      error: `Enter the bank's communication date between ${MIN_ASSESSMENT_DATE} and ${MAX_ASSESSMENT_DATE}.`,
+    };
+  }
+  if (notification < MIN_ASSESSMENT_STAMP || notification > MAX_ASSESSMENT_STAMP) {
+    return {
+      error: `Enter the notification date between ${MIN_ASSESSMENT_DATE} and ${MAX_ASSESSMENT_DATE}.`,
+    };
+  }
   if (notification < communication) {
     return { error: "You cannot have notified the bank before its alert reached you." };
   }
@@ -282,10 +329,14 @@ export function assessLiability({
   }
 
   const rawWorkingDays = countWorkingDays(communication, notification);
-  if (extraHolidays > rawWorkingDays) {
+  // This only matters for the third-party ladder below, which is the only
+  // branch that uses delayWorkingDays to decide the band. Blocking
+  // bank-deficiency/customer-negligence submissions on it rejects otherwise
+  // valid input for a check whose outcome those causes never consult.
+  if (cause.id === "third-party" && extraHolidays > rawWorkingDays) {
     return { error: "You have entered more holidays than there are working days in that gap." };
   }
-  const delayWorkingDays = rawWorkingDays - extraHolidays;
+  const delayWorkingDays = Math.max(0, rawWorkingDays - extraHolidays);
 
   let customerLiability;
   let bankLiability;
@@ -301,7 +352,7 @@ export function assessLiability({
     band = "negligence";
     customerLiability = round2(value);
     basis =
-      "Where payment credentials were shared, the customer bears the loss on transactions occurring up to the moment of reporting. Anything debited after you reported is the bank's liability, so the figure here is an upper bound on the pre-report transactions you have entered.";
+      "Where payment credentials were shared, the customer bears the loss on transactions occurring up to the moment of reporting. Anything debited after you reported is the bank's liability — but this tool only takes one disputed-amount figure, so treat what you entered as the pre-report loss and track any separate post-report debits (and the bank's liability for them) yourself.";
   } else if (delayWorkingDays <= ZERO_LIABILITY_WORKING_DAYS) {
     band = "zero";
     customerLiability = 0;
@@ -316,9 +367,17 @@ export function assessLiability({
     basis = `Reported ${delayWorkingDays} working days after the communication, beyond the ${LIMITED_LIABILITY_WORKING_DAYS} working day window. Liability then follows the bank's own board-approved policy, which you are entitled to ask for in writing.`;
   }
 
-  bankLiability = customerLiability === null ? null : round2(Math.max(0, value - customerLiability));
+  // The negligence band has no second input for post-report debits, so there
+  // is nothing to compute the bank's share from — show it as unknown (null)
+  // rather than a definite ₹0 that would contradict the basis text above.
+  bankLiability =
+    customerLiability === null || band === "negligence"
+      ? null
+      : round2(Math.max(0, value - customerLiability));
 
-  const shadowReversalBy = toIsoDate(addWorkingDays(notification, SHADOW_REVERSAL_WORKING_DAYS));
+  const shadowReversalBy = toIsoDate(
+    addWorkingDaysWithExtraHolidays(notification, SHADOW_REVERSAL_WORKING_DAYS, extraHolidays),
+  );
   const resolutionBy = toIsoDate(notification + RESOLUTION_CALENDAR_DAYS * MS_PER_DAY);
   const ombudsmanFrom = toIsoDate(notification + OMBUDSMAN_WAIT_DAYS * MS_PER_DAY);
 
@@ -335,8 +394,12 @@ export function assessLiability({
     customerLiability,
     bankLiability,
     basis,
-    zeroLiabilityDeadline: toIsoDate(addWorkingDays(communication, ZERO_LIABILITY_WORKING_DAYS)),
-    limitedLiabilityDeadline: toIsoDate(addWorkingDays(communication, LIMITED_LIABILITY_WORKING_DAYS)),
+    zeroLiabilityDeadline: toIsoDate(
+      addWorkingDaysWithExtraHolidays(communication, ZERO_LIABILITY_WORKING_DAYS, extraHolidays),
+    ),
+    limitedLiabilityDeadline: toIsoDate(
+      addWorkingDaysWithExtraHolidays(communication, LIMITED_LIABILITY_WORKING_DAYS, extraHolidays),
+    ),
     shadowReversalBy,
     resolutionBy,
     ombudsmanFrom,

@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How much does a 2000 W room heater cost per hour?",
-      "About ₹14.40 an hour at ₹8 a unit if the element runs continuously, since 2000 W is 2 units an hour. A fan heater whose thermostat keeps the element on roughly 90% of the time works out near ₹14.40, while an oil-filled radiator cycling at about 55% costs closer to ₹8.80 an hour once the room is warm.",
+      "About ₹16.00 an hour at ₹8 a unit if the element runs continuously, since 2000 W is 2 units an hour. A fan heater whose thermostat keeps the element on roughly 90% of the time works out a little less, near ₹14.40, while an oil-filled radiator cycling at about 55% costs closer to ₹8.80 an hour once the room is warm.",
     ],
     [
       "Which room heater consumes the least electricity?",

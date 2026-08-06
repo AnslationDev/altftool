@@ -18,7 +18,7 @@ export const STATES = [
     hasRural: false,
     duty: { male: 6, female: 4, joint: 5 },
     commercialDuty: { male: 6, female: 6, joint: 6 },
-    extras: [],
+    extras: [{ label: "Pasting charge", flat: 100 }],
     registration: { rate: 1, cap: null },
     note: "One of the widest gender gaps in the country — 6% for men, 4% for women, 5% for joint male-female ownership. Registration is 1% of the consideration with no cap, plus a ₹100 pasting charge. Properties inside NDMC limits are charged slightly differently.",
   },
@@ -213,6 +213,7 @@ export const STATES = [
     duty: { male: 5, female: 3.75, joint: 4.4 },
     extras: [],
     registration: { rate: 2, cap: null },
+    womenConcessionCap: 31250,
     note: "Women get a 1.25% concession, but only on the first ₹25 lakh of the property value — above that the standard 5% applies to the excess.",
   },
   {

@@ -1,15 +1,24 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function Toast({ message, onClose }) {
+  // Keep the latest onClose without making the dismiss timer depend on its
+  // identity — the caller passes a new arrow function on every render (e.g.
+  // every keystroke elsewhere on the page), which would otherwise restart
+  // the 2s timer indefinitely instead of dismissing the toast.
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      onClose();
+      onCloseRef.current();
     }, 2000);
 
     return () => clearTimeout(timer);
-  }, [onClose]);
+  }, [message]);
 
   return (
     <div

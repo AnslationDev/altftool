@@ -50,7 +50,7 @@ export const SCREEN_CAP_BANDS = [
     maxAge: 17,
     capMinutes: 120,
     band: "6 to 17 years",
-    source: "Canadian 24-Hour Movement Guidelines, ages 5-17",
+    source: "Canadian 24-Hour Movement Guidelines, ages 6-17 in this planner",
     note: "No more than 2 hours a day of recreational screen time; homework screens are counted separately.",
   },
 ];
@@ -58,7 +58,8 @@ export const SCREEN_CAP_BANDS = [
 /**
  * Recommended sleep per 24 hours, from the American Academy of Sleep Medicine
  * 2016 consensus statement (endorsed by the AAP). Ranges include naps for the
- * younger bands.
+ * younger bands, so buildScreenPlan adds any napMinutes entered on top of the
+ * overnight wake-to-bed window before comparing against these ranges.
  */
 export const SLEEP_BANDS = [
   { minAge: 0, maxAge: 0, minHours: 12, maxHours: 16, label: "4-12 months" },
@@ -94,9 +95,6 @@ export const WIND_DOWN_MINUTES = 60;
  */
 export const SUGGESTED_SHARES_UNDER_6 = { video: 1, games: 0, social: 0 };
 export const SUGGESTED_SHARES_6_PLUS = { video: 0.5, games: 0.3, social: 0.2 };
-
-/** Purposes that do NOT count towards the recreational cap. */
-export const EXEMPT_PURPOSES = ["schoolwork", "videoCalls"];
 
 const isNumber = (value) => typeof value === "number" && Number.isFinite(value);
 
@@ -147,6 +145,9 @@ export function screenCapForAge(ageYears) {
  * @param {string} input.wakeTime          "HH:MM" 24-hour wake time.
  * @param {string} input.bedTime           "HH:MM" 24-hour bedtime.
  * @param {number} input.schoolHours       Hours at school or childcare.
+ * @param {number} input.napMinutes        Daytime nap minutes, added on top of
+ *                                         overnight sleep before checking the
+ *                                         (nap-inclusive) sleep guideline.
  * @param {number} input.activityMinutes   Planned physical activity, minutes.
  * @param {number} input.schoolworkMinutes Screen minutes for homework/study.
  * @param {number} input.videoMinutes      Screen minutes for shows and video.
@@ -161,6 +162,7 @@ export function buildScreenPlan(input) {
     wakeTime,
     bedTime,
     schoolHours,
+    napMinutes,
     activityMinutes,
     schoolworkMinutes,
     videoMinutes,
@@ -172,6 +174,7 @@ export function buildScreenPlan(input) {
   const numericFields = {
     ageYears,
     schoolHours,
+    napMinutes,
     activityMinutes,
     schoolworkMinutes,
     videoMinutes,
@@ -191,6 +194,7 @@ export function buildScreenPlan(input) {
   }
 
   const minuteFields = [
+    napMinutes,
     activityMinutes,
     schoolworkMinutes,
     videoMinutes,
@@ -213,12 +217,16 @@ export function buildScreenPlan(input) {
 
   let awakeMinutes = bed - wake;
   if (awakeMinutes <= 0) awakeMinutes += MINUTES_PER_DAY;
-  const sleepMinutes = MINUTES_PER_DAY - awakeMinutes;
-  if (sleepMinutes <= 0) {
+  const overnightSleepMinutes = MINUTES_PER_DAY - awakeMinutes;
+  if (overnightSleepMinutes <= 0) {
     return { error: "Bedtime and wake time cannot be the same — the child needs a sleep window." };
   }
+  // AASM sleep ranges for the younger bands are 24-hour totals that include
+  // daytime naps, so naps are added on top of the overnight window here
+  // rather than compared against a nighttime-only figure.
+  const sleepMinutes = overnightSleepMinutes + napMinutes;
 
-  const capBand = bandFor(SCREEN_CAP_BANDS, age);
+  const capBand = screenCapForAge(age);
   const sleepBand = bandFor(SLEEP_BANDS, age);
   const activityBand = bandFor(ACTIVITY_TARGET_BANDS, age);
   const capMinutes = capBand ? capBand.capMinutes : 0;
@@ -252,7 +260,7 @@ export function buildScreenPlan(input) {
   const activityStatus = activityMinutes >= activityTargetMinutes ? "met" : "below";
 
   const schoolMinutes = schoolHours * 60;
-  const committedMinutes = schoolMinutes + activityMinutes + totalScreenMinutes;
+  const committedMinutes = schoolMinutes + activityMinutes + totalScreenMinutes + napMinutes;
   const freeMinutes = awakeMinutes - committedMinutes;
 
   const notes = [];
@@ -264,7 +272,9 @@ export function buildScreenPlan(input) {
   }
   if (sleepStatus === "short" && sleepBand) {
     notes.push(
-      `This wake-to-bed window leaves ${formatDuration(sleepMinutes)} of sleep, below the ${sleepBand.minHours}-${sleepBand.maxHours} hour range for ${sleepBand.label}.`,
+      napMinutes > 0
+        ? `Overnight sleep plus ${formatDuration(napMinutes)} of naps totals ${formatDuration(sleepMinutes)}, below the ${sleepBand.minHours}-${sleepBand.maxHours} hour range for ${sleepBand.label}.`
+        : `This wake-to-bed window leaves ${formatDuration(sleepMinutes)} of sleep, below the ${sleepBand.minHours}-${sleepBand.maxHours} hour range for ${sleepBand.label}. If this age still naps, add nap time above before treating this as short sleep.`,
     );
   }
   if (activityStatus === "below") {
@@ -300,6 +310,8 @@ export function buildScreenPlan(input) {
       videoCalls: videoCallMinutes,
     },
     awakeMinutes,
+    overnightSleepMinutes,
+    napMinutes,
     sleepMinutes,
     sleepHours,
     sleepBand,

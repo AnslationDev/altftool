@@ -35,6 +35,12 @@ const DASH = "—";
 const TICK_MS = 200;
 const PEAK_GAIN_FLOOR = 0.0001;
 
+/** "" for same-day, " (next day)" for +1, " (+N days)" beyond that. */
+const dayRolloverLabel = (days) => {
+  if (!days) return "";
+  return days === 1 ? " (next day)" : ` (+${days} days)`;
+};
+
 export default function ToolHome() {
   const [focus, setFocus] = useState(DEFAULTS.focus);
   const [shortBreak, setShortBreak] = useState(DEFAULTS.shortBreak);
@@ -68,7 +74,7 @@ export default function ToolHome() {
   const totalSeconds = hasError ? 0 : session.totalSeconds;
 
   const state = useMemo(
-    () => (hasError ? null : phaseAt(session, Math.min(elapsed, totalSeconds))),
+    () => (hasError ? null : phaseAt(session, Math.max(0, Math.min(elapsed, totalSeconds)))),
     [hasError, session, elapsed, totalSeconds],
   );
 
@@ -87,7 +93,10 @@ export default function ToolHome() {
   useEffect(() => {
     if (!running || hasError) return undefined;
     const id = setInterval(() => {
-      setElapsed(Math.min(totalSeconds, (Date.now() - anchor) / 1000));
+      // Clamp to >= 0: if the system clock is adjusted backward mid-session
+      // (NTP resync, sleep/wake, manual change), Date.now() - anchor can go
+      // negative, and phaseAt() treats negative elapsed as an error.
+      setElapsed(Math.max(0, Math.min(totalSeconds, (Date.now() - anchor) / 1000)));
     }, TICK_MS);
     return () => clearInterval(id);
   }, [running, anchor, totalSeconds, hasError]);
@@ -167,14 +176,31 @@ export default function ToolHome() {
     const from = state?.finished ? 0 : elapsed;
     setElapsed(from);
     setAnchor(Date.now() - from * 1000);
-    lastCueRef.current = null;
+    if (from === 0) {
+      // A true (re)start is a phase change into the first focus block —
+      // reset the cue tracker and announce it.
+      lastCueRef.current = null;
+      playCue("focus");
+    }
+    // Resuming mid-phase (from !== 0) is not a phase change, so lastCueRef
+    // is left untouched and no cue plays — otherwise every pause/resume
+    // cycle would replay the current phase's tone.
     setRunning(true);
-    playCue(from === 0 ? "focus" : cueKey || "focus");
   };
 
   const skipPhase = () => {
     if (hasError || !state || state.finished) return;
-    jumpTo(state.phase.endSeconds);
+    const target = state.phase.endSeconds;
+    jumpTo(target);
+    // jumpTo() nulls lastCueRef so the phase-change effect treats this as
+    // "just initialized" and stays silent — play the cue for the phase we
+    // land on here instead, the same way toggleRun() compensates for its
+    // own lastCueRef reset. Without this, Skip silently mutes the cue for
+    // the very transition it causes (including the session-complete tone).
+    const next = phaseAt(session, Math.min(target, totalSeconds));
+    if (!next.error) {
+      playCue(next.finished ? "done" : next.phase.cue);
+    }
   };
 
   const applyPreset = (preset) => {
@@ -193,7 +219,7 @@ export default function ToolHome() {
       `Focus: ${focus} min | Short break: ${shortBreak} min | Long break: ${longBreak} min`,
       `${session.pomodoroCount} pomodoros, long break every ${perSet}`,
       `Total session: ${formatClock(session.totalSeconds)} (focus ${formatClock(session.focusSeconds)}, breaks ${formatClock(session.breakSeconds)})`,
-      ending && !ending.error ? `Start ${startTime} -> ends ${ending.time}${ending.dayRollover ? " (next day)" : ""}` : "",
+      ending && !ending.error ? `Start ${startTime} -> ends ${ending.time}${dayRolloverLabel(ending.dayRollover)}` : "",
       "",
       ...session.phases.map(
         (phase) => `${formatClock(phase.startSeconds)}  ${phase.label} (${formatClock(phase.durationSeconds)})`,
@@ -215,6 +241,12 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (typeof window !== "undefined") {
+      const confirmed = window.confirm(
+        "Reset the timer settings and clear the current session progress?",
+      );
+      if (!confirmed) return;
+    }
     setFocus(DEFAULTS.focus);
     setShortBreak(DEFAULTS.shortBreak);
     setLongBreak(DEFAULTS.longBreak);
@@ -257,9 +289,9 @@ export default function ToolHome() {
         </div>
         <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">Pomodoro Sound Cue Timer</h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-          Runs a full pomodoro session and plays a short two- or three-note tone at every phase
-          change, so you can look away from the screen and still know when focus ends and the break
-          starts.
+          Runs a full pomodoro session and plays a short tone (two or three notes at each focus or
+          break change, four notes when the session finishes), so you can look away from the screen
+          and still know when focus ends, the break starts, and the session is done.
         </p>
       </header>
 
@@ -328,8 +360,9 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={() => playCue("focus")}
-              aria-label="Play a test cue tone"
-              className={GHOST_BTN}
+              aria-label={soundOn ? "Play a test cue tone" : "Play a test cue tone (turn Cues on first)"}
+              disabled={!soundOn}
+              className={`${GHOST_BTN} disabled:opacity-50 disabled:cursor-not-allowed`}
             >
               Test cue
             </button>
@@ -349,7 +382,11 @@ export default function ToolHome() {
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
+            <p
+              aria-live="polite"
+              role="status"
+              className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]"
+            >
               {hasError ? "Current phase" : state.finished ? "Session complete" : state.phase.label}
             </p>
             <p className="mt-1 font-mono text-5xl font-semibold text-[var(--primary)] tabular-nums">
@@ -413,7 +450,7 @@ export default function ToolHome() {
               "Finishes at",
               hasError || !ending || ending.error
                 ? DASH
-                : `${ending.time}${ending.dayRollover ? " (next day)" : ""}`,
+                : `${ending.time}${dayRolloverLabel(ending.dayRollover)}`,
             ],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">

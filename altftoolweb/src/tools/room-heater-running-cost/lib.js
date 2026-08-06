@@ -16,7 +16,6 @@
  */
 
 export const WATTS_PER_KW = 1000;
-export const MONTHS_PER_YEAR = 12;
 
 /**
  * dutyCycle — share of the running hours the element is actually energised once

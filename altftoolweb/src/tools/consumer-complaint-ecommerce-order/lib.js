@@ -155,12 +155,31 @@ export const CLAIM_HEADS = [
   { id: "punitive", label: "Punitive damages for a repeated practice" },
 ];
 
+/**
+ * Which computeClaim() amount backs each optional CLAIM_HEADS entry, so that
+ * an amount only counts toward totalClaim when the consumer has actually
+ * ticked the corresponding head. "punitive" has no backing amount field -
+ * punitive damages are pleaded without a pre-fixed rupee figure.
+ */
+const HEAD_AMOUNT_KEYS = {
+  "mental-agony": "compensationClaim",
+  "litigation-cost": "litigationCost",
+  interest: "interestClaim",
+};
+
 function clean(value) {
   return String(value ?? "").trim().replace(/\s+/g, " ");
 }
 
 function roundPaise(value) {
   return Math.round(value * 100) / 100;
+}
+
+/** Whole-rupee figure for display in the drafted notice/outline text, so the
+ * same amount never shows paise there while the summary card (which also
+ * rounds to the nearest rupee) shows a whole rupee. */
+function formatRupees(value) {
+  return Math.round(value).toLocaleString("en-IN");
 }
 
 /**
@@ -230,11 +249,17 @@ export function addDays(iso, days) {
  * @param {object} input
  * @param {number} input.considerationPaid  Amount actually paid for the goods or service.
  * @param {number} [input.shippingPaid]     Shipping or handling paid on the order.
- * @param {number} [input.incidentalCost]   Out-of-pocket costs caused by the failure.
- * @param {number} [input.compensationClaim] Compensation claimed for agony and loss.
- * @param {number} [input.interestClaim]    Interest claimed on the withheld amount.
- * @param {number} [input.litigationCost]   Cost of the proceeding claimed.
- * @returns {{considerationPaid:number, totalClaim:number, forum:string,
+ * @param {number} [input.incidentalCost]   Out-of-pocket costs caused by the failure. Always
+ *   part of the claim (it isn't an optional head), so it is always added to totalClaim and
+ *   always disclosed alongside it.
+ * @param {number} [input.compensationClaim] Compensation claimed for agony and loss. Only
+ *   counted toward totalClaim when "mental-agony" is in claimHeadIds.
+ * @param {number} [input.interestClaim]    Interest claimed on the withheld amount. Only
+ *   counted toward totalClaim when "interest" is in claimHeadIds.
+ * @param {number} [input.litigationCost]   Cost of the proceeding claimed. Only counted
+ *   toward totalClaim when "litigation-cost" is in claimHeadIds.
+ * @param {string[]} [input.claimHeadIds]   Ticked CLAIM_HEADS ids - see HEAD_AMOUNT_KEYS.
+ * @returns {{considerationPaid:number, incidentalCost:number, totalClaim:number, forum:string,
  *            forumBasis:string, nilFee:boolean, refundableNow:number}
  *          | {error:string}}
  */
@@ -245,6 +270,7 @@ export function computeClaim({
   compensationClaim = 0,
   interestClaim = 0,
   litigationCost = 0,
+  claimHeadIds = [],
 }) {
   const amounts = {
     considerationPaid: Number(considerationPaid),
@@ -268,14 +294,35 @@ export function computeClaim({
     return { error: "That amount is outside what this tool handles." };
   }
 
+  // compensationClaim / interestClaim / litigationCost are "optional heads of
+  // claim" (see CLAIM_HEADS above): only pull them into the total when the
+  // consumer has ticked the matching checkbox, so untying a head also
+  // untangles its rupees from the total the notice states.
+  const activeHeadIds = new Set(Array.isArray(claimHeadIds) ? claimHeadIds : []);
+  let compensationIncluded = 0;
+  let interestIncluded = 0;
+  let litigationIncluded = 0;
+  for (const [headId, amountKey] of Object.entries(HEAD_AMOUNT_KEYS)) {
+    if (!activeHeadIds.has(headId)) continue;
+    if (amountKey === "compensationClaim") compensationIncluded = amounts.compensationClaim;
+    if (amountKey === "interestClaim") interestIncluded = amounts.interestClaim;
+    if (amountKey === "litigationCost") litigationIncluded = amounts.litigationCost;
+  }
+
   const totalClaim = roundPaise(
     amounts.considerationPaid +
       amounts.shippingPaid +
       amounts.incidentalCost +
-      amounts.compensationClaim +
-      amounts.interestClaim +
-      amounts.litigationCost,
+      compensationIncluded +
+      interestIncluded +
+      litigationIncluded,
   );
+
+  // The nil-fee rule (Consumer Disputes Redressal Commissions Rules 2020) is
+  // narrower than totalClaim: it turns on "the value of the goods or
+  // services and the compensation claimed", which excludes litigation costs
+  // and interest even when those heads are ticked and folded into totalClaim.
+  const nilFeeBasis = roundPaise(totalClaim - interestIncluded - litigationIncluded);
 
   let forum = "District Consumer Disputes Redressal Commission";
   let forumBasis = `the consideration paid does not exceed Rs ${DISTRICT_CEILING_INR.toLocaleString("en-IN")}, so Section 34(1) puts it before the District Commission`;
@@ -289,10 +336,11 @@ export function computeClaim({
 
   return {
     considerationPaid: roundPaise(amounts.considerationPaid),
+    incidentalCost: roundPaise(amounts.incidentalCost),
     totalClaim,
     forum,
     forumBasis,
-    nilFee: totalClaim <= NIL_FEE_CEILING_INR,
+    nilFee: nilFeeBasis <= NIL_FEE_CEILING_INR,
     refundableNow: roundPaise(amounts.considerationPaid + amounts.shippingPaid),
   };
 }
@@ -316,11 +364,17 @@ export function computeLimitation({ causeOfActionDate, filingDate }) {
   }
 
   const causeDate = new Date(cause);
-  const lastStamp = Date.UTC(
-    causeDate.getUTCFullYear() + LIMITATION_YEARS,
-    causeDate.getUTCMonth(),
-    causeDate.getUTCDate(),
-  );
+  const targetYear = causeDate.getUTCFullYear() + LIMITATION_YEARS;
+  const targetMonth = causeDate.getUTCMonth();
+  const targetDay = causeDate.getUTCDate();
+  // Adding whole years keeps the month and day the same, except when the
+  // cause of action arose on 29 February and the target year isn't a leap
+  // year - Date.UTC would then silently roll 29 Feb over to 1 March. Clamp
+  // to the last real day of the target month instead (28 February in that
+  // case), the ordinary limitation-reckoning convention for an anniversary
+  // date that doesn't exist in the target year.
+  const daysInTargetMonth = new Date(Date.UTC(targetYear, targetMonth + 1, 0)).getUTCDate();
+  const lastStamp = Date.UTC(targetYear, targetMonth, Math.min(targetDay, daysInTargetMonth));
 
   const daysElapsed = Math.round((filing - cause) / MS_PER_DAY);
   const daysLeft = Math.round((lastStamp - filing) / MS_PER_DAY);
@@ -428,6 +482,16 @@ export function buildEcommerceComplaint({
   const heads = CLAIM_HEADS.filter((head) => claimHeadIds.includes(head.id));
   const addressee = seller ? `${platform} and ${seller}` : platform;
 
+  // Every extra rupee folded into claim.totalClaim beyond the base refund
+  // must be named here, so the "besides the refund, X, Y, taking the total
+  // claim to Rs N" sentence always reconciles with N. incidentalCost isn't
+  // one of the optional CLAIM_HEADS, so it's listed unconditionally whenever
+  // it's non-zero, alongside whichever heads the consumer has ticked.
+  const extraClaimLabels = [
+    ...(claim.incidentalCost > 0 ? [`out-of-pocket costs of Rs ${formatRupees(claim.incidentalCost)} caused by this`] : []),
+    ...heads.map((head) => head.label.toLowerCase()),
+  ];
+
   const subject = `Notice of deficiency in service and demand for refund - order ${order} dated ${orderLong}`;
 
   const notice = [
@@ -443,20 +507,20 @@ export function buildEcommerceComplaint({
     "",
     "Sir / Madam,",
     "",
-    `1. I placed order number ${order} with ${platform} on ${orderLong} for ${item}, and paid Rs ${claim.considerationPaid.toLocaleString("en-IN")} as consideration${claim.refundableNow > claim.considerationPaid ? `, besides shipping and handling, taking the amount paid to Rs ${claim.refundableNow.toLocaleString("en-IN")}` : ""}.`,
+    `1. I placed order number ${order} with ${platform} on ${orderLong} for ${item}, and paid Rs ${formatRupees(claim.considerationPaid)} as consideration${claim.refundableNow > claim.considerationPaid ? `, besides shipping and handling, taking the amount paid to Rs ${formatRupees(claim.refundableNow)}` : ""}.`,
     "",
     `2. On ${incidentLong}, ${problem.statement}. I have retained ${problem.proof} and will produce it.`,
     "",
     earlier
-      ? `3. I have already taken this up with you: ${earlier} No effective redress has followed, although Rule 4(5) of the Consumer Protection (E-Commerce) Rules 2020 requires a grievance to be acknowledged within ${GRIEVANCE_ACK_HOURS} hours and redressed within one month.`
-      : `3. I have already raised this through your customer support channel and no effective redress has followed, although Rule 4(5) of the Consumer Protection (E-Commerce) Rules 2020 requires a grievance to be acknowledged within ${GRIEVANCE_ACK_HOURS} hours and redressed within one month.`,
+      ? `3. I have already taken this up with you: ${earlier} No effective redress has followed, although Rule 4(5) of the Consumer Protection (E-Commerce) Rules 2020 requires a grievance to be acknowledged within ${GRIEVANCE_ACK_HOURS} hours and redressed within ${GRIEVANCE_REDRESS_DAYS} days.`
+      : `3. I have already raised this through your customer support channel and no effective redress has followed, although Rule 4(5) of the Consumer Protection (E-Commerce) Rules 2020 requires a grievance to be acknowledged within ${GRIEVANCE_ACK_HOURS} hours and redressed within ${GRIEVANCE_REDRESS_DAYS} days.`,
     "",
     `4. What has happened is a deficiency in service within the meaning of Section 2(11) of the Consumer Protection Act 2019. A refusal to take back a defective item or to refund the consideration within the stipulated period, or within ${DEFAULT_REFUND_DAYS} days where none is stipulated, is also an unfair trade practice under Section 2(47) of that Act.`,
     "",
     `5. I therefore call upon ${addressee} to provide ${problem.demand} within ${days} day${days === 1 ? "" : "s"} of receipt of this notice, that is on or before ${complyBy.long}.`,
     "",
-    heads.length > 0
-      ? `6. If that is not done I shall file a complaint before the ${claim.forum} claiming, besides the refund, ${heads.map((head) => head.label.toLowerCase()).join(", ")}, taking the total claim to Rs ${claim.totalClaim.toLocaleString("en-IN")}. A complaint may be filed where I reside or work, as Section 34(2)(d) permits.`
+    extraClaimLabels.length > 0
+      ? `6. If that is not done I shall file a complaint before the ${claim.forum} claiming, besides the refund, ${extraClaimLabels.join(", ")}, taking the total claim to Rs ${formatRupees(claim.totalClaim)}. A complaint may be filed where I reside or work, as Section 34(2)(d) permits.`
       : `6. If that is not done I shall file a complaint before the ${claim.forum} for the reliefs available under Section 39 of the Act. A complaint may be filed where I reside or work, as Section 34(2)(d) permits.`,
     "",
     `7. This notice is issued without prejudice to any other remedy available to me in law, including a complaint through the National Consumer Helpline on ${NATIONAL_CONSUMER_HELPLINE}.`,
@@ -486,9 +550,9 @@ export function buildEcommerceComplaint({
     }`,
     "",
     "Facts to plead",
-    `1. Order ${order} placed on ${orderLong} for ${item}; consideration paid Rs ${claim.considerationPaid.toLocaleString("en-IN")}.`,
+    `1. Order ${order} placed on ${orderLong} for ${item}; consideration paid Rs ${formatRupees(claim.considerationPaid)}.`,
     `2. On ${incidentLong}, ${problem.statement}.`,
-    `3. Grievance raised with the opposite parties and not redressed within the one month allowed by Rule 4(5) of the Consumer Protection (E-Commerce) Rules 2020.`,
+    `3. Grievance raised with the opposite parties and not redressed within the ${GRIEVANCE_REDRESS_DAYS} days allowed by Rule 4(5) of the Consumer Protection (E-Commerce) Rules 2020.`,
     `4. Notice dated ${noticeLong} calling for compliance by ${complyBy.long} went unanswered or was refused.`,
     "",
     "Documents to file",
@@ -499,9 +563,10 @@ export function buildEcommerceComplaint({
     "- Copy of this notice with proof of despatch and delivery.",
     "",
     "Reliefs to claim under Section 39",
-    `- Refund of Rs ${claim.refundableNow.toLocaleString("en-IN")} being the amount paid, or replacement of the item.`,
+    `- Refund of Rs ${formatRupees(claim.refundableNow)} being the amount paid, or replacement of the item.`,
+    ...(claim.incidentalCost > 0 ? [`- Out-of-pocket costs incurred because of this, Rs ${formatRupees(claim.incidentalCost)}.`] : []),
     ...heads.map((head) => `- ${head.label}.`),
-    `- Total claim as valued: Rs ${claim.totalClaim.toLocaleString("en-IN")}.`,
+    `- Total claim as valued: Rs ${formatRupees(claim.totalClaim)}.`,
     "",
     "Filing notes",
     `- The complaint can be filed online on the e-Daakhil portal or in person at the Commission.`,

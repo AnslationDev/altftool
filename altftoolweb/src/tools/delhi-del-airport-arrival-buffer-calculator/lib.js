@@ -278,6 +278,14 @@ export function computeArrivalPlan({
   if (terminalLeadMinutes === processLeadMinutes && processLeadMinutes >= checkInLeadMinutes) {
     governedBy = "your own queue, walking and buffer estimates";
   }
+  // checkInLeadMinutes (a fixed 55 min for domestic, 70 min for international -
+  // journey.checkInClosesMinutes plus the entry/counter margins) never exceeds
+  // recommendedLeadMinutes (120 / 180) for either journey type in JOURNEY_TYPES
+  // above, because DEL's own published reporting-time advice is deliberately
+  // more generous than any single airline's bag-drop cut-off. This branch is
+  // kept so the bag-drop cut-off is still correctly attributed as the binding
+  // deadline if those constants are ever edited to a combination where it can
+  // exceed the other two.
   if (
     terminalLeadMinutes === checkInLeadMinutes &&
     checkInLeadMinutes > processLeadMinutes &&
@@ -361,6 +369,8 @@ export function computeArrivalPlan({
     gateCloseMinutes,
     leaveByDayOffset: dayOffset(leaveByMinutes),
     arriveTerminalDayOffset: dayOffset(arriveTerminalMinutes),
+    checkInCloseDayOffset: dayOffset(checkInCloseMinutes),
+    gateCloseDayOffset: dayOffset(gateCloseMinutes),
     steps,
     warnings,
   };

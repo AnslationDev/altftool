@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "Pomodoro Sound Cue Timer runs a complete pomodoro session — focus blocks, short breaks and a long break after every set — and plays a short two- or three-note tone at each phase change so you never have to watch the clock. It follows the classic Pomodoro Technique defaults of 25 minutes of focus, a 5 minute short break and a 15 minute long break after four pomodoros, and every interval is adjustable. Tones are generated in the browser with the Web Audio API, so nothing is downloaded and the timer works offline.",
+    "Pomodoro Sound Cue Timer runs a complete pomodoro session — focus blocks, short breaks and a long break after every set — and plays a short two- or three-note tone at each focus or break change, plus a distinct four-note tone when the whole session finishes, so you never have to watch the clock. It follows the classic Pomodoro Technique defaults of 25 minutes of focus, a 5 minute short break and a 15 minute long break after four pomodoros, and every interval is adjustable. Tones are generated in the browser with the Web Audio API, so nothing is downloaded and the timer works offline.",
   useCases: [
     "Run four 25-minute pomodoros before lunch and hear a rising two-note cue the moment each break begins.",
     "Switch to a 50/10 deep-work rhythm for writing or coding sessions that need longer uninterrupted blocks.",

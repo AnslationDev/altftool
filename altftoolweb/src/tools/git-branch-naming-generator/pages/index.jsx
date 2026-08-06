@@ -313,10 +313,12 @@ export default function ToolHome() {
               />
               {testResult ? (
                 <p
+                  role="status"
+                  aria-live="polite"
                   className={`mt-2 rounded-md px-3 py-2 text-sm font-medium ${
                     testResult.valid
-                      ? "bg-[var(--muted)] text-[var(--success)]"
-                      : "bg-[var(--muted)] text-[var(--danger)]"
+                      ? "bg-[var(--muted)] text-[var(--success-text)]"
+                      : "bg-[var(--muted)] text-[var(--danger-text)]"
                   }`}
                 >
                   {testResult.valid ? "Valid — matches the standard." : testResult.reason}

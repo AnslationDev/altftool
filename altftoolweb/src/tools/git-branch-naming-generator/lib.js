@@ -36,7 +36,14 @@ export const SEPARATORS = [
 const PROJECT_KEY_RE = /^[A-Z][A-Z0-9]*$/;
 
 // Description slug: lowercase kebab-case, satisfies git-check-ref-format.
-const SLUG_SOURCE = "[a-z0-9]+(?:-[a-z0-9]+)*";
+// Built with plain capturing groups and [0-9] rather than the PCRE-only
+// (?:...) / \d shorthand: the generated CI snippet feeds this same pattern
+// into `grep -Eq` (POSIX Extended Regular Expressions), which does not
+// understand non-capturing groups or \d — see buildBranchStandard() below.
+// Plain "(...)" groups and "[0-9]" are valid in both POSIX ERE and the JS
+// RegExp engine used for the in-browser validator, so one pattern works
+// everywhere.
+const SLUG_SOURCE = "[a-z0-9]+(-[a-z0-9]+)*";
 
 /** Escape a literal for embedding in a regular expression. */
 export function escapeRegex(literal) {
@@ -98,7 +105,8 @@ export function buildBranchStandard({
   }
 
   const sepEsc = escapeRegex(sep);
-  const typeAlt = `(?:${selected.join("|")})`;
+  // Plain capturing group, not the PCRE-only "(?:...)" — see SLUG_SOURCE.
+  const typeAlt = `(${selected.join("|")})`;
 
   // Assemble the template and regex segment by segment.
   const templateParts = ["<type>"];
@@ -111,7 +119,10 @@ export function buildBranchStandard({
   if (requireTicket) {
     // Ticket and description form one segment joined by "-": PROJ-123-add-login
     templateParts.push(`${key}-<ticket>-<short-description>`);
-    regexParts.push(`${escapeRegex(key)}-\\d+-${SLUG_SOURCE}`);
+    // [0-9]+, not the PCRE-only \d+ — GNU grep -E does not treat \d as a
+    // digit class (it is a documented GNU ERE extension only for \w \W \s
+    // \S \b \B), so \d would match a literal "d" instead.
+    regexParts.push(`${escapeRegex(key)}-[0-9]+-${SLUG_SOURCE}`);
   } else {
     templateParts.push("<short-description>");
     regexParts.push(SLUG_SOURCE);

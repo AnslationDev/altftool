@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Layers, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 const INR = new Intl.NumberFormat("en-IN", {
   style: "currency",
   currency: "INR",
@@ -130,7 +132,9 @@ export default function ToolHome() {
   const [deductions, setDeductions] = useState(String(DEFAULTS.deductions));
   const [ageBand, setAgeBand] = useState(DEFAULTS.ageBand);
   const [salaried, setSalaried] = useState(DEFAULTS.salaried);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
+  const copied = isCopied("result");
 
   const calc = useMemo(() => {
     const g = toNumber(gross);
@@ -196,15 +200,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [calc]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "slab-by-slab tax breakdown" });
   };
 
   const reset = () => {
@@ -212,7 +210,7 @@ export default function ToolHome() {
     setDeductions(String(DEFAULTS.deductions));
     setAgeBand(DEFAULTS.ageBand);
     setSalaried(DEFAULTS.salaried);
-    setCopied(false);
+    resetCopyState();
   };
 
   const renderSlabs = (title, data, taxable, tone) => {
@@ -388,7 +386,11 @@ export default function ToolHome() {
                 <button
                   type="button"
                   onClick={copyResult}
-                  aria-label="Copy slab-by-slab tax breakdown"
+                  aria-label={
+                    copied
+                      ? "Copied! Slab-by-slab tax breakdown copied to clipboard"
+                      : "Copy result: slab-by-slab tax breakdown"
+                  }
                   className={GHOST_BTN}
                 >
                   {copied ? (
@@ -409,6 +411,9 @@ export default function ToolHome() {
                 </button>
               </div>
             </div>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
 
             <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
               {[

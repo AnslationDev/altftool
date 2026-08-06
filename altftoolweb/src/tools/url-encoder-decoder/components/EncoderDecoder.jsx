@@ -24,25 +24,32 @@ function downloadTextFile(filename, content) {
 }
 
 function parseQuery(value) {
-  const source = value.includes("?") ? value : `https://altftool.local/?${value}`;
-  const url = new URL(source);
+  // A full URL with a scheme (https://example.com/?a=1) parses on its own.
+  try {
+    return [...new URL(value).searchParams.entries()];
+  } catch {
+    // Not an absolute URL — most commonly a schemeless paste like
+    // "example.com/search?q=1", or a bare query string. Fall through and
+    // parse just the query portion instead of failing outright.
+  }
+  const queryPart = value.includes("?") ? value.slice(value.indexOf("?") + 1) : value;
+  const url = new URL(`https://altftool.local/?${queryPart}`);
   return [...url.searchParams.entries()];
 }
 
 function getOutput(mode, input) {
-  const value = input.trim();
-  if (!value) return { output: "", error: "" };
+  if (input === "") return { output: "", error: "" };
 
   try {
-    if (mode === "decode") return { output: decodeURIComponent(value), error: "" };
+    if (mode === "decode") return { output: decodeURIComponent(input), error: "" };
     if (mode === "query") {
-      const entries = parseQuery(value);
+      const entries = parseQuery(input);
       return {
         output: JSON.stringify(Object.fromEntries(entries), null, 2),
         error: entries.length ? "" : "No query parameters found.",
       };
     }
-    return { output: encodeURIComponent(value), error: "" };
+    return { output: encodeURIComponent(input), error: "" };
   } catch {
     return { output: "", error: "Input could not be processed for this mode." };
   }

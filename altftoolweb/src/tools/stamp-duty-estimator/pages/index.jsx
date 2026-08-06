@@ -40,6 +40,32 @@ function resolveRate(state, { value, owner, propertyType, urban }) {
   if (propertyType === "commercial" && state.commercialDuty) {
     return { rate: state.commercialDuty[owner], basis: "Commercial rate" };
   }
+  if (propertyType === "commercial") {
+    // This dataset does not carry a published commercial-specific rate for
+    // every state. Gender concessions on stamp duty are a residential-only
+    // rule in Indian states (see e.g. Maharashtra's own note), so rather than
+    // silently reusing the residential gender-varying table for "commercial",
+    // fall back to the state's own standard (male) rate for every buyer —
+    // real published data, applied without an unverified concession.
+    if (state.dutyMode === "slab") {
+      const slab = state.slabs.find((item) => value <= item.upTo) || state.slabs[state.slabs.length - 1];
+      return { rate: slab.rate, basis: `Slab: ${slab.label} — commercial, no gender concession` };
+    }
+    if (state.highValue && value > state.highValue.threshold) {
+      const rate = urban ? state.highValue.urban : state.highValue.rural;
+      return {
+        rate,
+        basis: `Above ${shortInr(state.highValue.threshold)} ${urban ? "urban" : "rural"} rate — commercial, no gender concession`,
+      };
+    }
+    if (!urban && state.hasRural && state.ruralDuty) {
+      return { rate: state.ruralDuty.male, basis: "Rural / gram panchayat rate — commercial, no gender concession" };
+    }
+    return {
+      rate: state.duty.male,
+      basis: `${state.hasRural ? "Urban / municipal" : "Standard"} rate — commercial, no gender concession`,
+    };
+  }
   if (state.dutyMode === "slab") {
     const slab = state.slabs.find((item) => value <= item.upTo) || state.slabs[state.slabs.length - 1];
     return { rate: slab.rate, basis: `Slab: ${slab.label}` };
@@ -63,7 +89,12 @@ export function computeCost(state, opts) {
   let effectiveRate = resolved.rate;
   let concessionCapped = false;
 
-  if (owner !== "male" && state.womenConcessionCap) {
+  // The capped concession (e.g. UP, Uttarakhand) is specifically the sole
+  // female buyer's rebate — joint ownership already has its own flat
+  // `duty.joint` rate in the table above, so it must not share this cap
+  // (sharing it collapsed joint and female duty to the same figure above the
+  // cap threshold, and mislabelled the joint result as a "Women's rebate").
+  if (owner === "female" && state.womenConcessionCap) {
     const maleResolved = resolveRate(state, { value, owner: "male", propertyType, urban });
     const maleDuty = (value * maleResolved.rate) / 100;
     const rawSaving = maleDuty - duty;
@@ -82,7 +113,12 @@ export function computeCost(state, opts) {
     })
     .map((item) => ({
       label: item.label,
-      amount: item.ofDuty ? duty * item.ofDuty : value * item.ofValue,
+      isFlat: item.flat !== undefined,
+      amount: item.ofDuty
+        ? duty * item.ofDuty
+        : item.flat !== undefined
+          ? item.flat
+          : value * item.ofValue,
     }));
 
   const extrasTotal = extras.reduce((sum, item) => sum + item.amount, 0);
@@ -516,7 +552,7 @@ export default function ToolHome() {
                     </tr>
                     {result.extras.map((item) => (
                       <tr key={item.label} className="border-b border-[var(--border)] align-top">
-                        <td className="px-2 py-3 font-semibold">Cess / surcharge</td>
+                        <td className="px-2 py-3 font-semibold">{item.isFlat ? "Fixed fee" : "Cess / surcharge"}</td>
                         <td className="px-2 py-3 text-xs text-[var(--muted-foreground)]">{item.label}</td>
                         <td className="whitespace-nowrap px-2 py-3 text-right font-semibold">{inr(item.amount)}</td>
                       </tr>

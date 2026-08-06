@@ -26911,7 +26911,7 @@ export const toolMetaMap = {
       "Utilities"
     ],
     "icon": "share-2",
-    "iconColor": "text-blue-500"
+    "iconColor": "text-[var(--primary)]"
   },
   "society-charge-splitter": {
     "name": "Property Maintenance and Society Charge Splitter",
