@@ -104,6 +104,8 @@ export default function ToolHome() {
     setRetention(DEFAULT_TRAFFIC.retention);
     setTraceKb(DEFAULT_TRAFFIC.traceKb);
     setTailKeepRatePct(DEFAULT_TRAFFIC.tailKeepRatePct);
+    // Clears the lingering "Copied!" label and its aria-live announcement,
+    // which the pre-hook version did via setCopied(false).
     resetCopyState();
   };
 
@@ -391,7 +393,8 @@ export default function ToolHome() {
             />
             <p className="mt-1 text-xs text-[var(--muted-foreground)]">
               Rough share of all runs expected to match the tail rules below (errors, slow p95,
-              guardrail blocks, negative feedback). Head-sampled matches are counted only once.
+              guardrail blocks, negative feedback). Head-sampled matches are counted only once —
+              measure yours once you have real rates.
             </p>
           </div>
         </div>

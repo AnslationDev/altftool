@@ -6,7 +6,8 @@
  *  - Maximum resolution: 25 megapixels, up to 5000 x 5000 px per side.
  *  - File size must be smaller than 20 MB.
  *  - Recommended size for square product photos: 2048 x 2048 px.
- *  - Zoom on the product page needs at least 800 x 800 px.
+ *  - Product-page zoom is controlled by the theme, not the platform; 800 x 800 px
+ *    is a conservative detail heuristic this checker reports as a warning only.
  *  - Supported file types: JPEG, PNG, PSD, TIFF, BMP, GIF, SVG, HEIC and WebP.
  *  - Shopify recommends using one aspect ratio across every product image in a
  *    store so collection grids line up; this checker compares your image to a

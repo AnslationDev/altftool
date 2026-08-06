@@ -351,7 +351,7 @@ export default function ToolHome() {
       <div className="mt-4 flex flex-wrap gap-3">
         <button
           type="button"
-          className={PRIMARY_BTN}
+          className={GHOST_BTN}
           onClick={handleCopy}
           aria-label="Copy the similarity result to clipboard"
           disabled={Boolean(share.error)}
@@ -359,7 +359,7 @@ export default function ToolHome() {
           {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
           {copied ? "Copied!" : "Copy result"}
         </button>
-        <button type="button" className={GHOST_BTN} onClick={handleReset} aria-label="Reset to the demo photos">
+        <button type="button" className={PRIMARY_BTN} onClick={handleReset} aria-label="Reset to the demo photos">
           <RotateCcw className="h-4 w-4" aria-hidden="true" />
           Reset
         </button>

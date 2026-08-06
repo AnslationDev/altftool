@@ -306,7 +306,7 @@ export default function ToolHome() {
         <div className="flex flex-wrap gap-3">
           <button
             type="button"
-            className={PRIMARY_BTN}
+            className={GHOST_BTN}
             onClick={() => topMatch && copyReason(topMatch.reason)}
             disabled={!topMatch}
             aria-label="Copy the decoded rejection and its correction route"
@@ -318,7 +318,7 @@ export default function ToolHome() {
             )}
             {isCopied(`copy-${topMatch?.reason.id}`) ? "Copied!" : "Copy the decode"}
           </button>
-          <button type="button" className={GHOST_BTN} onClick={resetAll} aria-label="Reset the decoder and filters">
+          <button type="button" className={PRIMARY_BTN} onClick={resetAll} aria-label="Reset the decoder and filters">
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Reset
           </button>

@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Aperture, Check, Copy, Download } from "lucide-react";
 
+// Meter bar scale: meterPct maps evAdjusted linearly across [METER_EV_MIN, METER_EV_MAX],
+// and clampExposureMeterValue pins the ARIA value into that same range.
 import {
   METER_EV_MAX,
   METER_EV_MIN,

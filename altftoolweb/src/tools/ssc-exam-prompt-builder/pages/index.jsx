@@ -333,7 +333,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyPrompt}
               aria-label="Copy the generated SSC study prompt"
-              className={PRIMARY_BTN}
+              className={GHOST_BTN}
               disabled={!ok}
             >
               {copied ? (
@@ -343,7 +343,7 @@ export default function ToolHome() {
               )}
               {copied ? "Copied!" : "Copy prompt"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all fields" className={GHOST_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all fields" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>

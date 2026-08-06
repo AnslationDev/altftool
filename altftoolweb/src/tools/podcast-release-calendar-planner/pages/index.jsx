@@ -53,6 +53,9 @@ export default function ToolHome() {
   // Rendered on the server with the constant default, then rolled forward to the
   // next Monday after mount, so there is never a hydration mismatch.
   useEffect(() => {
+    // Deferred a tick past the hydration commit so the first client render is
+    // byte-identical to the SSR output, and cleared on unmount so the state
+    // update can never land on a torn-down tree.
     const timer = window.setTimeout(() => {
       // The visitor's local calendar day, not the UTC day — otherwise the
       // overdue flag and the "next Monday" default can land a day early or

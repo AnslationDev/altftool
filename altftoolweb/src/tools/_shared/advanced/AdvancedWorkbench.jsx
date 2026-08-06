@@ -353,6 +353,11 @@ const mediaOptions = {
     // MediaLab runner below; every other entry in this file still declares
     // `command` with 3-5 params and simply ignores the extra argument, so
     // this is scoped to this one tool only.
+    // There is deliberately no "assume 48000" fallback: because the multiplier
+    // is R / R_in, a guessed R_in reinstates the exact bug above rather than
+    // degrading gracefully (an 8kHz clip asked to shift *down* would come out
+    // ~5.5x *up*), so probeAudioSampleRate throws a user-facing message and the
+    // run is abandoned instead of emitting a silently wrong file.
     command: async (input, output, choice, _second, _fontPath, ffmpeg) => {
       const sourceRate = await probeAudioSampleRate(ffmpeg, input);
       return buildVoiceprintPitchShiftCommand({ input, output, choice, sourceRate });
@@ -559,6 +564,18 @@ function MediaLab({ slug }) {
           setProgress(Math.max(0, Math.min(100, Math.round(value * 100)))),
         );
         ffmpeg.on("log", ({ message: value }) => {
+          // Tools with `analyze: true` export this capture as the user's
+          // downloaded diagnostic report, so a plain "keep the last 200 lines"
+          // window silently evicted the earliest lines — e.g. the first
+          // silence_start marker a decay reading depends on — with no
+          // indication anything was dropped. captureMediaAnalysisLine keeps a
+          // priority head *and* tail of the analysis-cue lines plus the recent
+          // raw tail, and formatMediaAnalysisLog states explicitly how many
+          // lines were omitted, so the earliest markers survive without the
+          // report growing without bound on a long encode. Gated on
+          // analyzeRef, not config.analyze: this listener is installed once
+          // per FFmpeg engine and the engine is reused across runs, so the
+          // closed-over config would go stale if the slug changed.
           if (analyzeRef.current) {
             captureMediaAnalysisLine(analysisLogRef.current, value);
           }

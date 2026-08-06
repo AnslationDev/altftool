@@ -55,6 +55,11 @@ export default function MainComponent() {
   const [vCard, setVCard] = useState({ fn: '', ln: '', tel: '', email: '' });
   const [upi, setUpi] = useState({ vpa: '', name: '', am: '' });
 
+  // Payload construction lives in ../lib/qrPayload.js so it can be unit
+  // tested: it escapes the WIFI: separators (\ ; , : "), escapes vCard
+  // fields and emits the mandatory N: row with CRLF endings, percent-encodes
+  // every UPI parameter (and omits an empty am=), and returns an explicit
+  // error instead of silently encoding an unrelated fallback URL.
   const qrPayload = useMemo(
     () => buildQrPayload({ activeTab, url: qrValue, bulkValue: bulkQrValue, upi, vCard, wifi }),
     [activeTab, qrValue, bulkQrValue, upi, vCard, wifi],
@@ -133,10 +138,14 @@ export default function MainComponent() {
         link.click();
         downloaded += 1;
       }
-      setScanCount((prev) => prev + downloaded);
     } catch (error) {
       setBulkError(error instanceof Error ? error.message : 'Batch export failed. Try again.');
     } finally {
+      // Committed in the finally block so a batch that aborts part-way still
+      // counts the rows it actually saved, exactly as the per-row increment
+      // used to. One state update instead of N avoids re-rendering the canvas
+      // between downloads.
+      if (downloaded > 0) setScanCount((prev) => prev + downloaded);
       setBulkSkipped(skipped);
       setIsProcessing(false);
     }
@@ -160,7 +169,7 @@ export default function MainComponent() {
 
   return (
     <div className="space-y-8 text-(--foreground) p-5 md:p-10 max-w-7xl mx-auto font-sans">
-      
+
       {/* Header Section */}
       <div className="space-y-2 mb-12 text-center">
         <h1 className="text-4xl md:text-7xl font-bold uppercase text-(--primary)">
@@ -172,10 +181,10 @@ export default function MainComponent() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-        
+
         {/* LEFT: CONTROLS */}
         <div className="lg:col-span-7 space-y-6">
-          
+
           <div className="flex bg-(--card) p-1.5 rounded-2xl shadow-sm border border-(--border) overflow-x-auto no-scrollbar">
             {[
               { id: 'URL', icon: <Link size={18}/>, label: 'Website' },

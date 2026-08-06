@@ -142,9 +142,11 @@ export default function ToolHome() {
     setCopied(false);
   };
 
+  const totalIncomeForSuggestion = Number(income || 0) + Number(otherIncome || 0);
+  const canApplySuggestion = Number.isFinite(totalIncomeForSuggestion) && totalIncomeForSuggestion > 0;
+
   const applySuggestion = () => {
-    const totalIncome = Number(income || 0) + Number(otherIncome || 0);
-    const suggestion = suggestBudget(totalIncome);
+    const suggestion = suggestBudget(totalIncomeForSuggestion);
     if (suggestion.error) return;
     const confirmed = window.confirm(
       "Fill a 50/30/20 starting plan? This replaces all 16 expense fields with generated values — anything you entered will be lost.",
@@ -228,7 +230,13 @@ export default function ToolHome() {
           </div>
         </div>
         <div className="mt-4 flex flex-wrap gap-2">
-          <button type="button" onClick={applySuggestion} className={GHOST_BTN}>
+          <button
+            type="button"
+            onClick={applySuggestion}
+            disabled={!canApplySuggestion}
+            title={canApplySuggestion ? undefined : "Enter a net monthly income greater than zero first"}
+            className={`${GHOST_BTN} disabled:cursor-not-allowed disabled:opacity-50`}
+          >
             Fill a 50/30/20 starting plan
           </button>
           <button type="button" onClick={clearAll} className={GHOST_BTN}>
@@ -295,7 +303,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Left unallocated each month
             </p>
@@ -303,7 +311,7 @@ export default function ToolHome() {
               className={`mt-1 text-4xl font-semibold ${
                 hasError
                   ? "text-[var(--muted-foreground)]"
-                  : result.unallocated < 0
+                  : result.overspending
                     ? "text-[var(--danger)]"
                     : "text-[var(--primary)]"
               }`}
@@ -313,7 +321,7 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? "Fix the input above to see your budget."
-                : result.unallocated < 0
+                : result.overspending
                   ? "You have planned more than you earn — trim a line or raise income."
                   : "Money not yet given a job. Assign it to savings so it does not drift away."}
             </p>

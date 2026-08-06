@@ -7,6 +7,7 @@ import {
   ADULT_BANDS,
   ADULT_USUAL_PI,
   HEALTHY_BMI,
+  LIMITS,
   NEWBORN_BANDS,
   REFERENCE_HEIGHT_M,
   adultPonderalIndex,
@@ -14,6 +15,22 @@ import {
   newbornPonderalIndex,
   poundsToKg,
 } from "../lib";
+
+// Feet/inches bounds derived from LIMITS.heightCm so the imperial inputs never
+// advertise a min/max the metric validator (adultPonderalIndex) would reject.
+// Feet alone can legitimately be as low as 3 or as high as 8 (there exists a
+// valid inches value for each), but the inches bound at those two extremes
+// depends on which feet value is currently entered — see inchesBoundsForFeet.
+const HEIGHT_MIN_IN = LIMITS.heightCm.min / 2.54;
+const HEIGHT_MAX_IN = LIMITS.heightCm.max / 2.54;
+const FEET_MIN = Math.floor(HEIGHT_MIN_IN / 12);
+const FEET_MAX = Math.floor(HEIGHT_MAX_IN / 12);
+
+const inchesBoundsForFeet = (feetValue) => {
+  const min = Math.max(0, Math.ceil((HEIGHT_MIN_IN - feetValue * 12) * 10) / 10);
+  const max = Math.min(11.9, Math.floor((HEIGHT_MAX_IN - feetValue * 12) * 10) / 10);
+  return { min, max: Math.max(min, max) };
+};
 
 const NUM1 = new Intl.NumberFormat("en-IN", {
   minimumFractionDigits: 1,
@@ -67,6 +84,12 @@ const bandRange = (band) => {
   return `${NUM2.format(band.min)} – ${NUM2.format(band.max)}`;
 };
 
+const newbornBandLabel = (band) => {
+  if (band.key === "thin") return "Below the historical neonatal reference band";
+  if (band.key === "heavy") return "Above the historical neonatal reference band";
+  return "Within the historical neonatal reference band";
+};
+
 export default function ToolHome() {
   const [mode, setMode] = useState(DEFAULTS.mode);
   const [unit, setUnit] = useState(DEFAULTS.unit);
@@ -80,6 +103,7 @@ export default function ToolHome() {
   const [copied, setCopied] = useState(false);
 
   const adult = mode === "adult";
+  const { min: inchesMin, max: inchesMax } = inchesBoundsForFeet(toNum(feet) || FEET_MIN);
 
   const result = useMemo(() => {
     if (!adult) {
@@ -104,7 +128,7 @@ export default function ToolHome() {
       return [
         "Ponderal Index Calculator — newborn",
         `Ponderal index: ${NUM2.format(result.pi)} (100 × g / cm³)`,
-        `Interpretation: ${result.band.label}`,
+        `Reference-band reading: ${newbornBandLabel(result.band)}`,
         `Weight range for this length at PI 2.2–3.0: ${NUM0.format(result.weightMinG)}–${NUM0.format(result.weightMaxG)} g`,
       ].join("\n");
     }
@@ -154,7 +178,7 @@ export default function ToolHome() {
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Body mass scales closer to height cubed than height squared, so BMI reads high for tall
           people and low for short ones. The ponderal index divides by height cubed and removes that
-          bias. Newborn mode uses the 100 × grams ÷ cm³ form used in neonatology.
+          bias. Newborn mode calculates the 100 × grams ÷ cm³ form as a historical reference only.
         </p>
       </header>
 
@@ -238,8 +262,8 @@ export default function ToolHome() {
                       className={INPUT}
                       type="number"
                       inputMode="numeric"
-                      min="3"
-                      max="8"
+                      min={String(FEET_MIN)}
+                      max={String(FEET_MAX)}
                       step="1"
                       value={feet}
                       onChange={(event) => setFeet(event.target.value)}
@@ -254,8 +278,8 @@ export default function ToolHome() {
                       className={INPUT}
                       type="number"
                       inputMode="decimal"
-                      min="0"
-                      max="11.9"
+                      min={String(inchesMin)}
+                      max={String(inchesMax)}
                       step="0.5"
                       value={inches}
                       onChange={(event) => setInches(event.target.value)}
@@ -337,7 +361,7 @@ export default function ToolHome() {
               {ok ? NUM2.format(result.pi) : DASH}
             </p>
             <p className={`mt-1 text-sm font-semibold ${ok ? toneClass(result.band.tone) : "text-[var(--muted-foreground)]"}`}>
-              {ok ? result.band.label : DASH}
+              {ok ? (adult ? result.band.label : newbornBandLabel(result.band)) : DASH}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -383,11 +407,11 @@ export default function ToolHome() {
               ]
             : [
                 [
-                  "Appropriate weight for this length (PI 2.2–3.0)",
+                  "Historical reference interval for this length (PI 2.2–3.0)",
                   ok ? `${NUM0.format(result.weightMinG)} – ${NUM0.format(result.weightMaxG)} g` : DASH,
                 ],
-                ["Below 2.2 means", "Thin for length — suggests asymmetric growth restriction"],
-                ["Above 3.0 means", "Heavy for length — worth checking for macrosomia"],
+                ["Below 2.2", "Below the historical reference; not a diagnosis"],
+                ["Above 3.0", "Above the historical reference; not a diagnosis"],
               ]
           ).map(([label, value]) => (
             <div key={label} className="flex items-start justify-between gap-4 py-2.5">
@@ -420,7 +444,7 @@ export default function ToolHome() {
                   >
                     <td className="py-2 pr-3 font-semibold">{bandRange(band)}</td>
                     <td className={`py-2 ${active ? toneClass(band.tone) : "text-[var(--muted-foreground)]"}`}>
-                      {band.label}
+                      {adult ? band.label : newbornBandLabel(band)}
                     </td>
                   </tr>
                 );
@@ -431,7 +455,7 @@ export default function ToolHome() {
         <p className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]">
           {adult
             ? "There is no WHO classification for adult ponderal index. The band above is a descriptive reference range from the anthropometry literature, useful for tracking yourself over time rather than for diagnosis."
-            : "The 2.2 and 3.0 lines come from Miller and Hassanein (Pediatrics, 1971) and remain the usual neonatal convention for separating symmetric from asymmetric growth restriction."}
+            : "The 2.2 and 3.0 lines are historical neonatal reference values. They do not account for gestational age or growth-chart context and must not be used to diagnose growth restriction or macrosomia."}
         </p>
       </section>
 

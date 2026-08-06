@@ -10,21 +10,72 @@ import History from "./History";
 
 const MAX_HISTORY = 10;
 const STORAGE_KEY = "altftool-qr-history";
+const HISTORY_TYPES = new Set([
+  "URL",
+  "TEXT",
+  "EMAIL",
+  "PHONE",
+  "SMS",
+  "WHATSAPP",
+  "WIFI",
+  "VCARD",
+  "LOCATION",
+  "CALENDAR",
+]);
+const HISTORY_PREVIEW = "Content not saved for privacy.";
+
+function toHistoryMetadata(item) {
+  const type = typeof item?.type === "string" ? item.type.toUpperCase() : "";
+  if (!HISTORY_TYPES.has(type)) return null;
+
+  return {
+    type,
+    label: `${type === "WIFI" ? "Wi-Fi" : type === "VCARD" ? "vCard" : type} QR code`,
+    preview: HISTORY_PREVIEW,
+    timestamp: Number.isFinite(item?.timestamp) ? item.timestamp : Date.now(),
+  };
+}
+
+function normalizeHistory(items) {
+  if (!Array.isArray(items)) return [];
+  return items
+    .map(toHistoryMetadata)
+    .filter(Boolean)
+    .slice(0, MAX_HISTORY);
+}
 
 function loadHistory() {
   if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
+    if (!raw) return [];
+
+    // Older versions saved a payload preview (and briefly a complete form
+    // snapshot), which could include Wi-Fi credentials or contact details.
+    // Keep those entries usable as type shortcuts while immediately migrating
+    // the stored data to metadata-only records.
+    const items = normalizeHistory(JSON.parse(raw));
+    saveHistory(items);
+    return items;
   } catch {
+    // A malformed legacy value may still contain private payload text.
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {}
     return [];
   }
 }
 
 function saveHistory(items) {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
-  } catch {}
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(normalizeHistory(items)));
+  } catch {
+    // If a legacy value cannot be replaced, remove it rather than leave
+    // credentials or contact data behind in localStorage.
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {}
+  }
 }
 
 export default function MainComponent() {
@@ -121,10 +172,15 @@ export default function MainComponent() {
       }
 
       case "WIFI": {
-        const ssid = formData.wifiSsid || "";
-        const pass = formData.wifiPass || "";
+        const rawSsid = formData.wifiSsid || "";
+        if (!rawSsid) return "";
+        // Escape WIFI payload delimiters so SSIDs/passwords containing them
+        // are decoded as field values rather than QR grammar.
+        const escapeWifiField = (value) =>
+          String(value).replace(/([\\;,":])/g, "\\$1");
+        const ssid = escapeWifiField(rawSsid);
+        const pass = escapeWifiField(formData.wifiPass || "");
         const enc = formData.wifiEnc || "WPA";
-        if (!ssid) return "";
         return `WIFI:S:${ssid};T:${enc};P:${pass};;`;
       }
 
@@ -161,11 +217,20 @@ export default function MainComponent() {
         if (!title) return "";
         const formatDT = (val) => {
           if (!val) return "";
-          return val.replace(/[-:]/g, "").replace("T", "T") + "00Z";
+          // `datetime-local` is a local wall-clock value. Parse it in the
+          // browser's timezone before serializing the calendar value as UTC.
+          const date = new Date(val);
+          if (Number.isNaN(date.getTime())) return "";
+          return date
+            .toISOString()
+            .replace(/[-:]/g, "")
+            .replace(/\.\d{3}Z$/, "Z");
         };
+        const startUtc = formatDT(start);
+        const endUtc = formatDT(end);
         let ical = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${title}`;
-        if (start) ical += `\nDTSTART:${formatDT(start)}`;
-        if (end) ical += `\nDTEND:${formatDT(end)}`;
+        if (startUtc) ical += `\nDTSTART:${startUtc}`;
+        if (endUtc) ical += `\nDTEND:${endUtc}`;
         if (desc) ical += `\nDESCRIPTION:${desc}`;
         if (loc) ical += `\nLOCATION:${loc}`;
         ical += `\nEND:VEVENT\nEND:VCALENDAR`;
@@ -195,18 +260,15 @@ export default function MainComponent() {
 
   const addToHistory = useCallback((value, type) => {
     if (!value || !value.trim()) return;
-    const label =
-      type === "URL"
-        ? value.replace(/^https?:\/\//, "").slice(0, 60)
-        : value.slice(0, 60);
-    const entry = {
-      type,
-      label,
-      preview: value.slice(0, 120),
-      timestamp: Date.now(),
-    };
+    const entry = toHistoryMetadata({ type, timestamp: Date.now() });
+    if (!entry) return;
     setHistory((prev) => {
-      const next = [entry, ...prev.filter((h) => h.preview !== entry.preview)].slice(0, MAX_HISTORY);
+      // Metadata-only entries cannot restore private content. Keep one recent
+      // shortcut per QR type instead of persisting payloads to distinguish them.
+      const next = [entry, ...prev.filter((item) => item.type !== entry.type)].slice(
+        0,
+        MAX_HISTORY
+      );
       saveHistory(next);
       return next;
     });
@@ -223,16 +285,16 @@ export default function MainComponent() {
   );
 
   const handleHistorySelect = useCallback((item) => {
-    setFormData((prev) => {
-      const next = { ...prev };
-      if (item.type === "URL") next.url = item.preview;
-      else if (item.type === "TEXT") next.text = item.preview;
-      return next;
-    });
-    setActiveType(item.type);
+    if (HISTORY_TYPES.has(item?.type)) setActiveType(item.type);
   }, []);
 
   const handleHistoryClear = useCallback(() => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Clear all saved QR code history? This cannot be undone.")
+    ) {
+      return;
+    }
     setHistory([]);
     saveHistory([]);
   }, []);

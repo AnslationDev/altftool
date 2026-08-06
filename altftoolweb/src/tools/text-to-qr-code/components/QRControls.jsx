@@ -54,10 +54,11 @@ export default function QRControls({
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wide flex items-center gap-1">
+          <label htmlFor="qr-ctl-size" className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wide flex items-center gap-1">
             <Maximize size={12} /> Size
           </label>
           <select
+            id="qr-ctl-size"
             className="w-full h-10 px-2 bg-(--background) border border-(--border) rounded-lg font-semibold text-sm"
             value={size}
             onChange={(e) => setSize(Number(e.target.value))}
@@ -71,10 +72,11 @@ export default function QRControls({
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wide">
+          <label htmlFor="qr-ctl-margin" className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wide">
             Margin
           </label>
           <select
+            id="qr-ctl-margin"
             className="w-full h-10 px-2 bg-(--background) border border-(--border) rounded-lg font-semibold text-sm"
             value={margin}
             onChange={(e) => setMargin(Number(e.target.value))}
@@ -87,10 +89,11 @@ export default function QRControls({
         </div>
 
         <div className="space-y-1.5">
-          <label className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wide flex items-center gap-1">
+          <label htmlFor="qr-ctl-error-level" className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wide flex items-center gap-1">
             <Shield size={12} /> Error Correction
           </label>
           <select
+            id="qr-ctl-error-level"
             className="w-full h-10 px-2 bg-(--background) border border-(--border) rounded-lg font-semibold text-sm"
             value={errorLevel}
             onChange={(e) => setErrorLevel(e.target.value)}

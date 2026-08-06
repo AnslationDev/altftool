@@ -120,6 +120,13 @@ export function convertPitch({
 } = {}) {
   if (!PITCH_MODES.includes(mode)) return { error: "Pick one of the supported pitch notations." };
 
+  // Span and overhang only feed the "apply it to a roof" rafter-length section
+  // below; the pitch conversion itself needs only mode/value (or rise/run).
+  // Leaving them out must therefore never block the conversion, so a blank,
+  // null or omitted entry is read as "not supplied" (0 ft). A figure that was
+  // actually supplied but is unusable — unparseable or negative — is reported
+  // rather than silently zeroed, so the caller sees their mistake instead of
+  // rafter lengths quietly computed from a span of nothing.
   const normalizedSpan = spanFt === "" || spanFt === null || spanFt === undefined ? 0 : spanFt;
   const normalizedOverhang =
     overhangFt === "" || overhangFt === null || overhangFt === undefined

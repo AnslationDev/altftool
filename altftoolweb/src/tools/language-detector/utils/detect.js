@@ -97,6 +97,8 @@ export function detectLanguage(text) {
   // Profiles include Latin Extended letters such as ğ, ł, ă, ș, ț, ơ, ư and
   // đ. A hand-written Latin-1 range silently dropped those characters from
   // the denominator; Unicode script properties cover the full Latin script.
+  // \p{Script=Latin} also excludes × (U+00D7) and ÷ (U+00F7), which are
+  // Common-script maths symbols that a bare à-ÿ range wrongly counted.
   const letters = lower.replace(/[^\p{Script=Latin}]/gu, "");
   const letterCount = letters.length || 1;
 
@@ -156,6 +158,9 @@ export function detectLanguage(text) {
       length: clean.length,
       words,
       uniqueChars,
+      // Count every Unicode letter, not just Latin-1: this tool detects 19
+      // scripts, so Cyrillic, Greek, Devanagari and CJK text must not report
+      // zero letters. \p{L} excludes × and ÷ as well.
       letters: clean.match(/\p{L}/gu)?.length ?? 0,
     },
   };

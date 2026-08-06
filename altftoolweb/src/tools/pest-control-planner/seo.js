@@ -14,11 +14,11 @@ const seo = {
   faqs: [
     [
       "Does this tool prescribe how often pest control should be done?",
-      "No. Its intervals, round counts and callback periods are illustrative demo assumptions for comparing scenarios. Infestation, product label, property conditions and local rules can change the appropriate plan. Ask qualified providers for a written inspection-based schedule.",
+      "No. Its intervals, round counts and callback periods are illustrative demo assumptions for comparing scenarios, and they are not interchangeable with each other: in the demo catalogue the assumed callback period equals the full repeat interval only for cockroaches, mosquitoes, termites and wood borer, while for ants, bed bugs, rodents, lizards and houseflies it is shorter than the interval, leaving an assumed gap with no cover before the next cycle. Infestation, product label, property conditions and local rules can change the appropriate plan. Ask qualified providers for a written inspection-based schedule and written callback terms.",
     ],
     [
       "Are the displayed prices current provider quotes?",
-      "No. They are an August 2026 demo baseline, not live market data. Use them only to compare scenarios, then replace the displayed assumptions with itemised local quotes that state taxes, number of visits, products, exclusions and callback terms.",
+      "No. They are an August 2026 demo baseline, not live market data. They also do not scale the way a round count suggests — a multi-round assumption carries a higher per-sq-ft rate as well as the extra round, so in the demo catalogue one bed-bug cycle works out at roughly five to six times a cockroach cycle for the same floor area once the assumed minimum call-out no longer binds, not twice it. Use the figures only to compare scenarios, then replace the displayed assumptions with itemised local quotes that state taxes, number of visits, products, exclusions and callback terms.",
     ],
     [
       "Why does the calendar show a cycle instead of every visit date?",

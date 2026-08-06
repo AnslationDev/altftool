@@ -18,9 +18,13 @@
 export const MAX_LINES = 1500;
 
 /**
- * Shared memory budget for every exact LCS pass. The table stores one Int32
- * per cell, so this keeps each pass near the same ~9 MiB ceiling as the
- * 1500-line comparison instead of relying on a one-dimensional token cap.
+ * Shared memory budget for every exact LCS pass. MAX_LINES bounds how many
+ * lines there are, not how many words sit on any one of them, so a single very
+ * long unwrapped line can blow up the word-level passes on its own. The table
+ * stores one Int32 per cell, so budgeting by cells keeps every pass near the
+ * same ~9 MiB ceiling as the 1500-line comparison — a one-dimensional word cap
+ * cannot, because the token arrays also carry the whitespace runs between the
+ * words (roughly 2x the tokens, so 4x the cells).
  */
 export const MAX_LCS_CELLS = (MAX_LINES + 1) * (MAX_LINES + 1);
 
@@ -262,9 +266,13 @@ export function buildSideBySide(leftText, rightText, options = {}) {
       const rightLine = rightLines[inserts[k]];
       const leftLineWords = countWords(leftLine);
       const rightLineWords = countWords(rightLine);
-      // diffWords applies the same cell budget as every other LCS pass. Its
-      // token arrays include whitespace runs as well as words, so gating by
-      // the actual table size avoids under-counting a long unwrapped line.
+      // Word-diffing a replaced line is itself an O(wordsA x wordsB) LCS, so a
+      // single very long replaced line (e.g. an unwrapped paragraph) is just as
+      // expensive as the whole-document stats pass below. diffWords applies the
+      // same cell budget as every other LCS pass and reports whether it stayed
+      // exact; past the budget it falls back to marking the line fully
+      // replaced, exactly as already happens below that threshold when the two
+      // lines are too dissimilar to bother aligning.
       const words = diffWords(leftLine, rightLine);
       if (!words.exact) wordHighlightsExact = false;
       const totalWords = leftLineWords + rightLineWords;
@@ -315,13 +323,29 @@ export function buildSideBySide(leftText, rightText, options = {}) {
 
   // The headline Similarity/Churn stats need a whole-document word-level LCS.
   // lcsOps enforces the shared cell budget and reports whether the answer is
-  // exact; beyond it, reuse the bounded row pass rather than freezing the tab.
+  // exact; beyond it, estimate rather than freezing the tab on every keystroke.
   const normaliseWord = options.ignoreCase ? (word) => word.toLowerCase() : (word) => word;
   const wholeDocumentWords = lcsOps(
     leftWordList.map(normaliseWord),
     rightWordList.map(normaliseWord),
   );
-  const sharedWords = wholeDocumentWords.lcs;
+  let sharedWords = wholeDocumentWords.lcs;
+  if (!wholeDocumentWords.exact) {
+    // Two independent estimates, each a *lower bound* on the true LCS, so the
+    // larger one is the tighter answer and neither can overstate similarity:
+    //   1. wholeDocumentWords.lcs — the common prefix plus suffix. Sharp for a
+    //      single oversized line edited at one end, but it collapses to almost
+    //      nothing once a document changes near both ends.
+    //   2. The bounded row pass above. Every left word a row did not mark
+    //      removed was matched in document order, so those matches form a
+    //      genuine common subsequence; it is blind only to words that matched
+    //      across a row boundary, and to rows rendered as full replacements.
+    // Case 2 is far sharper for many short lines (where the rows word-diff
+    // exactly); case 1 is far sharper for one huge line (where they do not).
+    const rowWordsRemoved = rows.reduce((sum, row) => sum + (row.wordsRemoved || 0), 0);
+    sharedWords = Math.max(sharedWords, Math.max(0, leftWords - rowWordsRemoved));
+  }
+
   const totalWords = leftWords + rightWords;
   const similarityPct =
     totalWords === 0 ? 100 : Math.round(((2 * sharedWords) / totalWords) * 1000) / 10;

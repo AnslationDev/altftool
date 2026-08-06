@@ -394,7 +394,9 @@ export function buildChecklist({ traits = [], done = [] } = {}) {
 
 /** Default share of daily runs expected to match tail rules (errors, slow-p95,
  * guardrail blocks, negative feedback). A matching run that was already kept
- * by head sampling is not counted twice. */
+ * by head sampling is not counted twice. A starting estimate, not a
+ * measurement -- replace it with your real error/slow-run/feedback rate once
+ * you have one. */
 export const DEFAULT_TAIL_KEEP_RATE_PCT = 5;
 
 /**
@@ -402,6 +404,9 @@ export const DEFAULT_TAIL_KEEP_RATE_PCT = 5;
  * Head rate reserves room inside the daily trace budget for the expected tail
  * matches. Tail rules then keep matching runs only from the unsampled pool, so
  * one run is never counted twice and captured volume never exceeds traffic.
+ * Tail-kept traces are real stored volume, so they are folded into
+ * storedTraces/storageGb via tailKeepRatePct rather than silently left out of
+ * the storage estimate.
  */
 export function computeSamplingPlan({
   requestsPerDay,
@@ -423,6 +428,8 @@ export function computeSamplingPlan({
   if (target <= 0) return { error: "Trace budget per day must be greater than zero." };
   if (days <= 0) return { error: "Retention must be at least one day." };
   if (kb <= 0) return { error: "Average trace size must be greater than zero." };
+  // A share of daily runs cannot exceed 100% of them, so the upper bound is
+  // part of the validation, not a nicety.
   if (Number.isNaN(tailPct) || tailPct < 0 || tailPct > 100) {
     return { error: "Tail-kept share must be between 0 and 100 percent." };
   }
@@ -440,6 +447,10 @@ export function computeSamplingPlan({
       : (targetRate - tailRate) / (1 - tailRate);
   const headRate = Math.min(1, Math.max(MIN_HEAD_SAMPLE_RATE, rawHeadRate));
   const sampledPerDay = runs * headRate;
+  // Tail rules only ever add runs the head sample already dropped: a run kept
+  // by both is one stored trace, not two. Counting tailKeptPerDay against the
+  // unsampled pool is the union P(head) + (1 - P(head)) * P(tail), which also
+  // keeps captured volume from exceeding the traffic that actually happened.
   const unsampledPerDay = Math.max(0, runs - sampledPerDay);
   const tailKeptPerDay = unsampledPerDay * tailRate;
   const capturedPerDay = Math.min(runs, sampledPerDay + tailKeptPerDay);

@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "How much of my salary should go to rent in India?",
-      "Aim for 30% of net monthly income or less, including maintenance. In Mumbai, Bengaluru and Delhi NCR this often stretches to 35-40%, and the trade-off shows up directly as a smaller savings rate — which is why the planner shows both ratios side by side.",
+      "Aim for 30% of net monthly income or less for rent or your home-loan EMI — the planner's housing ratio tracks that line on its own. Domestic help and society maintenance charges are real needs spending too, so log them in their own line; they count toward your total needs but not toward this 30% figure. In Mumbai, Bengaluru and Delhi NCR the rent line alone often stretches to 35-40%, and the trade-off shows up directly as a smaller savings rate — which is why the planner shows both ratios side by side.",
     ],
     [
       "What is FOIR and why does it matter for a home loan?",

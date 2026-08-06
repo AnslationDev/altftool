@@ -2,13 +2,14 @@
 
 import { Globe, User, Mail, Phone, MessageSquare, MessageCircle, Wifi, MapPin, Calendar, FileText } from "lucide-react";
 
-function Field({ label, value, onChange, placeholder, type = "text", className = "" }) {
+function Field({ id, label, value, onChange, placeholder, type = "text", className = "" }) {
   return (
     <div className={`space-y-1 ${className}`}>
-      <label className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wide">
+      <label htmlFor={id} className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wide">
         {label}
       </label>
       <input
+        id={id}
         type={type}
         value={value}
         onChange={onChange}
@@ -19,11 +20,11 @@ function Field({ label, value, onChange, placeholder, type = "text", className =
   );
 }
 
-function TextArea({ label, value, onChange, placeholder, maxLength, charCount }) {
+function TextArea({ id, label, value, onChange, placeholder, maxLength, charCount }) {
   return (
     <div className="space-y-1">
       <div className="flex items-center justify-between">
-        <label className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wide">
+        <label htmlFor={id} className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wide">
           {label}
         </label>
         {maxLength > 0 && (
@@ -33,6 +34,7 @@ function TextArea({ label, value, onChange, placeholder, maxLength, charCount })
         )}
       </div>
       <textarea
+        id={id}
         value={value}
         onChange={onChange}
         placeholder={placeholder}
@@ -44,13 +46,14 @@ function TextArea({ label, value, onChange, placeholder, maxLength, charCount })
   );
 }
 
-function Select({ label, value, onChange, options }) {
+function Select({ id, label, value, onChange, options }) {
   return (
     <div className="space-y-1">
-      <label className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wide">
+      <label htmlFor={id} className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wide">
         {label}
       </label>
       <select
+        id={id}
         value={value}
         onChange={onChange}
         className="w-full px-4 py-3 bg-(--background) border border-(--border) rounded-xl outline-none focus:ring-2 focus:ring-(--primary) font-medium transition-all"
@@ -76,6 +79,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
           <h3 className="font-semibold text-sm">Plain Text Content</h3>
         </div>
         <TextArea
+          id="qr-text"
           label="Your Text"
           value={formData.text || ""}
           onChange={(e) => update("text", e.target.value)}
@@ -95,6 +99,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
           <h3 className="font-semibold text-sm">Website URL</h3>
         </div>
         <Field
+          id="qr-url"
           label="URL"
           value={formData.url || ""}
           onChange={(e) => update("url", e.target.value)}
@@ -114,6 +119,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field
+            id="qr-email"
             label="Email"
             value={formData.email || ""}
             onChange={(e) => update("email", e.target.value)}
@@ -121,6 +127,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
             type="email"
           />
           <Field
+            id="qr-emailSubject"
             label="Subject"
             value={formData.emailSubject || ""}
             onChange={(e) => update("emailSubject", e.target.value)}
@@ -128,6 +135,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
           />
         </div>
         <TextArea
+          id="qr-emailBody"
           label="Body"
           value={formData.emailBody || ""}
           onChange={(e) => update("emailBody", e.target.value)}
@@ -147,6 +155,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
           <h3 className="font-semibold text-sm">Phone Number</h3>
         </div>
         <Field
+          id="qr-phone"
           label="Phone Number"
           value={formData.phone || ""}
           onChange={(e) => update("phone", e.target.value)}
@@ -166,6 +175,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field
+            id="qr-smsPhone"
             label="Phone Number"
             value={formData.smsPhone || ""}
             onChange={(e) => update("smsPhone", e.target.value)}
@@ -174,6 +184,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
           />
         </div>
         <TextArea
+          id="qr-smsMessage"
           label="Message"
           value={formData.smsMessage || ""}
           onChange={(e) => update("smsMessage", e.target.value)}
@@ -193,6 +204,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
           <h3 className="font-semibold text-sm">WhatsApp Link</h3>
         </div>
         <Field
+          id="qr-whatsappPhone"
           label="Phone Number (with country code)"
           value={formData.whatsappPhone || ""}
           onChange={(e) => update("whatsappPhone", e.target.value)}
@@ -200,6 +212,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
           type="tel"
         />
         <TextArea
+          id="qr-whatsappMessage"
           label="Pre-filled Message"
           value={formData.whatsappMessage || ""}
           onChange={(e) => update("whatsappMessage", e.target.value)}
@@ -219,6 +232,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
           <h3 className="font-semibold text-sm">Wi-Fi Credentials</h3>
         </div>
         <Field
+          id="qr-wifiSsid"
           label="Network Name (SSID)"
           value={formData.wifiSsid || ""}
           onChange={(e) => update("wifiSsid", e.target.value)}
@@ -226,6 +240,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field
+            id="qr-wifiPass"
             label="Password"
             value={formData.wifiPass || ""}
             onChange={(e) => update("wifiPass", e.target.value)}
@@ -233,6 +248,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
             type="password"
           />
           <Select
+            id="qr-wifiEnc"
             label="Encryption"
             value={formData.wifiEnc || "WPA"}
             onChange={(e) => update("wifiEnc", e.target.value)}
@@ -256,18 +272,21 @@ export default function InputForms({ activeType, formData, setFormData }) {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field
+            id="qr-vcardFn"
             label="First Name"
             value={formData.vcardFn || ""}
             onChange={(e) => update("vcardFn", e.target.value)}
             placeholder="John"
           />
           <Field
+            id="qr-vcardLn"
             label="Last Name"
             value={formData.vcardLn || ""}
             onChange={(e) => update("vcardLn", e.target.value)}
             placeholder="Doe"
           />
           <Field
+            id="qr-vcardTel"
             label="Phone"
             value={formData.vcardTel || ""}
             onChange={(e) => update("vcardTel", e.target.value)}
@@ -275,6 +294,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
             type="tel"
           />
           <Field
+            id="qr-vcardEmail"
             label="Email"
             value={formData.vcardEmail || ""}
             onChange={(e) => update("vcardEmail", e.target.value)}
@@ -282,6 +302,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
             type="email"
           />
           <Field
+            id="qr-vcardOrg"
             label="Company"
             value={formData.vcardOrg || ""}
             onChange={(e) => update("vcardOrg", e.target.value)}
@@ -289,6 +310,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
             className="sm:col-span-2"
           />
           <Field
+            id="qr-vcardUrl"
             label="Website"
             value={formData.vcardUrl || ""}
             onChange={(e) => update("vcardUrl", e.target.value)}
@@ -309,12 +331,14 @@ export default function InputForms({ activeType, formData, setFormData }) {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field
+            id="qr-lat"
             label="Latitude"
             value={formData.lat || ""}
             onChange={(e) => update("lat", e.target.value)}
             placeholder="28.6139"
           />
           <Field
+            id="qr-lng"
             label="Longitude"
             value={formData.lng || ""}
             onChange={(e) => update("lng", e.target.value)}
@@ -322,6 +346,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
           />
         </div>
         <Field
+          id="qr-locationLabel"
           label="Label (optional)"
           value={formData.locationLabel || ""}
           onChange={(e) => update("locationLabel", e.target.value)}
@@ -339,6 +364,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
           <h3 className="font-semibold text-sm">Calendar Event</h3>
         </div>
         <Field
+          id="qr-calTitle"
           label="Event Title"
           value={formData.calTitle || ""}
           onChange={(e) => update("calTitle", e.target.value)}
@@ -346,12 +372,14 @@ export default function InputForms({ activeType, formData, setFormData }) {
         />
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Field
+            id="qr-calStart"
             label="Start Date & Time"
             value={formData.calStart || ""}
             onChange={(e) => update("calStart", e.target.value)}
             type="datetime-local"
           />
           <Field
+            id="qr-calEnd"
             label="End Date & Time"
             value={formData.calEnd || ""}
             onChange={(e) => update("calEnd", e.target.value)}
@@ -359,6 +387,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
           />
         </div>
         <TextArea
+          id="qr-calDesc"
           label="Description"
           value={formData.calDesc || ""}
           onChange={(e) => update("calDesc", e.target.value)}
@@ -367,6 +396,7 @@ export default function InputForms({ activeType, formData, setFormData }) {
           charCount={(formData.calDesc || "").length}
         />
         <Field
+          id="qr-calLocation"
           label="Location"
           value={formData.calLocation || ""}
           onChange={(e) => update("calLocation", e.target.value)}

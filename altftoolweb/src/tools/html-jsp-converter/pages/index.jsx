@@ -258,6 +258,11 @@ function jspToHtml(input, options) {
       /<c:out\b([^>]*?)\/>|<c:out\b([^>]*?)>([\s\S]*?)<\/c:out>/gi,
       (full, selfAttrs, bodyAttrs, body) => {
         const attrs = selfAttrs ?? bodyAttrs ?? "";
+        // Accept both forms of the value attribute: when "EL to placeholders"
+        // is on, convertElToHandlebars has already rewritten value="${expr}"
+        // into value="{{ expr }}"; when it is off the raw EL is still there.
+        // Matching only the {{ }} form silently left whole <c:out> elements
+        // unconverted whenever that option was toggled off.
         const valueMatch = attrs.match(
           /value=["'](?:\{\{\s*([^}"']+?)\s*\}\}|\$\{\s*([^}"']+?)\s*\})["']/i,
         );
@@ -270,6 +275,9 @@ function jspToHtml(input, options) {
         if (fallbackText) notes.push(`default "${fallbackText}"`);
         if (escapeXmlMatch) notes.push(`escapeXml=${escapeXmlMatch[1]}`);
         const suffix = notes.length ? ` <!-- c:out ${notes.join(", ")} -->` : "";
+        // Emit the token in whichever dialect the rest of the pass is using,
+        // so unwrapping <c:out> never re-introduces {{ }} into output the user
+        // asked to keep as EL.
         const token = options.elToPlaceholders ? `{{ ${expr} }}` : `\${${expr}}`;
         return `${token}${suffix}`;
       },

@@ -81,9 +81,12 @@ export function computeBonus({
   const perCycleGross = cycles > 0 ? grossPayout / cycles : 0;
   const perCycleNet = cycles > 0 ? netPayout / cycles : 0;
   const fixedPay = mode === "percent" ? Math.max(0, ctc - targetAnnual) : null;
-  // Bonus eligibility does not prove how many months of fixed salary were
-  // paid (a new bonus plan can start mid-employment), so do not prorate the
-  // annual fixed CTC component from this field.
+  // "Months eligible" is a bonus-eligibility window, not a proof of how many
+  // months of fixed salary were paid (a new bonus plan can start mid-
+  // employment, probation can be excluded), so the annual fixed CTC component
+  // is NOT prorated from this field. The total below is therefore stated as
+  // exactly what it is -- annual fixed pay plus the calculated bonus -- and
+  // the footnote flags that a part-year employee received less fixed pay.
   const totalCash = fixedPay === null ? null : fixedPay + grossPayout;
   const shortfall = proratedTarget - grossPayout;
 
@@ -521,6 +524,8 @@ export default function ToolHome() {
         Informational estimate only. Bonus schemes differ — some cap the individual multiplier, some
         apply the company factor before the rating, and statutory bonus under the Payment of Bonus
         Act 1965 is a separate entitlement. Tax here is a flat effective rate, not a slab computation.
+        Eligible months prorate the bonus target only; the fixed pay shown is the full-year figure, so
+        if you also joined or left partway through the year your actual fixed pay was lower than that.
       </p>
     </main>
   );

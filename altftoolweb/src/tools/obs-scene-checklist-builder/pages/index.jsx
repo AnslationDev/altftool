@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Check, Copy, ListChecks, RotateCcw, TriangleAlert } from "lucide-react";
 
 import {
@@ -51,8 +51,15 @@ const TOGGLES = [
 const DASH = "—";
 const NUM = new Intl.NumberFormat("en-US");
 
-// Completion state must survive optional checklist rows appearing or disappearing.
-// Array indices shift when a feature toggle changes, while section + item text stays stable.
+// Completion state has to survive both of the ways a checklist row can move under the user:
+//  - optional rows appearing or disappearing, which shifts every array index below them, so a
+//    bare `${sectionId}-${index}` key would slide a tick onto a different item;
+//  - live values being interpolated into a row's label (bitrate, platform name, keyframe
+//    seconds), which rewrites the item text, so a `${sectionId}::${item}` key built from the
+//    rendered text would drop a tick the moment the user edits the bitrate field.
+// The key is therefore built from a canonical rebuild of the checklist (see `checklistKeys`):
+// same feature toggles, so the same rows in the same order, but with the library's placeholder
+// values instead of the current settings.
 const checklistItemKey = (sectionId, item) => `${sectionId}::${item}`;
 
 export default function ToolHome() {
@@ -96,11 +103,46 @@ export default function ToolHome() {
     [form, settings],
   );
 
+  // Row count depends only on the feature toggles — the platform/keyframe/bitrate options only
+  // change the wording — so this canonical rebuild lines up index-for-index with `sections`
+  // while staying stable as the encoder settings are edited.
+  const checklistKeys = useMemo(() => {
+    const canonical = buildPreLiveChecklist({
+      hasGuests: form.hasGuests,
+      hasGameplay: form.hasGameplay,
+      hasMusic: form.hasMusic,
+      hasAlerts: form.hasAlerts,
+      hasChatOverlay: form.hasChatOverlay,
+      recordsLocally: form.recordsLocally,
+      hasSecondScreen: form.hasSecondScreen,
+      hasCaptureCard: form.hasCaptureCard,
+    });
+    return new Map(
+      canonical.map((section) => [
+        section.id,
+        section.items.map((item) => checklistItemKey(section.id, item)),
+      ]),
+    );
+  }, [
+    form.hasGuests,
+    form.hasGameplay,
+    form.hasMusic,
+    form.hasAlerts,
+    form.hasChatOverlay,
+    form.recordsLocally,
+    form.hasSecondScreen,
+    form.hasCaptureCard,
+  ]);
+
+  const keyFor = useCallback(
+    (sectionId, index) => checklistKeys.get(sectionId)?.[index] ?? `${sectionId}::${index}`,
+    [checklistKeys],
+  );
+
   const total = countChecklistItems(sections);
   const completed = sections.reduce(
     (count, section) =>
-      count +
-      section.items.filter((item) => done.includes(checklistItemKey(section.id, item))).length,
+      count + section.items.filter((_, index) => done.includes(keyFor(section.id, index))).length,
     0,
   );
 
@@ -122,12 +164,11 @@ export default function ToolHome() {
       "",
       `## ${section.title}`,
       ...section.items.map(
-        (item) =>
-          `${done.includes(checklistItemKey(section.id, item)) ? "[x]" : "[ ]"} ${item}`,
+        (item, index) => `${done.includes(keyFor(section.id, index)) ? "[x]" : "[ ]"} ${item}`,
       ),
     ]);
     return [...header, ...body].join("\n");
-  }, [settings, sections, done]);
+  }, [settings, sections, done, keyFor]);
 
   const copyResult = async () => {
     try {
@@ -372,7 +413,7 @@ export default function ToolHome() {
           <ul className="mt-3 space-y-2">
             {section.items.map((item, index) => {
               const inputId = `${section.id}-${index}`;
-              const itemKey = checklistItemKey(section.id, item);
+              const itemKey = keyFor(section.id, index);
               const isDone = done.includes(itemKey);
               return (
                 <li key={itemKey} className="rounded-md bg-[var(--muted)] p-3">

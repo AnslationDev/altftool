@@ -32,12 +32,25 @@ export default function PrivateRecordWorkspace({ title, description, fields = ["
   useEffect(() => {
     const raw = window.localStorage.getItem(storageKey);
     if (raw === null) {
+      // Nothing has ever been written for this tool. That is not a corrupted
+      // read, so it must not raise the alarm below -- otherwise a first-time
+      // visitor is told their (non-existent) records are unreadable.
       setRows([]);
       setLoadError(false);
       setHasLoaded(true);
       return;
     }
     try {
+      // JSON.parse succeeds on any valid JSON value, not just arrays (e.g. a
+      // stray "{}" or "null" written by devtools tampering, a browser
+      // extension, or a future schema change reusing this key). Without a
+      // shape check `rows` would become a non-array, `rows.filter(...)` would
+      // throw on every render, and the only way out would be clearing all
+      // site storage. normalizePrivateRecordRows enforces that shape -- it
+      // throws on a non-array, on any row that isn't a plain object, and it
+      // also de-duplicates/back-fills row ids and coerces field values to
+      // strings -- so all of those land in the catch below and are treated
+      // the same as a parse failure.
       setRows(
         normalizePrivateRecordRows(
           JSON.parse(raw),
@@ -51,12 +64,18 @@ export default function PrivateRecordWorkspace({ title, description, fields = ["
       setLoadError(true);
     }
     setHasLoaded(true);
+    // `storedFields` is memoised off the serialised field list, so a caller
+    // passing a fresh array literal every render doesn't re-run this effect.
   }, [storageKey, storedFields]);
 
   useEffect(() => {
     if (!hasLoaded) return;
     if (rows.length) {
       window.localStorage.setItem(storageKey, JSON.stringify(rows));
+      // Backstop for the explicit setLoadError(false) calls in add()/import:
+      // once real records exist and have been written back, the corrupted-data
+      // banner is stale whichever path produced them.
+      if (loadError) setLoadError(false);
     } else if (!loadError) {
       window.localStorage.removeItem(storageKey);
     }
@@ -81,6 +100,8 @@ export default function PrivateRecordWorkspace({ title, description, fields = ["
     // only falls back to the placeholder for a genuinely empty string).
     const trimmed = Object.fromEntries(fields.map((field) => [field, (values[field] ?? "").trim()]));
     if (!Object.values(trimmed).some(Boolean)) return;
+    // Adding a real record is the explicit "start fresh" signal that releases
+    // the guard preserving the unreadable raw string in localStorage.
     setLoadError(false);
     setRows((current) => [...current, { ...trimmed, id: crypto.randomUUID() }]);
     setValues(Object.fromEntries(fields.map((field) => [field, ""])));
@@ -95,8 +116,21 @@ export default function PrivateRecordWorkspace({ title, description, fields = ["
     const reader = new FileReader();
     reader.onload = () => {
       try {
+        const imported = JSON.parse(String(reader.result));
+        // Checked here as well as inside normalizePrivateRecordRows so the
+        // single most common mistake (exporting/pasting one record object
+        // instead of the array) gets a message that names the actual problem
+        // rather than the generic "not valid JSON in the expected format".
+        if (!Array.isArray(imported)) {
+          setImportMessage({ tone: "error", text: "Import failed: the file must contain a JSON array of records, not a single object." });
+          return;
+        }
+        // Rejects rows that aren't plain objects, back-fills missing ids and
+        // replaces duplicated ones (duplicates would collide as React keys and
+        // make Delete remove several records at once), and keeps only the
+        // declared fields, as strings.
         const safeRows = normalizePrivateRecordRows(
-          JSON.parse(String(reader.result)),
+          imported,
           fields,
           () => crypto.randomUUID(),
         );

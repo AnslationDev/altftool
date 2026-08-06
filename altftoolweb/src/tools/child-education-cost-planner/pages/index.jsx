@@ -13,9 +13,13 @@ const pct = new Intl.NumberFormat("en-IN", {
   minimumFractionDigits: 1,
   maximumFractionDigits: 2,
 });
+const yearsFmt = new Intl.NumberFormat("en-IN", {
+  maximumFractionDigits: 2,
+});
 
 const money = (v) => inr.format(Number.isFinite(v) ? v : 0);
 const rate = (v) => `${pct.format(Number.isFinite(v) ? v : 0)}%`;
+const years = (v) => yearsFmt.format(Number.isFinite(v) ? v : 0);
 
 const DEFAULTS = {
   annualFee: "600000",
@@ -29,12 +33,14 @@ const DEFAULTS = {
 
 const PRESETS = [
   { label: "Engineering in India (4 yrs)", annualFee: "300000", duration: "4", eduInflation: "10" },
-  { label: "Private MBBS (5.5 yrs)", annualFee: "1500000", duration: "6", eduInflation: "10" },
+  { label: "Private MBBS (5.5 yrs)", annualFee: "1500000", duration: "5.5", eduInflation: "10" },
   { label: "Overseas masters (2 yrs)", annualFee: "3500000", duration: "2", eduInflation: "8" },
 ];
 
 const num = (v) => {
-  const n = Number(String(v).trim());
+  const value = String(v).trim();
+  if (value === "") return NaN;
+  const n = Number(value);
   return Number.isFinite(n) ? n : NaN;
 };
 
@@ -72,13 +78,17 @@ export default function ToolHome() {
     const yearsToGo = start - age;
     const gr = g / 100;
     const rr = r / 100;
-    const D = Math.round(dur);
+    const wholeYears = Math.floor(dur);
+    const partialYear = Math.round((dur - wholeYears) * 100) / 100;
+    const D = partialYear > 0 ? wholeYears + 1 : wholeYears;
 
     // Fee for each academic year, inflated to the year it is actually paid
     const schedule = [];
     let corpusNeeded = 0;
     for (let d = 0; d < D; d += 1) {
-      const feeThatYear = fee * Math.pow(1 + gr, yearsToGo + d);
+      const isTrailingPartialYear = partialYear > 0 && d === D - 1;
+      const yearFraction = isTrailingPartialYear ? partialYear : 1;
+      const feeThatYear = fee * yearFraction * Math.pow(1 + gr, yearsToGo + d);
       // Discount back to the goal date; money for later years keeps earning until it's spent
       const presentAtGoal = feeThatYear / Math.pow(1 + rr, d);
       corpusNeeded += presentAtGoal;
@@ -94,7 +104,7 @@ export default function ToolHome() {
     const gap = Math.max(0, corpusNeeded - futureSavings);
 
     const monthlyRate = rr / 12;
-    const months = Math.round(yearsToGo * 12);
+    const months = yearsToGo > 0 ? Math.max(1, Math.round(yearsToGo * 12)) : 0;
     let monthlySip = 0;
     if (gap > 0 && months > 0) {
       if (monthlyRate === 0) {
@@ -120,9 +130,9 @@ export default function ToolHome() {
       lumpsumToday,
       totalInvested,
       growth: Math.max(0, gap - totalInvested),
-      todayTotal: fee * D,
+      todayTotal: fee * dur,
       funded: gap === 0,
-      inputs: { fee, D, g, r, existing },
+      inputs: { fee, duration: dur, g, r, existing },
     };
   }, [annualFee, duration, childAge, startAge, eduInflation, returnRate, savings]);
 
@@ -130,8 +140,8 @@ export default function ToolHome() {
     if (state.error) return "";
     return [
       "Child Education Cost Planner",
-      `Annual fee today: ${money(state.inputs.fee)} x ${state.inputs.D} years = ${money(state.todayTotal)}`,
-      `Years to go: ${state.yearsToGo}`,
+      `Annual fee today: ${money(state.inputs.fee)} x ${years(state.inputs.duration)} years = ${money(state.todayTotal)}`,
+      `Years to go: ${years(state.yearsToGo)}`,
       `Education inflation: ${rate(state.inputs.g)} p.a. | Expected return: ${rate(state.inputs.r)} p.a.`,
       `First-year fee at admission: ${money(state.firstYearFee)}`,
       `Total fees over the course (future value): ${money(state.totalSpend)}`,
@@ -208,10 +218,10 @@ export default function ToolHome() {
                   <input
                     id="cec-duration"
                     type="number"
-                    inputMode="numeric"
+                    inputMode="decimal"
                     min="1"
                     max="10"
-                    step="1"
+                    step="0.5"
                     value={duration}
                     onChange={(e) => setDuration(e.target.value)}
                     className={inputClass}
@@ -346,9 +356,9 @@ export default function ToolHome() {
                 {state.error}
               </div>
             ) : (
-              <>
+              <div>
                 <div className="flex flex-wrap items-start justify-between gap-3">
-                  <div>
+                  <div aria-live="polite" role="status">
                     <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                       Monthly SIP needed
                     </p>
@@ -356,7 +366,7 @@ export default function ToolHome() {
                       {money(state.monthlySip)}
                     </p>
                     <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-                      for {state.yearsToGo} {state.yearsToGo === 1 ? "year" : "years"} ({state.months} months)
+                      for {years(state.yearsToGo)} {state.yearsToGo === 1 ? "year" : "years"} ({state.months} months)
                     </p>
                   </div>
                   <button
@@ -429,7 +439,7 @@ export default function ToolHome() {
                   later years keeps earning until it is spent. SIP is assumed to be invested at the
                   start of each month. Estimates only, not investment advice.
                 </p>
-              </>
+              </div>
             )}
           </div>
         </section>

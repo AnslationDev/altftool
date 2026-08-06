@@ -207,9 +207,10 @@ function clean(value) {
 /**
  * Rough keyword screen for hostile language, not real sentiment analysis. It
  * exists so the "No criticism of colleagues or employer" checklist item can
- * stop being a hardcoded `true` and start reflecting the one piece of free
- * text (the custom reason) that goes into the letter body unfiltered. It will
- * miss subtler criticism and can occasionally flag a neutral use of a word
+ * stop being a hardcoded `true` and start reflecting the free text the user
+ * supplies (the custom reason and the handover notes) that goes into the
+ * letter body unfiltered. It will miss subtler criticism and can
+ * occasionally flag a neutral use of a word
  * (e.g. "negligent" in a legal sense) — it is a safety net, not a guarantee.
  */
 const CRITICISM_MARKERS = [

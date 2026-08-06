@@ -401,7 +401,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               aria-label="Copy extension board load result"
-              className={PRIMARY_BTN}
+              className={GHOST_BTN}
               disabled={!ok}
             >
               {isCopied("result") ? (
@@ -411,7 +411,7 @@ export default function ToolHome() {
               )}
               {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
