@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, PartyPopper, RotateCcw, Shuffle } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   MAX_WISHES,
   OCCASIONS,
@@ -38,12 +40,13 @@ const EM_DASH = "—";
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copiedId, setCopiedId] = useState("");
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const setField = (key) => (event) => {
     const { value } = event.target;
     setForm((current) => ({ ...current, [key]: value }));
-    setCopiedId("");
+    resetCopyState();
   };
 
   const result = useMemo(() => generateTeluguNewYearWishes(form), [form]);
@@ -52,27 +55,29 @@ export default function ToolHome() {
 
   const shuffle = () => {
     setForm((current) => ({ ...current, seed: (Number(current.seed) || 0) + 1 }));
-    setCopiedId("");
+    resetCopyState();
   };
 
   const reset = () => {
-    setForm(DEFAULTS);
-    setCopiedId("");
-  };
-
-  const copy = async (id, text) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopiedId(id);
-      setTimeout(() => setCopiedId(""), 1500);
-    } catch {
-      setCopiedId("");
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset every field, including your typed recipient name, sign-off name and Telugu year name, back to the demo example values? This cannot be undone.",
+      )
+    ) {
+      return;
     }
+    setForm(DEFAULTS);
+    resetCopyState();
   };
 
-  const copyAll = async () => {
+  const copy = (id, text) => {
+    copyToClipboard(id, text, { label: id === "all" ? "all messages" : "message" });
+  };
+
+  const copyAll = () => {
     if (failed) return;
-    await copy("all", result.wishes.map((wish) => wish.text).join("\n\n---\n\n"));
+    copy("all", result.wishes.map((wish) => wish.text).join("\n\n---\n\n"));
   };
 
   return (
@@ -214,14 +219,17 @@ export default function ToolHome() {
             aria-label="Copy every generated wish"
             className={`${GHOST_BTN} disabled:opacity-50`}
           >
-            {copiedId === "all" ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-            {copiedId === "all" ? "Copied!" : "Copy all"}
+            {isCopied("all") ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+            {isCopied("all") ? "Copied!" : "Copy all"}
           </button>
-          <button type="button" onClick={reset} aria-label="Reset all options" className={GHOST_BTN}>
+          <button type="button" onClick={reset} aria-label="Reset all options" className={PRIMARY_BTN}>
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Reset
           </button>
         </div>
+        <span aria-live="polite" role="status" className="sr-only">
+          {announcement}
+        </span>
       </section>
 
       {failed ? (
@@ -238,7 +246,9 @@ export default function ToolHome() {
           Greeting used
         </p>
         <p className="mt-1 text-2xl font-semibold leading-snug text-[var(--primary)] sm:text-3xl">
-          {failed ? EM_DASH : result.greetingUsed}
+          {failed
+            ? EM_DASH
+            : result.greetingUsed || "Not used - short captions stand alone"}
         </p>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
@@ -270,12 +280,12 @@ export default function ToolHome() {
                   aria-label={`Copy message ${index + 1}`}
                   className={GHOST_BTN}
                 >
-                  {copiedId === wish.id ? (
+                  {isCopied(wish.id) ? (
                     <Check className="h-4 w-4" aria-hidden="true" />
                   ) : (
                     <Copy className="h-4 w-4" aria-hidden="true" />
                   )}
-                  {copiedId === wish.id ? "Copied!" : "Copy"}
+                  {isCopied(wish.id) ? "Copied!" : "Copy"}
                 </button>
               </div>
               <p className="mt-3 whitespace-pre-wrap break-words text-base leading-7">{wish.text}</p>
@@ -283,7 +293,8 @@ export default function ToolHome() {
                 {wish.length} characters ·{" "}
                 <span className={wish.fitsOneSms ? "text-[var(--success)]" : undefined}>
                   {wish.smsSegments} SMS {wish.smsSegments === 1 ? "segment" : "segments"} (
-                  {wish.isUnicode ? "Unicode, 70 per segment" : "GSM-7, 160 per segment"})
+                  {wish.isUnicode ? "Unicode" : "GSM-7"}, {wish.smsSegments > 1 ? wish.concatLimit : wish.smsLimit}{" "}
+                  per segment{wish.smsSegments > 1 ? " once split" : ""})
                 </span>{" "}
                 · {wish.fitsWhatsAppStatus ? "fits" : "too long for"} a WhatsApp status (
                 {WHATSAPP_STATUS_LIMIT} characters)

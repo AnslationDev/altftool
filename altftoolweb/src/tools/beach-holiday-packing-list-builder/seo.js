@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "How many swimsuits should I take?",
-      "Two at minimum, so one can dry while the other is worn — swimwear packed damp is the usual cause of a musty bag. Add a third if you swim more than twice a day or the humidity keeps things from drying overnight.",
+      "Two at minimum, so one can dry while the other is worn — swimwear packed damp is the usual cause of a musty bag. Add a third if you swim twice a day or more, or the humidity keeps things from drying overnight.",
     ],
   ],
 };

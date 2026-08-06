@@ -149,7 +149,7 @@ export default function ClipboardCapsuleHome() {
 
     // Search filtering
     if (searchQuery.trim().length > 0) {
-      const q = searchQuery.toLowerCase();
+      const q = searchQuery.trim().toLowerCase();
       result = result.filter(s => 
         (s.title && s.title.toLowerCase().includes(q)) || 
         (s.content && s.content.toLowerCase().includes(q)) ||

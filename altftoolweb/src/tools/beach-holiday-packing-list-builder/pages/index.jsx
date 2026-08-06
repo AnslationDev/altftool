@@ -129,6 +129,14 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    const hasTicks = Object.values(ticked).some(Boolean);
+    const hasChanges = JSON.stringify(form) !== JSON.stringify(DEFAULTS);
+    if (
+      (hasTicks || hasChanges) &&
+      !window.confirm("Reset the form and clear every ticked item? This cannot be undone.")
+    ) {
+      return;
+    }
     setForm(DEFAULTS);
     setTicked({});
     setCopied(false);
@@ -298,7 +306,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        role="status"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
@@ -351,8 +363,12 @@ export default function ToolHome() {
               "Weight to spare",
               hasError
                 ? DASH
-                : result.spareKg >= 0
-                  ? `${NUM.format(result.spareKg)} kg under`
+                : // Branch on the unrounded withinAllowance boolean, not the
+                  // rounded spareKg's sign — a party a few grams over its
+                  // allowance can round to 0.0 kg, and that must still read
+                  // as "over" to agree with the warning banner below.
+                  result.withinAllowance
+                  ? `${NUM.format(Math.abs(result.spareKg))} kg under`
                   : `${NUM.format(Math.abs(result.spareKg))} kg over`,
             ],
             ["Days of clothing to cover", hasError ? DASH : `${result.wearDays} days`],

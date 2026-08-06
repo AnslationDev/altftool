@@ -168,7 +168,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        role="status"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -245,6 +249,12 @@ export default function ToolHome() {
             {result.gvwCheck.sufficient
               ? `Capacity check passed: ${kg(result.gvwCheck.capacityKg)} against ${kg(result.gvwCheck.gvwKg)} gross weight, a margin of ${kg(result.gvwCheck.marginKg)}.`
               : `Capacity check failed: ${kg(result.gvwCheck.capacityKg)} against ${kg(result.gvwCheck.gvwKg)} gross weight — short by ${kg(Math.abs(result.gvwCheck.marginKg))}.`}
+          </p>
+        ) : null}
+
+        {ok && result.capacityNote ? (
+          <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm text-[var(--muted-foreground)]">
+            {result.capacityNote}
           </p>
         ) : null}
 

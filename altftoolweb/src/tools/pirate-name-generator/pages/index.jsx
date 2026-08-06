@@ -1,7 +1,9 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
-import { Shuffle, Copy, Check, Anchor, Ship, Skull, Sword } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Shuffle, Copy, Check, Anchor, Ship } from "lucide-react";
+
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const PIRATES = [
   { name: "Captain Black Beard", ship: "The Revenge", crew: 45, bounty: "2,500,000", ocean: "Caribbean", weapon: "Cutlass", motto: "Take what ye can!" },
@@ -28,24 +30,40 @@ function getRandomPirate() {
 export default function ToolHome() {
   const [pirate, setPirate] = useState(null);
   const [animating, setAnimating] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
+
+  const generateTimerRef = useRef(null);
+  const fadeInFrameRef = useRef(null);
+
+  // Clear any pending re-roll animation timers/frames on unmount so a click
+  // right before navigating away doesn't call setState after unmount.
+  useEffect(() => {
+    return () => {
+      if (generateTimerRef.current) window.clearTimeout(generateTimerRef.current);
+      if (fadeInFrameRef.current) window.cancelAnimationFrame(fadeInFrameRef.current);
+    };
+  }, []);
 
   const handleGenerate = useCallback(() => {
     setAnimating(true);
-    setTimeout(() => {
+    generateTimerRef.current = window.setTimeout(() => {
       setPirate(getRandomPirate());
-      setAnimating(false);
+      // Flip back to opacity-100 on the next frame instead of in the same
+      // commit as the content swap -- otherwise React batches both state
+      // updates together, the new content never paints at opacity-0, and
+      // the fade-in half of the crossfade never actually plays.
+      fadeInFrameRef.current = window.requestAnimationFrame(() => {
+        fadeInFrameRef.current = window.requestAnimationFrame(() => {
+          setAnimating(false);
+        });
+      });
     }, 250);
   }, []);
 
-  const handleCopy = async () => {
+  const handleCopy = () => {
     if (!pirate) return;
     const text = `${pirate.name}\nShip: ${pirate.ship}\nCrew: ${pirate.crew}\nBounty: $${pirate.bounty}\nOcean: ${pirate.ocean}\nWeapon: ${pirate.weapon}\nMotto: "${pirate.motto}"`;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {}
+    copy("pirate", text, { label: "pirate details" });
   };
 
   return (
@@ -84,7 +102,12 @@ export default function ToolHome() {
           </button>
 
           {pirate && (
-            <div className={`rounded-2xl p-6 border transition-all duration-300 ${animating ? "opacity-0 scale-95" : "opacity-100 scale-100"}`} style={{ background: "var(--card)", borderColor: "var(--border)" }}>
+            <div
+              className={`rounded-2xl p-6 border transition-all duration-300 ${animating ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
+              style={{ background: "var(--card)", borderColor: "var(--border)" }}
+              aria-live="polite"
+              role="status"
+            >
               <div className="flex items-center gap-4 mb-4">
                 <div className="p-3 rounded-xl" style={{ background: "var(--background)" }}>
                   <Anchor size={28} style={{ color: "var(--primary)" }} />
@@ -102,7 +125,7 @@ export default function ToolHome() {
                 </div>
                 <div className="p-3 rounded-xl" style={{ background: "var(--background)" }}>
                   <p className="text-[10px] font-black uppercase tracking-wider mb-0.5" style={{ color: "var(--muted-foreground)" }}>Bounty</p>
-                  <p className="text-lg font-extrabold" style={{ color: "#F59E0B" }}>${pirate.bounty}</p>
+                  <p className="text-lg font-extrabold" style={{ color: "var(--warning-text)" }}>${pirate.bounty}</p>
                 </div>
                 <div className="p-3 rounded-xl" style={{ background: "var(--background)" }}>
                   <p className="text-[10px] font-black uppercase tracking-wider mb-0.5" style={{ color: "var(--muted-foreground)" }}>Ocean</p>
@@ -120,12 +143,16 @@ export default function ToolHome() {
 
               <button
                 onClick={handleCopy}
+                aria-label={isCopied("pirate") ? "Copied pirate details to clipboard" : "Copy pirate details"}
                 className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-bold border transition-all"
-                style={{ borderColor: "var(--border)", color: copied ? "var(--primary)" : "var(--foreground)" }}
+                style={{ borderColor: "var(--border)", color: isCopied("pirate") ? "var(--primary)" : "var(--foreground)" }}
               >
-                {copied ? <Check size={16} /> : <Copy size={16} />}
-                {copied ? "Copied!" : "Copy Pirate"}
+                {isCopied("pirate") ? <Check size={16} /> : <Copy size={16} />}
+                {isCopied("pirate") ? "Copied!" : "Copy Pirate"}
               </button>
+              <span className="sr-only" role="status" aria-live="polite">
+                {announcement}
+              </span>
             </div>
           )}
 

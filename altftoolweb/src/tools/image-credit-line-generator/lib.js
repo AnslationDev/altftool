@@ -117,6 +117,21 @@ export const RIGHTS_TERMS = {
 
 const clean = (value) => String(value ?? "").replace(/\s+/g, " ").trim();
 
+/** Human-readable labels for the fields a style's `parts` array can reference. */
+const FIELD_LABELS = {
+  photographer: "photographer",
+  agency: "agency",
+  owner: "collection",
+  handle: "social handle",
+  year: "year",
+};
+
+function joinWithOr(items) {
+  if (items.length <= 1) return items[0] || "";
+  if (items.length === 2) return `${items[0]} or ${items[1]}`;
+  return `${items.slice(0, -1).join(", ")}, or ${items[items.length - 1]}`;
+}
+
 function partValue(part, fields) {
   const raw = clean(fields[part.field]);
   if (!raw) return "";
@@ -171,8 +186,10 @@ export function buildCreditLine(input = {}) {
   const fields = { photographer, agency, owner, handle, year, source };
   const creditLine = renderStyle(style, fields);
   if (!creditLine) {
+    const usedFields = [...new Set(style.parts.map((part) => part.field))];
+    const fieldLabels = usedFields.map((field) => FIELD_LABELS[field] || field);
     return {
-      error: `The ${style.label.split(" — ")[0]} style needs at least one of the fields it uses. Fill in the photographer, agency or collection.`,
+      error: `The ${style.label.split(" — ")[0]} style needs at least one of the fields it uses. Fill in the ${joinWithOr(fieldLabels)}.`,
     };
   }
 

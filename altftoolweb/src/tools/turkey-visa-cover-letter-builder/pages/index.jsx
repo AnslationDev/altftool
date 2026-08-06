@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Landmark, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   MAX_STAY_DAYS_PER_180,
   PASSPORT_DAYS_BEYOND_STAY,
@@ -57,31 +58,32 @@ const DEFAULTS = {
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const set = (key) => (event) => {
     const { value } = event.target;
     setForm((current) => ({ ...current, [key]: value }));
-    setCopied(false);
+    resetCopyState();
   };
 
   const result = useMemo(() => buildTurkeyCoverLetter(form), [form]);
   const hasError = Boolean(result.error);
 
-  const copyLetter = async () => {
+  const copyLetter = () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.letter);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1600);
-    } catch {
-      setCopied(false);
-    }
+    copy("letter", result.letter, { label: "cover letter" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will clear all your entered personal, passport and trip details and replace them with the sample values — this cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setForm(DEFAULTS);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -210,7 +212,7 @@ export default function ToolHome() {
       </section>
 
       {hasError ? (
-        <p role="alert" className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+        <p role="alert" className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]">
           {result.error}
         </p>
       ) : null}
@@ -235,16 +237,27 @@ export default function ToolHome() {
               type="button"
               onClick={copyLetter}
               disabled={hasError}
-              aria-label="Copy the finished cover letter to the clipboard"
-              className={`${GHOST_BTN} disabled:opacity-50`}
+              aria-label={
+                isCopied("letter")
+                  ? "Copied the cover letter to clipboard"
+                  : "Copy the finished cover letter to the clipboard"
+              }
+              className={`${PRIMARY_BTN} disabled:opacity-50`}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy letter"}
+              {isCopied("letter") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("letter") ? "Copied!" : "Copy letter"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset every field to the sample values" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
@@ -277,20 +290,25 @@ export default function ToolHome() {
           </div>
         </dl>
 
-        {!hasError && result.warnings.length ? (
-          <ul className="mt-4 space-y-2">
-            {result.warnings.map((warning) => (
-              <li key={warning} className="rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">
-                {warning}
-              </li>
-            ))}
-          </ul>
-        ) : null}
-        {!hasError && !result.warnings.length ? (
-          <p className="mt-4 rounded-md border border-[var(--border)] px-3 py-2 text-sm text-[var(--success)]">
-            Stay allowance, the 90/180 rule, passport validity and visa validity all pass the automatic checks.
-          </p>
-        ) : null}
+        <div aria-live="polite" role="status">
+          {!hasError && result.warnings.length ? (
+            <ul className="mt-4 space-y-2">
+              {result.warnings.map((warning) => (
+                <li
+                  key={warning}
+                  className="rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger-text)]"
+                >
+                  {warning}
+                </li>
+              ))}
+            </ul>
+          ) : null}
+          {!hasError && !result.warnings.length ? (
+            <p className="mt-4 rounded-md border border-[var(--border)] px-3 py-2 text-sm text-[var(--success-text)]">
+              Stay allowance, the 90/180 rule, passport validity and visa validity all pass the automatic checks.
+            </p>
+          ) : null}
+        </div>
       </section>
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">

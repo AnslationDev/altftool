@@ -145,8 +145,17 @@ export function decodeTyreCode(code, { tyresOnVehicle = 4, grossVehicleWeightKg 
   }
 
   if (constructionRaw === "ZR" && speedSymbol && !OPEN_ENDED_SPEED[speedSymbol]) {
-    speedIsMinimum = true;
-    speedNote = "ZR in the size plus a speed symbol means the service description governs: the tyre is rated above 240 km/h.";
+    // ZR alone (no trailing speed symbol) is the true open-ended case, already
+    // handled by OPEN_ENDED_SPEED.ZR above. Here the tyre carries a FULL
+    // service description — load index plus a normal trailing speed symbol —
+    // so per ETRTO/ECE R30 the rated speed is the EXACT value that symbol
+    // gives (already resolved above), not an open "above" ceiling. Setting
+    // speedIsMinimum here would make the headline read "above 300 km/h" next
+    // to a note claiming "above 240 km/h" — two different, both-wrong numbers
+    // for the same tyre. Leave speedKmh/speedIsMinimum as the exact symbol
+    // lookup already set, and only add an explanatory note.
+    speedNote =
+      "ZR in the size denotes radial construction historically rated above 240 km/h. With a full service description like this one (load index plus speed symbol), the exact rated speed is the one given by the speed symbol above, not an open-ended ceiling.";
   }
 
   const sidewallMm = (widthMm * aspect) / 100;
@@ -157,7 +166,22 @@ export function decodeTyreCode(code, { tyresOnVehicle = 4, grossVehicleWeightKg 
   const revsPerKmLoaded = 1000000 / (circumferenceMm * DEFLECTION_FACTOR);
 
   const count = Number.isFinite(tyresOnVehicle) && tyresOnVehicle >= 1 ? Math.floor(tyresOnVehicle) : 4;
-  const totalCapacityKg = loadKg * count;
+
+  // Dual-fitment capacity: a second (dual) load index only exists on tyres
+  // meant for dual-rear-wheel trucks — two single-fitment tyres on the front
+  // axle, and every further tyre mounted as a de-rated dual pair on the rear.
+  // Using the single-fitment figure for ALL of `count` tyres (the previous
+  // behaviour) silently overstates capacity for exactly the vehicles this
+  // marking exists for, e.g. LT265/75R16 123/120Q with 6 tyres fitted.
+  let totalCapacityKg;
+  let capacityNote = null;
+  if (loadDualKg !== null && count > 2) {
+    const dualCount = count - 2;
+    totalCapacityKg = loadKg * 2 + loadDualKg * dualCount;
+    capacityNote = `Capacity assumes the standard dual-rear-wheel layout this tyre's second load index is for: 2 tyres at the single-fitment index (${loadIndex} = ${loadKg} kg each) on the front axle, and the remaining ${dualCount} at the dual-fitment index (${loadIndexDual} = ${loadDualKg} kg each) on the rear.`;
+  } else {
+    totalCapacityKg = loadKg * count;
+  }
 
   let gvwCheck = null;
   if (Number.isFinite(grossVehicleWeightKg) && grossVehicleWeightKg > 0) {
@@ -168,7 +192,13 @@ export function decodeTyreCode(code, { tyresOnVehicle = 4, grossVehicleWeightKg 
       sufficient: totalCapacityKg >= grossVehicleWeightKg,
     };
     if (!gvwCheck.sufficient) {
-      warnings.push(`${count} tyres at load index ${loadIndex} carry ${totalCapacityKg} kg, which is below the ${grossVehicleWeightKg} kg gross weight you entered. Fit a higher load index.`);
+      const shortfallKg = Math.abs(gvwCheck.marginKg);
+      const suggestion = loadIndexForKg(grossVehicleWeightKg / count);
+      warnings.push(
+        suggestion
+          ? `${count} tyres at load index ${loadIndex} carry ${totalCapacityKg} kg, short by ${shortfallKg} kg of the ${grossVehicleWeightKg} kg gross weight you entered. You need at least load index ${suggestion.index} (${suggestion.kg} kg per tyre) across all ${count} tyres.`
+          : `${count} tyres at load index ${loadIndex} carry ${totalCapacityKg} kg, short by ${shortfallKg} kg of the ${grossVehicleWeightKg} kg gross weight you entered. Fit a higher load index — no index in the standard table (up to 150 = ${LOAD_INDEX_KG[150]} kg) covers ${Math.ceil(grossVehicleWeightKg / count)} kg per tyre at this tyre count.`,
+      );
     }
   }
 
@@ -199,6 +229,7 @@ export function decodeTyreCode(code, { tyresOnVehicle = 4, grossVehicleWeightKg 
     axleCapacityKg: loadKg * 2,
     tyresOnVehicle: count,
     totalCapacityKg,
+    capacityNote,
     speedSymbol,
     speedKmh,
     speedMph: speedKmh === null ? null : round(speedKmh / KM_PER_MILE, 1),

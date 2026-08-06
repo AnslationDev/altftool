@@ -17,7 +17,7 @@ const Features = () => {
     {
       title: "Custom File Order",
       description:
-        "Rearrange pages or documents before merging to create the perfect final file.",
+        "Rearrange documents before merging to create the perfect final file.",
     },
     {
       title: "Fast & Secure Processing",

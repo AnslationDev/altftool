@@ -20,6 +20,11 @@
  * Message length rules used by the counter:
  *  - GSM-7 encoded SMS fits 160 characters in a single segment.
  *  - Any Telugu character forces UCS-2, which fits 70 per segment.
+ *  - Once a message needs more than one segment, every part of that
+ *    concatenated SMS loses a few characters to the UDH header carriers use
+ *    to stitch the parts back together, so per-part capacity drops to 153
+ *    (GSM-7) or 67 (UCS-2) - the standard concatenated-SMS convention used by
+ *    SMS aggregators such as Twilio.
  *  - WhatsApp text status allows up to 700 characters.
  */
 
@@ -28,6 +33,12 @@ export const SMS_GSM7_LIMIT = 160;
 
 /** Single-segment SMS length once any non-Latin character forces UCS-2. */
 export const SMS_UNICODE_LIMIT = 70;
+
+/** Per-part length for GSM-7 text once a message spans multiple concatenated SMS segments. */
+export const SMS_GSM7_CONCAT_LIMIT = 153;
+
+/** Per-part length for UCS-2 text once a message spans multiple concatenated SMS segments. */
+export const SMS_UNICODE_CONCAT_LIMIT = 67;
 
 /** Maximum length of a WhatsApp text status. */
 export const WHATSAPP_STATUS_LIMIT = 700;
@@ -152,22 +163,45 @@ export const TONES = [
   {
     id: "family",
     label: "Family and friends",
-    lines: {
-      telugu: [
-        "ఉగాది పచ్చడిలా ఈ సంవత్సరం కూడా అన్ని రుచులతో నిండుగా ఉండాలి.",
-        "ఈ ఏడాది మనం ఇంకా ఎక్కువసార్లు కలుద్దాం, ఇంకా ఎక్కువ నవ్వుదాం.",
-        "కొత్త బట్టలు, మంచి భోజనం, కొత్త మొదలు - బాగుండండి!",
-      ],
-      tenglish: [
-        "Ugadi pachadi laaga ee samvatsaram kuda anni ruchulatho nindugaa undali.",
-        "Ee edadi manam inka ekkuvasarlu kaluddam, inka ekkuva navvudam.",
-        "Kotha battalu, manchi bhojanam, kotha modalu - baagundandi!",
-      ],
-      english: [
-        "May the year taste like Ugadi pachadi - every flavour in its right place.",
-        "Here is to meeting more often and laughing a lot louder this year.",
-        "New clothes, a full plate and a clean slate. Enjoy all of it.",
-      ],
+    // The Ugadi-pachadi line only makes sense for the Ugadi occasion, so
+    // (unlike "traditional" and "professional", which are genuinely
+    // occasion-neutral) this tone's lines are split per occasion the same
+    // way OCCASIONS.statusLines is - see linesFor().
+    linesByOccasion: {
+      ugadi: {
+        telugu: [
+          "ఉగాది పచ్చడిలా ఈ సంవత్సరం కూడా అన్ని రుచులతో నిండుగా ఉండాలి.",
+          "ఈ ఏడాది మనం ఇంకా ఎక్కువసార్లు కలుద్దాం, ఇంకా ఎక్కువ నవ్వుదాం.",
+          "కొత్త బట్టలు, మంచి భోజనం, కొత్త మొదలు - బాగుండండి!",
+        ],
+        tenglish: [
+          "Ugadi pachadi laaga ee samvatsaram kuda anni ruchulatho nindugaa undali.",
+          "Ee edadi manam inka ekkuvasarlu kaluddam, inka ekkuva navvudam.",
+          "Kotha battalu, manchi bhojanam, kotha modalu - baagundandi!",
+        ],
+        english: [
+          "May the year taste like Ugadi pachadi - every flavour in its right place.",
+          "Here is to meeting more often and laughing a lot louder this year.",
+          "New clothes, a full plate and a clean slate. Enjoy all of it.",
+        ],
+      },
+      january: {
+        telugu: [
+          "ఈ కొత్త సంవత్సరం మీ కుటుంబానికి ఆనందం, ఆరోగ్యం, మంచి భోజనం తీసుకురావాలి.",
+          "ఈ ఏడాది మనం ఇంకా ఎక్కువసార్లు కలుద్దాం, ఇంకా ఎక్కువ నవ్వుదాం.",
+          "కొత్త బట్టలు, మంచి భోజనం, కొత్త మొదలు - బాగుండండి!",
+        ],
+        tenglish: [
+          "Ee kotha samvatsaram mee kutumbaniki aanandam, aarogyam, manchi bhojanam theesukuravali.",
+          "Ee edadi manam inka ekkuvasarlu kaluddam, inka ekkuva navvudam.",
+          "Kotha battalu, manchi bhojanam, kotha modalu - baagundandi!",
+        ],
+        english: [
+          "May this new year bring your family joy, good health and plenty of good food.",
+          "Here is to meeting more often and laughing a lot louder this year.",
+          "New clothes, a full plate and a clean slate. Enjoy all of it.",
+        ],
+      },
     },
   },
   {
@@ -224,12 +258,20 @@ export function measureMessage(text) {
   const length = characters.length;
   const isUnicode = characters.some((ch) => ch.codePointAt(0) > 0x7f);
   const smsLimit = isUnicode ? SMS_UNICODE_LIMIT : SMS_GSM7_LIMIT;
+  const concatLimit = isUnicode ? SMS_UNICODE_CONCAT_LIMIT : SMS_GSM7_CONCAT_LIMIT;
+  const fitsOneSms = length > 0 && length <= smsLimit;
+  // A message that fits in one segment uses the full single-segment budget.
+  // Once it needs more than one segment, every part (including the first)
+  // is capped at the smaller concatenated-SMS per-part limit, because each
+  // part now carries a UDH header.
+  const smsSegments = length === 0 ? 0 : fitsOneSms ? 1 : Math.ceil(length / concatLimit);
   return {
     length,
     isUnicode,
     smsLimit,
-    smsSegments: length === 0 ? 0 : Math.ceil(length / smsLimit),
-    fitsOneSms: length > 0 && length <= smsLimit,
+    concatLimit,
+    smsSegments,
+    fitsOneSms,
     fitsWhatsAppStatus: length <= WHATSAPP_STATUS_LIMIT,
   };
 }
@@ -237,6 +279,10 @@ export function measureMessage(text) {
 /** The body lines available for an occasion + tone + script combination. */
 function linesFor(occasion, tone, script) {
   if (tone.id === "status") return occasion.statusLines[script] || [];
+  if (tone.linesByOccasion) {
+    const byOccasion = tone.linesByOccasion[occasion.id];
+    return (byOccasion && byOccasion[script]) || [];
+  }
   return (tone.lines && tone.lines[script]) || [];
 }
 
@@ -349,6 +395,10 @@ export function generateTeluguNewYearWishes(input) {
     wishes,
     longestLength,
     variantsAvailable: maxVariants,
-    greetingUsed: greeting,
+    // Short captions never include the greeting/head (see the loop above),
+    // so there is nothing meaningful to report here for that tone - reporting
+    // `greeting` unconditionally would show text the copyable messages don't
+    // actually contain, including any yearName customization the user typed.
+    greetingUsed: isShort ? null : greeting,
   };
 }

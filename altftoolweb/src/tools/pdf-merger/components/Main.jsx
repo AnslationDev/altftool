@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   ArrowDown,
@@ -77,18 +77,20 @@ function buildMergeManifest(files, result, status) {
 }
 
 /*  Merge PDFs */
-const mergePdfs = async (files) => {
+const mergePdfs = async (files, onProgress) => {
   try {
     const PDFDocument = await loadPdfDocument();
     const mergedPdf = await PDFDocument.create();
     let pageCount = 0;
 
-    for (const file of files) {
+    for (let index = 0; index < files.length; index += 1) {
+      const file = files[index];
       const arrayBuffer = await file.arrayBuffer();
       const pdf = await PDFDocument.load(arrayBuffer, { ignoreEncryption: true });
       const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
       copiedPages.forEach((page) => mergedPdf.addPage(page));
       pageCount += copiedPages.length;
+      onProgress?.(index + 1, files.length);
     }
 
     const pdfBytes = await mergedPdf.save();
@@ -114,13 +116,14 @@ const DraggableFileItem = ({
   onDrop,
   canMoveUp,
   canMoveDown,
+  disabled,
 }) => {
   return (
     <div
-      draggable
-      onDragStart={(e) => onDragStart(e, index)}
-      onDragOver={onDragOver}
-      onDrop={onDrop}
+      draggable={!disabled}
+      onDragStart={disabled ? undefined : (e) => onDragStart(e, index)}
+      onDragOver={disabled ? undefined : onDragOver}
+      onDrop={disabled ? undefined : onDrop}
       className="flex items-center justify-between gap-3 rounded-lg border border-(--border) bg-(--background) p-3 transition hover:bg-(--background)/60"
     >
       <div className="flex min-w-0 items-center gap-3">
@@ -140,7 +143,7 @@ const DraggableFileItem = ({
         <button
           type="button"
           onClick={() => onMoveUp(index)}
-          disabled={!canMoveUp}
+          disabled={!canMoveUp || disabled}
           className="flex h-11 w-11 items-center justify-center rounded text-(--muted-foreground) hover:bg-(--card) hover:text-(--foreground) disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) sm:h-9 sm:w-9"
           aria-label={`Move ${file.file.name} up`}
         >
@@ -149,7 +152,7 @@ const DraggableFileItem = ({
         <button
           type="button"
           onClick={() => onMoveDown(index)}
-          disabled={!canMoveDown}
+          disabled={!canMoveDown || disabled}
           className="flex h-11 w-11 items-center justify-center rounded text-(--muted-foreground) hover:bg-(--card) hover:text-(--foreground) disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) sm:h-9 sm:w-9"
           aria-label={`Move ${file.file.name} down`}
         >
@@ -158,7 +161,8 @@ const DraggableFileItem = ({
         <button
           type="button"
           onClick={() => onRemove(file.id)}
-          className="flex h-11 w-11 items-center justify-center rounded text-(--muted-foreground) hover:bg-danger-soft hover:text-danger focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) sm:h-9 sm:w-9"
+          disabled={disabled}
+          className="flex h-11 w-11 items-center justify-center rounded text-(--muted-foreground) hover:bg-danger-soft hover:text-danger disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) sm:h-9 sm:w-9"
           aria-label={`Remove ${file.file.name}`}
         >
           <Trash2 className="h-4 w-4" />
@@ -219,6 +223,17 @@ export default function MainComponent() {
   const [progress, setProgress] = useState({ done: 0, total: 0 });
   const [copied, setCopied] = useState(false);
 
+  // Always holds the latest `files` value. handleFilesAdded reads several
+  // files asynchronously; by the time it resolves, the user may have
+  // removed/reordered/cleared files through other handlers. Reading through
+  // this ref instead of the closed-over `files` avoids resurrecting stale
+  // state (see the merge-in-flight guards below for the belt-and-suspenders
+  // UI-level protection).
+  const filesRef = useRef(files);
+  useEffect(() => {
+    filesRef.current = files;
+  }, [files]);
+
   const handleFilesAdded = async (newFiles) => {
     const validFiles = newFiles.filter((file) => file.size <= MAX_PDF_BYTES);
     const availableSlots = Math.max(0, MAX_PDF_FILES - files.length);
@@ -234,37 +249,55 @@ export default function MainComponent() {
     setProgress({ done: 0, total: filesToRead.length });
     setStatus("Reading PDF page counts...");
 
+    // Read every file independently: one password-protected or corrupted
+    // file in the batch must not discard files that read successfully.
+    const filesWithId = [];
+    const failedFiles = [];
     try {
-      const filesWithId = [];
       for (let index = 0; index < filesToRead.length; index += 1) {
         const file = filesToRead[index];
-        filesWithId.push({
-          id: uuidv4(),
-          file,
-          pages: await readPdfPageCount(file),
-        });
+        try {
+          const pages = await readPdfPageCount(file);
+          filesWithId.push({ id: uuidv4(), file, pages });
+        } catch {
+          failedFiles.push(file.name);
+        }
         setProgress({ done: index + 1, total: filesToRead.length });
       }
-      const queuedFiles = [...files, ...filesWithId];
-      setFiles(queuedFiles);
-      setError("");
-      setResult(null);
-      setCopied(false);
-      setStatus(
-        `${queuedFiles.length} file${queuedFiles.length === 1 ? "" : "s"} queued for merging.${
-          skippedCount ? ` ${skippedCount} file${skippedCount === 1 ? "" : "s"} skipped by size or queue limit.` : ""
-        }`,
-      );
-    } catch {
-      setError("Could not read one of the selected PDFs. Password-protected or damaged files may not be supported.");
-      setStatus("PDF read failed.");
     } finally {
       setIsReading(false);
       setProgress({ done: 0, total: 0 });
     }
+
+    // Merge against the latest queue (via ref), not the `files` snapshot
+    // captured when this async handler started, so files removed/cleared
+    // while this batch was still being read are not resurrected.
+    const queuedFiles = filesWithId.length ? [...filesRef.current, ...filesWithId] : filesRef.current;
+    if (filesWithId.length) {
+      setFiles(queuedFiles);
+      setResult(null);
+      setCopied(false);
+    }
+
+    if (failedFiles.length) {
+      setError(
+        `Could not read ${failedFiles.length === 1 ? "1 file" : `${failedFiles.length} files`} (${failedFiles.join(", ")}). Password-protected or damaged files are not supported; the rest were added.`,
+      );
+    } else {
+      setError("");
+    }
+
+    setStatus(
+      queuedFiles.length
+        ? `${queuedFiles.length} file${queuedFiles.length === 1 ? "" : "s"} queued for merging.${
+            skippedCount ? ` ${skippedCount} file${skippedCount === 1 ? "" : "s"} skipped by size or queue limit.` : ""
+          }${failedFiles.length ? ` ${failedFiles.length} file${failedFiles.length === 1 ? "" : "s"} could not be read.` : ""}`
+        : "Add at least two PDF files to prepare a merged output.",
+    );
   };
 
   const handleRemoveFile = (id) => {
+    if (isMerging || isReading) return;
     const queuedFiles = files.filter((f) => f.id !== id);
     setFiles(queuedFiles);
     setResult(null);
@@ -276,6 +309,10 @@ export default function MainComponent() {
   };
 
   const handleClearAll = () => {
+    if (!files.length || isMerging || isReading) return;
+    if (typeof window !== "undefined" && !window.confirm(`Remove all ${files.length} queued file${files.length === 1 ? "" : "s"}? This cannot be undone.`)) {
+      return;
+    }
     setFiles([]);
     setResult(null);
     setError("");
@@ -294,6 +331,7 @@ export default function MainComponent() {
 
   const handleDrop = (e, targetIndex) => {
     e.preventDefault();
+    if (isMerging || isReading) return;
     if (draggedIndex === null || draggedIndex === targetIndex) return;
 
     const updated = [...files];
@@ -307,6 +345,7 @@ export default function MainComponent() {
   };
 
   const moveFile = (fromIndex, toIndex) => {
+    if (isMerging || isReading) return;
     if (toIndex < 0 || toIndex >= files.length) return;
     const updated = [...files];
     const [moved] = updated.splice(fromIndex, 1);
@@ -329,7 +368,9 @@ export default function MainComponent() {
     setProgress({ done: 0, total: files.length });
 
     try {
-      const merged = await mergePdfs(files.map((f) => f.file));
+      const merged = await mergePdfs(files.map((f) => f.file), (done, total) => {
+        setProgress({ done, total });
+      });
       const filename = `merged-${Date.now()}.pdf`;
       setResult({ ...merged, filename });
       setProgress({ done: files.length, total: files.length });
@@ -396,7 +437,11 @@ export default function MainComponent() {
       )}
 
       {(isReading || isMerging || status) && (
-        <div className="flex items-center gap-3 rounded-lg border border-(--border) bg-(--section-highlight) p-4 text-(--primary)">
+        <div
+          role="status"
+          aria-live="polite"
+          className="flex items-center gap-3 rounded-lg border border-(--border) bg-(--section-highlight) p-4 text-(--primary)"
+        >
           {isReading || isMerging ? (
             <Loader2 className="h-5 w-5 animate-spin" />
           ) : (
@@ -427,7 +472,15 @@ export default function MainComponent() {
             <span>{isReading ? "Reading files" : "Merging files"}</span>
             <span>{progress.done}/{progress.total}</span>
           </div>
-          <div className="h-2 overflow-hidden rounded-full bg-(--background)">
+          <div
+            className="h-2 overflow-hidden rounded-full bg-(--background)"
+            role="progressbar"
+            aria-label={isReading ? "Reading files" : "Merging files"}
+            aria-valuemin={0}
+            aria-valuemax={progress.total}
+            aria-valuenow={progress.done}
+            aria-valuetext={`${progress.done} of ${progress.total}`}
+          >
             <div
               className="h-full rounded-full bg-(--primary) transition-all"
               style={{
@@ -447,7 +500,8 @@ export default function MainComponent() {
                 </h3>
             <button
               onClick={handleClearAll}
-              className="min-h-11 rounded px-2 text-sm text-(--muted-foreground) hover:text-danger cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)"
+              disabled={isMerging || isReading}
+              className="min-h-11 rounded px-2 text-sm text-(--muted-foreground) hover:text-danger cursor-pointer disabled:cursor-not-allowed disabled:opacity-40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary)"
             >
               Clear All
             </button>
@@ -457,8 +511,8 @@ export default function MainComponent() {
             {files.map((file, index) => (
               <div className=""
                 key={file.id}
-                onDragOver={handleDragOver}
-                  onDrop={(e) => handleDrop(e, index)}
+                onDragOver={isMerging || isReading ? undefined : handleDragOver}
+                  onDrop={isMerging || isReading ? undefined : (e) => handleDrop(e, index)}
                 >
                   <DraggableFileItem
                     file={file}
@@ -471,6 +525,7 @@ export default function MainComponent() {
                     onDrop={(e) => handleDrop(e, index)}
                     canMoveUp={index > 0}
                     canMoveDown={index < files.length - 1}
+                    disabled={isMerging || isReading}
                   />
               </div>
             ))}
@@ -529,11 +584,16 @@ export default function MainComponent() {
             Download
           </button>
         )}
-        <button type="button" onClick={handleClearAll} className="border border-(--border) bg-(--background) text-(--foreground) min-h-11 px-6 py-2 rounded-lg flex items-center gap-2 transition hover:border-(--primary) active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35">
+        <button
+          type="button"
+          onClick={handleClearAll}
+          disabled={!files.length || isMerging || isReading}
+          className="border border-(--border) bg-(--background) text-(--foreground) min-h-11 px-6 py-2 rounded-lg flex items-center gap-2 transition hover:border-(--primary) disabled:opacity-50 active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35"
+        >
           <RotateCcw className="h-4 w-4" />
           Reset
         </button>
-        {result && <CheckCircle className="hidden h-5 w-5 text-green-600 sm:block" />}
+        {result && <CheckCircle className="hidden h-5 w-5 text-(--success-text) sm:block" />}
       </div>
       <Features/>
     </div>

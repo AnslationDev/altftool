@@ -1,15 +1,49 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { QRCodeCanvas } from "qrcode.react";
+import { useState, useCallback, Component } from "react";
+import { QRCodeCanvas, QRCodeSVG } from "qrcode.react";
 import {
   Download,
   Copy,
   Printer,
   Share2,
   Check,
+  AlertTriangle,
 } from "lucide-react";
-import { safeCopyText } from "@/shared/utils/clipboard";
+// Published byte-mode data capacity (version 40, the largest QR size) per
+// error-correction level. Encoding more than this throws inside the
+// qrcode.react render path with no way for a parent try/catch to see it, so
+// we check against it before ever mounting the QR code components.
+const QR_BYTE_CAPACITY = { L: 2953, M: 2331, Q: 1663, H: 1273 };
+
+function getUtf8ByteLength(value) {
+  if (typeof TextEncoder !== "undefined") return new TextEncoder().encode(value).length;
+  return unescape(encodeURIComponent(value)).length;
+}
+
+// Defense-in-depth: if the capacity pre-check above is ever slightly off
+// (mixed numeric/alphanumeric/byte segments can shift the true limit a
+// little), this keeps a QR encoding failure from propagating up into the
+// page-level error boundary and wiping every field the user filled in.
+class QRRenderBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  componentDidCatch(error) {
+    console.error("QR code render failed:", error);
+  }
+
+  render() {
+    if (this.state.hasError) return this.props.fallback;
+    return this.props.children;
+  }
+}
 
 export default function QRPreview({
   computedValue,
@@ -23,9 +57,15 @@ export default function QRPreview({
 }) {
   const [downloadFormat, setDownloadFormat] = useState("png");
   const [copied, setCopied] = useState(false);
+  const [copyError, setCopyError] = useState(false);
   const [shared, setShared] = useState(false);
+  const [shareError, setShareError] = useState(false);
 
   const hasContent = computedValue && computedValue.trim().length > 0;
+  const payloadBytes = hasContent ? getUtf8ByteLength(computedValue) : 0;
+  const maxBytes = QR_BYTE_CAPACITY[errorLevel] || QR_BYTE_CAPACITY.M;
+  const exceedsCapacity = hasContent && payloadBytes > maxBytes;
+  const canRenderQr = hasContent && !exceedsCapacity;
 
   const getCanvas = useCallback(() => {
     if (typeof document === "undefined") return null;
@@ -69,23 +109,27 @@ export default function QRPreview({
   async function copyQRImage() {
     const canvas = getCanvas();
     if (!canvas) return;
-    try {
-      const blob = await new Promise((resolve) =>
-        canvas.toBlob(resolve, "image/png")
-      );
-      if (blob && navigator.clipboard?.write) {
-        await navigator.clipboard.write([
-          new ClipboardItem({ "image/png": blob }),
-        ]);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 1400);
-        return;
+    if (navigator.clipboard?.write) {
+      try {
+        const blob = await new Promise((resolve) =>
+          canvas.toBlob(resolve, "image/png")
+        );
+        if (blob) {
+          await navigator.clipboard.write([
+            new ClipboardItem({ "image/png": blob }),
+          ]);
+          setCopied(true);
+          setCopyError(false);
+          setTimeout(() => setCopied(false), 1400);
+          return;
+        }
+      } catch {
+        // Fall through to the error state below rather than silently
+        // copying an unusable base64 string and claiming success.
       }
-    } catch {}
-    const dataUrl = canvas.toDataURL("image/png");
-    const ok = await safeCopyText(dataUrl);
-    setCopied(ok);
-    if (ok) setTimeout(() => setCopied(false), 1400);
+    }
+    setCopyError(true);
+    setTimeout(() => setCopyError(false), 2000);
   }
 
   function printQR() {
@@ -112,6 +156,7 @@ export default function QRPreview({
           const file = new File([blob], "qr-code.png", { type: "image/png" });
           await navigator.share({ files: [file], title: "QR Code" });
           setShared(true);
+          setShareError(false);
           setTimeout(() => setShared(false), 1400);
           return;
         }
@@ -119,11 +164,18 @@ export default function QRPreview({
         if (err?.name === "AbortError") return;
       }
     }
-    const dataUrl = canvas.toDataURL("image/png");
-    const ok = await safeCopyText(dataUrl);
-    setShared(ok);
-    if (ok) setTimeout(() => setShared(false), 1400);
+    setShareError(true);
+    setTimeout(() => setShareError(false), 2000);
   }
+
+  const imageSettings = customLogo
+    ? {
+        src: customLogo,
+        height: Math.round(size * 0.18),
+        width: Math.round(size * 0.18),
+        excavate: true,
+      }
+    : undefined;
 
   return (
     <div className="bg-(--card) border border-(--border) rounded-2xl p-6 sm:p-8 flex flex-col items-center justify-center shadow-md sticky top-8">
@@ -135,37 +187,71 @@ export default function QRPreview({
         }`}
         style={!transparentBg ? { backgroundColor: bgColor } : undefined}
       >
-        {hasContent ? (
-          <QRCodeCanvas
-            id="qr-canvas-output"
-            value={computedValue}
-            size={size}
-            bgColor={transparentBg ? "transparent" : bgColor}
-            fgColor={fgColor}
-            level={errorLevel}
-            includeMargin={margin > 0}
-            marginSize={margin}
-            imageSettings={
-              customLogo
-                ? {
-                    src: customLogo,
-                    height: Math.round(size * 0.18),
-                    width: Math.round(size * 0.18),
-                    excavate: true,
-                  }
-                : undefined
-            }
-          />
-        ) : (
+        {!hasContent ? (
           <div className="h-48 w-48 bg-(--muted) rounded-lg animate-pulse flex items-center justify-center">
             <span className="text-xs font-semibold text-(--muted-foreground)">
               Enter content
             </span>
           </div>
+        ) : exceedsCapacity ? (
+          <div
+            role="alert"
+            className="flex h-48 w-48 flex-col items-center justify-center gap-2 rounded-lg border border-danger/40 bg-danger-soft p-4 text-center text-danger"
+          >
+            <AlertTriangle className="h-5 w-5 shrink-0" aria-hidden="true" />
+            <span className="text-xs font-semibold">
+              This content is too long to fit a QR code at the current error-correction
+              level ({payloadBytes} bytes, limit {maxBytes}). Shorten the content or lower
+              the error correction.
+            </span>
+          </div>
+        ) : (
+          <QRRenderBoundary
+            key={`${computedValue}|${errorLevel}|${size}|${margin}`}
+            fallback={
+              <div
+                role="alert"
+                className="flex h-48 w-48 flex-col items-center justify-center gap-2 rounded-lg border border-danger/40 bg-danger-soft p-4 text-center text-danger"
+              >
+                <AlertTriangle className="h-5 w-5 shrink-0" aria-hidden="true" />
+                <span className="text-xs font-semibold">
+                  This content could not be encoded as a QR code. Shorten it or lower the
+                  error-correction level and try again.
+                </span>
+              </div>
+            }
+          >
+            <QRCodeCanvas
+              id="qr-canvas-output"
+              value={computedValue}
+              size={size}
+              bgColor={transparentBg ? "transparent" : bgColor}
+              fgColor={fgColor}
+              level={errorLevel}
+              includeMargin={margin > 0}
+              marginSize={margin}
+              imageSettings={imageSettings}
+            />
+            {downloadFormat === "svg" && (
+              <QRCodeSVG
+                id="qr-svg-output"
+                value={computedValue}
+                size={size}
+                bgColor={transparentBg ? "transparent" : bgColor}
+                fgColor={fgColor}
+                level={errorLevel}
+                includeMargin={margin > 0}
+                marginSize={margin}
+                imageSettings={imageSettings}
+                className="hidden"
+                aria-hidden="true"
+              />
+            )}
+          </QRRenderBoundary>
         )}
       </div>
 
-      {hasContent && (
+      {canRenderQr && (
         <>
           <div className="mt-6 w-full space-y-3">
             <div className="flex items-center gap-2">
@@ -195,10 +281,11 @@ export default function QRPreview({
           <div className="mt-3 w-full grid grid-cols-3 gap-2">
             <button
               onClick={copyQRImage}
+              aria-label={copyError ? "Copying the QR code image is not supported in this browser" : "Copy QR code image"}
               className="py-2.5 rounded-xl border border-(--border) bg-(--background) text-(--foreground) font-semibold text-xs flex items-center justify-center gap-1.5 hover:border-(--primary) hover:text-(--primary) transition-all"
             >
               {copied ? <Check size={14} /> : <Copy size={14} />}
-              {copied ? "Copied" : "Copy"}
+              {copied ? "Copied" : copyError ? "Unavailable" : "Copy"}
             </button>
             <button
               onClick={printQR}
@@ -209,10 +296,11 @@ export default function QRPreview({
             </button>
             <button
               onClick={shareQR}
+              aria-label={shareError ? "Sharing the QR code image is not supported in this browser" : "Share QR code image"}
               className="py-2.5 rounded-xl border border-(--border) bg-(--background) text-(--foreground) font-semibold text-xs flex items-center justify-center gap-1.5 hover:border-(--primary) hover:text-(--primary) transition-all"
             >
               {shared ? <Check size={14} /> : <Share2 size={14} />}
-              {shared ? "Shared" : "Share"}
+              {shared ? "Shared" : shareError ? "Unavailable" : "Share"}
             </button>
           </div>
         </>

@@ -11,12 +11,20 @@
  * -----------------------------
  * - ISSN position stand on protein and exercise (Jager et al., JISSN 2017):
  *   1.4-2.0 g protein/kg body weight/day builds and maintains muscle in people
- *   who train; higher intakes are appropriate during energy restriction.
+ *   who train; higher intakes are appropriate during energy restriction. That
+ *   is why the body-weight basis (PROTEIN_PER_KG_BODYWEIGHT) allows entries up
+ *   to 3.0 g/kg rather than capping at the reviewed 2.0 g/kg ceiling - this
+ *   tool is specifically for a calorie deficit, where the higher end applies.
  * - Helms et al. (Int J Sport Nutr Exerc Metab 2014) reviewed lean, resistance-
  *   trained athletes dieting and recommended 2.3-3.1 g/kg of FAT-FREE MASS.
  *   That is why this tool lets you base protein on lean mass when you know your
  *   body-fat percentage - at 20% body fat, 2.6 g/kg lean mass is about 2.1 g/kg
- *   of total body weight.
+ *   of total body weight. The lean-mass input (PROTEIN_PER_KG_LEAN) is allowed
+ *   down to 1.8 g/kg, below Helms' reviewed 2.3 g/kg floor, because that floor
+ *   was measured in already-lean, competition-prep athletes; 1.8 g/kg of lean
+ *   mass is roughly the ISSN's 1.4 g/kg body-weight floor converted at a
+ *   typical 20% body fat, for people dieting less aggressively than Helms'
+ *   cohort. The sane default (2.6 g/kg) sits inside both reviewed ranges.
  * - Dietary fat is held at or above a floor because very low fat intakes are hard
  *   to sustain and cut into fat-soluble vitamin absorption; 0.5-1.0 g/kg is the
  *   usual practical range and 20% of calories the usual lower bound.

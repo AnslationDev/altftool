@@ -111,6 +111,11 @@ export function computeCookingCalories({ weight, weightUnit = "kg", minutes = {}
   const weightKg = toKilograms(weight, weightUnit);
   if (weightKg === null) return { error: "Enter your body weight." };
   if (weightKg < WEIGHT_MIN_KG || weightKg > WEIGHT_MAX_KG) {
+    if (weightUnit === "lb") {
+      const minLb = Math.round(WEIGHT_MIN_KG / KG_PER_LB);
+      const maxLb = Math.round(WEIGHT_MAX_KG / KG_PER_LB);
+      return { error: `Body weight should be between ${minLb} and ${maxLb} lb.` };
+    }
     return { error: `Body weight should be between ${WEIGHT_MIN_KG} and ${WEIGHT_MAX_KG} kg.` };
   }
 

@@ -97,7 +97,13 @@ export const CLAUSES = [
   {
     id: "disclosure",
     title: "Disclose that you work here",
-    always: true,
+    // Unlike the clauses above, this one is genuinely conditional: the FTC's
+    // jurisdiction is US-specific, and an advocacy/ambassador programme is
+    // the scenario where employees systematically post about the employer's
+    // products at scale. `always: true` here would make `requiredFor`
+    // permanently unreachable (see requiredClauses()) and defeat the
+    // "advocacy" profile checkbox entirely.
+    always: false,
     requiredFor: ["advocacy", "us"],
     weight: 3,
     body: "If you post about {{company}}'s products, services, customers or competitors, say that you work for {{company}}. Put the disclosure in the post itself — an unambiguous phrase such as \"I work at {{company}}\" or a clear #employee tag near the start — not in a bio or a linked page. The FTC's Endorsement Guides at 16 CFR Part 255 treat employment as a material connection that must be disclosed clearly and conspicuously, and the disclosure must travel with the post if it is shared or embedded. This applies equally to reviews, ratings and comments.",

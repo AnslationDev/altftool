@@ -86,7 +86,13 @@ export default function ToolHome() {
       `Permit held: ${result.idpLabel}`,
       `Last arrival: ${prettyDate(arrivalDate)}`,
       `Visitor window: ${result.windowLabel}`,
-      result.windowEndDate ? `Window closes: ${prettyDate(result.windowEndDate)}` : null,
+      result.windowEndDate
+        ? `Window closes: ${prettyDate(result.windowEndDate)}${
+            result.windowExpired
+              ? ` (EXPIRED ${Math.abs(result.daysRemaining)} days ago)`
+              : ` (${result.daysRemaining} days left)`
+          }`
+        : null,
       `Traffic drives on the ${result.drivesOn}`,
       `Alcohol limit: ${result.breathLimit} mcg/L breath, ${result.bloodLimit} mg/100 mL blood`,
       `Legal basis: ${result.legalBasis}`,
@@ -248,7 +254,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className={`mt-6 ${CARD}`}>
+      <section className={`mt-6 ${CARD}`} role="status" aria-live="polite">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
@@ -291,6 +297,18 @@ export default function ToolHome() {
           </p>
         )}
 
+        {hasError || !result.windowExpired ? null : (
+          <p
+            role="alert"
+            className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
+          >
+            This visitor window closed on {prettyDate(result.windowEndDate)}. Driving on this
+            overseas licence in {COUNTRY_NAME} today is no longer lawful unless you have since
+            converted to a New Zealand licence, or this reflects an arrival date since renewed by
+            leaving and re-entering the country.
+          </p>
+        )}
+
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Licence issued in", hasError ? DASH : result.originLabel],
@@ -299,7 +317,9 @@ export default function ToolHome() {
               "Window closes",
               hasError || !result.windowEndDate
                 ? DASH
-                : `${prettyDate(result.windowEndDate)} (${result.daysRemaining} days)`,
+                : result.windowExpired
+                  ? `${prettyDate(result.windowEndDate)} (expired ${Math.abs(result.daysRemaining)} days ago)`
+                  : `${prettyDate(result.windowEndDate)} (${result.daysRemaining} days left)`,
             ],
             [
               "Length of stay entered",

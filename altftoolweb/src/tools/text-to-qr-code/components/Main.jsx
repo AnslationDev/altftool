@@ -121,10 +121,15 @@ export default function MainComponent() {
       }
 
       case "WIFI": {
-        const ssid = formData.wifiSsid || "";
-        const pass = formData.wifiPass || "";
+        const rawSsid = formData.wifiSsid || "";
+        if (!rawSsid) return "";
+        // The WIFI: payload grammar uses \ ; , and : as field delimiters, so
+        // any of those characters inside the SSID/password must be
+        // backslash-escaped or a compliant scanner mis-parses the payload.
+        const escapeWifiField = (value) => String(value).replace(/([\\;,:])/g, "\\$1");
+        const ssid = escapeWifiField(rawSsid);
+        const pass = escapeWifiField(formData.wifiPass || "");
         const enc = formData.wifiEnc || "WPA";
-        if (!ssid) return "";
         return `WIFI:S:${ssid};T:${enc};P:${pass};;`;
       }
 
@@ -161,7 +166,13 @@ export default function MainComponent() {
         if (!title) return "";
         const formatDT = (val) => {
           if (!val) return "";
-          return val.replace(/[-:]/g, "").replace("T", "T") + "00Z";
+          // `datetime-local` gives a timezone-naive local wall-clock string
+          // (e.g. "2026-08-06T14:30"). `new Date(...)` parses that as local
+          // time, so converting through it (rather than just relabelling the
+          // digits with a trailing Z) actually shifts the value to UTC.
+          const date = new Date(val);
+          if (Number.isNaN(date.getTime())) return "";
+          return date.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
         };
         let ical = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:${title}`;
         if (start) ical += `\nDTSTART:${formatDT(start)}`;
@@ -193,7 +204,7 @@ export default function MainComponent() {
     setCustomLogo(null);
   }, [customLogo]);
 
-  const addToHistory = useCallback((value, type) => {
+  const addToHistory = useCallback((value, type, snapshot) => {
     if (!value || !value.trim()) return;
     const label =
       type === "URL"
@@ -203,6 +214,9 @@ export default function MainComponent() {
       type,
       label,
       preview: value.slice(0, 120),
+      // Full field snapshot for this type, so re-selecting the entry can
+      // restore every field it used, not just a truncated preview string.
+      formData: snapshot,
       timestamp: Date.now(),
     };
     setHistory((prev) => {
@@ -215,15 +229,21 @@ export default function MainComponent() {
   const handleTypeChange = useCallback(
     (newType) => {
       if (computedValue && computedValue.trim()) {
-        addToHistory(computedValue, activeType);
+        addToHistory(computedValue, activeType, formData);
       }
       setActiveType(newType);
     },
-    [activeType, computedValue, addToHistory]
+    [activeType, computedValue, formData, addToHistory]
   );
 
   const handleHistorySelect = useCallback((item) => {
     setFormData((prev) => {
+      if (item.formData) {
+        // Newer history entries carry a full field snapshot for their type.
+        return { ...prev, ...item.formData };
+      }
+      // Backward compatibility for history saved before this fix: only
+      // URL/TEXT can be restored from the truncated preview string alone.
       const next = { ...prev };
       if (item.type === "URL") next.url = item.preview;
       else if (item.type === "TEXT") next.text = item.preview;
@@ -233,6 +253,9 @@ export default function MainComponent() {
   }, []);
 
   const handleHistoryClear = useCallback(() => {
+    if (typeof window !== "undefined" && !window.confirm("Clear all saved QR code history? This cannot be undone.")) {
+      return;
+    }
     setHistory([]);
     saveHistory([]);
   }, []);

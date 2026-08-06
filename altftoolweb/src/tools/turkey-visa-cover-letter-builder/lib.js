@@ -143,9 +143,16 @@ function splitLines(value) {
     .filter(Boolean);
 }
 
+// Words spelled with a leading vowel letter but pronounced with a leading
+// consonant "y" sound (Ukrainian, Uruguayan, unionist, European…) still take
+// "a", not "an" — spelling alone gets nationalities like "Ukrainian" wrong.
+const CONSONANT_SOUND_VOWEL_SPELLING = /^(uni|us[ei]|ut[oi]|ukrain|urugu|europ|eu[a-z])/i;
+
 /** "a" or "an" for a following word. */
 export function indefiniteArticle(word) {
-  return /^[aeiou]/i.test(String(word).trim()) ? "an" : "a";
+  const trimmed = String(word).trim();
+  if (CONSONANT_SOUND_VOWEL_SPELLING.test(trimmed)) return "a";
+  return /^[aeiou]/i.test(trimmed) ? "an" : "a";
 }
 
 /** Pluralise a unit noun. */
@@ -262,8 +269,17 @@ export function buildTurkeyCoverLetter(input = {}) {
     );
   }
   if (!passportValidityOk) {
+    // passportBufferDays is negative when the passport actually expires
+    // before the stay allowance even ends (the worst case this tool exists
+    // to catch) — that needs different wording from merely falling short of
+    // the 60-day buffer, or the message reads as a nonsensical "-24 days
+    // after your stay allowance ends".
+    const passportExpiresBeforeStayEnds = passportBufferDays < 0;
+    const bufferPhrase = passportExpiresBeforeStayEnds
+      ? `${plural(Math.abs(passportBufferDays), "day")} before your stay allowance even ends`
+      : `only ${plural(passportBufferDays, "day")} after your stay allowance ends`;
     warnings.push(
-      `Your passport expires on ${formatLongDate(passportExpiry)}, ${plural(passportBufferDays, "day")} after your stay allowance ends. Türkiye requires validity for at least ${PASSPORT_DAYS_BEYOND_STAY} days beyond the duration of stay — to ${formatLongDate(passportRequiredUntil)} in your case. Airlines enforce this at check-in.`,
+      `Your passport expires on ${formatLongDate(passportExpiry)}, ${bufferPhrase}. Türkiye requires validity for at least ${PASSPORT_DAYS_BEYOND_STAY} days beyond the duration of stay — to ${formatLongDate(passportRequiredUntil)} in your case. Airlines enforce this at check-in.`,
     );
   }
   if (entryWithinVisaValidity === false) {
@@ -278,7 +294,7 @@ export function buildTurkeyCoverLetter(input = {}) {
       `Only ${plural(leadDays, "day")} separate the application from your flight. The official portal usually issues within minutes, but payment failures and name mismatches do happen, so leave a margin.`,
     );
   }
-  if (budgetEur > 0 && perPersonPerDayEur < 50) {
+  if (perPersonPerDayEur < 50) {
     warnings.push(
       `Your funds work out to about EUR ${perPersonPerDayEur.toFixed(0)} per person per day. Border officers may ask visitors to show funds, an onward ticket and accommodation, so carry statements or card evidence.`,
     );

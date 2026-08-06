@@ -57,6 +57,19 @@ const ceil = (value) => Math.ceil(value - 1e-9);
 const clamp = (value, low, high) => Math.min(high, Math.max(low, value));
 
 /**
+ * After-sun 100 ml bottles needed for the whole party, at roughly 10 ml a
+ * person a day (shared, like insect repellent — not a perTraveller item).
+ * Shared by the catalogue entry and the cabin-liquids audit so the two never
+ * drift out of sync.
+ * @param {number} days
+ * @param {number} travellers
+ * @returns {number}
+ */
+function afterSunBottles(days, travellers) {
+  return clamp(ceil((days * travellers * 10) / 100), 1, 3);
+}
+
+/**
  * Effective number of days a wardrobe must cover before laundry resets it.
  * @param {number} days
  * @param {number} laundryEveryDays 0 or less means no laundry on the trip
@@ -270,7 +283,8 @@ const CATALOG = [
     name: "After-sun aloe gel (100 ml)",
     gramsEach: 115,
     perTraveller: false,
-    qty: (c) => clamp(ceil(c.days / 7), 1, 3),
+    qty: (c) => afterSunBottles(c.days, c.travellers),
+    note: () => "About 10 ml a person a day to soothe sun-warmed skin",
   },
   {
     id: "repellent",
@@ -401,10 +415,18 @@ export function buildBeachPackingList(input) {
   } = input || {};
 
   if (!isNum(days)) return { error: "Enter the trip length in days as a number." };
-  if (days < MIN_DAYS) return { error: "A trip has to be at least one day long." };
-  if (days > MAX_DAYS) return { error: `Keep the trip under ${MAX_DAYS} days.` };
-  if (!isNum(travellers) || travellers < 1) return { error: "Enter at least one traveller." };
-  if (travellers > MAX_TRAVELLERS) {
+  // Validate against the ROUNDED value: the tool itself rounds days/travellers
+  // to whole numbers below (wholeDays/people), so a fractional input one tick
+  // above the cap (e.g. 90.4) must be judged by what it rounds to (90, valid),
+  // not by the raw float, or the tool rejects inputs it would otherwise accept
+  // happily once typed as whole numbers.
+  const wholeDays = Math.round(days);
+  if (wholeDays < MIN_DAYS) return { error: "A trip has to be at least one day long." };
+  if (wholeDays > MAX_DAYS) return { error: `Keep the trip under ${MAX_DAYS} days.` };
+  if (!isNum(travellers)) return { error: "Enter at least one traveller." };
+  const people = Math.round(travellers);
+  if (people < 1) return { error: "Enter at least one traveller." };
+  if (people > MAX_TRAVELLERS) {
     return { error: `This list is sized for up to ${MAX_TRAVELLERS} travellers.` };
   }
   if (!isNum(highTempC) || highTempC < -20 || highTempC > 55) {
@@ -420,8 +442,6 @@ export function buildBeachPackingList(input) {
     return { error: "Enter how many days between washes, or 0 for no laundry." };
   }
 
-  const wholeDays = Math.round(days);
-  const people = Math.round(travellers);
   const wearDays = wearCycleDays(wholeDays, laundryEveryDays);
 
   const sun = sunscreenNeed({
@@ -490,7 +510,7 @@ export function buildBeachPackingList(input) {
   const allowanceForParty = allowanceKg * people;
 
   // Cabin liquid audit: sunscreen plus after-sun plus repellent, all decanted.
-  const afterSunMl = 100 * clamp(ceil(wholeDays / 7), 1, 3);
+  const afterSunMl = 100 * afterSunBottles(wholeDays, people);
   const repellentMl = mosquitoes ? 100 * clamp(ceil((wholeDays * people * 10) / 100), 1, 4) : 0;
   const liquidsMl = sun.totalMl + afterSunMl + repellentMl;
   const cabinLiquidCapacityMl = LIQUID_BAG_MAX_ML * people;
@@ -515,6 +535,11 @@ export function buildBeachPackingList(input) {
     allowanceKg,
     allowanceForParty,
     withinAllowance: totalGrams / 1000 <= allowanceForParty,
-    spareKg: Math.round((allowanceForParty - totalGrams / 1000) * 10) / 10,
+    // `|| 0` normalizes JS negative zero (e.g. rounding -0.04 to one decimal
+    // place) back to +0. Without it, Object.is(spareKg, -0) is true, and
+    // `-0 >= 0` is also true in JS — which would make a party a hair over
+    // its allowance display as "-0 kg under" right next to the over-allowance
+    // warning banner, a direct on-screen contradiction.
+    spareKg: Math.round((allowanceForParty - totalGrams / 1000) * 10) / 10 || 0,
   };
 }

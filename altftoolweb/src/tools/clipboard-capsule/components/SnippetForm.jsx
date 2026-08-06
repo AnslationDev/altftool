@@ -96,8 +96,12 @@ export default function SnippetForm({ isOpen, onClose, onSave, categories, editi
     if (!content.trim()) return;
 
     let finalCategory = category;
-    if (isAddingCategory && newCategory.trim()) {
+    if (isAddingCategory) {
       const trimmedNewCategory = newCategory.trim();
+      if (!trimmedNewCategory) {
+        alert("Please enter a name for the new category, or switch back to \"Select Existing\".");
+        return;
+      }
       if (RESERVED_CATEGORY_NAMES.has(trimmedNewCategory.toLowerCase())) {
         alert(`"${trimmedNewCategory}" is a reserved name used by the built-in tabs. Please choose a different category name.`);
         return;

@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { BellRing, Check, Copy, Plus, RotateCcw, Trash2 } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import { DOCUMENT_TYPES, STATUS_LABELS, buildExpiryBoard } from "../lib";
 
 const INPUT_CLASS =
@@ -15,8 +17,21 @@ const GHOST_BTN =
 
 const DASH = "—";
 
-const todayIso = () => new Date().toISOString().slice(0, 10);
-const isoOffsetDays = (days) => new Date(Date.now() + days * 86400000).toISOString().slice(0, 10);
+// Format a Date using its LOCAL calendar fields (not toISOString, which
+// reports the UTC date). For a user east of UTC, toISOString's date lags
+// the real local date for hours every evening -- e.g. from 18:30 UTC
+// onward for IST, which this tool is clearly built for (Motor Vehicles
+// Act / PUC / Indian-passport document types, en-IN date formatting).
+// Since every downstream figure derives from `today`, that stale date
+// silently misclassifies documents that expired "today" local time.
+const localIsoDate = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+const todayIso = () => localIsoDate(new Date());
+const isoOffsetDays = (days) => localIsoDate(new Date(Date.now() + days * 86400000));
 
 const prettyDate = (iso) => {
   if (!iso) return DASH;
@@ -78,12 +93,18 @@ export default function ToolHome() {
   const [nextSeed, setNextSeed] = useState(4);
   const [today, setToday] = useState(todayIso);
   const [travelDate, setTravelDate] = useState("");
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () => buildExpiryBoard({ documents: rows, today, travelDate }),
     [rows, today, travelDate],
   );
+
+  const rowErrorsById = useMemo(() => {
+    const map = new Map();
+    for (const rowError of result.rowErrors ?? []) map.set(rowError.id, rowError.error);
+    return map;
+  }, [result.rowErrors]);
 
   const updateRow = (id, patch) =>
     setRows((current) => current.map((row) => (row.id === id ? { ...row, ...patch } : row)));
@@ -91,7 +112,23 @@ export default function ToolHome() {
   const changeType = (id, typeId) => {
     const type = DOCUMENT_TYPES.find((item) => item.id === typeId);
     if (!type) return;
-    updateRow(id, { typeId, name: type.label, stages: type.stages });
+    // Resetting `stages` to the new type's default ladder is intentional --
+    // it's tied to the type's renewal rules. Resetting `name` is not: only
+    // replace it when it still matches the PREVIOUS type's generic label
+    // (i.e. the user never customized it). Otherwise a name the user typed
+    // themselves, like "Mom's Passport", gets silently discarded the moment
+    // they correct a wrongly-picked type in the dropdown.
+    const currentRow = rows.find((row) => row.id === id);
+    const previousType = currentRow
+      ? DOCUMENT_TYPES.find((item) => item.id === currentRow.typeId)
+      : null;
+    const nameWasCustomized =
+      currentRow && previousType && currentRow.name.trim() !== previousType.label;
+    updateRow(id, {
+      typeId,
+      stages: type.stages,
+      ...(nameWasCustomized ? {} : { name: type.label }),
+    });
   };
 
   const updateStages = (id, value) => {
@@ -122,23 +159,23 @@ export default function ToolHome() {
     ].join("\n");
   }, [result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "expiry board" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the board? This clears every document, reference number and date you've entered.",
+      )
+    ) {
+      return;
+    }
     setRows(initialRows());
     setNextSeed(4);
     setToday(todayIso());
     setTravelDate("");
-    setCopied(false);
   };
 
   return (
@@ -272,6 +309,16 @@ export default function ToolHome() {
                   />
                 </div>
               </div>
+
+              {rowErrorsById.has(row.id) ? (
+                <p
+                  role="alert"
+                  className="mt-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
+                >
+                  {rowErrorsById.get(row.id)} This document is left out of the board below until
+                  it&apos;s fixed — the rest of your documents are unaffected.
+                </p>
+              ) : null}
             </div>
           ))}
         </div>
@@ -309,7 +356,7 @@ export default function ToolHome() {
         <>
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
-              <div>
+              <div aria-live="polite" role="status">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                   Next reminder
                 </p>
@@ -326,15 +373,17 @@ export default function ToolHome() {
                 <button
                   type="button"
                   onClick={copyResult}
-                  aria-label="Copy the expiry board"
-                  className={GHOST_BTN}
+                  aria-label={
+                    isCopied("result") ? "Copied the expiry board to clipboard" : "Copy the expiry board"
+                  }
+                  className={PRIMARY_BTN}
                 >
-                  {copied ? (
+                  {isCopied("result") ? (
                     <Check className="h-4 w-4" aria-hidden="true" />
                   ) : (
                     <Copy className="h-4 w-4" aria-hidden="true" />
                   )}
-                  {copied ? "Copied!" : "Copy result"}
+                  {isCopied("result") ? "Copied!" : "Copy result"}
                 </button>
                 <button
                   type="button"
@@ -345,10 +394,13 @@ export default function ToolHome() {
                   <RotateCcw className="h-4 w-4" aria-hidden="true" />
                   Reset
                 </button>
+                <span className="sr-only" role="status" aria-live="polite">
+                  {announcement}
+                </span>
               </div>
             </div>
 
-            <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+            <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
               {[
                 ["Documents tracked", String(result.total)],
                 ["Already expired", String(result.expiredCount)],
@@ -380,7 +432,11 @@ export default function ToolHome() {
           {result.travelWarnings.length > 0 ? (
             <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
               <h2 className="text-base font-semibold">Before you travel</h2>
-              <ul className="mt-3 space-y-2 text-sm text-[var(--muted-foreground)]">
+              <ul
+                className="mt-3 space-y-2 text-sm text-[var(--muted-foreground)]"
+                aria-live="polite"
+                role="status"
+              >
                 {result.travelWarnings.map((row) => (
                   <li key={`${row.id}-travel`} className="flex gap-2">
                     <span aria-hidden="true" className="text-[var(--danger)]">
@@ -398,7 +454,7 @@ export default function ToolHome() {
 
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
             <h2 className="text-base font-semibold">The board</h2>
-            <div className="mt-3 overflow-x-auto">
+            <div className="mt-3 overflow-x-auto" aria-live="polite" role="status">
               <table className="w-full min-w-[340px] text-left text-sm">
                 <thead>
                   <tr className="border-b border-[var(--border)] text-xs uppercase tracking-wide text-[var(--muted-foreground)]">

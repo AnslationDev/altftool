@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Camera, Check, Copy, RotateCcw, TriangleAlert } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import { CREDIT_STYLES, RIGHTS_TERMS, buildCreditLine } from "../lib";
 
 const INPUT_CLASS =
@@ -37,12 +38,12 @@ const DASH = "—";
 
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
-  const [copied, setCopied] = useState("");
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const set = (key) => (event) => {
     const { value } = event.target;
     setForm((prev) => ({ ...prev, [key]: value }));
-    setCopied("");
+    resetCopyState();
   };
 
   const result = useMemo(() => buildCreditLine(form), [form]);
@@ -57,20 +58,16 @@ export default function ToolHome() {
     ].join("\n");
   }, [result]);
 
-  const copyValue = async (key, value) => {
-    if (!value) return;
-    try {
-      await navigator.clipboard.writeText(value);
-      setCopied(key);
-      setTimeout(() => setCopied(""), 1500);
-    } catch {
-      setCopied("");
-    }
+  const copyValue = (key, value, label) => {
+    copy(key, value, { label });
   };
 
   const reset = () => {
+    if (typeof window !== "undefined" && !window.confirm("Reset all fields to the defaults? This clears any photographer, agency or other details you've entered.")) {
+      return;
+    }
     setForm(DEFAULTS);
-    setCopied("");
+    resetCopyState();
   };
 
   return (
@@ -157,7 +154,7 @@ export default function ToolHome() {
         <>
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
-              <div className="min-w-0">
+              <div className="min-w-0" aria-live="polite" role="status">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                   Credit line
                 </p>
@@ -169,21 +166,24 @@ export default function ToolHome() {
               <div className="flex flex-wrap gap-2">
                 <button
                   type="button"
-                  onClick={() => copyValue("summary", summary)}
+                  onClick={() => copyValue("summary", summary, "the credit line and IPTC fields")}
                   aria-label="Copy the credit line and IPTC fields"
                   className={GHOST_BTN}
                 >
-                  {copied === "summary" ? (
+                  {isCopied("summary") ? (
                     <Check className="h-4 w-4" aria-hidden="true" />
                   ) : (
                     <Copy className="h-4 w-4" aria-hidden="true" />
                   )}
-                  {copied === "summary" ? "Copied!" : "Copy result"}
+                  {isCopied("summary") ? "Copied!" : "Copy result"}
                 </button>
                 <button type="button" onClick={reset} aria-label="Reset all fields" className={PRIMARY_BTN}>
                   <RotateCcw className="h-4 w-4" aria-hidden="true" />
                   Reset
                 </button>
+                <span aria-live="polite" role="status" className="sr-only">
+                  {announcement}
+                </span>
               </div>
             </div>
 
@@ -203,7 +203,7 @@ export default function ToolHome() {
           {result.warnings.length > 0 && (
             <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
               <h2 className="text-base font-semibold">Check before you publish</h2>
-              <ul className="mt-3 space-y-2 text-sm leading-6">
+              <ul className="mt-3 space-y-2 text-sm leading-6" aria-live="polite" role="status">
                 {result.warnings.map((warning) => (
                   <li
                     key={warning}
@@ -242,16 +242,16 @@ export default function ToolHome() {
                       <td className="py-2 text-right">
                         <button
                           type="button"
-                          onClick={() => copyValue(name, line)}
+                          onClick={() => copyValue(name, line, `the ${name} credit line`)}
                           aria-label={`Copy the ${name} credit line`}
                           className="inline-flex min-h-11 items-center gap-1 rounded-md px-2 text-sm font-semibold text-[var(--primary)] transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
                         >
-                          {copied === name ? (
+                          {isCopied(name) ? (
                             <Check className="h-4 w-4" aria-hidden="true" />
                           ) : (
                             <Copy className="h-4 w-4" aria-hidden="true" />
                           )}
-                          {copied === name ? "Copied!" : "Copy"}
+                          {isCopied(name) ? "Copied!" : "Copy"}
                         </button>
                       </td>
                     </tr>

@@ -14,13 +14,21 @@ const SLOTS = [
 ];
 
 const PRESETS = [
-  { label: "Recipe scale-up", values: { a: "2", b: "5", c: "8", d: "" }, unknown: "d" },
-  { label: "Map scale 1:250", values: { a: "1", b: "250", c: "", d: "6000" }, unknown: "c" },
+  // 2 cups of flour serves 5 people, so how much flour serves 8? Keep units
+  // consistent across the proportion (a,c = cups; b,d = people), matching how
+  // "Unit price" below keeps a,c = items and b,d = price. Correct answer:
+  // c = (a x d) / b = (2 x 8) / 5 = 3.2 cups.
+  { label: "Recipe scale-up", values: { a: "2", b: "5", c: "", d: "8" }, unknown: "c" },
+  // Convert a known map measurement (24) at 1:250 scale into the real
+  // ground distance: d = (b x c) / a = (250 x 24) / 1 = 6000.
+  { label: "Map scale 1:250", values: { a: "1", b: "250", c: "24", d: "" }, unknown: "d" },
   { label: "Unit price", values: { a: "3", b: "149", c: "7", d: "" }, unknown: "d" },
 ];
 
 const numberFmt = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 6 });
-const formatNumber = (value) => (Number.isFinite(value) ? numberFmt.format(value) : "—");
+// value === 0 is true for both 0 and -0 in JS, so this normalises -0 to 0
+// before formatting — otherwise Intl.NumberFormat prints the confusing "-0".
+const formatNumber = (value) => (Number.isFinite(value) ? numberFmt.format(value === 0 ? 0 : value) : "—");
 
 function gcd(x, y) {
   let a = Math.abs(Math.round(x));
@@ -164,6 +172,7 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset all proportion values? This cannot be undone.")) return;
     setValues(DEFAULTS);
     setUnknown("d");
   };
@@ -285,7 +294,7 @@ export default function ToolHome() {
                 {result.error}
               </div>
             ) : (
-              <>
+              <div aria-live="polite" role="status">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                   {unknown} equals
                 </p>
@@ -348,7 +357,7 @@ export default function ToolHome() {
                     </li>
                   ))}
                 </ol>
-              </>
+              </div>
             )}
           </section>
         </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Ruler, RotateCcw } from "lucide-react";
 
 import {
@@ -25,6 +25,7 @@ const DEFAULTS = {
   referenceDistance: "",
   objectDistance: "",
   tiltDegrees: "0",
+  referenceSharesTilt: true,
   unit: "cm",
 };
 
@@ -33,6 +34,14 @@ const SEGMENTS = [
   { key: "width", label: "Object length / width", field: "widthPixels" },
   { key: "height", label: "Object height (optional)", field: "heightPixels" },
 ];
+
+// Each segment gets its own colour so overlapping width/height marks stay
+// distinguishable once both are placed on the same photo.
+const SEGMENT_COLORS = {
+  reference: "var(--success)",
+  width: "var(--primary)",
+  height: "var(--warning)",
+};
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -56,6 +65,7 @@ export default function ToolHome() {
   const [referenceDistance, setReferenceDistance] = useState(DEFAULTS.referenceDistance);
   const [objectDistance, setObjectDistance] = useState(DEFAULTS.objectDistance);
   const [tiltDegrees, setTiltDegrees] = useState(DEFAULTS.tiltDegrees);
+  const [referenceSharesTilt, setReferenceSharesTilt] = useState(DEFAULTS.referenceSharesTilt);
   const [unit, setUnit] = useState(DEFAULTS.unit);
 
   const [photo, setPhoto] = useState(null);
@@ -64,6 +74,17 @@ export default function ToolHome() {
   const [activeSegment, setActiveSegment] = useState("reference");
   const [copied, setCopied] = useState(false);
   const imageRef = useRef(null);
+  const fileInputRef = useRef(null);
+
+  // Single source of truth for the uploaded photo's blob URL lifecycle: this
+  // revokes the previous URL whenever `photo` changes to a new value or to
+  // null, and also on unmount (e.g. navigating to another tool without
+  // pressing Reset) - not just on the explicit Reset click.
+  useEffect(() => {
+    return () => {
+      if (photo) URL.revokeObjectURL(photo);
+    };
+  }, [photo]);
 
   const reference = findReference(referenceId);
   const referenceMm = referenceId === "custom" ? Number(customMm) : reference?.mm;
@@ -85,6 +106,7 @@ export default function ToolHome() {
         referenceDistance: referenceDistance === "" ? null : Number(referenceDistance),
         objectDistance: objectDistance === "" ? null : Number(objectDistance),
         tiltDegrees: Number(tiltDegrees),
+        referenceSharesTilt,
       }),
     [
       referencePixels,
@@ -95,6 +117,7 @@ export default function ToolHome() {
       referenceDistance,
       objectDistance,
       tiltDegrees,
+      referenceSharesTilt,
     ],
   );
 
@@ -104,10 +127,14 @@ export default function ToolHome() {
   const onPhoto = (event) => {
     const file = event.target.files && event.target.files[0];
     if (!file) return;
-    if (photo) URL.revokeObjectURL(photo);
     setPhoto(URL.createObjectURL(file));
     setPoints(emptyPoints);
     setActiveSegment("reference");
+    // Clear the input's own value so selecting the exact same file again
+    // later (e.g. right after Reset) still fires a change event - browsers
+    // only fire change when the resolved selection differs from the
+    // element's current value.
+    event.target.value = "";
   };
 
   const onImageLoad = (event) => {
@@ -164,7 +191,13 @@ export default function ToolHome() {
       lines.push(`Area: ${result.area.cm2.toFixed(2)} cm² (${result.area.in2.toFixed(2)} sq in)`);
     }
     if (result.ratio !== 1) lines.push(`Depth correction applied: ×${result.ratio.toFixed(3)}`);
-    if (result.tilt.angleDeg > 0) lines.push(`Tilt correction applied: ×${result.tilt.factor.toFixed(3)}`);
+    if (result.tilt.angleDeg > 0) {
+      lines.push(
+        result.tilt.applied
+          ? `Tilt correction applied: ×${result.tilt.factor.toFixed(3)}`
+          : `Tilt correction not applied: reference shares the ${result.tilt.angleDeg}° tilt, so it already cancels out`,
+      );
+    }
     lines.push("Estimate from a single photo — not a substitute for a tape or caliper.");
     return lines.join("\n");
   }, [hasError, result, reference, unit]);
@@ -181,6 +214,14 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset the uploaded photo, every placed mark and all typed values back to the example? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setReferenceId(DEFAULTS.referenceId);
     setCustomMm(DEFAULTS.customMm);
     setReferencePixels(DEFAULTS.referencePixels);
@@ -190,12 +231,15 @@ export default function ToolHome() {
     setReferenceDistance(DEFAULTS.referenceDistance);
     setObjectDistance(DEFAULTS.objectDistance);
     setTiltDegrees(DEFAULTS.tiltDegrees);
+    setReferenceSharesTilt(DEFAULTS.referenceSharesTilt);
     setUnit(DEFAULTS.unit);
-    if (photo) URL.revokeObjectURL(photo);
     setPhoto(null);
     setPoints(emptyPoints);
     setActiveSegment("reference");
     setCopied(false);
+    // Also clear the file input's own value so re-selecting the same photo
+    // right after Reset still fires a change event (see onPhoto()).
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const overlay = SEGMENTS.map((segment) => ({
@@ -363,6 +407,26 @@ export default function ToolHome() {
               onChange={(event) => setTiltDegrees(event.target.value)}
             />
           </div>
+          <div className="sm:col-span-2">
+            <label
+              className="flex min-h-11 cursor-pointer items-center gap-3 text-sm"
+              htmlFor="reference-shares-tilt"
+            >
+              <input
+                id="reference-shares-tilt"
+                type="checkbox"
+                className="h-5 w-5 shrink-0 rounded border-[var(--border)] accent-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none"
+                checked={referenceSharesTilt}
+                onChange={(event) => setReferenceSharesTilt(event.target.checked)}
+              />
+              Reference is on the same tilted surface as the object (recommended)
+            </label>
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+              Checked: the tilt above cancels out automatically, since the reference was foreshortened
+              by the same amount. Uncheck only if the reference itself was shot square to the camera
+              and just the object sits on a separately tilted surface.
+            </p>
+          </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="reference-distance">
               Camera to reference (optional, any unit)
@@ -410,6 +474,7 @@ export default function ToolHome() {
           </label>
           <input
             id="photo"
+            ref={fileInputRef}
             type="file"
             accept="image/*"
             onChange={onPhoto}
@@ -471,9 +536,7 @@ export default function ToolHome() {
                           y1={segment.marks[0].y}
                           x2={segment.marks[1].x}
                           y2={segment.marks[1].y}
-                          stroke={
-                            segment.key === "reference" ? "var(--success)" : "var(--primary)"
-                          }
+                          stroke={SEGMENT_COLORS[segment.key]}
                           strokeWidth={Math.max(natural.width / 300, 2)}
                         />
                       )}
@@ -483,7 +546,7 @@ export default function ToolHome() {
                           cx={mark.x}
                           cy={mark.y}
                           r={Math.max(natural.width / 150, 4)}
-                          fill={segment.key === "reference" ? "var(--success)" : "var(--primary)"}
+                          fill={SEGMENT_COLORS[segment.key]}
                         />
                       ))}
                     </g>
@@ -509,7 +572,7 @@ export default function ToolHome() {
       )}
 
       {!hasError && (
-        <>
+        <div aria-live="polite" role="status" className="contents">
           <section className={`mt-6 ${CARD}`}>
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
@@ -574,7 +637,9 @@ export default function ToolHome() {
                   "Tilt correction",
                   result.tilt.angleDeg === 0
                     ? "none (surface square to the camera)"
-                    : `×${result.tilt.factor.toFixed(3)} for ${result.tilt.angleDeg}°`,
+                    : result.tilt.applied
+                      ? `×${result.tilt.factor.toFixed(3)} for ${result.tilt.angleDeg}°`
+                      : `not applied — reference shares the ${result.tilt.angleDeg}° tilt, so it already cancels out`,
                 ],
               ].map(([label, value]) => (
                 <div key={label} className="flex items-start justify-between gap-4 py-2.5">
@@ -635,7 +700,7 @@ export default function ToolHome() {
               ))}
             </ul>
           </section>
-        </>
+        </div>
       )}
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">

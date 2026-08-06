@@ -22,9 +22,6 @@ export const INTRO_SHARE = 0.12;
  */
 export const CONCLUSION_SHARE = 0.11;
 
-/** Whatever is left after the introduction and conclusion belongs to the body. */
-export const BODY_SHARE = 1 - INTRO_SHARE - CONCLUSION_SHARE;
-
 /**
  * Plain-language and academic style guides both recommend an average sentence
  * length of 15-20 words. 18 is used to convert a word budget into sentences.
@@ -168,8 +165,14 @@ export function planEssay(input = {}) {
   const perBody = splitEvenly(bodyWords, bodies);
 
   const bodySections = perBody.map((words, index) => {
-    const sentences = sentencesFor(words);
-    const chunks = chunksFor(sentences);
+    // chunksFor() floors to at least 1 chunk, which structurally needs
+    // SCHAFFER_FRAME_SENTENCES + SCHAFFER_SENTENCES_PER_CHUNK sentences. Once
+    // chunks is fixed, the displayed sentence count must be recomputed from
+    // that same structural formula — otherwise the printed "~N sentences"
+    // figure can be lower than what the paragraph's own moves list (topic +
+    // evidence + commentary + link) actually requires.
+    const chunks = chunksFor(sentencesFor(words));
+    const sentences = SCHAFFER_FRAME_SENTENCES + SCHAFFER_SENTENCES_PER_CHUNK * chunks;
     const label = String(points[index] ?? "").trim();
     return {
       id: `body-${index + 1}`,
@@ -190,8 +193,11 @@ export function planEssay(input = {}) {
     };
   });
 
-  const introSentences = sentencesFor(introWords);
-  const conclusionSentences = sentencesFor(conclusionWords);
+  // The introduction and conclusion each print a fixed move checklist
+  // (INTRO_MOVES / CONCLUSION_MOVES), so the sentence estimate can never
+  // report fewer sentences than there are required moves.
+  const introSentences = Math.max(INTRO_MOVES.length, sentencesFor(introWords));
+  const conclusionSentences = Math.max(CONCLUSION_MOVES.length, sentencesFor(conclusionWords));
 
   const sections = [
     {

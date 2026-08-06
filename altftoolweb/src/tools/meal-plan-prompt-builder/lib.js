@@ -266,8 +266,7 @@ export function computeBudget({ totalBudget, people, mealsPerDay, days } = {}) {
   };
 }
 
-/** Split a textarea into a clean list of lines. */
-export function parseLines(raw, max = 25) {
+function splitRawLines(raw) {
   if (typeof raw !== "string") return [];
   const out = [];
   for (const line of raw.split(/[\n,]+/)) {
@@ -278,9 +277,21 @@ export function parseLines(raw, max = 25) {
       .trim();
     if (!item) continue;
     out.push(item);
-    if (out.length >= max) break;
   }
   return out;
+}
+
+/** Split a textarea into a clean list of lines, capped at `max` items. */
+export function parseLines(raw, max = 25) {
+  return splitRawLines(raw).slice(0, max);
+}
+
+/**
+ * Count every usable line in a textarea, ignoring the `parseLines` cap.
+ * Used to warn the user when their input is being silently truncated.
+ */
+export function countLines(raw) {
+  return splitRawLines(raw).length;
 }
 
 /** Assemble the prompt. Returns { error } for unusable input. */
@@ -332,6 +343,10 @@ export function buildMealPlanPrompt(input = {}) {
   const mealSplit = splitAcrossMeals(targets.calories, budget.mealsPerDay);
   const dislikes = parseLines(dislikesRaw);
   const equipment = parseLines(equipmentRaw);
+  const dislikesTotal = countLines(dislikesRaw);
+  const equipmentTotal = countLines(equipmentRaw);
+  const dislikesTruncated = dislikesTotal > dislikes.length;
+  const equipmentTruncated = equipmentTotal > equipment.length;
   const excluded = (Array.isArray(allergens) ? allergens : []).filter((item) =>
     MAJOR_ALLERGENS.includes(item),
   );
@@ -418,6 +433,10 @@ export function buildMealPlanPrompt(input = {}) {
     excluded,
     dislikes,
     equipment,
+    dislikesTotal,
+    equipmentTotal,
+    dislikesTruncated,
+    equipmentTruncated,
     proteinEntry,
     currency: currencyEntry,
     cookMinutes,

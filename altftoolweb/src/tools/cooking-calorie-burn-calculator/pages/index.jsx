@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, ChefHat, Copy, RotateCcw } from "lucide-react";
 
-import { COOKING_STAGES, computeCookingCalories } from "../lib";
+import { COOKING_STAGES, KG_PER_LB, WEIGHT_MAX_KG, WEIGHT_MIN_KG, computeCookingCalories } from "../lib";
 
 const NUM0 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 const NUM1 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
@@ -60,6 +60,14 @@ export default function ToolHome() {
 
   const hasError = Boolean(result.error);
 
+  const weightBounds = useMemo(
+    () =>
+      weightUnit === "lb"
+        ? { min: Math.round(WEIGHT_MIN_KG / KG_PER_LB), max: Math.round(WEIGHT_MAX_KG / KG_PER_LB) }
+        : { min: WEIGHT_MIN_KG, max: WEIGHT_MAX_KG },
+    [weightUnit],
+  );
+
   const setStage = (id, value) => {
     setMinutes((current) => ({ ...current, [id]: value }));
   };
@@ -97,6 +105,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every field? This will clear your entered weight and all six cooking-stage minute values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setWeight(DEFAULT_WEIGHT);
     setWeightUnit(DEFAULT_UNIT);
     setMinutes(DEFAULT_MINUTES);
@@ -130,7 +145,8 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               type="number"
               inputMode="decimal"
-              min="20"
+              min={weightBounds.min}
+              max={weightBounds.max}
               step="0.5"
               value={weight}
               onChange={(event) => setWeight(event.target.value)}
@@ -188,7 +204,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Calories burned
             </p>
@@ -223,7 +239,11 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {[
             [
               "Calories above resting (net burn)",

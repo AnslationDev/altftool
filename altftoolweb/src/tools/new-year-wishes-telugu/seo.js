@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This generator writes Telugu new year greetings for Ugadi — Chaitra Shuddha Padyami, the first day of the bright fortnight of Chaitra — and for the 1 January new year, in Telugu script, Tenglish or English. Each message pairs the correct greeting with a line about what the day involves, such as the six tastes of Ugadi pachadi or the panchanga sravanam reading, and closes in the tone you pick: traditional, family, professional or a short caption. Character and SMS segment counts are shown for each message, since Telugu text is sent as Unicode and fits only 70 characters per segment.",
+    "This generator writes Telugu new year greetings for Ugadi — Chaitra Shuddha Padyami, the first day of the bright fortnight of Chaitra — and for the 1 January new year, in Telugu script, Tenglish or English. Each message pairs the correct greeting with a line about what the day involves, such as the six tastes of Ugadi pachadi or the panchanga sravanam reading, and closes in the tone you pick: traditional, family, professional or a short caption. Character and SMS segment counts are shown for each message, since Telugu text is sent as Unicode, which fits 70 characters in a single segment or 67 per part once a message needs more than one segment.",
   useCases: [
     "Send Ugadi wishes in Telugu script to parents and elders without needing a Telugu keyboard.",
     "Write a neutral, professional new year greeting to send to clients and vendors from a business account.",

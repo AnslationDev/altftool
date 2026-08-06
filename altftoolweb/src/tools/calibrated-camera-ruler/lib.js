@@ -316,6 +316,16 @@ export function allUnits(mm) {
 /**
  * Full measurement pass: scale from the reference, then convert each named
  * segment, and derive area when both a width and a height are present.
+ *
+ * @param {boolean} [referenceSharesTilt=true] Was the reference photographed
+ *   on the same tilted surface as the object (the workflow this tool
+ *   recommends: "put the reference right beside the object, on the same
+ *   surface")? If so, the reference edge is foreshortened by the identical
+ *   cos(angle) as the object edge, so that factor already cancels out inside
+ *   mmPerPixel and no extra correction is applied. Set this to false only
+ *   when the reference itself was shot square to the camera and just the
+ *   object sits on a separately tilted surface - only then does the cosine
+ *   correction need to be added on top of the raw reading.
  */
 export function measureScene({
   referencePixels,
@@ -326,6 +336,7 @@ export function measureScene({
   referenceDistance = null,
   objectDistance = null,
   tiltDegrees = 0,
+  referenceSharesTilt = true,
 } = {}) {
   const scale = computeScale({ referencePixels, referenceMm });
   if (scale.error) return { error: scale.error };
@@ -340,16 +351,33 @@ export function measureScene({
     };
   }
 
+  const refDistanceGiven = referenceDistance !== null && referenceDistance !== "";
+  const objDistanceGiven = objectDistance !== null && objectDistance !== "";
+  if (refDistanceGiven !== objDistanceGiven) {
+    return {
+      error:
+        "Depth correction needs both the camera-to-reference and camera-to-object distances - fill in both, or leave both blank to skip it.",
+    };
+  }
+
   let ratio = 1;
   let depth = null;
-  if (referenceDistance !== null && referenceDistance !== "" && objectDistance !== null && objectDistance !== "") {
+  if (refDistanceGiven && objDistanceGiven) {
     depth = depthRatio({ referenceDistance, objectDistance });
     if (depth.error) return { error: depth.error };
     ratio = depth.ratio;
   }
 
-  const tilt = tiltCorrection(tiltDegrees);
-  if (tilt.error) return { error: tilt.error };
+  const tiltInput = tiltCorrection(tiltDegrees);
+  if (tiltInput.error) return { error: tiltInput.error };
+
+  // Only apply the cosine correction to the object's length when the
+  // reference was NOT shot on the same tilted surface - otherwise the
+  // reference edge already absorbed the identical foreshortening and the
+  // factor cancels out inside mmPerPixel (see the jsdoc above).
+  const tiltApplied = tiltInput.angleDeg > 0 && !referenceSharesTilt;
+  const tilt = { ...tiltInput, applied: tiltApplied };
+  const appliedTiltFactor = tiltApplied ? tiltInput.factor : 1;
 
   const shared = {
     mmPerPixel: scale.mmPerPixel,
@@ -357,7 +385,7 @@ export function measureScene({
     referenceMm: scale.referenceMm,
     markErrorPx,
     ratio,
-    tiltFactor: tilt.factor,
+    tiltFactor: appliedTiltFactor,
   };
 
   const width = measureLength({ pixels: widthPixels, ...shared });
@@ -384,6 +412,7 @@ export function measureScene({
     depth,
     ratio,
     tilt,
+    referenceSharesTilt,
     width,
     height,
     area,
@@ -439,12 +468,19 @@ export function accuracyNotes(result) {
   }
 
   if (result.tilt && result.tilt.angleDeg > 0) {
-    notes.push({
-      level: "info",
-      text: `A ${result.tilt.angleDeg}° tilt shortens the image by ${result.tilt.shrinkPercent.toFixed(
-        1,
-      )}%, and that has been divided back out.`,
-    });
+    if (result.tilt.applied) {
+      notes.push({
+        level: "info",
+        text: `A ${result.tilt.angleDeg}° tilt shortens the image by ${result.tilt.shrinkPercent.toFixed(
+          1,
+        )}%, and that has been divided back out because the reference was shot square to the camera while only the object is tilted.`,
+      });
+    } else {
+      notes.push({
+        level: "info",
+        text: `A ${result.tilt.angleDeg}° tilt was entered, but no extra correction was applied: the reference is on the same tilted surface as the object, so the foreshortening already cancels out between the two — applying it again would double-count the shrink.`,
+      });
+    }
   }
 
   notes.push({
