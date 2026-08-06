@@ -3,6 +3,8 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Gauge, Plus, RotateCcw, Trash2 } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import { computeMileageFromFills } from "../lib";
 
 const INR = new Intl.NumberFormat("en-IN", {
@@ -48,7 +50,7 @@ const toNumber = (raw) => {
 export default function ToolHome() {
   const [fills, setFills] = useState(DEFAULT_FILLS);
   const [fuelPrice, setFuelPrice] = useState(DEFAULT_PRICE);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const updateFill = (id, key, value) =>
     setFills((previous) =>
@@ -96,21 +98,17 @@ export default function ToolHome() {
     ].join("\n");
   }, [view]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "mileage result" });
   };
 
   const reset = () => {
+    if (!window.confirm("Reset the fill-up log? This replaces every logged fill with the demo data and cannot be undone.")) {
+      return;
+    }
     setFills(DEFAULT_FILLS);
     setFuelPrice(DEFAULT_PRICE);
-    setCopied(false);
   };
 
   return (
@@ -211,7 +209,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               True mileage
             </p>
@@ -228,16 +226,16 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy mileage result"
+              aria-label={isCopied("result") ? "Copied mileage result to clipboard" : "Copy mileage result"}
               className={GHOST_BTN}
               disabled={!view}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
@@ -248,10 +246,13 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             ["Consumption", view ? `${num2(view.litresPer100Km)} litres / 100 km` : "—"],
             ["US mpg", view ? num2(view.mpgUs) : "—"],

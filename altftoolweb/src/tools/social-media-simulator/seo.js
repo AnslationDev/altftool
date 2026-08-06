@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "Why does X say my post is longer than the character count I see elsewhere?",
-      "Because X does not count characters. It runs the twitter-text weighted algorithm: every code point costs 200 units except four ranges that cost 100, and the total is divided by 100. In practice that means Latin text costs 1 per character while emoji, Chinese, Japanese, Korean, Arabic and Devanagari all cost 2. A link is separately replaced by a flat 23 units because it is rewritten to a t.co address, so a 90-character tracking URL costs the same as a 12-character one.",
+      "Because X does not count characters. It runs the twitter-text weighted algorithm: every code point costs 200 units except four ranges that cost 100, and the total is divided by 100. In practice that means Latin, Arabic and Devanagari text costs 1 per character while emoji, Chinese, Japanese and Korean all cost 2. A link is separately replaced by a flat 23 units because it is rewritten to a t.co address, so a 90-character tracking URL costs the same as a 12-character one.",
     ],
     [
       "Are the crop points exact?",

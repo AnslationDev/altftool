@@ -11,7 +11,11 @@ export function ipToNumber(ip) {
   }
 
   const [a, b, c, d] = parts.map(part => parseInt(part, 10));
-  return (a << 24) + (b << 16) + (c << 8) + d;
+  // `<<` is a 32-bit SIGNED shift in JS, so `a << 24` sets the sign bit and
+  // goes negative for any first octet >= 128. `>>> 0` reinterprets the
+  // combined 32-bit pattern as an unsigned integer, matching a*16777216 +
+  // b*65536 + c*256 + d.
+  return ((a << 24) | (b << 16) | (c << 8) | d) >>> 0;
 }
 
 export function numberToIp(num) {
@@ -47,16 +51,4 @@ export function formatNumber(num) {
 
 export function getSampleIp() {
   return '192.168.1.1';
-}
-
-export function analyzeBinary(num) {
-  const binary = num.toString(2).padStart(32, '0');
-  const hex = num.toString(16).toUpperCase().padStart(8, '0');
-
-  return {
-    binary,
-    hex,
-    decimal: num,
-    dotted: numberToIp(num)
-  };
 }

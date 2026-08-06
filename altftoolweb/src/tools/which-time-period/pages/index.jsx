@@ -153,28 +153,31 @@ export default function ToolHome() {
   const [calculating, setCalculating] = useState(false);
   const [result, setResult] = useState(null);
 
-  const progress = Object.keys(answers).length;
   const total = QUESTIONS.length;
+  // The number of the question actually on screen (1-based), not the count
+  // of questions answered so far — those differ by one while a question is
+  // still awaiting its answer, including the very first one.
+  const currentQuestionNumber = step + 1;
 
   const handleAnswer = (qIndex, optIndex) => {
-    setAnswers((prev) => ({ ...prev, [qIndex]: optIndex }));
+    // Build the merged answers synchronously so the just-picked option for
+    // the final question is included in scoring below. `setAnswers` is
+    // async, so reading back `answers` state (even inside the setTimeout)
+    // would still see the pre-click snapshot for this question.
+    const nextAnswers = { ...answers, [qIndex]: optIndex };
+    setAnswers(nextAnswers);
     if (qIndex < total - 1) {
       setStep(qIndex + 1);
     } else {
       setCalculating(true);
       setTimeout(() => {
         const scores = { medieval: 0, renaissance: 0, victorian: 0, roaring20s: 0, future: 0, ancient: 0 };
-        Object.entries(answers).forEach(([qIdx, optIdx]) => {
+        Object.entries(nextAnswers).forEach(([qIdx, optIdx]) => {
           const q = QUESTIONS[parseInt(qIdx)];
           if (q && q.options[optIdx]) {
             Object.entries(q.options[optIdx].scores).forEach(([key, val]) => { scores[key] += val; });
           }
         });
-        const lastQ = QUESTIONS[total - 1];
-        const lastOpt = answers[total - 1];
-        if (lastQ && lastQ.options[lastOpt]) {
-          Object.entries(lastQ.options[lastOpt].scores).forEach(([key, val]) => { scores[key] += val; });
-        }
         const topPeriod = Object.entries(scores).sort((a, b) => b[1] - a[1])[0][0];
         setResult(PERIODS[topPeriod]);
         setCalculating(false);
@@ -310,11 +313,11 @@ export default function ToolHome() {
 
         <div className="mb-6">
           <div className="flex items-center justify-between text-xs font-bold mb-2" style={{ color: "var(--muted-foreground)" }}>
-            <span>Question {progress}/{total}</span>
-            <span>{Math.round((progress / total) * 100)}%</span>
+            <span>Question {currentQuestionNumber}/{total}</span>
+            <span>{Math.round((currentQuestionNumber / total) * 100)}%</span>
           </div>
           <div className="h-2 rounded-full overflow-hidden" style={{ background: "var(--border)" }}>
-            <div className="h-full rounded-full transition-all duration-500" style={{ width: `${(progress / total) * 100}%`, background: "var(--primary)" }} />
+            <div className="h-full rounded-full transition-all duration-500" style={{ width: `${(currentQuestionNumber / total) * 100}%`, background: "var(--primary)" }} />
           </div>
         </div>
 

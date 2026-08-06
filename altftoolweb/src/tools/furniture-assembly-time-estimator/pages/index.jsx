@@ -17,6 +17,14 @@ import {
 const NUM2 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 });
 const n2 = (v) => (Number.isFinite(v) ? NUM2.format(v) : "—");
 
+/** Describe a finish-time day offset, e.g. 0 -> "", 1 -> " the next day", 3 -> " 3 days later". */
+const dayOffsetLabel = (offset) => {
+  const n = Number(offset);
+  if (!Number.isFinite(n) || n <= 0) return "";
+  if (n === 1) return " the next day";
+  return ` ${n} days later`;
+};
+
 const DEFAULTS = {
   item: "bookshelf",
   parts: "12",
@@ -99,7 +107,7 @@ export default function ToolHome() {
       `${result.people} builder${result.people > 1 ? "s" : ""}, efficiency ×${n2(result.teamEfficiency)}`,
       `Estimate: ${formatDuration(result.totalMinutes)}`,
       `Likely range: ${formatDuration(result.optimisticMinutes)} to ${formatDuration(result.pessimisticMinutes)}`,
-      `Start ${result.startTime} → finish about ${result.finishTime}`,
+      `Start ${result.startTime} → finish about ${result.finishTime}${dayOffsetLabel(result.finishDayOffset)}`,
     ].join("\n");
   }, [ok, result]);
 
@@ -293,7 +301,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Estimated build time
             </p>
@@ -302,7 +310,7 @@ export default function ToolHome() {
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {ok
-                ? `Start at ${result.startTime}, finish around ${result.finishTime}${result.finishDayOffset ? " the next day" : ""}`
+                ? `Start at ${result.startTime}, finish around ${result.finishTime}${dayOffsetLabel(result.finishDayOffset)}`
                 : "Fix the inputs above to see an estimate"}
             </p>
           </div>
@@ -324,7 +332,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             [
               "Likely range",

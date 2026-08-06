@@ -76,13 +76,6 @@ export function overallGradeFor(gpa) {
   return band || CALICUT_OVERALL_GRADES[CALICUT_OVERALL_GRADES.length - 1];
 }
 
-/** Course grade band containing a percentage of marks, or null when out of range. */
-export function bandForMarks(marks) {
-  const value = toNumber(marks);
-  if (Number.isNaN(value) || value < 0 || value > 100) return null;
-  return CALICUT_GRADE_BANDS.find((row) => value >= row.minMarks) || null;
-}
-
 /**
  * Convert a Calicut CGPA or SGPA into the equivalent percentage of marks.
  *
@@ -97,16 +90,21 @@ export function calicutGpaToPercentage({ cgpa } = {}) {
     return { error: `CBCSS uses a ${CALICUT_MAX_GPA} point scale, so the average cannot exceed ${CALICUT_MAX_GPA}.` };
   }
 
-  const percentage = round2(value * CALICUT_PERCENT_PER_POINT);
+  const gpa = round2(value);
+  const percentage = round2(gpa * CALICUT_PERCENT_PER_POINT);
   const overall = overallGradeFor(value);
 
   return {
-    gpa: round2(value),
+    gpa,
     percentage,
     grade: overall.grade,
     gradeLabel: overall.label,
-    passing: value >= CALICUT_MIN_PASS_POINT,
-    formula: `${round2(value)} x ${CALICUT_PERCENT_PER_POINT}`,
+    // Aggregate pass/fail follows the same CALICUT_OVERALL_GRADES table used for
+    // `grade`/`gradeLabel` above (the "P" band starts at 3.5), not the per-course
+    // CALICUT_MIN_PASS_POINT cutoff of 4 - those are two different scales and mixing
+    // them produced a "P - Pass" grade next to a "No" passing flag for 3.5-3.99.
+    passing: overall.grade !== "F",
+    formula: `${gpa} x ${CALICUT_PERCENT_PER_POINT}`,
   };
 }
 
@@ -121,15 +119,16 @@ export function calicutPercentageToGpa({ percentage } = {}) {
   if (Number.isNaN(value)) return { error: "Enter a percentage of marks, for example 76." };
   if (value < 0 || value > 100) return { error: "A percentage of marks must be between 0 and 100." };
 
-  const gpa = round2(value / CALICUT_PERCENT_PER_POINT);
+  const roundedPercentage = round2(value);
+  const gpa = round2(roundedPercentage / CALICUT_PERCENT_PER_POINT);
   const overall = overallGradeFor(gpa);
 
   return {
-    percentage: round2(value),
+    percentage: roundedPercentage,
     gpa,
     grade: overall.grade,
     gradeLabel: overall.label,
-    formula: `${round2(value)} / ${CALICUT_PERCENT_PER_POINT}`,
+    formula: `${roundedPercentage} / ${CALICUT_PERCENT_PER_POINT}`,
   };
 }
 

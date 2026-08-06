@@ -113,7 +113,7 @@ export default function ToolHome() {
   const rows = hasError
     ? [
         ["Areas covered", DASH],
-        ["Abstract length", DASH],
+        ["Abstract length", `${NUM.format(abstract.trim().length)} characters`],
         ["Prompt length", DASH],
       ]
     : [

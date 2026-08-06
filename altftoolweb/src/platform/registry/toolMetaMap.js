@@ -31306,7 +31306,7 @@ export const toolMetaMap = {
     "topics": [
       "India"
     ],
-    "icon": "calendar-check-2",
+    "icon": "calendar-check",
     "iconColor": "text-primary"
   },
   "vehicle-downsizing-savings": {

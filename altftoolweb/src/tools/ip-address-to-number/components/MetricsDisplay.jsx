@@ -4,6 +4,12 @@ import React from 'react';
 import { Hash, Network, Zap, Info } from 'lucide-react';
 
 export default function MetricsDisplay({ ip, number }) {
+  // `number` may arrive comma-formatted (e.g. "167,772,161"); parseInt stops
+  // at the first non-digit, so strip separators before parsing — matching
+  // how BinaryDisplay/pages/index.jsx already handle this value elsewhere.
+  const raw = number ? parseInt(String(number).replace(/,/g, ''), 10) : NaN;
+  const hasValue = number && !isNaN(raw);
+
   const cards = [
     {
       icon: <Network size={16} />,
@@ -14,19 +20,19 @@ export default function MetricsDisplay({ ip, number }) {
     {
       icon: <Hash size={16} />,
       label: 'Decimal',
-      value: number ? parseInt(number).toLocaleString() : '—',
+      value: hasValue ? raw.toLocaleString() : '—',
       helper: 'Numeric Representation'
     },
     {
       icon: <Zap size={16} />,
       label: 'Hexadecimal',
-      value: number ? '0x' + parseInt(number).toString(16).toUpperCase().padStart(8, '0') : '—',
+      value: hasValue ? '0x' + raw.toString(16).toUpperCase().padStart(8, '0') : '—',
       helper: 'Hex Format'
     },
     {
       icon: <Info size={16} />,
       label: 'Binary',
-      value: number ? parseInt(number).toString(2).length : '—',
+      value: hasValue ? raw.toString(2).length : '—',
       helper: 'Bits Required'
     },
   ];

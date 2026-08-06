@@ -46,7 +46,7 @@ export function countGraphemes(text) {
   return toGraphemes(text).length;
 }
 
-/** Code points, which is what Mastodon, Instagram, LinkedIn and Facebook count. */
+/** Code points, which is what Instagram, LinkedIn and Facebook count. */
 export function countCodePoints(text) {
   return Array.from(String(text == null ? "" : text)).length;
 }
@@ -97,6 +97,25 @@ const URL_RE = new RegExp(
   "gi",
 );
 
+// A handful of the bare-host TLDs above double as common English abbreviation
+// suffixes ("S.no", "Sl.no", "Q.no" for "serial no.", or "Q.us", "cont.in")
+// so an unprefixed "word.tld" token whose label immediately before the TLD is
+// very short reads as prose, not a link a person actually typed. Explicit
+// http(s):// and www. links are never affected by this — only the bare
+// no-scheme branch is this ambiguous.
+const AMBIGUOUS_BARE_TLDS = new Set(["no", "in", "it", "us", "co", "de"]);
+const MIN_BARE_LABEL_LENGTH = 3;
+
+function isBareAbbreviationLikeToken(value) {
+  if (/^https?:\/\//i.test(value) || /^www\./i.test(value)) return false;
+  const hostPart = value.split("/")[0];
+  const labels = hostPart.split(".");
+  if (labels.length < 2) return false;
+  const tld = labels[labels.length - 1].toLowerCase();
+  const label = labels[labels.length - 2];
+  return AMBIGUOUS_BARE_TLDS.has(tld) && label.length < MIN_BARE_LABEL_LENGTH;
+}
+
 const HASHTAG_RE = /(^|[\s(\[{])#([\p{L}\p{N}_]+)/gu;
 const MENTION_RE = /(^|[\s(\[{])@([A-Za-z0-9_.-]+(?:@[A-Za-z0-9.-]+\.[A-Za-z]{2,})?)/gu;
 
@@ -115,7 +134,9 @@ function collect(re, text, pick) {
 
 export function extractEntities(text) {
   const source = String(text == null ? "" : text);
-  const urls = collect(URL_RE, source, (m) => ({ value: m[0], index: m.index }));
+  const urls = collect(URL_RE, source, (m) => ({ value: m[0], index: m.index })).filter(
+    (item) => !isBareAbbreviationLikeToken(item.value),
+  );
   const hashtags = collect(HASHTAG_RE, source, (m) => ({
     value: `#${m[2]}`,
     index: m.index + m[1].length,
@@ -400,8 +421,11 @@ function countForPlatform(platform, text) {
       const url = urls[i];
       bare = bare.slice(0, url.index) + bare.slice(url.index + url.value.length);
     }
+    // Mastodon's own compose-time counter (stringz -> char-regex) counts
+    // grapheme clusters, not code points, so a flag/ZWJ/skin-toned emoji is
+    // one "character" here too, matching the Bluesky branch above.
     return {
-      counted: countCodePoints(bare) + urls.length * platform.urlCost,
+      counted: countGraphemes(bare) + urls.length * platform.urlCost,
       doubleWeighted: 0,
     };
   }

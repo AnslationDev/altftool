@@ -35,7 +35,7 @@ const seo = {
     ],
     [
       "Will it notify me when something is about to expire?",
-      "No. It is a calculator, not a scheduler: it computes the status from the dates and review date you supply each time you open it, with nothing stored, synced or sent. Use it to work out the dates, then set the actual alerts in your own calendar.",
+      "No. It is a calculator, not a scheduler: it computes the status from the dates and review date you supply. What you type is saved locally in your own browser so your list is still there next time you open this page on the same device — nothing is synced to an account or sent to a server, and clearing your browser data removes it. Use it to work out the dates, then set the actual alerts in your own calendar.",
     ],
   ],
 };

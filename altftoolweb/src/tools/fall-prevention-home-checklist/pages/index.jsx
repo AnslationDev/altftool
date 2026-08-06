@@ -75,13 +75,34 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the checklist? This clears every ticked item and your risk question answers, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setDone(DEFAULT_DONE);
     setRisks(["worry"]);
     setCopied(false);
   };
 
-  const markAll = () => setDone(CHECKLIST.map((item) => item.key));
-  const clearAll = () => setDone([]);
+  const markAll = () => {
+    if (
+      !window.confirm(
+        "Mark every item as done? Only do this once you've actually checked each hazard — this sets the score to 100% regardless of what's really been fixed.",
+      )
+    ) {
+      return;
+    }
+    setDone(CHECKLIST.map((item) => item.key));
+  };
+  const clearAll = () => {
+    if (!window.confirm("Clear every ticked item? This cannot be undone.")) {
+      return;
+    }
+    setDone([]);
+  };
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">

@@ -36,7 +36,10 @@ export default function ToolHome() {
   const revealed = submitted && !hasError;
   const dash = "—";
 
-  const setVerdict = (id, value) => setVerdicts((current) => ({ ...current, [id]: value }));
+  const setVerdict = (id, value) => {
+    if (revealed) return; // frozen once graded — fieldset is also disabled, this just guards non-pointer paths
+    setVerdicts((current) => ({ ...current, [id]: value }));
+  };
 
   const restart = (nextSeed) => {
     setSeed(nextSeed);
@@ -132,21 +135,28 @@ export default function ToolHome() {
       <section className="mt-6 space-y-4">
         {messages.map((message, index) => {
           const chosen = verdicts[message.id];
-          const correct = revealed && chosen === (message.isScam ? "scam" : "genuine");
+          // Prefer the score engine's own per-message `answered`/`correct`
+          // flags (scoreVerdicts already computes them) over re-deriving
+          // from `verdicts` directly, so a skipped message can't be
+          // mislabeled as "Missed" (an actively wrong guess).
+          const resultRow = score.rows?.[index];
+          const wasAnswered = resultRow ? resultRow.answered : chosen !== undefined;
+          const correct = revealed && Boolean(resultRow?.correct);
           return (
-            <article
+            <fieldset
               key={message.id}
+              disabled={revealed}
               className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
             >
-              <div className="flex flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
+              <legend className="flex flex-wrap items-center gap-2 px-1 text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                 <span>
-                  {index + 1} of {messages.length}
+                  Message {index + 1} of {messages.length}
                 </span>
                 <span aria-hidden="true">·</span>
                 <span>{message.channel}</span>
                 <span aria-hidden="true">·</span>
                 <span className="normal-case">from {message.from}</span>
-              </div>
+              </legend>
               <blockquote className="mt-3 rounded-md border border-[var(--border)] bg-[var(--background)] p-3 text-sm leading-6">
                 {message.text}
               </blockquote>
@@ -181,12 +191,14 @@ export default function ToolHome() {
                   className={`mt-3 rounded-md px-3 py-2 text-sm leading-6 ${
                     correct
                       ? "bg-[var(--muted)] text-[var(--foreground)]"
-                      : "bg-[var(--danger-soft)] text-[var(--danger)]"
+                      : wasAnswered
+                        ? "bg-[var(--danger-soft)] text-[var(--danger-text)]"
+                        : "bg-[var(--muted)] text-[var(--muted-foreground)]"
                   }`}
                 >
                   <p>
                     <span className="font-semibold">
-                      {correct ? "Correct — " : "Missed — "}
+                      {correct ? "Correct — " : wasAnswered ? "Missed — " : "Skipped — "}
                       {message.isScam ? "scam. " : "genuine. "}
                     </span>
                     {message.explanation}
@@ -200,7 +212,7 @@ export default function ToolHome() {
                   )}
                 </div>
               )}
-            </article>
+            </fieldset>
           );
         })}
       </section>

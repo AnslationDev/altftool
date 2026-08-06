@@ -403,7 +403,7 @@ export default function ToolHome() {
                 The same post everywhere
               </h2>
               <div className="flex flex-wrap gap-2">
-                <button type="button" className={PRIMARY_BTN} onClick={copyResult}>
+                <button type="button" className={GHOST_BTN} onClick={copyResult}>
                   {copied ? (
                     <Check className="h-4 w-4" aria-hidden="true" />
                   ) : (
@@ -411,7 +411,7 @@ export default function ToolHome() {
                   )}
                   {copied ? "Copied" : "Copy report"}
                 </button>
-                <button type="button" className={GHOST_BTN} onClick={reset}>
+                <button type="button" className={PRIMARY_BTN} onClick={reset}>
                   <RotateCcw className="h-4 w-4" aria-hidden="true" />
                   Reset
                 </button>

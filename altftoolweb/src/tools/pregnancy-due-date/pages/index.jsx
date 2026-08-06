@@ -22,7 +22,13 @@ const addDays = (date, days) =>
   new Date(date.getFullYear(), date.getMonth(), date.getDate() + days);
 const diffDays = (a, b) => Math.round((a.getTime() - b.getTime()) / 86400000);
 const clampInt = (value, min, max, fallback) => {
-  const num = Number(value);
+  // `Number("")` and `Number("   ")` both evaluate to 0, which is finite --
+  // so without this guard a blank field silently clamps to `min` instead of
+  // falling back to `fallback`, shifting the due date instead of leaving it
+  // at the neutral default.
+  const trimmed = typeof value === "string" ? value.trim() : value;
+  if (trimmed === "" || trimmed === null || trimmed === undefined) return fallback;
+  const num = Number(trimmed);
   if (!Number.isFinite(num)) return fallback;
   return Math.min(max, Math.max(min, Math.round(num)));
 };
@@ -339,8 +345,16 @@ export default function ToolHome() {
                       {copied ? "Copied" : "Copy summary"}
                     </button>
                   </div>
-                  <div aria-live="polite">
-                    <p className="mt-3 text-3xl font-semibold text-[var(--primary)] sm:text-4xl">
+                  <div>
+                    {/* Scoped to just the headline so screen readers announce a
+                        single short sentence when the cycle-length input changes,
+                        instead of re-reading the whole due-date/gestational-age/
+                        progress-bar block on every keystroke. */}
+                    <p
+                      aria-live="polite"
+                      role="status"
+                      className="mt-3 text-3xl font-semibold text-[var(--primary)] sm:text-4xl"
+                    >
                       {formatLong(view.due)}
                     </p>
                     <div className="mt-5 grid gap-3 sm:grid-cols-3">

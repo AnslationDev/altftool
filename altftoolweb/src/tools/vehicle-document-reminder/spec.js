@@ -9,7 +9,7 @@ export const spec = {
     "India",
     "Productivity"
   ],
-  "icon": "calendar-check-2",
+  "icon": "calendar-check",
   "iconColor": "text-primary",
   "fields": [
     {
@@ -43,11 +43,13 @@ export const spec = {
       }
     }
   ],
-  "note": "Runs locally in your browser. Review the generated report before relying on it for legal, financial, medical, or safety decisions."
+  "note": "Runs locally in your browser. Review the generated report before relying on it for legal, financial, medical, or safety decisions.",
+  "confirmReset": "Reset and clear your saved vehicle document list? This cannot be undone."
 },
   compute: (values) => {
       const asOf = new Date(values.as_of + "T00:00:00");
-      const warning = Math.max(1, Number(values.warn_days) || 30);
+      const warnDaysNumber = Number(values.warn_days);
+      const warning = Math.max(1, Number.isNaN(warnDaysNumber) ? 30 : warnDaysNumber);
       const rows = String(values.documents || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean).map((line) => {
         const [name = "Item", dateText = "", reference = "—"] = line.split("|").map((cell) => cell.trim());
         const date = new Date(dateText + "T00:00:00");

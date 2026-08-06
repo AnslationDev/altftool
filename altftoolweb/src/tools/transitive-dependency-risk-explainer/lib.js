@@ -106,25 +106,34 @@ export function modelDependencyRisk(input = {}) {
   const keepRate = 1 - sharingPercent / 100;
 
   const levels = [];
-  let total = 0;
+  // Track the unrounded running total only to detect runaway expansion
+  // before it happens. The displayed/returned totals are built from the
+  // *rounded* per-level counts instead (see cumulativeTotal below) so the
+  // "Running total" column always equals the sum of the "New packages"
+  // cells above it, and the headline totalPackages always matches the
+  // table that's supposed to explain it.
+  let preciseTotal = 0;
+  let cumulativeTotal = 0;
   for (let depth = 1; depth <= maxDepth; depth += 1) {
     const raw = directDeps * branchingFactor ** (depth - 1);
     const unique = raw * keepRate ** (depth - 1);
-    if (!Number.isFinite(raw) || total + unique > MAX_MODELLED_PACKAGES) {
+    preciseTotal += unique;
+    if (!Number.isFinite(raw) || preciseTotal > MAX_MODELLED_PACKAGES) {
       return {
         error: `These assumptions expand past ${MAX_MODELLED_PACKAGES.toLocaleString("en-US")} packages — lower the branching factor or the depth.`,
       };
     }
-    total += unique;
+    const roundedUnique = Math.round(unique);
+    cumulativeTotal += roundedUnique;
     levels.push({
       depth,
       raw: Math.round(raw),
-      unique: Math.round(unique),
-      cumulative: Math.round(total),
+      unique: roundedUnique,
+      cumulative: cumulativeTotal,
     });
   }
 
-  const totalPackages = Math.round(total);
+  const totalPackages = cumulativeTotal;
   const transitivePackages = Math.max(0, totalPackages - directDeps);
   const expansionFactor = totalPackages / directDeps;
   const vettedShare = (directDeps / totalPackages) * 100;

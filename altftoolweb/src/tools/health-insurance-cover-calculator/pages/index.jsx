@@ -73,10 +73,18 @@ const toNumber = (raw) => {
 
 const ageBandFor = (age) => AGE_BANDS.find((band) => age <= band.max) ?? AGE_BANDS[AGE_BANDS.length - 1];
 
-/** Rounds up to the sum-insured slabs insurers actually sell. */
+/** Sum-insured slabs Indian health insurers actually sell (5L through 5Cr). */
+const SLABS = [
+  500000, 1000000, 1500000, 2000000, 2500000, 3000000, 4000000, 5000000, 7500000, 10000000, 15000000,
+  20000000, 25000000, 30000000, 40000000, 50000000,
+];
+
+/** Rounds up to the sum-insured slabs insurers actually sell (₹1 crore steps past the ₹5 crore top slab). */
 const roundToSlab = (value) => {
   if (!(value > 0)) return 0;
-  const step = value <= 2500000 ? 500000 : 5000000;
+  const match = SLABS.find((slab) => value <= slab);
+  if (match !== undefined) return match;
+  const step = 10000000;
   return Math.ceil(value / step) * step;
 };
 
@@ -202,7 +210,9 @@ export default function ToolHome() {
       `Recommended cover today: ${money(calc.recommendedToday)} (${inWords(calc.recommendedToday)})`,
       `Existing cover: ${money(calc.existingCover)}`,
       calc.gap > 0 ? `Gap to close: ${money(calc.gap)}` : "Gap to close: none",
-      `Suggested structure: ${inWords(calc.basePolicy)} base policy + ${inWords(calc.topUp)} super top-up`,
+      calc.topUp > 0
+        ? `Suggested structure: ${inWords(calc.basePolicy)} base policy + ${inWords(calc.topUp)} super top-up`
+        : `Suggested structure: ${inWords(calc.basePolicy)} base policy (already covers the full recommendation)`,
       `Cover to aim for in ${calc.horizon} years at ${num(calc.inflation)}% medical inflation: ${money(
         calc.recommendedFuture,
       )}`,
@@ -492,16 +502,28 @@ export default function ToolHome() {
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
             <h2 className="text-base font-semibold">A cheaper way to buy the same cover</h2>
             <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-              Instead of one large policy, most families pay less for a{" "}
-              <span className="font-semibold text-[var(--foreground)]">
-                {inWords(calc.basePolicy)} base policy
-              </span>{" "}
-              plus a{" "}
-              <span className="font-semibold text-[var(--foreground)]">
-                {inWords(calc.topUp)} super top-up
-              </span>{" "}
-              with a deductible equal to the base cover. The top-up only pays once the base is
-              exhausted, so its premium is a fraction of a standalone policy of the same size.
+              {calc.topUp > 0 ? (
+                <>
+                  Instead of one large policy, most families pay less for a{" "}
+                  <span className="font-semibold text-[var(--foreground)]">
+                    {inWords(calc.basePolicy)} base policy
+                  </span>{" "}
+                  plus a{" "}
+                  <span className="font-semibold text-[var(--foreground)]">
+                    {inWords(calc.topUp)} super top-up
+                  </span>{" "}
+                  with a deductible equal to the base cover. The top-up only pays once the base is
+                  exhausted, so its premium is a fraction of a standalone policy of the same size.
+                </>
+              ) : (
+                <>
+                  At this size, a single{" "}
+                  <span className="font-semibold text-[var(--foreground)]">
+                    {inWords(calc.basePolicy)} base policy
+                  </span>{" "}
+                  already covers the full recommendation — a super top-up would not add anything yet.
+                </>
+              )}
             </p>
 
             <h2 className="mt-6 text-base font-semibold">What medical inflation does to this number</h2>

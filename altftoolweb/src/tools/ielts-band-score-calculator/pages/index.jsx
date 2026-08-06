@@ -294,7 +294,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Overall Band Score
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">
               {hasError ? DASH : BAND.format(result.overall)}
             </p>
             <p className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]">
