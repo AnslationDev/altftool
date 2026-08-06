@@ -67,6 +67,7 @@ const blankDraft = () => ({
   priceInr: "",
   extendedMonths: "0",
   amcAnnualInr: "0",
+  causeOfActionIso: "",
 });
 
 export default function ToolHome() {
@@ -126,6 +127,7 @@ export default function ToolHome() {
       name: draft.name.trim(),
       type: draft.type,
       purchaseIso: draft.purchaseIso,
+      causeOfActionIso: draft.causeOfActionIso || undefined,
       priceInr: draft.priceInr === "" ? 0 : Number(draft.priceInr),
       extendedMonths: draft.extendedMonths === "" ? 0 : Math.trunc(Number(draft.extendedMonths)),
       amcAnnualInr: draft.amcAnnualInr === "" ? 0 : Number(draft.amcAnnualInr),
@@ -234,6 +236,22 @@ export default function ToolHome() {
               value={draft.purchaseIso}
               onChange={(event) => setDraftField("purchaseIso", event.target.value)}
             />
+          </div>
+          <div>
+            <label className={LABEL_CLASS} htmlFor="aw-cause">
+              Date the fault arose <span className="font-normal text-[var(--muted-foreground)]">(optional)</span>
+            </label>
+            <input
+              id="aw-cause"
+              className={`mt-2 ${INPUT_CLASS}`}
+              type="date"
+              value={draft.causeOfActionIso}
+              onChange={(event) => setDraftField("causeOfActionIso", event.target.value)}
+            />
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+              The two-year limit under s.69 runs from the day the defect arose or the seller
+              refused — not from today. Leave blank if nothing has gone wrong yet.
+            </p>
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="aw-price">
@@ -449,7 +467,16 @@ export default function ToolHome() {
                       ? `${money(row.amcAnnualInr)} a year · renewals ${row.amcRenewalDates.map(prettyDate).join(", ")}`
                       : "None",
                   ],
-                  ["Complaint filing deadline if a defect arises today", prettyDate(row.claimDeadlineIso)],
+                  [
+                    "Complaint filing deadline",
+                    row.claimDeadlineIso
+                      ? `${prettyDate(row.claimDeadlineIso)} · ${
+                          row.daysToClaimDeadline >= 0
+                            ? `${row.daysToClaimDeadline.toLocaleString("en-IN")} days left`
+                            : `${Math.abs(row.daysToClaimDeadline).toLocaleString("en-IN")} days past`
+                        }`
+                      : row.claimWindowNote,
+                  ],
                 ].map(([label, value]) => (
                   <div key={label} className="flex items-start justify-between gap-4 py-2.5">
                     <dt className="text-[var(--muted-foreground)]">{label}</dt>

@@ -90,13 +90,16 @@ export function shouldFire(alarm, now) {
   if (now.getMinutes() !== alarm.minute) return false;
   if (now.getSeconds() !== 0) return false;
 
-  const day = now.getDay(); // 0=Sun
+  return runsOnDay(alarm, now.getDay());
+}
+
+function runsOnDay(alarm, day) {
   switch (alarm.repeat) {
     case "one-time": return true;
     case "daily": return true;
     case "weekdays": return day >= 1 && day <= 5;
     case "weekends": return day === 0 || day === 6;
-    case "custom": return alarm.customDays.includes(day);
+    case "custom": return Array.isArray(alarm.customDays) && alarm.customDays.includes(day);
     default: return false;
   }
 }
@@ -105,17 +108,28 @@ export function shouldFire(alarm, now) {
  * Returns minutes until next alarm fires (from now).
  * Returns null if no enabled alarms.
  */
-export function minutesUntilNextAlarm(alarms) {
-  const now = new Date();
-  const totalNow = now.getHours() * 60 + now.getMinutes();
+export function minutesUntilNextAlarm(alarms, now = new Date()) {
   let minDiff = Infinity;
 
   for (const alarm of alarms) {
     if (!alarm.enabled) continue;
-    const alarmTotal = alarm.hour * 60 + alarm.minute;
-    let diff = alarmTotal - totalNow;
-    if (diff <= 0) diff += 24 * 60;
-    if (diff < minDiff) minDiff = diff;
+    if (!Number.isInteger(alarm.hour) || alarm.hour < 0 || alarm.hour > 23) continue;
+    if (!Number.isInteger(alarm.minute) || alarm.minute < 0 || alarm.minute > 59) continue;
+
+    // Search a full week so weekday, weekend and custom repeats land on the
+    // next day on which they can actually fire, not merely the next clock time.
+    for (let dayOffset = 0; dayOffset <= 7; dayOffset += 1) {
+      const candidate = new Date(now);
+      candidate.setDate(now.getDate() + dayOffset);
+      candidate.setHours(alarm.hour, alarm.minute, 0, 0);
+
+      if (candidate.getTime() <= now.getTime()) continue;
+      if (!runsOnDay(alarm, candidate.getDay())) continue;
+
+      const diff = Math.ceil((candidate.getTime() - now.getTime()) / 60_000);
+      if (diff < minDiff) minDiff = diff;
+      break;
+    }
   }
 
   return minDiff === Infinity ? null : minDiff;
@@ -124,8 +138,8 @@ export function minutesUntilNextAlarm(alarms) {
 /**
  * Returns a formatted "next alarm in X" string.
  */
-export function nextAlarmLabel(alarms) {
-  const mins = minutesUntilNextAlarm(alarms);
+export function nextAlarmLabel(alarms, now = new Date()) {
+  const mins = minutesUntilNextAlarm(alarms, now);
   if (mins === null) return null;
   if (mins < 60) return `Next alarm in ${mins}m`;
   const h = Math.floor(mins / 60);

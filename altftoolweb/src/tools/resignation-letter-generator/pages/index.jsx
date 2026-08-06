@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, LogOut, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   DEFAULT_BUYOUT_DIVISOR,
   NOTICE_PRESETS,
@@ -53,7 +54,8 @@ const CHECK_LABEL =
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [salary, setSalary] = useState("90000");
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const setField = (key, value) => setForm((current) => ({ ...current, [key]: value }));
 
@@ -71,21 +73,15 @@ export default function ToolHome() {
     });
   }, [result, salary]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (result.error) return;
-    try {
-      await navigator.clipboard.writeText(result.letter);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("letter", result.letter, { label: "resignation letter" });
   };
 
   const reset = () => {
     setForm(DEFAULTS);
     setSalary("90000");
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -214,6 +210,7 @@ export default function ToolHome() {
               id="rl-proposed"
               className={`mt-2 ${INPUT_CLASS}`}
               type="date"
+              min={form.resignationDate || undefined}
               value={form.proposedLastDay}
               onChange={(event) => setField("proposedLastDay", event.target.value)}
             />
@@ -358,13 +355,24 @@ export default function ToolHome() {
               <button
                 type="button"
                 onClick={copyResult}
-                aria-label="Copy the resignation letter"
+                aria-label={
+                  isCopied("letter")
+                    ? "Copied the resignation letter to clipboard"
+                    : "Copy the resignation letter"
+                }
                 className={GHOST_BTN}
               >
-                {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-                {copied ? "Copied!" : "Copy letter"}
+                {isCopied("letter") ? (
+                  <Check className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <Copy className="h-4 w-4" aria-hidden="true" />
+                )}
+                {isCopied("letter") ? "Copied!" : "Copy letter"}
               </button>
             </div>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
 
             <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
               {[
@@ -389,10 +397,10 @@ export default function ToolHome() {
               ))}
             </dl>
 
-            {result.requiredLastDay.isWeekend && (
+            {result.finalLastDay.isWeekend && (
               <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm" role="status">
-                The full notice period ends on a weekend. Most employers move the last working day to
-                the previous working day — confirm which date HR will record.
+                Your last working day falls on a weekend. Most employers move it to the previous
+                working day — confirm which date HR will record.
               </p>
             )}
           </section>
@@ -449,9 +457,22 @@ export default function ToolHome() {
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-base font-semibold">Your letter</h2>
-              <button type="button" onClick={copyResult} className={PRIMARY_BTN}>
-                {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-                {copied ? "Copied!" : "Copy"}
+              <button
+                type="button"
+                onClick={copyResult}
+                aria-label={
+                  isCopied("letter")
+                    ? "Copied the resignation letter to clipboard"
+                    : "Copy the resignation letter"
+                }
+                className={PRIMARY_BTN}
+              >
+                {isCopied("letter") ? (
+                  <Check className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <Copy className="h-4 w-4" aria-hidden="true" />
+                )}
+                {isCopied("letter") ? "Copied!" : "Copy"}
               </button>
             </div>
             <pre className="mt-3 overflow-x-auto whitespace-pre-wrap rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 text-sm leading-6">

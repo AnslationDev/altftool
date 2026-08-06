@@ -43,19 +43,16 @@ const SRGB_LINEAR_DIVISOR = 12.92;
 const SRGB_GAMMA_OFFSET = 0.055;
 const SRGB_GAMMA_EXPONENT = 2.4;
 
-/**
- * Stimulus swatches with a strong, nameable complement.
- * Kept here as data so the UI holds no colour literals of its own.
- */
-export const STIMULUS_SWATCHES = [
-  { hex: "#ff0000", name: "Red", afterimage: "Cyan" },
-  { hex: "#00a651", name: "Green", afterimage: "Magenta" },
-  { hex: "#0047ab", name: "Blue", afterimage: "Yellow-orange" },
-  { hex: "#ffd400", name: "Yellow", afterimage: "Blue-violet" },
-  { hex: "#ff6f00", name: "Orange", afterimage: "Azure" },
-  { hex: "#8a2be2", name: "Violet", afterimage: "Yellow-green" },
-  { hex: "#00ced1", name: "Turquoise", afterimage: "Red" },
-  { hex: "#ff1493", name: "Magenta", afterimage: "Spring green" },
+/** Stimulus swatch hex/name pairs; afterimage labels are computed below. */
+const SWATCH_HEXES = [
+  { hex: "#ff0000", name: "Red" },
+  { hex: "#00a651", name: "Green" },
+  { hex: "#0047ab", name: "Blue" },
+  { hex: "#ffd400", name: "Yellow" },
+  { hex: "#ff6f00", name: "Orange" },
+  { hex: "#8a2be2", name: "Violet" },
+  { hex: "#00ced1", name: "Turquoise" },
+  { hex: "#ff1493", name: "Magenta" },
 ];
 
 /** Neutral field the afterimage is projected onto. */
@@ -172,6 +169,29 @@ export function hueName(hue) {
   }
   return name;
 }
+
+/**
+ * Name of the sRGB-inverse complement for a stimulus hex. Computed rather
+ * than hand-written so a preset's advertised afterimage can never drift from
+ * what predictAfterimage actually reports once that swatch is selected (the
+ * default complement model shown is the sRGB inverse).
+ */
+function inverseAfterimageName(hex) {
+  const rgb = parseHex(hex);
+  if (rgb.error) return "";
+  const inverse = { r: 255 - rgb.r, g: 255 - rgb.g, b: 255 - rgb.b };
+  const name = hueName(rgbToHsl(inverse).h);
+  return name.charAt(0).toUpperCase() + name.slice(1);
+}
+
+/**
+ * Stimulus swatches with a strong, nameable complement.
+ * Kept here as data so the UI holds no colour literals of its own.
+ */
+export const STIMULUS_SWATCHES = SWATCH_HEXES.map((swatch) => ({
+  ...swatch,
+  afterimage: inverseAfterimageName(swatch.hex),
+}));
 
 /**
  * Which opponent channel carries most of the stimulus, from the classic

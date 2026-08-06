@@ -23,6 +23,7 @@ export default function ToolHome() {
   const [alarms, setAlarms] = useState([]);
   const [activeTab, setActiveTab] = useState("clock");
   const [firingAlarm, setFiringAlarm] = useState(null);
+  const [alarmLabelNow, setAlarmLabelNow] = useState(null);
   const stopSoundRef = useRef(null);
 
   useEffect(() => {
@@ -32,6 +33,13 @@ export default function ToolHome() {
   useEffect(() => {
     saveAlarms(alarms);
   }, [alarms]);
+
+  useEffect(() => {
+    const updateAlarmLabelClock = () => setAlarmLabelNow(new Date());
+    updateAlarmLabelClock();
+    const interval = setInterval(updateAlarmLabelClock, 30_000);
+    return () => clearInterval(interval);
+  }, []);
 
   const handleAdd = useCallback((alarm) => {
     setAlarms((prev) => [...prev, alarm]);
@@ -109,7 +117,7 @@ export default function ToolHome() {
     return () => clearInterval(interval);
   }, [alarms, firingAlarm]);
 
-  const label = nextAlarmLabel(alarms);
+  const label = alarmLabelNow ? nextAlarmLabel(alarms, alarmLabelNow) : null;
 
   return (
     <div className="px-4 py-6 max-w-3xl mx-auto space-y-6">

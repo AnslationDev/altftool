@@ -14,9 +14,21 @@ const LABEL_CLASS = "block text-sm font-semibold text-[var(--foreground)]";
 const GHOST_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 
-const isoToday = () => new Date().toISOString().slice(0, 10);
-const isoDaysAgo = (days) =>
-  new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString().slice(0, 10);
+// Local calendar date, not UTC — toISOString() reports the UTC date, which
+// has already rolled over to tomorrow (or not yet rolled over to today) for
+// part of every day in any non-UTC timezone.
+const toLocalIso = (date) => {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
+const isoToday = () => toLocalIso(new Date());
+const isoDaysAgo = (days) => {
+  const date = new Date();
+  date.setDate(date.getDate() - days);
+  return toLocalIso(date);
+};
 
 const DASH = "—";
 
@@ -219,13 +231,9 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section
-        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
-        aria-live="polite"
-        aria-atomic="true"
-      >
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Next rotation due
             </p>
@@ -289,11 +297,7 @@ export default function ToolHome() {
       </section>
 
       {hasError ? null : (
-        <section
-          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
-          aria-live="polite"
-          aria-atomic="true"
-        >
+        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
           <h2 className="text-base font-semibold">Cutover schedule</h2>
           <ol className="mt-3 space-y-3">
             {result.steps.map((step, index) => (

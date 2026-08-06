@@ -46,11 +46,6 @@ const seo = {
       "Yes, completely free with no signup.",
     ],
   ],
-  steps: [
-    "Enter your original width and height.",
-    "See the simplified ratio (like 16:9 or 4:3) instantly.",
-    "Enter a target width or height to get the exact proportional match.",
-  ],
 };
 
 export default seo;

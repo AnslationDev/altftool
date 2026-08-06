@@ -129,6 +129,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset all inputs to their default values? Anything you've typed in will be lost.",
+      )
+    ) {
+      return;
+    }
     setPrincipal(DEFAULTS.principal);
     setContractedRatePercent(DEFAULTS.contractedRatePercent);
     setTenureMonths(DEFAULTS.tenureMonths);
@@ -200,7 +207,7 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               type="number"
               inputMode="decimal"
-              min="0"
+              min="0.05"
               max="20"
               step="0.05"
               value={contractedRatePercent}
@@ -247,7 +254,7 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               type="number"
               inputMode="decimal"
-              min="0"
+              min="0.05"
               max="20"
               step="0.05"
               value={cardRate}
@@ -334,7 +341,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -353,7 +364,7 @@ export default function ToolHome() {
               onClick={copyResult}
               disabled={hasError}
               aria-label="Copy the FD break versus loan comparison"
-              className={`${GHOST_BTN} disabled:opacity-50`}
+              className={`${PRIMARY_BTN} disabled:opacity-50`}
             >
               {copied ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
@@ -362,7 +373,7 @@ export default function ToolHome() {
               )}
               {copied ? "Copied!" : "Copy result"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>

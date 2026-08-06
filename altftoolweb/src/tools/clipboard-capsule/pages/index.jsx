@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef } from "react";
 import { Clipboard, Plus } from "lucide-react";
 import { Tabs, SearchInput, ToastHost, Toast, Button } from "@altftool/ui";
 
@@ -10,13 +10,17 @@ import ClipboardStats from "../components/ClipboardStats";
 
 import {
   getSnippets,
-  saveSnippets,
   getCategories,
   saveCategories,
   createSnippet,
   updateSnippet,
   deleteSnippet
 } from "../utils/clipboardDb";
+
+// Tab keys reserved by the built-in "All"/"Favorites" filters -- a
+// user-created category sharing one of these names (in any case) would
+// otherwise collide with the hardcoded tab and become unreachable.
+const RESERVED_TAB_KEYS = new Set(["all", "favorites"]);
 
 export default function ClipboardCapsuleHome() {
   const [snippets, setSnippets] = useState([]);
@@ -29,6 +33,7 @@ export default function ClipboardCapsuleHome() {
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingSnippet, setEditingSnippet] = useState(null);
   const [toasts, setToasts] = useState([]);
+  const toastTimers = useRef(new Map());
 
   // Load initial data
   useEffect(() => {
@@ -37,12 +42,34 @@ export default function ClipboardCapsuleHome() {
     setIsLoaded(true);
   }, []);
 
+  // Auto-dismiss timers are tracked so they can be cleared on unmount --
+  // otherwise a toast fired right before navigating away calls setState on
+  // an unmounted component.
+  useEffect(() => {
+    const timers = toastTimers.current;
+    return () => {
+      timers.forEach((timerId) => clearTimeout(timerId));
+      timers.clear();
+    };
+  }, []);
+
+  const dismissToast = (id) => {
+    const timerId = toastTimers.current.get(id);
+    if (timerId) {
+      clearTimeout(timerId);
+      toastTimers.current.delete(id);
+    }
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  };
+
   const addToast = (message, tone = "info") => {
     const id = Date.now().toString();
     setToasts((prev) => [...prev, { id, message, tone }]);
-    setTimeout(() => {
+    const timerId = setTimeout(() => {
+      toastTimers.current.delete(id);
       setToasts((prev) => prev.filter((t) => t.id !== id));
     }, 3000);
+    toastTimers.current.set(id, timerId);
   };
 
   const handleSaveSnippet = (data) => {
@@ -66,6 +93,9 @@ export default function ClipboardCapsuleHome() {
   };
 
   const handleDelete = (id) => {
+    if (!window.confirm("Delete this snippet? This cannot be undone.")) {
+      return;
+    }
     deleteSnippet(id);
     setSnippets(getSnippets());
     addToast("Snippet deleted", "success");
@@ -133,7 +163,12 @@ export default function ClipboardCapsuleHome() {
   const tabs = [
     { key: "All", label: "All" },
     { key: "Favorites", label: "Favorites ❤️" },
-    ...categories.map(c => ({ key: c, label: c }))
+    // Guard against a user-created category literally named "All" or
+    // "Favorites" (any case) -- it would otherwise duplicate one of the
+    // built-in tab keys above and become permanently unreachable.
+    ...categories
+      .filter(c => !RESERVED_TAB_KEYS.has(String(c).trim().toLowerCase()))
+      .map(c => ({ key: c, label: c }))
   ];
 
   if (!isLoaded) return null;
@@ -239,7 +274,7 @@ export default function ClipboardCapsuleHome() {
             key={t.id}
             tone={t.tone}
             message={t.message}
-            onClose={() => setToasts(prev => prev.filter(x => x.id !== t.id))}
+            onClose={() => dismissToast(t.id)}
           />
         ))}
       </ToastHost>

@@ -29,6 +29,11 @@ const amplifyIncompatibleNativePackages = [
   "node_modules/@img/sharp-libvips-linuxmusl-x64/**/*",
   "node_modules/@img/sharp-linuxmusl-x64/**/*",
 ];
+const amplifyCdnCorpusFiles = ["public/data/lexicon/**/*.gz"];
+const amplifyTraceExcludes = [
+  ...amplifyIncompatibleNativePackages,
+  ...amplifyCdnCorpusFiles,
+];
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -40,10 +45,15 @@ const nextConfig = {
         // musl alternatives that can never load there; excluding them at trace
         // time is essential because Amplify rebuilds its compute bundle from
         // the NFT files. `/**` covers every route trace (including `/`) and
-        // `next-server` covers Next's shared trace.
+        // `next-server` covers Next's shared trace. Lexicon corpus objects are
+        // deployed from `public/` as immutable CDN assets; the server loader
+        // reads them locally while building and falls back to that public URL
+        // in Amplify's compute runtime. Keeping all 2,708 objects in every
+        // Lexicon route trace duplicates thousands of path entries and also
+        // makes Amplify copy the same 25 MiB corpus into the compute bundle.
         outputFileTracingExcludes: {
-          "/**": amplifyIncompatibleNativePackages,
-          "next-server": amplifyIncompatibleNativePackages,
+          "/**": amplifyTraceExcludes,
+          "next-server": amplifyTraceExcludes,
         },
       }
     : {}),
@@ -116,6 +126,19 @@ const nextConfig = {
 
   async headers() {
     return [
+      {
+        // `/sitemap.xml` is generated on demand so its 1.2 MiB response body
+        // does not live in the Amplify compute artifact. Preserve the cache
+        // contract of the former static metadata route; getSitemapEntries()
+        // still refreshes its underlying entry set once per hour.
+        source: "/sitemap.xml",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, must-revalidate",
+          },
+        ],
+      },
       {
         // Widget iframes are meant to be embedded on third-party sites.
         // The enforced frame-ancestors CSP governs framing in modern browsers

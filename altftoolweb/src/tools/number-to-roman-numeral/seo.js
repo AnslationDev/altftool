@@ -3,7 +3,7 @@ const seo = {
     "This converter turns any whole number from 1 to 3999 into standard Roman numerals using the greedy subtractive method — repeatedly taking the largest available value from M, CM, D, CD, C, XC, L, XL, X, IX, V, IV and I until nothing is left. Alongside the answer it shows the composition symbol by symbol, the character length, and the number split into thousands, hundreds, tens and ones, so you can see how each place value became its own group of letters. It is the form used on clock faces, book prefaces, film copyright lines and monument inscriptions.",
   useCases: [
     "You are writing the copyright line for a film title card and need 2024 rendered correctly as MMXXIV rather than the non-standard MMXXIIII.",
-    "You are numbering the front matter of a report in lowercase Roman and want to confirm that page 47 is xlvii, with the subtractive XL rather than XXXX.",
+    "You are numbering the front matter of a report in Roman numerals and want to confirm that page 47 is XLVII, with the subtractive XL rather than XXXX.",
     "A tattoo or engraving needs a birth year in Roman numerals, and you want the character-by-character composition before it goes onto something permanent.",
   ],
   benefits: [

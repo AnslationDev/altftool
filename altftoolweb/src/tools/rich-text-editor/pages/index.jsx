@@ -7,6 +7,7 @@ import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
+import Placeholder from "@tiptap/extension-placeholder";
 
 import {
   Bold,
@@ -28,6 +29,29 @@ import {
   Image as ImageIcon,
   PenTool,
 } from "lucide-react";
+
+// Declared at module scope (not inside EditorToolbar) so it keeps a stable
+// component identity across renders. When it used to be defined inside
+// EditorToolbar's function body, every keystroke in the editor triggered
+// onUpdate -> setContent -> a re-render of EditorToolbar, which redefined
+// ToolbarButton as a brand-new function reference each time -- React then
+// tore down and remounted all 17 toolbar buttons (and their DOM nodes) on
+// every character typed instead of just diffing their props.
+const ToolbarButton = ({ onClick, isActive, title, children }) => (
+  <button
+    type="button"
+    onClick={onClick}
+    title={title}
+    aria-label={title}
+    className={`p-2 rounded-md flex items-center justify-center transition-colors ${
+      isActive
+        ? "bg-(--primary)/20 text-(--primary)"
+        : "text-(--muted-foreground) hover:bg-(--border) hover:text-(--foreground)"
+    }`}
+  >
+    {children}
+  </button>
+);
 
 const EditorToolbar = ({ editor }) => {
   const addLink = useCallback(() => {
@@ -51,21 +75,6 @@ const EditorToolbar = ({ editor }) => {
   }, [editor]);
 
   if (!editor) return null;
-
-  const ToolbarButton = ({ onClick, isActive, title, children }) => (
-    <button
-      type="button"
-      onClick={onClick}
-      title={title}
-      className={`p-2 rounded-md flex items-center justify-center transition-colors ${
-        isActive
-          ? "bg-(--primary)/20 text-(--primary)"
-          : "text-(--muted-foreground) hover:bg-(--border) hover:text-(--foreground)"
-      }`}
-    >
-      {children}
-    </button>
-  );
 
   return (
     <div className="flex flex-wrap items-center gap-1 p-2 border-b border-(--border) bg-(--card)">
@@ -222,6 +231,9 @@ const RichTextEditor = ({
         openOnClick: false,
       }),
       Image,
+      Placeholder.configure({
+        placeholder,
+      }),
     ],
     content: initialContent,
     editable: !readOnly,
@@ -264,9 +276,24 @@ const RichTextEditor = ({
   if (!editor) return null;
 
   return (
-    <div className="border border-(--border) rounded-xl overflow-hidden bg-(--card) shadow-sm focus-within:ring-2 focus-within:ring-(--primary)/30 transition-all">
+    <div className="rte-editor border border-(--border) rounded-xl overflow-hidden bg-(--card) shadow-sm focus-within:ring-2 focus-within:ring-(--primary)/30 transition-all">
       {!readOnly && <EditorToolbar editor={editor} />}
-      <EditorContent editor={editor} placeholder={placeholder} />
+      <EditorContent editor={editor} />
+      {/* @tiptap/extension-placeholder decorates the empty node with an
+          `is-editor-empty` class and a `data-placeholder` attribute rather
+          than a real `placeholder` DOM attribute (that only exists on
+          <input>/<textarea>, never on the contenteditable <div> TipTap
+          renders into), so the placeholder text has to be painted in via
+          this ::before rule instead of a prop on EditorContent. */}
+      <style jsx global>{`
+        .rte-editor .is-editor-empty:first-child::before {
+          content: attr(data-placeholder);
+          float: left;
+          height: 0;
+          pointer-events: none;
+          color: var(--muted-foreground);
+        }
+      `}</style>
     </div>
   );
 };

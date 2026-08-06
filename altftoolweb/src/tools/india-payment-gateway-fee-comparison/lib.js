@@ -91,6 +91,7 @@ export const MIX_TOLERANCE_PCT = 0.01;
 const isNum = (value) => typeof value === "number" && Number.isFinite(value);
 const round2 = (value) => Math.round(value * 100) / 100;
 
+/** Kept public because other surfaces use the statutory classification. */
 export function isZeroMdrRail(railId) {
   return ZERO_MDR_RAILS.includes(railId);
 }
@@ -115,21 +116,37 @@ export function gatewayMonthlyCost({ monthlyVolume, averageTicket, mix, gateway 
   if (!gateway || typeof gateway !== "object" || !gateway.rates) {
     return { error: "Gateway rate card is missing." };
   }
+  if (!isNum(gateway.flatFeePerTxn) || gateway.flatFeePerTxn < 0) {
+    return { error: `Enter a flat fee per transaction of zero or more for ${gateway.name}.` };
+  }
+  if (!isNum(gateway.monthlyFee) || gateway.monthlyFee < 0) {
+    return { error: `Enter a monthly fee of zero or more for ${gateway.name}.` };
+  }
+  for (const rail of RAILS) {
+    if (rail.zeroMdr) continue;
+    const rate = Number(gateway.rates?.[rail.id]);
+    if (!isNum(rate)) {
+      return { error: `Enter a number for ${gateway.name}'s ${rail.label} rate.` };
+    }
+    if (rate < 0) {
+      return { error: `${gateway.name}'s ${rail.label} rate cannot be negative.` };
+    }
+  }
 
   const totalTxns = monthlyVolume / averageTicket;
-  const flat = isNum(gateway.flatFeePerTxn) ? gateway.flatFeePerTxn : 0;
-  const monthlyFee = isNum(gateway.monthlyFee) ? gateway.monthlyFee : 0;
+  const flat = gateway.flatFeePerTxn;
+  const monthlyFee = gateway.monthlyFee;
 
-  const lines = [];
   let percentFee = 0;
   let flatFee = 0;
+  const lines = [];
 
   for (const rail of RAILS) {
     const sharePct = Number(mix?.[rail.id]) || 0;
     if (sharePct <= 0) continue;
     const railVolume = (monthlyVolume * sharePct) / 100;
     const railTxns = railVolume / averageTicket;
-    const ratePct = rail.zeroMdr ? 0 : Number(gateway.rates[rail.id]) || 0;
+    const ratePct = rail.zeroMdr ? 0 : Number(gateway.rates[rail.id]);
     const railPercentFee = rail.zeroMdr ? 0 : (railVolume * ratePct) / 100;
     const railFlatFee = rail.zeroMdr ? 0 : railTxns * flat;
     percentFee += railPercentFee;

@@ -23,6 +23,7 @@ import {
   VolumeX,
   XCircle,
 } from "lucide-react";
+import { getVideoMimeType } from "../lib/media.js";
 
 const CORE_VERSION = "0.12.10";
 const CORE_BASE_URL = `https://unpkg.com/@ffmpeg/core@${CORE_VERSION}/dist/umd`;
@@ -102,12 +103,6 @@ function sanitizeFileName(name = "video") {
   );
 }
 
-function getMimeType(ext) {
-  if (ext === "webm") return "video/webm";
-  if (ext === "mov") return "video/quicktime";
-  return "video/mp4";
-}
-
 function downloadBlob(blob, filename) {
   const url = URL.createObjectURL(blob);
   const anchor = document.createElement("a");
@@ -143,6 +138,7 @@ export default function MainComponent() {
   const [resultUrl, setResultUrl] = useState("");
   const [resultBlob, setResultBlob] = useState(null);
   const [resultName, setResultName] = useState("");
+  const [hasDownloadedResult, setHasDownloadedResult] = useState(false);
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
 
@@ -151,6 +147,11 @@ export default function MainComponent() {
   const ffmpegRef = useRef(null);
   const resultUrlRef = useRef("");
   const sourceUrlRef = useRef("");
+  // Every async trim attempt owns a monotonically increasing token. Cancelling
+  // invalidates that token, so a fast Cancel -> Retry cannot let the old
+  // promise chain update the new run's worker, progress, result, or loading UI.
+  const activeRunRef = useRef(0);
+  const workerRunRef = useRef(0);
 
   const selectedDuration = Math.max(0, endTime - startTime);
   const sourceExt = file ? getExtension(file.name) : "mp4";
@@ -160,8 +161,41 @@ export default function MainComponent() {
         ? sourceExt
         : "mp4"
       : outputFormat;
-  const estimatedSize =
-    file && duration ? Math.round(file.size * (selectedDuration / duration)) : 0;
+  // Heuristic only (it's labeled "Est." in the UI): scales the source's
+  // average bitrate by the selected duration, then nudges the video/audio
+  // split by the controls that actually change what ffmpeg produces —
+  // keepAudio, trimMode (re-encode vs stream copy), CRF, and the re-encoded
+  // audio bitrate for the chosen container — so the figure visibly moves
+  // when those settings change instead of staying a flat proportion.
+  const estimatedSize = (() => {
+    if (!file || !duration || selectedDuration <= 0) return 0;
+
+    const avgBitrateBps = (file.size * 8) / duration;
+    const sourceAudioShareBps = Math.min(avgBitrateBps * 0.15, 128_000);
+    const sourceVideoShareBps = Math.max(
+      avgBitrateBps - sourceAudioShareBps,
+      avgBitrateBps * 0.5,
+    );
+
+    let videoBitrateBps = sourceVideoShareBps;
+    if (trimMode === "precise") {
+      const crfSteps = crf - 22;
+      const crfFactor = Math.max(0.25, 1 - crfSteps * 0.06);
+      videoBitrateBps = sourceVideoShareBps * crfFactor;
+    }
+
+    let audioBitrateBps = 0;
+    if (keepAudio) {
+      audioBitrateBps =
+        trimMode === "precise"
+          ? effectiveOutputFormat === "webm"
+            ? 96_000
+            : 128_000
+          : sourceAudioShareBps;
+    }
+
+    return Math.round(((videoBitrateBps + audioBitrateBps) / 8) * selectedDuration);
+  })();
   const selectionLeft = duration ? (startTime / duration) * 100 : 0;
   const selectionWidth = duration
     ? ((endTime - startTime) / duration) * 100
@@ -175,6 +209,8 @@ export default function MainComponent() {
 
   useEffect(() => {
     return () => {
+      activeRunRef.current += 1;
+      workerRunRef.current = 0;
       if (sourceUrlRef.current) URL.revokeObjectURL(sourceUrlRef.current);
       if (resultUrlRef.current) URL.revokeObjectURL(resultUrlRef.current);
       ffmpegRef.current?.terminate?.();
@@ -187,10 +223,18 @@ export default function MainComponent() {
     setResultUrl("");
     setResultBlob(null);
     setResultName("");
+    setHasDownloadedResult(false);
     setProgress(0);
   };
 
   const resetTool = () => {
+    const confirmMessage = resultBlob && !hasDownloadedResult
+      ? "Clear this video? Your trimmed clip hasn't been downloaded yet and will be lost."
+      : "Clear this video and start over?";
+    if (typeof window !== "undefined" && !window.confirm(confirmMessage)) {
+      return;
+    }
+
     clearResult();
     if (sourceUrlRef.current) URL.revokeObjectURL(sourceUrlRef.current);
     sourceUrlRef.current = "";
@@ -304,8 +348,23 @@ export default function MainComponent() {
     }
   };
 
-  const ensureFfmpeg = async () => {
+  // Throws a marked cancellation error if the user has clicked Cancel since
+  // the current trim attempt started. Checked at every await boundary below
+  // so Cancel reliably interrupts the job even during phases (like the
+  // initial engine/core download) where there is no ffmpeg worker yet for
+  // FFmpeg.terminate() to act on.
+  const throwIfCancelled = (runId) => {
+    if (activeRunRef.current !== runId) {
+      const err = new Error("Trim cancelled.");
+      err.cancelled = true;
+      throw err;
+    }
+  };
+
+  const ensureFfmpeg = async (runId) => {
     if (ffmpegRef.current?.loaded) {
+      throwIfCancelled(runId);
+      workerRunRef.current = runId;
       setFfmpegReady(true);
       return ffmpegRef.current;
     }
@@ -315,42 +374,65 @@ export default function MainComponent() {
     setStatus("Loading FFmpeg engine...");
     setProgress(0);
 
+    let ffmpeg = null;
     try {
       const [{ FFmpeg }, { toBlobURL }] = await Promise.all([
         import("@ffmpeg/ffmpeg"),
         import("@ffmpeg/util"),
       ]);
+      throwIfCancelled(runId);
 
-      const ffmpeg = new FFmpeg();
+      ffmpeg = new FFmpeg();
       ffmpeg.on("progress", ({ progress: ffmpegProgress }) => {
-        if (Number.isFinite(ffmpegProgress)) {
+        if (
+          activeRunRef.current === workerRunRef.current &&
+          ffmpegRef.current === ffmpeg &&
+          Number.isFinite(ffmpegProgress)
+        ) {
           setProgress(Math.min(98, Math.round(ffmpegProgress * 100)));
         }
       });
-      ffmpeg.on("log", ({ message }) => {
-        if (message?.trim()) {
-          setStatus(message.trim().slice(0, 140));
-        }
-      });
+      // Note: FFmpeg CLI log lines are intentionally not surfaced through
+      // setStatus — they're internal engine chatter (stream mapping,
+      // "frame= 102 fps=25 ..." progress banners, encoder identification),
+      // not human-facing status text, and displaying them next to a success
+      // icon while a trim is still running reads as a false "done" signal.
+
+      // Assign the instance to the ref immediately (before the network
+      // fetch/load below), not after ffmpeg.load() resolves, so cancelTrim's
+      // ffmpeg.terminate() call can always reach whichever instance is
+      // actually in flight, no matter which startup phase Cancel is clicked
+      // during.
+      ffmpegRef.current = ffmpeg;
+      workerRunRef.current = runId;
 
       const [coreURL, wasmURL] = await Promise.all([
         toBlobURL(`${CORE_BASE_URL}/ffmpeg-core.js`, "text/javascript"),
         toBlobURL(`${CORE_BASE_URL}/ffmpeg-core.wasm`, "application/wasm"),
       ]);
+      throwIfCancelled(runId);
 
       await ffmpeg.load({ coreURL, wasmURL });
-      ffmpegRef.current = ffmpeg;
+      throwIfCancelled(runId);
       setFfmpegReady(true);
       setStatus("FFmpeg ready. Starting trim...");
       return ffmpeg;
     } catch (err) {
+      if (ffmpegRef.current === ffmpeg) {
+        ffmpegRef.current = null;
+        workerRunRef.current = 0;
+      }
+      if (err?.cancelled) {
+        if (activeRunRef.current === runId) setFfmpegReady(false);
+        throw err;
+      }
       console.error("Failed to load FFmpeg:", err);
-      setFfmpegReady(false);
+      if (activeRunRef.current === runId) setFfmpegReady(false);
       throw new Error(
         "Could not load FFmpeg engine. Check internet once and try again.",
       );
     } finally {
-      setIsLoadingFfmpeg(false);
+      if (activeRunRef.current === runId) setIsLoadingFfmpeg(false);
     }
   };
 
@@ -436,6 +518,8 @@ export default function MainComponent() {
       return;
     }
 
+    const runId = activeRunRef.current + 1;
+    activeRunRef.current = runId;
     setIsTrimming(true);
     setProgress(0);
     setError("");
@@ -445,28 +529,33 @@ export default function MainComponent() {
     const outputName = `${sanitizeFileName(file.name)}-${formatFileTime(startTime)}-to-${formatFileTime(endTime)}.${effectiveOutputFormat}`;
 
     try {
-      const ffmpeg = await ensureFfmpeg();
+      const ffmpeg = await ensureFfmpeg(runId);
+      throwIfCancelled(runId);
       const { fetchFile } = await import("@ffmpeg/util");
 
       setStatus("Preparing source video...");
       await ffmpeg.writeFile(inputName, await fetchFile(file));
+      throwIfCancelled(runId);
 
       setStatus("Trimming video...");
       const args = buildCommand(inputName, outputName);
       const exitCode = await ffmpeg.exec(args);
+      throwIfCancelled(runId);
 
       if (exitCode !== 0) {
         throw new Error("FFmpeg returned a non-zero exit code.");
       }
 
       const data = await ffmpeg.readFile(outputName);
-      const blob = new Blob([data], { type: getMimeType(effectiveOutputFormat) });
+      throwIfCancelled(runId);
+      const blob = new Blob([data], { type: getVideoMimeType(effectiveOutputFormat) });
       const url = URL.createObjectURL(blob);
 
       resultUrlRef.current = url;
       setResultUrl(url);
       setResultBlob(blob);
       setResultName(outputName);
+      setHasDownloadedResult(false);
       setProgress(100);
       setStatus(`Trim ready: ${formatBytes(blob.size)}.`);
 
@@ -475,6 +564,12 @@ export default function MainComponent() {
         ffmpeg.deleteFile(outputName),
       ]);
     } catch (err) {
+      if (err?.cancelled || activeRunRef.current !== runId) {
+        // cancelTrim already set the clean "Trim cancelled." status/UI
+        // state — don't clobber it with FFmpeg's internal terminate()
+        // rejection text (message: "called FFmpeg.terminate()").
+        return;
+      }
       console.error("Video trim failed:", err);
       setError(
         err.message ||
@@ -482,16 +577,20 @@ export default function MainComponent() {
       );
       setStatus("");
     } finally {
-      setIsTrimming(false);
+      if (activeRunRef.current === runId) setIsTrimming(false);
     }
   };
 
   const cancelTrim = () => {
-    ffmpegRef.current?.terminate?.();
+    activeRunRef.current += 1;
+    const ffmpeg = ffmpegRef.current;
     ffmpegRef.current = null;
+    workerRunRef.current = 0;
+    ffmpeg?.terminate?.();
     setFfmpegReady(false);
     setIsTrimming(false);
     setIsLoadingFfmpeg(false);
+    setError("");
     setStatus("Trim cancelled.");
     setProgress(0);
   };
@@ -548,7 +647,7 @@ export default function MainComponent() {
                     </p>
                     <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-(--muted-foreground)">
                       <span className="inline-flex items-center gap-1 rounded-lg border border-(--border) px-2 py-1">
-                        <ShieldCheck className="h-3.5 w-3.5 text-green-600" />
+                        <ShieldCheck className="h-3.5 w-3.5 text-(--success)" />
                         No server upload
                       </span>
                       <span className="inline-flex items-center gap-1 rounded-lg border border-(--border) px-2 py-1">
@@ -661,7 +760,9 @@ export default function MainComponent() {
                         step="0.01"
                         value={startTime}
                         onChange={(event) => updateStart(event.target.value)}
-                        className="w-full accent-green-600"
+                        aria-label="Trim start time in seconds"
+                        aria-valuetext={formatTime(startTime, true)}
+                        className="w-full accent-(--success)"
                       />
                     </div>
                     <div>
@@ -680,6 +781,8 @@ export default function MainComponent() {
                         step="0.01"
                         value={endTime}
                         onChange={(event) => updateEnd(event.target.value)}
+                        aria-label="Trim end time in seconds"
+                        aria-valuetext={formatTime(endTime, true)}
                         className="w-full accent-[var(--primary)]"
                       />
                     </div>
@@ -766,14 +869,20 @@ export default function MainComponent() {
 
           {(error || status) && (
             <div
+              role="status"
+              aria-live="polite"
               className={`flex items-start gap-3 rounded-lg border p-4 ${
                 error
-                  ? "border-red-500/40 bg-red-500/10 text-red-600"
-                  : "border-green-500/40 bg-green-500/10 text-green-700"
+                  ? "border-(--danger) bg-(--danger-soft) text-(--danger)"
+                  : isTrimming || isLoadingFfmpeg
+                    ? "border-(--primary)/40 bg-(--section-highlight) text-(--foreground)"
+                    : "border-(--success) bg-(--success-soft) text-(--success)"
               }`}
             >
               {error ? (
                 <XCircle className="mt-0.5 h-5 w-5 shrink-0" />
+              ) : isTrimming || isLoadingFfmpeg ? (
+                <Loader2 className="mt-0.5 h-5 w-5 shrink-0 animate-spin" />
               ) : (
                 <CheckCircle className="mt-0.5 h-5 w-5 shrink-0" />
               )}
@@ -807,7 +916,11 @@ export default function MainComponent() {
                   )}
                   <button
                     type="button"
-                    onClick={() => resultBlob && downloadBlob(resultBlob, resultName)}
+                    onClick={() => {
+                      if (!resultBlob) return;
+                      downloadBlob(resultBlob, resultName);
+                      setHasDownloadedResult(true);
+                    }}
                     disabled={!resultBlob}
                     className="btn-primary inline-flex items-center gap-2 disabled:cursor-not-allowed disabled:opacity-60"
                   >
@@ -818,7 +931,7 @@ export default function MainComponent() {
               </div>
 
               {(isTrimming || progress > 0) && (
-                <div className="mt-5">
+                <div className="mt-5" role="status" aria-live="polite">
                   <div className="mb-2 flex justify-between text-xs text-(--muted-foreground)">
                     <span>
                       {isLoadingFfmpeg
@@ -839,12 +952,12 @@ export default function MainComponent() {
               )}
 
               {resultUrl && (
-                <div className="mt-6 overflow-hidden rounded-lg border border-(--border) bg-black">
+                <div className="mt-6 overflow-hidden rounded-lg border border-(--border) bg-(--canvas)">
                   <video
                     src={resultUrl}
                     controls
                     playsInline
-                    className="aspect-video w-full bg-black"
+                    className="aspect-video w-full bg-(--canvas)"
                   />
                 </div>
               )}
@@ -942,7 +1055,7 @@ export default function MainComponent() {
                     {keepAudio ? (
                       <Volume2 className="h-4 w-4 text-(--primary)" />
                     ) : (
-                      <VolumeX className="h-4 w-4 text-red-600" />
+                      <VolumeX className="h-4 w-4 text-(--danger)" />
                     )}
                     {keepAudio ? "Keep audio" : "Remove audio"}
                   </span>

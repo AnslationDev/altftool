@@ -3,18 +3,18 @@ const seo = {
     "The Warranty & Receipt Vault is a local record keeper for the purchase details you only need once, at the worst moment: each entry has an Item field and a free-text field for warranty and receipt details such as serial number, seller, purchase date and cover expiry. Records are saved in your browser's own localStorage, searchable across every field, and exportable to a JSON file you can back up or move to another device. It stores what you type — it does not verify warranty terms or remind you when cover ends.",
   useCases: [
     "Your washing machine fails eighteen months in and you need the serial number, the date of purchase and the length of cover — you search 'washing' and it is all in one record instead of in a shoebox.",
-    "You have just moved into a new place and want one list of every appliance, its model number and when its warranty runs out, built up as you unpack rather than reconstructed later.",
-    "You are handing a laptop over to a family member and want to pass on the receipt details with it, so you export the JSON and delete the record from your own copy.",
+    "You have just moved into a new place and want one list of every appliance, with its model number and warranty end date typed into the same details field, built up as you unpack rather than reconstructed later.",
+    "You are handing a laptop over to a family member and want to pass on the receipt details with it: Export JSON writes the whole vault to warranty-receipt-vault.json, so you copy that one entry out of the file before pressing Delete on your own copy.",
   ],
   benefits: [
     ["Search across everything you typed", "The filter matches text in any field, so a serial number, a shop name or a model number all find the same record."],
-    ["Portable through plain JSON", "Export writes a readable JSON file and import reads one back, so your records are not trapped in this browser and are easy to back up."],
+    ["Portable through plain JSON", "Export JSON saves the whole vault as an indented warranty-receipt-vault.json you can read in any editor, and Import JSON reads one back after warning you that it replaces every record currently saved here."],
     ["Nothing leaves the page", "Records are written only to this browser's localStorage — there is no account to create and nothing is transmitted to a server."],
   ],
   faqs: [
     [
       "Where is my data stored?",
-      "In your browser's localStorage, under a key specific to this tool. That means it is tied to this browser on this device and this site origin — it does not sync to your phone, and another browser on the same computer will show an empty vault.",
+      "In your browser's localStorage, under the key altftool-private-records:warranty-receipt-vault. That means it is tied to this browser on this device and this site origin — it does not sync to your phone, and another browser on the same computer will show an empty vault.",
     ],
     [
       "Is the vault encrypted or password protected?",

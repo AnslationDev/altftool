@@ -62,9 +62,9 @@ const BUCKET_META = {
 };
 
 const STATUS_CLASS = {
-  good: "text-[var(--success)]",
-  watch: "text-[var(--warning)]",
-  over: "text-[var(--danger)]",
+  good: "text-[var(--success-text)]",
+  watch: "text-[var(--warning-text)]",
+  over: "text-[var(--danger-text)]",
 };
 
 const STATUS_LABEL = { good: "On track", watch: "Watch", over: "Off track" };
@@ -146,6 +146,10 @@ export default function ToolHome() {
     const totalIncome = Number(income || 0) + Number(otherIncome || 0);
     const suggestion = suggestBudget(totalIncome);
     if (suggestion.error) return;
+    const confirmed = window.confirm(
+      "Fill a 50/30/20 starting plan? This replaces all 16 expense fields with generated values — anything you entered will be lost.",
+    );
+    if (!confirmed) return;
     const next = emptyLines();
     // Spread the 50/30/20 targets across representative lines in each bucket.
     next.rent = String(Math.round(suggestion.needs * 0.5));
@@ -283,7 +287,7 @@ export default function ToolHome() {
       {hasError && (
         <p
           role="alert"
-          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger-text)]"
         >
           {result.error}
         </p>
@@ -416,7 +420,12 @@ export default function ToolHome() {
                   <tr key={ratio.key} className="border-b border-[var(--border)] last:border-0">
                     <td className="py-2 pr-3">{ratio.label}</td>
                     <td className="py-2 pr-3 text-right font-semibold">{pct(ratio.value)}</td>
-                    <td className="py-2 pr-3 text-[var(--muted-foreground)]">{ratio.target}</td>
+                    <td className="py-2 pr-3 text-[var(--muted-foreground)]">
+                      {ratio.target}
+                      {ratio.targetAmount != null ? (
+                        <span className="block text-xs">{money(ratio.targetAmount)}</span>
+                      ) : null}
+                    </td>
                     <td className={`py-2 text-right font-semibold ${STATUS_CLASS[ratio.status]}`}>
                       {STATUS_LABEL[ratio.status]}
                     </td>

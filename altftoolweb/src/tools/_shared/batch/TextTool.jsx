@@ -14,6 +14,9 @@ import { safeCopyText } from "@/shared/utils/clipboard";
  *  - sample?: string  (loaded on first render + "Load sample")
  *  - placeholder?: string
  *  - inputLabel?, outputLabel?
+ *  - confirmClear?: string  (when set, Clear asks window.confirm(confirmClear)
+ *    before wiping the input; omitted by default so existing consumers keep
+ *    their current one-click behaviour unchanged)
  */
 export default function TextTool({
   title,
@@ -24,6 +27,7 @@ export default function TextTool({
   placeholder = "Type or paste your text here…",
   inputLabel = "Input",
   outputLabel = "Result",
+  confirmClear = "",
 }) {
   const initialOpts = useMemo(() => {
     const o = {};
@@ -130,7 +134,10 @@ export default function TextTool({
                 ) : null}
                 <button
                   type="button"
-                  onClick={() => setInput("")}
+                  onClick={() => {
+                    if (confirmClear && !window.confirm(confirmClear)) return;
+                    setInput("");
+                  }}
                   className="inline-flex items-center gap-1 text-xs font-semibold text-[var(--muted-foreground)]"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />

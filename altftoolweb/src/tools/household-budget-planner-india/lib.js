@@ -139,12 +139,21 @@ export function computeHouseholdBudget({
   const housingShare = round2(share(housing, totalIncome));
   const foir = round2(share(emiTotal, totalIncome));
 
+  const targets = {
+    needs: round2((totalIncome * NEEDS_TARGET_SHARE) / 100),
+    wants: round2((totalIncome * WANTS_TARGET_SHARE) / 100),
+    savings: round2((totalIncome * SAVINGS_TARGET_SHARE) / 100),
+  };
+
   const ratios = [
     {
       key: "needs",
       label: "Needs share of income",
       value: needsShare,
       target: `at or under ${NEEDS_TARGET_SHARE}%`,
+      // Rupee equivalent of the 50/30/20 target, so the ratio table can show
+      // the actual figure to aim for and not just the percentage.
+      targetAmount: targets.needs,
       status: needsShare <= NEEDS_TARGET_SHARE ? "good" : needsShare <= 60 ? "watch" : "over",
     },
     {
@@ -152,6 +161,7 @@ export function computeHouseholdBudget({
       label: "Wants share of income",
       value: wantsShare,
       target: `at or under ${WANTS_TARGET_SHARE}%`,
+      targetAmount: targets.wants,
       status: wantsShare <= WANTS_TARGET_SHARE ? "good" : wantsShare <= 40 ? "watch" : "over",
     },
     {
@@ -159,6 +169,7 @@ export function computeHouseholdBudget({
       label: "Savings and investing rate",
       value: savingsShare,
       target: `at least ${SAVINGS_TARGET_SHARE}%`,
+      targetAmount: targets.savings,
       status: savingsShare >= SAVINGS_TARGET_SHARE ? "good" : savingsShare >= 10 ? "watch" : "over",
     },
     {
@@ -176,12 +187,6 @@ export function computeHouseholdBudget({
       status: foir <= FOIR_COMFORT_LIMIT ? "good" : foir <= FOIR_HARD_LIMIT ? "watch" : "over",
     },
   ];
-
-  const targets = {
-    needs: round2((totalIncome * NEEDS_TARGET_SHARE) / 100),
-    wants: round2((totalIncome * WANTS_TARGET_SHARE) / 100),
-    savings: round2((totalIncome * SAVINGS_TARGET_SHARE) / 100),
-  };
 
   return {
     totalIncome: round2(totalIncome),

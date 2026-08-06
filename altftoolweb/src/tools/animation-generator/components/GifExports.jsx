@@ -1,6 +1,10 @@
 "use client";
 
 import React, { useState } from "react";
+import {
+  LOTTIE_INFINITE_PREVIEW_ITERATIONS,
+  buildLottieDocument,
+} from "../lib/animationState.js";
 
 let html2canvasPromise;
 
@@ -9,13 +13,20 @@ function loadHtml2Canvas() {
   return html2canvasPromise;
 }
 
-export default function GifExport() {
+export default function GifExport({
+  controls,
+  transform,
+  animationName,
+  color,
+  keyframesCss,
+  customKeyframes,
+}) {
 
   const [exportSize, setExportSize] = useState(250); // 👈 default size
 
   const getElement = () => document.querySelector(".animated-element");
 
-  /* 🎬 MP4 EXPORT */
+  /* 🎬 VIDEO EXPORT */
 
   const handleMp4 = async () => {
     const element = getElement();
@@ -76,16 +87,15 @@ export default function GifExport() {
   /* 🎨 LOTTIE EXPORT */
 
   const handleLottie = () => {
-    const lottie = {
-      v: "5.7.4",
-      fr: 60,
-      ip: 0,
-      op: 120,
-      w: exportSize,
-      h: exportSize,
-      nm: "Generated Animation",
-      layers: []
-    };
+    const lottie = buildLottieDocument({
+      size: exportSize,
+      animationName,
+      controls,
+      transform,
+      color,
+      keyframesCss,
+      customKeyframes,
+    });
 
     const blob = new Blob([JSON.stringify(lottie, null, 2)], {
       type: "application/json"
@@ -97,6 +107,7 @@ export default function GifExport() {
     a.href = url;
     a.download = "animation.json";
     a.click();
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -108,12 +119,15 @@ export default function GifExport() {
 
       {/* 🎛 SIZE CONTROL UI */}
       <div>
-        <label className="text-sm text-(--foreground)">
-          Export  video Size (px)
+        <label htmlFor="animation-export-size" className="text-sm text-(--foreground)">
+          Export video size (px)
         </label>
 
         <input
+          id="animation-export-size"
           type="number"
+          min="32"
+          max="2000"
           value={exportSize}
           onChange={(e) => setExportSize(Number(e.target.value))}
           className="w-full p-2 rounded-lg border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary)"
@@ -123,6 +137,7 @@ export default function GifExport() {
       <div className="flex gap-3">
 
         <button
+          type="button"
           onClick={handleMp4}
           className="bg-(--primary) text-(--primary-foreground) px-4 py-2 rounded hover:scale-105 transition"
         >
@@ -130,6 +145,7 @@ export default function GifExport() {
         </button>
 
         <button
+          type="button"
           onClick={handleLottie}
           className="bg-(--primary) text-(--primary-foreground) px-4 py-2 rounded hover:scale-105 transition"
         >
@@ -137,6 +153,12 @@ export default function GifExport() {
         </button>
 
       </div>
+
+      {controls?.iterations === "infinite" && (
+        <p className="text-xs text-(--muted-foreground)">
+          Infinite animations export as a bounded {LOTTIE_INFINITE_PREVIEW_ITERATIONS}-loop Lottie preview.
+        </p>
+      )}
 
     </div>
   );

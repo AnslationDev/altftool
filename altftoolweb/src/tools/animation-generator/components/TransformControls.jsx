@@ -1,18 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
-export default function TransformControls({ onChange }) {
-  const [translateX, setTranslateX] = useState(0);
-  const [translateY, setTranslateY] = useState(0);
-  const [rotate, setRotate] = useState(0);
-  const [scale, setScale] = useState(1);
-  const [opacity, setOpacity] = useState(1);
+import {
+  DEFAULT_TRANSFORM,
+  updateTransform,
+} from "../lib/animationState.js";
 
-  const update = () => {
-    if (onChange) {
-      onChange({ translateX, translateY, rotate, scale, opacity });
-    }
+export default function TransformControls({ value = DEFAULT_TRANSFORM, onChange }) {
+  const transform = { ...DEFAULT_TRANSFORM, ...value };
+
+  const update = (key, nextValue) => {
+    onChange?.((current) => updateTransform(current, key, nextValue));
   };
 
   return (
@@ -28,11 +27,8 @@ export default function TransformControls({ onChange }) {
           </label>
           <input
             type="number"
-            value={translateX}
-            onChange={(e) => {
-              setTranslateX(parseInt(e.target.value));
-              update();
-            }}
+            value={transform.x}
+            onChange={(e) => update("x", e.target.value)}
             className="border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary) p-1 rounded w-full"
           />
         </div>
@@ -44,11 +40,8 @@ export default function TransformControls({ onChange }) {
           </label>
           <input
             type="number"
-            value={translateY}
-            onChange={(e) => {
-              setTranslateY(parseInt(e.target.value));
-              update();
-            }}
+            value={transform.y}
+            onChange={(e) => update("y", e.target.value)}
             className="border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary) p-1 rounded w-full"
           />
         </div>
@@ -60,11 +53,8 @@ export default function TransformControls({ onChange }) {
           </label>
           <input
             type="number"
-            value={rotate}
-            onChange={(e) => {
-              setRotate(parseInt(e.target.value));
-              update();
-            }}
+            value={transform.rotate}
+            onChange={(e) => update("rotate", e.target.value)}
             className="border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary) p-1 rounded w-full"
           />
         </div>
@@ -76,12 +66,9 @@ export default function TransformControls({ onChange }) {
           </label>
           <input
             type="number"
-            value={scale}
+            value={transform.scale}
             step="0.1"
-            onChange={(e) => {
-              setScale(parseFloat(e.target.value));
-              update();
-            }}
+            onChange={(e) => update("scale", e.target.value)}
             className="border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary) p-1 rounded w-full"
           />
         </div>
@@ -93,14 +80,11 @@ export default function TransformControls({ onChange }) {
           </label>
           <input
             type="number"
-            value={opacity}
+            value={transform.opacity}
             step="0.1"
             min="0"
             max="1"
-            onChange={(e) => {
-              setOpacity(parseFloat(e.target.value));
-              update();
-            }}
+            onChange={(e) => update("opacity", e.target.value)}
             className="border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary) p-1 rounded w-full"
           />
         </div>

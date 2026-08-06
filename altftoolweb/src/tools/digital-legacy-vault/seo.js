@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "How do I hand it to my family?",
-      "Export the JSON, store it somewhere they can reach — an encrypted drive, a sealed envelope with your will, or a shared vault — and tell at least one trusted person it exists and how to open it. The import button reloads that same file into this page later, so the handover does not depend on this site being reachable.",
+      "Export the JSON, store it somewhere they can reach — an encrypted drive, a sealed envelope with your will, or a shared vault — and tell at least one trusted person it exists and how to open it. The export is plain indented JSON, so the list can be read in any text editor even by someone who never opens this page, and Import JSON loads the same file straight back into the tool if they do.",
     ],
   ],
 };

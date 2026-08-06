@@ -115,6 +115,9 @@ export function compareFdBreakVsLoan({
   if (monthsCompleted >= tenureMonths) {
     return { error: "The deposit has already matured — months completed must be less than the tenure." };
   }
+  if (contractedRatePercent <= 0 || cardRateForRunPeriodPercent <= 0) {
+    return { error: "Enter the deposit's contracted rate and the current card rate — both must be above 0%." };
+  }
   if (contractedRatePercent > 20 || cardRateForRunPeriodPercent > 20 || loanSpreadPercent > 20) {
     return { error: "Rates above 20% a year are not realistic for a bank deposit." };
   }
@@ -126,7 +129,11 @@ export function compareFdBreakVsLoan({
   }
 
   const remainingMonths = tenureMonths - monthsCompleted;
-  const drawnMonths = isNum(loanMonths) && loanMonths > 0 ? Math.min(loanMonths, remainingMonths) : remainingMonths;
+  // loanMonths === 0 is a deliberate, distinct choice (repay the overdraft
+  // immediately) and must not fall through to "left blank" — only a missing/
+  // invalid/negative value defaults to running the overdraft to maturity.
+  const drawnMonths =
+    isNum(loanMonths) && loanMonths >= 0 ? Math.min(loanMonths, remainingMonths) : remainingMonths;
   const reinvestRate = isNum(reinvestRatePercent) ? reinvestRatePercent : contractedRatePercent;
 
   // ---- Option A: break the deposit now ----
@@ -151,7 +158,12 @@ export function compareFdBreakVsLoan({
   const loanNetAtMaturity = fdMaturityValue - loanDrawn - loanInterest - loanShortfall;
 
   const advantage = loanNetAtMaturity - breakNetAtMaturity;
-  const interestForgone = fdMaturityValue - principal - breakInterest;
+  // Floored at 0: when the current card rate for the run period is high
+  // enough relative to the deposit's original contracted rate, breaking
+  // early can earn MORE than running the deposit to full (lower-rate)
+  // maturity would have. There is no such thing as negative interest given
+  // up in that case — nothing was forgone.
+  const interestForgone = Math.max(0, fdMaturityValue - principal - breakInterest);
 
   return {
     principal,

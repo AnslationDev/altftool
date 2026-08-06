@@ -5406,7 +5406,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use the Alcohol Units & BAC Calculator?",
-        "Add drinks with the + buttons in the What have you had? table, then fill in Body weight (kg), Body-water factor, Hours since your first drink and Food in your stomach; the Session total and the Widmark BAC estimate update as you go."
+        "Add drinks with the + buttons in the What have you had? table, then fill in Body weight (kg), Body-water factor and Hours since your first drink; the Session total and the Widmark BAC estimate update as you go. Food in your stomach changes only the absorption-context note and is not part of the numerical BAC calculation."
       ],
       [
         "What is an alcohol unit?",
@@ -5420,7 +5420,7 @@ export const toolContentOverrides = {
     "steps": [
       "In What have you had?, press the + button on any of the 14 drink rows - Beer at 330 ml and 5%, Wine at 150 ml and 12%, Large peg at 60 ml and 42.8% and eleven more - or type a Volume (ml) and ABV (%) under Something else? and press Add.",
       "Read the Session total panel: UK units calculated as ml × ABV% ÷ 1000, alongside US drinks, grams of alcohol and calories, with minus, plus and bin buttons on each line and Clear to empty the session.",
-      "Fill in Body weight (kg), Body-water factor, Hours since your first drink and Food in your stomach to get the Widmark BAC estimate with Back to 0.00%, Below 0.05% and Below 0.03% (India) timings, then press Save to my week or Copy."
+      "Fill in Body weight (kg), Body-water factor and Hours since your first drink to get the Widmark BAC estimate with Back to 0.00%, Below 0.05% and Below 0.03% (India) timings. Food in your stomach changes only the absorption-context note, not the calculated BAC; then press Save to my week or Copy."
     ]
   },
   "algebra-solver": {
@@ -5582,7 +5582,7 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Open a figure: press Start Exploring or Open Featured Figure in the hero, or click any card in the gallery. The Category, Difficulty and Status chip rows and the 'Search optical illusions...' box narrow the 12 bundled figures, and the counter reads 'Showing X of 12 figures'.",
+      "Press Start Exploring to jump to the gallery, then click any figure card to open it; Open Featured Figure opens the Rubin Vase directly. The Category, Difficulty and Status chip rows and the 'Search optical illusions...' box narrow the 12 bundled figures, and the counter reads 'Showing X of 12 figures'.",
       "In the viewer, switch readings with the Select Interpretation buttons — Vase or Faces on the Rubin Vase, Duck or Rabbit on the Duck / Rabbit — and each choice prints a Perceptual Focus hint, while the Overview, History and Psychology tabs explain the effect.",
       "Work the image with the Viewing Tools panel: In, Out and Reset move the zoom between 80% and 240%, and Blur, Spotlight and Invert filter the frame (keyboard shortcuts +, -, r, b, s, i). Then use Mark Solved, the heart to favourite it, or the download button to save the artwork as rubin-vase.svg."
     ]
@@ -5787,8 +5787,8 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Load your API: drop an OpenAPI or Swagger file on the 'Drop your OpenAPI / Swagger file here' panel (JSON or YAML), use Import from Postman for a collection export, or press New Documentation and paste your own JSON into the Input JSON tab. Load Example fills the box with the Pet Store API sample.",
-      "Press Generate Swagger Docs. The tool builds an OpenAPI 3.0.0 spec and switches to the Preview Docs tab; if a path or method is missing it names the offending endpoint in a red Error box instead. Code Snippets, Error Generator, Version Compare and Visual Flow tabs sit alongside the preview.",
+      "For a manual spec, press New Documentation and paste your JSON into the Input JSON tab (or use Load Example for the Pet Store sample), then press Generate Swagger Docs. The tool builds an OpenAPI 3.0.0 spec and switches to Preview Docs; if a path or method is missing it names the offending endpoint in a red Error box.",
+      "For an existing spec, drop an OpenAPI or Swagger JSON/YAML file on the import panel, or use Import from Postman for a collection export. Imports convert immediately and open Preview Docs automatically — no Generate click is needed. Code Snippets, Error Generator, Version Compare and Visual Flow tabs sit alongside the preview.",
       "Save or share the result: Download JSON writes swagger.json, Download YAML writes swagger.yaml, Copy JSON / Copy YAML flip to Copied!, and Share Link copies a self-contained URL. The banner below also offers Export as Markdown, HTML or PDF, and Publish Docs copies the share link and marks the project Published."
     ]
   },
@@ -5947,13 +5947,13 @@ export const toolContentOverrides = {
       ],
       [
         "Can I save apps for later?",
-        "Yes, you can easily save your favorite apps for quick access later."
+        "No — there is no favourites list or saved history; each search runs fresh against the live store catalogue. Use View in App Store or View in Play Store on a card to open the listing and save it there."
       ]
     ],
     "steps": [
-      "Simply click the button to open App Finder.",
-      "Enter the name of the app you're looking for or select a category from the dropdown menu.",
-      "Review the search results and choose your perfect app."
+      "Type an app name into the search box (it is prefilled with the hint 'Search for apps... (e.g., Spotify, Instagram, WhatsApp)') and press Search or hit Enter, or open the filter icon beside it and pick a category: Social, Music, Productivity, Finance, Education, Gaming, Food & Groceries or Entertainment.",
+      "The panel heading switches from Popular Apps to Search Results while the badge counts what came back — a query returns up to 12 apps. Search words such as study, focus, music, chat, video or money are mapped to a category, and a 'Showing smart results for ...' line names the one that was picked.",
+      "Each card carries the app icon, title, star rating and a trimmed description. Click a tag chip to narrow the current results to that tag, or use View in App Store or View in Play Store to open the store listing in a new tab; the 'More Apps to Explore' strip below holds six trending picks."
     ]
   },
   "ascii-explorer": {
@@ -6025,7 +6025,7 @@ export const toolContentOverrides = {
       ],
       [
         "How does it work?",
-        "You input your personal details and those of the person you wish to match with. The tool then performs a comprehensive analysis based on astrological principles and provides detailed compatibility reports."
+        "You fill in the Person 1 and Person 2 cards — Name, Day, Month, Year, an optional Birth Time and the Latitude and Longitude fields — and press Calculate Ashtakoot. Every calculation runs in your browser, and nothing is uploaded."
       ],
       [
         "Is it accurate?",
@@ -6033,9 +6033,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Calculate' button to input your personal details and those of the person you wish to match with.",
-      "The tool will then perform a comprehensive analysis based on astrological principles.",
-      "You will receive detailed compatibility reports highlighting strengths, weaknesses, and potential areas for growth."
+      "Fill in the Person 1 and Person 2 cards side by side: Name (up to 50 characters), then Day, Month and Year of birth. Birth Time is optional and takes the HH:MM (24h IST) format, and the Latitude and Longitude fields start on Delhi's 28.6139 and 77.209.",
+      "Press Calculate Ashtakoot. The score card headline reads verdict, match percentage and total — Excellent, Very Good, Good or Low followed by the score out of 36 — and the dial under it is labelled Highly Auspicious, Very Good Match, Qualifies for Marriage or Below Threshold against the minimum 18/36 guna requirement.",
+      "Below that each partner's panel gives their nakshatra with pada plus Moon and Sun rashi, and the Koota Breakdown grid scores all eight kootas separately: Varna out of 1, Vashya 2, Tara 3, Yoni 4, Graha Maitri 5, Gana 6, Bhakoot 7 and Nadi 8."
     ]
   },
   "aspect-ratio-calculator": {
@@ -6062,7 +6062,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use the Aspect Ratio Calculator?",
-        "Simply click 'Calculate', enter your width and height values, and the tool will provide you with the simplified ratio and proportional dimensions."
+        "Enter your source size in Original width and Original height, then set Target width. There is no submit button — Simplified ratio, Decimal and Target height update as you type, and Reset 16:9 puts the fields back to 1920, 1080 and 1280."
       ],
       [
         "What types of projects can I use this tool for?",
@@ -6074,9 +6074,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the 'Calculate' button to input your desired aspect ratio or dimensions.",
-      "Enter the width and height values you want to calculate the ratio for.",
-      "The tool will instantly provide you with the simplified ratio and proportional dimensions."
+      "Type your source size into the Original width and Original height fields, which open on 1920 and 1080. Both are number inputs with a minimum of 1.",
+      "Set Target width — it starts at 1280 — to the width you are scaling down or up to. There is no Calculate button; every readout recalculates as you type.",
+      "Read Simplified ratio (1920 by 1080 reduces to 16:9), Decimal to four places and Target height in px, check the preview block that mirrors the shape and is captioned '1920 x 1080 preview', then press Reset 16:9 to restore all three fields."
     ]
   },
   "attendance-calculator": {
@@ -6101,9 +6101,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to input your current attendance details.",
-      "Enter the total number of classes you've attended so far.",
-      "Input the total number of classes scheduled."
+      "Enter Classes attended and Total classes held — the fields open on 42 and 50 — then set Required percentage by typing it or tapping the 65%, 70%, 75%, 80% or 85% preset. Put in more attended than held and a red note warns that attended can't exceed total held and calculates with the total instead.",
+      "Everything updates as you type: the large percentage, a Safe zone or Catch-up mode badge against your target, a bar with a marker at the cutoff, and 'The smart answer' panel saying how many classes in a row you must attend to recover or how many you can skip, with the algebra printed underneath.",
+      "Fill in 'Classes remaining this semester (optional)' to unlock the semester-end planner — Max bunks you can afford, Attend everything, Skip everything — scan the 'What-if: the next 10 classes' table with its Attend all, Skip all and Alternate (1 on, 1 off) columns, then use Copy result to copy the whole summary; the button reads Copied for a moment, and Reset returns the fields to 42, 50 and 75."
     ]
   },
   "attention-span-test": {
@@ -6134,17 +6134,17 @@ export const toolContentOverrides = {
       ],
       [
         "How long does the test take?",
-        "The test typically lasts for around 10 minutes, but this can vary based on the specific version of the CPT being used."
+        "You pick the length from the Test Duration menu before you start: 1 Minute (Quick check), 2 Minutes (Standard) or 5 Minutes (Deep evaluation). The 2-minute run is selected by default and works out at 96 letters, one every 1.25 seconds."
       ],
       [
         "Is the test accurate?",
-        "Yes, the Attention Span Test is scientifically validated and provides reliable results to help you understand your attention span."
+        "It runs the standard Continuous Performance Task pattern — each letter shown for 250ms on a 1.25-second cycle, with roughly 15% of them the no-go letter X — and reports accuracy, omission errors, commission errors and average reaction time from your own keypresses. Treat it as a self-check, not a clinical diagnosis."
       ]
     ],
     "steps": [
-      "Click the 'Start Test' button to begin.",
-      "Follow the on-screen instructions carefully.",
-      "Complete the test within the given time frame."
+      "Read the Instructions card — letters flash on screen and you press the Spacebar for every letter EXCEPT the letter X — then choose from the Test Duration menu: 1 Minute (Quick check), 2 Minutes (Standard) or 5 Minutes (Deep evaluation).",
+      "Click the 'Start Test' button to begin. After a one-second lead-in a letter appears every 1.25 seconds and stays on screen for 250ms, with about 15% of them an X, while the banner reads 'Test in progress... Stay focused.' and a SPACE key is drawn below the stimulus box.",
+      "When the run finishes you get Attention Grade: Excellent, Average or Below Average, with Accuracy as a percentage and Avg Reaction in ms, plus cards for Omission Errors (Inattention), Commission Errors (Impulsivity) and Reaction Time. Retake Test returns you to the duration screen."
     ]
   },
   "audio-to-base64": {
@@ -6175,17 +6175,17 @@ export const toolContentOverrides = {
       ],
       [
         "How do I use this tool?",
-        "Simply click the button, select your audio file, and copy the generated Base64 data URL."
+        "Choose a file with the Audio file picker, then press Copy result for the whole data: URL or Download .txt to save it. Encoding runs in your browser — the file is never uploaded."
       ],
       [
         "Is there a limit to the size of files I can convert?",
-        "The tool supports most common audio formats up to reasonable file sizes for web use."
+        "Anything over 50.00 MB is refused outright with the message 'Encode files up to 50.00 MB'. Well before that, the Safe to inline? row turns to 'Not recommended' above 100.0 KB, which is the practical ceiling for an inlined clip."
       ]
     ],
     "steps": [
-      "Click the button to select a local audio file from your device.",
-      "Our tool will convert the selected audio file into a Base64 data URL instantly.",
-      "Copy the generated Base64 data URL for use in your projects."
+      "Use the Audio file picker to choose an MP3, WAV, OGG or M4A clip up to 50.00 MB — the caption below reads 'Encoding…' and then switches to the filename, size and detected MIME type.",
+      "Read the Encoded data URL size panel: original size in bytes, Base64 characters, full data URL characters, padding characters (=), extra bytes on the wire, the MIME type, and a Safe to inline? verdict of Yes or Not recommended measured against 100.0 KB.",
+      "Press Copy result for the whole data: URL, Download .txt to save it as <filename>.base64.txt, or Reset to clear the encoder — the Result card also plays the clip and shows ready-made HTML, CSS and JavaScript snippets."
     ]
   },
   "aura-color-generator": {
@@ -6253,7 +6253,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I customize my avatar?",
-        "Click on the customization options to choose colors, backgrounds, and facial features"
+        "Pick one of the four Avatar Style tiles, then use the Features tab for Face shape, Eyes, Eyebrows, Mouth, Hair, Facial hair and Accessory, and the Colors tab for Skin tone, Hair color, Accent / clothing and Background"
       ],
       [
         "Can I save my avatar?",
@@ -6265,13 +6265,13 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to generate a new avatar",
-      "Customize the avatar's color scheme, background, and facial features",
-      "Download your avatar as a PNG file or copy it instantly"
+      "Choose one of the four Avatar Style tiles — Flat, Geometric, Pixel or Friendly — then set the seven controls on the Features tab: Face shape, Eyes, Eyebrows, Mouth, Hair, Facial hair and Accessory",
+      "Switch to the Colors tab for Skin tone, Hair color and Accent / clothing swatches, each with a hex picker behind the small square, and a Background of Solid, Sunset, Ocean, Aurora, Dots or Grid. Random and AI Generate reseed every option at once; Reset configuration restores the defaults and shows a 'Reset to defaults' toast",
+      "Click PNG to save the live preview as avatar-<style>-<seed>.png at 3× pixel ratio, or Copy to put it on the clipboard as a PNG — browsers without image clipboard support fall back to an SVG data URL and report 'Avatar SVG copied (image paste not supported here)'"
     ]
   },
   "baby-name-generator": {
-    "intro": "The Baby Name Generator is a powerful tool designed to help parents discover unique, meaningful names for their little ones. Whether you're looking for traditional options or something truly special, this tool offers insights into the origins, meanings, and popularity trends of boys' names, girls' names, and gender-neutral choices.",
+    "intro": "The Baby Name Generator helps parents discover meaningful names for their little ones. It ships a curated list of 42 names — 18 boys', 18 girls' and 6 gender-neutral — each shown with its origin and its meaning, and lets you narrow them by gender, by origin or by typing part of a name.",
     "useCases": [
       "A couple deciding on a name for their first child who wants something meaningful and unique.",
       "Parents looking to avoid popular names and find a more distinctive option for their baby.",
@@ -6294,11 +6294,11 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How many names can I generate at once?",
-        "You can generate up to 10 unique names in one go."
+        "Nothing is generated on demand — the whole curated list of 42 names is on the page at once, and the filters decide how many of them stay visible."
       ],
       [
         "What if I don't like any of the suggested names?",
-        "Simply click 'Generate Names' again for a new set of options."
+        "Widen the filters: switch the gender buttons back to Any, set the origin dropdown to Any Origin, or clear the 'Search names...' box. If nothing matches, the page reads 'No names match your filters. Try adjusting the criteria.'"
       ],
       [
         "Is this tool free to use?",
@@ -6306,9 +6306,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the button labeled 'Generate Names' to start exploring unique baby names.",
-      "Select your preferred name type (boys, girls, or gender-neutral) from the dropdown menu.",
-      "Review the list of suggested names, each accompanied by its origin, meaning, and current popularity trends."
+      "Narrow the built-in list of 42 names from the Filters row: the Any, Male, Female and Neutral buttons, the origin dropdown that starts at Any Origin and covers 13 origins from Irish to Scottish, and the 'Search names...' box that matches the name text as you type.",
+      "Read each card — the name, then its gender and origin in small caps, then the meaning underneath, such as Liam / male · Irish / 'Strong-willed warrior'. If the filters exclude everything the page says 'No names match your filters. Try adjusting the criteria.'",
+      "Tap the heart on a card to add that name to Your Favorites, a panel that counts your picks and gives each one a × to remove it, and hover a card to reveal its Copy link, which puts the name on the clipboard and reads 'Copied' for about a second."
     ]
   },
   "baking-pan-converter": {
@@ -6335,7 +6335,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What if my new recipe calls for more ingredients than my pan can hold?",
-        "The tool will provide an overflow warning to prevent overfilling and potential mess."
+        "When the unscaled batter would pass the ⅔ line the result panel turns red and reads 'Overflow risk without scaling', with the exact percentage of the new pan it would fill. Below ⅓ it warns 'Layer would be very thin without scaling' instead."
       ],
       [
         "Can I use this tool for recipes that don't involve baking?",
@@ -6343,13 +6343,13 @@ export const toolContentOverrides = {
       ],
       [
         "Is the tool accurate?",
-        "Yes, it uses precise calculations based on standard pan sizes and typical ingredient ratios."
+        "The multiplier is your pan's volume divided by the recipe pan's volume, both measured to the brim from the capacities listed in the Pan volume reference table, so the two pans are always compared at the same fill level."
       ]
     ],
     "steps": [
-      "Click the button to input the recipe details and select the current and desired pan size.",
-      "The tool will automatically calculate the ingredient multiplier, adjust bake times, and provide warnings if there's a risk of overflow.",
-      "Simply follow the new instructions for your scaled recipe."
+      "Choose what the recipe asks for under 'Recipe pan (what the recipe asks for)' and what you own under 'Your pan (what you will bake in)' — 12 presets from Round 6″ through Rectangle 9 × 13″ and Loaf 9 × 5″ to Bundt 10″ (12-cup) and a Cupcake tin (12 standard). Swap pans flips the two.",
+      "Read the headline 'Multiply every ingredient by ×N' and the Practical kitchen rounding beside it, which snaps to a real kitchen fraction from ½× to 3× or says 'Keep recipe as-is' when the difference is under 10%. Below it, Bake time & temperature gives the adjusted timing and a fill bar marked at ⅓ and ⅔ flags 'Overflow risk without scaling' or 'Layer would be very thin without scaling'.",
+      "Type any quantity into the Quick ingredient scaler to see its scaled amount, then press Copy for the full report or Download to save it as pan-conversion.txt."
     ]
   },
   "barcode-generator": {
@@ -6376,21 +6376,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I generate a barcode?",
-        "Click the 'Generate Barcode' button, enter your data, select a format, and download the barcode."
+        "Type your value on the Enter Data tab, pick a symbology under Select Barcode Format, then press Generate Barcode — it validates the data, refreshes the preview and saves the code to Recent History, and the button reads 'Generated & saved!' when it lands."
       ],
       [
         "What formats are available?",
-        "The tool supports popular barcode formats like Code 128, EAN-13, UPC-A, and more."
+        "20 symbologies in four groups: Common (Code 128, QR Code, EAN-13, UPC-A, Code 39), Retail & packaging (EAN-8, EAN-5, EAN-2, ITF-14), Industrial (ITF, four MSI check-digit variants, Pharmacode, Codabar) and the Code 128 A/B/C subsets."
       ],
       [
         "Can I customize the barcode design?",
-        "No, but you can choose from different formats to suit your needs."
+        "Yes — the Customize tab sets Size (Small 400×120, Medium 600×200 or Large 800×300), Color, Background and a 0–40 px Margin, plus the Show Text, Show Code and Add Quiet Zone toggles."
       ]
     ],
     "steps": [
-      "Click the 'Generate Barcode' button and input the text, product code, or inventory label you need.",
-      "Select the desired barcode format from the available options.",
-      "Download your newly created barcode in a high-quality image format."
+      "On the Enter Data tab, type into 'Enter text, numbers or data to encode' — a counter under the box shows characters against the format's ceiling, 80 for Code 128 — or press Use example to load a valid sample, then pick a symbology from Select Barcode Format.",
+      "Open the Customize tab for Size (Small 400×120, Medium 600×200 or Large 800×300), Color, Background, a 0–40 px Margin and the Show Text, Show Code and Add Quiet Zone toggles; data the symbology cannot encode replaces the preview with a 'not valid ... data' alert instead.",
+      "Pick PNG, SVG, PDF or EPS above the preview and press Download to save barcode-<FORMAT>-<timestamp> in that extension, Copy Image for the clipboard, or Save to History. Generate Barcode also files it under Recent History, and Bulk Generate turns an uploaded CSV into barcodes.zip."
     ]
   },
   "barcode-scanner": {
@@ -6421,7 +6421,7 @@ export const toolContentOverrides = {
       ],
       [
         "How does it work?",
-        "Simply click 'Scan', hold your device over a barcode, and the data will be displayed instantly."
+        "Switch to Camera, click Start Camera and hold the code inside the scan frame, or stay in Upload mode and drop in a photo — the Scan Result panel fills in as soon as a code is decoded."
       ],
       [
         "Is it compatible with all devices?",
@@ -6429,9 +6429,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Scan' button to start scanning.",
-      "Hold your device over a barcode until it's detected.",
-      "The data from the barcode will be displayed instantly."
+      "Choose Upload or Camera at the top of the page. In Upload mode, drag and drop an image onto the drop zone or click Choose Image — it supports PNG, JPG, JPEG and WEBP.",
+      "In Camera mode, click Start Camera and point your camera at a barcode or QR code; a Scanning… badge shows over the live view, detection stops the camera on its own, and Stop Camera ends it early.",
+      "The Scan Result panel shows the Barcode Type, the Decoded Value and Additional Info (Format, Dimensions, Scan Time, File Name, File Size, Scan Source). Use Copy, Download TXT for decoded-barcode.txt or Export JSON for decoded-barcode.json, and find past codes under Recent Scans."
     ]
   },
   "base-converter": {
@@ -6458,7 +6458,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I convert a binary number to hexadecimal?",
-        "Enter the binary number, select 'binary' as the current system, and choose 'hexadecimal' as the target system. The tool will display the converted value."
+        "Type the binary number into the Number field and set Input base to Base 2 · Binary. There is no target selector — Hexadecimal is one of the rows the results list always shows, alongside Binary, Octal, Decimal and Base 36."
       ],
       [
         "What is base36 used for?",
@@ -6470,10 +6470,10 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click on the 'Base Converter' button to open the tool interface.",
-      "Enter the number you want to convert in the input field.",
-      "Select the current number system from the dropdown menu (binary, octal, decimal, hexadecimal, base36).",
-      "Choose the target number system for conversion from another dropdown menu."
+      "Type the value into the Number field — the placeholder shows the accepted shapes (255, DEAD.BEEF, -1010.11…). Spaces, underscores and commas are ignored, and the input takes up to 4096 characters.",
+      "Set Input base to the base the number is written in; the dropdown lists every base from Base 2 · Binary through Base 36.",
+      "The results update as you type, listing Binary (0b), Octal (0o), Decimal, Hexadecimal (0x) and Base 36 together with the bit and byte length; use Extra base to show to add any other base from 2 to 36 to that list, and read the Grouped for reading and Fixed-width types it fits in tables below it.",
+      "Drag the Fraction digits slider (0 to 60, default 20) to set how far a recurring fraction expands — anything cut short is marked …recurring. Then use Copy result to copy every conversion, or Reset to return to the defaults."
     ]
   },
   "base64-audio-converter": {
@@ -6500,21 +6500,21 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I input my Base64 audio data URL?",
-        "Simply click the button and enter or paste your Base64 audio data URL to start previewing and downloading your audio file"
+        "Paste it straight into the Base64 audio or data URL box — there is no upload step, and the clip is decoded and identified as you type"
       ],
       [
         "What formats are supported for downloading?",
-        "The Base64 Audio Converter supports downloading audio files in their original format, including MP3, WAV, and more"
+        "The container is read from the decoded bytes and the file is saved in that same format: WAV, MP3, FLAC, OGG, M4A, AIFF or AMR"
       ],
       [
         "Is the Base64 Audio Converter free to use?",
-        "Yes, the Base64 Audio Converter is completely free to use, with no limitations or watermarks on your downloaded audio files"
+        "Yes, the Base64 Audio Converter is completely free to use and adds nothing to your downloaded audio; the only cap is that it decodes up to 12,000,000 Base64 characters in the browser"
       ]
     ],
     "steps": [
-      "Click the button to input your Base64 audio data URL and instantly preview the audio file",
-      "Review the audio playback to ensure it meets your requirements",
-      "Download the audio file in its original format for further use or sharing"
+      "Paste your Base64 string or data:audio/… URL into the Base64 audio or data URL box; it is decoded in this tab and the container is identified from its magic bytes as WAV, MP3, FLAC, OGG, M4A, AIFF or AMR",
+      "Play the clip in the Decoded audio panel and check the reported Container, MIME type, Decoded size, Base64 length, Duration, Sample rate, Channels, Bit depth, Bitrate and Download name",
+      "Type a name into Download file name (the extension comes from the detected format), then click Download audio to save it or Copy data URL to copy the rebuilt data: URL; Reset restores the sample clip"
     ]
   },
   "base64-to-ascii": {
@@ -6553,9 +6553,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Decode' button next to your Base64 input field.",
-      "Enter or paste your Base64 encoded text in the designated area.",
-      "The tool will automatically decode the text and display it as readable ASCII characters."
+      "Paste your Base64 into the Base64 Input box, or use Upload File to load a .txt file, Paste to pull it from the clipboard, or Sample Data to drop in a built-in example; the counter under the box tracks your text against a 10,000 character limit.",
+      "Decoding runs as you type — the ASCII Output terminal shows the decoded text with line numbers, or an error such as \"This doesn't look like valid Base64 — check for stray characters.\" The Convert button re-runs it and, on narrow screens, scrolls the output into view.",
+      "Use Copy to put the text on your clipboard, Download to save it as decoded-ascii.txt, or Share to pass it on; the expand button opens the output fullscreen."
     ]
   },
   "base64-to-file": {
@@ -6582,7 +6582,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How do I use this tool?",
-        "Simply input your Base64 string or data URL and click the button. Select your desired file format, and download your file."
+        "Paste your Base64 string or data URL into the box and click Save file. You never pick a format — the type is read from the payload's magic number and the extension is added to the name for you."
       ],
       [
         "What file formats are supported?",
@@ -6594,9 +6594,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button next to your Base64 string or data URL input field.",
-      "Select the desired file format (e.g., PNG, JPEG, PDF) from the dropdown menu.",
-      "Download your converted file directly to your computer."
+      "Paste the payload into the Base64 payload or data URL box; the bytes are decoded in this tab and the type is read from the magic number, so there is no format to pick.",
+      "Check the Decoded payload panel — Detected type, MIME type, Decoded size, Base64 length, First 8 bytes, Byte-order mark, Entropy, Declared media type and Suggested file name, plus a Text preview of the first 240 characters when the payload is text.",
+      "Set a name in File name (extension is added for you), then click Save file to download it, Copy as data URL to copy the payload with its detected MIME type, or Reset to go back to the sample."
     ]
   },
   "base64-to-hex": {
@@ -6635,9 +6635,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to input your Base64 string.",
-      "The tool will decode it instantly and display the corresponding hexadecimal output.",
-      "Copy the result directly from the interface."
+      "Put your payload in the 'Base64 Input' box — type it, press Paste, press Upload .txt (it accepts .txt, .b64 and .base64), drag a file onto the box, or press Sample Data for a ready-made example. The character count sits under the box and Clear empties it.",
+      "Auto Convert is ON by default, so the 'Hex Output' panel fills in as you type; switch it off and press Convert to run it by hand. Bad input turns the status pill to Invalid and prints the reason, such as 'Incorrect length — this is not valid Base64.'",
+      "Shape the bytes in Advanced Options — 'Uppercase Hex (A-F)', 'Add 0x prefix', 'Group hex pairs' and the grouping menu (No grouping, Pairs (2 chars), Words (4 chars), Blocks (8 chars)) — then press Copy, Download .txt to save base64-to-hex.txt, or Share; Reset clears the input and restores the default options."
     ]
   },
   "base64-to-image": {
@@ -6758,9 +6758,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to decode your Base64 string into UTF-8 text",
-      "Copy the decoded text for use in your application or project",
-      "Verify the decoded text to ensure it matches your expected output"
+      "Load the string into the 'Base64 Encoded Input' box — type it, press Paste, press Upload .txt (it accepts .txt, .b64 and .base64), drop a file onto the box, or press Sample Data. Clear empties the box and the character count sits beneath it.",
+      "Auto Decode is ON by default, so the 'Decoded Text Output' panel updates as you type; switch it off and press Decode to run it by hand. Advanced Options holds 'Preserve line breaks', 'Trim whitespace', 'Detect invalid Base64' and 'URL-safe Base64 support' — turn the last one on when the payload uses - and _ characters.",
+      "Press Copy, Download .txt (saved as decoded-text.txt) or Share to take the text away; the Input Size, Output Size, Decoding Status and Processing Time tiles describe the last run, and Reset All returns the tool to its defaults."
     ]
   },
   "base64-to-video": {
@@ -6840,9 +6840,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Convert' button to input your standard Base64 or text payload.",
-      "Select the desired output format (standard Base64 or URL-safe Base64).",
-      "The converted result will be displayed instantly."
+      "Type or paste your payload into the Input box. The line under it reports what was detected — plain text, standard Base64, URL-safe Base64 or mixed alphabets — and the limit is 2,000,000 characters.",
+      "Set 'Treat input as' and 'Convert to'; both menus offer Plain text (UTF-8), Standard Base64 and URL-safe Base64. Tick 'Keep = padding on URL-safe output' when you need the = characters kept, and press Swap to exchange the two formats and move the result back into the Input box.",
+      "There is no convert button — the Result box updates as you type, above a table giving the same payload as Standard Base64, URL-safe Base64 and Percent-encoded standard. Press Copy result or Copy URL-safe for the clipboard, or Reset, which asks 'Reset to the default example?' before replacing anything you changed."
     ]
   },
   "base64-url-encoder": {
@@ -6869,7 +6869,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "What types of inputs can I use with this tool?",
-        "You can input plain text or existing Base64 payloads."
+        "The 'Interpret input as' menu offers three: Plain text (UTF-8), Standard Base64 and Hex bytes."
       ],
       [
         "Is the output URL-safe?",
@@ -6881,9 +6881,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to input your text or Base64 payload.",
-      "The tool will automatically encode it into URL-safe Base64 format.",
-      "Copy the encoded output for use in URLs or other web-related tasks."
+      "Paste the payload into the Input box — the limit is 2,000,000 characters — and set 'Interpret input as' to Plain text (UTF-8), Standard Base64 or Hex bytes.",
+      "Under Output options tick 'Keep = padding' or 'Wrap at 76 characters' if you need them. There is no encode button: the 'base64url output' box fills in as you type, over a list of Payload bytes, Standard Base64 length, Percent-encoded length, Encoding overhead, Characters swapped and Padding characters.",
+      "Read the size table — Interoperable URL length (2,000 chars), Apache LimitRequestLine (8,190 chars) and Cookie size (RFC 6265) (4,096 bytes) each show Fits or Over — then press Copy result, or Copy standard Base64 for the + and / form; Reset restores the example."
     ]
   },
   "basic-calculator": {
@@ -6914,17 +6914,17 @@ export const toolContentOverrides = {
       ],
       [
         "Is there a memory function?",
-        "Yes, the Basic Calculator includes a memory feature to store your calculations for later use."
+        "There are no M+, MR or MC keys. Every result is kept in the Calculation Log instead — click a logged entry and it goes straight back onto the display."
       ],
       [
         "How do I view my calculation history?",
-        "Simply press the 'History' button to access and review past calculations."
+        "The Calculation Log panel sits beside the keypad and is always on screen. It reads 'No calculations registered yet.' until your first =, then lists the last 20 results; its Clear link empties the list."
       ]
     ],
     "steps": [
-      "Press the number buttons (0-9) to enter your values.",
-      "Select an operator (+, -, *, /) from the calculator's interface.",
-      "Press '=' to see the result of your calculation."
+      "Press the number keys (0-9) and the . key to build a value. AC resets the display to 0, the back-arrow key rubs out the last character, and +/- flips the sign.",
+      "Pick an operator from the tinted column — the keys are ÷, ×, - and + — or type +, -, * or / on your keyboard, which is also wired to the digits, Enter, Backspace and Escape.",
+      "Press = (or Enter) to evaluate. The answer replaces the display, the expression moves to the small line above it, and the run is added to the Calculation Log, which keeps the last 20 entries; anything the calculator cannot evaluate shows Error."
     ]
   },
   "batch-generation-tool": {
@@ -6996,17 +6996,17 @@ export const toolContentOverrides = {
       ],
       [
         "Can I convert timestamps in bulk using the Batch Timestamp Conversion Tool?",
-        "Yes, the tool supports batch conversions, allowing you to process multiple timestamps at once and export the results in a convenient format."
+        "Yes, paste the values into Batch Input separated by spaces or line breaks; the tool reads up to 2,000 rows per batch, converts them all at once, and the Export Panel saves the whole set."
       ],
       [
         "What formats does the Batch Timestamp Conversion Tool support for export?",
-        "The tool supports various export formats, including CSV, JSON, and Excel, making it easy to integrate the converted timestamp data into your existing workflows or tools."
+        "The Export Panel offers CSV, TXT and JSON, downloading as batch-timestamp-conversion.csv, batch-timestamp-conversion.txt or batch-timestamp-conversion.json, and Copy puts the same batch on your clipboard as plain text."
       ]
     ],
     "steps": [
-      "Click the input button to enter or paste your mixed Unix timestamps and human dates, which will be automatically converted and validated in real-time.",
-      "Select the desired timezone for comparison and conversion to ensure accuracy across different regions.",
-      "Utilize the tool's history and search features to quickly retrieve and review previously converted timestamps, and export the results in a suitable format for further analysis or reporting."
+      "Paste your mixed Unix timestamps and human dates into the Batch Input box, separated by spaces or line breaks (up to 2,000 rows). Every row is detected, converted and validated as you type, and the Rows, Valid, Invalid and Success counters update with it.",
+      "Under Timezone Controls choose UTC / GMT, Local, IST - Kolkata, Pacific - Los Angeles, Eastern - New York, London or Tokyo, or type any zone into Custom IANA timezone — the badge reads Using <zone>, or Invalid timezone, falling back to UTC.",
+      "Read the results table (Row, Original Input, Converted Result, Format Type, Timezone, ISO / Detail, Status) and narrow it with Search rows, then use the Export Panel — Copy, CSV, TXT or JSON — to take the batch away. Save keeps it in History Section, where Restore loads it back."
     ]
   },
   "battery-health-and-lifespan-predictor": {
@@ -7037,17 +7037,17 @@ export const toolContentOverrides = {
       ],
       [
         "What kind of data does the tool collect?",
-        "It collects usage patterns, charging habits, and battery performance data."
+        "Nothing is read from your device. You answer the Device Input Panel yourself — Device Age (months), Daily Screen Time (hrs), Heat Exposure, Charging Frequency, Charging Style and the rest — and the prediction is calculated from those answers."
       ],
       [
         "Is my data secure?",
-        "Yes, your data is securely stored and analyzed within our platform to protect your privacy."
+        "Yes, the whole calculation runs in your browser: nothing you type is uploaded or kept after you leave the page, and the only file produced is the battery-report PDF you download yourself."
       ]
     ],
     "steps": [
-      "Click the button to start monitoring your device's battery usage.",
-      "The tool will analyze your data over time to provide detailed insights into your battery's health.",
-      "View comprehensive reports that include battery degradation risk, estimated charging cycles, and predicted device lifespan."
+      "Choose a category — consumer, mobility or home — then the device beneath it: phone, laptop, earbuds, powerbank, ev-scooter, ev-car, inverter or ups.",
+      "Answer the Device Input Panel fields for that device, such as Device Age (months), Daily Screen Time (hrs), Heat Exposure and Charging Style, or press Fill typical values to load a sample profile, then click Analyze Battery.",
+      "Read the Battery Report: the Battery Health bar, Condition, Usage Score out of 100, Life Left in months, Personalised Tips, What's Draining Your Battery?, 12-Month Health, Charge Cycles and the Forecast: Current vs. Optimized chart. Download PDF saves it as battery-report-<device>.pdf."
     ]
   },
   "beard-style-preview": {
@@ -7086,9 +7086,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the button to open the tool and upload a photo of your face.",
-      "Select from a variety of beard styles including stubble, goatee, full beard, and more.",
-      "View real-time previews on your face to see how each style looks."
+      "Drop a photo on the uploader or click to browse — JPG, PNG, WEBP or HEIC up to 20MB — or paste one, or shoot one with Camera. Face detection runs on its own once the image loads, and if several faces are found you pick the one to work on.",
+      "Filter the Styles list with the Categories buttons (All, None, Stubble, Partial, Full, Side) and choose a style such as Light Stubble, Goatee, Full Beard, Van Dyke or Mutton Chops, then set Beard Color and the Scale, Length, Density, Darkness and Opacity sliders — the preview re-renders after every change.",
+      "Toggle Before / After to drag between the original photo and the preview, then save the result with Download PNG or Download JPG as beard-preview.png or beard-preview.jpg, or use Share. New Photo starts over and Edit Image reopens the built-in editor."
     ]
   },
   "beautify-code-tool": {
@@ -7123,13 +7123,13 @@ export const toolContentOverrides = {
       ],
       [
         "Can I use the Code Beautifier for all types of code?",
-        "The tool supports a wide range of programming languages, including but not limited to JavaScript, Python, Java, and C++."
+        "The Language menu covers six families: JavaScript / TypeScript, JSON, CSS / SCSS / LESS, HTML, XML / SVG and SQL. Other languages such as Python, Java or C++ are not handled, and a snippet is limited to 500,000 characters."
       ]
     ],
     "steps": [
-      "Click the button next to the code snippet you want to beautify.",
-      "Select the programming language of your code from the dropdown menu.",
-      "Watch as the tool automatically formats and cleans up your code in real-time."
+      "Paste a snippet into the Your code box — the limit is 500,000 characters — or press Detect language to have the tool guess what you pasted.",
+      "Set Language to JavaScript / TypeScript, JSON, CSS / SCSS / LESS, HTML, XML / SVG or SQL, pick the Action (Beautify or Minify), choose an Indent width of 2, 4 or 8 spaces, and tick Uppercase SQL keywords when the language is SQL.",
+      "The Formatted code box rewrites itself as you type, with Output lines, Input size, Output size and Size change beside it. Use Copy result, which flips to Copied!, Download to save the file shown under Download name such as formatted.js or formatted.json, or Reset to return to the example."
     ]
   },
   "beauty-score": {
@@ -7156,7 +7156,7 @@ export const toolContentOverrides = {
     "faqs": [
       [
         "How does the Beauty Score Calculator work?",
-        "The tool uses advanced algorithms to analyze symmetry and proportions based on the Golden Ratio, providing an objective beauty score."
+        "It maps 68 facial landmarks in your browser, then measures left-versus-right symmetry and Golden Ratio proportions to produce the score. The tool states on the result card that this is a geometric heuristic meant for entertainment only."
       ],
       [
         "Is my facial score subjective?",
@@ -7168,9 +7168,9 @@ export const toolContentOverrides = {
       ]
     ],
     "steps": [
-      "Click the 'Calculate' button to input your facial features and receive an instant beauty score.",
-      "Review your results and learn about specific areas where you can enhance your natural beauty.",
-      "Compare your score with friends or celebrities to see how your features stack up against others."
+      "Drag a photo onto the dropzone or press Upload Photo — JPG or PNG, max 5MB — or press Use Webcam and then Capture & Analyze. Analysis starts by itself as soon as the photo loads.",
+      "Wait through the ANALYZING FACIAL STRUCTURE scan; a Face Detected box is drawn over the face that was found, and No face detected in the image. Please try another one. appears if none was.",
+      "Read the Final Beauty Score out of 100 with its Facial Symmetry (Left vs Right balance) and Golden Ratio (Geometric proportions) percentages, then press Start Over to clear the photo and try another."
     ]
   },
   "before-after-comparator": {

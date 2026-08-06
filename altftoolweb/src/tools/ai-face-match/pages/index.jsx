@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import { Upload, X, RefreshCw, Copy, Download, Info, Check, Sparkles, Eye, UserCheck } from "lucide-react";
 import { getFaceApi } from "../../emotion-detector/services/faceApiClient";
+import { getFaceDetectionError } from "../lib/faceDetectionState";
 
 // face-api's 68-point landmark model uses the same index layout as the
 // classic dlib scheme: jaw 0-16, eyebrows 17-26, nose 27-35, eyes 36-47,
@@ -122,46 +123,30 @@ export default function ToolHome() {
         faceapi.detectSingleFace(img2, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor()
       ]);
 
-      let score = 0;
-      let matchedByAI = false;
-      let eyesSim;
-      let noseSim;
-      let jawSim;
-
-      if (det1 && det2) {
-        const distance = faceapi.euclideanDistance(det1.descriptor, det2.descriptor);
-        // Distance generally ranges between 0.0 (identical) and 1.5 (extremely different)
-        score = Math.max(12, Math.min(99, Math.round((1 - distance / 1.4) * 100)));
-        matchedByAI = true;
-
-        // Compare the two faces' own landmark geometry per feature band,
-        // instead of deriving a number from photo 1 alone.
-        const norm1 = normalizeLandmarks(det1.landmarks.positions);
-        const norm2 = normalizeLandmarks(det2.landmarks.positions);
-        eyesSim = regionSimilarity(norm1, norm2, EYES_BROWS_INDICES);
-        noseSim = regionSimilarity(norm1, norm2, NOSE_INDICES);
-        jawSim = regionSimilarity(norm1, norm2, JAW_LIPS_INDICES);
-      } else {
-        // Fallback matching logic
-        let hash = 0;
-        const combined = photo1.name + photo2.name;
-        for (let i = 0; i < combined.length; i++) {
-          hash = (hash << 5) - hash + combined.charCodeAt(i);
-          hash |= 0;
-        }
-        const seed = Math.abs(hash + photo1.size + photo2.size);
-        score = Math.round((seed % 31) + 54); // similarity between 54% and 84%
-        eyesSim = Math.min(99, Math.round(((seed * 3) % 21) + 79));
-        noseSim = Math.min(99, Math.round(((seed * 7) % 21) + 79));
-        jawSim = Math.min(99, Math.round(((seed * 11) % 21) + 79));
+      const detectionError = getFaceDetectionError(det1, det2);
+      if (detectionError) {
+        setError(detectionError);
+        setAnalyzing(false);
+        return;
       }
+
+      const distance = faceapi.euclideanDistance(det1.descriptor, det2.descriptor);
+      // Distance generally ranges between 0.0 (identical) and 1.5 (extremely different)
+      const score = Math.max(12, Math.min(99, Math.round((1 - distance / 1.4) * 100)));
+
+      // Compare the two faces' own landmark geometry per feature band,
+      // instead of deriving a number from photo 1 alone.
+      const norm1 = normalizeLandmarks(det1.landmarks.positions);
+      const norm2 = normalizeLandmarks(det2.landmarks.positions);
+      const eyesSim = regionSimilarity(norm1, norm2, EYES_BROWS_INDICES);
+      const noseSim = regionSimilarity(norm1, norm2, NOSE_INDICES);
+      const jawSim = regionSimilarity(norm1, norm2, JAW_LIPS_INDICES);
 
       setResult({
         score,
         eyesSim,
         noseSim,
-        jawSim,
-        matchedByAI
+        jawSim
       });
       setAnalyzing(false);
     } catch (err) {
@@ -215,7 +200,7 @@ Verdict: ${verdict.label}
 Eyes Symmetry Match: ${result.eyesSim}%
 Nose Shape Alignment: ${result.noseSim}%
 Jaw Outline Similarity: ${result.jawSim}%
-Algorithm: ${result.matchedByAI ? "Real Neural Network descriptor comparison" : "Biological trait hash match"}
+Algorithm: Real neural-network descriptor comparison
 
 Analysis:
 ${verdict.text}

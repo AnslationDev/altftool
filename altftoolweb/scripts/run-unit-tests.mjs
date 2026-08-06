@@ -3,13 +3,18 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 
 const webRoot = path.resolve(import.meta.dirname, "..");
-const workspaceRoot = path.resolve(webRoot, "..");
 const testRoots = [
-  path.join(workspaceRoot, "packages/core/src/seo"),
+  path.join(webRoot, "packages/core/src/seo"),
+  path.join(webRoot, "packages/core/src/atlas"),
+  path.join(webRoot, "packages/core/src/detour"),
+  path.join(webRoot, "packages/core/src/lexicon"),
+  path.join(webRoot, "packages/core/src/persona"),
+  path.join(webRoot, "packages/core/src/rabbithole"),
   path.join(webRoot, "automation/lib"),
   path.join(webRoot, "src/app/(marketing)/components"),
   path.join(webRoot, "src/app/altflovepdf/lib"),
   path.join(webRoot, "src/app/api/download-image"),
+  path.join(webRoot, "src/app/blogs/data"),
   path.join(webRoot, "src/app/blogs/utils"),
   path.join(webRoot, "src/app/bazaar/data"),
   path.join(webRoot, "src/app/altflinking/lib"),

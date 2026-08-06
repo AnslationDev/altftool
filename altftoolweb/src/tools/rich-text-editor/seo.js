@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This is a WYSIWYG rich text editor built on TipTap that shows the semantic HTML it produces in a live pane beside the writing area, so you can format visually and copy the markup out. It covers bold, italic, underline and strikethrough, H1–H3 headings, bullet and ordered lists, blockquotes, code blocks, four text alignments, links and images by URL. A read-only toggle hides the toolbar and renders the same content as it would appear once published.",
+    "This is a WYSIWYG rich text editor built on TipTap that shows the semantic HTML it produces in a live pane below the writing area, so you can format visually and copy the markup out. It covers bold, italic, underline and strikethrough, H1–H3 headings, bullet and ordered lists, blockquotes, code blocks, four text alignments, links and images by URL. A read-only toggle hides the toolbar and renders the same content as it would appear once published.",
   useCases: [
     "Drafting a CMS or product-description field visually and copying the resulting HTML straight into a database column or a template.",
     "Checking what markup a formatting choice actually produces — whether that heading became an <h2> or just bold text — before it ships into a page.",

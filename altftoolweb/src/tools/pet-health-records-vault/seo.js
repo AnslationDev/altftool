@@ -4,12 +4,12 @@ const seo = {
   useCases: [
     "You have three cats on different vaccination cycles and need to answer 'when was Mishka last dewormed?' at the counter without scrolling two years of camera roll.",
     "Boarding a dog for a week and needing to hand the kennel a written list of current medicines, doses and the date of the last kennel-cough vaccine.",
-    "Tracking a cat's monthly weight through a prescription diet, so the trend across six entries is visible at the next check-up instead of one isolated number.",
+    "Tracking a cat's monthly weight through a prescription diet, so all six weigh-ins sit together in the order you entered them at the next check-up instead of one isolated number.",
   ],
   benefits: [
     [
       "One vault, every pet",
-      "Because the pet name is its own field, searching a name filters that animal's entire history out of a shared household log.",
+      "The pet name is its own field on every record, so typing that name into the search box pulls the animal's history out of a shared household log — the search reads the whole record, so distinct names keep the results clean.",
     ],
     [
       "Search by anything you wrote",
@@ -35,7 +35,7 @@ const seo = {
     ],
     [
       "Can I move the vault to a new phone or laptop?",
-      "Yes. Use Export JSON on the old device and Import JSON on the new one. The export is a plain JSON array with one object per record, so it also opens in a text editor if you ever want to read or edit it outside the tool.",
+      "Yes. Use Export JSON on the old device and Import JSON on the new one, confirming the prompt that warns the import replaces every record already saved there. The export is a plain JSON array with one object per record, so it also opens in a text editor if you ever want to read or edit it outside the tool.",
     ],
   ],
 };

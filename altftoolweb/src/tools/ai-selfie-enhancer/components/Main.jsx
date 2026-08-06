@@ -13,6 +13,7 @@ import {
   Contrast,
   Image as ImageIcon,
 } from "lucide-react";
+import { getSelfieFileError } from "../lib/fileValidation";
 
 export default function MainComponent() {
   const [imageSrc, setImageSrc] = useState(null);
@@ -179,8 +180,10 @@ export default function MainComponent() {
 
   const processFile = (file) => {
     if (!file) return;
-    if (!file.type.startsWith("image/")) {
-      setError("Please select a valid image file.");
+    const fileError = getSelfieFileError(file);
+    if (fileError) {
+      setSuccess("");
+      setError(fileError);
       return;
     }
     setError("");
@@ -391,7 +394,7 @@ export default function MainComponent() {
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/*"
+            accept="image/png,image/jpeg,image/webp"
             onChange={handleFileUpload}
             className="hidden"
           />

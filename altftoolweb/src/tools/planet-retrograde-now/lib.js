@@ -6,8 +6,9 @@
  * Apparent geocentric ecliptic longitude lambda(t) of each planet, referred to the
  * true equinox and ecliptic OF DATE (the frame the tropical zodiac is defined in),
  * corrected for light travel time and annual aberration. Source of the ephemeris:
- * the `astronomy-engine` package (v2.x, VSOP87 for Mercury..Neptune, the
- * Chapront/Standish-style analytic model for Pluto valid 1700-2200).
+ * the `astronomy-engine` package (v2.x, VSOP87 for Mercury..Neptune; Pluto is a
+ * numerically-integrated gravity simulation seeded from a table of barycentric
+ * state vectors spanning roughly year 1 to year 4000, not a closed-form series).
  *
  * A planet is *retrograde* when d(lambda)/dt < 0, i.e. its apparent longitude is
  * decreasing as seen from Earth. This is an APPARENT effect of the relative
@@ -48,9 +49,10 @@ const TIME_TOL_DAYS = 1 / 1440;
 const MAX_BISECTIONS = 60;
 
 /**
- * Validity window enforced here. astronomy-engine's planetary models are good far
- * wider, but its Pluto model is only defined for 1700-2200, so the page refuses
- * anything outside a comfortably interior range rather than returning silent junk.
+ * Validity window enforced here. astronomy-engine's planetary models, including
+ * Pluto's gravity simulation, are accurate far outside this window -- the page
+ * simply refuses anything outside a comfortably interior, well-tested range
+ * rather than returning results near the edge of what has been sanity-checked.
  */
 const MIN_YEAR = 1900;
 const MAX_YEAR = 2100;
@@ -139,7 +141,15 @@ function addDays(date, days) {
 }
 
 function toDate(value) {
-  if (value instanceof Date) return new Date(value.getTime());
+  if (value instanceof Date) {
+    // An Invalid Date is still an object, so it must be checked explicitly --
+    // otherwise it slips past the `if (!now)` guard in getRetrogradeState()
+    // as a truthy value, and its NaN internal time later fails the year-range
+    // guard silently (any comparison against NaN is false), reaching
+    // astronomy-engine and throwing a raw string instead of returning the
+    // documented { error } shape.
+    return Number.isNaN(value.getTime()) ? null : new Date(value.getTime());
+  }
   if (typeof value === "string" || typeof value === "number") {
     const d = new Date(value);
     return Number.isNaN(d.getTime()) ? null : d;
@@ -360,7 +370,7 @@ export function getRetrogradeState(body, at) {
   const year = now.getUTCFullYear();
   if (year < MIN_YEAR || year > MAX_YEAR) {
     return {
-      error: `Dates are limited to ${MIN_YEAR}-${MAX_YEAR}, because the Pluto model in the ephemeris used here is only defined for 1700-2200.`,
+      error: `Dates are limited to ${MIN_YEAR}-${MAX_YEAR} to stay inside a comfortably interior, well-tested range for every planet, Pluto included.`,
     };
   }
 
@@ -415,7 +425,13 @@ export function getRetrogradeState(body, at) {
     phaseEndsAt = nextCycle.stationRetrograde;
   }
 
-  const upcoming = isRetrograde ? currentCycle : nextCycle;
+  // During an actual retrograde OR its still-running post-retrograde shadow,
+  // the relevant cycle is the one that just happened (currentCycle) -- using
+  // nextCycle there would show a future cycle's station dates under a phase
+  // pill that says the current cycle's post-shadow is active. Only once the
+  // instant has moved into "pre-shadow" or plain "direct" does nextCycle
+  // become the relevant cycle.
+  const upcoming = isRetrograde || phase === "post-shadow" ? currentCycle : nextCycle;
 
   return {
     body,
@@ -451,7 +467,7 @@ export function getAllRetrogradeStates(at) {
   const year = now.getUTCFullYear();
   if (year < MIN_YEAR || year > MAX_YEAR) {
     return {
-      error: `Dates are limited to ${MIN_YEAR}-${MAX_YEAR}, because the Pluto model in the ephemeris used here is only defined for 1700-2200.`,
+      error: `Dates are limited to ${MIN_YEAR}-${MAX_YEAR} to stay inside a comfortably interior, well-tested range for every planet, Pluto included.`,
     };
   }
   const planets = PLANETS.map((p) => ({

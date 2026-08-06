@@ -17,7 +17,7 @@ const seo = {
     ],
     [
       "Portable as plain JSON",
-      "Export writes a readable JSON array you can back up or diff, and import merges it back with fresh IDs — no proprietary format to get stuck in.",
+      "Export writes a readable JSON array you can back up or diff, and import reads it back after a confirmation prompt — replacing the current list rather than merging into it, and keeping each record's existing id — so there is no proprietary format to get stuck in.",
     ],
   ],
   faqs: [

@@ -14,7 +14,17 @@ frontend:
       commands:
         - export ALTFT_DEFER_BULK_PRERENDER=true
         - export ALTFT_BUILD_CPUS=1
-        - export ALTFT_NODE_MAX_OLD_SPACE_SIZE=10240
+        # Matches the app-level ALTFT_NODE_MAX_OLD_SPACE_SIZE the runbook
+        # records (12288). This export runs in the build phase and overrides the
+        # app variable, so the two drifting apart meant the documented 12288 was
+        # never actually in force.
+        #
+        # 12288 is the value a full 3961-tool compile was measured to need: 8192
+        # dies (heap death at ~7.1 GiB during page-data collection) and 12288
+        # completes. 10240 sat between the two and had never been tested at this
+        # tool count. LARGE_16GB leaves ~3.7 GiB for the OS, the single webpack
+        # worker and artifact packaging at this setting.
+        - export ALTFT_NODE_MAX_OLD_SPACE_SIZE=12288
         - export ALTFT_WEBPACK_BUILD_WORKER=true
         - npm run build
         - rm -rf .next/cache

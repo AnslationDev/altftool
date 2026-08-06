@@ -68,8 +68,14 @@ export const SIGNALS = [
     detail: "Name, call id, argument size, latency and outcome. Most agent failures are tool failures wearing a model costume.",
     attribute: "gen_ai.tool.name, gen_ai.tool.call.id",
     base: "recommended",
+    // Visible whenever either trait that escalates it is on -- an autonomous
+    // (write-action) agent almost always calls a tool/API to take that
+    // action, so it should surface this signal too, not only when "tools"
+    // is explicitly ticked. Keep `requires` and `escalate` in sync: an id
+    // listed in `escalate` but missing from `requires` can never actually
+    // fire, since the item stays hidden before that trait would matter.
     escalate: ["tools", "autonomous"],
-    requires: ["tools"],
+    requires: ["tools", "autonomous"],
   },
   {
     id: "retrieval-span",
@@ -324,6 +330,10 @@ export function buildChecklist({ traits = [], done = [] } = {}) {
     done: doneSet.has(s.id),
   }));
 
+  // Defensive guard, not currently reachable: most SIGNALS entries have no
+  // `requires` gate, so at least one is always relevant regardless of which
+  // traits (including none) are selected. Kept in case a future edit to
+  // SIGNALS ever gates every entry behind a trait.
   if (items.length === 0) {
     return { error: "No signals matched that configuration. Turn at least one trait on." };
   }
@@ -343,6 +353,9 @@ export function buildChecklist({ traits = [], done = [] } = {}) {
     }
   });
 
+  // Defensive guard, not currently reachable: every relevant item always
+  // carries a positive TIER_WEIGHT. Kept for the same reason as the
+  // items.length guard above.
   if (totalWeight <= 0) {
     return { error: "Checklist has no weighted items to score." };
   }
@@ -379,21 +392,29 @@ export function buildChecklist({ traits = [], done = [] } = {}) {
   };
 }
 
+/** Default share of daily runs expected to match tail rules (errors, slow-p95,
+ * guardrail blocks, negative feedback). A matching run that was already kept
+ * by head sampling is not counted twice. */
+export const DEFAULT_TAIL_KEEP_RATE_PCT = 5;
+
 /**
  * Head + tail sampling plan.
- * Head rate is chosen so the daily trace budget is met; tail rules always keep
- * the traces you actually debug (errors, slow runs, thumbs-down).
+ * Head rate reserves room inside the daily trace budget for the expected tail
+ * matches. Tail rules then keep matching runs only from the unsampled pool, so
+ * one run is never counted twice and captured volume never exceeds traffic.
  */
 export function computeSamplingPlan({
   requestsPerDay,
   targetTracesPerDay,
   retentionDays,
   avgTraceKb = AVG_TRACE_KB,
+  tailKeepRatePct = DEFAULT_TAIL_KEEP_RATE_PCT,
 } = {}) {
   const runs = toFiniteNumber(requestsPerDay);
   const target = toFiniteNumber(targetTracesPerDay);
   const days = toFiniteNumber(retentionDays);
   const kb = toFiniteNumber(avgTraceKb);
+  const tailPct = toFiniteNumber(tailKeepRatePct);
 
   if ([runs, target, days, kb].some((n) => Number.isNaN(n))) {
     return { error: "Enter valid numbers for traffic, trace budget and retention." };
@@ -402,19 +423,39 @@ export function computeSamplingPlan({
   if (target <= 0) return { error: "Trace budget per day must be greater than zero." };
   if (days <= 0) return { error: "Retention must be at least one day." };
   if (kb <= 0) return { error: "Average trace size must be greater than zero." };
+  if (Number.isNaN(tailPct) || tailPct < 0 || tailPct > 100) {
+    return { error: "Tail-kept share must be between 0 and 100 percent." };
+  }
 
-  const rawRate = target / runs;
-  const headRate = Math.min(1, Math.max(MIN_HEAD_SAMPLE_RATE, rawRate));
+  const targetRate = Math.min(1, target / runs);
+  const tailRate = tailPct / 100;
+  // capturedRate = headRate + (1 - headRate) * tailRate. Solve for
+  // headRate so the combined expected volume, not just the head sample,
+  // targets the user's daily budget.
+  const rawHeadRate =
+    tailRate >= 1
+      ? targetRate >= 1
+        ? 1
+        : 0
+      : (targetRate - tailRate) / (1 - tailRate);
+  const headRate = Math.min(1, Math.max(MIN_HEAD_SAMPLE_RATE, rawHeadRate));
   const sampledPerDay = runs * headRate;
-  const storedTraces = sampledPerDay * days;
+  const unsampledPerDay = Math.max(0, runs - sampledPerDay);
+  const tailKeptPerDay = unsampledPerDay * tailRate;
+  const capturedPerDay = Math.min(runs, sampledPerDay + tailKeptPerDay);
+  const storedTraces = capturedPerDay * days;
   const storageGb = (storedTraces * kb) / KB_PER_GB;
+  const overBudget = capturedPerDay > target + 0.5;
 
   return {
     headRate,
     headRatePct: round(headRate * 100, 3),
-    capped: rawRate > 1,
-    floored: rawRate < MIN_HEAD_SAMPLE_RATE,
+    capped: target / runs >= 1,
+    floored: rawHeadRate < MIN_HEAD_SAMPLE_RATE,
+    overBudget,
     sampledPerDay: Math.round(sampledPerDay),
+    tailKeptPerDay: Math.round(tailKeptPerDay),
+    capturedPerDay: Math.round(capturedPerDay),
     storedTraces: Math.round(storedTraces),
     storageGb: round(storageGb, 2),
     tailRules: [
@@ -435,9 +476,12 @@ export function buildRedactionPlan(dataClassIds = []) {
   }
   const neverLog = rows.filter((r) => r.never);
   const withTtl = rows.filter((r) => !r.never);
+  // null (not 0) when every selected class is "never log" -- there is no
+  // retention window to report at all, which reads very differently from an
+  // actually-computed 0-day TTL.
   const strictestRetentionDays = withTtl.length
     ? Math.min(...withTtl.map((r) => r.retentionDays))
-    : 0;
+    : null;
   return { rows, neverLog, strictestRetentionDays, empty: false };
 }
 
@@ -459,7 +503,8 @@ export function buildSummary({ traits = [], checklist, sampling, redaction } = {
       "",
       "Sampling plan:",
       `- Head sample ${sampling.headRatePct}% of runs (~${sampling.sampledPerDay.toLocaleString("en-US")}/day)`,
-      `- Estimated stored trace volume: ${sampling.storageGb} GB`,
+      `- Tail-kept additional volume after head-sample overlap: ~${sampling.tailKeptPerDay.toLocaleString("en-US")}/day (est.)`,
+      `- Estimated stored trace volume: ${sampling.storageGb} GB (head + tail combined)`,
       ...sampling.tailRules.map((r) => `- ${r}`)
     );
   }

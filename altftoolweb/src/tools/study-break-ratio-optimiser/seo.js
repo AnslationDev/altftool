@@ -2,13 +2,13 @@ const seo = {
   intro:
     "This tool picks the study-to-break ratio that fits your real attention span, choosing among four documented protocols — Pomodoro 25/5, university-style 50/10, DeskTime's observed 52/17, and the ultradian-aligned 90/20 — by selecting the longest work block your focus span can sustain. It then lays the ratio across your available time as a start-time schedule that never ends on a break. It is for students who know they need breaks but keep guessing at when.",
   useCases: [
-    "A student who fades after about 45 minutes discovering that 25/5 cuts their sessions short while 50/10 fits",
+    "A student who fades after about 50 minutes discovering that 25/5 cuts their sessions short while 50/10 fits",
     "An aspirant planning a 3-hour evening slot as concrete blocks with clock times instead of one vague sitting",
     "Someone experimenting with longer deep-work blocks, stepping from 25/5 to 50/10 to 90/20 as their span grows",
   ],
   benefits: [
     ["Documented ratios only", "Every recommendation is a known protocol — Pomodoro, 50/10, 52/17 or 90/20 — not an invented number."],
-    ["Fits your span, not an ideal", "Selection is driven by the focus span you can honestly hold, with a custom 5:1 block below 25 minutes."],
+    ["Fits your span, not an ideal", "Selection is driven by the focus span you can honestly hold, with a custom block modelled on Pomodoro's ratio below 25 minutes."],
     ["Full schedule out", "You get block-by-block start times and a study-share percentage, ready to copy next to your desk."],
   ],
   faqs: [

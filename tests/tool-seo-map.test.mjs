@@ -86,7 +86,7 @@ test("compressed tool SEO lookup preserves legacy and per-tool content", async (
     });
   }
   assert.equal(
-    Object.hasOwn(generatedSeo["algebra-solver"], "steps"),
+    Object.hasOwn(generatedSeo["binary-hex-decimal-converter"], "steps"),
     false,
     "generic HowTo steps must not reach the compressed payload",
   );

@@ -2,10 +2,15 @@
 
 import React, { useState, useEffect, useRef } from "react";
 
+import {
+  DEFAULT_TRANSFORM,
+  buildTransformStyle,
+} from "../lib/animationState.js";
+
 export default function PlaygroundCanvas({
   animationStyle,
   animationKey,
-  transform = { x: 0, y: 0, scale: 1, rotate: 0, skew: 0 },
+  transform = DEFAULT_TRANSFORM,
   trigger = "auto",
   color1,
   color2,
@@ -17,7 +22,6 @@ export default function PlaygroundCanvas({
   const [dragging, setDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
   const [active, setActive] = useState(false);
-  const [dropdownHover, setDropdownHover] = useState(false);
 
   // Center object on initial render
   useEffect(() => {
@@ -51,13 +55,6 @@ export default function PlaygroundCanvas({
     setPosition({ x: newX, y: newY });
   };
 
-  const resetPosition = () => {
-    if (containerRef.current) {
-      const { width, height } = containerRef.current.getBoundingClientRect();
-      setPosition({ x: (width - 100) / 2, y: (height - 100) / 2 });
-    }
-  };
-
   const handleClick = () => {
     if (trigger === "click") setActive(!active);
   };
@@ -66,12 +63,8 @@ export default function PlaygroundCanvas({
     if (trigger === "hover") setActive(state);
   };
 
-  const transformStyle = `
-    translate(${transform.x}px,${transform.y}px)
-    scale(${transform.scale})
-    rotate(${transform.rotate}deg)
-    skew(${transform.skew}deg)
-  `;
+  const currentTransform = { ...DEFAULT_TRANSFORM, ...transform };
+  const transformStyle = buildTransformStyle(currentTransform);
 
   const finalAnimation = trigger === "auto" || active ? animationStyle : "none";
 
@@ -111,23 +104,25 @@ export default function PlaygroundCanvas({
 
       {/* Draggable Object */}
       <div
-  key={animationKey}
-  onMouseDown={handleMouseDown}
-  onClick={handleClick}
-  onMouseEnter={() => handleHover(true)}
-  onMouseLeave={() => handleHover(false)}
-  style={{
-    position: "absolute",
-    left: position.x,
-    top: position.y,
-    transform: transformStyle,
-    animation: finalAnimation,
-    cursor: dragging ? "grabbing" : "grab",
-    background: useGradient
-      ? `linear-gradient(45deg, ${color1}, ${color2})`
-      : color1
-  }}
-  className="animated-element w-24 h-24 rounded-lg flex items-center justify-center text-3xl select-none">
+        key={animationKey}
+        onMouseDown={handleMouseDown}
+        onClick={handleClick}
+        onMouseEnter={() => handleHover(true)}
+        onMouseLeave={() => handleHover(false)}
+        style={{
+          position: "absolute",
+          left: position.x,
+          top: position.y,
+          transform: transformStyle,
+          opacity: currentTransform.opacity,
+          animation: finalAnimation,
+          cursor: dragging ? "grabbing" : "grab",
+          background: useGradient
+            ? `linear-gradient(45deg, ${color1}, ${color2})`
+            : color1
+        }}
+        className="animated-element w-24 h-24 rounded-lg flex items-center justify-center text-3xl select-none"
+      >
         ✨
       </div>
     </div>

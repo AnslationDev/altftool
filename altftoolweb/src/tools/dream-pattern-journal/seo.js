@@ -2,7 +2,7 @@ const seo = {
   intro:
     "Dream Pattern Journal is a private dream log: you record a dream title and a free-text notes-and-tags field, and every entry is saved in this browser's local storage rather than to an account. Because the search box matches across the whole entry, tagging dreams with your own words — falling, teeth, that house, a person's name — turns the journal into a way to pull up every occurrence of a recurring theme later. It is for anyone tracking recurring dreams over months who does not want that material sitting on someone else's server.",
   useCases: [
-    "You keep having a variant of the same anxiety dream and want to search back through six months of entries to see what was going on the nights it turned up.",
+    "You keep having a variant of the same anxiety dream and want to search back through six months of entries to see what was going on the nights it turned up — dating the title yourself as you write, since an entry holds only the words you type into it.",
     "A therapist has asked you to note your dreams between sessions and you want a log you can export and bring, without it living in a cloud app.",
     "You are trying to build the habit of writing dreams down on waking and need something you can open on your phone in ten seconds with no login.",
   ],

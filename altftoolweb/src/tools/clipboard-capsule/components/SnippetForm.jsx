@@ -1,8 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useId } from "react";
 import { Button } from "@altftool/ui";
 import { X, ClipboardPaste } from "lucide-react";
+
+// Names reserved by the tab bar's built-in "All"/"Favorites" filters (see
+// pages/index.jsx RESERVED_TAB_KEYS) -- a category sharing one of these
+// names would collide with the hardcoded tab and become unreachable.
+const RESERVED_CATEGORY_NAMES = new Set(["all", "favorites"]);
+
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
 export default function SnippetForm({ isOpen, onClose, onSave, categories, editingSnippet = null }) {
   const [title, setTitle] = useState("");
@@ -10,6 +18,8 @@ export default function SnippetForm({ isOpen, onClose, onSave, categories, editi
   const [category, setCategory] = useState(categories[0] || "Text");
   const [newCategory, setNewCategory] = useState("");
   const [isAddingCategory, setIsAddingCategory] = useState(false);
+  const dialogRef = useRef(null);
+  const titleId = useId();
 
   useEffect(() => {
     if (isOpen) {
@@ -27,12 +37,54 @@ export default function SnippetForm({ isOpen, onClose, onSave, categories, editi
     }
   }, [isOpen, editingSnippet, categories]);
 
+  // Escape-to-close plus a small Tab focus trap: previously nothing kept
+  // keyboard focus inside the dialog or let Escape dismiss it.
+  useEffect(() => {
+    if (!isOpen) return undefined;
+
+    const focusTimer = window.setTimeout(() => {
+      const focusable = dialogRef.current?.querySelectorAll(FOCUSABLE_SELECTOR);
+      (focusable?.[0] || dialogRef.current)?.focus();
+    }, 0);
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const focusable = dialogRef.current?.querySelectorAll(FOCUSABLE_SELECTOR);
+      if (!focusable?.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      window.clearTimeout(focusTimer);
+    };
+  }, [isOpen, onClose]);
+
   if (!isOpen) return null;
 
   const handlePaste = async () => {
     try {
       const text = await navigator.clipboard.readText();
-      setContent((prev) => prev + text);
+      setContent((prev) => {
+        if (!prev || !text) return prev + text;
+        // Insert a newline boundary instead of gluing words together when
+        // there is already content and no trailing whitespace.
+        return /\s$/.test(prev) ? prev + text : `${prev}\n${text}`;
+      });
     } catch (err) {
       console.error("Failed to read clipboard", err);
       alert("Unable to access clipboard. Please paste manually.");
@@ -41,11 +93,16 @@ export default function SnippetForm({ isOpen, onClose, onSave, categories, editi
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!content) return;
-    
+    if (!content.trim()) return;
+
     let finalCategory = category;
     if (isAddingCategory && newCategory.trim()) {
-      finalCategory = newCategory.trim();
+      const trimmedNewCategory = newCategory.trim();
+      if (RESERVED_CATEGORY_NAMES.has(trimmedNewCategory.toLowerCase())) {
+        alert(`"${trimmedNewCategory}" is a reserved name used by the built-in tabs. Please choose a different category name.`);
+        return;
+      }
+      finalCategory = trimmedNewCategory;
     }
 
     onSave({
@@ -58,12 +115,19 @@ export default function SnippetForm({ isOpen, onClose, onSave, categories, editi
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-      <div className="w-full max-w-lg rounded-xl border border-[var(--border)] bg-[var(--background)] p-6 shadow-xl flex flex-col max-h-[90vh]">
+      <div
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby={titleId}
+        tabIndex={-1}
+        className="w-full max-w-lg rounded-xl border border-[var(--border)] bg-[var(--background)] p-6 shadow-xl flex flex-col max-h-[90vh]"
+      >
         <div className="mb-4 flex items-center justify-between shrink-0">
-          <h2 className="text-xl font-semibold text-[var(--foreground)]">
+          <h2 id={titleId} className="text-xl font-semibold text-[var(--foreground)]">
             {editingSnippet ? "Edit Snippet" : "Add Snippet"}
           </h2>
-          <button onClick={onClose} className="rounded-md p-1 text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]">
+          <button onClick={onClose} aria-label="Close" className="rounded-md p-1 text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]">
             <X size={20} />
           </button>
         </div>

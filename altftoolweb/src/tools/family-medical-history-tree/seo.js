@@ -4,7 +4,7 @@ const seo = {
   useCases: [
     "You are registering with a new practice and the form asks about conditions in first-degree relatives, so you write down what each parent and sibling has been diagnosed with and at roughly what age, then read from your own notes at the appointment.",
     "A grandparent tells you things at a family gathering that nobody has written down, so you capture each relative and condition on your phone before the detail is lost, and export the JSON to keep with your other documents.",
-    "A specialist has asked whether a condition appears on one side of the family, so you search your saved records for that condition and see at a glance which relatives it groups under.",
+    "A specialist has asked whether a condition appears on one side of the family, so you type that condition into the search box and the saved list narrows to only the records mentioning it, each one still showing the family member it was filed under.",
   ],
   benefits: [
     ["Stays out of an account", "Records live in this browser's local storage, so a sensitive family history is not created as a row in someone else's database by default."],

@@ -67,6 +67,8 @@ export const TONES = [
     id: "immediate",
     label: "Requesting early release",
     opening: "I am writing to resign from my position as",
+    request:
+      "I would be grateful if I could be released earlier than the full notice period allows, and am happy to discuss a suitable last working day with you.",
     thanks: "I am grateful for the opportunities I have had here.",
   },
 ];
@@ -202,6 +204,28 @@ function clean(value) {
   return typeof value === "string" ? value.trim().replace(/\s+/g, " ") : "";
 }
 
+/**
+ * Rough keyword screen for hostile language, not real sentiment analysis. It
+ * exists so the "No criticism of colleagues or employer" checklist item can
+ * stop being a hardcoded `true` and start reflecting the one piece of free
+ * text (the custom reason) that goes into the letter body unfiltered. It will
+ * miss subtler criticism and can occasionally flag a neutral use of a word
+ * (e.g. "negligent" in a legal sense) — it is a safety net, not a guarantee.
+ */
+const CRITICISM_MARKERS = [
+  "incompetent", "incompetence", "toxic", "terrible", "horrible", "awful",
+  "worst", "hate", "useless", "unfair", "mistreat", "abusive", "abuse",
+  "bully", "bullying", "harass", "disrespect", "unprofessional", "lazy",
+  "corrupt", "liar", "lied", "sabotage", "hostile", "discriminat", "nightmare",
+  "idiot", "stupid", "negligent", "neglect", "unbearable", "dysfunctional",
+  "worthless", "pathetic", "backstab",
+];
+
+export function containsCriticism(text) {
+  const value = String(text || "").toLowerCase();
+  return CRITICISM_MARKERS.some((marker) => value.includes(marker));
+}
+
 /** Compose the resignation letter. */
 export function buildResignationLetter({
   employeeName = "",
@@ -244,6 +268,14 @@ export function buildResignationLetter({
   if (!resignLong) return { error: "Enter a valid resignation date." };
 
   const proposed = clean(proposedLastDay);
+  if (proposed) {
+    const proposedParts = parseIsoDate(proposed);
+    if (!proposedParts) return { error: "Enter a valid proposed last working day." };
+    const resignParts = parseIsoDate(resignationDate);
+    if (resignParts && proposedParts.stamp < resignParts.stamp) {
+      return { error: "Your proposed last working day cannot be before the date you are resigning." };
+    }
+  }
   const shortfall = proposed
     ? noticeShortfall({ requiredIso: required.iso, proposedIso: proposed })
     : { shortfallDays: 0, status: "exact", extraDays: 0, message: "Serving the full notice period." };
@@ -252,6 +284,8 @@ export function buildResignationLetter({
   const finalIso = proposed || required.iso;
   const finalLong = formatLongDate(finalIso, { withWeekday: true });
   if (!finalLong) return { error: "Enter a valid proposed last working day." };
+  const finalParts = parseIsoDate(finalIso);
+  const finalIsWeekend = finalParts ? finalParts.weekday === 0 || finalParts.weekday === 6 : false;
 
   const manager = clean(managerName);
   const dept = clean(department);
@@ -273,7 +307,7 @@ export function buildResignationLetter({
 
   if (shortfall.status === "short") {
     paragraphs.push(
-      `This is ${shortfall.shortfallDays} day${shortfall.shortfallDays === 1 ? "" : "s"} short of the full notice period. I would be grateful if the balance could be waived; if not, I am willing to have it settled as per the terms of my appointment letter.`,
+      `${tone.request ? `${tone.request} ` : ""}This is ${shortfall.shortfallDays} day${shortfall.shortfallDays === 1 ? "" : "s"} short of the full notice period. I would be grateful if the balance could be waived; if not, I am willing to have it settled as per the terms of my appointment letter.`,
     );
   }
 
@@ -327,14 +361,17 @@ export function buildResignationLetter({
     { item: "Employee ID for the HR file", done: Boolean(empId) },
     { item: "Relieving letter and settlement requested", done: Boolean(requestExperienceLetter) },
     { item: "Full notice served", done: shortfall.status !== "short" },
-    { item: "No criticism of colleagues or employer", done: true },
+    {
+      item: "No criticism of colleagues or employer",
+      done: !containsCriticism([reasonLine, notes].filter(Boolean).join(" ")),
+    },
   ];
 
   return {
     letter,
     subject,
     requiredLastDay: required,
-    finalLastDay: { iso: finalIso, long: finalLong },
+    finalLastDay: { iso: finalIso, long: finalLong, isWeekend: finalIsWeekend },
     shortfall,
     wordCount: letter.split(/\s+/).filter(Boolean).length,
     checklist,

@@ -46,11 +46,6 @@ const seo = {
       "Yes — you can search general terms like popular or trending, or use the category filter, to explore apps without knowing exactly what you want.",
     ],
   ],
-  steps: [
-    "Type an app name, or browse the popular/trending picks.",
-    "Review the matching results from the App Store search.",
-    "Tap through to the App Store listing, or use the linked Google Play search for Android.",
-  ],
 };
 
 export default seo;

@@ -3,10 +3,13 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Radar, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 import {
   AGENT_TRAITS,
   AVG_TRACE_KB,
   DATA_CLASSES,
+  DEFAULT_TAIL_KEEP_RATE_PCT,
   TIER_LABEL,
   buildChecklist,
   buildRedactionPlan,
@@ -28,7 +31,13 @@ const CARD = "rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5";
 const DEFAULT_TRAITS = ["tools", "pii"];
 const DEFAULT_DONE = ["root-span", "llm-span", "structured-logs", "latency"];
 const DEFAULT_CLASSES = ["email", "freetext", "secret"];
-const DEFAULT_TRAFFIC = { runs: "25000", budget: "5000", retention: "30", traceKb: String(AVG_TRACE_KB) };
+const DEFAULT_TRAFFIC = {
+  runs: "25000",
+  budget: "5000",
+  retention: "30",
+  traceKb: String(AVG_TRACE_KB),
+  tailKeepRatePct: String(DEFAULT_TAIL_KEEP_RATE_PCT),
+};
 
 const TIER_STYLE = {
   required: "text-[var(--danger)]",
@@ -54,7 +63,8 @@ export default function ToolHome() {
   const [budget, setBudget] = useState(DEFAULT_TRAFFIC.budget);
   const [retention, setRetention] = useState(DEFAULT_TRAFFIC.retention);
   const [traceKb, setTraceKb] = useState(DEFAULT_TRAFFIC.traceKb);
-  const [copied, setCopied] = useState(false);
+  const [tailKeepRatePct, setTailKeepRatePct] = useState(DEFAULT_TRAFFIC.tailKeepRatePct);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const checklist = useMemo(() => buildChecklist({ traits, done }), [traits, done]);
   const sampling = useMemo(
@@ -64,8 +74,9 @@ export default function ToolHome() {
         targetTracesPerDay: budget,
         retentionDays: retention,
         avgTraceKb: traceKb,
+        tailKeepRatePct,
       }),
-    [runs, budget, retention, traceKb]
+    [runs, budget, retention, traceKb, tailKeepRatePct]
   );
   const redaction = useMemo(() => buildRedactionPlan(classes), [classes]);
 
@@ -74,18 +85,17 @@ export default function ToolHome() {
     [traits, checklist, sampling, redaction]
   );
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("plan", summary, { label: "Observability plan" });
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset the checklist? This clears every trait, checked-off signal, data class and traffic number you've entered."
+      )
+    ) {
+      return;
+    }
     setTraits(DEFAULT_TRAITS);
     setDone(DEFAULT_DONE);
     setClasses(DEFAULT_CLASSES);
@@ -93,7 +103,8 @@ export default function ToolHome() {
     setBudget(DEFAULT_TRAFFIC.budget);
     setRetention(DEFAULT_TRAFFIC.retention);
     setTraceKb(DEFAULT_TRAFFIC.traceKb);
-    setCopied(false);
+    setTailKeepRatePct(DEFAULT_TRAFFIC.tailKeepRatePct);
+    resetCopyState();
   };
 
   const failed = Boolean(checklist.error);
@@ -156,7 +167,7 @@ export default function ToolHome() {
 
       <section className={`mt-6 ${CARD}`} aria-labelledby="score-heading">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p
               id="score-heading"
               className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]"
@@ -177,23 +188,26 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               aria-label="Copy the observability plan"
-              className={GHOST_BTN}
+              className={PRIMARY_BTN}
             >
-              {copied ? (
+              {isCopied("plan") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy plan"}
+              {isCopied("plan") ? "Copied!" : "Copy plan"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
+          <span aria-live="polite" role="status" className="sr-only">
+            {announcement}
+          </span>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
           {[
             ["Signals in place", failed ? dash : `${checklist.doneTotal} of ${checklist.total}`],
             ["Required signals missing", failed ? dash : String(checklist.requiredGaps.length)],
@@ -243,7 +257,11 @@ export default function ToolHome() {
               <div key={pillar.id}>
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <h3 className="text-sm font-semibold">{pillar.label}</h3>
-                  <span className="text-xs font-semibold text-[var(--muted-foreground)]">
+                  <span
+                    className="text-xs font-semibold text-[var(--muted-foreground)]"
+                    role="status"
+                    aria-live="polite"
+                  >
                     {pillar.score}% covered
                   </span>
                 </div>
@@ -356,6 +374,26 @@ export default function ToolHome() {
               onChange={(event) => setTraceKb(event.target.value)}
             />
           </div>
+          <div>
+            <label className={LABEL_CLASS} htmlFor="obs-tail-pct">
+              Tail-rule match estimate (% of runs)
+            </label>
+            <input
+              id="obs-tail-pct"
+              className={`mt-2 ${INPUT_CLASS}`}
+              type="number"
+              inputMode="decimal"
+              min="0"
+              max="100"
+              step="0.5"
+              value={tailKeepRatePct}
+              onChange={(event) => setTailKeepRatePct(event.target.value)}
+            />
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+              Rough share of all runs expected to match the tail rules below (errors, slow p95,
+              guardrail blocks, negative feedback). Head-sampled matches are counted only once.
+            </p>
+          </div>
         </div>
 
         {sampling.error ? (
@@ -367,15 +405,30 @@ export default function ToolHome() {
           </p>
         ) : null}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          role="status"
+          aria-live="polite"
+        >
           {[
             ["Head sampling rate", sampling.error ? dash : `${sampling.headRatePct}%`],
             [
-              "Traces captured per day",
+              "Head-sampled traces per day",
               sampling.error ? dash : NUM.format(sampling.sampledPerDay),
             ],
+            [
+              "Additional tail-kept traces per day (est.)",
+              sampling.error ? dash : `+${NUM.format(sampling.tailKeptPerDay)}`,
+            ],
+            [
+              "Traces captured per day (total)",
+              sampling.error ? dash : NUM.format(sampling.capturedPerDay),
+            ],
             ["Traces held at any time", sampling.error ? dash : NUM.format(sampling.storedTraces)],
-            ["Estimated trace storage", sampling.error ? dash : `${sampling.storageGb} GB`],
+            [
+              "Estimated trace storage",
+              sampling.error ? dash : `${sampling.storageGb} GB (head + tail combined)`,
+            ],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -384,11 +437,13 @@ export default function ToolHome() {
           ))}
         </dl>
 
-        {!sampling.error && (sampling.capped || sampling.floored) ? (
+        {!sampling.error && (sampling.capped || sampling.floored || sampling.overBudget) ? (
           <p className="mt-3 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning)]">
             {sampling.capped
               ? "Your traffic is below the budget, so keep 100% of runs — head sampling buys you nothing yet."
-              : "That budget forces a very low head rate. Lean on tail sampling rules instead, or raise the budget."}
+              : sampling.overBudget
+                ? "Expected tail matches plus the minimum head sample exceed this trace budget. Lower the tail estimate, raise the budget, or explicitly accept the extra storage."
+                : "That budget forces a very low head rate. Lean on tail sampling rules instead, or raise the budget."}
           </p>
         ) : null}
 
@@ -474,13 +529,22 @@ export default function ToolHome() {
               </table>
             </div>
             <p className="mt-3 text-sm text-[var(--muted-foreground)]">
-              Strictest retention window across the selected classes:{" "}
-              <strong className="text-[var(--foreground)]">
-                {redaction.strictestRetentionDays} days
-              </strong>
-              {redaction.neverLog.length
-                ? ` · ${redaction.neverLog.length} class${redaction.neverLog.length === 1 ? "" : "es"} must never reach telemetry.`
-                : ""}
+              {redaction.strictestRetentionDays === null ? (
+                <>
+                  Every selected class must never reach telemetry — there is no retention window
+                  to report.
+                </>
+              ) : (
+                <>
+                  Strictest retention window across the selected classes:{" "}
+                  <strong className="text-[var(--foreground)]">
+                    {redaction.strictestRetentionDays} days
+                  </strong>
+                  {redaction.neverLog.length
+                    ? ` · ${redaction.neverLog.length} class${redaction.neverLog.length === 1 ? "" : "es"} must never reach telemetry.`
+                    : ""}
+                </>
+              )}
             </p>
           </>
         )}

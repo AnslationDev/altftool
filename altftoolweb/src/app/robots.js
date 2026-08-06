@@ -41,9 +41,13 @@ export default async function robots() {
     disallow: ["/api/", ...MOCK_COMMUNITY_CRAWL_TRAPS, ...crawl.disallow],
   };
 
-  const sitemap = crawl.extraSitemaps.length
-    ? [`${getSiteUrl()}/sitemap.xml`, ...crawl.extraSitemaps]
-    : `${getSiteUrl()}/sitemap.xml`;
+  const sitemap = [
+    `${getSiteUrl()}/sitemap.xml`,
+    `${getSiteUrl()}/ideas/sitemap.xml`,
+    `${getSiteUrl()}/detour/sitemap.xml`,
+    `${getSiteUrl()}/lexicon/sitemap.xml`,
+    ...crawl.extraSitemaps,
+  ];
 
   return {
     rules: [rule, aiCrawlerRule],
