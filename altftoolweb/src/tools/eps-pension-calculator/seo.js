@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     ["Uses the actual EPFO formula", "Pensionable salary × pensionable service ÷ 70, plus the 2-year bonus above 20 years of service."],
     ["Compares start ages side by side", "See the pension at 50, 55, 58 and 60 in one table so early versus deferred pension is an informed choice."],
-    ["Covers family pension too", "Widow/widower pension at 50% and child pension at 25% each are calculated automatically."],
+    ["Covers family pension too", "Widow/widower pension at 50% of the member's pension, and child pension at 25% of that widow/widower pension for each child, are calculated automatically."],
   ],
   faqs: [
     [

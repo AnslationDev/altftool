@@ -81,6 +81,12 @@ export default function ToolHome() {
   const failed = Boolean(plan.error);
 
   const applyType = (id) => {
+    if (
+      done.length > 0 &&
+      !window.confirm("Change video type? This clears your ticked checklist progress and cannot be undone.")
+    ) {
+      return;
+    }
     setVideoTypeId(id);
     const type = VIDEO_TYPES.find((item) => item.id === id);
     if (type) {
@@ -119,6 +125,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset the checklist? This clears every ticked task and your custom ratios and cannot be undone.")) {
+      return;
+    }
     setVideoTypeId(DEFAULTS.videoTypeId);
     setRuntimeMinutes(DEFAULTS.runtimeMinutes);
     setShootRatio(DEFAULTS.shootRatio);

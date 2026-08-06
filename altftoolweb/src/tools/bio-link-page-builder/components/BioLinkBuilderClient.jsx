@@ -134,6 +134,10 @@ function normalizeUrl(value) {
   const trimmed = value.trim();
   if (!trimmed) return "";
   if (/^https?:\/\//i.test(trimmed) || /^mailto:/i.test(trimmed) || /^tel:/i.test(trimmed)) return trimmed;
+  // Any other recognized URI scheme (e.g. ftp:, sftp:, market:) is left untouched instead of
+  // being prefixed with https:// — prepending would mangle it into a broken double-scheme URL.
+  // isValidUrl() will correctly reject these since only http/https/mailto/tel are allowed.
+  if (/^[a-z][a-z0-9+.-]*:/i.test(trimmed)) return trimmed;
   return `https://${trimmed}`;
 }
 
@@ -158,6 +162,25 @@ function safeSlug(value) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
     .slice(0, 36);
+}
+
+function generateId() {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+
+function getContrastText(hex) {
+  if (typeof hex !== "string") return "#0f172a";
+  const clean = hex.replace("#", "");
+  if (clean.length !== 6) return "#0f172a";
+  const r = parseInt(clean.slice(0, 2), 16);
+  const g = parseInt(clean.slice(2, 4), 16);
+  const b = parseInt(clean.slice(4, 6), 16);
+  if ([r, g, b].some((channel) => Number.isNaN(channel))) return "#0f172a";
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance > 0.6 ? "#0f172a" : "#ffffff";
 }
 
 export default function BioLinkBuilderClient() {
@@ -193,8 +216,15 @@ export default function BioLinkBuilderClient() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(project));
     } catch {
       console.warn("Bio Link Builder project could not be saved.");
+      setNotice("Couldn't save automatically — your browser's storage is full. Try a smaller profile photo.");
     }
   }, [project]);
+
+  useEffect(() => {
+    if (!notice) return undefined;
+    const timer = setTimeout(() => setNotice(""), 4500);
+    return () => clearTimeout(timer);
+  }, [notice]);
 
   const preset = useMemo(
     () => themePresets.find((item) => item.key === project.theme.preset) || themePresets[0],
@@ -253,7 +283,7 @@ export default function BioLinkBuilderClient() {
         ...current.links,
         {
           ...draft,
-          id: `${Date.now()}`,
+          id: generateId(),
           label: draft.label.trim(),
           url: normalizeUrl(draft.url),
           description: draft.description.trim(),
@@ -267,7 +297,7 @@ export default function BioLinkBuilderClient() {
   const duplicateLink = (link) => {
     setProject((current) => ({
       ...current,
-      links: [...current.links, { ...link, id: `${Date.now()}`, label: `${link.label} copy` }],
+      links: [...current.links, { ...link, id: generateId(), label: `${link.label} copy` }],
     }));
   };
 
@@ -322,6 +352,9 @@ export default function BioLinkBuilderClient() {
   };
 
   const resetProject = () => {
+    if (typeof window !== "undefined" && !window.confirm("Reset the whole project? This clears your profile, every link, and your theme, and cannot be undone.")) {
+      return;
+    }
     setProject(starterProject);
     setNotice("Builder reset to starter page");
   };
@@ -389,6 +422,16 @@ export default function BioLinkBuilderClient() {
       </section>
 
       <section className="relative px-4 sm:px-5 lg:px-6 py-5 sm:py-6">
+        {notice && (
+          <div
+            role="status"
+            aria-live="polite"
+            className="mb-5 flex items-center gap-2.5 rounded-2xl border border-cyan-400/30 bg-cyan-400/10 dark:bg-cyan-400/[0.08] px-4 py-3 text-sm font-bold text-cyan-800 dark:text-cyan-200"
+          >
+            <Sparkles className="h-4 w-4 shrink-0" />
+            <span className="break-words">{notice}</span>
+          </div>
+        )}
         <div className="grid grid-cols-1 2xl:grid-cols-12 gap-7 items-start">
           <div className="2xl:col-span-6 space-y-6 min-w-0">
             <div className={`rounded-3xl border ${panelBg} backdrop-blur-2xl p-2.5 transition-all`}>
@@ -676,7 +719,12 @@ function SortableLinkCard({ link, error, onChange, onDuplicate, onDelete }) {
       }`}
     >
       <div className="grid sm:grid-cols-[36px_1fr] gap-3 min-w-0">
-        <button {...attributes} {...listeners} className="h-10 w-10 rounded-2xl bg-gray-100 dark:bg-white/10 flex items-center justify-center cursor-grab active:cursor-grabbing shrink-0">
+        <button
+          {...attributes}
+          {...listeners}
+          aria-label={`Reorder link: ${link.label || link.url || "untitled link"}`}
+          className="h-10 w-10 rounded-2xl bg-gray-100 dark:bg-white/10 flex items-center justify-center cursor-grab active:cursor-grabbing shrink-0"
+        >
           <GripVertical className="h-5 w-5 text-gray-500" />
         </button>
         <div className="grid sm:grid-cols-2 gap-3 min-w-0">
@@ -717,7 +765,11 @@ function SortableLinkCard({ link, error, onChange, onDuplicate, onDelete }) {
           <button onClick={() => onDuplicate(link)} className="rounded-xl bg-gray-100 dark:bg-white/10 px-3 py-2 text-xs font-bold hover:bg-blue-500 hover:text-white transition-colors">
             Duplicate
           </button>
-          <button onClick={() => onDelete(link.id)} className="rounded-xl bg-rose-500/10 text-rose-500 px-3 py-2 text-xs font-bold hover:bg-rose-500 hover:text-white transition-colors">
+          <button
+            onClick={() => onDelete(link.id)}
+            aria-label={`Delete link: ${link.label || link.url || "untitled link"}`}
+            className="rounded-xl bg-rose-500/10 text-rose-500 px-3 py-2 text-xs font-bold hover:bg-rose-500 hover:text-white transition-colors"
+          >
             <Trash2 className="h-4 w-4" />
           </button>
         </div>
@@ -728,6 +780,11 @@ function SortableLinkCard({ link, error, onChange, onDuplicate, onDelete }) {
 
 function PreviewPhone({ project, preset, publicUrl, unframed = false }) {
   const fontClass = fontOptions.find((item) => item.key === project.theme.font)?.className || "font-secondary";
+  const previewLinks = project.links.filter((link) => link.label.trim() && isValidUrl(link.url));
+  const buttonStyle = project.theme.buttonStyle || "glass";
+  const accent = project.theme.accent || preset.accent;
+  const accentText = getContrastText(accent);
+  const radiusPx = `${project.theme.radius ?? 22}px`;
 
   return (
     <div className={unframed ? "" : "mx-auto w-full max-w-[420px] rounded-[2.2rem] bg-slate-950 p-2.5 sm:p-3 shadow-2xl shadow-cyan-950/30"}>
@@ -774,6 +831,51 @@ function PreviewPhone({ project, preset, publicUrl, unframed = false }) {
               </p>
             )}
           </div>
+
+          {previewLinks.length > 0 ? (
+            <div className="mt-7 space-y-3">
+              {previewLinks.map((link) => {
+                const PlatformIcon = getPlatform(link.platform).icon;
+                const isSolid = buttonStyle === "solid";
+                const isOutline = buttonStyle === "outline";
+                const linkStyle = {
+                  borderRadius: radiusPx,
+                  ...(isSolid
+                    ? { backgroundColor: accent, borderColor: accent, color: accentText }
+                    : isOutline
+                    ? { backgroundColor: "transparent", borderColor: accent, borderWidth: "2px", color: preset.text }
+                    : { backgroundColor: "rgba(255,255,255,0.14)", borderColor: "rgba(255,255,255,0.28)", color: preset.text }),
+                  ...(link.featured ? { boxShadow: `0 0 0 2px ${accent}80` } : {}),
+                };
+                const iconColor = isSolid ? accentText : accent;
+                return (
+                  <a
+                    key={link.id}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 border px-4 py-3.5 backdrop-blur-xl transition-transform hover:-translate-y-0.5 min-w-0"
+                    style={linkStyle}
+                  >
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-black/10">
+                      <PlatformIcon className="h-4 w-4" style={{ color: iconColor }} />
+                    </span>
+                    <span className="min-w-0 flex-1 text-left">
+                      <span className="block truncate text-sm font-black">{link.label}</span>
+                      {link.description && (
+                        <span className="block truncate text-xs font-semibold opacity-75">{link.description}</span>
+                      )}
+                    </span>
+                    {link.featured && <Star className="h-4 w-4 shrink-0" style={{ color: iconColor }} />}
+                  </a>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="mt-7 rounded-3xl border border-dashed border-white/25 p-5 text-center text-xs font-black uppercase tracking-widest text-white/50">
+              Add links to see them here
+            </div>
+          )}
 
           {publicUrl && (
             <div className="mt-7 rounded-3xl border border-white/15 bg-black/20 p-4 backdrop-blur-xl">

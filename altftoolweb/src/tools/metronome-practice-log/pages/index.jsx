@@ -33,6 +33,27 @@ function localIso(date) {
   return new Date(date.getTime() - offsetMs).toISOString().slice(0, 10);
 }
 
+/** Real calendar date check — rejects silent month rollover such as 2026-02-30. */
+function isValidIsoDate(text) {
+  const match = typeof text === "string" ? /^(\d{4})-(\d{2})-(\d{2})$/.exec(text) : null;
+  if (!match) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(year, month - 1, day);
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+}
+
+/** Mirrors the shape summarisePractice() expects, so malformed rows never enter state. */
+function isValidEntryShape(entry) {
+  if (!entry || typeof entry !== "object") return false;
+  if (!isValidIsoDate(entry.date)) return false;
+  if (typeof entry.exercise !== "string" || entry.exercise.trim() === "") return false;
+  if (!Number.isFinite(Number(entry.bpm))) return false;
+  if (!Number.isFinite(Number(entry.minutes))) return false;
+  return true;
+}
+
 function shiftDays(iso, days) {
   const base = Date.parse(`${iso}T00:00:00Z`) + days * 86400000;
   return new Date(base).toISOString().slice(0, 10);
@@ -65,6 +86,7 @@ export default function ToolHome() {
   const [ladderMinutes, setLadderMinutes] = useState(LADDER_DEFAULTS.minutes);
 
   const [copied, setCopied] = useState(false);
+  const [copyError, setCopyError] = useState("");
 
   useEffect(() => {
     const iso = localIso(new Date());
@@ -78,9 +100,11 @@ export default function ToolHome() {
       stored = null;
     }
 
-    if (Array.isArray(stored) && stored.length > 0) {
-      setEntries(stored);
-      setNextId(stored.reduce((max, item) => Math.max(max, Number(item.id) || 0), 0) + 1);
+    const validStored = Array.isArray(stored) ? stored.filter(isValidEntryShape) : [];
+
+    if (validStored.length > 0) {
+      setEntries(validStored);
+      setNextId(validStored.reduce((max, item) => Math.max(max, Number(item.id) || 0), 0) + 1);
     } else {
       const seeded = seedEntries(iso);
       setEntries(seeded);
@@ -143,6 +167,11 @@ export default function ToolHome() {
   const removeEntry = (id) => setEntries((list) => list.filter((item) => item.id !== id));
 
   const reset = () => {
+    if (
+      !window.confirm("Reset the practice log to sample data? This clears every logged block and cannot be undone.")
+    ) {
+      return;
+    }
     const iso = today || localIso(new Date());
     const seeded = seedEntries(iso);
     setEntries(seeded);
@@ -183,9 +212,11 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(clipboardText);
       setCopied(true);
+      setCopyError("");
       setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
+      setCopyError("Could not copy to the clipboard. Select and copy the summary manually.");
     }
   };
 
@@ -345,7 +376,7 @@ export default function ToolHome() {
             type="button"
             onClick={copyResult}
             disabled={failed || empty}
-            aria-label="Copy practice summary"
+            aria-label={copied ? "Copied" : "Copy practice summary"}
             className={`${GHOST_BTN} disabled:opacity-50`}
           >
             {copied ? (
@@ -356,6 +387,12 @@ export default function ToolHome() {
             {copied ? "Copied!" : "Copy summary"}
           </button>
         </div>
+
+        {copyError && (
+          <p role="status" aria-live="polite" className="mt-3 text-sm font-medium text-[var(--danger)]">
+            {copyError}
+          </p>
+        )}
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {summaryRows.map(([label, value]) => (

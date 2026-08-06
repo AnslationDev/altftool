@@ -36,19 +36,10 @@ const CHOICES = [
 
 const DASH = "—";
 
-const buildDefaults = () =>
-  Object.fromEntries(
-    ALL_STEPS.map((step) => {
-      if (step.id === "leaflet") return [step.id, STATUS.PROBLEM];
-      if (step.id === "alerts") return [step.id, STATUS.UNCHECKED];
-      return [step.id, STATUS.OK];
-    }),
-  );
-
 const allTo = (value) => Object.fromEntries(ALL_STEPS.map((step) => [step.id, value]));
 
 export default function ToolHome() {
-  const [statuses, setStatuses] = useState(buildDefaults);
+  const [statuses, setStatuses] = useState(() => allTo(STATUS.UNCHECKED));
   const [copied, setCopied] = useState(false);
 
   const result = useMemo(() => evaluateInspection({ statuses }), [statuses]);
@@ -72,7 +63,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
-    setStatuses(buildDefaults());
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the checklist? This clears your current inspection and cannot be undone.")
+    ) {
+      return;
+    }
+    setStatuses(allTo(STATUS.UNCHECKED));
     setCopied(false);
   };
 
@@ -180,7 +177,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

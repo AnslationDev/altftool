@@ -47,15 +47,18 @@ export const spec = {
   "confirmReset": "Reset the rotation planner? This clears your participant list and cannot be undone."
 },
   compute: (values) => {
+      const round2=(n)=>Math.round(n*100)/100;
       let list=String(values.participants||"").split(/\r?\n/).map((x)=>x.trim()).filter(Boolean);
       if(list.length<2) return {result:"—",caption:"Enter at least two participant names, one per line."};
+      const nameCounts={}; list.forEach((name)=>{nameCounts[name]=(nameCounts[name]||0)+1;});
+      const seenCounts={}; list=list.map((name)=>{ if(nameCounts[name]>1){ seenCounts[name]=(seenCounts[name]||0)+1; return `${name} (${seenCounts[name]})`; } return name; });
       const minutes=Number(values.minutes), breakMinutes=Number(values.break_minutes);
       if(!Number.isFinite(minutes)||minutes<1) return {result:"—",caption:"Minutes per meeting must be at least 1."};
       if(!Number.isFinite(breakMinutes)||breakMinutes<0) return {result:"—",caption:"Break between rounds cannot be negative."};
       const BYE=Symbol("bye");
       if(list.length%2)list.push(BYE);const fixed=list[0], rotating=list.slice(1), rows=[], rounds=list.length-1;
-      const BYE_LABEL="(sitting out)";for(let round=0;round<rounds;round+=1){const current=[fixed,...rotating];for(let i=0;i<current.length/2;i+=1){const a=current[i],b=current[current.length-1-i];rows.push([round+1,round*(minutes+breakMinutes)+" min",a===BYE?BYE_LABEL:a,b===BYE?BYE_LABEL:b,a===BYE||b===BYE?"Break":"Meet"]);}rotating.unshift(rotating.pop());}
-      return {result:rounds+" non-repeating round(s)",caption:(rounds*minutes+(rounds-1)*breakMinutes)+" minutes total",table:{headers:["Round","Starts","Participant A","Participant B","Type"],rows}};
+      const BYE_LABEL="(sitting out)";for(let round=0;round<rounds;round+=1){const current=[fixed,...rotating];for(let i=0;i<current.length/2;i+=1){const a=current[i],b=current[current.length-1-i];rows.push([round+1,round2(round*(minutes+breakMinutes))+" min",a===BYE?BYE_LABEL:a,b===BYE?BYE_LABEL:b,a===BYE||b===BYE?"Break":"Meet"]);}rotating.unshift(rotating.pop());}
+      return {result:rounds+" non-repeating round(s)",caption:round2(rounds*minutes+(rounds-1)*breakMinutes)+" minutes total",table:{headers:["Round","Starts","Participant A","Participant B","Type"],rows}};
     },
 };
 

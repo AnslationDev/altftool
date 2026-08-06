@@ -17,8 +17,8 @@ const features = [
     description: "Adjust the length of summaries according to your preference, from short to detailed."
   },
   {
-    title: "AI-Powered",
-    description: "Utilizes advanced AI algorithms to capture the key points accurately."
+    title: "Instant & Private",
+    description: "Runs entirely in your browser using sentence splitting and positional selection — nothing is uploaded, and nothing in the summary is invented."
   },
   {
     title: "Copy & Share",

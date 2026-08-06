@@ -324,14 +324,19 @@ export function buildInvitation({
   const venueText = town ? `${place}, ${town}` : place;
   const ceremonyName = ceremonyDef[language];
 
-  const inviteLine = INVITE_LINES[language][hostSide]
-    .replace("{hosts}", hosts)
-    .replace("{ceremony}", ceremonyName)
-    .replace("{bride}", bride)
-    .replace("{groom}", groom);
+  const placeholders = { hosts, ceremony: ceremonyName, bride, groom };
+  const fillTemplate = (template) =>
+    template.replace(/\{(hosts|ceremony|bride|groom)\}/g, (match, key) => placeholders[key] ?? match);
+
+  const inviteLine = fillTemplate(INVITE_LINES[language][hostSide]);
 
   const { opening, closing } = STYLE_TEXT[language][style];
-  const coupleLine = `${bride}  ${labels.and}  ${groom}`;
+  // Match the ordering INVITE_LINES already uses for this side: the groom's
+  // side names the groom first, everyone else names the bride first.
+  const coupleLine =
+    hostSide === "groom"
+      ? `${groom}  ${labels.and}  ${bride}`
+      : `${bride}  ${labels.and}  ${groom}`;
   const rsvpLine = contact ? `${labels.rsvp}: ${contact}` : "";
 
   let lines;

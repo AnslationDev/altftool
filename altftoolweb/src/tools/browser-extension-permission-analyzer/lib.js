@@ -342,6 +342,27 @@ export function parseCsp(value) {
   return directives;
 }
 
+/**
+ * The MV3 "no remote script sources" restriction only applies to the
+ * extension_pages CSP key (and the legacy V2 single-string key, which governs
+ * the same surface). The sandbox key is explicitly exempt: sandboxed pages
+ * run outside the extension's regular privileges and are allowed a more
+ * permissive CSP, including remote script sources, regardless of manifest
+ * version.
+ */
+function cspKeyNote(key, manifestVersion) {
+  if (key === "sandbox") {
+    return "Sandboxed pages have their own, more permissive CSP and are not subject to the extension_pages restriction, so a browser will honour a remote script source declared here.";
+  }
+  if (manifestVersion === 3) {
+    return "Manifest V3 refuses remote script sources for extension_pages, so a browser will reject these rather than honour them.";
+  }
+  if (manifestVersion === 2) {
+    return "Manifest V2 honoured remote script sources for extension_pages, which is the main reason V3 removed them.";
+  }
+  return "No valid manifest_version was declared, so it is not certain which rule applies to extension_pages — Chrome requires 3, which forbids remote script sources.";
+}
+
 function analyseCsp(raw, manifestVersion) {
   if (raw === undefined) return null;
 
@@ -391,13 +412,12 @@ function analyseCsp(raw, manifestVersion) {
     }
   }
 
+  const keysPresent = [...new Set(entries.map((entry) => entry.key))];
+
   return {
     entries,
     findings,
-    note:
-      manifestVersion === 3
-        ? "Manifest V3 refuses remote script sources for extension_pages, so a browser will reject these rather than honour them."
-        : "Manifest V2 honoured remote script sources, which is the main reason V3 removed them.",
+    note: keysPresent.map((key) => cspKeyNote(key, manifestVersion)).join(" "),
   };
 }
 
@@ -786,7 +806,6 @@ export function analyzeManifest(manifestText) {
     if (tierRank[item.level] > tierRank[overallLevel]) overallLevel = item.level;
   }
   if (broadHosts.length > 0 && tierRank[overallLevel] < tierRank.high) overallLevel = "high";
-  if (allGranted.length === 0 && allHosts.length === 0) overallLevel = "low";
 
   const unknownPermissions = allGranted.filter((item) => !item.known).map((item) => item.name);
 

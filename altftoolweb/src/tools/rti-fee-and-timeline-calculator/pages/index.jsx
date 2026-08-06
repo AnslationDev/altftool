@@ -161,6 +161,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset all RTI dates and fee details? This clears everything entered and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setIsBpl(DEFAULTS.isBpl);
     setPages(String(DEFAULTS.pages));
     setLargePages(String(DEFAULTS.largePages));
@@ -388,6 +395,9 @@ export default function ToolHome() {
             {deadlines.routeNote}
             {deadlines.appealAssumed
               ? " Appeal dates assume the first appeal is filed on the last permitted day."
+              : ""}
+            {deadlines.appealBeforeReplyDue
+              ? " The first appeal date entered is earlier than the reply-period expiry, which is valid under Section 19(1) if the PIO's decision was received before then."
               : ""}
           </p>
         ) : null}

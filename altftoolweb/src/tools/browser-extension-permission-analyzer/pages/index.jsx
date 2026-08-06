@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Puzzle, RotateCcw, WifiOff } from "lucide-react";
 
-import { TIER_LABELS, analyzeManifest, formatReport } from "../lib";
+import { TIER_LABELS, TIERS, analyzeManifest, formatReport } from "../lib";
 
 const TEXTAREA_CLASS =
   "w-full rounded-md border border-[var(--border)] bg-[var(--background)] p-3 font-mono text-xs leading-6 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -126,7 +126,15 @@ export default function ToolHome() {
   const result = useMemo(() => analyzeManifest(text), [text]);
   const report = useMemo(() => formatReport(result), [result]);
 
-  const reset = () => setText(DEFAULT_MANIFEST);
+  const reset = () => {
+    if (
+      window.confirm(
+        "Reset to the sample manifest? This discards your pasted manifest and cannot be undone.",
+      )
+    ) {
+      setText(DEFAULT_MANIFEST);
+    }
+  };
 
   return (
     <main className="mx-auto w-full max-w-4xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -186,7 +194,7 @@ export default function ToolHome() {
         </p>
       ) : (
         <>
-          <section className={`mt-6 ${CARD}`}>
+          <section className={`mt-6 ${CARD}`} aria-live="polite">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <h2 className="text-base font-semibold">
@@ -220,7 +228,7 @@ export default function ToolHome() {
             </dl>
 
             <div className="mt-4 flex flex-wrap gap-2">
-              {["critical", "high", "moderate", "low", "unknown"].map((tier) =>
+              {TIERS.map((tier) =>
                 result.tierCounts[tier] > 0 ? (
                   <span
                     key={tier}

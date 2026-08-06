@@ -185,7 +185,6 @@ export default function ToolHome() {
             type="button"
             className={PRIMARY_BTN}
             onClick={reset}
-            aria-label="Reset all filters"
           >
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Reset filters
@@ -221,7 +220,7 @@ export default function ToolHome() {
             type="button"
             className={GHOST_BTN}
             onClick={copyList}
-            aria-label="Copy the matching names with their meanings"
+            aria-label={copied ? "Copied!" : "Copy list"}
             disabled={hasError || names.length === 0}
           >
             {copied ? (
@@ -231,6 +230,11 @@ export default function ToolHome() {
             )}
             {copied ? "Copied!" : "Copy list"}
           </button>
+          <span className="sr-only" role="status" aria-live="polite">
+            {hasError
+              ? ""
+              : `${NUM.format(result.matched)} names matched, out of ${NUM.format(result.total)}.`}
+          </span>
         </div>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">

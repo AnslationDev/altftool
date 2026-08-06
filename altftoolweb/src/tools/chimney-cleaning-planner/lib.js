@@ -172,9 +172,10 @@ export function planChimneyCare({
     if (value > 60) return { error: `Kitchen ${label} above 60 ft looks like a typo.` };
   }
 
-  if (!isFiniteNumber(ratedSuction) || ratedSuction < 0) {
-    return { error: "Rated suction cannot be negative — enter 0 if you do not know it." };
+  if (!isFiniteNumber(ratedSuction)) {
+    return { error: "Enter the rated suction, or 0 if you do not know it." };
   }
+  if (ratedSuction < 0) return { error: "Rated suction cannot be negative." };
   if (ratedSuction > 5000) return { error: "Suction above 5000 m³/hr is commercial equipment." };
 
   const lastCleaned = lastCleanedIso ? parseIsoDate(lastCleanedIso) : null;
@@ -199,14 +200,16 @@ export function planChimneyCare({
   const charcoalSetsPerYear = charcoalIntervalDays ? DAYS_PER_YEAR / charcoalIntervalDays : 0;
   const ductCleansPerYear = ductIntervalDays ? DAYS_PER_YEAR / ductIntervalDays : 0;
 
+  // Filterless units are emptied and heat-cycled, never soaked, so they never incur
+  // the chemical-soak / paid-filter-clean cost line that baffle and mesh filters do.
   const annualCostDiy =
-    filterCleansPerYear * COSTS.diyFilterClean +
+    (filterType === "filterless" ? 0 : filterCleansPerYear * COSTS.diyFilterClean) +
     servicesPerYear * COSTS.deepService +
     charcoalSetsPerYear * COSTS.charcoalSet +
     ductCleansPerYear * COSTS.ductClean;
 
   const annualCostPro =
-    filterCleansPerYear * COSTS.proFilterClean +
+    (filterType === "filterless" ? 0 : filterCleansPerYear * COSTS.proFilterClean) +
     servicesPerYear * COSTS.deepService +
     charcoalSetsPerYear * COSTS.charcoalSet +
     ductCleansPerYear * COSTS.ductClean;

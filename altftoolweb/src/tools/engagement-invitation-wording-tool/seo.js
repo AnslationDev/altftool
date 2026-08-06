@@ -28,7 +28,7 @@ const seo = {
     ],
     [
       "How should engagement invitation wording start?",
-      "Traditional Indian cards open with a blessing line such as 'With the blessings of the Almighty and our elders' or '॥ श्री गणेशाय नमः ॥', then name the inviting family, then the couple, then the date, time and venue. Modern cards drop the blessing line and lead with the couple.",
+      "Traditional Indian cards open with a blessing line such as 'With the blessings of the Almighty and our elders' or '॥ श्री गणेशाय नमः ॥', then name the inviting family, then the couple, then the date, time and venue. Modern cards replace the blessing line with a casual announcement, then name the family, the couple, and the date, time and venue.",
     ],
     [
       "Whose name comes first on an engagement invitation?",

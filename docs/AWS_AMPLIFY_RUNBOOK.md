@@ -10,20 +10,22 @@ contains no credentials or secret environment values.
 | Public web | `knaltftoolweb` | `d3o0ra1ab3rxzf` | `main` | `ap-south-1` | `WEB_COMPUTE` |
 | Admin | `knadmintiertwoanslation` | `d3qv0il8ey2gki` | `main` | `ap-south-1` | `WEB_COMPUTE` |
 
-Both applications use Amplify managed caching without cookies and the
-`LARGE_16GB` build instance. Build instance size affects build speed; Amplify
-Hosting manages the runtime compute and CloudFront delivery separately.
+Both applications use Amplify managed caching without cookies. The public web
+currently uses the `XLARGE_72GB` build instance and admin uses `LARGE_16GB`.
+Build instance size affects build speed; Amplify Hosting manages the runtime
+compute and CloudFront delivery separately.
 
 ## Build settings
 
 Both applications must build with `next build --webpack` as required by
 `master.md`.
 
-Public web build environment:
+Effective public web build environment (exported by `altftoolweb/amplify.yml`):
 
-- `ALTFT_NODE_MAX_OLD_SPACE_SIZE=12288`
-- `ALTFT_BUILD_CPUS=4`
-- `ALTFT_PARALLEL_MINIFY=true`
+- `ALTFT_DEFER_BULK_PRERENDER=true`
+- `ALTFT_NODE_MAX_OLD_SPACE_SIZE=10240`
+- `ALTFT_BUILD_CPUS=1`
+- `ALTFT_WEBPACK_BUILD_WORKER=true`
 - `NEXT_TELEMETRY_DISABLED=1`
 
 Admin build environment:
@@ -31,10 +33,10 @@ Admin build environment:
 - `ALTFT_NODE_MAX_OLD_SPACE_SIZE=12288`
 - `NEXT_TELEMETRY_DISABLED=1`
 
-The web configuration clamps build workers to four. This leaves capacity for
-Next.js orchestration and artifact packaging on the eight-vCPU builder. Local
-builds default to one worker unless the performance variables are explicitly
-provided.
+The web configuration deliberately uses one webpack build worker and a 10 GiB
+heap. These are the measured SIGKILL-safe settings for the current catalogue;
+do not replace them with the older app-level `12288`/`4`/parallel-minify values.
+The deferred-prerender flag also enables the Amplify artifact-size gate.
 
 The Amplify build specifications cache only `.npm`. Both builds remove
 `.next/cache` after compilation so webpack cache packs are not included in the
@@ -55,8 +57,11 @@ Inspect only non-secret build settings:
 aws amplify get-app \
   --app-id d3o0ra1ab3rxzf \
   --region ap-south-1 \
-  --query '{compute:app.jobConfig.buildComputeType,heap:app.environmentVariables.ALTFT_NODE_MAX_OLD_SPACE_SIZE,cpus:app.environmentVariables.ALTFT_BUILD_CPUS,minify:app.environmentVariables.ALTFT_PARALLEL_MINIFY}'
+  --query '{compute:app.jobConfig.buildComputeType,appHeap:app.environmentVariables.ALTFT_NODE_MAX_OLD_SPACE_SIZE,appCpus:app.environmentVariables.ALTFT_BUILD_CPUS}'
 ```
+
+App-level values are legacy inputs; `altftoolweb/amplify.yml` exports the
+effective web heap, CPU, worker, and artifact-gate settings during every build.
 
 ```bash
 aws amplify get-app \
@@ -68,9 +73,10 @@ aws amplify get-app \
 Before a release, run:
 
 ```bash
-ALTFT_NODE_MAX_OLD_SPACE_SIZE=12288 \
-ALTFT_BUILD_CPUS=4 \
-ALTFT_PARALLEL_MINIFY=true \
+ALTFT_DEFER_BULK_PRERENDER=true \
+ALTFT_NODE_MAX_OLD_SPACE_SIZE=10240 \
+ALTFT_BUILD_CPUS=1 \
+ALTFT_WEBPACK_BUILD_WORKER=true \
 npm run build:web
 
 ALTFT_NODE_MAX_OLD_SPACE_SIZE=12288 npm run build:admin
@@ -91,9 +97,9 @@ perform a live Firebase probe and intentionally use a short shared cache.
 
 ## Rollback
 
-If a future web build becomes memory-unstable, set
-`ALTFT_PARALLEL_MINIFY=false` first. If needed, set `ALTFT_BUILD_CPUS=1` and
-`ALTFT_NODE_MAX_OLD_SPACE_SIZE=6144` to restore the conservative build mode.
+If a future web build becomes memory-unstable, keep the single-worker contract
+and lower `ALTFT_NODE_MAX_OLD_SPACE_SIZE` only after measuring the artifact and
+compile impact. Do not re-enable parallel minification as a first response.
 
 If admin build cost matters more than its build latency, return only the admin
 application to `STANDARD_8GB` and set its Node heap to `6144`.

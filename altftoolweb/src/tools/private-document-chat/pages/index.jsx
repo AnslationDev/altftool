@@ -146,10 +146,26 @@ export default function PrivateDocumentChat() {
     }
   };
 
+  const resetIndex = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset the index? This clears your uploaded documents and full Q&A history, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
+    clear();
+  };
+
   const ask = (event) => {
     event.preventDefault();
     if (!index) return;
-    const response = retrievePrivateExcerpts(index, question, 5);
+    const response = retrievePrivateExcerpts(
+      index,
+      question,
+      PRIVATE_CHAT_LIMITS.results,
+    );
     if (!response.ok) {
       setError(response.error);
       return;
@@ -297,7 +313,7 @@ export default function PrivateDocumentChat() {
                   <Download className="h-4 w-4" aria-hidden="true" />
                   Export counts only
                 </button>
-                <button type="button" className="btn-secondary" onClick={clear}>
+                <button type="button" className="btn-secondary" onClick={resetIndex}>
                   <RefreshCw className="h-4 w-4" aria-hidden="true" />
                   Reset index
                 </button>
@@ -318,9 +334,11 @@ export default function PrivateDocumentChat() {
                     {document.chunks} chunks
                   </p>
                   {document.warnings.length ? (
-                    <p className="mt-2 text-xs text-warning">
-                      {document.warnings.length} extraction notice(s)
-                    </p>
+                    <ul className="mt-2 space-y-1 text-xs text-warning">
+                      {document.warnings.map((warning, warningIndex) => (
+                        <li key={warningIndex}>{warning}</li>
+                      ))}
+                    </ul>
                   ) : null}
                 </article>
               ))}

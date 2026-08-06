@@ -62,6 +62,7 @@ export default function ToolHome() {
   const [history, setHistory] = useState(loadMemeHistory);
   const memeRef = useRef(null);
   const nextIdRef = useRef(0);
+  const dragListenersRef = useRef(null);
 
   const createId = useCallback((prefix) => `${prefix}-${++nextIdRef.current}`, []);
 
@@ -81,8 +82,12 @@ export default function ToolHome() {
     const newItem = { id: createId("draft"), meme, layers };
     const updatedHistory = [newItem, ...history].slice(0, 10);
     setHistory(updatedHistory);
-    localStorage.setItem("meme_history", JSON.stringify(updatedHistory));
-    alert("Draft Saved!");
+    try {
+      localStorage.setItem("meme_history", JSON.stringify(updatedHistory));
+      alert("Draft Saved!");
+    } catch {
+      alert("Couldn't save — your browser's storage is full. Try a smaller image.");
+    }
   };
 
   const removeBackground = () => {
@@ -101,7 +106,8 @@ export default function ToolHome() {
         if (data[i] > 230 && data[i+1] > 230 && data[i+2] > 230) data[i+3] = 0;
       }
       ctx.putImageData(imageData, 0, 0);
-      setMeme({ ...meme, image: canvas.toDataURL("image/png") });
+      const dataUrl = canvas.toDataURL("image/png");
+      setMeme(prev => ({ ...prev, image: dataUrl }));
     };
   };
 
@@ -141,13 +147,29 @@ export default function ToolHome() {
       window.removeEventListener("mouseup", stop);
       window.removeEventListener("touchmove", move);
       window.removeEventListener("touchend", stop);
+      dragListenersRef.current = null;
     };
 
     window.addEventListener("mousemove", move);
     window.addEventListener("mouseup", stop);
     window.addEventListener("touchmove", move, { passive: false });
     window.addEventListener("touchend", stop);
+
+    dragListenersRef.current = { move, stop };
   };
+
+  useEffect(() => {
+    return () => {
+      if (dragListenersRef.current) {
+        const { move, stop } = dragListenersRef.current;
+        window.removeEventListener("mousemove", move);
+        window.removeEventListener("mouseup", stop);
+        window.removeEventListener("touchmove", move);
+        window.removeEventListener("touchend", stop);
+        dragListenersRef.current = null;
+      }
+    };
+  }, []);
 
   const handleDownload = async () => {
     if (!memeRef.current || !meme.image) return;
@@ -232,8 +254,9 @@ export default function ToolHome() {
                       >
                         {l.content}
                         {selectedId === l.id && (
-                          <button 
-                            onClick={(e) => { e.stopPropagation(); setLayers(layers.filter(i => i.id !== l.id)); }} 
+                          <button
+                            onClick={(e) => { e.stopPropagation(); saveSnapshot(); setLayers(layers.filter(i => i.id !== l.id)); }}
+                            aria-label="Remove selected layer"
                             className="absolute -top-3 -right-3 bg-red-500 text-white w-7 h-7 rounded-full flex items-center justify-center text-xs shadow-lg border-2 border-white font-bold"
                           > × </button>
                         )}
@@ -303,9 +326,10 @@ export default function ToolHome() {
               </div>
 
               <div className="relative group overflow-hidden rounded-2xl border-2 border-dashed border-(--border) p-8 text-center transition-all hover:border-(--primary) hover:bg-blue-50/30">
-                <input 
-                  type="file" 
-                  accept="image/*" 
+                <input
+                  type="file"
+                  accept="image/*"
+                  aria-label="Upload your own image as a meme template"
                   onChange={(e) => {
                     const file = e.target.files?.[0];
                     if (file) {
@@ -313,8 +337,8 @@ export default function ToolHome() {
                       reader.onloadend = () => setMeme(prev => ({ ...prev, image: reader.result }));
                       reader.readAsDataURL(file);
                     }
-                  }} 
-                  className="absolute inset-0 z-10 cursor-pointer opacity-0" 
+                  }}
+                  className="absolute inset-0 z-10 cursor-pointer opacity-0"
                 />
                 <p className="text-ml font-bold uppercase text-gray-400 group-hover:text-(--primary) tracking-widest">
                   Choose Template
@@ -326,19 +350,19 @@ export default function ToolHome() {
                  Remove BG
                 </button>
                 <div className="space-y-2">
-                  <div className="flex justify-between items-end px-1"><label className="text-ml font-bold uppercase opacity-40">Blur</label><span className="text-xs font-bold text-(--primary)">{meme.blur}px</span></div>
-                  <input type="range" min="0" max="10" value={meme.blur} onChange={(e) => setMeme({...meme, blur: e.target.value})} className="w-full" />
+                  <div className="flex justify-between items-end px-1"><label htmlFor="meme-blur" className="text-ml font-bold uppercase opacity-40">Blur</label><span className="text-xs font-bold text-(--primary)">{meme.blur}px</span></div>
+                  <input id="meme-blur" type="range" min="0" max="10" value={meme.blur} onChange={(e) => setMeme({...meme, blur: e.target.value})} className="w-full" />
                 </div>
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
                 <div className="space-y-2">
-                  <div className="flex justify-between items-end px-1"><label className="text-ml font-bold uppercase opacity-40">Brightness</label><span className="text-xs font-bold text-(--primary)">{meme.brightness}%</span></div>
-                  <input type="range" min="50" max="150" value={meme.brightness} onChange={(e) => setMeme({...meme, brightness: e.target.value})} className="w-full" />
+                  <div className="flex justify-between items-end px-1"><label htmlFor="meme-brightness" className="text-ml font-bold uppercase opacity-40">Brightness</label><span className="text-xs font-bold text-(--primary)">{meme.brightness}%</span></div>
+                  <input id="meme-brightness" type="range" min="50" max="150" value={meme.brightness} onChange={(e) => setMeme({...meme, brightness: e.target.value})} className="w-full" />
                 </div>
                 <div className="space-y-2">
-                  <div className="flex justify-between items-end px-1"><label className="text-ml font-bold uppercase opacity-40 ">Contrast</label><span className="text-xs font-bold text-(--primary)">{meme.contrast}%</span></div>
-                  <input type="range" min="50" max="150" value={meme.contrast} onChange={(e) => setMeme({...meme, contrast: e.target.value})} className="w-full" />
+                  <div className="flex justify-between items-end px-1"><label htmlFor="meme-contrast" className="text-ml font-bold uppercase opacity-40 ">Contrast</label><span className="text-xs font-bold text-(--primary)">{meme.contrast}%</span></div>
+                  <input id="meme-contrast" type="range" min="50" max="150" value={meme.contrast} onChange={(e) => setMeme({...meme, contrast: e.target.value})} className="w-full" />
                 </div>
               </div>
             </section>
@@ -367,21 +391,21 @@ export default function ToolHome() {
                   
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-3">
-                      <div className="flex justify-between items-end px-1"><label className="text-xs font-bold uppercase opacity-40">Size</label><span className="text-xs font-bold text-(--primary)">{activeLayer.fontSize}px</span></div>
-                      <input type="range" min="10" max="250" value={activeLayer.fontSize} onChange={(e) => updateLayer(selectedId, 'fontSize', parseInt(e.target.value))} className="w-full" />
+                      <div className="flex justify-between items-end px-1"><label htmlFor="meme-layer-size" className="text-xs font-bold uppercase opacity-40">Size</label><span className="text-xs font-bold text-(--primary)">{activeLayer.fontSize}px</span></div>
+                      <input id="meme-layer-size" type="range" min="10" max="250" value={activeLayer.fontSize} onChange={(e) => updateLayer(selectedId, 'fontSize', parseInt(e.target.value))} className="w-full" />
                     </div>
                     <div className="space-y-2">
-                      <label className="text-xs font-bold uppercase opacity-40 block px-1">Font Family</label>
-                      <select value={activeLayer.font} onChange={(e) => updateLayer(selectedId, 'font', e.target.value)} className="w-full text-xs font-bold p-3.5 rounded-xl bg-white border border-(--border) appearance-none shadow-sm cursor-pointer outline-none">
+                      <label htmlFor="meme-layer-font" className="text-xs font-bold uppercase opacity-40 block px-1">Font Family</label>
+                      <select id="meme-layer-font" value={activeLayer.font} onChange={(e) => updateLayer(selectedId, 'font', e.target.value)} className="w-full text-xs font-bold p-3.5 rounded-xl bg-white border border-(--border) appearance-none shadow-sm cursor-pointer outline-none">
                         {FONT_OPTIONS.map(f => <option key={f.value} value={f.value}>{f.name}</option>)}
                       </select>
                     </div>
                   </div>
                   
                   <div className="space-y-2">
-                    <label className="text-xs font-bold uppercase opacity-40 block px-1">Fill Color</label>
+                    <label htmlFor="meme-layer-color" className="text-xs font-bold uppercase opacity-40 block px-1">Fill Color</label>
                     <div className="flex gap-4 items-center">
-                       <input type="color" value={activeLayer.color} onChange={(e) => updateLayer(selectedId, 'color', e.target.value)} className="h-10 w-20 cursor-pointer rounded-xl overflow-hidden border-2 border-white shadow-md" />
+                       <input id="meme-layer-color" type="color" value={activeLayer.color} onChange={(e) => updateLayer(selectedId, 'color', e.target.value)} className="h-10 w-20 cursor-pointer rounded-xl overflow-hidden border-2 border-white shadow-md" />
                        <span className="text-sm font-mono font-bold opacity-60 uppercase tracking-tighter">{activeLayer.color}</span>
                     </div>
                   </div>
@@ -389,7 +413,7 @@ export default function ToolHome() {
               )}
 
               <div className="flex flex-wrap gap-4 pt-6 border-t border-gray-50 justify-center">
-                {STICKERS.map(s => <button key={s} onClick={() => addLayer('emoji', s)} className="text-4xl hover:scale-125 transition-all active:scale-90 drop-shadow-lg">{s}</button>)}
+                {STICKERS.map(s => <button key={s} onClick={() => addLayer('emoji', s)} aria-label={`Add ${s} sticker`} className="text-4xl hover:scale-125 transition-all active:scale-90 drop-shadow-lg">{s}</button>)}
               </div>
             </section>
 

@@ -33,6 +33,10 @@ export const PRESET_SCHEMES = [
 const SHORT_YEAR_BASE = 2000;
 const DAYS_PER_WEEK = 7;
 
+/** Upper bound for MINOR/MICRO — keeps values well under 1e21, where JS numbers
+ * start rendering in exponential notation (e.g. "1e+21") instead of plain digits. */
+export const MAX_COUNTER = 999999999;
+
 function isLeapYear(year) {
   return (year % 4 === 0 && year % 100 !== 0) || year % 400 === 0;
 }
@@ -86,8 +90,12 @@ export function formatCalVer({ scheme, year, month, day, minor = 0, micro = 0, m
   }
   const minorNum = Number(minor);
   const microNum = Number(micro);
-  if (!Number.isInteger(minorNum) || minorNum < 0) return { error: "MINOR must be a whole number of 0 or more." };
-  if (!Number.isInteger(microNum) || microNum < 0) return { error: "MICRO must be a whole number of 0 or more." };
+  if (!Number.isInteger(minorNum) || minorNum < 0 || minorNum > MAX_COUNTER) {
+    return { error: `MINOR must be a whole number from 0 to ${MAX_COUNTER}.` };
+  }
+  if (!Number.isInteger(microNum) || microNum < 0 || microNum > MAX_COUNTER) {
+    return { error: `MICRO must be a whole number from 0 to ${MAX_COUNTER}.` };
+  }
 
   const modifierText = String(modifier ?? "").trim();
   const tokens = schemeText.split(".").map((token) => token.trim());
@@ -126,23 +134,82 @@ function addMonths(year, month, count) {
   return { year: Math.floor(zeroBased / 12), month: (zeroBased % 12) + 1 };
 }
 
+const DATE_TOKENS = ["YYYY", "YY", "0Y", "MM", "0M", "WW", "0W", "DD", "0D"];
+
+function dateTokenValue(token, y, m, d) {
+  if (token === "YYYY") return String(y);
+  if (token === "YY") return String(y - SHORT_YEAR_BASE);
+  if (token === "0Y") return pad2(y - SHORT_YEAR_BASE);
+  if (token === "MM") return String(m);
+  if (token === "0M") return pad2(m);
+  if (token === "WW") return String(weekOfYear(y, m, d));
+  if (token === "0W") return pad2(weekOfYear(y, m, d));
+  if (token === "DD") return String(d);
+  if (token === "0D") return pad2(d);
+  return "";
+}
+
+/** Key identifying the date segment a scheme's date tokens render to for (y, m, d) —
+ * used to detect when the segment rolls over so MINOR/MICRO counters should reset. */
+function periodKey(schemeTokens, y, m, d) {
+  return schemeTokens
+    .filter((token) => DATE_TOKENS.includes(token))
+    .map((token) => dateTokenValue(token, y, m, d))
+    .join(".");
+}
+
+function sanitizeCounterStart(value) {
+  const num = Number(value);
+  return Number.isInteger(num) && num >= 0 && num <= MAX_COUNTER ? num : 0;
+}
+
 /**
- * Preview timeline: the version each of the next `count` monthly releases would get,
- * with MICRO/MINOR reset to 0 each period (the CalVer convention: counters restart
- * when the date segment rolls over).
+ * Preview timeline: the version each of the next `count` monthly releases would get.
+ * MINOR/MICRO counters (when the scheme includes those tokens) start from the caller's
+ * current minor/micro values and increment by 1 for every release that lands in the
+ * same date segment as the previous one, resetting to 0 when the segment rolls over
+ * (the CalVer convention). Invalid/out-of-range starting minor or micro values are
+ * sanitized to 0 rather than propagating as an error, since the timeline only needs a
+ * valid scheme/date to render — it doesn't require the full form to be valid.
  */
-export function previewTimeline({ scheme, year, month, day, count = 6, modifier = "" }) {
+export function previewTimeline({ scheme, year, month, day, count = 6, modifier = "", minor = 0, micro = 0 }) {
+  const schemeTokens = String(scheme ?? "")
+    .trim()
+    .split(".")
+    .map((token) => token.trim().toUpperCase());
+  const hasMinorToken = schemeTokens.includes("MINOR");
+  const hasMicroToken = schemeTokens.includes("MICRO");
+
+  const baseYear = Number(year);
+  const baseMonth = Number(month);
+  const baseDay = Number(day);
+
+  let currentMinor = sanitizeCounterStart(minor);
+  let currentMicro = sanitizeCounterStart(micro);
+  let previousKey = periodKey(schemeTokens, baseYear, baseMonth, baseDay);
+
   const releases = [];
   for (let i = 1; i <= count; i += 1) {
-    const next = addMonths(Number(year), Number(month), i);
-    const clampedDay = Math.min(Number(day), daysInMonth(next.year, next.month));
+    const next = addMonths(baseYear, baseMonth, i);
+    const clampedDay = Math.min(baseDay, daysInMonth(next.year, next.month));
+    const key = periodKey(schemeTokens, next.year, next.month, clampedDay);
+
+    if (key === previousKey) {
+      if (hasMinorToken) currentMinor += 1;
+      if (hasMicroToken) currentMicro += 1;
+    } else {
+      if (hasMinorToken) currentMinor = 0;
+      if (hasMicroToken) currentMicro = 0;
+    }
+    previousKey = key;
+
     const result = formatCalVer({
       scheme,
       year: next.year,
       month: next.month,
       day: clampedDay,
-      minor: 0,
-      micro: 0,
+      minor: currentMinor,
+      micro: currentMicro,
       modifier,
     });
     if (result.error) return { error: result.error };
