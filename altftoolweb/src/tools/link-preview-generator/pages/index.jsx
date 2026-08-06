@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import PreviewCard from "../components/PreviewCard";
 import ProcessBreakdown from "../components/ProcessBreakdown";
 import Features from "../components/Features";
@@ -11,6 +11,7 @@ export default function LinkPreview() {
   const [recent, setRecent] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const requestIdRef = useRef(0);
 
   // Load saved URLs
   useEffect(() => {
@@ -23,18 +24,26 @@ export default function LinkPreview() {
     localStorage.setItem("recentUrls", JSON.stringify(recent));
   }, [recent]);
 
-  const fetchPreview = async () => {
-    if (!url) return;
+  // Accepts an optional explicit URL so callers (e.g. the Recent-URLs list)
+  // don't race the `url` state, which only updates on the next render.
+  const fetchPreview = async (targetUrl) => {
+    const effectiveUrl = targetUrl ?? url;
+    if (!effectiveUrl || loading) return;
+
+    const requestId = ++requestIdRef.current;
     setLoading(true);
     setError("");
 
     try {
       const res = await fetch(
-        `/api/tools/link-preview?url=${encodeURIComponent(url)}`,
+        `/api/tools/link-preview?url=${encodeURIComponent(effectiveUrl)}`,
       );
       const data = await res.json();
 
       if (!res.ok || data.error) throw new Error(data.description || data.error);
+
+      // Discard this response if a newer request has since been issued.
+      if (requestId !== requestIdRef.current) return;
 
       setPreview(data);
 
@@ -46,15 +55,28 @@ export default function LinkPreview() {
         return newList;
       });
     } catch (err) {
+      if (requestId !== requestIdRef.current) return;
       console.error("Failed to fetch link preview:", err);
       setError("Failed to fetch preview. Try a valid URL.");
     } finally {
-      setLoading(false);
+      if (requestId === requestIdRef.current) setLoading(false);
     }
   };
 
   const handleRecentClick = (link) => {
     setUrl(link);
+    fetchPreview(link);
+  };
+
+  const handleRecentKeyDown = (event, link) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleRecentClick(link);
+    }
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
     fetchPreview();
   };
 
@@ -67,7 +89,10 @@ export default function LinkPreview() {
           Quickly create rich link previews for any URL shared.
         </p>
         {/* Input Section */}
-        <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-xl mx-auto">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col sm:flex-row justify-center gap-4 max-w-xl mx-auto"
+        >
           <input
             type="text"
             placeholder="Paste URL here..."
@@ -76,12 +101,13 @@ export default function LinkPreview() {
             onChange={(e) => setUrl(e.target.value)}
           />
           <button
-            onClick={fetchPreview}
-            className="px-8 py-3 cursor-pointer rounded-xl text-(--primary-foreground) bg-(--primary) font-semibold hover:opacity-90 transition-all"
+            type="submit"
+            disabled={loading}
+            className="px-8 py-3 cursor-pointer rounded-xl text-(--primary-foreground) bg-(--primary) font-semibold hover:opacity-90 transition-all disabled:cursor-not-allowed disabled:opacity-60"
           >
             {loading ? "Loading..." : "Generate"}
           </button>
-        </div>
+        </form>
 
         {/* Recent URLs */}
         {recent.length > 0 && (
@@ -94,7 +120,11 @@ export default function LinkPreview() {
                 <li
                   key={i}
                   onClick={() => handleRecentClick(link)}
-                  className="cursor-pointer px-4 py-2 rounded-full text-sm font-medium transition-all bg-(--muted) text-(--muted-foreground) hover:bg-(--muted-foreground)/20 border border-(--border)"
+                  onKeyDown={(event) => handleRecentKeyDown(event, link)}
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Generate preview for ${link}`}
+                  className="cursor-pointer px-4 py-2 rounded-full text-sm font-medium transition-all bg-(--muted) text-(--muted-foreground) hover:bg-(--muted-foreground)/20 border border-(--border) focus:outline-none focus:ring-2 focus:ring-(--primary)"
                 >
                   {link.length > 30 ? link.slice(0, 30) + "..." : link}
                 </li>
@@ -105,7 +135,13 @@ export default function LinkPreview() {
 
         {/* Error */}
         {error && (
-          <p className="text-red-500 mt-3 text-lg font-medium">{error}</p>
+          <p
+            role="status"
+            aria-live="polite"
+            className="text-red-500 mt-3 text-lg font-medium"
+          >
+            {error}
+          </p>
         )}
 
         {/* Preview Card */}

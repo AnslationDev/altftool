@@ -2,11 +2,13 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Dumbbell, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import {
   RELIABLE_BODYWEIGHT_KG,
   WILKS_BANDS,
   computeWilks,
+  kgToLb,
   lbToKg,
   totalForWilks,
 } from "../lib";
@@ -47,7 +49,8 @@ export default function ToolHome() {
   const [squat, setSquat] = useState(DEFAULTS.squat);
   const [bench, setBench] = useState(DEFAULTS.bench);
   const [deadlift, setDeadlift] = useState(DEFAULTS.deadlift);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(() => {
     const convert = (raw) => {
@@ -63,10 +66,17 @@ export default function ToolHome() {
     if ([s, b, d].some((value) => Number.isNaN(value))) {
       return { error: "Enter all three lifts — squat, bench press and deadlift." };
     }
-    return computeWilks({ bodyweightKg: bw, sex, squatKg: s, benchKg: b, deadliftKg: d });
+    return computeWilks({ bodyweightKg: bw, sex, unit, squatKg: s, benchKg: b, deadliftKg: d });
   }, [bodyweight, squat, bench, deadlift, sex, unit]);
 
   const hasError = Boolean(result.error);
+
+  const reliableRangeLabel = useMemo(() => {
+    if (unit === "lb") {
+      return `${NUM1.format(kgToLb(RELIABLE_BODYWEIGHT_KG.min))}–${NUM1.format(kgToLb(RELIABLE_BODYWEIGHT_KG.max))} lb`;
+    }
+    return `${RELIABLE_BODYWEIGHT_KG.min}–${RELIABLE_BODYWEIGHT_KG.max} kg`;
+  }, [unit]);
 
   const targets = useMemo(() => {
     const raw = toNumber(bodyweight);
@@ -90,15 +100,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "Wilks score result" });
   };
 
   const reset = () => {
@@ -108,7 +112,7 @@ export default function ToolHome() {
     setSquat(DEFAULTS.squat);
     setBench(DEFAULTS.bench);
     setDeadlift(DEFAULTS.deadlift);
-    setCopied(false);
+    resetCopyState();
   };
 
   const rows = hasError
@@ -249,7 +253,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -268,17 +276,20 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy Wilks score result"
+              aria-label={isCopied("result") ? "Copied Wilks score result" : "Copy Wilks score result"}
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button
               type="button"
               onClick={reset}
@@ -292,9 +303,9 @@ export default function ToolHome() {
         </div>
 
         {!hasError && result.outsideFittedRange && (
-          <p className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning)]">
-            That bodyweight is outside the {RELIABLE_BODYWEIGHT_KG.min}–{RELIABLE_BODYWEIGHT_KG.max}{" "}
-            kg range the Wilks polynomial was fitted to, so the coefficient is unreliable there.
+          <p className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning-text)]">
+            That bodyweight is outside the {reliableRangeLabel} range the Wilks polynomial was fitted
+            to, so the coefficient is unreliable there.
           </p>
         )}
 

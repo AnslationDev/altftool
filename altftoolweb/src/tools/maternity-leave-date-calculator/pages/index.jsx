@@ -6,6 +6,7 @@ import {
   LEAVE_MODES,
   MATERNITY_RULES,
   computeMaternityLeave,
+  entitlementForChildren,
 } from "../lib";
 
 const DATE_FMT = new Intl.DateTimeFormat("en-IN", {
@@ -57,6 +58,12 @@ export default function ToolHome() {
 
   const anchorLabel =
     LEAVE_MODES.find((item) => item.id === mode)?.anchor ?? "Reference date";
+
+  // The real cap on pre-delivery weeks drops to 6 once survivingChildren >= 2
+  // (s.5(3) proviso); computeMaternityLeave already enforces this and shows a
+  // warning when it trims the value, but the input's own max attribute should
+  // match so the browser's spinner/validation reflects the true entitlement.
+  const preWeeksCap = entitlementForChildren(survivingChildren).maxPreWeeks;
 
   const summary = useMemo(() => {
     if (plan.error) return "";
@@ -177,7 +184,7 @@ export default function ToolHome() {
                   type="number"
                   inputMode="decimal"
                   min="0"
-                  max="8"
+                  max={preWeeksCap}
                   step="1"
                   value={preDeliveryWeeks}
                   onChange={(event) => setPreDeliveryWeeks(event.target.value)}
@@ -186,22 +193,24 @@ export default function ToolHome() {
             </>
           ) : null}
 
-          <div>
-            <label className={LABEL_CLASS} htmlFor="ml-illness">
-              Extra illness leave, days (section 10)
-            </label>
-            <input
-              id="ml-illness"
-              className={`mt-2 ${INPUT_CLASS}`}
-              type="number"
-              inputMode="numeric"
-              min="0"
-              max={MATERNITY_RULES.ILLNESS_MAX_DAYS}
-              step="1"
-              value={illnessDays}
-              onChange={(event) => setIllnessDays(event.target.value)}
-            />
-          </div>
+          {mode !== "adoption" ? (
+            <div>
+              <label className={LABEL_CLASS} htmlFor="ml-illness">
+                Extra illness leave, days (section 10)
+              </label>
+              <input
+                id="ml-illness"
+                className={`mt-2 ${INPUT_CLASS}`}
+                type="number"
+                inputMode="numeric"
+                min="0"
+                max={MATERNITY_RULES.ILLNESS_MAX_DAYS}
+                step="1"
+                value={illnessDays}
+                onChange={(event) => setIllnessDays(event.target.value)}
+              />
+            </div>
+          ) : null}
 
           <div>
             <label className={LABEL_CLASS} htmlFor="ml-worked">
@@ -308,14 +317,22 @@ export default function ToolHome() {
         </dl>
 
         {!failed && plan.preCapped ? (
-          <p className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning)]">
+          <p
+            role="status"
+            aria-live="polite"
+            className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning)]"
+          >
             Pre-delivery leave was trimmed to the statutory maximum of {plan.maxPreWeeks} weeks for
             this entitlement.
           </p>
         ) : null}
 
         {!failed && plan.eligibilityChecked && !plan.eligible ? (
-          <p className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning)]">
+          <p
+            role="status"
+            aria-live="polite"
+            className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning)]"
+          >
             Section 5(2) needs at least {MATERNITY_RULES.MIN_QUALIFYING_DAYS} days of work in the
             12 months before the expected delivery date — you are {plan.qualifyingDaysShort} day(s)
             short on the figure entered.

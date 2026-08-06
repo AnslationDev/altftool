@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "What resolution is the exported image?",
-      "The SVG is 430 px wide with a default phone height of 690 px, and the PNG is drawn from that at 2x, so roughly 860 x 1380 px. Because the PNG comes from vector source you can also export the SVG and scale it to any size without softening.",
+      "The SVG is always 430 px wide. The height is not fixed — it grows with your conversation (message count, captions, images) with a minimum of 700 px, so a longer chat produces a taller image. The PNG is rasterised from that SVG at 2x scale, so it is always exactly double the SVG's width and height in pixels. Because the PNG comes from vector source you can also export the SVG and scale it to any size without softening.",
     ],
     [
       "Is it legal to make a fake chat screenshot?",
@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "Will my conversation be saved if I close the tab?",
-      "Only if you save it — the tool writes your settings and messages to your browser's local storage when you hit save, and stamps the time it did. Nothing is sent to a server, and clearing site data removes it.",
+      "Yes, automatically — the tool autosaves your settings and messages to your browser's local storage about a second after any change, including the sample conversation on your first visit. The Save button writes the same snapshot immediately and stamps the time it did. Nothing is sent to a server, and clearing site data removes it.",
     ],
   ],
 };

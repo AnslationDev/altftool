@@ -27,7 +27,7 @@ const seo = {
     ],
     [
       "What leave applies for adoption, surrogacy or a miscarriage?",
-      "An adopting mother of a child below three months and a commissioning mother get 12 weeks from the date the child is handed over, under section 5(4). A miscarriage or medical termination of pregnancy carries 6 weeks from that day under section 9, and a tubectomy carries 2 weeks under section 9A. A further month of leave is available for illness arising out of any of these, under section 10.",
+      "An adopting mother of a child below three months and a commissioning mother get 12 weeks from the date the child is handed over, under section 5(4). A miscarriage or medical termination of pregnancy carries 6 weeks from that day under section 9, and a tubectomy carries 2 weeks under section 9A. A further month of leave is available under section 10 for illness arising out of pregnancy, delivery, premature birth, miscarriage, MTP or tubectomy — it does not extend to the adoption or surrogacy path.",
     ],
   ],
 };

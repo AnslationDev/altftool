@@ -149,7 +149,13 @@ export default function ToolHome() {
     setCopied(false);
   };
 
-  const setCount = (id, value) => setCounts((prev) => ({ ...prev, [id]: value }));
+  // Item counts are whole physical items — truncate any typed or pasted decimal
+  // part so the field never shows a value the packing-list math would silently
+  // floor away (e.g. "2.5" becomes "2", not the "25" a naive digit-strip would give).
+  const setCount = (id, value) => {
+    const whole = String(value).split(".")[0].replace(/[^0-9]/g, "");
+    setCounts((prev) => ({ ...prev, [id]: whole }));
+  };
 
   const rows = hasError
     ? [

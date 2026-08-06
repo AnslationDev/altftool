@@ -91,6 +91,7 @@ export default function Comments() {
             <div className="flex gap-4 mt-3">
               <button
                 onClick={() => addReaction(c.id, "like")}
+                aria-label={`Like, ${c.reactions.like}`}
                 className="flex items-center gap-1 text-sm text-blue-500"
               >
                 <ThumbsUp size={16} /> {c.reactions.like}
@@ -98,6 +99,7 @@ export default function Comments() {
 
               <button
                 onClick={() => addReaction(c.id, "love")}
+                aria-label={`Love, ${c.reactions.love}`}
                 className="flex items-center gap-1 text-sm text-red-500"
               >
                 <Heart size={16} /> {c.reactions.love}
@@ -105,6 +107,7 @@ export default function Comments() {
 
               <button
                 onClick={() => addReaction(c.id, "laugh")}
+                aria-label={`Laugh, ${c.reactions.laugh}`}
                 className="flex items-center gap-1 text-sm text-yellow-500"
               >
                 <Laugh size={16} /> {c.reactions.laugh}

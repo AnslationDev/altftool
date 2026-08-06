@@ -65,15 +65,23 @@ const isNum = (value) => typeof value === "number" && Number.isFinite(value);
 export const lbToKg = (lb) => (isNum(lb) ? lb * KG_PER_LB : null);
 export const kgToLb = (kg) => (isNum(kg) ? kg / KG_PER_LB : null);
 
+/** Format a kg bound in the display unit the caller is showing to the user. */
+function formatBound(kgValue, unit) {
+  if (unit === "lb") return kgToLb(kgValue).toFixed(1);
+  return String(kgValue);
+}
+
 /**
  * Wilks coefficient for a bodyweight.
- * @param {{bodyweightKg:number, sex?:"male"|"female"}} input
+ * @param {{bodyweightKg:number, sex?:"male"|"female", unit?:"kg"|"lb"}} input
+ *   `unit` only controls how out-of-range error messages are phrased — bodyweightKg
+ *   must always already be converted to kilograms by the caller.
  */
-export function wilksCoefficient({ bodyweightKg, sex = "male" } = {}) {
+export function wilksCoefficient({ bodyweightKg, sex = "male", unit = "kg" } = {}) {
   if (!isNum(bodyweightKg)) return { error: "Enter a bodyweight." };
   if (bodyweightKg < MIN_BODYWEIGHT_KG || bodyweightKg > MAX_BODYWEIGHT_KG) {
     return {
-      error: `Bodyweight must be between ${MIN_BODYWEIGHT_KG} and ${MAX_BODYWEIGHT_KG} kg.`,
+      error: `Bodyweight must be between ${formatBound(MIN_BODYWEIGHT_KG, unit)} and ${formatBound(MAX_BODYWEIGHT_KG, unit)} ${unit}.`,
     };
   }
 
@@ -107,18 +115,21 @@ export function classifyWilks(score) {
 /**
  * Full Wilks report from a bodyweight and either a total or the three lifts.
  *
- * @param {{bodyweightKg:number, sex?:"male"|"female", totalKg?:number,
+ * @param {{bodyweightKg:number, sex?:"male"|"female", unit?:"kg"|"lb", totalKg?:number,
  *          squatKg?:number, benchKg?:number, deadliftKg?:number}} input
+ *   `unit` only controls how out-of-range error messages are phrased — every *Kg
+ *   value must already be converted to kilograms by the caller.
  */
 export function computeWilks({
   bodyweightKg,
   sex = "male",
+  unit = "kg",
   totalKg,
   squatKg,
   benchKg,
   deadliftKg,
 } = {}) {
-  const coeff = wilksCoefficient({ bodyweightKg, sex });
+  const coeff = wilksCoefficient({ bodyweightKg, sex, unit });
   if (coeff.error) return { error: coeff.error };
 
   const lifts = [squatKg, benchKg, deadliftKg];
@@ -133,7 +144,9 @@ export function computeWilks({
 
   if (!isNum(total)) return { error: "Enter a competition total, or the three individual lifts." };
   if (total <= 0) return { error: "Total must be greater than zero." };
-  if (total > MAX_TOTAL_KG) return { error: `Total must be under ${MAX_TOTAL_KG} kg.` };
+  if (total > MAX_TOTAL_KG) {
+    return { error: `Total must be under ${formatBound(MAX_TOTAL_KG, unit)} ${unit}.` };
+  }
   if (lifts.some((value) => isNum(value) && value < 0)) {
     return { error: "Individual lifts cannot be negative." };
   }

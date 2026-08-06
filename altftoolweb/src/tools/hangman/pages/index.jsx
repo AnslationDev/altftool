@@ -304,11 +304,23 @@ export default function ToolHome() {
               </div>
 
               <div className="flex min-w-0 flex-1 flex-col items-center justify-center gap-3">
-                <div className="flex flex-wrap items-center justify-center gap-2 text-xs font-medium text-muted-foreground">
+                <div
+                  className="flex flex-wrap items-center justify-center gap-2 text-xs font-medium text-muted-foreground"
+                  aria-live="polite"
+                  role="status"
+                >
                   <span className="rounded-md bg-card px-2.5 py-1">{round.categoryLabel}</span>
                   <span className="rounded-md bg-card px-2.5 py-1">
                     Guesses left{" "}
                     <span className="font-semibold tabular-nums text-foreground">{MAX_WRONG - wrongCount}</span>
+                  </span>
+                  <span className="sr-only">
+                    {`Word: ${round.word
+                      .split("")
+                      .map((letter) =>
+                        letterStates[letter] === "correct" || status === "lost" ? letter : "blank",
+                      )
+                      .join(", ")}.`}
                   </span>
                 </div>
 

@@ -3,7 +3,7 @@ const toolConfig = {
   name: "Consumer Complaint Draft Builder",
   category: ["Text & Writing","India","Legal"],
   description: "Build a formatted consumer complaint from your facts, the relief sought and evidence.",
-  icon: "file-warning",
+  icon: "shield-alert",
   iconColor: "text-primary",
 };
 

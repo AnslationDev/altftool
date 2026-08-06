@@ -13,9 +13,6 @@
  *    leaves room to insert servers between tiers later.
  */
 
-// RFC 1035 s3.3.9: MX preference is a 16-bit unsigned integer.
-export const PREFERENCE_MAX = 65535;
-
 // Operational convention: tier spacing of 10 leaves insertion room.
 export const TIER_SPACING = 10;
 
@@ -44,7 +41,10 @@ export function parseHostList(raw, label) {
       return { error: `${label}: "${host}" is not a valid fully-qualified hostname.` };
     }
   }
-  return { hosts };
+  // De-dupe within this tier — a host pasted twice is one server, not two
+  // independent failover targets, and would otherwise publish as two identical
+  // MX records with an inflated, misleading record count.
+  return { hosts: Array.from(new Set(hosts)) };
 }
 
 const fqdn = (host) => (host.endsWith(".") ? host : `${host}.`);
@@ -82,10 +82,13 @@ export function planMxRecords({ scenario, primaryHosts, secondaryHosts = "", ttl
     };
   }
 
-  const secondary = parseHostList(
-    secondaryHosts,
-    scenario === "migration" ? "Old provider" : "Backup",
-  );
+  // The backup/secondary field is hidden entirely in the "single" scenario, so its
+  // leftover state must not be format- or overlap-validated — only scenarios that
+  // actually render the field should ever reject on its contents.
+  const secondary =
+    scenario === "single"
+      ? { hosts: [] }
+      : parseHostList(secondaryHosts, scenario === "migration" ? "Old provider" : "Backup");
   if (secondary.error) return { error: secondary.error };
 
   if (scenario !== "single" && secondary.hosts.length === 0) {

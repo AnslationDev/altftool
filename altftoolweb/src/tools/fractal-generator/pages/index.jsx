@@ -12,11 +12,19 @@ const FRACTALS = [
 ];
 
 export default function FractalGenerator() {
+  // The Mandelbrot/Julia zoom center. (-0.745, 0.113) sits in the "seahorse
+  // valley" on the fractal boundary rather than deep in the interior cardioid
+  // (unlike the old (-0.5, 0) default, which becomes a single flat interior
+  // color by ~10x zoom with nothing left to see) so Zoom In keeps revealing
+  // fresh self-similar detail.
+  const DEFAULT_PAN_X = -0.745;
+  const DEFAULT_PAN_Y = 0.113;
+
   const [fractal, setFractal] = useState(FRACTALS[0]);
   const [maxIter, setMaxIter] = useState(60);
   const [zoom, setZoom] = useState(1);
-  const [panX, setPanX] = useState(-0.5);
-  const [panY, setPanY] = useState(0);
+  const [panX, setPanX] = useState(DEFAULT_PAN_X);
+  const [panY, setPanY] = useState(DEFAULT_PAN_Y);
   const [palette, setPalette] = useState("teal");
 
   const canvasRef = useRef(null);
@@ -25,8 +33,8 @@ export default function FractalGenerator() {
     setFractal(FRACTALS[0]);
     setMaxIter(60);
     setZoom(1);
-    setPanX(-0.5);
-    setPanY(0);
+    setPanX(DEFAULT_PAN_X);
+    setPanY(DEFAULT_PAN_Y);
     setPalette("teal");
   };
 
@@ -42,11 +50,16 @@ export default function FractalGenerator() {
         Math.floor(166 * t + 220 * (1 - t)),
       ];
     } else if (palette === "fire") {
-      return [
-        Math.floor(255 * Math.sin(t * Math.PI)),
-        Math.floor(150 * Math.pow(t, 2)),
-        Math.floor(30 * (1 - t)),
-      ];
+      // Classic "hot" ramp: black -> red -> orange -> yellow -> white, so the
+      // slowest-escaping pixels near the fractal boundary (t -> 1) render
+      // white-hot instead of the green the previous sin()-based formula
+      // produced there.
+      if (t < 1 / 3) {
+        return [Math.floor(255 * (t / (1 / 3))), 0, 0];
+      } else if (t < 2 / 3) {
+        return [255, Math.floor(255 * ((t - 1 / 3) / (1 / 3))), 0];
+      }
+      return [255, 255, Math.floor(255 * ((t - 2 / 3) / (1 / 3)))];
     } else {
       // Neon Rainbow
       const h = t * 360;
@@ -110,6 +123,14 @@ export default function FractalGenerator() {
       ctx.fillStyle = "#0F172A";
       ctx.fillRect(0, 0, w, h);
 
+      // Zoom/pan is applied as a canvas transform centered on the canvas so the
+      // Zoom In/Out controls actually magnify this render (they previously did
+      // nothing for chaos-game / IFS fractals, which never read zoom/panX/panY).
+      ctx.save();
+      ctx.translate(w / 2, h / 2);
+      ctx.scale(zoom, zoom);
+      ctx.translate(-w / 2, -h / 2);
+
       // Chaos game Sierpinski
       let px = w / 2;
       let py = 20;
@@ -123,10 +144,16 @@ export default function FractalGenerator() {
         py = (py + target.y) / 2;
         ctx.fillRect(px, py, 1.5, 1.5);
       }
+      ctx.restore();
 
     } else if (fId === "fern") {
       ctx.fillStyle = "#0F172A";
       ctx.fillRect(0, 0, w, h);
+
+      ctx.save();
+      ctx.translate(w / 2, h / 2);
+      ctx.scale(zoom, zoom);
+      ctx.translate(-w / 2, -h / 2);
 
       let x = 0;
       let y = 0;
@@ -158,12 +185,18 @@ export default function FractalGenerator() {
         const cy = h - y * 32 - 10;
         ctx.fillRect(cx, cy, 1.2, 1.2);
       }
+      ctx.restore();
     } else if (fId === "koch") {
       ctx.fillStyle = "#0F172A";
       ctx.fillRect(0, 0, w, h);
 
+      ctx.save();
+      ctx.translate(w / 2, h / 2);
+      ctx.scale(zoom, zoom);
+      ctx.translate(-w / 2, -h / 2);
+
       ctx.strokeStyle = "#22D3EE";
-      ctx.lineWidth = 1.5;
+      ctx.lineWidth = 1.5 / zoom;
 
       const drawKochLine = (p1, p2, depth) => {
         if (depth === 0) {
@@ -185,7 +218,6 @@ export default function FractalGenerator() {
           y: a.y + dx * Math.sin(-Math.PI / 3) + dy * Math.cos(-Math.PI / 3),
         };
 
-        const depthLimit = Math.min(Math.floor(maxIter / 15), 5);
         drawKochLine(p1, a, depth - 1);
         drawKochLine(a, b, depth - 1);
         drawKochLine(b, c, depth - 1);
@@ -200,6 +232,7 @@ export default function FractalGenerator() {
       drawKochLine(p1, p2, kDepth);
       drawKochLine(p2, p3, kDepth);
       drawKochLine(p3, p1, kDepth);
+      ctx.restore();
     }
   }, [fractal, maxIter, zoom, panX, panY, palette]);
 
@@ -251,6 +284,7 @@ export default function FractalGenerator() {
                     <button
                       key={f.id}
                       onClick={() => setFractal(f)}
+                      aria-pressed={fractal.id === f.id}
                       className={`w-full px-3 py-2 rounded-lg text-xs font-medium border text-left flex items-center justify-between transition ${
                         fractal.id === f.id ? "bg-primary text-white border-primary" : "border-border hover:bg-surface-soft"
                       }`}
@@ -264,10 +298,11 @@ export default function FractalGenerator() {
               {/* Iterations Slider */}
               <div>
                 <div className="flex justify-between text-xs font-semibold mb-1">
-                  <span>Iteration Depth</span>
-                  <span className="text-primary font-mono">{maxIter}</span>
+                  <label htmlFor="fractal-iteration-depth">Iteration Depth</label>
+                  <span className="text-primary font-mono" aria-hidden="true">{maxIter}</span>
                 </div>
                 <input
+                  id="fractal-iteration-depth"
                   type="range"
                   min="20"
                   max="150"
@@ -289,6 +324,7 @@ export default function FractalGenerator() {
                     <button
                       key={p.id}
                       onClick={() => setPalette(p.id)}
+                      aria-pressed={palette === p.id}
                       className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition ${
                         palette === p.id ? "bg-primary text-white border-primary" : "border-border hover:bg-surface-soft"
                       }`}
@@ -325,7 +361,11 @@ export default function FractalGenerator() {
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div className="p-3 rounded-lg bg-surface-soft border border-border">
                   <div className="text-muted-foreground">Zoom Depth</div>
-                  <div className="text-sm font-bold font-mono text-foreground mt-0.5">
+                  <div
+                    className="text-sm font-bold font-mono text-foreground mt-0.5"
+                    role="status"
+                    aria-live="polite"
+                  >
                     {zoom.toFixed(1)}x
                   </div>
                 </div>
@@ -342,7 +382,12 @@ export default function FractalGenerator() {
           {/* Render Canvas (8 cols) */}
           <div className="lg:col-span-8 flex flex-col space-y-4">
             <div className="relative rounded-2xl border border-border bg-card overflow-hidden shadow-sm flex-1 min-h-[440px] flex items-center justify-center">
-              <canvas ref={canvasRef} className="w-full h-full block" />
+              <canvas
+                ref={canvasRef}
+                className="w-full h-full block"
+                role="img"
+                aria-label={`${fractal.name} rendered at ${zoom.toFixed(1)}x zoom with the ${palette} color palette and iteration depth ${maxIter}.`}
+              />
             </div>
 
             {/* Educational Notes */}

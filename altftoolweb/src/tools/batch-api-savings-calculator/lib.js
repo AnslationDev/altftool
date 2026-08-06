@@ -128,6 +128,5 @@ export function computeBatchSavings({
     annualSavings: savings * jobsPerMonth * 12,
     totalTokens,
     savingsPer1kRequests: (savings / requests) * 1000,
-    windowHours: BATCH_WINDOW_HOURS,
   };
 }

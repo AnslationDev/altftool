@@ -386,6 +386,19 @@ function wrapText(text, maxChars) {
   let current = "";
 
   words.forEach((word) => {
+    // Hard-break any single token longer than maxChars (e.g. a long URL)
+    // instead of placing it on its own line unmodified — SVG <text> never
+    // wraps on its own, so an unbroken long word would overflow its bubble
+    // in the exported SVG/PNG even though the live preview wraps it fine.
+    while (word.length > maxChars) {
+      if (current) {
+        lines.push(current);
+        current = "";
+      }
+      lines.push(word.slice(0, maxChars));
+      word = word.slice(maxChars);
+    }
+
     if (!current) {
       current = word;
       return;
@@ -465,7 +478,14 @@ function buildChatSvg(settings, messages) {
     const isMe = message.sender === "me";
     const lines = wrapText(message.text || (message.type === "image" ? "Photo" : ""), 31);
     const bubbleWidth = message.type === "image" ? 238 : Math.min(292, Math.max(132, Math.max(...lines.map((line) => line.length)) * 7.3 + 40));
-    const bubbleHeight = message.type === "image" ? 196 : Math.max(46, lines.length * 19 + 32 + (message.reaction ? 10 : 0));
+    // Image bubbles grow with the caption instead of a fixed 196px: the
+    // caption starts at bubbleY+155 (below the 132px-tall thumbnail) and
+    // each extra wrapped line needs another 19px, or it collides with the
+    // timestamp drawn near the bottom of the bubble.
+    const bubbleHeight =
+      message.type === "image"
+        ? 196 + (lines.length - 1) * 19
+        : Math.max(46, lines.length * 19 + 32 + (message.reaction ? 10 : 0));
     const showLeftIdentity = !isMe && !isDiscord;
     const avatarSize = 28;
     const x = isMe ? width - innerX - bubbleWidth : innerX + (showLeftIdentity ? avatarSize + 10 : 0);
@@ -492,10 +512,19 @@ function buildChatSvg(settings, messages) {
       ? `<circle cx="${isMe ? x + 18 : x + bubbleWidth - 18}" cy="${bubbleY + bubbleHeight + 3}" r="13" fill="#ffffff" stroke="#dbe3ef"/>
          <text x="${isMe ? x + 10 : x + bubbleWidth - 25}" y="${bubbleY + bubbleHeight + 8}" font-size="14">${escapeXml(message.reaction)}</text>`
       : "";
+    // Mirrors PhonePreview: incoming bubbles show settings.themAvatar as a
+    // real photo when uploaded, falling back to the accent-colour initials
+    // circle otherwise. Previously this was never read here at all, so an
+    // uploaded avatar showed correctly on screen but silently vanished
+    // from the exported SVG/PNG.
+    const bubbleAvatarNode = settings.themAvatar
+      ? `<clipPath id="avatarClip-${message.id}"><circle cx="${innerX + avatarSize / 2}" cy="${bubbleY + avatarSize / 2}" r="${avatarSize / 2}"/></clipPath>
+           <image x="${innerX}" y="${bubbleY}" width="${avatarSize}" height="${avatarSize}" preserveAspectRatio="xMidYMid slice" href="${escapeXml(settings.themAvatar)}" clip-path="url(#avatarClip-${message.id})"/>`
+      : `<circle cx="${innerX + avatarSize / 2}" cy="${bubbleY + avatarSize / 2}" r="${avatarSize / 2}" fill="${theme.accent}"/>
+           <text x="${innerX + avatarSize / 2}" y="${bubbleY + avatarSize / 2 + 5}" text-anchor="middle" font-family="Inter,Arial" font-size="13" font-weight="950" fill="${settings.template === "kakaotalk" ? "#3A1D1D" : "#ffffff"}">${escapeXml(initials(settings.themName))}</text>`;
     const leftIdentity =
       showLeftIdentity
-        ? `<circle cx="${innerX + avatarSize / 2}" cy="${bubbleY + avatarSize / 2}" r="${avatarSize / 2}" fill="${theme.accent}"/>
-           <text x="${innerX + avatarSize / 2}" y="${bubbleY + avatarSize / 2 + 5}" text-anchor="middle" font-family="Inter,Arial" font-size="13" font-weight="950" fill="${settings.template === "kakaotalk" ? "#3A1D1D" : "#ffffff"}">${escapeXml(initials(settings.themName))}</text>
+        ? `${bubbleAvatarNode}
            <text x="${x}" y="${y + 12}" font-family="Inter,Arial" font-size="11" font-weight="900" fill="${theme.profileName || timestamp}">${escapeXml(settings.themName)}</text>`
         : "";
 
@@ -532,7 +561,15 @@ function buildChatSvg(settings, messages) {
     <text x="28" y="${statusHeight + 53}" font-family="Inter,Arial" font-size="24" font-weight="800" fill="${stageHeaderText}">‹</text>
     ${isKakao ? "" : `<circle cx="62" cy="${statusHeight + 43}" r="22" fill="${avatarFill}"/>
     ${settings.template === "instagram" ? `<circle cx="62" cy="${statusHeight + 43}" r="18" fill="${stageHeader}"/>` : ""}
-    <text x="62" y="${statusHeight + 51}" text-anchor="middle" font-family="Inter,Arial" font-size="18" font-weight="950" fill="${settings.template === "instagram" ? stageHeaderText : "#fff"}">${escapeXml(settings.themName.slice(0, 1).toUpperCase())}</text>`}
+    ${
+      settings.themAvatar
+        ? (() => {
+            const headerAvatarRadius = settings.template === "instagram" ? 18 : 22;
+            return `<clipPath id="headerAvatarClip"><circle cx="62" cy="${statusHeight + 43}" r="${headerAvatarRadius}"/></clipPath>
+    <image x="${62 - headerAvatarRadius}" y="${statusHeight + 43 - headerAvatarRadius}" width="${headerAvatarRadius * 2}" height="${headerAvatarRadius * 2}" preserveAspectRatio="xMidYMid slice" href="${escapeXml(settings.themAvatar)}" clip-path="url(#headerAvatarClip)"/>`;
+          })()
+        : `<text x="62" y="${statusHeight + 51}" text-anchor="middle" font-family="Inter,Arial" font-size="18" font-weight="950" fill="${settings.template === "instagram" ? stageHeaderText : "#fff"}">${escapeXml(settings.themName.slice(0, 1).toUpperCase())}</text>`
+    }`}
     <text x="${isKakao ? 52 : 96}" y="${statusHeight + 38}" font-family="Inter,Arial" font-size="17" font-weight="950" fill="${stageHeaderText}">${escapeXml(settings.chatTitle)}</text>
     <text x="${isKakao ? 52 : 96}" y="${statusHeight + 58}" font-family="Inter,Arial" font-size="12" font-weight="750" fill="${stageHeaderSubtext}">${escapeXml(settings.chatStatus)}</text>
     <text x="${width - 82}" y="${statusHeight + 52}" font-family="Inter,Arial" font-size="18" font-weight="900" fill="${stageHeaderText}">⌕  ⋮</text>
@@ -1048,7 +1085,16 @@ function FakeChatHome({ settings, messages, savedAt, onOpenTemplate, onOpenBuild
               <button type="button" onClick={onOpenBuilder} className="break-words font-semibold text-[var(--foreground)] sm:border-r sm:border-[var(--border)] sm:p-4">
                 {recentTitle}
               </button>
-              <button type="button" onClick={onClearSaved} className="text-[var(--muted-foreground)] hover:text-[var(--danger)] sm:p-4" aria-label="Delete saved chat">
+              <button
+                type="button"
+                onClick={() => {
+                  if (window.confirm("Delete this saved chat? This clears your local draft and resets to the sample chat, and cannot be undone.")) {
+                    onClearSaved();
+                  }
+                }}
+                className="text-[var(--muted-foreground)] hover:text-[var(--danger)] sm:p-4"
+                aria-label="Delete saved chat"
+              >
                 <Trash2 className="h-4 w-4 sm:mx-auto" />
               </button>
             </div>
@@ -1115,6 +1161,7 @@ export default function FakeChatMaker() {
   const [draft, setDraft] = useState(emptyDraft);
   const [search, setSearch] = useState("");
   const [savedAt, setSavedAt] = useState("");
+  const [saveError, setSaveError] = useState("");
 
   const theme = TEMPLATES[settings.template];
   const isDarkTemplate = settings.darkMode || settings.template === "discord";
@@ -1280,8 +1327,17 @@ export default function FakeChatMaker() {
 
   const saveNow = () => {
     const stamp = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ settings, messages, savedAt: stamp }));
-    setSavedAt(stamp);
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ settings, messages, savedAt: stamp }));
+      setSavedAt(stamp);
+      setSaveError("");
+    } catch {
+      // Avatars/images are stored as unrestricted base64 data URIs, so a
+      // chat with a few uploads can exceed the per-origin storage quota.
+      // Every other localStorage write in this file already guards against
+      // that — this one silently did nothing on failure until now.
+      setSaveError("Couldn't save — your browser's local storage is full. Try removing an uploaded image and save again.");
+    }
   };
 
   const copyScript = async () => {
@@ -1540,6 +1596,13 @@ export default function FakeChatMaker() {
               </label>
             </div>
 
+            <div className="mb-5 grid min-w-0 grid-cols-2 gap-2.5 sm:grid-cols-4">
+              <MetricCard icon={Edit3} label="Words" value={stats.words} />
+              <MetricCard icon={ImageIcon} label="Images" value={stats.images} />
+              <MetricCard icon={User} label="Your messages" value={stats.mine} />
+              <MetricCard icon={MessageCircle} label="Their messages" value={stats.theirs} />
+            </div>
+
             <div className="grid min-w-0 gap-2.5">
               {filteredMessages.map((message) => (
                 <article
@@ -1740,15 +1803,36 @@ export default function FakeChatMaker() {
                 <Download className="h-4 w-4" />
                 JSON
               </button>
-              <button type="button" className="btn-secondary" onClick={resetSample}>
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={() => {
+                  if (window.confirm("Reset to the sample chat? This replaces your current settings and messages and cannot be undone.")) {
+                    resetSample();
+                  }
+                }}
+              >
                 <RefreshCw className="h-4 w-4" />
                 Sample
               </button>
-              <button type="button" className="btn-secondary" onClick={() => setMessages([])}>
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={() => {
+                  if (window.confirm("Clear every message in this chat? This cannot be undone.")) {
+                    setMessages([]);
+                  }
+                }}
+              >
                 <Trash2 className="h-4 w-4" />
                 Clear Chat
               </button>
             </div>
+            {saveError ? (
+              <p role="status" aria-live="polite" className="mt-3 text-sm font-semibold text-[var(--danger-text)]">
+                {saveError}
+              </p>
+            ) : null}
           </article>
         </div>
 

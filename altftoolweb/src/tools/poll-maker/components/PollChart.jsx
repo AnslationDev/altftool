@@ -35,6 +35,18 @@ export default function PollChart({ options = [], votes = [] }) {
   const maxVotes = Math.max(...votes);
   const isMobile = typeof window !== "undefined" && window.innerWidth < 640;
 
+  // Canvas fillStyle can't take a `var(--x)` reference directly, so resolve
+  // the theme's card-foreground token to a concrete color here. This keeps
+  // the vote-count labels readable against the surrounding --card
+  // background in both light and dark mode instead of a hardcoded black
+  // that disappears on the tool's dark-navy default theme.
+  const labelColor =
+    typeof window !== "undefined"
+      ? getComputedStyle(document.documentElement)
+          .getPropertyValue("--card-foreground")
+          .trim() || "#ffffff"
+      : "#ffffff";
+
   const palette = ["#F5F5F0", "#E6D8C3", "#C2A68C", "#5D866C"];
 
   const backgroundColors = votes.map((v, i) => {
@@ -66,7 +78,7 @@ export default function PollChart({ options = [], votes = [] }) {
       },
       datalabels: {
         display: true,
-        color: "#000",
+        color: labelColor,
         anchor: "end",
         align: "end",
         formatter: (value) => value,

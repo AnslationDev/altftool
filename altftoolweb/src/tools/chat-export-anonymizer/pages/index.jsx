@@ -108,8 +108,8 @@ export default function ChatExportAnonymizer() {
   }, [format, removeTimestamps, replaceParticipants, source]);
 
   const preview = useMemo(
-    () => buildLinePreview(source, analysis.result?.output ?? ""),
-    [analysis.result?.output, source],
+    () => buildLinePreview(source, analysis.result?.output ?? "", { format: analysis.result?.format }),
+    [analysis.result?.format, analysis.result?.output, source],
   );
 
   const visibleSummary = analysis.result?.summary.filter((item) => item.count > 0) ?? [];

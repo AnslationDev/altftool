@@ -43,7 +43,9 @@ const foodCheatSheet = [
     f: 400,
     minutes: 24,
     flip: "Flip once at 12 min",
-    note: "Cook to 74°C internal",
+    note: "Cook to {temp} internal",
+    internalTempC: 74,
+    internalTempF: 165,
   },
   {
     id: "whole-chicken",
@@ -61,7 +63,9 @@ const foodCheatSheet = [
     f: 380,
     minutes: 11,
     flip: "No flip — fillets are delicate",
-    note: "Done at 63°C, flakes easily",
+    note: "Done at {temp}, flakes easily",
+    internalTempC: 63,
+    internalTempF: 145,
   },
   {
     id: "veggies",
@@ -102,6 +106,15 @@ const safetyTemps = [
 ];
 
 const roundTo = (value, step) => Math.round(value / step) * step;
+
+// Cheat-sheet notes for a couple of foods embed a doneness temperature. Keep
+// that figure unit-aware instead of a hardcoded Celsius literal, so it always
+// matches whichever unit (°C/°F) the rest of the page is currently showing.
+function resolveFoodNote(food, unit) {
+  if (!food || food.internalTempC == null) return food?.note ?? "";
+  const temp = unit === "C" ? `${food.internalTempC}°C` : `${food.internalTempF}°F`;
+  return food.note.replace("{temp}", temp);
+}
 
 function downloadTextFile(filename, content) {
   const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
@@ -145,7 +158,9 @@ export default function ToolHome() {
         `Oven recipe: ${Number(ovenTemp) || 0}°${unit} for ${Number(ovenTime) || 0} min`,
         `Air fryer: ${result.airTemp}°${unit} for ${result.airTime} min`,
         `Rule: temperature -${TEMP_DROP[unit]}°${unit}, time -20%`,
-        activeFood ? `Food note: ${activeFood.flip} (${activeFood.note})` : `Shake or flip around ${result.flipAt} min`,
+        activeFood
+          ? `Food note: ${activeFood.flip} (${resolveFoodNote(activeFood, unit)})`
+          : `Shake or flip around ${result.flipAt} min`,
         `Start checking doneness at ${result.checkAt} min`,
         `Generated: ${new Date().toLocaleString()}`,
       ].join("\n"),
@@ -377,7 +392,7 @@ export default function ToolHome() {
 
             {activeFood && (
               <p className="mt-4 rounded-md bg-[var(--muted)] p-3 text-sm leading-6 text-[var(--muted-foreground)]">
-                Tip for {activeFood.name.toLowerCase()}: {activeFood.note}.
+                Tip for {activeFood.name.toLowerCase()}: {resolveFoodNote(activeFood, unit)}.
               </p>
             )}
           </div>

@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The Loan Comparison Tool turns a loan amount, an annual interest rate and a term in years into the level monthly payment, the total interest paid and the total amount payable, using the standard amortising EMI formula EMI = P x r x (1+r)^n / ((1+r)^n - 1), where r is the annual rate divided by 12 and n is the term in months. Change one input and every figure updates, so you can put two quotes side by side and see which one actually costs less over its life. It is aimed at anyone weighing a mortgage, car loan or personal loan offer before signing.",
+    "The Loan Comparison Tool turns a loan amount, an annual interest rate and a term in years into the level monthly payment, the total interest paid and the total amount payable, using the standard amortising EMI formula EMI = P x r x (1+r)^n / ((1+r)^n - 1), where r is the annual rate divided by 100 and by 12 and n is the term in months. Change one input and every figure updates, so you can put two quotes side by side and see which one actually costs less over its life. It is aimed at anyone weighing a mortgage, car loan or personal loan offer before signing.",
   useCases: [
     "Two lenders quote you 6.9% over 25 years and 7.4% over 20 years, and you want to know which one has the lower monthly payment and which one costs less in total interest.",
     "You are deciding whether to stretch a car loan from three years to five to make the payment fit your budget, and want to see exactly how much extra interest that stretch adds.",

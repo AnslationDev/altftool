@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Car, Check, Copy, RotateCcw } from "lucide-react";
 
-import { IDV_DEPRECIATION_SLABS, computeIdv } from "../lib";
+import { IDV_DEPRECIATION_SLABS, computeIdv, depreciationForMonths, monthsBetween } from "../lib";
 
 const INR = new Intl.NumberFormat("en-IN", {
   style: "currency",
@@ -103,7 +103,16 @@ export default function ToolHome() {
     setCopied(false);
   };
 
-  const showAgreedField = !error && result.mutuallyAgreed;
+  // Whether the "Agreed depreciation" field should be shown depends only on the
+  // vehicle's age (from the two dates), never on whether the agreed-depreciation
+  // value the user typed into that same field is itself valid. Otherwise typing
+  // an out-of-range value (which makes computeIdv() return an error) would
+  // immediately unmount the very field the user needs to fix it in.
+  const agreedFieldAgeMonths = monthsBetween(registration, valuation);
+  const showAgreedField =
+    agreedFieldAgeMonths !== null &&
+    agreedFieldAgeMonths >= 0 &&
+    depreciationForMonths(agreedFieldAgeMonths).mutuallyAgreed;
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">

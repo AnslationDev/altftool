@@ -74,6 +74,49 @@ const NON_PARTICIPANT_LABELS = new Set([
   "warning",
 ]);
 
+// Prefix words the inline id-detection regex (below) recognizes as naming a
+// labeled identifier rather than free text, e.g. "Ticket Number: TCK-4432" or
+// "Session ID: abc123". Kept as a single list so the participant-label
+// blocklist can be generated from it instead of drifting out of sync with a
+// hand-typed subset — see looksLikeParticipantLabel().
+const ID_LABEL_PREFIXES = [
+  "account",
+  "case",
+  "chat",
+  "conversation",
+  "customer",
+  "device",
+  "employee",
+  "id",
+  "member",
+  "message",
+  "order",
+  "participant",
+  "sender",
+  "session",
+  "thread",
+  "ticket",
+  "user",
+];
+
+// Matches a label naming an identifier column ("Ticket Number", "Session ID",
+// "Order No", ...) built from the exact same prefix words as ID_LABEL_REGEX
+// below, so a line like "Ticket Number: TCK-4432" is never mistaken for a new
+// chat participant just because the id-label variant isn't in the smaller,
+// hand-picked NON_PARTICIPANT_LABELS set above.
+const ID_LABEL_PATTERN = new RegExp(`^(?:${ID_LABEL_PREFIXES.join("|")})(?:[ _-]*(?:id|number|no))?$`);
+
+// Purely structural list/outline markers ("Section 1", "Step 2", ...) that
+// commonly appear as sub-lines inside a single chat message body and must
+// never be mistaken for a new speaker turn.
+const STRUCTURAL_LABEL_PATTERN =
+  /^(?:section|step|part|item|point|chapter|paragraph|clause|appendix)\s*\d*$/i;
+
+const ID_LABEL_REGEX = new RegExp(
+  `\\b((?:${ID_LABEL_PREFIXES.join("|")})(?:[ \\t_-]*(?:id|number|no))?(?:[ \\t]*[:=#-][ \\t]*|[ \\t]+))([A-Z0-9][A-Z0-9._/-]{4,})\\b`,
+  "giu",
+);
+
 const CSV_HINT_KEYS = new Set([
   ...PARTICIPANT_KEYS,
   ...MESSAGE_KEYS,
@@ -127,6 +170,11 @@ function createContext() {
       id: 0,
       timestamp: 0,
     },
+    // Timestamps are deleted rather than pseudonymized, so there is no
+    // dedup map to read a real distinct-value count from (unlike the other
+    // kinds). Track the removed values here purely to report an honest
+    // "unique values" count — never exposed beyond its .size.
+    timestampValues: new Set(),
   };
 }
 
@@ -186,7 +234,7 @@ function replaceSensitivePatterns(value, context) {
   );
 
   output = output.replace(
-    /\b((?:account|case|chat|conversation|customer|device|employee|id|member|message|order|participant|sender|session|thread|ticket|user)(?:[ \t_-]*(?:id|number|no))?(?:[ \t]*[:=#-][ \t]*|[ \t]+))([A-Z0-9][A-Z0-9._/-]{4,})\b/giu,
+    ID_LABEL_REGEX,
     (match, label, identifier) => `${label}${replacementFor(context, "id", identifier)}`,
   );
 
@@ -220,7 +268,9 @@ function stripTextTimestamps(value, context) {
       ];
 
       for (const pattern of prefixPatterns) {
-        if (pattern.test(output)) {
+        const match = output.match(pattern);
+        if (match) {
+          context.timestampValues.add(match[0].trim());
           output = output.replace(pattern, "");
           context.occurrences.timestamp += 1;
           break;
@@ -228,10 +278,12 @@ function stripTextTimestamps(value, context) {
       }
 
       const speakerTimestamp =
-        /^(\s*[^:\r\n]{1,60}?)\s+\[(?:(?:\d{1,4}[./-]\d{1,2}[./-]\d{1,4})[,\s]+)?\d{1,2}:\d{2}(?::\d{2})?(?:\s*[AP]M)?\](\s*:)/i;
+        /^(\s*[^:\r\n]{1,60}?)\s+(\[(?:(?:\d{1,4}[./-]\d{1,2}[./-]\d{1,4})[,\s]+)?\d{1,2}:\d{2}(?::\d{2})?(?:\s*[AP]M)?\])(\s*:)/i;
 
-      if (speakerTimestamp.test(output)) {
-        output = output.replace(speakerTimestamp, "$1$2");
+      const speakerTimestampMatch = output.match(speakerTimestamp);
+      if (speakerTimestampMatch) {
+        context.timestampValues.add(speakerTimestampMatch[2].trim());
+        output = output.replace(speakerTimestamp, "$1$3");
         context.occurrences.timestamp += 1;
       }
 
@@ -248,6 +300,8 @@ function looksLikeParticipantLabel(value) {
     candidate.length < 2 ||
     candidate.length > 60 ||
     NON_PARTICIPANT_LABELS.has(normalized) ||
+    ID_LABEL_PATTERN.test(normalized) ||
+    STRUCTURAL_LABEL_PATTERN.test(candidate) ||
     /^person\s+\d+$/i.test(candidate) ||
     /\bhttps?$/i.test(candidate) ||
     !/\p{L}/u.test(candidate) ||
@@ -386,6 +440,7 @@ function transformStructured(value, context, options, key = "", parent = null) {
   if (value === null || value === undefined) return value;
 
   if (options.removeTimestamps && isTimestampKey(key)) {
+    context.timestampValues.add(String(value));
     context.occurrences.timestamp += 1;
     return typeof value === "number" ? null : "[TIMESTAMP_REMOVED]";
   }
@@ -431,6 +486,7 @@ function anonymizeCsv(value, context, options) {
       const key = headers[columnIndex] ?? "";
 
       if (options.removeTimestamps && isTimestampKey(key) && cell.trim()) {
+        context.timestampValues.add(cell.trim());
         context.occurrences.timestamp += 1;
         return "";
       }
@@ -456,7 +512,7 @@ function buildSummary(context) {
     label: meta.label,
     token: meta.token,
     count: context.occurrences[kind],
-    unique: kind === "timestamp" ? context.occurrences.timestamp : context.maps[kind].size,
+    unique: kind === "timestamp" ? context.timestampValues.size : context.maps[kind].size,
   }));
 }
 
@@ -515,8 +571,26 @@ export function buildPrivacyReport(result) {
   };
 }
 
-export function buildLinePreview(source, output, limit = 120) {
-  const originalLines = String(source ?? "").split(/\r?\n/);
+// anonymizeChat() always re-serializes JSON output via
+// JSON.stringify(parsed, null, 2), regardless of how the source was
+// formatted. Diffing that pretty-printed output against raw (e.g. minified)
+// source text would flag nearly every line as "changed" purely from
+// re-indentation. Normalize the JSON source through the same pretty-printer
+// before diffing so only lines whose values actually changed are flagged.
+function normalizedSourceLines(source, format) {
+  if (format === "json") {
+    try {
+      return JSON.stringify(JSON.parse(source), null, 2).split(/\r?\n/);
+    } catch {
+      // Source no longer parses (shouldn't happen once anonymizeChat has
+      // already produced a successful JSON result) — fall back to raw text.
+    }
+  }
+  return String(source ?? "").split(/\r?\n/);
+}
+
+export function buildLinePreview(source, output, { format = "text", limit = 120 } = {}) {
+  const originalLines = normalizedSourceLines(source, format);
   const anonymizedLines = String(output ?? "").split(/\r?\n/);
   const totalLines = Math.max(originalLines.length, anonymizedLines.length);
   const shownLines = Math.min(totalLines, limit);

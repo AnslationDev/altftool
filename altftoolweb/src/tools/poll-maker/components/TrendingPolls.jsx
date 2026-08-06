@@ -3,7 +3,11 @@
 import { Flame, MessageCircle, BarChart3 } from "lucide-react";
 
 export default function TrendingPolls() {
-  // Dummy data (frontend only)
+  // Illustrative example data only — this tool has no backend or
+  // cross-user storage (polls live entirely in this browser's localStorage,
+  // per the tool's own FAQ), so these numbers are not real activity from
+  // other visitors. Keep them clearly labeled as examples so this section
+  // never reads as live platform-wide stats.
   const trending = [
     {
       id: 1,
@@ -33,8 +37,12 @@ export default function TrendingPolls() {
     <div className="mt-10 space-y-6">
       {/* Title */}
       <h2 className="text-xl font-semibold text-(--foreground) flex items-center gap-2">
-        <Flame className="text-orange-500" /> Trending Polls
+        <Flame className="text-orange-500" /> Trending Poll Ideas
       </h2>
+      <p className="text-xs text-(--muted-foreground)">
+        Example polls for inspiration — this tool keeps every poll in your
+        own browser, so these are not live counts from other visitors.
+      </p>
 
       {/* Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">

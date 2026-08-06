@@ -26,9 +26,6 @@ export const PDF_MAGIC = "%PDF-";
 /** And ends with this marker, per ISO 32000-1 section 7.5.5. */
 export const PDF_EOF_MARKER = "%%EOF";
 
-/** PDF versions defined by the specification and its predecessors. */
-export const KNOWN_PDF_VERSIONS = ["1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "1.6", "1.7", "2.0"];
-
 /**
  * Practical ceiling: 25 MiB in, which becomes a ~34 MB string. Both the raw bytes and the
  * Base64 text sit in memory at once and a JavaScript string is capped near 512 MiB in V8.
@@ -108,10 +105,10 @@ function bytesToLatin1(bytes, start, end) {
  * Reads the PDF header and trailer to confirm the file really is a PDF.
  *
  * @param {Uint8Array|number[]} bytes
- * @returns {{isPdf:boolean, version:string|null, knownVersion:boolean, hasEofMarker:boolean, linearHint:boolean}}
+ * @returns {{isPdf:boolean, version:string|null, hasEofMarker:boolean, linearHint:boolean}}
  */
 export function inspectPdfBytes(bytes) {
-  const empty = { isPdf: false, version: null, knownVersion: false, hasEofMarker: false, linearHint: false };
+  const empty = { isPdf: false, version: null, hasEofMarker: false, linearHint: false };
   if (!bytes || typeof bytes.length !== "number" || bytes.length < PDF_MAGIC.length) return empty;
 
   const head = bytesToLatin1(bytes, 0, 1024);
@@ -124,22 +121,10 @@ export function inspectPdfBytes(bytes) {
   return {
     isPdf: true,
     version,
-    knownVersion: Boolean(version) && KNOWN_PDF_VERSIONS.includes(version),
     hasEofMarker: tail.includes(PDF_EOF_MARKER),
     // A linearised ("fast web view") PDF declares /Linearized in its first object.
     linearHint: head.includes("/Linearized"),
   };
-}
-
-/** Splits a data URL into MIME type and payload, or returns { error }. */
-export function parseDataUrl(dataUrl) {
-  if (typeof dataUrl !== "string" || dataUrl.trim() === "") {
-    return { error: "Nothing to read — paste a data URL first." };
-  }
-  const match = /^data:([^;,]*)(;base64)?,([\s\S]*)$/.exec(dataUrl.trim());
-  if (!match) return { error: "That is not a valid data: URL." };
-  if (!match[2]) return { error: "This data URL is not Base64 encoded." };
-  return { mime: match[1] || PDF_MIME, base64: match[3] };
 }
 
 /** Formats a byte count with binary prefixes, e.g. "2.4 MiB". */
@@ -162,10 +147,9 @@ export function formatBytes(bytes) {
  * @param {object} file
  * @param {string} [file.name]
  * @param {number} file.size
- * @param {string} [file.type]
  * @returns {object} report, or { error }.
  */
-export function inspectPdfFile({ name = "", size, type = "" } = {}) {
+export function inspectPdfFile({ name = "", size } = {}) {
   if (!isNum(size) || size < 0) {
     return { error: "Could not read the file size. Try selecting the file again." };
   }
@@ -178,7 +162,6 @@ export function inspectPdfFile({ name = "", size, type = "" } = {}) {
     };
   }
 
-  const looksPdf = type === PDF_MIME || String(name).toLowerCase().endsWith(".pdf");
   const base64Length = base64EncodedLength(size);
   const prefix = dataUrlPrefix(PDF_MIME);
 
@@ -186,11 +169,12 @@ export function inspectPdfFile({ name = "", size, type = "" } = {}) {
     name: String(name),
     size,
     mime: PDF_MIME,
-    looksPdf,
     base64Length,
     dataUrlLength: prefix.length + base64Length,
     paddingChars: base64PaddingChars(size),
-    growthPercent: (BASE64_GROWTH - 1) * 100,
+    // Actual per-file growth, not the asymptotic 4/3 ratio — padding makes small files
+    // grow by more than 33.3% (e.g. a 10-byte file grows 60%).
+    growthPercent: (base64Length / size - 1) * 100,
     prefix,
   };
 }

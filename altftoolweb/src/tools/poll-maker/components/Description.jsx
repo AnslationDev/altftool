@@ -5,11 +5,11 @@ import React from "react";
 // reusable data for description section
 export const descriptionData = [
     { title: "Create Poll", description: "Easily create a poll with multiple options in seconds." },
-  { title: "Share Link", description: "Share the poll link with your friends or team instantly." },
+  { title: "Multiple Chart Types", description: "View results as a bar, pie or donut chart that updates instantly as votes come in." },
   { title: "Collect Votes", description: "Participants can vote anonymously or publicly." },
   { title: "Real-time Results", description: "See live updates of votes as they come in." },
   { title: "Analyze Trends", description: "Get insights into which options are popular and trends over time." },
-  { title: "Export Data", description: "Download poll results in CSV or PDF format for reporting." },
+  { title: "Download Card", description: "Save your poll results as a shareable PNG image card." },
 ];
 
 const Description = ({ data = descriptionData }) => {

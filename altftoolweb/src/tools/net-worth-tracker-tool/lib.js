@@ -74,7 +74,10 @@ const toNumber = (value, fallback = 0) => {
 // Intl.NumberFormat then renders as "-₹0" — a breakeven position reading as
 // debt. Normalise -0 to 0 so the headline never looks negative when it isn't.
 const round0 = (value) => Math.round(value) || 0;
-const round2 = (value) => Math.round(value * 100) / 100;
+// Same -0 hazard applies here: the wealth-benchmark ratio (netWorth / expected)
+// can be a tiny negative fraction that rounds to -0, which Intl.NumberFormat
+// then renders as "-0x" for a near-breakeven net worth. Normalise it away.
+const round2 = (value) => Math.round(value * 100) / 100 || 0;
 
 const findCategory = (list, value) => list.find((item) => item.value === value) || null;
 

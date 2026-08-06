@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Check, Copy, Download, FileUp, RotateCcw } from "lucide-react";
 
 import {
@@ -25,6 +25,10 @@ const DASH = "—";
 const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 
 export default function ToolHome() {
+  const fileInputRef = useRef(null);
+  // Tracks the file currently selected so a conversion whose selection was
+  // cleared or replaced while it was in flight cannot overwrite fresher state.
+  const activeHandleRef = useRef(null);
   const [fileMeta, setFileMeta] = useState(null);
   const [fileHandle, setFileHandle] = useState(null);
   const [dataUrl, setDataUrl] = useState("");
@@ -45,20 +49,26 @@ export default function ToolHome() {
     setFailure("");
     setCopied(false);
     if (!file) {
+      activeHandleRef.current = null;
       setFileMeta(null);
       setFileHandle(null);
       return;
     }
+    activeHandleRef.current = file;
     setFileHandle(file);
     setFileMeta({ name: file.name, size: file.size, type: file.type });
   };
 
   const convert = async () => {
     if (!fileHandle || hasError) return;
+    const targetHandle = fileHandle;
     setBusy(true);
     setFailure("");
     try {
-      const buffer = await fileHandle.arrayBuffer();
+      const buffer = await targetHandle.arrayBuffer();
+      // The selected file may have been cleared or replaced (e.g. via Reset)
+      // while this read was in flight — stale bytes must not land on newer state.
+      if (activeHandleRef.current !== targetHandle) return;
       const bytes = new Uint8Array(buffer);
       const inspected = inspectPdfBytes(bytes);
       setHeader(inspected);
@@ -69,10 +79,11 @@ export default function ToolHome() {
       }
       setDataUrl(dataUrlPrefix(PDF_MIME) + bytesToBase64(bytes));
     } catch {
+      if (activeHandleRef.current !== targetHandle) return;
       setFailure("The file could not be read. It may be too large for this browser tab.");
       setDataUrl("");
     } finally {
-      setBusy(false);
+      if (activeHandleRef.current === targetHandle) setBusy(false);
     }
   };
 
@@ -99,6 +110,7 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    activeHandleRef.current = null;
     setFileMeta(null);
     setFileHandle(null);
     setDataUrl("");
@@ -106,6 +118,7 @@ export default function ToolHome() {
     setFailure("");
     setBusy(false);
     setCopied(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   return (
@@ -128,10 +141,12 @@ export default function ToolHome() {
         </label>
         <input
           id="pdf-file"
+          ref={fileInputRef}
           className={`mt-2 ${INPUT_CLASS}`}
           type="file"
           accept="application/pdf,.pdf"
           onChange={onPick}
+          disabled={busy}
         />
         <p className="mt-2 text-sm text-[var(--muted-foreground)]">
           The header is checked for the %PDF- marker before encoding, so a renamed file is caught
@@ -153,6 +168,9 @@ export default function ToolHome() {
             Reset
           </button>
         </div>
+        <span aria-live="polite" role="status" className="sr-only">
+          {busy ? "Encoding the PDF to Base64…" : dataUrl ? "Encoding complete." : ""}
+        </span>
       </section>
 
       {hasError && (

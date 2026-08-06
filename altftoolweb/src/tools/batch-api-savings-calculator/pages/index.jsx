@@ -198,7 +198,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -244,6 +248,8 @@ export default function ToolHome() {
             ["All batch cost", ok ? usd(result.allBatchCost) : dash],
             ["Saving if 100% batched", ok ? usd(result.maxSavings) : dash],
             ["Saving per 1,000 requests", ok ? smartUsd(result.savingsPer1kRequests) : dash],
+            ["Monthly cost (real-time only)", ok ? usd(result.monthlyRealtimeCost) : dash],
+            ["Monthly cost (with batching)", ok ? usd(result.monthlyBlendedCost) : dash],
             ["Monthly saving", ok ? usd(result.monthlySavings) : dash],
             ["Annual saving", ok ? usd(result.annualSavings) : dash],
             ["Total tokens in the job", ok ? NUM.format(result.totalTokens) : dash],
@@ -272,7 +278,7 @@ export default function ToolHome() {
               />
             </div>
             <p className="mt-2 text-xs text-[var(--muted-foreground)]">
-              You still pay {Math.round(100 - result.savingsPercent)}% · Saved{" "}
+              You still pay {100 - Math.round(result.savingsPercent)}% · Saved{" "}
               {Math.round(result.savingsPercent)}%
             </p>
           </div>

@@ -11,6 +11,7 @@ import {
   bitsToSymbolic,
   convertPermissions,
 } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 font-mono text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -39,7 +40,8 @@ export default function ToolHome() {
   const [source, setSource] = useState("octal");
   const [octalText, setOctalText] = useState(DEFAULT_OCTAL);
   const [symbolicText, setSymbolicText] = useState("rwxr-xr-x");
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } =
+    useCopyToClipboard();
 
   const result = useMemo(
     () => convertPermissions({ source, octalText, symbolicText }),
@@ -91,24 +93,19 @@ export default function ToolHome() {
     if (!parsed.error) setOctalText(parsed.octal);
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(
-        [`Octal: ${result.octal}`, `Symbolic: ${result.symbolic}`, result.chmodCommand].join("\n"),
-      );
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    const text = [`Octal: ${result.octal}`, `Symbolic: ${result.symbolic}`, result.chmodCommand].join(
+      "\n",
+    );
+    copyToClipboard("result", text, { label: "the permission conversion result" });
   };
 
   const reset = () => {
     setSource("octal");
     setOctalText(DEFAULT_OCTAL);
     setSymbolicText("rwxr-xr-x");
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -267,16 +264,23 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the permission conversion result"
+              aria-label={
+                isCopied("result")
+                  ? "Copied the permission conversion result to clipboard"
+                  : "Copy the permission conversion result"
+              }
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset to default permissions" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset

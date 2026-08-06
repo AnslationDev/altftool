@@ -251,7 +251,7 @@ export const advancedCatalog = {
     "id": 187,
     "slug": "cloud-status-board",
     "name": "Cloud Status Board",
-    "description": "Major cloud aur SaaS incidents ek dashboard par dikhaye.",
+    "description": "Major cloud aur SaaS providers ka current status ek dashboard par dikhaye.",
     "category": "Live Data & Alerts",
     "priority": "P2"
   },

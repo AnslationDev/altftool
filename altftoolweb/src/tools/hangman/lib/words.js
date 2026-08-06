@@ -72,11 +72,6 @@ export const ALL_CATEGORY_ID = "all";
 
 const categoryById = new Map(CATEGORIES.map((category) => [category.id, category]));
 
-export function getCategoryLabel(categoryId) {
-  if (categoryId === ALL_CATEGORY_ID) return "All categories";
-  return categoryById.get(categoryId)?.label ?? "Mystery";
-}
-
 function getWordPool(categoryId) {
   if (categoryId === ALL_CATEGORY_ID) {
     return CATEGORIES.flatMap((category) => category.words);

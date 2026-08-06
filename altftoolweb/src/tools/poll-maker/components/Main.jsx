@@ -42,8 +42,13 @@ export default function PollMaker() {
   const [voters, setVoters] = useState({});
   const [theme, setTheme] = useState("dark");
   const [optionImages, setOptionImages] = useState([]);
-  const [showSavedMsg, setShowSavedMsg] = useState(false);
   const [showDraftSaved, setShowDraftSaved] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([]);
+
+  // Once voting has started, the option list is locked: adding/editing
+  // options after votes exist would desync `pollOptions` from the `votes`
+  // array (which is only sized once, in createPoll) and produce NaN counts.
+  const pollLocked = votes.length > 0;
 
   const mockUsers = [
     "Aman",
@@ -93,35 +98,59 @@ export default function PollMaker() {
 
       if (parsed.pollQuestion) setPollQuestion(parsed.pollQuestion);
       if (parsed.pollOptions) setPollOptions(parsed.pollOptions);
-      if (parsed.optionImages) setOptionImages(parsed.optionImages);
+      if (parsed.optionImages) {
+        // blob: object URLs never survive a reload — restoring one just
+        // points ManagedImage at a dead URL, which silently renders the
+        // generic fallback icon. Drop them so a reload shows a clean
+        // "no image" state instead of a fake-looking broken image.
+        setOptionImages(
+          parsed.optionImages.map((img) =>
+            typeof img === "string" && img.startsWith("blob:") ? "" : img,
+          ),
+        );
+      }
       if (parsed.theme) setTheme(parsed.theme);
     }
   }, []);
 
   //  AUTO SAVE
   useEffect(() => {
+    // Object URLs (blob:) are only valid for this page session, so they
+    // must never be written to localStorage as if they were durable —
+    // persist a clean empty slot instead of a URL that will be dead on
+    // the next reload.
+    const persistableOptionImages = optionImages.map((img) =>
+      typeof img === "string" && img.startsWith("blob:") ? "" : img,
+    );
+
     const draft = {
       pollQuestion,
       pollOptions,
-      optionImages,
+      optionImages: persistableOptionImages,
       theme,
     };
 
     localStorage.setItem("poll_draft", JSON.stringify(draft));
-    setShowSavedMsg(true);
+    setShowDraftSaved(true);
 
-    setTimeout(() => {
-      setShowSavedMsg(false);
+    const timer = setTimeout(() => {
+      setShowDraftSaved(false);
     }, 1500);
+
+    return () => clearTimeout(timer);
   }, [pollQuestion, pollOptions, optionImages, theme]);
 
   const handleOptionChange = (index, value) => {
+    if (pollLocked) return;
     const newOptions = [...pollOptions];
     newOptions[index] = value;
     setPollOptions(newOptions);
   };
 
-  const addOption = () => setPollOptions([...pollOptions, ""]);
+  const addOption = () => {
+    if (pollLocked) return;
+    setPollOptions([...pollOptions, ""]);
+  };
 
   const createPoll = () => {
     if (
@@ -143,6 +172,13 @@ export default function PollMaker() {
   };
 
   const handleVote = (index) => {
+    // Defensive guard: the option list is locked once votes exist (see
+    // pollLocked), but this keeps handleVote itself safe against ever
+    // being called with an index the votes array wasn't sized for.
+    if (index < 0 || index >= votes.length || typeof votes[index] !== "number") {
+      return;
+    }
+
     triggerAnimation(index);
     setHasVoted(true);
 
@@ -176,8 +212,14 @@ export default function PollMaker() {
           (user) => !currentOptionUsers.includes(user),
         );
 
+        // Once this option has accumulated every mock name as its own
+        // voter, reusableUsers is empty — fall back to any mock name
+        // instead of indexing into an empty array (which yields undefined
+        // and would push a nameless voter chip).
         randomUser =
-          reusableUsers[Math.floor(Math.random() * reusableUsers.length)];
+          reusableUsers.length > 0
+            ? reusableUsers[Math.floor(Math.random() * reusableUsers.length)]
+            : mockUsers[Math.floor(Math.random() * mockUsers.length)];
       } else {
         randomUser =
           availableUsers[Math.floor(Math.random() * availableUsers.length)];
@@ -261,17 +303,25 @@ export default function PollMaker() {
   ${theme === "neon" ? "border-pink-500 shadow-[0_0_20px_#ff00ff]" : ""}
 `}
         >
+          {pollLocked && (
+            <p className="text-xs text-(--muted-foreground)">
+              Voting has started, so the question and options are locked.
+              Reload the page to start a brand-new poll.
+            </p>
+          )}
           <input
             type="text"
             placeholder="Enter your question"
             value={pollQuestion}
             onChange={(e) => setPollQuestion(e.target.value)}
-            className="w-full px-4 py-3 rounded-lg bg-(--background) border border-(--border) focus:ring-2 focus:ring-(--primary) outline-none transition"
+            disabled={pollLocked}
+            className="w-full px-4 py-3 rounded-lg bg-(--background) border border-(--border) focus:ring-2 focus:ring-(--primary) outline-none transition disabled:cursor-not-allowed disabled:opacity-60"
           />
           <RandomPoll
             setPollQuestion={setPollQuestion}
             setPollOptions={setPollOptions}
             setVotes={setVotes}
+            disabled={pollLocked}
           />
           <VoiceRecorder />
 
@@ -282,7 +332,8 @@ export default function PollMaker() {
                 placeholder={`Option ${index + 1}`}
                 value={option}
                 onChange={(e) => handleOptionChange(index, e.target.value)}
-                className="w-full px-4 py-3 rounded-lg bg-(--background) border border-(--border) focus:ring-2 focus:ring-(--primary) outline-none transition"
+                disabled={pollLocked}
+                className="w-full px-4 py-3 rounded-lg bg-(--background) border border-(--border) focus:ring-2 focus:ring-(--primary) outline-none transition disabled:cursor-not-allowed disabled:opacity-60"
               />
 
               {/*  ImageUploader */}
@@ -290,6 +341,7 @@ export default function PollMaker() {
                 index={index}
                 optionImages={optionImages}
                 setOptionImages={setOptionImages}
+                disabled={pollLocked}
               />
             </div>
           ))}
@@ -297,16 +349,18 @@ export default function PollMaker() {
           <div className="flex flex-col sm:flex-row gap-3">
             <button
               onClick={addOption}
-              className="flex-1 px-4 py-3 rounded-xl bg-(--primary) text-white font-medium hover:opacity-90 transition cursor-pointer"
+              disabled={pollLocked}
+              className="flex-1 px-4 py-3 rounded-xl bg-(--primary) text-white font-medium hover:opacity-90 transition cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
             >
               <span className="text-2xl"> + </span> Add Option
             </button>
 
             <button
               onClick={createPoll}
-              className="flex-1 px-4 py-3 rounded-xl bg-linear-to-r from-green-600 to-emerald-600 text-white font-medium hover:opacity-90 transition cursor-pointer"
+              disabled={pollLocked}
+              className="flex-1 px-4 py-3 rounded-xl bg-linear-to-r from-green-600 to-emerald-600 text-white font-medium hover:opacity-90 transition cursor-pointer disabled:cursor-not-allowed disabled:opacity-60"
             >
-              Create Poll
+              {pollLocked ? "Poll Created" : "Create Poll"}
             </button>
             <div className="flex items-center gap-2 mt-2">
               <input
@@ -392,7 +446,11 @@ export default function PollMaker() {
             />
             {/* vote points */}
             {message && (
-              <div className="text-center mt-4 space-y-1">
+              <div
+                aria-live="polite"
+                role="status"
+                className="text-center mt-4 space-y-1"
+              >
                 <p className="text-(--foreground) font-semibold">{message}</p>
                 <p className="text-sm text-(--muted-foreground)">
                   ⭐ Points: {points}
@@ -401,7 +459,11 @@ export default function PollMaker() {
             )}
             {/* Insights  */}
             {insight && (
-              <div className="text-center mt-4 space-y-1 text-sm sm:text-base">
+              <div
+                aria-live="polite"
+                role="status"
+                className="text-center mt-4 space-y-1 text-sm sm:text-base"
+              >
                 <p>🔥 Most popular: {insight.popular}</p>
                 <p>🐢 Underdog: {insight.underdog}</p>
                 {insight.close && <p>⚡ Close competition</p>}
@@ -442,10 +504,13 @@ export default function PollMaker() {
             {Object.entries(reactions).map(([type, count]) => {
               const {icon: Icon, color } = reactionIcons[type];
 
+              const reactionLabel = type.charAt(0).toUpperCase() + type.slice(1);
+
               return (
                 <button
                   key={type}
                   onClick={() => addReaction(type)}
+                  aria-label={`${reactionLabel} reaction, ${count}`}
                   className={`px-3 py-2 rounded-full transition cursor-pointer text-sm sm:text-base flex items-center gap-2
 ${
   theme === "neon"
