@@ -14,8 +14,17 @@ export default function SnippetCard({ snippet, onEdit, onDelete, onToggleFavorit
         setMenuOpen(false);
       }
     }
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+      }
+    }
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
   }, []);
 
   const handleCopy = () => {
@@ -36,23 +45,29 @@ export default function SnippetCard({ snippet, onEdit, onDelete, onToggleFavorit
         <h3 className="line-clamp-1 font-semibold text-[var(--foreground)]" title={snippet.title}>{snippet.title}</h3>
 
         <div className="relative" ref={menuRef}>
-          <button onClick={() => setMenuOpen(!menuOpen)} className="rounded-md p-1.5 text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={`More options for ${snippet.title || "this snippet"}`}
+            aria-haspopup="menu"
+            aria-expanded={menuOpen}
+            className="rounded-md p-1.5 text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
+          >
             <MoreVertical size={18} />
           </button>
-          
+
           {menuOpen && (
-            <div className="absolute right-0 top-full z-10 mt-1 w-48 rounded-md border border-[var(--border)] bg-[var(--card)] p-1 shadow-lg">
-              <button onClick={() => { onEdit(snippet); setMenuOpen(false); }} className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm text-[var(--foreground)] hover:bg-[var(--muted)]">
+            <div role="menu" aria-label="Snippet actions" className="absolute right-0 top-full z-10 mt-1 w-48 rounded-md border border-[var(--border)] bg-[var(--card)] p-1 shadow-lg">
+              <button role="menuitem" onClick={() => { onEdit(snippet); setMenuOpen(false); }} className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm text-[var(--foreground)] hover:bg-[var(--muted)]">
                 <Edit size={14} /> Edit
               </button>
-              <button onClick={handleCopy} className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm text-[var(--foreground)] hover:bg-[var(--muted)]">
+              <button role="menuitem" onClick={handleCopy} className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm text-[var(--foreground)] hover:bg-[var(--muted)]">
                 <Copy size={14} /> Copy Content
               </button>
-              <button onClick={() => { onTogglePin(snippet.id); setMenuOpen(false); }} className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm text-[var(--foreground)] hover:bg-[var(--muted)]">
+              <button role="menuitem" onClick={() => { onTogglePin(snippet.id); setMenuOpen(false); }} className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm text-[var(--foreground)] hover:bg-[var(--muted)]">
                 <Pin size={14} /> {snippet.isPinned ? "Unpin" : "Pin"}
               </button>
               <div className="my-1 h-px bg-[var(--border)]"></div>
-              <button onClick={() => { onDelete(snippet.id); setMenuOpen(false); }} className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30">
+              <button role="menuitem" onClick={() => { onDelete(snippet.id); setMenuOpen(false); }} className="flex w-full items-center gap-2 rounded-sm px-3 py-2 text-left text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30">
                 <Trash2 size={14} /> Delete
               </button>
             </div>

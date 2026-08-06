@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, IndianRupee, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   DEFAULT_MIX,
   GATEWAY_DEFAULTS,
@@ -58,7 +59,7 @@ export default function ToolHome() {
   const [averageTicket, setAverageTicket] = useState("1200");
   const [mix, setMix] = useState(seedMix);
   const [gateways, setGateways] = useState(seedGateways);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const numericMix = useMemo(
     () => Object.fromEntries(RAILS.map((rail) => [rail.id, toNumber(mix[rail.id])])),
@@ -96,23 +97,24 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, comparison, monthlyVolume, averageTicket, zeroShare]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "gateway fee comparison" });
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset volume, payment mix and all rate cards to their defaults? This will discard your current values.",
+      )
+    ) {
+      return;
+    }
     setMonthlyVolume("2500000");
     setAverageTicket("1200");
     setMix(seedMix());
     setGateways(seedGateways());
-    setCopied(false);
+    resetCopyState();
   };
 
   const updateRate = (gatewayId, railId, value) => {
@@ -121,6 +123,22 @@ export default function ToolHome() {
         gateway.id === gatewayId
           ? { ...gateway, rates: { ...gateway.rates, [railId]: toNumber(value) } }
           : gateway,
+      ),
+    );
+  };
+
+  const updateFlatFee = (gatewayId, value) => {
+    setGateways((prev) =>
+      prev.map((gateway) =>
+        gateway.id === gatewayId ? { ...gateway, flatFeePerTxn: toNumber(value) } : gateway,
+      ),
+    );
+  };
+
+  const updateMonthlyFee = (gatewayId, value) => {
+    setGateways((prev) =>
+      prev.map((gateway) =>
+        gateway.id === gatewayId ? { ...gateway, monthlyFee: toNumber(value) } : gateway,
       ),
     );
   };
@@ -251,22 +269,25 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               aria-label="Copy the gateway fee comparison"
-              className={GHOST_BTN}
+              className={PRIMARY_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy comparison"}
+              {isCopied("result") ? "Copied!" : "Copy comparison"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
         </div>
+        <span aria-live="polite" role="status" className="sr-only">
+          {announcement}
+        </span>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
@@ -302,6 +323,7 @@ export default function ToolHome() {
                   <th scope="col" className="py-2 pr-3 text-right font-semibold">Fee ex GST</th>
                   <th scope="col" className="py-2 pr-3 text-right font-semibold">GST</th>
                   <th scope="col" className="py-2 pr-3 text-right font-semibold">Total / month</th>
+                  <th scope="col" className="py-2 pr-3 text-right font-semibold">Total / year</th>
                   <th scope="col" className="py-2 text-right font-semibold">Effective</th>
                 </tr>
               </thead>
@@ -312,6 +334,7 @@ export default function ToolHome() {
                     <td className="py-2 pr-3 text-right">{money(row.feeExGst)}</td>
                     <td className="py-2 pr-3 text-right text-[var(--muted-foreground)]">{money(row.gst)}</td>
                     <td className="py-2 pr-3 text-right font-semibold">{money(row.totalFee)}</td>
+                    <td className="py-2 pr-3 text-right text-[var(--muted-foreground)]">{money(row.annualFee)}</td>
                     <td className="py-2 text-right">{NUM.format(row.effectiveRatePct)}%</td>
                   </tr>
                 ))}
@@ -339,12 +362,45 @@ export default function ToolHome() {
                   className="h-5 w-5 accent-[var(--primary)]"
                 />
                 {gateway.name}
-                {gateway.flatFeePerTxn > 0 ? (
-                  <span className="text-xs font-normal text-[var(--muted-foreground)]">
-                    + {money2(gateway.flatFeePerTxn)} per transaction
-                  </span>
-                ) : null}
               </label>
+              <div className="mt-3 grid gap-3 sm:grid-cols-2">
+                <div>
+                  <label
+                    className="block text-xs font-semibold text-[var(--muted-foreground)]"
+                    htmlFor={`flat-${gateway.id}`}
+                  >
+                    Flat fee per transaction (INR)
+                  </label>
+                  <input
+                    id={`flat-${gateway.id}`}
+                    className={`mt-1 ${INPUT_CLASS}`}
+                    type="number"
+                    inputMode="decimal"
+                    min="0"
+                    step="0.5"
+                    value={gateway.flatFeePerTxn}
+                    onChange={(event) => updateFlatFee(gateway.id, event.target.value)}
+                  />
+                </div>
+                <div>
+                  <label
+                    className="block text-xs font-semibold text-[var(--muted-foreground)]"
+                    htmlFor={`monthly-${gateway.id}`}
+                  >
+                    Monthly platform fee (INR)
+                  </label>
+                  <input
+                    id={`monthly-${gateway.id}`}
+                    className={`mt-1 ${INPUT_CLASS}`}
+                    type="number"
+                    inputMode="decimal"
+                    min="0"
+                    step="100"
+                    value={gateway.monthlyFee}
+                    onChange={(event) => updateMonthlyFee(gateway.id, event.target.value)}
+                  />
+                </div>
+              </div>
               <div className="mt-3 grid gap-3 sm:grid-cols-2">
                 {RAILS.filter((rail) => !rail.zeroMdr).map((rail) => (
                   <div key={rail.id}>

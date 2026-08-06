@@ -50,7 +50,14 @@ export default function ToolHome() {
   const [revealElapsed, setRevealElapsed] = useState(0);
   const [copied, setCopied] = useState(false);
 
-  const stareSeconds = toNumber(stare);
+  const rawStareSeconds = toNumber(stare);
+  // Clamp before it feeds the live countdown so the experiment can never run
+  // longer than the cap this tool advertises (predictAfterimage clamps the
+  // same way internally, so the reported "adaptation after Ns" always
+  // matches how long the countdown actually ran).
+  const stareSeconds = Number.isFinite(rawStareSeconds)
+    ? Math.min(rawStareSeconds, MAX_STARE_SECONDS)
+    : rawStareSeconds;
 
   const result = useMemo(
     () => predictAfterimage({ hex, stareSeconds }),
@@ -81,12 +88,21 @@ export default function ToolHome() {
   }, [phase, elapsed, stareSeconds]);
 
   useEffect(() => {
-    if (phase !== "reveal") return undefined;
+    if (phase !== "reveal" || hasError) return undefined;
+    const startStrength = result.strength;
     const id = setInterval(() => {
-      setRevealElapsed((value) => value + TICK_MS / 1000);
+      setRevealElapsed((value) => {
+        const next = value + TICK_MS / 1000;
+        // Stop ticking once the modelled fade has fully settled instead of
+        // re-rendering forever while the tab sits open on the reveal field.
+        if (fadeAt(startStrength, next) <= 0) {
+          clearInterval(id);
+        }
+        return next;
+      });
     }, TICK_MS);
     return () => clearInterval(id);
-  }, [phase]);
+  }, [phase, hasError, result.strength]);
 
   const fade = hasError ? 0 : fadeAt(result.strength, revealElapsed);
   const remaining = Math.max(0, (Number.isFinite(stareSeconds) ? stareSeconds : 0) - elapsed);
@@ -161,18 +177,20 @@ export default function ToolHome() {
             <div className="mt-2 flex gap-2">
               <input
                 id="stimulus-hex"
-                className="h-11 w-14 shrink-0 cursor-pointer rounded-md border border-[var(--border)] bg-[var(--background)] p-1 focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none"
+                className="h-11 w-14 shrink-0 cursor-pointer rounded-md border border-[var(--border)] bg-[var(--background)] p-1 focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
                 type="color"
                 value={result.error ? DEFAULTS.hex : result.stimulusHex}
                 onChange={(event) => setHex(event.target.value)}
+                disabled={phase !== "idle"}
               />
               <input
                 id="stimulus-hex-text"
                 aria-label="Stimulus colour as a hex code"
-                className={INPUT_CLASS}
+                className={`${INPUT_CLASS} disabled:cursor-not-allowed disabled:opacity-50`}
                 type="text"
                 value={hex}
                 onChange={(event) => setHex(event.target.value)}
+                disabled={phase !== "idle"}
               />
             </div>
           </div>
@@ -182,7 +200,7 @@ export default function ToolHome() {
             </label>
             <input
               id="stare-seconds"
-              className={`mt-2 ${INPUT_CLASS}`}
+              className={`mt-2 ${INPUT_CLASS} disabled:cursor-not-allowed disabled:opacity-50`}
               type="number"
               inputMode="numeric"
               min="1"
@@ -190,6 +208,7 @@ export default function ToolHome() {
               step="1"
               value={stare}
               onChange={(event) => setStare(event.target.value)}
+              disabled={phase !== "idle"}
             />
           </div>
           <div className="sm:col-span-2">
@@ -198,9 +217,10 @@ export default function ToolHome() {
             </label>
             <select
               id="model"
-              className={`mt-2 ${INPUT_CLASS}`}
+              className={`mt-2 ${INPUT_CLASS} disabled:cursor-not-allowed disabled:opacity-50`}
               value={model}
               onChange={(event) => setModel(event.target.value)}
+              disabled={phase !== "idle"}
             >
               <option value="inverse">sRGB inverse (255 − channel) — photographic negative</option>
               <option value="rotated">Hue + 180° in HSL — designer&apos;s complement</option>

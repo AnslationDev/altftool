@@ -17,7 +17,7 @@ const seo = {
   faqs: [
     [
       "What colour is the afterimage of red?",
-      "Cyan. The sRGB inverse of #FF0000 is #00FFFF, and a 180-degree hue rotation gives the same answer for a fully saturated colour. Green gives magenta, blue gives yellow, and yellow gives blue-violet.",
+      "Cyan. The sRGB inverse of #FF0000 is #00FFFF, and a 180-degree hue rotation gives the same answer for a fully saturated colour. Green gives magenta, blue gives yellow, and yellow gives blue.",
     ],
     [
       "How long should I stare to get an afterimage?",

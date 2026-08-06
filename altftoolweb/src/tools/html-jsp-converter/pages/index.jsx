@@ -15,7 +15,7 @@ import {
   UploadCloud,
   Wand2,
 } from "lucide-react";
-import { safeCopyText } from "@/shared/utils/clipboard";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const SAMPLE_HTML = `<!doctype html>
 <html lang="en">
@@ -72,11 +72,16 @@ const DEFAULT_OPTIONS = {
   stripDirectives: true,
   scriptletsAsComments: true,
   jspCommentsToHtml: true,
+  elToPlaceholders: true,
 };
 
 function countLines(value) {
   if (!value.trim()) return 0;
-  return value.split(/\r\n|\r|\n/).length;
+  // A single trailing newline (the common case for pasted/uploaded files)
+  // shouldn't count as an extra blank line -- strip exactly one before
+  // splitting so the line count matches what an editor's status bar shows.
+  const withoutTrailingNewline = value.replace(/(\r\n|\r|\n)$/, "");
+  return withoutTrailingNewline.split(/\r\n|\r|\n/).length;
 }
 
 function countMatches(value, regex) {
@@ -89,7 +94,12 @@ function formatNumber(value) {
 
 function rewriteAssetPaths(code) {
   let rewrites = 0;
-  const output = code.replace(/\b(src|href|action)=("([^"]*)"|'([^']*)')/gi, (full, attr, quoted, doubleValue, singleValue) => {
+  // A plain \b word boundary also fires right after a hyphen, so it was
+  // matching data-src=/data-href=/data-action= (custom data-* hooks) as if
+  // they were the literal src/href/action attributes. Requiring that the
+  // attribute name isn't itself preceded by a word character or hyphen
+  // restricts this to the real HTML attributes.
+  const output = code.replace(/(?<![\w-])(src|href|action)=("([^"]*)"|'([^']*)')/gi, (full, attr, quoted, doubleValue, singleValue) => {
     const value = doubleValue ?? singleValue ?? "";
     const quote = quoted?.[0] || '"';
 
@@ -217,19 +227,50 @@ function jspToHtml(input, options) {
     warnings.push(`${scriptlets} JSP scriptlet${scriptlets > 1 ? "s were" : " was"} converted to HTML comment${scriptlets > 1 ? "s" : ""}.`);
   }
 
-  const elConverted = convertElToHandlebars(output);
-  output = elConverted.output;
-  if (elConverted.placeholders) {
-    messages.push(`${elConverted.placeholders} EL placeholder${elConverted.placeholders > 1 ? "s" : ""} converted to HTML-style tokens.`);
+  if (options.elToPlaceholders) {
+    const elConverted = convertElToHandlebars(output);
+    output = elConverted.output;
+    if (elConverted.placeholders) {
+      messages.push(`${elConverted.placeholders} EL placeholder${elConverted.placeholders > 1 ? "s" : ""} converted to HTML-style tokens.`);
+    }
   }
 
   const jspIncludes = countMatches(output, /<jsp:include\b[\s\S]*?\/?>/gi);
-  output = output.replace(/<jsp:include\b([^>]*)\/?>/gi, (_, attrs) => `<!-- jsp:include${attrs} -->`);
+  // [^>]* was greedy, so for a self-closing tag it swallowed the trailing
+  // "/" itself before the optional \/? had a chance to match, leaving a
+  // stray "/" right before the closing "-->" of the comment. The lazy
+  // quantifier plus an explicit \s* stops it from consuming the slash.
+  output = output.replace(/<jsp:include\b([^>]*?)\s*\/?>/gi, (_, attrs) => `<!-- jsp:include${attrs} -->`);
   if (jspIncludes) messages.push(`${jspIncludes} jsp:include tag${jspIncludes > 1 ? "s" : ""} converted to comments.`);
 
   const jstlTags = countMatches(output, /<\/?c:[^>]+>/gi);
   output = output
-    .replace(/<c:out\b[^>]*value=["']\{\{\s*([^}"']+?)\s*\}\}["'][^>]*\/?>/gi, "{{ $1 }}")
+    // <c:out> is special-cased into an inline {{ expr }} placeholder rather
+    // than a comment pair, because by this point convertElToHandlebars has
+    // already turned its value="${expr}" attribute into value="{{ expr }}".
+    // The common bodied form (<c:out value="...">default text</c:out>) used
+    // to only match the opening tag, leaving a raw, unconverted </c:out> in
+    // the HTML output and silently dropping the default/escapeXml info. This
+    // now consumes the whole element (self-closing or bodied) in one match
+    // and folds any default text / escapeXml flag into a labelled comment
+    // instead of discarding it.
+    .replace(
+      /<c:out\b([^>]*?)\/>|<c:out\b([^>]*?)>([\s\S]*?)<\/c:out>/gi,
+      (full, selfAttrs, bodyAttrs, body) => {
+        const attrs = selfAttrs ?? bodyAttrs ?? "";
+        const valueMatch = attrs.match(/value=["']\{\{\s*([^}"']+?)\s*\}\}["']/i);
+        if (!valueMatch) return full;
+        const expr = valueMatch[1];
+        const defaultAttrMatch = attrs.match(/\bdefault=["']([^"']*)["']/i);
+        const escapeXmlMatch = attrs.match(/\bescapeXml=["']([^"']*)["']/i);
+        const fallbackText = (body && body.trim()) || (defaultAttrMatch ? defaultAttrMatch[1] : "");
+        const notes = [];
+        if (fallbackText) notes.push(`default "${fallbackText}"`);
+        if (escapeXmlMatch) notes.push(`escapeXml=${escapeXmlMatch[1]}`);
+        const suffix = notes.length ? ` <!-- c:out ${notes.join(", ")} -->` : "";
+        return `{{ ${expr} }}${suffix}`;
+      },
+    )
     .replace(/<c:if\b([^>]*)>/gi, (_, attrs) => `<!-- c:if${attrs} -->`)
     .replace(/<\/c:if>/gi, "<!-- /c:if -->")
     .replace(/<c:forEach\b([^>]*)>/gi, (_, attrs) => `<!-- c:forEach${attrs} -->`)
@@ -279,6 +320,7 @@ function ToggleOption({ active, label, helper, onClick }) {
     <button
       type="button"
       onClick={onClick}
+      aria-pressed={active}
       className={`rounded-lg border p-3 text-left transition ${
         active
           ? "border-blue-500 bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-200"
@@ -298,7 +340,7 @@ export default function HTMLJSPConverter() {
   const [mode, setMode] = useState("htmlToJsp");
   const [input, setInput] = useState(SAMPLE_HTML);
   const [options, setOptions] = useState(DEFAULT_OPTIONS);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard({ resetMs: 1400 });
   const fileRef = useRef(null);
 
   const result = useMemo(() => {
@@ -327,9 +369,7 @@ export default function HTMLJSPConverter() {
   };
 
   const handleCopy = async () => {
-    await safeCopyText(output);
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1400);
+    await copyToClipboard("output", output, { label: "converted output" });
   };
 
   const handleSwap = () => {
@@ -406,8 +446,17 @@ export default function HTMLJSPConverter() {
                 key={key}
                 type="button"
                 onClick={() => {
+                  const nextSample = key === "htmlToJsp" ? SAMPLE_HTML : SAMPLE_JSP;
+                  const isUntouchedSample = input === SAMPLE_HTML || input === SAMPLE_JSP;
+                  const wouldDiscardWork = input.trim().length > 0 && !isUntouchedSample && input !== nextSample;
+                  if (
+                    wouldDiscardWork &&
+                    !window.confirm("Switching direction loads a sample and replaces the source editor. Discard your current input?")
+                  ) {
+                    return;
+                  }
                   setMode(key);
-                  setInput(key === "htmlToJsp" ? SAMPLE_HTML : SAMPLE_JSP);
+                  setInput(nextSample);
                 }}
                 className={`rounded-lg border px-4 py-3 text-left transition ${
                   mode === key
@@ -472,7 +521,7 @@ export default function HTMLJSPConverter() {
                   <ToggleOption active={options.stripDirectives} label="Strip directives" helper="Removes JSP page/taglib directives." onClick={() => setOption("stripDirectives")} />
                   <ToggleOption active={options.scriptletsAsComments} label="Scriptlets as comments" helper="Keeps scriptlet notes visible in HTML." onClick={() => setOption("scriptletsAsComments")} />
                   <ToggleOption active={options.jspCommentsToHtml} label="JSP comments to HTML" helper="Turns JSP comments into HTML comments." onClick={() => setOption("jspCommentsToHtml")} />
-                  <ToggleOption active label="EL to placeholders" helper="Converts ${'{value}'} into {{ value }}." onClick={() => {}} />
+                  <ToggleOption active={options.elToPlaceholders} label="EL to placeholders" helper="Converts ${'{value}'} into {{ value }}." onClick={() => setOption("elToPlaceholders")} />
                 </>
               )}
             </div>
@@ -500,8 +549,11 @@ export default function HTMLJSPConverter() {
                   disabled={!output}
                 >
                   <Clipboard className="h-4 w-4" />
-                  {copied ? "Copied" : "Copy"}
+                  {isCopied("output") ? "Copied" : "Copy"}
                 </button>
+                <span aria-live="polite" role="status" className="sr-only">
+                  {announcement}
+                </span>
                 <button
                   type="button"
                   className="btn-primary min-w-[132px] shrink-0 justify-center whitespace-nowrap"
@@ -530,7 +582,7 @@ export default function HTMLJSPConverter() {
                   <p className="text-sm text-[var(--muted-foreground)]">Quick checklist from this conversion.</p>
                 </div>
               </div>
-              <ul className="mt-4 space-y-3">
+              <ul aria-live="polite" role="status" className="mt-4 space-y-3">
                 {result.messages.map((message) => (
                   <li key={message} className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-100">
                     {message}
@@ -549,8 +601,15 @@ export default function HTMLJSPConverter() {
                   <p className="text-sm text-[var(--muted-foreground)]">Items to check before shipping code.</p>
                 </div>
               </div>
-              <ul className="mt-4 space-y-3">
-                {(result.warnings.length ? result.warnings : ["No risky JSP scriptlets detected in this pass."]).map((warning) => (
+              <ul aria-live="polite" role="status" className="mt-4 space-y-3">
+                {(result.warnings.length
+                  ? result.warnings
+                  : [
+                      mode === "jspToHtml"
+                        ? "No risky JSP scriptlets detected in this pass."
+                        : "No <script> tags found that need review before deploying as JSP.",
+                    ]
+                ).map((warning) => (
                   <li key={warning} className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-100">
                     {warning}
                   </li>

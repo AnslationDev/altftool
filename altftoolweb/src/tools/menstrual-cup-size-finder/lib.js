@@ -36,7 +36,7 @@ export const CERVIX_BANDS = [
     maxMm: 44.9,
     fingerCue: "You reach it at about the first knuckle.",
     lengthAdvice: "A short cup, roughly 45 mm or less in body length, or a stemless design.",
-    maxCupLengthMm: 50,
+    maxCupLengthMm: 45,
   },
   {
     id: "average",
@@ -51,7 +51,7 @@ export const CERVIX_BANDS = [
     label: "High cervix",
     maxMm: Infinity,
     fingerCue: "You can barely reach it, or cannot reach it at all.",
-    lengthAdvice: "A longer cup, roughly 70 mm or more, or one with a long stem you can trim later.",
+    lengthAdvice: "A longer cup, roughly 70 to 80 mm in total length, or one with a long stem you can trim later.",
     maxCupLengthMm: 80,
   },
 ];
@@ -91,7 +91,7 @@ export const CAPACITY_ML = { small: { min: 20, max: 30 }, large: { min: 25, max:
 /** A cup should be emptied at least this often (standard cup labelling). */
 export const CUP_MAX_WEAR_HOURS = 12;
 
-/** Total blood loss reference used for the capacity note. */
+/** Total blood loss reference (mL per cycle) used for the heavy-flow note. */
 export const BLOOD_LOSS_REFERENCE = { typicalMinMl: 30, typicalMaxMl: 40, heavyThresholdMl: 80 };
 
 export const LIMITS = {
@@ -154,7 +154,7 @@ export function findCupSize({
   const notes = [];
   if (heavyFlow) {
     notes.push(
-      `On a heavy flow, look for a high-capacity cup within your size — a ${capacity.min}-${capacity.max} mL cup still needs emptying every ${CUP_MAX_WEAR_HOURS} hours at most.`,
+      `On a heavy flow (total blood loss above about ${BLOOD_LOSS_REFERENCE.heavyThresholdMl} mL a cycle is generally considered heavy), look for a high-capacity cup within your size — a ${capacity.min}-${capacity.max} mL cup still needs emptying every ${CUP_MAX_WEAR_HOURS} hours at most.`,
     );
   }
   if (hasIud) {
@@ -169,7 +169,11 @@ export function findCupSize({
     notes.push("With a high cervix, a short cup can be hard to reach at removal; a long stem you can trim later is easier to start with.");
   }
   if (age < 18) {
-    notes.push("If you are new to internal products, a small, soft cup is the usual starting point, and a parent, pharmacist or clinician can help you choose.");
+    notes.push(
+      sizeId === "small"
+        ? "If you are new to internal products, a small, soft cup is the usual starting point, and a parent, pharmacist or clinician can help you choose."
+        : "Being under 18 does not change the larger diameter suggested above if you have had a vaginal birth — a soft, flexible cup in that size is still the usual starting point, and a parent, pharmacist or clinician can help you choose.",
+    );
   }
 
   return {

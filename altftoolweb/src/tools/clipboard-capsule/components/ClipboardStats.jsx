@@ -8,10 +8,10 @@ export default function ClipboardStats({ snippets, categories }) {
   const categoryCount = categories.length;
 
   const stats = [
-    { label: "Total Snippets", value: total, icon: <ClipboardList size={20} className="text-blue-500" /> },
-    { label: "Favorites", value: favorites, icon: <Star size={20} className="text-amber-500" /> },
-    { label: "Total Characters", value: totalCharacters.toLocaleString(), icon: <Type size={20} className="text-gray-500" /> },
-    { label: "Categories", value: categoryCount, icon: <Layers size={20} className="text-emerald-500" /> },
+    { label: "Total Snippets", value: total, icon: <ClipboardList size={20} className="text-info-text" /> },
+    { label: "Favorites", value: favorites, icon: <Star size={20} className="text-warning-text" /> },
+    { label: "Total Characters", value: totalCharacters.toLocaleString(), icon: <Type size={20} className="text-muted-foreground" /> },
+    { label: "Categories", value: categoryCount, icon: <Layers size={20} className="text-success-text" /> },
   ];
 
   return (

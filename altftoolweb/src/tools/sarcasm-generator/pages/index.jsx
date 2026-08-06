@@ -1,7 +1,9 @@
 "use client";
 
 import React, { useState, useCallback } from "react";
-import { MessageCircle, RefreshCw, Copy, Heart, TrendingUp } from "lucide-react";
+import { MessageCircle, RefreshCw, Copy, Heart, Check } from "lucide-react";
+
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const CONTEXTS = [
   { id: "work", label: "Work", icon: "💼" },
@@ -67,21 +69,19 @@ const RESPONSES = {
 export default function ToolHome() {
   const [context, setContext] = useState("general");
   const [response, setResponse] = useState("");
-  const [copied, setCopied] = useState(false);
+  // Snapshot of which context actually produced `response`, so the badge
+  // can't drift out of sync if the user switches tabs without regenerating.
+  const [responseContext, setResponseContext] = useState(null);
   const [favorites, setFavorites] = useState([]);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const generate = useCallback(() => {
     const list = RESPONSES[context] || RESPONSES.general;
     setResponse(list[Math.floor(Math.random() * list.length)]);
+    setResponseContext(context);
   }, [context]);
 
-  const copyResponse = async () => {
-    try {
-      await navigator.clipboard.writeText(response);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {}
-  };
+  const copyResponse = () => copy("response", response, { label: "Sarcastic response" });
 
   const toggleFavorite = () => {
     if (!response) return;
@@ -103,8 +103,14 @@ export default function ToolHome() {
         <div className="rounded-2xl border border-(--border) bg-(--card) p-6 shadow-lg">
           <div className="mb-6 flex flex-wrap gap-2">
             {CONTEXTS.map((c) => (
-              <button key={c.id} onClick={() => setContext(c.id)} className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all ${context === c.id ? "bg-(--primary) text-white shadow-md" : "border border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary)"}`}>
-                <span>{c.icon}</span> {c.label}
+              <button
+                key={c.id}
+                type="button"
+                onClick={() => setContext(c.id)}
+                aria-pressed={context === c.id}
+                className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all ${context === c.id ? "bg-(--primary) text-white shadow-md" : "border border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary)"}`}
+              >
+                <span aria-hidden="true">{c.icon}</span> {c.label}
               </button>
             ))}
           </div>
@@ -117,15 +123,42 @@ export default function ToolHome() {
         {response && (
           <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 rounded-2xl border-2 border-(--border) bg-(--card) p-6 shadow-lg" style={{ borderColor: "var(--primary)" }}>
             <div className="mb-4 flex items-start justify-between">
-              <span className="rounded-full bg-(--muted) px-3 py-1 text-xs font-semibold uppercase text-(--muted-foreground)">{CONTEXTS.find((c) => c.id === context)?.label}</span>
+              <span className="rounded-full bg-(--muted) px-3 py-1 text-xs font-semibold uppercase text-(--muted-foreground)">{CONTEXTS.find((c) => c.id === responseContext)?.label}</span>
               <div className="flex gap-2">
-                <button onClick={toggleFavorite} className={`rounded-lg p-2 transition-all ${favorites.includes(response) ? "text-pink-500" : "text-(--muted-foreground) hover:bg-(--muted)"}`}><Heart className="h-4 w-4" /></button>
-                <button onClick={generate} className="rounded-lg p-2 text-(--muted-foreground) hover:bg-(--muted)"><RefreshCw className="h-4 w-4" /></button>
-                <button onClick={copyResponse} className="rounded-lg p-2 text-(--muted-foreground) hover:bg-(--muted)"><Copy className="h-4 w-4" /></button>
+                <button
+                  type="button"
+                  onClick={toggleFavorite}
+                  aria-pressed={favorites.includes(response)}
+                  aria-label={favorites.includes(response) ? "Remove from favorites" : "Add to favorites"}
+                  className={`rounded-lg p-2 transition-all ${favorites.includes(response) ? "text-(--danger-text)" : "text-(--muted-foreground) hover:bg-(--muted)"}`}
+                >
+                  <Heart className="h-4 w-4" fill={favorites.includes(response) ? "currentColor" : "none"} />
+                </button>
+                <button
+                  type="button"
+                  onClick={generate}
+                  aria-label="Generate another response"
+                  className="rounded-lg p-2 text-(--muted-foreground) hover:bg-(--muted)"
+                >
+                  <RefreshCw className="h-4 w-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={copyResponse}
+                  aria-label="Copy response to clipboard"
+                  className="rounded-lg p-2 text-(--muted-foreground) hover:bg-(--muted)"
+                >
+                  {isCopied("response") ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                </button>
               </div>
             </div>
-            <p className="text-xl font-semibold leading-relaxed text-(--foreground) italic">"{response}"</p>
-            {copied && <p className="mt-2 text-sm text-(--primary)">Copied to clipboard!</p>}
+            <p aria-live="polite" role="status" className="text-xl font-semibold leading-relaxed text-(--foreground) italic">
+              "{response}"
+            </p>
+            {isCopied("response") && <p className="mt-2 text-sm text-(--primary)">Copied to clipboard!</p>}
+            <span aria-live="polite" role="status" className="sr-only">
+              {announcement}
+            </span>
           </div>
         )}
 
@@ -136,7 +169,14 @@ export default function ToolHome() {
               {favorites.map((f, i) => (
                 <div key={i} className="flex items-start justify-between rounded-xl bg-(--muted) p-3">
                   <p className="text-sm text-(--foreground)">{f}</p>
-                  <button onClick={() => setFavorites((prev) => prev.filter((_, j) => j !== i))} className="ml-2 text-xs text-(--muted-foreground) hover:text-red-500">✕</button>
+                  <button
+                    type="button"
+                    onClick={() => setFavorites((prev) => prev.filter((_, j) => j !== i))}
+                    aria-label="Remove this favorite"
+                    className="ml-2 text-xs text-(--muted-foreground) hover:text-(--danger-text)"
+                  >
+                    ✕
+                  </button>
                 </div>
               ))}
             </div>

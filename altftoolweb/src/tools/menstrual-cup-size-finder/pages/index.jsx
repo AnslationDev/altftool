@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Droplets, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import {
   CERVIX_BANDS,
@@ -46,7 +47,7 @@ export default function ToolHome() {
   const [pelvicFloor, setPelvicFloor] = useState(DEFAULTS.pelvicFloor);
   const [heavyFlow, setHeavyFlow] = useState(DEFAULTS.heavyFlow);
   const [hasIud, setHasIud] = useState(DEFAULTS.hasIud);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard({ resetMs: 1500 });
 
   const result = useMemo(
     () =>
@@ -79,23 +80,19 @@ export default function ToolHome() {
 
   const copyResult = async () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    await copyToClipboard("result", summary, { label: "cup sizing guidance" });
   };
 
   const reset = () => {
+    if (!window.confirm("Reset all inputs, including any measured cervix height, back to the defaults?")) {
+      return;
+    }
     setAge(DEFAULTS.age);
     setVaginalBirth(DEFAULTS.vaginalBirth);
     setCervixMm(DEFAULTS.cervixMm);
     setPelvicFloor(DEFAULTS.pelvicFloor);
     setHeavyFlow(DEFAULTS.heavyFlow);
     setHasIud(DEFAULTS.hasIud);
-    setCopied(false);
   };
 
   const rows = [
@@ -242,7 +239,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -259,17 +260,20 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy cup sizing guidance"
+              aria-label={isCopied("result") ? "Cup sizing guidance copied to clipboard" : "Copy cup sizing guidance"}
               className={GHOST_BTN}
               disabled={!ok}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
+            <span aria-live="polite" role="status" className="sr-only">
+              {announcement}
+            </span>
             <button
               type="button"
               onClick={reset}

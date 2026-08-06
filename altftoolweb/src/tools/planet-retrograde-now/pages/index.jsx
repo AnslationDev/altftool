@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useSyncExternalStore } from "react";
 import { Check, Copy, Orbit, RotateCcw } from "lucide-react";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 import { PLANETS, cycleTimeline, getAllRetrogradeStates } from "../lib";
 
@@ -132,7 +133,7 @@ function Timeline({ timeline }) {
 export default function ToolHome() {
   const [chosenDate, setChosenDate] = useState(null);
   const [selected, setSelected] = useState("Mercury");
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard({ resetMs: 1800 });
 
   const todayUtc = useSyncExternalStore(subscribeToNothing, readTodayUtc, readNoDate);
   const dateValue = chosenDate ?? todayUtc;
@@ -170,13 +171,9 @@ export default function ToolHome() {
       `Retrograde arc: ${num2.format(focusCycle.arcDegrees)}° over ${num0.format(focusCycle.retrogradeDays)} days`,
       "Computed from apparent geocentric ecliptic longitude (ecliptic and equinox of date), astronomy-engine v2.",
     ];
-    try {
-      await navigator.clipboard.writeText(lines.join("\n"));
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
-    } catch {
-      setCopied(false);
-    }
+    await copyToClipboard("summary", lines.join("\n"), {
+      label: `${focus.body} retrograde summary`,
+    });
   }
 
   function reset() {
@@ -238,15 +235,26 @@ export default function ToolHome() {
             className={PRIMARY_BTN}
             onClick={copySummary}
             disabled={!focusCycle}
-            aria-label={`Copy the ${selected} retrograde summary to the clipboard`}
+            aria-label={
+              isCopied("summary")
+                ? `${selected} retrograde summary copied to the clipboard`
+                : `Copy the ${selected} retrograde summary to the clipboard`
+            }
           >
-            {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-            {copied ? "Copied!" : "Copy summary"}
+            {isCopied("summary") ? (
+              <Check className="h-4 w-4" aria-hidden="true" />
+            ) : (
+              <Copy className="h-4 w-4" aria-hidden="true" />
+            )}
+            {isCopied("summary") ? "Copied!" : "Copy summary"}
           </button>
           <button type="button" className={GHOST_BTN} onClick={reset} aria-label="Reset to today and Mercury">
             <RotateCcw className="h-4 w-4" aria-hidden="true" />
             Reset
           </button>
+          <span aria-live="polite" role="status" className="sr-only">
+            {announcement}
+          </span>
         </div>
       </section>
 
@@ -259,7 +267,12 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className={`${CARD_CLASS} mt-4`} aria-label={`${selected} retrograde status`}>
+      <section
+        className={`${CARD_CLASS} mt-4`}
+        aria-label={`${selected} retrograde status`}
+        aria-live="polite"
+        role="status"
+      >
         {!dateValue ? (
           <p className="text-sm text-[var(--muted-foreground)]">Reading the clock…</p>
         ) : failed || !focus || focus.error ? (
@@ -288,6 +301,12 @@ export default function ToolHome() {
               on {fmtDay(observedAt)} at 12:00 UT, at {focus.position.label}, moving{" "}
               {num4.format(focus.dailyMotion)}° per day.
             </p>
+            {focus.phaseEndsAt ? (
+              <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                {PHASE_LABEL[focus.phase] ?? focus.phase} phase ends {fmtDay(focus.phaseEndsAt)} — in{" "}
+                {num0.format(focus.daysToPhaseEnd)} days.
+              </p>
+            ) : null}
 
             <Timeline timeline={timeline} />
 
@@ -311,12 +330,28 @@ export default function ToolHome() {
               <Row
                 label="Pre-retrograde shadow begins"
                 hint="reaches the station-direct degree"
-                value={focusCycle ? fmtStamp(focusCycle.preShadowStart) : DASH}
+                value={
+                  focusCycle
+                    ? `${fmtStamp(focusCycle.preShadowStart)}${
+                        focusCycle.preShadowDays != null
+                          ? ` · ${num0.format(focusCycle.preShadowDays)} days before the station`
+                          : ""
+                      }`
+                    : DASH
+                }
               />
               <Row
                 label="Post-retrograde shadow ends"
                 hint="regains the station-retrograde degree"
-                value={focusCycle ? fmtStamp(focusCycle.postShadowEnd) : DASH}
+                value={
+                  focusCycle
+                    ? `${fmtStamp(focusCycle.postShadowEnd)}${
+                        focusCycle.postShadowDays != null
+                          ? ` · ${num0.format(focusCycle.postShadowDays)} days after the station`
+                          : ""
+                      }`
+                    : DASH
+                }
               />
               <Row
                 label="Retrograde arc"
@@ -418,8 +453,10 @@ export default function ToolHome() {
             computed for the ecliptic and equinox of date, corrected for light travel time and annual
             aberration, and the planet is called retrograde whenever dλ/dt &lt; 0. Stations are the
             instants where dλ/dt = 0, located by bracketing the sign change and bisecting to one
-            minute of time. Ephemeris: astronomy-engine v2 (VSOP87 for Mercury–Neptune; the analytic
-            Pluto model, defined 1700–2200, which is why this page is capped at 1900–2100).
+            minute of time. Ephemeris: astronomy-engine v2 (VSOP87 for Mercury–Neptune; Pluto from a
+            numerically-integrated gravity simulation). Every model stays accurate well outside
+            1900–2100, but this page still caps input dates to that range to stay inside a
+            comfortably interior, well-tested window.
           </p>
           <p>
             The shadow windows are geometry, not forecast. The pre-retrograde shadow opens when the

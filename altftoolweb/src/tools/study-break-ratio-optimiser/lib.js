@@ -67,16 +67,29 @@ export function pickProtocol(focusSpanMinutes) {
     return eligible.reduce((a, b) => (b.workMinutes > a.workMinutes ? b : a));
   }
   const work = Math.max(1, Math.round(focusSpanMinutes));
+  // Rounding the raw span can land exactly on a documented protocol's work
+  // minutes (e.g. a 24.6-24.99 min span rounds to 25) — prefer the real,
+  // sourced protocol over building a "custom" one that would just duplicate it.
+  const roundedEligible = PROTOCOLS.filter((p) => p.workMinutes <= work);
+  if (roundedEligible.length > 0) {
+    return roundedEligible.reduce((a, b) => (b.workMinutes > a.workMinutes ? b : a));
+  }
   const brk = Math.max(
     MIN_CUSTOM_BREAK_MINUTES,
     Math.round(work / CUSTOM_RATIO_WORK_PER_BREAK),
   );
+  // Integer break minutes can't always land exactly on a 5:1 ratio (e.g. work
+  // minutes not divisible by 5, or the MIN_CUSTOM_BREAK_MINUTES floor), so the
+  // basis states the ratio this specific plan actually produces instead of
+  // asserting a fixed 5:1 that would be false for most inputs in this range.
+  const actualRatio = Math.round((work / brk) * 10) / 10;
+  const ratioLabel = Number.isInteger(actualRatio) ? `${actualRatio}:1` : `${actualRatio.toFixed(1)}:1`;
   return {
     id: "custom",
     label: `Custom ${work}/${brk}`,
     workMinutes: work,
     breakMinutes: brk,
-    basis: `Built from your focus span at the Pomodoro-style ${CUSTOM_RATIO_WORK_PER_BREAK}:1 work:break ratio.`,
+    basis: `Built from your focus span, modelled on the Pomodoro-style ${CUSTOM_RATIO_WORK_PER_BREAK}:1 work:break ratio — this plan works out to roughly ${ratioLabel}.`,
   };
 }
 
@@ -149,7 +162,9 @@ export function buildBreakPlan({ focusSpanMinutes, totalMinutes }) {
     plannedMinutes: cursor,
     unusedMinutes: total - cursor,
     fullWorkBlocks: fullCycles,
-    // Share of planned time actually spent studying.
-    studySharePercent: Math.round((studyMinutes / cursor) * 1000) / 10,
+    // Share of the user's requested total time actually spent studying (not
+    // just the planned/trimmed time) so this stays consistent with the
+    // "unused time" figure, which is also measured against `total`.
+    studySharePercent: Math.round((studyMinutes / total) * 1000) / 10,
   };
 }

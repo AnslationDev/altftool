@@ -8,9 +8,11 @@ import {
   COMPETITION_COLLAR_KG,
   KG_BARS,
   LB_BARS,
+  MAX_PAIRS_PER_PLATE,
   computePlateLoading,
   defaultInventory,
 } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 2 });
 const DASH = "—";
@@ -39,12 +41,12 @@ export default function ToolHome() {
   const [collar, setCollar] = useState(String(COMPETITION_COLLAR_KG));
   const [target, setTarget] = useState("142.5");
   const [inventory, setInventory] = useState(() => inventoryToState("kg"));
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const bars = unit === "lb" ? LB_BARS : KG_BARS;
   const bar = bars.find((option) => option.id === barId) ?? bars[0];
 
-  const switchUnit = (nextUnit) => {
+  const applyUnitDefaults = (nextUnit) => {
     setUnit(nextUnit);
     setInventory(inventoryToState(nextUnit));
     if (nextUnit === "lb") {
@@ -56,7 +58,23 @@ export default function ToolHome() {
       setCollar(String(COMPETITION_COLLAR_KG));
       setTarget("142.5");
     }
-    setCopied(false);
+    resetCopyState();
+  };
+
+  // Switching units resets the rack, since kg and lb plates come in different
+  // denominations — confirm first if that would discard a custom rack.
+  const handleUnitChange = (nextUnit) => {
+    if (nextUnit === unit) return;
+    const isCustomRack = JSON.stringify(inventory) !== JSON.stringify(inventoryToState(unit));
+    if (
+      isCustomRack &&
+      !window.confirm(
+        "Switching units resets your plate rack to the default stock for that unit (kg and lb plates come in different sizes). Continue?",
+      )
+    ) {
+      return;
+    }
+    applyUnitDefaults(nextUnit);
   };
 
   const result = useMemo(() => {
@@ -72,8 +90,9 @@ export default function ToolHome() {
       barWeight: bar.weight,
       collarWeight,
       inventory: stock.length ? stock : [{ weight: 0, pairs: 0 }],
+      unit,
     });
-  }, [target, collar, inventory, bar]);
+  }, [target, collar, inventory, bar, unit]);
 
   const hasError = Boolean(result.error);
 
@@ -92,18 +111,18 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result, bar, unit]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("result", summary, { label: "Plate loading result" });
 
-  const reset = () => switchUnit("kg");
+  const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the target, collars, bar and plate rack back to the defaults? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
+    applyUnitDefaults(unit);
+  };
 
   const rows = hasError
     ? [
@@ -139,9 +158,9 @@ export default function ToolHome() {
           Barbell Plate Loading Calculator
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-          Weight per side is (target − bar − both collars) ÷ 2, then the plates are picked heaviest
-          first from what your rack actually has. Bar weights and disc sizes follow IWF and IPF
-          competition specifications.
+          Weight per side is (target − bar − both collars) ÷ 2, then the closest achievable weight
+          is found from what your rack actually has, preferring the heaviest plates first. Bar
+          weights and disc sizes follow IWF and IPF competition specifications.
         </p>
       </header>
 
@@ -155,7 +174,7 @@ export default function ToolHome() {
               id="plate-unit"
               className={`mt-2 ${INPUT_CLASS}`}
               value={unit}
-              onChange={(event) => switchUnit(event.target.value)}
+              onChange={(event) => handleUnitChange(event.target.value)}
             >
               <option value="kg">Kilograms</option>
               <option value="lb">Pounds</option>
@@ -225,7 +244,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Loaded bar weight
             </p>
@@ -242,21 +261,21 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the plate loading"
+              aria-label="Copy result to clipboard"
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
               onClick={reset}
-              aria-label="Reset to the default kilogram setup"
+              aria-label="Reset target, collars, bar and rack to defaults"
               className={PRIMARY_BTN}
             >
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
@@ -264,16 +283,23 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span aria-live="polite" role="status" className="sr-only">
+          {announcement}
+        </span>
 
         {!hasError && !result.exact && (
-          <p className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning)]">
+          <p
+            aria-live="polite"
+            role="status"
+            className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning)]"
+          >
             The rack cannot make {NUM.format(result.targetWeight)} {unit} exactly — this is the
             closest loading at or below it, {NUM.format(result.shortfall)} {unit} short.
           </p>
         )}
 
         {!hasError && (
-          <div className="mt-5">
+          <div className="mt-5" aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Per side, sleeve outwards
             </p>
@@ -325,11 +351,22 @@ export default function ToolHome() {
                 type="number"
                 inputMode="numeric"
                 min="0"
-                max="20"
+                max={MAX_PAIRS_PER_PLATE}
                 step="1"
                 value={plate.pairs}
                 onChange={(event) => {
-                  const next = event.target.value;
+                  const raw = event.target.value;
+                  // min/max on a number input only affect the spinner arrows,
+                  // not typed/pasted text, so clamp explicitly — otherwise an
+                  // out-of-range value (e.g. pasted "9999") flows straight
+                  // into state and can render thousands of per-side pills.
+                  let next = raw;
+                  if (raw !== "") {
+                    const parsed = Number(raw);
+                    if (Number.isFinite(parsed)) {
+                      next = String(Math.max(0, Math.min(MAX_PAIRS_PER_PLATE, parsed)));
+                    }
+                  }
                   setInventory((list) =>
                     list.map((row, rowIndex) =>
                       rowIndex === index ? { ...row, pairs: next } : row
@@ -343,9 +380,9 @@ export default function ToolHome() {
       </section>
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
-        Loading is picked heaviest first, which matches how a bar is actually loaded and keeps the
-        largest discs against the sleeve. Check your own bar on a scale — training bars are often a
-        kilogram or two off their marked weight.
+        Loading finds the closest weight your rack can actually make, preferring the largest discs
+        against the sleeve when more than one combination works. Check your own bar on a scale —
+        training bars are often a kilogram or two off their marked weight.
       </p>
     </main>
   );

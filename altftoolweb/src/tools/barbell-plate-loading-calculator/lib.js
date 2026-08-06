@@ -3,11 +3,13 @@
  *
  * A loaded bar is symmetrical, so:
  *   weight per side = (target - bar - 2 x collar) / 2
- * and the plates are chosen largest-first from what is actually in the rack.
+ * and the plates are chosen to hit the closest achievable per-side weight
+ * from what is actually in the rack (preferring heavier denominations first
+ * when more than one combination reaches the same weight).
  *
  * Plate denominations and bar weights follow IWF / IPF competition specifications:
  * a men's bar is 20 kg, a women's bar 15 kg, and competition collars are 2.5 kg each.
- * Imperial gyms use 45 lb and 35 lb bars with 45/35/25/10/5/2.5 lb plates.
+ * Imperial gyms use 45 lb and 35 lb bars with 45/35/25/10/5/2.5/1.25 lb plates.
  */
 
 /** Everything is computed in thousandths of a unit so 2.5 + 1.25 never drifts. */
@@ -50,16 +52,19 @@ export function defaultInventory(unit = "kg") {
 }
 
 /**
- * Choose plates for one side, largest first, respecting how many pairs exist.
+ * Choose the best achievable per-side plate loading, respecting how many
+ * pairs of each denomination exist.
  *
  * @param {{targetWeight:number, barWeight:number, collarWeight?:number,
- *          inventory?:Array<{weight:number,pairs:number}>}} input
+ *          inventory?:Array<{weight:number,pairs:number}>, unit?:string}} input
+ *          `unit` (e.g. "kg"/"lb") is optional and only used to label error text.
  */
 export function computePlateLoading({
   targetWeight,
   barWeight,
   collarWeight = 0,
   inventory,
+  unit = "",
 } = {}) {
   if (!isNum(targetWeight)) return { error: "Enter a target weight." };
   if (!isNum(barWeight)) return { error: "Enter the weight of the bar." };
@@ -72,8 +77,9 @@ export function computePlateLoading({
 
   const barAndCollars = barWeight + 2 * collarWeight;
   if (targetWeight < barAndCollars) {
+    const unitSuffix = unit ? ` ${unit}` : "";
     return {
-      error: `The bar plus collars already weighs ${fromUnits(toUnits(barAndCollars))}. Pick a heavier target.`,
+      error: `The bar plus collars already weighs ${fromUnits(toUnits(barAndCollars))}${unitSuffix}. Pick a heavier target.`,
     };
   }
 
@@ -81,7 +87,13 @@ export function computePlateLoading({
     .filter((plate) => isNum(plate?.weight) && plate.weight > 0)
     .map((plate) => ({
       weight: plate.weight,
-      pairs: isNum(plate.pairs) && plate.pairs > 0 ? Math.floor(plate.pairs) : 0,
+      // A rack only physically holds so many plates of one denomination —
+      // clamp to MAX_PAIRS_PER_PLATE so neither the search below nor the
+      // rendered "per side" plate list has to deal with an unbounded count.
+      pairs:
+        isNum(plate.pairs) && plate.pairs > 0
+          ? Math.min(MAX_PAIRS_PER_PLATE, Math.floor(plate.pairs))
+          : 0,
     }))
     .sort((a, b) => b.weight - a.weight);
 
@@ -91,21 +103,20 @@ export function computePlateLoading({
   const diffUnits = toUnits(targetWeight) - toUnits(barAndCollars);
   const perSideUnits = Math.floor(diffUnits / 2);
 
-  let remaining = perSideUnits;
-  const loading = [];
-  for (const plate of list) {
-    const unitsEach = toUnits(plate.weight);
-    if (unitsEach <= 0 || plate.pairs <= 0) continue;
-    const count = Math.min(plate.pairs, Math.floor(remaining / unitsEach));
-    if (count > 0) {
-      loading.push({ weight: plate.weight, count });
-      remaining -= count * unitsEach;
-    }
-  }
+  const { loadedUnits, counts } = bestPerSideLoading(list, perSideUnits);
+  const loading = list
+    .map((plate, index) => ({ weight: plate.weight, count: counts[index] }))
+    .filter((row) => row.count > 0);
 
-  const loadedPerSideUnits = perSideUnits - remaining;
+  const loadedPerSideUnits = loadedUnits;
   const achievedUnits = toUnits(barAndCollars) + 2 * loadedPerSideUnits;
-  const smallestPlate = list[list.length - 1].weight;
+  // Only count denominations the rack actually has a whole pair of — a
+  // denomination that floors to 0 pairs can never be loaded, so it must not
+  // be reported as the "smallest jump" the rack allows.
+  const usablePlates = list.filter((plate) => plate.pairs > 0);
+  const smallestUsableWeight = usablePlates.length
+    ? usablePlates[usablePlates.length - 1].weight
+    : 0;
 
   return {
     targetWeight,
@@ -120,39 +131,75 @@ export function computePlateLoading({
     achievedWeight: fromUnits(achievedUnits),
     shortfall: fromUnits(toUnits(targetWeight) - achievedUnits),
     exact: toUnits(targetWeight) === achievedUnits,
-    /** Smallest change you can make to the bar with the plates in the rack. */
-    smallestIncrement: smallestPlate * 2,
+    /** Smallest change you can make to the bar with plates you actually own a pair of. */
+    smallestIncrement: smallestUsableWeight * 2,
   };
 }
 
 /**
- * Nearest weight that CAN be loaded at or below a target, given the rack.
- * Handy when the exact number is not reachable.
+ * Find the heaviest per-side weight achievable at or below `capacityUnits`,
+ * respecting the limited number of pairs owned for each denomination.
+ *
+ * This is a bounded subset-sum problem: a naive largest-first greedy is
+ * provably suboptimal once quantities are limited — e.g. owning one 20 kg
+ * pair and two 15 kg pairs can hit 30 kg exactly, but greedy takes the 20 kg
+ * pair first and gets stuck 10 kg short even though 15+15 reaches the target.
+ * We solve it exactly with a bounded knapsack: each denomination's pair count
+ * is split into power-of-two "chunks" (a standard bounded-knapsack trick), and
+ * a subset-sum DP is run over those chunks, so each denomination still only
+ * contributes O(log2(MAX_PAIRS_PER_PLATE)) items to the search regardless of
+ * how many pairs are owned.
  */
-export function nearestLoadableWeight(input) {
-  const result = computePlateLoading(input);
-  if (result.error) return result;
-  return { weight: result.achievedWeight, exact: result.exact, loading: result.loading };
-}
+function bestPerSideLoading(list, capacityUnits) {
+  const counts = list.map(() => 0);
+  if (!(capacityUnits > 0)) return { loadedUnits: 0, counts };
 
-/**
- * A warm-up-free percentage ladder: what each percentage of a top set loads to,
- * rounded down to what the rack can actually make.
- */
-export function loadingLadder({ topWeight, percentages, barWeight, collarWeight = 0, inventory } = {}) {
-  if (!isNum(topWeight) || topWeight <= 0) return [];
-  const list = Array.isArray(percentages) ? percentages : [];
-  return list
-    .filter((pct) => isNum(pct) && pct > 0)
-    .map((pct) => {
-      const target = (topWeight * pct) / 100;
-      const result = computePlateLoading({ targetWeight: target, barWeight, collarWeight, inventory });
-      return {
-        percentage: pct,
-        requested: target,
-        loadable: result.error ? null : result.achievedWeight,
-        loading: result.error ? null : result.loading,
-        error: result.error ?? null,
-      };
-    });
+  const totalAvailableUnits = list.reduce(
+    (sum, plate) => sum + toUnits(plate.weight) * plate.pairs,
+    0,
+  );
+  const capacity = Math.min(capacityUnits, totalAvailableUnits);
+  if (capacity <= 0) return { loadedUnits: 0, counts };
+
+  const chunkItems = [];
+  list.forEach((plate, denomIndex) => {
+    const unitsEach = toUnits(plate.weight);
+    let remainingPairs = plate.pairs;
+    let chunk = 1;
+    while (remainingPairs > 0 && unitsEach > 0) {
+      const take = Math.min(chunk, remainingPairs);
+      chunkItems.push({ denomIndex, plateCount: take, unitWeight: unitsEach * take });
+      remainingPairs -= take;
+      chunk *= 2;
+    }
+  });
+
+  // reachable[s] = true once some subset of chunk items sums to exactly s.
+  const reachable = new Uint8Array(capacity + 1);
+  reachable[0] = 1;
+  const parent = new Int32Array(capacity + 1).fill(-1);
+  for (let ci = 0; ci < chunkItems.length; ci++) {
+    const { unitWeight } = chunkItems[ci];
+    if (unitWeight <= 0 || unitWeight > capacity) continue;
+    for (let s = capacity; s >= unitWeight; s--) {
+      if (!reachable[s] && reachable[s - unitWeight]) {
+        reachable[s] = 1;
+        parent[s] = ci;
+      }
+    }
+  }
+
+  let best = capacity;
+  while (best > 0 && !reachable[best]) best -= 1;
+
+  let cursor = best;
+  while (cursor > 0) {
+    const ci = parent[cursor];
+    if (ci < 0) break;
+    const item = chunkItems[ci];
+    counts[item.denomIndex] += item.plateCount;
+    cursor -= item.unitWeight;
+  }
+
+  return { loadedUnits: best, counts };
 }

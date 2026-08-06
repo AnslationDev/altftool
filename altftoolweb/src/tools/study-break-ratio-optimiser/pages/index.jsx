@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Check, Coffee, Copy, RotateCcw } from "lucide-react";
 
 import { PROTOCOLS, buildBreakPlan } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const NUM = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
 
@@ -31,7 +32,7 @@ const fmtTime = (minute) => {
 export default function ToolHome() {
   const [focusSpan, setFocusSpan] = useState(DEFAULTS.focusSpan);
   const [totalMinutes, setTotalMinutes] = useState(DEFAULTS.totalMinutes);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -57,21 +58,11 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result]);
 
-  const copyResult = async () => {
-    if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
-  };
+  const copyResult = () => copy("plan", summary, { label: "Study break plan" });
 
   const reset = () => {
     setFocusSpan(DEFAULTS.focusSpan);
     setTotalMinutes(DEFAULTS.totalMinutes);
-    setCopied(false);
   };
 
   return (
@@ -158,15 +149,15 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the study break plan"
+              aria-label="Copy plan to clipboard"
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copied ? (
+              {isCopied("plan") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy plan"}
+              {isCopied("plan") ? "Copied!" : "Copy plan"}
             </button>
             <button
               type="button"
@@ -179,6 +170,9 @@ export default function ToolHome() {
             </button>
           </div>
         </div>
+        <span aria-live="polite" role="status" className="sr-only">
+          {announcement}
+        </span>
 
         {!hasError ? (
           <>

@@ -121,11 +121,28 @@ export function toCelsius(fahrenheit) {
 }
 
 /**
- * US National Weather Service heat index in degrees Fahrenheit.
- * @param {number} tempF air temperature, degrees Fahrenheit
- * @param {number} rh    relative humidity, percent
+ * Upper edge of the NWS's officially published heat-index chart, degrees
+ * Fahrenheit (about 43 C). The Rothfusz regression below is only fit and
+ * published for roughly 80-110 F air temperature; this tool's own LIMITS
+ * allow air temperatures up to 55 C (131 F), and even right at the chart's
+ * own edge (110 F, 100% RH) the raw polynomial already overshoots badly.
  */
-export function heatIndexF(tempF, rh) {
+export const HEAT_INDEX_CHART_MAX_TEMP_F = 110;
+
+/**
+ * Hard ceiling applied to the returned heat index so extrapolating the
+ * regression past its valid range (e.g. 55 C / 100% RH, both individually
+ * inside LIMITS) can never produce a runaway, physically-meaningless number
+ * such as ~515 F. Matches the ceiling the sibling hydration-planner-monsoon-india
+ * tool treats as the practical top of the published chart.
+ */
+export const HEAT_INDEX_CHART_MAX_F = 137;
+
+/**
+ * Rothfusz regression, unclamped. Not exported: callers use heatIndexF
+ * (clamped) plus isHeatIndexOutOfRange to know whether that clamp bit.
+ */
+function rawHeatIndexF(tempF, rh) {
   if (!Number.isFinite(tempF) || !Number.isFinite(rh)) return null;
 
   // Steadman-based simple form, used first as the NWS specifies.
@@ -154,10 +171,40 @@ export function heatIndexF(tempF, rh) {
   return hi;
 }
 
+/**
+ * US National Weather Service heat index in degrees Fahrenheit.
+ * @param {number} tempF air temperature, degrees Fahrenheit
+ * @param {number} rh    relative humidity, percent
+ */
+export function heatIndexF(tempF, rh) {
+  const hi = rawHeatIndexF(tempF, rh);
+  if (hi === null) return null;
+  // Clamp: see HEAT_INDEX_CHART_MAX_F above. Never lowers a value that was
+  // already below the ceiling, so normal in-range results are unaffected.
+  return Math.min(hi, HEAT_INDEX_CHART_MAX_F);
+}
+
 /** Heat index expressed in degrees Celsius. */
 export function heatIndexC(tempC, rh) {
   const f = heatIndexF(toFahrenheit(tempC), rh);
   return f === null ? null : toCelsius(f);
+}
+
+/**
+ * True when this input combination is a genuine extrapolation past the
+ * Rothfusz regression's documented valid range (roughly 80-110 F / 27-43 C),
+ * either because the air temperature itself is above that band, or because
+ * -- as happens at plausible-looking inputs like 42 C / 80% RH, still inside
+ * the "valid" temperature band alone -- the humidity combination is still
+ * enough to run the raw polynomial past the practical chart ceiling before
+ * heatIndexF clamps it. Mirrors the "heatIndexOutOfRange" pattern used by
+ * the sibling hydration-planner-monsoon-india tool.
+ */
+export function isHeatIndexOutOfRange(tempC, humidityPct) {
+  const tempF = toFahrenheit(tempC);
+  if (tempF > HEAT_INDEX_CHART_MAX_TEMP_F) return true;
+  const raw = rawHeatIndexF(tempF, humidityPct);
+  return raw !== null && raw > HEAT_INDEX_CHART_MAX_F;
 }
 
 /** Sweat multiplier for a given heat index, as a planning heuristic. */
@@ -241,12 +288,14 @@ export function humidHydrationPlan({
   if (!intensityDef) return { error: "Choose a training intensity." };
   const sweatDef = SWEAT_SODIUM[sweatType];
   if (!sweatDef) return { error: "Choose how salty your sweat runs." };
-  if (outdoorHours < exerciseHours) {
-    return { error: "Hours outdoors cannot be fewer than the hours you spend training outdoors." };
-  }
+  // No outdoorHours-vs-exerciseHours cross-check here: they are independent
+  // quantities (per the JSDoc above) -- e.g. a 1-hour air-conditioned gym
+  // session with zero outdoor exposure is a perfectly valid combination.
+  // passiveHours below already clamps at 0 for exactly this case.
 
   const heatIdxC = heatIndexC(tempC, humidityPct);
   const heatIdxF = heatIndexF(toFahrenheit(tempC), humidityPct);
+  const heatIndexOutOfRange = isHeatIndexOutOfRange(tempC, humidityPct);
   const multiplier = heatSweatMultiplier(heatIdxC);
   const humidityPenaltyC = heatIdxC - tempC;
 
@@ -269,6 +318,7 @@ export function humidHydrationPlan({
   return {
     heatIndexC: heatIdxC,
     heatIndexF: heatIdxF,
+    heatIndexOutOfRange,
     tempC,
     humidityPct,
     humidityPenaltyC,

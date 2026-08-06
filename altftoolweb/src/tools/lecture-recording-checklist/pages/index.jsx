@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Check, Copy, ListChecks, RotateCcw } from "lucide-react";
 
 import { ALL_ITEM_IDS, scoreChecklist } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const PRIMARY_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)] transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
@@ -19,7 +20,7 @@ const SEVERITY_CLASS = {
 
 export default function ToolHome() {
   const [checkedIds, setCheckedIds] = useState([]);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(() => scoreChecklist(checkedIds), [checkedIds]);
   const hasError = Boolean(result.error);
@@ -28,23 +29,25 @@ export default function ToolHome() {
     setCheckedIds((current) =>
       current.includes(id) ? current.filter((value) => value !== id) : [...current, id],
     );
-    setCopied(false);
   };
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (hasError) return;
-    try {
-      await navigator.clipboard.writeText(result.summaryText);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("summary", result.summaryText, { label: "Checklist status summary" });
   };
+
+  const tickAll = () => setCheckedIds(ALL_ITEM_IDS);
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the checklist? This clears every ticked item and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setCheckedIds([]);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -72,7 +75,7 @@ export default function ToolHome() {
 
       <section className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Recording readiness
             </p>
@@ -83,9 +86,11 @@ export default function ToolHome() {
               className={`mt-1 text-sm font-semibold ${
                 hasError
                   ? "text-[var(--muted-foreground)]"
-                  : result.blocked
-                    ? "text-[var(--danger)]"
-                    : "text-[var(--success)]"
+                  : result.tone === "danger"
+                    ? "text-[var(--danger-text)]"
+                    : result.tone === "warn"
+                      ? "text-[var(--warning-text)]"
+                      : "text-[var(--success-text)]"
               }`}
             >
               {hasError ? "Checklist unavailable" : result.status}
@@ -95,30 +100,34 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the checklist status summary"
+              aria-label="Copy summary to clipboard"
               className={GHOST_BTN}
               disabled={hasError}
             >
-              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
-              {copied ? "Copied!" : "Copy summary"}
+              {isCopied("summary") ? (
+                <Check className="h-4 w-4" aria-hidden="true" />
+              ) : (
+                <Copy className="h-4 w-4" aria-hidden="true" />
+              )}
+              {isCopied("summary") ? "Copied!" : "Copy summary"}
             </button>
             <button
               type="button"
-              onClick={() => {
-                setCheckedIds(ALL_ITEM_IDS);
-                setCopied(false);
-              }}
-              aria-label="Tick every checklist item"
+              onClick={tickAll}
+              aria-label="Tick all checklist items"
               className={GHOST_BTN}
             >
               Tick all
             </button>
-            <button type="button" onClick={reset} aria-label="Clear the checklist" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset the checklist" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
         </div>
+        <span aria-live="polite" role="status" className="sr-only">
+          {announcement}
+        </span>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[

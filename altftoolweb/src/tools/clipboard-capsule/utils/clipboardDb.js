@@ -70,7 +70,14 @@ export function updateSnippet(id, updates) {
   const snippets = getSnippets();
   const index = snippets.findIndex((s) => s.id === id);
   if (index !== -1) {
-    snippets[index] = { ...snippets[index], ...updates };
+    const merged = { ...snippets[index], ...updates };
+    // Mirror createSnippet's fallback: a title cleared (or never set) during
+    // an edit should re-derive from content, not persist as a blank string.
+    if (!merged.title || !String(merged.title).trim()) {
+      const content = String(merged.content || "");
+      merged.title = content.length > 20 ? content.slice(0, 20) + "..." : content;
+    }
+    snippets[index] = merged;
     saveSnippets(snippets);
     return snippets[index];
   }

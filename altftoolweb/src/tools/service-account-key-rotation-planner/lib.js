@@ -81,13 +81,13 @@ export function planKeyRotation({
     return { error: "Rotation period must be a whole number of days, at least 1." };
   }
   if (!Number.isFinite(overlap) || !Number.isInteger(overlap) || overlap < 0) {
-    return { error: "Overlap window cannot be negative." };
+    return { error: "Overlap window must be a whole number of days, at least 0." };
   }
   if (overlap >= period) {
     return { error: "Overlap window must be shorter than the rotation period." };
   }
   if (!Number.isFinite(notice) || !Number.isInteger(notice) || notice < 0) {
-    return { error: "Notice period cannot be negative." };
+    return { error: "Notice period must be a whole number of days, at least 0." };
   }
   if (notice > period) {
     return { error: "Notice period cannot be longer than the rotation period." };
@@ -109,7 +109,14 @@ export function planKeyRotation({
   const overdue = daysUntilDue < 0;
   const keyAgeDays = daysBetween(last, now);
 
-  const notifyDate = addDays(due, -notice);
+  // Owners must always be notified before the replacement key is created —
+  // if the overlap window is longer than the requested notice period, the
+  // notify date is pulled earlier so it never lands after createDate. Without
+  // this, a plain chronological sort of the steps below could (and did) put
+  // "Create the new key" ahead of "Notify owners" whenever overlapDays >
+  // noticeDays, inverting the tool's own documented process.
+  const effectiveNoticeDays = Math.max(notice, overlap);
+  const notifyDate = addDays(due, -effectiveNoticeDays);
   const createDate = addDays(due, -overlap);
   const disableDate = due;
   const deleteDate = addDays(due, QUARANTINE_DAYS);
@@ -123,14 +130,19 @@ export function planKeyRotation({
   const rotationsPerYearPerKeyRounded = Math.round(rotationsPerYearPerKey * 10) / 10;
   const rotationEventsPerYear = Math.round(rotationsPerYearPerKeyRounded * keys * 10) / 10;
 
-  // Ordered by intended sequence first; sorted by actual date below so a
-  // short notice period combined with a long overlap window (notice <
-  // overlap) can't leave an earlier step numbered after a later one.
+  // Ordered by intended sequence first. Thanks to effectiveNoticeDays above,
+  // notifyDate <= createDate <= disableDate <= deleteDate always holds, so
+  // the date sort below is a no-op safety net rather than something the
+  // schedule depends on to look correct.
   const orderedSteps = [
     {
       date: toIso(notifyDate),
       title: "Notify owners",
-      detail: `Alert the owning team ${notice} day${notice === 1 ? "" : "s"} ahead; confirm every consumer of the key is known.`,
+      detail: `Alert the owning team ${effectiveNoticeDays} day${effectiveNoticeDays === 1 ? "" : "s"} ahead${
+        effectiveNoticeDays > notice
+          ? ` (moved earlier than the ${notice}-day notice period so it isn't after the new key is created)`
+          : ""
+      }; confirm every consumer of the key is known.`,
     },
     {
       date: toIso(createDate),
