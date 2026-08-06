@@ -53,7 +53,17 @@ export const spec = {
       const removed = before.filter((line) => !afterSet.has(normalize(line)));
       const added = after.filter((line) => !beforeSet.has(normalize(line)));
       const sensitive = [...added, ...removed].filter((line) => /collect|share|retain|delete|sell|consent|right|transfer|processor|cookie/i.test(line));
-      return { result: added.length + " added · " + removed.length + " removed", caption: sensitive.length + " privacy-sensitive changed line(s)", rows: [["Before lines", before.length], ["After lines", after.length], ["Sensitive changes", sensitive.length]], list: [...added.map((line) => "+ " + line), ...removed.map((line) => "− " + line)].slice(0, 100) };
+      const rowLimit = 100;
+      const changeLines = [...added.map((line) => "+ " + line), ...removed.map((line) => "− " + line)];
+      const truncated = changeLines.length > rowLimit;
+      const list = changeLines.slice(0, rowLimit);
+      if (truncated) {
+        list.push(
+          "Showing the first " + rowLimit + " of " + changeLines.length +
+            " changed line(s). Copy and download only include what's shown here — split larger policies into multiple comparisons."
+        );
+      }
+      return { result: added.length + " added · " + removed.length + " removed", caption: sensitive.length + " privacy-sensitive changed line(s)", rows: [["Before lines", before.length], ["After lines", after.length], ["Sensitive changes", sensitive.length]], list };
     },
 };
 
