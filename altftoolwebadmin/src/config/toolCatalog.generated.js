@@ -5275,7 +5275,7 @@ export const TOOL_CATALOG = [
       "Developer",
       "Productivity"
     ],
-    "description": "See incidents across major cloud and SaaS providers on one dashboard."
+    "description": "See the current status of major cloud and SaaS providers on one dashboard."
   },
   {
     "slug": "cloud-tagging-policy-generator",
@@ -17648,7 +17648,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Productivity"
     ],
-    "description": "Scan raw meeting notes for decisions, actions, owners and due dates, then build a prompt that fills the gaps it found."
+    "description": "Scan raw meeting notes for decisions, actions, owners and due dates, then build a prompt that flags the gaps it found instead of inventing them."
   },
   {
     "slug": "meeting-transcript-action-extractor",
