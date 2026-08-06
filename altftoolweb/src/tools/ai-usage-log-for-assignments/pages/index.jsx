@@ -64,12 +64,18 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the log? This will clear the assignment details and all entries you've added, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setStudentName("");
     setAssignment("Essay: Causes of the 2008 financial crisis");
     setCourse("");
     setFormat("markdown");
     setEntries([{ ...DEFAULT_ENTRY }]);
-    setCopied(false);
   };
 
   return (

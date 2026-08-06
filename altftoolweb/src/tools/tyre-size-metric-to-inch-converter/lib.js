@@ -172,9 +172,19 @@ export function parseTyreSize(text) {
  */
 export function compareToStock(spec, stock, indicatedSpeed = 100) {
   if (!spec || spec.error || !stock || stock.error) return null;
-  const indicated = toNumber(indicatedSpeed);
-  if (Number.isNaN(indicated) || indicated < 0 || indicated > 400) return null;
   if (!(stock.overallMm > 0)) return null;
+
+  // Fall back to NaN (not 0) for a blank field, so an empty speed reading is
+  // treated as missing input rather than a silently valid "0 km/h" result —
+  // 0 is inside the field's own accepted 0-400 range, so a fallback of 0
+  // would compute a confident-looking (but unrequested) answer.
+  const indicated = toNumber(indicatedSpeed, NaN);
+  if (Number.isNaN(indicated)) {
+    return { error: "Enter the speedometer reading (0–400 km/h) to compare against the factory size." };
+  }
+  if (indicated < 0 || indicated > 400) {
+    return { error: "Speedometer reading should be between 0 and 400 km/h." };
+  }
 
   const ratio = spec.overallMm / stock.overallMm;
   const diffMm = spec.overallMm - stock.overallMm;
@@ -212,9 +222,10 @@ export function convertTyreSize({ mode = "metric", tyre = {}, stock = null, indi
     return { spec, stockError: stockSpec.error, comparison: null };
   }
 
-  return {
-    spec,
-    stockSpec,
-    comparison: stockSpec ? compareToStock(spec, stockSpec, indicatedSpeed) : null,
-  };
+  const comparison = stockSpec ? compareToStock(spec, stockSpec, indicatedSpeed) : null;
+  if (comparison && comparison.error) {
+    return { spec, stockSpec, stockError: comparison.error, comparison: null };
+  }
+
+  return { spec, stockSpec, comparison };
 }

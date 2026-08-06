@@ -36,7 +36,7 @@ export const spec = {
       if (lose <= 0) return { result: "—", caption: "Goal should be below current weight" };
       if (num(values.weeks) <= 0) return { result: "—", caption: "Enter a number of weeks" };
       const dailyDeficit = (lose * 7700) / (num(values.weeks) * 7);
-      return { result: Math.round(dailyDeficit).toLocaleString() + " kcal/day deficit", caption: `to lose ${lose} kg in ${num(values.weeks)} weeks`, rows: [["Weekly loss", (lose / num(values.weeks)).toFixed(2) + " kg"], ["Total to lose", lose.toFixed(1) + " kg"]] };
+      return { result: Math.round(dailyDeficit).toLocaleString() + " kcal/day deficit", caption: `to lose ${lose.toFixed(1)} kg in ${num(values.weeks)} weeks`, rows: [["Weekly loss", (lose / num(values.weeks)).toFixed(2) + " kg"], ["Total to lose", lose.toFixed(1) + " kg"]] };
     },
 };
 

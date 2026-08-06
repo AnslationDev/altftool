@@ -104,11 +104,18 @@ export default function ToolHome() {
     [trainingDays, digitalTxns, tranche],
   );
 
-  const error = check.error || benefits.error || null;
-  const showFigures = !error;
+  // The eligibility verdict is an independent computation from the benefit estimate —
+  // an unrelated/momentarily-invalid "training days" or "digital transactions" field
+  // must not hide an already-determined eligibility verdict. checkError gates the
+  // verdict/blockers, benefitsError additionally gates the money figures.
+  const checkError = check.error || null;
+  const benefitsError = benefits.error || null;
+  const error = checkError || benefitsError || null;
+  const showEligibility = !checkError;
+  const showFigures = !checkError && !benefitsError;
 
   const summary = useMemo(() => {
-    if (error) return "";
+    if (checkError || benefitsError) return "";
     return [
       "PM Vishwakarma Scheme Eligibility Checker",
       `Trade: ${check.trade ? check.trade.label : "not in the notified list"}`,
@@ -123,7 +130,7 @@ export default function ToolHome() {
       `Digital transaction incentive: ${money(benefits.digitalIncentivePerYear)} a year`,
       `Indicative first-year benefit value: ${money(benefits.firstYearBenefit)}`,
     ].join("\n");
-  }, [error, check, benefits]);
+  }, [checkError, benefitsError, check, benefits]);
 
   const copyResult = async () => {
     if (!summary) return;
@@ -338,7 +345,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -378,7 +389,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        {showFigures && (
+        {showEligibility && (
           <div
             className={`mt-5 flex items-start gap-3 rounded-md px-3 py-2.5 text-sm font-medium ${
               check.eligible
@@ -399,7 +410,7 @@ export default function ToolHome() {
           </div>
         )}
 
-        {showFigures && check.blockers.length > 0 && (
+        {showEligibility && check.blockers.length > 0 && (
           <ul className="mt-4 grid gap-2 text-sm">
             {check.blockers.map((line) => (
               <li
@@ -414,10 +425,10 @@ export default function ToolHome() {
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
-            ["Trade selected", showFigures && check.trade ? check.trade.label : DASH],
+            ["Trade selected", showEligibility && check.trade ? check.trade.label : DASH],
             [
               "Minimum age condition",
-              showFigures ? `${MIN_AGE_YEARS} years on the date of registration` : DASH,
+              showEligibility ? `${MIN_AGE_YEARS} years on the date of registration` : DASH,
             ],
             [
               "Toolkit e-voucher",
@@ -461,7 +472,7 @@ export default function ToolHome() {
           ))}
         </dl>
 
-        {showFigures && check.notes.length > 0 && (
+        {showEligibility && check.notes.length > 0 && (
           <ul className="mt-4 grid gap-2 text-xs leading-5 text-[var(--muted-foreground)]">
             {check.notes.map((note) => (
               <li key={note} className="rounded-md bg-[var(--muted)] px-3 py-2">
@@ -492,7 +503,8 @@ export default function ToolHome() {
         </div>
         <p className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]">
           The toolkit incentive is capped at {money(TOOLKIT_INCENTIVE)} and is released as an
-          e-voucher after basic training.
+          e-voucher at the start of basic training, once skill verification is complete — not
+          after training finishes.
         </p>
       </section>
 

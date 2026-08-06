@@ -16,6 +16,7 @@ export default function UserProfile({ initialProfile, onSave }) {
   });
 
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(null);
 
   const handleChange = (field) => (e) => {
     let value = e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -27,6 +28,21 @@ export default function UserProfile({ initialProfile, onSave }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Guard against an inverted target range (min > max). Left unchecked,
+    // Dashboard's `r >= targetMin && r <= targetMax` range filter becomes
+    // impossible to satisfy for any reading, so "Time in Target" would
+    // silently and permanently read 0% no matter how well-controlled the
+    // user's readings are.
+    const min = Number(formData.targetMin);
+    const max = Number(formData.targetMax);
+    if (Number.isFinite(min) && Number.isFinite(max) && min > max) {
+      setError("Minimum target must be less than or equal to maximum target.");
+      setSuccess(false);
+      return;
+    }
+
+    setError(null);
     onSave(formData);
     setSuccess(true);
     setTimeout(() => setSuccess(false), 3000);
@@ -35,6 +51,7 @@ export default function UserProfile({ initialProfile, onSave }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {success && <Alert tone="success" title="Success">Profile saved successfully.</Alert>}
+      {error && <Alert tone="danger" title="Error">{error}</Alert>}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <Field label="Age">

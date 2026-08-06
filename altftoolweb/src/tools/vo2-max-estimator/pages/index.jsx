@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, HeartPulse, RotateCcw } from "lucide-react";
 
 import {
@@ -71,6 +71,13 @@ export default function ToolHome() {
   const [useMeasuredMax, setUseMeasuredMax] = useState(DEFAULTS.useMeasuredMax);
   const [maxHeartRate, setMaxHeartRate] = useState(DEFAULTS.maxHeartRate);
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -114,14 +121,20 @@ export default function ToolHome() {
     const lines = [
       `VO2 max estimate — ${result.methodLabel}`,
       `${one(result.vo2max)} ml/kg/min (${two(result.mets)} METs)`,
-      `Rating: ${result.category} for ${sex}, age band ${result.bandLabel}`,
+      result.category
+        ? `Rating: ${result.category} for ${sex}, age band ${result.bandLabel}`
+        : `Rating: not available (${result.ratingUnavailable})`,
       result.absoluteLitresPerMin ? `Absolute: ${two(result.absoluteLitresPerMin)} L/min at ${weightKg} kg` : "",
       `Predicted HRmax (Tanaka): ${one(result.predictedHrMax)} bpm`,
     ].filter(Boolean);
     try {
       await navigator.clipboard.writeText(lines.join("\n"));
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => {
+        setCopied(false);
+        copyTimerRef.current = null;
+      }, 2000);
     } catch {
       setCopied(false);
     }
@@ -272,7 +285,7 @@ export default function ToolHome() {
         </section>
 
         <section className="grid gap-4">
-          <div className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+          <div className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-live="polite" role="status">
             {error ? (
               <p className="mb-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]" role="alert">
                 {error}
@@ -282,14 +295,31 @@ export default function ToolHome() {
             <p className="text-4xl font-bold tracking-tight text-[var(--foreground)] tabular-nums">
               {error ? DASH : `${one(result.vo2max)} ml/kg/min`}
             </p>
-            <p className="mt-1 text-sm font-semibold text-[var(--success)]">{error ? DASH : result.category}</p>
+            <p className="mt-1 text-sm font-semibold text-[var(--success-text)]">
+              {error ? DASH : result.category ?? "Not rated"}
+            </p>
+            {!error && !result.category && result.ratingUnavailable ? (
+              <p className="mt-1 text-xs text-[var(--muted-foreground)]">{result.ratingUnavailable}</p>
+            ) : null}
 
             <dl className="mt-4">
               <Row label="Method" value={error ? DASH : result.methodLabel} />
               <Row label="METs (1 MET = 3.5 ml/kg/min)" value={error ? DASH : two(result.mets)} />
               <Row label="Absolute uptake" value={error || !result.absoluteLitresPerMin ? DASH : `${two(result.absoluteLitresPerMin)} L/min`} />
-              <Row label="Norm band" value={error ? DASH : `${sex === "male" ? "Men" : "Women"} ${result.bandLabel}`} />
-              <Row label="Gap to Superior" value={error ? DASH : result.toSuperior > 0 ? `${one(result.toSuperior)} ml/kg/min` : "Already there"} />
+              <Row
+                label="Norm band"
+                value={error || !result.bandLabel ? DASH : `${sex === "male" ? "Men" : "Women"} ${result.bandLabel}`}
+              />
+              <Row
+                label="Gap to Superior"
+                value={
+                  error || result.toSuperior == null
+                    ? DASH
+                    : result.toSuperior > 0
+                      ? `${one(result.toSuperior)} ml/kg/min`
+                      : "Already there"
+                }
+              />
               <Row label="Predicted HRmax (208 - 0.7 x age)" value={error ? DASH : `${one(result.predictedHrMax)} bpm`} />
             </dl>
           </div>

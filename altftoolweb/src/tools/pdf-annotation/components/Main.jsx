@@ -10,6 +10,22 @@ import ManagedImage from "@/components/ui/ManagedImage";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
 const MAX_PDF_BYTES = 80 * 1024 * 1024;
+// PDF.js viewport dimensions at scale=1 equal PDF points 1:1. Pages are
+// rasterised at a higher scale for crisper on-screen editing, so this factor
+// must be divided back out before canvas pixel dimensions are used as PDF
+// page dimensions (in points) during export.
+const PDF_RENDER_SCALE = 1.8;
+
+const TOOL_LABELS = {
+  pen: "Pen",
+  highlight: "Highlight",
+  rect: "Rectangle",
+  circle: "Circle",
+  arrow: "Arrow",
+  text: "Text",
+  signature: "Signature",
+  eraser: "Eraser",
+};
 
 function formatBytes(bytes = 0) {
   if (!bytes) return "0 B";
@@ -175,6 +191,10 @@ export default function MainComponent() {
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
   const pdfPagesRef = useRef([]);
+  // Bumped on every new upload attempt and on Reset, so a stale in-flight
+  // FileReader/pdf.js load can detect it has been superseded and discard its
+  // result instead of silently repopulating state after a Reset.
+  const uploadTokenRef = useRef(0);
 
   useEffect(() => {
     pdfPagesRef.current = pdfPages;
@@ -261,23 +281,31 @@ export default function MainComponent() {
     }
 
     releaseRenderedPages(pdfPagesRef.current);
+    const token = ++uploadTokenRef.current;
     setIsLoadingPdf(true);
     setStatus("Rendering PDF pages for annotation...");
     const reader = new FileReader();
     reader.onload = async (event) => {
       let pdf = null;
+      let pagesArray = [];
       try {
         const typedArray = new Uint8Array(event.target.result);
         pdf = await window.pdfjsLib.getDocument({ data: typedArray }).promise;
-        const pagesArray = [];
         for (let i = 1; i <= pdf.numPages; i++) {
           const page = await pdf.getPage(i);
-          const viewport = page.getViewport({ scale: 1.8 });
+          const viewport = page.getViewport({ scale: PDF_RENDER_SCALE });
           const canvas = document.createElement("canvas");
           const context = canvas.getContext("2d");
           canvas.width = viewport.width; canvas.height = viewport.height;
           await page.render({ canvasContext: context, viewport }).promise;
           pagesArray.push({ canvas, thumb: canvas.toDataURL("image/jpeg", 0.2) });
+        }
+        if (uploadTokenRef.current !== token) {
+          // Reset (or a newer upload) superseded this load while it was in
+          // flight — discard the freshly rendered pages instead of
+          // overwriting whatever the user reset/replaced it with.
+          releaseRenderedPages(pagesArray);
+          return;
         }
         setPdfFile(file);
         setPdfPages(pagesArray);
@@ -288,15 +316,17 @@ export default function MainComponent() {
         setZoom(1);
         setStatus(`Loaded ${pagesArray.length} page${pagesArray.length === 1 ? "" : "s"}. Add annotations and export PDF.`);
       } catch (err) {
+        if (uploadTokenRef.current !== token) return;
         console.error("PDF annotation load failed:", err);
         setError("Could not load this PDF. It may be encrypted or corrupted.");
         setStatus("");
       } finally {
         await pdf?.destroy?.();
-        setIsLoadingPdf(false);
+        if (uploadTokenRef.current === token) setIsLoadingPdf(false);
       }
     };
     reader.onerror = () => {
+      if (uploadTokenRef.current !== token) return;
       setError("Could not read the selected PDF.");
       setStatus("");
       setIsLoadingPdf(false);
@@ -317,6 +347,14 @@ export default function MainComponent() {
       setAnnotations(prev => prev.filter(ann => {
         if (ann.pageIndex !== currentPageIdx) return true;
         if (ann.type === "pen") return !ann.points.some(p => Math.hypot(p.x - x, p.y - y) < 10);
+        if (ann.type === "text") {
+          const ctx = canvasRef.current.getContext("2d");
+          ctx.font = `${ann.fontSize || 20}px sans-serif`;
+          const metrics = ctx.measureText(ann.text);
+          const withinX = x >= ann.x && x <= ann.x + metrics.width;
+          const withinY = y <= ann.y && y >= ann.y - (ann.fontSize || 20);
+          return !(withinX && withinY);
+        }
         const minX = Math.min(ann.x, ann.x + (ann.width || 100));
         const maxX = Math.max(ann.x, ann.x + (ann.width || 100));
         const minY = Math.min(ann.y, ann.y + (ann.height || 50));
@@ -326,25 +364,32 @@ export default function MainComponent() {
       return;
     }
 
-    const hitIndex = annotations.findIndex(ann => {
-      if (ann.pageIndex !== currentPageIdx) return false;
-      if (ann.type === "text") {
-        const ctx = canvasRef.current.getContext("2d");
-        ctx.font = `${ann.fontSize || 20}px sans-serif`;
-        const metrics = ctx.measureText(ann.text);
-        return x >= ann.x && x <= ann.x + metrics.width && y <= ann.y && y >= ann.y - (ann.fontSize || 20);
-      }
-      if (ann.type === "signature") {
-        return x >= ann.x && x <= ann.x + (ann.width || 150) && y >= ann.y && y <= ann.y + (ann.height || 60);
-      }
-      return false;
-    });
+    // Only hit-test existing annotations for drag when the currently
+    // selected tool is the one that placed that annotation type — otherwise
+    // selecting Pen/Highlighter/Rectangle/Circle/Arrow and drawing over an
+    // existing text/signature annotation would silently drag it instead of
+    // drawing, with no indication the tool's behavior changed.
+    if (currentTool === "text" || currentTool === "signature") {
+      const hitIndex = annotations.findIndex(ann => {
+        if (ann.pageIndex !== currentPageIdx) return false;
+        if (currentTool === "text" && ann.type === "text") {
+          const ctx = canvasRef.current.getContext("2d");
+          ctx.font = `${ann.fontSize || 20}px sans-serif`;
+          const metrics = ctx.measureText(ann.text);
+          return x >= ann.x && x <= ann.x + metrics.width && y <= ann.y && y >= ann.y - (ann.fontSize || 20);
+        }
+        if (currentTool === "signature" && ann.type === "signature") {
+          return x >= ann.x && x <= ann.x + (ann.width || 150) && y >= ann.y && y <= ann.y + (ann.height || 60);
+        }
+        return false;
+      });
 
-    if (hitIndex !== -1) {
-      saveHistory();
-      setDraggingIndex(hitIndex);
-      setDragOffset({ x: x - annotations[hitIndex].x, y: y - annotations[hitIndex].y });
-      return;
+      if (hitIndex !== -1) {
+        saveHistory();
+        setDraggingIndex(hitIndex);
+        setDragOffset({ x: x - annotations[hitIndex].x, y: y - annotations[hitIndex].y });
+        return;
+      }
     }
 
     if (currentTool === "text") {
@@ -402,6 +447,17 @@ export default function MainComponent() {
   };
 
   const resetTool = () => {
+    if (
+      pdfFile &&
+      !window.confirm(
+        "Reset the workspace? This discards the loaded PDF and every annotation, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
+    // Invalidate any in-flight upload so a load that finishes after this
+    // Reset can't silently repopulate the state we're about to clear.
+    uploadTokenRef.current += 1;
     releaseRenderedPages(pdfPagesRef.current);
     setPdfFile(null);
     setPdfPages([]);
@@ -413,6 +469,7 @@ export default function MainComponent() {
     setStatus("");
     setError("");
     setCopied(false);
+    setIsLoadingPdf(false);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
@@ -444,8 +501,11 @@ export default function MainComponent() {
 
       for (let pageIndex = 0; pageIndex < pdfPages.length; pageIndex += 1) {
         const canvas = await renderAnnotatedPage(pageIndex);
-        const width = canvas.width;
-        const height = canvas.height;
+        // The canvas is rasterised at PDF_RENDER_SCALE for crisp on-screen
+        // editing; divide it back out so the exported page matches the
+        // source PDF's true physical size in points.
+        const width = canvas.width / PDF_RENDER_SCALE;
+        const height = canvas.height / PDF_RENDER_SCALE;
         const orientation = width > height ? "landscape" : "portrait";
 
         if (!doc) {
@@ -520,7 +580,11 @@ export default function MainComponent() {
                 ) : (
                   <ShieldCheck className="h-5 w-5 text-(--primary)" />
                 )}
-                <p className={`font-semibold ${error ? "text-red-600" : "text-(--foreground)"}`}>
+                <p
+                  className={`font-semibold ${error ? "text-red-600" : "text-(--foreground)"}`}
+                  aria-live="polite"
+                  role="status"
+                >
                   {error || status || "Ready to annotate"}
                 </p>
               </div>
@@ -553,7 +617,15 @@ export default function MainComponent() {
               <p className="font-medium mb-2 text-sm text-(--muted-foreground) uppercase tracking-wider">Tools</p>
               <div className="flex gap-2 flex-wrap">
                 {["pen", "highlight", "rect", "circle", "arrow", "text", "signature", "eraser"].map(t => (
-                  <button key={t} onClick={() => setCurrentTool(t)} className={`p-2 rounded-lg border flex items-center gap-1 ${currentTool === t ? 'border-(--primary) bg-(--section-highlight) text-(--primary) shadow-sm' : 'border-(--border) bg-(--background) text-(--foreground) hover:bg-(--muted)'}`}>
+                  <button
+                    key={t}
+                    type="button"
+                    onClick={() => setCurrentTool(t)}
+                    aria-label={`${TOOL_LABELS[t]} tool`}
+                    aria-pressed={currentTool === t}
+                    title={TOOL_LABELS[t]}
+                    className={`p-2 rounded-lg border flex items-center gap-1 ${currentTool === t ? 'border-(--primary) bg-(--section-highlight) text-(--primary) shadow-sm' : 'border-(--border) bg-(--background) text-(--foreground) hover:bg-(--muted)'}`}
+                  >
                     {t === 'pen' && <Pen size={18}/>}
                     {t === 'highlight' && <Highlighter size={18}/>}
                     {t === 'rect' && <Square size={18}/>}
@@ -584,8 +656,8 @@ export default function MainComponent() {
             <div>
               <p className="font-medium mb-2 text-sm text-(--muted-foreground) uppercase tracking-wider">History</p>
               <div className="flex gap-2">
-                <button onClick={undo} disabled={history.length === 0} className="p-2 border rounded-lg disabled:opacity-30"><Undo2 size={18}/></button>
-                <button onClick={redo} disabled={redoStack.length === 0} className="p-2 border rounded-lg disabled:opacity-30"><Redo2 size={18}/></button>
+                <button type="button" onClick={undo} disabled={history.length === 0} aria-label="Undo" title="Undo" className="p-2 border rounded-lg disabled:opacity-30"><Undo2 size={18}/></button>
+                <button type="button" onClick={redo} disabled={redoStack.length === 0} aria-label="Redo" title="Redo" className="p-2 border rounded-lg disabled:opacity-30"><Redo2 size={18}/></button>
               </div>
             </div>
 
@@ -635,8 +707,8 @@ export default function MainComponent() {
             <div className="flex-1 bg-(--card) border border-(--border) rounded-lg p-6 overflow-auto min-h-[600px] flex justify-center items-start shadow-sm relative">
               <canvas ref={canvasRef} onMouseDown={startDrawing} onMouseMove={draw} onMouseUp={stopDrawing} onMouseLeave={stopDrawing} className="border rounded-lg bg-white shadow-lg cursor-crosshair" />
               <div className="absolute bottom-4 right-4 flex flex-col gap-2">
-                <button onClick={()=>setZoom(Math.min(2, zoom+0.25))} className="bg-(--card) text-(--foreground) p-3 rounded-full shadow-lg border border-(--border) hover:bg-(--muted)"><ZoomIn size={20}/></button>
-                <button onClick={()=>setZoom(Math.max(0.5, zoom-0.25))} className="bg-(--card) text-(--foreground) p-3 rounded-full shadow-lg border border-(--border) hover:bg-(--muted)"><ZoomOut size={20}/></button>
+                <button type="button" onClick={()=>setZoom(Math.min(2, zoom+0.25))} aria-label="Zoom in" title="Zoom in" className="bg-(--card) text-(--foreground) p-3 rounded-full shadow-lg border border-(--border) hover:bg-(--muted)"><ZoomIn size={20}/></button>
+                <button type="button" onClick={()=>setZoom(Math.max(0.5, zoom-0.25))} aria-label="Zoom out" title="Zoom out" className="bg-(--card) text-(--foreground) p-3 rounded-full shadow-lg border border-(--border) hover:bg-(--muted)"><ZoomOut size={20}/></button>
               </div>
             </div>
           </div>

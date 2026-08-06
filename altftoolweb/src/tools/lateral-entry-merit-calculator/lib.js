@@ -84,39 +84,56 @@ export function computeLateralEntryMerit({
     return { error: "The diploma weight must be between 0 and 100." };
   }
 
-  const diplomaPercent = toPercent(diplomaObtained, diplomaMax, "Diploma");
-  if (typeof diplomaPercent === "object") return diplomaPercent;
+  const diplomaPercentRaw = toPercent(diplomaObtained, diplomaMax, "Diploma");
+  if (typeof diplomaPercentRaw === "object") return diplomaPercentRaw;
 
-  let entrancePercent = 0;
+  let entrancePercentRaw = 0;
   if (weight < 100) {
     const computed = toPercent(entranceObtained, entranceMax, "Entrance");
     if (typeof computed === "object") return computed;
-    entrancePercent = computed;
+    entrancePercentRaw = computed;
   } else {
     const computed = toPercent(entranceObtained, entranceMax, "Entrance");
-    entrancePercent = typeof computed === "object" ? 0 : computed;
+    entrancePercentRaw = typeof computed === "object" ? 0 : computed;
   }
 
-  const diplomaShare = (diplomaPercent * weight) / 100;
-  const entranceShare = (entrancePercent * (100 - weight)) / 100;
-  const merit = diplomaShare + entranceShare;
+  const round2 = (v) => Math.round(v * 100) / 100;
+
+  // Round the diploma/entrance percentages once, up front, and reuse those
+  // rounded values for both what's displayed AND the AICTE floor check.
+  // Checking the floor against the raw (unrounded) percentage while the UI
+  // shows the rounded one could previously display a contradictory pair like
+  // "45.00%" next to "Below the AICTE floor".
+  const diplomaPercent = round2(diplomaPercentRaw);
+  const entrancePercent = round2(entrancePercentRaw);
+
+  const diplomaShareRaw = (diplomaPercentRaw * weight) / 100;
+  const entranceShareRaw = (entrancePercentRaw * (100 - weight)) / 100;
+  const diplomaShare = round2(diplomaShareRaw);
+  const entranceShare = round2(entranceShareRaw);
+  // Derive the headline merit index as the sum of the two *already-rounded*
+  // shares (not the raw shares) so the two displayed contribution rows
+  // always add up to the displayed merit index instead of being off by 0.01
+  // from independent rounding.
+  const merit = round2(diplomaShare + entranceShare);
 
   const aicteFloor = isReserved
     ? AICTE_MIN_DIPLOMA_PERCENT_RESERVED
     : AICTE_MIN_DIPLOMA_PERCENT;
   const meetsAicteFloor = diplomaPercent >= aicteFloor;
 
-  const round2 = (v) => Math.round(v * 100) / 100;
-
   return {
-    merit: round2(merit),
+    merit,
     meritScale: MERIT_SCALE,
-    diplomaPercent: round2(diplomaPercent),
-    entrancePercent: round2(entrancePercent),
-    diplomaShare: round2(diplomaShare),
-    entranceShare: round2(entranceShare),
+    diplomaPercent,
+    entrancePercent,
+    diplomaShare,
+    entranceShare,
     diplomaWeight: weight,
-    entranceWeight: 100 - weight,
+    // Rounded like every other numeric output -- `100 - weight` otherwise
+    // hits ordinary floating-point representation error for common decimal
+    // weight inputs (e.g. 100 - 66.6 === 33.400000000000006).
+    entranceWeight: round2(100 - weight),
     aicteFloor,
     meetsAicteFloor,
   };

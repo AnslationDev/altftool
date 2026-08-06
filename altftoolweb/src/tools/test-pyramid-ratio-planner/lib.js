@@ -65,9 +65,21 @@ export function apportionCounts(total, percents) {
     .map((value, index) => ({ index, frac: value - Math.floor(value) }))
     .sort((a, b) => b.frac - a.frac);
   const counts = [...floors];
-  for (let i = 0; i < order.length && remainder > 0; i += 1) {
-    counts[order[i].index] += 1;
+  // Percents are only required to sum to 100 within RATIO_SUM_TOLERANCE, so
+  // for a large total the rounding remainder can exceed the number of
+  // layers (or go negative). Cycle through the layers, ordered by largest
+  // fractional part, until the full remainder is distributed (or clawed
+  // back) so counts always sum to exactly `total`.
+  let cursor = 0;
+  while (remainder > 0) {
+    counts[order[cursor % order.length].index] += 1;
     remainder -= 1;
+    cursor += 1;
+  }
+  while (remainder < 0) {
+    counts[order[cursor % order.length].index] -= 1;
+    remainder += 1;
+    cursor += 1;
   }
   return counts;
 }
@@ -107,8 +119,14 @@ export function planPyramid({
     return { error: "Each ratio must be a percentage between 0 and 100." };
   }
   const sum = pcts.reduce((acc, value) => acc + value, 0);
-  if (Math.abs(sum - 100) > RATIO_SUM_TOLERANCE) {
-    return { error: `Ratios must add up to 100% — they currently add up to ${sum}%.` };
+  // Round away IEEE-754 representation dust (e.g. 33.33 * 3 is ~1e-14 off
+  // 100 in double precision, not just display-rounded to 99.99) before
+  // comparing to the tolerance, so an input sitting exactly on the tool's
+  // declared tolerance boundary isn't rejected by sub-boundary float noise.
+  const diff = Math.round(Math.abs(sum - 100) * 1e9) / 1e9;
+  if (diff > RATIO_SUM_TOLERANCE) {
+    const displaySum = Math.round(sum * 100) / 100;
+    return { error: `Ratios must add up to 100% — they currently add up to ${displaySum}%.` };
   }
 
   const seconds = LAYERS.map((layer) => toNumber(avgSeconds[layer.id]));
@@ -173,7 +191,7 @@ export function planPyramid({
 
   let shape = "Pyramid";
   let shapeNote = "Fast layers dominate — feedback stays quick as the suite grows.";
-  if (pcts[2] >= pcts[0]) {
+  if (pcts[2] > pcts[0]) {
     shape = "Ice-cream cone";
     shapeNote =
       "End-to-end tests outnumber unit tests — the classic anti-pattern: slow feedback, high flake exposure, hard debugging.";

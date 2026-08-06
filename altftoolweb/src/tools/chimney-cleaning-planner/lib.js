@@ -217,8 +217,14 @@ export function planChimneyCare({
   const byAirChanges = volumeM3 * style.airChanges;
   const requiredSuction = Math.max(byAirChanges, style.minSuction);
   const suctionKnown = ratedSuction > 0;
-  const suctionAdequate = suctionKnown ? ratedSuction >= requiredSuction : null;
-  const suctionShortfall = suctionKnown ? Math.max(0, requiredSuction - ratedSuction) : 0;
+  // Compare the same rounded whole numbers that get displayed to the user, so the
+  // adequate/inadequate verdict and the shortfall figure never contradict two
+  // matching on-screen suction values (see: two 622 m3/hr readouts with a "short by
+  // 0" warning when only the unrounded values differed).
+  const requiredSuctionRounded = Math.round(requiredSuction);
+  const ratedSuctionRounded = Math.round(ratedSuction);
+  const suctionAdequate = suctionKnown ? ratedSuctionRounded >= requiredSuctionRounded : null;
+  const suctionShortfall = suctionKnown ? Math.max(0, requiredSuctionRounded - ratedSuctionRounded) : 0;
 
   const dueOn = lastCleaned === null ? null : toIsoDate(lastCleaned + Math.round(filterIntervalDays) * MS_PER_DAY);
   const upcoming = lastCleanedIso ? scheduleFrom(lastCleanedIso, filterIntervalDays, 6) : [];
@@ -243,11 +249,11 @@ export function planChimneyCare({
     volumeCuFt: Math.round(volumeCuFt),
     volumeM3: round1(volumeM3),
     airChangesUsed: style.airChanges,
-    requiredSuction: Math.round(requiredSuction),
-    ratedSuction: Math.round(ratedSuction),
+    requiredSuction: requiredSuctionRounded,
+    ratedSuction: ratedSuctionRounded,
     suctionKnown,
     suctionAdequate,
-    suctionShortfall: Math.round(suctionShortfall),
+    suctionShortfall,
     nextFilterCleanIso: dueOn,
     upcomingFilterCleans: upcoming,
     ductless,

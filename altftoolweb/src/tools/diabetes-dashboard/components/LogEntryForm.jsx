@@ -28,8 +28,16 @@ export default function LogEntryForm({ onSave }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.reading) {
+    // formData.reading is coerced to a Number on change, so a literal "0"
+    // entry becomes the number 0. A plain `!formData.reading` falsy check
+    // would reject that as "missing" even though the field's own min="0"
+    // treats 0 as a valid reading -- check for absence explicitly instead.
+    if (formData.reading === "" || formData.reading === null || !Number.isFinite(formData.reading)) {
       setError("Blood glucose reading is required.");
+      return;
+    }
+    if (formData.reading < 0) {
+      setError("Blood glucose reading cannot be negative.");
       return;
     }
     setError(null);
@@ -76,7 +84,7 @@ export default function LogEntryForm({ onSave }) {
           </Select>
         </Field>
         <Field label="Meal / General Notes">
-          <Input type="text" value={formData.notes} onChange={handleChange("notes")} placeholder="e.g. Felt dizzy, ate a big meal" className="min-h-[56px] px-4 py-3 text-lg" />
+          <Textarea rows={3} value={formData.notes} onChange={handleChange("notes")} placeholder="e.g. Felt dizzy, ate a big meal" className="px-4 py-3 text-lg" />
         </Field>
       </div>
 

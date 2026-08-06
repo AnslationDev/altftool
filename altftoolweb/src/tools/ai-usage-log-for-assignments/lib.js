@@ -74,7 +74,16 @@ export function buildUsageLog({ studentName = "", assignment, course = "", entri
     entries[0].modeId,
   );
 
-  const toolsUsed = [...new Set(entries.map((e) => String(e.tool).trim()))];
+  const toolsUsed = [];
+  const seenTools = new Set();
+  entries.forEach((e) => {
+    const trimmed = String(e.tool).trim();
+    const key = trimmed.toLowerCase();
+    if (trimmed && !seenTools.has(key)) {
+      seenTools.add(key);
+      toolsUsed.push(trimmed);
+    }
+  });
 
   const md = format === "markdown";
   const lines = [];

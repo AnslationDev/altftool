@@ -2,7 +2,7 @@
 
 import React, { useState, useRef, useCallback, useEffect } from "react";
 import {
-  UploadCloud, Music, X, Play, Pause, Loader2, CheckCircle2, AlertTriangle,
+  UploadCloud, X, Play, Pause, Loader2, AlertTriangle,
   Scissors, Settings2, Download, Wand2, Copy, Trash2, ChevronLeft, ChevronRight,
   ZoomIn, ZoomOut, Film, AudioLines,
 } from "lucide-react";
@@ -157,41 +157,63 @@ function insertionOffsetPx(clips, pxPerSec, insertIndex) {
   return cursor;
 }
 
-// apply a fade/gain envelope to a GainNode; only meaningful when the clip
-// is being played (or rendered) from its true start (offset 0)
-function applyFadeAutomation(gainParam, startCtxTime, dur, fadeIn, fadeOut, gain) {
+// The fade envelope's gain value at clip-relative time `t` (0..dur).
+function fadeGainAt(t, dur, fadeIn, fadeOut, gain) {
+  const base = Math.max(0, gain);
+  const fi = Math.min(fadeIn, dur / 2);
+  const fo = Math.min(fadeOut, dur / 2);
+  if (fi > 0 && t < fi) return 0.0001 + (base - 0.0001) * (t / fi);
+  if (fo > 0 && t > dur - fo) return base - (base - 0.0001) * ((t - (dur - fo)) / fo);
+  return base;
+}
+
+// Apply a fade/gain envelope to a GainNode for playback (or render) that
+// starts at clip-relative time `offset` (0 for the clip's true start) and
+// runs to the end of the clip — so scrubbing into the middle of a clip still
+// picks up whatever fade-in/fade-out is already in progress at that point,
+// instead of jumping straight to flat gain.
+function applyFadeAutomation(gainParam, startCtxTime, dur, fadeIn, fadeOut, gain, offset = 0) {
   const base = Math.max(0, gain);
   const fi = Math.min(fadeIn, dur / 2);
   const fo = Math.min(fadeOut, dur / 2);
   gainParam.cancelScheduledValues(startCtxTime);
-  if (fi > 0) {
-    gainParam.setValueAtTime(0.0001, startCtxTime);
-    gainParam.linearRampToValueAtTime(base, startCtxTime + fi);
-  } else {
-    gainParam.setValueAtTime(base, startCtxTime);
+  gainParam.setValueAtTime(fadeGainAt(offset, dur, fadeIn, fadeOut, gain), startCtxTime);
+  if (fi > 0 && offset < fi) {
+    gainParam.linearRampToValueAtTime(base, startCtxTime + (fi - offset));
   }
   if (fo > 0) {
-    const foStart = startCtxTime + Math.max(fi, dur - fo);
-    gainParam.setValueAtTime(base, foStart);
-    gainParam.linearRampToValueAtTime(0.0001, startCtxTime + dur);
-  } else if (fi > 0) {
-    gainParam.setValueAtTime(base, startCtxTime + dur);
+    if (offset < dur - fo) {
+      gainParam.setValueAtTime(base, startCtxTime + (dur - fo - offset));
+    }
+    gainParam.linearRampToValueAtTime(0.0001, startCtxTime + (dur - offset));
   }
 }
 
 async function renderTimelineToBuffer(timeline, sources) {
   const total = timelineDuration(timeline);
   if (total <= 0) return null;
-  const sr = sources[0]?.audioBuffer.sampleRate || 44100;
-  const channels = Math.max(1, ...sources.map((s) => s.audioBuffer.numberOfChannels));
+  // Derive sample rate / channel count only from sources actually referenced
+  // by the timeline (and only those that finished decoding), not the whole
+  // media pool — a source still decoding/extracting or one that failed has
+  // audioBuffer === null, and mixing it into this calculation either throws
+  // or picks a sample rate unrelated to what's really on the timeline.
+  const usedSourceIds = new Set(timeline.map((clip) => clip.sourceId));
+  const readyUsedSources = sources.filter((s) => usedSourceIds.has(s.id) && s.audioBuffer);
+  if (readyUsedSources.length === 0) return null;
+  const sr = readyUsedSources[0].audioBuffer.sampleRate || 44100;
+  const channels = Math.max(1, ...readyUsedSources.map((s) => s.audioBuffer.numberOfChannels));
   const OfflineCtx = window.OfflineAudioContext || window.webkitOfflineAudioContext;
   const offline = new OfflineCtx(channels, Math.max(1, Math.ceil(total * sr)), sr);
   let cursor = 0;
   for (const clip of timeline) {
-    const source = sources.find((s) => s.id === clip.sourceId);
-    if (!source) continue;
     const dur = clipDur(clip);
     if (dur <= 0) continue;
+    const source = sources.find((s) => s.id === clip.sourceId);
+    if (!source || !source.audioBuffer) {
+      // Leave a silent gap instead of shifting every later clip earlier.
+      cursor += dur;
+      continue;
+    }
     const srcNode = offline.createBufferSource();
     srcNode.buffer = source.audioBuffer;
     const gainNode = offline.createGain();
@@ -429,10 +451,17 @@ export default function SpliceDeck() {
   const [outputURL, setOutputURL] = useState("");
   const [outputSize, setOutputSize] = useState(0);
   const [outputMime, setOutputMime] = useState("");
+  // Mirrors outputURL for the unmount-cleanup effect below, which only runs
+  // once and would otherwise close over the initial (empty) value.
+  const outputURLRef = useRef("");
+  useEffect(() => {
+    outputURLRef.current = outputURL;
+  }, [outputURL]);
   const [analysers, setAnalysers] = useState({});
 
   const videoRefs = useRef({});
   const captureBundles = useRef({});
+  const captureWaitTimers = useRef({});
   const fileInputRef = useRef(null);
   const timelineScrollRef = useRef(null);
   const trackRef = useRef(null);
@@ -447,6 +476,7 @@ export default function SpliceDeck() {
     return () => {
       sources.forEach((s) => s.url && URL.revokeObjectURL(s.url));
       stopPlayback();
+      if (outputURLRef.current) URL.revokeObjectURL(outputURLRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -498,9 +528,20 @@ export default function SpliceDeck() {
 
   const captureFromVideo = useCallback((source) => {
     updateSource(source.id, { status: "extracting", progress: 0, error: "" });
+    // A mutable cancellation token: removeSource() flips `cancelled` and
+    // clears the pending timer so this metadata-wait poll stops instead of
+    // rescheduling itself forever once the source (and its <video> ref) is
+    // gone or never finishes loading metadata.
+    const waitState = { cancelled: false, timer: null };
+    captureWaitTimers.current[source.id] = waitState;
     const wait = () => {
+      if (waitState.cancelled) return;
       const video = videoRefs.current[source.id];
-      if (!video || !video.duration) { setTimeout(wait, 60); return; }
+      if (!video || !video.duration) {
+        waitState.timer = setTimeout(wait, 60);
+        return;
+      }
+      if (captureWaitTimers.current[source.id] === waitState) delete captureWaitTimers.current[source.id];
       try {
         let bundle = captureBundles.current[source.id];
         if (!bundle) {
@@ -575,6 +616,12 @@ export default function SpliceDeck() {
     });
     setTimeline((prev) => prev.filter((c) => c.sourceId !== id));
     delete videoRefs.current[id];
+    const pendingWait = captureWaitTimers.current[id];
+    if (pendingWait) {
+      pendingWait.cancelled = true;
+      if (pendingWait.timer) clearTimeout(pendingWait.timer);
+      delete captureWaitTimers.current[id];
+    }
     const bundle = captureBundles.current[id];
     if (bundle && bundle.audioCtx) bundle.audioCtx.close().catch(() => {});
     delete captureBundles.current[id];
@@ -647,7 +694,14 @@ export default function SpliceDeck() {
     });
     setSelectedClipId(second.id);
   };
-  const clearTimeline = () => { setTimeline([]); setSelectedClipId(null); stopPlayback(); setPlayheadTime(0); };
+  const clearTimeline = () => {
+    if (timeline.length === 0) return;
+    if (!window.confirm("Clear the entire timeline? This removes every clip, trim, split and fade you've set up.")) return;
+    setTimeline([]);
+    setSelectedClipId(null);
+    stopPlayback();
+    setPlayheadTime(0);
+  };
 
   // -- drag to reorder ---------------------------------------------------------
 
@@ -710,8 +764,7 @@ export default function SpliceDeck() {
       const gainNode = ctx.createGain();
       srcNode.connect(gainNode);
       gainNode.connect(ctx.destination);
-      if (offsetInClip <= 0.005) applyFadeAutomation(gainNode.gain, when, dur, clip.fadeIn, clip.fadeOut, clip.gain);
-      else gainNode.gain.setValueAtTime(Math.max(0, clip.gain), when);
+      applyFadeAutomation(gainNode.gain, when, dur, clip.fadeIn, clip.fadeOut, clip.gain, offsetInClip);
       srcNode.start(when, clip.inPoint + offsetInClip, playDur);
       nodes.push(srcNode);
     }
@@ -1007,7 +1060,7 @@ export default function SpliceDeck() {
                           {s.kind === "video" ? <Film size={12} style={{ color: "var(--text-muted)" }} /> : <AudioLines size={12} style={{ color: "var(--text-muted)" }} />}
                           <p className="text-[12px] font-medium truncate">{s.name}</p>
                         </div>
-                        <button className="btn-icon w-6 h-6 flex items-center justify-center shrink-0" onClick={() => removeSource(s.id)} title="Remove"><X size={13} /></button>
+                        <button className="btn-icon w-6 h-6 flex items-center justify-center shrink-0" onClick={() => removeSource(s.id)} title="Remove" aria-label={`Remove ${s.name} from the media pool`}><X size={13} /></button>
                       </div>
 
                       {s.status === "decoding" && (
@@ -1016,7 +1069,7 @@ export default function SpliceDeck() {
                       {s.status === "extracting" && <Scope analyser={analysers[s.id] || null} active={true} />}
                       {s.status === "ready" && <PoolWaveform peaks={s.peaks} />}
                       {s.status === "error" && (
-                        <div className="flex items-center gap-1.5 h-[34px]"><AlertTriangle size={12} style={{ color: "var(--red)" }} /><span className="text-[11px]" style={{ color: "var(--red)" }}>{s.error}</span></div>
+                        <div className="flex items-center gap-1.5 h-[34px]" role="alert"><AlertTriangle size={12} style={{ color: "var(--red)" }} /><span className="text-[11px]" style={{ color: "var(--red)" }}>{s.error}</span></div>
                       )}
 
                       <div className="flex items-center justify-between mt-2">
@@ -1036,7 +1089,7 @@ export default function SpliceDeck() {
           {/* ---- timeline ---- */}
           <div className="mt-6">
             <div className="flex flex-wrap items-center gap-2 mb-2.5">
-              <button className={`btn-primary w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${isPlaying ? "playing" : ""}`} onClick={togglePlay} disabled={timeline.length === 0} title={isPlaying ? "Pause (Space)" : "Play (Space)"}>
+              <button className={`btn-primary w-9 h-9 rounded-full flex items-center justify-center shrink-0 ${isPlaying ? "playing" : ""}`} onClick={togglePlay} disabled={timeline.length === 0} title={isPlaying ? "Pause (Space)" : "Play (Space)"} aria-label={isPlaying ? "Pause (Space)" : "Play (Space)"}>
                 {isPlaying ? <Pause size={15} /> : <Play size={15} />}
               </button>
               <span className="sd-mono text-[12px] tabular-nums" style={{ color: "var(--text-muted)" }}>{formatTime(playheadTime)} / {formatTime(totalDuration)}</span>
@@ -1049,9 +1102,9 @@ export default function SpliceDeck() {
               </button>
 
               <div className="ml-auto flex items-center gap-1.5">
-                <ZoomOut size={13} style={{ color: "var(--text-muted)" }} />
-                <input type="range" className="plain" style={{ width: 90 }} min={20} max={240} step={5} value={pxPerSec} onChange={(e) => setPxPerSec(Number(e.target.value))} />
-                <ZoomIn size={13} style={{ color: "var(--text-muted)" }} />
+                <ZoomOut size={13} style={{ color: "var(--text-muted)" }} aria-hidden="true" />
+                <input type="range" className="plain" style={{ width: 90 }} min={20} max={240} step={5} value={pxPerSec} onChange={(e) => setPxPerSec(Number(e.target.value))} aria-label="Timeline zoom" />
+                <ZoomIn size={13} style={{ color: "var(--text-muted)" }} aria-hidden="true" />
               </div>
             </div>
 
@@ -1118,25 +1171,25 @@ export default function SpliceDeck() {
                   </p>
                 </div>
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <button className="btn-icon w-8 h-8 flex items-center justify-center" onClick={() => moveClip(selectedClip.id, -1)} title="Move left"><ChevronLeft size={15} /></button>
-                  <button className="btn-icon w-8 h-8 flex items-center justify-center" onClick={() => moveClip(selectedClip.id, 1)} title="Move right"><ChevronRight size={15} /></button>
-                  <button className="btn-icon w-8 h-8 flex items-center justify-center" onClick={() => duplicateClip(selectedClip.id)} title="Duplicate clip"><Copy size={14} /></button>
-                  <button className="btn-icon w-8 h-8 flex items-center justify-center" onClick={() => deleteClip(selectedClip.id)} title="Delete clip (Del)"><Trash2 size={14} /></button>
+                  <button className="btn-icon w-8 h-8 flex items-center justify-center" onClick={() => moveClip(selectedClip.id, -1)} title="Move left" aria-label="Move selected clip left"><ChevronLeft size={15} /></button>
+                  <button className="btn-icon w-8 h-8 flex items-center justify-center" onClick={() => moveClip(selectedClip.id, 1)} title="Move right" aria-label="Move selected clip right"><ChevronRight size={15} /></button>
+                  <button className="btn-icon w-8 h-8 flex items-center justify-center" onClick={() => duplicateClip(selectedClip.id)} title="Duplicate clip" aria-label="Duplicate selected clip"><Copy size={14} /></button>
+                  <button className="btn-icon w-8 h-8 flex items-center justify-center" onClick={() => deleteClip(selectedClip.id)} title="Delete clip (Del)" aria-label="Delete selected clip"><Trash2 size={14} /></button>
                 </div>
               </div>
 
               <div className="grid sm:grid-cols-3 gap-4">
                 <div>
-                  <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>Fade in · {selectedClip.fadeIn.toFixed(1)}s</span>
-                  <input type="range" className="plain mt-1.5" min={0} max={Math.max(0.1, clipDur(selectedClip) / 2)} step={0.1} value={selectedClip.fadeIn} onChange={(e) => patchClip(selectedClip.id, { fadeIn: Number(e.target.value) })} />
+                  <label htmlFor="clip-fade-in" className="text-[11px]" style={{ color: "var(--text-muted)" }}>Fade in · {selectedClip.fadeIn.toFixed(1)}s</label>
+                  <input id="clip-fade-in" type="range" className="plain mt-1.5" min={0} max={Math.max(0.1, clipDur(selectedClip) / 2)} step={0.1} value={selectedClip.fadeIn} onChange={(e) => patchClip(selectedClip.id, { fadeIn: Number(e.target.value) })} aria-valuetext={`${selectedClip.fadeIn.toFixed(1)} seconds`} />
                 </div>
                 <div>
-                  <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>Fade out · {selectedClip.fadeOut.toFixed(1)}s</span>
-                  <input type="range" className="plain mt-1.5" min={0} max={Math.max(0.1, clipDur(selectedClip) / 2)} step={0.1} value={selectedClip.fadeOut} onChange={(e) => patchClip(selectedClip.id, { fadeOut: Number(e.target.value) })} />
+                  <label htmlFor="clip-fade-out" className="text-[11px]" style={{ color: "var(--text-muted)" }}>Fade out · {selectedClip.fadeOut.toFixed(1)}s</label>
+                  <input id="clip-fade-out" type="range" className="plain mt-1.5" min={0} max={Math.max(0.1, clipDur(selectedClip) / 2)} step={0.1} value={selectedClip.fadeOut} onChange={(e) => patchClip(selectedClip.id, { fadeOut: Number(e.target.value) })} aria-valuetext={`${selectedClip.fadeOut.toFixed(1)} seconds`} />
                 </div>
                 <div>
-                  <span className="text-[11px]" style={{ color: "var(--text-muted)" }}>Gain · {Math.round(selectedClip.gain * 100)}%</span>
-                  <input type="range" className="plain mt-1.5" min={0} max={2} step={0.05} value={selectedClip.gain} onChange={(e) => patchClip(selectedClip.id, { gain: Number(e.target.value) })} />
+                  <label htmlFor="clip-gain" className="text-[11px]" style={{ color: "var(--text-muted)" }}>Gain · {Math.round(selectedClip.gain * 100)}%</label>
+                  <input id="clip-gain" type="range" className="plain mt-1.5" min={0} max={2} step={0.05} value={selectedClip.gain} onChange={(e) => patchClip(selectedClip.id, { gain: Number(e.target.value) })} aria-valuetext={`${Math.round(selectedClip.gain * 100)}%`} />
                 </div>
               </div>
               <p className="sd-mono text-[10.5px] mt-3" style={{ color: "var(--text-muted)" }}>
@@ -1163,7 +1216,7 @@ export default function SpliceDeck() {
                 ))}
               </div>
             )}
-            <div className="ml-auto flex items-center gap-2">
+            <div className="ml-auto flex items-center gap-2" aria-live="polite" role="status">
               {(exportStatus === "rendering" || exportStatus === "encoding") ? (
                 <div className="flex items-center gap-2.5 w-40">
                   <div className="progress-rail flex-1"><div className="progress-fill" style={{ width: `${exportProgress}%` }} /></div>
@@ -1182,7 +1235,7 @@ export default function SpliceDeck() {
             </div>
           </div>
           {exportStatus === "error" && (
-            <div className="mt-3 px-3 py-2 rounded-lg" style={{ background: "rgba(255,110,98,0.08)" }}>
+            <div className="mt-3 px-3 py-2 rounded-lg" style={{ background: "rgba(255,110,98,0.08)" }} role="alert">
               <p className="text-[12px]" style={{ color: "var(--red)" }}>{exportError}</p>
             </div>
           )}

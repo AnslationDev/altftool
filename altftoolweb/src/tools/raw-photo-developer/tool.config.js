@@ -5,7 +5,7 @@ const toolConfig = {
     "Image & Photo",
     "Productivity"
   ],
-  "description": "Develop RAW photos with exposure and white balance controls, then export to JPEG.",
+  "description": "Preview RAW photos with a simple exposure control, then export to JPEG.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

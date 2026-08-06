@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Activity, Calculator } from "lucide-react";
+import { Activity } from "lucide-react";
 
 const activityFactors = {
   sedentary: 1.2,
@@ -10,6 +10,16 @@ const activityFactors = {
   active: 1.725,
   athlete: 1.9,
 };
+
+const AGE_BOUNDS = { min: 10, max: 100 };
+const HEIGHT_BOUNDS = { min: 90, max: 250 };
+const WEIGHT_BOUNDS = { min: 25, max: 300 };
+
+function clampNumber(value, min, max) {
+  const number = Number(value);
+  if (!Number.isFinite(number)) return min;
+  return Math.min(Math.max(min, number), max);
+}
 
 function Stat({ label, value }) {
   return (
@@ -33,7 +43,7 @@ export default function ToolHome() {
     return {
       bmr: Math.round(base),
       tdee: Math.round(tdee),
-      cut: Math.round(tdee - 500),
+      cut: Math.max(1200, Math.round(tdee - 500)),
       bulk: Math.round(tdee + 300),
       protein: `${Math.round(weight * 1.6)}-${Math.round(weight * 2.2)}g`,
     };
@@ -63,14 +73,21 @@ export default function ToolHome() {
               </select>
             </label>
             {[
-              ["Age", age, setAge, "years"],
-              ["Height", height, setHeight, "cm"],
-              ["Weight", weight, setWeight, "kg"],
-            ].map(([label, value, setter, suffix]) => (
+              ["Age", age, setAge, "years", AGE_BOUNDS],
+              ["Height", height, setHeight, "cm", HEIGHT_BOUNDS],
+              ["Weight", weight, setWeight, "kg", WEIGHT_BOUNDS],
+            ].map(([label, value, setter, suffix, bounds]) => (
               <label key={label} className="mt-5 block">
                 <span className="text-sm font-semibold">{label}</span>
                 <div className="mt-2 flex overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--background)] focus-within:border-[var(--primary)]">
-                  <input type="number" value={value} onChange={(event) => setter(Number(event.target.value))} className="min-w-0 flex-1 bg-transparent px-4 py-3 outline-none" />
+                  <input
+                    type="number"
+                    min={bounds.min}
+                    max={bounds.max}
+                    value={value}
+                    onChange={(event) => setter(clampNumber(event.target.value, bounds.min, bounds.max))}
+                    className="min-w-0 flex-1 bg-transparent px-4 py-3 outline-none"
+                  />
                   <span className="shrink-0 bg-[var(--muted)] px-3 py-3 text-sm font-semibold text-[var(--muted-foreground)] sm:px-4">{suffix}</span>
                 </div>
               </label>
@@ -87,7 +104,7 @@ export default function ToolHome() {
             </label>
           </div>
 
-          <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]">
+          <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)]" aria-live="polite" role="status">
             <div className="tool-card-grid">
               <Stat label="BMR" value={`${result.bmr} kcal`} />
               <Stat label="Maintenance" value={`${result.tdee} kcal`} />

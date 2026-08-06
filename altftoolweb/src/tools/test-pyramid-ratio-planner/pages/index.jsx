@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, Triangle } from "lucide-react";
 
 import { LAYERS, RATIO_PRESETS, planPyramid } from "../lib";
@@ -42,8 +42,15 @@ const DEFAULTS = {
 
 function formatDuration(totalSeconds) {
   if (totalSeconds < 60) return `${DEC.format(totalSeconds)} s`;
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = Math.round(totalSeconds % 60);
+  let minutes = Math.floor(totalSeconds / 60);
+  let seconds = Math.round(totalSeconds % 60);
+  // Math.round can carry the seconds remainder up to 60 (e.g. 59.5s rounds
+  // to 60), which must roll into the minutes place instead of printing a
+  // nonsensical "X min 60 s".
+  if (seconds === 60) {
+    seconds = 0;
+    minutes += 1;
+  }
   if (minutes < 60) return `${minutes} min ${seconds} s`;
   const hours = Math.floor(minutes / 60);
   return `${hours} h ${minutes % 60} min`;
@@ -52,6 +59,13 @@ function formatDuration(totalSeconds) {
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+    };
+  }, []);
 
   const set = (key, value) => setForm((current) => ({ ...current, [key]: value }));
 
@@ -103,7 +117,11 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => {
+        setCopied(false);
+        copyTimerRef.current = null;
+      }, 1500);
     } catch {
       setCopied(false);
     }

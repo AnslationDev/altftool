@@ -61,6 +61,14 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset the setup guide? This clears every checked-off step and your homework block schedule.",
+      )
+    ) {
+      return;
+    }
     setMode(DEFAULT_MODE);
     setAge(String(DEFAULT_AGE));
     setDone(DEFAULT_DONE.slice());

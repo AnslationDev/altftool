@@ -292,14 +292,41 @@ export function generateCottagecorePalette({ seed = "elderflower", season = "spr
     return { key, name: byKey[key].name, originalHex: byKey[key].hex, ...adjusted };
   });
 
+  // The Contrast table checks the pairings the app actually renders, not
+  // fixed raw-colour pairs: the sage button label is whichever of ink/cream
+  // bestTextOn picked, and clay/honey are checked at their UI-safe (darkened)
+  // value, since that's what borders/icons/badges actually use on cream.
+  const sageButtonLabel = bestTextOn(byKey.sage.rgb, [ink, byKey.cream]);
+  const uiSafeByKey = Object.fromEntries(uiSafe.map((item) => [item.key, item]));
+  const clayUiSafeRgb = hslToRgb(...uiSafeByKey.clay.hsl);
+  const honeyUiSafeRgb = hslToRgb(...uiSafeByKey.honey.hsl);
+
   const checks = [
     { id: "ink-cream", label: "Ink on cream", fg: ink, bg: byKey.cream, min: AA_NORMAL },
     { id: "moss-cream", label: "Moss text on cream", fg: byKey.moss, bg: byKey.cream, min: AA_NORMAL },
     { id: "berry-cream", label: "Berry link on cream", fg: byKey.berry, bg: byKey.cream, min: AA_NORMAL },
-    { id: "cream-sage", label: "Cream text on sage button", fg: byKey.cream, bg: byKey.sage, min: AA_NORMAL },
+    {
+      id: "sage-button-label",
+      label: "Button label on sage",
+      fg: { rgb: sageButtonLabel.rgb },
+      bg: byKey.sage,
+      min: AA_NORMAL,
+    },
     { id: "cream-moss", label: "Cream text on moss footer", fg: byKey.cream, bg: byKey.moss, min: AA_NORMAL },
-    { id: "clay-cream", label: "Clay shape on cream", fg: byKey.clay, bg: byKey.cream, min: AA_LARGE },
-    { id: "honey-cream", label: "Honey badge on cream", fg: byKey.honey, bg: byKey.cream, min: AA_LARGE },
+    {
+      id: "clay-ui-safe",
+      label: "UI-safe clay on cream",
+      fg: { rgb: clayUiSafeRgb },
+      bg: byKey.cream,
+      min: AA_LARGE,
+    },
+    {
+      id: "honey-ui-safe",
+      label: "UI-safe honey on cream",
+      fg: { rgb: honeyUiSafeRgb },
+      bg: byKey.cream,
+      min: AA_LARGE,
+    },
   ].map((check) => {
     const ratio = contrastRatio(check.fg.rgb, check.bg.rgb);
     return {

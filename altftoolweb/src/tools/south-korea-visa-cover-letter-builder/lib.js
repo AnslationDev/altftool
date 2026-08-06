@@ -7,7 +7,10 @@
  *    and C-3-1 short-term business. The period of sojourn granted is up to
  *    90 days, counted with the day of entry as day one.
  *  - A single-entry short-term visa must be used within three months of the
- *    date of issue; after that it lapses whether or not it was used.
+ *    date of issue; after that it lapses whether or not it was used. Double-entry
+ *    is commonly 6 months. Multiple-entry validity is not a single fixed period —
+ *    it is commonly 1, 3 or 5 years depending on the mission and nationality — so
+ *    it is treated as approximate rather than a definite lapse date below.
  *  - Standard consular fees for short-term visas of up to 90 days are US$40 for
  *    single entry, US$70 for double entry and US$90 for multiple entry. Some
  *    nationalities are exempt or pay a reduced fee under bilateral agreements,
@@ -51,7 +54,13 @@ export const VISA_TYPES = [
     label: "C-3-9 general tourism — multiple entry",
     noun: "C-3-9 short-term visit (tourism) visa, multiple entry",
     feeUsd: 90,
+    // Multiple-entry visas are commonly issued valid for 1, 3 or 5 years depending on the
+    // mission and nationality — unlike the single/double-entry rows above, this isn't a
+    // single fixed period, so 12 (the conservative low end) is a display default only and
+    // must not be used to assert a confident "this visa has lapsed" claim. See
+    // validityIsApproximate below.
     validityMonths: 12,
+    validityIsApproximate: true,
   },
   {
     id: "c31-single",
@@ -154,9 +163,27 @@ function splitLines(value) {
     .filter(Boolean);
 }
 
+// Words that start with a vowel LETTER but a consonant SOUND ("y"/"w") take "a", not "an" —
+// e.g. "a Ukrainian citizen", "a European citizen", "a Uruguayan citizen", "a united front".
+// Not exhaustive (English demonym pronunciation isn't derivable from spelling alone), but
+// covers the common nationality/demonym cases this free-text field actually sees.
+const CONSONANT_SOUND_VOWEL_WORDS = [
+  /^ukrain/i,
+  /^uruguay/i,
+  /^europ/i,
+  /^eu(ro|genic|phemi|calyp|nuch)/i,
+  /^uni(on|fied|form|que|corn|versal|ted|ty|cycle)/i,
+  /^us(a|ual|er|age)\b/i,
+  /^one(\b|s\b)/i,
+  /^once\b/i,
+];
+
 /** "a" or "an" for a following word. */
 export function indefiniteArticle(word) {
-  return /^[aeiou]/i.test(String(word).trim()) ? "an" : "a";
+  const trimmed = String(word ?? "").trim();
+  if (!trimmed) return "a";
+  if (CONSONANT_SOUND_VOWEL_WORDS.some((pattern) => pattern.test(trimmed))) return "a";
+  return /^[aeiou]/i.test(trimmed) ? "an" : "a";
 }
 
 /** Pluralise a unit noun. */
@@ -259,7 +286,11 @@ export function buildKoreaCoverLetter(input = {}) {
       `Your passport expires on ${formatLongDate(passportExpiry)}. Korea requires at least six months of validity from the date of entry — to ${formatLongDate(passportRequiredUntil)} in your case.`,
     );
   }
-  if (entryWithinVisaValidity === false) {
+  if (entryWithinVisaValidity === false && visaType.validityIsApproximate) {
+    warnings.push(
+      `Multiple-entry visas are commonly valid for 1, 3 or 5 years depending on the mission and nationality, not a fixed period — check the expiry date printed on your visa sticker or grant notice rather than assuming it lapses ${plural(visaType.validityMonths, "month")} after the issue date of ${formatLongDate(issue)} shown here.`,
+    );
+  } else if (entryWithinVisaValidity === false) {
     warnings.push(
       `This visa must be used within ${plural(visaType.validityMonths, "month")} of issue. Issued on ${formatLongDate(issue)} it would lapse on ${formatLongDate(visaUsableUntil)}, before your arrival on ${formatLongDate(arrival)}.`,
     );
@@ -271,7 +302,7 @@ export function buildKoreaCoverLetter(input = {}) {
       `Only ${plural(leadDays, "day")} separate the application from your flight. Korean missions commonly take one to two weeks and some require an interview, so avoid non-refundable bookings.`,
     );
   }
-  if (budgetUsd > 0 && perPersonPerDayUsd < 60) {
+  if (perPersonPerDayUsd < 60) {
     warnings.push(
       `Your funds work out to about US$${perPersonPerDayUsd.toFixed(0)} per person per day. There is no published minimum, but consular officers ask for bank statements to see that the trip is affordable, so attach three to six months of them.`,
     );
@@ -290,6 +321,15 @@ export function buildKoreaCoverLetter(input = {}) {
   const tiesStatement = clean(input.tiesStatement);
   const itineraryLines = splitLines(input.itinerary);
 
+  // withinSojourn distinguishes a normal trip from one whose stated dates already exceed
+  // the 90-day limit. The two must not share one unconditional "I will leave well before
+  // that date" sentence — that claim is only true in the first case, and stating it
+  // alongside a departure date that is in fact after the limit would be a direct,
+  // self-contradicting false statement in a document meant for a consular officer.
+  const sojournSentence = withinSojourn
+    ? `I plan to arrive in the Republic of Korea on ${formatLongDate(arrival)} and to depart on ${formatLongDate(departure)}, a sojourn of ${plural(stayDays, "day")} counting the day of entry. I understand that a short-term visit visa permits a stay of up to ninety days, which in my case would end on ${formatLongDate(sojournLimit)}, and I will leave well before that date.`
+    : `I plan to arrive in the Republic of Korea on ${formatLongDate(arrival)} and to depart on ${formatLongDate(departure)}, a sojourn of ${plural(stayDays, "day")} counting the day of entry. I understand that a short-term visit visa permits a stay of only up to ninety days, which in my case would end on ${formatLongDate(sojournLimit)} — ${plural(Math.max(0, stayDays - SHORT_TERM_MAX_STAY_DAYS), "day")} short of the dates above. I will either shorten this visit to fit within the permitted sojourn or apply for an extension through HiKorea before the ninety-day period expires, and will not remain in Korea beyond what is authorised.`;
+
   const letterLines = [
     formatLongDate(applied),
     "",
@@ -301,7 +341,7 @@ export function buildKoreaCoverLetter(input = {}) {
     "",
     `I am applying for ${indefiniteArticle(visaType.noun)} ${visaType.noun} for the purpose of ${purpose.sentence}. ${nationality ? `I am ${indefiniteArticle(nationality)} ${nationality} citizen holding` : "I hold"} passport ${passportNumber}, valid until ${formatLongDate(passportExpiry)}.${homeAddress ? ` I live at ${homeAddress}.` : ""}${contact ? ` I can be reached at ${contact}.` : ""}`,
     "",
-    `I plan to arrive in the Republic of Korea on ${formatLongDate(arrival)} and to depart on ${formatLongDate(departure)}, a sojourn of ${plural(stayDays, "day")} counting the day of entry. I understand that a short-term visit visa permits a stay of up to ninety days, which in my case would end on ${formatLongDate(sojournLimit)}, and I will leave well before that date.`,
+    sojournSentence,
   ];
 
   if (inviterName) {
