@@ -10,7 +10,7 @@ const seo = {
   benefits: [
     ["Correct application format", "Date, addressee, subject line, body and signature block in the order Indian institutions expect."],
     ["Deadline reality check", "Adds the office turnaround in working days to the letter date and tells you if the deadline is already missed."],
-    ["Purpose-specific wording", "Each purpose adds the detail the verifying office actually wants, such as date of birth for a passport."],
+    ["Purpose-specific guidance", "Each purpose shows an on-page tip about what the verifying office typically wants alongside it, such as date of birth for a passport — a reminder for you, not text inserted into the letter."],
   ],
   faqs: [
     [

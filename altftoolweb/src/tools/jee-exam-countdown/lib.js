@@ -135,17 +135,28 @@ export function buildCountdownBoard(todayISO, events) {
   if (!Array.isArray(events) || events.length === 0) {
     return { error: "Add at least one exam date." };
   }
-  const rows = [];
-  for (const event of events) {
+  if (parseISODate(todayISO) === null) {
+    return { error: "Today's date: Enter the date as a valid calendar date." };
+  }
+  const rows = events.map((event) => {
     const result = countdownTo(todayISO, event.date);
     if (result.error) {
-      return { error: `${event.label || "Exam"}: ${result.error}` };
+      return { ...event, error: `${event.label || "Exam"}: ${result.error}` };
     }
-    rows.push({ ...event, ...result });
-  }
-  rows.sort((a, b) => a.days - b.days);
-  const upcoming = rows.filter((row) => row.days >= 0);
-  return { rows, next: upcoming.length > 0 ? upcoming[0] : null, allPast: upcoming.length === 0 };
+    return { ...event, ...result };
+  });
+  // Valid rows sort earliest-first; rows with an unparseable date sink to the
+  // bottom instead of blanking the whole board (a bad date on one event should
+  // never hide the countdown for every other, still-valid event).
+  rows.sort((a, b) => {
+    if (a.error && b.error) return 0;
+    if (a.error) return 1;
+    if (b.error) return -1;
+    return a.days - b.days;
+  });
+  const upcoming = rows.filter((row) => !row.error && row.days >= 0);
+  const anyValid = rows.some((row) => !row.error);
+  return { rows, next: upcoming.length > 0 ? upcoming[0] : null, allPast: anyValid && upcoming.length === 0 };
 }
 
 function bandFor(pace) {
@@ -252,6 +263,16 @@ export function computePace({
   }
 
   if (studyDays <= 0) {
+    let note;
+    if (calendarDaysLeft === 0) {
+      note = "The exam is today, so there are no calendar days left for a first pass.";
+    } else if (bufferDaysApplied === 0) {
+      // prepDays > 0 but flooring at a low studyDaysPerWeek rounds the usable
+      // study days down to zero — the buffer (0 days applied) isn't the cause.
+      note = `Studying ${studyDaysPerWeek} day${studyDaysPerWeek === 1 ? "" : "s"} a week rounds down to zero study days across ${prepDays} prep day${prepDays === 1 ? "" : "s"}. Raise study days per week (or add hours per day) instead of blaming the buffer.`;
+    } else {
+      note = "The revision buffer swallows every remaining day. Shorten the buffer or accept that the leftover units stay unread.";
+    }
     return {
       calendarDaysLeft,
       prepDays,
@@ -268,7 +289,7 @@ export function computePace({
       band: {
         tone: "danger",
         label: "No first-pass days left",
-        note: "The revision buffer swallows every remaining day. Shorten the buffer or accept that the leftover units stay unread.",
+        note,
       },
     };
   }

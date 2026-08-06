@@ -206,6 +206,14 @@ export function buildJdbcUrl({
     db.needsHost || (db.id === "h2" && h2Mode === "tcp");
 
   if (usesHost && !hostName) return { error: "Enter a host name or IP address." };
+  // A colon in the host is almost always a "host:port" habit — the template already places a
+  // colon and the Port field right after hostName, so keeping it here would double it up
+  // (host:port:port) instead of doing what the user meant.
+  if (hostName && hostName.includes(":")) {
+    return {
+      error: "Host must not include a port — put the port number in the Port field instead of writing \"host:port\" here.",
+    };
+  }
   // A slash or backslash in the authority would be read as the start of the path (or, on
   // SQL Server, as an instance name), so they are rejected here rather than silently kept.
   if (hostName && /[\s/\\]/.test(hostName)) {
@@ -231,8 +239,26 @@ export function buildJdbcUrl({
     if (db.id === "sqlite") return { error: "Enter the path to the SQLite file." };
     return { error: "Enter the database name." };
   }
-  if (dbName && /\s/.test(dbName)) {
-    return { error: "Database name must not contain spaces — quote it in SQL instead." };
+  if (dbName) {
+    // The database name is spliced straight into the URL ahead of the connection-parameter
+    // block, so a stray grammar character in it can silently defeat or inject connection
+    // properties (e.g. sslmode=require) the same way an unchecked extraParams entry could —
+    // apply the same per-grammar checks used for extraParams below.
+    if (db.paramStyle === PARAM_STYLES.query && UNSAFE_QUERY.test(dbName)) {
+      return {
+        error:
+          'Database name must not contain spaces, ?, & or # — a "?" starts the query-string parameters in this URL grammar, so it would silently split off or override connection properties such as sslmode=require.',
+      };
+    }
+    if (db.paramStyle === PARAM_STYLES.semicolon && UNSAFE_SEMICOLON.test(dbName)) {
+      return {
+        error:
+          'Database name must not contain spaces or ; — a ";" starts a new connection property in this URL grammar, so it could silently inject or override one (including encrypt/trustServerCertificate).',
+      };
+    }
+    if (db.paramStyle === PARAM_STYLES.none && /\s/.test(dbName)) {
+      return { error: "Database name must not contain spaces — quote it in SQL instead." };
+    }
   }
 
   // Assemble the connection properties.

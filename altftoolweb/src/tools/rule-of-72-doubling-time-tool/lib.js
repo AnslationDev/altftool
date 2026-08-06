@@ -151,6 +151,10 @@ export function computeDoublingTime({
   const errorPercent = (errorYears / exactDouble) * 100;
 
   // Real (inflation-adjusted) return: Fisher equation, (1+nominal)/(1+inflation) - 1.
+  // realRate itself is always computed (and shown) even when inflation erodes or
+  // exceeds the nominal rate; only the "years to double" figures are meaningless
+  // (and left null) once the real rate is non-positive, since a shrinking or flat
+  // real balance never doubles.
   const realRate = ((1 + ratePercent / 100) / (1 + inflationPercent / 100) - 1) * 100;
   const realDouble =
     realRate > 0 ? exactTimeToMultiple(realRate, 2, compoundsPerYear, continuous) : null;

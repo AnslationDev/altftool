@@ -56,13 +56,21 @@ export default function ToolHome() {
 
   const formRows = hasError
     ? []
-    : [
-        ...result.indianForms.map((form) => [`In ${form.unit}`, AMOUNT_FMT.format(form.amount)]),
-        ...result.internationalForms.map((form) => [
-          `In ${form.unit}`,
-          AMOUNT_FMT.format(form.amount),
-        ]),
-      ];
+    : (() => {
+        const combined = [
+          ...result.indianForms.map((form) => [`In ${form.unit}`, AMOUNT_FMT.format(form.amount)]),
+          ...result.internationalForms.map((form) => [
+            `In ${form.unit}`,
+            AMOUNT_FMT.format(form.amount),
+          ]),
+        ];
+        const seen = new Set();
+        return combined.filter(([label]) => {
+          if (seen.has(label)) return false;
+          seen.add(label);
+          return true;
+        });
+      })();
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -146,7 +154,8 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the conversion result"
+              aria-label={copied ? "Copied" : "Copy the conversion result"}
+              aria-live="polite"
               className={GHOST_BTN}
               disabled={hasError}
             >
@@ -201,7 +210,7 @@ export default function ToolHome() {
                 ["10 lakh", "10,00,000", "1 million"],
                 ["1 crore", "1,00,00,000", "10 million"],
                 ["100 crore", "1,00,00,00,000", "1 billion"],
-                ["1 lakh crore", "1,00,00,00,00,00,000", "1 trillion"],
+                ["1 lakh crore", "10,00,00,00,00,000", "1 trillion"],
               ].map(([indian, digits, international]) => (
                 <tr key={indian} className="border-b border-[var(--border)] last:border-0">
                   <td className="py-2 pr-3 font-semibold">{indian}</td>

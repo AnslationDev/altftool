@@ -567,10 +567,12 @@ export function analyzeAudioTranscriptCoverage(
     });
   }
 
-  const uncovered = mergeWindows(
+  const mergedUncovered = mergeWindows(
     windows.filter(({ active, covered }) => active && !covered),
     settings.minimumUncoveredMilliseconds,
-  ).slice(0, ALIGNMENT_LIMITS.findings);
+  );
+  const uncoveredFullLength = mergedUncovered.length;
+  const uncovered = mergedUncovered.slice(0, ALIGNMENT_LIMITS.findings);
   const quietCues = [];
   const durationMs = (channels[0].length / sampleRate) * 1_000;
   const outOfRangeCues = [];
@@ -612,7 +614,7 @@ export function analyzeAudioTranscriptCoverage(
     quietCues: quietCues.slice(0, ALIGNMENT_LIMITS.findings),
     outOfRangeCues: outOfRangeCues.slice(0, ALIGNMENT_LIMITS.findings),
     findingLimitReached:
-      uncovered.length >= ALIGNMENT_LIMITS.findings ||
+      uncoveredFullLength > ALIGNMENT_LIMITS.findings ||
       quietCues.length > ALIGNMENT_LIMITS.findings ||
       outOfRangeCues.length > ALIGNMENT_LIMITS.findings,
   };

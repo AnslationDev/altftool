@@ -80,7 +80,11 @@ export default function ToolHome() {
     if (!ok) return "";
     const lines = ["JEE Exam Countdown", `As on ${today}`];
     board.rows.forEach((row) => {
-      lines.push(`${row.label} (${row.date}): ${dayLabel(row.days)}`);
+      lines.push(
+        row.error
+          ? `${row.label}${row.date ? ` (${row.date})` : ""}: date needed`
+          : `${row.label} (${row.date}): ${dayLabel(row.days)}`,
+      );
     });
     lines.push(
       "",
@@ -106,6 +110,14 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset all exam dates and subject progress? This clears your entered dates, syllabus progress and pace settings and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setToday(toLocalISODate(new Date()));
     setEvents(JEE_EVENT_DEFAULTS.map((event) => ({ ...event })));
     setTargetId(JEE_EVENT_DEFAULTS[0].id);
@@ -293,7 +305,10 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -387,12 +402,18 @@ export default function ToolHome() {
                 {board.rows.map((row) => (
                   <tr key={row.id} className="border-b border-[var(--border)] last:border-0">
                     <td className="py-2 pr-3 font-semibold">{row.label}</td>
-                    <td className="py-2 pr-3 text-[var(--muted-foreground)]">{row.date}</td>
+                    <td className="py-2 pr-3 text-[var(--muted-foreground)]">{row.date || DASH}</td>
                     <td
-                      className={`py-2 text-right font-semibold ${row.isPast ? "text-[var(--muted-foreground)]" : ""}`}
+                      className={`py-2 text-right font-semibold ${
+                        row.error
+                          ? "text-[var(--danger)]"
+                          : row.isPast
+                            ? "text-[var(--muted-foreground)]"
+                            : ""
+                      }`}
                     >
-                      {dayLabel(row.days)}
-                      {row.days > 6 ? (
+                      {row.error ? "Date needed" : dayLabel(row.days)}
+                      {!row.error && row.days > 6 ? (
                         <span className="block text-xs font-normal text-[var(--muted-foreground)]">
                           {NUM0.format(row.weeks)} weeks {NUM0.format(row.spareDays)} days
                         </span>

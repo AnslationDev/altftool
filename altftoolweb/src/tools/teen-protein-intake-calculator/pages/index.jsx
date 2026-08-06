@@ -274,7 +274,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -324,6 +328,16 @@ export default function ToolHome() {
             </div>
           ))}
         </dl>
+
+        {!hasError && result.perMealBelowMinimum && (
+          <p className={NOTE_CLASS}>
+            Splitting {g0(result.recommendedGrams)} across {result.mealsPerDay} meals gives about{" "}
+            {g0(result.perMealGrams)} per meal, under the {g1(result.perMealMinimumGrams)} useful
+            minimum per meal (0.25 g/kg) for stimulating muscle protein synthesis. Fewer, larger
+            meals — around {result.mealsAtUsefulMinimum} a day — would keep each serving above that
+            threshold.
+          </p>
+        )}
 
         {!hasError && (
           <>

@@ -36,6 +36,7 @@ const DEFAULTS = {
   addressee: "The Principal",
   purposeId: "passport",
   purposeDetail: "",
+  enclosuresConfirmed: true,
   copies: "2",
   requestDate: "2026-07-28",
   neededBy: "2026-08-14",
@@ -88,6 +89,7 @@ export default function ToolHome() {
         parentName: form.parentName,
         contactPhone: form.contactPhone,
         contactEmail: form.contactEmail,
+        enclosuresConfirmed: form.enclosuresConfirmed,
         lead,
       }),
     [form, lead],
@@ -107,6 +109,14 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset all fields? This clears your name, roll number, institution details, address, purpose, dates and parent/contact information and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setForm(DEFAULTS);
     setCopied("");
   };
@@ -199,6 +209,23 @@ export default function ToolHome() {
               placeholder="application reference NSP/2026/884213"
             />
           </div>
+          <div className="flex items-end sm:col-span-2">
+            <label
+              htmlFor="bf-enclosures"
+              className="flex min-h-11 w-full cursor-pointer items-center gap-3 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-sm"
+            >
+              <input
+                id="bf-enclosures"
+                type="checkbox"
+                className="h-5 w-5 shrink-0 accent-[var(--primary)]"
+                checked={form.enclosuresConfirmed}
+                onChange={(event) =>
+                  setForm((prev) => ({ ...prev, enclosuresConfirmed: event.target.checked }))
+                }
+              />
+              <span>I am enclosing my ID card copy and fee receipt</span>
+            </label>
+          </div>
         </div>
       </section>
 
@@ -211,7 +238,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">

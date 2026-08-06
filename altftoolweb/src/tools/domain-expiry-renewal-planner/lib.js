@@ -368,13 +368,20 @@ export function planDomainRenewal({
   } else {
     actions.push("Nothing urgent. Use the quiet period to fix auto-renew, contacts and two-factor rather than waiting for the reminder emails.");
   }
-  if (!autoRenew) actions.push("Turn auto-renew on and confirm the card on file has not expired.");
-  if (!contactCurrent) {
-    actions.push("Point the registrant email at a shared mailbox that outlives any individual, and verify it receives mail.");
+  if (phase !== "dropped") {
+    // Once a domain has actually dropped there is no registrar-side object left to
+    // configure — these steps only make sense while the registration still exists.
+    if (!autoRenew) actions.push("Turn auto-renew on and confirm the card on file has not expired.");
+    if (!contactCurrent) {
+      actions.push("Point the registrant email at a shared mailbox that outlives any individual, and verify it receives mail.");
+    }
+    if (!twoFactor) actions.push("Enable two-factor authentication on the registrar account.");
+    if (!registrarLock) actions.push("Switch the registrar transfer lock back on.");
+    actions.push("Record the auth code procedure and where the account credentials live, so a renewal is not blocked by one person being unavailable.");
+  } else {
+    actions.push("Set a backorder with a drop-catch service if you want another shot at the exact name the moment it becomes registerable again.");
+    actions.push("If someone else registers it first and it matches a trademark you hold, a UDRP or URS complaint is the only recovery path — budget weeks, not days.");
   }
-  if (!twoFactor) actions.push("Enable two-factor authentication on the registrar account.");
-  if (!registrarLock) actions.push("Switch the registrar transfer lock back on.");
-  actions.push("Record the auth code procedure and where the account credentials live, so a renewal is not blocked by one person being unavailable.");
 
   return {
     phase,

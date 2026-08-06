@@ -63,6 +63,12 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the joiner? This clears your pasted prompt and all options and cannot be undone.")
+    ) {
+      return;
+    }
     setText(DEFAULT_TEXT);
     setFormat("json");
     setNewlineMode("escape");
@@ -190,7 +196,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

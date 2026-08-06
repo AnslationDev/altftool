@@ -80,7 +80,8 @@ export const spec = {
   "note": "Linear elastic, small-deflection, ideal simply supported formulas. It is not a structural design check; verify supports, load combinations, stability, shear, local effects, fatigue, safety factors, and governing code."
 },
   compute: (values) => {
-      const load = Math.max(0, Number(values.load) || 0), L = Number(values.length), E = Number(values.elasticity) * 1e9, I = Number(values.inertia) * 1e-8, Z = Number(values.section_modulus) * 1e-6;
+      const rawLoad = Number(values.load), load = Number.isFinite(rawLoad) ? rawLoad : 0, L = Number(values.length), E = Number(values.elasticity) * 1e9, I = Number(values.inertia) * 1e-8, Z = Number(values.section_modulus) * 1e-6;
+      if (load < 0) return { result: "—", caption: "Load must not be negative." };
       if (!(L > 0 && E > 0 && I > 0 && Z > 0)) return { result: "—", caption: "L, E, I, and Z must be positive" };
       const point = values.load_case === "point";
       const moment = point ? load * L / 4 : load * L * L / 8;

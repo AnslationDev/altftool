@@ -73,7 +73,7 @@ export default function ToolHome() {
         expiryDate,
         today,
         registeredOn,
-        graceDays: Number(graceDays),
+        graceDays: graceDays.trim() === "" ? Number.NaN : Number(graceDays),
         renewalPrice: Number(renewalPrice),
         redemptionFee: Number(redemptionFee),
         ...flags,
@@ -282,7 +282,7 @@ export default function ToolHome() {
         </>
       ) : (
         <>
-          <section className={`mt-6 ${CARD}`}>
+          <section className={`mt-6 ${CARD}`} aria-live="polite">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -434,7 +434,7 @@ export default function ToolHome() {
                       : `Cleared on ${prettyDate(plan.transfer.lockEnd)}`,
                   ],
                   [
-                    "5-day add grace period",
+                    "5-day grace period",
                     plan.transfer.inAddGrace
                       ? `Still open until ${prettyDate(plan.transfer.addGraceEnd)} — a deletion in this window is refundable`
                       : `Closed on ${prettyDate(plan.transfer.addGraceEnd)}`,

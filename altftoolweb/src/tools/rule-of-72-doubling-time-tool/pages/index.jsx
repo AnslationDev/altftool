@@ -95,8 +95,10 @@ export default function ToolHome() {
       result.principal > 0
         ? `${amount(result.principal)} becomes ${amount(result.doubledValue)}`
         : null,
-      Number.isFinite(result.realDouble)
-        ? `After ${num(toNumber(inflation))}% inflation, real doubling takes ${num(result.realDouble)} years`
+      Number.isFinite(result.realRate)
+        ? Number.isFinite(result.realDouble)
+          ? `After ${num(toNumber(inflation))}% inflation, real doubling takes ${num(result.realDouble)} years`
+          : `After ${num(toNumber(inflation))}% inflation, the real return is ${num(result.realRate)}% — purchasing power never doubles`
         : null,
     ]
       .filter(Boolean)
@@ -233,7 +235,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Exact time to double
             </p>
@@ -334,20 +336,31 @@ export default function ToolHome() {
         </div>
       </section>
 
-      {ok && Number.isFinite(result.realDouble) && (
+      {ok && Number.isFinite(result.realRate) && (
         <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
           <h2 className="text-base font-semibold">After inflation</h2>
           <dl className="mt-3 divide-y divide-[var(--border)] text-sm">
-            {[
-              ["Real (inflation-adjusted) return", `${num(result.realRate)}%`],
-              ["Years to double purchasing power", years(result.realDouble)],
-              ["Rule of 72 on the real return", years(result.realRule72)],
-            ].map(([label, value]) => (
-              <div key={label} className="flex items-center justify-between gap-4 py-2.5">
-                <dt className="text-[var(--muted-foreground)]">{label}</dt>
-                <dd className="text-right font-semibold">{value}</dd>
+            <div className="flex items-center justify-between gap-4 py-2.5">
+              <dt className="text-[var(--muted-foreground)]">Real (inflation-adjusted) return</dt>
+              <dd className="text-right font-semibold">{num(result.realRate)}%</dd>
+            </div>
+            {Number.isFinite(result.realDouble) ? (
+              [
+                ["Years to double purchasing power", years(result.realDouble)],
+                ["Rule of 72 on the real return", years(result.realRule72)],
+              ].map(([label, value]) => (
+                <div key={label} className="flex items-center justify-between gap-4 py-2.5">
+                  <dt className="text-[var(--muted-foreground)]">{label}</dt>
+                  <dd className="text-right font-semibold">{value}</dd>
+                </div>
+              ))
+            ) : (
+              <div className="py-2.5">
+                <p className="rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning-text)]">
+                  Purchasing power shrinks over time at this inflation rate — it never doubles.
+                </p>
               </div>
-            ))}
+            )}
           </dl>
         </section>
       )}
@@ -370,7 +383,7 @@ export default function ToolHome() {
               onChange={(event) => setTarget(event.target.value)}
             />
           </div>
-          <div className="rounded-md bg-[var(--muted)] p-4">
+          <div className="rounded-md bg-[var(--muted)] p-4" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Required annual return
             </p>

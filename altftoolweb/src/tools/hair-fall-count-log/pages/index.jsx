@@ -110,6 +110,14 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset the hair fall log? This clears every logged day and the trigger date, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setRows(DEFAULT_ROWS);
     setNextId(8);
     setTriggerDate("");
@@ -234,7 +242,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -311,7 +323,9 @@ export default function ToolHome() {
             {NUM1.format(result.trend.priorAverage)} for the {ROLLING_WINDOW_DAYS} before —{" "}
             {result.trend.direction === "flat"
               ? "no change"
-              : `${result.trend.direction === "up" ? "up" : "down"} ${NUM1.format(Math.abs(result.trend.changePct))}%`}
+              : result.trend.changePct === null
+                ? `${result.trend.direction === "up" ? "up from zero" : "down to zero"}`
+                : `${result.trend.direction === "up" ? "up" : "down"} ${NUM1.format(Math.abs(result.trend.changePct))}%`}
             .
           </p>
         )}
@@ -346,7 +360,15 @@ export default function ToolHome() {
 
       {!hasError && (
         <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
-          <h2 className="text-base font-semibold">Daily counts and {ROLLING_WINDOW_DAYS}-day average</h2>
+          <h2 className="text-base font-semibold">
+            Daily counts and rolling average (last {ROLLING_WINDOW_DAYS} entries)
+          </h2>
+          <p className="mt-1 text-xs leading-5 text-[var(--muted-foreground)]">
+            Colour reflects each day&apos;s count spread across the days it represents, so an
+            infrequent wash day is not compared raw against a per-day threshold. The rolling average
+            is over the last {ROLLING_WINDOW_DAYS} logged entries — for gapped logs that can span
+            more than {ROLLING_WINDOW_DAYS} calendar days.
+          </p>
           <div className="mt-3 overflow-x-auto">
             <table className="w-full min-w-[380px] text-left text-sm">
               <thead>
@@ -363,9 +385,9 @@ export default function ToolHome() {
                     <td className="py-2 pr-3">{formatDate(entry.ms)}</td>
                     <td
                       className={`py-2 pr-3 text-right font-semibold ${
-                        entry.count > HIGH_DAILY_THRESHOLD
+                        entry.dailyRate > HIGH_DAILY_THRESHOLD
                           ? "text-[var(--danger)]"
-                          : entry.count > NORMAL_DAILY_MAX
+                          : entry.dailyRate > NORMAL_DAILY_MAX
                             ? "text-[var(--foreground)]"
                             : "text-[var(--success)]"
                       }`}

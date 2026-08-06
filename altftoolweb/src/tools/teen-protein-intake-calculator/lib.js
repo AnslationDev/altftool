@@ -75,7 +75,7 @@ export const ACTIVITY_LEVELS = {
  */
 export const SPORT_LEVELS = {
   none: { label: "No regular sport or training", min: null, max: null },
-  recreational: { label: "Recreational sport, 2-3 sessions a week", min: 1.0, max: 1.2 },
+  recreational: { label: "Recreational sport, 2-3 sessions a week", min: 1.2, max: 1.2 },
   competitive: { label: "Competitive team or endurance sport", min: 1.2, max: 1.6 },
   strength: { label: "Strength training to build muscle", min: 1.4, max: 1.7 },
 };
@@ -226,6 +226,8 @@ export function teenProteinTarget({
     mealsPerDay,
     perMealGrams: recommendedGrams / mealsPerDay,
     perMealMinimumGrams: PER_MEAL_G_PER_KG * weightKg,
+    perMealBelowMinimum: recommendedGrams / mealsPerDay < PER_MEAL_G_PER_KG * weightKg,
+    mealsAtUsefulMinimum: Math.max(1, Math.floor(recommendedGrams / (PER_MEAL_G_PER_KG * weightKg))),
     growthKcal: GROWTH_KCAL,
   };
 }

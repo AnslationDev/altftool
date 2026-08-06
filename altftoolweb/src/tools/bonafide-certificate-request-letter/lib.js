@@ -258,6 +258,7 @@ export function buildBonafideLetter({
   parentName,
   contactPhone,
   contactEmail,
+  enclosuresConfirmed = true,
   lead,
 }) {
   if (!lead || lead.error) {
@@ -279,8 +280,10 @@ export function buildBonafideLetter({
   const detail = clean(purposeDetail);
 
   const purposeSentence =
-    purpose.id === "other" && detail
-      ? `I require the certificate ${detail}.`
+    purpose.id === "other"
+      ? detail
+        ? `I require the certificate ${detail}.`
+        : "I require the certificate for personal purposes."
       : `I require the certificate ${purpose.line}${detail ? ` — ${detail}` : ""}.`;
 
   const copyLine =
@@ -320,7 +323,7 @@ export function buildBonafideLetter({
     "",
     clean(parentName) ? `My parent / guardian, ${clean(parentName)}, is aware of this request and can be contacted if any confirmation is needed.` : "",
     "",
-    "I have enclosed a copy of my identity card and the fee receipt for the current term. Please let me know if any further document or fee is required.",
+    `${enclosuresConfirmed ? "I have enclosed a copy of my identity card and the fee receipt for the current term. " : ""}Please let me know if any further document or fee is required.`,
     "",
     "Thank you for your time and consideration.",
     "",

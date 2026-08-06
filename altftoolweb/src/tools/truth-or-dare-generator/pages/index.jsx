@@ -53,7 +53,14 @@ export default function ToolHome() {
 
   const nextPrompt = () => {
     if (single.error) return;
-    setUsedIds((prev) => (single.recycled ? [single.id] : [...prev, single.id]));
+    setUsedIds((prev) => {
+      if (!single.recycled) return [...prev, single.id];
+      // Only forget the sub-pool (truth or dare) that was actually exhausted —
+      // wiping the whole combined list would also reset tracking for the other
+      // type, which hasn't been drawn out yet.
+      const prefix = `${level}-${single.type}-`;
+      return [...prev.filter((id) => !id.startsWith(prefix)), single.id];
+    });
     setDrawSeed((prev) => Number(prev) + 1);
   };
 
@@ -79,6 +86,14 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset the game? This clears your player list, round count, and game number and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setLevel("family");
     setType("random");
     setPlayersRaw(DEFAULT_PLAYERS);

@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     [
       "Guarantees every pair meets exactly once",
-      "The circle-method rotation is a proven round-robin construction, so with n people you get n−1 rounds and no duplicate pairing anywhere in the table.",
+      "The circle-method rotation is a proven round-robin construction: with n people you get n−1 rounds if n is even, or n rounds with one bye per round if n is odd — and no duplicate pairing anywhere in the table.",
     ],
     [
       "Handles odd group sizes with an explicit bye",

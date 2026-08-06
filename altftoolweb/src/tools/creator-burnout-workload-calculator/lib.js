@@ -234,8 +234,27 @@ export function computeWorkload({
 
   const band = bandForScore(score);
 
-  // What the same mix looks like if it is scaled to the target week.
-  const scale = totalHours > 0 ? clamp(targetHours / totalHours, 0, 10) : 1;
+  // What the same mix looks like if it is scaled to the target week. Admin
+  // hours (email, brand deals, analytics, community) are not reducible by
+  // cutting output the way production hours are, so they are held fixed and
+  // only the production side is scaled down to close the gap. Scaling both
+  // together (targetHours / totalHours) previously under-cut production and
+  // still left the reconstructed total above the target whenever adminHours
+  // was non-trivial.
+  const adminAloneExceedsTarget = totalHours > targetHours && adminHours >= targetHours;
+  let scale;
+  if (totalHours <= targetHours) {
+    // Already at or under target — nothing to trim.
+    scale = 1;
+  } else if (adminAloneExceedsTarget) {
+    // Admin hours alone already meet or exceed the target: no amount of
+    // trimming production gets there, so every suggested count drops to zero.
+    scale = 0;
+  } else if (productionHours > 0) {
+    scale = clamp((targetHours - adminHours) / productionHours, 0, 10);
+  } else {
+    scale = 1;
+  }
   const trimmed = cleaned.map((item) => ({
     ...item,
     share: totalHours > 0 ? (item.hours / totalHours) * 100 : 0,
@@ -262,6 +281,13 @@ export function computeWorkload({
   }
   if (weeksSinceBreak >= BREAK_MAX_WEEKS) {
     flags.push(`${Math.round(weeksSinceBreak)} weeks without a full week off — schedule one and bank content first.`);
+  }
+  if (adminAloneExceedsTarget) {
+    flags.push(
+      `Admin & comms alone (${Math.round(adminHours)} h) already meets or exceeds your ${Math.round(
+        targetHours,
+      )}-hour target, so no amount of trimming production output reaches it — the target hours need to go up, or admin time needs to come down first.`,
+    );
   }
   if (flags.length === 0) {
     flags.push("No threshold breached — this schedule is inside published working-time and sleep guidance.");
@@ -291,6 +317,7 @@ export function computeWorkload({
     hoursVsHighRisk: totalHours - HIGH_RISK_WEEKLY_HOURS,
     targetHours,
     scale,
+    adminAloneExceedsTarget,
     items: trimmed,
     flags,
   };

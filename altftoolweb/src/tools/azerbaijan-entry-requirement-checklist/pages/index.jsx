@@ -94,7 +94,9 @@ export default function ToolHome() {
       result.needsRegistration
         ? `Register with the State Migration Service by ${result.registrationDeadline}`
         : `No registration needed — stays of ${REGISTRATION_THRESHOLD_DAYS} days or less are exempt`,
-      `Visa cost: ${usd.format(result.visaFeeTotalUsd)} for ${result.travellers} traveller(s)`,
+      result.feeUnknown
+        ? "Visa cost: fee varies by mission — contact the embassy directly"
+        : `Visa cost: ${usd.format(result.visaFeeTotalUsd)} for ${result.travellers} traveller(s)${result.needsSecondVisa ? ", including a second visa for the return leg" : ""}`,
       `Readiness: ${readiness.have} of ${readiness.total} required items (${readiness.percent}%)`,
       "",
       ...result.warnings.map((warning) => `! ${warning}`),
@@ -306,8 +308,18 @@ export default function ToolHome() {
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Visa cost for the party
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
-              {hasError ? DASH : usd.format(result.visaFeeTotalUsd)}
+            <p
+              className={
+                hasError || result.feeUnknown
+                  ? "mt-1 text-xl font-semibold text-[var(--primary)] sm:text-2xl"
+                  : "mt-1 text-4xl font-semibold text-[var(--primary)]"
+              }
+            >
+              {hasError
+                ? DASH
+                : result.feeUnknown
+                  ? "Fee varies by mission — contact the embassy"
+                  : usd.format(result.visaFeeTotalUsd)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
@@ -380,7 +392,14 @@ export default function ToolHome() {
                   ? `Due by ${result.registrationDeadline}`
                   : "Not needed for this stay",
             ],
-            ["Visa fee per traveller", hasError ? DASH : usd.format(result.visaFeePerPersonUsd)],
+            [
+              "Visa fee per traveller",
+              hasError
+                ? DASH
+                : result.feeUnknown
+                  ? "Set by the mission"
+                  : usd.format(result.visaFeePerPersonUsd),
+            ],
             [
               "Entries",
               hasError ? DASH : result.route.singleEntry ? "Single entry" : "Multiple entries",

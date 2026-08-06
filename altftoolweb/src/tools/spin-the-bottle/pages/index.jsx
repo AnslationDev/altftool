@@ -5,17 +5,61 @@ import {
   Wine, RotateCcw, Plus, X, Users, Volume2, VolumeX,
   Sparkles, RefreshCw, Palette,
 } from "lucide-react";
+import { playSound, resumeAudio } from "../utils/sound";
 
 function generateId() {
   return Math.random().toString(36).substring(2, 9);
 }
 
+// Each design's body fill is chosen so it holds >=3:1 contrast (WCAG AA
+// non-text contrast) against the card surface in BOTH light and dark theme —
+// gold/cyan needed a darker light-mode shade to clear that bar.
 const BOTTLE_DESIGNS = [
-  { id: "classic", label: "Classic", color: "text-emerald-600" },
-  { id: "gold", label: "Gold", color: "text-amber-500" },
-  { id: "rose", label: "Rose", color: "text-rose-500" },
-  { id: "purple", label: "Purple", color: "text-purple-500" },
-  { id: "cyan", label: "Cyan", color: "text-cyan-500" },
+  {
+    id: "classic",
+    label: "Classic",
+    color: "text-emerald-600 dark:text-emerald-400",
+    fill: "fill-emerald-600 dark:fill-emerald-500",
+    stroke: "stroke-emerald-700 dark:stroke-emerald-300",
+    ellipseFill: "fill-emerald-700 dark:fill-emerald-400",
+    highlightFill: "fill-emerald-500 dark:fill-emerald-300",
+  },
+  {
+    id: "gold",
+    label: "Gold",
+    color: "text-amber-600 dark:text-amber-400",
+    fill: "fill-amber-600 dark:fill-amber-500",
+    stroke: "stroke-amber-700 dark:stroke-amber-300",
+    ellipseFill: "fill-amber-700 dark:fill-amber-400",
+    highlightFill: "fill-amber-500 dark:fill-amber-300",
+  },
+  {
+    id: "rose",
+    label: "Rose",
+    color: "text-rose-500 dark:text-rose-400",
+    fill: "fill-rose-500 dark:fill-rose-500",
+    stroke: "stroke-rose-600 dark:stroke-rose-300",
+    ellipseFill: "fill-rose-600 dark:fill-rose-400",
+    highlightFill: "fill-rose-400 dark:fill-rose-300",
+  },
+  {
+    id: "purple",
+    label: "Purple",
+    color: "text-purple-500 dark:text-purple-400",
+    fill: "fill-purple-500 dark:fill-purple-500",
+    stroke: "stroke-purple-600 dark:stroke-purple-300",
+    ellipseFill: "fill-purple-600 dark:fill-purple-400",
+    highlightFill: "fill-purple-400 dark:fill-purple-300",
+  },
+  {
+    id: "cyan",
+    label: "Cyan",
+    color: "text-cyan-600 dark:text-cyan-400",
+    fill: "fill-cyan-600 dark:fill-cyan-500",
+    stroke: "stroke-cyan-700 dark:stroke-cyan-300",
+    ellipseFill: "fill-cyan-700 dark:fill-cyan-400",
+    highlightFill: "fill-cyan-500 dark:fill-cyan-300",
+  },
 ];
 
 export default function ToolHome() {
@@ -26,6 +70,7 @@ export default function ToolHome() {
   const [selected, setSelected] = useState(null);
   const [design, setDesign] = useState("classic");
   const [soundEnabled, setSoundEnabled] = useState(false);
+  const [spinDurationMs, setSpinDurationMs] = useState(3500);
   const [result, setResult] = useState(null);
   const [history, setHistory] = useState([]);
   const bottleRef = useRef(null);
@@ -68,6 +113,8 @@ export default function ToolHome() {
 
   const spin = useCallback(() => {
     if (participants.length < 2 || spinning) return;
+    resumeAudio();
+    if (soundEnabled) playSound("spin");
     setSpinning(true);
     setResult(null);
     setSelected(null);
@@ -75,7 +122,11 @@ export default function ToolHome() {
     const extraSpins = 3 + Math.floor(Math.random() * 5);
     const targetAngle = extraSpins * 360 + Math.floor(Math.random() * 360);
     const finalRotation = rotation + targetAngle;
+    // Same randomized duration drives both the visual rotation (in seconds,
+    // via spinDurationMs below) and the winner-reveal timeout, so the result
+    // is announced exactly when the bottle stops turning.
     const duration = 2000 + Math.random() * 1500;
+    setSpinDurationMs(duration);
 
     setRotation(finalRotation);
 
@@ -84,16 +135,19 @@ export default function ToolHome() {
       setSpinning(false);
       const normalized = ((finalRotation % 360) + 360) % 360;
       const sliceAngle = 360 / participants.length;
-      const winnerIndex = Math.floor(normalized / sliceAngle) % participants.length;
+      // Round to the nearest marker (markers sit AT i*sliceAngle, not at the
+      // start of a [i, i+1) bucket), wrapping length -> 0.
+      const winnerIndex = Math.round(normalized / sliceAngle) % participants.length;
       const winner = participants[winnerIndex];
       setSelected(winner);
       setResult(`${winner.name} is chosen!`);
+      if (soundEnabled) playSound("winner");
       setHistory((prev) => [
         { id: generateId(), name: winner.name, date: new Date().toLocaleString() },
         ...prev.slice(0, 19),
       ]);
     }, duration);
-  }, [participants, spinning, rotation]);
+  }, [participants, spinning, rotation, soundEnabled]);
 
   useEffect(() => {
     return () => {
@@ -110,18 +164,29 @@ export default function ToolHome() {
     setHistory([]);
   }, []);
 
+  const addFromInput = useCallback(() => {
+    if (inputValue.includes("\n") || inputValue.includes(",")) {
+      addBulk();
+    } else {
+      addParticipant();
+    }
+  }, [inputValue, addParticipant, addBulk]);
+
   const handleKeyDown = useCallback(
     (e) => {
       if (e.key === "Enter") {
-        if (inputValue.includes("\n") || inputValue.includes(",")) {
-          addBulk();
-        } else {
-          addParticipant();
-        }
+        addFromInput();
       }
     },
-    [inputValue, addParticipant, addBulk]
+    [addFromInput]
   );
+
+  const handleClearAll = useCallback(() => {
+    if (typeof window !== "undefined" && !window.confirm("Clear all participants? This cannot be undone.")) {
+      return;
+    }
+    setParticipants([]);
+  }, []);
 
   const currentDesign = BOTTLE_DESIGNS.find((d) => d.id === design);
   const sliceAngle = participants.length > 0 ? 360 / participants.length : 0;
@@ -147,8 +212,9 @@ export default function ToolHome() {
                   className="flex-1 px-3 py-2 rounded-xl bg-(--muted) border border-(--border) text-(--foreground) placeholder:text-(--muted-foreground) focus:outline-none focus:ring-2 focus:ring-(--primary) text-sm"
                 />
                 <button
-                  onClick={addParticipant}
-                  disabled={!inputValue.trim()}
+                  onClick={addFromInput}
+                  disabled={!inputValue.trim() || spinning}
+                  aria-label="Add participant"
                   className="px-3 py-2 rounded-xl bg-(--primary) text-(--primary-foreground) font-semibold text-sm hover:opacity-90 disabled:opacity-40 transition"
                 >
                   <Plus size="16" />
@@ -177,7 +243,12 @@ export default function ToolHome() {
                           }`}
                         >
                           {p.name}
-                          <button onClick={() => removeParticipant(p.id)} className="hover:opacity-60">
+                          <button
+                            onClick={() => removeParticipant(p.id)}
+                            disabled={spinning}
+                            aria-label={`Remove ${p.name}`}
+                            className="hover:opacity-60 disabled:opacity-40 disabled:cursor-not-allowed"
+                          >
                             <X size="10" />
                           </button>
                         </motion.span>
@@ -186,7 +257,7 @@ export default function ToolHome() {
                   </div>
                   <div className="flex items-center justify-between pt-2 border-t border-(--border)">
                     <span className="text-xs text-(--muted-foreground)">{participants.length} players</span>
-                    <button onClick={() => setParticipants([])} className="text-xs text-(--muted-foreground) hover:text-(--foreground) transition">
+                    <button onClick={handleClearAll} className="text-xs text-(--muted-foreground) hover:text-(--foreground) transition">
                       Clear All
                     </button>
                   </div>
@@ -290,42 +361,28 @@ export default function ToolHome() {
                 >
                   <motion.div
                     animate={{ rotate: rotation }}
-                    transition={{ duration: spinning ? 3.5 : 0.3, ease: spinning ? [0.2, 0.8, 0.3, 1] : "easeOut" }}
+                    transition={{
+                      duration: spinning ? spinDurationMs / 1000 : 0.3,
+                      ease: spinning ? [0.2, 0.8, 0.3, 1] : "easeOut",
+                    }}
                     className="w-full h-full flex items-center justify-center"
                   >
                     <svg viewBox="0 0 40 80" className="w-8 h-16">
                       <path
                         d="M20 2 C22 8 24 14 24 20 L24 30 C26 32 28 34 28 36 L28 72 C28 75 26 78 20 78 C14 78 12 75 12 72 L12 36 C12 34 14 32 16 30 L16 20 C16 14 18 8 20 2Z"
-                        className={
-                          design === "classic" ? "fill-emerald-600" :
-                          design === "gold" ? "fill-amber-500" :
-                          design === "rose" ? "fill-rose-500" :
-                          design === "purple" ? "fill-purple-500" :
-                          "fill-cyan-500"
-                        }
-                        stroke={
-                          design === "classic" ? "#059669" :
-                          design === "gold" ? "#d97706" :
-                          design === "rose" ? "#e11d48" :
-                          design === "purple" ? "#9333ea" :
-                          "#0891b2"
-                        }
+                        className={`${currentDesign.fill} ${currentDesign.stroke}`}
                         strokeWidth="1"
                       />
-                      <ellipse cx="20" cy="72" rx="6" ry="2" className={
-                        design === "classic" ? "fill-emerald-700" :
-                        design === "gold" ? "fill-amber-600" :
-                        design === "rose" ? "fill-rose-600" :
-                        design === "purple" ? "fill-purple-600" :
-                        "fill-cyan-600"
-                      } />
-                      <rect x="17" y="20" width="6" height="10" rx="1" className={
-                        design === "classic" ? "fill-emerald-500" :
-                        design === "gold" ? "fill-amber-400" :
-                        design === "rose" ? "fill-rose-400" :
-                        design === "purple" ? "fill-purple-400" :
-                        "fill-cyan-400"
-                      } opacity="0.5" />
+                      <ellipse cx="20" cy="72" rx="6" ry="2" className={currentDesign.ellipseFill} />
+                      <rect
+                        x="17"
+                        y="20"
+                        width="6"
+                        height="10"
+                        rx="1"
+                        className={currentDesign.highlightFill}
+                        opacity="0.5"
+                      />
                     </svg>
                   </motion.div>
                 </div>
@@ -352,20 +409,23 @@ export default function ToolHome() {
                 )}
               </button>
 
-              <AnimatePresence>
-                {result && !spinning && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="mt-4 p-4 rounded-xl bg-(--primary)/10 border border-(--primary)/20 text-center w-full"
-                  >
-                    <p className="text-lg font-bold text-(--foreground)">{result}</p>
-                    <p className="text-xs text-(--muted-foreground) mt-1">
-                      {selected && `${selected.name} is selected!`}
-                    </p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              <div aria-live="polite" aria-atomic="true" className="w-full">
+                <span className="sr-only">{spinning ? "Spinning..." : result || ""}</span>
+                <AnimatePresence>
+                  {result && !spinning && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="mt-4 p-4 rounded-xl bg-(--primary)/10 border border-(--primary)/20 text-center w-full"
+                    >
+                      <p className="text-lg font-bold text-(--foreground)">{result}</p>
+                      <p className="text-xs text-(--muted-foreground) mt-1">
+                        {selected && `${selected.name} is selected!`}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
             {history.length > 0 && (

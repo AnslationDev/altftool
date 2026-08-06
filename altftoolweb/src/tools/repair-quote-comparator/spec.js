@@ -36,13 +36,19 @@ export const spec = {
       }
     }
   ],
-  "note": "Runs locally in your browser. Review the generated report before relying on it for legal, financial, medical, or safety decisions."
+  "note": "Runs locally in your browser. Review the generated report before relying on it for legal, financial, medical, or safety decisions.",
+  "confirmReset": "Reset the repair quote comparator? This clears every pasted quote and cannot be undone."
 },
   compute: (values) => {
+      const parseMoney = (value) => {
+        const cleaned = String(value ?? "").replace(/[^0-9.\-]/g, "");
+        const num = Number(cleaned);
+        return Number.isFinite(num) ? num : 0;
+      };
       const taxRate = Math.max(0, Number(values.tax_rate) || 0);
       const parsed = String(values.quotes || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean).map((line) => line.split("|").map((cell) => cell.trim()));
       const rows = parsed.map((row) => {
-        const subtotal = [row[1], row[2], row[3]].reduce((sum, value) => sum + (Number(value) || 0), 0);
+        const subtotal = [row[1], row[2], row[3]].reduce((sum, value) => sum + parseMoney(value), 0);
         const total = subtotal * (1 + taxRate / 100);
         return [row[0] || "—", subtotal.toFixed(2), total.toFixed(2), row[4] || "—", row[5] || "—", row[6] || "—"];
       }).sort((a, b) => Number(a[2]) - Number(b[2]));

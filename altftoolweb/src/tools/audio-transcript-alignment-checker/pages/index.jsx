@@ -459,6 +459,7 @@ export default function AudioTranscriptAlignmentChecker() {
             type="button"
             className="btn-primary"
             disabled={!file || busy}
+            aria-busy={busy}
             onClick={analyze}
           >
             <ScanSearch className="h-4 w-4" aria-hidden="true" />
@@ -487,7 +488,7 @@ export default function AudioTranscriptAlignmentChecker() {
       ) : null}
 
       {result ? (
-        <>
+        <div aria-live="polite" aria-atomic="true">
           <section className="tool-card p-4 sm:p-5">
             <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
@@ -546,6 +547,13 @@ export default function AudioTranscriptAlignmentChecker() {
                 </div>
               ))}
             </div>
+            {result.coverage.findingLimitReached ? (
+              <p className="mt-3 rounded-lg border border-warning bg-warning-soft p-3 text-xs font-bold text-foreground">
+                Showing the first {ALIGNMENT_LIMITS.findings} — more uncovered
+                spans, quiet cues, or out-of-range cues exist but were not
+                listed.
+              </p>
+            ) : null}
           </section>
 
           <div className="grid gap-6 lg:grid-cols-2">
@@ -630,6 +638,12 @@ export default function AudioTranscriptAlignmentChecker() {
                     {result.comparison.findings.length} bounded comparison
                     cue(s)
                   </p>
+                  {result.comparison.findingLimitReached ? (
+                    <p className="mt-2 rounded-lg border border-warning bg-warning-soft p-3 text-xs font-bold text-foreground">
+                      Showing the first {ALIGNMENT_LIMITS.findings} — more
+                      comparison findings exist but were not listed.
+                    </p>
+                  ) : null}
                   <div className="mt-4 max-h-96 space-y-3 overflow-auto">
                     {result.comparison.findings.map((finding, index) => (
                       <article
@@ -687,7 +701,7 @@ export default function AudioTranscriptAlignmentChecker() {
               content; it includes bounded cue numbers and timings for review.
             </p>
           </section>
-        </>
+        </div>
       ) : null}
 
       <section className="tool-card p-4 sm:p-5">

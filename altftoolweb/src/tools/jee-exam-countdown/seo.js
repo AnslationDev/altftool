@@ -1,3 +1,7 @@
+import { JEE_ADVANCED_PATTERN } from "./lib";
+
+const mainQualifiersCap = JEE_ADVANCED_PATTERN.mainQualifiersCap.toLocaleString("en-IN");
+
 const seo = {
   intro:
     "This countdown converts your JEE Main and JEE Advanced dates into days remaining and then into the only number that decides the outcome: syllabus units you must finish per study day. It subtracts a revision buffer from the calendar, counts only the days of the week you actually study, and divides the units still unread across what is left. Physics, Chemistry and Mathematics are tracked separately so you can see which subject is dragging the pace up.",
@@ -26,7 +30,7 @@ const seo = {
     ],
     [
       "How is JEE Advanced different from JEE Main?",
-      "JEE Advanced is held on a single day as two compulsory papers of 3 hours each, and only candidates who fall inside the JEE Main cut-off announced by the Joint Admission Board — 2,50,000 across all categories in recent years — may register. Its questions carry variable marking schemes including partial credit, so the preparation is depth-first rather than speed-first.",
+      `JEE Advanced is held on a single day as two compulsory papers of 3 hours each, and only candidates who fall inside the JEE Main cut-off announced by the Joint Admission Board — ${mainQualifiersCap} across all categories in recent years — may register. Its questions carry variable marking schemes including partial credit, so the preparation is depth-first rather than speed-first.`,
     ],
   ],
 };

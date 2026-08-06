@@ -432,6 +432,11 @@ export default function ToolHome() {
                 </tbody>
               </table>
             </div>
+            <p className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]">
+              {result.adminAloneExceedsTarget
+                ? `Admin & comms hours alone (${hours(result.adminHours)}) already meet or exceed your ${NUM0.format(result.targetHours)}-hour target, so every suggested count is 0 — trimming output cannot reach this target on its own.`
+                : `Suggested counts hold admin & comms hours (${hours(result.adminHours)}) fixed and scale only the production formats, so the total lands at your ${NUM0.format(result.targetHours)}-hour target.`}
+            </p>
           </section>
 
           <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
