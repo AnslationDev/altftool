@@ -9,6 +9,8 @@ import {
   EVIDENCE_CHECKLIST,
   IMMEDIATE_STEPS,
   LIMITED_LIABILITY_WORKING_DAYS,
+  MAX_ASSESSMENT_DATE,
+  MIN_ASSESSMENT_DATE,
   OMBUDSMAN_WAIT_DAYS,
   RESOLUTION_CALENDAR_DAYS,
   SHADOW_REVERSAL_WORKING_DAYS,
@@ -129,6 +131,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset every input? This clears your case details and the playbook checklist you have ticked off.",
+      )
+    ) {
+      return;
+    }
     setCommunication(DEFAULTS.communication);
     setNotification(DEFAULTS.notification);
     setAccount(DEFAULTS.account);
@@ -169,6 +178,8 @@ export default function ToolHome() {
               id="cc-comm"
               className={`mt-2 ${INPUT_CLASS}`}
               type="date"
+              min={MIN_ASSESSMENT_DATE}
+              max={MAX_ASSESSMENT_DATE}
               value={communication}
               onChange={(event) => setCommunication(event.target.value)}
             />
@@ -181,6 +192,8 @@ export default function ToolHome() {
               id="cc-notif"
               className={`mt-2 ${INPUT_CLASS}`}
               type="date"
+              min={MIN_ASSESSMENT_DATE}
+              max={MAX_ASSESSMENT_DATE}
               value={notification}
               onChange={(event) => setNotification(event.target.value)}
             />
@@ -271,7 +284,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className={`mt-6 ${CARD}`} aria-labelledby="liability-heading">
+      <section className={`mt-6 ${CARD}`} aria-labelledby="liability-heading" aria-live="polite" role="status">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2

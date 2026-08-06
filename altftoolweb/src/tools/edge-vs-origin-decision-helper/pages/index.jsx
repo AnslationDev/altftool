@@ -15,6 +15,19 @@ const GHOST_BTN =
 
 const NUM = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
 
+function formatBreakEven(breakEvenHitPercent) {
+  if (breakEvenHitPercent === null || breakEvenHitPercent === undefined) {
+    return "N/A (no origin calls)";
+  }
+  if (breakEvenHitPercent <= 0) {
+    return "0% (edge always wins)";
+  }
+  if (breakEvenHitPercent >= 100) {
+    return ">100% (unreachable)";
+  }
+  return `${breakEvenHitPercent.toFixed(0)}%`;
+}
+
 const DEFAULTS = {
   userToEdge: "20",
   userToOrigin: "120",
@@ -62,7 +75,8 @@ export default function ToolHome() {
       `Edge vs origin: run this endpoint at the ${result.recommendation.toUpperCase()}`,
       `Expected edge path latency: ${NUM.format(result.edgeLatencyMs)} ms`,
       `Expected origin path latency: ${NUM.format(result.originLatencyMs)} ms`,
-      `Difference: ${NUM.format(Math.abs(result.savingsMs))} ms in favour of the ${result.savingsMs >= 0 ? "edge" : "origin"}`,
+      `Difference: ${NUM.format(Math.abs(result.savingsMs))} ms (${Math.abs(result.savingsPercent).toFixed(0)}%) in favour of the ${result.savingsMs >= 0 ? "edge" : "origin"}`,
+      `Break-even cache-hit ratio: ${formatBreakEven(result.breakEvenHitPercent)}`,
       ...result.reasons.map((r) => `- ${r}`),
     ].join("\n");
   }, [hasError, result]);
@@ -233,7 +247,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -247,7 +265,7 @@ export default function ToolHome() {
                 ? "Fix the input above to see the recommendation."
                 : result.blocked
                   ? "A hard constraint decides this one — latency was not the deciding factor."
-                  : `Expected per-request difference: ${NUM.format(Math.abs(result.savingsMs))} ms in favour of the ${result.savingsMs >= 0 ? "edge" : "origin"}.`}
+                  : `Expected per-request difference: ${NUM.format(Math.abs(result.savingsMs))} ms (${Math.abs(result.savingsPercent).toFixed(0)}%) in favour of the ${result.savingsMs >= 0 ? "edge" : "origin"}.`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -279,12 +297,14 @@ export default function ToolHome() {
                 ["Expected origin path latency", DASH],
                 ["Origin data cost from edge", DASH],
                 ["Miss rate", DASH],
+                ["Break-even cache-hit ratio", DASH],
               ]
             : [
                 ["Expected edge path latency", `${NUM.format(result.edgeLatencyMs)} ms`],
                 ["Expected origin path latency", `${NUM.format(result.originLatencyMs)} ms`],
                 ["Origin data cost from edge", `${NUM.format(result.missPenaltyMs)} ms per request`],
                 ["Miss rate", `${NUM.format(result.missRatePercent)}%`],
+                ["Break-even cache-hit ratio", formatBreakEven(result.breakEvenHitPercent)],
               ]
           ).map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">

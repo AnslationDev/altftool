@@ -3,7 +3,7 @@ const toolConfig = {
   name: "Meeting Notes Prompt Builder",
   category: ["Productivity"],
   description:
-    "Scan raw meeting notes for decisions, actions, owners and due dates, then build a prompt that fills the gaps it found.",
+    "Scan raw meeting notes for decisions, actions, owners and due dates, then build a prompt that flags the gaps it found instead of inventing them.",
   icon: "clipboard-list",
   iconColor: "text-[var(--primary)]",
 };

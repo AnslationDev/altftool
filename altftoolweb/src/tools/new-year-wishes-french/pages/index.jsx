@@ -76,6 +76,7 @@ export default function ToolHome() {
     [name, gender, recipientId, address, timing, tone, year, count, seed, senderName],
   );
 
+  const isGroup = recipientId === "group";
   const hasError = Boolean(result.error);
   const messages = hasError ? [] : result.messages;
   const featured = messages[0] || null;
@@ -148,12 +149,20 @@ export default function ToolHome() {
             </label>
             <input
               id="fr-name"
-              className={`mt-2 ${INPUT_CLASS}`}
+              className={`mt-2 ${INPUT_CLASS} ${isGroup ? "opacity-60" : ""}`}
               type="text"
               value={name}
               onChange={(event) => setName(event.target.value)}
               placeholder="Camille"
+              disabled={isGroup}
+              aria-describedby={isGroup ? "fr-name-hint" : undefined}
             />
+            {isGroup ? (
+              <p id="fr-name-hint" className="mt-1.5 text-xs text-[var(--muted-foreground)]">
+                Group salutations (e.g. &ldquo;Chers tous,&rdquo;) don&rsquo;t address one person by
+                name, so this field is ignored while &ldquo;A whole group&rdquo; is selected.
+              </p>
+            ) : null}
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="fr-gender">

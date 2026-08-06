@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, PlaneTakeoff, RotateCcw } from "lucide-react";
 
 import {
@@ -25,7 +25,18 @@ const PRIMARY_BTN =
 const GHOST_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 
-const dayLabel = (offset) => (offset < 0 ? " (previous day)" : "");
+// dayOffset() can return -2 or lower for a plan whose drive, queues and
+// buffer push the leave-by time back more than one calendar day, so this
+// must say how many days early it is rather than collapsing every negative
+// offset to the same ambiguous "(previous day)" label.
+const dayLabel = (offset) => {
+  if (!offset) return "";
+  if (offset < 0) {
+    const days = Math.abs(offset);
+    return days === 1 ? " (previous day)" : ` (${days} days earlier)`;
+  }
+  return ` (${offset} day${offset === 1 ? "" : "s"} later)`;
+};
 
 export default function ToolHome() {
   const [departureTime, setDepartureTime] = useState(DEFAULTS.departureTime);
@@ -38,6 +49,13 @@ export default function ToolHome() {
   const [parkingMinutes, setParkingMinutes] = useState(String(DEFAULTS.parkingMinutes));
   const [personalBufferMinutes, setPersonalBufferMinutes] = useState(String(DEFAULTS.personalBufferMinutes));
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    };
+  }, []);
 
   const plan = useMemo(
     () =>
@@ -72,8 +90,8 @@ export default function ToolHome() {
       `Flight departs: ${formatClock(plan.departureMinutes)}`,
       `Leave home by: ${formatClock(plan.leaveByMinutes)}${dayLabel(plan.leaveByDayOffset)}`,
       `Be at the terminal by: ${formatClock(plan.arriveTerminalMinutes)}${dayLabel(plan.arriveTerminalDayOffset)}`,
-      `Bag drop / check-in closes: ${plan.hasBags ? formatClock(plan.checkInCloseMinutes) : "Not needed"}`,
-      `Boarding gate closes: ${formatClock(plan.gateCloseMinutes)}`,
+      `Bag drop / check-in closes: ${plan.hasBags ? `${formatClock(plan.checkInCloseMinutes)}${dayLabel(plan.checkInCloseDayOffset)}` : "Not needed"}`,
+      `Boarding gate closes: ${formatClock(plan.gateCloseMinutes)}${dayLabel(plan.gateCloseDayOffset)}`,
       `Road time with traffic: ${formatDuration(plan.roadMinutes)}`,
       `Time inside the terminal: ${formatDuration(plan.terminalLeadMinutes)}`,
       `Total door-to-departure: ${formatDuration(plan.totalLeadMinutes)}`,
@@ -96,7 +114,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -350,8 +369,15 @@ export default function ToolHome() {
               "Be inside the terminal by",
               show(`${formatClock(plan.arriveTerminalMinutes)}${dayLabel(plan.arriveTerminalDayOffset)}`),
             ],
-            ["Bag drop / check-in closes", show(plan.hasBags ? formatClock(plan.checkInCloseMinutes) : "Not needed")],
-            ["Boarding gate closes", show(formatClock(plan.gateCloseMinutes))],
+            [
+              "Bag drop / check-in closes",
+              show(
+                plan.hasBags
+                  ? `${formatClock(plan.checkInCloseMinutes)}${dayLabel(plan.checkInCloseDayOffset)}`
+                  : "Not needed",
+              ),
+            ],
+            ["Boarding gate closes", show(`${formatClock(plan.gateCloseMinutes)}${dayLabel(plan.gateCloseDayOffset)}`)],
             ["Road time including traffic", show(formatDuration(plan.roadMinutes))],
             ["Time needed inside the terminal", show(formatDuration(plan.terminalLeadMinutes))],
             ["Spare time at the gate", show(formatDuration(plan.spareMinutes))],

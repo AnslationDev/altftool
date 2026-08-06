@@ -10,6 +10,7 @@ const DEFAULTS = {
   wakeTime: "07:00",
   bedTime: "21:00",
   schoolHours: "6",
+  napMinutes: "0",
   activityMinutes: "60",
   schoolworkMinutes: "30",
   videoMinutes: "60",
@@ -60,6 +61,7 @@ export default function ToolHome() {
         wakeTime: form.wakeTime,
         bedTime: form.bedTime,
         schoolHours: toNumber(form.schoolHours),
+        napMinutes: toNumber(form.napMinutes),
         activityMinutes: toNumber(form.activityMinutes),
         schoolworkMinutes: toNumber(form.schoolworkMinutes),
         videoMinutes: toNumber(form.videoMinutes),
@@ -96,7 +98,7 @@ export default function ToolHome() {
         ["Family video calls (outside the cap)", formatDuration(plan.breakdown.videoCalls)],
         ["All screen time today", formatDuration(plan.totalScreenMinutes)],
         [
-          "Sleep window",
+          plan.napMinutes > 0 ? "Sleep window (incl. naps)" : "Sleep window",
           plan.sleepBand
             ? `${formatDuration(plan.sleepMinutes)} (target ${plan.sleepBand.minHours}-${plan.sleepBand.maxHours} h)`
             : formatDuration(plan.sleepMinutes),
@@ -236,6 +238,25 @@ export default function ToolHome() {
               onChange={setField("activityMinutes")}
             />
           </div>
+          <div>
+            <label className={LABEL_CLASS} htmlFor="kstl-nap">
+              Daytime naps, if any (min)
+            </label>
+            <input
+              id="kstl-nap"
+              className={`mt-2 ${INPUT_CLASS}`}
+              type="number"
+              inputMode="numeric"
+              min="0"
+              step="5"
+              value={form.napMinutes}
+              onChange={setField("napMinutes")}
+            />
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+              Sleep guidelines for younger children include naps — add nap time here so the sleep
+              check is accurate. Leave at 0 for children who no longer nap.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -275,7 +296,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

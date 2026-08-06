@@ -7,8 +7,11 @@ import {
   SIZE_UNITS,
   SPEED_UNITS,
   computeTransferTime,
+  formatBitSize,
+  formatDataSize,
   formatTransferDuration,
 } from "../lib";
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -36,7 +39,8 @@ export default function ToolHome() {
   const [speedValue, setSpeedValue] = useState(DEFAULTS.speedValue);
   const [speedUnit, setSpeedUnit] = useState(DEFAULTS.speedUnit);
   const [efficiency, setEfficiency] = useState(DEFAULTS.efficiency);
-  const [copied, setCopied] = useState(false);
+  const { copy: copyToClipboard, isCopied, reset: resetCopyState } = useCopyToClipboard();
+  const copied = isCopied("result");
 
   const result = useMemo(
     () =>
@@ -62,15 +66,9 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result, sizeValue, sizeUnit, speedValue, speedUnit]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copyToClipboard("result", summary, { label: "transfer time result" });
   };
 
   const reset = () => {
@@ -79,7 +77,7 @@ export default function ToolHome() {
     setSpeedValue(DEFAULTS.speedValue);
     setSpeedUnit(DEFAULTS.speedUnit);
     setEfficiency(DEFAULTS.efficiency);
-    setCopied(false);
+    resetCopyState();
   };
 
   return (
@@ -195,7 +193,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -243,7 +245,7 @@ export default function ToolHome() {
             : [
                 ["Ideal time (100% efficiency)", formatTransferDuration(result.idealSeconds)],
                 ["Added by overhead", formatTransferDuration(result.overheadSeconds)],
-                ["Total data", `${NUM.format(result.totalBytes / 1e9)} GB (${NUM.format(result.totalBits / 1e9)} gigabits)`],
+                ["Total data", `${formatDataSize(result.totalBytes)} (${formatBitSize(result.totalBits)})`],
                 [
                   "Effective throughput",
                   `${NUM.format(result.effectiveMegabytesPerSecond)} MB/s (${NUM.format(result.effectiveBitsPerSecond / 1e6)} Mbit/s)`,

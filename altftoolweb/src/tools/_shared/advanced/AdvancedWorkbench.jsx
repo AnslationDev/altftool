@@ -887,7 +887,7 @@ function LiveLab({ slug }) {
   );
 }
 
-function ResultTable({ rows, mostRecent = false }) {
+function ResultTable({ rows, mostRecent = false, headers }) {
   if (!rows.length) return <Notice>No matching records were returned.</Notice>;
   // Live/rolling logs (mostRecent) keep the newest entries appended at the end,
   // so the visible window must be the tail of the array, not the head — otherwise
@@ -896,6 +896,17 @@ function ResultTable({ rows, mostRecent = false }) {
   return (
     <div className="overflow-auto rounded-md border border-[var(--border)]">
       <table className="w-full min-w-max text-left text-sm">
+        {headers ? (
+          <thead>
+            <tr className="border-b border-[var(--border)]">
+              {headers.map((header, index) => (
+                <th key={index} scope="col" className="px-3 py-2 font-semibold">
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+        ) : null}
         <tbody>
           {visibleRows.map((row, index) => (
             <tr key={`${index}-${row[0]}`} className="border-b border-[var(--border)] last:border-0">
@@ -960,7 +971,7 @@ function SensorLab({ slug }) {
   };
 
   const start = async () => {
-    if (slug === "chromatic-instrument-tuner" && readings.length > 0) {
+    if (["chromatic-instrument-tuner", "local-sound-event-logger"].includes(slug) && readings.length > 0) {
       const shouldReset = window.confirm(
         "Starting again will clear the current reading log. Continue?",
       );
@@ -1007,49 +1018,39 @@ function SensorLab({ slug }) {
           const rms = Math.sqrt(samples.reduce((sum, value) => sum + value * value, 0) / samples.length);
           let bestOffset = 0;
           let best = 0;
-          if (slug === "chromatic-instrument-tuner") {
-            // Raw (unnormalized) correlation always favours short lags, because a
-            // shorter lag sums over more overlapping sample pairs regardless of fit
-            // — so it used to lock onto the 20-sample floor (~2205 Hz) for any real
-            // note below ~132 Hz instead of finding the note's true, longer period.
-            // Normalizing by each window's energy, extending the max lag down to
-            // 40 Hz (covering a bass guitar's low E at 41.2 Hz), and requiring the
-            // correlation to dip below the match threshold before it rises again
-            // finds the fundamental period instead of the trivially high
-            // correlation near lag 0 or a shorter-period alias.
-            const minOffset = 20;
-            const maxOffset = Math.min(samples.length - 1, Math.ceil(context.sampleRate / 40));
-            const sumOfSquares = new Float64Array(samples.length + 1);
-            for (let index = 0; index < samples.length; index += 1)
-              sumOfSquares[index + 1] = sumOfSquares[index] + samples[index] * samples[index];
-            let hasDipped = false;
-            let tracking = false;
-            for (let offset = 1; offset < maxOffset; offset += 1) {
-              let correlation = 0;
-              for (let index = 0; index < samples.length - offset; index += 1)
-                correlation += samples[index] * samples[index + offset];
-              const energyA = sumOfSquares[samples.length - offset];
-              const energyB = sumOfSquares[samples.length] - sumOfSquares[offset];
-              const normalized = correlation / (Math.sqrt(energyA * energyB) || 1);
-              if (normalized < 0.9) {
-                hasDipped = true;
-                if (tracking && offset >= minOffset) break;
-                tracking = false;
-              } else if (hasDipped) {
-                tracking = true;
-                if (offset >= minOffset && normalized > best) {
-                  best = normalized;
-                  bestOffset = offset;
-                }
-              }
-            }
-          } else {
-            for (let offset = 20; offset < 1000; offset += 1) {
-              let correlation = 0;
-              for (let index = 0; index < samples.length - offset; index += 1)
-                correlation += samples[index] * samples[index + offset];
-              if (correlation > best) {
-                best = correlation;
+          // Raw (unnormalized) correlation always favours short lags, because a
+          // shorter lag sums over more overlapping sample pairs regardless of fit
+          // — so it used to lock onto the 20-sample floor (~2205 Hz) for any real
+          // tone below ~132 Hz instead of finding the tone's true, longer period.
+          // Normalizing by each window's energy, extending the max lag down to
+          // 40 Hz (covering a bass guitar's low E at 41.2 Hz), and requiring the
+          // correlation to dip below the match threshold before it rises again
+          // finds the fundamental period instead of the trivially high
+          // correlation near lag 0 or a shorter-period alias. This applies to
+          // both slugs that reach this branch (chromatic-instrument-tuner and
+          // local-sound-event-logger) — they share the same pitch estimator.
+          const minOffset = 20;
+          const maxOffset = Math.min(samples.length - 1, Math.ceil(context.sampleRate / 40));
+          const sumOfSquares = new Float64Array(samples.length + 1);
+          for (let index = 0; index < samples.length; index += 1)
+            sumOfSquares[index + 1] = sumOfSquares[index] + samples[index] * samples[index];
+          let hasDipped = false;
+          let tracking = false;
+          for (let offset = 1; offset < maxOffset; offset += 1) {
+            let correlation = 0;
+            for (let index = 0; index < samples.length - offset; index += 1)
+              correlation += samples[index] * samples[index + offset];
+            const energyA = sumOfSquares[samples.length - offset];
+            const energyB = sumOfSquares[samples.length] - sumOfSquares[offset];
+            const normalized = correlation / (Math.sqrt(energyA * energyB) || 1);
+            if (normalized < 0.9) {
+              hasDipped = true;
+              if (tracking && offset >= minOffset) break;
+              tracking = false;
+            } else if (hasDipped) {
+              tracking = true;
+              if (offset >= minOffset && normalized > best) {
+                best = normalized;
                 bestOffset = offset;
               }
             }
@@ -1251,7 +1252,11 @@ function SensorLab({ slug }) {
           </Notice>
         ) : (
           <>
-            <ResultTable rows={readings} mostRecent={slug === "chromatic-instrument-tuner"} />
+            <ResultTable
+              rows={readings}
+              mostRecent={["chromatic-instrument-tuner", "local-sound-event-logger"].includes(slug)}
+              headers={slug === "local-sound-event-logger" ? ["Timestamp", "RMS", "Frequency (Hz)", "Note"] : undefined}
+            />
             {!readings.length && !camera && slug !== "multi-touch-tester" && (
               <p className="mt-2 text-sm text-[var(--muted-foreground)]">
                 Start the tool to collect local readings.

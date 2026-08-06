@@ -197,7 +197,7 @@ export default function ToolHome() {
             <p className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? "Fix the input above to see a result."
-                : result.noFailures
+                : result.noFailures || result.fullyDown
                   ? result.note
                   : `MTBF ÷ (MTBF + MTTR) — about ${NUM.format(result.nines)} nines of availability.`}
             </p>

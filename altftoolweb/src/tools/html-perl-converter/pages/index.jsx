@@ -102,17 +102,28 @@ function escapeSingleQuoted(value) {
   return String(value).replace(/\\/g, "\\\\").replace(/'/g, "\\'");
 }
 
+// Perl scalar names may only contain letters, digits, and underscores. The
+// mustache path separator "." is mapped to a double underscore -- distinct
+// from an ordinary single underscore already in the key -- so that (a)
+// "user.id" and "user_id" produce different scalar names instead of
+// colliding on the same $user_id declaration, and (b) toPlaceholderName
+// below can invert the dot back out without guessing at (and corrupting)
+// underscores that were never a dot to begin with.
 function toScalarName(key) {
   const cleaned = String(key)
     .trim()
-    .replace(/[^a-zA-Z0-9_]+/g, "_")
-    .replace(/^_+|_+$/g, "");
+    .replace(/\./g, "__")
+    .replace(/[^a-zA-Z0-9_]+/g, "_");
   const safe = cleaned || "value";
   return /^[a-zA-Z_]/.test(safe) ? safe : `v_${safe}`;
 }
 
+// Best-effort inverse of toScalarName: undo the "__" dot marker only. A
+// plain single underscore (including one that happens to start with "v_")
+// is left exactly as-is rather than reinterpreted, since toScalarName never
+// removes or renames ordinary underscores.
 function toPlaceholderName(key) {
-  return String(key).replace(/_/g, ".").replace(/^v\./, "");
+  return String(key).replace(/__/g, ".");
 }
 
 function humanValueFromKey(key) {
@@ -158,11 +169,14 @@ function htmlToPerl(input, options) {
       output: "",
       messages: ["Paste HTML code to generate Perl output."],
       warnings: [],
-      variableCount: 0,
     };
   }
 
-  const variables = collectHandlebarVariables(html);
+  // Collecting variables only when the toggle is on also gates the "my $x = ...;"
+  // declaration block below (it renders only for entries in `variables`), so
+  // switching this option off no longer leaves behind unused declarations for
+  // placeholders whose {{ }} text was deliberately left unconverted.
+  const variables = options.mustacheToScalars ? collectHandlebarVariables(html) : new Map();
   if (options.mustacheToScalars) {
     const converted = convertHandlebarsToPerl(html, variables);
     html = converted.output;
@@ -214,7 +228,6 @@ function htmlToPerl(input, options) {
     output: lines.join("\n"),
     messages: messages.length ? messages : ["HTML wrapped into Perl CGI output."],
     warnings,
-    variableCount: variables.size,
   };
 }
 
@@ -237,15 +250,8 @@ function perlToHtml(input, options) {
       output: "",
       messages: ["Paste Perl or VPerl-style template code to generate HTML output."],
       warnings: [],
-      variableCount: 0,
     };
   }
-
-  const variableDeclarations = new Map();
-  output.replace(/\bmy\s+\$([a-zA-Z_]\w*)\s*=\s*(['"])([\s\S]*?)\2\s*;/g, (_, name, _quote, value) => {
-    variableDeclarations.set(name, value);
-    return "";
-  });
 
   const heredoc = extractHeredoc(output);
   if (heredoc) {
@@ -304,7 +310,6 @@ function perlToHtml(input, options) {
     output: output.trim(),
     messages: messages.length ? messages : ["Perl cleaned into readable HTML output."],
     warnings,
-    variableCount: variableDeclarations.size || scalarCount,
   };
 }
 
@@ -582,7 +587,11 @@ export default function HTMLPerlConverter() {
               </div>
             </div>
 
-            <pre className="mt-5 max-h-[560px] min-h-[420px] overflow-auto rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm leading-6 text-[var(--foreground)]">
+            <pre
+              aria-live="polite"
+              role="status"
+              className="mt-5 max-h-[560px] min-h-[420px] overflow-auto rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 font-mono text-sm leading-6 text-[var(--foreground)]"
+            >
               <code>{output || "Converted output will appear here."}</code>
             </pre>
           </div>
@@ -598,7 +607,7 @@ export default function HTMLPerlConverter() {
                   <p className="text-sm text-[var(--muted-foreground)]">Quick checklist from this conversion.</p>
                 </div>
               </div>
-              <ul className="mt-4 space-y-3">
+              <ul aria-live="polite" role="status" className="mt-4 space-y-3">
                 {result.messages.map((message) => (
                   <li key={message} className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800 dark:border-emerald-500/30 dark:bg-emerald-500/10 dark:text-emerald-100">
                     {message}
@@ -617,7 +626,7 @@ export default function HTMLPerlConverter() {
                   <p className="text-sm text-[var(--muted-foreground)]">Items to check before shipping code.</p>
                 </div>
               </div>
-              <ul className="mt-4 space-y-3">
+              <ul aria-live="polite" role="status" className="mt-4 space-y-3">
                 {(result.warnings.length ? result.warnings : ["No risky Perl interpolation issue detected in this pass."]).map((warning) => (
                   <li key={warning} className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-800 dark:border-amber-500/30 dark:bg-amber-500/10 dark:text-amber-100">
                     {warning}

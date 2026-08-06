@@ -46,18 +46,65 @@ export const DEFAULT_EFFICIENCY_PERCENT = 90;
 /** Human-friendly duration string from seconds. */
 export function formatTransferDuration(totalSeconds) {
   const s = Math.max(0, totalSeconds);
+  if (!Number.isFinite(s)) return "—";
   if (s < 1) return `${(s * 1000).toFixed(0)} ms`;
-  if (s < 60) return `${s.toFixed(1)} sec`;
-  const days = Math.floor(s / 86400);
-  const hours = Math.floor((s % 86400) / 3600);
-  const minutes = Math.floor((s % 3600) / 60);
-  const seconds = Math.round(s % 60);
+  // Anything that would round to "60.0" at one decimal place belongs to the
+  // next whole minute, not this branch — fall through so it carries below.
+  if (s < 59.95) return `${s.toFixed(1)} sec`;
+  // Round to a single whole-second total first, then decompose it. Rounding
+  // each unit (days/hours/minutes/seconds) independently — as before — could
+  // produce a seconds value of 60 without carrying into minutes (and so on),
+  // yielding invalid strings like "17 h 11 min 60 sec".
+  const wholeSeconds = Math.round(s);
+  const days = Math.floor(wholeSeconds / 86400);
+  const hours = Math.floor((wholeSeconds % 86400) / 3600);
+  const minutes = Math.floor((wholeSeconds % 3600) / 60);
+  const seconds = wholeSeconds % 60;
   const parts = [];
   if (days) parts.push(`${days} d`);
   if (hours) parts.push(`${hours} h`);
   if (minutes) parts.push(`${minutes} min`);
   if (seconds && !days) parts.push(`${seconds} sec`);
   return parts.length > 0 ? parts.join(" ") : "0 sec";
+}
+
+const DECIMAL_BYTE_UNITS = [
+  { id: "TB", divisor: 1e12 },
+  { id: "GB", divisor: 1e9 },
+  { id: "MB", divisor: 1e6 },
+  { id: "KB", divisor: 1e3 },
+  { id: "B", divisor: 1 },
+];
+
+const DECIMAL_BIT_UNITS = [
+  { id: "Tbit", divisor: 1e12 },
+  { id: "Gbit", divisor: 1e9 },
+  { id: "Mbit", divisor: 1e6 },
+  { id: "kbit", divisor: 1e3 },
+  { id: "bit", divisor: 1 },
+];
+
+function scaleToUnit(rawValue, units) {
+  const magnitude = Math.max(0, Number(rawValue) || 0);
+  const unit = units.find((u) => magnitude >= u.divisor) || units[units.length - 1];
+  const value = magnitude / unit.divisor;
+  const decimals = unit.divisor === 1 ? 0 : 2;
+  const rounded = Math.round(value * 10 ** decimals) / 10 ** decimals;
+  return `${rounded} ${unit.id}`;
+}
+
+/**
+ * Human-friendly data size, auto-scaled from bytes to the largest decimal
+ * unit (B/KB/MB/GB/TB) that keeps the figure >= 1 — unlike a hardcoded ÷1e9,
+ * this never rounds a real, nonzero transfer down to a misleading "0 GB".
+ */
+export function formatDataSize(totalBytes) {
+  return scaleToUnit(totalBytes, DECIMAL_BYTE_UNITS);
+}
+
+/** Human-friendly bit count, auto-scaled from bits to bit/kbit/Mbit/Gbit/Tbit. */
+export function formatBitSize(totalBits) {
+  return scaleToUnit(totalBits, DECIMAL_BIT_UNITS);
 }
 
 /**
@@ -101,6 +148,14 @@ export function computeTransferTime({
   const totalBits = size * sizeDef.bytes * BITS_PER_BYTE;
   const linkBitsPerSecond = speed * speedDef.bitsPerSecond;
   const effectiveBitsPerSecond = linkBitsPerSecond * (efficiency / 100);
+
+  if (
+    !Number.isFinite(totalBits) ||
+    !Number.isFinite(linkBitsPerSecond) ||
+    !Number.isFinite(effectiveBitsPerSecond)
+  ) {
+    return { error: "That data size is too large to compute. Try a smaller value or a bigger unit." };
+  }
 
   const idealSeconds = totalBits / linkBitsPerSecond;
   const seconds = totalBits / effectiveBitsPerSecond;

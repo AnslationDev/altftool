@@ -107,6 +107,22 @@ export function decideEdgeVsOrigin({
   const savingsMs = originLatencyMs - edgeLatencyMs;
   const savingsPercent = originLatencyMs > 0 ? (savingsMs / originLatencyMs) * 100 : 0;
 
+  // ms saved by terminating the connection at the edge instead of the origin,
+  // BEFORE accounting for the cost of any origin data calls. Negative means
+  // the nearest edge PoP is actually farther from this user than the origin
+  // region itself.
+  const hopSavingsMs = userOrigin - userEdge;
+
+  // Break-even edge cache/replica hit ratio: the hit% at which the edge and
+  // origin paths have equal latency, holding every other input fixed. Only
+  // meaningful when there is at least one per-request origin data call and a
+  // non-zero edge-to-origin hop — otherwise the hit ratio has no effect on
+  // edge latency at all, so there is nothing to solve for.
+  let breakEvenHitPercent = null;
+  if (calls > 0 && edgeOrigin > 0) {
+    breakEvenHitPercent = 100 * (1 - hopSavingsMs / (calls * edgeOrigin));
+  }
+
   const reasons = [];
   if (blocked) {
     for (const b of activeBlockers) reasons.push(`${b.label}: ${b.explanation}`);
@@ -123,14 +139,28 @@ export function decideEdgeVsOrigin({
     reasons.push(
       calls === 0
         ? "The endpoint needs no per-request origin data, so the edge answers entirely from the nearby PoP — the ideal edge case."
-        : `Expected origin data cost per request is ${missPenaltyMs.toFixed(0)} ms (${(missRate * 100).toFixed(0)}% miss rate x ${calls} call(s) x ${edgeOrigin} ms), which is smaller than the ${(userOrigin - userEdge).toFixed(0)} ms the user saves by terminating at the edge.`,
+        : `Expected origin data cost per request is ${missPenaltyMs.toFixed(0)} ms (${(missRate * 100).toFixed(0)}% miss rate x ${calls} call(s) x ${edgeOrigin} ms), which is smaller than the ${hopSavingsMs.toFixed(0)} ms the user saves by terminating at the edge.`,
     );
   } else {
     recommendation = "origin";
-    reasons.push(
-      `Uncached origin data calls cost an expected ${missPenaltyMs.toFixed(0)} ms per request from the edge — more than the ${(userOrigin - userEdge).toFixed(0)} ms saved on the user hop. Crossing back to the data ("the edge tax") makes the edge path slower here.`,
-    );
-    if (calls >= 1 && hit < 50) {
+    if (missPenaltyMs > 0 && hopSavingsMs > 0) {
+      reasons.push(
+        `Uncached origin data calls cost an expected ${missPenaltyMs.toFixed(0)} ms per request from the edge — more than the ${hopSavingsMs.toFixed(0)} ms saved on the user hop. Crossing back to the data ("the edge tax") makes the edge path slower here.`,
+      );
+    } else if (missPenaltyMs > 0) {
+      reasons.push(
+        `The nearest edge PoP is ${Math.abs(hopSavingsMs).toFixed(0)} ms farther from this user than the origin region, and uncached origin data calls add a further ${missPenaltyMs.toFixed(0)} ms per request — both push the edge path behind the origin here.`,
+      );
+    } else {
+      reasons.push(
+        `The nearest edge PoP is ${Math.abs(hopSavingsMs).toFixed(0)} ms farther from this user than the origin region itself, so terminating at the edge adds latency instead of saving it — origin wins on the network hop alone, independent of any data calls.`,
+      );
+    }
+    // Raising the hit ratio (or batching/splitting) can only flip the
+    // decision when the edge PoP is genuinely closer to the user than the
+    // origin — if the hop itself already favours origin, no amount of
+    // caching changes that.
+    if (hopSavingsMs > 0) {
       reasons.push(
         "To flip this decision: cache or replicate the data at the edge (raise the hit ratio), batch the round trips into one, or move only the data-free part of the endpoint to the edge.",
       );
@@ -146,6 +176,7 @@ export function decideEdgeVsOrigin({
     missRatePercent: missRate * 100,
     savingsMs,
     savingsPercent,
+    breakEvenHitPercent,
     reasons,
   };
 }

@@ -213,7 +213,11 @@ export function buildKpiPrompt({
   if (clean(sourceTables)) lines.push(`- Source tables or events: ${clean(sourceTables)}`);
   lines.push("");
   lines.push("WORKED EXAMPLE");
-  lines.push(`- Numerator ${num.toLocaleString("en-US")} over denominator ${den.toLocaleString("en-US")} gives ${evaluated.display}`);
+  if (type === "count") {
+    lines.push(`- Count: ${evaluated.display}`);
+  } else {
+    lines.push(`- Numerator ${num.toLocaleString("en-US")} over denominator ${den.toLocaleString("en-US")} gives ${evaluated.display}`);
+  }
   if (moe !== null) {
     lines.push(
       `- 95% margin of error at this sample: ±${round(moe, 2)} percentage points (normal approximation, z = ${Z_95})`,

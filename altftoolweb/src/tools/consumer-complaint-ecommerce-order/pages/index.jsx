@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, ShoppingCart } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   CLAIM_HEADS,
   NATIONAL_CONSUMER_HELPLINE,
@@ -85,8 +86,7 @@ export default function ToolHome() {
   const [interestClaim, setInterestClaim] = useState(String(DEFAULTS.interestClaim));
   const [litigationCost, setLitigationCost] = useState(String(DEFAULTS.litigationCost));
 
-  const [copiedNotice, setCopiedNotice] = useState(false);
-  const [copiedOutline, setCopiedOutline] = useState(false);
+  const { copy: copyToClipboard, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const claim = useMemo(
     () =>
@@ -97,8 +97,9 @@ export default function ToolHome() {
         compensationClaim: Number(compensationClaim),
         interestClaim: Number(interestClaim),
         litigationCost: Number(litigationCost),
+        claimHeadIds,
       }),
-    [considerationPaid, shippingPaid, incidentalCost, compensationClaim, interestClaim, litigationCost],
+    [considerationPaid, shippingPaid, incidentalCost, compensationClaim, interestClaim, litigationCost, claimHeadIds],
   );
 
   const limitation = useMemo(
@@ -160,24 +161,12 @@ export default function ToolHome() {
 
   const copyNotice = async () => {
     if (draftError) return;
-    try {
-      await navigator.clipboard.writeText(draft.notice);
-      setCopiedNotice(true);
-      setTimeout(() => setCopiedNotice(false), 1500);
-    } catch {
-      setCopiedNotice(false);
-    }
+    await copyToClipboard("notice", draft.notice, { label: "the notice" });
   };
 
   const copyOutline = async () => {
     if (draftError) return;
-    try {
-      await navigator.clipboard.writeText(draft.complaintOutline);
-      setCopiedOutline(true);
-      setTimeout(() => setCopiedOutline(false), 1500);
-    } catch {
-      setCopiedOutline(false);
-    }
+    await copyToClipboard("outline", draft.complaintOutline, { label: "the complaint outline" });
   };
 
   const reset = () => {
@@ -203,8 +192,7 @@ export default function ToolHome() {
     setCompensationClaim(String(DEFAULTS.compensationClaim));
     setInterestClaim(String(DEFAULTS.interestClaim));
     setLitigationCost(String(DEFAULTS.litigationCost));
-    setCopiedNotice(false);
-    setCopiedOutline(false);
+    resetCopyState();
   };
 
   return (
@@ -583,29 +571,29 @@ export default function ToolHome() {
               type="button"
               onClick={copyNotice}
               disabled={draftError}
-              aria-label="Copy the notice"
+              aria-label={isCopied("notice") ? "Copied the notice to clipboard" : "Copy the notice"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copiedNotice ? (
+              {isCopied("notice") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copiedNotice ? "Copied!" : "Copy notice"}
+              {isCopied("notice") ? "Copied!" : "Copy notice"}
             </button>
             <button
               type="button"
               onClick={copyOutline}
               disabled={draftError}
-              aria-label="Copy the complaint outline"
+              aria-label={isCopied("outline") ? "Copied the complaint outline to clipboard" : "Copy the complaint outline"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
-              {copiedOutline ? (
+              {isCopied("outline") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copiedOutline ? "Copied!" : "Copy outline"}
+              {isCopied("outline") ? "Copied!" : "Copy outline"}
             </button>
             <button
               type="button"
@@ -616,6 +604,9 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

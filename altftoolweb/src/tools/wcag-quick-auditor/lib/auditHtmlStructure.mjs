@@ -348,6 +348,13 @@ function idIndex(elements) {
   return index;
 }
 
+// input types whose visible text/value IS their accessible name, the same
+// way a <button> element's content is: they are controls, not free-text
+// data-entry fields, so "value" and the native submit/reset defaults are
+// legitimate naming sources for them (but must NOT apply to text/email/etc.
+// fields, where a filled-in value is not a label).
+const BUTTON_LIKE_INPUT_TYPES = new Set(["button", "submit", "reset", "image"]);
+
 function accessibleName(node, indexes) {
   const ariaLabel = normalizeWhitespace(attribute(node, "aria-label"));
   if (ariaLabel) return { value: ariaLabel, source: "aria-label" };
@@ -378,11 +385,35 @@ function accessibleName(node, indexes) {
     if (value) return { value, source: "label" };
   }
 
+  // input[type=image] takes its accessible name from `alt`, the same way an
+  // <img> does (HTML-AAM); textForName() only special-cases the <img> tag
+  // itself, so an <input type="image"> needs its own check here or it falls
+  // through with no name at all despite having a valid alt attribute.
+  if (
+    node.type === "element" &&
+    node.tag === "input" &&
+    attribute(node, "type").toLowerCase() === "image" &&
+    hasAttribute(node, "alt")
+  ) {
+    return { value: normalizeWhitespace(attribute(node, "alt")), source: "alt" };
+  }
+
   const visibleText = normalizeWhitespace(textForName(node));
   if (visibleText) return { value: visibleText, source: "content" };
 
   const title = normalizeWhitespace(attribute(node, "title"));
   if (title) return { value: title, source: "title" };
+
+  if (node.type === "element" && node.tag === "input") {
+    const type = attribute(node, "type").toLowerCase() || "text";
+    if (BUTTON_LIKE_INPUT_TYPES.has(type)) {
+      const value = normalizeWhitespace(attribute(node, "value"));
+      if (value) return { value, source: "value" };
+      if (type === "submit") return { value: "Submit", source: "native-default" };
+      if (type === "reset") return { value: "Reset", source: "native-default" };
+    }
+  }
+
   return { value: "", source: "none" };
 }
 
@@ -401,18 +432,24 @@ function buildNameIndexes(elements) {
   return { ids, labelsFor };
 }
 
+// Types that are controls (their own value/alt/native default names them,
+// like a <button>) rather than data-entry fields, plus "hidden" which is
+// never rendered. None of these belong in the "form fields" inventory or
+// need an independent label.
+const NON_DATA_ENTRY_INPUT_TYPES = new Set(["hidden", "button", "submit", "reset", "image"]);
+
 function isFormField(element) {
   if (!isRendered(element)) return false;
   if (element.tag === "select" || element.tag === "textarea") return true;
   if (element.tag !== "input") return false;
-  return attribute(element, "type").toLowerCase() !== "hidden";
+  const type = attribute(element, "type").toLowerCase() || "text";
+  return !NON_DATA_ENTRY_INPUT_TYPES.has(type);
 }
 
 function fieldNeedsLabel(element) {
   if (element.tag !== "input") return true;
   const type = attribute(element, "type").toLowerCase() || "text";
-  if (type === "hidden" || type === "submit" || type === "reset") return false;
-  return true;
+  return !NON_DATA_ENTRY_INPUT_TYPES.has(type);
 }
 
 function isNamedControl(element) {
@@ -429,19 +466,6 @@ function isNamedControl(element) {
   }
   const role = attribute(element, "role").toLowerCase();
   return role === "button" || role === "link";
-}
-
-function controlName(element, indexes) {
-  if (element.tag === "input") {
-    const type = attribute(element, "type").toLowerCase();
-    const ariaName = accessibleName(element, indexes);
-    if (ariaName.value) return ariaName;
-    const value = normalizeWhitespace(attribute(element, "value"));
-    if (value) return { value, source: "value" };
-    if (type === "submit") return { value: "Submit", source: "native-default" };
-    if (type === "reset") return { value: "Reset", source: "native-default" };
-  }
-  return accessibleName(element, indexes);
 }
 
 function auditDocument(text) {
@@ -584,7 +608,7 @@ function auditDocument(text) {
 
   const controls = activeElements.filter(isNamedControl);
   const unnamedControls = controls.filter(
-    (control) => !controlName(control, indexes).value,
+    (control) => !accessibleName(control, indexes).value,
   );
   addFinding(findings, counters, {
     ruleId: "interactive-name",

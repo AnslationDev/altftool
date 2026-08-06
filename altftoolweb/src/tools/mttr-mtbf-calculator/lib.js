@@ -88,7 +88,12 @@ export function computeReliability({ periodHours, failures, totalRepairHours }) 
 
   const mtbfHours = uptimeHours / count; // MTBF = up time / failures
   const mttrHours = repair / count; // MTTR = repair time / failures
-  const failureRatePerHour = mtbfHours > 0 ? 1 / mtbfHours : 0; // λ = 1/MTBF
+  // λ = 1/MTBF. When the window had zero uptime (repair time equals the whole
+  // period, yet failures were recorded), MTBF is 0 and the failure rate is
+  // undefined/infinite — reporting 0 here would misleadingly read as "failures
+  // never happen" for what is actually a total-outage scenario.
+  const fullyDown = mtbfHours === 0;
+  const failureRatePerHour = fullyDown ? Infinity : 1 / mtbfHours;
 
   return {
     noFailures: false,
@@ -99,8 +104,14 @@ export function computeReliability({ periodHours, failures, totalRepairHours }) 
     mtbfHours,
     mttrHours,
     failureRatePerHour,
+    fullyDown,
     availability,
     availabilityPercent,
     nines: ninesOfAvailability(availability),
+    ...(fullyDown
+      ? {
+          note: "The system was down for the entire observation window, so MTBF is 0 and the failure rate is undefined (shown as ∞) rather than zero.",
+        }
+      : {}),
   };
 }

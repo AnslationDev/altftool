@@ -23,7 +23,7 @@ const seo = {
     ],
     [
       "How large a sample do I need for a reliable percentage?",
-      "Rearranging the formula, n = z²p(1−p)/e². To measure a 25.8% rate to within ±2 percentage points at 95% confidence you need roughly 1,841 in the denominator. The normal approximation also needs at least five in each outcome group before it is trustworthy at all.",
+      "Rearranging the formula, n = z²p(1−p)/e². To measure a 25.8% rate to within ±2 percentage points at 95% confidence you need roughly 1,839 in the denominator. The normal approximation also needs at least five in each outcome group before it is trustworthy at all.",
     ],
     [
       "What makes a metric easy to game?",

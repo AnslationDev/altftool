@@ -100,7 +100,7 @@ export default function ToolHome() {
       `Before class: ${ml(plan.totalBeforeMl)}`,
       `During class: ${ml(plan.duringMl)} (${plan.sipCount} sips of about ${ml(plan.sipMl)})`,
       `After class: ${ml(plan.afterMl)}`,
-      `Remaining deficit: ${pct(plan.deficitPct)} of body mass`,
+      `Deficit at end of class (before after-drink): ${pct(plan.deficitPct)} of body mass`,
       `Sodium lost in sweat: ${NUM.format(plan.sodiumMg)} mg`,
     ].join("\n");
   }, [plan]);
@@ -292,7 +292,7 @@ export default function ToolHome() {
                   className={`mt-2 ${INPUT_CLASS}`}
                   type="number"
                   inputMode="decimal"
-                  min="20"
+                  min="25"
                   max="300"
                   step="0.1"
                   value={postMassKg}
@@ -343,7 +343,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -390,7 +394,7 @@ export default function ToolHome() {
             ["Sweat rate used", plan ? `${NUM2.format(plan.sweatRateLPerH)} L/h` : DASH],
             ["Sweat lost this class", plan ? litres(plan.sweatLossL) : DASH],
             ["Body-mass loss if you drink nothing", plan ? pct(plan.unreplacedLossPct) : DASH],
-            ["Deficit left at the end of this plan", plan ? pct(plan.deficitPct) : DASH],
+            ["Deficit at end of class (before after-drink)", plan ? pct(plan.deficitPct) : DASH],
             ["Sodium lost in sweat", plan ? `${NUM.format(plan.sodiumMg)} mg` : DASH],
             ["Same as table salt", plan ? `${NUM2.format(plan.saltEquivalentG)} g` : DASH],
           ].map(([label, value]) => (
@@ -425,7 +429,10 @@ export default function ToolHome() {
               <p className="rounded-md bg-[var(--warning-soft)] px-3 py-2 font-medium text-[var(--warning-text)]">
                 Your inputs imply a sweat rate outside what is physiologically plausible for a single
                 class, so it was capped to a realistic range before building this plan. Double-check
-                your {plan.sweatSource === "measured" ? "before/after weights and fluid drunk" : "room, duration and body-weight"}{" "}
+                your{" "}
+                {plan.sweatSource === "measured"
+                  ? "before/after weights, fluid drunk and class length"
+                  : "room temperature, humidity, body weight and class style"}{" "}
                 entries.
               </p>
             ) : null}

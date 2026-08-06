@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "Kids Screen Time Limit Planner converts a child's age into a daily recreational screen budget and splits that budget across shows, games and social use, while counting homework screens and family video calls separately. The limits come from WHO's under-5 guidance (no screen time below 2 years, up to 1 hour for ages 2-4), the AAP's 1-hour recommendation for ages 2-5, and the Canadian 24-Hour Movement Guidelines' 2-hour recreational ceiling for ages 5-17. It also tests the day against sleep ranges from the American Academy of Sleep Medicine and WHO physical activity targets, so a parent can see whether the plan still leaves room for sleep, movement and free play.",
+    "Kids Screen Time Limit Planner converts a child's age into a daily recreational screen budget and splits that budget across shows, games and social use, while counting homework screens and family video calls separately. The limits come from WHO's under-5 guidance (no screen time below 2 years, up to 1 hour for ages 2-4), the AAP's 1-hour recommendation for ages 2-5, and the Canadian 24-Hour Movement Guidelines' 2-hour recreational ceiling, which this planner applies from age 6 onward since the AAP figure already covers age 5. It also tests the day against sleep ranges from the American Academy of Sleep Medicine — including a field for daytime naps, since the youngest bands' sleep targets assume naps are part of the total — and WHO physical activity targets, so a parent can see whether the plan still leaves room for sleep, movement and free play.",
   useCases: [
     "Agree a written screen deal with a 9-year-old before term starts, showing exactly how the 2 hours split between video, games and messaging.",
     "Check whether a 4-year-old's tablet routine fits inside the WHO 1-hour ceiling once shared cartoon time and grandparent video calls are separated out.",
@@ -24,7 +24,7 @@ const seo = {
   faqs: [
     [
       "How much screen time should a child have per day?",
-      "WHO advises no screen time below 2 years and no more than 1 hour a day for ages 2-4; the AAP uses the same 1-hour figure for ages 2-5, and the Canadian 24-Hour Movement Guidelines cap recreational screen time at 2 hours a day for ages 5-17. Homework and video chatting with relatives are normally counted separately from that recreational limit.",
+      "WHO advises no screen time below 2 years and no more than 1 hour a day for ages 2-4; the AAP uses the same 1-hour figure for ages 2-5, and the Canadian 24-Hour Movement Guidelines cap recreational screen time at 2 hours a day, officially for ages 5-17. Because the AAP and Canadian guidelines overlap at age 5, this planner uses the AAP's 1-hour figure through age 5 and switches to the Canadian 2-hour cap from age 6 onward. Homework and video chatting with relatives are normally counted separately from that recreational limit.",
     ],
     [
       "Does homework on a laptop count as screen time?",

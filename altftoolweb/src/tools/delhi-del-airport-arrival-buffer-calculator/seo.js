@@ -1,13 +1,13 @@
 const seo = {
   intro:
-    "This calculator turns a Delhi DEL departure time into the single time you need to leave home, by working backwards through the boarding-gate close, security, emigration, bag drop and the drive itself. It takes the larger of three deadlines — the airport's published reporting time (2 hours for domestic, 3 hours for international at Indira Gandhi International), your airline's bag-drop cut-off, and the time your own queue and walking estimates actually need — then subtracts the road journey after applying a traffic factor. Useful for early-morning T3 departures from Gurugram, Noida or South Delhi where the drive is the least predictable part of the trip.",
+    "This calculator turns a Delhi DEL departure time into the single time you need to leave home, by working backwards through the boarding-gate close, security, emigration, bag drop and the drive itself. It takes the larger of three deadlines — the airport's published reporting time (2 hours for domestic, 3 hours for international at Indira Gandhi International), your airline's bag-drop cut-off, and the time your own queue and walking estimates actually need — then subtracts the road journey after applying a traffic factor. In practice the airport's published reporting time is already generous enough to clear the airline's bag-drop cut-off, so your leave-by time ends up governed by that reporting time or by your own queue and walking estimate; the bag-drop cut-off is still checked and called out if it would ever bind. Useful for early-morning T3 departures from Gurugram, Noida or South Delhi where the drive is the least predictable part of the trip.",
   useCases: [
     "Planning a 6 am international departure from T3 when the cab has to come from Noida through the morning build-up.",
     "Deciding whether a cabin-bag-only domestic flight really needs the full two hours, or whether a later start is safe.",
     "Sharing an exact pickup time with a driver or family member instead of a vague 'leave around five'.",
   ],
   benefits: [
-    ["Three deadlines, one answer", "Weighs your own gate, security and bag-drop estimate against the airport's published reporting time, and tells you which one actually sets your leave-by time."],
+    ["Three deadlines, one answer", "Compares your own gate, security and buffer estimate, the airport's published reporting time, and your airline's bag-drop cut-off, and tells you which deadline actually sets your leave-by time."],
     ["Traffic modelled separately", "Free-flow drive time is multiplied by a road-condition factor, so rush hour and clear roads give different answers."],
     ["Full timeline", "Shows the clock time each step starts, from leaving home to the aircraft door shutting."],
   ],

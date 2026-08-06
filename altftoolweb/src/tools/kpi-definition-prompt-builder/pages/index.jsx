@@ -3,15 +3,169 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Target } from "lucide-react";
 
-import { GRAINS, METRIC_TYPES, buildKpiPrompt } from "../lib";
+import { DIRECTIONS, GRAINS, METRIC_TYPES, buildKpiPrompt } from "../lib";
 
 const INPUT_CLASS = "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
 const PRIMARY_BTN = "inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 text-sm font-semibold text-[var(--primary-foreground)]";
 const GHOST_BTN = "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)]";
 
+const DEFAULTS = {
+  metricName: "Redaction completion rate",
+  type: "percentage",
+  num: "documents fully redacted",
+  den: "documents submitted for redaction",
+  sampleNumerator: "820",
+  sampleDenominator: "1000",
+  grain: "Weekly",
+  direction: "up",
+};
+
 export default function ToolHome() {
-  const [metricName, setMetricName] = useState("Redaction completion rate"); const [type, setType] = useState("percentage"); const [num, setNum] = useState("documents fully redacted"); const [den, setDen] = useState("documents submitted for redaction"); const [sampleNumerator, setSampleNumerator] = useState("820"); const [sampleDenominator, setSampleDenominator] = useState("1000"); const [grain, setGrain] = useState("Weekly"); const [copied, setCopied] = useState(false);
-  const result = useMemo(() => buildKpiPrompt({ metricName, type, numeratorDefinition: num, denominatorDefinition: den, sampleNumerator: Number(sampleNumerator), sampleDenominator: Number(sampleDenominator), grain, direction: "up", edgeCases: ["Duplicate events from retries", "Test, internal and bot traffic"] }), [metricName, type, num, den, sampleNumerator, sampleDenominator, grain]);
-  const copy = async () => { if (!result.prompt) return; try { await navigator.clipboard.writeText(result.prompt); setCopied(true); setTimeout(() => setCopied(false), 1500); } catch { setCopied(false); } };
-  return <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6"><header className="mb-6"><div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[var(--primary)]"><Target className="h-4 w-4" aria-hidden="true" />Metric definition</div><h1 className="text-3xl font-semibold leading-tight sm:text-4xl">KPI Definition Prompt Builder</h1><p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">Define a metric, check uncertainty and build an analytics-engineer prompt.</p></header><section className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"><div className="grid gap-4 sm:grid-cols-2"><div><label className="block text-sm font-semibold" htmlFor="kpi-name">Metric name</label><input id="kpi-name" className={`mt-2 ${INPUT_CLASS}`} value={metricName} onChange={(event) => setMetricName(event.target.value)} /></div><div><label className="block text-sm font-semibold" htmlFor="kpi-type">Type</label><select id="kpi-type" className={`mt-2 ${INPUT_CLASS}`} value={type} onChange={(event) => setType(event.target.value)}>{Object.entries(METRIC_TYPES).map(([key, value]) => <option key={key} value={key}>{value.label}</option>)}</select></div><div><label className="block text-sm font-semibold" htmlFor="kpi-num">Numerator</label><input id="kpi-num" className={`mt-2 ${INPUT_CLASS}`} value={num} onChange={(event) => setNum(event.target.value)} /></div><div><label className="block text-sm font-semibold" htmlFor="kpi-den">Denominator</label><input id="kpi-den" className={`mt-2 ${INPUT_CLASS}`} value={den} onChange={(event) => setDen(event.target.value)} /></div><div><label className="block text-sm font-semibold" htmlFor="kpi-sn">Sample numerator</label><input id="kpi-sn" className={`mt-2 ${INPUT_CLASS}`} type="number" value={sampleNumerator} onChange={(event) => setSampleNumerator(event.target.value)} /></div><div><label className="block text-sm font-semibold" htmlFor="kpi-sd">Sample denominator</label><input id="kpi-sd" className={`mt-2 ${INPUT_CLASS}`} type="number" value={sampleDenominator} onChange={(event) => setSampleDenominator(event.target.value)} /></div><div><label className="block text-sm font-semibold" htmlFor="kpi-grain">Grain</label><select id="kpi-grain" className={`mt-2 ${INPUT_CLASS}`} value={grain} onChange={(event) => setGrain(event.target.value)}>{GRAINS.map((item) => <option key={item} value={item}>{item}</option>)}</select></div></div></section>{result.error ? <p role="alert" className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">{result.error}</p> : <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"><div className="grid gap-3 sm:grid-cols-3"><div className="rounded-lg bg-[var(--surface-soft)] p-3"><p className="text-xs text-[var(--muted-foreground)]">Value</p><p className="mt-1 font-semibold">{result.display}</p></div><div className="rounded-lg bg-[var(--surface-soft)] p-3"><p className="text-xs text-[var(--muted-foreground)]">MOE</p><p className="mt-1 font-semibold">{result.marginOfError === null ? "n/a" : `±${result.marginOfError}pp`}</p></div><div className="rounded-lg bg-[var(--surface-soft)] p-3"><p className="text-xs text-[var(--muted-foreground)]">Prompt</p><p className="mt-1 font-semibold">{result.tokenEstimate} tokens</p></div></div><pre className="mt-4 max-h-96 overflow-auto whitespace-pre-wrap rounded-lg bg-[var(--surface-soft)] p-4 text-sm leading-6">{result.prompt}</pre><div className="mt-5 flex flex-wrap gap-2"><button className={GHOST_BTN} type="button" onClick={() => setMetricName("Redaction completion rate")}><RotateCcw className="h-4 w-4" aria-hidden="true" />Reset</button><button className={PRIMARY_BTN} type="button" onClick={copy}>{copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}{copied ? "Copied" : "Copy prompt"}</button></div></section>}</main>;
+  const [metricName, setMetricName] = useState(DEFAULTS.metricName);
+  const [type, setType] = useState(DEFAULTS.type);
+  const [num, setNum] = useState(DEFAULTS.num);
+  const [den, setDen] = useState(DEFAULTS.den);
+  const [sampleNumerator, setSampleNumerator] = useState(DEFAULTS.sampleNumerator);
+  const [sampleDenominator, setSampleDenominator] = useState(DEFAULTS.sampleDenominator);
+  const [grain, setGrain] = useState(DEFAULTS.grain);
+  const [direction, setDirection] = useState(DEFAULTS.direction);
+  const [copied, setCopied] = useState(false);
+
+  const result = useMemo(
+    () =>
+      buildKpiPrompt({
+        metricName,
+        type,
+        numeratorDefinition: num,
+        denominatorDefinition: den,
+        sampleNumerator: Number(sampleNumerator),
+        sampleDenominator: Number(sampleDenominator),
+        grain,
+        direction,
+        edgeCases: ["Duplicate events from retries", "Test, internal and bot traffic"],
+      }),
+    [metricName, type, num, den, sampleNumerator, sampleDenominator, grain, direction],
+  );
+
+  const copy = async () => {
+    if (!result.prompt) return;
+    try {
+      await navigator.clipboard.writeText(result.prompt);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {
+      setCopied(false);
+    }
+  };
+
+  const reset = () => {
+    if (typeof window !== "undefined" && !window.confirm("Reset all fields to the defaults? This clears anything you've typed.")) {
+      return;
+    }
+    setMetricName(DEFAULTS.metricName);
+    setType(DEFAULTS.type);
+    setNum(DEFAULTS.num);
+    setDen(DEFAULTS.den);
+    setSampleNumerator(DEFAULTS.sampleNumerator);
+    setSampleDenominator(DEFAULTS.sampleDenominator);
+    setGrain(DEFAULTS.grain);
+    setDirection(DEFAULTS.direction);
+    setCopied(false);
+  };
+
+  return (
+    <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
+      <header className="mb-6">
+        <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold uppercase tracking-wide text-[var(--primary)]">
+          <Target className="h-4 w-4" aria-hidden="true" />
+          Metric definition
+        </div>
+        <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">KPI Definition Prompt Builder</h1>
+        <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
+          Define a metric, check uncertainty and build an analytics-engineer prompt.
+        </p>
+      </header>
+      <section className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <div>
+            <label className="block text-sm font-semibold" htmlFor="kpi-name">Metric name</label>
+            <input id="kpi-name" className={`mt-2 ${INPUT_CLASS}`} value={metricName} onChange={(event) => setMetricName(event.target.value)} />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold" htmlFor="kpi-type">Type</label>
+            <select id="kpi-type" className={`mt-2 ${INPUT_CLASS}`} value={type} onChange={(event) => setType(event.target.value)}>
+              {Object.entries(METRIC_TYPES).map(([key, value]) => (
+                <option key={key} value={key}>{value.label}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-semibold" htmlFor="kpi-num">Numerator</label>
+            <input id="kpi-num" className={`mt-2 ${INPUT_CLASS}`} value={num} onChange={(event) => setNum(event.target.value)} />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold" htmlFor="kpi-den">Denominator</label>
+            <input id="kpi-den" className={`mt-2 ${INPUT_CLASS}`} value={den} onChange={(event) => setDen(event.target.value)} />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold" htmlFor="kpi-sn">Sample numerator</label>
+            <input id="kpi-sn" className={`mt-2 ${INPUT_CLASS}`} type="number" value={sampleNumerator} onChange={(event) => setSampleNumerator(event.target.value)} />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold" htmlFor="kpi-sd">Sample denominator</label>
+            <input id="kpi-sd" className={`mt-2 ${INPUT_CLASS}`} type="number" value={sampleDenominator} onChange={(event) => setSampleDenominator(event.target.value)} />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold" htmlFor="kpi-grain">Grain</label>
+            <select id="kpi-grain" className={`mt-2 ${INPUT_CLASS}`} value={grain} onChange={(event) => setGrain(event.target.value)}>
+              {GRAINS.map((item) => (
+                <option key={item} value={item}>{item}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-semibold" htmlFor="kpi-direction">Direction</label>
+            <select id="kpi-direction" className={`mt-2 ${INPUT_CLASS}`} value={direction} onChange={(event) => setDirection(event.target.value)}>
+              {Object.entries(DIRECTIONS).map(([key, label]) => (
+                <option key={key} value={key}>{label.charAt(0).toUpperCase() + label.slice(1)}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </section>
+      {result.error ? (
+        <p role="alert" className="mt-6 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+          {result.error}
+        </p>
+      ) : (
+        <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+          <div className="grid gap-3 sm:grid-cols-3">
+            <div className="rounded-lg bg-[var(--surface-soft)] p-3">
+              <p className="text-xs text-[var(--muted-foreground)]">Value</p>
+              <p className="mt-1 font-semibold">{result.display}</p>
+            </div>
+            <div className="rounded-lg bg-[var(--surface-soft)] p-3">
+              <p className="text-xs text-[var(--muted-foreground)]">MOE</p>
+              <p className="mt-1 font-semibold">{result.marginOfError === null ? "n/a" : `±${result.marginOfError}pp`}</p>
+            </div>
+            <div className="rounded-lg bg-[var(--surface-soft)] p-3">
+              <p className="text-xs text-[var(--muted-foreground)]">Prompt</p>
+              <p className="mt-1 font-semibold">{result.tokenEstimate} tokens</p>
+            </div>
+          </div>
+          <pre className="mt-4 max-h-96 overflow-auto whitespace-pre-wrap rounded-lg bg-[var(--surface-soft)] p-4 text-sm leading-6">{result.prompt}</pre>
+          <div className="mt-5 flex flex-wrap gap-2">
+            <button className={GHOST_BTN} type="button" onClick={reset}>
+              <RotateCcw className="h-4 w-4" aria-hidden="true" />
+              Reset
+            </button>
+            <button className={PRIMARY_BTN} type="button" onClick={copy}>
+              {copied ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
+              {copied ? "Copied" : "Copy prompt"}
+            </button>
+          </div>
+        </section>
+      )}
+    </main>
+  );
 }
