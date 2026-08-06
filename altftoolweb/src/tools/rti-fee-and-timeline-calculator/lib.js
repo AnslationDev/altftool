@@ -298,6 +298,7 @@ export function computeRtiFees({
  *            transferBy:{iso:string,long:string},
  *            firstAppealBy:{iso:string,long:string},
  *            appealAssumed:boolean,
+ *            appealBeforeReplyDue:boolean,
  *            faaDecisionDue:{iso:string,long:string},
  *            faaExtendedDue:{iso:string,long:string},
  *            secondAppealBy:{iso:string,long:string},
@@ -352,12 +353,20 @@ export function computeRtiDeadlines({
   if (appealFiledDate && supplied === null) {
     return { error: "The first appeal date is not a valid yyyy-mm-dd date." };
   }
-  if (supplied !== null && supplied < replyDueStamp) {
-    return { error: "A first appeal runs from the reply date or from the expiry of the reply period, not before it." };
+  // Section 19(1) lets a first appeal run from EITHER the expiry of the reply
+  // period OR the date of the PIO's actual decision, whichever applies. This
+  // tool has no separate field for "decision received on", so a supplied
+  // appeal date earlier than the reply-period expiry is not an error - it is
+  // the ordinary case of an early decision followed by a prompt appeal. Only
+  // reject dates that could not possibly be valid: before the request itself,
+  // or beyond the outer limit measured from expiry of the reply period.
+  if (supplied !== null && supplied < filed) {
+    return { error: "The first appeal date cannot be before the date the RTI request was filed." };
   }
   if (supplied !== null && supplied > firstAppealByStamp) {
     return { error: "That appeal date is beyond the thirty days allowed by Section 19(1); condonation would have to be sought." };
   }
+  const appealBeforeReplyDue = supplied !== null && supplied < replyDueStamp;
   const appealStamp = supplied === null ? firstAppealByStamp : supplied;
 
   const faaDecisionStamp = appealStamp + FAA_DECISION_DAYS * MS_PER_DAY;
@@ -373,6 +382,7 @@ export function computeRtiDeadlines({
     transferBy: describe(filed + TRANSFER_DAYS * MS_PER_DAY),
     firstAppealBy: describe(firstAppealByStamp),
     appealAssumed: supplied === null,
+    appealBeforeReplyDue,
     appealFiled: describe(appealStamp),
     faaDecisionDue: describe(faaDecisionStamp),
     faaExtendedDue: describe(appealStamp + FAA_EXTENDED_DAYS * MS_PER_DAY),

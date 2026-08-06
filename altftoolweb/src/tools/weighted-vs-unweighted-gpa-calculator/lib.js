@@ -88,10 +88,14 @@ export function computeGpas({ courses }) {
   }
 
   // totalCredits > 0 is guaranteed because every course passed the cr > 0 check.
+  const unweightedGpa = round2(unweightedPoints / totalCredits);
+  const weightedGpa = round2(weightedPoints / totalCredits);
   return {
-    unweightedGpa: round2(unweightedPoints / totalCredits),
-    weightedGpa: round2(weightedPoints / totalCredits),
-    boost: round2((weightedPoints - unweightedPoints) / totalCredits),
+    unweightedGpa,
+    weightedGpa,
+    // Derived from the already-rounded GPAs (not the raw fraction) so the displayed
+    // boost always exactly equals weightedGpa - unweightedGpa.
+    boost: round2(weightedGpa - unweightedGpa),
     totalCredits: round2(totalCredits),
     courseCount: courses.length,
     perCourse,

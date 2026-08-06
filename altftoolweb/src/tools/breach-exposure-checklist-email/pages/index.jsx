@@ -110,6 +110,7 @@ export default function ToolHome() {
       <section
         className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
         aria-labelledby="score-heading"
+        aria-live="polite"
       >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
@@ -193,8 +194,12 @@ export default function ToolHome() {
           <p className="mt-4 flex items-start gap-2 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning)]">
             <TriangleAlert className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
             <span>
-              Held at {CRITICAL_CAP_PERCENT}% while a critical step is open. Phishing vigilance cannot
-              make up for an email account that still has its pre-breach password and no second factor.
+              Held at {CRITICAL_CAP_PERCENT}% while {score.missingCritical.length} critical step
+              {score.missingCritical.length === 1 ? "" : "s"} still{" "}
+              {score.missingCritical.length === 1 ? "needs" : "need"} to be finished: {" "}
+              {score.missingCritical.map((item) => item.title).join("; ")}. No amount of progress
+              elsewhere makes up for {score.missingCritical.length === 1 ? "this step" : "these steps"}{" "}
+              staying open.
             </span>
           </p>
         ) : null}

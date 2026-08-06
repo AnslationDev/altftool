@@ -8,14 +8,26 @@ import Description from "../components/Description"
 
 function localSummarize(text, level) {
   if (!text) return "";
-  const sentences = text.split(/[.?!]\s+/);
+  // ASCII terminal punctuation requires trailing whitespace (so decimals like
+  // "3.14" are not split); CJK/full-width terminal punctuation is often not
+  // followed by a space, so its trailing whitespace is optional.
+  const sentences = text
+    .split(/[.?!]\s+|[。！？]\s*/)
+    .map((s) => s.trim())
+    .filter(Boolean);
   if (sentences.length <= 2) return text;
 
   let count = level === "short" ? 1 : level === "medium" ? 2 : 3;
 
-  const first = sentences[0];
-  const middle = sentences[Math.floor(sentences.length / 2)];
-  const last = sentences[sentences.length - 1];
+  // The split regex only consumes a sentence's terminal punctuation when it
+  // is followed by whitespace, so the final sentence can retain its own
+  // punctuation. Strip any leftover terminal punctuation before appending
+  // the summary's own, so the result never ends in "..", "?." or "!.".
+  const stripEnd = (s) => s.replace(/[.?!。！？]+$/, "");
+
+  const first = stripEnd(sentences[0]);
+  const middle = stripEnd(sentences[Math.floor(sentences.length / 2)]);
+  const last = stripEnd(sentences[sentences.length - 1]);
 
   if (count === 1) return first + ".";
   if (count === 2) return first + ". " + last + ".";
@@ -27,6 +39,7 @@ export default function App() {
   const [summary, setSummary] = useState("");
   const [level, setLevel] = useState("medium");
   const [history, setHistory] = useState([]);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
@@ -49,6 +62,37 @@ export default function App() {
     navigator.clipboard.writeText(summary);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleDownloadSummary = () => {
+    if (!summary) return;
+
+    const blob = new Blob([summary], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "summary.txt";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+  const handleClear = () => {
+    if (!text && !summary) return;
+    const confirmed = window.confirm(
+      "Clear the text and summary? This cannot be undone.",
+    );
+    if (!confirmed) return;
+    setText("");
+    setSummary("");
+  };
+
+  const handleRestoreHistory = (item) => {
+    setText(item.text);
+    setSummary(item.summary);
+    setLevel(item.level);
+    setHistoryOpen(false);
   };
 
   return (
@@ -122,10 +166,7 @@ export default function App() {
                     </button>
 
                     <button
-                      onClick={() => {
-                        setText("");
-                        setSummary("");
-                      }}
+                      onClick={handleClear}
                       className="border border-(--border) px-4 py-2 rounded-lg text-sm"
                     >
                       Clear
@@ -144,12 +185,22 @@ export default function App() {
                         <span className="text-xs sm:text-sm">({level})</span>
                       </h3>
 
-                      <button
-                        onClick={handleCopySummary}
-                        className="px-3 py-1.5 text-xs sm:text-sm rounded-md border border-(--border) hover:bg-(--muted) transition"
-                      >
-                        {copied ? "Copied!" : "Copy"}
-                      </button>
+                      <div className="flex gap-2">
+                        <button
+                          onClick={handleDownloadSummary}
+                          className="px-3 py-1.5 text-xs sm:text-sm rounded-md border border-(--border) hover:bg-(--muted) transition"
+                        >
+                          Download
+                        </button>
+
+                        <button
+                          onClick={handleCopySummary}
+                          aria-live="polite"
+                          className="px-3 py-1.5 text-xs sm:text-sm rounded-md border border-(--border) hover:bg-(--muted) transition"
+                        >
+                          {copied ? "Copied!" : "Copy"}
+                        </button>
+                      </div>
                     </div>
 
                     <div className="flex-1 bg-(--background) border border-(--border) rounded-lg p-4 text-sm leading-relaxed whitespace-pre-wrap">
@@ -163,6 +214,43 @@ export default function App() {
                 )}
               </div>
             </div>
+
+            {/* HISTORY */}
+            {history.length > 0 && (
+              <div className="mt-6 border-t border-(--border) pt-4">
+                <button
+                  onClick={() => setHistoryOpen((prev) => !prev)}
+                  aria-expanded={historyOpen}
+                  className="flex items-center justify-between w-full text-left font-bold text-sm sm:text-base"
+                >
+                  <span>History ({history.length})</span>
+                  <span className="text-(--muted-foreground) text-xs font-normal">
+                    {historyOpen ? "Hide" : "Show"}
+                  </span>
+                </button>
+
+                {historyOpen && (
+                  <ul className="mt-3 flex flex-col gap-2 max-h-64 overflow-y-auto">
+                    {history.map((item) => (
+                      <li key={item.id}>
+                        <button
+                          onClick={() => handleRestoreHistory(item)}
+                          className="w-full text-left px-3 py-2 rounded-lg border border-(--border) bg-(--background) hover:bg-(--muted) transition text-xs sm:text-sm"
+                        >
+                          <span className="block font-semibold text-(--foreground)/80">
+                            {item.level} &middot;{" "}
+                            {new Date(item.id).toLocaleTimeString()}
+                          </span>
+                          <span className="block text-(--muted-foreground) truncate">
+                            {item.summary}
+                          </span>
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            )}
           </div>
         </section>
         {/* FEATURES */}

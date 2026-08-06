@@ -69,6 +69,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset all courses? This clears your entered courses and cannot be undone.")) {
+      return;
+    }
     setCourses(DEFAULT_COURSES);
     setCopied(false);
   };

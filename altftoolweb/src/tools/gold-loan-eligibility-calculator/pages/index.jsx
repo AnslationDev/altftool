@@ -26,7 +26,7 @@ const KARAT_OPTIONS = [
   { karat: 21, label: "21K (87.5%)" },
   { karat: 20, label: "20K (83.3%)" },
   { karat: 18, label: "18K (75.0%)" },
-  { karat: 14, label: "14K (58.5%)" },
+  { karat: 14, label: "14K (58.3%)" },
 ];
 
 const DEFAULT_ITEMS = [
@@ -94,6 +94,9 @@ export default function ToolHome() {
       return { error: "Interest rate should be between 0% and 60% per year." };
     }
     if (tenure <= 0 || tenure > 60) return { error: "Gold loan tenure is usually 3 to 36 months." };
+    if (tenure < 0.5) {
+      return { error: "Enter a tenure of at least 0.5 months so it rounds to a full repayment month." };
+    }
 
     const parsed = [];
     for (const row of items) {
@@ -184,6 +187,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset the gold loan calculator? This will clear your entered values and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setItems(DEFAULT_ITEMS);
     setRate24k(DEFAULTS.rate24k);
     setLtv(DEFAULTS.ltv);

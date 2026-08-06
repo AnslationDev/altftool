@@ -52,6 +52,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset to the sample invitation? This replaces your entered details and cannot be undone.")) {
+      return;
+    }
     setValues(DEFAULTS);
     setCopied(false);
   };

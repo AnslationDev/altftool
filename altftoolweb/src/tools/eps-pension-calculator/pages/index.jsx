@@ -95,7 +95,9 @@ export function computeEpsPension({ salary, service, age, capped }) {
     flooredToMinimum: adjusted < MIN_PENSION,
     yearly: monthly * 12,
     widow: monthly * 0.5,
-    child: monthly * 0.25,
+    // Child pension is 25% of the WIDOW's pension (i.e. 12.5% of the member's own
+    // pension), not 25% of the member's pension — per EPS-95 family-pension rules.
+    child: monthly * 0.5 * 0.25,
   };
 }
 
@@ -126,12 +128,16 @@ export default function ToolHome() {
     if (s > 500000) return { error: "Pensionable salary looks too high — enter monthly basic + DA." };
     if (y < 0) return { error: "Years of service cannot be negative." };
     if (y > 45) return { error: "EPS service beyond 45 years is not possible — check the value." };
-    if (a < 50 || a > 60) {
-      return { error: "EPS pension can start between age 50 (early) and 60 (deferred)." };
-    }
 
+    // The withdrawal-benefit path (service under 10 years) never uses age, so it must
+    // not be blocked by the age-range check below — that check only applies once a
+    // monthly pension is actually being calculated.
     if (y < 10) {
       return { eligible: false, ...computeWithdrawalBenefit(s, y, capped), service: y };
+    }
+
+    if (a < 50 || a > 60) {
+      return { error: "EPS pension can start between age 50 (early) and 60 (deferred)." };
     }
 
     return { eligible: true, service: y, age: a, ...computeEpsPension({ salary: s, service: y, age: a, capped }) };
@@ -287,7 +293,10 @@ export default function ToolHome() {
         </p>
       ) : calc.eligible ? (
         <>
-          <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section
+            className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+            aria-live="polite"
+          >
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -346,7 +355,7 @@ export default function ToolHome() {
                   ? ["Minimum pension floor applied", `${money(MIN_PENSION)} / month`]
                   : null,
                 ["Widow / widower pension (50%)", `${money2(calc.widow)} / month`],
-                ["Child pension, each (25%, up to 2)", `${money2(calc.child)} / month`],
+                ["Child pension, each (25% of widow's pension, up to 2)", `${money2(calc.child)} / month`],
               ]
                 .filter(Boolean)
                 .map(([label, value]) => (
@@ -358,7 +367,10 @@ export default function ToolHome() {
             </dl>
           </section>
 
-          <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <section
+            className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+            aria-live="polite"
+          >
             <h2 className="text-base font-semibold">Pension if you start at a different age</h2>
             <div className="mt-3 overflow-x-auto">
               <table className="w-full min-w-[320px] text-left text-sm">
@@ -404,7 +416,10 @@ export default function ToolHome() {
           </section>
         </>
       ) : (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+          aria-live="polite"
+        >
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
               <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

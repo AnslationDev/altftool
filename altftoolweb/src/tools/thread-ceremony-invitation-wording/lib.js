@@ -50,6 +50,14 @@ const MONTHS = [
 
 const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
+/** "1" -> "1st", "8" -> "8th", "11" -> "11th", "12" -> "12th". */
+function ordinal(n) {
+  const suffixes = ["th", "st", "nd", "rd"];
+  const remainder = n % 100;
+  const suffix = suffixes[(remainder - 20) % 10] || suffixes[remainder] || suffixes[0];
+  return `${n}${suffix}`;
+}
+
 export const STYLES = [
   {
     id: "north-janeu",
@@ -261,8 +269,9 @@ export function buildThreadCeremonyInvitation(input) {
     if (!age) {
       return { error: "The date of birth must be a valid date on or before the ceremony date." };
     }
+    const yearPart = age.years === 1 ? "1 year" : `${age.years} years`;
     const monthPart = age.months === 1 ? "1 month" : `${age.months} months`;
-    ageNote = `He will be ${age.years} years and ${monthPart} old on the day. Manusmriti 2.36 names the eighth year for a Brahmin boy, the eleventh for a Kshatriya and the twelfth for a Vaishya; families follow their own custom and the priest's muhurtham.`;
+    ageNote = `He will be ${yearPart} and ${monthPart} old on the day. Manusmriti 2.36 names the ${ordinal(TRADITIONAL_AGE_BRAHMIN)} year for a Brahmin boy, the ${ordinal(TRADITIONAL_AGE_KSHATRIYA)} for a Kshatriya and the ${ordinal(TRADITIONAL_AGE_VAISHYA)} for a Vaishya; families follow their own custom and the priest's muhurtham.`;
   }
 
   const dateLong = formatLongDate(data.ceremonyDate);
@@ -287,7 +296,7 @@ export function buildThreadCeremonyInvitation(input) {
   if (data.includeKashiYatra) {
     lines.push(
       "",
-      "Do join us for the Gayatri upadesam, the tying of the yajnopavita, Bhikshandehi and the Kashi Yatra.",
+      `Do join us for the Gayatri upadesam, the tying of the ${YAJNOPAVITA_STRANDS}-strand yajnopavita, Bhikshandehi and the Kashi Yatra.`,
     );
   }
   if (data.includeMeal) {

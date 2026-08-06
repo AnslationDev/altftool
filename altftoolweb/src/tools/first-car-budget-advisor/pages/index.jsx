@@ -83,6 +83,7 @@ export default function ToolHome() {
   const [downPct, setDownPct] = useState(DEFAULTS.downPct);
   const [sharePct, setSharePct] = useState(DEFAULTS.sharePct);
   const [copied, setCopied] = useState(false);
+  const [copyError, setCopyError] = useState(false);
 
   const result = useMemo(
     () =>
@@ -172,9 +173,12 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
+      setCopyError(false);
       setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
+      setCopyError(true);
+      setTimeout(() => setCopyError(false), 4000);
     }
   };
 
@@ -296,7 +300,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               On-road price you can afford
             </p>
@@ -309,25 +313,32 @@ export default function ToolHome() {
                 : `${money(result.downPayment)} down, ${money(result.loanAmount)} financed at an EMI of ${money(result.emi)}`}
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            <button
-              type="button"
-              onClick={copyResult}
-              disabled={hasError}
-              aria-label="Copy first car budget result"
-              className={`${GHOST_BTN} disabled:opacity-50`}
-            >
-              {copied ? (
-                <Check className="h-4 w-4" aria-hidden="true" />
-              ) : (
-                <Copy className="h-4 w-4" aria-hidden="true" />
-              )}
-              {copied ? "Copied!" : "Copy result"}
-            </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
-              <RotateCcw className="h-4 w-4" aria-hidden="true" />
-              Reset
-            </button>
+          <div className="flex flex-col items-end gap-2">
+            <div className="flex flex-wrap gap-2">
+              <button
+                type="button"
+                onClick={copyResult}
+                disabled={hasError}
+                aria-label={copied ? "Copied to clipboard" : "Copy first car budget result"}
+                className={`${GHOST_BTN} disabled:opacity-50`}
+              >
+                {copied ? (
+                  <Check className="h-4 w-4" aria-hidden="true" />
+                ) : (
+                  <Copy className="h-4 w-4" aria-hidden="true" />
+                )}
+                {copied ? "Copied!" : "Copy result"}
+              </button>
+              <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
+                <RotateCcw className="h-4 w-4" aria-hidden="true" />
+                Reset
+              </button>
+            </div>
+            {copyError && (
+              <p role="status" aria-live="polite" className="text-xs text-[var(--danger)]">
+                Couldn&apos;t copy — try selecting and copying manually.
+              </p>
+            )}
           </div>
         </div>
 

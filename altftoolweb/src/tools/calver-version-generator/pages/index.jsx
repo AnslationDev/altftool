@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CalendarDays, Check, Copy, RotateCcw } from "lucide-react";
 
-import { PRESET_SCHEMES, formatCalVer, previewTimeline } from "../lib";
+import { MAX_COUNTER, PRESET_SCHEMES, formatCalVer, previewTimeline } from "../lib";
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -50,6 +50,13 @@ export default function ToolHome() {
   const [micro, setMicro] = useState(DEFAULTS.micro);
   const [modifier, setModifier] = useState(DEFAULTS.modifier);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const numericInput = (value) => (value.trim() === "" ? Number.NaN : Number(value));
 
@@ -70,7 +77,6 @@ export default function ToolHome() {
   const hasError = Boolean(result.error);
 
   const timeline = useMemo(() => {
-    if (hasError) return null;
     const preview = previewTimeline({
       scheme,
       year: numericInput(year),
@@ -78,16 +84,22 @@ export default function ToolHome() {
       day: numericInput(day),
       count: 6,
       modifier: "",
+      minor: numericInput(minor),
+      micro: numericInput(micro),
     });
     return preview.error ? null : preview.releases;
-  }, [hasError, scheme, year, month, day]);
+  }, [scheme, year, month, day, minor, micro]);
 
   const copyResult = async () => {
     if (hasError) return;
     try {
       await navigator.clipboard.writeText(result.version);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => {
+        setCopied(false);
+        copyTimeoutRef.current = null;
+      }, 1500);
     } catch {
       setCopied(false);
     }
@@ -203,6 +215,7 @@ export default function ToolHome() {
               type="number"
               inputMode="numeric"
               min="0"
+              max={MAX_COUNTER}
               value={minor}
               onChange={(event) => setMinor(event.target.value)}
             />
@@ -217,6 +230,7 @@ export default function ToolHome() {
               type="number"
               inputMode="numeric"
               min="0"
+              max={MAX_COUNTER}
               value={micro}
               onChange={(event) => setMicro(event.target.value)}
             />
@@ -261,7 +275,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the generated CalVer version"
+              aria-label={copied ? "Copied" : "Copy the generated CalVer version"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? (

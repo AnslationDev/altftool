@@ -210,8 +210,8 @@ export const GROUPS = [
 /** Sum of all weights. The checklist is authored so that this equals 100. */
 export const TOTAL_WEIGHT = CHECKLIST.reduce((sum, item) => sum + item.weight, 0);
 
-/** Ticked at first paint because most people find the notice before acting on it. */
-export const DEFAULT_DONE = ["check-inbox-notice"];
+/** Nothing is pre-ticked: a new user has not verified any step yet. */
+export const DEFAULT_DONE = [];
 
 /** Bands as a percentage of TOTAL_WEIGHT; the first band the score reaches wins. */
 export const BANDS = [
@@ -378,7 +378,7 @@ export function overdueSteps(doneIds, daysElapsed) {
   for (const item of CHECKLIST) {
     if (done.has(item.id)) continue;
     const limit = windowDays(item.window);
-    if (elapsed > limit) overdue.push(item);
+    if (elapsed >= limit) overdue.push(item);
     else dueSoon.push(item);
   }
 

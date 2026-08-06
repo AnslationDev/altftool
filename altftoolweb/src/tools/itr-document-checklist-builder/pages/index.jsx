@@ -204,7 +204,8 @@ function buildChecklist(profile, regime, seniorCitizen, resident) {
       profile.disability && "Section 80DD / 80U: disability certificate in Form 10-IA from a prescribed authority",
       profile.disability && "Section 80DDB: prescription and treatment bills for the specified illness",
       !profile.hra && "Form 10BA declaration if you claim rent deduction under Section 80GG",
-      "Savings interest certificate for Section 80TTA, or Section 80TTB if you are 60 or above",
+      profile.otherSources &&
+        "Savings interest certificate for Section 80TTA, or Section 80TTB if you are 60 or above",
     ],
   );
 
@@ -306,6 +307,14 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset the checklist? This clears your profile answers and every ticked document, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setProfile(DEFAULT_PROFILE);
     setRegime("old");
     setSeniorCitizen(false);
@@ -432,7 +441,7 @@ export default function ToolHome() {
                 <button
                   type="button"
                   onClick={copyResult}
-                  aria-label="Copy the document checklist"
+                  aria-label={copied ? "Copied" : "Copy the document checklist"}
                   className={GHOST_BTN}
                 >
                   {copied ? (

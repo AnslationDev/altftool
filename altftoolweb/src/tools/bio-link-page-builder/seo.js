@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     ["Reorder by dragging, with keyboard support too", "Links sort via drag-and-drop or arrow keys, so the running order you settle on is the order you see in the preview immediately."],
     ["Catches broken links before your audience does", "Every URL is parsed and flagged unless it resolves to http, https, mailto or tel, and a bare domain is auto-prefixed with https://."],
-    ["The whole project is portable", "Profile, links and theme export as a single JSON file you can re-import or hand to a designer, rather than being locked in an account."],
+    ["The whole project is portable", "Profile, links and theme export as a single JSON file you can hand to a designer or keep as a backup of your settings, rather than being locked in an account."],
   ],
   faqs: [
     [

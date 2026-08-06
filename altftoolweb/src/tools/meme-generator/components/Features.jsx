@@ -10,7 +10,7 @@ const Features = () => {
     {
       title: "Custom Text Editing",
       description:
-        "Add top and bottom text, customize font size, color, and alignment to match your style.",
+        "Add top and bottom text, customize font size and color to match your style.",
     },
     {
       title: "Upload Your Own Images",

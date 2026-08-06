@@ -35,7 +35,7 @@ const seo = {
     ],
     [
       "What is the difference between webRequest and declarativeNetRequest here?",
-      "webRequest hands the extension the details of every matching request, and webRequestBlocking additionally lets it rewrite or cancel each one before it is sent. declarativeNetRequest applies rules the browser evaluates, so the extension changes traffic without seeing it — unless declarativeNetRequestFeedback is also declared, which reports back which rule matched which request and largely undoes the privacy benefit. The tool tiers all four differently for that reason.",
+      "webRequest hands the extension the details of every matching request, and webRequestBlocking additionally lets it rewrite or cancel each one before it is sent. declarativeNetRequest applies rules the browser evaluates, so the extension changes traffic without seeing it — unless declarativeNetRequestFeedback is also declared, which reports back which rule matched which request and largely undoes the privacy benefit. The tool tiers these from moderate up to critical depending on what each one can actually do.",
     ],
   ],
 };

@@ -10,7 +10,7 @@ const seo = {
   benefits: [
     [
       "Correct regional names",
-      "Janeu, munj, vratabandha, brahmopadesam, janoi and upanayan each get their own ceremony name and invocation.",
+      "Janeu, munj, vratabandha, brahmopadesam, janoi and upanayan each get their own ceremony name, and most also carry a regionally matched invocation — a couple of traditions share the same Ganesh invocation.",
     ],
     [
       "Muhurtham formatted properly",

@@ -364,7 +364,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy chimney care plan"
+              aria-label={copied ? "Copied" : "Copy chimney care plan"}
               className={GHOST_BTN}
               disabled={!ok}
             >

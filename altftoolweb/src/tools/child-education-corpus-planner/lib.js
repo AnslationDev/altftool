@@ -95,8 +95,14 @@ export function planEducationCorpus({
   if (!(years > 0) || years > MAX_YEARS_TO_START) {
     return { error: `Years until the course starts should be between 1 and ${MAX_YEARS_TO_START}.` };
   }
+  if (years < 1 / 12) {
+    return { error: "Enter at least 1 month until the course starts." };
+  }
   if (!(duration >= 1) || duration > MAX_COURSE_YEARS) {
     return { error: `Course duration should be between 1 and ${MAX_COURSE_YEARS} years.` };
+  }
+  if (!Number.isInteger(duration)) {
+    return { error: "Course duration must be a whole number of years." };
   }
   if (inflation > MAX_RATE_PCT) {
     return { error: `Fee inflation above ${MAX_RATE_PCT}% a year is not a realistic plan.` };

@@ -97,6 +97,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      !window.confirm(
+        "Reset all fields? This clears the assessment year, filing details, and every ticked eligibility answer, and cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setAssessmentYear(DEFAULTS.assessmentYear);
     setCategory(DEFAULTS.category);
     setFilingDate(todayIso());
@@ -399,7 +406,7 @@ export default function ToolHome() {
             {result.error}
           </p>
         ) : eligible ? (
-          <div>
+          <div aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Total payable before the updated return can be furnished
             </p>
@@ -418,7 +425,7 @@ export default function ToolHome() {
             </p>
           </div>
         ) : (
-          <div>
+          <div aria-live="polite">
             <p className="inline-flex items-center gap-2 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-semibold text-[var(--danger)]">
               <Ban className="h-4 w-4 shrink-0" aria-hidden="true" />
               {result.barHeadline}
@@ -430,7 +437,7 @@ export default function ToolHome() {
           </div>
         )}
 
-        {!hasError && (
+        {!hasError && result.status !== "outside-section" && (
           <dl className="mt-5 divide-y divide-[var(--border)] border-t border-[var(--border)] text-sm">
             <div className="flex items-start justify-between gap-4 py-2">
               <dt className="text-[var(--muted-foreground)]">
@@ -467,7 +474,7 @@ export default function ToolHome() {
           </dl>
         )}
 
-        {!hasError && (
+        {!hasError && result.status !== "outside-section" && (
           <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-xs leading-5 text-[var(--muted-foreground)]">
             {result.regime.statute}
           </p>
@@ -505,7 +512,7 @@ export default function ToolHome() {
       </section>
 
       {/* ---------------- Slab table ---------------- */}
-      {!hasError && result.tiers.length > 0 && (
+      {!hasError && result.status !== "outside-section" && result.tiers.length > 0 && (
         <section className={`${CARD} mt-5`} aria-labelledby="slab-heading">
           <h2 id="slab-heading" className="text-base font-semibold">
             Section 140B(3) slabs for AY {result.assessmentYear}

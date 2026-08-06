@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The ATM Skimmer Inspection Checklist walks you through 16 physical checks — card slot, keypad, fascia, surroundings and dispenser — and turns what you find into a stop-or-proceed verdict. Three checks are treated as stop findings because each one alone proves tampering: a card slot that moves when tugged, a keypad that flexes or sits proud of the panel, and a pinhole or angled leaflet holder pointing at the keys. Everything else is weighted by how strongly it indicates a fitted skimmer rather than an ATM that is simply badly maintained.",
+    "The ATM Skimmer Inspection Checklist walks you through 16 physical checks — card slot, keypad, fascia, surroundings and dispenser — and turns what you find into a stop-or-proceed verdict. Three checks are treated as stop findings because each one alone proves tampering: a card slot that moves when tugged, a keypad that flexes or sits proud of the panel, and a pinhole, mirror or extra panel above or beside the keypad. Everything else, including an outward-angled leaflet holder, is weighted by how strongly it indicates a fitted skimmer rather than an ATM that is simply badly maintained.",
   useCases: [
     "Checking a standalone kiosk ATM at a petrol pump or market before a large cash withdrawal.",
     "Teaching an elderly parent or a first-time card holder a fixed routine they can repeat every time.",
@@ -15,7 +15,7 @@ const seo = {
   faqs: [
     [
       "How can you tell if an ATM has a skimmer?",
-      "Grip the card slot and pull: factory hardware is bolted through the fascia and will not move, while an overlay skimmer is glued on and wobbles, lifts or comes away. Then press a corner of the keypad — an overlay flexes — and look for a pinhole, mirror or leaflet holder angled down at the keys.",
+      "Grip the card slot and pull: factory hardware is bolted through the fascia and will not move, while an overlay skimmer is glued on and wobbles, lifts or comes away. Then press a corner of the keypad — an overlay flexes — and look for a pinhole, mirror or extra panel above or beside the keypad, plus a leaflet holder angled down at the keys, which is a lower-severity but still worth checking sign.",
     ],
     [
       "Does covering the keypad actually help?",
