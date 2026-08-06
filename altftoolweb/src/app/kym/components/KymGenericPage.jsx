@@ -17,7 +17,7 @@ const CATEGORY_COPY = {
     about:
       "This explainer tracks how the phrase moved through comment sections, captions and short-form video posts before becoming a recognizable reaction shorthand.",
     origin:
-      "The format is presented here as a local KYM-style summary: a compact definition, the situation it describes and the reason users began applying it outside the original context.",
+      "The format is presented here as a compact encyclopedia summary: a definition, the situation it describes and the reason users began applying it outside the original context.",
     spread:
       "After the phrase became legible on its own, creators reused it in stitched clips, caption jokes and quote-post replies where the setup needed almost no extra explanation.",
     notes: ["Definition-focused", "Caption-friendly", "Common in reaction posts"],
@@ -110,7 +110,7 @@ function getArticleProfile(item, category) {
   if (lowerTitle.includes("what does") || lowerTitle.includes("what is")) {
     return {
       ...CATEGORY_COPY.Explainer,
-      lede: `${item.title} is presented as a KYM-style explainer for readers who have seen the phrase or image in posts but want the context behind the joke.`,
+      lede: `${item.title} is presented as an encyclopedia explainer for readers who have seen the phrase or image in posts but want the context behind the joke.`,
       examples: [
         `People use ${titleKeyword} as a quick reference when a caption needs an instantly readable setup.`,
         "The format works best in short posts, screenshots and replies where the audience already understands the mood.",
@@ -234,7 +234,7 @@ export default function KymGenericPage({ item }) {
           </section>
           <section className="kym-article-section">
             <h2>Spread</h2>
-            <p>{profile.spread} The local version of <strong>{item.title}</strong> keeps the page distinct from the other cards while preserving the same KYM-style article structure.</p>
+            <p>{profile.spread} The local version of <strong>{item.title}</strong> keeps the page distinct from the other cards while preserving the same encyclopedia article structure.</p>
           </section>
           <section className="kym-article-section">
             <h2>Common Examples</h2>

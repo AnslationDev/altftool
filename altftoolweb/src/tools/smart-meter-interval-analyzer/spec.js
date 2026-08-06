@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "smart-meter-interval-analyzer",
   "title": "Smart-Meter Interval Analyzer",
-  "description": "Energy CSV me peaks aur time-of-use opportunities dikhaye.",
+  "description": "Find demand peaks and time-of-use savings in your smart meter CSV export.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Lifestyle",

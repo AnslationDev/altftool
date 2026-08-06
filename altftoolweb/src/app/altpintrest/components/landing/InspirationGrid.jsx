@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Download, Heart, Share2, Bookmark, Sparkles, ArrowRight } from 'lucide-react';
+import { Download, Share2, Bookmark, Sparkles, ArrowRight } from 'lucide-react';
 import { MOCK_DATA } from '../../data/mockData';
 import { useSavedPins } from '../../service/useSavedPins';
 
@@ -25,11 +25,11 @@ export default function InspirationGrid({ onExplorePin }) {
             <span>Visual Moodboards</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight">
-            Popular Inspiration Grid
+            Inspiration Grid
           </h2>
         </div>
         <p className="text-sm text-gray-500 dark:text-gray-400 max-w-md">
-          Explore top-performing visual pins curated from active design boards.
+          Browse the starter visual ideas included with this board.
         </p>
       </div>
 
@@ -104,7 +104,7 @@ export default function InspirationGrid({ onExplorePin }) {
           onClick={() => onExplorePin(null)}
           className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#0D9488] hover:bg-teal-700 text-white font-bold text-base shadow-lg shadow-teal-500/20 hover:scale-105 transition-all cursor-pointer"
         >
-          <span>Explore All 10,000+ Live Pins</span>
+          <span>Explore Available Pins</span>
           <ArrowRight size={20} />
         </button>
       </div>

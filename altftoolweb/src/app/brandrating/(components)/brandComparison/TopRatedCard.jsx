@@ -168,6 +168,10 @@ export default function TopRated({
             const isTop = index === 0;
             const rank = index + 1;
             const showRankBadge = index < 3;
+            // Stars and the "x/5" readout appear only for a brand that carries a
+            // rating. Unrated brands previously rendered "/5" beside a filled star
+            // or five grey ones, which reads as a score rather than as no score.
+            const hasRating = Number(brand?.rating) > 0;
 
             return (
               <div
@@ -212,10 +216,12 @@ export default function TopRated({
                             <h3 className="text-lg md:text-xl lg:text-2xl xl:text-[28px] font-bold truncate">
                               {brand.name}
                             </h3>
-                            <div className="flex sm:hidden items-center gap-1 flex-shrink-0">
-                              <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                              <span className="text-sm font-semibold">{brand.rating}/5</span>
-                            </div>
+                            {hasRating ? (
+                              <div className="flex sm:hidden items-center gap-1 flex-shrink-0">
+                                <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                                <span className="text-sm font-semibold">{brand.rating}/5</span>
+                              </div>
+                            ) : null}
                           </div>
 
                           <p className="text-sm md:text-base font-medium text-(--muted-foreground) mt-2 mb-2">
@@ -252,10 +258,12 @@ export default function TopRated({
                         </div>
 
                         <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 mt-4 sm:mt-5">
-                          <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
-                            {renderStars(brand.rating)}
-                            <span className="font-semibold text-sm sm:text-base">{brand.rating}/5</span>
-                          </div>
+                          {hasRating ? (
+                            <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
+                              {renderStars(brand.rating)}
+                              <span className="font-semibold text-sm sm:text-base">{brand.rating}/5</span>
+                            </div>
+                          ) : null}
 
                           <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 sm:ml-auto">
                             <Link
@@ -286,10 +294,12 @@ export default function TopRated({
                         <h3 className="text-lg md:text-xl lg:text-2xl xl:text-[26px] font-bold truncate">
                           {brand.name}
                         </h3>
-                        <div className="flex sm:hidden items-center gap-1 flex-shrink-0">
-                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                          <span className="text-sm font-semibold">{brand.rating}</span>
-                        </div>
+                        {hasRating ? (
+                          <div className="flex sm:hidden items-center gap-1 flex-shrink-0">
+                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                            <span className="text-sm font-semibold">{brand.rating}</span>
+                          </div>
+                        ) : null}
                       </div>
 
                       <p className="text-sm md:text-base font-medium text-(--muted-foreground)">
@@ -325,12 +335,14 @@ export default function TopRated({
                       </div>
 
                       <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-3 mt-2">
-                        <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
-                         {renderStars(brand.rating)}
-                          <span className="font-semibold text-sm sm:text-base sm:ml-1">
-                            {brand.rating}/5
-                          </span>
-                        </div>
+                        {hasRating ? (
+                          <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
+                            {renderStars(brand.rating)}
+                            <span className="font-semibold text-sm sm:text-base sm:ml-1">
+                              {brand.rating}/5
+                            </span>
+                          </div>
+                        ) : null}
 
                         <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 sm:ml-auto">
                           <Link

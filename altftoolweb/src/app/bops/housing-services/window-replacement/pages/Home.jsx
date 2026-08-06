@@ -426,7 +426,7 @@ export default function Home() {
           </Reveal>
           <Reveal delay={240}>
             <div className="mt-9 flex flex-wrap items-center justify-center gap-4">
-              <Button href={`tel:${company.phoneHref}`} variant="outlineLight" size="lg">
+              <Button href={company.phoneHref} variant="outlineLight" size="lg">
                 <Icon name="phone" className="h-5 w-5" />
                 {company.phone}
               </Button>

@@ -15,9 +15,9 @@ import {
   Zap,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/guardianalert";
-const PHONE_DISPLAY = "(888) 555-0532";
-const PHONE_TEL = "tel:+18885550532";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG = {
   heroCouple:

@@ -207,9 +207,10 @@ function clean(value) {
 /**
  * Rough keyword screen for hostile language, not real sentiment analysis. It
  * exists so the "No criticism of colleagues or employer" checklist item can
- * stop being a hardcoded `true` and start reflecting the one piece of free
- * text (the custom reason) that goes into the letter body unfiltered. It will
- * miss subtler criticism and can occasionally flag a neutral use of a word
+ * stop being a hardcoded `true` and start reflecting the free text the user
+ * supplies (the custom reason and the handover notes) that goes into the
+ * letter body unfiltered. It will miss subtler criticism and can
+ * occasionally flag a neutral use of a word
  * (e.g. "negligent" in a legal sense) — it is a safety net, not a guarantee.
  */
 const CRITICISM_MARKERS = [
@@ -305,11 +306,9 @@ export function buildResignationLetter({
 
   if (reasonLine) paragraphs.push(reasonLine);
 
-  if (tone.request) paragraphs.push(tone.request);
-
   if (shortfall.status === "short") {
     paragraphs.push(
-      `This is ${shortfall.shortfallDays} day${shortfall.shortfallDays === 1 ? "" : "s"} short of the full notice period. I would be grateful if the balance could be waived; if not, I am willing to have it settled as per the terms of my appointment letter.`,
+      `${tone.request ? `${tone.request} ` : ""}This is ${shortfall.shortfallDays} day${shortfall.shortfallDays === 1 ? "" : "s"} short of the full notice period. I would be grateful if the balance could be waived; if not, I am willing to have it settled as per the terms of my appointment letter.`,
     );
   }
 
@@ -363,7 +362,10 @@ export function buildResignationLetter({
     { item: "Employee ID for the HR file", done: Boolean(empId) },
     { item: "Relieving letter and settlement requested", done: Boolean(requestExperienceLetter) },
     { item: "Full notice served", done: shortfall.status !== "short" },
-    { item: "No criticism of colleagues or employer", done: !containsCriticism(reasonLine) },
+    {
+      item: "No criticism of colleagues or employer",
+      done: !containsCriticism([reasonLine, notes].filter(Boolean).join(" ")),
+    },
   ];
 
   return {

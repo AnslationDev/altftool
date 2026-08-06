@@ -1,0 +1,2447 @@
+/* Animal Hub — module stylesheet.
+ *
+ * Imported once from the module layout. Every rule is scoped under .ah-app
+ * and every class is `ah-` prefixed so the module never leaks styles into
+ * (or absorbs styles from) the rest of the site.
+ *
+ * The .ah-app root re-aliases the global theme variables (set via
+ * html[data-theme]) into module-local --ah-* tokens, so the whole module
+ * inherits light/dark mode with zero theme-specific rules — the same
+ * mechanism as .afc-app in altfcalculators.
+ *
+ * Design language: quiet editorial. Serif display voice (Fraunces, loaded by
+ * the module layout as --font-ah-display), hairline borders and whitespace
+ * instead of heavy shadows, left-aligned section headers with an eyebrow
+ * kicker, restrained hover motion. Components consume --ah-* tokens only —
+ * never raw colors.
+ */
+
+/* ───────────────────────── 1. Tokens ───────────────────────── */
+
+.ah-app {
+  /* Surfaces */
+  --ah-bg: var(--background);
+  --ah-surface: var(--card);
+  --ah-surface-soft: var(--surface-soft);
+  --ah-border: var(--border);
+  --ah-border-strong: var(--border-strong);
+
+  /* Text */
+  --ah-text: var(--foreground);
+  --ah-text-soft: var(--muted-foreground);
+
+  /* Brand */
+  --ah-brand: var(--primary);
+  --ah-brand-soft: var(--primary-soft);
+  --ah-brand-hover: var(--primary-hover);
+  --ah-brand-contrast: var(--primary-foreground);
+
+  /* Status (badge tones, conservation states later) */
+  --ah-positive: var(--success);
+  --ah-positive-soft: var(--success-soft);
+  --ah-warning: var(--warning);
+  --ah-warning-soft: var(--warning-soft);
+  --ah-danger: var(--danger);
+  --ah-danger-soft: var(--danger-soft);
+  --ah-info: var(--info);
+  --ah-info-soft: var(--info-soft);
+
+  /* Geometry & depth (design-system primitives) */
+  --ah-radius: var(--anslation-ds-radius);
+  --ah-radius-lg: var(--anslation-ds-radius-lg);
+  --ah-radius-sm: calc(var(--anslation-ds-radius) - 4px);
+  --ah-shadow-sm: var(--anslation-ds-shadow-sm);
+  --ah-shadow-md: var(--anslation-ds-shadow-md);
+  --ah-shadow-lg: var(--anslation-ds-shadow-lg);
+  --ah-focus: var(--focus-ring);
+  --ah-max: var(--anslation-ds-container);
+
+  /* Type */
+  --ah-font-body: var(--anslation-ds-font-sans);
+  --ah-font-display: var(--font-ah-display, var(--anslation-ds-font-sans));
+
+  /* Spacing — 4px base scale + fluid rhythm values */
+  --ah-space-1: 0.25rem;
+  --ah-space-2: 0.5rem;
+  --ah-space-3: 0.75rem;
+  --ah-space-4: 1rem;
+  --ah-space-5: 1.25rem;
+  --ah-space-6: 1.5rem;
+  --ah-space-8: 2rem;
+  --ah-space-10: 2.5rem;
+  --ah-space-12: 3rem;
+  --ah-space-16: 4rem;
+  --ah-section-y: clamp(3.25rem, 6vw, 5.5rem);
+  --ah-gutter: clamp(1.25rem, 4vw, 2.5rem);
+  --ah-gap: clamp(1rem, 2.5vw, 1.75rem);
+
+  min-height: 100vh;
+  background: var(--ah-bg);
+  color: var(--ah-text);
+  font-family: var(--ah-font-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+.ah-app ::selection {
+  background: color-mix(in srgb, var(--ah-brand) 20%, transparent);
+}
+
+.ah-app [id] {
+  scroll-margin-top: 5rem;
+}
+
+/* Foundation-phase page shell (route files; replaced as pages get built out) */
+.ah-page {
+  max-width: var(--ah-max);
+  margin: 0 auto;
+  padding: var(--ah-space-10) var(--ah-gutter) var(--ah-space-16);
+}
+
+/* ───────────────────────── 2. Typography ───────────────────────── */
+
+.ah-display {
+  font-family: var(--ah-font-display);
+  font-optical-sizing: auto;
+  font-weight: 540;
+  line-height: 1.06;
+  letter-spacing: -0.018em;
+  color: var(--ah-text);
+  text-wrap: balance;
+}
+
+.ah-display--xl {
+  font-size: clamp(2.5rem, 5.5vw, 4rem);
+}
+
+.ah-display--lg {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.ah-display--md {
+  font-size: clamp(1.5rem, 2.6vw, 2.125rem);
+}
+
+.ah-display--sm {
+  font-size: clamp(1.1875rem, 1.8vw, 1.4375rem);
+  line-height: 1.25;
+}
+
+.ah-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+}
+
+.ah-eyebrow--rule::before {
+  content: "";
+  width: 1.75rem;
+  height: 1px;
+  background: var(--ah-brand);
+}
+
+.ah-lead {
+  font-size: clamp(1.0625rem, 1.4vw, 1.1875rem);
+  line-height: 1.65;
+  color: var(--ah-text-soft);
+  max-width: 62ch;
+  text-wrap: pretty;
+}
+
+.ah-prose {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+  max-width: 68ch;
+  color: var(--ah-text);
+}
+
+.ah-prose p + p {
+  margin-top: 1em;
+}
+
+.ah-prose h2,
+.ah-prose h3 {
+  font-family: var(--ah-font-display);
+  font-optical-sizing: auto;
+  font-weight: 560;
+  letter-spacing: -0.012em;
+  line-height: 1.2;
+  margin: 1.75em 0 0.6em;
+}
+
+.ah-prose h2 {
+  font-size: 1.5rem;
+}
+
+.ah-prose h3 {
+  font-size: 1.1875rem;
+}
+
+.ah-caption {
+  font-size: 0.75rem;
+  letter-spacing: 0.01em;
+  color: var(--ah-text-soft);
+}
+
+/* ───────────────────────── 3. Layout ───────────────────────── */
+
+.ah-container {
+  width: 100%;
+  max-width: var(--ah-max);
+  margin-inline: auto;
+  padding-inline: var(--ah-gutter);
+}
+
+.ah-container--narrow {
+  max-width: 46rem;
+}
+
+.ah-container--wide {
+  max-width: min(96rem, 100%);
+}
+
+.ah-section {
+  padding-block: var(--ah-section-y);
+}
+
+.ah-section--flush {
+  padding-block: 0;
+}
+
+.ah-section--tint {
+  background: var(--ah-surface-soft);
+  border-block: 1px solid var(--ah-border);
+}
+
+/* Left-aligned editorial header: title block on the left, optional action
+   anchored to the baseline on the right. Never centered. */
+.ah-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--ah-space-4) var(--ah-space-8);
+  margin-bottom: clamp(1.75rem, 3vw, 2.75rem);
+}
+
+.ah-section-head__main {
+  display: grid;
+  gap: var(--ah-space-3);
+  max-width: 62ch;
+}
+
+.ah-grid {
+  display: grid;
+  gap: var(--ah-gap);
+  grid-template-columns: repeat(auto-fill, minmax(min(var(--ah-grid-min, 16rem), 100%), 1fr));
+}
+
+.ah-grid--cols-2,
+.ah-grid--cols-3,
+.ah-grid--cols-4,
+.ah-grid--feature {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 40rem) {
+  .ah-grid--cols-2,
+  .ah-grid--cols-3,
+  .ah-grid--cols-4,
+  .ah-grid--feature {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 64rem) {
+  .ah-grid--cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .ah-grid--cols-4,
+  .ah-grid--feature {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  /* Editorial feature layout: the lead item reads as a cover story. */
+  .ah-grid--feature > :first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+}
+
+.ah-divider {
+  border: 0;
+  border-top: 1px solid var(--ah-border);
+  margin-block: var(--ah-space-10);
+}
+
+.ah-divider--labeled {
+  display: flex;
+  align-items: center;
+  gap: var(--ah-space-4);
+  border: 0;
+}
+
+.ah-divider--labeled::before,
+.ah-divider--labeled::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--ah-border);
+}
+
+.ah-divider__label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+}
+
+/* ───────────────────────── 4. Elements ───────────────────────── */
+
+.ah-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid transparent;
+  border-radius: var(--ah-radius-sm);
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.ah-btn:focus-visible {
+  outline: none;
+  box-shadow: var(--ah-focus);
+}
+
+.ah-btn:active {
+  transform: translateY(1px);
+}
+
+.ah-btn--sm {
+  font-size: 0.8125rem;
+  padding: 0.5rem 0.875rem;
+}
+
+.ah-btn--md {
+  font-size: 0.9375rem;
+  padding: 0.6875rem 1.125rem;
+}
+
+.ah-btn--lg {
+  font-size: 1rem;
+  padding: 0.8125rem 1.375rem;
+}
+
+.ah-btn--solid {
+  background: var(--ah-brand);
+  color: var(--ah-brand-contrast);
+}
+
+.ah-btn--solid:hover {
+  background: var(--ah-brand-hover);
+}
+
+.ah-btn--outline {
+  border-color: var(--ah-border-strong);
+  color: var(--ah-text);
+  background: transparent;
+}
+
+.ah-btn--outline:hover {
+  border-color: color-mix(in srgb, var(--ah-text) 40%, transparent);
+  background: var(--ah-surface-soft);
+}
+
+.ah-btn--ghost {
+  color: var(--ah-text);
+  background: transparent;
+  padding-inline: 0.625rem;
+}
+
+.ah-btn--ghost:hover {
+  background: var(--ah-surface-soft);
+}
+
+.ah-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.625rem;
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  background: var(--ah-surface-soft);
+  color: var(--ah-text-soft);
+}
+
+.ah-badge[data-tone="brand"] {
+  background: var(--ah-brand-soft);
+  color: var(--ah-brand);
+}
+
+.ah-badge[data-tone="positive"] {
+  background: var(--ah-positive-soft);
+  color: var(--ah-positive);
+}
+
+.ah-badge[data-tone="warning"] {
+  background: var(--ah-warning-soft);
+  color: var(--ah-warning);
+}
+
+.ah-badge[data-tone="danger"] {
+  background: var(--ah-danger-soft);
+  color: var(--ah-danger);
+}
+
+.ah-badge[data-tone="info"] {
+  background: var(--ah-info-soft);
+  color: var(--ah-info);
+}
+
+.ah-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3125rem 0.75rem;
+  border: 1px solid var(--ah-border);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ah-text-soft);
+  background: transparent;
+  text-decoration: none;
+  white-space: nowrap;
+  transition:
+    border-color 160ms ease,
+    color 160ms ease;
+}
+
+a.ah-tag:hover {
+  border-color: var(--ah-border-strong);
+  color: var(--ah-text);
+}
+
+a.ah-tag:focus-visible {
+  outline: none;
+  box-shadow: var(--ah-focus);
+}
+
+/* ───────────────────────── 5. Card ───────────────────────── */
+
+.ah-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--ah-surface);
+  border: 1px solid var(--ah-border);
+  border-radius: var(--ah-radius-lg);
+  overflow: hidden;
+  transition:
+    border-color 200ms ease,
+    box-shadow 200ms ease,
+    transform 200ms ease;
+}
+
+.ah-card:hover {
+  border-color: var(--ah-border-strong);
+  box-shadow: var(--ah-shadow-md);
+  transform: translateY(-2px);
+}
+
+.ah-card:focus-within {
+  border-color: var(--ah-border-strong);
+  box-shadow: var(--ah-focus);
+}
+
+.ah-card__media {
+  position: relative;
+  overflow: hidden;
+}
+
+.ah-card__media img {
+  transition: transform 500ms ease;
+}
+
+.ah-card:hover .ah-card__media img {
+  transform: scale(1.04);
+}
+
+.ah-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ah-space-2);
+  padding: var(--ah-space-5);
+  flex: 1;
+}
+
+.ah-card__title {
+  font-family: var(--ah-font-display);
+  font-optical-sizing: auto;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--ah-text);
+}
+
+.ah-card__title a {
+  color: inherit;
+  text-decoration: none;
+  outline: none;
+}
+
+/* Stretched link: the title's anchor covers the whole card. Any other
+   interactive element inside the card must sit above it (see __meta a). */
+.ah-card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.ah-card__text {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--ah-text-soft);
+  display: -webkit-box;
+  -webkit-line-clamp: var(--ah-card-lines, 2);
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ah-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ah-space-3);
+  margin-top: auto;
+  padding-top: var(--ah-space-3);
+  font-size: 0.75rem;
+  color: var(--ah-text-soft);
+}
+
+.ah-card__meta a {
+  position: relative;
+  z-index: 2;
+}
+
+/* ───────────────────────── 6. Media ───────────────────────── */
+
+.ah-image {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  background: var(--ah-surface-soft);
+}
+
+.ah-image--rounded {
+  border-radius: var(--ah-radius-lg);
+  border: 1px solid var(--ah-border);
+}
+
+/* Neutral frame for records that have no imagery yet: a faint diagonal
+   hatch so empty media reads as intentional, not broken. */
+.ah-image--empty {
+  background:
+    repeating-linear-gradient(
+      45deg,
+      transparent 0 6px,
+      color-mix(in srgb, var(--ah-text) 5%, transparent) 6px 7px
+    ),
+    var(--ah-surface-soft);
+}
+
+/* ───────────────────────── 7. Skeletons ───────────────────────── */
+
+.ah-skeleton {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--ah-radius-sm);
+  background: color-mix(in srgb, var(--ah-text) 7%, transparent);
+}
+
+.ah-skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--ah-bg) 55%, transparent),
+    transparent
+  );
+  animation: ah-shimmer 1.8s ease infinite;
+}
+
+@keyframes ah-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.ah-skeleton--line {
+  height: 0.875em;
+}
+
+.ah-skeleton--title {
+  height: 1.25em;
+  max-width: 14rem;
+}
+
+.ah-skeleton--pill {
+  height: 1.5rem;
+  width: 5rem;
+  border-radius: 999px;
+}
+
+.ah-skeleton-text {
+  display: grid;
+  gap: 0.625em;
+}
+
+.ah-skeleton-text > :last-child {
+  max-width: 72%;
+}
+
+/* ───────────────────────── 8. Chrome: header & footer ───────────────────────── */
+
+.ah-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  background: var(--ah-surface);
+  color: var(--ah-text);
+  border: 1px solid var(--ah-border-strong);
+  border-radius: var(--ah-radius-sm);
+}
+
+.ah-skip:focus {
+  left: 1rem;
+  top: 1rem;
+}
+
+.ah-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--ah-bg) 92%, transparent);
+  backdrop-filter: saturate(150%) blur(8px);
+  border-bottom: 1px solid var(--ah-border);
+}
+
+.ah-header__inner {
+  max-width: var(--ah-max);
+  margin-inline: auto;
+  padding: 0.875rem var(--ah-gutter);
+  display: flex;
+  align-items: center;
+  gap: var(--ah-space-6);
+}
+
+.ah-header__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  text-decoration: none;
+  color: var(--ah-text);
+}
+
+/* A drawn mark rather than an icon import: two concentric arcs suggesting a
+   tracked animal's path, at the same stroke weight as the rest of the UI. */
+.ah-header__mark {
+  width: 1.375rem;
+  height: 1.375rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--ah-brand);
+  position: relative;
+  flex: none;
+}
+
+.ah-header__mark::after {
+  content: "";
+  position: absolute;
+  inset: 4px 4px auto auto;
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 999px;
+  background: var(--ah-brand);
+}
+
+.ah-header__wordmark {
+  font-family: var(--ah-font-display);
+  font-optical-sizing: auto;
+  font-size: 1.0625rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.ah-header__wordmark-accent {
+  color: var(--ah-brand);
+}
+
+.ah-header__nav {
+  display: none;
+  align-items: center;
+  gap: 0.25rem;
+  margin-inline-start: auto;
+}
+
+.ah-header__link {
+  padding: 0.375rem 0.6875rem;
+  border-radius: var(--ah-radius-sm);
+  font-size: 0.875rem;
+  color: var(--ah-text-soft);
+  text-decoration: none;
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+.ah-header__link:hover {
+  color: var(--ah-text);
+  background: var(--ah-surface-soft);
+}
+
+.ah-header__link.is-active {
+  color: var(--ah-text);
+  font-weight: 600;
+}
+
+.ah-header__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ah-space-3);
+  margin-inline-start: auto;
+}
+
+/* Scoped to the desktop breakpoint deliberately. `~` matches on document
+   structure, not on rendering, so this rule still applied below 64rem where
+   .ah-header__nav is display:none — cancelling the auto margin and leaving the
+   menu toggle stranded next to the wordmark instead of at the right edge.
+   Above 64rem the nav is visible and its own auto margin does the pushing, so
+   the actions must not add a second one. */
+@media (min-width: 64rem) {
+  .ah-header__nav ~ .ah-header__actions {
+    margin-inline-start: 0;
+  }
+}
+
+.ah-header__home {
+  display: none;
+  font-size: 0.8125rem;
+  color: var(--ah-text-soft);
+  text-decoration: none;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid var(--ah-border);
+  border-radius: 999px;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.ah-header__home:hover {
+  border-color: var(--ah-border-strong);
+  color: var(--ah-text);
+}
+
+.ah-header__toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: 1px solid var(--ah-border);
+  border-radius: var(--ah-radius-sm);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.ah-header__toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--ah-focus);
+}
+
+.ah-header__bars,
+.ah-header__bars::before,
+.ah-header__bars::after {
+  display: block;
+  width: 1rem;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 200ms ease, opacity 200ms ease;
+}
+
+.ah-header__bars {
+  position: relative;
+}
+
+.ah-header__bars::before,
+.ah-header__bars::after {
+  content: "";
+  position: absolute;
+  left: 0;
+}
+
+.ah-header__bars::before {
+  top: -5px;
+}
+
+.ah-header__bars::after {
+  top: 5px;
+}
+
+.ah-header__bars.is-open {
+  background: transparent;
+}
+
+.ah-header__bars.is-open::before {
+  transform: translateY(5px) rotate(45deg);
+}
+
+.ah-header__bars.is-open::after {
+  transform: translateY(-5px) rotate(-45deg);
+}
+
+.ah-drawer {
+  border-top: 1px solid var(--ah-border);
+  background: var(--ah-bg);
+  padding: var(--ah-space-4) var(--ah-gutter) var(--ah-space-8);
+}
+
+.ah-drawer__list {
+  display: grid;
+  gap: 0.125rem;
+}
+
+.ah-drawer__link {
+  display: flex;
+  align-items: center;
+  gap: var(--ah-space-4);
+  padding: 0.875rem 0.25rem;
+  border-bottom: 1px solid var(--ah-border);
+  color: var(--ah-text);
+  text-decoration: none;
+  font-family: var(--ah-font-display);
+  font-size: 1.125rem;
+}
+
+.ah-drawer__ordinal {
+  font-family: var(--ah-font-body);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--ah-text-soft);
+}
+
+.ah-drawer__count {
+  margin-inline-start: auto;
+  font-family: var(--ah-font-body);
+  font-size: 0.8125rem;
+  color: var(--ah-text-soft);
+}
+
+.ah-drawer__home {
+  display: inline-block;
+  margin-top: var(--ah-space-5);
+  font-size: 0.875rem;
+  color: var(--ah-text-soft);
+}
+
+@media (min-width: 60rem) {
+  .ah-header__nav,
+  .ah-header__home {
+    display: inline-flex;
+  }
+
+  .ah-header__toggle,
+  .ah-drawer {
+    display: none;
+  }
+}
+
+.ah-footer {
+  border-top: 1px solid var(--ah-border);
+  padding-block: var(--ah-space-12) var(--ah-space-8);
+  margin-top: var(--ah-space-16);
+}
+
+.ah-footer__top {
+  display: grid;
+  gap: var(--ah-space-8);
+  padding-bottom: var(--ah-space-8);
+}
+
+@media (min-width: 48rem) {
+  .ah-footer__top {
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: var(--ah-space-10);
+  }
+}
+
+.ah-footer__wordmark {
+  font-family: var(--ah-font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+.ah-footer__blurb {
+  margin-top: var(--ah-space-3);
+  max-width: 44ch;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--ah-text-soft);
+}
+
+.ah-footer__stat {
+  margin-top: var(--ah-space-4);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+}
+
+.ah-footer__heading {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+  margin-bottom: var(--ah-space-4);
+}
+
+.ah-footer__nav ul {
+  display: grid;
+  gap: 0.625rem;
+}
+
+.ah-footer__nav a {
+  font-size: 0.9375rem;
+  color: var(--ah-text-soft);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.ah-footer__nav a:hover {
+  color: var(--ah-text);
+}
+
+.ah-footer__base {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ah-space-3);
+  padding-top: var(--ah-space-6);
+  border-top: 1px solid var(--ah-border);
+  font-size: 0.8125rem;
+  color: var(--ah-text-soft);
+}
+
+.ah-footer__product {
+  color: var(--ah-text-soft);
+  text-decoration: none;
+}
+
+.ah-footer__product:hover {
+  color: var(--ah-brand);
+}
+
+/* ───────────────────────── 9. Search ───────────────────────── */
+
+.ah-search {
+  position: relative;
+  width: 100%;
+}
+
+.ah-search__field {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0 0.875rem;
+  border: 1px solid var(--ah-border-strong);
+  border-radius: var(--ah-radius-sm);
+  background: var(--ah-surface);
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.ah-search__field:focus-within {
+  border-color: var(--ah-brand);
+  box-shadow: var(--ah-focus);
+}
+
+.ah-search__glyph {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex: none;
+  color: var(--ah-text-soft);
+}
+
+.ah-search__input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.75rem 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  outline: none;
+}
+
+.ah-search__input::-webkit-search-cancel-button {
+  filter: grayscale(1) opacity(0.6);
+}
+
+.ah-search--lg .ah-search__input {
+  padding-block: 1rem;
+  font-size: 1.0625rem;
+}
+
+.ah-search__results {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  padding: 0.375rem;
+  background: var(--ah-surface);
+  border: 1px solid var(--ah-border-strong);
+  border-radius: var(--ah-radius);
+  box-shadow: var(--ah-shadow-lg);
+  max-height: 22rem;
+  overflow-y: auto;
+}
+
+.ah-search__result {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0 var(--ah-space-3);
+  padding: 0.625rem 0.75rem;
+  border-radius: var(--ah-radius-sm);
+  text-decoration: none;
+  color: var(--ah-text);
+}
+
+.ah-search__result.is-active {
+  background: var(--ah-surface-soft);
+}
+
+.ah-search__result-name {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.ah-search__result-latin {
+  grid-column: 1;
+  font-size: 0.8125rem;
+  font-style: italic;
+  color: var(--ah-text-soft);
+}
+
+.ah-search__result-category {
+  grid-row: 1 / span 2;
+  align-self: center;
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+}
+
+.ah-search__empty {
+  margin-top: 0.625rem;
+  font-size: 0.875rem;
+  color: var(--ah-text-soft);
+}
+
+/* ───────────────────────── 10. Animal & category cards ───────────────────────── */
+
+.ah-animal-card__latin {
+  font-size: 0.8125rem;
+  font-style: italic;
+  color: var(--ah-text-soft);
+}
+
+.ah-animal-card__traits {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: var(--ah-space-3);
+}
+
+.ah-animal-card__trait {
+  display: inline-block;
+  padding: 0.25rem 0.625rem;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--ah-brand) 12%, transparent);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--ah-text);
+  cursor: help;
+}
+
+.ah-animal-card__category {
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ah-animal-card__index {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 2;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--ah-radius-sm);
+  background: color-mix(in srgb, var(--ah-bg) 82%, transparent);
+  backdrop-filter: blur(4px);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ah-text);
+}
+
+.ah-animal-card--feature .ah-card__title {
+  font-size: clamp(1.375rem, 2.2vw, 1.75rem);
+}
+
+.ah-animal-card--feature .ah-card__body {
+  padding: var(--ah-space-6);
+  gap: var(--ah-space-3);
+}
+
+.ah-image__monogram {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--ah-font-display);
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 500;
+  color: color-mix(in srgb, var(--ah-text) 14%, transparent);
+  user-select: none;
+}
+
+.ah-image__note {
+  position: absolute;
+  bottom: 0.625rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+}
+
+.ah-empty {
+  padding: var(--ah-space-10) 0;
+  color: var(--ah-text-soft);
+  border-top: 1px solid var(--ah-border);
+}
+
+/* ───────────────────────── 11. Homepage ───────────────────────── */
+
+.ah-hero {
+  padding-top: clamp(2.5rem, 5vw, 4.5rem);
+  border-bottom: 1px solid var(--ah-border);
+}
+
+.ah-hero__grid {
+  display: grid;
+  gap: var(--ah-space-10);
+}
+
+@media (min-width: 64rem) {
+  .ah-hero__grid {
+    grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+    gap: var(--ah-space-16);
+    align-items: end;
+  }
+}
+
+.ah-hero__title {
+  margin-top: var(--ah-space-5);
+}
+
+.ah-hero__title-accent {
+  font-style: italic;
+  color: var(--ah-brand);
+}
+
+.ah-hero__lead {
+  margin-top: var(--ah-space-5);
+}
+
+.ah-hero__search {
+  margin-top: var(--ah-space-8);
+  max-width: 34rem;
+}
+
+.ah-hero__jump {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.375rem var(--ah-space-4);
+  margin-top: var(--ah-space-5);
+  font-size: 0.875rem;
+  color: var(--ah-text-soft);
+}
+
+.ah-hero__jump a {
+  color: var(--ah-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ah-border-strong);
+  padding-bottom: 1px;
+  transition: border-color 160ms ease;
+}
+
+.ah-hero__jump a:hover {
+  border-color: var(--ah-brand);
+}
+
+.ah-hero__stats {
+  border-top: 2px solid var(--ah-text);
+  padding-top: var(--ah-space-5);
+}
+
+.ah-hero__stat {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ah-space-4);
+  padding-block: var(--ah-space-4);
+  border-bottom: 1px solid var(--ah-border);
+}
+
+.ah-hero__stat dt {
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  color: var(--ah-text-soft);
+}
+
+.ah-hero__stat dd {
+  font-family: var(--ah-font-display);
+  font-optical-sizing: auto;
+  font-size: clamp(1.75rem, 3vw, 2.375rem);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.ah-hero__stats-note {
+  margin-top: var(--ah-space-4);
+  font-size: 0.75rem;
+  color: var(--ah-text-soft);
+}
+
+/* Category index — a table of contents, not a tile grid */
+.ah-index {
+  border-top: 1px solid var(--ah-border);
+}
+
+.ah-index-row {
+  border-bottom: 1px solid var(--ah-border);
+}
+
+.ah-index-row__link {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: baseline;
+  gap: var(--ah-space-4) var(--ah-space-5);
+  padding-block: var(--ah-space-5);
+  text-decoration: none;
+  color: inherit;
+  transition: padding-inline-start 220ms ease, color 160ms ease;
+}
+
+.ah-index-row__link:hover {
+  padding-inline-start: var(--ah-space-3);
+  color: var(--ah-brand);
+}
+
+.ah-index-row__link:focus-visible {
+  outline: none;
+  box-shadow: var(--ah-focus);
+  border-radius: var(--ah-radius-sm);
+}
+
+.ah-index-row__ordinal {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.1em;
+  color: var(--ah-text-soft);
+}
+
+.ah-index-row__name {
+  display: block;
+  font-family: var(--ah-font-display);
+  font-optical-sizing: auto;
+  font-size: clamp(1.375rem, 2.6vw, 1.875rem);
+  font-weight: 540;
+  letter-spacing: -0.012em;
+}
+
+.ah-index-row__desc {
+  display: block;
+  margin-top: 0.375rem;
+  max-width: 58ch;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ah-text-soft);
+}
+
+.ah-index-row__count {
+  font-family: var(--ah-font-display);
+  font-size: 1.125rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--ah-text-soft);
+  white-space: nowrap;
+}
+
+.ah-index-row__count-label {
+  font-family: var(--ah-font-body);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Two-column band: ranked list beside habitat weights */
+.ah-split {
+  display: grid;
+  gap: var(--ah-space-12);
+}
+
+@media (min-width: 64rem) {
+  .ah-split {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ah-space-16);
+  }
+}
+
+.ah-ranked {
+  border-top: 1px solid var(--ah-border);
+}
+
+.ah-ranked__item {
+  border-bottom: 1px solid var(--ah-border);
+}
+
+.ah-ranked__link {
+  display: flex;
+  align-items: center;
+  gap: var(--ah-space-4);
+  padding-block: var(--ah-space-4);
+  text-decoration: none;
+  color: inherit;
+  transition: color 160ms ease;
+}
+
+.ah-ranked__link:hover {
+  color: var(--ah-brand);
+}
+
+.ah-ranked__ordinal {
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.1em;
+  color: var(--ah-text-soft);
+}
+
+.ah-ranked__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.ah-ranked__name {
+  display: block;
+  font-family: var(--ah-font-display);
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+.ah-ranked__latin {
+  display: block;
+  font-size: 0.8125rem;
+  font-style: italic;
+  color: var(--ah-text-soft);
+}
+
+.ah-habitats {
+  border-top: 1px solid var(--ah-border);
+}
+
+.ah-habitats__item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 5rem auto;
+  align-items: center;
+  gap: var(--ah-space-4);
+  padding-block: var(--ah-space-3);
+  border-bottom: 1px solid var(--ah-border);
+  font-size: 0.9375rem;
+}
+
+.ah-habitats__bar {
+  display: block;
+  height: 2px;
+  background: var(--ah-border);
+}
+
+.ah-habitats__bar > span {
+  display: block;
+  height: 100%;
+  width: var(--ah-bar, 0%);
+  background: var(--ah-brand);
+}
+
+.ah-habitats__count {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8125rem;
+  color: var(--ah-text-soft);
+}
+
+/* Quick facts — an asymmetric fact table */
+.ah-facts {
+  display: grid;
+  gap: var(--ah-space-6);
+  border-top: 1px solid var(--ah-border);
+}
+
+@media (min-width: 48rem) {
+  .ah-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 72rem) {
+  .ah-facts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--ah-space-8);
+  }
+}
+
+.ah-facts__item {
+  padding-top: var(--ah-space-6);
+  border-top: 1px solid transparent;
+}
+
+.ah-facts__label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+}
+
+.ah-facts__value {
+  margin-top: var(--ah-space-3);
+  font-family: var(--ah-font-display);
+  font-optical-sizing: auto;
+  font-size: clamp(1.375rem, 2.2vw, 1.625rem);
+  font-weight: 540;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+}
+
+.ah-facts__note {
+  margin-top: var(--ah-space-2);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  color: var(--ah-text-soft);
+}
+
+.ah-facts__source {
+  display: inline-block;
+  margin-top: var(--ah-space-3);
+  font-size: 0.8125rem;
+  color: var(--ah-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ah-border-strong);
+  padding-bottom: 1px;
+  transition: border-color 160ms ease;
+}
+
+.ah-facts__source:hover {
+  border-color: var(--ah-brand);
+}
+
+.ah-cta {
+  border-top: 1px solid var(--ah-border);
+}
+
+.ah-cta__inner {
+  display: grid;
+  gap: var(--ah-space-5);
+  text-align: left;
+}
+
+.ah-cta__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: var(--ah-space-2);
+}
+
+/* ───────────────────────── 12. Category page ───────────────────────── */
+
+.ah-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.8125rem;
+  color: var(--ah-text-soft);
+  margin-bottom: var(--ah-space-6);
+}
+
+.ah-breadcrumb a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.ah-breadcrumb a:hover {
+  color: var(--ah-text);
+}
+
+.ah-cat-hero {
+  padding-top: clamp(2rem, 4vw, 3.25rem);
+  padding-bottom: var(--ah-space-10);
+}
+
+.ah-cat-hero__grid {
+  display: grid;
+  gap: var(--ah-space-8);
+}
+
+@media (min-width: 64rem) {
+  .ah-cat-hero__grid {
+    grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr);
+    gap: var(--ah-space-16);
+    align-items: end;
+  }
+}
+
+.ah-cat-hero__lead {
+  margin-top: var(--ah-space-4);
+}
+
+.ah-cat-hero__stats {
+  display: flex;
+  gap: var(--ah-space-8);
+  border-top: 2px solid var(--ah-text);
+  padding-top: var(--ah-space-4);
+}
+
+.ah-cat-hero__stats dt {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+}
+
+.ah-cat-hero__stats dd {
+  margin-top: 0.25rem;
+  font-family: var(--ah-font-display);
+  font-size: 2rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.ah-toolbar {
+  position: sticky;
+  top: 3.5rem;
+  z-index: 20;
+  background: color-mix(in srgb, var(--ah-bg) 94%, transparent);
+  backdrop-filter: blur(8px);
+  border-block: 1px solid var(--ah-border);
+  margin-bottom: var(--ah-space-8);
+}
+
+.ah-toolbar__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ah-space-4);
+  padding-block: 0.875rem;
+}
+
+.ah-toolbar__search {
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.ah-toolbar__input {
+  width: 100%;
+  padding: 0.625rem 0.875rem;
+  border: 1px solid var(--ah-border);
+  border-radius: var(--ah-radius-sm);
+  background: var(--ah-surface);
+  color: inherit;
+  font: inherit;
+  font-size: 0.9375rem;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.ah-toolbar__input:focus {
+  border-color: var(--ah-brand);
+  box-shadow: var(--ah-focus);
+}
+
+.ah-toolbar__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ah-space-4);
+}
+
+.ah-field {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ah-field__label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+}
+
+.ah-field__select {
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--ah-border);
+  border-radius: var(--ah-radius-sm);
+  background: var(--ah-surface);
+  color: inherit;
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.ah-field__select:focus-visible {
+  border-color: var(--ah-brand);
+  box-shadow: var(--ah-focus);
+}
+
+.ah-results {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ah-space-4);
+  margin-bottom: var(--ah-space-6);
+}
+
+.ah-results__count {
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  color: var(--ah-text-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+.ah-results__reset {
+  border: 0;
+  background: transparent;
+  color: var(--ah-brand);
+  font: inherit;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: var(--ah-radius-sm);
+}
+
+.ah-results__reset:focus-visible {
+  outline: none;
+  box-shadow: var(--ah-focus);
+}
+
+.ah-results__wider {
+  max-width: 32rem;
+  margin-top: var(--ah-space-16);
+  padding-top: var(--ah-space-6);
+  border-top: 1px solid var(--ah-border);
+  display: grid;
+  gap: var(--ah-space-3);
+}
+
+/* ───────────────────────── 13. Animal profile ───────────────────────── */
+
+.ah-profile-hero {
+  padding-top: clamp(1.75rem, 3.5vw, 2.75rem);
+  padding-bottom: var(--ah-space-10);
+  border-bottom: 1px solid var(--ah-border);
+}
+
+.ah-profile-hero__grid {
+  display: grid;
+  gap: var(--ah-space-8);
+  align-items: center;
+}
+
+@media (min-width: 64rem) {
+  .ah-profile-hero__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+    gap: var(--ah-space-12);
+  }
+}
+
+.ah-profile-hero__latin {
+  margin-top: 0.5rem;
+  font-size: 1.0625rem;
+  font-style: italic;
+  color: var(--ah-text-soft);
+}
+
+.ah-profile-hero__text .ah-lead {
+  margin-top: var(--ah-space-5);
+}
+
+.ah-profile-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ah-space-4);
+  margin-top: var(--ah-space-6);
+}
+
+.ah-profile-hero__media .ah-image {
+  box-shadow: var(--ah-shadow-md);
+}
+
+/* Fact strip under the hero */
+.ah-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr));
+  gap: 0;
+  margin-top: var(--ah-space-10);
+  border-top: 1px solid var(--ah-border);
+}
+
+.ah-strip__item {
+  padding: var(--ah-space-5) var(--ah-space-5) var(--ah-space-4) 0;
+  border-bottom: 1px solid var(--ah-border);
+}
+
+@media (min-width: 48rem) {
+  .ah-strip__item + .ah-strip__item {
+    padding-inline-start: var(--ah-space-5);
+    border-inline-start: 1px solid var(--ah-border);
+  }
+}
+
+.ah-strip__item dt {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+}
+
+.ah-strip__item dd {
+  margin-top: 0.5rem;
+  font-family: var(--ah-font-display);
+  font-optical-sizing: auto;
+  font-size: 1.125rem;
+  font-weight: 560;
+  line-height: 1.3;
+}
+
+/* Two-column body: narrative + sticky aside */
+.ah-profile {
+  display: grid;
+  gap: var(--ah-space-12);
+}
+
+@media (min-width: 64rem) {
+  .ah-profile {
+    grid-template-columns: minmax(0, 1fr) 20rem;
+    gap: var(--ah-space-16);
+    align-items: start;
+  }
+
+  .ah-profile__aside {
+    position: sticky;
+    top: 5.5rem;
+    display: grid;
+    gap: var(--ah-space-8);
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+    padding-inline-end: 0.25rem;
+  }
+}
+
+.ah-profile__aside {
+  display: grid;
+  gap: var(--ah-space-8);
+}
+
+.ah-narrative__opener::first-letter {
+  float: left;
+  font-family: var(--ah-font-display);
+  font-size: 3.25em;
+  line-height: 0.82;
+  font-weight: 500;
+  padding-inline-end: 0.09em;
+  padding-block-start: 0.06em;
+  color: var(--ah-brand);
+}
+
+.ah-narrative__section {
+  margin-top: var(--ah-space-10);
+  padding-top: var(--ah-space-6);
+  border-top: 1px solid var(--ah-border);
+}
+
+.ah-narrative__section h2 {
+  margin-top: 0;
+}
+
+/* Aside panels */
+.ah-panel {
+  border-top: 2px solid var(--ah-text);
+  padding-top: var(--ah-space-4);
+}
+
+.ah-panel__heading {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+  margin-bottom: var(--ah-space-4);
+}
+
+.ah-contents {
+  border-top: 2px solid var(--ah-text);
+  padding-top: var(--ah-space-4);
+}
+
+.ah-contents__heading {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+  margin-bottom: var(--ah-space-3);
+}
+
+.ah-contents ol {
+  display: grid;
+  gap: 0.125rem;
+}
+
+.ah-contents a {
+  display: flex;
+  gap: var(--ah-space-3);
+  padding: 0.4375rem 0;
+  font-size: 0.9375rem;
+  color: var(--ah-text-soft);
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.ah-contents a:hover {
+  color: var(--ah-brand);
+}
+
+.ah-contents a span {
+  font-size: 0.6875rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.08em;
+  padding-top: 0.28em;
+  color: var(--ah-text-soft);
+}
+
+.ah-datalist {
+  display: grid;
+}
+
+.ah-factgroup + .ah-factgroup {
+  margin-top: var(--ah-space-5);
+}
+
+.ah-factgroup__label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ah-brand);
+  margin-bottom: var(--ah-space-2);
+}
+
+.ah-datalist__row {
+  display: grid;
+  grid-template-columns: 8.5rem minmax(0, 1fr);
+  gap: var(--ah-space-3);
+  padding-block: 0.6875rem;
+  border-bottom: 1px solid var(--ah-border);
+  font-size: 0.875rem;
+}
+
+.ah-datalist--tight .ah-datalist__row {
+  padding-block: 0.5rem;
+  font-size: 0.8125rem;
+}
+
+.ah-datalist__row dt {
+  color: var(--ah-text-soft);
+}
+
+.ah-datalist__note {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: var(--ah-text-soft);
+}
+
+/* Classification as an indented lineage */
+.ah-lineage {
+  display: grid;
+  margin-bottom: var(--ah-space-5);
+}
+
+.ah-lineage__item {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ah-space-3);
+  padding: 0.3125rem 0;
+  padding-inline-start: calc(var(--ah-depth) * 0.5rem);
+  position: relative;
+  font-size: 0.875rem;
+}
+
+.ah-lineage__item + .ah-lineage__item::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--ah-depth) * 0.5rem - 0.375rem);
+  top: 0;
+  bottom: 50%;
+  width: 1px;
+  background: var(--ah-border);
+}
+
+.ah-lineage__rank {
+  min-width: 4.25rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+}
+
+.ah-lineage__value {
+  font-style: italic;
+}
+
+.ah-lineage__item:last-child .ah-lineage__value {
+  font-weight: 600;
+  color: var(--ah-brand);
+}
+
+.ah-panel--status .ah-status {
+  display: grid;
+  gap: var(--ah-space-3);
+  margin-bottom: var(--ah-space-4);
+}
+
+.ah-status__desc {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: var(--ah-text-soft);
+}
+
+.ah-status__note {
+  margin-top: var(--ah-space-4);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--ah-text-soft);
+}
+
+.ah-sources {
+  display: grid;
+  gap: var(--ah-space-3);
+}
+
+.ah-sources li {
+  display: grid;
+  gap: 0.125rem;
+  padding-bottom: var(--ah-space-3);
+  border-bottom: 1px solid var(--ah-border);
+}
+
+.ah-sources a {
+  font-size: 0.875rem;
+  color: var(--ah-text);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ah-border-strong);
+  justify-self: start;
+  transition: border-color 160ms ease;
+}
+
+.ah-sources a:hover {
+  border-color: var(--ah-brand);
+}
+
+.ah-sources__publisher {
+  font-size: 0.75rem;
+  color: var(--ah-text-soft);
+}
+
+.ah-sources__updated {
+  margin-top: var(--ah-space-3);
+}
+
+/* Distribution */
+.ah-dist {
+  display: grid;
+  gap: var(--ah-space-8);
+}
+
+@media (min-width: 60rem) {
+  .ah-dist {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.ah-dist__label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+  margin-bottom: var(--ah-space-4);
+}
+
+.ah-dist__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Gallery */
+/* Available to screen readers, removed from the visual layout. Used for table
+   captions and for stating in words what the "highest value" styling conveys
+   visually, since that ranking must not depend on seeing the emphasis. */
+.ah-visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Compare — a wide table that must scroll inside itself rather than pushing
+   the page sideways. The first column is sticky so fact labels stay readable
+   while the animal columns scroll. */
+.ah-compare__scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ah-compare {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 34rem;
+  font-size: 0.9375rem;
+}
+
+.ah-compare th,
+.ah-compare td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--ah-border);
+}
+
+.ah-compare tbody th[scope="row"] {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--ah-bg);
+  font-weight: 500;
+  color: var(--ah-text-soft);
+  min-width: 11rem;
+}
+
+.ah-compare__corner {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  background: var(--ah-bg);
+}
+
+.ah-compare__head {
+  min-width: 12rem;
+  vertical-align: bottom;
+}
+
+.ah-compare__head-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.ah-compare__head-name {
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.ah-compare__head-latin {
+  font-style: italic;
+  font-size: 0.8125rem;
+  color: var(--ah-text-soft);
+}
+
+.ah-compare__remove {
+  display: inline-block;
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--ah-text-soft);
+}
+
+.ah-compare__group th {
+  padding-top: 1.75rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ah-brand);
+  border-bottom: none;
+}
+
+/* The winning value is marked with weight and a rule, never colour alone —
+   the ranking has to survive a monochrome or colour-blind reading. */
+.ah-compare__cell--highest .ah-compare__value {
+  font-weight: 650;
+  box-shadow: inset 0 -0.35em 0 color-mix(in srgb, var(--ah-brand) 18%, transparent);
+}
+
+.ah-compare__absent {
+  color: var(--ah-text-soft);
+  opacity: 0.55;
+}
+
+/* Shown when a row's units belong to different families (newtons vs PSI), so
+   the table states why it is not ranking rather than silently not ranking. */
+.ah-compare__conflict {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: var(--ah-text-soft);
+}
+
+.ah-picker {
+  position: relative;
+  max-width: 30rem;
+}
+
+.ah-picker__label {
+  display: block;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ah-text-soft);
+  margin-bottom: 0.5rem;
+}
+
+.ah-picker__input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  border: 1px solid var(--ah-border);
+  border-radius: var(--ah-radius, 0.5rem);
+  background: var(--ah-surface, transparent);
+  color: inherit;
+  font: inherit;
+}
+
+.ah-picker__results {
+  list-style: none;
+  margin: 0.5rem 0 0;
+  padding: 0.25rem;
+  border: 1px solid var(--ah-border);
+  border-radius: var(--ah-radius, 0.5rem);
+  background: var(--ah-bg);
+}
+
+.ah-picker__option {
+  display: flex;
+  width: 100%;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.5rem 0.65rem;
+  background: none;
+  border: 0;
+  border-radius: calc(var(--ah-radius, 0.5rem) - 0.15rem);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.ah-picker__option:hover,
+.ah-picker__option:focus-visible {
+  background: color-mix(in srgb, var(--ah-brand) 10%, transparent);
+}
+
+.ah-picker__option-meta {
+  font-size: 0.75rem;
+  color: var(--ah-text-soft);
+}
+
+.ah-picker__empty {
+  padding: 0.5rem 0.65rem;
+  font-size: 0.875rem;
+  color: var(--ah-text-soft);
+}
+
+/* Gallery — alternating image/text rows rather than a uniform grid, so a
+   profile reads as an illustrated article instead of a contact sheet. Rows
+   with no title or caption span the full width and simply show the photo. */
+.ah-zigzag {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.ah-zigzag__row {
+  display: grid;
+  gap: var(--ah-gap);
+  align-items: center;
+  grid-template-columns: 1fr;
+}
+
+.ah-zigzag__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.ah-zigzag__ordinal {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--ah-brand);
+}
+
+.ah-zigzag__title {
+  margin: 0;
+  font-size: clamp(1.125rem, 2.2vw, 1.4rem);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.ah-zigzag__caption {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--ah-text-soft);
+}
+
+@media (min-width: 48rem) {
+  .ah-zigzag__row {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+    gap: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  /* Odd rows put the photograph on the right. Source order stays
+     image-then-text, so the reading order is unchanged for screen readers. */
+  .ah-zigzag__row--flip .ah-zigzag__media {
+    order: 2;
+  }
+
+  .ah-zigzag__row--flip .ah-zigzag__body {
+    order: 1;
+  }
+
+  .ah-zigzag__row--full {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* FAQ — native disclosure */
+.ah-faq {
+  border-top: 1px solid var(--ah-border);
+}
+
+.ah-faq__item {
+  border-bottom: 1px solid var(--ah-border);
+}
+
+.ah-faq__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ah-space-4);
+  padding-block: var(--ah-space-5);
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--ah-font-display);
+  font-optical-sizing: auto;
+  font-size: 1.0625rem;
+  font-weight: 560;
+  letter-spacing: -0.008em;
+  transition: color 160ms ease;
+}
+
+.ah-faq__q::-webkit-details-marker {
+  display: none;
+}
+
+.ah-faq__q:hover {
+  color: var(--ah-brand);
+}
+
+.ah-faq__q:focus-visible {
+  outline: none;
+  box-shadow: var(--ah-focus);
+  border-radius: var(--ah-radius-sm);
+}
+
+/* A drawn plus that becomes a minus — no icon dependency */
+.ah-faq__marker {
+  position: relative;
+  flex: none;
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.ah-faq__marker::before,
+.ah-faq__marker::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto 0;
+  height: 1.5px;
+  background: currentColor;
+  transition: transform 220ms ease;
+}
+
+.ah-faq__marker::after {
+  transform: rotate(90deg);
+}
+
+.ah-faq__item[open] .ah-faq__marker::after {
+  transform: rotate(0deg);
+}
+
+.ah-faq__a {
+  padding-bottom: var(--ah-space-5);
+  max-width: 62ch;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--ah-text-soft);
+}
+
+/* ───────────────────────── 14. Scroll reveal ───────────────────────── */
+
+/* Paired with AhReveal, which flips data-shown once a section nears the
+   viewport. The transition itself is always declared; only the HIDDEN starting
+   state is gated behind `scripting: enabled`.
+
+   That gate is the point. This is an encyclopedia, and a decorative animation
+   must never be capable of hiding content. With JavaScript disabled the query
+   does not match, so nothing is ever set to opacity 0 and every section renders
+   normally. In a browser too old to support the query it also does not match —
+   the same safe outcome, just without the animation. Only when scripting is
+   genuinely available, and therefore AhReveal is genuinely running to flip the
+   attribute back, is anything hidden to begin with. */
+/* Timing, distance and easing are ported deliberately from the reveal
+   vocabulary in bops/housing-services/climatech/globals.css (.reveal and
+   friends) so scroll motion feels the same across the site. That file cannot be
+   imported here — it would pull an unrelated module's entire stylesheet into
+   Animal Hub — so the values are restated rather than shared. If that set ever
+   moves into src/app/globals.css proper, this block should be deleted and the
+   shared classes used directly. */
+.ah-reveal {
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (scripting: enabled) {
+  .ah-reveal[data-shown="false"] {
+    opacity: 0;
+    transform: translateY(44px);
+    will-change: opacity, transform;
+  }
+
+  /* Variants, matching the same source vocabulary. */
+  .ah-reveal--scale[data-shown="false"] {
+    transform: translateY(28px) scale(0.96);
+  }
+  .ah-reveal--left[data-shown="false"] {
+    transform: translateX(-44px);
+  }
+  .ah-reveal--right[data-shown="false"] {
+    transform: translateX(44px);
+  }
+  .ah-reveal--blur[data-shown="false"] {
+    transform: translateY(28px);
+    filter: blur(10px);
+  }
+}
+
+.ah-reveal[data-shown="true"] {
+  opacity: 1;
+  transform: none;
+  filter: none;
+  will-change: auto;
+}
+
+.ah-reveal--blur {
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ───────────────────────── 15. Motion preferences ───────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .ah-app *,
+  .ah-app *::before,
+  .ah-app *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+
+  /* Collapsing the duration alone would leave a section stuck at opacity 0
+     until the observer fired. Force the end state outright. */
+  .ah-reveal,
+  .ah-reveal[data-shown="false"] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

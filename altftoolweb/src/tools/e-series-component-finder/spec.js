@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "e-series-component-finder",
   "title": "E-Series Component Finder",
-  "description": "Nearest standard resistor/capacitor value suggest kare.",
+  "description": "Find the nearest standard E-series resistor or capacitor value.",
   "badge": "Engineering & Science Calculators",
   "category": [
     "Electronics",

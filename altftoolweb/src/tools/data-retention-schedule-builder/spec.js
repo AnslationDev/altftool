@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "data-retention-schedule-builder",
   "title": "Data Retention Schedule Builder",
-  "description": "Data categories ke review aur deletion periods define kare.",
+  "description": "Define review and deletion periods for each of your data categories.",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Productivity",

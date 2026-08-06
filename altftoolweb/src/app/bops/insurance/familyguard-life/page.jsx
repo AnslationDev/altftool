@@ -15,9 +15,9 @@ import {
 } from "lucide-react";
 import DemoBrandNotice from "../_components/DemoBrandNotice";
 
-const QUOTE_URL = "https://example.com/quote/familyguard-life";
-const PHONE_TEL = "tel:+18665550312";
-const PHONE_DISPLAY = "(866) 555-0312";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1604251163789-4b8f70807273?auto=format&fit=crop&w=1600&q=80",

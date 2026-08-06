@@ -121,7 +121,7 @@ export default function ToolHome() {
 
   const affordability = useMemo(() => {
     if (concession.error) return { error: concession.error };
-    return computeAffordability({ payable: concession.payable, monthlyIncome: Number(form.monthlyIncome) });
+    return computeAffordability({ payable: concession.payable, monthlyIncome: form.monthlyIncome });
   }, [concession, form.monthlyIncome]);
 
   const letter = useMemo(

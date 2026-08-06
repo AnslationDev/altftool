@@ -2,10 +2,10 @@
  * Service account key rotation planning.
  *
  * Cadence guidance encoded here:
- *  - CIS AWS Foundations Benchmark control 1.14: access keys must be
- *    rotated every 90 days or less. The same 90-day ceiling is the common
- *    baseline auditors apply to GCP service account keys and Azure app
- *    client secrets.
+ *  - CIS AWS Foundations Benchmark control 1.14: AWS IAM access keys must be
+ *    rotated every 90 days or less. That AWS-specific ceiling is used as the
+ *    configurable planning baseline here; other clouds and credential types
+ *    can have different requirements.
  *  - Zero-downtime cutover relies on both providers allowing two active
  *    keys per identity (AWS allows 2 access keys per IAM user; GCP allows
  *    up to 10 keys per service account), so a new key can run alongside
@@ -116,10 +116,14 @@ export function planKeyRotation({
   // "Create the new key" ahead of "Notify owners" whenever overlapDays >
   // noticeDays, inverting the tool's own documented process.
   const effectiveNoticeDays = Math.max(notice, overlap);
-  const notifyDate = addDays(due, -effectiveNoticeDays);
-  const createDate = addDays(due, -overlap);
-  const disableDate = due;
-  const deleteDate = addDays(due, QUARANTINE_DAYS);
+  // A compliance due date can be historical, but an operational runbook
+  // cannot ask someone to create/disable/delete keys in the past. For an
+  // overdue key, start the cutover now, keep the requested overlap from now,
+  // and quarantine the disabled key from its actual disable date.
+  const notifyDate = overdue ? now : addDays(due, -effectiveNoticeDays);
+  const createDate = overdue ? now : addDays(due, -overlap);
+  const disableDate = overdue ? addDays(now, overlap) : due;
+  const deleteDate = addDays(disableDate, QUARANTINE_DAYS);
 
   const meetsCis = period <= CIS_MAX_ROTATION_DAYS;
   const rotationsPerYearPerKey = 365.25 / period;
@@ -138,11 +142,13 @@ export function planKeyRotation({
     {
       date: toIso(notifyDate),
       title: "Notify owners",
-      detail: `Alert the owning team ${effectiveNoticeDays} day${effectiveNoticeDays === 1 ? "" : "s"} ahead${
-        effectiveNoticeDays > notice
-          ? ` (moved earlier than the ${notice}-day notice period so it isn't after the new key is created)`
-          : ""
-      }; confirm every consumer of the key is known.`,
+      detail: overdue
+        ? "Alert the owning team immediately; confirm every consumer of the overdue key is known before cutover."
+        : `Alert the owning team ${effectiveNoticeDays} day${effectiveNoticeDays === 1 ? "" : "s"} ahead${
+            effectiveNoticeDays > notice
+              ? ` (moved earlier than the ${notice}-day notice period so it isn't after the new key is created)`
+              : ""
+          }; confirm every consumer of the key is known.`,
     },
     {
       date: toIso(createDate),

@@ -17,9 +17,9 @@ import {
   Sun,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/goldenyears-living";
-const PHONE_DISPLAY = "(888) 555-0510";
-const PHONE_TEL = "tel:+18885550510";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const STEPS = [
   {

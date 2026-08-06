@@ -7,6 +7,7 @@ import {
   Building2,
   Calculator,
   Code2,
+  Compass,
   Dumbbell,
   FileText,
   FlaskConical,
@@ -26,12 +27,14 @@ import {
   LayoutGrid,
   Library,
   Lightbulb,
+  Link2,
   Maximize2,
   Bot,
   MapPin,
   Monitor,
   Music4,
   Newspaper,
+  Package,
   Palette,
   PawPrint,
   PenTool,
@@ -45,10 +48,13 @@ import {
   ScrollText,
   ShieldCheck,
   ShoppingBag,
+  Shuffle,
   Smartphone,
   Sparkles,
   Tags,
   TextCursorInput,
+  Trophy,
+  Users,
   Video,
   Waves,
   Workflow,
@@ -115,12 +121,14 @@ const EXPERIENCE_ICONS = {
   LayoutGrid,
   Library,
   Music4,
+  PawPrint,
   PenTool,
   Plane,
   Puzzle,
   Radio,
   ScrollText,
   Sparkles,
+  Users,
   Waves,
 };
 
@@ -262,6 +270,37 @@ export const SITE_ROUTES = {
   products: { label: "Products", href: "/products" },
   labs: { label: "Labs", href: "/labs" },
   signals: { label: "Signals", href: "/signals" },
+  ideas: { label: "Ideas", href: "/ideas", match: ["/ideas"] },
+  backlinks: { label: "Backlinks", href: "/backlinks", match: ["/backlinks"] },
+  lexicon: { label: "Lexicon", href: "/lexicon", match: ["/lexicon"] },
+  lexiconBrowse: { label: "Browse A–Z", href: "/lexicon/browse" },
+  lexiconWordOfTheDay: { label: "Word of the Day", href: "/lexicon/word-of-the-day" },
+  lexiconThesaurus: { label: "Thesaurus", href: "/lexicon/thesaurus" },
+  lexiconCollections: { label: "Word Collections", href: "/lexicon/collections" },
+  lexiconWordLists: { label: "Word Lists", href: "/lexicon/words" },
+  lexiconGames: { label: "Word Games", href: "/lexicon/games" },
+  lexiconTools: { label: "Word Tools", href: "/lexicon/tools" },
+  lexiconLearn: { label: "Grammar & Usage", href: "/lexicon/learn" },
+  lexiconCompare: { label: "Compare Words", href: "/lexicon/compare" },
+  lexiconSources: { label: "Sources & Licences", href: "/lexicon/sources" },
+  rabbithole: { label: "Rabbithole", href: "/rabbithole", match: ["/rabbithole"] },
+  rabbitholeBrowse: { label: "Browse interesting sites", href: "/rabbithole/browse" },
+  rabbitholeCollections: { label: "Rabbithole collections", href: "/rabbithole/collections" },
+  rabbitholeBuiltByAltf: { label: "Built by AltF", href: "/rabbithole/built-by-altf" },
+  atlas: { label: "Atlas", href: "/altfatlas", match: ["/altfatlas"] },
+  atlasBrowse: { label: "Browse useful sites", href: "/altfatlas/browse" },
+  atlasCategories: { label: "Atlas categories", href: "/altfatlas/categories" },
+  atlasUseCases: { label: "Find a site by task", href: "/altfatlas/use-case" },
+  detour: { label: "Detour", href: "/detour", match: ["/detour"] },
+  detourToday: { label: "Detour of the day", href: "/detour/today" },
+  detourBrowse: { label: "Browse Detour", href: "/detour/browse" },
+  detourOriginals: { label: "AltF originals", href: "/detour/play" },
+  persona: { label: "Persona", href: "/persona", match: ["/persona"] },
+  personaStudio: { label: "Persona Studio", href: "/persona/studio" },
+  personaCast: { label: "Persona cast", href: "/persona/cast" },
+  personaShots: { label: "Shot library", href: "/persona/shots" },
+  personaDisclosure: { label: "AI disclosure", href: "/persona/disclosure" },
+  personaRates: { label: "Quote worksheet", href: "/persona/rates" },
   ideaLab: { label: "IdeaLab", href: "/products/idea-lab" },
   domainOps: { label: "DomainOps", href: "/products/domainops" },
   minutes: { label: "Minutes", href: "/products/minutes" },
@@ -373,10 +412,30 @@ export const SITE_ROUTES = {
   saleLocator: { label: "Sale Locator", href: "/sale" },
   imgPrompt: { label: "Img Prompt", href: "/imgprompt" },
   freeAiTool: { label: "Free-Ai-Tool", href: "/free-ai-tool" },
-  // Hub over the two routes directly above. It links to those two and
-  // nothing else — see LOOKOUTS_PRODUCTS in src/app/lookouts/lookouts.js,
-  // which must only ever name routes that exist in this tree.
+  // Keep this group aligned with LOOKOUTS_PRODUCTS in
+  // src/app/lookouts/lookouts.js. The nested Free AI Tool is a distinct route
+  // from the top-level directory above.
   lookouts: { label: "Lookouts", href: "/lookouts" },
+  festival: {
+    label: "Festival",
+    href: "/lookouts/festival",
+    match: ["/lookouts/festival"],
+  },
+  topDiscountProducts: {
+    label: "Top Discount Products",
+    href: "/lookouts/top-discount-products",
+    match: ["/lookouts/top-discount-products"],
+  },
+  aiBundles: {
+    label: "AI Bundle",
+    href: "/lookouts/ai-bundles",
+    match: ["/lookouts/ai-bundles"],
+  },
+  lookoutsFreeAiTool: {
+    label: "Free AI Tool",
+    href: "/lookouts/free-ai-tool",
+    match: ["/lookouts/free-ai-tool"],
+  },
   academy: { label: "Academy", href: "/academy" },
   blogs: { label: "Blog", href: "/blogs" },
   brandRatings: { label: "Brand Ratings", href: "/brandrating" },
@@ -397,10 +456,23 @@ export const SITE_ROUTES = {
   // Every entry here must have a page.jsx under src/app — a nav link to a
   // missing route resolves to the global not-found document served with a
   // 200, which is the soft 404 these routes exist to stop producing.
-  top1: { label: "Top1", href: "/top1" },
-  top6: { label: "Top6", href: "/top6" },
-  top9: { label: "Top9", href: "/top9" },
-  top10: { label: "Top10", href: "/top10" },
+  // Labels below match each page's own title exactly (including which ones
+  // do and don't space "TopN"), pulled from each route's own metadata -
+  // not generic placeholders. top1/top6/top10 cover the same category set
+  // (books, music, food, dogs, cats, AI tools, anime, Pokemon, etc.) at
+  // one/six/ten picks per category respectively; top5 and top9 are
+  // unrelated products (world rankings by category+country; topic pages
+  // across entertainment/sports/business/tools/lifestyle).
+  top1: { label: "Top 1 Picks", href: "/top1" },
+  top5: { label: "Top 5 Rankings", href: "/top5" },
+  top6: { label: "Top 6 Lists", href: "/top6" },
+  top9: { label: "Top9 Lists", href: "/top9" },
+  top10: { label: "Top 10 Lists", href: "/top10" },
+  top49: { label: "Top 49 Lists", href: "/top49" },
+  // top8 and top11 are deliberately excluded: both are in
+  // QUARANTINED_ROUTE_PREFIXES (src/proxy.js) and return a hard 404 for
+  // everyone until their unsourced rankings are replaced. Do not add them
+  // back here or link them from nav until that quarantine is lifted.
   about: { label: "About AltFTool", href: "/policypages/about" },
   contact: { label: "Contact", href: "/policypages/contact" },
   privacy: { label: "Privacy", href: "/policypages/privacy" },
@@ -429,6 +501,9 @@ export const PUBLIC_NAV_ITEMS = [
     menuColumns: 3,
     options: [
       { ...SITE_ROUTES.products, group: "Overview", icon: LayoutGrid },
+      { ...SITE_ROUTES.ideas, group: "Discover", icon: Lightbulb },
+      { ...SITE_ROUTES.backlinks, group: "Discover", icon: Link2 },
+      { ...SITE_ROUTES.persona, group: "Create", icon: Sparkles },
       { ...SITE_ROUTES.signals, group: "Overview", icon: Radar },
       ...PRODUCT_SUITE_ROUTE_OPTIONS,
     ],
@@ -451,6 +526,8 @@ export const PUBLIC_NAV_ITEMS = [
       },
       { ...SITE_ROUTES.pdfTools, group: "Directories & apps", icon: FileText },
       { ...SITE_ROUTES.altfGames, group: "Directories & apps", icon: Gamepad2 },
+      { ...SITE_ROUTES.atlas, group: "Directories & apps", icon: Compass },
+      { ...SITE_ROUTES.lexicon, group: "Directories & apps", icon: BookOpen },
       {
         ...SITE_ROUTES.examPhoto,
         group: "Directories & apps",
@@ -540,10 +617,34 @@ export const PUBLIC_NAV_ITEMS = [
       { ...SITE_ROUTES.buySmart, group: "Find deals", icon: ShoppingBag },
       { ...SITE_ROUTES.saleLocator, group: "Find deals", icon: MapPin },
       { ...SITE_ROUTES.brandRatings, group: "Research", icon: ShieldCheck },
-      { ...SITE_ROUTES.top1, group: "Research", icon: LayoutGrid },
-      { ...SITE_ROUTES.top6, group: "Research", icon: LayoutGrid },
-      { ...SITE_ROUTES.top9, group: "Research", icon: LayoutGrid },
-      { ...SITE_ROUTES.top10, group: "Research", icon: LayoutGrid },
+    ],
+  },
+  {
+    label: "Top Picks",
+    href: "/top1",
+    icon: Trophy,
+    menuColumns: 2,
+    // Top3, Top8 and Top11 are excluded while their unsourced rankings remain
+    // quarantined by src/proxy.js (hard 404 for everyone).
+    options: [
+      { ...SITE_ROUTES.top1, group: "Rankings", icon: Trophy },
+      { ...SITE_ROUTES.top5, group: "Rankings", icon: Trophy },
+      { ...SITE_ROUTES.top6, group: "Rankings", icon: Trophy },
+      { ...SITE_ROUTES.top9, group: "Rankings", icon: Trophy },
+      { ...SITE_ROUTES.top10, group: "Rankings", icon: Trophy },
+      { ...SITE_ROUTES.top49, group: "Rankings", icon: Trophy },
+    ],
+  },
+  {
+    ...SITE_ROUTES.lookouts,
+    icon: Music4,
+    menuColumns: 2,
+    options: [
+      { ...SITE_ROUTES.festival, group: "Discover", icon: Music4 },
+      { ...SITE_ROUTES.topDiscountProducts, group: "Discover", icon: Tags },
+      { ...SITE_ROUTES.imgPrompt, group: "AI tools", icon: Sparkles },
+      { ...SITE_ROUTES.aiBundles, group: "AI tools", icon: Package },
+      { ...SITE_ROUTES.lookoutsFreeAiTool, group: "AI tools", icon: Bot },
     ],
   },
   {
@@ -584,6 +685,8 @@ export const PUBLIC_NAV_ITEMS = [
     menuColumns: 3,
     options: [
       { ...SITE_ROUTES.labs, group: "Create & experiment", icon: FlaskConical },
+      { ...SITE_ROUTES.detour, group: "Explore the web", icon: Shuffle },
+      { ...SITE_ROUTES.rabbithole, group: "Explore the web", icon: Compass },
       ...EXPERIENCE_ROUTE_OPTIONS,
     ],
   },
@@ -616,6 +719,8 @@ export const MOBILE_TAB_ITEMS = [
       "/altfloveimg",
       "/altflovepdf",
       "/exam-photo",
+      "/altfatlas",
+      "/lexicon",
     ],
   },
   {
@@ -680,6 +785,8 @@ export const TOOL_QUICK_LINKS = [
  */
 export const TOOL_DIRECTORY_LINKS = [
   { ...SITE_ROUTES.tools, label: "All tools", icon: Wrench },
+  { ...SITE_ROUTES.atlas, icon: Compass },
+  { ...SITE_ROUTES.lexicon, icon: BookOpen },
   { ...SITE_ROUTES.calculators, icon: Calculator },
   { ...SITE_ROUTES.imageTools, icon: ImageIcon },
   { ...SITE_ROUTES.pdfTools, icon: FileText },
@@ -711,6 +818,9 @@ export const FOOTER_ROUTE_GROUPS = [
     title: "Products",
     links: [
       SITE_ROUTES.products,
+      SITE_ROUTES.ideas,
+      SITE_ROUTES.backlinks,
+      SITE_ROUTES.persona,
       SITE_ROUTES.signals,
       SITE_ROUTES.ideaLab,
       SITE_ROUTES.domainOps,
@@ -721,6 +831,8 @@ export const FOOTER_ROUTE_GROUPS = [
     title: "Tools",
     links: [
       SITE_ROUTES.tools,
+      SITE_ROUTES.atlas,
+      SITE_ROUTES.lexicon,
       SITE_ROUTES.calculators,
       SITE_ROUTES.imageTools,
       SITE_ROUTES.pdfTools,
@@ -747,6 +859,8 @@ export const FOOTER_ROUTE_GROUPS = [
     title: "Discover",
     links: [
       SITE_ROUTES.labs,
+      SITE_ROUTES.detour,
+      SITE_ROUTES.rabbithole,
       SITE_ROUTES.games,
       SITE_ROUTES.altfGames,
       SITE_ROUTES.academy,
@@ -764,9 +878,11 @@ export const FOOTER_ROUTE_GROUPS = [
       SITE_ROUTES.buySmart,
       SITE_ROUTES.brandRatings,
       SITE_ROUTES.top1,
+      SITE_ROUTES.top5,
       SITE_ROUTES.top6,
       SITE_ROUTES.top9,
       SITE_ROUTES.top10,
+      SITE_ROUTES.top49,
     ],
   },
   {
@@ -836,7 +952,7 @@ export const POPULAR_TOOL_LINKS = [
   { label: "Compliment Generator", href: "/tools/all/compliment-generator" },
 ];
 
-const HIDDEN_PUBLIC_SHELL_PREFIXES = ["/search-eng"];
+const HIDDEN_PUBLIC_SHELL_PREFIXES = ["/search-eng", "/top8", "/top3"];
 const HIDDEN_PUBLIC_SHELL_PATTERNS = [];
 
 export function isPublicShellHidden(pathname = "") {

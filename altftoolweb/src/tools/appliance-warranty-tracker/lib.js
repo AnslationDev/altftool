@@ -103,6 +103,10 @@ export function daysBetween(a, b) {
  * @param {number} item.partMonths           overrides the type default
  * @param {number} item.extendedMonths       extra comprehensive cover bought
  * @param {number} item.amcAnnualInr         annual maintenance contract cost, 0 if none
+ * @param {string} item.causeOfActionIso     YYYY-MM-DD the defect arose or the
+ *                                           seller refused; optional. The s.69
+ *                                           limitation runs from this date, so
+ *                                           without it no deadline is computed.
  * @param {string} todayIso
  * @returns {object} status, or { error }
  */
@@ -164,8 +168,33 @@ export function computeApplianceStatus(item = {}, todayIso = "") {
     }
   }
 
+  // Section 69 of the Consumer Protection Act 2019 runs the two-year limitation
+  // from the CAUSE OF ACTION — the day the defect arose or the seller refused —
+  // not from the day someone opens this page. Anchoring it to `today` produced a
+  // deadline that stayed exactly two years away forever and never approached, so
+  // a buyer 18 months into their claim was shown two years of runway instead of
+  // the six months they actually had.
+  //
+  // Without that date there is no deadline to compute. Returning null and saying
+  // so beats returning a confident wrong date on a limitation period.
+  const causeOfAction = parseIsoDate(item.causeOfActionIso);
+  const claimWindow =
+    causeOfAction === null
+      ? { claimDeadlineIso: null, daysToClaimDeadline: null, claimWindowNote: "Enter the date the fault arose (or the date the seller refused) to get the filing deadline — the two-year limit runs from then, not from today." }
+      : causeOfAction > today
+        ? { claimDeadlineIso: null, daysToClaimDeadline: null, claimWindowNote: "The date the fault arose cannot be in the future." }
+        : (() => {
+            const deadline = addMonths(causeOfAction, CONSUMER_CLAIM_WINDOW_MONTHS);
+            return {
+              claimDeadlineIso: toIsoDate(deadline),
+              daysToClaimDeadline: daysBetween(today, deadline),
+              claimWindowNote: null,
+            };
+          })();
+
   return {
     name: typeof item.name === "string" && item.name.trim() ? item.name.trim() : type.label,
+    causeOfActionIso: causeOfAction === null ? null : toIsoDate(causeOfAction),
     typeLabel: type.label,
     partName: type.partName,
     purchaseIso: toIsoDate(purchase),
@@ -186,7 +215,7 @@ export function computeApplianceStatus(item = {}, todayIso = "") {
     amcAnnualInr,
     amcStartIso: amcAnnualInr > 0 ? toIsoDate(amcStart) : null,
     amcRenewalDates,
-    claimDeadlineIso: toIsoDate(addMonths(today, CONSUMER_CLAIM_WINDOW_MONTHS)),
+    ...claimWindow,
   };
 }
 

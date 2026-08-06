@@ -39,6 +39,46 @@ import { services as homeservServices } from "@/app/homeserv/services-data";
 import { apps } from "@/app/apps/data/apps";
 import { SIGNAL_CATALOG } from "@altftool/core/signals";
 import { isSignalIndexable } from "@/app/signals/signalCoverage";
+import { SITES as RABBITHOLE_SITES } from "@altftool/core/rabbithole";
+import {
+  ENTRIES as ATLAS_ENTRIES,
+  getIndexableTags as getIndexableAtlasTags,
+} from "@altftool/core/atlas";
+import {
+  CATEGORIES as ATLAS_CATEGORIES,
+  COLLECTIONS as ATLAS_COLLECTIONS,
+  USE_CASES as ATLAS_USE_CASES,
+} from "@altftool/core/atlas/taxonomy";
+import { GUIDES as ATLAS_GUIDES } from "@/app/altfatlas/learn/guides";
+import {
+  CAST as PERSONA_CAST,
+  SHOTS as PERSONA_SHOTS,
+  getPopulatedNiches as getPopulatedPersonaNiches,
+} from "@altftool/core/persona";
+import {
+  MODELS as PERSONA_MODELS,
+  SHOT_CATEGORIES as PERSONA_SHOT_CATEGORIES,
+} from "@altftool/core/persona/taxonomy";
+import { GUIDES as PERSONA_GUIDES } from "@/app/persona/learn/guides";
+import {
+  CATEGORIES as RABBITHOLE_CATEGORIES,
+  COLLECTIONS as RABBITHOLE_COLLECTIONS,
+  VIBES as RABBITHOLE_VIBES,
+} from "@altftool/core/rabbithole/taxonomy";
+import {
+  VERTICALS as IDEA_VERTICALS,
+  COLLECTION_RULES as IDEA_COLLECTION_RULES,
+} from "@altftool/core/ideas/taxonomy";
+import {
+  PERSONAS as IDEA_PERSONAS,
+  MODIFIERS as IDEA_MODIFIERS,
+} from "@altftool/core/ideas/personas";
+import { GUIDES as IDEA_GUIDES } from "@/app/ideas/learn/guides";
+import { LETTERS as LEXICON_LETTERS } from "@altftool/core/lexicon";
+import {
+  getAllItems as getBacklinkItems,
+  getGroups as getBacklinkGroups,
+} from "@altftool/core/backlinks";
 import { PRODUCT_SUITE_CATALOG } from "@altftool/core/product-suites";
 import { EXPERIENCE_CATALOG } from "@altftool/core/experiences";
 import {
@@ -66,7 +106,8 @@ import { sitemapPages as tripFindBoxPages } from "@/app/bops/tripfindbox/lib/sit
 import { HN_CATEGORIES } from "@/app/bops/housingneeds/_data/categories";
 import { BOPS_COLLECTIONS } from "@/app/bops/_data/collections";
 
-export const revalidate = 3600;
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 // These registry entries redirect to /bops/housing-services#<slug>. Keep the
 // guides available to the dashboard, but never advertise redirecting URLs in
@@ -81,6 +122,68 @@ const staticRoutes = [
   { path: "/exam-photo", priority: 0.7 },
   { path: "/signals", priority: 0.88 },
   { path: "/products", priority: 0.9 },
+  { path: "/ideas", priority: 0.92 },
+  { path: "/backlinks", priority: 0.9 },
+  { path: "/ideas/browse", priority: 0.85 },
+  { path: "/ideas/verticals", priority: 0.82 },
+  { path: "/ideas/collections", priority: 0.82 },
+  { path: "/ideas/for", priority: 0.82 },
+  { path: "/ideas/map", priority: 0.8 },
+  { path: "/ideas/rankings", priority: 0.8 },
+  { path: "/ideas/compare", priority: 0.68 },
+  { path: "/ideas/learn", priority: 0.8 },
+  { path: "/ideas/learn/scoring-methodology", priority: 0.84 },
+  { path: "/ideas/generate", priority: 0.86 },
+  { path: "/ideas/tools", priority: 0.78 },
+  { path: "/ideas/tools/score-my-idea", priority: 0.8 },
+  { path: "/rabbithole", priority: 0.9 },
+  { path: "/rabbithole/browse", priority: 0.84 },
+  { path: "/rabbithole/collections", priority: 0.82 },
+  { path: "/rabbithole/built-by-altf", priority: 0.8 },
+  { path: "/rabbithole/how-we-pick", priority: 0.76 },
+  { path: "/rabbithole/sites-we-lost", priority: 0.72 },
+  { path: "/altfatlas", priority: 0.9 },
+  { path: "/altfatlas/browse", priority: 0.84 },
+  { path: "/altfatlas/categories", priority: 0.82 },
+  { path: "/altfatlas/use-case", priority: 0.84 },
+  { path: "/altfatlas/collections", priority: 0.8 },
+  { path: "/altfatlas/archive", priority: 0.82 },
+  { path: "/altfatlas/learn", priority: 0.78 },
+  { path: "/altfatlas/tags", priority: 0.72 },
+  { path: "/persona", priority: 0.92 },
+  { path: "/persona/studio", priority: 0.9 },
+  { path: "/persona/cast", priority: 0.86 },
+  { path: "/persona/shots", priority: 0.85 },
+  { path: "/persona/playbook", priority: 0.84 },
+  { path: "/persona/captions", priority: 0.82 },
+  { path: "/persona/models", priority: 0.84 },
+  { path: "/persona/disclosure", priority: 0.86 },
+  { path: "/persona/rates", priority: 0.72 },
+  { path: "/persona/pricing", priority: 0.7 },
+  { path: "/persona/learn", priority: 0.78 },
+  { path: "/persona/shots/category", priority: 0.76 },
+  { path: "/detour", priority: 0.92 },
+  { path: "/detour/browse", priority: 0.86 },
+  { path: "/detour/categories", priority: 0.84 },
+  { path: "/detour/collections", priority: 0.82 },
+  { path: "/detour/play", priority: 0.85 },
+  { path: "/detour/today", priority: 0.84 },
+  { path: "/detour/about", priority: 0.6 },
+  { path: "/detour/submit", priority: 0.5 },
+  { path: "/lexicon", priority: 0.92 },
+  { path: "/lexicon/browse", priority: 0.86 },
+  ...LEXICON_LETTERS.map((letter) => ({
+    path: `/lexicon/browse/${letter}`,
+    priority: 0.78,
+  })),
+  { path: "/lexicon/words", priority: 0.84 },
+  { path: "/lexicon/collections", priority: 0.83 },
+  { path: "/lexicon/thesaurus", priority: 0.8 },
+  { path: "/lexicon/word-of-the-day", priority: 0.82 },
+  { path: "/lexicon/learn", priority: 0.78 },
+  { path: "/lexicon/games", priority: 0.76 },
+  { path: "/lexicon/tools", priority: 0.76 },
+  { path: "/lexicon/sources", priority: 0.5 },
   { path: "/blogs", priority: 0.9 },
   { path: "/blogs/topics", priority: 0.72 },
   { path: "/buysmart", priority: 0.85 },
@@ -264,6 +367,10 @@ let activeSeoConfig = null;
 
 function pushUnique(entries, seen, path, options) {
   if (!path || seen.has(path)) return;
+  // Business Ops pages are design demonstrations, not operating providers or
+  // live quote flows. Their responses carry X-Robots-Tag: noindex, nofollow;
+  // keep the central sitemap unable to advertise one through any future loop.
+  if (path === "/bops" || path.startsWith("/bops/")) return;
 
   let opts = options;
   if (activeSeoConfig) {
@@ -379,34 +486,16 @@ async function getLiveSitemapCollections() {
   const [
     firebaseBlogs,
     extensions,
-    brandCategories,
-    brandSubcategories,
-    brands,
     landers,
   ] = await Promise.all([
     fetchFirebaseBlogsForSeo(),
     listPublicFirestoreDocs(`${FIREBASE_PROJECT_ROOT}/extensions`, 100),
-    listPublicFirestoreDocs(
-      `${FIREBASE_PROJECT_ROOT}/consumerrating/data/categories`,
-      100,
-    ),
-    listPublicFirestoreDocs(
-      `${FIREBASE_PROJECT_ROOT}/consumerrating/data/subcategories`,
-      100,
-    ),
-    listPublicFirestoreDocs(
-      `${FIREBASE_PROJECT_ROOT}/consumerrating/data/brands`,
-      100,
-    ),
     fetchAllPublishedLanderSlugs(),
   ]);
 
   return {
     firebaseBlogs,
     extensions,
-    brandCategories,
-    brandSubcategories,
-    brands,
     landers,
   };
 }
@@ -414,9 +503,6 @@ async function getLiveSitemapCollections() {
 const EMPTY_LIVE_COLLECTIONS = Object.freeze({
   firebaseBlogs: [],
   extensions: [],
-  brandCategories: [],
-  brandSubcategories: [],
-  brands: [],
   landers: [],
 });
 
@@ -487,6 +573,7 @@ async function buildSitemapEntries({
     // are intentionally noindexed. Apply the KYM family's indexing policy here
     // too so the catalogue loop cannot silently re-add its hub after the
     // dedicated, policy-gated KYM loop below excludes it.
+    if (experience.noindex) continue;
     if (experience.href === "/kym" && !isKymIndexable(experience.href)) continue;
     pushUnique(entries, seen, experience.href, {
       priority: experience.priority,
@@ -585,6 +672,144 @@ async function buildSitemapEntries({
     pushUnique(entries, seen, `/signals/${signal.slug}`, {
       priority: 0.74,
       changeFrequency: "weekly",
+    });
+  }
+
+  for (const group of await getBacklinkGroups()) {
+    pushUnique(entries, seen, `/backlinks/category/${group.id}`, {
+      priority: 0.8,
+      changeFrequency: "weekly",
+    });
+  }
+  for (const item of await getBacklinkItems()) {
+    pushUnique(entries, seen, `/backlinks/${item.slug}`, {
+      priority: item.priority === "P0" ? 0.78 : item.priority === "P1" ? 0.72 : 0.64,
+      changeFrequency: "monthly",
+    });
+  }
+
+  for (const category of RABBITHOLE_CATEGORIES) {
+    pushUnique(entries, seen, `/rabbithole/category/${category.id}`, {
+      priority: 0.82,
+      changeFrequency: "weekly",
+    });
+  }
+  for (const collection of RABBITHOLE_COLLECTIONS) {
+    pushUnique(entries, seen, `/rabbithole/collections/${collection.id}`, {
+      priority: 0.78,
+      changeFrequency: "weekly",
+    });
+  }
+  for (const vibe of RABBITHOLE_VIBES) {
+    pushUnique(entries, seen, `/rabbithole/vibe/${vibe.id}`, {
+      priority: 0.8,
+      changeFrequency: "weekly",
+    });
+  }
+  for (const site of RABBITHOLE_SITES) {
+    pushUnique(entries, seen, `/rabbithole/site/${site.slug}`, {
+      priority: 0.72,
+      changeFrequency: "monthly",
+    });
+  }
+
+  for (const category of ATLAS_CATEGORIES) {
+    pushUnique(entries, seen, `/altfatlas/category/${category.slug}`, {
+      priority: 0.82,
+      changeFrequency: "weekly",
+    });
+  }
+  for (const useCase of ATLAS_USE_CASES) {
+    pushUnique(entries, seen, `/altfatlas/use-case/${useCase.slug}`, {
+      priority: 0.8,
+      changeFrequency: "weekly",
+    });
+  }
+  for (const collection of ATLAS_COLLECTIONS) {
+    pushUnique(entries, seen, `/altfatlas/collections/${collection.slug}`, {
+      priority: 0.78,
+      changeFrequency: "weekly",
+    });
+  }
+  for (const guide of ATLAS_GUIDES) {
+    pushUnique(entries, seen, `/altfatlas/learn/${guide.slug}`, {
+      priority: 0.74,
+      changeFrequency: "monthly",
+    });
+  }
+  for (const tag of getIndexableAtlasTags()) {
+    pushUnique(entries, seen, `/altfatlas/tag/${tag.slug}`, {
+      priority: 0.68,
+      changeFrequency: "weekly",
+    });
+  }
+  for (const entry of ATLAS_ENTRIES) {
+    pushUnique(entries, seen, `/altfatlas/site/${entry.slug}`, {
+      priority: entry.status === "retired" ? 0.6 : 0.72,
+      changeFrequency: "monthly",
+    });
+  }
+
+  for (const entry of PERSONA_CAST) {
+    pushUnique(entries, seen, `/persona/cast/${entry.slug}`, {
+      priority: 0.78,
+      changeFrequency: "monthly",
+    });
+  }
+  for (const shot of PERSONA_SHOTS) {
+    pushUnique(entries, seen, `/persona/shots/${shot.slug}`, {
+      priority: 0.74,
+      changeFrequency: "monthly",
+    });
+  }
+  for (const model of PERSONA_MODELS) {
+    pushUnique(entries, seen, `/persona/models/${model.slug}`, {
+      priority: 0.76,
+      changeFrequency: "monthly",
+    });
+  }
+  for (const guide of PERSONA_GUIDES) {
+    pushUnique(entries, seen, `/persona/learn/${guide.slug}`, {
+      priority: 0.74,
+      changeFrequency: "monthly",
+    });
+  }
+  for (const niche of getPopulatedPersonaNiches()) {
+    pushUnique(entries, seen, `/persona/niche/${niche.slug}`, {
+      priority: 0.82,
+      changeFrequency: "weekly",
+    });
+  }
+  for (const category of PERSONA_SHOT_CATEGORIES) {
+    pushUnique(entries, seen, `/persona/shots/category/${category.slug}`, {
+      priority: 0.78,
+      changeFrequency: "monthly",
+    });
+  }
+
+  for (const vertical of IDEA_VERTICALS) {
+    pushUnique(entries, seen, `/ideas/verticals/${vertical.slug}`, {
+      priority: 0.8,
+      changeFrequency: "weekly",
+    });
+  }
+  for (const collection of IDEA_COLLECTION_RULES) {
+    pushUnique(entries, seen, `/ideas/collections/${collection.slug}`, {
+      priority: 0.78,
+      changeFrequency: "weekly",
+    });
+  }
+  for (const entry of [...IDEA_PERSONAS, ...IDEA_MODIFIERS]) {
+    pushUnique(entries, seen, `/ideas/for/${entry.slug}`, {
+      priority: 0.76,
+      changeFrequency: "weekly",
+    });
+  }
+  for (const guide of IDEA_GUIDES) {
+    pushUnique(entries, seen, `/ideas/learn/${guide.slug}`, {
+      lastModified: guide.updated ? new Date(guide.updated) : undefined,
+      priority: 0.78,
+      changeFrequency: "monthly",
     });
   }
 
@@ -704,63 +929,6 @@ async function buildSitemapEntries({
         priority: 0.66,
         changeFrequency: "monthly",
       });
-    }
-  }
-
-  const brandCategoryById = new Map(
-    liveCollections.brandCategories
-      .filter((category) => category?.id && category?.name)
-      .map((category) => [category.id, category]),
-  );
-  const brandSubcategoryById = new Map(
-    liveCollections.brandSubcategories
-      .filter((subcategory) => subcategory?.id && subcategory?.name)
-      .map((subcategory) => [subcategory.id, subcategory]),
-  );
-
-  for (const subcategory of liveCollections.brandSubcategories) {
-    const category = brandCategoryById.get(subcategory.categoryId);
-    const categorySlug = normalizeSlug(category?.name);
-    const subcategorySlug = normalizeSlug(subcategory?.name);
-
-    if (categorySlug && subcategorySlug) {
-      pushUnique(
-        entries,
-        seen,
-        `/brandrating/${categorySlug}/${subcategorySlug}`,
-        {
-          lastModified:
-            subcategory.updatedAt || subcategory.createdAt
-              ? new Date(subcategory.updatedAt || subcategory.createdAt)
-              : undefined,
-          priority: 0.62,
-          changeFrequency: "weekly",
-        },
-      );
-    }
-  }
-
-  for (const brand of liveCollections.brands) {
-    const category = brandCategoryById.get(brand.categoryId);
-    const subcategory = brandSubcategoryById.get(brand.subCategoryId);
-    const categorySlug = normalizeSlug(category?.name);
-    const subcategorySlug = normalizeSlug(subcategory?.name);
-    const brandSlug = normalizeSlug(brand?.name);
-
-    if (categorySlug && subcategorySlug && brandSlug) {
-      pushUnique(
-        entries,
-        seen,
-        `/brandrating/${categorySlug}/${subcategorySlug}/${brandSlug}`,
-        {
-          lastModified:
-            brand.updatedAt || brand.createdAt
-              ? new Date(brand.updatedAt || brand.createdAt)
-              : undefined,
-          priority: 0.58,
-          changeFrequency: "weekly",
-        },
-      );
     }
   }
 
@@ -1045,7 +1213,7 @@ async function buildSitemapEntries({
 
 export const getSitemapEntries = unstable_cache(
   buildSitemapEntries,
-  ["altftool-sitemap-entries-v5"],
+  ["altftool-sitemap-entries-v6"],
   {
     revalidate: 3600,
     tags: ["altftool-sitemap-entries"],
@@ -1058,7 +1226,7 @@ export const getStaticSearchSitemapEntries = unstable_cache(
       includeLiveCollections: false,
       includeSeoConfig: false,
     }),
-  ["altftool-static-search-sitemap-entries-v5"],
+  ["altftool-static-search-sitemap-entries-v6"],
   {
     revalidate: 86400,
     tags: ["altftool-static-search-sitemap-entries"],

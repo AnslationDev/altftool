@@ -28,21 +28,23 @@ export default function ToolHome() {
     };
   }, []);
 
-  // Sync columns size array length
-  useEffect(() => {
-    if (colSizes.length < cols) {
-      const diff = cols - colSizes.length;
-      setColSizes([...colSizes, ...Array(diff).fill("1fr")]);
-    }
-  }, [cols, colSizes]);
+  const updateColumnCount = (nextCount) => {
+    setCols(nextCount);
+    setColSizes((current) =>
+      current.length < nextCount
+        ? [...current, ...Array(nextCount - current.length).fill("1fr")]
+        : current,
+    );
+  };
 
-  // Sync rows size array length
-  useEffect(() => {
-    if (rowSizes.length < rows) {
-      const diff = rows - rowSizes.length;
-      setRowSizes([...rowSizes, ...Array(diff).fill("1fr")]);
-    }
-  }, [rows, rowSizes]);
+  const updateRowCount = (nextCount) => {
+    setRows(nextCount);
+    setRowSizes((current) =>
+      current.length < nextCount
+        ? [...current, ...Array(nextCount - current.length).fill("1fr")]
+        : current,
+    );
+  };
 
   const toggleColSize = (index) => {
     const units = ["1fr", "2fr", "auto", "120px"];
@@ -202,7 +204,7 @@ export default function ToolHome() {
                   min="1"
                   max="8"
                   value={cols}
-                  onChange={(e) => setCols(parseInt(e.target.value))}
+                  onChange={(e) => updateColumnCount(Number.parseInt(e.target.value, 10))}
                   aria-valuetext={`${cols} columns`}
                   className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                 />
@@ -220,7 +222,7 @@ export default function ToolHome() {
                   min="1"
                   max="8"
                   value={rows}
-                  onChange={(e) => setRows(parseInt(e.target.value))}
+                  onChange={(e) => updateRowCount(Number.parseInt(e.target.value, 10))}
                   aria-valuetext={`${rows} rows`}
                   className="w-full bg-border accent-primary h-1.5 rounded-lg appearance-none cursor-pointer"
                 />

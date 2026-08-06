@@ -64,7 +64,7 @@ export default function ToolHome() {
   const [retention, setRetention] = useState(DEFAULT_TRAFFIC.retention);
   const [traceKb, setTraceKb] = useState(DEFAULT_TRAFFIC.traceKb);
   const [tailKeepRatePct, setTailKeepRatePct] = useState(DEFAULT_TRAFFIC.tailKeepRatePct);
-  const { copy, isCopied, announcement } = useCopyToClipboard();
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const checklist = useMemo(() => buildChecklist({ traits, done }), [traits, done]);
   const sampling = useMemo(
@@ -104,6 +104,9 @@ export default function ToolHome() {
     setRetention(DEFAULT_TRAFFIC.retention);
     setTraceKb(DEFAULT_TRAFFIC.traceKb);
     setTailKeepRatePct(DEFAULT_TRAFFIC.tailKeepRatePct);
+    // Clears the lingering "Copied!" label and its aria-live announcement,
+    // which the pre-hook version did via setCopied(false).
+    resetCopyState();
   };
 
   const failed = Boolean(checklist.error);
@@ -187,7 +190,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               aria-label="Copy the observability plan"
-              className={GHOST_BTN}
+              className={PRIMARY_BTN}
             >
               {isCopied("plan") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
@@ -196,7 +199,7 @@ export default function ToolHome() {
               )}
               {isCopied("plan") ? "Copied!" : "Copy plan"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
@@ -375,7 +378,7 @@ export default function ToolHome() {
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="obs-tail-pct">
-              Tail-kept extra volume (% of runs)
+              Tail-rule match estimate (% of runs)
             </label>
             <input
               id="obs-tail-pct"
@@ -383,13 +386,15 @@ export default function ToolHome() {
               type="number"
               inputMode="decimal"
               min="0"
+              max="100"
               step="0.5"
               value={tailKeepRatePct}
               onChange={(event) => setTailKeepRatePct(event.target.value)}
             />
             <p className="mt-1 text-xs text-[var(--muted-foreground)]">
-              Rough share of runs additionally kept in full via the tail rules below (errors, slow
-              p95, guardrail blocks, negative feedback) — measure yours once you have real rates.
+              Rough share of all runs expected to match the tail rules below (errors, slow p95,
+              guardrail blocks, negative feedback). Head-sampled matches are counted only once —
+              measure yours once you have real rates.
             </p>
           </div>
         </div>
@@ -415,7 +420,7 @@ export default function ToolHome() {
               sampling.error ? dash : NUM.format(sampling.sampledPerDay),
             ],
             [
-              "Tail-kept traces per day (est.)",
+              "Additional tail-kept traces per day (est.)",
               sampling.error ? dash : `+${NUM.format(sampling.tailKeptPerDay)}`,
             ],
             [
@@ -435,11 +440,13 @@ export default function ToolHome() {
           ))}
         </dl>
 
-        {!sampling.error && (sampling.capped || sampling.floored) ? (
+        {!sampling.error && (sampling.capped || sampling.floored || sampling.overBudget) ? (
           <p className="mt-3 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning)]">
             {sampling.capped
               ? "Your traffic is below the budget, so keep 100% of runs — head sampling buys you nothing yet."
-              : "That budget forces a very low head rate. Lean on tail sampling rules instead, or raise the budget."}
+              : sampling.overBudget
+                ? "Expected tail matches plus the minimum head sample exceed this trace budget. Lower the tail estimate, raise the budget, or explicitly accept the extra storage."
+                : "That budget forces a very low head rate. Lean on tail sampling rules instead, or raise the budget."}
           </p>
         ) : null}
 

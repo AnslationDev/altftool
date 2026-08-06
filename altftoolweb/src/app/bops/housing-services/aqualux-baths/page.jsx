@@ -14,9 +14,9 @@ import {
 } from "lucide-react";
 import "./aqualux-baths.css";
 
-const QUOTE_URL = "https://example.com/quote/aqualux-baths";
-const PHONE_DISPLAY = "(833) 555-0176";
-const PHONE_TEL = "tel:+18335550176";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1756079664354-34944e001f6d?auto=format&fit=crop&w=1600&q=80",

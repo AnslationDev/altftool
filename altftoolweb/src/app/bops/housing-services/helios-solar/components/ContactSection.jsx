@@ -3,8 +3,8 @@ import { Phone, Mail, ArrowRight, X } from "lucide-react";
 import { useState, useEffect } from "react";
 
 const contactMethods = [
-  { icon: <Phone className="w-6 h-6" strokeWidth={1.5} />, title: "Call Us", desc: "Mon – Fri, 8:00 – 18:00 (EST)", href: "tel:+18005550192" },
-  { icon: <Mail className="w-6 h-6" strokeWidth={1.5} />, title: "Email", desc: "hello@heliosolar.com", href: "mailto:hello@heliosolar.com" },
+  { icon: <Phone className="w-6 h-6" strokeWidth={1.5} />, title: "Call Us", desc: "Mon – Fri, 8:00 – 18:00 (EST)", href: "#demo-only" },
+  { icon: <Mail className="w-6 h-6" strokeWidth={1.5} />, title: "Email", desc: "hello@heliosolar.com", href: "#demo-only" },
 ];
 
 export default function ContactSection() {
@@ -162,7 +162,7 @@ export default function ContactSection() {
                 This was saved on your device only — no message was sent. Call us now for the quickest estimate and installation.
               </p>
 
-              <a href="tel:+18005550192" className="contact-modal-cta">
+              <a href="#demo-only" className="contact-modal-cta">
                 <Phone size={18} />
                 <span>Call Us Now</span>
               </a>

@@ -3,7 +3,7 @@
 import React from "react";
 import "../style/SurveySection.css";
 
-export default function SurveySection({ onOpenSupport }) {
+export default function SurveySection() {
   return (
     <section className="windowswap-survey windowswap-section w-full py-16 px-6 flex flex-col items-center text-center">
 
@@ -26,14 +26,15 @@ export default function SurveySection({ onOpenSupport }) {
       </div>
 
       <h2 className="windowswap-survey-title font-display text-xl md:text-2xl font-extrabold tracking-normal max-w-md mb-6 leading-snug" style={{color: 'var(--windowswap-foreground)'}}>
-        Help us make WindowSwap better
+        Feedback survey coming later
       </h2>
 
       <button
-        onClick={onOpenSupport}
-        className="windowswap-survey-cta windowswap-secondary-button px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 font-semibold tracking-wide text-xs cursor-pointer"
+        type="button"
+        disabled
+        className="windowswap-survey-cta windowswap-secondary-button px-8 py-3 rounded-full font-semibold tracking-wide text-xs cursor-not-allowed opacity-60"
       >
-        take our survey
+        Survey unavailable
       </button>
 
     </section>

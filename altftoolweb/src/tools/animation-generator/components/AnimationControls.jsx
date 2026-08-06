@@ -1,18 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 
-export default function AnimationControls({ onChange }) {
-  const [duration, setDuration] = useState(1);
-  const [delay, setDelay] = useState(0);
-  const [iteration, setIteration] = useState("infinite");
-  const [direction, setDirection] = useState("normal");
-  const [fillMode, setFillMode] = useState("forwards");
+import {
+  DEFAULT_ANIMATION_CONTROLS,
+  updateAnimationControl,
+} from "../lib/animationState.js";
 
-  const update = () => {
-    if (onChange) {
-      onChange({ duration, delay, iteration, direction, fillMode });
-    }
+export default function AnimationControls({ value = DEFAULT_ANIMATION_CONTROLS, onChange }) {
+  const controls = { ...DEFAULT_ANIMATION_CONTROLS, ...value };
+
+  const update = (key, nextValue) => {
+    onChange?.((current) => updateAnimationControl(current, key, nextValue));
   };
 
   return (
@@ -28,14 +27,11 @@ export default function AnimationControls({ onChange }) {
           </label>
           <input
             type="number"
-            value={duration}
+            value={controls.duration}
             step="0.1"
             min="0"
             className="p-2 rounded-lg border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary) w-full"
-            onChange={(e) => {
-              setDuration(parseFloat(e.target.value));
-              update();
-            }}
+            onChange={(e) => update("duration", e.target.value)}
           />
         </div>
 
@@ -46,14 +42,11 @@ export default function AnimationControls({ onChange }) {
           </label>
           <input
             type="number"
-            value={delay}
+            value={controls.delay}
             step="0.1"
             min="0"
             className="p-2 rounded-lg border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary) w-full"
-            onChange={(e) => {
-              setDelay(parseFloat(e.target.value));
-              update();
-            }}
+            onChange={(e) => update("delay", e.target.value)}
           />
         </div>
 
@@ -63,12 +56,9 @@ export default function AnimationControls({ onChange }) {
             Iterations
           </label>
           <select
-            value={iteration}
+            value={controls.iterations}
             className="p-2 rounded-lg border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary) w-full"
-            onChange={(e) => {
-              setIteration(e.target.value);
-              update();
-            }}
+            onChange={(e) => update("iterations", e.target.value)}
           >
             <option value="1">1</option>
             <option value="infinite">Infinite</option>
@@ -81,12 +71,9 @@ export default function AnimationControls({ onChange }) {
             Direction
           </label>
           <select
-            value={direction}
+            value={controls.direction}
             className="p-2 rounded-lg border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary) w-full"
-            onChange={(e) => {
-              setDirection(e.target.value);
-              update();
-            }}
+            onChange={(e) => update("direction", e.target.value)}
           >
             <option value="normal">Normal</option>
             <option value="alternate">Alternate</option>
@@ -99,12 +86,9 @@ export default function AnimationControls({ onChange }) {
             Fill Mode
           </label>
           <select
-            value={fillMode}
+            value={controls.fill}
             className="p-2 rounded-lg border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary) w-full"
-            onChange={(e) => {
-              setFillMode(e.target.value);
-              update();
-            }}
+            onChange={(e) => update("fill", e.target.value)}
           >
             <option value="forwards">Forwards</option>
             <option value="backwards">Backwards</option>

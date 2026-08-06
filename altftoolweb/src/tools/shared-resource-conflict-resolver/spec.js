@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "shared-resource-conflict-resolver",
   "title": "Shared-Resource Conflict Resolver",
-  "description": "Rooms, vehicles ya equipment ke booking conflicts resolve kare.",
+  "description": "Resolve booking conflicts over shared rooms, vehicles or equipment.",
   "badge": "Fair Decisions & Group Scheduling",
   "category": [
     "Productivity",

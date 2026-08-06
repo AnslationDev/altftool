@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "insurance-policy-comparator",
   "title": "Insurance Policy Comparator",
-  "description": "Coverage, exclusions, waiting periods aur limits compare kare.",
+  "description": "Compare insurance policies on coverage, exclusions, waiting periods and limits.",
   "badge": "Consumer, Family & Personal Resilience",
   "category": [
     "Finance",

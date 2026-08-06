@@ -35,13 +35,13 @@ const Contact = () => {
                 <div className="flex gap-4">
                   <Phone className="text-[#1D7A43] mt-0.5" size={21} />
                   <div>
-                    <a href="tel:7865679554" className="font-semibold block hover:underline">(786) 567-9554</a>
+                    <a href="#demo-only" className="font-semibold block hover:underline">(786) 567-9554</a>
                     <div className="text-xs text-[#64748b]">Main Line • 24/7 Emergencies</div>
                   </div>
                 </div>
                 <div className="flex gap-4">
                   <Mail className="text-[#1D7A43] mt-0.5" size={21} />
-                  <a href="mailto:info@pestxmiami.com" className="hover:underline">info@pestxmiami.com</a>
+                  <a href="#demo-only" className="hover:underline">info@pestxmiami.com</a>
                 </div>
               </div>
             </div>

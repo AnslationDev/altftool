@@ -7,9 +7,9 @@ import {
 } from "lucide-react";
 import "./tiletrend-bath.css";
 
-const QUOTE_URL = "https://example.com/quote/tiletrend-bath";
-const PHONE_DISPLAY = "(855) 555-0276";
-const PHONE_HREF = "tel:+18555550276";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_HREF = "#demo-only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1661107259637-4e1c55462428?auto=format&fit=crop&w=1600&q=80",

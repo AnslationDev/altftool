@@ -6,7 +6,7 @@ export async function generateMetadata({ params }) {
   return createPageMetadata({
     title: `Personality Test Question ${id}`,
     description:
-      "Answer this personality test question on AltFTool to continue your assessment and discover your personality type.",
+      "Answer one question in AltFTool's four-question reflection and continue toward four directional trait scores.",
     path: `/personality/question/${id}`,
     noindex: true,
     follow: true,

@@ -16,6 +16,13 @@ import GifExport from "../components/GifExports.jsx";
 import PerformanceIndicator from "../components/PerformanceIndicator.jsx";
 import AiAnimationGenerator from "../components/AiAnimationGenerator.jsx";
 import ColorGradientAnimator from "../components/ColorGradientAnimator.jsx";
+import {
+  DEFAULT_ANIMATION_CONTROLS,
+  DEFAULT_TRANSFORM,
+  buildAnimationShorthand,
+  resolveAnimation,
+  updateAnimationControl,
+} from "../lib/animationState.js";
 
 /* ANIMATION PRESETS */
 
@@ -55,24 +62,11 @@ const [animation,setAnimation] = useState("fadeIn");
 const [customKeyframes,setCustomKeyframes] = useState(null);
 const [aiKeyframes, setAiKeyframes] = useState(""); // ✅ FIXED
 
-const [transform,setTransform] = useState({
-  x:0,
-  y:0,
-  scale:1,
-  rotate:0,
-  skew:0
-});
+const [transform,setTransform] = useState({ ...DEFAULT_TRANSFORM });
 
 const [trigger,setTrigger] = useState("auto");
 
-const [controls,setControls] = useState({
-  duration:"1",
-  delay:"0",
-  easing:"ease",
-  iterations:"1",
-  direction:"normal",
-  fill:"forwards"
-});
+const [controls,setControls] = useState({ ...DEFAULT_ANIMATION_CONTROLS });
 
 const [isPlaying,setIsPlaying] = useState(true);
 const [animationKey,setAnimationKey] = useState(0);
@@ -88,7 +82,7 @@ const [useGradient, setUseGradient] = useState(false);
 /* FUNCTIONS */
 
 const updateControl = (key,value)=>{
-  setControls(prev=>({...prev,[key]:value}));
+  setControls(prev=>updateAnimationControl(prev,key,value));
 };
 
 const handleReplay=()=>{
@@ -99,36 +93,40 @@ const handleReplay=()=>{
   },50);
 };
 
-/* ANIMATION NAME FIX */
-const animationName = customKeyframes ? "customAnimation" : "aiAnimation";
+const selectBaseAnimation = (name) => {
+  setAnimation(name);
+  setCustomKeyframes(null);
+  setAiKeyframes("");
+  handleReplay();
+};
+
+const activateCustomKeyframes = (frames) => {
+  setCustomKeyframes(frames);
+  setAiKeyframes("");
+  handleReplay();
+};
 
 /* KEYFRAMES */
 
-const generatedKeyframes = customKeyframes
-  ? `@keyframes customAnimation {
-${customKeyframes.map(k=>`
-${k.percent}% {
-opacity:${k.opacity};
-transform:translateY(${k.translateY}px);
-background: ${useGradient 
-  ? `linear-gradient(45deg, ${color1}, ${color2})`
-  : color1};
-}
-`).join("")}
-}`
-  : aiKeyframes || animations[animation]?.keyframes;
+const activeAnimation = resolveAnimation({
+  animation,
+  animations,
+  customKeyframes,
+  aiKeyframes,
+});
+const animationName = activeAnimation.name;
+const generatedKeyframes = activeAnimation.keyframes;
+const animationSelectorValue = customKeyframes
+  ? "customAnimation"
+  : aiKeyframes
+    ? "aiAnimation"
+    : animation;
 
 /* CSS */
 
 const cssCode = `
 .animated-element{
-animation:${animationName}
-${controls.duration}s
-${controls.easing}
-${controls.delay}s
-${controls.iterations}
-${controls.direction}
-${controls.fill};
+animation:${buildAnimationShorthand(animationName, controls)};
 }
 
 ${generatedKeyframes}
@@ -187,7 +185,7 @@ const handleDownload = ()=>{
 };
 
 const animationStyle = isPlaying
-? `${animationName} ${controls.duration}s ${controls.easing}`
+? buildAnimationShorthand(animationName, controls)
 : "none";
 
 /* UI */
@@ -210,10 +208,13 @@ return(
 <div className="space-y-6 border border-(--border) p-4 rounded-xl">
 
 <select
-value={animation}
-onChange={(e)=>{setAnimation(e.target.value);handleReplay();}}
+value={animationSelectorValue}
+onChange={(e)=>selectBaseAnimation(e.target.value)}
+aria-label="Base animation"
 className=" w-full p-2 rounded-lg border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary)"
 >
+{customKeyframes && <option value="customAnimation" disabled>Custom keyframes</option>}
+{aiKeyframes && <option value="aiAnimation" disabled>AI-generated animation</option>}
 {Object.entries(animations).map(([k,v])=>(
 <option key={k} value={k}>{v.name}</option>
 ))}
@@ -223,30 +224,34 @@ className=" w-full p-2 rounded-lg border border-(--border) bg-(--card) text-(--f
 type="number"
 value={controls.duration}
 onChange={(e)=>updateControl("duration",e.target.value)}
+aria-label="Duration in seconds"
+min="0.1"
+step="0.1"
 className="w-full p-2 rounded-lg border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary)"
 />
 
 <select
 value={controls.easing}
 onChange={(e)=>updateControl("easing",e.target.value)}
+aria-label="Easing"
 className=" w-full p-2 rounded-lg border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary)"
 >
 {easingOptions.map(e=>(<option key={e}>{e}</option>))}
 </select>
 
 <div className="flex gap-3">
-<button onClick={handleReplay} className="bg-(--primary) text-(--primary-foreground) px-4 py-2 rounded-lg hover:scale-105">
+<button onClick={handleReplay} aria-label="Replay animation" className="bg-(--primary) text-(--primary-foreground) px-4 py-2 rounded-lg hover:scale-105">
 <RotateCcw size={18}/> 
 </button>
 
-<button onClick={()=>setIsPlaying(p=>!p)} className="bg-(--primary) text-(--primary-foreground) px-4 py-2 rounded-lg hover:scale-105">
+<button onClick={()=>setIsPlaying(p=>!p)} aria-label={isPlaying ? "Pause animation" : "Play animation"} className="bg-(--primary) text-(--primary-foreground) px-4 py-2 rounded-lg hover:scale-105">
 {isPlaying ? <Pause size={18}/> : <Play size={18}/>}
 </button>
 </div>
 
 <PresetsDropdown/>
-<TransformControls onChange={setTransform}/>
-<AnimationControls controls={controls} onChange={setControls}/>
+<TransformControls value={transform} onChange={setTransform}/>
+<AnimationControls value={controls} onChange={setControls}/>
 <TriggerSelector trigger={trigger} setTrigger={setTrigger}/>
 
 </div>
@@ -273,20 +278,27 @@ useGradient={useGradient}
 
 {/* EXTRA FEATURES */}
 
-<KeyframeEditor onChange={setCustomKeyframes}/>
-<GifExport/>
+<KeyframeEditor onChange={activateCustomKeyframes}/>
+<GifExport
+  controls={controls}
+  transform={transform}
+  animationName={animationName}
+  color={color1}
+  keyframesCss={generatedKeyframes}
+  customKeyframes={customKeyframes}
+/>
 
 <PerformanceIndicator
 controls={controls}
 transform={transform}
-animation={animation}
+animation={animationName}
 />
 
 <AiAnimationGenerator
 onGenerate={(data)=>{
   setCustomKeyframes(null);
   setAiKeyframes(data.keyframes);
-  setAnimation(data.name);
+  handleReplay();
 }}
 />
 

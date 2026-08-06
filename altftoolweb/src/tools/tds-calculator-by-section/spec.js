@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "tds-calculator-by-section",
   "title": "TDS Calculator by Section",
-  "description": "Selected section, threshold aur rate se TDS calculate kare.",
+  "description": "Calculate TDS from the section you select, its threshold and the applicable rate.",
   "badge": "India-Specific Utilities",
   "category": [
     "Finance",

@@ -5,6 +5,7 @@ import { Check, Copy, Landmark, RotateCcw } from "lucide-react";
 
 import {
   AVAILABLE_YEARS,
+  CONTRIBUTION_SOURCE_URL,
   CONTRIBUTION_YEARS,
   CPP_BASIC_EXEMPTION,
   PAY_PERIOD_OPTIONS,
@@ -513,7 +514,15 @@ export default function ToolHome() {
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
         Informational only, not tax or payroll advice. Income tax is not included. Employers with
         an approved EI premium reduction pay less than 1.4 times the employee premium — check the
-        CRA payroll deductions tables or speak to a payroll professional before remitting.
+        <a
+          href={CONTRIBUTION_SOURCE_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline decoration-dotted underline-offset-2 hover:text-[var(--foreground)]"
+        >
+          CRA T4127 payroll deductions formulas
+        </a>{" "}
+        or speak to a payroll professional before remitting.
       </p>
     </main>
   );

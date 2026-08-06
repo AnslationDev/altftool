@@ -137,7 +137,11 @@ export function calculateCurtainFabric({
   }
 
   const heading = HEADING_TYPES.find((item) => item.id === headingId) ?? HEADING_TYPES[3];
-  const fullness = isNum(fullnessOverride) ? fullnessOverride : heading.fullness;
+  const hasFullnessOverride = fullnessOverride !== undefined && fullnessOverride !== null;
+  if (hasFullnessOverride && !isNum(fullnessOverride)) {
+    return { error: "Enter a valid custom fullness ratio." };
+  }
+  const fullness = hasFullnessOverride ? fullnessOverride : heading.fullness;
   if (fullness < 1 || fullness > 4) {
     return { error: "Fullness must be between 1 and 4 times the track width." };
   }

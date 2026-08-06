@@ -10,11 +10,9 @@
  * exist, and the extra /<anything> level did the same for brands. That is an
  * unbounded doorway space, which is assessed site-wide.
  *
- * This module reads the same public Firestore REST collections that
- * src/app/sitemap.js reads, so the routes accept exactly the URLs the sitemap
- * advertises, plus the legacy link shapes the UI still emits
- * (/brandrating/categories/…, /brandrating/subcategories/…, …/pdetail/…), which
- * are accepted but canonicalised onto the sitemap URL instead of duplicating it.
+ * This module reads the public Firestore catalogue to resolve known entities
+ * onto one stable canonical path. Legacy link shapes remain compatible, while
+ * unknown shapes receive generic noindex preview content.
  *
  * AVAILABILITY RULE
  * If the catalogue cannot be read (network error, timeout, non-200), the
@@ -26,14 +24,9 @@
 import { cache } from "react";
 
 import { normalizeSlug } from "@/platform/seo/generateMetadata";
-import {
-  MOCK_BRANDS,
-  MOCK_DATA_ENABLED,
-  MOCK_HIDDEN_BRAND_NAMES,
-} from "../(data)/mockBrands";
 
-// Same public web-API credentials and collection root the sitemap and the
-// client Firestore SDK use (service/config.js ROOT).
+// Same public web-API credentials and collection root the legacy client SDK
+// uses (service/config.js ROOT).
 const FIREBASE_API_KEY =
   process.env.NEXT_PUBLIC_FIREBASE_API_KEY ||
   "AIzaSyAYKc0SBXyY3bfKLkmcCrPf-NsPF8p_Z50";
@@ -46,12 +39,6 @@ const CATALOG_REVALIDATE = 3600;
 // First/second path segments the UI hard-codes in its own links. They are not
 // category slugs, so they must be accepted, but they never become canonical.
 const LEGACY_PATH_SEGMENTS = new Set(["categories", "subcategories", "pdetail"]);
-
-// service.js only hides these while the mock layer is on, so mirror that switch
-// exactly — the guard must accept every brand the UI actually renders.
-const HIDDEN_BRAND_SLUGS = new Set(
-  MOCK_DATA_ENABLED ? MOCK_HIDDEN_BRAND_NAMES.map((name) => normalizeSlug(name)) : [],
-);
 
 const UNAVAILABLE_CATALOG = Object.freeze({
   available: false,
@@ -165,25 +152,11 @@ export const getBrandCatalog = cache(async () => {
 
   const brands = new Map();
 
-  // Mock brands render as real pages until the admin panel replaces them
-  // (see (data)/mockBrands.js), so their URLs must keep resolving.
-  const allBrandDocs = MOCK_DATA_ENABLED
-    ? [...brandDocs, ...MOCK_BRANDS.map((brand) => ({
-        id: brand.id || "",
-        name: String(brand.name || "").trim(),
-        status: "active",
-        categoryId: brand.categoryId || "",
-        subCategoryId: brand.subCategoryId || "",
-      }))]
-    : brandDocs;
-
-  for (const doc of allBrandDocs) {
+  for (const doc of brandDocs) {
     const slug = normalizeSlug(doc.name);
-    // Brands the UI hides have no page either.
-    if (!slug || HIDDEN_BRAND_SLUGS.has(slug) || brands.has(slug)) continue;
+    if (!slug || brands.has(slug)) continue;
 
-    // A brand without a live subcategory has no canonical URL — the sitemap
-    // skips it for the same reason.
+    // A brand without a live subcategory has no stable canonical URL.
     const subcategory = subcategoryById.get(doc.subCategoryId);
     if (!subcategory) continue;
 

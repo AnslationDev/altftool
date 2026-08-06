@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "Can it tell Hindi from Marathi, or Urdu from Arabic?",
-      "Not reliably, because those pairs share a script. Devanagari text is reported as Hindi, and Arabic-script text — including Urdu, which is written in the same Arabic script — is always reported as Arabic, since detection works at the script-block level and has no way to distinguish languages that share a writing system. Script-level detection is exact; the language label within a shared script is a best guess.",
+      "Not reliably, because those pairs share a script. Devanagari text is reported as Hindi, and Arabic-script text — including Urdu, which is written in the same Arabic script — is always reported as Arabic, since detection works at the script-block level and has no way to distinguish languages that share a writing system. Script-block classification is deterministic for the ranges this tool covers, but the inferred language is only a heuristic — especially for shared scripts.",
     ],
     [
       "Is my text sent anywhere?",

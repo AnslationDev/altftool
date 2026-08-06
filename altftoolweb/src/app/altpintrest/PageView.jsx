@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Inter, Manrope } from 'next/font/google';
-import { Search, X, Menu, Compass, SlidersHorizontal, MoreHorizontal, ArrowLeft, MessageCircle, Upload, ChevronDown, Smile, Image as ImageIcon, Download, Share2, Heart, Sparkles, RefreshCw, Loader2, ArrowDown, Check, RotateCcw, AlertCircle } from 'lucide-react';
+import { Search, X, Menu, Compass, SlidersHorizontal, MoreHorizontal, ArrowLeft, MessageCircle, Upload, ChevronDown, Download, Share2, Heart, Sparkles, RefreshCw, Loader2, ArrowDown, Check, RotateCcw, AlertCircle } from 'lucide-react';
 import './altpintrest.css';
 
 const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600'] });
@@ -1167,22 +1167,15 @@ export default function AltPinterest({ defaultView, children: heading }) {
                         {selectedItem.title || "AI Generated Inspiration"}
                       </h1>
 
-                      <div className="flex items-center gap-3 mt-1">
-                        <div className="w-10 h-10 rounded-full bg-gray-200 overflow-hidden shrink-0">
-                          <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="user" className="w-full h-full object-cover" />
-                        </div>
-                        <span className="text-[14px] font-medium text-[var(--foreground)]">Lamice Neves</span>
-                      </div>
+                      <p className="text-sm text-muted-foreground">
+                        {selectedItem.originalData?.author || selectedItem.author
+                          ? `Source: ${selectedItem.originalData?.author || selectedItem.author}`
+                          : "Source attribution not provided"}
+                      </p>
 
-                      <div className="border-t border-[#E9E9E9] dark:border-[var(--border)] pt-8 mt-4">
-                        <h2 className="text-[16px] font-bold mb-4 text-[var(--foreground)] font-[#Segoe_UI]">No comments yet</h2>
-                        <div className="bg-[#F3F4F6] dark:bg-[var(--muted)] border border-[#E5E5E0] dark:border-[var(--border)] rounded-full px-5 py-3.5 flex items-center justify-between cursor-pointer">
-                          <span className="text-[15.5px] text-[#9197A3]">Add a comment to start the conversation</span>
-                          <div className="flex gap-4 text-gray-500">
-                            <Smile size={20} className="hover:text-gray-700 dark:hover:text-white transition-colors" />
-                            <ImageIcon size={20} className="hover:text-gray-700 dark:hover:text-white transition-colors" />
-                          </div>
-                        </div>
+                      <div className="border-t border-border pt-8 mt-4">
+                        <h2 className="text-base font-bold mb-2 text-foreground">Comments</h2>
+                        <p className="text-sm text-muted-foreground">Comments aren&rsquo;t available on this board.</p>
                       </div>
                     </div>
 
@@ -1369,15 +1362,8 @@ export default function AltPinterest({ defaultView, children: heading }) {
 
                   {/* Profile & Info */}
                   <div className="flex items-center gap-3 sm:gap-6">
-                    <div className="relative shrink-0">
-                      <img
-                        src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80"
-                        alt="Profile Avatar"
-                        className="w-12 h-12 sm:w-20 sm:h-20 rounded-full object-cover ring-2 sm:ring-4 ring-white dark:ring-zinc-800 shadow-md"
-                      />
-                      <span className="absolute bottom-0 right-0 w-4 h-4 sm:w-5 sm:h-5 bg-[#0D9488] border-2 border-white dark:border-zinc-900 rounded-full flex items-center justify-center">
-                        <Sparkles size={10} className="text-white" />
-                      </span>
+                    <div className="w-12 h-12 sm:w-20 sm:h-20 rounded-full bg-muted border border-border flex items-center justify-center shrink-0">
+                      <Heart size={28} className="text-primary" aria-hidden="true" />
                     </div>
 
                     <div className="flex flex-col min-w-0">
@@ -1388,7 +1374,7 @@ export default function AltPinterest({ defaultView, children: heading }) {
                         <Heart size={20} className="text-[#0D9488] fill-[#0D9488] shrink-0 sm:w-6 sm:h-6" />
                       </div>
                       <p className="text-xs sm:text-base font-medium text-gray-500 dark:text-gray-400 flex items-center gap-2 sm:gap-3 flex-wrap">
-                        <span>Curated by Lamice Neves</span>
+                        <span>Saved locally on this device</span>
                         <span className="hidden xs:inline">•</span>
                         <span className="font-bold text-gray-900 dark:text-white">{displayedItems.length} Pins Saved</span>
                       </p>

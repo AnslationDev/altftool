@@ -37,13 +37,12 @@ export default function LoanQuoteButton({
 }) {
   if (!href) return null;
 
+  if (href === "#demo-only") {
+    return <button type="button" className={`${className} ${size}`.trim()} disabled title="Demo only">{label}</button>;
+  }
+
   if (mode === "phone") {
-    return (
-      <a className={`${className} ${size}`.trim()} href={href}>
-        <Phone size={15} strokeWidth={2.4} aria-hidden="true" />
-        {label}
-      </a>
-    );
+    return <button type="button" className={`${className} ${size}`.trim()} disabled title="Demo only"><Phone size={15} strokeWidth={2.4} aria-hidden="true" />{label}</button>;
   }
 
   if (isPlaceholderQuoteUrl(href)) {

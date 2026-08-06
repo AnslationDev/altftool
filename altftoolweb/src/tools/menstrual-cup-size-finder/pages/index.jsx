@@ -47,7 +47,12 @@ export default function ToolHome() {
   const [pelvicFloor, setPelvicFloor] = useState(DEFAULTS.pelvicFloor);
   const [heavyFlow, setHeavyFlow] = useState(DEFAULTS.heavyFlow);
   const [hasIud, setHasIud] = useState(DEFAULTS.hasIud);
-  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard({ resetMs: 1500 });
+  const {
+    copy: copyToClipboard,
+    isCopied,
+    announcement,
+    reset: resetCopyState,
+  } = useCopyToClipboard({ resetMs: 1500 });
 
   const result = useMemo(
     () =>
@@ -93,6 +98,7 @@ export default function ToolHome() {
     setPelvicFloor(DEFAULTS.pelvicFloor);
     setHeavyFlow(DEFAULTS.heavyFlow);
     setHasIud(DEFAULTS.hasIud);
+    resetCopyState();
   };
 
   const rows = [

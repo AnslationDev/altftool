@@ -27,7 +27,7 @@ const seo = {
     ],
     [
       "Does my photo get uploaded anywhere?",
-      "Yes, if you use the AI conversion. Uploaded files and pasted URLs are sent to the Pollinations image endpoint running the Flux model to produce the character render; the emboss, bloom and vibrancy sliders, by contrast, run purely on a local canvas and never transmit the image.",
+      "Yes, and it happens as soon as you load one. Uploading a file or pasting a URL sends the image to image.pollinations.ai, which runs the Flux model that produces the character render — the AI conversion fires automatically on load, so there is no photo-in, local-only mode. The emboss, bloom and vibrancy sliders, by contrast, run purely on a local canvas and never transmit the image.",
     ],
     [
       "What do the three sliders actually change?",

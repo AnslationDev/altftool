@@ -133,7 +133,12 @@ function Timeline({ timeline }) {
 export default function ToolHome() {
   const [chosenDate, setChosenDate] = useState(null);
   const [selected, setSelected] = useState("Mercury");
-  const { copy: copyToClipboard, isCopied, announcement } = useCopyToClipboard({ resetMs: 1800 });
+  const {
+    copy: copyToClipboard,
+    isCopied,
+    announcement,
+    reset: resetCopyState,
+  } = useCopyToClipboard({ resetMs: 1800 });
 
   const todayUtc = useSyncExternalStore(subscribeToNothing, readTodayUtc, readNoDate);
   const dateValue = chosenDate ?? todayUtc;
@@ -179,6 +184,7 @@ export default function ToolHome() {
   function reset() {
     setChosenDate(null);
     setSelected("Mercury");
+    resetCopyState();
   }
 
   return (

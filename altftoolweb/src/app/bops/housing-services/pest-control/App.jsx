@@ -62,7 +62,7 @@ export default function App() {
 
       {/* Mobile Sticky CTA */}
       <div className="md:hidden sticky-cta flex gap-3">
-        <a href="tel:7865679554" className="flex-1 btn btn-secondary text-sm py-[13px]">Call Now</a>
+        <a href="#demo-only" className="flex-1 btn btn-secondary text-sm py-[13px]">Call Now</a>
         <Link to="/book" className="flex-1 btn btn-primary text-sm py-[13px]">Get Free Quote</Link>
       </div>
     </div>

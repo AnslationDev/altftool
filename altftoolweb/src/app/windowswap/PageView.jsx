@@ -127,7 +127,7 @@ export default function WindowSwapPage() {
           <GiftSection />
           <AllAccessSection />
           <TipJarSection onOpenSupport={() => setIsSurveyOpen(true)} />
-          <SurveySection onOpenSupport={() => setIsSurveyOpen(true)} />
+          <SurveySection />
           <MusicSection />
           <Footer />
         </div>

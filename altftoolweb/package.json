@@ -9,15 +9,20 @@
   },
   "scripts": {
     "generate:registry": "node scripts/generate-tool-meta.mjs && node scripts/generate-tool-runtime-map.mjs && node scripts/generate-tool-seo-map.mjs && node scripts/generate-tool-network-map.mjs",
+    "generate:ideas": "node --max-old-space-size=4096 scripts/generate-ideas.mjs",
+    "verify:ideas": "node --max-old-space-size=4096 scripts/verify-rehydration.mjs",
+    "generate:lexicon": "node --max-old-space-size=4096 scripts/generate-lexicon.mjs",
+    "verify:lexicon": "node scripts/verify-lexicon.mjs",
     "predev": "npm run generate:registry",
     "dev": "next dev --webpack",
-    "prebuild": "npm run generate:registry",
-    "build": "node scripts/use-patched-next-dependencies.mjs && node scripts/assert-no-server-tool-loader.mjs && node scripts/assert-transform-manifest.mjs && node scripts/check-merge-conflicts.mjs && node scripts/check-import-case.mjs && node scripts/check-global-css-leaks.mjs && node scripts/check-howto-steps.mjs && node scripts/check-tool-entry-ambiguity.mjs && node scripts/check-global-shadowing.mjs && node scripts/run-with-node-memory.mjs next build --webpack && node scripts/compact-rsc-manifests.mjs && node scripts/prune-amplify-build.mjs && node scripts/check-prerender-size.mjs",
+    "prebuild": "npm run generate:registry && npm run verify:ideas && npm run verify:lexicon",
+    "build": "node scripts/use-patched-next-dependencies.mjs && node scripts/assert-no-server-tool-loader.mjs && node scripts/assert-transform-manifest.mjs && node scripts/check-merge-conflicts.mjs && node scripts/check-import-case.mjs && node scripts/check-global-css-leaks.mjs && node scripts/check-howto-steps.mjs && node scripts/check-tool-entry-ambiguity.mjs && node scripts/check-pruned-imports.mjs && node scripts/check-global-shadowing.mjs && node scripts/run-with-node-memory.mjs next build --webpack && node scripts/compact-rsc-manifests.mjs && node scripts/prune-amplify-build.mjs && node scripts/check-prerender-size.mjs",
     "start": "next start",
     "lint": "eslint",
     "test:unit": "node scripts/run-unit-tests.mjs",
     "qa:sitemap": "node scripts/qa-sitemap.mjs",
-    "validate": "npm run lint && npm run test:unit && npm run build"
+    "validate": "npm run lint && npm run test:unit && npm run build",
+    "import:backlinks": "node scripts/import-backlinks.mjs"
   },
   "dependencies": {
     "@altftool/core": "file:./packages/core",
@@ -89,7 +94,7 @@
     "@tensorflow/tfjs-backend-wasm": "4.22.0",
     "@tiptap/extension-image": "^3.28.0",
     "@tiptap/extension-link": "^3.28.0",
-    "@tiptap/extension-placeholder": "^3.28.0",
+    "@tiptap/extension-placeholder": "3.28.0",
     "@tiptap/extension-text-align": "^3.28.0",
     "@tiptap/extension-underline": "^3.28.0",
     "@tiptap/pm": "^3.28.0",
@@ -157,7 +162,7 @@
     "monaco-editor": "0.53.0",
     "mongoose": "^9.8.0",
     "nanoid": "^5.1.15",
-    "next": "^16.2.11",
+    "next": "^16.3.0",
     "next-themes": "^0.4.6",
     "nextjs-toploader": "^3.9.17",
     "node-html-parser": "^9.0.0",
@@ -227,12 +232,14 @@
     "@types/react": "19.2.8",
     "autoprefixer": "^10.4.27",
     "babel-plugin-react-compiler": "1.0.0",
+    "cmu-pronouncing-dictionary": "^3.0.0",
     "eslint": "^9",
-    "eslint-config-next": "^16.2.11",
+    "eslint-config-next": "^16.3.0",
     "lucide-static": "^0.563.0",
     "postcss": "8.5.25",
     "tailwindcss": "^4.2.1",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wordnet-db": "^3.1.14"
   },
   "overrides": {
     "brace-expansion@1.1.16": "1.1.18",

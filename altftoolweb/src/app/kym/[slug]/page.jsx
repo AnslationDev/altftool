@@ -21,7 +21,7 @@ import { isKymIndexable } from "../data/indexPolicy";
  * Both custom-page descriptions are derived from the data these pages actually
  * render, so a change to the roundup's sections or to the poll's option list
  * cannot leave a stale claim in the snippet. They replaced scaffolding strings
- * ("Local KYM-style article page for the weekly meme roundup.", "Vote for May
+ * ("Local encyclopedia article page for the weekly meme roundup.", "Vote for May
  * 2026's meme of the month.") that described the implementation rather than the
  * page and were too short to earn a click. The poll wording matches what the
  * page tells the reader: a pick is stored locally and no vote is ever submitted
@@ -83,7 +83,7 @@ export async function generateMetadata({ params }) {
     });
   }
 
-  // "Local KYM-style detail page for X." was scaffolding text, and it shipped
+  // "Local encyclopedia detail page for X." was scaffolding text, and it shipped
   // as the meta description on every entry — the snippet a searcher reads
   // described the page's implementation rather than the meme. Its replacement
   // then broke on the real catalog ("a episode entry", "What What Does
@@ -125,7 +125,7 @@ export async function generateMetadata({ params }) {
  * getArticleProfile() in KymGenericPage.jsx from the title, so it is identical
  * across every entry sharing a category and says nothing verifiable about the
  * meme. There is no description, no publication date and no real author: the
- * `meta` strings ("KYM Staff - 19 hours ago", "K.J. Genualdo - a day ago") are
+ * Source-card `meta` strings with unverified bylines or relative dates are
  * scaffolding bylines and relative timestamps, exactly the kind of value that
  * had to be stripped from this codebase once already. Emitting an Article or a
  * CreativeWork here would mean publishing a headline plus template filler as if

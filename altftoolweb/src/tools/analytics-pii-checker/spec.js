@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "analytics-pii-checker",
   "title": "Analytics PII Checker",
-  "description": "Analytics payloads me accidentally transmitted personal data detect kare.",
+  "description": "Detect personal data accidentally transmitted inside your analytics payloads.",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Security & Privacy",

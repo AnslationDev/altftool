@@ -26,7 +26,7 @@ export const petInsurance = {
   ],
 
   quoteLabel: "Compare plans",
-  quoteUrl: "https://example.com/quote/pet-insurance",
+  quoteUrl: "#demo-only",
 
   coverageTitle: "What pet insurance can cover",
   coverageIntro:

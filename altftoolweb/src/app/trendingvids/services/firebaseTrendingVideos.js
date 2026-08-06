@@ -54,6 +54,11 @@ function getSortDate(value) {
   return toDateObject(value)?.getTime() || 0;
 }
 
+// Sort key only — never rendered. The `??` chain below can in practice never
+// get past `viewCount`: normalizeTrendingVideo always emits it as a number
+// (0 when the document has none), and compactFirestoreData strips only
+// `undefined`. That is fine for ordering, but it is why this must not be used
+// to fill a field the UI labels as something else — see getLikeCount.
 function getPopularityScore(item) {
   return Number(
     item.viewCount ??
@@ -63,6 +68,15 @@ function getPopularityScore(item) {
       item.rating ??
       0,
   );
+}
+
+// Read the document's own like count. The reels rail prints this number beside
+// a filled heart and next to a "Like" button, so it has to be the like count
+// and nothing else; it used to be filled from getPopularityScore, which meant
+// every reel showed its view count under a heart.
+function getLikeCount(item) {
+  const value = Number(item.likeCount ?? item.likes ?? 0);
+  return Number.isFinite(value) && value > 0 ? value : 0;
 }
 
 export function extractYouTubeId(url) {
@@ -174,7 +188,7 @@ function mapShortCard(item) {
     channelTitle: item.channelName || "AltFTool",
     channelDescription: item.description || "",
     description: item.description || "",
-    likeCount: getPopularityScore(item),
+    likeCount: getLikeCount(item),
     type: item.type,
   };
 }

@@ -269,7 +269,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               aria-label="Copy the gateway fee comparison"
-              className={GHOST_BTN}
+              className={PRIMARY_BTN}
               disabled={hasError}
             >
               {isCopied("result") ? (
@@ -279,7 +279,7 @@ export default function ToolHome() {
               )}
               {isCopied("result") ? "Copied!" : "Copy comparison"}
             </button>
-            <button type="button" onClick={reset} aria-label="Reset all inputs" className={PRIMARY_BTN}>
+            <button type="button" onClick={reset} aria-label="Reset all inputs" className={GHOST_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>

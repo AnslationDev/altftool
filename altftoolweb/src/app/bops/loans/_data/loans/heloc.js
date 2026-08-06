@@ -26,7 +26,7 @@ export const heloc = {
   ],
 
   quoteLabel: "Check your equity",
-  quoteUrl: "https://example.com/quote/heloc",
+  quoteUrl: "#demo-only",
 
   featuresTitle: "What you can do with a HELOC",
   featuresIntro:

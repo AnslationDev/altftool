@@ -458,7 +458,7 @@ export default function ToolHome() {
       </section>
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
-        Informational only. Android warns that an input method may collect everything you type; iOS keyboards can only reach the network once you enable Allow Full Access. Check the vendor's privacy policy for how long typed text is retained.
+        Informational only. Android warns that an input method may collect everything you type; iOS keyboards can only reach the network once you enable Allow Full Access. Check the vendor&apos;s privacy policy for how long typed text is retained.
       </p>
     </main>
   );

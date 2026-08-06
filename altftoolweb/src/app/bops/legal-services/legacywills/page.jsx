@@ -16,9 +16,9 @@ import {
 } from "lucide-react";
 import "./legacywills.css";
 
-const QUOTE_URL = "https://example.com/quote/legacywills";
-const PHONE_HREF = "tel:+18775550465";
-const PHONE_LABEL = "(877) 555-0465";
+const QUOTE_URL = "#demo-only";
+const PHONE_HREF = "#demo-only";
+const PHONE_LABEL = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1603796846097-bee99e4a601f?auto=format&fit=crop&w=1600&q=80",

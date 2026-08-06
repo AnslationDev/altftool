@@ -3,7 +3,7 @@ const seo = {
     "The Encrypted Private Journal keeps diary entries — a title and a body per entry — in this browser's own localStorage, with full-text search across everything you have written and JSON export for backup. There is no account, no sync and no server: nothing you type is transmitted, which is what makes it private. Privacy here comes from the data never leaving the device, not from a passphrase, so treat it as a personal notebook on a machine only you use.",
   useCases: [
     "You want to keep a daily work log or mood diary without creating an account on a journalling app that syncs your writing to someone else's servers.",
-    "You are trying to remember when a recurring symptom, argument or idea first came up, and you search your own entries for the word rather than scrolling months of them.",
+    "You are trying to remember when a recurring symptom, argument or idea first came up, and you search your own entries for the word rather than scrolling months of them — matches stay in the order you wrote them, so the earliest sits at the top.",
     "You are switching laptops and export the whole journal as one JSON file, then import it on the new machine to carry every entry across.",
   ],
   benefits: [

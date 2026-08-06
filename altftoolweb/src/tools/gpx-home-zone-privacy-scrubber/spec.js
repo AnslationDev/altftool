@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "gpx-home-zone-privacy-scrubber",
   "title": "GPX Home-Zone Privacy Scrubber",
-  "description": "Route ke home-area start/end points remove kare.",
+  "description": "Trim the start and end of a GPX route so it no longer reveals your home.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Security & Privacy",

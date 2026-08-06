@@ -1,0 +1,223 @@
+/*
+ * AltF Atlas — product token layer
+ *
+ * Extends the shared AltFTool design system rather than replacing it. Every
+ * token is namespaced --afa-* so nothing leaks into the rest of the platform,
+ * and every one is defined for BOTH themes because the site ships a light
+ * default with a dark toggle. Dark-tuned 400-weight hues fail contrast on the
+ * near-white light page, so the light block uses the 600/700 ramp.
+ *
+ * THE VISUAL ARGUMENT
+ * -------------------
+ * Every other web directory renders as a wall of product cards, which hides
+ * the thing people actually need to know: what does this cost me before it
+ * does anything, and does my file leave the machine. So the signature device
+ * here is the ACCESS STRIPE — a hairline rule down the leading edge of every
+ * card, coloured by access level, with an on-device marker. You learn it once
+ * on the home page and read it everywhere else without a legend.
+ *
+ * The second decision is that entries are presented domain-first, in mono.
+ * A directory of websites should look like a list of websites, not a list of
+ * SaaS products; the domain is the thing a reader recognises and trusts.
+ */
+
+:root {
+  --afa-open: var(--anslation-ds-success-text);
+  --afa-open-soft: var(--anslation-ds-success-soft);
+  --afa-account: var(--anslation-ds-info-text);
+  --afa-account-soft: var(--anslation-ds-info-soft);
+  --afa-freemium: var(--anslation-ds-warning-text);
+  --afa-freemium-soft: var(--anslation-ds-warning-soft);
+
+  --afa-local: var(--anslation-ds-accent);
+  --afa-local-soft: var(--anslation-ds-accent-soft);
+
+  --afa-live: var(--anslation-ds-primary-text);
+  --afa-retired: var(--anslation-ds-muted);
+  --afa-retired-soft: var(--anslation-ds-soft);
+
+  --afa-rule: var(--anslation-ds-border);
+  --afa-graticule: var(--anslation-ds-border);
+  --afa-paper: var(--anslation-ds-surface);
+  --afa-plate: var(--anslation-ds-soft);
+}
+
+/* ---------- Graticule: the atlas backdrop ----------
+   Latitude/longitude lines rather than the dot grid used elsewhere on the
+   platform, so the two products are distinguishable at a glance. Masked to
+   fade out at the bottom edge so it never competes with body text. */
+.afa-graticule {
+  background-image:
+    linear-gradient(to right, var(--afa-graticule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--afa-graticule) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-mask-image: linear-gradient(to bottom, var(--anslation-ds-text) 0%, transparent 100%);
+  mask-image: linear-gradient(to bottom, var(--anslation-ds-text) 0%, transparent 100%);
+}
+
+/* ---------- Access stripe: the signature device ----------
+   A 3px rule down the leading edge of a card. Implemented as a border rather
+   than a pseudo-element so it survives being placed inside a <li> in a grid
+   without a stacking-context surprise. */
+.afa-stripe {
+  border-inline-start: 3px solid var(--afa-accent, var(--afa-rule));
+}
+
+.afa-access-open {
+  --afa-accent: var(--afa-open);
+  --afa-accent-soft: var(--afa-open-soft);
+}
+.afa-access-account {
+  --afa-accent: var(--afa-account);
+  --afa-accent-soft: var(--afa-account-soft);
+}
+.afa-access-freemium {
+  --afa-accent: var(--afa-freemium);
+  --afa-accent-soft: var(--afa-freemium-soft);
+}
+.afa-access-retired {
+  --afa-accent: var(--afa-retired);
+  --afa-accent-soft: var(--afa-retired-soft);
+}
+
+/* ---------- Cards ---------- */
+.afa-card {
+  background: var(--afa-paper);
+  transition:
+    border-color var(--anslation-ds-motion-base, 0.15s) ease-out,
+    transform var(--anslation-ds-motion-base, 0.15s) ease-out,
+    box-shadow var(--anslation-ds-motion-base, 0.15s) ease-out;
+}
+.afa-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--afa-accent, var(--border-strong));
+  box-shadow: var(--anslation-ds-shadow-md);
+}
+.afa-card:focus-within {
+  border-color: var(--afa-accent, var(--primary));
+  box-shadow: var(--anslation-ds-shadow-md);
+}
+
+/* Retired entries are legible but visibly historical — they are reference,
+   not recommendation. Kept above 4.5:1 so this is a de-emphasis, not a
+   contrast failure. */
+.afa-card--retired {
+  background: var(--afa-retired-soft);
+}
+
+/* ---------- Domain line: mono, the recognisable part ---------- */
+.afa-domain {
+  font-family: var(--anslation-ds-font-mono);
+  font-size: 0.75rem;
+  letter-spacing: -0.01em;
+  color: var(--muted-foreground);
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Favicon plate ----------
+   Third-party favicons load from Google's s2 service. They fail regularly
+   (blocked, missing, rate-limited), so the plate carries a monogram
+   underneath that shows through rather than leaving a ragged hole. */
+.afa-plate {
+  background: var(--afa-plate);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+}
+.afa-plate__mono {
+  font-family: var(--anslation-ds-font-mono);
+  font-weight: 600;
+  color: var(--afa-accent, var(--muted-foreground));
+  text-transform: uppercase;
+}
+.afa-plate__img {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+}
+
+/* ---------- Pills ---------- */
+.afa-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3125rem;
+  border-radius: var(--radius-pill);
+  padding: 0.125rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  white-space: nowrap;
+}
+.afa-pill--solid {
+  background: var(--afa-pill-soft, var(--muted));
+  color: var(--afa-pill-ink, var(--muted-foreground));
+}
+.afa-pill--outline {
+  border: 1px solid var(--afa-pill-ink, var(--border));
+  color: var(--afa-pill-ink, var(--muted-foreground));
+}
+.afa-pill__dot {
+  width: 0.375rem;
+  height: 0.375rem;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+/* ---------- Section eyebrow: the catalogue voice ---------- */
+.afa-eyebrow {
+  font-family: var(--anslation-ds-font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+/* ---------- Stat figures ---------- */
+.afa-figure {
+  font-family: var(--anslation-ds-font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+/* ---------- Answer-first block (the chunk AI engines lift verbatim) ---------- */
+.afa-answer {
+  border-left: 3px solid var(--primary);
+}
+
+/* ---------- Filter rail scroll on small screens ----------
+   The rail is a horizontal scroller under lg. `stable` gutters stop the
+   layout jumping by a scrollbar width when the result count changes. */
+.afa-rail {
+  scrollbar-width: thin;
+  scrollbar-gutter: stable;
+}
+.afa-rail::-webkit-scrollbar {
+  height: 6px;
+}
+.afa-rail::-webkit-scrollbar-thumb {
+  background: var(--afa-rule);
+  border-radius: 3px;
+}
+
+/* ---------- Compare table ----------
+   Wide content must scroll inside its own container; the page body must never
+   scroll horizontally. */
+.afa-scroll-x {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .afa-card,
+  .afa-card:hover {
+    transform: none;
+    transition: none;
+  }
+}

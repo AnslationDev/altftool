@@ -15,9 +15,9 @@ export default function Description() {
           <ul className="list-disc pl-5 space-y-1.5">
             <li><strong className="text-(--foreground)">Industry</strong> — 28 sectors from healthcare to gaming</li>
             <li><strong className="text-(--foreground)">Problem</strong> — Real-world pain points and inefficiencies</li>
-            <li><strong className="text-(--foreground)">Technology</strong> — 25+ emerging and established technologies</li>
+            <li><strong className="text-(--foreground)">Technology</strong> — 25 emerging and established technologies</li>
             <li><strong className="text-(--foreground)">Business Model</strong> — 20+ proven monetization strategies</li>
-            <li><strong className="text-(--foreground)">Target Audience</strong> — 25+ specific user segments</li>
+            <li><strong className="text-(--foreground)">Target Audience</strong> — 24 specific user segments</li>
           </ul>
           <p>
             The result is over 10 million possible combinations — each with a company name,

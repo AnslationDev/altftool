@@ -28,8 +28,9 @@ export default function Privacy() {
         },
         {
             icon: <Storage sx={{ fontSize: 40 }} />,
-            title: 'Real-Time Queries',
-            description: 'Direct database queries with no data retention',
+            title: 'Live DNS Queries',
+            description:
+                "Each check is a live lookup at Cloudflare's public resolver, not an AltFTool database",
         },
         {
             icon: <VerifiedUser sx={{ fontSize: 40 }} />,
@@ -85,7 +86,7 @@ export default function Privacy() {
                 <Box sx={{ textAlign: 'center', mb: 10 }}>
                     <Chip
                         icon={<Lock />}
-                        label="Privacy First"
+                        label="Cloudflare DNS Only"
                         sx={{
                             mb: 4,
                             px: 2,
@@ -125,7 +126,7 @@ export default function Privacy() {
                             lineHeight: 1.1,
                         }}
                     >
-                        Your Privacy, Protected
+                        Where Your Search Goes
                     </Typography>
 
                     <Typography
@@ -137,7 +138,7 @@ export default function Privacy() {
                             lineHeight: 1.6,
                         }}
                     >
-                        Built with privacy and security as the foundation
+                        Every check is an encrypted DNS query to Cloudflare — and nothing else
                     </Typography>
                 </Box>
 
@@ -192,7 +193,7 @@ export default function Privacy() {
                             letterSpacing: '-0.02em',
                         }}
                     >
-                        Privacy-First Design
+                        What Leaves Your Device
                     </Typography>
 
                     <Typography
@@ -205,7 +206,7 @@ export default function Privacy() {
                             lineHeight: 1.7,
                         }}
                     >
-                        Domain Checker is designed with your privacy in mind. We use secure, encrypted connections for all domain queries and never store your search history. Your domain searches remain completely private and are never logged, tracked, or shared with third parties.
+                        The domain you type is sent over HTTPS to Cloudflare&apos;s public DNS resolver (cloudflare-dns.com), which is what performs the lookup — so the search does leave your device, and Cloudflare&apos;s own logging policy applies to it. Nothing is sent to an AltFTool server, there is no account or API key, and the domain is not saved anywhere on this page: it lives in the open tab and clears when you reload.
                     </Typography>
                 </Box>
 

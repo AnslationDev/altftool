@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "gig-platform-fee-normalizer",
   "title": "Gig Platform Fee Normalizer",
-  "description": "Fees, travel aur admin time ke baad effective hourly pay compare kare.",
+  "description": "Compare effective hourly pay across gig platforms after fees, travel and admin time.",
   "badge": "Creator & Gig-Business Tools",
   "category": [
     "Finance",

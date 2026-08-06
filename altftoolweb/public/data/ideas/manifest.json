@@ -1,0 +1,402 @@
+{
+  "generatedFrom": "packages/core/src/ideas/taxonomy.js",
+  "total": 117264,
+  "rejected": 0,
+  "published": 12000,
+  "shards": 5,
+  "shardSize": 2500,
+  "publishCutoffAos": 70,
+  "verticals": 61,
+  "jobs": 40,
+  "mechanisms": 14,
+  "wedges": 16,
+  "models": 12,
+  "aos": {
+    "min": 31,
+    "max": 87,
+    "median": 59,
+    "tierS": 1252,
+    "tierA": 10884,
+    "tierB": 48842,
+    "tierC": 56286
+  },
+  "byVertical": {
+    "healthcare": 3080,
+    "logistics": 2464,
+    "manufacturing": 2496,
+    "solar": 1872,
+    "waste-management": 1824,
+    "hospitality": 1824,
+    "public-safety": 1848,
+    "life-sciences": 1872,
+    "home-care": 1848,
+    "construction": 2464,
+    "energy": 1872,
+    "franchising": 1824,
+    "dental": 1848,
+    "warehousing": 1824,
+    "mental-health": 1848,
+    "freight-brokerage": 1824,
+    "agriculture": 2432,
+    "staffing": 1848,
+    "security-services": 1872,
+    "telecom": 1848,
+    "legal": 2464,
+    "accounting": 1824,
+    "fintech": 1848,
+    "property-management": 1848,
+    "wholesale": 1824,
+    "auto-repair": 1848,
+    "equipment-rental": 1824,
+    "childcare": 1848,
+    "hvac-plumbing": 1848,
+    "veterinary": 1824,
+    "insurance": 2432,
+    "facilities": 1824,
+    "last-mile-delivery": 1848,
+    "utilities": 1824,
+    "food-production": 1848,
+    "retail": 2464,
+    "automotive": 1848,
+    "industrial-services": 1848,
+    "education": 2432,
+    "government": 1848,
+    "pest-control": 1848,
+    "lending": 1848,
+    "architecture": 1824,
+    "restaurants": 1848,
+    "trade-schools": 1824,
+    "wealth-management": 1824,
+    "real-estate": 1848,
+    "aviation": 1848,
+    "salons-spas": 1216,
+    "travel": 1848,
+    "landscaping": 1824,
+    "e-commerce": 1848,
+    "recruiting": 1848,
+    "professional-services": 1824,
+    "maritime": 1848,
+    "nonprofits": 1848,
+    "marketing-agencies": 1848,
+    "funeral-services": 1232,
+    "fitness": 1824,
+    "events": 1824,
+    "rail": 1872
+  },
+  "byCollection": {
+    "deep-moat-plays": 2787,
+    "under-5k-startup-cost": 4133,
+    "solo-founder-scale": 1748,
+    "proven-demand": 2200,
+    "top-100": 203,
+    "ai-native-2026": 2554,
+    "boring-and-profitable": 3479,
+    "high-acv-niche": 3964,
+    "weekend-build-saas": 2715,
+    "no-competition": 2262,
+    "fast-first-dollar": 908,
+    "contrarian-bets": 8838
+  },
+  "top50": [
+    {
+      "slug": "automated-margin-watch-for-healthcare",
+      "title": "Automated Margin Watch for Healthcare",
+      "aos": 87,
+      "vertical": "healthcare"
+    },
+    {
+      "slug": "knowledge-base-for-logistics-run-by-voice-logistics",
+      "title": "Knowledge Base for Logistics, Run by Voice",
+      "aos": 87,
+      "vertical": "logistics"
+    },
+    {
+      "slug": "automated-compliance-auditor-for-manufacturing-maintenance-lead",
+      "title": "Automated Compliance Auditor for Manufacturing",
+      "aos": 87,
+      "vertical": "manufacturing"
+    },
+    {
+      "slug": "retrieval-powered-grant-tracker-for-owner-operators-solar",
+      "title": "Retrieval-Powered Grant Tracker for Owner-Operators",
+      "aos": 87,
+      "vertical": "solar"
+    },
+    {
+      "slug": "automated-competency-tracker-for-waste-management-ops-manager",
+      "title": "Automated Competency Tracker for Waste management",
+      "aos": 87,
+      "vertical": "waste-management"
+    },
+    {
+      "slug": "compliance-auditor-for-hospitality-run-by-retrieval-hospitality",
+      "title": "Compliance Auditor for Hospitality, Run by Retrieval",
+      "aos": 87,
+      "vertical": "hospitality"
+    },
+    {
+      "slug": "public-safety-reporting-layer-usage-based",
+      "title": "Public safety Reporting Layer",
+      "aos": 87,
+      "vertical": "public-safety"
+    },
+    {
+      "slug": "risk-scorer-for-life-sciences-study-leads-serve-the-abandoned-tail",
+      "title": "Risk Scorer for Life sciences Study Leads",
+      "aos": 86,
+      "vertical": "life-sciences"
+    },
+    {
+      "slug": "home-care-contract-analyser-usage-based",
+      "title": "Home care Contract Analyser",
+      "aos": 86,
+      "vertical": "home-care"
+    },
+    {
+      "slug": "extraction-onboarding-flow-for-construction",
+      "title": "Extraction Onboarding Flow for Construction",
+      "aos": 86,
+      "vertical": "construction"
+    },
+    {
+      "slug": "construction-quote-builder-estimator",
+      "title": "Construction Quote Builder",
+      "aos": 86,
+      "vertical": "construction"
+    },
+    {
+      "slug": "grant-tracker-built-for-dispatchers-dispatcher",
+      "title": "Grant Tracker Built for Dispatchers",
+      "aos": 86,
+      "vertical": "logistics"
+    },
+    {
+      "slug": "compliance-auditor-for-manufacturing-run-by-retrieval-ops-manager",
+      "title": "Compliance Auditor for Manufacturing, Run by Retrieval",
+      "aos": 86,
+      "vertical": "manufacturing"
+    },
+    {
+      "slug": "automated-handover-recorder-for-manufacturing-quality-lead",
+      "title": "Automated Handover Recorder for Manufacturing",
+      "aos": 86,
+      "vertical": "manufacturing"
+    },
+    {
+      "slug": "extraction-pricing-engine-for-energy-energy",
+      "title": "Extraction Pricing Engine for Energy",
+      "aos": 86,
+      "vertical": "energy"
+    },
+    {
+      "slug": "retrieval-support-agent-for-energy-asset-manager",
+      "title": "Retrieval Support Agent for Energy",
+      "aos": 86,
+      "vertical": "energy"
+    },
+    {
+      "slug": "automated-quote-builder-for-public-safety-compliance-lead",
+      "title": "Automated Quote Builder for Public safety",
+      "aos": 86,
+      "vertical": "public-safety"
+    },
+    {
+      "slug": "proposal-builder-for-franchising-run-by-retrieval-franchisee",
+      "title": "Proposal Builder for Franchising, Run by Retrieval",
+      "aos": 86,
+      "vertical": "franchising"
+    },
+    {
+      "slug": "retrieval-powered-compliance-auditor-for-clinic-admins",
+      "title": "Retrieval-Powered Compliance Auditor for Clinic Admins",
+      "aos": 85,
+      "vertical": "healthcare"
+    },
+    {
+      "slug": "healthcare-vendor-monitor-on-reconciliation-department-head",
+      "title": "Healthcare Vendor Monitor on Reconciliation",
+      "aos": 85,
+      "vertical": "healthcare"
+    },
+    {
+      "slug": "rfp-responder-for-dental-run-by-extraction-dental",
+      "title": "RFP Responder for Dental, Run by Extraction",
+      "aos": 85,
+      "vertical": "dental"
+    },
+    {
+      "slug": "proposal-builder-for-dental-run-by-retrieval-office-manager",
+      "title": "Proposal Builder for Dental, Run by Retrieval",
+      "aos": 85,
+      "vertical": "dental"
+    },
+    {
+      "slug": "life-sciences-field-reporter-managed-service",
+      "title": "Life sciences Field Reporter",
+      "aos": 85,
+      "vertical": "life-sciences"
+    },
+    {
+      "slug": "voice-incident-recorder-for-life-sciences-life-sciences",
+      "title": "Voice Incident Recorder for Life sciences",
+      "aos": 85,
+      "vertical": "life-sciences"
+    },
+    {
+      "slug": "support-agent-for-home-care-run-by-retrieval",
+      "title": "Support Agent for Home care, Run by Retrieval",
+      "aos": 85,
+      "vertical": "home-care"
+    },
+    {
+      "slug": "construction-document-reviewer-construction",
+      "title": "Construction Document Reviewer",
+      "aos": 85,
+      "vertical": "construction"
+    },
+    {
+      "slug": "proposal-builder-built-for-owner-operators",
+      "title": "Proposal Builder Built for Owner-Operators",
+      "aos": 85,
+      "vertical": "construction"
+    },
+    {
+      "slug": "extraction-warranty-handler-for-construction-construction",
+      "title": "Extraction Warranty Handler for Construction",
+      "aos": 85,
+      "vertical": "construction"
+    },
+    {
+      "slug": "construction-handover-recorder-estimator",
+      "title": "Construction Handover Recorder",
+      "aos": 85,
+      "vertical": "construction"
+    },
+    {
+      "slug": "automated-compliance-auditor-for-warehousing-ops-manager",
+      "title": "Automated Compliance Auditor for Warehousing",
+      "aos": 85,
+      "vertical": "warehousing"
+    },
+    {
+      "slug": "compliance-auditor-for-warehousing-inventory-planners-warehousing",
+      "title": "Compliance Auditor for Warehousing Inventory Planners",
+      "aos": 85,
+      "vertical": "warehousing"
+    },
+    {
+      "slug": "grant-tracker-for-public-safety-run-by-retrieval-public-safety",
+      "title": "Grant Tracker for Public safety, Run by Retrieval",
+      "aos": 85,
+      "vertical": "public-safety"
+    },
+    {
+      "slug": "franchising-handover-recorder-on-extraction-franchising",
+      "title": "Franchising Handover Recorder on Extraction",
+      "aos": 85,
+      "vertical": "franchising"
+    },
+    {
+      "slug": "extraction-powered-appeal-drafter-for-field-supervisors-field-supervisor",
+      "title": "Extraction-Powered Appeal Drafter for Field Supervisors",
+      "aos": 85,
+      "vertical": "franchising"
+    },
+    {
+      "slug": "competency-tracker-built-for-practice-owners",
+      "title": "Competency Tracker Built for Practice Owners",
+      "aos": 84,
+      "vertical": "healthcare"
+    },
+    {
+      "slug": "retrieval-support-agent-for-healthcare-ops-manager",
+      "title": "Retrieval Support Agent for Healthcare",
+      "aos": 84,
+      "vertical": "healthcare"
+    },
+    {
+      "slug": "life-sciences-intake-triage-on-voice",
+      "title": "Life sciences Intake Triage on Voice",
+      "aos": 84,
+      "vertical": "life-sciences"
+    },
+    {
+      "slug": "life-sciences-competency-tracker-unbundle-the-suite",
+      "title": "Life sciences Competency Tracker",
+      "aos": 84,
+      "vertical": "life-sciences"
+    },
+    {
+      "slug": "support-agent-for-mental-health-run-by-retrieval",
+      "title": "Support Agent for Mental health, Run by Retrieval",
+      "aos": 84,
+      "vertical": "mental-health"
+    },
+    {
+      "slug": "automated-compliance-auditor-for-home-care-scheduler",
+      "title": "Automated Compliance Auditor for Home care",
+      "aos": 84,
+      "vertical": "home-care"
+    },
+    {
+      "slug": "automated-risk-scorer-for-construction",
+      "title": "Automated Risk Scorer for Construction",
+      "aos": 84,
+      "vertical": "construction"
+    },
+    {
+      "slug": "automated-proposal-builder-for-construction-construction",
+      "title": "Automated Proposal Builder for Construction",
+      "aos": 84,
+      "vertical": "construction"
+    },
+    {
+      "slug": "appeal-drafter-for-construction-run-by-extraction-construction",
+      "title": "Appeal Drafter for Construction, Run by Extraction",
+      "aos": 84,
+      "vertical": "construction"
+    },
+    {
+      "slug": "compliance-auditor-for-construction-run-by-retrieval-seat-saas",
+      "title": "Compliance Auditor for Construction, Run by Retrieval",
+      "aos": 84,
+      "vertical": "construction"
+    },
+    {
+      "slug": "logistics-asset-tracker-on-anomaly-logistics",
+      "title": "Logistics Asset Tracker on Anomaly",
+      "aos": 84,
+      "vertical": "logistics"
+    },
+    {
+      "slug": "retrieval-powered-appeal-drafter-for-dispatchers",
+      "title": "Retrieval-Powered Appeal Drafter for Dispatchers",
+      "aos": 84,
+      "vertical": "logistics"
+    },
+    {
+      "slug": "automated-rfp-responder-for-logistics-kill-the-phone-queue",
+      "title": "Automated RFP Responder for Logistics",
+      "aos": 84,
+      "vertical": "logistics"
+    },
+    {
+      "slug": "automated-risk-scorer-for-logistics-close-the-loop-overnight",
+      "title": "Automated Risk Scorer for Logistics",
+      "aos": 84,
+      "vertical": "logistics"
+    },
+    {
+      "slug": "freight-brokerage-expense-reviewer-on-extraction-freight-brokerage",
+      "title": "Freight brokerage Expense Reviewer on Extraction",
+      "aos": 84,
+      "vertical": "freight-brokerage"
+    },
+    {
+      "slug": "grant-tracker-for-freight-brokerage-run-by-retrieval-dispatcher",
+      "title": "Grant Tracker for Freight brokerage, Run by Retrieval",
+      "aos": 84,
+      "vertical": "freight-brokerage"
+    }
+  ]
+}

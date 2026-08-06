@@ -16,9 +16,9 @@ import {
   FileX2,
 } from "lucide-react";
 
-const QUOTE_URL = "https://example.com/quote/lendleap";
-const PHONE_DISPLAY = "(811) 555-0201";
-const PHONE_TEL = "tel:+18115550201";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1681826292838-c37fbd22263a?auto=format&fit=crop&w=1600&q=80",
@@ -311,9 +311,18 @@ export default function LendLeapPage() {
                 <strong>Same day</strong>
                 <span>Fastest funding*</span>
               </div>
+              {/*
+                Was "4.8★ / Average app rating". There is no app and no store
+                listing to be rated — LendLeap is the fictional brand the footer
+                disclaimer describes. Of the four numbers in this row it is the
+                only one a visitor reads as other people's verdict rather than a
+                product spec, and the disclaimer that admits the brand is
+                invented is in the footer, well below it. Replaced with that
+                admission, moved up to where it is read first.
+              */}
               <div className="lendleap-stat">
-                <strong>4.8★</strong>
-                <span>Average app rating</span>
+                <strong>Demo</strong>
+                <span>Fictional brand page</span>
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "gig-earnings-mileage-analyzer",
   "title": "Gig Earnings & Mileage Analyzer",
-  "description": "Expenses ke baad effective hourly earnings calculate kare.",
+  "description": "Calculate what you really earn per hour once mileage and expenses come out.",
   "badge": "Creator & Gig-Business Tools",
   "category": [
     "Finance",

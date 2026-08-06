@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This is a full pass-and-play chess board for two people sharing one device, with a complete rules engine behind it: only legal moves are accepted, and castling, en passant, promotion, check and checkmate are all handled properly. It also recognises every standard draw — stalemate, insufficient material, the 50-move rule and threefold repetition — and runs a clock with six time controls from 1-minute bullet to 30-minute classical. Move history is recorded in standard algebraic notation with correct disambiguation, alongside captured pieces and the running material count.",
+    "This is a full pass-and-play chess board for two people sharing one device, with a complete rules engine behind it: only legal moves are accepted, and castling, en passant, promotion, check and checkmate are all handled properly. It also recognises every standard draw — stalemate, insufficient material, the 50-move rule and threefold repetition — and runs a clock offering five choices on the New Match card, from 1-minute bullet up to 30-minute classical plus an Unlimited option. Move history is recorded in standard algebraic notation with correct disambiguation, alongside captured pieces and the running material count.",
   useCases: [
     "Two of you are waiting somewhere with one phone between you and want a real game with a clock rather than an app that pairs you with a stranger",
     "You are teaching someone the rules and want the board to refuse illegal moves, so a pinned knight simply will not lift",
@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "What time controls are available?",
-      "Six: 1-minute bullet, 3- and 5-minute blitz, 10-minute rapid, 15 minutes with a 10-second increment, and 30-minute classical. Only the 15+10 option adds increment; the rest are straight countdowns.",
+      "Five buttons on the New Match card: Bullet at 1 minute, Blitz at 5, Rapid at 10, Classical at 30, and Unlimited. None of them add increment — every timed choice is a straight countdown, and when a clock reaches zero the game ends on Time forfeit.",
     ],
     [
       "How does the 50-move rule work here?",

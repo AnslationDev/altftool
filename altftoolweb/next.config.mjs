@@ -29,6 +29,14 @@ const amplifyIncompatibleNativePackages = [
   "node_modules/@img/sharp-libvips-linuxmusl-x64/**/*",
   "node_modules/@img/sharp-linuxmusl-x64/**/*",
 ];
+const amplifyCdnCorpusFiles = [
+  "public/data/ideas/**/*.json",
+  "public/data/lexicon/**/*.gz",
+];
+const amplifyTraceExcludes = [
+  ...amplifyIncompatibleNativePackages,
+  ...amplifyCdnCorpusFiles,
+];
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -40,10 +48,15 @@ const nextConfig = {
         // musl alternatives that can never load there; excluding them at trace
         // time is essential because Amplify rebuilds its compute bundle from
         // the NFT files. `/**` covers every route trace (including `/`) and
-        // `next-server` covers Next's shared trace.
+        // `next-server` covers Next's shared trace. Ideas and Lexicon corpus
+        // objects are deployed from `public/` as immutable CDN assets; their
+        // server loaders read locally while building and fall back to those
+        // public URLs in Amplify's compute runtime. Keeping the generated
+        // corpora in route traces makes Amplify copy the same large static
+        // datasets into the compute bundle as well as the CDN deployment.
         outputFileTracingExcludes: {
-          "/**": amplifyIncompatibleNativePackages,
-          "next-server": amplifyIncompatibleNativePackages,
+          "/**": amplifyTraceExcludes,
+          "next-server": amplifyTraceExcludes,
         },
       }
     : {}),
@@ -116,6 +129,31 @@ const nextConfig = {
 
   async headers() {
     return [
+      {
+        // BOPS contains interface demonstrations, not operating providers or
+        // live quote flows. A response header guarantees noindex even when a
+        // nested legacy page exports its own metadata object.
+        source: "/bops/:path*",
+        headers: [
+          {
+            key: "X-Robots-Tag",
+            value: "noindex, nofollow",
+          },
+        ],
+      },
+      {
+        // `/sitemap.xml` is generated on demand so its 1.2 MiB response body
+        // does not live in the Amplify compute artifact. Preserve the cache
+        // contract of the former static metadata route; getSitemapEntries()
+        // still refreshes its underlying entry set once per hour.
+        source: "/sitemap.xml",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, must-revalidate",
+          },
+        ],
+      },
       {
         // Widget iframes are meant to be embedded on third-party sites.
         // The enforced frame-ancestors CSP governs framing in modern browsers
@@ -410,6 +448,13 @@ const nextConfig = {
         // optimizer restricted to that exact HTTPS hostname.
         protocol: "https",
         hostname: "upload.wikimedia.org",
+        pathname: "/**",
+      },
+      {
+        // Festival photo search can return Pexels CDN images. Restrict the
+        // optimizer to that exact HTTPS hostname and path space.
+        protocol: "https",
+        hostname: "images.pexels.com",
         pathname: "/**",
       },
 

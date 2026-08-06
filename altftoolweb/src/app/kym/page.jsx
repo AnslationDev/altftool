@@ -4,9 +4,9 @@ import { isKymIndexable } from "./data/indexPolicy";
 
 export async function generateMetadata() {
   return createPageMetadata({
-    title: "Know Your Meme – Memes & Internet Culture",
+    title: "Meme Encyclopedia — Memes & Internet Culture",
     description:
-      "Explore trending memes, viral moments, and internet culture on AltFTool's KYM hub. Browse meme origins, roundups, and community polls.",
+      "Explore trending memes, viral moments, and internet culture in ALTFTool's meme encyclopedia. Browse meme origins, roundups, and community polls.",
     path: "/kym",
     keywords: [
       "meme encyclopedia",

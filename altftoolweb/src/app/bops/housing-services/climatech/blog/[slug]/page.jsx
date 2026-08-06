@@ -300,10 +300,10 @@ export default async function BlogPage({ params }) {
                     Book Appointment
                   </Link>
                   <a
-                    href="tel:8005551234"
+                    href="#demo-only"
                     className="block text-center border border-[#1a1a1a]/40 hover:border-[#1a1a1a] text-[#1a1a1a] py-3 px-6 rounded-full font-semibold text-sm transition-colors duration-300"
                   >
-                    📞 Call (800) 555-1234
+                    📞 Call Demo only
                   </a>
                 </div>
               </div>
@@ -367,10 +367,10 @@ export default async function BlogPage({ params }) {
               Book Service
             </Link>
             <a
-              href="tel:8005551234"
+              href="#demo-only"
               className="border border-[#1a1a1a]/40 hover:border-[#1a1a1a] text-[#1a1a1a] px-8 py-4 rounded-full font-semibold transition-transform duration-300 hover:-translate-y-0.5 inline-block text-sm"
             >
-              Call Now: (800) 555-1234
+              Call Now: Demo only
             </a>
           </div>
         </div>

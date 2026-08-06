@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "shift-rotation-fairness-auditor",
   "title": "Shift-Rotation Fairness Auditor",
-  "description": "Nights, weekends aur workload ka member-wise fairness score dikhaye.",
+  "description": "Score how fairly nights, weekends and workload are split across team members.",
   "badge": "Fair Decisions & Group Scheduling",
   "category": [
     "Productivity",

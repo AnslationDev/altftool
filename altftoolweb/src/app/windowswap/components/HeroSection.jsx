@@ -32,10 +32,10 @@ export default function HeroSection({ onStartPlaying, onOpenSubmit, onOpenSuppor
             onClick={onOpenSupport}
             className="windowswap-primary-button px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1.5 font-semibold text-xs cursor-pointer"
           >
-            <Coffee className="h-3 w-3" /> Buy us a coffee
+            <Coffee className="h-3 w-3" /> Payments unavailable
           </button>
 
-          <button onClick={onOpenSubmit} className="hover:text-white transition duration-200 cursor-pointer">Contact</button>
+          <button onClick={onOpenSubmit} className="hover:text-white transition duration-200 cursor-pointer">Window draft</button>
 
         </div>
 
@@ -59,7 +59,7 @@ export default function HeroSection({ onStartPlaying, onOpenSubmit, onOpenSuppor
             onClick={onOpenSubmit}
             className="windowswap-secondary-button px-5 py-2 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 font-semibold flex items-center gap-1 text-xs cursor-pointer"
           >
-            <Upload className="h-3 w-3" /> Submit
+            <Upload className="h-3 w-3" /> Save local draft
           </button>
         </div>
 
@@ -80,7 +80,7 @@ export default function HeroSection({ onStartPlaying, onOpenSubmit, onOpenSuppor
         </motion.button>
 
         <p className="windowswap-hero-subtitle mt-6 text-white font-sans text-sm font-semibold tracking-wide">
-          Share your view. Travel without moving.
+          Browse embedded views. Drafts stay only in this browser.
         </p>
       </div>
 

@@ -4,7 +4,7 @@ import { ShieldCheck } from "lucide-react";
 const INSURANCE_BASE = "/bops/insurance";
 
 const DISCLAIMER =
-  "AltFTool is not an insurance company or agency and does not sell insurance. We help you compare options and connect with licensed insurers and agents; quotes, coverage, eligibility and pricing depend on the provider, your state and your circumstances. Nothing here is insurance advice.";
+  "ALTFTool is not an insurer, insurance agency, or broker. These pages are general educational demonstrations: we do not sell policies, provide rates, collect quote requests, or connect visitors with providers. Verify current rules and licensing with your state insurance regulator. Nothing here is insurance advice.";
 
 /**
  * Slim footer for an Insurance vertical page. `links` is `[{ slug, name }]` for
@@ -32,8 +32,8 @@ export default function InsuranceFooter({ links = [], activeSlug = null }) {
                 maxWidth: "24rem",
               }}
             >
-              Compare insurance quotes across trusted, licensed providers and find
-              the right coverage in minutes — free, with no obligation.
+              Read general insurance guides and learn what to verify before contacting
+              a licensed provider or your state insurance regulator.
             </p>
           </div>
 

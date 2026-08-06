@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "creator-contract-rights-timeline",
   "title": "Creator Contract Rights Timeline",
-  "description": "Usage, exclusivity, whitelisting aur renewal dates extract kare.",
+  "description": "Extract usage, exclusivity, whitelisting and renewal dates from a creator contract.",
   "badge": "Creator & Gig-Business Tools",
   "category": [
     "Business",

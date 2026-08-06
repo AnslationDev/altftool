@@ -256,7 +256,7 @@ export function FloatingBubbleBackground({ mousePos }) {
 // --- HERO SECTION ---
 export function HeroSection() {
   const badges = [
-    { label: "22+ Bubble Styles", icon: Layers },
+    { label: "22 Bubble Styles", icon: Layers },
     { label: "Instant Live Conversion", icon: Zap },
     { label: "PNG & SVG Export", icon: Download },
     { label: "Google Fonts Gallery", icon: Type },

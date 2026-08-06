@@ -206,7 +206,7 @@ export function srtToTranscript(raw, options = {}) {
   let firstUsedStartMs = null;
   let lastUsedEndMs = null;
 
-  cues.forEach((cue, position) => {
+  cues.forEach((cue) => {
     const kept = [];
     cue.lines.forEach((rawLine) => {
       let line = stripMarkup(rawLine);
@@ -230,11 +230,14 @@ export function srtToTranscript(raw, options = {}) {
     });
 
     if (kept.length === 0) return;
+    // Paragraph boundaries must compare with the previous cue that survived
+    // filtering. A filtered [MUSIC] cue in between must not hide a long gap.
+    const silenceBefore =
+      lastUsedEndMs === null ? Infinity : cue.startMs - lastUsedEndMs;
     usedCues += 1;
     if (firstUsedStartMs === null) firstUsedStartMs = cue.startMs;
     lastUsedEndMs = cue.endMs;
 
-    const silenceBefore = position === 0 ? Infinity : cue.startMs - cues[position - 1].endMs;
     if (current === null || silenceBefore > gap) {
       current = { startMs: cue.startMs, parts: [] };
       paragraphs.push(current);

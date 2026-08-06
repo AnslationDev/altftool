@@ -27,7 +27,7 @@ export const healthInsurance = {
   ],
 
   quoteLabel: "Compare plans",
-  quoteUrl: "https://example.com/quote/health-insurance",
+  quoteUrl: "#demo-only",
 
   coverageTitle: "What health insurance covers",
   coverageIntro:

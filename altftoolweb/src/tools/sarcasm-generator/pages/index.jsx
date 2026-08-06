@@ -108,7 +108,7 @@ export default function ToolHome() {
                 type="button"
                 onClick={() => setContext(c.id)}
                 aria-pressed={context === c.id}
-                className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all ${context === c.id ? "bg-(--primary) text-white shadow-md" : "border border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary)"}`}
+                className={`inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all ${context === c.id ? "bg-(--primary) text-(--primary-foreground) shadow-md" : "border border-(--border) bg-(--background) text-(--muted-foreground) hover:border-(--primary)"}`}
               >
                 <span aria-hidden="true">{c.icon}</span> {c.label}
               </button>

@@ -5,17 +5,17 @@ const Features = () => {
     {
       title: "Multiple Time Zones at Once",
       description:
-        "View current time across multiple countries and cities simultaneously in one convenient dashboard.",
+        "View current time across several browser-supported IANA zones in one dashboard.",
     },
     {
       title: "Accurate Real-Time Updates",
       description:
-        "Get precise and automatically updated time based on each country's official time zone.",
+        "Format your device clock once per second with the selected zone rules supplied by your browser.",
     },
     {
       title: "Add & Remove Cities Easily",
       description:
-        "Customize your clock by adding or removing countries and cities based on your needs.",
+        "Add or remove zones by searching their IANA city or region identifiers.",
     },
     {
       title: "24-Hour & 12-Hour Format",
@@ -30,7 +30,7 @@ const Features = () => {
     {
       title: "Fully Responsive Design",
       description:
-        "Access the multi-country clock seamlessly on desktop, tablet, or mobile devices anytime.",
+        "Use the time-zone dashboard on desktop, tablet, or mobile layouts.",
     },
   ];
 
@@ -40,7 +40,7 @@ const Features = () => {
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16">
           <h2 className="text-2xl sm:text-4xl font-extrabold text-(--foreground) mb-4">
-            Why Use Our Multi Country Clock?
+            Why Use Our Multi Time Zone Clock?
           </h2>
           <p className="text-base sm:text-lg text-(--muted-foreground) max-w-2xl mx-auto leading-relaxed">
             Track global time zones effortlessly and stay connected worldwide

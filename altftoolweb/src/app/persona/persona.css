@@ -1,0 +1,268 @@
+/*
+ * AltF Persona — product token layer
+ *
+ * Extends the shared AltFTool design system rather than replacing it. Every
+ * token is namespaced --psn-* so nothing leaks into the rest of the platform,
+ * and every one is defined for BOTH themes because the site ships a light
+ * default with a dark toggle. Dark-tuned 400-weight hues fail contrast on the
+ * near-white light page, so the light block uses the 600/700 ramp.
+ *
+ * THE VISUAL ARGUMENT
+ * -------------------
+ * Every other product in this category sells you the render, so every other
+ * product in this category looks like a gallery. We sell the specification, so
+ * this looks like a casting call sheet: a name in a heavy weight, a plate of
+ * monospace facts underneath, a stamp in the corner.
+ *
+ * Two signature devices, learned once on the landing page and read everywhere
+ * after:
+ *
+ *   1. THE ROUTE STRIPE — a 3px rule down the leading edge of every persona
+ *      card, coloured by production route. It answers "what will this cost me
+ *      before it works" without a legend, the way Atlas's access stripe does.
+ *
+ *   2. THE IDENTITY PLATE — the seed token set in monospace on a tinted slab.
+ *      It is the thing that says "this is a specification, not a vibe", and it
+ *      is why the locked line is always rendered as code and never as prose.
+ *      Prose invites paraphrase, and paraphrase is what breaks a face.
+ */
+
+:root {
+  --psn-prompt: var(--anslation-ds-success-text);
+  --psn-prompt-soft: var(--anslation-ds-success-soft);
+  --psn-reference: var(--anslation-ds-info-text);
+  --psn-reference-soft: var(--anslation-ds-info-soft);
+  --psn-trained: var(--anslation-ds-accent);
+  --psn-trained-soft: var(--anslation-ds-accent-soft);
+
+  --psn-accent: var(--anslation-ds-accent);
+  --psn-accent-soft: var(--anslation-ds-accent-soft);
+  --psn-accent-text: var(--anslation-ds-accent);
+
+  --psn-paper: var(--anslation-ds-surface);
+  --psn-plate: var(--anslation-ds-soft);
+  --psn-plate-ink: var(--anslation-ds-text-soft);
+  --psn-rule: var(--anslation-ds-border);
+  --psn-graticule: var(--anslation-ds-border);
+  --psn-stamp: var(--anslation-ds-muted);
+
+  --psn-still: var(--anslation-ds-primary-text);
+  --psn-video: var(--anslation-ds-danger-text);
+}
+
+/* ------------------------------------------------------------------ *
+ * Route stripe — the signature device.
+ * ------------------------------------------------------------------ */
+
+.psn-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.psn-stripe::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block: 0;
+  width: 3px;
+  background: var(--psn-stripe-colour, var(--psn-rule));
+}
+
+.psn-route-prompt-only {
+  --psn-stripe-colour: var(--psn-prompt);
+  --psn-route-soft: var(--psn-prompt-soft);
+  --psn-route-ink: var(--psn-prompt);
+}
+
+.psn-route-reference {
+  --psn-stripe-colour: var(--psn-reference);
+  --psn-route-soft: var(--psn-reference-soft);
+  --psn-route-ink: var(--psn-reference);
+}
+
+.psn-route-trained {
+  --psn-stripe-colour: var(--psn-trained);
+  --psn-route-soft: var(--psn-trained-soft);
+  --psn-route-ink: var(--psn-trained);
+}
+
+.psn-route-chip {
+  background: var(--psn-route-soft, var(--psn-plate));
+  color: var(--psn-route-ink, var(--psn-accent-text));
+}
+
+/* ------------------------------------------------------------------ *
+ * Identity plate and locked line
+ * ------------------------------------------------------------------ */
+
+.psn-plate {
+  background: var(--psn-plate);
+  color: var(--psn-plate-ink);
+  font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, "SF Mono",
+    Menlo, Consolas, monospace);
+  letter-spacing: 0.08em;
+}
+
+.psn-seed {
+  font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, "SF Mono",
+    Menlo, Consolas, monospace);
+  letter-spacing: 0.14em;
+  font-variant-ligatures: none;
+}
+
+/*
+ * The locked line is always code. If it looks like prose people paraphrase it,
+ * and paraphrasing it is precisely what makes a face drift.
+ */
+.psn-code {
+  background: var(--psn-plate);
+  color: var(--psn-plate-ink);
+  border: 1px solid var(--psn-rule);
+  font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, "SF Mono",
+    Menlo, Consolas, monospace);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  tab-size: 2;
+}
+
+.psn-stamp {
+  color: var(--psn-stamp);
+  font-family: var(--font-geist-mono, ui-monospace, SFMono-Regular, "SF Mono",
+    Menlo, Consolas, monospace);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-size: 0.625rem;
+}
+
+/* ------------------------------------------------------------------ *
+ * Surfaces
+ * ------------------------------------------------------------------ */
+
+.psn-sheet {
+  background: var(--psn-paper);
+  border: 1px solid var(--psn-rule);
+}
+
+/* The call-sheet grid. Faint enough to read as paper rather than as graph. */
+.psn-graticule {
+  background-image:
+    linear-gradient(to right, var(--psn-graticule) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--psn-graticule) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.psn-accent-panel {
+  background: var(--psn-accent-soft);
+  border: 1px solid color-mix(in srgb, var(--psn-accent) 24%, transparent);
+}
+
+/* Horizontal rail: the sub-nav and facet strips scroll rather than wrap. */
+.psn-rail {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.psn-rail::-webkit-scrollbar {
+  display: none;
+}
+
+/* ------------------------------------------------------------------ *
+ * Studio wizard
+ * ------------------------------------------------------------------ */
+
+.psn-option {
+  border: 1px solid var(--psn-rule);
+  background: var(--psn-paper);
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease;
+}
+
+.psn-option:hover {
+  border-color: color-mix(in srgb, var(--psn-accent) 45%, var(--psn-rule));
+}
+
+.psn-option[aria-pressed="true"] {
+  border-color: var(--psn-accent);
+  background: var(--psn-accent-soft);
+  color: var(--psn-accent-text);
+}
+
+.psn-steps {
+  counter-reset: psn-step;
+}
+
+.psn-step-dot {
+  border: 1px solid var(--psn-rule);
+  background: var(--psn-paper);
+}
+
+.psn-step-dot[data-state="done"] {
+  background: var(--psn-accent);
+  border-color: var(--psn-accent);
+  color: var(--anslation-ds-status-foreground);
+}
+
+.psn-step-dot[data-state="current"] {
+  border-color: var(--psn-accent);
+  color: var(--psn-accent-text);
+  box-shadow: 0 0 0 3px var(--psn-accent-soft);
+}
+
+/* ------------------------------------------------------------------ *
+ * Content-kind glyphs
+ * ------------------------------------------------------------------ */
+
+.psn-kind-still {
+  color: var(--psn-still);
+}
+
+.psn-kind-video {
+  color: var(--psn-video);
+}
+
+/* ------------------------------------------------------------------ *
+ * The 30-day grid. A month has to be legible as a shape, not a list, or
+ * nobody notices the four days in a row with nothing on them.
+ * ------------------------------------------------------------------ */
+
+.psn-month {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.375rem;
+}
+
+@media (min-width: 640px) {
+  .psn-month {
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+  }
+}
+
+.psn-day {
+  aspect-ratio: 1;
+  border: 1px solid var(--psn-rule);
+  background: var(--psn-paper);
+}
+
+.psn-day[data-rest="true"] {
+  background: var(--psn-graticule);
+  border-color: transparent;
+}
+
+.psn-day[data-kind="video"] {
+  border-color: color-mix(in srgb, var(--psn-video) 55%, transparent);
+  background: color-mix(in srgb, var(--psn-video) 10%, var(--psn-paper));
+}
+
+.psn-day[data-kind="still"] {
+  border-color: color-mix(in srgb, var(--psn-still) 55%, transparent);
+  background: color-mix(in srgb, var(--psn-still) 10%, var(--psn-paper));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .psn-option {
+    transition: none;
+  }
+}

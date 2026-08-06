@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "snake-draft-board",
   "title": "Snake Draft Board",
-  "description": "Serpentine pick order aur live selections manage kare.",
+  "description": "Run a snake draft with serpentine pick order and live selection tracking.",
   "badge": "Fair Decisions & Group Scheduling",
   "category": [
     "Productivity",

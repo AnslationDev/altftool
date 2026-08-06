@@ -1,46 +1,30 @@
 "use client";
 
 import Image from "next/image";
-import { Users, ArrowRight, BriefcaseBusiness } from "lucide-react";
+import { ArrowRight, BriefcaseBusiness } from "lucide-react";
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import PersonalityLoader from "./PersonalityLoader";
 
 const tests = [
   {
-    title: "Career Personality Test",
-    desc: "Discover careers aligned with your strengths and working style.",
-    people: "1.2k People Took This Test",
+    title: "Structure Preference",
+    desc: "Reflect on whether you prefer a defined routine or room to adapt.",
     imgSrc: "/personality/categories/Career.png",
   },
   {
-    title: "Emotional Intelligence",
-    desc: "Discover careers aligned with your strengths and working style.",
-    people: "1.2k People Took This Test",
-    imgSrc: "/personality/categories/emotional.png",
-  },
-  {
-    title: "Leadership Style",
-    desc: "Discover your leadership approach and how you inspire others.",
-    people: "1.2k People Took This Test",
+    title: "Leadership Preference",
+    desc: "Reflect on whether you prefer guiding a team or contributing alongside it.",
     imgSrc: "/personality/categories/lead.png",
   },
   {
-    title: "Introvert vs Extrovert",
-    desc: "Understand your energy style and how you interact with the world.",
-    people: "1.2k People Took This Test",
+    title: "Social Energy",
+    desc: "Reflect on whether social interaction tends to energize or drain you.",
     imgSrc: "/personality/categories/extrovert.png",
   },
   {
-    title: "Relationship Personality",
-    desc: "Explore your relationship patterns and build stronger connections.",
-    people: "1.2k People Took This Test",
-    imgSrc: "/personality/categories/relationship.png",
-  },
-  {
-    title: "Communication Style",
-    desc: "Explore your relationship patterns and build stronger connections.",
-    people: "1.2k People Took This Test",
+    title: "Planning Style",
+    desc: "Reflect on whether you prefer planning ahead or staying spontaneous.",
     imgSrc: "/personality/categories/communication.png",
   },
 ];
@@ -69,11 +53,11 @@ export default function Categories() {
         {/* Heading */}
         <div className="text-center mb-14">
           <h2 className="section-title max-w-[675px] mx-auto">
-            Explore Personality Tests Designed For You
+            Preview the Four Scored Traits
           </h2>
           <p className="section-subtitle max-w-[548px] mx-auto">
-            Discover scientifically inspired assessments for career growth,
-            relationships, self-awareness, and communication.
+            Every card starts the same four-question reflection; each question
+            contributes one transparent score to your final snapshot.
           </p>
         </div>
 
@@ -149,14 +133,6 @@ export default function Categories() {
                   <h3 className="font-bold text-[18px] leading-[28px] mb-1">
                     {test.title}
                   </h3>
-
-                  <div className="flex items-center gap-1.5 mb-3">
-                    <Users className="text-(--primary) fill-(--primary) h-5 w-5" />
-
-                    <span className="font-semibold text-[12px] text-(--muted-foreground)">
-                      {test.people}
-                    </span>
-                  </div>
 
                   <div className="mt-auto flex items-end justify-between gap-4">
                     <p className="leading-[23px] max-w-xl text-(--muted-foreground)">
@@ -234,12 +210,6 @@ export default function Categories() {
               <h3 className="font-bold text-[17px] md:text-[17px] lg:text-[20px] leading-[30px] mb-1">
                 {test.title}
               </h3>
-              <div className="flex items-center gap-1.5 py-3">
-                <Users className="text-(--primary) fill-(--primary) h-5 w-5" />
-                <span className="font-semibold text-[12px] text-(--muted-foreground)">
-                  {test.people}
-                </span>
-              </div>
               <div className="mt-auto flex items-end justify-between gap-4">
                 <p className="leading-[23px] max-w-xl text-(--muted-foreground)">
                   {test.desc}

@@ -32,7 +32,7 @@ const fmtTime = (minute) => {
 export default function ToolHome() {
   const [focusSpan, setFocusSpan] = useState(DEFAULTS.focusSpan);
   const [totalMinutes, setTotalMinutes] = useState(DEFAULTS.totalMinutes);
-  const { copy, isCopied, announcement } = useCopyToClipboard();
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -63,6 +63,7 @@ export default function ToolHome() {
   const reset = () => {
     setFocusSpan(DEFAULTS.focusSpan);
     setTotalMinutes(DEFAULTS.totalMinutes);
+    resetCopyState();
   };
 
   return (

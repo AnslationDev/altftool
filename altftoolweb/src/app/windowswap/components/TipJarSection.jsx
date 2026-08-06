@@ -18,18 +18,18 @@ export default function TipJarSection({ onOpenSupport }) {
       {/* Main Overlay Content */}
       <div className="windowswap-tipjar-content relative z-20 max-w-2xl flex flex-col items-center px-6">
         <h2 className="windowswap-tipjar-title font-serif text-5xl md:text-6xl font-bold tracking-wide text-white mb-6 drop-shadow-md">
-          The Tip Jar
+          Tip Jar Preview
         </h2>
 
         <p className="windowswap-tipjar-copy font-serif text-base md:text-lg text-white leading-relaxed font-light mb-8 max-w-xl drop-shadow-sm">
-          Send some virtual tips/thanks for sharing windows, or receive tips from someone who loved yours
+          Tips and donations are not available in this demonstration. No payment details are collected and no money is transferred.
         </p>
 
         <button
           onClick={onOpenSupport}
           className="windowswap-tipjar-cta windowswap-secondary-button px-10 py-3 rounded-full transition-all duration-300 hover:scale-105 active:scale-95 font-semibold tracking-wide text-xs cursor-pointer"
         >
-          Find out how
+          Why payments are unavailable
         </button>
       </div>
 

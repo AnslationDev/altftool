@@ -176,6 +176,37 @@ async function mapWithConcurrency(items, limit, handler) {
   return results;
 }
 
+function isNavigationTimeout(error) {
+  return (
+    error?.name === "TimeoutError" ||
+    /Timeout\s+\d+ms\s+exceeded/i.test(String(error?.message || ""))
+  );
+}
+
+async function gotoAdminModuleRoute(page, url, timeout) {
+  let lastError;
+
+  for (let attempt = 1; attempt <= 2; attempt += 1) {
+    try {
+      return await page.goto(url, {
+        waitUntil: "domcontentloaded",
+        timeout,
+      });
+    } catch (error) {
+      lastError = error;
+      if (attempt === 2 || !isNavigationTimeout(error)) throw error;
+
+      console.warn(`Admin route audit retrying ${url} after a navigation timeout.`);
+      await page
+        .goto("about:blank", { waitUntil: "commit", timeout: 10_000 })
+        .catch(() => {});
+      await new Promise((resolve) => setTimeout(resolve, 1_000));
+    }
+  }
+
+  throw lastError;
+}
+
 async function readJson(path) {
   return JSON.parse(await readFile(path, "utf8"));
 }
@@ -474,10 +505,11 @@ test("admin module route surface resolves for local super admin", async ({ page 
 
   for (const route of adminRoutesToAudit) {
     try {
-      const response = await page.goto(`${adminUrl}${route}`, {
-        waitUntil: "domcontentloaded",
-        timeout: adminModuleRouteTimeoutMs,
-      });
+      const response = await gotoAdminModuleRoute(
+        page,
+        `${adminUrl}${route}`,
+        adminModuleRouteTimeoutMs,
+      );
       await page.waitForLoadState("networkidle", { timeout: 5_000 }).catch(() => {});
       await page.waitForFunction(() => document.body?.innerText?.trim().length > 0, null, { timeout: 10_000 }).catch(() => {});
 

@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "The Circled Text Generator swaps each letter and digit you type for its enclosed Unicode equivalent — ⓐ for a, ① for 1 — in four styles: Circled, Filled Circle, Double Circled and Parenthesized. It is for people writing bios, usernames, comments and captions in places that strip formatting, because the result is real text rather than an image or a font, so it survives copy and paste. Characters with no enclosed counterpart, including spaces and punctuation, pass through untouched.",
+    "The Circled Text Generator swaps supported letters for enclosed Unicode equivalents — ⓐ for a — in four styles: Circled, Filled Circle, Filled Square and Parenthesized. Filled Square uses Unicode's Negative Squared Latin Capital Letter characters. Circled and Filled Circle map digits 0 through 9, Parenthesized maps 1 through 9, and Filled Square has no digit mapping. It is real text rather than an image or font; characters with no mapping, including spaces, punctuation and unsupported digits, pass through untouched.",
   useCases: [
     "You want a social bio or display name that stands out where bold and italic are unavailable, and need characters that paste intact into a plain-text field.",
     "You are numbering steps in a chat message or spreadsheet cell where a real numbered list is not an option, and want ①②③ inline instead of 1. 2. 3.",
@@ -8,8 +8,8 @@ const seo = {
   ],
   benefits: [
     [
-      "Four enclosed styles side by side",
-      "Switch between Circled, Filled Circle, Double Circled and Parenthesized on the same input and pick whichever renders best where you are pasting.",
+      "Four enclosed letter styles side by side",
+      "Switch between Circled, Filled Circle, Filled Square and Parenthesized on the same input. Circled and Filled Circle map 0-9, Parenthesized maps 1-9, and Filled Square changes letters only.",
     ],
     [
       "Real characters, not a font",
@@ -31,7 +31,7 @@ const seo = {
     ],
     [
       "Can I circle numbers above 9?",
-      "Not as one character here — the mapping covers the digits 0 through 9 individually, so typing 10 produces ①⓪ rather than the single glyph ⑩. Multi-digit enclosed numerals exist in Unicode but are not part of this converter's digit map.",
+      "Not as one character here. Circled turns 10 into ①⓪, while Parenthesized turns it into ⑴0 because Unicode has parenthesized digits 1-9 but no matching parenthesized zero. Filled Square has no digit mapping and leaves 10 unchanged. Multi-digit enclosed numerals are not part of this converter.",
     ],
     [
       "Is circled text readable by screen readers and searchable?",

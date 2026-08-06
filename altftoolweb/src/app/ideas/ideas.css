@@ -1,0 +1,180 @@
+/*
+ * AltF Ideas — product token layer
+ *
+ * Extends the shared AltFTool design system rather than replacing it. Every
+ * token here is namespaced --afi-* so nothing leaks into the rest of the
+ * platform, and every one is defined for both themes because the site ships
+ * a light default with a dark toggle.
+ *
+ * The six signal hues are the backbone of the whole product: one hue per
+ * signal, used identically in the score ring, the bars, the filter rail, the
+ * compare table, and the quadrant map. Learn it once, read it everywhere.
+ */
+
+:root {
+  --afi-demand: var(--anslation-ds-primary-text);
+  --afi-moat: var(--anslation-ds-accent);
+  --afi-money: var(--anslation-ds-success-text);
+  --afi-feasibility: var(--anslation-ds-info-text);
+  --afi-timing: var(--anslation-ds-warning-text);
+  --afi-competition: var(--anslation-ds-danger-text);
+
+  --afi-tier-s: var(--anslation-ds-primary-text);
+  --afi-tier-a: var(--anslation-ds-success-text);
+  --afi-tier-b: var(--anslation-ds-info-text);
+  --afi-tier-c: var(--anslation-ds-muted);
+
+  --afi-track: var(--anslation-ds-border);
+  --afi-grid-dot: var(--anslation-ds-border);
+  --afi-glow: var(--anslation-ds-shadow-md);
+}
+
+/* ---------- dotted grid backdrop ---------- */
+.afi-grid-bg {
+  background-image: radial-gradient(circle, var(--afi-grid-dot) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* ---------- ScoreRing ---------- */
+.afi-ring {
+  position: relative;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+.afi-ring svg {
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+.afi-ring__track {
+  stroke: var(--afi-track);
+}
+.afi-ring__inner {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+  pointer-events: none;
+}
+.afi-ring__value {
+  font-family: var(--anslation-ds-font-mono);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.afi-ring__label {
+  font-family: var(--anslation-ds-font-mono);
+  font-size: 0.5rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-top: 0.1875rem;
+}
+
+/* ---------- SignalBars: the compact fingerprint ---------- */
+.afi-bars {
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+}
+.afi-bars__item {
+  flex: 1;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--afi-track);
+  position: relative;
+  overflow: hidden;
+}
+/* No radius on the fill — the track already clips it, and a rounded 2px fill
+   reads as a floating dot rather than a partial bar. */
+.afi-bars__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+}
+
+/* ---------- Labelled signal rows ---------- */
+.afi-signal-row {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr 2.5rem;
+  align-items: center;
+  gap: 0.875rem;
+  padding-block: 0.5rem;
+}
+.afi-signal-row__track {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--afi-track);
+  overflow: hidden;
+}
+.afi-signal-row__fill {
+  display: block;
+  height: 100%;
+}
+
+@media (max-width: 480px) {
+  .afi-signal-row {
+    grid-template-columns: 6rem 1fr 2.25rem;
+    gap: 0.625rem;
+  }
+}
+
+/* ---------- Range inputs in the weight tuner ---------- */
+.afi-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--afi-track);
+  outline: none;
+}
+.afi-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--afi-thumb, var(--primary));
+  cursor: grab;
+  border: 2px solid var(--page);
+  box-shadow: 0 0 0 1px var(--afi-thumb, var(--primary));
+}
+.afi-range::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: var(--afi-thumb, var(--primary));
+  cursor: grab;
+  border: 2px solid var(--page);
+  box-shadow: 0 0 0 1px var(--afi-thumb, var(--primary));
+}
+.afi-range:focus-visible {
+  box-shadow: var(--anslation-ds-focus-ring);
+}
+
+/* ---------- Idea card hover ---------- */
+.afi-card {
+  transition:
+    border-color var(--anslation-ds-motion-base, 0.15s) ease-out,
+    transform var(--anslation-ds-motion-base, 0.15s) ease-out,
+    box-shadow var(--anslation-ds-motion-base, 0.15s) ease-out;
+}
+.afi-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--afi-tier, var(--border-strong));
+  box-shadow: var(--anslation-ds-shadow-md);
+}
+
+/* ---------- Answer-first block (the chunk AI engines lift) ---------- */
+.afi-answer {
+  border-left: 3px solid var(--primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .afi-card,
+  .afi-card:hover {
+    transform: none;
+    transition: none;
+  }
+}

@@ -51,7 +51,7 @@ const seo = {
     ],
     [
       "Is my domain search stored or tracked?",
-      "The domain you type is sent over HTTPS to Cloudflare's public DNS resolver, which is what performs the lookup, so it is not a fully offline check. Nothing is sent to an AltFTool server and no search history is written on this page — the entire check is the one encrypted DNS query.",
+      "The domain you type is sent over HTTPS to Cloudflare's public DNS resolver, which is what performs the lookup, so it is not a fully offline check. Nothing is sent to an AltFTool server and no search history is written on this page — the entire check is one encrypted DNS query for NS records, plus a second one for A records if the first is inconclusive.",
     ],
     [
       "Can I check several domains at once?",

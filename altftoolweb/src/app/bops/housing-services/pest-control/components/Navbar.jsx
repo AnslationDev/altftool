@@ -49,7 +49,7 @@ const Navbar = () => {
               <MapPin size={15} className="text-[#4ADE80]" />
               <span>Serving South Florida</span>
             </div>
-            <a href="tel:7865679554" className="flex items-center gap-2 font-semibold hover:text-[#4ADE80] transition-colors">
+            <a href="#demo-only" className="flex items-center gap-2 font-semibold hover:text-[#4ADE80] transition-colors">
               <Phone size={15} />
               (786) 567-9554
             </a>
@@ -131,7 +131,7 @@ const Navbar = () => {
 
             {/* Desktop CTA */}
             <div className="hidden lg:flex items-center gap-3">
-              <a href="tel:7865679554" className="btn btn-secondary text-sm px-5 py-2.5 hidden xl:flex">
+              <a href="#demo-only" className="btn btn-secondary text-sm px-5 py-2.5 hidden xl:flex">
                 Call Now
               </a>
               <Link to="/book" className="btn btn-primary text-sm px-6 py-2.5">
@@ -174,7 +174,7 @@ const Navbar = () => {
                 <Link to="/services" onClick={() => setIsOpen(false)} className="py-3 px-4 font-medium">All Services</Link>
 
                 <div className="pt-3 flex flex-col gap-3">
-                  <a href="tel:7865679554" className="btn btn-secondary w-full justify-center">Call (786) 567-9554</a>
+                  <a href="#demo-only" className="btn btn-secondary w-full justify-center">Call (786) 567-9554</a>
                   <Link to="/book" onClick={() => setIsOpen(false)} className="btn btn-primary w-full justify-center">Get Free Quote</Link>
                 </div>
               </div>

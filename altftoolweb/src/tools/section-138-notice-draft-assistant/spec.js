@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "section-138-notice-draft-assistant",
   "title": "Section 138 Notice Draft Assistant",
-  "description": "Versioned checklist ke saath cheque-bounce notice draft structure kare.",
+  "description": "Structure a Section 138 cheque-bounce notice draft against a versioned checklist.",
   "badge": "India-Specific Utilities",
   "category": [
     "Text & Writing",

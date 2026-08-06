@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "micr-cheque-code-decoder",
   "title": "MICR Cheque Code Decoder",
-  "description": "MICR city, bank aur branch fields explain kare.",
+  "description": "Decode and explain the city, bank and branch fields in a cheque's MICR code.",
   "badge": "India-Specific Utilities",
   "category": [
     "Finance",

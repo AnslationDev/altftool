@@ -35,7 +35,7 @@ export default function Hero() {
             <li>Free Inspection &amp; Same-Day Service</li>
           </ul>
           <div className="hero-actions">
-            <a href="tel:+919711177747" className="btn-green">
+            <a href="#demo-only" className="btn-green">
               <i className="fa-solid fa-phone" style={{ marginRight: '8px' }}></i> Call Now
             </a>
           </div>

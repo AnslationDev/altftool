@@ -303,8 +303,8 @@ export default function ToolHome() {
               {[
                 ["Maximum resolution", `${MAX_MEGAPIXELS} megapixels`],
                 ["Maximum dimension", `${MAX_SIDE_PX} px per side`],
-                ["Maximum file size", `${MAX_FILE_SIZE_MB} MB`],
-                ["Zoom threshold", `${ZOOM_MIN_SIDE_PX} px on the shortest side`],
+                ["File size", `Smaller than ${MAX_FILE_SIZE_MB} MB`],
+                ["Detail heuristic (theme-dependent)", `${ZOOM_MIN_SIDE_PX} px on the shortest side`],
                 ["Recommended square", `${RECOMMENDED_SIDE_PX} x ${RECOMMENDED_SIDE_PX} px`],
                 ["Supported types", ALLOWED_FORMATS.join(", ").toUpperCase()],
               ].map(([label, value]) => (

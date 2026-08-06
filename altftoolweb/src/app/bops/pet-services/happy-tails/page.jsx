@@ -7,7 +7,6 @@ import {
   MapPin,
   Camera,
   ShieldCheck,
-  Star,
   Clock,
   Heart,
   Home,
@@ -20,9 +19,9 @@ import {
 } from "lucide-react";
 import "./happy-tails.css";
 
-const QUOTE_URL = "https://example.com/quote/happy-tails";
-const TEL = "tel:+18225550133";
-const PHONE = "(822) 555-0133";
+const QUOTE_URL = "#demo-only";
+const TEL = "#demo-only";
+const PHONE = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1530700131180-d43d9b8cc41f?auto=format&fit=crop&w=1600&q=80",
@@ -33,7 +32,7 @@ const IMG = {
   cuddle: "https://images.unsplash.com/photo-1562263690-f1308e103a88?auto=format&fit=crop&w=900&q=80",
 };
 
-function QuoteButton({ variant = "primary", children = "Get a Free Quote" }) {
+function QuoteButton({ variant = "primary", children = "Preview Quote CTA" }) {
   return (
     <a
       className={`happytails-btn happytails-btn-${variant}`}
@@ -72,7 +71,6 @@ export default function HappyTailsPage() {
             <li><a href="#happytails-services" onClick={() => setMenuOpen(false)}>Services</a></li>
             <li><a href="#happytails-how" onClick={() => setMenuOpen(false)}>How It Works</a></li>
             <li><a href="#happytails-adventures" onClick={() => setMenuOpen(false)}>Adventures</a></li>
-            <li><a href="#happytails-reviews" onClick={() => setMenuOpen(false)}>Reviews</a></li>
           </ul>
           <div className="happytails-nav-cta">
             <a className="happytails-nav-phone" href={TEL}>
@@ -94,34 +92,34 @@ export default function HappyTailsPage() {
       <header className="happytails-hero" id="happytails-top">
         <div className="happytails-wrap happytails-hero-grid">
           <div>
-            <span className="happytails-eyebrow"><Sun size={16} aria-hidden="true" /> Sunshine-approved walks, rain or shine backup plans</span>
+            <span className="happytails-eyebrow"><Sun size={16} aria-hidden="true" /> Fictional pet-service layout</span>
             <h1>Walks they&apos;ll <em>wag</em> about all day long</h1>
             <p>
-              GPS-tracked adventures and loving in-home pet sitting from vetted, insured local
-              walkers. You get live route maps and photo updates — they get the zoomies.
+              A design preview showing how walking, sitting, route-map, and photo-update features
+              could be presented by a verified local provider.
             </p>
             <div className="happytails-hero-actions">
-              <QuoteButton variant="sun">Get a Free Quote</QuoteButton>
+              <QuoteButton variant="sun">Preview Quote CTA</QuoteButton>
               <a className="happytails-btn happytails-btn-ghost" href={TEL}>
                 <Phone size={18} aria-hidden="true" /> {PHONE}
               </a>
             </div>
             <div className="happytails-hero-trust">
-              <span className="happytails-trust-item"><ShieldCheck size={18} aria-hidden="true" /> Vetted &amp; insured</span>
-              <span className="happytails-trust-item"><MapPin size={18} aria-hidden="true" /> GPS on every walk</span>
-              <span className="happytails-trust-item"><Camera size={18} aria-hidden="true" /> Photo updates</span>
+              <span className="happytails-trust-item"><ShieldCheck size={18} aria-hidden="true" /> Credential placeholder</span>
+              <span className="happytails-trust-item"><MapPin size={18} aria-hidden="true" /> Example route feature</span>
+              <span className="happytails-trust-item"><Camera size={18} aria-hidden="true" /> Example update feature</span>
             </div>
           </div>
           <div className="happytails-hero-visual">
             <div className="happytails-hero-imgwrap">
               <img
                 src={IMG.hero}
-                alt="A happy golden dog mid-stride on a sunny outdoor walk"
+                alt="Licensed stock photo of a golden dog on a sunny outdoor walk"
                 width="1600"
                 height="1200"
               />
             </div>
-            <div className="happytails-map" role="img" aria-label="Illustration of a live GPS walk map showing a 2.4 kilometre route in progress">
+            <div className="happytails-map" role="img" aria-label="Illustration of a sample GPS walk-map component">
               <div className="happytails-map-canvas">
                 <span className="happytails-map-park" />
                 <span className="happytails-map-pond" />
@@ -130,9 +128,9 @@ export default function HappyTailsPage() {
                 <span className="happytails-map-pin"><PawPrint size={26} aria-hidden="true" /></span>
               </div>
               <div className="happytails-map-meta">
-                <span className="happytails-map-stat">2.4 km<small>distance</small></span>
-                <span className="happytails-map-stat">38 min<small>duration</small></span>
-                <span className="happytails-map-live">LIVE</span>
+                <span className="happytails-map-stat">Example<small>distance</small></span>
+                <span className="happytails-map-stat">Sample<small>duration</small></span>
+                <span className="happytails-map-live">DEMO</span>
               </div>
             </div>
           </div>
@@ -143,41 +141,41 @@ export default function HappyTailsPage() {
 
       <section className="happytails-section" id="happytails-services">
         <div className="happytails-wrap">
-          <span className="happytails-kicker">Tail-wagging services</span>
-          <h2>Every pup gets the VIP (Very Important Pup) treatment</h2>
+          <span className="happytails-kicker">Example service cards</span>
+          <h2>Preview a pet-care service menu</h2>
           <p className="happytails-section-lead">
-            From lunchtime leg-stretchers to overnight snuggle duty, pick the care that fits your
-            crew — every visit ends with a full report card.
+            These cards demonstrate information layout only; no walks, visits, or sitting services
+            are offered through this fictional page.
           </p>
           <div className="happytails-cards">
             <article className="happytails-card">
               <div className="happytails-imgwrap">
-                <img src={IMG.walking} alt="A dog walker leading a leashed dog along a tree-lined path" loading="lazy" width="900" height="600" />
+                <img src={IMG.walking} alt="Licensed stock photo of a person walking a leashed dog" loading="lazy" width="900" height="600" />
               </div>
               <div className="happytails-card-body">
                 <h3><Footprints size={20} aria-hidden="true" /> GPS-Tracked Walks</h3>
-                <p>30 or 60-minute solo strolls with live route tracking, sniff breaks included, and fresh water topped up before we leave.</p>
-                <span className="happytails-card-price">From $19 / walk</span>
+                <p>Example copy showing where a provider could describe walk formats and tracking policies.</p>
+                <span className="happytails-card-price">Example price placement</span>
               </div>
             </article>
             <article className="happytails-card">
               <div className="happytails-imgwrap">
-                <img src={IMG.sitting} alt="A relaxed dog lounging comfortably at home with its sitter nearby" loading="lazy" width="900" height="600" />
+                <img src={IMG.sitting} alt="Licensed stock photo of a relaxed dog at home" loading="lazy" width="900" height="600" />
               </div>
               <div className="happytails-card-body">
                 <h3><Home size={20} aria-hidden="true" /> In-Home Pet Sitting</h3>
-                <p>Overnight or drop-in sitting in your pet&apos;s own kingdom — meals, meds, belly rubs, and mail brought in while you travel.</p>
-                <span className="happytails-card-price">From $45 / night</span>
+                <p>Example copy showing where a provider could explain visit scope and care policies.</p>
+                <span className="happytails-card-price">Example price placement</span>
               </div>
             </article>
             <article className="happytails-card">
               <div className="happytails-imgwrap">
-                <img src={IMG.puppy} alt="A young puppy looking up curiously during a home visit" loading="lazy" width="900" height="600" />
+                <img src={IMG.puppy} alt="Licensed stock photo of a young puppy looking up curiously" loading="lazy" width="900" height="600" />
               </div>
               <div className="happytails-card-body">
                 <h3><Heart size={20} aria-hidden="true" /> Puppy Visits</h3>
-                <p>Short, frequent check-ins for the little ones — potty breaks, play sessions, and gentle leash practice to build big-dog confidence.</p>
-                <span className="happytails-card-price">From $16 / visit</span>
+                <p>Example copy showing where a provider could describe puppy-visit options.</p>
+                <span className="happytails-card-price">Example price placement</span>
               </div>
             </article>
           </div>
@@ -188,21 +186,21 @@ export default function HappyTailsPage() {
 
       <section className="happytails-section happytails-section-tint" id="happytails-how">
         <div className="happytails-wrap">
-          <span className="happytails-kicker">Easy as fetch</span>
-          <h2>How Happy Tails works</h2>
-          <p className="happytails-section-lead">Three quick steps between your pup and their new favourite human.</p>
+          <span className="happytails-kicker">Example workflow</span>
+          <h2>Preview a three-step service flow</h2>
+          <p className="happytails-section-lead">This illustrative sequence does not contact, book, or match a real walker.</p>
           <div className="happytails-steps">
             <div className="happytails-step">
-              <h3><Phone size={19} aria-hidden="true" /> Request a quote</h3>
-              <p>Tap the quote button or call us — tell us about your pet&apos;s routine, quirks, and treat preferences.</p>
+              <h3><Phone size={19} aria-hidden="true" /> Preview an enquiry step</h3>
+              <p>A real provider could explain what information is needed before offering availability.</p>
             </div>
             <div className="happytails-step">
-              <h3><Heart size={19} aria-hidden="true" /> Meet your walker</h3>
-              <p>Free meet-and-greet at home so tails and humans alike can approve the match before day one.</p>
+              <h3><Heart size={19} aria-hidden="true" /> Preview a provider-introduction step</h3>
+              <p>This demo does not arrange a meeting or match anyone with a walker.</p>
             </div>
             <div className="happytails-step">
-              <h3><MapPin size={19} aria-hidden="true" /> Watch the walk live</h3>
-              <p>Follow the GPS route in real time, then swoon over the photo report and personalised pup notes.</p>
+              <h3><MapPin size={19} aria-hidden="true" /> Preview a route-update step</h3>
+              <p>The map and update concepts are illustrative; no live route or pet data exists.</p>
             </div>
           </div>
         </div>
@@ -212,8 +210,8 @@ export default function HappyTailsPage() {
         <div className="happytails-wrap">
           <div className="happytails-band">
             <div>
-              <h2>Fetch your free walking quote</h2>
-              <p>Answers within one business day — zoomies guaranteed sooner.</p>
+              <h2>Preview a walking-service call to action</h2>
+              <p>This disabled component does not request a quote or promise a response.</p>
             </div>
             <div className="happytails-band-actions">
               <QuoteButton variant="sun" />
@@ -227,21 +225,21 @@ export default function HappyTailsPage() {
 
       <section className="happytails-section" id="happytails-adventures">
         <div className="happytails-wrap">
-          <span className="happytails-kicker">Fresh from the trail</span>
-          <h2>Adventures in progress</h2>
-          <p className="happytails-section-lead">Real moments from this week&apos;s walks and sits — straight from our walkers&apos; photo reports.</p>
+          <span className="happytails-kicker">Illustrative gallery</span>
+          <h2>Pet-care photo inspiration</h2>
+          <p className="happytails-section-lead">Licensed stock images used to demonstrate this fictional service-page layout.</p>
           <div className="happytails-gallery">
             <figure>
               <div className="happytails-imgwrap">
-                <img src={IMG.trail} alt="An energetic dog exploring an outdoor trail on a bright day" loading="lazy" width="900" height="563" />
+                <img src={IMG.trail} alt="Licensed stock photo of a dog exploring an outdoor trail" loading="lazy" width="900" height="563" />
               </div>
-              <figcaption><MapPin size={15} aria-hidden="true" /> Morning trail loop, 2.4 km</figcaption>
+              <figcaption><MapPin size={15} aria-hidden="true" /> Example outdoor-walk image</figcaption>
             </figure>
             <figure>
               <div className="happytails-imgwrap">
-                <img src={IMG.cuddle} alt="A content dog enjoying cuddle time during an in-home sitting visit" loading="lazy" width="900" height="563" />
+                <img src={IMG.cuddle} alt="Licensed stock photo of a dog resting indoors" loading="lazy" width="900" height="563" />
               </div>
-              <figcaption><Heart size={15} aria-hidden="true" /> Overnight sit, snuggle level: max</figcaption>
+              <figcaption><Heart size={15} aria-hidden="true" /> Example in-home care image</figcaption>
             </figure>
           </div>
         </div>
@@ -249,45 +247,20 @@ export default function HappyTailsPage() {
 
       <PawTrail />
 
-      <section className="happytails-section happytails-section-tint" id="happytails-reviews">
-        <div className="happytails-wrap happytails-center">
-          <span className="happytails-kicker">Wags of approval</span>
-          <h2>Loved by pets (and their people)</h2>
-          <p className="happytails-section-lead">4.9 average from local pet parents across 2,300+ walks.</p>
-          <div className="happytails-quotes">
-            {[
-              { q: "Biscuit sprints to the door when her walker arrives. The GPS map and photos make my workday so much brighter.", by: "Priya M. & Biscuit" },
-              { q: "Our sitter sent updates every evening of our trip. We came home to a calm, happy dog and a spotless kitchen.", by: "Daniel R. & Mochi" },
-              { q: "The puppy visits saved our floors and our sanity. Leash practice actually stuck — our vet noticed the difference.", by: "Sofia T. & Waffles" },
-            ].map(({ q, by }) => (
-              <div className="happytails-quote" key={by}>
-                <div className="happytails-stars" aria-label="Rated 5 out of 5 stars">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star key={i} size={17} fill="currentColor" aria-hidden="true" />
-                  ))}
-                </div>
-                <blockquote>&ldquo;{q}&rdquo;</blockquote>
-                <cite>{by}</cite>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="happytails-section">
         <div className="happytails-wrap">
           <div className="happytails-band">
             <div>
-              <h2>Ready for happier tails?</h2>
+              <h2>Preview the final call-to-action band</h2>
               <p>
                 <CheckCircle2 size={15} aria-hidden="true" style={{ verticalAlign: "-2px", marginRight: 6 }} />
-                Vetted walkers, GPS tracking, and a wag-back guarantee. Call {PHONE} or grab your quote.
+                Fictional provider, illustrative features, and disabled contact controls. No guarantee is offered.
               </p>
             </div>
             <div className="happytails-band-actions">
               <QuoteButton variant="sun" />
               <a className="happytails-btn happytails-btn-ghost" href={TEL}>
-                <Phone size={18} aria-hidden="true" /> Call us
+                <Phone size={18} aria-hidden="true" /> Demo Call
               </a>
             </div>
           </div>
@@ -303,21 +276,20 @@ export default function HappyTailsPage() {
                 Happy Tails
               </span>
               <p>
-                Dog walking and in-home pet sitting with GPS-tracked routes, photo updates, and
-                walkers your pup will adore. Serving sunny neighbourhoods near you.
+                Fictional dog-walking and pet-sitting page used to demonstrate layout and content structure.
               </p>
             </div>
             <div>
               <p>
                 <Clock size={15} aria-hidden="true" style={{ verticalAlign: "-2px", marginRight: 6 }} />
-                Mon–Sun, 7am–9pm &nbsp;·&nbsp; <a href={TEL}>{PHONE}</a>
+                No live provider hours &nbsp;·&nbsp; <a href={TEL}>{PHONE}</a>
               </p>
-              <p><a href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">Get a Free Quote →</a></p>
+              <p><a href={QUOTE_URL} target="_blank" rel="sponsored noopener noreferrer">Preview Quote CTA →</a></p>
             </div>
           </div>
           <div className="happytails-footer-note">
             <span>© {new Date().getFullYear()} Happy Tails Pet Care. All tails reserved.</span>
-            <span>Independent service provider listing</span>
+            <span>Design demonstration, not a provider listing</span>
           </div>
         </div>
       </footer>

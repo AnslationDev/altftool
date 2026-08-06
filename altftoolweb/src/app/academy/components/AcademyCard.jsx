@@ -7,6 +7,20 @@ import { SkeletonBlock } from "@/components/ui/skeleton";
 
 export default function AcademyCard({ academy }) {
   if (!academy) return null;
+
+  // The pill's value is whatever the Firestore academy record carries, but
+  // normalizeAcademy (packages/core/src/firebaseContent.js:138) defaults a
+  // missing `rating` to 0 — so `rating !== null && rating !== undefined` was
+  // true for every live row, and any platform with no rating in the CMS
+  // rendered "User rating: 0" against its name. Nobody scored it 0; the
+  // constant did. Absent and genuinely-zero are indistinguishable once that
+  // default has been applied, so only a positive finite number is shown.
+  //
+  // The label no longer says "User rating" either: this site has no review
+  // form, no vote endpoint and no store API, so nothing here comes from users.
+  const parsedRating = Number(academy.rating);
+  const displayRating = Number.isFinite(parsedRating) && parsedRating > 0 ? parsedRating : null;
+
   return (
     <a
       href={academy?.academyUrl || "#"}
@@ -26,9 +40,9 @@ export default function AcademyCard({ academy }) {
           <AcademyLogoImage key={academy.image || academy.id || academy.name} academy={academy} />
         </div>
 
-        {academy.rating !== null && academy.rating !== undefined ? (
+        {displayRating !== null ? (
           <div className="academy-pill flex h-[28px] items-center rounded-[7px] px-[10px] text-sm font-medium">
-            User rating: {academy.rating}
+            Rating: {displayRating}
           </div>
         ) : null}
       </div>

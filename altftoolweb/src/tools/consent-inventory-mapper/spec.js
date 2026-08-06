@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "consent-inventory-mapper",
   "title": "Consent Inventory Mapper",
-  "description": "Business ke consent collection aur withdrawal points map kare.",
+  "description": "Map every point where your business collects consent and where it can be withdrawn.",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Productivity",

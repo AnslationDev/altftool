@@ -5,7 +5,7 @@ export const spec = {
   ...{
   "slug": "e-way-bill-validity-calculator",
   "title": "E-Way Bill Validity Calculator",
-  "description": "Distance aur generation time se validity window calculate kare.",
+  "description": "Calculate an e-way bill's validity window from the distance and generation time.",
   "badge": "India-Specific Utilities",
   "category": [
     "Business",

@@ -46,16 +46,16 @@ export default function ExploreLanding({ onStartExploring, onNavigateHome, onNav
       {/* 2. Hero Section */}
       <HeroSection onExplore={handleExplore} onSearchSubmit={handleExplore} />
 
-      {/* 3. SECTION 1: Explore the Best of Pinterest */}
+      {/* 3. SECTION 1: Explore visual collections */}
       <ExploreBestPinterest onExplore={handleExplore} />
 
       {/* 4. SECTION 2: Browse by Category */}
       <BrowseByCategory onSelectCategory={handleExplore} />
 
-      {/* 5. Trending Story Topics */}
+      {/* 5. Topic collections */}
       <TrendingTopics onSelectTopic={handleExplore} />
 
-      {/* 6. What's New On Pinterest (Discovery Feed Section) */}
+      {/* 6. Visual discovery feed */}
       <WhatsNewOnPinterest
         onExplorePin={handleExplore}
         onSelectPin={onSelectPin}

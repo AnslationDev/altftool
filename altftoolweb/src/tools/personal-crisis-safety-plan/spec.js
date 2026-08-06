@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "personal-crisis-safety-plan",
   "title": "Personal Crisis Safety Plan",
-  "description": "Coping steps, trusted contacts aur user-selected actions organize kare.",
+  "description": "Organize coping steps, trusted contacts and the actions you choose in advance.",
   "badge": "Consumer, Family & Personal Resilience",
   "category": [
     "Health & Wellness",

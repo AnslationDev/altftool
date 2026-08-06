@@ -5,11 +5,11 @@ export default function Topbar() {
     <div className="topbar">
       <div className="container">
         <div className="topbar-left">
-          <a href="tel:+919999605070">
+          <a href="#demo-only">
             <i className="fa-solid fa-phone"></i>
             <span>Phone: +91-9999605070</span>
           </a>
-          <a href="mailto:pcds.ggn@gmail.com">
+          <a href="#demo-only">
             <i className="fa-solid fa-envelope"></i>
             <span>pcds.ggn@gmail.com</span>
           </a>

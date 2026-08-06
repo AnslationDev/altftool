@@ -16,9 +16,9 @@ import {
 import DemoBrandNotice from "../_components/DemoBrandNotice";
 import "./pawcover.css";
 
-const QUOTE_URL = "https://example.com/quote/pawcover";
-const PHONE_DISPLAY = "(866) 555-0345";
-const PHONE_TEL = "tel:+18665550345";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1613915588863-e6cc05fcaa16?auto=format&fit=crop&w=1600&q=80",

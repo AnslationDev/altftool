@@ -29,7 +29,7 @@ export const medicare = {
   ],
 
   quoteLabel: "Compare plans",
-  quoteUrl: "https://example.com/quote/medicare",
+  quoteUrl: "#demo-only",
 
   coverageTitle: "The parts of Medicare, explained",
   coverageIntro:

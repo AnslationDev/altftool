@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "adjusted-winner-splitter",
   "title": "Adjusted-Winner Splitter",
-  "description": "Two-person point allocation se shared assets fairly divide kare.",
+  "description": "Divide shared assets fairly between two people using point allocation.",
   "badge": "Fair Decisions & Group Scheduling",
   "category": [
     "Productivity",

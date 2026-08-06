@@ -10,10 +10,14 @@ const PROJECT_ID = "altftool";
 const FIRESTORE_PARENT = `projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/projects/${PROJECT_ID}`;
 const CACHE_SECONDS = 300;
 const CACHE_MS = CACHE_SECONDS * 1000;
+const NEGATIVE_CACHE_SECONDS = 30;
 // "Not found"/empty results are cached briefly (not for the full 5 minutes):
 // caching null for 300s made freshly published posts 404 for up to 5 minutes.
-const NEGATIVE_CACHE_MS = 30 * 1000;
+const NEGATIVE_CACHE_MS = NEGATIVE_CACHE_SECONDS * 1000;
 const MAX_MEMORY_CACHE_ENTRIES = 200;
+const LEGACY_SLUG_SCAN_LIMIT = 500;
+const LEGACY_SLUG_SCAN_PAGE_SIZE = 100;
+const MAX_FALLBACK_SLUG_LENGTH = 256;
 // 3.5s was borderline on cold starts and flapped requests onto the static
 // fallback (listing/search then silently showed stale data). 8s default,
 // still overridable via env.
@@ -59,6 +63,8 @@ const LIST_FIELDS = [
 const DETAIL_FIELDS = [...LIST_FIELDS, "description", "content", "body", "faq", "faqs", "faqItems"];
 const memoryCache = new Map();
 const inflightRequests = new Map();
+const CACHE_MISS = Symbol("firebase-blog-cache-miss");
+let legacySlugIndexRequest = null;
 
 export function describeFirebaseBlogError(error) {
   const message = String(error?.message || error || "Firebase blog read failed.");
@@ -84,7 +90,7 @@ function readCache(key) {
   if (!cached || cached.expiresAt <= Date.now()) {
     // NOTE: entry is intentionally kept so readStaleCache() can serve the
     // last known-good value when Firestore errors out.
-    return null;
+    return CACHE_MISS;
   }
   return cached.value;
 }
@@ -174,10 +180,14 @@ function andFilter(filters) {
   };
 }
 
-async function firestorePost(endpoint, body) {
+async function firestorePost(
+  endpoint,
+  body,
+  { revalidate = CACHE_SECONDS } = {},
+) {
   if (!FIREBASE_API_KEY || !FIREBASE_PROJECT_ID) return [];
 
-  const requestKey = `${endpoint}:${JSON.stringify(body)}`;
+  const requestKey = `${endpoint}:${revalidate}:${JSON.stringify(body)}`;
   const inflight = inflightRequests.get(requestKey);
   if (inflight) return inflight;
 
@@ -192,7 +202,7 @@ async function firestorePost(endpoint, body) {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify(body),
-      next: { revalidate: CACHE_SECONDS },
+      next: { revalidate },
     }
   ).finally(() => {
     inflightRequests.delete(requestKey);
@@ -217,7 +227,7 @@ export async function fetchFirebaseBlogsPage({
     includeDescription: Boolean(includeDescription),
   });
   const cached = readCache(key);
-  if (cached) return cached;
+  if (cached !== CACHE_MISS) return cached;
 
   const fields = includeDescription ? DETAIL_FIELDS : LIST_FIELDS;
   const filters = [
@@ -258,15 +268,109 @@ export async function fetchFirebaseBlogsPage({
   return writeCache(key, posts);
 }
 
-export async function fetchFirebaseBlogBySlug(slug) {
-  if (!slug) return null;
-  const key = cacheKey("blogBySlug", { slug });
-  const cached = readCache(key);
-  if (cached) return cached;
+function isSafeFallbackSlug(slug) {
+  return (
+    typeof slug === "string" &&
+    slug.length > 0 &&
+    slug.length <= MAX_FALLBACK_SLUG_LENGTH &&
+    /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)
+  );
+}
 
-  let rows;
-  try {
-    rows = await firestorePost("runQuery", {
+function isSafeDocumentId(id) {
+  return (
+    typeof id === "string" &&
+    id.length > 0 &&
+    id.length <= 1_500 &&
+    !id.includes("/") &&
+    id !== "." &&
+    id !== ".."
+  );
+}
+
+async function buildLegacySlugIndex() {
+  const key = cacheKey("legacyBlogSlugIndex", {
+    limit: LEGACY_SLUG_SCAN_LIMIT,
+  });
+  const cached = readCache(key);
+  if (cached !== CACHE_MISS) return cached;
+  if (legacySlugIndexRequest) return legacySlugIndexRequest;
+
+  legacySlugIndexRequest = (async () => {
+    try {
+      const index = new Map();
+      let offset = 0;
+
+      while (offset < LEGACY_SLUG_SCAN_LIMIT) {
+        const pageSize = Math.min(
+          LEGACY_SLUG_SCAN_PAGE_SIZE,
+          LEGACY_SLUG_SCAN_LIMIT - offset,
+        );
+        const rows = await firestorePost("runQuery", {
+          structuredQuery: {
+            // Do not download article bodies while recovering legacy identity.
+            select: {
+              fields: ["heading", "title", "slug"].map((fieldPath) => ({
+                fieldPath,
+              })),
+            },
+            from: [{ collectionId: "blogs" }],
+            where: fieldFilter("status", "EQUAL", {
+              stringValue: "published",
+            }),
+            orderBy: [
+              { field: { fieldPath: "createdAt" }, direction: "DESCENDING" },
+            ],
+            offset,
+            limit: pageSize,
+          },
+        });
+        const documents = rows
+          .filter((row) => row.document)
+          .map((row) => decodeDocument(row.document));
+
+        for (const [position, document] of documents.entries()) {
+          if (!isSafeDocumentId(document.id)) continue;
+          if (!document.slug && !document.heading && !document.title) continue;
+          // Stored slugs let this path recover from an old cached-empty exact
+          // query; missing slugs mirror list normalization and derive from title.
+          const fallbackSlug =
+            document.slug || normalizeBlog(document, offset + position).slug;
+          if (!isSafeFallbackSlug(fallbackSlug)) continue;
+
+          if (!index.has(fallbackSlug)) {
+            index.set(fallbackSlug, document.id);
+          } else if (index.get(fallbackSlug) !== document.id) {
+            // Two documents resolving to one URL is ambiguous. Fail closed
+            // rather than returning whichever document happened to sort first.
+            index.set(fallbackSlug, null);
+          }
+        }
+
+        if (documents.length < pageSize) break;
+        offset += documents.length;
+      }
+
+      return writeCache(key, index);
+    } catch (error) {
+      const stale = readStaleCache(key);
+      if (stale) return stale;
+      throw error;
+    }
+  })().finally(() => {
+    legacySlugIndexRequest = null;
+  });
+
+  return legacySlugIndexRequest;
+}
+
+async function fetchPublishedFirebaseBlogById(id) {
+  if (!isSafeDocumentId(id)) return null;
+
+  const documentName = `${FIRESTORE_PARENT}/blogs/${id}`;
+  const rows = await firestorePost(
+    "runQuery",
+    {
       structuredQuery: {
         select: {
           fields: DETAIL_FIELDS.map((fieldPath) => ({ fieldPath })),
@@ -274,19 +378,63 @@ export async function fetchFirebaseBlogBySlug(slug) {
         from: [{ collectionId: "blogs" }],
         where: andFilter([
           fieldFilter("status", "EQUAL", { stringValue: "published" }),
-          fieldFilter("slug", "EQUAL", { stringValue: slug }),
+          fieldFilter("__name__", "EQUAL", {
+            referenceValue: documentName,
+          }),
         ]),
         limit: 1,
       },
-    });
+    },
+    { revalidate: NEGATIVE_CACHE_SECONDS },
+  );
+
+  const document = rows.find((row) => row.document)?.document;
+  return document ? normalizeBlog(decodeDocument(document)) : null;
+}
+
+export async function fetchFirebaseBlogBySlug(slug) {
+  if (!slug) return null;
+  const key = cacheKey("blogBySlug", { slug });
+  const cached = readCache(key);
+  if (cached !== CACHE_MISS) return cached;
+
+  try {
+    const rows = await firestorePost(
+      "runQuery",
+      {
+        structuredQuery: {
+          select: {
+            fields: DETAIL_FIELDS.map((fieldPath) => ({ fieldPath })),
+          },
+          from: [{ collectionId: "blogs" }],
+          where: andFilter([
+            fieldFilter("status", "EQUAL", { stringValue: "published" }),
+            fieldFilter("slug", "EQUAL", { stringValue: slug }),
+          ]),
+          limit: 1,
+        },
+      },
+      { revalidate: NEGATIVE_CACHE_SECONDS },
+    );
+
+    const exactDocument = rows.find((row) => row.document)?.document;
+    if (exactDocument) {
+      return writeCache(key, normalizeBlog(decodeDocument(exactDocument)));
+    }
+
+    if (!isSafeFallbackSlug(slug)) return writeCache(key, null);
+
+    const legacyIndex = await buildLegacySlugIndex();
+    const legacyDocumentId = legacyIndex.get(slug);
+    const legacyBlog = legacyDocumentId
+      ? await fetchPublishedFirebaseBlogById(legacyDocumentId)
+      : null;
+    return writeCache(key, legacyBlog);
   } catch (error) {
     const stale = readStaleCache(key);
     if (stale) return stale;
     throw error;
   }
-
-  const document = rows.find((row) => row.document)?.document;
-  return writeCache(key, document ? normalizeBlog(decodeDocument(document)) : null);
 }
 
 export async function fetchFirebaseRelatedBlogs(category, excludeSlug, limit = 6) {
@@ -305,7 +453,7 @@ export async function fetchFirebaseRelatedBlogs(category, excludeSlug, limit = 6
 export async function fetchFirebaseBlogCategories() {
   const key = cacheKey("blogCategories");
   const cached = readCache(key);
-  if (cached) return cached;
+  if (cached !== CACHE_MISS) return cached;
 
   let rows;
   try {
@@ -335,7 +483,7 @@ export async function fetchFirebaseBlogCategories() {
 export async function fetchFirebaseBlogCount() {
   const key = cacheKey("blogCount");
   const cached = readCache(key);
-  if (cached !== null) return cached;
+  if (cached !== CACHE_MISS) return cached;
 
   let rows;
   try {
@@ -361,7 +509,7 @@ export async function fetchFirebaseBlogCount() {
 export async function getFirebaseBlogCatalog() {
   const key = cacheKey("blogCatalog");
   const cached = readCache(key);
-  if (cached) return cached;
+  if (cached !== CACHE_MISS) return cached;
 
   const [posts, count] = await Promise.all([
     fetchFirebaseBlogsPage({ pageSize: BLOG_REMOTE_LIMIT }),

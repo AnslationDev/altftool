@@ -2,8 +2,18 @@
 "use client";
 
 import Link from "next/link";
-import { ChevronRight, Star } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
+/*
+  Each entry used to carry a `rating` literal — 4.7, 4.7, 4.8, 4.5 — rendered as
+  a filled star row beside the broker's real name and logo, directly above an
+  "Open Account" link to that broker's own site. Tradeon has no review store, no
+  scoring model for brokers and no cited third-party source, so those scores were
+  four invented verdicts on four real, regulated companies, shown where they most
+  influence whether someone opens an account. The star row and the ratings behind
+  it are gone rather than softened; the card still identifies the broker and links
+  out, which is everything it can honestly say.
+*/
 const BROKERS = [
   {
     id: "pepperstone",
@@ -11,7 +21,6 @@ const BROKERS = [
     logo: "https://unavatar.io/pepperstone.com",
     bgColor: "transparent",
     initials: "P",
-    rating: 4.7,
     openAccountUrl: "https://pepperstone.com",
     reviewUrl: "/tradeon/brokers/pepperstone",
   },
@@ -21,7 +30,6 @@ const BROKERS = [
     logo: "https://unavatar.io/fxpro.com",
     bgColor: "transparent",
     initials: "Fx",
-    rating: 4.7,
     openAccountUrl: "https://fxpro.com",
     reviewUrl: "/tradeon/brokers/fxpro",
   },
@@ -31,7 +39,6 @@ const BROKERS = [
     logo: "https://unavatar.io/iforex.com",
     bgColor: "transparent",
     initials: "iF",
-    rating: 4.8,
     openAccountUrl: "https://iforex.com",
     reviewUrl: "/tradeon/brokers/iforex",
   },
@@ -41,42 +48,10 @@ const BROKERS = [
     logo: "https://unavatar.io/fpmarkets.com",
     bgColor: "transparent",
     initials: "FP",
-    rating: 4.5,
     openAccountUrl: "https://fpmarkets.com",
     reviewUrl: "/tradeon/brokers/fp-markets",
   },
 ];
-
-function StarRating({ rating }) {
-  const fullStars = Math.floor(rating);
-  const hasHalfStar = rating % 1 !== 0;
-
-  return (
-    <div className="flex items-center gap-1">
-      <span
-        className="tdn-mono text-xs font-bold mr-1"
-        style={{ color: "var(--tdn-fg-strong)" }}
-      >
-        {rating.toFixed(1)}
-      </span>
-      <div className="flex items-center text-amber-400">
-        {[...Array(5)].map((_, i) => (
-          <Star
-            key={i}
-            size={13}
-            className={`${
-              i < fullStars
-                ? "fill-amber-400 text-amber-400"
-                : i === fullStars && hasHalfStar
-                ? "fill-amber-400/50 text-amber-400"
-                : "text-slate-300 dark:text-slate-700"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
 
 export default function TopBrokers() {
   return (
@@ -129,7 +104,7 @@ export default function TopBrokers() {
               />
             </div>
 
-            {/* Broker Name & Stars */}
+            {/* Broker Name */}
             <div className="text-center mb-4 flex flex-col items-center">
               <h3
                 className="text-sm font-bold mb-1"
@@ -137,7 +112,6 @@ export default function TopBrokers() {
               >
                 {broker.name}
               </h3>
-              <StarRating rating={broker.rating} />
             </div>
 
             {/* CTA Buttons */}

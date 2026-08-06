@@ -28,9 +28,9 @@ const Features = () => {
         "Correct your text and copy the improved version instantly for use anywhere.",
     },
     {
-      title: "Fast, Secure & Browser-Based",
+      title: "Checked by LanguageTool's API",
       description:
-        "Works directly in your browser without storing your text, ensuring privacy and convenience.",
+        "Your text is sent over HTTPS to LanguageTool's public API at api.languagetool.org to be checked, so avoid pasting confidential material. Nothing is sent to an AltFTool server and the text is not saved on this page.",
     },
   ];
 

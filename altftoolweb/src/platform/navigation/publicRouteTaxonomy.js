@@ -3,6 +3,8 @@ import { EXPERIENCE_CATALOG } from "@altftool/core/experiences";
 const EXPERIENCE_PREFIXES = [
   "/labs",
   "/altfgame",
+  "/detour",
+  "/rabbithole",
   ...EXPERIENCE_CATALOG.map((experience) => experience.href),
 ];
 
@@ -14,7 +16,7 @@ export const PUBLIC_ROUTE_FAMILIES = Object.freeze([
     description:
       "Focused AltFTool products for ideas, security, careers, creators, markets, and everyday work.",
     href: "/products",
-    prefixes: ["/products", "/signals"],
+    prefixes: ["/products", "/signals", "/ideas", "/backlinks", "/persona"],
   },
   {
     id: "tools",
@@ -30,6 +32,7 @@ export const PUBLIC_ROUTE_FAMILIES = Object.freeze([
       "/altflovepdf",
       "/transform",
       "/exam-photo",
+      "/altfatlas",
       "/smartlink",
       "/fullscrn",
       "/search-eng",
@@ -91,6 +94,7 @@ export const PUBLIC_ROUTE_FAMILIES = Object.freeze([
       "/prompts",
       "/trendingvids",
       "/locations",
+      "/lexicon",
     ],
   },
   {

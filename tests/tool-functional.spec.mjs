@@ -770,6 +770,7 @@ test.describe("microtool functional flows", () => {
     });
     await expect(page.locator("body")).toContainText("Structure match");
     await expect(page.locator("body")).toContainText("Colour match");
+    page.once("dialog", (dialog) => dialog.accept());
     await page.getByRole("button", { name: "Reset to the demo photos" }).click();
     await expect(page.locator("body")).toContainText("Showing two generated demo photos");
 

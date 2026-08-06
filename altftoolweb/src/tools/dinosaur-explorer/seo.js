@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "Dinosaur Explorer is a browsable reference card set for 20 well-known prehistoric animals — from Compsognathus to Brachiosaurus — with pronunciation, name meaning, diet, length, height, weight, habitat, range and five facts each. You can filter by period (Triassic, Jurassic, Cretaceous), diet and size class, search by name, place each animal on a Mesozoic timeline spanning 252 to 66 million years ago, and see its height drawn against an average 1.8 m human. It is built for school projects and curious kids, not for taxonomic research.",
+    "Dinosaur Explorer is a browsable reference card set for 20 well-known prehistoric animals — from Compsognathus to Brachiosaurus — with pronunciation, name meaning, diet, length, height, weight, habitat, range and five facts each. You can filter by period (Jurassic, Cretaceous), diet and size class, search by name, place each animal on a Mesozoic timeline spanning 252 to 66 million years ago, and see its height drawn against an average 1.8 m human. It is built for school projects and curious kids, not for taxonomic research.",
   useCases: [
     "A child asks how big a T. rex really was, and you want a silhouette next to a human rather than a number in metres",
     "A Year 4 project needs three Jurassic herbivores with diet, size and habitat, so you filter to Jurassic plus Herbivore and read the cards",

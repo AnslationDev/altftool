@@ -1,7 +1,5 @@
 import "server-only";
 
-import { unstable_cache } from "next/cache";
-
 import { EXPERIENCE_CATALOG } from "@altftool/core/experiences";
 import { PRODUCT_SUITE_CATALOG } from "@altftool/core/product-suites";
 import { SIGNAL_CATALOG } from "@altftool/core/signals";
@@ -214,14 +212,36 @@ async function buildGlobalSearchIndex() {
     );
 }
 
-const getGlobalSearchIndex = unstable_cache(
-  buildGlobalSearchIndex,
-  ["altftool-global-search-index-v5"],
-  {
-    revalidate: 3600,
-    tags: ["altftool-global-search"],
-  },
-);
+// Next's persistent data cache rejects payloads above 2 MiB. The complete
+// route index is intentionally larger, so serializing it through
+// unstable_cache makes otherwise valid searches fail at runtime. Keep one
+// bounded snapshot per warm server process instead: freshness remains one
+// hour, concurrent cold requests share one build, and a failed build is never
+// retained.
+const SEARCH_INDEX_TTL_MS = 60 * 60 * 1000;
+let globalSearchIndex = null;
+let globalSearchIndexExpiresAt = 0;
+let globalSearchIndexPromise = null;
+
+async function getGlobalSearchIndex() {
+  if (globalSearchIndex && Date.now() < globalSearchIndexExpiresAt) {
+    return globalSearchIndex;
+  }
+
+  if (!globalSearchIndexPromise) {
+    globalSearchIndexPromise = buildGlobalSearchIndex()
+      .then((index) => {
+        globalSearchIndex = index;
+        globalSearchIndexExpiresAt = Date.now() + SEARCH_INDEX_TTL_MS;
+        return index;
+      })
+      .finally(() => {
+        globalSearchIndexPromise = null;
+      });
+  }
+
+  return globalSearchIndexPromise;
+}
 
 function scoreEntry(entry, normalizedQuery, tokens) {
   if (!tokens.every((token) => entry.searchable.includes(token))) return null;

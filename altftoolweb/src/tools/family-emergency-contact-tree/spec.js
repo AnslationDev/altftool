@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "family-emergency-contact-tree",
   "title": "Family Emergency Contact Tree",
-  "description": "Contact priority, responsibilities aur offline printable tree banaye.",
+  "description": "Build a printable family contact tree with call priority and who does what.",
   "badge": "Consumer, Family & Personal Resilience",
   "category": [
     "Lifestyle",

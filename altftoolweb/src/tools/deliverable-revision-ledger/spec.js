@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "deliverable-revision-ledger",
   "title": "Deliverable Revision Ledger",
-  "description": "Versions, feedback, approvals aur included revision count record kare.",
+  "description": "Record versions, feedback, approvals and how many included revisions remain.",
   "badge": "Creator & Gig-Business Tools",
   "category": [
     "Business",

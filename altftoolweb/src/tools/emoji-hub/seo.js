@@ -4,7 +4,7 @@ const seo = {
   metaDescription:
     "Free emoji picker with 1,898 emojis, keyword search, skin tones, private favorites and recents, plus searchable and trending Giphy GIFs.",
   intro:
-    "Emoji Hub is a two-tab browser for emojis and GIFs. The Emojis tab runs the open-source emoji-picker-react component over a bundled Unicode dataset of 1,898 emojis in 8 categories, with search powered by an in-browser character index built from every keyword attached to each emoji — so typing \"grin\", \"smile\" or \"face\" all surface the grinning face without a network request. Each glyph is drawn as a 64px Apple-style PNG from the emoji-datasource-apple package on the jsDelivr CDN, so the artwork looks identical on Windows, macOS, Android and Linux. The GIFs tab calls AltFTool's own /api/tools/giphy route, which queries Giphy's trending endpoint server-side and returns 20 GIFs, keeping the Giphy API key off the client.",
+    "Emoji Hub is a two-tab browser for emojis and GIFs. The Emojis tab runs the open-source emoji-picker-react component over a bundled Unicode dataset of 1,898 emojis in 8 categories, with search powered by an in-browser character index built from every keyword attached to each emoji — so typing \"grin\", \"smile\" or \"face\" all surface the grinning face without a network request. Each glyph is drawn as a 64px Apple-style PNG from the emoji-datasource-apple package on the jsDelivr CDN, so the artwork looks identical on Windows, macOS, Android and Linux. The GIFs tab calls AltFTool's own /api/tools/giphy route, which queries Giphy server-side — its trending endpoint by default, or its search endpoint carrying the keyword you submit — and returns 20 GIFs, keeping the Giphy API key off the client. The GIF files in the grid are then loaded into your browser directly from Giphy's media CDN.",
   useCases: [
     "Finding the right emoji by keyword when you can't remember what it's actually called",
     "Picking emoji artwork that looks the same for everyone, instead of whatever set the reader's operating system ships",
@@ -24,8 +24,8 @@ const seo = {
       "A skin-tone control sits in the search bar with five Fitzpatrick modifiers plus the default yellow; 323 of the 1,898 emojis support them, covering hands, faces and people.",
     ],
     [
-      "Free, no account, nothing collected",
-      "No signup and no usage limit. Emoji search and category browsing happen entirely in your browser; your picks are saved only to your own browser's localStorage.",
+      "Free, with no account",
+      "No signup and no usage limit. Emoji search and category browsing happen entirely in your browser and your picks are saved only to your own browser's localStorage. The emoji artwork itself is fetched from the jsDelivr CDN as you browse, and the GIFs tab sends the keyword you submit through AltFTool's server to Giphy — nothing else about your session is transmitted.",
     ],
   ],
   faqs: [
@@ -47,7 +47,7 @@ const seo = {
     ],
     [
       "Where do the GIFs come from?",
-      "Giphy. The GIFs tab calls AltFTool's /api/tools/giphy route, which hits Giphy's trending endpoint on the server with a limit of 20 GIFs and returns them as a grid. The Giphy API key never reaches the browser, responses are cached for 5 minutes, and the route is rate-limited to 120 requests per minute.",
+      "Giphy. The GIFs tab calls AltFTool's /api/tools/giphy route, which hits Giphy on the server with a limit of 20 GIFs and returns them as a grid — the trending endpoint when you open the tab, and the search endpoint once you submit a keyword, in which case that keyword is sent to AltFTool's server and passed on to Giphy. The Giphy API key never reaches the browser, responses are cached for 5 minutes, and the route is rate-limited to 120 requests per minute. The GIF files in the grid are loaded straight from Giphy's media CDN by your browser.",
     ],
     [
       "Why are the same GIFs showing every time I open the tab?",
@@ -59,7 +59,7 @@ const seo = {
     ],
     [
       "Is Emoji Hub free, and does it need an account?",
-      "Yes, it's free with no signup and no usage cap. The emoji dataset ships with the page and search runs locally; the only outbound requests are the emoji image files from the jsDelivr CDN and, if you open the GIFs tab, the trending GIF request that goes through AltFTool's server to Giphy.",
+      "Yes, it's free with no signup and no usage cap. The emoji dataset ships with the page and emoji search runs locally; the outbound requests are the emoji image files from the jsDelivr CDN and, if you open the GIFs tab, the GIF request that goes through AltFTool's server to Giphy — carrying the keyword you typed whenever you search — plus the GIF files your browser then loads from Giphy's media CDN.",
     ],
   ],
   steps: [

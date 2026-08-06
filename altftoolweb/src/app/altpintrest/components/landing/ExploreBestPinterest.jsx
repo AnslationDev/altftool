@@ -120,7 +120,7 @@ export default function ExploreBestPinterest({ onExplore }) {
       {/* Header */}
       <div className="mb-6 sm:mb-10 text-left flex items-center justify-between">
         <h2 className="text-3xl sm:text-[42px] lg:text-[48px] font-bold text-[#111111] dark:text-white tracking-tight leading-tight">
-          Explore the Best of Pinterest
+          Explore visual collections
         </h2>
         {/* Animated Slide Dots Indicator */}
         <div className="flex items-center gap-1.5 shrink-0">
@@ -193,10 +193,10 @@ export default function ExploreBestPinterest({ onExplore }) {
       {/* Pill-Shaped Centered See More Button */}
       <div className="mt-8 sm:mt-10 text-center">
         <button
-          onClick={() => onExplore?.("Featured Editorial")}
+          onClick={() => onExplore?.("")}
           className="px-7 py-3.5 rounded-full bg-[#E9E9E9] hover:bg-[#E2E2E2] dark:bg-zinc-800 dark:hover:bg-zinc-700 text-[#111111] dark:text-white font-semibold text-base border-0 transition-all cursor-pointer hover:scale-105 active:scale-95"
         >
-          See more
+          Browse more collections
         </button>
       </div>
 

@@ -159,8 +159,9 @@ export default function ToolHome() {
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Weight per side is (target − bar − both collars) ÷ 2, then the closest achievable weight
-          is found from what your rack actually has, preferring the heaviest plates first. Bar
-          weights and disc sizes follow IWF and IPF competition specifications.
+          is found from what your rack actually has, then listed from the largest plate to the
+          smallest for sleeve loading. Bar weights and disc sizes follow IWF and IPF competition
+          specifications.
         </p>
       </header>
 
@@ -380,9 +381,9 @@ export default function ToolHome() {
       </section>
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
-        Loading finds the closest weight your rack can actually make, preferring the largest discs
-        against the sleeve when more than one combination works. Check your own bar on a scale —
-        training bars are often a kilogram or two off their marked weight.
+        Loading finds a closest weight your rack can actually make and lists that combination with
+        the largest discs against the sleeve. Check your own bar on a scale — training bars are
+        often a kilogram or two off their marked weight.
       </p>
     </main>
   );

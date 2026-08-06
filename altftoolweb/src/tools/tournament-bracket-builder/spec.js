@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "tournament-bracket-builder",
   "title": "Tournament Bracket Builder",
-  "description": "Single/double elimination brackets aur byes generate kare.",
+  "description": "Generate single or double elimination brackets, with byes placed automatically.",
   "badge": "Fair Decisions & Group Scheduling",
   "category": [
     "Productivity",

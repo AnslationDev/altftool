@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "carpool-rotation-scheduler",
   "title": "Carpool Rotation Scheduler",
-  "description": "Drivers aur passengers ka recurring fair rota banaye.",
+  "description": "Build a recurring, fair driving rota across your carpool's drivers and passengers.",
   "badge": "Fair Decisions & Group Scheduling",
   "category": [
     "Productivity",

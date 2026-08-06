@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "personal-data-flow-mapper",
   "title": "Personal Data Flow Mapper",
-  "description": "Collection se storage, processor aur deletion tak data-flow diagram banaye.",
+  "description": "Diagram how personal data flows from collection through storage and processors to deletion.",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Security & Privacy",

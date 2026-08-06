@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "condorcet-election-judge",
   "title": "Condorcet Election Judge",
-  "description": "Pairwise comparison se winner ya voting cycle dikhaye.",
+  "description": "Find the Condorcet winner from pairwise comparisons, or expose a voting cycle.",
   "badge": "Fair Decisions & Group Scheduling",
   "category": [
     "Productivity",

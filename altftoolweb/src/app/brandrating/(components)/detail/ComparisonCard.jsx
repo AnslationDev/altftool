@@ -18,8 +18,10 @@ function getUrlLink(value = "") {
 
 /* SINGLE CARD COMPONENT*/
 function ComparisonCard({ brand,category }) {
-    // Ratings come from the admin panel on a 0–5 scale.
+    // Ratings come from the admin panel on a 0–5 scale. A brand with no rating
+    // shows no stars and no "x/5" — "0/5" would be a score nobody gave.
     const rating = clampRating(brand?.rating);
+    const hasRating = rating > 0;
     const fullStars = Math.floor(rating);
     const hasHalf = rating % 1 >= 0.5;
 
@@ -43,25 +45,27 @@ function ComparisonCard({ brand,category }) {
                 <h3 className="text-[20px] font-bold leading-[28px] line-clamp-2">
                     {brand?.name}
                 </h3>
-                <div className="flex items-center gap-[6px]">
+                {hasRating ? (
+                    <div className="flex items-center gap-[6px]">
 
-                    <div className="flex">
-                        {[...Array(fullStars)].map((_, i) => (
-                            <Star
-                                key={i}
-                                className="w-4 h-4 text-yellow-400 fill-yellow-400"
-                            />
-                        ))}
+                        <div className="flex">
+                            {[...Array(fullStars)].map((_, i) => (
+                                <Star
+                                    key={i}
+                                    className="w-4 h-4 text-yellow-400 fill-yellow-400"
+                                />
+                            ))}
 
-                        {hasHalf && (
-                            <StarHalf className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-                        )}
+                            {hasHalf && (
+                                <StarHalf className="w-4 h-4 text-yellow-400 fill-yellow-400" />
+                            )}
+                        </div>
+
+                        <span className="text-xs text-(--muted-foreground) font-medium">
+                            {formatRating(rating)}/5
+                        </span>
                     </div>
-
-                    <span className="text-xs text-(--muted-foreground) font-medium">
-                        {formatRating(rating)}/5
-                    </span>
-                </div>
+                ) : null}
 
                 <p className="text-[13px] font-medium text-(--muted-foreground) leading-snug line-clamp-2">
                     {getBrandTagline(brand)}

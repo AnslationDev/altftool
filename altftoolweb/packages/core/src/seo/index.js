@@ -8,6 +8,7 @@ export {
   resolveContent,
   resolveExtendedMeta,
   resolveInjectedCode,
+  sanitizeInjectedMarkup,
   globToRegExp,
 } from "./resolver.js";
 

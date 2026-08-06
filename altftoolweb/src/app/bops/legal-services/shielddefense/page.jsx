@@ -15,9 +15,9 @@ import {
 } from "lucide-react";
 import "./shielddefense.css";
 
-const QUOTE_URL = "https://example.com/quote/shielddefense";
-const PHONE_TEL = "tel:+18775550432";
-const PHONE_DISPLAY = "(877) 555-0432";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1667849921481-9e13c239ee3d?auto=format&fit=crop&w=1600&q=80",

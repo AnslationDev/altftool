@@ -28,8 +28,16 @@ export default function TopPicks({ brands = [] }) {
     <section className="section w-full py-10 sm:py-20 animate-slide-up">
       <div className="text-center px-4 pb-6 animate-slide-right">
         <h2 className="section-title">Our Top 3 Premium Picks</h2>
+        {/*
+          This read "Carefully selected based on comfort, performance, and real
+          customer ratings." No customer ratings reach this component: the order
+          is the `ranking` an editor sets in the admin panel, and any rating on a
+          card is that same editorial value. Naming a customer-review source that
+          does not exist is the claim that had to go, so the line now says where
+          the order actually comes from.
+        */}
         <p className="section-subtitle max-w-4xl mx-auto">
-          Carefully selected based on comfort, performance, and real customer ratings.
+          Ordered by our editors&apos; ranking for this category.
         </p>
       </div>
       <div className="mt-6 md:mt-10 lg:mt-14 w-full lg:max-w-5xl xl:max-w-6xl lg:mx-auto lg:px-6">

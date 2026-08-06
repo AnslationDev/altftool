@@ -17,31 +17,39 @@ export const LIKERT_SCORE = {
 export const TRAITS = {
   structure: {
     label: "Structure",
-    lowLabel: "Flexible",
-    highLabel: "Structured",
-    lowDetail: "You adapt as things change and prefer to keep your options open rather than lock in a fixed plan.",
-    highDetail: "You do your best work with clear systems, routines, and a defined process to follow.",
+    lowLabel: "Leans flexible",
+    midLabel: "Neutral response",
+    highLabel: "Leans structured",
+    lowDetail: "This answer leans toward adapting as plans change and keeping options open.",
+    midDetail: "This answer sits at the midpoint between a defined routine and room to adapt.",
+    highDetail: "This answer leans toward clear systems, routines, and a defined process.",
   },
   leadership: {
-    label: "Leadership",
-    lowLabel: "Collaborator",
-    highLabel: "Leader",
-    lowDetail: "You prefer contributing as part of a team over directing it, and work well alongside others toward a shared goal.",
-    highDetail: "You naturally step up to guide projects and people, and enjoy taking ownership of outcomes.",
+    label: "Leadership Preference",
+    lowLabel: "Leans collaborative",
+    midLabel: "Neutral response",
+    highLabel: "Leans toward leading",
+    lowDetail: "This answer leans toward contributing alongside a team rather than directing it.",
+    midDetail: "This answer sits at the midpoint between contributing alongside others and taking the lead.",
+    highDetail: "This answer leans toward guiding a team and taking ownership of shared outcomes.",
   },
   socialEnergy: {
     label: "Social Energy",
-    lowLabel: "Introvert",
-    highLabel: "Extrovert",
-    lowDetail: "Quiet, focused time recharges you, and you tend to prefer deeper one-on-one conversations over large groups.",
-    highDetail: "Social interaction energizes you, and you tend to think out loud and thrive in group settings.",
+    lowLabel: "Leans toward quiet focus",
+    midLabel: "Neutral response",
+    highLabel: "Leans toward social energy",
+    lowDetail: "This answer leans toward recharging through quiet, focused time.",
+    midDetail: "This answer sits at the midpoint between quiet focus and social interaction.",
+    highDetail: "This answer leans toward gaining energy from social interaction.",
   },
   planning: {
     label: "Planning Style",
-    lowLabel: "Spontaneous",
-    highLabel: "Planner",
-    lowDetail: "You like to stay open to the moment and adjust course as opportunities come up.",
-    highDetail: "You feel most comfortable when you've mapped out the steps ahead of time.",
+    lowLabel: "Leans spontaneous",
+    midLabel: "Neutral response",
+    highLabel: "Leans planned",
+    lowDetail: "This answer leans toward staying open to the moment and adjusting course as needed.",
+    midDetail: "This answer sits at the midpoint between planning ahead and staying spontaneous.",
+    highDetail: "This answer leans toward mapping out the steps ahead of time.",
   },
 };
 
@@ -55,8 +63,10 @@ export function computeResult(getAnswer) {
     const rawScore = LIKERT_SCORE[answer] ?? null;
     const percent = rawScore == null ? null : Math.round(((rawScore - 1) / 4) * 100);
     const meta = TRAITS[question.trait];
-    const dominant = percent == null ? null : percent >= 50 ? meta.highLabel : meta.lowLabel;
-    const detail = percent == null ? null : percent >= 50 ? meta.highDetail : meta.lowDetail;
+    const direction =
+      rawScore == null ? null : rawScore < 3 ? "low" : rawScore > 3 ? "high" : "mid";
+    const dominant = direction == null ? null : meta[`${direction}Label`];
+    const detail = direction == null ? null : meta[`${direction}Detail`];
 
     return {
       key: question.trait,

@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "scope-creep-change-order-builder",
   "title": "Scope-Creep Change-Order Builder",
-  "description": "Original scope aur new request ka price/deadline delta banaye.",
+  "description": "Turn a new request into a change order showing the price and deadline delta.",
   "badge": "Creator & Gig-Business Tools",
   "category": [
     "Business",

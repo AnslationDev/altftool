@@ -9,8 +9,8 @@ const companyLinks = [
 ];
 
 const supportLinks = [
-  { label: '(800) 555-0100', href: 'tel:8005550100' },
-  { label: 'info@flowpro.com', href: 'mailto:info@flowpro.com' },
+  { label: 'Demo only', href: '#demo-only' },
+  { label: 'info@flowpro.com', href: '#demo-only' },
   { label: 'Book a Plumber', href: '#book-form' },
   { label: 'Free Estimate', href: '#book-form' },
 ];
@@ -31,8 +31,8 @@ export default function Footer() {
               Licensed plumbers at your door in under 60 minutes. Clear pricing, clean work, 24/7 response.
             </p>
             <div className="fp-footer__contact-row">
-              <a href="tel:8005550100"><Phone size={14} /> Call</a>
-              <a href="mailto:info@flowpro.com"><Mail size={14} /> Email</a>
+              <a href="#demo-only"><Phone size={14} /> Call</a>
+              <a href="#demo-only"><Mail size={14} /> Email</a>
             </div>
           </div>
 

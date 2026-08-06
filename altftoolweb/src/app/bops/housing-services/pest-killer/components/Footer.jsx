@@ -54,12 +54,9 @@ export default function Footer() {
             </div>
 
             <div className="footer-map">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11560.704424972651!2d77.0060658!3d28.492663!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d175ec0000001%3A0x6e90f7bfaa0deb05!2sPest-killer-company!5e1!3m2!1sen!2sin!4v1775814844240!5m2!1sen!2sin"
-                width="100%" height="220"
-                style={{ border: 0, borderRadius: '8px' }} allowFullScreen="" loading="lazy"
-                title="Location"
-              ></iframe>
+              <div className="flex min-h-52 items-center justify-center bg-muted/40 p-6 text-center text-muted-foreground" role="note">
+                Location map unavailable in this design demonstration.
+              </div>
             </div>
           </div>
 
@@ -72,7 +69,7 @@ export default function Footer() {
                 <li><a href="#about">About Us</a></li>
                 <li><a href="#services">Our Services</a></li>
                 {/* <li><a href="#">Blogs</a></li> */}
-                <li><a href="tel:+919711177747">Contact Us</a></li>
+                <li><a href="#demo-only">Contact Us</a></li>
               </ul>
             </div>
 

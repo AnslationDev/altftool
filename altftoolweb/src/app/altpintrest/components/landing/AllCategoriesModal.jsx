@@ -8,62 +8,62 @@ const FALLBACK_IMAGE = "https://images.unsplash.com/photo-1579546929518-9e396f3c
 const ALL_CATEGORY_CARDS = [
   {
     name: "All",
-    count: "All Pins & Topics",
+    count: "All topics",
     image: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=600&auto=format&fit=crop&q=80"
   },
   {
     name: "Rain",
-    count: "1.2k pins",
+    count: "Topic collection",
     image: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?w=600&auto=format&fit=crop&q=80"
   },
   {
     name: "Fifa World Cup",
-    count: "950 pins",
+    count: "Topic collection",
     image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=600&auto=format&fit=crop&q=80"
   },
   {
     name: "Art",
-    count: "3.4k pins",
+    count: "Topic collection",
     image: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=600&auto=format&fit=crop&q=80"
   },
   {
     name: "ROSE",
-    count: "1.8k pins",
+    count: "Topic collection",
     image: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=600&auto=format&fit=crop&q=80"
   },
   {
     name: "Ai images",
-    count: "4.2k pins",
+    count: "Topic collection",
     image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80"
   },
   {
     name: "car",
-    count: "2.1k pins",
+    count: "Topic collection",
     image: "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&auto=format&fit=crop&q=80"
   },
   {
     name: "cool wallpaper",
-    count: "5.8k pins",
+    count: "Topic collection",
     image: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=600&auto=format&fit=crop&q=80"
   },
   {
     name: "Flowers",
-    count: "1.6k pins",
+    count: "Topic collection",
     image: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?w=600&auto=format&fit=crop&q=80"
   },
   {
     name: "Food & Recipes",
-    count: "2.9k pins",
+    count: "Topic collection",
     image: "https://images.unsplash.com/photo-1498837167922-ddd27525d352?w=600&auto=format&fit=crop&q=80"
   },
   {
     name: "Graphic Design",
-    count: "3.1k pins",
+    count: "Topic collection",
     image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?w=600&auto=format&fit=crop&q=80"
   },
   {
     name: "Nature",
-    count: "4.5k pins",
+    count: "Topic collection",
     image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&auto=format&fit=crop&q=80"
   }
 ];

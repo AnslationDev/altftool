@@ -2,10 +2,10 @@
 /**
  * Re-encodes Next's per-route RSC client-reference manifests compactly.
  *
- * Next writes one `page_client-reference-manifest.js` per app route. Across 390
- * routes here they total 51 MiB, and the content is almost entirely repetition:
- * every route's manifest lists the same 429 client modules (a page under
- * /altfgame carries 115 modules belonging to /bops), every value has the shape
+ * Next writes one `page_client-reference-manifest.js` per app route. Across
+ * this large app they total tens of MiB, and the content is almost entirely
+ * repetition: each route's manifest lists hundreds of client modules belonging
+ * to otherwise unrelated pages, every value has the shape
  * {id, name, chunks, async}, there are only 6 distinct chunk arrays among the
  * 429 entries, and ssrModuleMapping and rscModuleMapping take just 2 distinct
  * values across all 390 files.
@@ -136,7 +136,7 @@ function encodeGeneral(manifest, route) {
   };
 
   // clientModules is keyed by absolute module path, so each file repeats the
-  // build root ~429 times and directories like node_modules/next/dist/esm/
+  // build root hundreds of times and directories like node_modules/next/dist/esm/
   // client/components dozens more. Interning the directory and keeping only
   // the basename per row is where most of the remaining bytes are.
   const directories = [];
@@ -297,9 +297,12 @@ function encodeCommonWebpackShape(manifest, route) {
     !hasCommonClientShape ||
     !hasCommonMappingShape(ssr) ||
     !hasCommonMappingShape(rsc) ||
-    !hasCommonMappingShape(edgeRsc) ||
+    // Amplify's Node/webpack output has no edge mapping. Keeping that as an
+    // explicit invariant lets the compact form omit a fourth value from every
+    // RSC row. If Next starts emitting edge rows, the fully general encoder is
+    // used instead and the semantic comparison below remains the final gate.
+    Object.keys(edgeRsc).length > 0 ||
     Object.keys(ssr).some((moduleId) => !(moduleId in rsc)) ||
-    Object.keys(edgeRsc).some((moduleId) => !(moduleId in rsc)) ||
     Object.keys(manifest.edgeSSRModuleMapping || {}).length > 0
   ) {
     return null;
@@ -375,27 +378,79 @@ function encodeCommonWebpackShape(manifest, route) {
     );
   }
 
-  // RSC is the superset, so each row carries the module id, RSC target id,
-  // and its SSR/edge-RSC target ids (-1 when that mapping is absent).
+  // RSC is the superset, so each row carries the delta from the previous
+  // module id, its RSC target id, and its SSR target id (-1 when absent).
+  // Numeric object keys enumerate in ascending order, making the delta both
+  // deterministic and materially smaller than repeating six-digit ids.
   const mappingRows = [];
+  let previousModuleId = 0;
   for (const [moduleId, byExport] of Object.entries(rsc)) {
+    const numericModuleId = Number(moduleId);
     mappingRows.push(
-      Number(moduleId),
+      numericModuleId - previousModuleId,
       Number(byExport["*"].id),
       ssr[moduleId] ? Number(ssr[moduleId]["*"].id) : -1,
-      edgeRsc[moduleId] ? Number(edgeRsc[moduleId]["*"].id) : -1,
     );
+    previousModuleId = numericModuleId;
   }
+
+  // The three large numeric tables contain only integers >= -1. A printable
+  // base-32 VLQ keeps small trie/index values to one or two bytes, six-digit
+  // webpack ids to four, and the -1 sentinel to one. It is considerably
+  // smaller than JSON's commas and decimal digits while remaining plain JS
+  // that Next can evaluate in its deliberately sparse VM context.
+  const vlqAlphabet =
+    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-_";
+  const packIntegers = (values) => {
+    let packed = "";
+    for (const value of values) {
+      if (!Number.isSafeInteger(value) || value < -1) return null;
+      let remaining = value + 1;
+      do {
+        let digit = remaining % 32;
+        remaining = Math.floor(remaining / 32);
+        if (remaining > 0) digit += 32;
+        packed += vlqAlphabet[digit];
+      } while (remaining > 0);
+    }
+    return packed;
+  };
+
+  const packedDirectoryNodes = packIntegers(directoryNodes);
+  const packedClientRows = packIntegers(clientRows);
+  const packedMappingRows = packIntegers(mappingRows);
+  if (
+    packedDirectoryNodes === null ||
+    packedClientRows === null ||
+    packedMappingRows === null
+  ) {
+    return null;
+  }
+
+  // Quotes and commas cost two bytes per string in JSON arrays. These tables
+  // are safe to join with a one-byte delimiter selected per manifest; the
+  // fallback preserves unusual future strings that contain every candidate.
+  const joinedStringTable = (values) => {
+    if (values.length === 0) return "[]";
+    const separator = ["|", "~", "^", "`"].find((candidate) =>
+      values.every((value) => !value.includes(candidate)),
+    );
+    return separator
+      ? `${JSON.stringify(values.join(separator))}.split(${JSON.stringify(separator)})`
+      : JSON.stringify(values);
+  };
 
   const j = JSON.stringify;
   return `globalThis.__RSC_MANIFEST=(globalThis.__RSC_MANIFEST||{});(function(){
-var C=${j(chunkGroups)},P=${j(pathPrefix)},S=${j(segments)},T=${j(directoryNodes)},B=${j(basenames)},D=[""];
+var C=${j(chunkGroups)},P=${j(pathPrefix)},S=${joinedStringTable(segments)},B=${joinedStringTable(basenames)},K=${j(vlqAlphabet)},D=[""];
+function u(s){var a=[],n=0,p=1,x;for(var i=0;i<s.length;i++){x=K.indexOf(s[i]);n+=(x&31)*p;if(x&32)p*=32;else{a.push(n-1);n=0;p=1}}return a}
+var T=u(${j(packedDirectoryNodes)});
 for(var i=0;i<T.length;i+=2)D.push(D[T[i]]+S[T[i+1]]+"/");
 function q(i,c){return {id:i,name:"*",chunks:C[c],async:false}}
 function o(v){var t={};for(var i=0;i<v.length;i+=4)t[P+D[v[i]]+B[v[i+1]]]=q(v[i+2],v[i+3]);return t}
-function m(v){var a={},b={},e={};for(var i=0;i<v.length;i+=4){var k=v[i],r=v[i+1],s=v[i+2],z=v[i+3];b[k]={"*":q(String(r),0)};if(s>=0)a[k]={"*":q(String(s),0)};if(z>=0)e[k]={"*":q(String(z),0)}}return [a,b,e]}
-var X=m(${j(mappingRows)});
-globalThis.__RSC_MANIFEST[${j(route)}]={moduleLoading:${j(manifest.moduleLoading)},ssrModuleMapping:X[0],edgeSSRModuleMapping:{},clientModules:o(${j(clientRows)}),entryCSSFiles:${j(manifest.entryCSSFiles)},rscModuleMapping:X[1],edgeRscModuleMapping:X[2]};
+function m(v){var a={},b={},k=0;for(var i=0;i<v.length;i+=3){k+=v[i];b[k]={"*":q(String(v[i+1]),0)};if(v[i+2]>=0)a[k]={"*":q(String(v[i+2]),0)}}return [a,b]}
+var X=m(u(${j(packedMappingRows)}));
+globalThis.__RSC_MANIFEST[${j(route)}]={moduleLoading:${j(manifest.moduleLoading)},ssrModuleMapping:X[0],edgeSSRModuleMapping:{},clientModules:o(u(${j(packedClientRows)})),entryCSSFiles:${j(manifest.entryCSSFiles)},rscModuleMapping:X[1],edgeRscModuleMapping:{}};
 })();
 `;
 }

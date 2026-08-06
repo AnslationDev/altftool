@@ -4,11 +4,19 @@
 
 "use client";
 import React, { useState } from "react";
-import dynamic from "next/dynamic";
+import { useRouter } from "next/navigation";
 
-const jsPDF = dynamic(() => import("jspdf"), { ssr: false });
+// jspdf is loaded inside the download handler rather than at module scope: it is
+// a browser-only library, and it is only needed once the user asks for a PDF.
+//
+// This used to be `const jsPDF = dynamic(() => import("jspdf"), { ssr: false })`.
+// next/dynamic returns a React component, not the constructor, so the
+// `new jsPDF()` below threw a TypeError and the "Download as PDF" button never
+// produced a file. next/dynamic is for rendering components; a plain dynamic
+// import() is what gives you the module.
 
 export default function Generator() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -57,10 +65,31 @@ export default function Generator() {
     setGenerated(true);
   };
 
-  const handleDownloadPDF = () => {
+  const handleDownloadPDF = async () => {
+    const { jsPDF } = await import("jspdf");
     const doc = new jsPDF();
+
+    const marginX = 15;
+    const marginY = 20;
+    const lineHeight = 7;
+    const pageHeight = doc.internal.pageSize.getHeight();
+    const usableWidth = doc.internal.pageSize.getWidth() - marginX * 2;
+
     doc.setFontSize(12);
-    doc.text(coverLetter, 10, 10);
+    // A generated cover letter is several paragraphs and runs past one page. The
+    // single `doc.text(coverLetter, 10, 10)` this replaces would have printed it
+    // as one unwrapped line off the edge of the sheet.
+    const lines = doc.splitTextToSize(coverLetter, usableWidth);
+    let y = marginY;
+    for (const line of lines) {
+      if (y + lineHeight > pageHeight - marginY) {
+        doc.addPage();
+        y = marginY;
+      }
+      doc.text(line, marginX, y);
+      y += lineHeight;
+    }
+
     doc.save("CoverLetter.pdf");
   };
 
@@ -101,7 +130,7 @@ export default function Generator() {
     setErrorMessage("");
 
     // Redirect to landing page
-    window.location.href = "/"; // yaha landing page ka URL daal do
+    router.push("/");
   };
 
 

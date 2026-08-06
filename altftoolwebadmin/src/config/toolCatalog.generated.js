@@ -734,7 +734,7 @@ export const TOOL_CATALOG = [
       "Image & Photo",
       "Developer"
     ],
-    "description": "Detect and count objects in images using TensorFlow.js COCO-SSD. Supports 90+ object categories with confidence scoring and visualization."
+    "description": "Detect and count objects in images using TensorFlow.js COCO-SSD. Supports 80 object categories with confidence scoring and visualization."
   },
   {
     "slug": "ai-passport-photo-maker",
@@ -5363,7 +5363,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Developer"
     ],
-    "description": "Convert chatbot chat logs and conversational arrays between OpenAI, Anthropic, and Markdown formats instantly."
+    "description": "Convert message arrays or Markdown transcripts into OpenAI, Anthropic, Gemini, Cohere, Llama, or Markdown output."
   },
   {
     "slug": "coding-model-picker",
@@ -5949,7 +5949,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Education & Science"
     ],
-    "description": "Test your knowledge of the 7 continents — identify countries, capitals, flags, and geographic facts with timed quizzes and scoring."
+    "description": "Test your knowledge of the 6 inhabited continents — identify countries, capitals, flags, and geographic facts with timed quizzes and scoring."
   },
   {
     "slug": "contraction-timer",
@@ -6564,7 +6564,7 @@ export const TOOL_CATALOG = [
       "Finance Calculators",
       "Developer"
     ],
-    "description": "Validate and identify crypto wallet addresses across 10+ major blockchains."
+    "description": "Validate and identify crypto wallet addresses across 10 major blockchains."
   },
   {
     "slug": "csp-auditor",
@@ -7908,7 +7908,7 @@ export const TOOL_CATALOG = [
       "Education & Science",
       "Fun"
     ],
-    "description": "Explore 20+ dinosaur species with search, filter, timeline view, size comparison, and detailed cards."
+    "description": "Explore 20 dinosaur species with search, filter, timeline view, size comparison, and detailed cards."
   },
   {
     "slug": "direct-vs-regular-plan-calculator",
@@ -12149,10 +12149,9 @@ export const TOOL_CATALOG = [
     "slug": "google-ads-description-writer",
     "name": "Google Ads Writer",
     "categories": [
-      "Business",
-      "AI Tools"
+      "Business"
     ],
-    "description": "Generate highly converting Google Ads descriptions using AI."
+    "description": "Generate ready-to-paste Google Ads descriptions from proven ad-copy templates."
   },
   {
     "slug": "google-meet-background-maker",
@@ -12658,7 +12657,7 @@ export const TOOL_CATALOG = [
       "Lifestyle",
       "Image & Photo"
     ],
-    "description": "Preview 30+ hair colors on your photo instantly. Try natural shades, fashion colors, highlights, and balayage with realistic in-browser simulation."
+    "description": "Preview 16 hair colors on your photo instantly. Try natural shades, warm tones, blondes, fashion colors, and highlights with realistic in-browser simulation."
   },
   {
     "slug": "hair-fall-count-log",
@@ -17624,7 +17623,7 @@ export const TOOL_CATALOG = [
       "Productivity",
       "Business"
     ],
-    "description": "Create meetings, manage attendees, build real-time draggable agendas, track actions, reminders, and export meeting summaries."
+    "description": "Turn agenda topics with owners and durations into a timed running order — reorder items with move up and down controls, then copy the schedule with clock slots,"
   },
   {
     "slug": "meeting-cost-calculator",
@@ -18323,7 +18322,7 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "moving-checklist",
-    "name": "40-Task Moving Checklist",
+    "name": "42-Task Moving Checklist",
     "categories": [
       "Lifestyle",
       "Productivity"
@@ -18431,11 +18430,11 @@ export const TOOL_CATALOG = [
   },
   {
     "slug": "multi-country-clock",
-    "name": "Multi Country Clock Tool",
+    "name": "Multi Time Zone Clock Tool",
     "categories": [
       "Developer"
     ],
-    "description": "View current time across multiple countries simultaneously."
+    "description": "Compare current time across multiple browser-supported IANA zones."
   },
   {
     "slug": "multi-currency-invoice-calculator",
@@ -23973,7 +23972,7 @@ export const TOOL_CATALOG = [
       "Video & Audio",
       "Productivity"
     ],
-    "description": "Estimate a room's RT60 reverberation time from a clap or sweep response."
+    "description": "Log decay and silence diagnostics from a clap or sweep recording — not a calibrated RT60 estimate."
   },
   {
     "slug": "roommate-agreement-generator",
@@ -25415,7 +25414,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Marketing & Social"
     ],
-    "description": "Check Shopify product photos against the 20 megapixel and 20 MB limits, the 800 px zoom threshold and your store's standard aspect ratio."
+    "description": "Check Shopify product photos against the 25 megapixel, 5000 px and under-20-MB limits, plus a theme-dependent detail heuristic and your store's standard aspect "
   },
   {
     "slug": "short-modern-indian-baby-names",
@@ -32097,7 +32096,7 @@ export const TOOL_CATALOG = [
     "categories": [
       "Education & Science"
     ],
-    "description": "Explore fascinating world facts — population, area, GDP, HDI, and more with interactive comparisons and filtering across 195+ countries."
+    "description": "Explore fascinating world facts — population, area, GDP, HDI, and more with interactive comparisons and filtering across 121 countries."
   },
   {
     "slug": "would-you-rather-generator",

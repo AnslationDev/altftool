@@ -15,9 +15,9 @@ import {
 } from "lucide-react";
 import "./topnotch-roofing.css";
 
-const QUOTE_URL = "https://example.com/quote/topnotch-roofing";
-const PHONE_TEL = "tel:+18555550210";
-const PHONE_DISPLAY = "(855) 555-0210";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1633759593085-1eaeb724fc88?auto=format&fit=crop&w=1600&q=80",

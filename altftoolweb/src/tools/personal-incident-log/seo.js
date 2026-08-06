@@ -17,7 +17,7 @@ const seo = {
     ],
     [
       "Consistent entry structure",
-      "Every record uses the same two fields, so a log built over months still reads as a clean timeline instead of scattered notes.",
+      "Every record uses the same two fields and stays where you added it — new entries append to the end of the list — so a log built over months still reads as one ordered account instead of scattered notes.",
     ],
   ],
   faqs: [
@@ -31,7 +31,7 @@ const seo = {
     ],
     [
       "How do I move the log to another device?",
-      "Use Export JSON on the first browser and Import JSON on the second. The export is a plain JSON array with one object per record, so it also opens in any text editor and can be attached to an email or archived as a backup.",
+      "Use Export JSON on the first browser and Import JSON on the second; the import asks you to confirm because it replaces every record already saved there. The export is a plain JSON array with one object per record, so it also opens in any text editor and can be attached to an email or archived as a backup.",
     ],
     [
       "What should go into each entry?",

@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "appliance-load-shift-planner",
   "title": "Appliance Load-Shift Planner",
-  "description": "Flexible loads ko cheaper tariff windows me schedule kare.",
+  "description": "Shift flexible appliance loads into your cheaper electricity tariff windows.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Lifestyle",

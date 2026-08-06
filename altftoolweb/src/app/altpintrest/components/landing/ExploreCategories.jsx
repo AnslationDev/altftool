@@ -10,7 +10,7 @@ const FEATURED_CATEGORIES = [
     name: 'AI Image & Art',
     description: 'Generative art, prompt ideas, character design',
     image: '/altpintrest-images/pin-card.png',
-    count: '24.5k Pins',
+    count: 'Topic collection',
     gradient: 'from-amber-600/80 to-rose-900/90',
   },
   {
@@ -18,7 +18,7 @@ const FEATURED_CATEGORIES = [
     name: 'UI/UX & Mobile Design',
     description: 'Neumorphic interfaces, app mockups, web components',
     image: '/altpintrest-images/pin-card-1.png',
-    count: '18.2k Pins',
+    count: 'Topic collection',
     gradient: 'from-blue-600/80 to-indigo-900/90',
   },
   {
@@ -26,7 +26,7 @@ const FEATURED_CATEGORIES = [
     name: 'Productivity & Workflows',
     description: 'Dashboard layouts, task trackers, workflow hacks',
     image: '/altpintrest-images/pin-card-7.png',
-    count: '12.8k Pins',
+    count: 'Topic collection',
     gradient: 'from-emerald-600/80 to-teal-900/90',
   },
   {
@@ -34,7 +34,7 @@ const FEATURED_CATEGORIES = [
     name: 'Web & App Development',
     description: 'Frontend setups, code snippets, login screens',
     image: '/altpintrest-images/Component 4.png',
-    count: '31.0k Pins',
+    count: 'Topic collection',
     gradient: 'from-purple-600/80 to-violet-900/90',
   },
   {
@@ -42,7 +42,7 @@ const FEATURED_CATEGORIES = [
     name: 'Video & Animation',
     description: 'Motion graphics, UI micro-interactions, reels',
     image: '/altpintrest-images/pin-card-12.png',
-    count: '9.4k Pins',
+    count: 'Topic collection',
     gradient: 'from-rose-600/80 to-pink-900/90',
   },
   {
@@ -50,7 +50,7 @@ const FEATURED_CATEGORIES = [
     name: 'AI Chatbots & Agents',
     description: 'Conversational UI, assistant widgets, LLM prompts',
     image: '/altpintrest-images/pin-card.png',
-    count: '15.6k Pins',
+    count: 'Topic collection',
     gradient: 'from-cyan-600/80 to-blue-900/90',
   },
 ];

@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "cookie-gpc-behavior-auditor",
   "title": "Cookie & GPC Behavior Auditor",
-  "description": "Reject action aur Global Privacy Control response test kare.",
+  "description": "Test how a site responds to a cookie reject action and to Global Privacy Control.",
   "badge": "Privacy Operations & Compliance",
   "category": [
     "Security & Privacy",

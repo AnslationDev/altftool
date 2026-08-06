@@ -290,7 +290,7 @@ export function scoreSscAttempt({ examKey, correct, wrong }) {
 
   const c = Number(correct);
   const w = Number(wrong);
-  if (![c, w].every(Number.isFinite)) {
+  if (![c, w].every(Number.isFinite) || ![c, w].every(Number.isInteger)) {
     return { error: "Enter whole numbers for correct and wrong answers." };
   }
   if (c < MIN_ATTEMPTS || w < MIN_ATTEMPTS) {
@@ -300,8 +300,8 @@ export function scoreSscAttempt({ examKey, correct, wrong }) {
     return { error: `${exam.label} has only ${exam.questions} questions.` };
   }
 
-  const correctCount = Math.round(c);
-  const wrongCount = Math.round(w);
+  const correctCount = c;
+  const wrongCount = w;
   const marksPerCorrect = exam.maxMarks / exam.questions;
   const net = correctCount * marksPerCorrect - wrongCount * exam.penalty;
   const attempted = correctCount + wrongCount;

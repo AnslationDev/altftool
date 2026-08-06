@@ -1,4 +1,4 @@
-import { LANGUAGE_ALIASES, SUPPORTED_LANGUAGES } from "./constants";
+import { LANGUAGE_ALIASES, SUPPORTED_LANGUAGES } from "./constants.js";
 
 export function parseChatFile(file) {
   const ext = file.name.split(".").pop().toLowerCase();
@@ -93,6 +93,24 @@ function parseJSON(content) {
 function extractMessages(data) {
   if (typeof data !== "object" || data === null) return [];
   const messages = [];
+
+  // ChatGPT's data export stores each message inside a mapping node instead of
+  // placing role/content beside one another. Recognize that documented shape
+  // before the generic recursive walk so an official conversations.json file
+  // does not parse into an empty thread.
+  if (data.message?.author?.role && data.message?.content) {
+    const message = data.message;
+    messages.push(
+      normalizeMessage({
+        id: message.id || data.id,
+        role: message.author.role,
+        content: message.content,
+        create_time: message.create_time,
+      }),
+    );
+    return messages;
+  }
+
   if (data.role && data.content) {
     messages.push(normalizeMessage(data));
   }
@@ -119,11 +137,16 @@ function normalizeMessage(msg) {
     content = JSON.stringify(msg.content);
   }
   const parts = parseContent(content);
+  const rawTimestamp = msg.timestamp || msg.create_time;
+  const timestamp =
+    typeof rawTimestamp === "number" && rawTimestamp > 0 && rawTimestamp < 1e12
+      ? rawTimestamp * 1000
+      : rawTimestamp || new Date().toISOString();
   return {
     id: msg.id || `msg-${Date.now()}-${Math.random().toString(36).slice(2)}`,
     role,
     content: parts.text,
-    timestamp: msg.timestamp || msg.create_time || new Date().toISOString(),
+    timestamp,
     codeBlocks: parts.codeBlocks,
     tables: parts.tables,
     images: [],

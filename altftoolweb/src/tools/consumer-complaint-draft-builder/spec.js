@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "consumer-complaint-draft-builder",
   "title": "Consumer Complaint Draft Builder",
-  "description": "Facts, relief aur evidence se complaint format banaye.",
+  "description": "Build a formatted consumer complaint from your facts, the relief sought and evidence.",
   "badge": "India-Specific Utilities",
   "category": [
     "Text & Writing",

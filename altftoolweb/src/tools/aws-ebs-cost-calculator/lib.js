@@ -182,19 +182,14 @@ export function computeEbsCost({
     throughputCostPerVolume = billableMbps * (type.throughputPerMbpsMonth ?? 0);
   }
 
-  // Snapshot GB is entered the same way as volume size — a per-volume figure,
-  // styled and positioned identically to it — so it scales with volume count
-  // exactly like storage/IOPS/throughput do. Previously this was left
-  // unmultiplied, silently under-estimating snapshot spend for any fleet of
-  // more than one volume.
-  const snapshotCostPerVolume = snapshot * SNAPSHOT_PER_GB_MONTH;
-
-  const perVolume =
-    storageCostPerVolume + iopsCostPerVolume + throughputCostPerVolume + snapshotCostPerVolume;
+  // snapshotGb is the total incremental snapshot data stored across the
+  // fleet, not a per-volume allocation. Keep it outside `perVolume` so the
+  // documented contract cannot multiply the same snapshot bytes by count.
+  const perVolume = storageCostPerVolume + iopsCostPerVolume + throughputCostPerVolume;
   const storageCost = storageCostPerVolume * count;
   const iopsCost = iopsCostPerVolume * count;
   const throughputCost = throughputCostPerVolume * count;
-  const snapshotCost = snapshotCostPerVolume * count;
+  const snapshotCost = snapshot * SNAPSHOT_PER_GB_MONTH;
   const total = storageCost + iopsCost + throughputCost + snapshotCost;
 
   return {
@@ -204,6 +199,7 @@ export function computeEbsCost({
     iopsCost,
     throughputCost,
     snapshotCost,
+    snapshotGbTotal: snapshot,
     perVolume,
     volumeCount: count,
     total,

@@ -11,7 +11,7 @@ const CTASection = () => {
           <p className="text-white/75 text-lg mb-8">Our team is ready to help. Get a free quote or speak to a specialist right away.</p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link to="/book" className="btn bg-white text-[#14532D] hover:bg-[#F8FAFC] px-10 text-base">Book Service Now</Link>
-            <a href="tel:7865679554" className="btn border-2 border-white/70 hover:bg-white/10 text-white px-9 text-base">Call (786) 567-9554</a>
+            <a href="#demo-only" className="btn border-2 border-white/70 hover:bg-white/10 text-white px-9 text-base">Call (786) 567-9554</a>
           </div>
         </div>
       </div>

@@ -51,7 +51,7 @@ export const personalLoan = {
   ],
 
   quoteLabel: "Check your rate",
-  quoteUrl: "https://example.com/quote/personal-loan",
+  quoteUrl: "#demo-only",
 
   featuresTitle: "One loan, plenty of reasons",
   featuresIntro:

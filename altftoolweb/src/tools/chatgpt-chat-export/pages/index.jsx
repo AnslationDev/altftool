@@ -34,39 +34,41 @@ const TABS = [
   { id: "tools", label: "Tools", icon: Wrench },
 ];
 
+const DEFAULT_SETTINGS = Object.freeze({
+  showAvatar: true,
+  showTimestamps: true,
+  hideUser: false,
+  hideAssistant: false,
+  fontFamily: "",
+  fontSize: 15,
+  lineHeight: "1.6",
+  pageSize: "a4",
+  orientation: "portrait",
+  margins: 20,
+  pdfDarkTheme: false,
+});
+
 function getInitialSettings() {
-  if (typeof window === "undefined") {
-    return {
-      showAvatar: true,
-      showTimestamps: true,
-      hideUser: false,
-      hideAssistant: false,
-      fontFamily: "",
-      fontSize: 15,
-      lineHeight: "1.6",
-      pageSize: "a4",
-      orientation: "portrait",
-      margins: 20,
-      pdfDarkTheme: false,
-    };
-  }
+  if (typeof window === "undefined") return { ...DEFAULT_SETTINGS };
+
   try {
     const saved = localStorage.getItem("chatgpt-export-settings");
-    if (saved) return { ...getInitialSettings(), ...JSON.parse(saved) };
+    if (saved) return { ...DEFAULT_SETTINGS, ...JSON.parse(saved) };
   } catch {}
-  return {
-    showAvatar: true,
-    showTimestamps: true,
-    hideUser: false,
-    hideAssistant: false,
-    fontFamily: "",
-    fontSize: 15,
-    lineHeight: "1.6",
-    pageSize: "a4",
-    orientation: "portrait",
-    margins: 20,
-    pdfDarkTheme: false,
-  };
+  return { ...DEFAULT_SETTINGS };
+}
+
+function getInitialHistory() {
+  if (typeof window === "undefined") return [];
+
+  try {
+    const saved = JSON.parse(
+      localStorage.getItem("chatgpt-export-history") || "[]",
+    );
+    return Array.isArray(saved) ? saved : [];
+  } catch {
+    return [];
+  }
 }
 
 export default function ChatGPTExportPro() {
@@ -85,10 +87,12 @@ export default function ChatGPTExportPro() {
   }, [settings]);
 
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("chatgpt-export-history");
-      if (saved) setHistory(JSON.parse(saved));
-    } catch {}
+    // Read after hydration so local-only summaries cannot change the server
+    // HTML and trigger a hydration mismatch.
+    const timeout = window.setTimeout(() => {
+      setHistory(getInitialHistory());
+    }, 0);
+    return () => window.clearTimeout(timeout);
   }, []);
 
   const addToHistory = useCallback(
@@ -178,7 +182,7 @@ export default function ChatGPTExportPro() {
         toastOptions={{
           duration: 3000,
           className:
-            "!rounded-lg !border !border-[--border] !bg-[--surface] !text-[--foreground] !shadow-md",
+            "!rounded-lg !border !border-[--border] !bg-[--surface] !text-[--foreground] !shadow-[var(--anslation-ds-shadow-md)]",
         }}
       />
       <div className="mb-6 text-center">
@@ -210,7 +214,7 @@ export default function ChatGPTExportPro() {
               disabled={disabled}
               className={`inline-flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm font-medium transition-all ${
                 isActive
-                  ? "bg-primary text-white shadow-sm"
+                  ? "bg-(--primary) text-(--primary-foreground) shadow-[var(--anslation-ds-shadow-sm)]"
                   : disabled
                   ? "cursor-not-allowed text-[--muted] opacity-40"
                   : "text-[--muted] hover:bg-[--surface-soft] hover:text-[--foreground]"
@@ -224,7 +228,7 @@ export default function ChatGPTExportPro() {
         {hasConversation && (
           <button
             onClick={handleClear}
-            className="ml-2 rounded-lg border border-red-200 px-3 py-2 text-xs font-medium text-red-500 transition-colors hover:bg-red-50"
+            className="ml-2 rounded-lg border border-(--destructive)/30 px-3 py-2 text-xs font-medium text-(--destructive) transition-colors hover:bg-(--destructive)/10"
           >
             Clear
           </button>
@@ -242,7 +246,7 @@ export default function ChatGPTExportPro() {
             {history.length > 0 && (
               <div className="rounded-xl border border-[--border] bg-[--surface] p-4">
                 <h3 className="mb-3 text-sm font-semibold text-[--foreground]">
-                  Recent Conversations
+                  Recent Import Summaries
                 </h3>
                 <div className="space-y-2">
                   {history.map((h, i) => (

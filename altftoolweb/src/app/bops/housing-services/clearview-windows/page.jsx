@@ -7,9 +7,9 @@ import {
 } from "lucide-react";
 import "./clearview-windows.css";
 
-const QUOTE_URL = "https://example.com/quote/clearview-windows";
-const PHONE_HUMAN = "(833) 555-0143";
-const PHONE_TEL = "tel:+18335550143";
+const QUOTE_URL = "#demo-only";
+const PHONE_HUMAN = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG_HERO =
   "https://images.unsplash.com/photo-1464519586905-a8c004d307cc?auto=format&fit=crop&w=1600&q=80";

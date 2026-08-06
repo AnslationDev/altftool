@@ -152,6 +152,12 @@ export const BANDS = [
 
 const cleanText = (value) => String(value === undefined || value === null ? "" : value).trim();
 
+const normaliseSpokenToken = (value) =>
+  String(value)
+    .normalize("NFKC")
+    .toLowerCase()
+    .replace(/^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$/gu, "");
+
 /**
  * Assess a chosen safe word. Pure, no dictionary lookups.
  *
@@ -169,9 +175,17 @@ export function checkSafeWord(word) {
     return { ok: false, level: "weak", message: "Digits alone are easy to guess. Use a word or a short phrase." };
   }
   const words = value.split(/\s+/).filter(Boolean);
-  const weakWord = words.find(
-    (single) => single.length < 4 || WEAK_SAFE_WORDS.includes(single.toLowerCase()),
-  );
+  const weakWord = words.find((single) => {
+    // Punctuation is not a secret when the phrase is spoken aloud. Strip it
+    // before the weak-word and digits-only checks so `password!`, `secret,`
+    // and `1234!` cannot bypass the guard.
+    const spoken = normaliseSpokenToken(single);
+    return (
+      spoken.length < 4 ||
+      WEAK_SAFE_WORDS.includes(spoken) ||
+      /^\p{N}+$/u.test(spoken)
+    );
+  });
   if (weakWord) {
     return {
       ok: false,

@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "vehicle-document-reminder",
   "title": "Vehicle Document Reminder",
-  "description": "RC, insurance, PUC aur licence expiry track kare.",
+  "description": "Track RC, insurance, PUC and driving licence expiry dates in one place.",
   "badge": "India-Specific Utilities",
   "category": [
     "India",

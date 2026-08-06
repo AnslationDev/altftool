@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "post-office-scheme-calculator",
   "title": "Post Office Scheme Calculator",
-  "description": "NSC, KVP aur MIS maturity estimates compare kare.",
+  "description": "Compare maturity estimates across post office NSC, KVP and MIS savings schemes.",
   "badge": "India-Specific Utilities",
   "category": [
     "Finance",

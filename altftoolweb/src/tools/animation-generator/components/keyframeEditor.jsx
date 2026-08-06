@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+
+import { buildCustomKeyframes } from "../lib/animationState.js";
 
 export default function KeyframeEditor({ onChange }) {
 
@@ -10,26 +12,15 @@ export default function KeyframeEditor({ onChange }) {
     { percent: 100, opacity: 1, transform: "translateY(0)" }
   ]);
 
-  useEffect(() => {
-    onChange && onChange(frames);
-  }, [frames, onChange]);
-
   const updateFrame = (index, key, value) => {
-    const updated = [...frames];
-    updated[index][key] = value;
+    const updated = frames.map((frame, frameIndex) =>
+      frameIndex === index ? { ...frame, [key]: value } : frame,
+    );
     setFrames(updated);
+    onChange?.(updated);
   };
 
-  const generatedCode = `
-@keyframes customAnimation {
-${frames.map(f => `
-  ${f.percent}% {
-    opacity: ${f.opacity};
-    ${f.transform ? `transform: ${f.transform};` : ""}
-  }
-`).join("")}
-}
-`;
+  const generatedCode = buildCustomKeyframes(frames);
 
   return (
     <div className=" p-2 rounded-lg border border-(--border) bg-(--card) text-(--foreground) shadow-sm hover:bg-(--muted) focus:outline-none focus:ring-2 focus:ring-(--primary)">

@@ -18,6 +18,16 @@ import {
   Upload,
   Wrench,
 } from "lucide-react";
+
+import {
+  captureMediaAnalysisLine,
+  createMediaAnalysisLog,
+  formatMediaAnalysisLog,
+} from "./mediaAnalysisLog.js";
+import {
+  buildVoiceprintPitchShiftCommand,
+  probeAudioSampleRate,
+} from "./voiceprintPitchShift.js";
 import { advancedCatalog } from "./catalog";
 import { sanitizeSvgSource } from "./svgSanitizer";
 
@@ -343,46 +353,14 @@ const mediaOptions = {
     // MediaLab runner below; every other entry in this file still declares
     // `command` with 3-5 params and simply ignores the extra argument, so
     // this is scoped to this one tool only.
+    // There is deliberately no "assume 48000" fallback: because the multiplier
+    // is R / R_in, a guessed R_in reinstates the exact bug above rather than
+    // degrading gracefully (an 8kHz clip asked to shift *down* would come out
+    // ~5.5x *up*), so probeAudioSampleRate throws a user-facing message and the
+    // run is abandoned instead of emitting a silently wrong file.
     command: async (input, output, choice, _second, _fontPath, ffmpeg) => {
-      const factor = choice.includes("strong") ? 1.18 : 1.08;
-      const actual = choice.includes("down") ? 1 / factor : factor;
-      let sourceRate = 48000;
-      if (ffmpeg?.ffprobe) {
-        const probeOutput = "voiceprint-anonymizer-probe.txt";
-        try {
-          await ffmpeg.ffprobe([
-            "-v",
-            "error",
-            "-select_streams",
-            "a:0",
-            "-show_entries",
-            "stream=sample_rate",
-            "-of",
-            "default=noprint_wrappers=1:nokey=1",
-            input,
-            "-o",
-            probeOutput,
-          ]);
-          const bytes = await ffmpeg.readFile(probeOutput);
-          const text =
-            typeof bytes === "string" ? bytes : new TextDecoder().decode(bytes);
-          const parsed = parseInt(text.trim().split(/\s+/)[0], 10);
-          if (Number.isFinite(parsed) && parsed > 0) sourceRate = parsed;
-        } catch {
-          // If the probe fails for any reason (unusual container, older
-          // core build, etc.) fall back to the previous 48000 assumption
-          // rather than failing the whole conversion.
-        } finally {
-          await ffmpeg.deleteFile(probeOutput).catch(() => {});
-        }
-      }
-      return [
-        "-i",
-        input,
-        "-af",
-        `asetrate=${sourceRate}*${actual},aresample=48000,atempo=${1 / actual},highpass=f=100,lowpass=f=8500`,
-        output,
-      ];
+      const sourceRate = await probeAudioSampleRate(ffmpeg, input);
+      return buildVoiceprintPitchShiftCommand({ input, output, choice, sourceRate });
     },
     note: "Changes obvious pitch cues but cannot guarantee biometric anonymity. Do not rely on it against determined speaker recognition.",
   },
@@ -557,7 +535,8 @@ function MediaLab({ slug }) {
   const [messageTone, setMessageTone] = useState("info");
   const [logs, setLogs] = useState([]);
   const engine = useRef(null);
-  const logsRef = useRef([]);
+  const analysisLogRef = useRef(createMediaAnalysisLog());
+  const analyzeRef = useRef(Boolean(config.analyze));
 
   useEffect(() => () => engine.current?.terminate?.(), []);
 
@@ -567,7 +546,11 @@ function MediaLab({ slug }) {
     setMessage("");
     setMessageTone("info");
     setLogs([]);
-    logsRef.current = [];
+    analysisLogRef.current = createMediaAnalysisLog();
+    // The FFmpeg listener is installed only once with the engine. Refresh
+    // this ref for every run so a reused engine never reads the slug/config
+    // that happened to create it.
+    analyzeRef.current = Boolean(config.analyze);
     setProgress(0);
     try {
       const [{ FFmpeg }, { fetchFile, toBlobURL }] = await Promise.all([
@@ -581,16 +564,21 @@ function MediaLab({ slug }) {
           setProgress(Math.max(0, Math.min(100, Math.round(value * 100)))),
         );
         ffmpeg.on("log", ({ message: value }) => {
-          // Tools with `analyze: true` export logsRef.current verbatim as
-          // the user's downloaded diagnostic report (see `config.analyze`
-          // below), so capping it at 200 lines can silently evict the
-          // earliest lines — e.g. the first silence_start marker a decay
-          // reading depends on — with no indication anything was dropped.
-          // Non-analyze tools never read logsRef.current for anything but
-          // memory bookkeeping, so their behavior is unchanged.
-          logsRef.current = config.analyze
-            ? [...logsRef.current, value]
-            : [...logsRef.current.slice(-199), value];
+          // Tools with `analyze: true` export this capture as the user's
+          // downloaded diagnostic report, so a plain "keep the last 200 lines"
+          // window silently evicted the earliest lines — e.g. the first
+          // silence_start marker a decay reading depends on — with no
+          // indication anything was dropped. captureMediaAnalysisLine keeps a
+          // priority head *and* tail of the analysis-cue lines plus the recent
+          // raw tail, and formatMediaAnalysisLog states explicitly how many
+          // lines were omitted, so the earliest markers survive without the
+          // report growing without bound on a long encode. Gated on
+          // analyzeRef, not config.analyze: this listener is installed once
+          // per FFmpeg engine and the engine is reused across runs, so the
+          // closed-over config would go stale if the slug changed.
+          if (analyzeRef.current) {
+            captureMediaAnalysisLine(analysisLogRef.current, value);
+          }
           setLogs((current) => [...current.slice(-79), value]);
         });
         const base =
@@ -638,7 +626,7 @@ function MediaLab({ slug }) {
       const exitCode = await ffmpeg.exec(command);
       if (exitCode !== 0) throw new Error(`Processing exited with code ${exitCode}`);
       if (config.analyze) {
-        const report = logsRef.current.join("\n");
+        const report = formatMediaAnalysisLog(analysisLogRef.current);
         downloadBlob(
           new Blob([report], { type: "text/plain;charset=utf-8" }),
           `altftool-${slug}-analysis.txt`,

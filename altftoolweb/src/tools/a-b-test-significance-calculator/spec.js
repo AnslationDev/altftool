@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "a-b-test-significance-calculator",
   "title": "A/B Test Significance Calculator",
-  "description": "Conversion data se p-value aur confidence calculate kare.",
+  "description": "Calculate the p-value and confidence level from your A/B test conversion data.",
   "badge": "Finance & Statistics Workbenches",
   "category": [
     "Business",

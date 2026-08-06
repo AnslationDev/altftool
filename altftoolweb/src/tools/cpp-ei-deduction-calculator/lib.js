@@ -10,7 +10,7 @@
  *    for evenly spread earnings the annual figure divided by the number of pay periods gives
  *    the same answer.
  * 2. Base plus first additional CPP is 5.95% for the employee, matched by the employer.
- *    Quebec employees pay QPP instead, at 6.40% employee and employer.
+ *    Quebec employees pay QPP instead, at the rate published for the selected year.
  * 3. Second additional CPP ("CPP2") applies to earnings between the YMPE and the Year's
  *    Additional Maximum Pensionable Earnings (YAMPE) at 4% for both employee and employer.
  *    QPP2 works the same way at 4%.
@@ -33,11 +33,26 @@ export const CPP_BASIC_EXEMPTION = 3500;
 /** Standard employer EI multiplier — 1.4 times the employee premium. */
 export const EI_EMPLOYER_MULTIPLIER = 1.4;
 
+export const CONTRIBUTION_SOURCE_URL =
+  "https://www.canada.ca/en/revenue-agency/services/forms-publications/payroll/t4127-payroll-deductions-formulas/t4127-jan/t4127-jan-payroll-deductions-formulas-computer-programs.html";
+
 /**
  * Verified statutory parameters by year. Sources: CRA payroll deduction tables and the
  * Canada Employment Insurance Commission premium rate announcements.
  */
 export const CONTRIBUTION_YEARS = {
+  2026: {
+    year: 2026,
+    ympe: 74600,
+    yampe: 85000,
+    cppEmployeeRate: 0.0595,
+    cpp2Rate: 0.04,
+    qppEmployeeRate: 0.063,
+    qpp2Rate: 0.04,
+    eiMaxInsurableEarnings: 68900,
+    eiRateOutsideQuebec: 0.0163,
+    eiRateQuebec: 0.013,
+  },
   2025: {
     year: 2025,
     ympe: 71300,

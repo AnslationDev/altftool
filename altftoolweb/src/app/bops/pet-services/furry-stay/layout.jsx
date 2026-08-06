@@ -1,6 +1,6 @@
 export const metadata = {
   title: "FurryStay — Pet Boarding & Daycare",
-  description: "Cage-free boarding and playful daycare with live cameras and daily report cards. Get a stay quote.",
+  description: "Design demonstration for a fictional pet boarding and daycare page; no facility, booking, quote, or live camera service is available.",
   robots: { index: false, follow: true, googleBot: { index: false, follow: true } },
   alternates: { canonical: "/bops/pet-services/furry-stay" },
 };

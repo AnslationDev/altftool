@@ -17,9 +17,9 @@ import {
 } from "lucide-react";
 import "./draindoctors.css";
 
-const QUOTE_URL = "https://example.com/quote/draindoctors";
-const PHONE_DISPLAY = "(855) 555-0265";
-const PHONE_TEL = "tel:+18555550265";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1766330977065-4458b54c6d1a?auto=format&fit=crop&w=1600&q=80",

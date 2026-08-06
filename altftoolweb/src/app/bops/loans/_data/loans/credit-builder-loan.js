@@ -34,7 +34,7 @@ export const creditBuilderLoan = {
   ],
 
   quoteLabel: "Start building",
-  quoteUrl: "https://example.com/quote/credit-builder-loan",
+  quoteUrl: "#demo-only",
 
   featuresTitle: "A loan built to grow your credit",
   featuresIntro:

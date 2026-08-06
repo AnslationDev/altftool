@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "speed-date-rotation-planner",
   "title": "Speed-Date Rotation Planner",
-  "description": "Non-repeating round-robin meeting schedule banaye.",
+  "description": "Build a non-repeating round-robin meeting schedule for a speed dating event.",
   "badge": "Fair Decisions & Group Scheduling",
   "category": [
     "Productivity",

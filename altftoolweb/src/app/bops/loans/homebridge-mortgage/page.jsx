@@ -18,9 +18,9 @@ import {
 } from "lucide-react";
 import "./homebridge-mortgage.css";
 
-const QUOTE_URL = "https://example.com/quote/homebridge-mortgage";
-const PHONE_TEL = "tel:+18115550212";
-const PHONE_DISPLAY = "(811) 555-0212";
+const QUOTE_URL = "#demo-only";
+const PHONE_TEL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
 
 const IMG = {
   hero: "https://images.unsplash.com/photo-1758523671413-cd178a883d6a?auto=format&fit=crop&w=1600&q=80",

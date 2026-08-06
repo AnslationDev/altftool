@@ -91,6 +91,11 @@ export const MIX_TOLERANCE_PCT = 0.01;
 const isNum = (value) => typeof value === "number" && Number.isFinite(value);
 const round2 = (value) => Math.round(value * 100) / 100;
 
+/** Kept public because other surfaces use the statutory classification. */
+export function isZeroMdrRail(railId) {
+  return ZERO_MDR_RAILS.includes(railId);
+}
+
 /**
  * Fee for a single gateway against a payment mix.
  *
@@ -134,6 +139,7 @@ export function gatewayMonthlyCost({ monthlyVolume, averageTicket, mix, gateway 
 
   let percentFee = 0;
   let flatFee = 0;
+  const lines = [];
 
   for (const rail of RAILS) {
     const sharePct = Number(mix?.[rail.id]) || 0;
@@ -145,6 +151,16 @@ export function gatewayMonthlyCost({ monthlyVolume, averageTicket, mix, gateway 
     const railFlatFee = rail.zeroMdr ? 0 : railTxns * flat;
     percentFee += railPercentFee;
     flatFee += railFlatFee;
+    lines.push({
+      railId: rail.id,
+      label: rail.label,
+      sharePct,
+      volume: railVolume,
+      txns: railTxns,
+      ratePct,
+      fee: railPercentFee + railFlatFee,
+      zeroMdr: rail.zeroMdr,
+    });
   }
 
   const feeExGst = percentFee + flatFee + monthlyFee;
@@ -165,6 +181,7 @@ export function gatewayMonthlyCost({ monthlyVolume, averageTicket, mix, gateway 
     effectiveRatePct: round2((totalFee / monthlyVolume) * 100),
     costPerTxn: totalTxns > 0 ? totalFee / totalTxns : 0,
     annualFee: totalFee * 12,
+    lines,
   };
 }
 

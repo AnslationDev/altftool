@@ -95,13 +95,13 @@ export default function Footer() {
             <ul className="mt-5 space-y-4 text-sm">
 
               <li>
-                <a href={`tel:${company.phoneHref}`} className="flex gap-3 transition-colors hover:text-bronze-300">
+                <a href={company.phoneHref} className="flex gap-3 transition-colors hover:text-bronze-300">
                   <Icon name="phone" className="mt-0.5 h-4 w-4 shrink-0 text-bronze-400" />
                   {company.phone}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${company.email}`} className="flex gap-3 break-all transition-colors hover:text-bronze-300">
+                <a href="#demo-only" className="flex gap-3 break-all transition-colors hover:text-bronze-300">
                   <Icon name="mail" className="mt-0.5 h-4 w-4 shrink-0 text-bronze-400" />
                   {company.email}
                 </a>

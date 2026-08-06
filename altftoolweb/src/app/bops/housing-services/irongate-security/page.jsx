@@ -18,9 +18,9 @@ import {
 } from "lucide-react";
 import "./irongate-security.css";
 
-const QUOTE_URL = "https://example.com/quote/irongate-security";
-const PHONE_DISPLAY = "(833) 555-0128";
-const PHONE_TEL = "tel:+18335550128";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG = {
   heroCamera:

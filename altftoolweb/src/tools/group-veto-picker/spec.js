@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "group-veto-picker",
   "title": "Group Veto Picker",
-  "description": "Member vetoes se options progressively narrow kare.",
+  "description": "Narrow a shortlist down to one choice as each member spends their vetoes.",
   "badge": "Fair Decisions & Group Scheduling",
   "category": [
     "Productivity",

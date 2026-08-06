@@ -1,4 +1,4 @@
-// 20+ supported symbologies: every JsBarcode format (including variants) plus
+// 20 supported symbologies: every JsBarcode format (including variants) plus
 // QR via qrcode.react. `example` values are valid for their format.
 
 export const SIZE_PRESETS = {

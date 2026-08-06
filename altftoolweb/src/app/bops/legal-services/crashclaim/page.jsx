@@ -22,9 +22,9 @@ import {
 } from "lucide-react";
 import "./crashclaim.css";
 
-const QUOTE_URL = "https://example.com/quote/crashclaim";
-const PHONE_DISPLAY = "(877) 555-0421";
-const PHONE_TEL = "tel:+18775550421";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const CHECKLIST = [
   {

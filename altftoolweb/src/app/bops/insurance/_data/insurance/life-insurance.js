@@ -26,7 +26,7 @@ export const lifeInsurance = {
   ],
 
   quoteLabel: "Compare quotes",
-  quoteUrl: "https://example.com/quote/life-insurance",
+  quoteUrl: "#demo-only",
 
   coverageTitle: "What life insurance can do for your family",
   coverageIntro:

@@ -18,9 +18,9 @@ import {
 } from "lucide-react";
 import "./nightwatch-security.css";
 
-const QUOTE_URL = "https://example.com/quote/nightwatch-security";
-const PHONE_DISPLAY = "(855) 555-0228";
-const PHONE_TEL = "tel:+18555550228";
+const QUOTE_URL = "#demo-only";
+const PHONE_DISPLAY = "Demo only";
+const PHONE_TEL = "#demo-only";
 
 const IMG = {
   city: "https://images.unsplash.com/photo-1496368077930-c1e31b4e5b44",

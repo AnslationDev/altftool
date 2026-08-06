@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
 import {
   RefreshCw,
@@ -10,6 +10,7 @@ import {
   FileText,
   Check
 } from "lucide-react";
+import { parseChatInput } from "../lib";
 
 const FORMATS = [
   { id: "openai", label: "OpenAI JSON" },
@@ -40,11 +41,7 @@ export default function MainComponent() {
     setTimeout(() => setSuccess(""), 3000);
   };
 
-  useEffect(() => {
-    handleConvert(inputText, outputFormat);
-  }, [inputText, outputFormat]);
-
-  const handleConvert = (input, format) => {
+  const handleConvert = useCallback((input, format) => {
     setError("");
     setOutputText("");
 
@@ -52,64 +49,10 @@ export default function MainComponent() {
       return;
     }
 
-    let parsedMessages = [];
+    let parsedMessages;
 
-    // 1. Try to parse JSON array
     try {
-      const cleanInput = input.trim();
-      if (cleanInput.startsWith("[") || cleanInput.startsWith("{")) {
-        const parsed = JSON.parse(cleanInput);
-        if (Array.isArray(parsed)) {
-          parsedMessages = parsed.map((m) => ({
-            role: m.role || "user",
-            content: m.content || m.text || "",
-          }));
-        } else if (parsed.messages && Array.isArray(parsed.messages)) {
-          // Anthropic/Other nested structure
-          parsedMessages = parsed.messages.map((m) => ({
-            role: m.role || "user",
-            content: m.content || "",
-          }));
-          if (parsed.system) {
-            parsedMessages.unshift({ role: "system", content: parsed.system });
-          }
-        } else {
-          throw new Error("JSON structure must be an array of messages or contain a messages array.");
-        }
-      } else {
-        // Parse raw Markdown/Text logs
-        const lines = cleanInput.split("\n");
-        let currentRole = "user";
-        let currentContent = [];
-
-        for (const line of lines) {
-          const lower = line.toLowerCase();
-          if (lower.startsWith("**user:**") || lower.startsWith("**user**:")) {
-            if (currentContent.length || currentRole) {
-              parsedMessages.push({ role: currentRole, content: currentContent.join("\n").trim() });
-            }
-            currentRole = "user";
-            currentContent = [line.substring(line.indexOf(":") + 1)];
-          } else if (lower.startsWith("**assistant:**") || lower.startsWith("**assistant**:") || lower.startsWith("**bot:**") || lower.startsWith("**bot**:")) {
-            if (currentContent.length || currentRole) {
-              parsedMessages.push({ role: currentRole, content: currentContent.join("\n").trim() });
-            }
-            currentRole = "assistant";
-            currentContent = [line.substring(line.indexOf(":") + 1)];
-          } else if (lower.startsWith("**system:**") || lower.startsWith("**system**:") || lower.startsWith("# system")) {
-            if (currentContent.length || currentRole) {
-              parsedMessages.push({ role: currentRole, content: currentContent.join("\n").trim() });
-            }
-            currentRole = "system";
-            currentContent = [line.substring(line.indexOf(":") + 1)];
-          } else {
-            currentContent.push(line);
-          }
-        }
-        if (currentContent.length || currentRole) {
-          parsedMessages.push({ role: currentRole, content: currentContent.join("\n").trim() });
-        }
-      }
+      parsedMessages = parseChatInput(input);
     } catch (err) {
       setError(`Failed to parse input: ${err.message}. Make sure your JSON format is valid.`);
       return;
@@ -189,7 +132,12 @@ export default function MainComponent() {
       });
       setOutputText(lines.join("\n"));
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => handleConvert(inputText, outputFormat), 0);
+    return () => window.clearTimeout(timer);
+  }, [handleConvert, inputText, outputFormat]);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(outputText);
@@ -224,7 +172,7 @@ export default function MainComponent() {
           <RefreshCw className="h-8 w-8 text-teal-500 shrink-0" /> Codex Chat Transfer
         </h1>
         <p className="mt-2 text-md text-slate-600 dark:text-slate-300 max-w-2xl text-center">
-          Refactor dialogue models and export system configurations between modern LLM formats in real-time.
+          Convert message arrays or Markdown transcripts into six target LLM formats in real time.
         </p>
       </div>
 

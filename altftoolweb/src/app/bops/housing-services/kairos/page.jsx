@@ -25,7 +25,7 @@ import NewsletterForm from "./NewsletterForm";
 import "./styles.css";
 
 const phoneDisplay = "(786) 400-3830";
-const phoneHref = "tel:7864003830";
+const phoneHref = "#demo-only";
 
 const trustPoints = [
   {

@@ -53,15 +53,25 @@ export default function ToolHome() {
   // Rendered on the server with the constant default, then rolled forward to the
   // next Monday after mount, so there is never a hydration mismatch.
   useEffect(() => {
-    // The visitor's local calendar day, not the UTC day — otherwise the
-    // overdue flag and the "next Monday" default can land a day early or
-    // late depending on which side of UTC midnight the visitor is on.
-    const now = new Date();
-    const pad = (value) => String(value).padStart(2, "0");
-    const nowIso = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
-    setToday(nowIso);
-    const ts = parseISODate(nowIso);
-    if (ts !== null) setStartDate((current) => (current === DEFAULTS.startDate ? toISODate(nextWeekdayOnOrAfter(ts, 1)) : current));
+    // Deferred a tick past the hydration commit so the first client render is
+    // byte-identical to the SSR output, and cleared on unmount so the state
+    // update can never land on a torn-down tree.
+    const timer = window.setTimeout(() => {
+      // The visitor's local calendar day, not the UTC day — otherwise the
+      // overdue flag and the "next Monday" default can land a day early or
+      // late depending on which side of UTC midnight the visitor is on.
+      const now = new Date();
+      const pad = (value) => String(value).padStart(2, "0");
+      const nowIso = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+      setToday(nowIso);
+      const ts = parseISODate(nowIso);
+      if (ts !== null) {
+        setStartDate((current) =>
+          current === DEFAULTS.startDate ? toISODate(nextWeekdayOnOrAfter(ts, 1)) : current,
+        );
+      }
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   const plan = useMemo(
