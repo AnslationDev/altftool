@@ -4,7 +4,7 @@ const seo = {
   useCases: [
     "Adding a backup MX at preference 20 behind a primary at 10 so mail queues elsewhere during an outage",
     "Planning a three-phase migration from an on-premise mail server to a hosted provider without dropping messages mid-cutover",
-    "Sanity-checking an inherited zone where MX targets point at IP addresses or share conflicting preference values",
+    "Sanity-checking an inherited zone where MX targets point at IP addresses or the same host is listed in both the primary and backup tiers",
   ],
   benefits: [
     ["RFC 5321 ordering applied", "Lowest-preference-first and equal-value load balancing drive every tier the planner emits."],

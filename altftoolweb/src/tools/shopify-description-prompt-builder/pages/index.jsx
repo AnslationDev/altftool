@@ -95,10 +95,14 @@ export default function ToolHome() {
     setCopied("");
   };
 
+  // Matches lib.js's parseList(), which splits on commas, semicolons and
+  // newlines — keep button state and clicks in sync with that delimiter set.
+  const VOICE_TRAIT_SPLIT = /[\n,;]+/;
+
   const toggleTrait = (trait) =>
     setForm((prev) => {
       const current = prev.voiceTraitsRaw
-        .split(",")
+        .split(VOICE_TRAIT_SPLIT)
         .map((item) => item.trim())
         .filter(Boolean);
       const exists = current.some((item) => item.toLowerCase() === trait.toLowerCase());
@@ -109,7 +113,11 @@ export default function ToolHome() {
     });
 
   const traitSelected = (trait) =>
-    form.voiceTraitsRaw.toLowerCase().split(",").map((item) => item.trim()).includes(trait.toLowerCase());
+    form.voiceTraitsRaw
+      .toLowerCase()
+      .split(VOICE_TRAIT_SPLIT)
+      .map((item) => item.trim())
+      .includes(trait.toLowerCase());
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -358,7 +366,7 @@ export default function ToolHome() {
               onClick={() => copy("handle", failed ? "" : result.handle.handle)}
               aria-label="Copy the generated URL handle"
               className={GHOST_BTN}
-              disabled={failed}
+              disabled={failed || !result.handle.handle}
             >
               {copied === "handle" ? <Check className="h-4 w-4" aria-hidden="true" /> : <Copy className="h-4 w-4" aria-hidden="true" />}
               {copied === "handle" ? "Copied!" : "Copy handle"}

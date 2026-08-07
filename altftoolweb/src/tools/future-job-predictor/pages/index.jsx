@@ -104,7 +104,7 @@ const CAREER_DATABASE = [
   },
 ];
 
-const SKILL_LIST = ["Programming", "Communication", "Leadership", "Creativity", "Mathematics", "Design", "Writing", "AI Knowledge", "Data Analysis", "Problem Solving"];
+const SKILL_LIST = ["Programming", "Communication", "Leadership", "Creativity", "Mathematics", "Design", "Writing", "AI Knowledge", "Data Analysis", "Problem Solving", "Critical Thinking"];
 const INTEREST_LIST = ["Technology", "Business", "Healthcare", "Finance", "Gaming", "Science", "Space", "Robotics", "AI", "Startups"];
 const PERSONALITY_LIST = ["Introvert", "Extrovert", "Analytical", "Creative", "Logical", "Risk Taker", "Adaptable", "Detail Oriented"];
 const PREFERENCE_LIST = ["Remote", "Hybrid", "Office", "Startup", "Corporate", "High Salary", "Work Life Balance"];
@@ -159,9 +159,25 @@ export default function FutureJobPredictorApp() {
       if (preferences.includes("Remote") && job.pros.join(" ").toLowerCase().includes("remote")) {
         matchScore += 5;
       }
-      if (preferences.includes("High Salary") && Number(job.salaryRange.match(/\d+/g)?.[0] || 0) > 100) {
+      // Strip thousands separators before parsing so "$100,000 - $160,000"
+      // resolves to a real dollar figure (100000) instead of a truncated "100".
+      const salaryFloor = Number(job.salaryRange.replace(/,/g, "").match(/\d+/g)?.[0] || 0);
+      if (preferences.includes("High Salary") && salaryFloor >= 100000) {
         matchScore += 5;
       }
+
+      // Small honest nudge: careers whose name/outlook/education/skills genuinely
+      // reference a selected interest get a small boost. This is deliberately
+      // lightweight — it does not attempt to fully model interests, personality,
+      // or bio into the score (see the disclosure copy near those wizard steps).
+      const interestSearchText = [job.name, job.futureOutlook, job.educationNeeded, job.requiredSkills.join(" "), job.pros.join(" ")]
+        .join(" ")
+        .toLowerCase();
+      interests.forEach((interest) => {
+        if (interestSearchText.includes(interest.toLowerCase())) {
+          matchScore += 1;
+        }
+      });
 
       // Bound score between 0 and 100
       matchScore = Math.min(100, Math.max(0, Math.round(matchScore)));
@@ -215,7 +231,7 @@ export default function FutureJobPredictorApp() {
         </div>
 
         {/* AI Disclaimer Alert */}
-        <div className="bg-amber-500/5 border border-amber-500/20 px-4 py-3 rounded-xl text-xs text-amber-600 leading-relaxed">
+        <div className="bg-warning-soft border border-warning px-4 py-3 rounded-xl text-xs text-warning leading-relaxed">
           <strong>Important Disclaimer:</strong> This is an AI-inspired career simulation based on your inputs. It is intended for educational and entertainment purposes and should not be considered professional career advice.
         </div>
 
@@ -244,6 +260,9 @@ export default function FutureJobPredictorApp() {
               {/* Step 1: Bio */}
               {step === 1 && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                  <p className="sm:col-span-2 text-[11px] text-muted-foreground italic -mt-1">
+                    Your bio helps us tailor future recommendations. It does not currently move your match score &mdash; skill ratings and work preferences drive the numbers.
+                  </p>
                   <div>
                     <label className="block text-xs font-bold text-foreground mb-1 uppercase tracking-wider">Age</label>
                     <input
@@ -312,6 +331,9 @@ export default function FutureJobPredictorApp() {
               {/* Step 3: Interests Checkboxes */}
               {step === 3 && (
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <p className="col-span-2 sm:col-span-4 text-[11px] text-muted-foreground italic -mt-1">
+                    Interests that align with a career&apos;s name or focus area give it a small match-score boost; skill ratings and work preferences still drive most of the score.
+                  </p>
                   {INTEREST_LIST.map((int) => (
                     <button
                       key={int}
@@ -331,6 +353,9 @@ export default function FutureJobPredictorApp() {
               {/* Step 4: Personality Traits */}
               {step === 4 && (
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <p className="col-span-2 sm:col-span-4 text-[11px] text-muted-foreground italic -mt-1">
+                    This helps us understand your work style for future features. It does not currently affect your match score.
+                  </p>
                   {PERSONALITY_LIST.map((p) => (
                     <button
                       key={p}
@@ -390,7 +415,7 @@ export default function FutureJobPredictorApp() {
               ) : (
                 <button
                   onClick={handleSimulate}
-                  className="px-6 py-2.5 bg-gradient-to-r from-primary to-rose-500 hover:opacity-95 text-white text-xs font-black rounded-lg transition-all flex items-center gap-2 shadow-sm"
+                  className="px-6 py-2.5 bg-gradient-to-r from-primary to-danger hover:opacity-95 text-white text-xs font-black rounded-lg transition-all flex items-center gap-2 shadow-sm"
                 >
                   Run Compatibility Engine <Sparkles className="w-4 h-4" />
                 </button>
@@ -415,6 +440,15 @@ export default function FutureJobPredictorApp() {
                     <div
                       key={item.name}
                       onClick={() => setSelectedMatchIdx(idx)}
+                      role="button"
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setSelectedMatchIdx(idx);
+                        }
+                      }}
+                      aria-pressed={isSelected}
                       className={`p-4 rounded-xl border text-left flex flex-col justify-between transition-all cursor-pointer ${
                         isSelected
                           ? "border-primary bg-primary/5 shadow-xs"
@@ -430,7 +464,7 @@ export default function FutureJobPredictorApp() {
 
                       <div className="mt-3 flex justify-between items-center text-[10px] text-muted-foreground border-t border-border/50 pt-2.5">
                         <span className="flex items-center gap-1 font-bold text-foreground">
-                          <DollarSign className="w-3.5 h-3.5 text-emerald-500" /> {item.salaryRange}
+                          <DollarSign className="w-3.5 h-3.5 text-success" /> {item.salaryRange}
                         </span>
                         <span className="uppercase tracking-wider font-extrabold px-1.5 py-0.5 bg-secondary rounded text-[9px]">
                           {item.learningDifficulty} Study
@@ -476,6 +510,7 @@ export default function FutureJobPredictorApp() {
                         onClick={handlePrint}
                         className="p-2 border border-border rounded-lg hover:bg-secondary text-muted-foreground transition-all"
                         title="Print Report"
+                        aria-label="Print report"
                       >
                         <Printer className="w-4 h-4" />
                       </button>
@@ -497,7 +532,7 @@ export default function FutureJobPredictorApp() {
                   </div>
 
                   {/* Recharts widgets */}
-                  <CareerCharts activeCareer={activeCareer} matches={matches} />
+                  <CareerCharts activeCareer={activeCareer} matches={matches} skills={skills} />
                 </div>
               )}
 

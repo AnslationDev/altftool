@@ -22,7 +22,7 @@ const seo = {
     ],
     [
       "Do twin-spark Bajaj engines need two spark plugs?",
-      "Yes. DTS-i twin-spark engines carry two plugs per cylinder, so budget for two units every time the plug replacement interval comes up, typically around 10,000 km. Using a single new plug alongside an old one causes uneven burn and rough idling.",
+      "Yes, physically — DTS-i twin-spark engines carry two plugs per cylinder, so budget for two units every time the plug replacement interval comes up, typically around 10,000 km. This planner's cost line only prices a single spark plug per visit, so twin-spark owners should manually double that line item when estimating the real bill. Using a single new plug alongside an old one causes uneven burn and rough idling.",
     ],
     [
       "Is a prepaid service package worth buying?",

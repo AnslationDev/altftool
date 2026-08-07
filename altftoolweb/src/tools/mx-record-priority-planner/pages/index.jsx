@@ -205,7 +205,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               {isMigration ? "Cutover record set (Phase 2)" : "MX records to publish"}
             </p>
@@ -222,6 +222,7 @@ export default function ToolHome() {
               onClick={copyResult}
               disabled={hasError}
               aria-label="Copy the MX record plan"
+              aria-live="polite"
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? (

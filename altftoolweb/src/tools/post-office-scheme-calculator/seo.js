@@ -31,7 +31,7 @@ const seo = {
     ],
     [
       "Where do I find the current rate to enter?",
-      "India Post small-savings rates are notified quarterly by the Ministry of Finance and published on the India Post website. The calculator preloads 7.7% for NSC and 7.4% for MIS as example figures only; replace them with the rate in force for your quarter.",
+      "India Post small-savings rates are notified quarterly by the Ministry of Finance and published on the India Post website. The rate field itself doesn't change automatically when you switch the Scheme dropdown — use the \"NSC example\" and \"MIS example\" preset buttons to load a scheme together with its example rate (7.7% and 7.4% respectively) in one click, then replace that rate with the one in force for your quarter.",
     ],
     [
       "Is the interest taxable?",

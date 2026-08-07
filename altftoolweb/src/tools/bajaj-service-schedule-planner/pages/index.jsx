@@ -27,7 +27,9 @@ const DATE = new Intl.DateTimeFormat("en-IN", {
 });
 
 const DASH = "—";
-const money = (value) => (Number.isFinite(value) ? INR.format(value) : DASH);
+// Guard against negative zero (e.g. -(0) from negating an exact tie) so it
+// never renders as "-₹0" — normalize any zero, positive or negative, to 0.
+const money = (value) => (Number.isFinite(value) ? INR.format(value === 0 ? 0 : value) : DASH);
 const km = (value) => (Number.isFinite(value) ? `${NUM.format(value)} km` : DASH);
 const showDate = (iso) => {
   if (!iso) return DASH;

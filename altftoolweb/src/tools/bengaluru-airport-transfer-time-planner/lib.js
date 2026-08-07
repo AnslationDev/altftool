@@ -345,18 +345,19 @@ export function planTransfer({
       break;
     }
     if (previous !== null && Math.abs(next - previous) < 0.5) {
-      // Oscillating between two hours — trust the congestion factor for the
-      // earlier (safer) of the pair, then re-solve leaveByMinute for THAT
-      // factor's travel time. Re-solving (rather than keeping the raw
-      // Math.min candidate) is what keeps leaveByMinute a genuine fixed
-      // point of terminalArrival - travel - buffer, so every number the UI
-      // prints from this result (journey, required lead, buffer, total
-      // door-to-departure) reconciles with the others even though strict
-      // iteration never settled.
-      const saferMinute = Math.min(next, leaveByMinute);
-      factor = level.factor === null ? trafficFactorAt(saferMinute, { isWeekend }) : level.factor;
+      // Oscillating between two adjacent hours. Take the EARLIER (safer) of
+      // the two actual candidate minutes from the last two iterations and
+      // use it directly as the final answer — do NOT re-solve leaveByMinute
+      // from its factor. Re-solving can drift the result back into the
+      // LATER (less safe) hour, which would report a travel time from the
+      // earlier hour's (lower) factor while actually landing in the later
+      // hour's higher-congestion window — silently understating travel time
+      // and eating into the required arrival margin. Instead, compute
+      // travel/factor FROM the chosen minute's own hour, so every number
+      // reported is self-consistent with the leave-by time actually used.
+      leaveByMinute = Math.min(next, leaveByMinute);
+      factor = level.factor === null ? trafficFactorAt(leaveByMinute, { isWeekend }) : level.factor;
       travel = journeyMinutes({ distanceKm: km, mode, factor });
-      leaveByMinute = terminalArrivalMinute - travel - buffer;
       break;
     }
     previous = leaveByMinute;

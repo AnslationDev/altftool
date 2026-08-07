@@ -53,7 +53,7 @@ export const PIXEL_CATALOG = [
     setsIdentifier: true,
     transfersOutsideEea: true,
     optOut: "https://adssettings.google.com",
-    typicalRetentionMonths: 24,
+    typicalRetentionMonths: 3,
   },
   {
     id: "meta-pixel",
@@ -65,7 +65,7 @@ export const PIXEL_CATALOG = [
     setsIdentifier: true,
     transfersOutsideEea: true,
     optOut: "https://www.facebook.com/adpreferences/ad_settings",
-    typicalRetentionMonths: 24,
+    typicalRetentionMonths: 3,
   },
   {
     id: "linkedin-insight",
@@ -77,7 +77,7 @@ export const PIXEL_CATALOG = [
     setsIdentifier: true,
     transfersOutsideEea: true,
     optOut: "https://www.linkedin.com/psettings/guest-controls/retargeting-opt-out",
-    typicalRetentionMonths: 6,
+    typicalRetentionMonths: 24,
   },
   {
     id: "microsoft-uet",
@@ -245,6 +245,20 @@ export function buildPixelDisclosure({
     0,
   );
 
+  const transferParagraph = (() => {
+    if (transferring.length === 0) {
+      return "Based on the vendors and details provided, none of the selected pixels are recorded as transferring data outside your selected region.";
+    }
+    const vendorPhrase = `${transferring.length} of these vendor${transferring.length === 1 ? "" : "s"}`;
+    if (region === "india") {
+      return `${vendorPhrase} may process your data outside India, principally in the United States. India's DPDP Act, 2023 permits transfer of personal data to any country or territory other than those the Central Government restricts by notification, so confirm none of these vendors' processing locations fall on that restricted list.`;
+    }
+    if (region === "us-ca") {
+      return `${vendorPhrase} may process your data outside California, including on servers located in other US states or other countries. CCPA/CPRA does not mandate a specific cross-border transfer mechanism for this, but sharing your identifiers with these vendors must still be disclosed and covered by the opt-out described below.`;
+    }
+    return `${vendorPhrase} may process your data outside the EEA, principally in the United States. Those transfers rely on Standard Contractual Clauses or the vendor's certification under the EU-US Data Privacy Framework.`;
+  })();
+
   const categoriesUsed = Array.from(new Set(rows.map((row) => row.categoryLabel)));
   const categoryPhrase =
     categoriesUsed.length === 1
@@ -261,9 +275,7 @@ export function buildPixelDisclosure({
       ? `Pixels that store or read information on your device are loaded only after you consent, and you can withdraw that consent at any time from the cookie settings link in the footer. Strictly necessary functionality never depends on them.`
       : `You do not have to opt in before these pixels load, but you can opt out of the sale or sharing of your personal information at any time using the opt-out link in the footer, and ${controller} honours the Global Privacy Control signal.`,
     `${controller} keeps the data derived from these pixels for ${retentionMonths} month${retentionMonths === 1 ? "" : "s"}, after which it is deleted or aggregated so it can no longer identify you. Each vendor applies its own retention period to the copy it holds.`,
-    transferring.length > 0
-      ? `${transferring.length} of these vendor${transferring.length === 1 ? "" : "s"} may process your data outside the EEA, principally in the United States. Those transfers rely on Standard Contractual Clauses or the vendor's certification under the EU-US Data Privacy Framework.`
-      : `These vendors process your data within the EEA or the United Kingdom.`,
+    transferParagraph,
     behavioural.length > 0
       ? `Session-recording tools reconstruct how you moved through a page. ${controller} masks form fields and payment details so keystrokes in them are not captured, and does not use replays to identify individuals.`
       : "",

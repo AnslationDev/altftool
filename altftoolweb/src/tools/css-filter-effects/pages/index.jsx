@@ -180,7 +180,7 @@ export default function ToolHome() {
             </div>
 
             {/* Right Side indicator label */}
-            <div className="absolute top-2 right-2 bg-primary/80 text-white text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded">
+            <div className="absolute top-2 right-2 bg-[var(--primary)] text-[var(--primary-foreground)] text-[9px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded">
               Filtered
             </div>
 
@@ -192,12 +192,12 @@ export default function ToolHome() {
               value={comparePos}
               onChange={(e) => setComparePos(parseInt(e.target.value))}
               aria-label="Comparison slider position"
-              className="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20"
+              className="peer absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20"
             />
 
             {/* Drag handle line element */}
             <div
-              className="absolute top-0 bottom-0 pointer-events-none z-10 w-0.5 bg-white shadow-xl"
+              className="absolute top-0 bottom-0 pointer-events-none z-10 w-0.5 bg-white shadow-xl peer-focus-visible:ring-2 peer-focus-visible:ring-[var(--primary)]"
               style={{ left: `${comparePos}%` }}
             >
               <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-white border border-border shadow flex items-center justify-center text-[10px] font-bold text-foreground">
@@ -427,6 +427,7 @@ export default function ToolHome() {
               <div className="flex gap-1.5">
                 <button
                   onClick={handleCopy}
+                  aria-live="polite"
                   className="inline-flex items-center gap-1 text-[10px] font-bold text-foreground bg-background border border-border rounded-lg px-2.5 py-1.5 hover:border-primary transition shrink-0"
                 >
                   {copied ? <CheckCircle2 size={10} className="text-primary" /> : <Copy size={10} />}
@@ -434,6 +435,7 @@ export default function ToolHome() {
                 </button>
                 <button
                   onClick={handleDownload}
+                  aria-live="polite"
                   className="inline-flex items-center gap-1 text-[10px] font-bold text-foreground bg-background border border-border rounded-lg px-2.5 py-1.5 hover:border-primary transition shrink-0"
                 >
                   {downloaded ? <CheckCircle2 size={10} className="text-primary" /> : <FileDown size={10} />}

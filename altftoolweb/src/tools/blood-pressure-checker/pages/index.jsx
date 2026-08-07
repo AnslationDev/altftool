@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -41,24 +41,26 @@ export default function ToolHome() {
   const [systolic, setSystolic] = useState("");
   const [diastolic, setDiastolic] = useState("");
   const [error, setError] = useState("");
-  const [readings, setReadings] = useState([
-    { time: "09:00 AM", systolic: 120, diastolic: 80, date: "Today" },
-    { time: "12:30 PM", systolic: 118, diastolic: 78, date: "Today" }
-  ]);
+  const [readings, setReadings] = useState([]);
 
+  // ACC/AHA categories, checked from most to least severe so a reading
+  // needs to clear only ONE of the two thresholds for Stage 1/Stage 2
+  // (Stage 2 is systolic >= 140 OR diastolic >= 90 — not both required).
   const getStatus = (s, d) => {
-    if (s < 120 && d < 80) return "normal";
-    if (s < 130 && d < 80) return "elevated";
-    if (s < 140 || d < 90) return "stage1";
-    return "stage2";
+    if (s >= 140 || d >= 90) return "stage2";
+    if (s >= 130 || d >= 80) return "stage1";
+    if (s >= 120) return "elevated";
+    return "normal";
   };
 
-  const getStatusLabel = (s, d) => {
-    if (s < 120 && d < 80) return "Normal";
-    if (s < 130 && d < 80) return "Elevated";
-    if (s < 140 || d < 90) return "Stage 1 Hypertension";
-    return "Stage 2 Hypertension";
+  const STATUS_LABELS = {
+    normal: "Normal",
+    elevated: "Elevated",
+    stage1: "Stage 1 Hypertension",
+    stage2: "Stage 2 Hypertension"
   };
+
+  const getStatusLabel = (s, d) => STATUS_LABELS[getStatus(s, d)];
 
   const getStatusColorClass = (s, d) => {
     const status = getStatus(s, d);
@@ -107,8 +109,28 @@ export default function ToolHome() {
   };
 
   const handleClearHistory = () => {
+    if (!window.confirm("Clear all readings? This cannot be undone.")) {
+      return;
+    }
     setReadings([]);
   };
+
+  // Canvas colors can't take a `var(--x)` reference directly, so resolve the
+  // theme's danger/primary/border tokens to concrete colors here. This keeps
+  // the trend lines and grid on-brand and keeps the grid visible against the
+  // dark-navy theme instead of a fixed rgba(0,0,0,0.05) that nearly
+  // disappears on dark backgrounds.
+  const getThemeColor = (token, fallback) => {
+    if (typeof window === "undefined") return fallback;
+    const value = getComputedStyle(document.documentElement)
+      .getPropertyValue(token)
+      .trim();
+    return value || fallback;
+  };
+
+  const dangerColor = getThemeColor("--danger", "#ef4444");
+  const primaryColor = getThemeColor("--primary", "#06b6d4");
+  const gridColor = getThemeColor("--border", "rgba(128,128,128,0.2)");
 
   const chartData = {
     labels: readings.map(r => r.time),
@@ -116,16 +138,16 @@ export default function ToolHome() {
       {
         label: "Systolic (mmHg)",
         data: readings.map(r => r.systolic),
-        borderColor: "#ef4444",
-        backgroundColor: "rgba(239, 68, 68, 0.1)",
+        borderColor: dangerColor,
+        backgroundColor: dangerColor + "1a",
         fill: true,
         tension: 0.4
       },
       {
         label: "Diastolic (mmHg)",
         data: readings.map(r => r.diastolic),
-        borderColor: "#06b6d4",
-        backgroundColor: "rgba(6, 182, 212, 0.1)",
+        borderColor: primaryColor,
+        backgroundColor: primaryColor + "1a",
         fill: true,
         tension: 0.4
       }
@@ -146,11 +168,11 @@ export default function ToolHome() {
     },
     scales: {
       x: {
-        grid: { color: "rgba(0,0,0,0.05)" },
+        grid: { color: gridColor },
         ticks: { color: "var(--muted)" }
       },
       y: {
-        grid: { color: "rgba(0,0,0,0.05)" },
+        grid: { color: gridColor },
         ticks: { color: "var(--muted)" }
       }
     }
@@ -207,10 +229,11 @@ export default function ToolHome() {
 
               <form onSubmit={handleAddReading} className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-foreground uppercase tracking-wider block">
+                  <label htmlFor="bp-systolic" className="text-xs font-bold text-foreground uppercase tracking-wider block">
                     Systolic (mmHg)
                   </label>
                   <input
+                    id="bp-systolic"
                     type="number"
                     value={systolic}
                     onChange={(e) => setSystolic(e.target.value)}
@@ -220,10 +243,11 @@ export default function ToolHome() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-foreground uppercase tracking-wider block">
+                  <label htmlFor="bp-diastolic" className="text-xs font-bold text-foreground uppercase tracking-wider block">
                     Diastolic (mmHg)
                   </label>
                   <input
+                    id="bp-diastolic"
                     type="number"
                     value={diastolic}
                     onChange={(e) => setDiastolic(e.target.value)}
@@ -233,7 +257,7 @@ export default function ToolHome() {
                 </div>
 
                 {error && (
-                  <div className="bg-rose-500/10 border border-rose-500/20 text-rose-500 p-2.5 rounded-xl text-xs font-semibold leading-relaxed">
+                  <div role="alert" className="bg-rose-500/10 border border-rose-500/20 text-rose-500 p-2.5 rounded-xl text-xs font-semibold leading-relaxed">
                     {error}
                   </div>
                 )}
@@ -325,7 +349,7 @@ export default function ToolHome() {
             
             {/* Informational Tip Card */}
             <div className="bg-surface-soft border border-border/80 p-4 rounded-xl text-xs text-muted-foreground leading-relaxed font-semibold">
-              💡 **Health Reminder:** Sit quietly for 5 minutes before taking blood pressure. Do not talk, drink caffeine, or exercise within 30 minutes of taking a reading.
+              💡 <strong>Health Reminder:</strong> Sit quietly for 5 minutes before taking blood pressure. Do not talk, drink caffeine, or exercise within 30 minutes of taking a reading.
             </div>
           </div>
           

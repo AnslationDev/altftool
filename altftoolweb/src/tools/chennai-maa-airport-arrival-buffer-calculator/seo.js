@@ -7,14 +7,14 @@ const seo = {
     "Building extra road time into a northeast-monsoon week when GST Road and the Adyar bridges back up.",
   ],
   benefits: [
-    ["Three deadlines, one answer", "Compares gate close, bag-drop cut-off and airport advice, and reports which one is binding."],
+    ["Three deadlines, one answer", "Compares gate close, bag-drop cut-off and airport advice, and reports which one is binding - usually the airport's advised reporting time, or your own queue and buffer estimates when those add up to more, since the bag-drop cut-off falls safely inside both."],
     ["Local road model", "Free-flow drive times from Velachery, OMR, Tambaram and other suburbs, multiplied by a traffic factor you choose."],
     ["Full timeline", "Shows the clock time each step starts, from leaving home to the aircraft door shutting."],
   ],
   faqs: [
     [
       "How early should I reach Chennai airport for an international flight?",
-      "Three hours before departure is the reporting time advised for international flights at Chennai, and two hours for domestic. The binding deadline with a checked bag is usually the airline counter cut-off, commonly 60 minutes before an international departure and 45 minutes before a domestic one.",
+      "Three hours before departure is the reporting time advised for international flights at Chennai, and two hours for domestic. That advised reporting time is what actually governs the binding deadline by default; your own queue, walking and personal-buffer estimates can push it earlier still if they add up to more than the airport's advice. The airline's bag-drop counter cut-off (commonly 60 minutes before an international departure and 45 minutes before a domestic one) is also checked, but Chennai's advised reporting times already exceed it, so it functions as an always-satisfied secondary confirmation rather than the deadline that actually binds.",
     ],
     [
       "Which terminal do I use at Chennai airport?",

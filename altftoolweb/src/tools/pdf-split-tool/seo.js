@@ -1,13 +1,13 @@
 const seo = {
   intro:
-    "PDF Split Tool breaks one PDF into separate files using five modes — one file per page, fixed batches of N pages, custom semicolon-separated page groups, extract selected pages into a single PDF, or remove selected pages and keep the rest. It shows the full output plan, file by file, before anything is generated, then downloads a single PDF or a DEFLATE-compressed ZIP containing every part plus a split-plan.txt manifest. Page selections accept ranges such as 1-3, 7, 10-12.",
+    "PDF Split Tool breaks one PDF into separate files using five modes — one file per page, fixed batches of N pages, custom semicolon-separated page groups, extract selected pages into a single PDF, or remove selected pages and keep the rest. It shows the output plan, file by file, before anything is generated (the first 80 planned files are listed on screen; the full plan is still exported even for larger splits), then downloads a single PDF or a DEFLATE-compressed ZIP containing every part plus a split-plan.txt manifest. Page selections accept ranges such as 1-3, 7, 10-12.",
   useCases: [
     "A 120-page scanned bundle holds a dozen separate invoices, and each one needs to reach your accounting system as its own file.",
     "You need pages 4 to 9 of a lease to send to a mortgage broker and nothing else from the document.",
     "A printer wants a long manual delivered in 20-page chunks, and you need consistent batches with predictable filenames.",
   ],
   benefits: [
-    ["See the plan before you split", "Every planned output file, its label and its page numbers are listed on screen first, so you catch a wrong range before generating anything."],
+    ["See the plan before you split", "The first 80 planned output files, their labels and page numbers are listed on screen first (the full plan is still exported even for larger splits), so you catch a wrong range before generating anything."],
     ["Five split strategies, one tool", "Per-page, fixed batches, custom groups, extraction and removal all work off the same page-range syntax instead of needing separate tools."],
     ["Outputs arrive documented", "Multi-file results are packaged as a ZIP with a split-plan.txt manifest recording the mode and the pages inside each file."],
   ],

@@ -140,7 +140,9 @@ export default function ToolHome() {
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Dividend is taxed at your slab rate as income from other sources. This works out the tax,
           the interest deduction you may claim (capped at 20% of the dividend under section 57) and
-          the section 194 TDS already withheld, company by company.
+          the section 194 TDS already withheld, company by company. Section numbers cited are from
+          the Income-tax Act, 1961, carried forward under the Income-tax Act, 2025 (effective 1 April
+          2026, Tax Year 2026-27).
         </p>
       </header>
 
@@ -427,7 +429,9 @@ export default function ToolHome() {
           </div>
           <p className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]">
             Every rupee of dividend is taxable even where no TDS was deducted. Check the deducted
-            amounts against your Form 26AS and Annual Information Statement before filing.
+            amounts against your Form 26AS and Annual Information Statement before filing. Section
+            194 is the Income-tax Act, 1961 citation; it carries forward under the Income-tax Act,
+            2025 (effective 1 April 2026, Tax Year 2026-27).
           </p>
         </section>
       )}

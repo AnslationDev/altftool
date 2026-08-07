@@ -326,6 +326,16 @@ export default function ToolHome() {
             {result.autoRegister === "respectful" ? "మీరు" : "నువ్వు"} form.
           </p>
         ) : null}
+
+        {!hasError && result.delivered < result.requested ? (
+          <p className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning-text)]">
+            Only {result.poolSize} wording{result.poolSize === 1 ? "" : "s"} exist
+            {result.poolSize === 1 ? "s" : ""} for the &ldquo;
+            {TONES.find((item) => item.id === result.tone)?.label || result.tone}&rdquo; tone, so
+            {" "}{result.requested} message{result.requested === 1 ? " was" : "s were"} requested but
+            only {result.delivered} could be delivered. Choose a different tone for more variety.
+          </p>
+        ) : null}
       </section>
 
       {messages.length > 0 ? (

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   Archive,
@@ -214,6 +214,9 @@ function buildSplitPlan({ mode, totalPages, pageRange, customGroups, batchSize }
   }
 
   if (mode === "extract") {
+    if (!pageRange.trim()) {
+      throw new Error("Enter at least one page to extract.");
+    }
     const pages = parsePageRange(pageRange, totalPages);
     return [
       {
@@ -225,6 +228,9 @@ function buildSplitPlan({ mode, totalPages, pageRange, customGroups, batchSize }
   }
 
   if (mode === "remove") {
+    if (!pageRange.trim()) {
+      throw new Error("Enter at least one page to remove.");
+    }
     const removedPages = new Set(parsePageRange(pageRange, totalPages));
     const pages = Array.from({ length: totalPages }, (_, index) => index + 1).filter(
       (page) => !removedPages.has(page),
@@ -295,6 +301,16 @@ export default function MainComponent() {
   const [copied, setCopied] = useState(false);
 
   const fileInputRef = useRef(null);
+  const readGenerationRef = useRef(0);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) {
+        window.clearTimeout(copiedTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const splitPlan = useMemo(() => {
     if (!pageCount) return { parts: [], error: "" };
@@ -326,6 +342,12 @@ export default function MainComponent() {
     !isSplitting;
 
   const resetTool = () => {
+    if (
+      file &&
+      !window.confirm("Clear the loaded PDF and reset settings? This cannot be undone.")
+    ) {
+      return;
+    }
     setFile(null);
     setPageCount(0);
     setProgress({ done: 0, total: 0 });
@@ -345,6 +367,11 @@ export default function MainComponent() {
       return;
     }
 
+    // Bump a generation token so a stale read (e.g. a slow first drop) can't
+    // clobber a newer one (e.g. a faster second drop or file-picker choice)
+    // when its async work finishes out of order.
+    const generation = (readGenerationRef.current += 1);
+
     setIsReading(true);
     setError("");
     setStatus("Reading PDF page structure...");
@@ -357,9 +384,11 @@ export default function MainComponent() {
       const PDFDocument = await loadPdfDocument();
       const bytes = await nextFile.arrayBuffer();
       const pdf = await PDFDocument.load(bytes, { ignoreEncryption: true });
+      if (readGenerationRef.current !== generation) return;
       setPageCount(pdf.getPageCount());
       setStatus("PDF loaded. Choose a split mode and review the output plan.");
     } catch (err) {
+      if (readGenerationRef.current !== generation) return;
       console.error("Failed to read PDF:", err);
       setFile(null);
       setStatus("");
@@ -367,7 +396,9 @@ export default function MainComponent() {
         "Could not read this PDF. Password-protected or damaged PDFs may not be supported.",
       );
     } finally {
-      setIsReading(false);
+      if (readGenerationRef.current === generation) {
+        setIsReading(false);
+      }
     }
   };
 
@@ -462,7 +493,13 @@ export default function MainComponent() {
       return;
     }
     setCopied(true);
-    window.setTimeout(() => setCopied(false), 1400);
+    if (copiedTimeoutRef.current) {
+      window.clearTimeout(copiedTimeoutRef.current);
+    }
+    copiedTimeoutRef.current = window.setTimeout(() => {
+      setCopied(false);
+      copiedTimeoutRef.current = null;
+    }, 1400);
   };
 
   const downloadPlan = () => {
@@ -603,7 +640,8 @@ export default function MainComponent() {
                   type="button"
                   onClick={() => setMode(value)}
                   aria-pressed={mode === value}
-                  className={`rounded-lg border p-4 text-left transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 ${
+                  disabled={isSplitting}
+                  className={`rounded-lg border p-4 text-left transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-(--primary)/35 disabled:cursor-not-allowed disabled:opacity-60 ${
                     mode === value
                       ? "border-(--primary) bg-(--section-highlight)"
                       : "border-(--border) bg-(--background)"
@@ -625,10 +663,14 @@ export default function MainComponent() {
                 <input
                   type="number"
                   min="1"
+                  step="1"
                   max={Math.max(1, pageCount || 999)}
                   value={batchSize}
-                  onChange={(event) => setBatchSize(Math.max(1, Number(event.target.value) || 1))}
-                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
+                  onChange={(event) =>
+                    setBatchSize(Math.max(1, Math.round(Number(event.target.value)) || 1))
+                  }
+                  disabled={isSplitting}
+                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 disabled:cursor-not-allowed disabled:opacity-60"
                 />
               </label>
             )}
@@ -643,7 +685,8 @@ export default function MainComponent() {
                   value={pageRange}
                   onChange={(event) => setPageRange(event.target.value)}
                   placeholder={pageCount ? `Example: 1-${Math.min(pageCount, 3)}, 7` : "Upload a PDF first"}
-                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
+                  disabled={isSplitting}
+                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 disabled:cursor-not-allowed disabled:opacity-60"
                 />
               </label>
             )}
@@ -656,7 +699,8 @@ export default function MainComponent() {
                   onChange={(event) => setCustomGroups(event.target.value)}
                   rows={4}
                   placeholder="1-3; 4,6; 7-10"
-                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
+                  disabled={isSplitting}
+                  className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 disabled:cursor-not-allowed disabled:opacity-60"
                 />
                 <p className="mt-2 text-xs text-(--muted-foreground)">
                   Separate output PDFs with semicolons or new lines.
@@ -670,7 +714,8 @@ export default function MainComponent() {
                 value={filenamePrefix}
                 onChange={(event) => setFilenamePrefix(event.target.value)}
                 placeholder="split-document"
-                className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25"
+                disabled={isSplitting}
+                className="w-full rounded-lg border border-(--border) bg-(--background) px-3 py-2 text-(--foreground) outline-none transition focus:border-(--primary) focus:ring-2 focus:ring-(--primary)/25 disabled:cursor-not-allowed disabled:opacity-60"
               />
             </label>
 
@@ -680,7 +725,8 @@ export default function MainComponent() {
                 type="checkbox"
                 checked={preserveMetadata}
                 onChange={(event) => setPreserveMetadata(event.target.checked)}
-                className="h-5 w-5 accent-[var(--primary)]"
+                disabled={isSplitting}
+                className="h-5 w-5 accent-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-60"
               />
             </label>
 
@@ -722,7 +768,11 @@ export default function MainComponent() {
 
         <div className="space-y-6">
           {status && (
-            <div className="flex items-center gap-3 rounded-lg border border-(--border) bg-(--section-highlight) p-4 text-(--primary)">
+            <div
+              role="status"
+              aria-live="polite"
+              className="flex items-center gap-3 rounded-lg border border-(--border) bg-(--section-highlight) p-4 text-(--primary)"
+            >
               {isReading || isSplitting ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
               ) : (
@@ -733,7 +783,10 @@ export default function MainComponent() {
           )}
 
           {(error || splitPlan.error) && (
-            <div className="flex items-start gap-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4 text-amber-700">
+            <div
+              role="alert"
+              className="flex items-start gap-3 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4 text-amber-700"
+            >
               <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
               <p className="text-sm font-medium">{error || splitPlan.error}</p>
             </div>

@@ -104,7 +104,7 @@ export function computeAppliancePayback({
   if (discountRatePct < 0 || discountRatePct > MAX_DISCOUNT_PCT) {
     return { error: `Discount rate should be between 0% and ${MAX_DISCOUNT_PCT}%.` };
   }
-  if (applianceLifeYears <= 0 || applianceLifeYears > MAX_LIFE_YEARS) {
+  if (!(applianceLifeYears >= 1) || applianceLifeYears > MAX_LIFE_YEARS) {
     return { error: `Appliance life should be between 1 and ${MAX_LIFE_YEARS} years.` };
   }
 
@@ -160,16 +160,26 @@ export function computeAppliancePayback({
   const paysBackWithinLife =
     simplePaybackYears !== null && simplePaybackYears <= life && !noSaving;
 
+  // The verdict's positive/negative framing is driven by NPV - the discounted,
+  // tariff-escalation-aware metric - NOT by the flat, un-escalated simple
+  // payback. A fast-rising tariff can make simplePaybackYears look longer than
+  // the appliance's life while the true NPV is strongly positive (escalating
+  // future savings more than make up for it); a high discount rate can do the
+  // reverse. So npv > 0 is checked before any simple-payback veto, and the
+  // negative branch describes the discounted NPV rather than the simple figure.
+  const isGoodDeal = !noSaving && npv > 0;
+
   let verdict;
   if (noSaving) {
     verdict =
       "The replacement uses at least as much energy as the appliance you already own, so there is no energy saving to pay back the purchase.";
-  } else if (!paysBackWithinLife) {
-    verdict = `Simple payback is longer than the ${life}-year life you expect from the new appliance, so on energy savings alone this upgrade loses money.`;
-  } else if (npv > 0 && discountedPaybackYears !== null) {
-    verdict = `The saving covers the cost after about ${discountedPaybackYears.toFixed(1)} years once the tariff rise and discount rate are applied, leaving a positive net present value over ${life} years.`;
+  } else if (isGoodDeal) {
+    verdict =
+      discountedPaybackYears !== null
+        ? `The saving covers the cost after about ${discountedPaybackYears.toFixed(1)} years once the tariff rise and discount rate are applied, leaving a positive net present value over ${life} years.`
+        : `Once the tariff rise and discount rate are applied, this upgrade has a positive net present value over ${life} years, even though the exact break-even year could not be pinned down.`;
   } else {
-    verdict = `The upgrade pays back in ${simplePaybackYears.toFixed(1)} years in plain cash, but after discounting at ${discountRatePct}% the ${life}-year net present value is not positive.`;
+    verdict = `Once a ${discountRatePct}% discount rate and the expected tariff rise are applied, the ${life}-year net present value is not positive, so this upgrade does not pay for itself on a time-value-of-money basis (in plain, undiscounted cash it would pay back in ${simplePaybackYears.toFixed(1)} years).`;
   }
 
   return {
@@ -191,6 +201,7 @@ export function computeAppliancePayback({
     rows,
     noSaving,
     paysBackWithinLife,
+    isGoodDeal,
     verdict,
   };
 }

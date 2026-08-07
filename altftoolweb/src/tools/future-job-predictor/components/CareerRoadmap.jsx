@@ -29,8 +29,8 @@ export default function CareerRoadmap({ activeCareer }) {
         <div className="space-y-4">
           
           {/* Missing Skills Warning */}
-          <div className="bg-rose-500/5 border border-rose-500/20 p-4 rounded-xl space-y-2">
-            <h4 className="text-xs font-bold text-rose-500 flex items-center gap-1.5">
+          <div className="bg-danger-soft border border-danger p-4 rounded-xl space-y-2">
+            <h4 className="text-xs font-bold text-danger flex items-center gap-1.5">
               <ShieldAlert className="w-4 h-4" /> Skill Gap Warning
             </h4>
             <p className="text-xs text-muted-foreground leading-relaxed">
@@ -38,7 +38,7 @@ export default function CareerRoadmap({ activeCareer }) {
             </p>
             <div className="flex flex-wrap gap-1.5 mt-1">
               {activeCareer.missingSkills.map((sk) => (
-                <span key={sk} className="px-2.5 py-0.5 bg-rose-500/10 text-rose-500 text-[10px] font-bold rounded-md">
+                <span key={sk} className="px-2.5 py-0.5 bg-danger-soft text-danger text-[10px] font-bold rounded-md">
                   {sk}
                 </span>
               ))}
