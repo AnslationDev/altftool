@@ -67,7 +67,7 @@ export function parseTimecode(input) {
  * Format seconds as HH:MM:SS.mmm (the form FFmpeg accepts for -ss).
  */
 export function formatTimecode(totalSeconds, withMillis = true) {
-  const safe = Number.isFinite(totalSeconds) && totalSeconds > 0 ? totalSeconds : 0;
+  const safe = round(Number.isFinite(totalSeconds) && totalSeconds > 0 ? totalSeconds : 0, 3);
   const hours = Math.floor(safe / 3600);
   const minutes = Math.floor((safe % 3600) / 60);
   const seconds = safe % 60;

@@ -198,8 +198,12 @@ function useMorseAudio() {
         const t1 = setTimeout(() => {
           stopTone();
           symIdx++;
-          const t2 = setTimeout(playSymbol, dotMs);
-          timeoutsRef.current.push(t2);
+          if (symIdx < morse.length) {
+            const t2 = setTimeout(playSymbol, dotMs);
+            timeoutsRef.current.push(t2);
+          } else {
+            playSymbol();
+          }
         }, dur);
         timeoutsRef.current.push(t1);
       };
@@ -251,23 +255,6 @@ function DecodeSection() {
   const [output, setOutput] = useState("");
   const [error, setError] = useState("");
 
-  const handleDecode = useCallback(() => {
-    setError("");
-    const trimmed = input.trim();
-    if (!trimmed) { setOutput(""); return; }
-    const words = trimmed.split("/");
-    const decoded = words.map(word => {
-      const symbols = word.trim().split(" ");
-      return symbols.map(s => {
-        if (!s) return "";
-        const ch = REVERSE_MORSE[s];
-        if (!ch) throw new Error(`Unknown code: ${s}`);
-        return ch;
-      }).join("");
-    }).join(" ");
-    setOutput(decoded);
-  }, [input]);
-
   const handleInputChange = useCallback((e) => {
     const v = e.target.value;
     setInput(v);
@@ -304,7 +291,7 @@ function DecodeSection() {
         className="w-full rounded-xl border border-border bg-transparent p-4 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20 transition leading-relaxed font-mono text-sm"
       />
       {error && (
-        <p className="text-xs font-bold text-red-500 flex items-center gap-1">
+        <p role="alert" className="text-xs font-bold text-red-500 flex items-center gap-1">
           <XCircle className="w-3.5 h-3.5" /> {error}
         </p>
       )}
@@ -321,15 +308,20 @@ function DecodeSection() {
 function EncodeSection() {
   const [text, setText] = useState("");
   const [morse, setMorse] = useState("");
+  const [unsupported, setUnsupported] = useState([]);
 
   const handleEncode = useCallback((val) => {
     setText(val);
     const chars = val.toUpperCase().split("");
+    const skipped = [];
     const encoded = chars.map(c => {
       if (c === " ") return "/";
-      return MORSE_MAP[c] || "";
+      const code = MORSE_MAP[c];
+      if (!code) skipped.push(c);
+      return code || "";
     }).filter(x => x !== "").join(" ");
     setMorse(encoded);
+    setUnsupported([...new Set(skipped)]);
   }, []);
 
   return (
@@ -350,6 +342,11 @@ function EncodeSection() {
           <p className="text-lg font-mono font-bold text-foreground break-all">{morse}</p>
         </div>
       )}
+      {unsupported.length > 0 && (
+        <p role="status" className="text-xs font-bold text-amber-600 flex items-center gap-1">
+          Skipped unsupported characters: {unsupported.join(', ')}
+        </p>
+      )}
     </div>
   );
 }
@@ -362,15 +359,21 @@ function PlaybackSection({ text, setText, wpm, setWpm, pitch, setPitch, volume, 
   const [activeSym, setActiveSym] = useState(-1);
   const { playMorseSequence, stopAll } = useMorseAudio();
 
+  const unfilteredChars = useMemo(() => text.toUpperCase().split(""), [text]);
+  const chars = useMemo(
+    () => unfilteredChars.filter(c => MORSE_MAP[c] || c === " "),
+    [unfilteredChars]
+  );
+  const unsupported = useMemo(() => {
+    const skipped = unfilteredChars.filter(c => c !== " " && !MORSE_MAP[c]);
+    return [...new Set(skipped)];
+  }, [unfilteredChars]);
+
   useEffect(() => {
-    const chars = text.toUpperCase().split("");
-    const encoded = chars.map(c => {
-      if (c === " ") return "/";
-      return MORSE_MAP[c] || "";
-    }).filter(x => x !== "").join(" ");
+    const encoded = chars.map(c => (c === " " ? "/" : MORSE_MAP[c])).join(" ");
     setMorseString(encoded);
-    if (isPlaying) stopAll();
-  }, [text, isPlaying, stopAll]);
+    stopAll();
+  }, [chars, stopAll]);
 
   const handlePlay = useCallback(() => {
     if (isPlaying) {
@@ -383,7 +386,6 @@ function PlaybackSection({ text, setText, wpm, setWpm, pitch, setPitch, volume, 
     setActiveIdx(-1);
     setActiveSym(-1);
     setIsPlaying(true);
-    const chars = text.toUpperCase().split("").filter(c => MORSE_MAP[c] || c === " ");
     playMorseSequence(chars, wpm, pitch, volume, (charIdx, symIdx) => {
       setActiveIdx(charIdx);
       setActiveSym(symIdx);
@@ -391,9 +393,7 @@ function PlaybackSection({ text, setText, wpm, setWpm, pitch, setPitch, volume, 
         setIsPlaying(false);
       }
     });
-  }, [isPlaying, text, wpm, pitch, volume, playMorseSequence, stopAll]);
-
-  const chars = text.toUpperCase().split("");
+  }, [isPlaying, chars, wpm, pitch, volume, playMorseSequence, stopAll]);
 
   return (
     <div className="space-y-4">
@@ -487,6 +487,12 @@ function PlaybackSection({ text, setText, wpm, setWpm, pitch, setPitch, volume, 
             );
           })}
         </div>
+      )}
+
+      {unsupported.length > 0 && (
+        <p role="status" className="text-xs font-bold text-amber-600 flex items-center gap-1">
+          Skipped unsupported characters: {unsupported.join(', ')}
+        </p>
       )}
     </div>
   );
@@ -629,7 +635,7 @@ function PracticeMode({ scores, onRecord, unlockedGroups }) {
         </div>
       ) : (
         <div>
-          <div className={`p-4 rounded-xl text-center font-bold text-sm mb-4 ${
+          <div role="status" aria-live="polite" className={`p-4 rounded-xl text-center font-bold text-sm mb-4 ${
             isCorrectBuilt
               ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300"
               : "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300"
@@ -777,7 +783,7 @@ function QuizMode({ scores, onRecord, unlockedGroups, wpm, pitch, volume }) {
       </div>
 
       {result && (
-        <div className={`mt-4 p-4 rounded-xl text-center font-bold text-sm ${
+        <div role="status" aria-live="polite" className={`mt-4 p-4 rounded-xl text-center font-bold text-sm ${
           result === "correct"
             ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300"
             : "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300"

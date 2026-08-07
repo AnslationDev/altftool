@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "ev-road-trip-charge-planner",
   "title": "EV Road-Trip Charge Planner",
-  "description": "Battery, range aur route legs se charging stops plan kare.",
+  "description": "Plan charging stops along a route from your battery size, range and each leg.",
   "badge": "Energy, Mobility & Quantified-Self",
   "category": [
     "Lifestyle",
@@ -79,10 +79,11 @@ export const spec = {
       let soc = Math.max(0, Math.min(100, Number(values.start_soc))), totalCharge = 0;
       const rows = String(values.legs || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean).map((line, index, all) => {
         const [name, distanceRaw] = line.split("|").map((cell) => cell.trim()), distance = Math.max(0, Number(distanceRaw) || 0), energy = distance * consumption, usedSoc = energy / battery * 100, arrival = soc - usedSoc;
+        const arrivalRounded = Math.round(arrival * 10) / 10;
         let charge = 0;
         if (index < all.length - 1 && arrival < target) { charge = Math.max(0, target - arrival) / 100 * battery; soc = target; } else soc = arrival;
         totalCharge += charge;
-        return [name || "Leg", distance, energy.toFixed(2), arrival.toFixed(1) + "%", arrival >= reserve ? "Above reserve" : "Below reserve", charge.toFixed(2) + " kWh"];
+        return [name || "Leg", distance, energy.toFixed(2), arrivalRounded.toFixed(1) + "%", arrivalRounded >= reserve ? "Above reserve" : "Below reserve", charge.toFixed(2) + " kWh"];
       });
       return { result: totalCharge.toFixed(2) + " kWh planned stop charging", caption: reserve + "% entered reserve", table: { headers: ["Leg", "km", "Energy", "Arrival SOC", "Reserve", "Charge before next"], rows } };
     },

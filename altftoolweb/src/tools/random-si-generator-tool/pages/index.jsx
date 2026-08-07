@@ -7,6 +7,7 @@ import {
   AUDIENCES,
   formatIdea,
   generateIdea,
+  MAX_RAW_EFFORT,
   MAX_SEED,
   MODELS,
   TOTAL_COMBINATIONS,
@@ -159,7 +160,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-5 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-5 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
           Idea {failed ? DASH : `#${NUM.format(idea.combinationIndex + 1)}`} of{" "}
           {NUM.format(TOTAL_COMBINATIONS)}
@@ -217,7 +222,7 @@ export default function ToolHome() {
           <div>
             <dt className="text-[var(--muted-foreground)]">Raw effort weight</dt>
             <dd className="font-semibold text-[var(--foreground)]">
-              {failed ? DASH : `${idea.rawEffort} of 25`}
+              {failed ? DASH : `${idea.rawEffort} of ${MAX_RAW_EFFORT}`}
             </dd>
           </div>
         </dl>

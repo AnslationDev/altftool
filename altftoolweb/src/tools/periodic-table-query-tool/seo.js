@@ -3,7 +3,7 @@ const seo = {
     "This periodic table query tool lets you search all 118 confirmed elements by name, symbol, atomic number, or category, then explore each one in depth. Filter with category pills — alkali metal, noble gas, lanthanoid, and more — and review atomic mass, electron configuration, electronegativity, density, melting and boiling point, and other measured properties. Compare any two elements side by side, save favorites, and revisit recent searches from history. The Chemistry Section looks up predefined classroom reactions or builds a valence-balanced compound formula for pairs without one, an animated Atom Model Canvas and Atomic Structure Diagram visualize protons, neutrons, and electron shells, and a temperature slider simulates standard state across 0-6500K. Export the selected element's full profile as JSON or plain text, or copy a formatted report with one click.",
   useCases: [
     "Search for 'iron' or 'Fe' to instantly pull up atomic mass, electron configuration, and physical properties.",
-    "Compare two elements side by side — for example, iron and copper on melting point, density, and ionization energy.",
+    "Compare two elements side by side — for example, iron and copper on atomic mass, category, standard state, electron configuration, and density.",
     "Open the Chemistry Section to look up a predefined reaction, like sodium and chlorine forming NaCl, or generate a valence-balanced compound formula for a pair without one, like magnesium and oxygen forming MgO.",
   ],
   benefits: [

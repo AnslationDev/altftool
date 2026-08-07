@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, Target } from "lucide-react";
 
 const INR = new Intl.NumberFormat("en-IN", {
@@ -54,7 +54,7 @@ function project({ sip, lumpsum, annualReturnPct, months, stepUpPct }) {
     invested += contribution;
     if (month % 12 === 0 || month === months) {
       yearly.push({
-        year: Math.ceil(month / 12),
+        year: month % 12 === 0 ? month / 12 : `${Math.floor(month / 12)} (+${month % 12} mo)`,
         monthlySip: contribution,
         invested,
         balance,
@@ -74,6 +74,11 @@ export default function ToolHome() {
   const [stepUp, setStepUp] = useState(String(DEFAULTS.stepUp));
   const [inflation, setInflation] = useState(String(DEFAULTS.inflation));
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => () => {
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+  }, []);
 
   const calc = useMemo(() => {
     const goalToday = toNumber(target);
@@ -173,8 +178,9 @@ export default function ToolHome() {
     if (!summary) return;
     try {
       await navigator.clipboard.writeText(summary);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }

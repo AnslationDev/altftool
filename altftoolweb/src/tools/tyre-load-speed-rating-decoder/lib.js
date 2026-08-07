@@ -140,6 +140,10 @@ export function decodeTyreCode(code, { tyresOnVehicle = 4, grossVehicleWeightKg 
       return { error: `Speed symbol "${speedSymbol}" is not in the standard table.` };
     }
     speedKmh = value;
+  } else if (constructionRaw === "ZR") {
+    speedKmh = OPEN_ENDED_SPEED.ZR.minKmh;
+    speedIsMinimum = true;
+    speedNote = OPEN_ENDED_SPEED.ZR.note;
   } else {
     warnings.push("No speed symbol was found in the code — read it again from the sidewall; a tyre without one has no rated speed you can rely on.");
   }

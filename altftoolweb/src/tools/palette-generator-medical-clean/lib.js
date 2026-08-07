@@ -418,7 +418,7 @@ export function generateMedicalPalette({
     // value stays available for dots, bars and chart series.
     const text = repairToTarget(
       { h: spec.hue, s: saturation, l: lightness },
-      surfaceRgb,
+      softRgb,
       WCAG.AA_NORMAL,
       modeSpec.statusDirection,
     );

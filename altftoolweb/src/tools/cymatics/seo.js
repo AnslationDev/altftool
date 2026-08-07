@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     ["Real plate equations", "Frequencies come from thin-plate theory with published material constants, not from an arbitrary lookup."],
     ["Damping actually matters", "The response uses the standard magnification factor, so a low-damping plate shows a sharp resonance peak."],
-    ["Runs at 60 fps in the browser", "The field is sampled on a grid and drawn to canvas — no audio hardware or plugin required."],
+    ["Redraws instantly on canvas", "The field is sampled on a grid and redrawn the moment you change an input — no audio hardware or plugin required."],
   ],
   faqs: [
     [

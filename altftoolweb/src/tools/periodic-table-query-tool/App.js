@@ -61,7 +61,7 @@ const reactionDataset = {
   "H+O": { formula: "H2O", name: "Water", note: "Hydrogen and oxygen combine in a 2:1 ratio to form water." },
   "C+O": { formula: "CO2", name: "Carbon dioxide", note: "Carbon reacts with oxygen during combustion to form carbon dioxide." },
   "Fe+O": { formula: "Fe2O3", name: "Iron(III) oxide", note: "Iron and oxygen form rust-like iron oxide compounds." },
-  "H+Cl": { formula: "HCl", name: "Hydrogen chloride", note: "Hydrogen and chlorine form a polar covalent compound." },
+  "Cl+H": { formula: "HCl", name: "Hydrogen chloride", note: "Hydrogen and chlorine form a polar covalent compound." },
 };
 
 const shellCapacities = [2, 8, 18, 32, 32, 18, 8];
@@ -80,7 +80,13 @@ const buildCompoundFormula = (leftSymbol, rightSymbol) => {
   return `${leftSymbol}${reducedLeft > 1 ? reducedLeft : ""}${rightSymbol}${reducedRight > 1 ? reducedRight : ""}`;
 };
 
-const getShells = (atomicNumber) => {
+// Simplified Bohr-model shell filling: electrons are packed into each shell up to its
+// theoretical maximum capacity (2n^2) in strict sequential order. This does NOT follow the
+// real Aufbau/subshell-filling rules, so for many elements past argon it diverges from the
+// element's true electron configuration (already shown correctly via electronicConfiguration
+// elsewhere in this panel). Treat this as an illustrative approximation only, not a scientific
+// statement of the element's actual shell populations.
+const getApproximateBohrShells = (atomicNumber) => {
   let remaining = Number(atomicNumber) || 0;
   return shellCapacities.reduce((shells, capacity) => {
     if (remaining <= 0) return shells;
@@ -140,8 +146,8 @@ const getStateAtTemperature = (element, kelvin) => {
   const melting = Number(element.meltingPoint);
   const boiling = Number(element.boilingPoint);
   if (!melting && !boiling) return titleCase(element.standardState);
-  if (melting && kelvin < melting) return "Solid";
   if (boiling && kelvin >= boiling) return "Gas";
+  if (melting && kelvin < melting) return "Solid";
   return "Liquid";
 };
 
@@ -320,7 +326,7 @@ export default function PeriodicTableQueryTool() {
   const visibleSet = useMemo(() => new Set(table.filteredElements.map((element) => element.atomicNumber)), [table.filteredElements]);
   const favoriteSet = useMemo(() => new Set(table.favorites), [table.favorites]);
   const selectedCategoryStyle = categoryStyles[table.selected.groupBlock] || "bg-cyan-500/10 text-cyan-500 border-cyan-500/25";
-  const selectedShells = useMemo(() => getShells(table.selected.atomicNumber), [table.selected.atomicNumber]);
+  const selectedShells = useMemo(() => getApproximateBohrShells(table.selected.atomicNumber), [table.selected.atomicNumber]);
   const reactionLeft = table.elements.find((element) => element.atomicNumber === Number(reactionA));
   const reactionRight = table.elements.find((element) => element.atomicNumber === Number(reactionB));
   const reaction = getReaction(reactionLeft, reactionRight);
@@ -378,6 +384,7 @@ export default function PeriodicTableQueryTool() {
                   if (event.key === "Enter" && table.filteredElements[0]) handleSelectElement(table.filteredElements[0].atomicNumber, "search");
                 }}
                 placeholder="Search by name, symbol, atomic number, or category"
+                aria-label="Search elements"
                 className="w-full pl-11 pr-4 py-3 rounded-xl bg-(--background) border border-(--border) outline-none focus:border-cyan-500/60 text-base"
               />
             </div>
@@ -434,7 +441,7 @@ export default function PeriodicTableQueryTool() {
             </div>
           </InfoCard>
 
-          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_420px] gap-8 items-start">
+          <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_420px] gap-8 items-start" aria-live="polite">
             <InfoCard title="Element Detail Panel" icon={FlaskConical}>
               <div className={`rounded-2xl border p-5 mb-4 ${selectedCategoryStyle}`}>
                 <div className="flex items-start justify-between gap-4">
@@ -458,6 +465,7 @@ export default function PeriodicTableQueryTool() {
                 <div>
                   <p className="text-xs uppercase tracking-widest font-bold text-cyan-500 mb-2">3D Atom Model Viewer</p>
                   <AtomModelCanvas element={table.selected} shells={selectedShells} />
+                  <p className="mt-2 text-xs text-(--muted-foreground)">Simplified Bohr-model illustration, not the element&apos;s true subshell structure — see Electron Config above.</p>
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-widest font-bold text-cyan-500 mb-2">Element Uses</p>
@@ -486,9 +494,10 @@ export default function PeriodicTableQueryTool() {
               </div>
               <div className="mt-5 space-y-5">
                 <div>
-                  <p className="text-xs uppercase tracking-widest font-bold text-cyan-500 mb-2">Electron Shell Visualization</p>
+                  <p className="text-xs uppercase tracking-widest font-bold text-cyan-500 mb-2">Electron Shell Visualization (Simplified Bohr Model)</p>
                   <ShellDiagram shells={selectedShells} />
                   <p className="mt-2 text-sm font-bold text-(--muted-foreground)">Shell layout: {selectedShells.join(", ")}</p>
+                  <p className="mt-1 text-xs text-(--muted-foreground)">This is a simplified Bohr-model approximation (shells filled to capacity in order), not the element&apos;s true electron configuration shown above.</p>
                 </div>
                 <div>
                   <p className="text-xs uppercase tracking-widest font-bold text-cyan-500 mb-2">Atomic Structure Diagram</p>

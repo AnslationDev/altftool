@@ -203,7 +203,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Status pairs still separable under red-green CVD
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p aria-live="polite" className="mt-1 text-4xl font-semibold text-[var(--primary)]">
               {hasError ? DASH : `${palette.safeStatusPairs} / ${palette.totalStatusPairs}`}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -263,7 +263,7 @@ export default function ToolHome() {
             </div>
             <div>
               <dt className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
-                Text tones darkened for you
+                Text tones {mode === "dark" ? "lightened" : "darkened"} for you
               </dt>
               <dd className="mt-1 text-sm font-semibold">{palette.statusTextTonesFixed}</dd>
             </div>

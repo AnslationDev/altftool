@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Handshake, RotateCcw } from "lucide-react";
 import { CLAUSES, buildVolunteerAgreement, formatLongDate } from "../lib";
 
@@ -80,6 +80,13 @@ export default function ToolHome() {
     OPTIONAL_CLAUSES.map((clause) => clause.key),
   );
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -638,7 +645,10 @@ export default function ToolHome() {
         </dl>
 
         {commitment && commitment.warning && (
-          <p className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">
+          <p
+            role="alert"
+            className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]"
+          >
             {commitment.warning}
           </p>
         )}

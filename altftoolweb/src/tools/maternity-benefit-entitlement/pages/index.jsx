@@ -324,7 +324,7 @@ export default function ToolHome() {
           </p>
         ) : null}
 
-        <div className={panelClass}>
+        <div className={panelClass} aria-live="polite" aria-atomic="true">
           <p className="text-sm text-[var(--muted-foreground)]">{heroLabel}</p>
           <p className="mt-1 text-3xl font-bold tracking-tight sm:text-4xl">{heroValue}</p>
 

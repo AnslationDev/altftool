@@ -202,7 +202,7 @@ export default function ToolHome() {
         ) : null}
       </section>
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-live="polite" role="status">
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
             <label className={LABEL_CLASS} htmlFor="target-score">

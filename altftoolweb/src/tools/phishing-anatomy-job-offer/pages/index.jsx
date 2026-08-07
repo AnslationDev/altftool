@@ -60,7 +60,9 @@ export default function ToolHome() {
     if (!ok) return "";
     const lines = [
       "Job offer scam check",
-      `Risk score: ${result.score} of ${MAX_MARKER_SCORE} marker points — ${result.bandLabel}`,
+      `Marker points: ${result.markerScore} of ${MAX_MARKER_SCORE}`,
+      `Link points: ${result.linkScore}`,
+      `Total risk score: ${result.score} — ${result.bandLabel}`,
       `Message markers: ${result.matched.length} of ${result.matched.length + result.missed.length}`,
       `Link findings: ${result.links.reduce((sum, link) => sum + link.findings.length, 0)}`,
       "",
@@ -151,7 +153,7 @@ export default function ToolHome() {
         ) : null}
 
         <div className="mt-5 flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Risk score
             </p>
@@ -267,7 +269,7 @@ export default function ToolHome() {
                 <p className="mt-1 text-xs text-[var(--muted-foreground)]">
                   Real domain:{" "}
                   <span className="font-semibold text-[var(--foreground)]">{link.registrable}</span>
-                  {link.official ? " — on the official list" : " — not a known bank domain"}
+                  {link.official ? " — on the official list" : " — not a known job portal"}
                 </p>
                 {link.findings.length > 0 ? (
                   <ul className="mt-2 space-y-1.5 text-sm">

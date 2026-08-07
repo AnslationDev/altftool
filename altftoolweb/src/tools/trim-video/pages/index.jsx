@@ -45,6 +45,7 @@ export default function ToolHome() {
   const [copied, setCopied] = useState(false);
   const fileInputRef = useRef(null);
   const ffmpegRef = useRef(null);
+  const copyTimerRef = useRef(null);
 
   const plan = useMemo(
     () =>
@@ -91,6 +92,13 @@ export default function ToolHome() {
     ffmpegRef.current?.terminate?.();
   }, []);
 
+  useEffect(
+    () => () => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+    },
+    [],
+  );
+
   const onPickFile = (event) => {
     const picked = event.target.files?.[0];
     setStatus("");
@@ -135,6 +143,7 @@ export default function ToolHome() {
 
   const runTrim = async () => {
     if (hasError || !file || busy) return;
+    const ranMode = mode;
     setBusy(true);
     setProgress(0);
     setOutputUrl("");
@@ -154,7 +163,9 @@ export default function ToolHome() {
       setStatus(`Clip ready — ${formatBytes(blob.size)}.`);
     } catch {
       setStatus(
-        "The trim failed. Stream copy only works on some containers — try the precise re-encode mode.",
+        ranMode === "copy"
+          ? "The trim failed. Stream copy only works on some containers — try the precise re-encode mode."
+          : "The trim failed. Try a different source file or a lower quality setting.",
       );
     } finally {
       setBusy(false);
@@ -184,7 +195,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -228,7 +240,8 @@ export default function ToolHome() {
           type="file"
           accept="video/*"
           onChange={onPickFile}
-          className="mt-1 block w-full cursor-pointer rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2.5 text-sm text-[var(--foreground)] file:mr-3 file:min-h-9 file:rounded-md file:border-0 file:bg-[var(--primary)] file:px-3 file:text-sm file:font-semibold file:text-[var(--primary-foreground)]"
+          disabled={busy}
+          className="mt-1 block w-full cursor-pointer rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2.5 text-sm text-[var(--foreground)] file:mr-3 file:min-h-9 file:rounded-md file:border-0 file:bg-[var(--primary)] file:px-3 file:text-sm file:font-semibold file:text-[var(--primary-foreground)] disabled:opacity-60"
         />
 
         {videoUrl && (
@@ -253,7 +266,8 @@ export default function ToolHome() {
               inputMode="decimal"
               value={start}
               onChange={(e) => setStart(e.target.value)}
-              className={`${INPUT_CLASS} mt-1`}
+              disabled={busy}
+              className={`${INPUT_CLASS} mt-1 disabled:opacity-60`}
             />
           </div>
           <div>
@@ -266,7 +280,8 @@ export default function ToolHome() {
               inputMode="decimal"
               value={end}
               onChange={(e) => setEnd(e.target.value)}
-              className={`${INPUT_CLASS} mt-1`}
+              disabled={busy}
+              className={`${INPUT_CLASS} mt-1 disabled:opacity-60`}
             />
           </div>
           <div>
@@ -277,7 +292,8 @@ export default function ToolHome() {
               id="trim-mode"
               value={mode}
               onChange={(e) => setMode(e.target.value)}
-              className={`${INPUT_CLASS} mt-1`}
+              disabled={busy}
+              className={`${INPUT_CLASS} mt-1 disabled:opacity-60`}
             >
               {Object.entries(TRIM_MODES).map(([key, label]) => (
                 <option key={key} value={key}>
@@ -299,7 +315,8 @@ export default function ToolHome() {
                 step="1"
                 value={crf}
                 onChange={(e) => setCrf(Number(e.target.value))}
-                className="mt-4 h-11 w-full accent-[var(--primary)]"
+                disabled={busy}
+                className="mt-4 h-11 w-full accent-[var(--primary)] disabled:opacity-60"
               />
             </div>
           )}
@@ -310,7 +327,8 @@ export default function ToolHome() {
             type="checkbox"
             checked={keepAudio}
             onChange={(e) => setKeepAudio(e.target.checked)}
-            className="h-5 w-5 rounded border-[var(--border)] accent-[var(--primary)]"
+            disabled={busy}
+            className="h-5 w-5 rounded border-[var(--border)] accent-[var(--primary)] disabled:opacity-60"
           />
           Keep the audio track
         </label>

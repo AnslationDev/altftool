@@ -23,7 +23,7 @@ const seo = {
   "faqs": [
     [
       "Does the count include the start and end dates?",
-      "The start date is always included if it is a working day. The end date is included by default, and you can switch it off if your range is meant to be exclusive."
+      "The start date is always included if it is a working day — except when the start and end dates are the same and 'Include the end date' is unchecked, which produces an empty range with nothing counted. The end date is included by default, and you can switch it off if your range is meant to be exclusive."
     ],
     [
       "What happens if a holiday falls on a weekend?",
