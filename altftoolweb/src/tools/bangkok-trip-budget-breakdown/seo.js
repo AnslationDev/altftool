@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "What is the cheapest time of year to visit Bangkok?",
-      "The green season from June to October, when hotel rates fall roughly 20% below the hot-season baseline because of the afternoon rain. The cool dry season from November to February is the busiest and the most expensive, and Songkran in mid-April and the New Year week are short surges when rooms are hardest to get. These figures are informational planning estimates, not quotes — confirm current Thai visa, customs and tax rules before you book.",
+      "The green season from June to October, when hotel rates fall roughly 20% below the hot-season baseline because of the afternoon rain. Songkran in mid-April and the New Year week are the most expensive: these short surge weeks push room rates about 50% above baseline, higher than any other stretch of the year. The cool dry season from November to February is the next priciest and the busiest for the rest of the year, with rooms hardest to get. These figures are informational planning estimates, not quotes — confirm current Thai visa, customs and tax rules before you book.",
     ],
   ],
 };

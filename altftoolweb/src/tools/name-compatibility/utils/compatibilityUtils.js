@@ -228,5 +228,7 @@ export function validateNames(name1, name2) {
   if (!name2 || !name2.trim()) errors.push("Please enter the second name.");
   if (name1 && name1.trim().length < 2) errors.push("First name must be at least 2 characters.");
   if (name2 && name2.trim().length < 2) errors.push("Second name must be at least 2 characters.");
+  if (name1 && name1.trim() && !/[a-zA-Z]/.test(name1)) errors.push("First name must contain at least one letter.");
+  if (name2 && name2.trim() && !/[a-zA-Z]/.test(name2)) errors.push("Second name must contain at least one letter.");
   return errors;
 }

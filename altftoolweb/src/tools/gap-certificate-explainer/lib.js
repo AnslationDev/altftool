@@ -182,7 +182,7 @@ export function assessGap({
     band = "affidavit-plus-evidence";
     verdict = "Affidavit plus supporting evidence expected";
     guidance =
-      `Your gap is ${describeMonths(months)} — beyond ${EXTRA_EVIDENCE_THRESHOLD_MONTHS / 12} years. Alongside the notarised affidavit, institutions commonly ask for evidence of what you did (${reason.evidence.toLowerCase()}). Some professional courses also cap the permissible gap or seat-allotment eligibility, so read the specific admission brochure carefully.`;
+      `Your gap is ${describeMonths(months)} — ${EXTRA_EVIDENCE_THRESHOLD_MONTHS / 12} years or more. Alongside the notarised affidavit, institutions commonly ask for evidence of what you did (${reason.evidence.toLowerCase()}). Some professional courses also cap the permissible gap or seat-allotment eligibility, so read the specific admission brochure carefully.`;
   }
 
   const name = candidateName.trim().replace(/\s+/g, " ") || "[Full Name]";
@@ -191,26 +191,32 @@ export function assessGap({
     lastQualification.trim().replace(/\s+/g, " ") ||
     "[Last qualification, board/university, year, roll number]";
 
-  const draftAffidavit = [
-    `GAP AFFIDAVIT`,
-    `(to be executed on non-judicial stamp paper of the value prescribed in your state and notarised)`,
-    ``,
-    `I, ${name}, son/daughter of ${guardian}, do hereby solemnly affirm and declare as under:`,
-    ``,
-    `1. That I passed ${qualification}.`,
-    `2. That after the said examination I did not pursue any regular course of study from ${startLabel} to ${endLabel}, a period of ${describeMonths(Math.max(months, 1))}.`,
-    `3. That the said gap was on account of ${reasonPhrase}.`,
-    `4. That during the said period I was not enrolled in any school, college or university, and my admission was not cancelled by, nor was I expelled from, any institution.`,
-    `5. That I was not involved in any unlawful activity during the said period.`,
-    ``,
-    `I state that the contents of this affidavit are true and correct to the best of my knowledge and belief, and nothing material has been concealed.`,
-    ``,
-    `Deponent: ${name}`,
-    `Place: ____________`,
-    `Date: ____________`,
-    ``,
-    `(Signature of Deponent — to be signed before the Notary Public)`,
-  ].join("\n");
+  // A gap of 0 months (gapStart === gapEnd) is exactly the "no gap certificate
+  // needed" verdict above — drafting a legal affidavit declaring a gap that
+  // doesn't exist is nonsensical, so no draft is produced for that case.
+  const draftAffidavit =
+    months === 0 && band === "none"
+      ? null
+      : [
+          `GAP AFFIDAVIT`,
+          `(to be executed on non-judicial stamp paper of the value prescribed in your state and notarised)`,
+          ``,
+          `I, ${name}, son/daughter of ${guardian}, do hereby solemnly affirm and declare as under:`,
+          ``,
+          `1. That I passed ${qualification}.`,
+          `2. That after the said examination I did not pursue any regular course of study from ${startLabel} to ${endLabel}, a period of ${describeMonths(months)}.`,
+          `3. That the said gap was on account of ${reasonPhrase}.`,
+          `4. That during the said period I was not enrolled in any school, college or university, and my admission was not cancelled by, nor was I expelled from, any institution.`,
+          `5. That I was not involved in any unlawful activity during the said period.`,
+          ``,
+          `I state that the contents of this affidavit are true and correct to the best of my knowledge and belief, and nothing material has been concealed.`,
+          ``,
+          `Deponent: ${name}`,
+          `Place: ____________`,
+          `Date: ____________`,
+          ``,
+          `(Signature of Deponent — to be signed before the Notary Public)`,
+        ].join("\n");
 
   return {
     months,

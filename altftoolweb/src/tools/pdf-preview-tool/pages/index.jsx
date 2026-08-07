@@ -9,6 +9,7 @@ import {
   DialogHeader,
   DialogTitle
 } from '../components/ui/dialog';
+import { cn } from '../lib/utils';
 import {
   Upload,
   ZoomIn,
@@ -26,6 +27,7 @@ const PdfPreviewTool = () => {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewHD, setPreviewHD] = useState(null);
   const [currentPage, setCurrentPage] = useState(null);
+  const [isDragging, setIsDragging] = useState(false);
   const renderPDF = async (file) => {
     setLoading(true);
     setPages([]);
@@ -62,15 +64,21 @@ const PdfPreviewTool = () => {
     setCurrentPage(pageNum);
     setPreviewHD(null);
     setPreviewOpen(true);
-    const page = await pdfInstance.getPage(pageNum);
-    const viewport = page.getViewport({ scale: 2 });
-    const canvas = document.createElement("canvas");
-    const ctx = canvas.getContext("2d");
-    if (ctx) {
-      canvas.width = viewport.width;
-      canvas.height = viewport.height;
-      await page.render({ canvasContext: ctx, viewport }).promise;
-      setPreviewHD(canvas.toDataURL("image/png"));
+    try {
+      const page = await pdfInstance.getPage(pageNum);
+      const viewport = page.getViewport({ scale: 2 });
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+        await page.render({ canvasContext: ctx, viewport }).promise;
+        setPreviewHD(canvas.toDataURL("image/png"));
+      }
+    } catch (err) {
+      setPreviewOpen(false);
+      setPreviewHD(null);
+      alert("Error loading HD preview: " + err.message);
     }
   };
   return <div className="space-y-6">
@@ -87,7 +95,29 @@ const PdfPreviewTool = () => {
     {
       /* Upload Section */
     }
-    {pages.length === 0 && !loading && <Card className="p-8 text-center border-2 border-dashed rounded-lg hover:border-primary/50 transition-colors">
+    {pages.length === 0 && !loading && <Card
+      className={cn(
+        "p-8 text-center border-2 border-dashed rounded-lg hover:border-primary/50 transition-colors",
+        isDragging && "border-primary/50 bg-primary/5"
+      )}
+      onDragOver={(e) => {
+        e.preventDefault();
+      }}
+      onDragEnter={(e) => {
+        e.preventDefault();
+        setIsDragging(true);
+      }}
+      onDragLeave={(e) => {
+        e.preventDefault();
+        setIsDragging(false);
+      }}
+      onDrop={(e) => {
+        e.preventDefault();
+        setIsDragging(false);
+        const file = e.dataTransfer.files?.[0];
+        if (file) renderPDF(file);
+      }}
+    >
       <FileText className="mx-auto h-12 w-12 text-(--muted-foreground)" />
       <h3 className="mt-4 text-lg font-medium">Drop your PDF here</h3>
       <p className="mt-2 text-sm text-(--muted-foreground)">
@@ -107,13 +137,17 @@ const PdfPreviewTool = () => {
       hidden
       type="file"
       accept="application/pdf"
-      onChange={(e) => e.target.files?.[0] && renderPDF(e.target.files[0])}
+      onChange={(e) => {
+        const file = e.target.files?.[0];
+        if (file) renderPDF(file);
+        e.target.value = "";
+      }}
     />
 
     {
       /* Loading State */
     }
-    {loading && <Card className="p-8 text-center">
+    {loading && <Card className="p-8 text-center" aria-live="polite" role="status">
       <Loader2 className="mx-auto h-8 w-8 animate-spin text-primary" />
       <h3 className="mt-4 text-lg font-medium">Processing your PDF...</h3>
       <p className="mt-2 text-sm text-(--muted-foreground)">
@@ -129,7 +163,7 @@ const PdfPreviewTool = () => {
         /* File Info Bar */
       }
       <Card className="p-4 mb-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div>
+        <div aria-live="polite" role="status">
           <h3 className="font-medium">{fileName}</h3>
           <p className="text-sm text-(--muted-foreground)">
             {pages.length} {pages.length === 1 ? "page" : "pages"}
@@ -150,8 +184,17 @@ const PdfPreviewTool = () => {
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
         {pages.map((p, idx) => <Card
           key={p.pageNum}
-          className="overflow-hidden cursor-pointer hover:shadow-md transition-shadow"
+          className="group overflow-hidden cursor-pointer hover:shadow-md transition-shadow focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          role="button"
+          tabIndex={0}
+          aria-label={`View page ${p.pageNum} in HD preview`}
           onClick={() => handleFullPreview(p.pageNum)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              handleFullPreview(p.pageNum);
+            }
+          }}
         >
           <div className="aspect-[1/1.414] relative bg-(--muted) dark:bg-gray-800">
             <img
@@ -160,7 +203,7 @@ const PdfPreviewTool = () => {
               className="w-full h-full object-contain"
             />
             <div className="absolute inset-0 bg-(--background)/0 hover:bg-(--background)/10 transition-colors flex items-center justify-center">
-              <ZoomIn className="opacity-0 hover:opacity-100 h-6 w-6 text-(--foreground) drop-shadow" />
+              <ZoomIn className="opacity-0 group-hover:opacity-100 group-focus-visible:opacity-100 h-6 w-6 text-(--foreground) drop-shadow" />
             </div>
           </div>
           <div className="p-2 text-center">
@@ -179,7 +222,7 @@ const PdfPreviewTool = () => {
           <DialogTitle>Page {currentPage} - HD Preview</DialogTitle>
         </DialogHeader>
         <div className="text-center min-h-[400px] flex items-center justify-center">
-          {!previewHD && <div className="py-8">
+          {!previewHD && <div className="py-8" aria-live="polite" role="status">
             <Loader2 className="mx-auto h-8 w-8 animate-spin" />
             <p className="mt-2 text-sm text-(--muted-foreground)">
               Loading HD preview...

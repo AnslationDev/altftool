@@ -58,8 +58,9 @@ export const spec = {
       const initial = Math.max(0, Number(values.initial) || 0), half = Number(values.half_life), time = Math.max(0, Number(values.time) || 0), target = Math.max(0, Number(values.target) || 0);
       if (!(half > 0)) return { result: "—", caption: "Half-life must be positive" };
       const lambda = Math.log(2) / half, remaining = initial * Math.exp(-lambda * time), fraction = initial ? remaining / initial : 0;
-      const targetTime = initial > 0 && target > 0 && target <= initial ? Math.log(initial / target) / lambda : 0;
-      return { result: remaining.toFixed(8) + " remaining", caption: (fraction * 100).toFixed(6) + "% of initial", rows: [["Decay constant", lambda.toFixed(8) + " per time unit"], ["Elapsed half-lives", (time / half).toFixed(6)], ["Decayed quantity", (initial - remaining).toFixed(8)], ["Time to entered target", targetTime ? targetTime.toFixed(8) : "Target must be >0 and ≤ initial"]] };
+      const validTarget = initial > 0 && target > 0 && target <= initial;
+      const targetTime = validTarget ? Math.log(initial / target) / lambda : 0;
+      return { result: remaining.toFixed(8) + " remaining", caption: (fraction * 100).toFixed(6) + "% of initial", rows: [["Decay constant", lambda.toFixed(8) + " per time unit"], ["Elapsed half-lives", (time / half).toFixed(6)], ["Decayed quantity", (initial - remaining).toFixed(8)], ["Time to entered target", validTarget ? targetTime.toFixed(8) : "Target must be >0 and ≤ initial"]] };
     },
 };
 

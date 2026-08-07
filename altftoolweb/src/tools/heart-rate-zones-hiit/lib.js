@@ -69,7 +69,7 @@ export const HIIT_FORMATS = [
     workHigh: 1.0,
     recoveryLow: 0.75,
     recoveryHigh: 0.9,
-    note: "Four minutes total. Heart rate never falls far in 10 seconds, so it climbs all the way through.",
+    note: "Just under four minutes total (3:50 for the interval block). Heart rate never falls far in 10 seconds, so it climbs all the way through.",
   },
   {
     id: "30-30",
@@ -254,12 +254,12 @@ export function computeHiitPlan({
   }
 
   const isCustom = format.id === "custom";
-  const useReps = isNumber(reps) ? reps : format.reps;
+  const useReps = isCustom && isNumber(reps) ? reps : format.reps;
   const useWork = isCustom && isNumber(workSeconds) ? workSeconds : format.workSeconds;
   const useRest = isCustom && isNumber(restSeconds) ? restSeconds : format.restSeconds;
 
-  if (useReps < REPS_MIN || useReps > REPS_MAX) {
-    return { error: `Repetitions should be between ${REPS_MIN} and ${REPS_MAX}.` };
+  if (!Number.isInteger(useReps) || useReps < REPS_MIN || useReps > REPS_MAX) {
+    return { error: `Repetitions should be a whole number between ${REPS_MIN} and ${REPS_MAX}.` };
   }
   if (useWork < WORK_SEC_MIN || useWork > WORK_SEC_MAX) {
     return { error: `Work intervals should be between ${WORK_SEC_MIN} and ${WORK_SEC_MAX} seconds.` };

@@ -76,9 +76,16 @@ export default function GlassesTool() {
       revokeIfBlobUrl(imageSrcRef.current);
       imageSrcRef.current = url;
       setImage(prev => ({ ...prev, src: url }));
+      // Rotate/flip/crop changes the image geometry, so any face detected
+      // against the pre-edit photo is now stale (wrong position/scale on
+      // the new canvas). Clear it and re-run detection against the edited
+      // image, the same flow a freshly uploaded photo goes through, so the
+      // auto-preview effect waits for fresh faceData before drawing glasses.
+      resetFace();
+      loadImage(url).then((img) => detectFace(img, { faceIndex: -1 }));
     });
     setShowEditor(false);
-  }, []);
+  }, [resetFace, detectFace]);
 
   const handleOpenEditor = useCallback(async () => {
     if (!image) return;
@@ -286,7 +293,7 @@ export default function GlassesTool() {
           <div className="rounded-xl border border-[var(--border)] p-4 space-y-3">
             <h3 className="text-sm font-medium text-foreground">Lens</h3>
             <div className="flex flex-wrap gap-2">
-              {LENS_COLORS.slice(0, 8).map(c => (
+              {LENS_COLORS.map(c => (
                 <button key={c.name} onClick={() => setSelectedLensColor(c)}
                   className={`w-7 h-7 rounded-full border-2 transition-all ${selectedLensColor.name === c.name ? 'border-[var(--primary)] scale-110 shadow-md' : 'border-transparent hover:scale-105'}`}
                   style={{ background: c.value === 'gradient' ? 'linear-gradient(135deg, #3b82f6, #a855f7)' : c.value }}

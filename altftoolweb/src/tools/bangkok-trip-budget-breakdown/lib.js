@@ -374,7 +374,7 @@ export function buildBangkokBudget({
   if (nights === 0) {
     notes.push("Zero nights is a layover day trip: no room cost, and daily spends count for one day.");
   }
-  if (travellers % peoplePerRoom !== 0) {
+  if (nights > 0 && travellers % peoplePerRoom !== 0) {
     notes.push(
       `${travellers} travellers at ${peoplePerRoom} per room needs ${rooms} rooms, so one room is not full and the stay line costs more per head than the shared rate suggests.`,
     );

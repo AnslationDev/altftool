@@ -71,7 +71,7 @@ function paramBase(field) {
  * @param {Array<{combinator:"AND"|"OR", conditions:Array<{field:string, operator:string, value:string, value2:string, valueType:string}>}>} input.groups
  * @param {"AND"|"OR"} input.groupCombinator  how the groups join together
  * @param {string} input.paramStyle           one of PARAM_STYLES ids
- * @returns {{clause:string, params:Array<{name:string,value:string}>, conditionCount:number}|{error:string}}
+ * @returns {{clause:string, params:Array<{name:string,value:string}>, conditionCount:number, warnings:string[]}|{error:string}}
  */
 export function buildWhereClause({ groups, groupCombinator = "AND", paramStyle = "literal" }) {
   if (!Array.isArray(groups) || groups.length === 0) {
@@ -86,6 +86,7 @@ export function buildWhereClause({ groups, groupCombinator = "AND", paramStyle =
 
   const params = [];
   const usedNames = new Map();
+  const backslashWarningFields = new Set();
 
   const nextPlaceholder = (field, value) => {
     if (paramStyle === "literal") return null;
@@ -123,6 +124,17 @@ export function buildWhereClause({ groups, groupCombinator = "AND", paramStyle =
     }
     const placeholder = nextPlaceholder(condition.field, value);
     if (placeholder) return { text: placeholder };
+    if (condition.valueType !== "number" && value.includes("\\")) {
+      // Inline literal mode only does SQL-standard '' quote-doubling. MySQL/MariaDB's
+      // default sql_mode (NO_BACKSLASH_ESCAPES unset) also treats \ as an escape
+      // character inside '...' strings, so a value ending in an odd number of
+      // backslashes can leave the literal unterminated there. Doubling the
+      // backslash would fix MySQL but would corrupt the value on engines (e.g.
+      // PostgreSQL) that do not treat backslash specially in a plain string —
+      // so rather than guess at a dialect, flag it and point at a bind parameter,
+      // which sidesteps the ambiguity entirely.
+      backslashWarningFields.add(condition.field);
+    }
     return { text: condition.valueType === "number" ? value : sqlStringLiteral(value) };
   };
 
@@ -188,5 +200,10 @@ export function buildWhereClause({ groups, groupCombinator = "AND", paramStyle =
     .map((group) => (groupSql.length > 1 && group.size > 1 ? `(${group.text})` : group.text))
     .join(`\n${groupCombinator} `);
 
-  return { clause: `WHERE ${clause}`, params, conditionCount };
+  const warnings = [...backslashWarningFields].map(
+    (field) =>
+      `"${field}" has a value containing a backslash. Inline literal mode only does SQL-standard '' quote-escaping — it does not escape backslashes, and MySQL/MariaDB's default sql_mode treats \\ as an escape character inside string literals, which can leave the literal unterminated. Use a bind parameter (a parameter style other than "Inline literals") for this value instead.`,
+  );
+
+  return { clause: `WHERE ${clause}`, params, conditionCount, warnings };
 }

@@ -39,7 +39,7 @@ const seo = {
     ],
     [
       "What replaces the WordPress !-f / !-d rewrite block in NGINX?",
-      "A single line: try_files $uri $uri/ /index.php?$query_string;. The converter detects the RewriteCond %{REQUEST_FILENAME} !-f and !-d pair and collapses it into try_files, which tests the file, then the directory, then falls through to the front controller — the same behaviour, and cheaper than an if.",
+      "A single line: try_files $uri $uri/ /index.php;. The converter detects the RewriteCond %{REQUEST_FILENAME} !-f and !-d pair and collapses it into try_files, which tests the file, then the directory, then falls through to the front controller — the same behaviour, and cheaper than an if. The tool only appends a ?$query_string suffix when the original RewriteRule carries the [QSA] flag; without it, the output is the bare try_files $uri $uri/ /index.php; shown above, matching what a plain RewriteRule . /index.php [L] (no QSA) produces.",
     ],
     [
       "Is this htaccess to nginx converter free, and does my config get uploaded?",

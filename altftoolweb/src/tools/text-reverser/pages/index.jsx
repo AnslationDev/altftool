@@ -9,6 +9,7 @@ export default function ToolHome() {
   const [mode, setMode] = useState("char"); // 'char' | 'word' | 'word-char' | 'line'
   const [copied, setCopied] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
+  const [copyError, setCopyError] = useState(false);
 
   useEffect(() => {
     if (!input) {
@@ -24,14 +25,21 @@ export default function ToolHome() {
         break;
       case "word":
         // Reverse word order, keeping character direction inside words
-        result = input.split(/\s+/).reverse().join(" ");
+        result = input
+          .split(/\s+/)
+          .filter((token) => token !== "")
+          .reverse()
+          .join(" ");
         break;
       case "word-char":
-        // Keep word order, but reverse characters inside each word
+        // Keep word order, but reverse characters inside each word.
+        // Split on captured whitespace runs (including newlines) so line
+        // breaks and word order are preserved; only non-whitespace tokens
+        // get their letters reversed.
         result = input
-          .split(" ")
-          .map((word) => word.split("").reverse().join(""))
-          .join(" ");
+          .split(/(\s+)/)
+          .map((token) => (/\s/.test(token) ? token : token.split("").reverse().join("")))
+          .join("");
         break;
       case "line":
         // Reverse order of lines
@@ -47,9 +55,12 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(output);
       setCopied(true);
+      setCopyError(false);
       setTimeout(() => setCopied(false), 2000);
     } catch (e) {
       console.error(e);
+      setCopyError(true);
+      setTimeout(() => setCopyError(false), 2000);
     }
   };
 
@@ -144,7 +155,7 @@ export default function ToolHome() {
             </div>
 
             {/* Output */}
-            <div className="space-y-2">
+            <div className="space-y-2" aria-live="polite">
               <div className="flex items-center justify-between">
                 <label className="text-xs font-bold text-foreground uppercase tracking-wider flex items-center gap-1.5">
                   <RefreshCw size={14} className="text-primary" />
@@ -154,14 +165,16 @@ export default function ToolHome() {
                   <button
                     onClick={handleCopy}
                     disabled={!output}
+                    aria-label={copyError ? "Copy failed" : copied ? "Copied to clipboard" : "Copy output"}
                     className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground bg-background border border-border rounded-lg px-2.5 py-1.5 hover:border-primary transition disabled:opacity-50"
                   >
                     {copied ? <CheckCircle2 size={12} className="text-primary" /> : <Copy size={12} />}
-                    {copied ? "Copied" : "Copy"}
+                    {copyError ? "Copy failed" : copied ? "Copied" : "Copy"}
                   </button>
                   <button
                     onClick={handleDownload}
                     disabled={!output}
+                    aria-label={downloaded ? "Downloaded" : "Download output"}
                     className="inline-flex items-center gap-1.5 text-[11px] font-bold text-foreground bg-background border border-border rounded-lg px-2.5 py-1.5 hover:border-primary transition disabled:opacity-50"
                   >
                     {downloaded ? <CheckCircle2 size={12} className="text-primary" /> : <FileDown size={12} />}

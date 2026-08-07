@@ -36,9 +36,10 @@ export default function ToolHome() {
 
   const result = useMemo(() => assessGap(form), [form]);
   const hasError = Boolean(result.error);
+  const hasAffidavit = !hasError && Boolean(result.draftAffidavit);
 
   const copyAffidavit = async () => {
-    if (hasError) return;
+    if (hasError || !result.draftAffidavit) return;
     try {
       await navigator.clipboard.writeText(result.draftAffidavit);
       setCopied(true);
@@ -135,7 +136,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -152,7 +157,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyAffidavit}
-              disabled={hasError}
+              disabled={!hasAffidavit}
               aria-label="Copy the draft gap affidavit"
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
@@ -205,10 +210,15 @@ export default function ToolHome() {
         <h2 className="text-base font-semibold">Draft gap affidavit</h2>
         {hasError ? (
           <p className="mt-3 text-sm text-[var(--muted-foreground)]">{DASH}</p>
-        ) : (
+        ) : hasAffidavit ? (
           <pre className="mt-3 overflow-x-auto whitespace-pre-wrap rounded-md border border-[var(--border)] bg-[var(--background)] p-4 font-sans text-sm leading-6 text-[var(--foreground)]">
             {result.draftAffidavit}
           </pre>
+        ) : (
+          <p className="mt-3 text-sm leading-6 text-[var(--muted-foreground)]">
+            No draft is shown because your gap is 0 months — there is nothing to affirm, and
+            institutions usually need no gap certificate at all in this case.
+          </p>
         )}
       </section>
 

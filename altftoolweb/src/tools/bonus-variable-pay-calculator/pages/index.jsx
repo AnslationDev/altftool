@@ -78,8 +78,13 @@ export function computeBonus({
   const grossPayout = proratedTarget * effectiveFactor;
   const tax = (grossPayout * taxRate) / 100;
   const netPayout = grossPayout - tax;
-  const perCycleGross = cycles > 0 ? grossPayout / cycles : 0;
-  const perCycleNet = cycles > 0 ? netPayout / cycles : 0;
+  // Scale the payout cycle count down to the months actually eligible, so a
+  // mid-year joiner sees what one real payout is worth rather than the gross
+  // bonus divided by a full year of cycles they were never eligible for.
+  const effectiveCycles =
+    cycles > 0 && monthsEligible > 0 ? Math.max(1, Math.round((cycles * monthsEligible) / 12)) : cycles;
+  const perCycleGross = effectiveCycles > 0 ? grossPayout / effectiveCycles : 0;
+  const perCycleNet = effectiveCycles > 0 ? netPayout / effectiveCycles : 0;
   const fixedPay = mode === "percent" ? Math.max(0, ctc - targetAnnual) : null;
   // Fixed pay is a full-year figure by definition (it's what's left of the
   // annual CTC once the annual target variable pay is removed), but cash

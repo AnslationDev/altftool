@@ -338,6 +338,19 @@ export default function ToolHome() {
         </p>
       ) : null}
 
+      {!hasError && result.warnings.length > 0 ? (
+        <ul role="status" className="mt-6 space-y-2">
+          {result.warnings.map((warning) => (
+            <li
+              key={warning}
+              className="rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning-text)]"
+            >
+              {warning}
+            </li>
+          ))}
+        </ul>
+      ) : null}
+
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

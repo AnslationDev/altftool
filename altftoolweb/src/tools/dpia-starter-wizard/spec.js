@@ -80,11 +80,11 @@ export const spec = {
   "note": "Runs locally in your browser. Review the generated report before relying on it for legal, financial, medical, or safety decisions."
 },
   compute: (values) => {
-      const text = (values.data + " " + values.feature).toLowerCase();
+      const text = (values.data + " " + values.feature + " " + values.people).toLowerCase();
       let score = values.scale === "large" ? 4 : values.scale === "medium" ? 2 : 1;
       if (values.sensitive) score += 4;
       if (/location|biometric|health|children|financial|tracking|profil/.test(text)) score += 3;
-      const mitigations = String(values.mitigations || "").split(/[,;\n]+/).map((item) => item.trim()).filter(Boolean);
+      const mitigations = String(values.mitigations || "").split(/[,;.\n]+/).map((item) => item.trim()).filter(Boolean);
       score = Math.max(0, score - Math.min(3, mitigations.length));
       const level = score >= 7 ? "High" : score >= 4 ? "Medium" : "Lower";
       return { result: level + " initial privacy risk", caption: "Structured starter for " + values.feature, rows: [["Risk score", score + "/11"], ["Affected people", values.people], ["Safeguards listed", mitigations.length]], list: ["Describe necessity and proportionality", "Map collection, sharing, retention, and deletion", "Record risks to people, not only the business", "Assign mitigation owners and residual risk", "Schedule approval and review"] };

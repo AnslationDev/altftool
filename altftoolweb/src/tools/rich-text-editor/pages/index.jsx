@@ -222,7 +222,16 @@ const RichTextEditor = ({
 }) => {
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      // StarterKit v3 bundles its own default-configured Link (openOnClick:
+      // true) and Underline extensions. Without disabling them here, TipTap
+      // registers both the StarterKit copies and the ones configured below,
+      // and the StarterKit copy's click handler can end up ahead of ours --
+      // silently defeating openOnClick:false. Disabling them in StarterKit
+      // keeps the Underline/Link instances below as the only ones registered.
+      StarterKit.configure({
+        link: false,
+        underline: false,
+      }),
       Underline,
       TextAlign.configure({
         types: ["heading", "paragraph"],

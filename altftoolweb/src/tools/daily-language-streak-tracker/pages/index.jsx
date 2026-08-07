@@ -19,6 +19,9 @@ const GHOST_BTN =
 const DAY_MS = 86400000;
 const todayIso = () => new Date().toISOString().slice(0, 10);
 const shift = (iso, days) => new Date(Date.parse(`${iso}T00:00:00Z`) + days * DAY_MS).toISOString().slice(0, 10);
+// Bounds the "Treat this date as today" picker to a few years out so an
+// easily-reachable far-future date can't be entered through the UI.
+const MAX_TODAY_ISO = shift(todayIso(), 365 * 5);
 
 /** Ten days of sample sessions so the page shows a real streak at first paint. */
 const seedLogs = (anchor) => {
@@ -160,6 +163,7 @@ export default function ToolHome() {
             <input
               id="streak-today"
               type="date"
+              max={MAX_TODAY_ISO}
               className={`mt-2 ${INPUT_CLASS}`}
               value={today}
               onChange={(event) => setToday(event.target.value)}

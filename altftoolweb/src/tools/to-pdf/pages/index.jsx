@@ -39,6 +39,7 @@ export default function ToolHome() {
   const [images, setImages] = useState([]);
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState("");
+  const [buildFailed, setBuildFailed] = useState(false);
   const [copied, setCopied] = useState(false);
   const fileInputRef = useRef(null);
 
@@ -72,10 +73,18 @@ export default function ToolHome() {
   const hasError = Boolean(activeError);
   const pageCount = mode === "text" ? textResult.pageCount : images.length;
 
+  const overflowingImages =
+    mode === "image" && !hasError
+      ? imageResults.filter((item) => item.layout.overflows)
+      : [];
+  const hasOverflow = overflowingImages.length > 0;
+
   const onPickFiles = async (event) => {
     const picked = Array.from(event.target.files || []);
     setStatus("");
+    setBuildFailed(false);
     const loaded = [];
+    const rejected = [];
     for (const file of picked) {
       if (classifyFile({ name: file.name, type: file.type }) !== "image") continue;
       const dataUrl = await new Promise((resolve) => {
@@ -84,24 +93,39 @@ export default function ToolHome() {
         reader.onerror = () => resolve(null);
         reader.readAsDataURL(file);
       });
-      if (!dataUrl) continue;
+      if (!dataUrl) {
+        rejected.push(file.name);
+        continue;
+      }
       const dims = await new Promise((resolve) => {
         const el = new window.Image();
         el.onload = () => resolve({ widthPx: el.naturalWidth, heightPx: el.naturalHeight });
         el.onerror = () => resolve(null);
         el.src = dataUrl;
       });
-      if (!dims) continue;
+      if (!dims) {
+        rejected.push(file.name);
+        continue;
+      }
       loaded.push({ name: file.name, dataUrl, format: file.type, ...dims });
     }
     setImages(loaded);
     if (loaded.length > 0) setMode("image");
+    if (rejected.length > 0) {
+      setBuildFailed(true);
+      setStatus(
+        `${rejected.length} file${rejected.length === 1 ? "" : "s"} could not be read and ${
+          rejected.length === 1 ? "was" : "were"
+        } skipped: ${rejected.join(", ")}`,
+      );
+    }
   };
 
   const buildPdf = async () => {
     if (hasError || busy) return;
     setBusy(true);
     setStatus("");
+    setBuildFailed(false);
     try {
       const { jsPDF } = await import("jspdf");
       const doc = new jsPDF({
@@ -136,8 +160,10 @@ export default function ToolHome() {
       }
 
       doc.save(mode === "text" ? "document.pdf" : "images.pdf");
+      setBuildFailed(false);
       setStatus(`PDF saved with ${pageCount} page${pageCount === 1 ? "" : "s"}.`);
     } catch {
+      setBuildFailed(true);
       setStatus("Could not build the PDF in this browser. Try fewer or smaller files.");
     } finally {
       setBusy(false);
@@ -190,6 +216,7 @@ export default function ToolHome() {
     setFitMode("contain");
     setImages([]);
     setStatus("");
+    setBuildFailed(false);
     setCopied(false);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
@@ -370,6 +397,18 @@ export default function ToolHome() {
           </p>
         )}
 
+        {!hasError && hasOverflow && (
+          <p
+            role="alert"
+            className="mb-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning-text)]"
+          >
+            {overflowingImages.length === 1
+              ? `"${overflowingImages[0].name}" is taller than the page and will be cut off in "Fill the page width" mode.`
+              : `${overflowingImages.length} images are taller than the page and will be cut off in "Fill the page width" mode.`}{" "}
+            Switch to &ldquo;Fit inside margins (keep whole image)&rdquo; or pick a different page size to avoid this.
+          </p>
+        )}
+
         <p className="text-sm text-[var(--muted-foreground)]">Pages in the PDF</p>
         <p className="text-4xl font-semibold tracking-tight sm:text-5xl">
           {hasError ? DASH : NUM.format(pageCount)}
@@ -459,8 +498,11 @@ export default function ToolHome() {
                   <th scope="col" className="py-2 pr-3 font-medium">
                     Source px
                   </th>
-                  <th scope="col" className="py-2 font-medium">
+                  <th scope="col" className="py-2 pr-3 font-medium">
                     On page (mm)
+                  </th>
+                  <th scope="col" className="py-2 font-medium">
+                    Fits page?
                   </th>
                 </tr>
               </thead>
@@ -472,8 +514,17 @@ export default function ToolHome() {
                     <td className="py-2 pr-3">
                       {item.widthPx}×{item.heightPx}
                     </td>
-                    <td className="py-2">
+                    <td className="py-2 pr-3">
                       {NUM.format(item.layout.width)}×{NUM.format(item.layout.height)}
+                    </td>
+                    <td className="py-2">
+                      {item.layout.overflows ? (
+                        <span className="inline-flex items-center rounded-full bg-[var(--warning-soft)] px-2 py-0.5 text-xs font-semibold text-[var(--warning-text)]">
+                          Cut off
+                        </span>
+                      ) : (
+                        <span className="text-[var(--muted-foreground)]">Yes</span>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -482,9 +533,23 @@ export default function ToolHome() {
           </div>
         )}
 
-        {status && (
-          <p className="mt-4 text-sm font-medium text-[var(--success)]">{status}</p>
-        )}
+        {status &&
+          (buildFailed ? (
+            <p
+              role="alert"
+              className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+            >
+              {status}
+            </p>
+          ) : (
+            <p
+              role="status"
+              aria-live="polite"
+              className="mt-4 text-sm font-medium text-[var(--success)]"
+            >
+              {status}
+            </p>
+          ))}
 
         <div className="mt-5 flex flex-wrap gap-3">
           <button type="button" onClick={buildPdf} disabled={hasError || busy} className={PRIMARY_BTN}>

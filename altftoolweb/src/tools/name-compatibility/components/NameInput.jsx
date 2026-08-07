@@ -43,7 +43,7 @@ export default function NameInput({ name1, setName1, name2, setName2, onAnalyze,
         </div>
 
         {errors.length > 0 && (
-          <div className="bg-red-50 text-red-600 p-3 rounded-lg text-sm space-y-1">
+          <div role="alert" className="bg-[var(--danger-soft)] text-[var(--danger)] p-3 rounded-lg text-sm space-y-1">
             {errors.map((err, i) => (
               <div key={i}>{err}</div>
             ))}

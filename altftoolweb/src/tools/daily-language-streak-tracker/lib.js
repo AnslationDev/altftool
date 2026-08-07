@@ -23,6 +23,10 @@ export const MAX_GOAL_MINUTES = 600;
 export const MAX_SESSION_MINUTES = 1440;
 export const MAX_LOGS = 2000;
 export const MAX_FREEZES = 3;
+// Defense-in-depth: caps the day-by-day walk in summarise() so a wildly-future
+// (or malformed) "today" cannot block the main thread for seconds. Ten years
+// is already far beyond the tool's largest milestone (365 days).
+export const MAX_STREAK_SPAN_DAYS = 3660;
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 const DAY_MS = 86400000;
@@ -98,16 +102,20 @@ export function addLog(logs, raw, today) {
 
   const key = (item) => `${item.date}|${item.language.toLowerCase()}`;
   const target = key(checked.log);
-  let merged = false;
+  const existing = list.find((item) => key(item) === target);
 
-  const next = list.map((item) => {
-    if (key(item) !== target) return item;
-    merged = true;
-    const total = Math.min(MAX_SESSION_MINUTES, item.minutes + checked.log.minutes);
-    return { ...item, minutes: total };
-  });
+  if (existing) {
+    const total = existing.minutes + checked.log.minutes;
+    if (total > MAX_SESSION_MINUTES) {
+      return {
+        error: `That session would bring ${checked.log.date} (${existing.language}) to ${total} minutes, over the ${MAX_SESSION_MINUTES}-minute daily cap.`,
+      };
+    }
+    const next = list.map((item) => (key(item) === target ? { ...item, minutes: total } : item));
+    return { logs: next };
+  }
 
-  return { logs: merged ? next : [...next, checked.log] };
+  return { logs: [...list, checked.log] };
 }
 
 /** Remove one date + language pair. */
@@ -194,6 +202,13 @@ export function summarise({ logs, goalMinutes, today, language = "All", freezes 
   }
 
   const firstStamp = parseIsoDate(dates[0]);
+
+  if (Math.round((todayStamp - firstStamp) / DAY_MS) > MAX_STREAK_SPAN_DAYS) {
+    return {
+      error: `Set "today" within ${MAX_STREAK_SPAN_DAYS} days of your earliest logged session so the streak can be calculated.`,
+    };
+  }
+
   const met = (iso) => (totals.get(iso) || 0) >= goal;
 
   // Walk from the first logged day up to yesterday, then handle today.

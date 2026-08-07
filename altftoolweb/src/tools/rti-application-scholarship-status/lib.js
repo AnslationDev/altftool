@@ -347,6 +347,7 @@ export function computeRtiTimeline({ filedDate, lifeLiberty = false }) {
  * @param {string} input.asOnDate         yyyy-mm-dd the pendency is measured on.
  * @param {boolean} [input.isBpl]
  * @param {boolean} [input.wantsInspection]
+ * @param {boolean} [input.lifeLiberty]
  * @returns {{application:string, subject:string, queryCount:number,
  *            timeline:object, pendency:object, levelNote:string} | {error:string}}
  */
@@ -368,6 +369,7 @@ export function buildScholarshipRti({
   asOnDate,
   isBpl = false,
   wantsInspection = false,
+  lifeLiberty = false,
 }) {
   const name = clean(studentName);
   const addr = clean(address);
@@ -399,7 +401,7 @@ export function buildScholarshipRti({
   const appliedLong = formatIsoLong(appliedDate);
   if (!appliedLong) return { error: "Enter a valid date on which the scholarship was applied for." };
 
-  const timeline = computeRtiTimeline({ filedDate });
+  const timeline = computeRtiTimeline({ filedDate, lifeLiberty });
   if (timeline.error) return { error: timeline.error };
   const filedLong = formatIsoLong(filedDate);
 
@@ -442,7 +444,7 @@ export function buildScholarshipRti({
     ...queries.map((query, index) => `${index + 1}. ${query}`),
     "",
     ...(inspectionLine ? [inspectionLine, ""] : []),
-    `Please supply the information in the form in which it is sought, as Section 7(9) of the Act requires. If any part is treated as exempt, please state the exact clause of Section 8 or Section 9 relied on and supply the remainder after severance under Section 10(1). This office ${level.holds}; if any part of the information is held by another public authority, please transfer that part within five days under Section 6(3) and inform me of the transfer.`,
+    `Please supply the information in the form in which it is sought, as Section 7(9) of the Act requires. If any part is treated as exempt, please state the exact clause of Section 8 or Section 9 relied on and supply the remainder after severance under Section 10(1). This office holds ${level.holds}; if any part of the information is held by another public authority, please transfer that part within five days under Section 6(3) and inform me of the transfer.`,
     "",
     `I am not required to give any reason for seeking this information, as Section 6(2) provides. ${feeLine}`,
     "",
