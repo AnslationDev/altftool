@@ -41,11 +41,30 @@ const PRIMARY_BTN =
 const GHOST_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 
-const PRINT_CSS = `
+/**
+ * Print stylesheet is generated per-render from the current page size so the
+ * sheet prints at the exact millimetre dimensions the tool calculates, with a
+ * fixed @page size/margin instead of relying on the browser's default print
+ * viewport and "fit to page" auto-scaling. The slant/ruling lines are also
+ * locked to a fixed dark ink colour here (never `currentColor`/the on-screen
+ * `--foreground` token) so the sheet stays legible on paper no matter which
+ * UI theme was active when it was printed — printers always assume a white
+ * page and dark-mode CSS variables have no meaning there.
+ */
+const buildPrintCss = (page) => `
 @media print {
   body * { visibility: hidden !important; }
   #slant-print-area, #slant-print-area * { visibility: visible !important; }
   #slant-print-area { position: absolute; inset: 0 auto auto 0; width: 100%; }
+  #slant-print-area svg {
+    width: ${page.widthMm}mm !important;
+    height: ${page.heightMm}mm !important;
+  }
+  #slant-print-area line { stroke: #111827 !important; }
+  @page {
+    size: ${page.widthMm}mm ${page.heightMm}mm;
+    margin: 0;
+  }
 }
 `;
 
@@ -86,6 +105,12 @@ export default function ToolHome() {
 
   const hasError = Boolean(guide.error);
   const dash = "—";
+  const printCss = hasError ? "" : buildPrintCss(guide.page);
+
+  const selectedPreset = useMemo(
+    () => SLANT_PRESETS.find((preset) => String(preset.angleDeg) === angleDeg) ?? null,
+    [angleDeg],
+  );
 
   const summary = useMemo(() => {
     if (hasError) return "";
@@ -130,7 +155,7 @@ export default function ToolHome() {
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
-      <style>{PRINT_CSS}</style>
+      <style>{printCss}</style>
 
       <header className="mb-6">
         <div className="mb-3 inline-flex items-center gap-2 rounded-full bg-[var(--muted)] px-3 py-1 text-xs font-semibold tracking-wide uppercase text-[var(--primary)]">
@@ -168,6 +193,9 @@ export default function ToolHome() {
                 <option value={angleDeg}>Custom — {angleDeg}°</option>
               ) : null}
             </select>
+            <p className="mt-2 text-xs text-[var(--muted-foreground)]">
+              {selectedPreset ? selectedPreset.note : "Custom angle — not tied to a named script."}
+            </p>
           </div>
           <div>
             <label className={LABEL_CLASS} htmlFor="slant-angle">
@@ -322,7 +350,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">

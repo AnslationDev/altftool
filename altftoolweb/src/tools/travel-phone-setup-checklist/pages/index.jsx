@@ -206,7 +206,12 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className={`mt-6 ${CARD}`} aria-labelledby="tp-score">
+      <section
+        className={`mt-6 ${CARD}`}
+        aria-labelledby="tp-score"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <h2

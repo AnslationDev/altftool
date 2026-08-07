@@ -239,7 +239,7 @@ export function computeFootageStorage({
   const codec = findCodec(codecId);
   if (!codec) return { error: "Pick a codec from the list." };
 
-  const numbers = [width, height, fps, hours, cardGb, customMbps];
+  const numbers = [width, height, fps, hours, cardGb];
   if (numbers.some((value) => !Number.isFinite(value))) {
     return { error: "Enter valid numbers in every field." };
   }
@@ -256,7 +256,12 @@ export function computeFootageStorage({
 
   let video;
   if (codec.kind === "custom") {
-    if (!(customMbps > 0)) return { error: "Custom bitrate must be greater than zero." };
+    // customMbps is only meaningful — and only validated — when the custom
+    // codec is actually selected, so a leftover invalid value in the hidden
+    // "Custom bitrate" field cannot break the calculator for every other codec.
+    if (!Number.isFinite(customMbps) || !(customMbps > 0)) {
+      return { error: "Custom bitrate must be greater than zero." };
+    }
     video = customMbps;
   } else if (codec.kind === "fixed") {
     video = codec.mbps;

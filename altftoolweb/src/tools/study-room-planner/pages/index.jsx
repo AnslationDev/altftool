@@ -162,7 +162,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Desk and chair zone off the wall
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">
               {error ? DASH : mm(plan.zoneDepthMm)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -216,7 +216,10 @@ export default function ToolHome() {
         </dl>
 
         {!error && !plan.deskFits ? (
-          <p className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+          <p
+            aria-live="polite"
+            className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          >
             A comfortable desk for {toNumber(users)} people needs {mm(plan.deskWidthMm)} of wall and
             the longest wall is only {metres(plan.longWallM)}. Drop to{" "}
             {plan.usersThatFit || 1} seat(s), use an L-shaped layout, or plan a narrower desk per
@@ -225,10 +228,23 @@ export default function ToolHome() {
         ) : null}
 
         {!error && !plan.walkwayOk ? (
-          <p className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">
+          <p
+            aria-live="polite"
+            className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          >
             Once the desk and pushed-back chair take {mm(plan.zoneDepthMm)}, less than the{" "}
             {mm(WALKWAY_MM)} walkway is left across the room. Consider a wall-mounted or shallower
             desk top.
+          </p>
+        ) : null}
+
+        {!error && plan.cramped ? (
+          <p
+            aria-live="polite"
+            className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning-text)]"
+          >
+            Only {num(plan.areaPerUser)} m² per person — this room is tight for the number of people
+            you've set. Aim for at least 3.5 m² per person for a comfortable study space.
           </p>
         ) : null}
       </section>

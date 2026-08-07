@@ -90,6 +90,15 @@ export const MIN_CTA_SEC = 2;
 /** CTA gets this share of the runtime by default, floored at MIN_CTA_SEC. */
 export const DEFAULT_CTA_SHARE = 0.15;
 
+/**
+ * Upper bound on how many pattern-interrupt beats a single plan can generate.
+ * A valid duration/interval combination (e.g. a 600s video with a 0.5s interval)
+ * can otherwise produce 1000+ rows, which is unreviewable as a beat sheet and
+ * re-renders on every keystroke. Chosen well above any practical cut cadence
+ * for short-form video rather than derived from a platform rule.
+ */
+export const MAX_INTERRUPTS = 200;
+
 /** The opening image the viewer judges before any words land. */
 export const COLD_OPEN_SEC = 0.5;
 
@@ -165,6 +174,13 @@ export function buildHookPlan({
   // The hook window closes when the platform credits a view, but never later
   // than the first fifth of the runtime and never later than 3 seconds.
   const hookEnd = clamp(Math.min(3, Math.max(marks.viewAtSec, 1), Math.max(1, durationSec * 0.2)));
+
+  const interruptSpan = durationSec - ctaLength - hookEnd;
+  if (interruptSpan > 0 && interruptSpan / interruptEverySec > MAX_INTERRUPTS) {
+    return {
+      error: `That pattern interrupt interval would generate more than ${MAX_INTERRUPTS} beats — use a longer interval or a shorter video.`,
+    };
+  }
 
   const beats = [];
   const push = (id, label, startSec, endSec, detail, critical = false) => {

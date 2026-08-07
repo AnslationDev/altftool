@@ -48,7 +48,7 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(text);
       setCopiedMime(entry.mime);
-      setTimeout(() => setCopiedMime(""), 1500);
+      setTimeout(() => setCopiedMime((cur) => (cur === entry.mime ? "" : cur)), 1500);
     } catch {
       setCopiedMime("");
     }
@@ -142,7 +142,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
           {mode === "extension" ? "MIME type" : "Best match"}
         </p>
@@ -158,7 +162,7 @@ export default function ToolHome() {
         <div className="mt-5 space-y-4">
           {entries.map((entry) => (
             <article
-              key={entry.mime}
+              key={entry.mime + entry.extensions.join(",")}
               className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4"
             >
               <div className="flex flex-wrap items-start justify-between gap-3">

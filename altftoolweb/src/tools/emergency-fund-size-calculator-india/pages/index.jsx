@@ -325,7 +325,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -394,6 +398,10 @@ export default function ToolHome() {
             </div>
           ))}
         </dl>
+
+        {!hasError && (
+          <p className="mt-3 text-xs text-[var(--muted-foreground)]">{result.goalNote}</p>
+        )}
 
         {!hasError && (
           <>

@@ -44,7 +44,7 @@ const GHOST_BTN =
 
 const TONE_CLASS = {
   success: "text-[var(--success)]",
-  warn: "text-[var(--primary)]",
+  warn: "text-[var(--warning)]",
   danger: "text-[var(--danger)]",
 };
 

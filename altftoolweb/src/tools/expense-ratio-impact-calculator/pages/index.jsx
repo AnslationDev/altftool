@@ -98,7 +98,7 @@ export default function ToolHome() {
     const planB = corpusAfter(mode, parsed.amount, parsed.grossReturn - parsed.ratioB, months);
 
     const yearly = [];
-    for (let year = 1; year <= Math.min(parsed.years, 30); year += 1) {
+    for (let year = 1; year <= parsed.years; year += 1) {
       const m = year * 12;
       const a = corpusAfter(mode, parsed.amount, parsed.grossReturn - parsed.ratioA, m);
       const b = corpusAfter(mode, parsed.amount, parsed.grossReturn - parsed.ratioB, m);
@@ -363,11 +363,27 @@ export default function ToolHome() {
               </div>
               <div className="flex items-center justify-between gap-3 py-2">
                 <dt className="text-[var(--muted-foreground)]">Corpus at {num(parsed.ratioA)}%</dt>
-                <dd className="font-semibold text-[var(--foreground)]">{inr(result.planA)}</dd>
+                <dd
+                  className={`font-semibold ${
+                    result.planA > result.planB
+                      ? "text-[var(--success)]"
+                      : "text-[var(--foreground)]"
+                  }`}
+                >
+                  {inr(result.planA)}
+                </dd>
               </div>
               <div className="flex items-center justify-between gap-3 py-2">
                 <dt className="text-[var(--muted-foreground)]">Corpus at {num(parsed.ratioB)}%</dt>
-                <dd className="font-semibold text-[var(--success)]">{inr(result.planB)}</dd>
+                <dd
+                  className={`font-semibold ${
+                    result.planB > result.planA
+                      ? "text-[var(--success)]"
+                      : "text-[var(--foreground)]"
+                  }`}
+                >
+                  {inr(result.planB)}
+                </dd>
               </div>
               <div className="flex items-center justify-between gap-3 py-2">
                 <dt className="text-[var(--muted-foreground)]">Corpus with zero cost</dt>

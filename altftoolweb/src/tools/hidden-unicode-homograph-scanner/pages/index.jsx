@@ -142,7 +142,11 @@ export default function ToolHome() {
         </p>
       ) : (
         <>
-          <section className={`mt-6 rounded-xl p-5 ${verdict.wrap}`}>
+          <section
+            className={`mt-6 rounded-xl p-5 ${verdict.wrap}`}
+            aria-live="polite"
+            aria-atomic="true"
+          >
             <div className="flex items-start gap-3">
               <VerdictIcon className={`mt-0.5 h-6 w-6 shrink-0 ${verdict.text}`} aria-hidden="true" />
               <div>

@@ -23,8 +23,10 @@ export const MAPS_MB_PER_HOUR = 5;
 /**
  * Video streaming rates per hour, as published by the streaming services for
  * each quality setting (Netflix quotes ~0.3 GB/h for its lowest setting,
- * ~0.7 GB/h for standard definition, ~3 GB/h for HD and ~7 GB/h for 4K;
- * YouTube at 1080p measures around 1.5-2 GB/h).
+ * ~0.7 GB/h for standard definition and ~7 GB/h for 4K; YouTube at 1080p
+ * measures around 1.5-2 GB/h). The hd (720p) tier below is set at 1.2 GB/h,
+ * an interpolated mid-point between the sd and fullhd rates rather than a
+ * directly Netflix-quoted figure.
  */
 export const VIDEO_QUALITY_MB_PER_HOUR = {
   saver: { label: "Data saver (240-360p)", rate: 300 },
@@ -207,6 +209,25 @@ export function estimateTripData(input = {}) {
     return { error: "Overhead cannot exceed 100%." };
   }
 
+  // Each hour/minute field is capped individually above, but nothing stopped a
+  // combined day (e.g. 8h maps + 10h video + 10h audio + 8h social = 36h) from
+  // slipping through as a normal-looking estimate. This is a blunt sum-to-24
+  // check: it treats every activity as if it used the phone exclusively, which
+  // is conservative — some activities (e.g. audio streaming in the background
+  // while using maps or scrolling social) can legitimately overlap in real
+  // usage, so this will also flag some valid concurrent-usage inputs, not just
+  // typos. That's the safer trade-off versus silently accepting physically
+  // impossible days.
+  const totalDayHours =
+    numeric.mapsHoursPerDay +
+    numeric.videoHoursPerDay +
+    numeric.audioHoursPerDay +
+    numeric.socialHoursPerDay +
+    (numeric.videoCallMinutesPerDay + numeric.voiceCallMinutesPerDay + numeric.captureMinutesPerDay) / 60;
+  if (totalDayHours > 24) {
+    return { error: "Combined daily activity cannot exceed 24 hours. Reduce one or more activities." };
+  }
+
   const video = VIDEO_QUALITY_MB_PER_HOUR[videoQuality];
   const audio = AUDIO_QUALITY_MB_PER_HOUR[audioQuality];
   const photo = PHOTO_FORMAT_MB[photoFormat];
@@ -302,7 +323,34 @@ export function estimateTripData(input = {}) {
     }))
     .sort((a, b) => b.perDayMb - a.perDayMb);
 
+  // "Biggest driver" is picked from actual usage activities only, before the
+  // overhead row (below) is appended — overhead is a protocol tax on top of
+  // usage, not an activity someone can reduce like the others.
   const biggest = breakdown.find((line) => line.perDayMb > 0) || null;
+
+  // The breakdown table (and the copied text summary, which reuses this same
+  // array) previously listed payload-only rows that never summed to the
+  // headline "Per day" / "Whole trip" figures above, which already include
+  // overhead — a visible gap that undermined the tool's "rates you can check"
+  // claim. Appending overhead as its own row makes the two totals reconcile.
+  // Its sharePercent is numeric.overheadPercent itself (not payload-relative
+  // like the other rows) because overhead is defined as exactly that percent
+  // of the payload total by construction, so this is exact, not estimated.
+  const roundedOverheadPerDayMb = round(overheadMbPerDay, 2);
+  const breakdownWithOverhead =
+    roundedOverheadPerDayMb > 0
+      ? [
+          ...breakdown,
+          {
+            id: "overhead",
+            label: "Network overhead",
+            detail: `${numeric.overheadPercent}% protocol/retry overhead added on top of the payload rows above`,
+            perDayMb: roundedOverheadPerDayMb,
+            tripMb: round(overheadMbPerDay * numeric.days, 2),
+            sharePercent: numeric.overheadPercent,
+          },
+        ]
+      : breakdown;
 
   return {
     days: numeric.days,
@@ -311,11 +359,11 @@ export function estimateTripData(input = {}) {
     tripMb: round(tripMb, 2),
     tripGb: round(tripMb / MB_PER_GB, 3),
     payloadPerDayMb: round(payloadPerDayMb, 2),
-    overheadMbPerDay: round(overheadMbPerDay, 2),
+    overheadMbPerDay: roundedOverheadPerDayMb,
     overheadPercent: numeric.overheadPercent,
     recommendedGb,
     bufferPercent: RECOMMENDED_BUFFER_PERCENT,
-    breakdown,
+    breakdown: breakdownWithOverhead,
     biggestDriverId: biggest ? biggest.id : null,
     biggestDriverLabel: biggest ? biggest.label : null,
   };

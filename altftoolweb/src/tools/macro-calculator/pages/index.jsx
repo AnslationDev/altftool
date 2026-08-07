@@ -39,13 +39,34 @@ export default function ToolHome() {
   const [split, setSplit] = useState("balanced");
   const [submitted, setSubmitted] = useState(false);
 
-  const result = useMemo(() => {
+  const validationError = useMemo(() => {
     const ageNum = Number(age);
     const weightKg = Number(weight);
     const heightCm = Number(height);
     const bfNum = Number(bodyFat);
-    
-    if (!ageNum || !weightKg || !heightCm) return null;
+
+    if (age.trim() === "" || weight.trim() === "" || height.trim() === "") {
+      return "Enter your age, weight, and height to calculate your macros.";
+    }
+    if (!(ageNum > 0) || !(weightKg > 0) || !(heightCm > 0)) {
+      return "Age, weight, and height must be positive numbers.";
+    }
+    if (bodyFat.trim() !== "" && !(bfNum > 0)) {
+      return "Body fat % must be a positive number.";
+    }
+    if (formula === "katch" && !(bfNum > 0)) {
+      return "Enter your body fat % to use the Katch-McArdle formula.";
+    }
+    return "";
+  }, [age, weight, height, bodyFat, formula]);
+
+  const result = useMemo(() => {
+    if (validationError) return null;
+
+    const ageNum = Number(age);
+    const weightKg = Number(weight);
+    const heightCm = Number(height);
+    const bfNum = Number(bodyFat);
 
     const bmr = calculateBmr({ sex, weightKg, heightCm, age: ageNum, formula, bodyFat: bfNum });
     const tdee = bmr * getActivityMultiplier(activity);
@@ -88,7 +109,7 @@ export default function ToolHome() {
       waterIntake,
       percentages: { p, c, f },
     };
-  }, [age, sex, weight, height, bodyFat, formula, activity, goal, split]);
+  }, [validationError, age, sex, weight, height, bodyFat, formula, activity, goal, split]);
 
   return (
     <div className="px-4 py-6">
@@ -106,30 +127,30 @@ export default function ToolHome() {
           <div className="p-6 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div>
-                <label className="text-sm font-semibold text-(--foreground) mb-1 block">Age</label>
-                <input value={age} onChange={(e) => setAge(e.target.value)} type="number" min="10" placeholder="Years" className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)" />
+                <label htmlFor="macro-age" className="text-sm font-semibold text-(--foreground) mb-1 block">Age</label>
+                <input id="macro-age" value={age} onChange={(e) => setAge(e.target.value)} type="number" min="10" placeholder="Years" className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)" />
               </div>
               <div>
-                <label className="text-sm font-semibold text-(--foreground) mb-1 block">Gender</label>
-                <select value={sex} onChange={(e) => setSex(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)">
+                <label htmlFor="macro-gender" className="text-sm font-semibold text-(--foreground) mb-1 block">Gender</label>
+                <select id="macro-gender" value={sex} onChange={(e) => setSex(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)">
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                 </select>
               </div>
               <div>
-                <label className="text-sm font-semibold text-(--foreground) mb-1 block">Weight (kg)</label>
-                <input value={weight} onChange={(e) => setWeight(e.target.value)} type="number" min="20" placeholder="kg" className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)" />
+                <label htmlFor="macro-weight" className="text-sm font-semibold text-(--foreground) mb-1 block">Weight (kg)</label>
+                <input id="macro-weight" value={weight} onChange={(e) => setWeight(e.target.value)} type="number" min="20" placeholder="kg" className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)" />
               </div>
               <div>
-                <label className="text-sm font-semibold text-(--foreground) mb-1 block">Height (cm)</label>
-                <input value={height} onChange={(e) => setHeight(e.target.value)} type="number" min="100" placeholder="cm" className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)" />
+                <label htmlFor="macro-height" className="text-sm font-semibold text-(--foreground) mb-1 block">Height (cm)</label>
+                <input id="macro-height" value={height} onChange={(e) => setHeight(e.target.value)} type="number" min="100" placeholder="cm" className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)" />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <label className="text-sm font-semibold text-(--foreground) mb-1 block">BMR Formula</label>
-                <select value={formula} onChange={(e) => setFormula(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)">
+                <label htmlFor="macro-formula" className="text-sm font-semibold text-(--foreground) mb-1 block">BMR Formula</label>
+                <select id="macro-formula" value={formula} onChange={(e) => setFormula(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)">
                   <option value="mifflin">Mifflin-St Jeor (Default)</option>
                   <option value="harris">Harris-Benedict</option>
                   <option value="katch">Katch-McArdle</option>
@@ -137,13 +158,13 @@ export default function ToolHome() {
               </div>
               {formula === "katch" && (
                 <div>
-                  <label className="text-sm font-semibold text-(--foreground) mb-1 block">Body Fat %</label>
-                  <input value={bodyFat} onChange={(e) => setBodyFat(e.target.value)} type="number" min="1" max="70" placeholder="Required for Katch" className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)" />
+                  <label htmlFor="macro-bodyfat" className="text-sm font-semibold text-(--foreground) mb-1 block">Body Fat %</label>
+                  <input id="macro-bodyfat" value={bodyFat} onChange={(e) => setBodyFat(e.target.value)} type="number" min="1" max="70" placeholder="Required for Katch" className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)" />
                 </div>
               )}
               <div className={formula === "katch" ? "" : "md:col-span-2"}>
-                <label className="text-sm font-semibold text-(--foreground) mb-1 block">Activity Level</label>
-                <select value={activity} onChange={(e) => setActivity(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)">
+                <label htmlFor="macro-activity" className="text-sm font-semibold text-(--foreground) mb-1 block">Activity Level</label>
+                <select id="macro-activity" value={activity} onChange={(e) => setActivity(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)">
                   <option value="sedentary">Sedentary (Little or no exercise)</option>
                   <option value="light">Lightly Active (Exercise 1-3 days/wk)</option>
                   <option value="moderate">Moderately Active (Exercise 3-5 days/wk)</option>
@@ -155,8 +176,8 @@ export default function ToolHome() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="text-sm font-semibold text-(--foreground) mb-1 block">Primary Goal</label>
-                <select value={goal} onChange={(e) => setGoal(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)">
+                <label htmlFor="macro-goal" className="text-sm font-semibold text-(--foreground) mb-1 block">Primary Goal</label>
+                <select id="macro-goal" value={goal} onChange={(e) => setGoal(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)">
                   <option value="aggressive-cut">Aggressive Fat Loss (-500 kcal)</option>
                   <option value="cut">Fat Loss (-250 kcal)</option>
                   <option value="maintain">Maintain Weight</option>
@@ -165,8 +186,8 @@ export default function ToolHome() {
                 </select>
               </div>
               <div>
-                <label className="text-sm font-semibold text-(--foreground) mb-1 block">Macro Split</label>
-                <select value={split} onChange={(e) => setSplit(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)">
+                <label htmlFor="macro-split" className="text-sm font-semibold text-(--foreground) mb-1 block">Macro Split</label>
+                <select id="macro-split" value={split} onChange={(e) => setSplit(e.target.value)} className="w-full px-4 py-3 rounded-lg border border-(--border) bg-(--background) text-(--foreground) outline-none focus:ring-2 focus:ring-(--primary)">
                   <option value="balanced">Balanced (30P/40C/30F)</option>
                   <option value="high-protein">High Protein (40P/30C/30F)</option>
                   <option value="low-carb">Low Carb (35P/25C/40F)</option>
@@ -179,9 +200,15 @@ export default function ToolHome() {
               Calculate Macros
             </button>
 
+            {submitted && validationError && (
+              <p role="alert" className="mt-4 rounded-md bg-(--danger-soft) px-3 py-2 text-sm font-medium text-(--danger) text-center">
+                {validationError}
+              </p>
+            )}
+
             {submitted && result && (
-              <div className="mt-8 pt-8 border-t border-(--border) animate-fade-up">
-                <h3 className="text-2xl font-bold mb-6 text-(--foreground) text-center">Your Results</h3>
+              <div role="status" aria-live="polite" className="mt-8 pt-8 border-t border-(--border) animate-fade-up">
+                <h2 className="text-2xl font-bold mb-6 text-(--foreground) text-center">Your Results</h2>
                 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                   <div className="rounded-2xl border border-(--border) p-5 bg-(--background) text-center shadow-sm">

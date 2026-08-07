@@ -9,7 +9,12 @@ const seo = {
   ],
   benefits: [
     ["Menu paths, not advice", "Every step names the exact screen — Xbox privacy, Realm members, or Minecraft settings — where the switch lives."],
-    ["Scoped to how they play", "A solo player gets a four-step list; a public-server player gets server vetting and voice-chat planning added."],
+    // Figure below is hand-verified against lib.js STEPS for edition:"bedrock", playMode:"solo",
+    // childAge:10 (the app's own defaults) = 10 steps (5 essential + 3 recommended + 2 optional).
+    // seo.js is loaded standalone at build time and must NOT import ./lib — re-check this figure
+    // by hand (or via `node --input-type=module -e "import{buildPlan}from './lib.js'; ..."`)
+    // whenever STEPS in lib.js changes.
+    ["Scoped to how they play", "A solo Bedrock player gets a 10-step list; a public-server player gets server vetting and voice-chat planning added."],
     ["Weighted score", "Essential steps count more than nice-to-haves, so the percentage reflects real exposure rather than boxes ticked."],
   ],
   faqs: [

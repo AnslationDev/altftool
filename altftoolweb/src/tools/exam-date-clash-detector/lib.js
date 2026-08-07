@@ -69,7 +69,14 @@ export function detectClashes({ exams, tightGapDays = DEFAULT_TIGHT_GAP_DAYS }) 
     const end = exam.end ? parseIsoDate(exam.end) : start;
     if (!end) return { error: `"${name}": the end date is not a valid yyyy-mm-dd date.` };
     if (end < start) return { error: `"${name}": the end date is before the start date.` };
-    parsed.push({ name, start, end, startIso: exam.start, endIso: exam.end || exam.start });
+    parsed.push({
+      id: exam.id,
+      name,
+      start,
+      end,
+      startIso: exam.start,
+      endIso: exam.end || exam.start,
+    });
   }
 
   const timeline = [...parsed].sort(
@@ -82,6 +89,11 @@ export function detectClashes({ exams, tightGapDays = DEFAULT_TIGHT_GAP_DAYS }) 
     for (let j = i + 1; j < timeline.length; j += 1) {
       const a = timeline[i];
       const b = timeline[j];
+      // Exact duplicate entry (same name and same date window): not a real clash,
+      // just the same exam listed twice — skip instead of reporting a self-clash.
+      if (a.name === b.name && a.startIso === b.startIso && a.endIso === b.endIso) {
+        continue;
+      }
       // Interval overlap: at least one shared day.
       if (a.start <= b.end && b.start <= a.end) {
         const overlapStart = a.start > b.start ? a.start : b.start;
@@ -108,7 +120,12 @@ export function detectClashes({ exams, tightGapDays = DEFAULT_TIGHT_GAP_DAYS }) 
   }
 
   return {
-    timeline: timeline.map(({ name, startIso, endIso }) => ({ name, start: startIso, end: endIso })),
+    timeline: timeline.map(({ id, name, startIso, endIso }) => ({
+      id,
+      name,
+      start: startIso,
+      end: endIso,
+    })),
     clashes,
     tightPairs,
     clashCount: clashes.length,

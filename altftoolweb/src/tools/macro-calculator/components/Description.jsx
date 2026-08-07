@@ -53,36 +53,42 @@ export default function Description() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="bg-(--card) border border-(--border) rounded-2xl p-6 shadow-sm">
-          <h3 className="text-lg font-bold mb-3 flex items-center gap-2 text-(--foreground)">
-            <Zap className="w-5 h-5 text-(--primary)" /> BMR & TDEE
-          </h3>
-          <p className="text-sm text-(--muted-foreground) leading-relaxed">
-            <strong>BMR (Basal Metabolic Rate):</strong> The calories your body burns at rest.
-            <br className="mb-2" />
-            <strong>TDEE (Total Daily Energy Expenditure):</strong> Your total daily calories burned, factoring in your activity level.
-          </p>
-        </div>
-        <div className="bg-(--card) border border-(--border) rounded-2xl p-6 shadow-sm">
-          <h3 className="text-lg font-bold mb-3 flex items-center gap-2 text-(--foreground)">
-            <Target className="w-5 h-5 text-(--primary)" /> Goal Calories
-          </h3>
-          <p className="text-sm text-(--muted-foreground) leading-relaxed">
-            To lose weight, you need a calorie deficit (eating less than your TDEE). To gain muscle, you need a calorie surplus. We automatically calculate these targets based on your goal.
-          </p>
-        </div>
-        <div className="bg-(--card) border border-(--border) rounded-2xl p-6 shadow-sm">
-          <h3 className="text-lg font-bold mb-3 flex items-center gap-2 text-(--foreground)">
-            <Utensils className="w-5 h-5 text-(--primary)" /> Macros
-          </h3>
-          <p className="text-sm text-(--muted-foreground) leading-relaxed">
-            <strong>Protein:</strong> Essential for muscle repair (4 cal/g).
-            <br />
-            <strong>Carbs:</strong> Primary energy source (4 cal/g).
-            <br />
-            <strong>Fats:</strong> Vital for hormones and health (9 cal/g).
-          </p>
+      <div>
+        <h2 className="text-2xl font-bold mb-6 flex items-center gap-2 text-(--foreground)">
+          <Info className="w-6 h-6 text-(--primary)" />
+          Key Terms Explained
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-(--card) border border-(--border) rounded-2xl p-6 shadow-sm">
+            <h3 className="text-lg font-bold mb-3 flex items-center gap-2 text-(--foreground)">
+              <Zap className="w-5 h-5 text-(--primary)" /> BMR & TDEE
+            </h3>
+            <p className="text-sm text-(--muted-foreground) leading-relaxed">
+              <strong>BMR (Basal Metabolic Rate):</strong> The calories your body burns at rest.
+              <br className="mb-2" />
+              <strong>TDEE (Total Daily Energy Expenditure):</strong> Your total daily calories burned, factoring in your activity level.
+            </p>
+          </div>
+          <div className="bg-(--card) border border-(--border) rounded-2xl p-6 shadow-sm">
+            <h3 className="text-lg font-bold mb-3 flex items-center gap-2 text-(--foreground)">
+              <Target className="w-5 h-5 text-(--primary)" /> Goal Calories
+            </h3>
+            <p className="text-sm text-(--muted-foreground) leading-relaxed">
+              To lose weight, you need a calorie deficit (eating less than your TDEE). To gain muscle, you need a calorie surplus. We automatically calculate these targets based on your goal.
+            </p>
+          </div>
+          <div className="bg-(--card) border border-(--border) rounded-2xl p-6 shadow-sm">
+            <h3 className="text-lg font-bold mb-3 flex items-center gap-2 text-(--foreground)">
+              <Utensils className="w-5 h-5 text-(--primary)" /> Macros
+            </h3>
+            <p className="text-sm text-(--muted-foreground) leading-relaxed">
+              <strong>Protein:</strong> Essential for muscle repair (4 cal/g).
+              <br />
+              <strong>Carbs:</strong> Primary energy source (4 cal/g).
+              <br />
+              <strong>Fats:</strong> Vital for hormones and health (9 cal/g).
+            </p>
+          </div>
         </div>
       </div>
     </div>

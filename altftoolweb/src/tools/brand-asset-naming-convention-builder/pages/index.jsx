@@ -297,6 +297,7 @@ export default function ToolHome() {
                 id={`value-${token.key}`}
                 className={`mt-2 ${INPUT_CLASS}`}
                 type="text"
+                placeholder={token.sample || undefined}
                 value={values[token.key] ?? ""}
                 onChange={(event) =>
                   setValues((current) => ({ ...current, [token.key]: event.target.value }))

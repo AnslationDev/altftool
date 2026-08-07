@@ -74,7 +74,11 @@ export const GST_SCHEMES = [
   { id: "composition", label: "Composition scheme" },
 ];
 
-export const MIN_FY_START_YEAR = 2017; // GST came into force on 1 July 2017
+// GST came into force on 1 July 2017, three months into FY 2017-18, so that
+// year cannot be built as a normal full-year GST calendar (it would generate
+// GSTR-1/GSTR-3B due dates for April-June 2017, before GST existed). 2018 is
+// the first full post-GST financial year, so it is the earliest one offered.
+export const MIN_FY_START_YEAR = 2018;
 export const MAX_FY_START_YEAR = 2035;
 
 const MONTH_NAMES = [

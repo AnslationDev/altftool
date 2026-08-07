@@ -143,7 +143,7 @@ export const STEPS = [
     editions: ["bedrock", "java", "both"],
     modes: ["lan", "realm", "public"],
     minAge: 3,
-    maxAge: 15,
+    maxAge: 17,
   },
   {
     id: "realm-owned-by-parent",
@@ -154,7 +154,7 @@ export const STEPS = [
     editions: ["bedrock", "java", "both"],
     modes: ["realm"],
     minAge: 3,
-    maxAge: 15,
+    maxAge: 17,
   },
   {
     id: "realm-invite-by-name",

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, Signal } from "lucide-react";
 
 import {
@@ -46,6 +46,7 @@ const DEFAULTS = {
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [copied, setCopied] = useState(false);
+  const copyTimer = useRef(null);
 
   const setField = (key) => (event) => {
     const { type, value, checked } = event.target;
@@ -75,38 +76,47 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimer.current);
+      copyTimer.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
   };
+
+  useEffect(() => () => clearTimeout(copyTimer.current), []);
 
   const reset = () => {
     setForm(DEFAULTS);
     setCopied(false);
   };
 
-  const numberField = (key, label, hint, extra = {}) => (
-    <div>
-      <label className={LABEL_CLASS} htmlFor={`tdu-${key}`}>
-        {label}
-      </label>
-      <input
-        id={`tdu-${key}`}
-        className={`mt-2 ${INPUT_CLASS}`}
-        type="number"
-        inputMode="decimal"
-        min="0"
-        step="any"
-        value={form[key]}
-        onChange={setField(key)}
-        {...extra}
-      />
-      {hint ? (
-        <p className="mt-1 text-xs text-[var(--muted-foreground)]">{hint}</p>
-      ) : null}
-    </div>
-  );
+  const numberField = (key, label, hint, extra = {}) => {
+    const hintId = hint ? `tdu-${key}-hint` : undefined;
+    return (
+      <div>
+        <label className={LABEL_CLASS} htmlFor={`tdu-${key}`}>
+          {label}
+        </label>
+        <input
+          id={`tdu-${key}`}
+          className={`mt-2 ${INPUT_CLASS}`}
+          type="number"
+          inputMode="decimal"
+          min="0"
+          step="any"
+          value={form[key]}
+          onChange={setField(key)}
+          aria-describedby={hintId}
+          {...extra}
+        />
+        {hint ? (
+          <p id={hintId} className="mt-1 text-xs text-[var(--muted-foreground)]">
+            {hint}
+          </p>
+        ) : null}
+      </div>
+    );
+  };
 
   const selectField = (key, label, options) => (
     <div>
@@ -226,7 +236,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        role="status"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">

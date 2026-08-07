@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Pickaxe, RotateCcw } from "lucide-react";
 
 import { BANDS, EDITIONS, PLAY_MODES, buildPlan } from "../lib";
@@ -34,6 +34,14 @@ export default function ToolHome() {
   const [playMode, setPlayMode] = useState(DEFAULTS.playMode);
   const [completed, setCompleted] = useState([]);
   const [copied, setCopied] = useState(false);
+  const [copyError, setCopyError] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const plan = useMemo(
     () => buildPlan({ childAge, edition, playMode, completed }),
@@ -75,21 +83,26 @@ export default function ToolHome() {
 
   const copyResult = async () => {
     if (!summary) return;
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      setCopyError(false);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
+      setCopyError(true);
     }
   };
 
   const reset = () => {
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
     setChildAge(DEFAULTS.childAge);
     setEdition(DEFAULTS.edition);
     setPlayMode(DEFAULTS.playMode);
     setCompleted([]);
     setCopied(false);
+    setCopyError(false);
   };
 
   const toneText = plan.error ? TONE_TEXT.danger : TONE_TEXT[plan.tone] ?? TONE_TEXT.warning;
@@ -175,7 +188,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -195,7 +212,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               aria-label="Copy the Minecraft safety plan"
-              className={GHOST_BTN}
+              className={copyError ? `${GHOST_BTN} border-[var(--danger)] text-[var(--danger)]` : GHOST_BTN}
               disabled={Boolean(plan.error)}
             >
               {copied ? (
@@ -203,7 +220,7 @@ export default function ToolHome() {
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy plan"}
+              {copyError ? "Copy failed — try again" : copied ? "Copied!" : "Copy plan"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset the checklist" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />

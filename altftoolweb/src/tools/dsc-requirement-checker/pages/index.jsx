@@ -76,22 +76,26 @@ export default function ToolHome() {
 
   const summary = useMemo(() => {
     if (hasError) return "";
-    return [
+    const header = [
       "Digital signature requirement check",
       `Entity: ${result.entityLabel}`,
       `Verdict: ${result.headline}`,
       `Certificate: ${result.certificateType}`,
       `Certificates needed: ${result.certificatesNeeded} (one per signatory)`,
-      "",
-      result.mandatory.length ? "Compulsory for:" : "",
-      ...result.mandatory.map((row) => `- ${row.label} — ${row.rule}`),
-      result.optional.length ? "\nOptional (EVC allowed) for:" : "",
-      ...result.optional.map((row) => `- ${row.label} — ${row.rule}`),
-      "",
-      ...result.notes.map((note) => `* ${note}`),
-    ]
-      .filter(Boolean)
-      .join("\n");
+    ].join("\n");
+    const mandatorySection = result.mandatory.length
+      ? ["Compulsory for:", ...result.mandatory.map((row) => `- ${row.label} — ${row.rule}`)].join("\n")
+      : null;
+    const optionalSection = result.optional.length
+      ? [
+          "Optional (EVC allowed) for:",
+          ...result.optional.map((row) => `- ${row.label} — ${row.rule}`),
+        ].join("\n")
+      : null;
+    const notesSection = result.notes.length
+      ? result.notes.map((note) => `* ${note}`).join("\n")
+      : null;
+    return [header, mandatorySection, optionalSection, notesSection].filter(Boolean).join("\n\n");
   }, [hasError, result]);
 
   const copyResult = async () => {

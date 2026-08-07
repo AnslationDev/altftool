@@ -272,9 +272,11 @@ export function planRecoveryMeal({
   let sweatEstimated = false;
   if (lost === null || Number.isNaN(lost)) {
     sweatEstimated = true;
-    lost = (SWEAT_RATE_L_PER_HOUR[intensityEntry.id] * minutes) / 60;
-  }
-  if (lost < 0 || lost > 8) {
+    // Auto-estimate is derived internally (not typed by the user), so clamp it to the
+    // field's own declared 0-8 kg bounds instead of running it through the hard
+    // validation meant for explicit user entries.
+    lost = Math.min(8, Math.max(0, (SWEAT_RATE_L_PER_HOUR[intensityEntry.id] * minutes) / 60));
+  } else if (lost < 0 || lost > 8) {
     return { error: "Bodyweight lost during the session should be between 0 kg and 8 kg." };
   }
 
@@ -309,7 +311,7 @@ export function planRecoveryMeal({
   const carbToProteinRatio = proteinG > 0 ? Number((carbG / proteinG).toFixed(1)) : 0;
 
   const timingNote = urgentRefuel
-    ? `Start eating within 30 minutes. With only ${gap} h to the next session, glycogen replacement is time-critical: aim for ${Math.round(weight * CARB_RAPID_PER_KG_PER_HOUR)} g of carbohydrate every hour for up to ${CARB_RAPID_WINDOW_HOURS} hours.`
+    ? `Start eating within 30 minutes. With only ${gap} h to the next session, glycogen replacement is time-critical: aim for ${Math.round(weight * CARB_RAPID_PER_KG_PER_HOUR)} g of carbohydrate every hour for up to ${rapidWindowHours} hour${rapidWindowHours === 1 ? "" : "s"}.`
     : "Eat within about two hours. With a long gap before the next session, hitting your daily protein and carbohydrate totals matters more than the exact minute you eat.";
 
   return {
