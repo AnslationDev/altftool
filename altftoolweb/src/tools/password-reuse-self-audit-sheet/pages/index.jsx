@@ -83,6 +83,12 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset the sheet? This clears every row you've entered and restores the example data.")
+    ) {
+      return;
+    }
     setRows(DEFAULT_ROWS);
     setNextId(DEFAULT_ROWS.length + 1);
     setCopied(false);
@@ -216,7 +222,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Account value behind a shared password
             </p>
@@ -243,7 +249,7 @@ export default function ToolHome() {
           </button>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             [
               "Accounts in a reuse cluster",
@@ -304,7 +310,7 @@ export default function ToolHome() {
                 </tr>
               </thead>
               <tbody>
-                {result.clusters.map((cluster) => (
+                {result.clusters.filter((cluster) => cluster.reused).map((cluster) => (
                   <tr key={cluster.name} className="border-b border-[var(--border)] last:border-0">
                     <td className="py-2 pr-3">
                       <span className="font-semibold">{cluster.name}</span>

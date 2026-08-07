@@ -131,6 +131,14 @@ export function buildPnpmWorkspaceYaml({
     if (parsed.error) return { error: `Named catalog problem: ${parsed.error}` };
     namedEntries.push(parsed);
   }
+  const namedDupes = namedEntries
+    .map((e) => e.name)
+    .filter((n, i, arr) => arr.indexOf(n) !== i);
+  if (namedDupes.length) {
+    return {
+      error: `Duplicate entry for "${namedDupes[0]}" in named catalog "${namedName}" — each package can appear once per catalog.`,
+    };
+  }
 
   const lines = ["packages:"];
   for (const g of includeGlobs) lines.push(`  - ${yamlString(g)}`);

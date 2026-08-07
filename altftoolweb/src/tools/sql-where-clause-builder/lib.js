@@ -186,7 +186,11 @@ export function buildWhereClause({ groups, groupCombinator = "AND", paramStyle =
       conditionCount += 1;
     }
     if (parts.length > 0) {
-      groupSql.push({ text: parts.join(` ${group.combinator === "OR" ? "OR" : "AND"} `), size: parts.length });
+      groupSql.push({
+        text: parts.join(` ${group.combinator === "OR" ? "OR" : "AND"} `),
+        size: parts.length,
+        combinator: group.combinator,
+      });
     }
   }
 
@@ -194,10 +198,13 @@ export function buildWhereClause({ groups, groupCombinator = "AND", paramStyle =
     return { error: "Fill in at least one condition (column name plus a value)." };
   }
 
-  // Parenthesise multi-condition groups whenever more than one group exists —
-  // AND binds tighter than OR (ISO 9075), so this keeps the intended grouping.
+  // Parenthesise multi-condition OR groups whenever more than one group exists —
+  // AND binds tighter than OR (ISO 9075), so an AND-only group never needs its
+  // own parens; only an OR-combined group with more than one condition does.
   const clause = groupSql
-    .map((group) => (groupSql.length > 1 && group.size > 1 ? `(${group.text})` : group.text))
+    .map((group) =>
+      groupSql.length > 1 && group.size > 1 && group.combinator === "OR" ? `(${group.text})` : group.text,
+    )
     .join(`\n${groupCombinator} `);
 
   const warnings = [...backslashWarningFields].map(

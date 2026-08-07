@@ -188,13 +188,13 @@ export function computePace({
     return { error: "Add at least one subject to track." };
   }
   if (!Number.isFinite(revisionBufferDays) || revisionBufferDays < 0) {
-    return { error: "Revision buffer cannot be negative." };
+    return { error: "Revision buffer cannot be negative.", calendarDaysLeft };
   }
   if (!Number.isFinite(studyDaysPerWeek) || studyDaysPerWeek < 1 || studyDaysPerWeek > DAYS_PER_WEEK) {
-    return { error: "Study days per week must be between 1 and 7." };
+    return { error: "Study days per week must be between 1 and 7.", calendarDaysLeft };
   }
   if (!Number.isFinite(hoursPerDay) || hoursPerDay <= 0 || hoursPerDay > 18) {
-    return { error: "Study hours a day must be between 0 and 18." };
+    return { error: "Study hours a day must be between 0 and 18.", calendarDaysLeft };
   }
 
   const perSubject = [];
@@ -204,13 +204,22 @@ export function computePace({
     const total = Number(subject.total);
     const done = Number(subject.done);
     if (!Number.isFinite(total) || total <= 0) {
-      return { error: `${subject.label || "Subject"}: total units must be greater than zero.` };
+      return {
+        error: `${subject.label || "Subject"}: total units must be greater than zero.`,
+        calendarDaysLeft,
+      };
     }
     if (!Number.isFinite(done) || done < 0) {
-      return { error: `${subject.label || "Subject"}: units finished cannot be negative.` };
+      return {
+        error: `${subject.label || "Subject"}: units finished cannot be negative.`,
+        calendarDaysLeft,
+      };
     }
     if (done > total) {
-      return { error: `${subject.label || "Subject"}: units finished cannot exceed total units.` };
+      return {
+        error: `${subject.label || "Subject"}: units finished cannot exceed total units.`,
+        calendarDaysLeft,
+      };
     }
     unitsTotal += total;
     unitsDone += done;

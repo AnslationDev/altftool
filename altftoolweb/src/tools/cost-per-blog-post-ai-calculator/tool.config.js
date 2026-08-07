@@ -3,7 +3,7 @@ const toolConfig = {
   name: "Cost Per Blog Post AI Calculator",
   category: ["Calculators"],
   description:
-    "Add up drafting, regeneration, editing passes, images and human review time for one AI-assisted blog post.",
+    "Estimate monthly AI content cost from your tool subscription plus editor time per post, and see the per-post price.",
   icon: "pen-line",
   iconColor: "text-[var(--primary)]",
 };

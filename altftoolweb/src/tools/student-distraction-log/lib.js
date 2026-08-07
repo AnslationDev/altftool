@@ -93,7 +93,10 @@ export function analyseDistractions({
   if (minutes > 24 * 60) {
     return { error: "Session length cannot exceed 24 hours." };
   }
-  if (!Number.isFinite(costPer) || costPer < 0) {
+  if (!Number.isFinite(costPer)) {
+    return { error: "Enter a minutes-lost-per-distraction value (0 or more)." };
+  }
+  if (costPer < 0) {
     return { error: "Minutes lost per distraction cannot be negative." };
   }
   if (!Array.isArray(entries) || entries.length === 0) {

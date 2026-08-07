@@ -244,6 +244,13 @@ export default function ToolHome() {
       )}
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <span className="sr-only" role="status" aria-live="polite">
+          {failed
+            ? "Enter a password above to see the policy test result."
+            : `Active Directory: ${result.adPass ? "accepted" : "rejected"}, NIST: ${
+                result.nistPass ? "met" : "not met"
+              }, ${result.passedCount} of ${result.ruleCount} rules passed.`}
+        </span>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

@@ -169,6 +169,14 @@ export const RELATIONSHIPS = [
       roman: "Ātmīya {name} avarē,",
       english: "Dear {name} (with the honorific avarē),",
     },
+    // ಅವರೇ (avarē) is the ನೀವು-register respectful vocative (see the tool's own FAQ),
+    // so it is dropped here when the caller overrides the register to ನೀನು — pairing
+    // ಅವರೇ with the casual pronoun would contradict itself.
+    salutationCasual: {
+      native: "ಆತ್ಮೀಯ {name},",
+      roman: "Ātmīya {name},",
+      english: "Dear {name},",
+    },
   },
   {
     id: "boss",
@@ -177,6 +185,11 @@ export const RELATIONSHIPS = [
     salutation: {
       native: "ಮಾನ್ಯ {name} ಅವರೇ,",
       roman: "Mānya {name} avarē,",
+      english: "Respected {name},",
+    },
+    salutationCasual: {
+      native: "ಮಾನ್ಯ {name},",
+      roman: "Mānya {name},",
       english: "Respected {name},",
     },
   },
@@ -188,6 +201,11 @@ export const RELATIONSHIPS = [
       native: "ಪೂಜ್ಯ {name} ಗುರುಗಳೇ,",
       roman: "Pūjya {name} gurugaḷē,",
       english: "Respected teacher {name},",
+    },
+    salutationCasual: {
+      native: "ಪೂಜ್ಯ {name},",
+      roman: "Pūjya {name},",
+      english: "Respected {name},",
     },
   },
 ];
@@ -777,10 +795,17 @@ export function generateKannadaBirthdayWishes({
   const safeSeed = Math.abs(Math.trunc(seed)) || 1;
   const picked = seededShuffle(pool, safeSeed).slice(0, Math.min(count, pool.length));
 
+  // A relationship's salutation may embed a ನೀವು-only honorific (ಅವರೇ / ಗುರುಗಳೇ). If the
+  // register is overridden to ನೀನು, fall back to that relationship's honorific-free
+  // salutationCasual (when one is defined) so the greeting doesn't contradict the body.
+  const salutationSource =
+    usedRegister === "casual" && relationship.salutationCasual
+      ? relationship.salutationCasual
+      : relationship.salutation;
   const salutation = {
-    native: applyName(relationship.salutation.native, cleanedName),
-    roman: capitaliseFirst(applyName(relationship.salutation.roman, cleanedName)),
-    english: capitaliseFirst(applyName(relationship.salutation.english, cleanedName)),
+    native: applyName(salutationSource.native, cleanedName),
+    roman: capitaliseFirst(applyName(salutationSource.roman, cleanedName)),
+    english: capitaliseFirst(applyName(salutationSource.english, cleanedName)),
   };
   const closing = CLOSINGS[usedRegister];
   const signature = {

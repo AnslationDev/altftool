@@ -4,7 +4,7 @@ const seo = {
   metaDescription:
     "Free emoji picker with 1,898 emojis, keyword search, skin tones, private favorites and recents, plus searchable and trending Giphy GIFs.",
   intro:
-    "Emoji Hub is a two-tab browser for emojis and GIFs. The Emojis tab runs the open-source emoji-picker-react component over a bundled Unicode dataset of 1,898 emojis in 8 categories, with search powered by an in-browser character index built from every keyword attached to each emoji — so typing \"grin\", \"smile\" or \"face\" all surface the grinning face without a network request. Each glyph is drawn as a 64px Apple-style PNG from the emoji-datasource-apple package on the jsDelivr CDN, so the artwork looks identical on Windows, macOS, Android and Linux. The GIFs tab calls AltFTool's own /api/tools/giphy route, which queries Giphy's trending endpoint server-side and returns 20 GIFs, keeping the Giphy API key off the client.",
+    "Emoji Hub is a two-tab browser for emojis and GIFs. The Emojis tab runs the open-source emoji-picker-react component over a bundled Unicode dataset of 1,898 emojis in 8 categories, with search powered by an in-browser character index built from every keyword attached to each emoji — so typing \"grin\", \"smile\" or \"face\" all surface the grinning face without a network request. Each glyph is drawn as a 64px Apple-style PNG from the emoji-datasource-apple package on the jsDelivr CDN, so the artwork looks identical on Windows, macOS, Android and Linux. The GIFs tab calls AltFTool's own /api/tools/giphy route, which shows Giphy's live trending feed by default and switches to Giphy's search endpoint when you submit a keyword, returning up to 20 GIFs either way, with the API key kept server-side.",
   useCases: [
     "Finding the right emoji by keyword when you can't remember what it's actually called",
     "Picking emoji artwork that looks the same for everyone, instead of whatever set the reader's operating system ships",
@@ -47,7 +47,7 @@ const seo = {
     ],
     [
       "Where do the GIFs come from?",
-      "Giphy. The GIFs tab calls AltFTool's /api/tools/giphy route, which hits Giphy's trending endpoint on the server with a limit of 20 GIFs and returns them as a grid. The Giphy API key never reaches the browser, responses are cached for 5 minutes, and the route is rate-limited to 120 requests per minute.",
+      "Giphy. The GIFs tab calls AltFTool's /api/tools/giphy route, which shows Giphy's live trending feed by default and switches to Giphy's search endpoint when you submit a keyword, returning up to 20 GIFs either way. The Giphy API key never reaches the browser, responses are cached for 5 minutes, and the route is rate-limited to 120 requests per minute.",
     ],
     [
       "Why are the same GIFs showing every time I open the tab?",

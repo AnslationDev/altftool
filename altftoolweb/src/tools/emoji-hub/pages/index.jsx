@@ -24,7 +24,6 @@ const LEGACY_RECENT_KEY = "recentEmojis";
 const FAVORITES_LIMIT = 100;
 const RECENT_LIMIT = 20;
 const GIF_RESULT_LIMIT = 20;
-const DEFAULT_GIF_QUERY = "trending";
 
 // emoji-picker-react ships its own "Frequently Used" row backed by the
 // `epr_suggested` localStorage key. It still writes that key internally, but
@@ -230,6 +229,7 @@ function EmojiRow({
   onToggleFavorite,
   onClear,
   clearLabel,
+  isConfirmingClear,
 }) {
   return (
     <section className="rounded-xl border border-border bg-card p-4 shadow-sm sm:p-5">
@@ -241,10 +241,14 @@ function EmojiRow({
         <button
           type="button"
           onClick={onClear}
-          className={`inline-flex min-h-11 items-center gap-1.5 rounded-md border border-border bg-surface px-3 text-xs font-semibold text-muted-foreground transition-colors duration-150 motion-reduce:transition-none hover:border-primary hover:text-foreground ${FOCUS_RING}`}
+          className={`inline-flex min-h-11 items-center gap-1.5 rounded-md border px-3 text-xs font-semibold transition-colors duration-150 motion-reduce:transition-none ${FOCUS_RING} ${
+            isConfirmingClear
+              ? "border-danger bg-danger-soft text-danger"
+              : "border-border bg-surface text-muted-foreground hover:border-primary hover:text-foreground"
+          }`}
         >
           <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
-          {clearLabel}
+          {isConfirmingClear ? "Confirm clear?" : clearLabel}
         </button>
       </div>
       <ul className="flex flex-wrap gap-x-5 gap-y-6 pt-2">
@@ -267,7 +271,10 @@ function EmojiRow({
 export default function ToolHome() {
   const [activeTab, setActiveTab] = useState("emoji");
   const [searchTerm, setSearchTerm] = useState("");
-  const [gifQuery, setGifQuery] = useState(DEFAULT_GIF_QUERY);
+  // `null` is the "no active search" sentinel for the default trending feed —
+  // distinct from any real, user-typable keyword (including the literal word
+  // "trending", which must behave like an ordinary search term).
+  const [gifQuery, setGifQuery] = useState(null);
   const [gifRequestVersion, setGifRequestVersion] = useState(0);
   const [gifs, setGifs] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -277,9 +284,13 @@ export default function ToolHome() {
   const [favorites, setFavorites] = useState([]);
   const [recentEmojis, setRecentEmojis] = useState([]);
   const [storageLoaded, setStorageLoaded] = useState(false);
+  // Tracks which Clear button ("favorites" | "recents") is armed awaiting a
+  // confirming second click; null means neither is armed.
+  const [pendingClear, setPendingClear] = useState(null);
 
   const pickerTheme = usePickerTheme();
   const copyTimer = useRef(null);
+  const pendingClearTimer = useRef(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -319,8 +330,32 @@ export default function ToolHome() {
       if (copyTimer.current !== null) {
         window.clearTimeout(copyTimer.current);
       }
+      if (pendingClearTimer.current !== null) {
+        window.clearTimeout(pendingClearTimer.current);
+      }
     },
     [],
+  );
+
+  // Two-step confirm for destructive Clear actions: the first click arms
+  // `target` and reverts automatically after a few seconds; a second click
+  // on the same target within that window actually runs `action`.
+  const requestClear = useCallback(
+    (target, action) => {
+      window.clearTimeout(pendingClearTimer.current);
+      if (pendingClear === target) {
+        pendingClearTimer.current = null;
+        setPendingClear(null);
+        action();
+        return;
+      }
+      setPendingClear(target);
+      pendingClearTimer.current = window.setTimeout(() => {
+        setPendingClear(null);
+        pendingClearTimer.current = null;
+      }, 4000);
+    },
+    [pendingClear],
   );
 
   const fetchGifs = useCallback(async (query, signal) => {
@@ -328,10 +363,10 @@ export default function ToolHome() {
     setLoading(true);
     setGifError("");
     try {
-      const response = await fetch(
-        `/api/tools/giphy?q=${encodeURIComponent(query)}`,
-        { signal },
-      );
+      const url = query
+        ? `/api/tools/giphy?q=${encodeURIComponent(query)}`
+        : "/api/tools/giphy";
+      const response = await fetch(url, { signal });
       if (!response.ok) {
         throw new Error(`Giphy request failed with status ${response.status}`);
       }
@@ -429,13 +464,13 @@ export default function ToolHome() {
 
   const handleGifSearch = (event) => {
     event.preventDefault();
-    setGifQuery(searchTerm.trim() || DEFAULT_GIF_QUERY);
+    setGifQuery(searchTerm.trim() || null);
     setGifRequestVersion((current) => current + 1);
   };
 
   const clearGifSearch = () => {
     setSearchTerm("");
-    setGifQuery(DEFAULT_GIF_QUERY);
+    setGifQuery(null);
     setGifRequestVersion((current) => current + 1);
   };
 
@@ -505,8 +540,11 @@ export default function ToolHome() {
                   copiedItem={copiedItem}
                   onCopy={copyEmoji}
                   onToggleFavorite={toggleFavorite}
-                  onClear={() => setFavorites([])}
+                  onClear={() =>
+                    requestClear("favorites", () => setFavorites([]))
+                  }
                   clearLabel="Clear favorites"
+                  isConfirmingClear={pendingClear === "favorites"}
                 />
               )}
 
@@ -519,8 +557,11 @@ export default function ToolHome() {
                   copiedItem={copiedItem}
                   onCopy={copyEmoji}
                   onToggleFavorite={toggleFavorite}
-                  onClear={() => setRecentEmojis([])}
+                  onClear={() =>
+                    requestClear("recents", () => setRecentEmojis([]))
+                  }
                   clearLabel="Clear recents"
+                  isConfirmingClear={pendingClear === "recents"}
                 />
               )}
 
@@ -599,7 +640,7 @@ export default function ToolHome() {
                     ? "Loading GIFs…"
                     : gifError
                       ? "GIFs are temporarily unavailable."
-                      : gifQuery === DEFAULT_GIF_QUERY
+                      : gifQuery === null
                         ? "Showing trending GIFs."
                         : `Showing results for “${gifQuery}”.`}
                 </p>
@@ -636,7 +677,9 @@ export default function ToolHome() {
 
               {!loading && !gifError && gifs.length === 0 && (
                 <p className="rounded-xl border border-border bg-card px-4 py-10 text-center text-sm text-muted-foreground">
-                  No GIFs found for “{gifQuery}”. Try a different search.
+                  {gifQuery === null
+                    ? "No trending GIFs found right now. Try a search instead."
+                    : `No GIFs found for “${gifQuery}”. Try a different search.`}
                 </p>
               )}
 

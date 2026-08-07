@@ -169,6 +169,9 @@ export function summariseRuns(runs) {
 
 const fixed = (value, digits) => (isFiniteNumber(value) ? value.toFixed(digits) : "—");
 
+/** Escape markdown-table-breaking characters in free-text fields before joining a row. */
+const esc = (s) => String(s).replace(/\|/g, "\\|").replace(/\r?\n/g, " ");
+
 /** Markdown table of every run, ready to paste into a README or an issue. */
 export function buildSheetMarkdown(runs) {
   const list = (Array.isArray(runs) ? runs : []).filter((run) => run && !run.error);
@@ -179,8 +182,8 @@ export function buildSheetMarkdown(runs) {
   ];
   const body = list.map((run) =>
     [
-      run.label,
-      run.hardware || "—",
+      esc(run.label),
+      esc(run.hardware || "—"),
       run.quantLabel,
       fixed(run.weightsGB, 2),
       run.promptTokens,

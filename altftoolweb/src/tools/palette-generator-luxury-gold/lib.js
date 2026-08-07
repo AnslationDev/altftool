@@ -303,26 +303,37 @@ export function generateLuxuryPalette({
   const byRole = Object.fromEntries(swatches.map((swatch) => [swatch.role, swatch]));
 
   const pairDefs = [
-    ["ink", "ground", "Body text on page", WCAG.AA_NORMAL],
-    ["ink", "surface", "Body text on card", WCAG.AA_NORMAL],
-    ["gold", "ground", "Gold display type on page", WCAG.AA_LARGE],
-    ["gold", "surface", "Gold rule or border on card", WCAG.UI_COMPONENT],
-    ["goldLight", "ground", "Gold highlight on page", WCAG.AA_NORMAL],
-    ["champagne", "surface", "Champagne caption on card", WCAG.AA_NORMAL],
-    ["ground", "gold", "Dark label on a gold button", WCAG.AA_NORMAL],
+    ["ink", "ground", "Body text on page", WCAG.AA_NORMAL, "text"],
+    ["ink", "surface", "Body text on card", WCAG.AA_NORMAL, "text"],
+    ["gold", "ground", "Gold display type on page", WCAG.AA_LARGE, "text"],
+    ["gold", "surface", "Gold rule or border on card", WCAG.UI_COMPONENT, "component"],
+    ["goldLight", "ground", "Gold highlight on page", WCAG.AA_NORMAL, "text"],
+    ["champagne", "surface", "Champagne caption on card", WCAG.AA_NORMAL, "text"],
+    ["ground", "gold", "Dark label on a gold button", WCAG.AA_NORMAL, "text"],
   ];
 
-  const pairs = pairDefs.map(([fg, bg, label, threshold]) => {
+  const pairs = pairDefs.map(([fg, bg, label, threshold, kind]) => {
     const ratio = round2(contrastRatio(byRole[fg].rgb, byRole[bg].rgb));
+    const passes = ratio >= threshold;
+    // Non-text UI components (WCAG SC 1.4.11) are pass/fail against a single
+    // 3:1 threshold — they have no AA/AAA/large-text distinction, so they get
+    // their own label instead of the text-oriented wcagLevel() scale.
+    const level =
+      kind === "component"
+        ? passes
+          ? "Pass (3:1 UI component)"
+          : "Fail (3:1 UI component)"
+        : wcagLevel(ratio);
     return {
       id: `${fg}-on-${bg}`,
       label,
       foreground: byRole[fg].hex,
       background: byRole[bg].hex,
       ratio,
-      level: wcagLevel(ratio),
+      kind,
+      level,
       threshold,
-      passes: ratio >= threshold,
+      passes,
     };
   });
 

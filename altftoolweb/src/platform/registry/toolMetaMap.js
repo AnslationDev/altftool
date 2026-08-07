@@ -6320,7 +6320,7 @@ export const toolMetaMap = {
   },
   "coronary-artery-disease-risk-calculator": {
     "name": "Coronary Artery Disease Risk Calculator",
-    "description": "Estimate 10-year ASCVD and Framingham coronary heart disease risk using validated clinical risk calculators.",
+    "description": "Estimate 10-year ASCVD and Framingham coronary heart disease risk using simplified approximations of published risk equations, for educational purposes only.",
     "category": "Health & Fitness",
     "topics": [
       "Medical"
@@ -6375,7 +6375,7 @@ export const toolMetaMap = {
   },
   "cost-per-blog-post-ai-calculator": {
     "name": "Cost Per Blog Post AI Calculator",
-    "description": "Add up drafting, regeneration, editing passes, images and human review time for one AI-assisted blog post.",
+    "description": "Estimate monthly AI content cost from your tool subscription plus editor time per post, and see the per-post price.",
     "category": "Calculators",
     "icon": "pen-line",
     "iconColor": "text-[var(--primary)]"
@@ -12816,7 +12816,7 @@ export const toolMetaMap = {
   },
   "group-trip-tip-splitter": {
     "name": "Group Trip Tip Splitter",
-    "description": "Split shared travel tips fairly when not everyone was at every meal, then settle up in the fewest possible transfers.",
+    "description": "Split shared travel tips fairly when not everyone was at every meal, then settle up in as few transfers as possible (at most one fewer than the number of travellers).",
     "category": "Finance Calculators",
     "icon": "users",
     "iconColor": "text-[var(--primary)]"

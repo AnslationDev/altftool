@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     ["The pixels are actually removed", "Redaction is baked into every exported frame, so no one can scrub the overlay off the way they can with a video editor's layer or a CSS mask."],
     ["Per-region timing, not whole-clip masking", "Every rectangle carries its own start and end time, so covers appear and disappear with the content instead of blocking the frame for the entire video."],
-    ["Blur and pixelation scale to the region", "Blur radius is at least 8px and grows with the smaller side of the box, and pixelation downsamples the area to a sixteenth of its size before enlarging it with smoothing off."],
+    ["Blur and pixelation scale to the region", "Blur radius is at least 8px and grows with the smaller side of the box, and pixelation downsamples each side of the region to a sixteenth of its length (a 256th of its area) before enlarging it with smoothing off."],
   ],
   faqs: [
     [
@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "What format does the export produce?",
-      "A WebM, saved as your-filename-redacted.webm. It prefers VP9 with Opus audio, falls back to VP8 with Opus and then to whatever plain video/webm the browser offers, and the canvas is captured at 30fps at the source video's native pixel dimensions.",
+      "On most browsers, a WebM saved as your-filename-redacted.webm — it prefers VP9 with Opus audio, falls back to VP8 with Opus and then to whatever plain video/webm the browser offers. Browsers without a WebM MediaRecorder (Safari, for example) record in their own default container instead, and the download's file extension always matches the real container. The canvas is captured at 30fps at the source video's native pixel dimensions either way.",
     ],
     [
       "Why does exporting take as long as the video?",

@@ -10,10 +10,9 @@ export default function ToolHome() {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [expandedId, setExpandedId] = useState(null);
-  const [visibleCount, setVisibleCount] = useState(12);
 
 
-  
+
   const categories = useMemo(() => {
     const cats = new Set(formulas.map((f) => f.category));
     return ["All", ...Array.from(cats).sort()];
@@ -35,10 +34,7 @@ export default function ToolHome() {
     });
   }, [searchTerm, selectedCategory]);
 
-  const displayedFormulas =
-    searchTerm || selectedCategory !== "All"
-      ? filteredFormulas
-      : filteredFormulas;
+  const displayedFormulas = filteredFormulas;
 
   const handleToggleExpand = (id) => {
     setExpandedId(expandedId === id ? null : id);
@@ -63,7 +59,11 @@ export default function ToolHome() {
         <div className="mb-8">
           <div className="relative">
            <Search className="absolute left-3 top-3.5 h-5 w-5 text-(--foreground)" />
+            <label htmlFor="formula-search" className="sr-only">
+              Search Excel formulas
+            </label>
             <input
+              id="formula-search"
               type="text"
               placeholder="Search formulas by name, syntax, or description..."
               value={searchTerm}
@@ -94,7 +94,7 @@ export default function ToolHome() {
         </div>
 
         {/* Results Info */}
-        <div className="mb-6">
+        <div className="mb-6" aria-live="polite">
           <p className="text-sm text-(--foreground)">
             Showing {displayedFormulas.length} of {formulas.length} formulas
             {searchTerm && ` • Searching for "${searchTerm}"`}
@@ -120,7 +120,7 @@ export default function ToolHome() {
                       <h3 className="text-lg font-bold text-(--foreground)">
                         {formula.name}
                       </h3>
-                      <span className="inline-block mt-2 rounded-full bg-blue-100 px-3 py-1 text-xs font-medium text-blue-500">
+                      <span className="inline-block mt-2 rounded-full bg-(--primary-soft) px-3 py-1 text-xs font-medium text-(--primary-text)">
                         {formula.category}
                       </span>
                     </div>
@@ -148,7 +148,7 @@ export default function ToolHome() {
                     <p className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wide">
                       Syntax
                     </p>
-                    <p className="mt-1 rounded bg-(--card) px-2 py-1 font-mono text-sm text-(--foreground">
+                    <p className="mt-1 rounded bg-(--card) px-2 py-1 font-mono text-sm text-(--foreground)">
                       {formula.syntax}
                     </p>
                   </div>
@@ -189,9 +189,9 @@ export default function ToolHome() {
             ))}
           </div>
         ) : (
-          <div className="rounded-lg border border-gray-300 bg-white p-12 text-center">
+          <div className="rounded-lg border border-(--border) bg-(--card) p-12 text-center">
             <svg
-              className="mx-auto h-12 w-12 text-gray-400"
+              className="mx-auto h-12 w-12 text-(--muted-foreground)"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -203,24 +203,14 @@ export default function ToolHome() {
                 d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <h3 className="mt-2 text-lg font-medium text-black">
+            <h3 className="mt-2 text-lg font-medium text-(--foreground)">
               No formulas found
             </h3>
-            <p className="mt-1 text-gray-600">
+            <p className="mt-1 text-(--muted-foreground)">
               Try adjusting your search or filter criteria
             </p>
           </div>
         )}
-       
-        {/* Info Section */}
-        {/* {!searchTerm && selectedCategory === "All" && (
-          <div className="mt-12 rounded-lg bg-blue-50 p-6 text-center">
-            <p className="text-sm text-gray-700">
-               Showing the first 6 formulas. Use the search bar or category filters to
-              discover more formulas!
-            </p>
-          </div>
-        )} */}
       </main>
 
     <Features/>

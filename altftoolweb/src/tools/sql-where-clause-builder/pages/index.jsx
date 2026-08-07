@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Filter, Plus, RotateCcw, Trash2 } from "lucide-react";
 
 import { OPERATORS, PARAM_STYLES, VALUE_TYPES, buildWhereClause } from "../lib";
@@ -50,6 +50,13 @@ export default function ToolHome() {
   const [paramStyle, setParamStyle] = useState("literal");
   const [nextId, setNextId] = useState(100);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () => buildWhereClause({ groups, groupCombinator, paramStyle }),
@@ -114,7 +121,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(result.clause);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -361,7 +369,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               disabled={hasError}
-              aria-label="Copy the WHERE clause"
+              aria-label={copied ? "Copied to clipboard" : "Copy the WHERE clause"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? (
@@ -371,6 +379,9 @@ export default function ToolHome() {
               )}
               {copied ? "Copied!" : "Copy clause"}
             </button>
+            <span className="sr-only" aria-live="polite">
+              {copied ? "Copied to clipboard" : ""}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset the builder" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
@@ -378,7 +389,10 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <div className="mt-4 overflow-x-auto rounded-md border border-[var(--border)] bg-[var(--background)] p-3">
+        <div
+          className="mt-4 overflow-x-auto rounded-md border border-[var(--border)] bg-[var(--background)] p-3"
+          aria-live="polite"
+        >
           <pre className="whitespace-pre font-mono text-sm leading-6 text-[var(--primary)]">
             {hasError ? DASH : result.clause}
           </pre>
