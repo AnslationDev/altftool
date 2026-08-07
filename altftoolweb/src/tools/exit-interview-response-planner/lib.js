@@ -235,7 +235,7 @@ export function buildAnswers({ profile, questionIds = [], positiveNote, companyN
     },
   };
 
-  const wanted = questionIds.length > 0 ? questionIds : QUESTIONS.map((entry) => entry.id);
+  const wanted = Array.isArray(questionIds) ? questionIds : QUESTIONS.map((entry) => entry.id);
   const answers = QUESTIONS.filter((entry) => wanted.includes(entry.id)).map((entry) => ({
     id: entry.id,
     question: entry.question,

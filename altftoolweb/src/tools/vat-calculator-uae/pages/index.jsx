@@ -241,7 +241,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div role="status" aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               {mode === "inclusive" ? "VAT contained in the price" : "Total payable including VAT"}
             </p>
@@ -276,7 +276,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" role="status" aria-live="polite">
           {[
             ["Net amount (excluding VAT)", show(result.net)],
             [`VAT at ${hasError ? "—" : `${PLAIN.format(result.rate)}%`}`, show(result.vat)],
@@ -292,7 +292,11 @@ export default function ToolHome() {
         </dl>
 
         {!hasError && result.rate > 0 && (
-          <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-xs leading-5 text-[var(--muted-foreground)]">
+          <p
+            role="status"
+            aria-live="polite"
+            className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-xs leading-5 text-[var(--muted-foreground)]"
+          >
             {mode === "inclusive"
               ? `VAT = gross x ${result.vatFraction}. On ${money(result.gross)} that is ${money(result.vat)}.`
               : `VAT = net x ${PLAIN.format(result.rate)}%. On ${money(result.net)} that is ${money(result.vat)}.`}
@@ -300,7 +304,7 @@ export default function ToolHome() {
         )}
 
         {!hasError && (
-          <p className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]">
+          <p role="status" aria-live="polite" className="mt-3 text-xs leading-5 text-[var(--muted-foreground)]">
             {result.qualifiesForTouristRefund
               ? `This invoice total clears the AED ${PLAIN.format(UAE_TOURIST_REFUND_MIN_SPEND)} minimum spend for the tourist VAT refund scheme.`
               : `Below the AED ${PLAIN.format(UAE_TOURIST_REFUND_MIN_SPEND)} minimum invoice value for the tourist VAT refund scheme.`}
@@ -333,7 +337,7 @@ export default function ToolHome() {
             {registration.error}
           </p>
         ) : (
-          <div className="mt-3">
+          <div className="mt-3" aria-live="polite" role="status">
             <p
               className={`text-sm font-semibold ${
                 registration.status === "mandatory" ? "text-[var(--danger)]" : "text-[var(--success)]"

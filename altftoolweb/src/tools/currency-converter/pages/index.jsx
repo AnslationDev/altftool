@@ -98,7 +98,10 @@ const CurrencyConverter = () => {
   const [animatedValue, setAnimatedValue] = React.useState(0);
 
 React.useEffect(() => {
-  if (!convertedAmount) return;
+  if (!convertedAmount) {
+    setAnimatedValue(0);
+    return;
+  }
 
   let start = 0;
   const end = Number(convertedAmount);
@@ -139,7 +142,7 @@ React.useEffect(() => {
 
           <div className="relative z-10">
             {error && (
-              <div className="mb-4 rounded-lg border border-red-600 bg-red-800/50 p-3 text-sm text-red-300">
+              <div role="alert" className="mb-4 rounded-lg border border-red-600 bg-red-800/50 p-3 text-sm text-red-300">
                 {error}
               </div>
             )}

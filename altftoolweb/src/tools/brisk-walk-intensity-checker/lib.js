@@ -186,9 +186,9 @@ export function assessBriskWalk({
   const isBrisk = overall >= MODERATE;
 
   const cadenceGap =
-    cadence > 0 && cadence < CADENCE_MODERATE ? CADENCE_MODERATE - cadence : 0;
+    cadence > 0 ? (cadence < CADENCE_MODERATE ? CADENCE_MODERATE - cadence : 0) : null;
   const heartRateGap =
-    heartRate > 0 && heartRate < zones.moderate[0] ? zones.moderate[0] - heartRate : 0;
+    heartRate > 0 ? (heartRate < zones.moderate[0] ? zones.moderate[0] - heartRate : 0) : null;
 
   const advice = isBrisk
     ? overall === VIGOROUS

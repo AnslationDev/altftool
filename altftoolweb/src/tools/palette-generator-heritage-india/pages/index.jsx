@@ -107,7 +107,12 @@ export default function ToolHome() {
               step="1"
               value={variation}
               onChange={(event) => {
-                setVariation(Number(event.target.value));
+                const n = Number(event.target.value);
+                setVariation(
+                  Number.isFinite(n)
+                    ? ((Math.round(n) % (MAX_VARIATION + 1)) + (MAX_VARIATION + 1)) % (MAX_VARIATION + 1)
+                    : DEFAULTS.variation,
+                );
                 setCopied("");
               }}
             />
@@ -142,7 +147,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">

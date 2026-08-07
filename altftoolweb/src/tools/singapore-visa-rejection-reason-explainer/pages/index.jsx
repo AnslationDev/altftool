@@ -188,7 +188,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Reapplication readiness
             </p>
@@ -229,7 +229,7 @@ export default function ToolHome() {
           />
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl aria-live="polite" aria-atomic="true" className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             ["Grounds selected", plan.error ? DASH : LIST.format(plan.grounds.map((g) => g.title))],
             ["How serious", plan.error ? DASH : SEVERITY_LABELS[plan.severity]],

@@ -109,11 +109,23 @@ export default function ToolHome() {
     ],
     [
       "Cadence still needed",
-      ok ? (result.cadenceGap > 0 ? `+${zero(result.cadenceGap)} steps/min` : "Threshold met") : DASH,
+      ok
+        ? result.cadenceGap == null
+          ? DASH
+          : result.cadenceGap > 0
+            ? `+${zero(result.cadenceGap)} steps/min`
+            : "Threshold met"
+        : DASH,
     ],
     [
       "Heart rate still needed",
-      ok ? (result.heartRateGap > 0 ? `+${zero(result.heartRateGap)} bpm` : "Threshold met") : DASH,
+      ok
+        ? result.heartRateGap == null
+          ? DASH
+          : result.heartRateGap > 0
+            ? `+${zero(result.heartRateGap)} bpm`
+            : "Threshold met"
+        : DASH,
     ],
   ];
 
@@ -244,7 +256,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -289,7 +301,7 @@ export default function ToolHome() {
         </dl>
       </section>
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" aria-atomic="true">
         <h2 className="text-base font-semibold">Reading by reading</h2>
         {ok ? (
           <ul className="mt-3 grid gap-3">

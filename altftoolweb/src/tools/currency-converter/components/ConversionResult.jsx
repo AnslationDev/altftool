@@ -26,7 +26,7 @@ const ConversionResult = ({
         <div className="space-y-4">
 
           {/* Converted Amount */}
-          <div className="w-full">
+          <div className="w-full" aria-live="polite" aria-atomic="true">
             <p className="text-xs sm:text-sm text-(--muted-foreground)">
               Total Converted
             </p>

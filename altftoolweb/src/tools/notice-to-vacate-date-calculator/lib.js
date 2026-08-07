@@ -204,6 +204,7 @@ export function computeVacateDate({
   const value = Number(noticeValue);
   if (!Number.isFinite(value)) return { error: "Enter the notice length as a number." };
   if (value <= 0) return { error: "The notice length must be greater than zero." };
+  if (!Number.isInteger(value)) return { error: "The notice length must be a whole number." };
   if (noticeUnit !== "days" && noticeUnit !== "months") {
     return { error: "The notice length must be in days or months." };
   }
@@ -308,7 +309,7 @@ export function computeOverstayCompensation({ monthlyRent, monthsOverstayed } = 
     laterMonths,
     firstAmount: Math.round(firstAmount),
     laterAmount: Math.round(laterAmount),
-    total: Math.round(firstAmount + laterAmount),
+    total: Math.round(firstAmount) + Math.round(laterAmount),
     normalRent: Math.round(months * rent),
   };
 }

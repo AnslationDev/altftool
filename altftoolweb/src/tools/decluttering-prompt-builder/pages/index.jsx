@@ -358,7 +358,11 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -370,7 +374,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <h2 className="text-base font-semibold">Your prompt</h2>
-        <div className="mt-3 overflow-x-auto">
+        <div className="mt-3 overflow-x-auto" aria-live="polite" aria-atomic="true">
           <pre className="min-w-full whitespace-pre-wrap break-words rounded-md border border-[var(--border)] bg-[var(--background)] p-3 text-sm leading-6 text-[var(--foreground)]">
             {hasError ? DASH : result.prompt}
           </pre>

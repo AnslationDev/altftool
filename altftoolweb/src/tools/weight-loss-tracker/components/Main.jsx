@@ -2,13 +2,23 @@
 import React, { useState, useEffect } from "react";
 import Features from "./Features";
 
+// Local (viewer-timezone) YYYY-MM-DD, so the default date reflects the
+// viewer's "today" rather than UTC's (avoids a day-boundary mismatch for
+// negative-UTC-offset viewers using toISOString()).
+function getLocalDateISO() {
+  const d = new Date();
+  const month = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${d.getFullYear()}-${month}-${day}`;
+}
+
 export default function MainComponent() {
   const [isEditingGoal, setIsEditingGoal] = useState(true);
   const [entries, setEntries] = useState([]);
   const [currentWeight, setCurrentWeight] = useState("");
   const [targetWeight, setTargetWeight] = useState("");
   const [unit, setUnit] = useState("kg");
-  const [date, setDate] = useState(new Date().toISOString().split("T")[0]);
+  const [date, setDate] = useState(getLocalDateISO());
   const [notes, setNotes] = useState("");
   const [showForm, setShowForm] = useState(false);
 
@@ -44,7 +54,7 @@ export default function MainComponent() {
 
     setCurrentWeight("");
     setNotes("");
-    setDate(new Date().toISOString().split("T")[0]);
+    setDate(getLocalDateISO());
     setShowForm(false);
   };
 
@@ -60,7 +70,6 @@ export default function MainComponent() {
     target: parseFloat(targetWeight) || 0,
     progress: 0,
     remaining: 0,
-    trend: 0,
   };
 
   if (stats.starting && stats.target) {
@@ -68,13 +77,6 @@ export default function MainComponent() {
     const lostSoFar = stats.starting - stats.current;
     stats.progress = totalToLose > 0 ? (lostSoFar / totalToLose) * 100 : 0;
     stats.remaining = stats.current - stats.target;
-  }
-
-  if (entries.length >= 2) {
-    const recent = entries.slice(0, Math.min(7, entries.length));
-    if (recent.length >= 2) {
-      stats.trend = recent[0].weight - recent[recent.length - 1].weight;
-    }
   }
 
   //   const chartData = [...entries].reverse().slice(-10);
@@ -115,7 +117,10 @@ export default function MainComponent() {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <div
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6"
+          aria-live="polite"
+        >
           <div className="rounded-2xl p-6 shadow-lg bg-(--card) border border-(--border)">
             <div className="text-sm mb-2 text-(--muted-foreground)">
               Current Weight
@@ -177,7 +182,11 @@ export default function MainComponent() {
                   🎯 Set Your Goal
                 </h2>
                 <div className="flex gap-2 flex-col sm:flex-row">
+                  <label htmlFor="target-weight-input" className="sr-only">
+                    Target weight
+                  </label>
                   <input
+                    id="target-weight-input"
                     type="number"
                     step="0.1"
                     value={targetWeight}
@@ -188,6 +197,7 @@ export default function MainComponent() {
                   <select
                     value={unit}
                     onChange={(e) => setUnit(e.target.value)}
+                    aria-label="Weight unit"
                     className="px-4 py-3 rounded-lg font-medium bg-(--background) border-2 border-(--border) text-(--foreground)"
                   >
                     <option value="kg">kg</option>
@@ -325,6 +335,7 @@ export default function MainComponent() {
                             {new Date(entry.date).toLocaleDateString("en-US", {
                               month: "short",
                               day: "numeric",
+                              timeZone: "UTC",
                             })}
                           </div>
                         </div>
@@ -411,6 +422,7 @@ export default function MainComponent() {
                                   month: "short",
                                   day: "numeric",
                                   year: "numeric",
+                                  timeZone: "UTC",
                                 },
                               )}
                             </div>

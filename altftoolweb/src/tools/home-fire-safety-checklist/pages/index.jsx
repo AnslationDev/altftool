@@ -231,10 +231,10 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Fire safety score
             </p>
-            <p className={`mt-1 text-4xl font-semibold ${levelTone}`}>
+            <p className={`mt-1 text-4xl font-semibold ${levelTone}`} aria-live="polite">
               {hasError ? DASH : `${NUM.format(result.percent)}%`}
             </p>
-            <p className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]">
+            <p className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]" aria-live="polite">
               {hasError ? "Fix the input above to score the home." : result.verdict}
             </p>
           </div>
