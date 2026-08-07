@@ -120,8 +120,9 @@ export default function ToolHome() {
         </div>
         <h1 className="text-3xl font-semibold leading-tight sm:text-4xl">Chair Yoga Desk Routine</h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-          Tell it how long your break is and which areas ache. It builds a seated routine that fits
-          the time exactly, with holds in the 20-30 second range used for static stretching.
+          Tell it how long your break is and which areas ache. It builds the longest seated routine
+          that fits within your time, using longer holds to fill the break as closely as possible,
+          with holds roughly 20-45 seconds per position, growing up to 60s to fill your break.
         </p>
       </header>
 

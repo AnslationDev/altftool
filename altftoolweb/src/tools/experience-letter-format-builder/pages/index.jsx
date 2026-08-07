@@ -377,6 +377,7 @@ export default function ToolHome() {
         </>
       ) : (
         <>
+          <div aria-live="polite" role="status">
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
@@ -450,6 +451,7 @@ export default function ToolHome() {
               ))}
             </ul>
           </section>
+          </div>
 
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
             <h2 className="text-base font-semibold">Which document is being asked for?</h2>

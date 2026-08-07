@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This builder assembles a seated stretch routine that fits the exact number of minutes you have, drawing from eighteen chair-based positions for the neck, shoulders and chest, wrists, spine, hips and eyes. Holds sit in the 20-30 second static stretch range recommended for adults, and the eye break follows the 20-20-20 rule — every 20 minutes, look about 20 feet away for 20 seconds. Nothing requires a mat, floor space or changing clothes.",
+    "This builder assembles the longest seated stretch routine that fits within the minutes you have, drawing from eighteen chair-based positions for the neck, shoulders and chest, wrists, spine, hips and eyes, and stretching holds longer to fill the break as closely as possible. Holds run roughly 20-45 seconds per position, growing up to 60 seconds to fill your break, in line with the 10-30 second static stretch range recommended for adults, and the eye break follows the 20-20-20 rule — every 20 minutes, look about 20 feet away for 20 seconds. Nothing requires a mat, floor space or changing clothes.",
   useCases: [
     "Fill a five-minute gap between calls with neck, shoulder and wrist work without leaving your desk.",
     "Build a three-minute wrist and eye reset for a day of heavy typing and screen time.",

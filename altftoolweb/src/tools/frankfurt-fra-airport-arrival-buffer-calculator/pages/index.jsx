@@ -13,6 +13,8 @@ import {
   computeArrivalPlan,
   formatClock,
   formatDuration,
+  parseClock,
+  suggestTrafficLevel,
 } from "../lib";
 
 const INPUT_CLASS =
@@ -54,6 +56,22 @@ export default function ToolHome() {
   );
 
   const failed = Boolean(plan.error);
+
+  // Suggests a road-conditions level from roughly when the drive itself would
+  // start (departure minus the airport's advised lead, minus parking and
+  // driving) - independent of the traffic level itself so it never loops back
+  // on its own answer. Shown as a hint only; it never overrides the driver's
+  // own choice.
+  const suggestedTrafficId = useMemo(() => {
+    const departure = parseClock(departureTime);
+    const journey = JOURNEY_TYPES.find((item) => item.id === journeyId) || JOURNEY_TYPES[0];
+    const drive = driveMinutes.trim() === "" ? NaN : Number(driveMinutes);
+    const parking = parkingMinutes.trim() === "" ? NaN : Number(parkingMinutes);
+    if (departure === null || !Number.isFinite(drive) || !Number.isFinite(parking)) return null;
+    const approxDriveStartMinutes = departure - journey.recommendedLeadMinutes - parking - drive;
+    return suggestTrafficLevel(approxDriveStartMinutes);
+  }, [departureTime, journeyId, driveMinutes, parkingMinutes]);
+  const suggestedTraffic = suggestedTrafficId ? TRAFFIC_LEVELS.find((item) => item.id === suggestedTrafficId) : null;
 
   const summary = useMemo(() => {
     if (failed) return "";
@@ -221,6 +239,11 @@ export default function ToolHome() {
                 </option>
               ))}
             </select>
+            {suggestedTraffic && suggestedTraffic.id !== trafficId && (
+              <p className={HINT_CLASS}>
+                Suggested for roughly when you would leave: {suggestedTraffic.label}.
+              </p>
+            )}
           </div>
 
           <div>
@@ -286,7 +309,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

@@ -26,7 +26,8 @@ export const spec = {
       }
     }
   ],
-  "confirmReset": "Reset and clear the pasted text back to the default sample? This cannot be undone."
+  "confirmReset": "Reset and clear the pasted text back to the default sample? This cannot be undone.",
+  "exportResultOnly": true
 },
   compute: (values) => {
           const t = String(values.text || "");

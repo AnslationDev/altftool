@@ -8,7 +8,7 @@ const seo = {
   ],
   benefits: [
     ["Schengen logic built in", "Passport control is dropped entirely for intra-Schengen flights and added back for anything leaving the area."],
-    ["Three deadlines, one answer", "Compares gate close, check-in cut-off and airport advice, and says which one is binding."],
+    ["Three deadlines, one answer", "Weighs gate close, check-in cut-off and airport advice together, and says whether your own queue/walk estimate or the airport's published advice is driving the plan."],
     ["Full timeline", "Shows the clock time each step starts, from leaving home to the aircraft door shutting."],
   ],
   faqs: [

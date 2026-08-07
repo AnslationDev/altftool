@@ -40,7 +40,7 @@ const GuessWinner = forwardRef(({ options, votes }, ref) => {
       </div>
 
       {locked && selected && winner && (
-        <p className="mt-2">
+        <p className="mt-2" aria-live="polite" role="status">
           {selected === winner
             ? "You guessed it right!! "
             : `Actual winner is ${winner}`}

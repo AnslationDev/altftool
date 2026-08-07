@@ -161,6 +161,10 @@ export default function PollMaker() {
       return;
     }
     setVotes(new Array(pollOptions.length).fill(0));
+    // A new poll must start with a clean voters list — otherwise names
+    // from a previous (non-anonymous) poll leak into this one's Voters list.
+    setVoters({});
+    localStorage.setItem("poll_voters", JSON.stringify({}));
   };
   // handle multi select click
   const handleSelectOption = (index) => {
@@ -420,9 +424,9 @@ export default function PollMaker() {
                     theme === "neon"
                       ? "bg-black border border-pink-500 text-pink-400 hover:bg-pink-500 hover:text-white"
                       : "bg-(--muted) hover:bg-(--primary) hover:text-white"
-                  }
+                  } ${
                     activeIndex === index ? "animate-pulse-soft" : ""
-                  } `}
+                  }`}
                 >
                   {/*  ImageUpload + Text */}
                   <div className="flex flex-col items-center gap-2">

@@ -191,6 +191,7 @@ export default function ToolHome() {
                 <button
                   key={item.id}
                   type="button"
+                  aria-pressed={mode === item.id}
                   onClick={() => setMode(item.id)}
                   className={`rounded-md border px-3 py-3 text-left transition ${
                     mode === item.id
@@ -237,6 +238,7 @@ export default function ToolHome() {
                   <button
                     key={preset.label}
                     type="button"
+                    aria-pressed={Number(rate) === preset.value}
                     onClick={() => setRate(preset.value)}
                     className={`rounded-md border px-3 py-1.5 text-xs font-semibold transition ${
                       Number(rate) === preset.value
@@ -260,6 +262,11 @@ export default function ToolHome() {
                     onChange={(event) => setYears(Number(event.target.value))}
                     className="mt-2 h-12 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 outline-none focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
                   />
+                  {Number(years) > 60 && (
+                    <p className="mt-2 text-xs font-semibold text-[var(--anslation-ds-danger)]" role="status">
+                      Capped at 60 years for this calculation.
+                    </p>
+                  )}
                 </label>
               )}
 
@@ -297,6 +304,9 @@ export default function ToolHome() {
               <button
                 type="button"
                 onClick={() => {
+                  if (typeof window !== "undefined" && !window.confirm("Reset all fields to defaults? Your entered values will be lost.")) {
+                    return;
+                  }
                   setMode("future");
                   setAmount(100000);
                   setRate(6);

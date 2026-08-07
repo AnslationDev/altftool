@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Card } from '../components/ui/card';
 import { Button } from '../components/ui/button';
 import {
@@ -28,6 +28,19 @@ const PdfPreviewTool = () => {
   const [previewHD, setPreviewHD] = useState(null);
   const [currentPage, setCurrentPage] = useState(null);
   const [isDragging, setIsDragging] = useState(false);
+  const previewRequestIdRef = useRef(0);
+  const pdfInstanceRef = useRef(null);
+
+  useEffect(() => {
+    pdfInstanceRef.current = pdfInstance;
+  }, [pdfInstance]);
+
+  useEffect(() => {
+    return () => {
+      pdfInstanceRef.current?.destroy();
+    };
+  }, []);
+
   const renderPDF = async (file) => {
     setLoading(true);
     setPages([]);
@@ -36,6 +49,9 @@ const PdfPreviewTool = () => {
       const buffer = await file.arrayBuffer();
       const loadingTask = pdfjsLib.getDocument({ data: buffer });
       const pdf = await loadingTask.promise;
+      if (pdfInstance) {
+        pdfInstance.destroy();
+      }
       setPdfInstance(pdf);
       let tempPages = [];
       for (let i = 1; i <= pdf.numPages; i++) {
@@ -61,6 +77,7 @@ const PdfPreviewTool = () => {
   };
   const handleFullPreview = async (pageNum) => {
     if (!pdfInstance) return;
+    const requestId = ++previewRequestIdRef.current;
     setCurrentPage(pageNum);
     setPreviewHD(null);
     setPreviewOpen(true);
@@ -73,9 +90,11 @@ const PdfPreviewTool = () => {
         canvas.width = viewport.width;
         canvas.height = viewport.height;
         await page.render({ canvasContext: ctx, viewport }).promise;
+        if (previewRequestIdRef.current !== requestId) return;
         setPreviewHD(canvas.toDataURL("image/png"));
       }
     } catch (err) {
+      if (previewRequestIdRef.current !== requestId) return;
       setPreviewOpen(false);
       setPreviewHD(null);
       alert("Error loading HD preview: " + err.message);

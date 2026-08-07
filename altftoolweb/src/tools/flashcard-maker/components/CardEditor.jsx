@@ -11,7 +11,7 @@ export default function CardEditor({ card, onSave, onClose }) {
   const handleSave = (e) => {
     e.preventDefault();
     if (front.trim() && back.trim()) {
-      onSave({ front, back, difficulty });
+      onSave({ ...card, front, back, difficulty });
       onClose();
     }
   };

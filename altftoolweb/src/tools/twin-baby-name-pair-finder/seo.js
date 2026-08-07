@@ -27,7 +27,7 @@ const seo = {
     ],
     [
       "How is the pairing score calculated?",
-      "Twenty points for a shared first letter, twenty for the same final two letters, twenty for an equal syllable count, fifteen when the letter counts are within one of each other, and up to twenty-five for being distinct enough not to be confused. Seventy-five and above reads as a strong pair; below thirty-five the two names are barely connected.",
+      "Twenty points for a shared first letter, twenty for the same final two letters, twenty for an equal syllable count, fifteen when the letter counts are within one of each other, and up to twenty-five for being distinct enough not to be confused. Seventy-five and above reads as a strong pair, unless the pair is flagged as confusing (spelling too similar), in which case it's capped at Good pair; below thirty-five the two names are barely connected.",
     ],
   ],
 };

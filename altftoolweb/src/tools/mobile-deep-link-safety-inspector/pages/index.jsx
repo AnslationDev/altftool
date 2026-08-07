@@ -166,7 +166,7 @@ export default function ToolHome() {
           {result.error}
         </p>
       ) : (
-        <>
+        <div aria-live="polite" role="status">
           <section className={`mt-6 rounded-xl p-5 ${verdict.wrap}`}>
             <div className="flex items-start gap-3">
               <VerdictIcon className={`mt-0.5 h-6 w-6 shrink-0 ${verdict.text}`} aria-hidden="true" />
@@ -447,7 +447,7 @@ export default function ToolHome() {
               ))}
             </ul>
           </section>
-        </>
+        </div>
       )}
     </main>
   );

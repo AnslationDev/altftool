@@ -42,8 +42,13 @@ const BASE64_ANY_RE = /^[A-Za-z0-9+/\-_]*={0,2}$/;
 export function splitDataUrl(raw) {
   const value = String(raw == null ? "" : raw).trim();
   const match = DATA_URL_RE.exec(value);
-  if (!match) return { declaredMime: "", payload: value, wasDataUrl: false };
-  return { declaredMime: (match[1] || "").toLowerCase(), payload: match[4] || "", wasDataUrl: true };
+  if (!match) return { declaredMime: "", payload: value, wasDataUrl: false, hadBase64Marker: false };
+  return {
+    declaredMime: (match[1] || "").toLowerCase(),
+    payload: match[4] || "",
+    wasDataUrl: true,
+    hadBase64Marker: Boolean(match[3]),
+  };
 }
 
 /** Strip whitespace, fold URL-safe characters, restore `=` padding. */
@@ -52,6 +57,11 @@ export function normalizeBase64(payload) {
   if (!compact) return { error: "Paste a Base64 string to decode." };
   if (!BASE64_ANY_RE.test(compact)) {
     const bad = compact.split("").find((ch) => !/[A-Za-z0-9+/\-_=]/.test(ch));
+    if (bad === undefined) {
+      return {
+        error: "Base64 padding is malformed — check the placement of '=' characters.",
+      };
+    }
     return {
       error: `"${bad}" is not a Base64 character. Standard Base64 uses A–Z, a–z, 0–9, + and /.`,
     };
@@ -167,7 +177,10 @@ export function formatBytes(bytes) {
  * Always returns `{ error }` or a complete result — never NaN or Infinity.
  */
 export function decodeBase64Text(rawInput) {
-  const { declaredMime, payload, wasDataUrl } = splitDataUrl(rawInput);
+  const { declaredMime, payload, wasDataUrl, hadBase64Marker } = splitDataUrl(rawInput);
+  if (wasDataUrl && !hadBase64Marker) {
+    return { error: "This data: URL is not base64-encoded." };
+  }
   const normalizedResult = normalizeBase64(payload);
   if (normalizedResult.error) return { error: normalizedResult.error };
 

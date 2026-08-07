@@ -265,26 +265,32 @@ export function computeArrivalPlan({
     personal;
   const processLeadMinutes = inTerminalMinutes + journey.gateClosesMinutes;
 
-  // Deadline 2: reach the bag-drop counter before the airline shuts it.
+  // Deadline 2: reach the bag-drop counter before the airline shuts it. Scales
+  // with the same terminal-queue congestion used for the gate deadline below,
+  // so a busy check-in hall genuinely tightens this cut-off rather than being
+  // a fixed constant.
   const checkInLeadMinutes = hasBags
-    ? journey.checkInClosesMinutes + TERMINAL_ENTRY_MINUTES + COUNTER_JOIN_MARGIN_MINUTES
+    ? journey.checkInClosesMinutes + TERMINAL_ENTRY_MINUTES + checkInQueueMinutes + COUNTER_JOIN_MARGIN_MINUTES
     : 0;
 
   // Deadline 3: the airport's published reporting time.
   const recommendedLeadMinutes = journey.recommendedLeadMinutes;
 
+  // Two deadlines can end up governing the plan: your own queue/walk/buffer
+  // estimate (the process/gate-closing chain), or the airport's published
+  // reporting time. The bag-drop cut-off (checkInLeadMinutes) is folded into
+  // the max() below as a floor, but for FRA's published check-in and gate
+  // timings it can never independently exceed both of the others at once -
+  // the gate-side chain (security + immigration + gate walk + gate closing)
+  // always needs more total lead than the earlier check-in cut-off buys on
+  // its own, so it never becomes the sole binding deadline. It still matters:
+  // raising queueId or turning on bags widens checkInLeadMinutes and can push
+  // the process deadline itself higher via checkInQueueMinutes.
   const terminalLeadMinutes = Math.max(processLeadMinutes, checkInLeadMinutes, recommendedLeadMinutes);
-  let governedBy = "the airport's published reporting time";
-  if (terminalLeadMinutes === processLeadMinutes && processLeadMinutes >= checkInLeadMinutes) {
-    governedBy = "your own queue, walking and buffer estimates";
-  }
-  if (
-    terminalLeadMinutes === checkInLeadMinutes &&
-    checkInLeadMinutes > processLeadMinutes &&
-    checkInLeadMinutes > recommendedLeadMinutes
-  ) {
-    governedBy = "the bag-drop counter cut-off";
-  }
+  const governedBy =
+    terminalLeadMinutes === processLeadMinutes
+      ? "your own queue, walking and buffer estimates"
+      : "the airport's published reporting time";
 
   const driveWithTrafficMinutes = Math.round(drive * traffic.multiplier);
   const roadMinutes = driveWithTrafficMinutes + parking;
@@ -318,11 +324,6 @@ export function computeArrivalPlan({
   if (processLeadMinutes > recommendedLeadMinutes) {
     warnings.push(
       `Your own step estimates need ${formatDuration(processLeadMinutes)} inside the terminal, which is more than the ${formatDuration(recommendedLeadMinutes)} the airport advises. The larger figure is used.`,
-    );
-  }
-  if (hasBags && checkInLeadMinutes > recommendedLeadMinutes) {
-    warnings.push(
-      `Bag drop closes ${journey.checkInClosesMinutes} minutes before departure, which is the binding deadline here.`,
     );
   }
   if (dayOffset(leaveByMinutes) < 0) {

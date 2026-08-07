@@ -450,12 +450,24 @@ export function buildWeddingPackingList(input) {
     ),
   );
 
-  const totalGrams = plan.totalGrams + extrasGrams;
-  const packedGrams = wearHeaviestOnTravel
-    ? Math.max(0, totalGrams - plan.heaviestGrams)
-    : totalGrams;
   const allowanceKg =
     bagPlan === "international" ? CHECKED_ALLOWANCE_KG.international : CHECKED_ALLOWANCE_KG.domestic;
+
+  // Every displayed weight below is derived from the SAME rounded figures
+  // that appear in the breakdown, so outfitKg + extrasKg always equals
+  // totalKg exactly, and allowanceKg - packedKg always equals spareKg
+  // exactly — rounding the raw unrounded totals independently let those
+  // sums drift apart by up to 0.1 kg.
+  const outfitKg = round1(plan.totalGrams / 1000);
+  const extrasKg = round1(extrasGrams / 1000);
+  // Adding the two already-rounded parts directly (rather than rounding
+  // the raw unrounded gram total separately) means this is the exact same
+  // value a caller gets back by re-adding outfitKg + extrasKg themselves.
+  const totalKg = outfitKg + extrasKg;
+  const heaviestOutfitKg = round1(plan.heaviestGrams / 1000);
+  const packedKg = wearHeaviestOnTravel
+    ? Math.max(0, totalKg - heaviestOutfitKg)
+    : totalKg;
 
   return {
     groups,
@@ -467,14 +479,17 @@ export function buildWeddingPackingList(input) {
     formalOutfits,
     shoePairs,
     totalItems: plan.totalOutfits + extrasItems,
-    outfitKg: round1(plan.totalGrams / 1000),
-    extrasKg: round1(extrasGrams / 1000),
-    totalKg: round1(totalGrams / 1000),
-    packedKg: round1(packedGrams / 1000),
-    heaviestOutfitKg: round1(plan.heaviestGrams / 1000),
+    outfitKg,
+    extrasKg,
+    totalKg,
+    packedKg,
+    heaviestOutfitKg,
     allowanceKg,
-    withinAllowance: packedGrams / 1000 <= allowanceKg,
-    spareKg: round1(allowanceKg - packedGrams / 1000),
+    withinAllowance: packedKg <= allowanceKg,
+    // Derived directly from allowanceKg and packedKg (both already settled
+    // above) rather than rounded independently, so allowanceKg - packedKg
+    // always equals spareKg exactly.
+    spareKg: allowanceKg - packedKg,
     bagPlan,
     days: Math.round(days),
   };

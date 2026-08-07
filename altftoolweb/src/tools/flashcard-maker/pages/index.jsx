@@ -78,7 +78,6 @@ export default function FlashcardMaker() {
       ...card,
       id: Math.random().toString(36).substr(2, 9),
       createdAt: new Date().toISOString(),
-      difficulty: 'medium'
     };
     handleUpdateDeck(activeDeckId, {
       cards: [newCard, ...activeDeck.cards]
@@ -296,7 +295,7 @@ export default function FlashcardMaker() {
                                }`}>
                                  {card.difficulty}
                                </span>
-                               <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                               <div className="flex gap-2 opacity-0 group-hover:opacity-100 focus-within:opacity-100 transition-opacity">
                                   <button onClick={() => { setEditingCard(card); setIsEditorOpen(true); }} className="p-2 hover:text-(--primary) rounded-md hover:bg-(--card-hover-bg)" title="Edit"><Edit3 className="w-4 h-4" /></button>
                                   <button onClick={() => handleDeleteCard(card.id)} className="p-2 hover:text-red-500 rounded-md hover:bg-red-50" title="Delete"><Trash2 className="w-4 h-4" /></button>
                                </div>
