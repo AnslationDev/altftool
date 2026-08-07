@@ -107,7 +107,8 @@ export const TIPPING_EXPECTED = false;
 
 const round = (value, decimals) => {
   const factor = 10 ** decimals;
-  return Math.round(value * factor) / factor;
+  const result = Math.round(value * factor) / factor;
+  return result === 0 ? 0 : result;
 };
 
 const gcd = (a, b) => (b === 0 ? a : gcd(b, a % b));
@@ -181,7 +182,7 @@ function buildQuickRule(rate) {
   };
 }
 
-function buildTunedRule(rate, quick) {
+function buildTunedRule(rate, quick, symbol) {
   let best = null;
   for (const percent of ADJUSTMENT_PERCENTS) {
     const ruleRate = quick.rate * (1 + percent / 100);
@@ -193,7 +194,7 @@ function buildTunedRule(rate, quick) {
   if (Math.abs(best.percent) > 1e-9) {
     const magnitude = round(Math.abs(best.percent), 2);
     steps.push(
-      `${best.percent > 0 ? "Add" : "Subtract"} ${num(magnitude)}% (about ₹${num(round(magnitude, 1))} on every ₹100)`,
+      `${best.percent > 0 ? "Add" : "Subtract"} ${num(magnitude)}% (about ${symbol}${num(round(magnitude, 1))} on every ${symbol}100)`,
     );
   }
 
@@ -294,9 +295,9 @@ function buildFractionRule(rate, quick) {
 }
 
 /** Derive the three mental rules for one direction of a rate. */
-export function deriveRules(rate) {
+export function deriveRules(rate, symbol = "₹") {
   const quick = buildQuickRule(rate);
-  const tuned = buildTunedRule(rate, quick);
+  const tuned = buildTunedRule(rate, quick, symbol);
   const fraction = buildFractionRule(rate, quick);
 
   const candidates = [quick];
@@ -383,13 +384,13 @@ export function buildCheatSheet({
     return { error: "That rate is outside any plausible exchange rate. Check the decimal point." };
   }
 
-  const forward = deriveRules(rate);
-  const reverse = deriveRules(1 / rate);
+  const forward = deriveRules(rate, "₹");
+  const reverse = deriveRules(1 / rate, CURRENCY.symbol);
 
   const priceLadder = CURRENCY.pricePoints.map((point) => {
     const exact = point.amount * rate;
     const quick = point.amount * forward.quick.rate;
-    const tuned = point.amount * forward.tuned.rate;
+    const tuned = point.amount * forward[forward.recommendedId].rate;
     return {
       amount: point.amount,
       note: point.note,

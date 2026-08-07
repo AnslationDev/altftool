@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, RotateCcw, Shuffle, Stethoscope } from "lucide-react";
 
 import {
@@ -47,6 +47,7 @@ export default function ToolHome() {
   const [count, setCount] = useState(DEFAULTS.count);
   const [seed, setSeed] = useState(1);
   const [copiedId, setCopiedId] = useState(0);
+  const copyTimeoutRef = useRef(null);
 
   const result = useMemo(
     () =>
@@ -73,11 +74,19 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(text);
       setCopiedId(id);
-      setTimeout(() => setCopiedId(0), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopiedId(0), 1500);
     } catch {
       setCopiedId(0);
     }
   };
+
+  useEffect(
+    () => () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    },
+    [],
+  );
 
   const reset = () => {
     setName(DEFAULTS.name);
@@ -307,7 +316,11 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {[
             ["Words in message 1", hasError ? DASH : NUM.format(lead.stats.words)],
             ["SMS encoding", hasError ? DASH : lead.stats.encoding],
@@ -323,7 +336,7 @@ export default function ToolHome() {
       </section>
 
       {!hasError && (
-        <section className="mt-6 space-y-4">
+        <section className="mt-6 space-y-4" aria-live="polite">
           {variants.map((variant) => (
             <article
               key={variant.id}
@@ -351,7 +364,9 @@ export default function ToolHome() {
                 {variant.text}
               </p>
               <p className="mt-3 text-xs text-[var(--muted-foreground)]">
-                {NUM.format(variant.stats.chars)} characters · {NUM.format(variant.stats.words)} words
+                {NUM.format(variant.stats.chars)} characters · {NUM.format(variant.stats.words)} words ·{" "}
+                {variant.stats.encoding} · {NUM.format(variant.stats.smsParts)} SMS part
+                {variant.stats.smsParts === 1 ? "" : "s"}
               </p>
             </article>
           ))}

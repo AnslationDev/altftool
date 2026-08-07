@@ -296,7 +296,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Total booth time
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">
               {result.error ? DASH : formatHoursMinutes(result.boothMinutes)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -330,7 +330,7 @@ export default function ToolHome() {
               "Retakes",
               result.error
                 ? DASH
-                : `${NUM.format(result.retakeCount)} × ${NUM.format(toNumber(retakeSeconds))}s = ${formatHoursMinutes(result.retakeMinutes)}`,
+                : `${NUM1.format(result.retakeCount)} × ${NUM.format(toNumber(retakeSeconds))}s = ${formatHoursMinutes(result.retakeMinutes)}`,
             ],
             ["Time actually voicing", result.error ? DASH : formatHoursMinutes(result.voicingMinutes)],
             ["Vocal rest", result.error ? DASH : formatHoursMinutes(result.breakMinutes)],

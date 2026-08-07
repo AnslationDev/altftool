@@ -98,6 +98,16 @@ function getDaysUntil(dateValue) {
   return Math.ceil((renewal - today) / 86400000);
 }
 
+function formatRenewalText(days) {
+  return days === null
+    ? "No renewal date"
+    : days < 0
+      ? `${Math.abs(days)}d overdue`
+      : days === 0
+        ? "Renews today"
+        : `${days}d left`;
+}
+
 function sanitizeSubscriptions(subscriptions) {
   return subscriptions.map((subscription) => ({
     ...subscription,
@@ -211,14 +221,7 @@ function CostTooltip({ active, payload }) {
 
 function SubscriptionRow({ subscription, onUpdate, onRemove }) {
   const renewalDays = getDaysUntil(subscription.renewalDate);
-  const renewalText =
-    renewalDays === null
-      ? "No renewal date"
-      : renewalDays < 0
-        ? `${Math.abs(renewalDays)}d overdue`
-        : renewalDays === 0
-          ? "Renews today"
-          : `${renewalDays}d left`;
+  const renewalText = formatRenewalText(renewalDays);
 
   return (
     <div className="grid min-w-0 gap-3 rounded-lg border border-[var(--border)] bg-[var(--background)] p-3">
@@ -343,10 +346,10 @@ export default function SubscriptionCostTracker() {
     const pausedMonthlySavings = pausedRows.reduce((sum, subscription) => sum + subscription.monthlyCost, 0);
     const highestSubscription = [...activeRows].sort((a, b) => b.monthlyCost - a.monthlyCost)[0];
     const nextRenewal = [...activeRows]
-      .filter((subscription) => subscription.daysUntilRenewal !== null)
+      .filter((subscription) => subscription.daysUntilRenewal !== null && subscription.daysUntilRenewal >= 0)
       .sort((a, b) => a.daysUntilRenewal - b.daysUntilRenewal)[0];
     const categoryRows = groupByCategory(activeRows);
-    const budgetUsed = monthlyBudget ? (monthlyActiveCost / monthlyBudget) * 100 : 0;
+    const budgetUsed = monthlyBudget > 0 ? (monthlyActiveCost / monthlyBudget) * 100 : monthlyActiveCost > 0 ? 100 : 0;
 
     return {
       rows,
@@ -600,16 +603,18 @@ export default function SubscriptionCostTracker() {
               <h2 className="text-xl font-semibold text-[var(--foreground)]">Renewal Signals</h2>
               <div className="mt-4 grid min-w-0 gap-3 sm:grid-cols-3 2xl:grid-cols-1">
                 {[
-                  ["Next Renewal", metrics.nextRenewal?.name || "None", metrics.nextRenewal?.daysUntilRenewal ?? "-"],
+                  [
+                    "Next Renewal",
+                    metrics.nextRenewal?.name || "None",
+                    metrics.nextRenewal ? formatRenewalText(metrics.nextRenewal.daysUntilRenewal) : "No upcoming renewal",
+                  ],
                   ["Active Plans", `${metrics.activeCount}`, "Currently billing"],
                   ["Paused Plans", `${metrics.pausedCount}`, "Not counted in total"],
                 ].map(([label, value, detail]) => (
                   <div key={label} className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
                     <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">{label}</p>
                     <p className="mt-2 break-words text-lg font-bold text-[var(--foreground)]">{value}</p>
-                    <p className="mt-1 break-words text-sm text-[var(--muted-foreground)]">
-                      {typeof detail === "number" ? `${detail} days left` : detail}
-                    </p>
+                    <p className="mt-1 break-words text-sm text-[var(--muted-foreground)]">{detail}</p>
                   </div>
                 ))}
               </div>
@@ -652,7 +657,7 @@ export default function SubscriptionCostTracker() {
         </section>
 
         {metrics.overBudget && (
-          <div className="mt-6 flex min-w-0 items-start gap-3 rounded-lg border border-rose-500/30 bg-rose-500/10 p-4 text-rose-700">
+          <div role="alert" className="mt-6 flex min-w-0 items-start gap-3 rounded-lg border border-rose-500/30 bg-rose-500/10 p-4 text-rose-700">
             <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" />
             <p className="min-w-0 break-words text-sm leading-6">
               Active subscriptions are above your monthly budget. Pause unused plans or switch yearly plans only when

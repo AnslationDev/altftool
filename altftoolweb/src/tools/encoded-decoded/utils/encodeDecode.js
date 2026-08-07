@@ -102,9 +102,7 @@ export const encodeHTML = (text) => {
 // HTML Entities Decode
 export const decodeHTML = (text) => {
     try {
-        const element = document.createElement('div');
-        element.innerHTML = text;
-        return element.textContent || '';
+        return new DOMParser().parseFromString(text, 'text/html').documentElement.textContent || '';
     } catch (e) {
         throw new Error('Failed to decode HTML entities');
     }
