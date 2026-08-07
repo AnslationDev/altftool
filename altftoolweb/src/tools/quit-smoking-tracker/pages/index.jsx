@@ -555,7 +555,7 @@ export default function ToolHome() {
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
                       <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">Smoke-free for</p>
-                      <div className="mt-3 flex flex-wrap items-baseline gap-4" aria-live="polite">
+                      <div className="mt-3 flex flex-wrap items-baseline gap-4">
                         {[
                           [clock.days, clock.days === 1 ? "day" : "days"],
                           [clock.hours, "hours"],
@@ -760,7 +760,7 @@ export default function ToolHome() {
                           {Math.ceil(goalDate.daysNeeded)} more days at {inr.format(dailySpend)} a day.
                         </p>
                         <div className="mt-3">
-                          <ProgressBar value={moneySaved / Math.max(1, Number(goalAmount) || 1)} />
+                          <ProgressBar value={moneySaved / Math.max(Number(goalAmount) || 0, 0.01)} />
                         </div>
                         <p className="mt-2 text-xs text-[var(--muted-foreground)]">
                           {inr.format(moneySaved)} saved so far
@@ -827,7 +827,7 @@ export default function ToolHome() {
                   <div className="mt-5">
                     <div className="rounded-md border border-[var(--border)] bg-[var(--muted)] p-5 text-center">
                       <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">Ride it out</p>
-                      <p className="mt-2 text-5xl font-semibold tabular-nums text-[var(--primary)]" aria-live="polite">
+                      <p className="mt-2 text-5xl font-semibold tabular-nums text-[var(--primary)]">
                         {pad(Math.floor(cravingLeft / 60))}:{pad(cravingLeft % 60)}
                       </p>
                       {cravingEndsAt && cravingLeft === 0 ? (

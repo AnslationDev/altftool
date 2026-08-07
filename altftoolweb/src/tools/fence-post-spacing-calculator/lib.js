@@ -154,6 +154,12 @@ export function planFence({
 
   const sections = Math.ceil(runFt / spanFt);
   const posts = closedLoop ? sections : sections + 1;
+  if (closedLoop && posts < 3) {
+    return {
+      error:
+        "A closed enclosure needs at least 3 posts — increase the run length or reduce the max spacing.",
+    };
+  }
   const spacingFt = runFt / sections;
 
   const heightIn = heightFt * INCHES_PER_FOOT;

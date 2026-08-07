@@ -134,7 +134,10 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               type="date"
               value={dayIso}
-              onChange={(event) => setDayIso(event.target.value)}
+              onChange={(event) => {
+                setDayIso(event.target.value);
+                setCopied(false);
+              }}
             />
           </div>
         </div>
@@ -149,7 +152,9 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the featured Kannada proverb with its meaning"
+              aria-label={
+                copied ? "Copied" : "Copy the featured Kannada proverb with its meaning"
+              }
               className={GHOST_BTN}
             >
               {copied ? (

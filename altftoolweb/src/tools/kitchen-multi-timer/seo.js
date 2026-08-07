@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "What cook times do the presets use?",
-      "Fourteen common ones, including soft-boiled eggs at 7 minutes, jammy at 9 and hard-boiled at 12, pasta al dente at 9, white rice at 12, tea steep at 3, steamed vegetables at 8 and a roast chicken at 90. Any preset can be edited before you start it.",
+      "Fourteen common ones, including soft-boiled eggs at 7 minutes, jammy at 9 and hard-boiled at 12, pasta al dente at 9, white rice at 12, tea steep at 3, steamed vegetables at 8 and a roast chicken at 90. Tapping a preset adds it and starts the clock immediately at that length; once it's running you can adjust it with the +1 minute or Restart buttons, or set a custom time yourself in the dish-name/minutes/seconds form before adding it.",
     ],
     [
       "Will the timers keep running if I switch tabs or lock the phone?",

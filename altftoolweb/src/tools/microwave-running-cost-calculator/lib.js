@@ -25,6 +25,11 @@ export const MINUTES_PER_HOUR = 60;
 export const WATTS_PER_KW = 1000;
 export const HOURS_PER_DAY = 24;
 export const MONTHS_PER_YEAR = 12;
+/** Standby (the clock/display) runs every calendar day regardless of how
+ * often the oven is actually used for cooking, so its monthly/annual totals
+ * are computed on a fixed calendar basis rather than "days used per month". */
+export const DAYS_PER_MONTH_CALENDAR = 30;
+export const DAYS_PER_YEAR_CALENDAR = 365;
 
 export const MODES = {
   solo: {
@@ -37,7 +42,9 @@ export const MODES = {
     /** Magnetron runs continuously while on. */
     dutyCycle: 1,
     supportsPreheat: false,
-    note: "The wattage on the door is cooking output. An 800 W oven draws roughly 1230 W from the socket.",
+    /** Static fallback only; computeMicrowaveCost() builds the real note from
+     * the actual ratedPowerW/drawWatts for this mode since ratedIsOutput. */
+    note: "The wattage on the door is cooking output, not the draw from the socket.",
   },
   grill: {
     id: "grill",
@@ -64,6 +71,25 @@ export const MODES = {
 };
 
 const isNum = (value) => typeof value === "number" && Number.isFinite(value);
+
+/**
+ * Mode-aware sanity check for a rated power value. Each mode heats with a
+ * different kind of element (magnetron, quartz grill, convection coil), so
+ * the plausible wattage range — and the wording of the error — differs.
+ */
+function powerRangeError(ratedPowerW, modeId) {
+  if (!isNum(ratedPowerW) || ratedPowerW <= 0) return "Rated power must be greater than zero.";
+  if (ratedPowerW > 5000) {
+    if (modeId === "grill") {
+      return "Domestic grill elements are typically rated 800 W to 2500 W — check the power.";
+    }
+    if (modeId === "convection") {
+      return "Domestic convection elements are typically rated 1000 W to 3000 W — check the power.";
+    }
+    return "Domestic microwaves are rated 600 W to 2000 W — check the power.";
+  }
+  return null;
+}
 
 /** Power actually drawn from the socket, in watts. */
 export function inputPowerWatts(ratedPowerW, modeId) {
@@ -129,12 +155,15 @@ export function computeMicrowaveCost({
   }
   if (values.some((value) => value < 0)) return { error: "None of these values can be negative." };
 
-  if (ratedPowerW <= 0) return { error: "Rated power must be greater than zero." };
-  if (ratedPowerW > 5000) return { error: "Domestic microwaves are rated 600 W to 2000 W — check the power." };
+  const powerError = powerRangeError(ratedPowerW, modeId);
+  if (powerError) return { error: powerError };
   if (powerLevelPercent <= 0 || powerLevelPercent > 100) {
     return { error: "Power level should be between 1% and 100%." };
   }
   if (cookMinutes > 240) return { error: "A single run longer than four hours looks like a typo." };
+  if (preheatMinutes > 60) {
+    return { error: "A single preheat longer than an hour looks like a typo — check the minutes." };
+  }
   if (usesPerDay > 100) return { error: "More than 100 runs a day is a commercial kitchen, not a home oven." };
   if (standbyWatts > 50) return { error: "Standby draw on a microwave is 1 W to 5 W — check that figure." };
   if (daysPerMonth <= 0 || daysPerMonth > 31) {
@@ -155,16 +184,36 @@ export function computeMicrowaveCost({
   const cookingKwhPerDay = runKwh * usesPerDay;
   /** Standby runs every hour of every day, whether or not you cook. */
   const standbyKwhPerDay = (standbyWatts / WATTS_PER_KW) * HOURS_PER_DAY;
+  /** "Per day" figures describe a typical day you actually cook, so they
+   * combine both — used only for the daily-glance numbers below. */
   const kwhPerDay = cookingKwhPerDay + standbyKwhPerDay;
 
   const costPerRun = runKwh * tariffPerKwh;
   const costPerDay = kwhPerDay * tariffPerKwh;
-  const monthlyKwh = kwhPerDay * daysPerMonth;
-  const standbyAnnualKwh = standbyKwhPerDay * daysPerMonth * MONTHS_PER_YEAR;
+
+  /** Cooking energy scales with how many days a month you actually cook.
+   * Standby energy does not — the clock/display draws power on every
+   * calendar day, so it is totalled on a fixed 30-day / 365-day basis
+   * regardless of daysPerMonth. */
+  const cookingMonthlyKwh = cookingKwhPerDay * daysPerMonth;
+  const standbyMonthlyKwh = standbyKwhPerDay * DAYS_PER_MONTH_CALENDAR;
+  const monthlyKwh = cookingMonthlyKwh + standbyMonthlyKwh;
+  const monthlyCost = monthlyKwh * tariffPerKwh;
+
+  const cookingAnnualKwh = cookingMonthlyKwh * MONTHS_PER_YEAR;
+  const standbyAnnualKwh = standbyKwhPerDay * DAYS_PER_YEAR_CALENDAR;
+  const annualKwh = cookingAnnualKwh + standbyAnnualKwh;
+  const annualCost = annualKwh * tariffPerKwh;
+
+  const modeNote = mode.ratedIsOutput
+    ? `The wattage on the door is cooking output. A microwave rated at ${Math.round(
+        ratedPowerW,
+      )} W draws roughly ${Math.round(drawWatts)} W from the socket.`
+    : mode.note;
 
   return {
     modeLabel: mode.label,
-    modeNote: mode.note,
+    modeNote,
     drawWatts,
     runKwh,
     costPerRun,
@@ -173,9 +222,9 @@ export function computeMicrowaveCost({
     kwhPerDay,
     costPerDay,
     monthlyKwh,
-    monthlyCost: costPerDay * daysPerMonth,
-    annualKwh: monthlyKwh * MONTHS_PER_YEAR,
-    annualCost: costPerDay * daysPerMonth * MONTHS_PER_YEAR,
+    monthlyCost,
+    annualKwh,
+    annualCost,
     standbyAnnualKwh,
     standbyAnnualCost: standbyAnnualKwh * tariffPerKwh,
     standbyShare: kwhPerDay > 0 ? (standbyKwhPerDay / kwhPerDay) * 100 : 0,
@@ -192,12 +241,27 @@ export const COMMON_TASKS = [
   { id: "bake-cake", label: "Bake a cake", modeId: "convection", cookMinutes: 25, preheatMinutes: 8 },
 ];
 
+/**
+ * Same power sanity checks computeMicrowaveCost() applies, run across every
+ * mode this table draws from, since the task list mixes solo/grill/
+ * convection rows independently of whichever mode is currently selected.
+ */
 export function buildTaskTable({ ratedPowerW, grillPowerW, convectionPowerW, tariffPerKwh }) {
   const powerFor = (modeId) => {
     if (modeId === "grill") return grillPowerW;
     if (modeId === "convection") return convectionPowerW;
     return ratedPowerW;
   };
+
+  for (const [power, modeId] of [
+    [ratedPowerW, "solo"],
+    [grillPowerW, "grill"],
+    [convectionPowerW, "convection"],
+  ]) {
+    const error = powerRangeError(power, modeId);
+    if (error) return { rows: [], error };
+  }
+
   const rows = [];
   for (const task of COMMON_TASKS) {
     const kwh = energyPerRunKwh({
@@ -210,5 +274,5 @@ export function buildTaskTable({ ratedPowerW, grillPowerW, convectionPowerW, tar
     const cost = isNum(tariffPerKwh) && tariffPerKwh > 0 ? kwh * tariffPerKwh : 0;
     rows.push({ ...task, kwh, cost });
   }
-  return rows;
+  return { rows, error: null };
 }

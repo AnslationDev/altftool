@@ -143,7 +143,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className={`mt-6 ${CARD}`} aria-labelledby="score-heading">
+      <section className={`mt-6 ${CARD}`} aria-labelledby="score-heading" aria-live="polite">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p
@@ -251,6 +251,7 @@ export default function ToolHome() {
                   <h3 className="text-sm font-semibold">{dim.label}</h3>
                   <span
                     className={`text-xs font-bold uppercase tracking-wide ${row ? SEVERITY_STYLE[row.severity] : "text-[var(--muted-foreground)]"}`}
+                    aria-live="polite"
                   >
                     {row ? (row.distance === 0 ? row.severity : `${row.severity} · ${row.direction}`) : dash}
                   </span>

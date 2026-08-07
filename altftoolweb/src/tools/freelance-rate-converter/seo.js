@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How do I convert an hourly rate to an annual rate?",
-      "Multiply the hourly rate by your billable hours a year, not by 2,080. At 8 hours a day, 5 days a week and 46 working weeks that is 1,840 hours, so a rate of 50 an hour is 92,000 a year before costs and tax.",
+      "Multiply the hourly rate by your billable hours a year, not by 2,080. At 8 hours a day, 5 days a week and 46 working weeks that is 1,840 hours at 100% utilisation, so a rate of 50 an hour is 92,000 a year before costs and tax if every billable hour is actually billed.",
     ],
     [
       "What utilisation rate should a freelancer assume?",
@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "What hourly rate replaces a salary?",
-      "Add the employer contributions and benefits you now fund yourself, plus your business costs, then divide by billable hours. Replacing a 60,000 salary with 15% on-costs and 9,000 of business costs needs 78,000 of billings, which is about 42 an hour across 1,840 billable hours.",
+      "Add the employer contributions and benefits you now fund yourself, plus your business costs, then divide by billable hours. Replacing a 60,000 salary with 15% on-costs and 9,000 of business costs needs 78,000 of billings, which is about 42 an hour across 1,840 billable hours at 100% utilisation — assume less than that and the hourly figure rises.",
     ],
   ],
 };

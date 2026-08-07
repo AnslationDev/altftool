@@ -118,7 +118,14 @@ export default function ToolHome() {
     }
   };
 
-  const highest = error ? null : result.shares.reduce((a, b) => (b.exact > a.exact ? b : a));
+  const highest = error
+    ? null
+    : result.shares.reduce((a, b) => {
+        if (b.exact !== a.exact) return b.exact > a.exact ? b : a;
+        // Tie-break on exact share: prefer whoever actually rode farther, since
+        // that is the passenger the "rode the full X km" caption below refers to.
+        return b.dropKm > a.dropKm ? b : a;
+      });
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -252,7 +259,9 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {error
                 ? "Fix the highlighted input to see a result."
-                : `${highest.name}, who rode the full ${km(result.totalDistance)}`}
+                : highest.dropKm === result.totalDistance
+                  ? `${highest.name}, who rode the full ${km(result.totalDistance)}`
+                  : `${highest.name}, who paid the most of the group`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -260,6 +269,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyResult}
               aria-label="Copy the fare split"
+              aria-live="polite"
               className={GHOST_BTN}
             >
               {copied ? (
@@ -283,22 +293,29 @@ export default function ToolHome() {
                 <th scope="col" className="py-2 pr-3 font-semibold">Passenger</th>
                 <th scope="col" className="py-2 pr-3 text-right font-semibold">Drop</th>
                 <th scope="col" className="py-2 pr-3 text-right font-semibold">Pays</th>
+                <th scope="col" className="py-2 pr-3 text-right font-semibold">By distance only</th>
                 <th scope="col" className="py-2 text-right font-semibold">vs equal split</th>
               </tr>
             </thead>
             <tbody>
               {error ? (
                 <tr>
-                  <td className="py-3 text-[var(--muted-foreground)]" colSpan={4}>
+                  <td className="py-3 text-[var(--muted-foreground)]" colSpan={5}>
                     {DASH}
                   </td>
                 </tr>
               ) : (
-                result.shares.map((share) => (
-                  <tr key={share.name + share.dropKm} className="border-b border-[var(--border)] last:border-0">
+                result.shares.map((share, index) => (
+                  <tr
+                    key={`${index}-${share.name}-${share.dropKm}`}
+                    className="border-b border-[var(--border)] last:border-0"
+                  >
                     <td className="py-2 pr-3 font-semibold">{share.name}</td>
                     <td className="py-2 pr-3 text-right text-[var(--muted-foreground)]">{km(share.dropKm)}</td>
                     <td className="py-2 pr-3 text-right font-semibold">{money(share.rounded)}</td>
+                    <td className="py-2 pr-3 text-right text-[var(--muted-foreground)]">
+                      {money(share.proportionalShare)}
+                    </td>
                     <td
                       className={`py-2 text-right font-semibold ${
                         share.savingVsEqual >= 0 ? "text-[var(--success)]" : "text-[var(--danger)]"
@@ -313,6 +330,11 @@ export default function ToolHome() {
             </tbody>
           </table>
         </div>
+        <p className="mt-2 text-xs leading-5 text-[var(--muted-foreground)]">
+          &quot;By distance only&quot; is what each passenger would pay if the whole fare were split
+          purely in proportion to their drop distance, with no fixed-charge or segment adjustment — shown
+          for comparison against the actual, fairer &quot;Pays&quot; amount.
+        </p>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[

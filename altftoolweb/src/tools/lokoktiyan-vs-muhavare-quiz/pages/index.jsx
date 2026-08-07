@@ -55,6 +55,14 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      Object.keys(answers).length > 0 &&
+      !window.confirm(
+        "Reset the quiz? This clears your answered questions and cannot be undone."
+      )
+    ) {
+      return;
+    }
     setCountInput(DEFAULT_COUNT);
     setRoundInput(DEFAULT_ROUND);
     setAnswers({});
@@ -178,7 +186,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               {checked ? "Score" : "Answered"}
             </p>

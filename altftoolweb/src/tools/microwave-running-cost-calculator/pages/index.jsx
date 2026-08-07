@@ -124,7 +124,7 @@ export default function ToolHome() {
   );
 
   const result = useMemo(() => computeMicrowaveCost(input), [input]);
-  const tasks = useMemo(
+  const taskTable = useMemo(
     () =>
       buildTaskTable({
         ratedPowerW: toNumber(ratedPowerW),
@@ -134,6 +134,8 @@ export default function ToolHome() {
       }),
     [ratedPowerW, grillPowerW, convectionPowerW, tariffPerKwh],
   );
+  const tasks = taskTable.rows;
+  const hasTaskError = Boolean(taskTable.error);
 
   const hasError = Boolean(result.error);
 
@@ -376,36 +378,38 @@ export default function ToolHome() {
         )}
       </section>
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
-        <h2 className="text-base font-semibold">What common jobs cost</h2>
-        <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-          Using your rated powers and tariff, excluding standby.
-        </p>
-        <div className="mt-3 overflow-x-auto">
-          <table className="w-full min-w-[320px] text-left text-sm">
-            <thead>
-              <tr className="border-b border-[var(--border)] text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
-                <th scope="col" className="py-2 pr-3 font-semibold">Job</th>
-                <th scope="col" className="py-2 pr-3 text-right font-semibold">Minutes</th>
-                <th scope="col" className="py-2 pr-3 text-right font-semibold">kWh</th>
-                <th scope="col" className="py-2 text-right font-semibold">Cost</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tasks.map((row) => (
-                <tr key={row.id} className="border-b border-[var(--border)] last:border-0">
-                  <td className="py-2 pr-3 font-semibold">{row.label}</td>
-                  <td className="py-2 pr-3 text-right text-[var(--muted-foreground)]">
-                    {num(row.cookMinutes + row.preheatMinutes)}
-                  </td>
-                  <td className="py-2 pr-3 text-right">{num3(row.kwh)}</td>
-                  <td className="py-2 text-right">{money2(row.cost)}</td>
+      {!hasError && !hasTaskError && (
+        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+          <h2 className="text-base font-semibold">What common jobs cost</h2>
+          <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+            Using your rated powers and tariff, excluding standby.
+          </p>
+          <div className="mt-3 overflow-x-auto">
+            <table className="w-full min-w-[320px] text-left text-sm">
+              <thead>
+                <tr className="border-b border-[var(--border)] text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+                  <th scope="col" className="py-2 pr-3 font-semibold">Job</th>
+                  <th scope="col" className="py-2 pr-3 text-right font-semibold">Minutes</th>
+                  <th scope="col" className="py-2 pr-3 text-right font-semibold">kWh</th>
+                  <th scope="col" className="py-2 text-right font-semibold">Cost</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
+              </thead>
+              <tbody>
+                {tasks.map((row) => (
+                  <tr key={row.id} className="border-b border-[var(--border)] last:border-0">
+                    <td className="py-2 pr-3 font-semibold">{row.label}</td>
+                    <td className="py-2 pr-3 text-right text-[var(--muted-foreground)]">
+                      {num(row.cookMinutes + row.preheatMinutes)}
+                    </td>
+                    <td className="py-2 pr-3 text-right">{num3(row.kwh)}</td>
+                    <td className="py-2 text-right">{money2(row.cost)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      )}
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
         Estimates based on a 65% magnetron efficiency and typical element duty cycles. A clamp meter

@@ -88,7 +88,8 @@ export function buildIndex({ bookmarks }) {
     }))
     .sort((a, b) => a.topic.localeCompare(b.topic));
 
-  const books = new Set(cleaned.map((entry) => entry.book.toLowerCase()));
+  // Case-sensitive: books are matched by exact name (see the tool's FAQ).
+  const books = new Set(cleaned.map((entry) => entry.book));
   const biggestTopic = groups.reduce((big, group) => (group.entries.length > big.entries.length ? group : big));
 
   return {

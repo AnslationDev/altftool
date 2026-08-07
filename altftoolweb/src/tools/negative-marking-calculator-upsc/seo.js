@@ -8,7 +8,7 @@ const seo = {
   ],
   benefits: [
     ["Tiered, not a single accuracy figure", "Sure answers, two-option guesses, three-option guesses and blind guesses are scored separately."],
-    ["Names the optimal attempt count", "Tiers with a negative expected value are identified so you know exactly which attempts to drop."],
+    ["Names the optimal attempt count", "Tiers at or below break-even expected value are identified so you know exactly which attempts to drop."],
     ["Handles both papers correctly", "GS Paper I uses 2 marks a question and CSAT uses 2.5, so the deduction differs and is calculated for each."],
   ],
   faqs: [
@@ -18,7 +18,7 @@ const seo = {
     ],
     [
       "Is blind guessing worth it in UPSC prelims?",
-      "It is exactly break-even, not profitable. With four options a blind guess is right 25% of the time, giving 0.25 × 2 − 0.75 × 0.67 = 0 expected marks in GS. Ruling out even one option turns the same guess positive, which is why elimination — not guessing volume — decides your score.",
+      "It is exactly break-even, not profitable. With four options a blind guess is right 25% of the time, giving 0.25 × 2 − 0.75 × (2/3) = 0 expected marks in GS. Ruling out even one option turns the same guess positive, which is why elimination — not guessing volume — decides your score.",
     ],
     [
       "How many questions should I attempt in UPSC prelims?",

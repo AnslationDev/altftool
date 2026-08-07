@@ -232,6 +232,21 @@ export default function ToolHome() {
             />
           </div>
           <div>
+            <label className={LABEL_CLASS} htmlFor="gemini-cache-storage-rate">
+              Cache storage rate (USD / 1M token-hour)
+            </label>
+            <input
+              id="gemini-cache-storage-rate"
+              className={`mt-2 ${INPUT_CLASS}`}
+              type="number"
+              inputMode="decimal"
+              min="0"
+              step="0.001"
+              value={rates.cacheStoragePerMTokHour}
+              onChange={setRateField("cacheStoragePerMTokHour")}
+            />
+          </div>
+          <div>
             <label className={LABEL_CLASS} htmlFor="gemini-audio-rate">
               Audio input rate (USD / 1M tokens)
             </label>
@@ -276,6 +291,21 @@ export default function ToolHome() {
                   step="0.001"
                   value={rates.longOutputPerMTok}
                   onChange={setRateField("longOutputPerMTok")}
+                />
+              </div>
+              <div>
+                <label className={LABEL_CLASS} htmlFor="gemini-long-cached-rate">
+                  Long-context cached input rate (USD / 1M)
+                </label>
+                <input
+                  id="gemini-long-cached-rate"
+                  className={`mt-2 ${INPUT_CLASS}`}
+                  type="number"
+                  inputMode="decimal"
+                  min="0"
+                  step="0.001"
+                  value={rates.longCachedInputPerMTok}
+                  onChange={setRateField("longCachedInputPerMTok")}
                 />
               </div>
             </>
@@ -427,7 +457,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Estimated monthly cost
             </p>
@@ -458,7 +488,11 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {[
             ["Prompt tokens per request", ok ? tokens(result.promptTokens) : dash],
             ["Billing tier", ok ? (result.isLongContext ? "Long context" : "Standard") : dash],
@@ -470,6 +504,7 @@ export default function ToolHome() {
             ["Cost per request", ok ? smartUsd(result.costPerRequest) : dash],
             ["Cost per 1,000 requests", ok ? smartUsd(result.costPer1kRequests) : dash],
             ["Context cache storage (month)", ok ? usd(result.cacheStorageCost) : dash],
+            ["Cache saving (month)", ok ? usd(result.cacheSavingPerMonth) : dash],
             ["Annual run rate", ok ? usd(result.annualCost) : dash],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">

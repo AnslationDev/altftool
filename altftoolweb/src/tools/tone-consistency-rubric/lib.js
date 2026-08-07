@@ -89,8 +89,8 @@ export const DIMENSIONS = [
     defaultTarget: 2,
     defaultWeight: 2,
     anchors: [
-      "Zero domain terms; anything technical is paraphrased in plain words.",
-      "Everyday language, with a domain term only when it is defined on first use.",
+      "Zero domain terms: anything technical is paraphrased in plain words.",
+      "Everyday language: a domain term appears only when it is defined on first use.",
       "Mixed: assumes basic domain vocabulary, explains the specialist terms.",
       "Practitioner-level: acronyms used unexplained, dense noun phrases.",
       "Insider-only: undefined acronyms, internal codenames, unreadable outside the team.",
@@ -104,7 +104,7 @@ export const DIMENSIONS = [
     defaultTarget: 2,
     defaultWeight: 1,
     anchors: [
-      "None. Strictly informational.",
+      "None: strictly informational.",
       "Dry: an occasional light turn of phrase, never a joke as such.",
       "Playful: about one wink per few paragraphs, never in an error state.",
       "Comedic: jokes are part of the structure, puns in headings.",
@@ -213,7 +213,7 @@ export function scoreTone({ ratings = {}, targets = {}, weights = {} } = {}) {
   }
 
   const score = Math.round((weightedAlignment / weightSum) * 100);
-  const drifting = rows.filter((r) => r.distance > 0).sort((a, b) => b.loss - a.loss);
+  const drifting = rows.filter((r) => r.distance > 0 && r.weight > 0).sort((a, b) => b.loss - a.loss);
   const onTarget = rows.filter((r) => r.distance === 0);
 
   return {

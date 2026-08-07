@@ -212,7 +212,7 @@ function parseInertHtml(value) {
     const selfClosing = /\/\s*$/u.test(rawTag);
     if (!selfClosing && !VOID_ELEMENTS.has(tag)) {
       stack.push(node);
-      if (tag === "script" || tag === "style") {
+      if (tag === "script" || tag === "style" || tag === "textarea") {
         const closingStart = lowerText.indexOf(`</${tag}`, index);
         if (closingStart < 0) {
           stack.pop();
@@ -293,7 +293,7 @@ function nearestAncestor(node, tag) {
 }
 
 function elementReference(node, counters) {
-  const index = counters.get(node.tag) || node.order;
+  const index = counters.get(node) || node.order;
   return `${node.tag === "img" ? "Image" : node.tag === "a" ? "Link" : node.tag === "input" ? "Input" : node.tag === "iframe" ? "Iframe" : node.tag === "table" ? "Table" : `<${node.tag}>`} ${index}`;
 }
 

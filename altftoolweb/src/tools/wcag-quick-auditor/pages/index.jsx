@@ -233,6 +233,14 @@ export default function WcagQuickAuditor() {
   };
 
   const clearAll = () => {
+    if (!html && !result) return;
+    if (
+      !window.confirm(
+        "Clear the pasted HTML and audit result? This cannot be undone.",
+      )
+    ) {
+      return;
+    }
     setHtml("");
     setResult(null);
     setCopied(false);

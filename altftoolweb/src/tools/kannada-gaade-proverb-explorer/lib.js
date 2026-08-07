@@ -322,7 +322,10 @@ export function searchProverbs({ query = "", theme = "all" } = {}) {
 
   return {
     results,
-    total: PROVERBS.length,
+    total:
+      safeTheme === "all"
+        ? PROVERBS.length
+        : PROVERBS.filter((proverb) => proverb.theme === safeTheme).length,
     matched: results.length,
     query: String(query ?? ""),
     theme: safeTheme,

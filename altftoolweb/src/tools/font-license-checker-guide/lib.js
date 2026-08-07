@@ -230,7 +230,12 @@ export function evaluateFontLicence({
   );
 
   const requirements = [];
-  const usesMeter = (meter) => results.some((row) => row.meter === meter);
+  // Only rows where a metered purchase is genuinely part of complying — a use that's
+  // already PERMITTED needs nothing bought, and one that's PROHIBITED can't be fixed
+  // by buying more of the meter, so neither should surface a "declare this" number.
+  const meteredVerdicts = new Set([VERDICT.SEPARATE, VERDICT.CONDITIONAL]);
+  const usesMeter = (meter) =>
+    results.some((row) => row.meter === meter && meteredVerdicts.has(row.verdict));
   if (usesMeter(METER.WORKSTATIONS)) {
     requirements.push({
       label: "Desktop seats to licence",
