@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How much larger is a PDF after Base64 encoding?",
-      "Exactly 33.3% larger. A 2 MiB PDF becomes 2,796,204 Base64 characters, plus the 28-character data:application/pdf;base64, prefix — so plan attachment limits against the encoded size, not the file size.",
+      "About 33% larger for typical file sizes — the asymptotic ratio is exactly 4/3. A 2 MiB PDF becomes 2,796,204 Base64 characters, plus the 28-character data:application/pdf;base64, prefix. Smaller files can grow by more than 33% because of Base64 padding, so plan attachment limits against the encoded size, not the file size.",
     ],
     [
       "What is the largest PDF I can convert here?",

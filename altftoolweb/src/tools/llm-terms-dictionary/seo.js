@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     ["Searchable by the parameter name, not just the concept", "Every entry carries aliases — top_p, BPE, developer message — so the term you saw in a request body leads to the explanation."],
     ["Each definition stands on its own", "Meaning, a worked example with real numbers, and what to actually do with the setting, rather than a circular one-line gloss."],
-    ["A budget check next to the vocabulary", "The context-window entry comes with a calculator that turns your prompt text into an estimated token count and percentage of the window used."],
+    ["A budget check next to the vocabulary", "The same page carries a context-budget calculator that turns your prompt text into an estimated token count and percentage of the window used."],
   ],
   faqs: [
     [

@@ -158,7 +158,7 @@ export default function ToolHome() {
     const fireNumber = expenses / (rate / 100);
     const multiple = 100 / rate;
     const months = monthsToTarget(corpus, monthly, realMonthly, fireNumber);
-    const progress = fireNumber > 0 ? (corpus / fireNumber) * 100 : 0;
+    const progress = fireNumber > 0 ? (corpus / fireNumber) * 100 : 100;
 
     const coastTarget = Math.max(age, Number(coastAge) || 60);
     const yearsToCoastAge = Math.max(0, coastTarget - age);
@@ -307,6 +307,12 @@ export default function ToolHome() {
   const stage = fireStage(model.progress);
   const clampedProgress = Math.max(0, Math.min(100, model.progress));
 
+  const rawWithdrawalRate = Number(withdrawalRate);
+  const rateIsClamped = Number.isFinite(rawWithdrawalRate) && rawWithdrawalRate !== model.rate;
+
+  const rawCoastAge = Number(coastAge) || 60;
+  const coastAgeIsClamped = model.coastTarget !== rawCoastAge;
+
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
       <div className="mx-auto max-w-6xl">
@@ -356,6 +362,7 @@ export default function ToolHome() {
                       type="button"
                       onClick={() => setWithdrawalRate(preset.rate)}
                       title={preset.hint}
+                      aria-pressed={Number(withdrawalRate) === preset.rate}
                       className={`rounded-md border px-2 py-2 text-center text-sm font-semibold transition ${
                         Number(withdrawalRate) === preset.rate
                           ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
@@ -377,6 +384,14 @@ export default function ToolHome() {
                     suffix="%"
                     hint={`Your corpus multiple: ${model.multiple.toFixed(1)}x annual expenses`}
                   />
+                  {rateIsClamped ? (
+                    <p
+                      className="mt-2 text-xs font-semibold text-[var(--anslation-ds-warning)]"
+                      role="status"
+                    >
+                      Using {model.rate}% for the calculation — rates outside 0.1–12% aren&apos;t modelled.
+                    </p>
+                  ) : null}
                 </div>
               </div>
 
@@ -430,7 +445,18 @@ export default function ToolHome() {
 
               <div className="grid gap-4 sm:grid-cols-2">
                 <NumberField label="Current age" value={currentAge} onChange={setCurrentAge} min={0} max={90} step={1} />
-                <NumberField label="Coast to age" value={coastAge} onChange={setCoastAge} min={30} max={90} step={1} />
+                <div>
+                  <NumberField label="Coast to age" value={coastAge} onChange={setCoastAge} min={30} max={90} step={1} />
+                  {coastAgeIsClamped ? (
+                    <p
+                      className="mt-2 text-xs font-semibold text-[var(--anslation-ds-warning)]"
+                      role="status"
+                    >
+                      Raised to age {model.coastTarget} — you can&apos;t coast to an age younger than you already
+                      are.
+                    </p>
+                  ) : null}
+                </div>
               </div>
 
               <NumberField

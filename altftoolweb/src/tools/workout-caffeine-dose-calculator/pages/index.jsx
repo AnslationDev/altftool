@@ -12,6 +12,7 @@ import {
   FORMS,
   HALF_LIFE_HOURS_MAX,
   HALF_LIFE_HOURS_MIN,
+  NO_EXTRA_BENEFIT_MG_PER_KG,
   SLEEP_THRESHOLD_MG,
   computeCaffeinePlan,
 } from "../lib";
@@ -334,7 +335,7 @@ export default function ToolHome() {
         )}
         {!hasError && plan.aboveErgogenicRange && (
           <p className="mt-2 text-xs text-[var(--muted-foreground)]">
-            Above {ERGOGENIC_MAX_MG_PER_KG} mg/kg, the evidence shows no further performance gain —
+            Above {NO_EXTRA_BENEFIT_MG_PER_KG} mg/kg, the evidence shows no further performance gain —
             only more jitteriness, higher heart rate and worse sleep.
           </p>
         )}

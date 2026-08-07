@@ -342,7 +342,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section aria-live="polite" className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -418,15 +418,22 @@ export default function ToolHome() {
         {!hasError && result.multipleEntryWorthIt && (
           <p className="mt-4 rounded-md bg-[var(--success-soft)] px-3 py-2 text-sm font-medium text-[var(--success)]">
             Over {result.plannedTrips} trips this choice saves {money(result.savingVsRepeatInr)}{" "}
-            against applying afresh for a short single-entry visa each time.
+            against applying afresh for a short single-entry visa each time
+            {result.applicationsNeededForAllTrips > 1
+              ? ` — this visa needs to be bought ${result.applicationsNeededForAllTrips} times to cover all ${result.plannedTrips} trips, totaling ${money(result.trueTotalCostInr)}`
+              : ""}
+            .
           </p>
         )}
 
         {!hasError && !result.multipleEntryWorthIt && result.plannedTrips > 1 && (
           <p className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning)]">
             For {result.plannedTrips} trips this visa costs{" "}
-            {money(result.extraCostVsRepeatInr)} more than re-applying each time. A
-            multiple-entry visa only pays off once the trips outnumber the fee difference.
+            {money(result.extraCostVsRepeatInr)} more than re-applying each time
+            {result.applicationsNeededForAllTrips > 1
+              ? ` — you would need to buy it ${result.applicationsNeededForAllTrips} times (${money(result.trueTotalCostInr)} total) to cover all trips`
+              : ""}
+            . A multiple-entry visa only pays off once the trips outnumber the fee difference.
           </p>
         )}
       </section>

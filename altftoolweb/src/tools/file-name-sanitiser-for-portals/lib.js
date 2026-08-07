@@ -96,7 +96,10 @@ export function sanitizeFileName({ name, replacement = "_", lowercase = false, m
   // original name or were introduced by the replacement above — a portal is
   // just as likely to choke on ".." as on "__".
   const beforeCollapse = base;
-  const runPattern = new RegExp(`[${replacement}]{2,}`, "g");
+  // Collapse runs of EITHER separator character, not just the one currently
+  // selected as `replacement` — a name can contain both "_" and "-" runs
+  // regardless of which one the user picked as their preferred separator.
+  const runPattern = /[_-]{2,}/g;
   base = base
     .replace(/\.{2,}/g, ".")
     .replace(runPattern, replacement)
@@ -116,17 +119,13 @@ export function sanitizeFileName({ name, replacement = "_", lowercase = false, m
     issues.push("The extension was lowercased — case-sensitive validators expect lowercase extensions.");
   }
 
-  // Truncate the BASE so the extension always survives — but if the extension
-  // alone is long relative to the cap, shrink the extension too. The output
-  // must never exceed `cap`, no matter how long the original extension was.
+  // Truncate the BASE so the extension always survives — the extension itself
+  // is never shortened, since a corrupted extension (e.g. ".jpe" instead of
+  // ".jpeg") can fail a portal's exact-extension whitelist, which is worse
+  // than a result that runs slightly over `cap`. If there isn't room for a
+  // meaningful base name, fall back to a single character.
   let extensionPart = extension === "" ? "" : `.${extension}`;
   if (base.length + extensionPart.length > cap) {
-    if (extensionPart.length > cap - 1) {
-      // Reserve 1 char for the base name and 1 for the dot, then trim the extension.
-      const maxExtensionChars = Math.max(0, cap - 2);
-      extension = maxExtensionChars > 0 ? extension.slice(0, maxExtensionChars) : "";
-      extensionPart = extension === "" ? "" : `.${extension}`;
-    }
     base = base.slice(0, Math.max(1, cap - extensionPart.length));
     base = base.replace(new RegExp(`[.${replacement}]+$`, "g"), "") || "file";
     issues.push(`The name was longer than ${cap} characters and was truncated.`);

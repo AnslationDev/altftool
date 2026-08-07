@@ -157,7 +157,15 @@ export function estimateSouthKoreaVisaCost({
       indianChargesInr,
   );
   const repeatSingleEntryInr = round2(oneSingleApplicationInr * plannedTrips);
-  const savingVsRepeatInr = round2(repeatSingleEntryInr - totalInr);
+
+  // A single- or double-entry visa only covers 1 or 2 of the planned trips, so
+  // covering every planned trip means buying the SAME visa type again once its
+  // entries run out — not just paying for it once. A multiple-entry visa
+  // (entries === null) covers every trip with one application.
+  const applicationsNeededForAllTrips =
+    visaType.entries === null ? 1 : Math.ceil(plannedTrips / visaType.entries);
+  const trueTotalCostInr = round2(totalInr * applicationsNeededForAllTrips);
+  const savingVsRepeatInr = round2(repeatSingleEntryInr - trueTotalCostInr);
 
   const lines = [
     {
@@ -231,6 +239,8 @@ export function estimateSouthKoreaVisaCost({
     costPerEntryInr,
     oneSingleApplicationInr,
     repeatSingleEntryInr,
+    applicationsNeededForAllTrips,
+    trueTotalCostInr,
     savingVsRepeatInr,
     extraCostVsRepeatInr: round2(Math.max(0, -savingVsRepeatInr)),
     multipleEntryWorthIt: savingVsRepeatInr > 0,

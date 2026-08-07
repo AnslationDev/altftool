@@ -36,6 +36,7 @@ const GHOST_BTN =
   "inline-flex min-h-11 items-center justify-center gap-2 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 text-sm font-semibold text-[var(--foreground)] transition hover:border-[var(--primary)] active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35";
 
 export default function ToolHome() {
+  const [sizeKey, setSizeKey] = useState(DEFAULTS.sizeKey);
   const [unit, setUnit] = useState(DEFAULTS.unit);
   const [width, setWidth] = useState(DEFAULTS.width);
   const [height, setHeight] = useState(DEFAULTS.height);
@@ -66,6 +67,7 @@ export default function ToolHome() {
   const applySize = (key) => {
     const preset = SIZE_PRESETS[key];
     if (!preset) return;
+    setSizeKey(key);
     const show = (mm) => String(Math.round(fromMm(mm, unit) * 1000) / 1000);
     setWidth(show(preset.width));
     setHeight(show(preset.height));
@@ -118,6 +120,7 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    setSizeKey(DEFAULTS.sizeKey);
     setUnit(DEFAULTS.unit);
     setWidth(DEFAULTS.width);
     setHeight(DEFAULTS.height);
@@ -162,7 +165,7 @@ export default function ToolHome() {
             <select
               id="bleed-preset-size"
               className={`mt-2 ${INPUT_CLASS}`}
-              defaultValue={DEFAULTS.sizeKey}
+              value={sizeKey}
               onChange={(event) => applySize(event.target.value)}
             >
               {Object.values(SIZE_PRESETS).map((option) => (
@@ -311,7 +314,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -332,7 +339,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the print setup figures"
+              aria-label={copied ? "Print setup figures copied" : "Copy the print setup figures"}
               className={PRIMARY_BTN}
               disabled={failed}
             >

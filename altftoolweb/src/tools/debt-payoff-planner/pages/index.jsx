@@ -32,7 +32,7 @@ export default function DebtPayoffPlanner() {
             Debt Payoff Planner
           </h1>
           <p className="mx-auto mt-3 max-w-2xl text-(--muted-foreground)">
-            Compare Snowball vs Avalanche debt payoff methods. Find the fastest and most cost-effective way to become debt-free.
+            See how long it will take to pay off a single debt balance and how much interest you&apos;ll pay, based on your minimum and extra monthly payments.
           </p>
         </div>
 
@@ -97,41 +97,48 @@ function CalculatorContent({ slug, pascal, icon, iconColor, name, result, setRes
 
   return (
     <>
-      {fields.map((field) => (
-        <div key={field.key}>
-          <label className="mb-1.5 block text-sm font-semibold text-(--foreground)">
-            {field.label}
-          </label>
-          <div className="relative">
-            {field.prefix && (
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-(--muted-foreground) font-medium">
-                {field.prefix}
-              </span>
-            )}
-            <input
-              type="number"
-              value={form[field.key] ?? ""}
-              onChange={(e) => handleChange(field.key, e.target.value)}
-              placeholder={field.placeholder || ""}
-              className={`h-12 w-full rounded-xl border ${
-                errors[field.key]
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500/30"
-                  : "border-(--border) focus:border-(--primary) focus:ring-(--primary)/30"
-              } bg-(--background) px-4 ${
-                field.prefix ? "pl-8" : ""
-              } text-sm font-medium text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:ring-2`}
-            />
-            {field.suffix && (
-              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-sm text-(--muted-foreground)">
-                {field.suffix}
-              </span>
+      {fields.map((field) => {
+        const inputId = `${slug}-field-${field.key}`;
+        const errorId = `${inputId}-error`;
+        return (
+          <div key={field.key}>
+            <label htmlFor={inputId} className="mb-1.5 block text-sm font-semibold text-(--foreground)">
+              {field.label}
+            </label>
+            <div className="relative">
+              {field.prefix && (
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-(--muted-foreground) font-medium">
+                  {field.prefix}
+                </span>
+              )}
+              <input
+                id={inputId}
+                type="number"
+                value={form[field.key] ?? ""}
+                onChange={(e) => handleChange(field.key, e.target.value)}
+                placeholder={field.placeholder || ""}
+                aria-invalid={errors[field.key] ? "true" : undefined}
+                aria-describedby={errors[field.key] ? errorId : undefined}
+                className={`h-12 w-full rounded-xl border ${
+                  errors[field.key]
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-500/30"
+                    : "border-(--border) focus:border-(--primary) focus:ring-(--primary)/30"
+                } bg-(--background) px-4 ${
+                  field.prefix ? "pl-8" : ""
+                } text-sm font-medium text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:ring-2`}
+              />
+              {field.suffix && (
+                <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-sm text-(--muted-foreground)">
+                  {field.suffix}
+                </span>
+              )}
+            </div>
+            {errors[field.key] && (
+              <p id={errorId} role="alert" className="mt-1 text-xs text-red-500">{errors[field.key]}</p>
             )}
           </div>
-          {errors[field.key] && (
-            <p className="mt-1 text-xs text-red-500">{errors[field.key]}</p>
-          )}
-        </div>
-      ))}
+        );
+      })}
 
       {getExtraControls(slug, form, setForm)}
 
@@ -157,7 +164,11 @@ function CalculatorContent({ slug, pascal, icon, iconColor, name, result, setRes
 function ResultsPanel({ result, showDetails, slug, name }) {
   if (!result) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-(--border) bg-(--background)/50 p-8 text-center">
+      <div
+        aria-live="polite"
+        role="status"
+        className="flex flex-col items-center justify-center rounded-xl border border-dashed border-(--border) bg-(--background)/50 p-8 text-center"
+      >
         <Calculator className="mb-3 h-12 w-12 text-(--muted-foreground)/40" />
         <p className="text-sm text-(--muted-foreground)">
           Enter your details and click Calculate to see results
@@ -170,7 +181,13 @@ function ResultsPanel({ result, showDetails, slug, name }) {
   }
 
   return (
-    <div className="space-y-5">
+    <div aria-live="polite" role="status" className="space-y-5">
+      {result.warning && (
+        <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm font-medium text-red-600">
+          {result.warning}
+        </div>
+      )}
+
       {result.primary !== undefined && (
         <div className="rounded-xl bg-(--primary)/5 border border-(--primary)/10 p-6 text-center">
           <p className="text-sm font-medium text-(--muted-foreground) mb-1">{result.primaryLabel || "Result"}</p>
@@ -239,7 +256,8 @@ function ResultsPanel({ result, showDetails, slug, name }) {
 }
 
 function formatCurrency(value) {
-  if (value === undefined || value === null) return "";
+  if (value === undefined || value === null || value === "") return "";
+  if (typeof value === "string") return value;
   return new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
@@ -636,30 +654,36 @@ function computeResult(slug, form) {
       let avalancheMonths = 0;
       let snowballInterest = 0;
       let avalancheInterest = 0;
+      let snowballPaidOff = false;
+      let avalanchePaidOff = false;
       const totalPayment = minPayment + extraPayment;
       for (let m = 1; m <= 600 && snowballBalance > 0; m++) {
         const interest = snowballBalance * monthlyRate;
         const principal = Math.min(totalPayment - interest, snowballBalance);
         snowballInterest += interest;
         snowballBalance -= principal;
-        if (snowballBalance <= 0) { snowballMonths = m; break; }
+        if (snowballBalance <= 0) { snowballMonths = m; snowballPaidOff = true; break; }
       }
       for (let m = 1; m <= 600 && avalancheBalance > 0; m++) {
         const interest = avalancheBalance * monthlyRate;
         const principal = Math.min(totalPayment - interest, avalancheBalance);
         avalancheInterest += interest;
         avalancheBalance -= principal;
-        if (avalancheBalance <= 0) { avalancheMonths = m; break; }
+        if (avalancheBalance <= 0) { avalancheMonths = m; avalanchePaidOff = true; break; }
       }
+      const unpayable = !snowballPaidOff || !avalanchePaidOff;
       return {
         primary: Math.round(total),
         primaryLabel: "Total Debt",
         summaryItems: [
-          { label: "Snowball - Months to Pay Off", value: snowballMonths > 0 ? snowballMonths + " months" : "N/A" },
-          { label: "Snowball - Total Interest", value: Math.round(snowballInterest) },
-          { label: "Avalanche - Months to Pay Off", value: avalancheMonths > 0 ? avalancheMonths + " months" : "N/A" },
-          { label: "Avalanche - Total Interest", value: Math.round(avalancheInterest) },
+          { label: "Snowball - Months to Pay Off", value: snowballPaidOff ? snowballMonths + " months" : "N/A" },
+          { label: "Snowball - Total Interest", value: snowballPaidOff ? Math.round(snowballInterest) : "N/A" },
+          { label: "Avalanche - Months to Pay Off", value: avalanchePaidOff ? avalancheMonths + " months" : "N/A" },
+          { label: "Avalanche - Total Interest", value: avalanchePaidOff ? Math.round(avalancheInterest) : "N/A" },
         ],
+        warning: unpayable
+          ? "This payment plan does not pay off the debt within 50 years — your minimum and extra payments together must exceed the first month's interest. Increase your payment to see a payoff timeline."
+          : undefined,
       };
     }
     case "net-worth-calculator": {

@@ -41,15 +41,15 @@ const BASE_SHAPES = [
   ],
   [
     [0, 1, 1, 0],
-    [0, 0, 1, 1],
-    [0, 0, 0, 1],
+    [1, 1, 0, 0],
+    [0, 1, 0, 0],
     [0, 0, 0, 0]
   ],
   [
     [0, 1, 0, 0],
-    [0, 1, 1, 0],
-    [0, 0, 1, 1],
-    [0, 0, 0, 0]
+    [0, 1, 0, 0],
+    [1, 1, 0, 0],
+    [1, 0, 0, 0]
   ],
   [
     [0, 0, 1, 1],
@@ -142,6 +142,7 @@ export default function MentalRotationTest() {
   
   const trialStartTime = useRef(0);
   const isTransitioning = useRef(false);
+  const nextTrialTimeoutRef = useRef(null);
 
   const startTest = useCallback(() => {
     // Generate trials
@@ -182,7 +183,8 @@ export default function MentalRotationTest() {
     setResponses((prev) => [...prev, { rt, isCorrect }]);
     
     if (currentTrialIdx + 1 < TOTAL_TRIALS) {
-      setTimeout(() => {
+      nextTrialTimeoutRef.current = setTimeout(() => {
+        nextTrialTimeoutRef.current = null;
         setCurrentTrialIdx((prev) => prev + 1);
         trialStartTime.current = performance.now();
         isTransitioning.current = false;
@@ -235,6 +237,15 @@ export default function MentalRotationTest() {
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [phase, handleResponse]);
+
+  useEffect(() => {
+    return () => {
+      if (nextTrialTimeoutRef.current) {
+        clearTimeout(nextTrialTimeoutRef.current);
+        nextTrialTimeoutRef.current = null;
+      }
+    };
+  }, []);
 
   return (
     <div className="bg-[var(--background)] text-[var(--foreground)] transition-colors py-6 px-4">
@@ -325,7 +336,7 @@ export default function MentalRotationTest() {
       )}
 
       {phase === PHASES.FEEDBACK && results && (
-        <div className="mx-auto max-w-4xl space-y-6">
+        <div className="mx-auto max-w-4xl space-y-6" aria-live="polite" role="status">
           <div className="flex flex-col items-center rounded-3xl border border-[var(--border)] bg-[var(--card)] p-8 text-center shadow-md">
             <div className={`mb-4 flex h-20 w-20 items-center justify-center rounded-full ${
               results.tone === "good" ? "bg-emerald-500/10 text-emerald-500" : results.tone === "warn" ? "bg-rose-500/10 text-rose-500" : "bg-blue-500/10 text-blue-500"

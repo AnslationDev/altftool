@@ -214,7 +214,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -276,7 +280,11 @@ export default function ToolHome() {
         </dl>
       </section>
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <h2 className="text-base font-semibold">Recommended alert ladder</h2>
         <div className="mt-3 overflow-x-auto">
           <table className="w-full min-w-[420px] text-left text-sm">
@@ -326,10 +334,10 @@ export default function ToolHome() {
       </section>
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
-        The 50% / 85% / 100% ladder matches GCP Billing budget defaults and the AWS Budgets
-        recommended template; the forecast trigger uses the same linear run-rate model consoles
-        show early in the month. Seasonal or spiky workloads deserve an anomaly-detection alert on
-        top.
+        The 50% / 100% rungs match GCP Billing budget defaults (GCP defaults to 50% / 90% / 100%);
+        the 85% rung matches the AWS Budgets recommended template. The forecast trigger uses the
+        same linear run-rate model consoles show early in the month. Seasonal or spiky workloads
+        deserve an anomaly-detection alert on top.
       </p>
     </main>
   );

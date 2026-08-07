@@ -55,6 +55,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    const hasProgress = submitted || answers.some((answer) => answer !== null);
+    if (
+      hasProgress &&
+      !window.confirm("Reset the quiz? This clears your answered questions and cannot be undone.")
+    ) {
+      return;
+    }
     setAnswers(BLANK_ANSWERS);
     setSubmitted(false);
     setCopied(false);
@@ -98,7 +105,11 @@ export default function ToolHome() {
         </p>
       </header>
 
-      <section className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        role="status"
+        className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
