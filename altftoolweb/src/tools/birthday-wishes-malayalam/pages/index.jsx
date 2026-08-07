@@ -132,7 +132,10 @@ export default function ToolHome() {
         ],
         ["Opening line", result.salutation.native],
         ["Sign-off", result.closing.native],
-        ["Wordings available", `${result.delivered} of ${result.poolSize} written for this pairing`],
+        [
+          "Wordings available",
+          `${result.tailoredCount} of ${result.poolSize} written specifically for a ${result.relationship.label.toLowerCase()} (${result.delivered} shown)`,
+        ],
         [
           "SMS length",
           featured
@@ -298,7 +301,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section aria-live="polite" aria-atomic="true" className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -348,7 +351,7 @@ export default function ToolHome() {
       </section>
 
       {messages.length > 0 ? (
-        <section className="mt-6 space-y-3">
+        <section aria-live="polite" aria-atomic="true" className="mt-6 space-y-3">
           {messages.map((item) => (
             <article
               key={item.id}

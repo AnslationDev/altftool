@@ -28,6 +28,7 @@ const DEFAULTS = {
   maxGap: "7",
   startBell: true,
   endBell: true,
+  soundOn: true,
 };
 
 const INPUT_CLASS =
@@ -52,6 +53,7 @@ export default function ToolHome() {
   const [elapsed, setElapsed] = useState(0);
   const [copied, setCopied] = useState(false);
   const audioRef = useRef(null);
+  const lastPlayedRef = useRef(0);
 
   const schedule = useMemo(
     () =>
@@ -76,6 +78,7 @@ export default function ToolHome() {
   useEffect(() => {
     setRunning(false);
     setElapsed(0);
+    lastPlayedRef.current = 0;
   }, [minutes, mode, interval, minGap, maxGap, startBell, endBell, seed]);
 
   useEffect(() => {
@@ -93,7 +96,8 @@ export default function ToolHome() {
 
   // Strike the bell whenever another one has been reached.
   useEffect(() => {
-    if (!running || !soundOn || rungCount === 0) return;
+    if (!running || !soundOn || rungCount === 0 || rungCount <= lastPlayedRef.current) return;
+    lastPlayedRef.current = rungCount;
     const ctx = audioRef.current;
     if (!ctx) return;
     try {
@@ -135,7 +139,10 @@ export default function ToolHome() {
     }
     const ctx = audioRef.current;
     if (ctx && ctx.state === "suspended" && typeof ctx.resume === "function") ctx.resume();
-    if (finished) setElapsed(0);
+    if (finished) {
+      setElapsed(0);
+      lastPlayedRef.current = 0;
+    }
     setRunning(true);
   };
 
@@ -147,9 +154,11 @@ export default function ToolHome() {
     setMaxGap(DEFAULTS.maxGap);
     setStartBell(DEFAULTS.startBell);
     setEndBell(DEFAULTS.endBell);
+    setSoundOn(DEFAULTS.soundOn);
     setSeed(DEFAULT_SEED);
     setRunning(false);
     setElapsed(0);
+    lastPlayedRef.current = 0;
     setCopied(false);
   };
 

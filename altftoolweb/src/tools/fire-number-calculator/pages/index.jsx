@@ -145,7 +145,8 @@ export default function ToolHome() {
 
   const model = useMemo(() => {
     const expenses = Math.max(0, Number(annualExpenses) || 0);
-    const rate = Math.min(12, Math.max(0.1, Number(withdrawalRate) || 4));
+    const parsedRate = Number(withdrawalRate);
+    const rate = Math.min(12, Math.max(0.1, Number.isFinite(parsedRate) ? parsedRate : 4));
     const corpus = Math.max(0, Number(currentCorpus) || 0);
     const monthly = Math.max(0, Number(monthlyInvestment) || 0);
     const nominal = Number(expectedReturn) || 0;
@@ -160,7 +161,8 @@ export default function ToolHome() {
     const months = monthsToTarget(corpus, monthly, realMonthly, fireNumber);
     const progress = fireNumber > 0 ? (corpus / fireNumber) * 100 : 100;
 
-    const coastTarget = Math.max(age, Number(coastAge) || 60);
+    const parsedCoastAge = Number(coastAge);
+    const coastTarget = Math.max(age, Number.isFinite(parsedCoastAge) ? parsedCoastAge : 60);
     const yearsToCoastAge = Math.max(0, coastTarget - age);
     const coastGrowth = Math.pow(1 + realAnnual, yearsToCoastAge);
     const coastNumber = coastGrowth > 0 ? fireNumber / coastGrowth : fireNumber;
@@ -310,8 +312,8 @@ export default function ToolHome() {
   const rawWithdrawalRate = Number(withdrawalRate);
   const rateIsClamped = Number.isFinite(rawWithdrawalRate) && rawWithdrawalRate !== model.rate;
 
-  const rawCoastAge = Number(coastAge) || 60;
-  const coastAgeIsClamped = model.coastTarget !== rawCoastAge;
+  const rawCoastAge = Number(coastAge);
+  const coastAgeIsClamped = Number.isFinite(rawCoastAge) && model.coastTarget !== rawCoastAge;
 
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -502,7 +504,7 @@ export default function ToolHome() {
                 corpus to outlive you.
               </p>
 
-              <div className="tool-compact-grid mt-6">
+              <div className="tool-compact-grid mt-6" aria-live="polite">
                 <StatTile
                   label="Time to FIRE"
                   value={formatYears(model.months)}
@@ -519,7 +521,7 @@ export default function ToolHome() {
             </div>
 
             <div className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-6 shadow-[var(--anslation-ds-shadow-sm)]">
-              <div className="flex flex-wrap items-center justify-between gap-2">
+              <div className="flex flex-wrap items-center justify-between gap-2" aria-live="polite">
                 <p className="text-sm font-semibold">Progress to FIRE</p>
                 <p className="text-sm font-semibold text-[var(--primary)]">{model.progress.toFixed(1)}%</p>
               </div>
@@ -558,7 +560,7 @@ export default function ToolHome() {
                 <sup>years to {model.coastTarget}</sup>.
               </p>
 
-              <div className="tool-compact-grid mt-4">
+              <div className="tool-compact-grid mt-4" aria-live="polite">
                 <StatTile
                   label={`Coast number at ${model.age}`}
                   value={formatCompactINR(model.coastNumber)}
@@ -577,6 +579,8 @@ export default function ToolHome() {
 
               <div
                 className="mt-4 rounded-md border p-4 text-sm leading-6"
+                role="status"
+                aria-live="polite"
                 style={{
                   borderColor: model.coasting ? "var(--anslation-ds-success)" : "var(--border)",
                   background: model.coasting ? "var(--anslation-ds-success-soft)" : "var(--muted)",

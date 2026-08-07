@@ -344,10 +344,13 @@ export function planTransfer({
       break;
     }
     if (previous !== null && Math.abs(next - previous) < 0.5) {
-      // Oscillating between two hours — take the earlier of the pair.
+      // Oscillating between two hours — take the earlier of the pair, then
+      // re-derive leaveByMinute from the recomputed factor/travel so the
+      // fixed-point equation still holds for what gets returned.
       leaveByMinute = Math.min(next, leaveByMinute);
       factor = level.factor === null ? trafficFactorAt(leaveByMinute, { isWeekend }) : level.factor;
       travel = journeyMinutes({ distanceKm: km, mode, factor });
+      leaveByMinute = terminalArrivalMinute - travel - buffer;
       break;
     }
     previous = leaveByMinute;
@@ -376,7 +379,7 @@ export function planTransfer({
     mode,
     flightType,
     trafficLevel: level,
-    factor: Math.round(factor * 100) / 100,
+    factor: mode.trafficSensitive ? Math.round(factor * 100) / 100 : 1,
     departureMinute,
     departureTime: formatMinutes(departureMinute),
     leaveByMinute,
@@ -387,7 +390,7 @@ export function planTransfer({
     terminalArrivalDayOffset: dayOffset(terminalArrivalMinute),
     travelMinutes: Math.round(travel),
     freeFlowTravelMinutes: Math.round(freeFlowTravel),
-    congestionCostMinutes: Math.round(travel - freeFlowTravel),
+    congestionCostMinutes: Math.round(travel) - Math.round(freeFlowTravel),
     personalBufferMinutes: buffer,
     requiredLeadMinutes: requiredLead,
     bagDropLeadMinutes: bagDropLead,

@@ -245,11 +245,11 @@ export function buildRotation({
   if (!Array.isArray(subjects) || subjects.length === 0) {
     return { error: "Pick a branch so there are subjects to rotate." };
   }
-  if (!Number.isFinite(cycles) || cycles < MIN_CYCLES || cycles > MAX_CYCLES) {
-    return { error: `Revision cycles must be between ${MIN_CYCLES} and ${MAX_CYCLES}.` };
+  if (!Number.isFinite(cycles) || !Number.isInteger(cycles) || cycles < MIN_CYCLES || cycles > MAX_CYCLES) {
+    return { error: `Revision cycles must be a whole number between ${MIN_CYCLES} and ${MAX_CYCLES}.` };
   }
-  if (!Number.isFinite(mockBufferDays) || mockBufferDays < 0) {
-    return { error: "The mock-test buffer cannot be negative." };
+  if (!Number.isFinite(mockBufferDays) || !Number.isInteger(mockBufferDays) || mockBufferDays < 0) {
+    return { error: "The mock-test buffer must be a whole number of days." };
   }
   if (mockBufferDays >= rotationSpan) {
     return { error: "The mock-test buffer leaves no days for the rotation. Shorten it." };

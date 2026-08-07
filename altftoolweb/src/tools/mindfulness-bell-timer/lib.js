@@ -91,7 +91,6 @@ export function buildBellSchedule({
   const totalSeconds = Math.round(minutes * 60);
 
   const times = [];
-  let averageGapSeconds = 0;
 
   if (mode === "interval") {
     if (!isNum(intervalMinutes)) return { error: "Enter the interval as a number." };
@@ -106,7 +105,6 @@ export function buildBellSchedule({
       return { error: `That would ring more than ${MAX_BELLS} bells. Lengthen the interval.` };
     }
     for (let t = gap; t < totalSeconds; t += gap) times.push(t);
-    averageGapSeconds = gap;
   } else {
     if (!isNum(minGapMinutes) || !isNum(maxGapMinutes)) {
       return { error: "Enter the smallest and largest gap as numbers." };
@@ -135,7 +133,6 @@ export function buildBellSchedule({
       if (rounded >= totalSeconds) break;
       times.push(rounded);
     }
-    averageGapSeconds = times.length > 0 ? totalSeconds / (times.length + 1) : totalSeconds;
   }
 
   const bells = [];
@@ -145,6 +142,7 @@ export function buildBellSchedule({
 
   const gaps = [];
   for (let i = 1; i < bells.length; i += 1) gaps.push(bells[i].at - bells[i - 1].at);
+  const averageGapSeconds = gaps.length > 0 ? gaps.reduce((a, b) => a + b, 0) / gaps.length : totalSeconds;
 
   return {
     mode,

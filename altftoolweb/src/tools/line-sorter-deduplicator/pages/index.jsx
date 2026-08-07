@@ -189,7 +189,7 @@ export default function ToolHome() {
     setSeed(1);
   };
 
-  const isEmpty = text.trim() === "";
+  const isEmpty = result.outputCount === 0;
 
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -357,6 +357,9 @@ export default function ToolHome() {
             <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
               {nf.format(result.outputCount)}
             </p>
+            <span className="sr-only" role="status" aria-live="polite">
+              {`${result.outputCount} lines returned, ${result.removedByDedupe} duplicates removed, ${result.blanksRemoved} blank lines removed`}
+            </span>
             <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
               {[
                 ["Input lines", nf.format(result.inputCount)],

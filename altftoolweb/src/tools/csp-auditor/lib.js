@@ -220,7 +220,8 @@ export function analyseSourceList(values) {
       analysis.unquotedKeywords.push(value);
       return;
     }
-    if (value.startsWith("*.")) {
+    const schemeStripped = value.replace(/^[a-z][a-z0-9+.-]*:\/\//i, "");
+    if (schemeStripped.startsWith("*.")) {
       analysis.wildcardHosts.push(value);
       analysis.hosts.push(value);
       return;
@@ -312,8 +313,8 @@ export function describePermissions(name, analysis, resolution) {
   }
   if (analysis.hasUnsafeInline) {
     lines.push(
-      analysis.hasNonceOrHash
-        ? "'unsafe-inline' is present but a nonce or hash is too, so CSP Level 3 browsers ignore it. Only browsers that predate nonce support honour it."
+      analysis.hasNonceOrHash || analysis.hasStrictDynamic
+        ? "'unsafe-inline' is present but a nonce, hash, or 'strict-dynamic' is too, so CSP Level 3 browsers ignore it. Only browsers that predate nonce support honour it."
         : "Any inline content, including a <script> tag an attacker injects.",
     );
   }
@@ -375,10 +376,10 @@ function auditScriptSources(name, resolution, analysis, add) {
     });
   }
 
-  if (analysis.hasUnsafeInline && !analysis.hasNonceOrHash) {
+  if (analysis.hasUnsafeInline && !analysis.hasNonceOrHash && !analysis.hasStrictDynamic) {
     add("critical", `${label} allows 'unsafe-inline'`, `With 'unsafe-inline' and no nonce or hash, any inline <script> the attacker injects into the page executes. This is the single condition that reduces a CSP to no XSS protection at all.`, "Move inline scripts into files, or mark the legitimate ones with a per-response nonce.", label);
-  } else if (analysis.hasUnsafeInline && analysis.hasNonceOrHash) {
-    add("info", `${label} keeps 'unsafe-inline' as a legacy fallback`, "Because a nonce or hash is also present, CSP Level 3 browsers ignore 'unsafe-inline'. It only takes effect in browsers old enough to lack nonce support, which is the intended backwards-compatibility behaviour.", "Safe to leave. Remove it once you no longer support pre-2016 browsers.", label);
+  } else if (analysis.hasUnsafeInline && (analysis.hasNonceOrHash || analysis.hasStrictDynamic)) {
+    add("info", `${label} keeps 'unsafe-inline' as a legacy fallback`, "Because a nonce, hash, or 'strict-dynamic' is also present, CSP Level 3 browsers ignore 'unsafe-inline'. It only takes effect in browsers old enough to lack that support, which is the intended backwards-compatibility behaviour.", "Safe to leave. Remove it once you no longer support pre-2016 browsers.", label);
   }
 
   if (analysis.hasUnsafeEval) {
@@ -579,7 +580,7 @@ export function auditCsp(input) {
     strength = { key: "none", label: "No script restriction", detail: "The policy does not constrain script execution." };
   } else if (scriptEntry.analysis.hasNone) {
     strength = { key: "blocked", label: "All scripts blocked", detail: "script-src 'none' — nothing executes, including your own code." };
-  } else if (scriptEntry.analysis.hasUnsafeInline && !scriptEntry.analysis.hasNonceOrHash) {
+  } else if (scriptEntry.analysis.hasUnsafeInline && !scriptEntry.analysis.hasNonceOrHash && !scriptEntry.analysis.hasStrictDynamic) {
     strength = { key: "none", label: "No XSS protection", detail: "'unsafe-inline' with no nonce or hash means an injected <script> tag runs." };
   } else if (scriptEntry.analysis.hasNonceOrHash && scriptEntry.analysis.hasStrictDynamic) {
     strength = { key: "strict", label: "Strict, nonce-based", detail: "Nonce or hash plus 'strict-dynamic' — the shape recommended for a CSP that actually stops XSS." };
@@ -592,11 +593,19 @@ export function auditCsp(input) {
     scriptEntry.analysis.schemes.length === 0 &&
     !scriptEntry.analysis.hasSelf
   ) {
-    strength = {
-      key: "malformed",
-      label: "Malformed source list",
-      detail: "script-src is set but names no source a browser can use — usually because a keyword lost its quotes and was parsed as a host name.",
-    };
+    const looksMalformed =
+      scriptEntry.analysis.malformed.length > 0 || scriptEntry.analysis.unquotedKeywords.length > 0;
+    strength = looksMalformed
+      ? {
+          key: "malformed",
+          label: "Malformed source list",
+          detail: "script-src is set but names no source a browser can use — usually because a keyword lost its quotes and was parsed as a host name.",
+        }
+      : {
+          key: "no-source",
+          label: "No script source granted",
+          detail: "script-src's keywords (e.g. 'strict-dynamic' alone, or 'unsafe-eval' alone) grant no host, scheme, self, nonce or hash a <script> tag can actually load from.",
+        };
   } else {
     strength = { key: "allowlist", label: "Host allow-list only", detail: "Protection depends entirely on every allow-listed host staying trustworthy, and on none of them serving JSONP or AngularJS." };
   }

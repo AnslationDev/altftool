@@ -143,6 +143,10 @@ function calcFramingham({ age, gender, tc, hdl, sbp, smoker, bpTreatment }) {
   return { score, risk: ">20%" };
 }
 
+function parseRiskPercent(riskStr) {
+  return parseFloat(String(riskStr).replace(/[<>%]/g, ""));
+}
+
 function getAscvdCategory(risk) {
   if (risk < 5) return { label: "Low Risk", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200", description: "Low 10-year ASCVD risk. Focus on healthy lifestyle maintenance." };
   if (risk < 7.5) return { label: "Borderline Risk", color: "text-teal-600", bg: "bg-teal-50", border: "border-teal-200", description: "Borderline risk. Consider risk-enhancing factors. Discuss with physician." };
@@ -150,7 +154,8 @@ function getAscvdCategory(risk) {
   return { label: "High Risk", color: "text-red-600", bg: "bg-red-50", border: "border-red-200", description: "High 10-year ASCVD risk. High-intensity statin therapy recommended. Lifestyle modification critical." };
 }
 
-function getChdCategory(risk) {
+function getChdCategory(riskStr) {
+  const risk = parseRiskPercent(riskStr);
   if (risk < 10) return { label: "Low Risk", color: "text-emerald-600", bg: "bg-emerald-50", border: "border-emerald-200", description: "Low 10-year CHD risk per Framingham criteria." };
   if (risk < 20) return { label: "Moderate Risk", color: "text-amber-600", bg: "bg-amber-50", border: "border-amber-200", description: "Moderate 10-year CHD risk. Lifestyle modifications and consideration of pharmacotherapy." };
   return { label: "High Risk", color: "text-red-600", bg: "bg-red-50", border: "border-red-200", description: "High 10-year CHD risk. Aggressive treatment with statins recommended." };
@@ -251,7 +256,7 @@ export default function ToolHome() {
     setResult({
       age: ageVal, gender, race, smoker, diabetes,
       tcCat: tcData.tc, hdlCat: hdlData.hdl, sbp: bpData.systolic, bpTreatment,
-      ascvdRisk: ascvdRisk.toFixed(1), ascvdCat,
+      ascvdRisk: ascvdRisk.toFixed(1), ascvdRiskNum: ascvdRisk, ascvdCat,
       frsScore: frs.score, frsRisk: frs.risk, chdCat,
       isHighRisk, date: new Date().toLocaleString(),
     });
@@ -294,10 +299,10 @@ HIGH-RISK INDICATORS:
 ${result.isHighRisk ? "✓ High-risk status identified — aggressive treatment recommended" : "✗ No high-risk criteria met"}
 
 RECOMMENDED ACTION:
-${parseFloat(result.ascvdRisk) >= 20 ? "• High-intensity statin therapy (atorvastatin 40-80 mg or rosuvastatin 20-40 mg)\n• Aggressive lifestyle modification\n• Consider aspirin therapy after physician discussion" : parseFloat(result.ascvdRisk) >= 7.5 ? "• Moderate-intensity statin therapy recommended\n• Lifestyle modifications: diet, exercise, weight management\n• Reassess risk in 3–6 months" : "• Focus on healthy lifestyle\n• Maintain current lipid levels\n• Reassess every 5 years"}
+${result.ascvdRiskNum >= 20 ? "• High-intensity statin therapy (atorvastatin 40-80 mg or rosuvastatin 20-40 mg)\n• Aggressive lifestyle modification\n• Consider aspirin therapy after physician discussion" : result.ascvdRiskNum >= 7.5 ? "• Moderate-intensity statin therapy recommended\n• Lifestyle modifications: diet, exercise, weight management\n• Reassess risk in 3–6 months" : "• Focus on healthy lifestyle\n• Maintain current lipid levels\n• Reassess every 5 years"}
 
 STATIN ELIGIBILITY (ACC/AHA):
-${parseFloat(result.ascvdRisk) >= 19 ? "→ Moderate-to-high intensity statin indicated (risk ≥ 7.5%)" : parseFloat(result.ascvdRisk) >= 7.5 ? "→ Consider moderate-intensity statin therapy" : "→ Statin therapy generally not indicated for primary prevention at this risk level"}
+${result.ascvdRiskNum >= 20 ? "→ Moderate-to-high intensity statin indicated (risk ≥ 7.5%)" : result.ascvdRiskNum >= 7.5 ? "→ Consider moderate-intensity statin therapy" : "→ Statin therapy generally not indicated for primary prevention at this risk level"}
 
 ---------------------------------
 This calculator is for educational and informational purposes only.
@@ -317,6 +322,7 @@ Clinical decisions should always be made by qualified healthcare professionals.
     link.href = URL.createObjectURL(blob);
     link.download = `CAD_Risk_Report_${result.ascvdRisk}%_ASCVD.txt`;
     link.click();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
   };
 
   return (
@@ -326,7 +332,7 @@ Clinical decisions should always be made by qualified healthcare professionals.
         <div className="rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-800 dark:border-amber-700 dark:bg-amber-950 dark:text-amber-200">
           <div className="flex items-start gap-2">
             <Info className="h-4 w-4 mt-0.5 shrink-0" />
-            <p>This calculator is for educational and informational purposes only. Clinical decisions should always be made by qualified healthcare professionals.</p>
+            <p>This calculator is for educational and informational purposes only. It uses simplified approximations of the Pooled Cohort Equations and Framingham Risk Score and will not exactly match official ACC/AHA calculators. Clinical decisions should always be made by qualified healthcare professionals.</p>
           </div>
         </div>
 
@@ -368,13 +374,13 @@ Clinical decisions should always be made by qualified healthcare professionals.
           </div>
 
           {/* Result Card */}
-          <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)] sm:p-6">
+          <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--card)] p-5 shadow-[var(--anslation-ds-shadow-sm)] sm:p-6" aria-live="polite" role="status">
             {result ? (
               <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
                 {/* Gauges */}
                 <div className="grid grid-cols-2 gap-4">
-                  <RiskGauge value={parseFloat(result.ascvdRisk)} max={40} label="ASCVD 10-Year" />
-                  <RiskGauge value={parseFloat(result.frsRisk) || 1} max={40} label="Framingham CHD" />
+                  <RiskGauge value={result.ascvdRiskNum} max={40} label="ASCVD 10-Year" />
+                  <RiskGauge value={parseRiskPercent(result.frsRisk) || 0} max={40} label="Framingham CHD" />
                 </div>
 
                 {/* Overall Status */}
@@ -416,12 +422,12 @@ Clinical decisions should always be made by qualified healthcare professionals.
                 {/* Statin Recommendation */}
                 <div className="rounded-lg bg-[var(--background)] p-4">
                   <p className="text-xs font-bold uppercase tracking-widest text-[var(--muted)] mb-3">Statin Eligibility (ACC/AHA Guidelines)</p>
-                  <div className={`rounded-lg border p-3 text-sm ${parseFloat(result.ascvdRisk) >= 7.5 ? "border-amber-200 bg-amber-50" : "border-emerald-200 bg-emerald-50"}`}>
-                    <p className={`font-semibold ${parseFloat(result.ascvdRisk) >= 7.5 ? "text-amber-800" : "text-emerald-800"}`}>
-                      {parseFloat(result.ascvdRisk) >= 20 ? "High-intensity statin recommended" : parseFloat(result.ascvdRisk) >= 7.5 ? "Moderate-intensity statin considered" : "Statin therapy generally not indicated"}
+                  <div className={`rounded-lg border p-3 text-sm ${result.ascvdRiskNum >= 7.5 ? "border-amber-200 bg-amber-50" : "border-emerald-200 bg-emerald-50"}`}>
+                    <p className={`font-semibold ${result.ascvdRiskNum >= 7.5 ? "text-amber-800" : "text-emerald-800"}`}>
+                      {result.ascvdRiskNum >= 20 ? "High-intensity statin recommended" : result.ascvdRiskNum >= 7.5 ? "Moderate-intensity statin considered" : "Statin therapy generally not indicated"}
                     </p>
                     <p className="text-xs text-[var(--muted-foreground)] mt-1">
-                      {parseFloat(result.ascvdRisk) >= 20 ? "Atorvastatin 40-80 mg or Rosuvastatin 20-40 mg" : parseFloat(result.ascvdRisk) >= 7.5 ? "Atorvastatin 10-20 mg or Rosuvastatin 5-10 mg" : "Focus on lifestyle modifications"}
+                      {result.ascvdRiskNum >= 20 ? "Atorvastatin 40-80 mg or Rosuvastatin 20-40 mg" : result.ascvdRiskNum >= 7.5 ? "Atorvastatin 10-20 mg or Rosuvastatin 5-10 mg" : "Focus on lifestyle modifications"}
                     </p>
                   </div>
                 </div>
@@ -453,7 +459,7 @@ Clinical decisions should always be made by qualified healthcare professionals.
           <div className="grid gap-6 sm:grid-cols-2 text-sm text-[var(--muted-foreground)] leading-relaxed">
             <div>
               <p className="font-semibold text-[var(--foreground)] mb-2">Pooled Cohort Equations (ASCVD)</p>
-              <p>The 2013 ACC/AHA Pooled Cohort Equations estimate 10-year risk of a first atherosclerotic cardiovascular disease event (heart attack or stroke) using age, sex, race, cholesterol levels, blood pressure, diabetes, and smoking status. It is the primary tool used to guide statin therapy decisions.</p>
+              <p>The 2013 ACC/AHA Pooled Cohort Equations estimate 10-year risk of a first atherosclerotic cardiovascular disease event (heart attack or stroke) using age, sex, race, cholesterol levels, blood pressure, diabetes, and smoking status. It is the primary tool used to guide statin therapy decisions. This calculator uses a simplified approximation of those equations for educational purposes, so its output will diverge from the official ACC/AHA calculator — treat it as an illustration of how the risk factors interact, not a clinical-grade estimate.</p>
             </div>
             <div>
               <p className="font-semibold text-[var(--foreground)] mb-2">Framingham Risk Score</p>

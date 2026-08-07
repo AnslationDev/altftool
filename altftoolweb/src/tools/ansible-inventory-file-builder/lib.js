@@ -99,6 +99,12 @@ export function parseInventorySpec(text) {
         warnings.push(`Line ${lineNo}: host "${hostName}" repeated in [${current}] — kept once.`);
         return;
       }
+      const rangeMatch = RANGE_PATTERN.exec(hostName);
+      if (rangeMatch && Number(rangeMatch[2]) < Number(rangeMatch[1])) {
+        warnings.push(
+          `Line ${lineNo}: host "${hostName}" has a backwards range (end before start) and expands to 0 hosts.`,
+        );
+      }
       group.hosts.push({ name: hostName, vars });
       return;
     }
@@ -134,10 +140,14 @@ export function parseInventorySpec(text) {
   // Detect child cycles (a -> b -> a) which Ansible rejects.
   const visiting = new Set();
   const safe = new Set();
+  const reported = new Set();
   const hasCycle = (name, trail) => {
     if (safe.has(name)) return false;
+    if (reported.has(name)) return true;
     if (visiting.has(name)) {
+      const cycleNodes = trail.slice(trail.indexOf(name));
       errors.push(`Circular :children chain: ${[...trail, name].join(" -> ")}.`);
+      cycleNodes.forEach((n) => reported.add(n));
       return true;
     }
     visiting.add(name);

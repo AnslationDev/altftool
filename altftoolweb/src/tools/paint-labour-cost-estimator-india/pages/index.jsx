@@ -299,7 +299,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Total painter labour cost
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">
               {failed ? DASH : money(result.totalLabourCost)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">

@@ -158,7 +158,7 @@ function parsePageRange(input, totalPages) {
     throw new Error("Enter at least one page number.");
   }
 
-  return pages;
+  return pages.sort((a, b) => a - b);
 }
 
 function parseCustomGroups(input, totalPages) {
@@ -220,7 +220,7 @@ function buildSplitPlan({ mode, totalPages, pageRange, customGroups, batchSize }
     const pages = parsePageRange(pageRange, totalPages);
     return [
       {
-        id: `extracted-${compressRange(pages).replace(/[^a-z0-9]+/gi, "-")}`,
+        id: `extracted-${compressRange(pages).replace(/[^a-z0-9]+/gi, "-").slice(0, 60)}`,
         label: "Extracted pages",
         pages,
       },
@@ -350,6 +350,12 @@ export default function MainComponent() {
     }
     setFile(null);
     setPageCount(0);
+    setMode("every");
+    setPageRange("1-3");
+    setCustomGroups("1-2; 3-4; 5");
+    setBatchSize(2);
+    setFilenamePrefix("split");
+    setPreserveMetadata(true);
     setProgress({ done: 0, total: 0 });
     setStatus("");
     setError("");
@@ -612,7 +618,14 @@ export default function MainComponent() {
               </div>
 
               {progress.total > 0 && (
-                <div className="mt-4">
+                <div
+                  className="mt-4"
+                  role="progressbar"
+                  aria-valuenow={progress.done}
+                  aria-valuemin={0}
+                  aria-valuemax={progress.total}
+                  aria-valuetext={`${progress.done} of ${progress.total} files`}
+                >
                   <div className="mb-2 flex justify-between text-xs font-medium text-(--muted-foreground)">
                     <span>Progress</span>
                     <span>{progress.done}/{progress.total}</span>

@@ -10,7 +10,7 @@ const seo = {
   benefits: [
     [
       "Random bells you cannot count down to",
-      "Gaps are drawn inside your chosen range, so the pause interrupts the task rather than being anticipated.",
+      "Pause-to-pause gaps are drawn inside your chosen range; the trailing gap to the closing bell (if enabled) isn't bounded by that range.",
     ],
     [
       "Reproducible patterns",
@@ -28,7 +28,7 @@ const seo = {
     ],
     [
       "Should the bells be at fixed or random intervals?",
-      "Fixed intervals suit formal sitting, where the bell marks stages of a known session. Random intervals suit informal practice during work, because a bell you cannot predict produces a genuine interruption instead of something you brace for; the tool keeps random gaps inside a minimum and maximum you choose so they never bunch up.",
+      "Fixed intervals suit formal sitting, where the bell marks stages of a known session. Random intervals suit informal practice during work, because a bell you cannot predict produces a genuine interruption instead of something you brace for; the tool keeps pause-bell gaps inside a minimum and maximum you choose, though the closing bell's own timing isn't constrained by that range.",
     ],
     [
       "How long should a meditation session be?",
