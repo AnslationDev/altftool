@@ -8,7 +8,7 @@ const seo = {
   ],
   benefits: [
     ["Two-phase depreciation", "Separates the steep first-year drop from the slower decline afterwards, instead of one flat rate."],
-    ["Battery health priced in", "Uses the 80% service threshold that makers themselves flag as the point a battery needs replacing."],
+    ["Battery health priced in", "Applies a straight-line discount that starts easing in at 90% battery health and reaches its maximum 18% deduction at 50%, not a single cutoff."],
     ["Private sale vs trade-in", "Shows both numbers, so a low buy-back offer is easy to recognise."],
   ],
   faqs: [
@@ -18,7 +18,10 @@ const seo = {
     ],
     [
       "Does battery health affect a laptop's resale price?",
-      "Yes, and the cliff is around 80%. Most makers, Apple included, flag a battery for service once its maximum capacity falls below 80% of design capacity, and buyers price in a replacement from that point, which is usually a few thousand rupees plus labour.",
+      // Mirrors lib.js's batteryMultiplier: full value at >=90% health, a straight-line
+      // discount down to an 18% deduction at <=50% health, with no special point at 80%.
+      // Keep these figures in sync with lib.js if that function changes.
+      "Yes, and it eases in gradually rather than at one cutoff. Value stays full down to 90% health, then the discount grows steadily as health falls, reaching its maximum 18% deduction at 50% health and below. (Some makers, Apple included, flag a battery for service around 80% capacity — that is a real service milestone, but it is not where this estimator's pricing curve does anything special; the discount is a smooth line the whole way from 90% to 50%.)",
     ],
     [
       "Should I keep the original box and invoice?",

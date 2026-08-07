@@ -63,7 +63,10 @@ const ConverterForm = ({ onConvert }) => {
 
   const convert = () => {
     const val = parseFloat(inputValue);
-    if (isNaN(val)) return;
+    if (isNaN(val)) {
+      setResult(null);
+      return;
+    }
 
     let converted;
     if (activeTab === 'temperature') {
@@ -86,8 +89,8 @@ const ConverterForm = ({ onConvert }) => {
 
   const handleSave = () => {
     if (result === null || isNaN(result)) return;
-    const fromLabel = UNITS[activeTab].units.find(u => u.value === fromUnit)?.label.split(' ')[0] || "";
-    const toLabel = UNITS[activeTab].units.find(u => u.value === toUnit)?.label.split(' ')[0] || "";
+    const fromLabel = UNITS[activeTab].units.find(u => u.value === fromUnit)?.label.replace(/\s*\(.*\)\s*$/, '') || "";
+    const toLabel = UNITS[activeTab].units.find(u => u.value === toUnit)?.label.replace(/\s*\(.*\)\s*$/, '') || "";
     const val = parseFloat(inputValue);
     if (isNaN(val)) return;
     onConvert({
@@ -132,8 +135,9 @@ const ConverterForm = ({ onConvert }) => {
       <div className="grid gap-8 md:grid-cols-2">
         <div className="space-y-6">
           <div className="space-y-2">
-            <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Amount to Convert</label>
+            <label htmlFor="kuc-amount" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Amount to Convert</label>
             <input
+              id="kuc-amount"
               type="number"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
@@ -144,8 +148,9 @@ const ConverterForm = ({ onConvert }) => {
 
           <div className="relative space-y-4">
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">From</label>
+              <label htmlFor="kuc-from" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">From</label>
               <select
+                id="kuc-from"
                 value={fromUnit}
                 onChange={(e) => setFromUnit(e.target.value)}
                 className="w-full rounded-lg border border-border bg-background px-4 py-3 font-mono text-sm font-bold text-foreground outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 cursor-pointer"
@@ -166,8 +171,9 @@ const ConverterForm = ({ onConvert }) => {
             </div>
 
             <div className="space-y-2">
-              <label className="text-xs font-bold uppercase tracking-wider text-muted-foreground">To</label>
+              <label htmlFor="kuc-to" className="text-xs font-bold uppercase tracking-wider text-muted-foreground">To</label>
               <select
+                id="kuc-to"
                 value={toUnit}
                 onChange={(e) => setToUnit(e.target.value)}
                 className="w-full rounded-lg border border-border bg-background px-4 py-3 font-mono text-sm font-bold text-foreground outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 cursor-pointer"
@@ -183,11 +189,11 @@ const ConverterForm = ({ onConvert }) => {
         <div className="flex flex-col items-center justify-center rounded-xl bg-gradient-to-br from-primary/5 to-primary/10 p-6 border border-primary/10">
           <span className="text-sm font-bold text-muted mb-2 uppercase tracking-wider">Result</span>
           <div className="text-center">
-            <div className="text-5xl font-black text-primary tracking-tight mb-2">
+            <div aria-live="polite" role="status" className="text-5xl font-black text-primary tracking-tight mb-2">
               {result !== null ? result : '0'}
             </div>
             <div className="text-lg font-bold text-foreground mb-4">
-              {UNITS[activeTab].units.find(u => u.value === toUnit)?.label.split(' ')[0]}
+              {UNITS[activeTab].units.find(u => u.value === toUnit)?.label.replace(/\s*\(.*\)\s*$/, '')}
             </div>
           </div>
 

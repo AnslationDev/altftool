@@ -98,8 +98,9 @@ export const PHASE_KINDS = {
 
 const isNum = (value) => typeof value === "number" && Number.isFinite(value);
 
-function checkRange(value, bounds, label) {
+function checkRange(value, bounds, label, { integer = false } = {}) {
   if (!isNum(value)) return `${label} must be a number.`;
+  if (integer && !Number.isInteger(value)) return `${label} must be a whole number.`;
   if (value < bounds.min) return `${label} cannot be below ${bounds.min}.`;
   if (value > bounds.max) return `${label} cannot be above ${bounds.max}.`;
   return null;
@@ -132,11 +133,11 @@ export function buildKegelPlan({
   const problems = [
     checkRange(hold, LIMITS.hold, "Hold length (seconds)"),
     checkRange(rest, LIMITS.rest, "Release length (seconds)"),
-    checkRange(reps, LIMITS.reps, "Repetitions per set"),
-    checkRange(sets, LIMITS.sets, "Sets per session"),
+    checkRange(reps, LIMITS.reps, "Repetitions per set", { integer: true }),
+    checkRange(sets, LIMITS.sets, "Sets per session", { integer: true }),
     checkRange(setRest, LIMITS.setRest, "Rest between sets (seconds)"),
     checkRange(prep, LIMITS.prep, "Get-ready countdown (seconds)"),
-    checkRange(sessionsPerDay, LIMITS.sessionsPerDay, "Sessions per day"),
+    checkRange(sessionsPerDay, LIMITS.sessionsPerDay, "Sessions per day", { integer: true }),
   ].filter(Boolean);
 
   if (problems.length > 0) return { error: problems[0] };

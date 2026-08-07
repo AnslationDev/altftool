@@ -90,7 +90,7 @@ export const FILINGS = [
     holder: "individual signatory",
     needsEncryption: false,
     decide: ({ entity, taxAuditApplicable }) => {
-      if (entity.value === "company" || entity.value === "opc") {
+      if (entity.value === "company" || entity.value === "opc" || entity.value === "section8") {
         return {
           verdict: "mandatory",
           reason:
@@ -119,7 +119,10 @@ export const FILINGS = [
     holder: "authorised signatory",
     needsEncryption: false,
     decide: ({ entity }) =>
-      entity.value === "company" || entity.value === "opc" || entity.value === "llp"
+      entity.value === "company" ||
+      entity.value === "opc" ||
+      entity.value === "llp" ||
+      entity.value === "section8"
         ? {
             verdict: "mandatory",
             reason:

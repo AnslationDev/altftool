@@ -331,6 +331,7 @@ export function estimateBac({
   }
   if (n < 0 || volume < 0 || abv < 0 || hours < 0) return { error: "Values cannot be negative." };
   if (abv > 100) return { error: "Alcohol strength cannot exceed 100% ABV." };
+  if (volume > 2000) return { error: "Enter a drink size of 2000 ml or fewer." };
   if (weight < 30) return { error: "Enter a body weight of at least 30 kg." };
   if (weight > 400) return { error: "Enter a body weight below 400 kg." };
   if (n > 100) return { error: "Enter 100 drinks or fewer." };

@@ -210,7 +210,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Topic sentence patterns
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">
               {hasError ? DASH : generated.count}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -298,7 +298,7 @@ export default function ToolHome() {
         ) : (
           <>
             <div className="mt-4 flex flex-wrap items-baseline gap-3">
-              <p className="text-4xl font-semibold text-[var(--primary)]">{assessment.score}%</p>
+              <p className="text-4xl font-semibold text-[var(--primary)]" aria-live="polite">{assessment.score}%</p>
               <p className="text-sm text-[var(--muted-foreground)]">
                 {assessment.passed} of {assessment.total} checks passed · {assessment.words} words
               </p>

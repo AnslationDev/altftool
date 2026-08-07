@@ -277,7 +277,11 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Estimated private-sale value
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p
+              className="mt-1 text-4xl font-semibold text-[var(--primary)]"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {hasError ? DASH : money(result.estimatedValue)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">

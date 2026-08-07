@@ -24,26 +24,27 @@ export default function ParametersCard({ params, onParamChange }) {
         </h3>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <Slider label="Mass 1 (kg)" value={params.m1} min={0.5} max={5} step={0.1} onChange={handleChange('m1')} />
-        <Slider label="Mass 2 (kg)" value={params.m2} min={0.5} max={5} step={0.1} onChange={handleChange('m2')} />
-        <Slider label="Length 1 (m)" value={params.L1} min={0.5} max={3} step={0.05} onChange={handleChange('L1')} />
-        <Slider label="Length 2 (m)" value={params.L2} min={0.5} max={3} step={0.05} onChange={handleChange('L2')} />
-        <Slider label="Gravity (m/s²)" value={params.g} min={0.5} max={30} step={0.1} onChange={handleChange('g')} />
-        <Slider label="Damping" value={params.damping} min={0} max={0.5} step={0.01} onChange={handleChange('damping')} />
-        <Slider label="Speed" value={params.speed} min={0.1} max={3} step={0.1} onChange={handleChange('speed')} />
+        <Slider id="dp-mass1" label="Mass 1 (kg)" value={params.m1} min={0.5} max={5} step={0.1} onChange={handleChange('m1')} />
+        <Slider id="dp-mass2" label="Mass 2 (kg)" value={params.m2} min={0.5} max={5} step={0.1} onChange={handleChange('m2')} />
+        <Slider id="dp-length1" label="Length 1 (m)" value={params.L1} min={0.5} max={3} step={0.05} onChange={handleChange('L1')} />
+        <Slider id="dp-length2" label="Length 2 (m)" value={params.L2} min={0.5} max={3} step={0.05} onChange={handleChange('L2')} />
+        <Slider id="dp-gravity" label="Gravity (m/s²)" value={params.g} min={0.5} max={30} step={0.1} onChange={handleChange('g')} />
+        <Slider id="dp-damping" label="Damping" value={params.damping} min={0} max={0.5} step={0.01} onChange={handleChange('damping')} />
+        <Slider id="dp-speed" label="Speed" value={params.speed} min={0.1} max={3} step={0.1} onChange={handleChange('speed')} />
       </div>
     </div>
   );
 }
 
-function Slider({ label, value, min, max, step, onChange }) {
+function Slider({ id, label, value, min, max, step, onChange }) {
   return (
     <div className="space-y-1">
       <div className="flex justify-between text-xs text-[var(--secondary-foreground)]">
-        <span>{label}</span>
+        <label htmlFor={id}>{label}</label>
         <span className="tabular-nums">{value.toFixed(2)}</span>
       </div>
       <input
+        id={id}
         type="range"
         min={min}
         max={max}

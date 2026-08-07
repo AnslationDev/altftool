@@ -104,7 +104,12 @@ export function computeSalsaBurn({
 
   const weightKg = weightUnit === "lb" ? weight * LB_TO_KG : weight;
   if (weightKg < MIN_WEIGHT_KG || weightKg > MAX_WEIGHT_KG) {
-    return { error: `Body weight should be between ${MIN_WEIGHT_KG} kg and ${MAX_WEIGHT_KG} kg.` };
+    const [minDisplay, maxDisplay] =
+      weightUnit === "lb"
+        ? [Math.round(MIN_WEIGHT_KG / LB_TO_KG), Math.round(MAX_WEIGHT_KG / LB_TO_KG)]
+        : [MIN_WEIGHT_KG, MAX_WEIGHT_KG];
+    const unitLabel = weightUnit === "lb" ? "lb" : "kg";
+    return { error: `Body weight should be between ${minDisplay} ${unitLabel} and ${maxDisplay} ${unitLabel}.` };
   }
   if (songs <= 0) return { error: "Enter at least one song danced." };
   if (songs > MAX_SONGS) return { error: `Songs danced should be ${MAX_SONGS} or fewer.` };

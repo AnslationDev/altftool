@@ -1007,7 +1007,11 @@ function ResultTable({ rows, mostRecent = false, headers }) {
 // is that a dead (unpowered) pixel stays black against it, so if these were
 // theme tokens they'd invert in dark mode and hide the exact defect the tool
 // exists to reveal. Intentionally NOT semantic tokens — see wave-18 audit.
-const screenPatterns = ["bg-black", "bg-red-600", "bg-green-600", "bg-blue-600", "bg-white"];
+// The colour fields must also be pure saturated primaries (not Tailwind's
+// red-600/green-600/blue-600, which carry non-zero values in the "wrong"
+// channels) so a pixel that vanishes on one field but shows on another
+// genuinely isolates which sub-pixel is failing — see wave-58 audit.
+const screenPatterns = ["bg-black", "bg-[#ff0000]", "bg-[#00ff00]", "bg-[#0000ff]", "bg-white"];
 
 function SensorLab({ slug }) {
   const [active, setActive] = useState(false);
@@ -1020,6 +1024,7 @@ function SensorLab({ slug }) {
   const canvasRef = useRef(null);
   const audioRef = useRef(null);
   const overlayRef = useRef(null);
+  const exitButtonRef = useRef(null);
   const cleanupRef = useRef(() => {});
 
   const append = useCallback((row) => {
@@ -1064,6 +1069,9 @@ function SensorLab({ slug }) {
     stop();
     setMessage("");
     setReadings([]);
+    // A fresh run must always begin on the dark/black field, not wherever
+    // an earlier run's pattern index was left after an early exit.
+    setPattern(0);
     try {
       if (slug === "headphone-balance-test") {
         const context = new AudioContext();
@@ -1240,6 +1248,66 @@ function SensorLab({ slug }) {
     }
   };
 
+  // Full-screen modal focus trap for the dead-pixel test: without this, Tab
+  // can carry a keyboard user past "Exit test" onto the site's global
+  // header/footer links rendered elsewhere in the DOM, and Escape stops
+  // working the moment focus leaves the overlay's own subtree because the
+  // overlay's own onKeyDown only ever sees events that bubble through it.
+  // A capture-phase document listener catches Escape/Tab regardless of
+  // where focus is, and the header/footer are marked inert so they briefly
+  // leave the accessibility tree and tab order while the overlay is active.
+  useEffect(() => {
+    if (!(slug === "dead-pixel-screen-test" && active)) return undefined;
+
+    const header = document.getElementById("main-header");
+    const footer = document.querySelector("footer");
+    const setInert = (element, value) => {
+      if (!element) return;
+      if (value) {
+        element.setAttribute("inert", "");
+        element.setAttribute("aria-hidden", "true");
+      } else {
+        element.removeAttribute("inert");
+        element.removeAttribute("aria-hidden");
+      }
+    };
+    setInert(header, true);
+    setInert(footer, true);
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        event.stopPropagation();
+        stop();
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const overlay = overlayRef.current;
+      const exitButton = exitButtonRef.current;
+      if (!overlay || !exitButton) return;
+      const cycle = [overlay, exitButton];
+      const currentIndex = cycle.indexOf(document.activeElement);
+      if (currentIndex === -1) return;
+      event.preventDefault();
+      event.stopPropagation();
+      const nextIndex = event.shiftKey
+        ? (currentIndex - 1 + cycle.length) % cycle.length
+        : (currentIndex + 1) % cycle.length;
+      cycle[nextIndex].focus();
+    };
+    document.addEventListener("keydown", handleKeyDown, true);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown, true);
+      setInert(header, false);
+      setInert(footer, false);
+    };
+    // stop() only touches refs/setState via closures that stay valid for the
+    // lifetime of this effect, so it's intentionally left out of the deps —
+    // this should install once per overlay session, not on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [slug, active]);
+
   const sampleCamera = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
@@ -1257,6 +1325,8 @@ function SensorLab({ slug }) {
       <div
         ref={overlayRef}
         tabIndex={0}
+        role="dialog"
+        aria-modal="true"
         aria-label={`Dead pixel test pattern ${pattern + 1} of ${screenPatterns.length}. Press Enter or Space for the next pattern, or Escape to exit.`}
         className={`fixed inset-0 z-50 ${screenPatterns[pattern]} cursor-pointer focus-visible:outline-none focus-visible:ring-[4px] focus-visible:ring-[var(--primary)]`}
         onClick={() => setPattern((value) => (value + 1) % screenPatterns.length)}
@@ -1270,7 +1340,12 @@ function SensorLab({ slug }) {
           }
         }}
       >
-        <button type="button" className="absolute right-4 top-4 rounded-md border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-[var(--foreground)]" onClick={(event) => { event.stopPropagation(); stop(); }}>
+        <button
+          ref={exitButtonRef}
+          type="button"
+          className="absolute right-4 top-4 rounded-md border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-[var(--foreground)]"
+          onClick={(event) => { event.stopPropagation(); stop(); }}
+        >
           Exit test
         </button>
       </div>

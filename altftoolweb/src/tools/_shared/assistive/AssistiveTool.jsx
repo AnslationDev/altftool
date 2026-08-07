@@ -83,7 +83,7 @@ const TOOL_META = {
   "slow-speech-playback-trainer": {
     title: "Slow Speech Playback Trainer",
     description:
-      "Play a local audio file more slowly, preserve pitch where supported, and loop difficult segments.",
+      "Play a local audio file more slowly, preserve pitch where supported, and loop the full file to repeat it without a manual rewind.",
     icon: Volume2,
   },
   "lip-read-practice-mirror": {

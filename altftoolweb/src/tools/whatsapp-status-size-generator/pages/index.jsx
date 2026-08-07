@@ -55,6 +55,7 @@ export default function ToolHome() {
   const [copied, setCopied] = useState(false);
 
   const imageRef = useRef(null);
+  const requestIdRef = useRef(0);
 
   useEffect(() => {
     if (!imageUrl) return undefined;
@@ -120,9 +121,14 @@ export default function ToolHome() {
     if (!file) return;
     setExportError("");
     setExported(null);
+    const requestId = ++requestIdRef.current;
     const url = URL.createObjectURL(file);
     const img = new Image();
     img.onload = () => {
+      if (requestIdRef.current !== requestId) {
+        URL.revokeObjectURL(url);
+        return;
+      }
       imageRef.current = img;
       setImageUrl(url);
       setImageName(file.name.replace(/\.[^.]+$/, ""));
@@ -131,6 +137,7 @@ export default function ToolHome() {
     };
     img.onerror = () => {
       URL.revokeObjectURL(url);
+      if (requestIdRef.current !== requestId) return;
       setExportError("That file could not be read as an image. Try a PNG, JPEG or WebP.");
     };
     img.src = url;
@@ -354,6 +361,15 @@ export default function ToolHome() {
               ))}
             </select>
           </div>
+          {background === "transparent" && format === "image/jpeg" && (
+            <p
+              role="alert"
+              className="sm:col-span-2 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+            >
+              JPEG does not support transparency — the bars will render solid black instead. Switch
+              the export format to PNG or WebP to keep them transparent.
+            </p>
+          )}
           <div className="sm:col-span-2">
             <label className={LABEL_CLASS} htmlFor="wa-quality">
               Encoder quality ({quality}%)
@@ -391,7 +407,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Export size
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite">
               {plan.error ? dash : `${plan.target.width} × ${plan.target.height}`}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -426,7 +442,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
           {[
             ["Source image", plan.error ? dash : `${plan.source.width} × ${plan.source.height} px (${plan.source.ratio})`],
             ["Scale applied", plan.error ? dash : `${NUM.format(plan.scalePercent)}%`],

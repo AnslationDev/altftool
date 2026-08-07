@@ -270,7 +270,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className={`mt-6 ${CARD}`} aria-live="polite" role="status">
+      <section className={`mt-6 ${CARD}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -305,7 +305,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
           {[
             ["Which side of the road", `Drive on the ${COUNTRY.driveSide} · ${COUNTRY.steeringWheelSide}-hand-drive cars`],
             ["Speeds are posted in", `${COUNTRY.speedUnit} — miles per hour, not km/h`],
@@ -457,7 +457,7 @@ export default function ToolHome() {
         )}
       </section>
 
-      <section className={`mt-6 ${CARD}`} aria-labelledby="us-alcohol" aria-live="polite" role="status">
+      <section className={`mt-6 ${CARD}`} aria-labelledby="us-alcohol">
         <h2 id="us-alcohol" className="flex items-center gap-2 text-base font-semibold">
           <Wine className="h-4 w-4 text-[var(--primary)]" aria-hidden="true" />
           Morning-after estimate
@@ -574,7 +574,7 @@ export default function ToolHome() {
           </p>
         ) : null}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" role="status">
           {[
             [
               "Pure alcohol consumed",

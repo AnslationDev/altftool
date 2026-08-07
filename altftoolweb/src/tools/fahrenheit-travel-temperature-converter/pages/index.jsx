@@ -29,6 +29,16 @@ const n0 = new Intl.NumberFormat("en-GB", { maximumFractionDigits: 0 });
 const degC = (value) => (Number.isFinite(value) ? `${n1.format(value)}°C` : DASH);
 const degF = (value) => (Number.isFinite(value) ? `${n1.format(value)}°F` : DASH);
 
+// Number("") is 0, not NaN, so a blank field would silently compute on a
+// fabricated zero instead of tripping lib.js's own "enter a number"
+// validation. Treat a blank/whitespace-only field as NaN so those checks
+// (convertTemperature's !Number.isFinite(amount), dailyPackingPlan's
+// !Number.isFinite(rh)/wind checks) fire instead.
+const toNumberOrNaN = (value) => {
+  const trimmed = String(value).trim();
+  return trimmed === "" ? NaN : Number(trimmed);
+};
+
 export default function ToolHome() {
   const [high, setHigh] = useState(DEFAULTS.high);
   const [low, setLow] = useState(DEFAULTS.low);
@@ -41,11 +51,11 @@ export default function ToolHome() {
   const plan = useMemo(
     () =>
       dailyPackingPlan({
-        high: Number(String(high).trim()),
-        low: Number(String(low).trim()),
+        high: toNumberOrNaN(high),
+        low: toNumberOrNaN(low),
         unit,
-        humidity: Number(String(humidity).trim()),
-        windSpeed: Number(String(wind).trim()),
+        humidity: toNumberOrNaN(humidity),
+        windSpeed: toNumberOrNaN(wind),
         windUnit,
       }),
     [high, low, unit, humidity, wind, windUnit],
@@ -227,7 +237,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

@@ -183,10 +183,10 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Gross calories
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite" aria-atomic="true">
               {hasError ? DASH : `${NUM0.format(result.grossKcal)} kcal`}
             </p>
-            <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+            <p className="mt-1 text-sm text-[var(--muted-foreground)]" aria-live="polite" aria-atomic="true">
               {hasError ? "Fix the inputs above to see a result." : `${NUM0.format(result.netKcal)} kcal above resting.`}
             </p>
           </div>
@@ -202,7 +202,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 grid gap-3 sm:grid-cols-2">
+        <dl className="mt-5 grid gap-3 sm:grid-cols-2" aria-live="polite" aria-atomic="true">
           {rows.map(([label, value]) => (
             <div key={label} className="rounded-lg bg-[var(--background)] p-3 ring-1 ring-[var(--border)]">
               <dt className="text-xs font-medium text-[var(--muted-foreground)]">{label}</dt>

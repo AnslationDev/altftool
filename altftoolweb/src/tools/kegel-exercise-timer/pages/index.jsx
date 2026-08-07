@@ -164,6 +164,11 @@ export default function ToolHome() {
   })();
 
   const progressPercent = hasError ? 0 : Math.round(current.overallProgress * 100);
+  const runLabel = running
+    ? "Pause the Kegel timer"
+    : elapsed > 0
+      ? "Resume the Kegel timer"
+      : "Start the Kegel timer";
 
   const fields = [
     { id: "kegel-hold", label: "Hold (seconds)", value: hold, onSet: setHold, min: 1, max: 30, step: 1, preset: true },
@@ -257,19 +262,21 @@ export default function ToolHome() {
       ) : null}
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
-        <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
-          {hasError ? "Timer unavailable" : current.phase.label}
-        </p>
-        <p className={`mt-1 text-5xl font-semibold tabular-nums ${phaseTone}`}>
-          {hasError ? DASH : formatClock(Math.ceil(current.remaining))}
-        </p>
-        <p className="mt-1 text-sm text-[var(--muted-foreground)]">
-          {hasError
-            ? "Fix the inputs above to start the timer."
-            : current.done
-              ? current.phase.hint
-              : `${current.phase.hint} · Set ${Math.max(1, current.phase.set)} of ${plan.sets}`}
-        </p>
+        <div aria-live="polite" aria-atomic="true">
+          <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
+            {hasError ? "Timer unavailable" : current.phase.label}
+          </p>
+          <p className={`mt-1 text-5xl font-semibold tabular-nums ${phaseTone}`}>
+            {hasError ? DASH : formatClock(Math.ceil(current.remaining))}
+          </p>
+          <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+            {hasError
+              ? "Fix the inputs above to start the timer."
+              : current.done
+                ? current.phase.hint
+                : `${current.phase.hint} · Set ${Math.max(1, current.phase.set)} of ${plan.sets}`}
+          </p>
+        </div>
 
         <div
           className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
@@ -295,7 +302,7 @@ export default function ToolHome() {
             type="button"
             onClick={toggleRun}
             disabled={hasError}
-            aria-label={running ? "Pause the Kegel timer" : "Start the Kegel timer"}
+            aria-label={runLabel}
             className={`${PRIMARY_BTN} disabled:opacity-50`}
           >
             {running ? (

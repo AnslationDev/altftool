@@ -31,7 +31,7 @@ const seo = {
     ],
     [
       "Is the simulation physically accurate?",
-      "It solves the standard Lagrangian equations for a double pendulum with point masses and massless rigid rods, using RK4 with a timestep capped at 0.05 s per frame. It is a faithful model of that idealisation, but it ignores rod mass, air resistance and joint friction beyond the linear damping term you set.",
+      "It solves the standard Lagrangian equations for a double pendulum with point masses and massless rigid rods, using RK4 stepped by the real-time frame delta capped at 0.05 s (that cap is applied before the Speed slider scales it, so the integrator's actual step is min(frameDelta, 0.05 s) x Speed - up to 0.15 s at the 3x Speed maximum). It is a faithful model of that idealisation, but it ignores rod mass, air resistance and joint friction beyond the linear damping term you set.",
     ],
     [
       "What is the damping slider doing?",

@@ -80,7 +80,7 @@ export default function ToolHome() {
   }, [pendingAngles]);
 
   const randomize = useCallback(() => {
-    const rand = () => Math.random() * 2 * Math.PI;
+    const rand = () => Math.random() * 2 * Math.PI - Math.PI;
     const newAngles = { theta1: rand(), theta2: rand() };
     setPendingAngles(newAngles);
     setAppliedAngles(newAngles);

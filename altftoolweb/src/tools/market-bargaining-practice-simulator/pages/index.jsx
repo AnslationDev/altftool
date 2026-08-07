@@ -83,7 +83,15 @@ export default function ToolHome() {
   const applyPreset = (id) => {
     const next = MARKET_PRESETS.find((item) => item.id === id);
     setPresetId(id);
-    if (next) setSellerMargin(String(next.sellerMinMarginPct));
+    if (next) {
+      setSellerMargin(String(next.sellerMinMarginPct));
+      // Seed a suggested asking price from the preset's opening markup over the
+      // local price the buyer researched, when that figure is usable.
+      const fairNum = Number(String(fairPrice).replace(/,/g, "").trim());
+      if (Number.isFinite(fairNum) && fairNum > 0) {
+        setAskingPrice(String(Math.round(fairNum * (1 + next.openingMarkupPct / 100))));
+      }
+    }
     setCopied(false);
   };
 
@@ -293,7 +301,12 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

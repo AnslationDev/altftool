@@ -320,7 +320,8 @@ export default function ToolHome() {
 
   const sessionTotalMs = (session?.totalSec ?? totalSec) * 1000;
   const progress = sessionTotalMs > 0 ? Math.min(1, Math.max(0, 1 - remainingMs / sessionTotalMs)) : 0;
-  const staleTarget = Boolean(session && session.totalSec !== totalSec);
+  const staleTarget = Boolean(session && session.totalSec !== totalSec && session.status !== "done");
+  const staleTargetVerb = session?.status === "paused" ? "paused" : "running";
 
   const plan = useMemo(
     () =>
@@ -348,6 +349,8 @@ export default function ToolHome() {
   };
 
   const resetAll = () => {
+    const active = session?.status === "running" || session?.status === "paused";
+    if (active && !window.confirm("A timer is currently running — reset anyway?")) return;
     setDonenessId("jammy");
     setSizeId("l");
     setTempId("fridge");
@@ -613,8 +616,8 @@ export default function ToolHome() {
               ) : null}
               {staleTarget ? (
                 <p className="mt-5 rounded-md bg-[var(--muted)] p-3 text-sm text-[var(--muted-foreground)]">
-                  Timer is running on the earlier {formatClock(session.totalSec)} target. Reset and start again to use{" "}
-                  {formatClock(totalSec)}.
+                  Timer is {staleTargetVerb} on the earlier {formatClock(session.totalSec)} target. Reset and start
+                  again to use {formatClock(totalSec)}.
                 </p>
               ) : null}
             </div>

@@ -1,16 +1,16 @@
 const seo = {
   intro:
-    "This generator resizes artwork to Pinterest's pin canvases — 1000x1500 standard, 1000x1000 square, 1000x2100 long and 1080x1920 idea pin — and tells you how much of the frame is cropped before you export. It also applies Pinterest's feed rule: pins are shown in full up to about 1:2.1 height-to-width, and anything taller is cut off. All resizing runs on canvas in your browser, so the image is never uploaded.",
+    "This calculator sizes a Pinterest pin canvas from six official presets — standard 1000x1500, square 1000x1000, long/infographic 1000x2100, idea pin 1080x1920, board cover and profile photo — applies your export scale and safe-area inset, and checks the result against Pinterest's own feed rule: pins taller than about 1:2.1 height-to-width get cut off in the scroll. Enter your source artwork's pixel dimensions to see the crop percentage and scale for the fit mode you pick, and enter a planned export file size to check it against Pinterest's 20 MB pin upload limit. Everything runs from the numbers you type — no image file is uploaded or stored.",
   useCases: [
-    "Convert a 4:3 product photograph into the recommended 2:3 pin shape and see exactly which 44% of the image gets cropped away.",
-    "Check whether a tall infographic at 1000x2600 will be truncated in the home feed, and what height keeps it fully visible.",
-    "Repurpose a 1080x1920 Reel frame as an idea pin without letterboxing, then export a matching 1000x1500 static pin for the same campaign.",
-    "Batch a set of board covers to a consistent 1000x1000 square so the board grid stops looking ragged.",
+    "Enter a 4:3 (1600x1200) source photo's dimensions against the 2:3 standard pin to see the crop percentage and draw scale before you open an editor.",
+    "Check whether a tall infographic canvas will be truncated in the home feed, using the same 1:2.1 feed ceiling Pinterest applies.",
+    "Compare fill (crop), fit (letterbox bars) and stretch against the same source dimensions to pick the least destructive way to reach a target pin shape.",
+    "Check a finished PNG or JPEG export's file size against Pinterest's 20 MB pin upload ceiling before you publish it.",
   ],
   benefits: [
-    ["Feed truncation check", "Warns when a pin is taller than the roughly 1:2.1 point where the feed stops showing the whole image."],
-    ["Crop shown before export", "The preview frame is the real pin shape, with the cropped percentage stated as a number."],
-    ["Local canvas export", "PNG, JPEG or WebP written in the browser with an adjustable encoder quality — no upload, no watermark."],
+    ["Six real Pinterest presets", "Standard, square, long/infographic, idea pin, board cover and profile photo canvases, each at the exact pixel size Pinterest recommends."],
+    ["Feed truncation check", "Warns when a pin is taller than the roughly 1:2.1 point where the feed stops showing the whole image, using the canvas size you actually chose."],
+    ["Crop and file-size estimate", "Type your source image's width and height for a crop-percentage and scale estimate, and a planned file size to check against Pinterest's 20 MB cap — no upload required."],
   ],
   faqs: [
     [

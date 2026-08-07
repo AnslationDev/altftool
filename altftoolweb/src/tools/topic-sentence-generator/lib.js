@@ -50,6 +50,11 @@ export const VAGUE_TERMS = [
   "various factors",
 ];
 
+/** Word-boundary regex for each vague term, so "stuff" doesn't match inside "stuffing". */
+const VAGUE_PATTERNS = VAGUE_TERMS.map(
+  (term) => new RegExp(`\\b${term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\b`, "i"),
+);
+
 /**
  * Evidence markers. Quotations, page references, years in brackets and
  * "according to" belong in the body of the paragraph, not in the sentence
@@ -92,6 +97,9 @@ const lowerFirst = (value) => {
   // Leave acronyms and proper-noun-looking words alone.
   if (/^[A-Z]{2,}/.test(text)) return text;
   if (/^[A-Z][a-z]+\s+[A-Z]/.test(text)) return text;
+  // Leave a lone capitalized word alone too (e.g. "France") — the tool cannot
+  // reliably tell a proper noun apart from a word capitalized out of habit.
+  if (/^[A-Z][a-z]+$/.test(text)) return text;
   return text.charAt(0).toLowerCase() + text.slice(1);
 };
 
@@ -112,7 +120,14 @@ export function countWords(text) {
 export function countSentences(text) {
   const trimmed = clean(text);
   if (!trimmed) return 0;
-  const matches = trimmed.match(/[.!?]+(?=\s|$)/g);
+  // Abbreviations (U.S., e.g., etc., Dr., ...) end in a period that does not
+  // close the sentence; neutralise them before counting so they are not
+  // mistaken for a sentence boundary.
+  const withoutAbbreviations = trimmed.replace(
+    /\b(?:[A-Z]\.){2,4}|\b(?:etc|e\.g|i\.e|vs|Dr|Mr|Mrs|Ms|St|Prof|approx)\.(?=\s|$)/gi,
+    (match) => match.replace(/\./g, ""),
+  );
+  const matches = withoutAbbreviations.match(/[.!?]+(?=\s|$)/g);
   return matches ? matches.length : 1;
 }
 
@@ -267,9 +282,9 @@ export function assessTopicSentence(text) {
     {
       id: "vague",
       label: "No vague filler",
-      pass: !VAGUE_TERMS.some((term) => sentence.toLowerCase().includes(term)),
+      pass: !VAGUE_PATTERNS.some((pattern) => pattern.test(sentence)),
       detail: (() => {
-        const hits = VAGUE_TERMS.filter((term) => sentence.toLowerCase().includes(term));
+        const hits = VAGUE_TERMS.filter((_term, i) => VAGUE_PATTERNS[i].test(sentence));
         return hits.length > 0
           ? `Replace: ${hits.join(", ")}.`
           : "The controlling idea is specific enough to argue with.";

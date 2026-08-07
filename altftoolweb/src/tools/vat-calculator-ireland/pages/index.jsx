@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Receipt, RotateCcw } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
 import {
   CURRENCY,
   LOCALE,
@@ -63,7 +64,7 @@ export default function ToolHome() {
   const [custom, setCustom] = useState(DEFAULTS.custom);
   const [turnover, setTurnover] = useState(DEFAULTS.turnover);
   const [activity, setActivity] = useState(DEFAULTS.activity);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement, reset: resetCopyState } = useCopyToClipboard();
 
   const selectedBand = useMemo(() => VAT_RATES.find((item) => item.id === band) ?? null, [band]);
 
@@ -104,15 +105,9 @@ export default function ToolHome() {
       .join("\n");
   }, [ok, result, mode]);
 
-  const copyResult = async () => {
+  const copyResult = () => {
     if (!summary) return;
-    try {
-      await navigator.clipboard.writeText(summary);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {
-      setCopied(false);
-    }
+    copy("result", summary, { label: "Irish VAT result" });
   };
 
   const reset = () => {
@@ -122,7 +117,7 @@ export default function ToolHome() {
     setCustom(DEFAULTS.custom);
     setTurnover(DEFAULTS.turnover);
     setActivity(DEFAULTS.activity);
-    setCopied(false);
+    resetCopyState();
   };
 
   const headlineLabel = mode === "add" ? "Total including VAT" : "Price excluding VAT";
@@ -239,7 +234,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               {headlineLabel}
             </p>
@@ -254,16 +249,16 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy Irish VAT result"
+              aria-label={isCopied("result") ? "Copied the Irish VAT result to clipboard" : "Copy Irish VAT result"}
               className={GHOST_BTN}
               disabled={!ok}
             >
-              {copied ? (
+              {isCopied("result") ? (
                 <Check className="h-4 w-4" aria-hidden="true" />
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {isCopied("result") ? "Copied!" : "Copy result"}
             </button>
             <button
               type="button"
@@ -274,6 +269,9 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

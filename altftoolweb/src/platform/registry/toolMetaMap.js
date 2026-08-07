@@ -21713,7 +21713,7 @@ export const toolMetaMap = {
   },
   "pinterest-pin-size-generator": {
     "name": "Pinterest Pin Size Generator",
-    "description": "Create standard, square, long and idea pin canvases with correct 2:3 ratio exports and feed truncation checks.",
+    "description": "Calculate standard, square, long and idea pin canvas sizes with a scale multiplier, safe-area CSS, feed-truncation checks and a crop estimate from your source image's dimensions.",
     "category": "Design & Color",
     "icon": "pin",
     "iconColor": "text-[var(--primary)]"
@@ -26680,7 +26680,7 @@ export const toolMetaMap = {
   },
   "slow-speech-playback-trainer": {
     "name": "Slow Speech Playback Trainer",
-    "description": "Slow, loop and segment speech for practice while preserving the original pitch.",
+    "description": "Slow down and loop a full audio file for practice while preserving the original pitch.",
     "category": [
       "Developer",
       "Productivity"
@@ -29806,7 +29806,7 @@ export const toolMetaMap = {
   },
   "topic-sentence-generator": {
     "name": "Topic Sentence Generator",
-    "description": "Turn a paragraph subject and controlling idea into six topic sentence patterns, then score your own sentence against seven checks.",
+    "description": "Turn a paragraph subject and controlling idea into several topic sentence patterns (more when you add a reason or a concession), then score your own sentence against seven checks.",
     "category": "Education & Science",
     "icon": "pen-line",
     "iconColor": "text-[var(--primary)]"
