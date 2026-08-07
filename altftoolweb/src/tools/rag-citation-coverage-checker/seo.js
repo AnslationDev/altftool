@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     ["Four statuses, not pass or fail", "A claim is linked when every citation resolves, mixed when some resolve and some do not, unknown when none resolve, and missing when there is no citation at all."],
     ["Reads the retrieval set in either format", "Paste JSON - an array, an object keyed by ID, or a {sources: [...]} wrapper - or plain lines like \"S3 | passage text\", and IDs are matched case-insensitively with surrounding brackets stripped."],
-    ["Skips text that is not a claim", "Headings, list markers, questions, a trailing \"Sources:\" block and fragments under four words are excluded, so the coverage denominator stays honest."],
+    ["Skips text that is not a claim", "Headings, questions, a trailing \"Sources:\" block and fragments under four words are excluded outright, and leading list-marker syntax (bullets, numbering) is stripped from the remaining text, so the coverage denominator stays honest."],
   ],
   faqs: [
     [

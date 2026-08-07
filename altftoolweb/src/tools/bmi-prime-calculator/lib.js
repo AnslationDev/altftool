@@ -86,22 +86,43 @@ export function primeBands(scheme) {
   });
 }
 
+/** Format a height in centimetres as a "X ft Y.Y in" label for imperial error copy. */
+const cmToFeetInchesLabel = (cm) => {
+  const totalInches = cm / 2.54;
+  const feet = Math.floor(totalInches / 12);
+  const inches = round(totalInches - feet * 12, 1);
+  return `${feet} ft ${inches} in`;
+};
+
+/** Format a weight in kilograms as a "X.X lb" label for imperial error copy. */
+const kgToPoundsLabel = (kg) => `${round(kg / 0.45359237, 1)} lb`;
+
 /**
  * @param {object} input
  * @param {number} input.heightCm  Height in centimetres.
  * @param {number} input.weightKg  Weight in kilograms.
  * @param {"who"|"asia"} [input.scheme]
+ * @param {"metric"|"imperial"} [input.unit] Controls the units used in validation error copy.
  * @returns {object} BMI Prime result, or { error }.
  */
-export function bmiPrime({ heightCm, weightKg, scheme = "who" }) {
+export function bmiPrime({ heightCm, weightKg, scheme = "who", unit = "metric" }) {
   if ([heightCm, weightKg].some((n) => typeof n !== "number" || !Number.isFinite(n))) {
     return { error: "Enter a valid height and weight." };
   }
+  const imperial = unit === "imperial";
   if (heightCm < LIMITS.heightCm.min || heightCm > LIMITS.heightCm.max) {
-    return { error: `Height must be between ${LIMITS.heightCm.min} cm and ${LIMITS.heightCm.max} cm.` };
+    return {
+      error: imperial
+        ? `Height must be between ${cmToFeetInchesLabel(LIMITS.heightCm.min)} and ${cmToFeetInchesLabel(LIMITS.heightCm.max)}.`
+        : `Height must be between ${LIMITS.heightCm.min} cm and ${LIMITS.heightCm.max} cm.`,
+    };
   }
   if (weightKg < LIMITS.weightKg.min || weightKg > LIMITS.weightKg.max) {
-    return { error: `Weight must be between ${LIMITS.weightKg.min} kg and ${LIMITS.weightKg.max} kg.` };
+    return {
+      error: imperial
+        ? `Weight must be between ${kgToPoundsLabel(LIMITS.weightKg.min)} and ${kgToPoundsLabel(LIMITS.weightKg.max)}.`
+        : `Weight must be between ${LIMITS.weightKg.min} kg and ${LIMITS.weightKg.max} kg.`,
+    };
   }
 
   const config = SCHEMES[scheme] ?? SCHEMES.who;
@@ -123,12 +144,17 @@ export function bmiPrime({ heightCm, weightKg, scheme = "who" }) {
   const excessKg = weightKg > ceilingKg ? weightKg - ceilingKg : 0;
   const deficitKg = weightKg < floorKg ? floorKg - weightKg : 0;
 
+  // Derive the headline and the percentages from the same rounded prime so a
+  // headlined 1.00 always reads as exactly 100.0% / +0.0%, never a
+  // contradicting sign or nonzero delta caused by rounding only the headline.
+  const roundedPrime = round(prime, 2);
+
   return {
     bmi: round(bmi, 1),
-    prime: round(prime, 2),
+    prime: roundedPrime,
     primeExact: prime,
-    percentOfCeiling: round(prime * 100, 1),
-    percentOver: round((prime - 1) * 100, 1),
+    percentOfCeiling: round(roundedPrime * 100, 1),
+    percentOver: round((roundedPrime - 1) * 100, 1),
     band,
     bands,
     scheme: config,

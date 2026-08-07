@@ -67,7 +67,7 @@ export default function ToolHome() {
     const metric = unit === "metric";
     const h = metric ? toNum(heightCm) : feetInchesToCm(toNum(feet) || 0, toNum(inches) || 0);
     const w = metric ? toNum(weightKg) : poundsToKg(toNum(weightLb));
-    return bmiPrime({ heightCm: h, weightKg: w, scheme });
+    return bmiPrime({ heightCm: h, weightKg: w, scheme, unit });
   }, [unit, heightCm, feet, inches, weightKg, weightLb, scheme]);
 
   const ok = !result.error;
@@ -263,7 +263,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className={`mt-6 ${CARD}`}>
+      <section className={`mt-6 ${CARD}`} aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

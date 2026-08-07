@@ -80,6 +80,17 @@ export default function ToolHome() {
     [videoUrl],
   );
 
+  useEffect(
+    () => () => {
+      if (outputUrl) URL.revokeObjectURL(outputUrl);
+    },
+    [outputUrl],
+  );
+
+  useEffect(() => () => {
+    ffmpegRef.current?.terminate?.();
+  }, []);
+
   const onPickFile = (event) => {
     const picked = event.target.files?.[0];
     setStatus("");
@@ -383,7 +394,13 @@ export default function ToolHome() {
 
         {busy && (
           <div className="mt-4">
-            <div className="h-2 w-full overflow-hidden rounded-full bg-[var(--muted)]">
+            <div
+              className="h-2 w-full overflow-hidden rounded-full bg-[var(--muted)]"
+              role="progressbar"
+              aria-valuenow={progress}
+              aria-valuemin={0}
+              aria-valuemax={100}
+            >
               <div
                 className="h-full bg-[var(--primary)] transition-[width]"
                 style={{ width: `${progress}%` }}
@@ -391,7 +408,11 @@ export default function ToolHome() {
             </div>
           </div>
         )}
-        {status && <p className="mt-3 text-sm text-[var(--muted-foreground)]">{status}</p>}
+        {status && (
+          <p role="status" aria-live="polite" className="mt-3 text-sm text-[var(--muted-foreground)]">
+            {status}
+          </p>
+        )}
 
         <div className="mt-5 flex flex-wrap gap-3">
           <button

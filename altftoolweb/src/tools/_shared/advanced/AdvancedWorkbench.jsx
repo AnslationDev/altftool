@@ -917,10 +917,19 @@ function LiveLab({ slug }) {
             <div>
               <p className="text-xl font-semibold">{data.summary}</p>
               <p className="mt-1 text-xs text-[var(--muted-foreground)]">
-                Updated {new Date(data.updatedAt).toLocaleString()}
+                Updated {new Date(data.readingTime || data.updatedAt).toLocaleString()}
               </p>
             </div>
-            <ResultTable rows={data.rows || []} />
+            <ResultTable
+              rows={data.rows || []}
+              headers={
+                slug === "pin-code-region-lookup"
+                  ? ["Post office", "Branch type", "District", "State", "Circle", "Delivery status"]
+                  : slug === "aqi-live-dashboard"
+                    ? ["Reading", "Value", "Unit"]
+                    : undefined
+              }
+            />
             {data.note && <Notice>{data.note}</Notice>}
             {data.source && (
               <p className="break-all text-xs text-[var(--muted-foreground)]">

@@ -258,7 +258,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Net settlement
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite" aria-atomic="true">
               {ok ? money(result.net) : DASH}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -312,7 +312,7 @@ export default function ToolHome() {
             {grossUp.error}
           </p>
         ) : (
-          <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+          <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
             {[
               ["Charge the customer", money(grossUp.chargeAmount)],
               ["Uplift over your price", `${money(grossUp.uplift)} (${pct.format(grossUp.upliftPercent)}%)`],
@@ -375,7 +375,7 @@ export default function ToolHome() {
             {monthly.error}
           </p>
         ) : (
-          <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+          <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
             {[
               ["Processed volume", money(monthly.volume)],
               ["Processing cost", money(monthly.cost)],

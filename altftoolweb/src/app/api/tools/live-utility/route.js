@@ -33,6 +33,7 @@ const timeoutFetch = async (url, options = {}, timeout = 9000) => {
 };
 
 const number = (value, fallback) => {
+  if (value == null || String(value).trim() === "") return fallback;
   const parsed = Number(value);
   return Number.isFinite(parsed) ? parsed : fallback;
 };
@@ -368,6 +369,7 @@ async function handle(slug, params) {
     return {
       summary: `AQI ${current.us_aqi ?? current.european_aqi ?? "unavailable"}`,
       source: "Open-Meteo Air Quality API using CAMS data",
+      readingTime: current.time || null,
       rows: Object.entries(current)
         .filter(([key]) => !["time", "interval"].includes(key))
         .map(([key, value]) => [key, value, data.current_units?.[key] || ""]),

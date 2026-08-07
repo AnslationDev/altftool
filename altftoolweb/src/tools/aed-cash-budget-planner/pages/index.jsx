@@ -515,7 +515,11 @@ export default function ToolHome() {
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Carry in {CURRENCY.plural}
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p
+              className="mt-1 text-4xl font-semibold text-[var(--primary)]"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {hasError ? DASH : local(plan.cashToCarry)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -659,29 +663,29 @@ export default function ToolHome() {
           <h2 className="text-base font-semibold">Limits this plan touches</h2>
           <dl className="mt-3 divide-y divide-[var(--border)] text-sm">
             <div className="flex items-center justify-between gap-4 py-2.5">
-              <dt className="text-[var(--muted-foreground)]">Notes in US dollar terms</dt>
+              <dt className="text-[var(--muted-foreground)]">Notes in US dollars, per traveller</dt>
               <dd className="text-right font-semibold">
                 {hasError ? DASH : `USD ${NUM2.format(plan.cashUsdEquivalent)}`}
               </dd>
             </div>
             <div className="flex items-center justify-between gap-4 py-2.5">
-              <dt className="text-[var(--muted-foreground)]">RBI cash limit per visit</dt>
+              <dt className="text-[var(--muted-foreground)]">RBI cash limit per traveller per visit</dt>
               <dd className="text-right font-semibold">USD {RBI_CASH_NOTES_LIMIT_USD}</dd>
             </div>
             <div className="flex items-center justify-between gap-4 py-2.5">
-              <dt className="text-[var(--muted-foreground)]">Counts towards LRS</dt>
+              <dt className="text-[var(--muted-foreground)]">Counts towards LRS, per traveller</dt>
               <dd className="text-right font-semibold">
                 {hasError ? DASH : money(plan.lrsAmountInr)}
               </dd>
             </div>
             <div className="flex items-center justify-between gap-4 py-2.5">
-              <dt className="text-[var(--muted-foreground)]">TCS collected</dt>
+              <dt className="text-[var(--muted-foreground)]">TCS collected, per traveller</dt>
               <dd className="text-right font-semibold">
                 {hasError ? DASH : money(plan.tcs.tcsInr)}
               </dd>
             </div>
             <div className="flex items-center justify-between gap-4 py-2.5">
-              <dt className="text-[var(--muted-foreground)]">Declare on return?</dt>
+              <dt className="text-[var(--muted-foreground)]">Declare on return? (per traveller)</dt>
               <dd className="text-right font-semibold">
                 {hasError ? DASH : plan.mustDeclareOnReturn ? "Yes" : "No"}
               </dd>

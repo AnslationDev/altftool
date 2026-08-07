@@ -222,11 +222,12 @@ export default function RagCitationCoverageChecker() {
 
       {result ? (
         <section className="space-y-5" aria-live="polite">
-          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-6">
+          <div className="grid gap-3 sm:grid-cols-3 lg:grid-cols-7">
             {[
               ["Coverage", `${result.coveragePercent}%`],
               ["Claims", result.claimCount],
-              ["Linked", result.linkedClaims],
+              ["Linked", result.linkedClaims - result.mixedClaims],
+              ["Mixed", result.mixedClaims],
               ["No citation", result.missingClaims],
               ["Unknown only", result.unknownOnlyClaims],
               ["Sources", result.sourceCount],

@@ -159,6 +159,7 @@ export default function GamePlay({ config, onFinish }) {
     setIsAnswered(true);
     setShowFeedback("skipped");
     setStreak(0);
+    if (gameMode === "survival") setLives((prev) => prev - 1);
   };
 
   const handleNext = () => {

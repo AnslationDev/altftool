@@ -19,7 +19,7 @@ const seo = {
     ],
     [
       "How should delivery time be counted — calendar days or working days?",
-      "Count working days after dispatch, and say so on the page. A parcel handed over on a Tuesday with a 4 to 7 working-day band for the rest of India arrives roughly the following Saturday to the Wednesday after, which is 5 to 9 calendar days — quoting the calendar figure without the working-day basis is what generates complaints.",
+      "Count working days after dispatch, and say so on the page. A parcel handed over on a Tuesday with a 4 to 7 working-day band for the rest of India arrives roughly the following Saturday to the Wednesday after, which is 4 to 8 calendar days — quoting the calendar figure without the working-day basis is what generates complaints.",
     ],
     [
       "What should a customer do when a parcel arrives damaged?",

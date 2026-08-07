@@ -105,7 +105,7 @@ export default function ToolHome() {
         </p>
       ) : (
         <>
-          <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+          <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-live="polite" role="status">
             <div className="flex flex-wrap items-center gap-4">
               <div className="flex h-20 w-20 shrink-0 flex-col items-center justify-center rounded-xl bg-[var(--muted)]">
                 <span className="text-3xl font-bold leading-none text-[var(--primary)]">{result.grade}</span>

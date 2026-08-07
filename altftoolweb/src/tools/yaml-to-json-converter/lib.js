@@ -59,7 +59,7 @@ function jsonSafe(value, stats) {
   if (value === undefined) return null;
   if (Array.isArray(value)) return value.map((entry) => jsonSafe(entry, stats));
   if (value !== null && typeof value === "object") {
-    const out = {};
+    const out = Object.create(null);
     for (const [key, entry] of Object.entries(value)) out[key] = jsonSafe(entry, stats);
     return out;
   }

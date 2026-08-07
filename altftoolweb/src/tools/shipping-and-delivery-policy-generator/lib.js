@@ -349,6 +349,11 @@ export function computeDeliveryEstimate({
   const missedCutoff = placed >= cutoff;
   const preparationStamp = missedCutoff ? start + MS_PER_DAY : start;
 
+  const preparationWalked = addWorkingDays(preparationStamp, 0, calendar);
+  if (preparationWalked === null) {
+    return { error: "No working day is available to dispatch on - check the holiday list." };
+  }
+
   const dispatchStamp = addWorkingDays(preparationStamp, processing, calendar);
   if (dispatchStamp === null) {
     return { error: "No working day is available to dispatch on - check the holiday list." };
@@ -366,7 +371,7 @@ export function computeDeliveryEstimate({
 
   return {
     missedCutoff,
-    preparationStart: describe(preparationStamp),
+    preparationStart: describe(preparationWalked),
     dispatch: describe(dispatchStamp),
     earliest: describe(earliestStamp),
     latest: describe(latestStamp),

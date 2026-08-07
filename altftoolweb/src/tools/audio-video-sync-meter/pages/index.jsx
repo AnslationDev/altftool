@@ -182,7 +182,11 @@ export default function ToolHome() {
         </div>
       ) : null}
 
-      <section className="mt-5 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-5 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <p className="text-sm font-medium text-[var(--muted-foreground)]">Audio offset</p>
         <p className="mt-1 text-4xl font-bold tabular-nums sm:text-5xl">
           {failed ? DASH : `${msFmt.format(result.offsetMs)} ms`}
@@ -201,7 +205,11 @@ export default function ToolHome() {
         </dl>
       </section>
 
-      <section className="mt-5 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-5 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <h2 className="text-base font-semibold">Against the standards</h2>
         {failed ? (
           <p className="mt-2 text-sm text-[var(--muted-foreground)]">{DASH}</p>
@@ -238,7 +246,11 @@ export default function ToolHome() {
         )}
       </section>
 
-      <section className="mt-5 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-5 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <h2 className="text-base font-semibold">Correction</h2>
         {failed || !fix ? (
           <p className="mt-2 text-sm text-[var(--muted-foreground)]">{DASH}</p>
