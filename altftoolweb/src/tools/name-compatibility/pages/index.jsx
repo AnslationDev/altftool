@@ -45,7 +45,7 @@ export default function NameCompatibility() {
         />
 
         {result && (
-          <>
+          <div aria-live="polite" aria-atomic="true" className="space-y-6">
             <OverallScore
               score={result.scores.overall}
               trait={result.overallTrait}
@@ -57,7 +57,7 @@ export default function NameCompatibility() {
               name2Profile={result.name2}
             />
             <DetailedAnalysis result={result} />
-          </>
+          </div>
         )}
       </div>
 

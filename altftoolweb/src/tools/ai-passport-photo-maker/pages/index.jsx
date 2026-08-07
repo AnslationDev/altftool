@@ -120,16 +120,28 @@ export default function ToolHome() {
     [specId, sheetId, gapMm, marginMm],
   );
 
+  const hasError = Boolean(geometry.error);
+
   const resolution = useMemo(() => {
-    if (!imageSize) return null;
-    return checkResolution({
+    if (!imageSize || hasError) return null;
+    // The resolution check has to look at the pixels the current zoom/pan
+    // actually keeps, not the full uploaded image — zooming in crops the
+    // source down and can drop the effective dpi well below the raw photo's.
+    const crop = computeCropBox({
       sourceWidthPx: imageSize.width,
       sourceHeightPx: imageSize.height,
+      aspectRatio: geometry.aspectRatio,
+      zoom,
+      offsetX,
+      offsetY,
+    });
+    if (crop.error) return null;
+    return checkResolution({
+      sourceWidthPx: crop.sWidth,
+      sourceHeightPx: crop.sHeight,
       specId,
     });
-  }, [imageSize, specId]);
-
-  const hasError = Boolean(geometry.error);
+  }, [imageSize, specId, hasError, geometry.aspectRatio, zoom, offsetX, offsetY]);
 
   useEffect(() => {
     const canvas = previewRef.current;

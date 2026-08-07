@@ -94,6 +94,7 @@ export default function AttentionSpanTest() {
 
   const timerRef = useRef(null);
   const hideTimerRef = useRef(null);
+  const startTimeoutRef = useRef(null);
   const stimulusAppearTime = useRef(0);
   const hasRespondedThisTrial = useRef(false);
 
@@ -102,6 +103,7 @@ export default function AttentionSpanTest() {
   const cleanup = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
     if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    if (startTimeoutRef.current) clearTimeout(startTimeoutRef.current);
   }, []);
 
   useEffect(() => cleanup, [cleanup]);
@@ -134,7 +136,7 @@ export default function AttentionSpanTest() {
     };
 
     // First delay
-    setTimeout(() => {
+    startTimeoutRef.current = setTimeout(() => {
       runNext();
       timerRef.current = setInterval(runNext, TOTAL_INTERVAL_MS);
     }, 1000);
@@ -265,8 +267,9 @@ export default function AttentionSpanTest() {
             </ul>
 
             <div className="mb-8 w-full max-w-sm">
-              <label className="mb-2 block text-sm font-bold text-[var(--foreground)]">Test Duration</label>
+              <label htmlFor="attention-test-duration" className="mb-2 block text-sm font-bold text-[var(--foreground)]">Test Duration</label>
               <select
+                id="attention-test-duration"
                 value={duration}
                 onChange={(e) => setDuration(Number(e.target.value))}
                 className="w-full rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-2 text-sm text-[var(--foreground)] focus:border-[var(--primary)] focus:outline-none"
@@ -344,7 +347,7 @@ export default function AttentionSpanTest() {
               label="Reaction Time"
               value={`${results.avgRt}ms`}
               detail="Average time to hit spacebar"
-              tone={results.avgRt < 400 ? "good" : results.avgRt > 600 ? "warn" : "default"}
+              tone={results.hits === 0 ? "warn" : results.avgRt < 400 ? "good" : results.avgRt > 600 ? "warn" : "default"}
             />
           </div>
 

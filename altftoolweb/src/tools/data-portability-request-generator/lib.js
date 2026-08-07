@@ -216,6 +216,12 @@ export function buildPortabilityRequest({
   const inScope = selected.filter((item) => item.origin !== "inferred");
   const outOfScope = selected.filter((item) => item.origin === "inferred");
 
+  if (inScope.length === 0) {
+    return {
+      error: `The categories you selected (${outOfScope.map((item) => item.label).join(", ")}) are data the organisation derived or inferred about you, which falls outside the data portability right (WP242 rev.01). Select at least one category of data you actively provided or that was observed from your use of the service, or use an access request instead.`,
+    };
+  }
+
   const deadlineDate = applyPeriod(requestDate, law.deadlineKind, law.deadlineValue);
   const extensionDate =
     law.extensionKind === "none" ? null : applyPeriod(deadlineDate, law.extensionKind, law.extensionValue);
@@ -237,13 +243,13 @@ export function buildPortabilityRequest({
       ? `Article 15 ${law.id === "uk-gdpr" ? "UK " : ""}GDPR (right of access), because Article 20 does not apply to processing based on ${basis.label.toLowerCase()}`
       : "Section 11, Digital Personal Data Protection Act, 2023 (right to access information)";
 
-  const subject = `${portabilityApplies ? "Data portability request" : "Data access request in machine-readable form"} — ${name}${accountRef ? ` (${clean(accountRef)})` : ""}`;
+  const subject = `${portabilityApplies ? "Data portability request" : "Data access request in machine-readable form"} — ${name}${clean(accountRef) ? ` (${clean(accountRef)})` : ""}`;
 
   const bodyLines = [
     `Dear ${org} Privacy Team,`,
     "",
     `I am exercising my right under ${rightCited}.`,
-    `My details: ${name}${clean(email) ? `, ${clean(email)}` : ""}${accountRef ? `, account reference ${clean(accountRef)}` : ""}.`,
+    `My details: ${name}${clean(email) ? `, ${clean(email)}` : ""}${clean(accountRef) ? `, account reference ${clean(accountRef)}` : ""}.`,
     "",
     `Please supply a copy of the following categories of personal data concerning me, in ${chosenFormat.label} format:`,
     ...inScope.map((item) => `- ${item.label} (${item.origin === "provided" ? "data I supplied" : "data observed from my use of the service"})`),

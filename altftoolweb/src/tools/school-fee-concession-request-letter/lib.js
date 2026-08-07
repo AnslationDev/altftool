@@ -157,6 +157,9 @@ export function groundById(id) {
   return CONCESSION_GROUNDS.find((item) => item.id === id) || CONCESSION_GROUNDS[CONCESSION_GROUNDS.length - 1];
 }
 
+/** Grounds that are an achievement, not a hardship — the letter's opening sentence must not frame these as "a difficulty". */
+export const ACHIEVEMENT_GROUND_IDS = new Set(["merit", "sports"]);
+
 export const REQUEST_KINDS = {
   CONCESSION: "concession",
   INSTALMENTS: "instalments",
@@ -243,7 +246,10 @@ export function computeConcession({ total, mode, concessionPercent, concessionAm
   }
 
   const netFee = feeTotal - amount;
-  const payable = netFee + due;
+  // Round to whole rupees here so every downstream consumer (the header
+  // total, the letter text and the instalment split) works from the same
+  // integer base and can never disagree after display rounding.
+  const payable = Math.round(netFee + due);
 
   return { concessionAmount: amount, concessionPercent: percent, netFee, arrears: due, payable };
 }
@@ -390,6 +396,9 @@ export function buildFeeConcessionLetter({
   const ground = groundById(groundId);
   const detail = clean(groundDetail);
   const groundText = ground.id === "other" && detail ? detail : ground.line;
+  const openingSentence = ACHIEVEMENT_GROUND_IDS.has(ground.id)
+    ? "I am writing to request your consideration for a fee concession in recognition of my child's achievement."
+    : "I am writing to place before you a difficulty I would not raise if there were another way.";
 
   const feeLines = [
     "The fee for the year, as billed:",
@@ -440,7 +449,7 @@ export function buildFeeConcessionLetter({
     "",
     `I am ${parent}, parent of ${student}, a student of Class ${cls}${sec ? `-${sec}` : ""}, bearing Admission No. ${admission}, for the academic year ${year}.`,
     "",
-    `I am writing to place before you a difficulty I would not raise if there were another way. ${groundText.charAt(0).toUpperCase()}${groundText.slice(1)}.`,
+    `${openingSentence} ${groundText.charAt(0).toUpperCase()}${groundText.slice(1)}.`,
     detail && ground.id !== "other" ? detail : "",
     clean(occupation) ? `I work as ${clean(occupation)}.` : "",
     clean(siblingDetail) ? clean(siblingDetail) : "",

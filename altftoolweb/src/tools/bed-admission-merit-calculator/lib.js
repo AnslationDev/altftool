@@ -107,13 +107,20 @@ export function computeBedMerit({
 
   const round2 = (v) => Math.round(v * 100) / 100;
 
+  // Round the two shares first, then derive the displayed merit index as
+  // their sum, so the breakdown always adds up exactly to the headline
+  // number (rounding `merit` independently from `gradShare`/`entranceShare`
+  // could make the displayed figures disagree by a cent-level rounding gap).
+  const roundedGradShare = round2(gradShare);
+  const roundedEntranceShare = round2(entranceShare);
+
   return {
-    merit: round2(merit),
+    merit: round2(roundedGradShare + roundedEntranceShare),
     meritScale: MERIT_SCALE,
     gradPercent: round2(gradPercent),
     entrancePercent: round2(entrancePercent),
-    gradShare: round2(gradShare),
-    entranceShare: round2(entranceShare),
+    gradShare: roundedGradShare,
+    entranceShare: roundedEntranceShare,
     graduationWeight: weight,
     entranceWeight: 100 - weight,
     ncteFloor,

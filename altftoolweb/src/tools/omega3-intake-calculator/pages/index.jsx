@@ -154,7 +154,7 @@ export default function Omega3IntakeCalculator() {
             </button>
           </div>
         ) : (
-          <div className="bg-[var(--card)] border border-[var(--border)] rounded-3xl p-8 shadow-md animate-in fade-in zoom-in duration-300">
+          <div aria-live="polite" role="status" className="bg-[var(--card)] border border-[var(--border)] rounded-3xl p-8 shadow-md animate-in fade-in zoom-in duration-300">
             <div className="text-center mb-8">
               <h2 className="text-2xl font-extrabold text-[var(--foreground)] mb-2">Your Omega-3 Analysis</h2>
               <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-[var(--section-highlight)] text-[var(--muted-foreground)] text-sm font-bold mb-6">

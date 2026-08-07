@@ -18,9 +18,9 @@ const faqItems = [
       "No. All parsing, indentation, and formatting operations are executed entirely client-side inside your browser, ensuring total privacy.",
   },
   {
-    question: "How do I choose between tabs and spaces?",
+    question: "How do I choose my indentation size?",
     answer:
-      "Use the configuration panel below the input box to customize your preferred indentation format (2 spaces, 4 spaces, or tabs).",
+      "Use the configuration panel below the input box to customize your preferred indentation width (2, 4, or 8 spaces). The tool always indents with spaces, not tab characters.",
   },
 ];
 

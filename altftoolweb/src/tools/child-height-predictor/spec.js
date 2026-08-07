@@ -46,7 +46,8 @@ export const spec = {
       const m = num(values.mother), f = num(values.father);
       if (m <= 0 || f <= 0) return { result: "—", caption: "Enter both parents' heights" };
       const mid = values.sex === "female" ? (m + f - 13) / 2 : (m + f + 13) / 2;
-      return { result: mid.toFixed(1) + " cm", caption: "predicted adult height", rows: [["Likely range", (mid - 8.5).toFixed(0) + "–" + (mid + 8.5).toFixed(0) + " cm"], ["In feet", Math.floor(mid / 30.48) + "′" + Math.round((mid / 2.54) % 12) + "″"]] };
+      const totalIn = Math.round(mid / 2.54); const ft = Math.floor(totalIn / 12); const inch = totalIn % 12;
+      return { result: mid.toFixed(1) + " cm", caption: "predicted adult height", rows: [["Likely range", (mid - 8.5).toFixed(0) + "–" + (mid + 8.5).toFixed(0) + " cm"], ["In feet", ft + "′" + inch + "″"]] };
     },
 };
 

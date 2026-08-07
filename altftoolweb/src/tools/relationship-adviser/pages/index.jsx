@@ -231,7 +231,11 @@ export default function ToolHome() {
           </p>
         ) : null}
 
-        <div className="mt-5 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+        <div
+          className="mt-5 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+          aria-live="polite"
+          role="status"
+        >
           <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
             Ritual time this week
           </p>
@@ -338,7 +342,11 @@ export default function ToolHome() {
             {ratio.error}
           </p>
         ) : (
-          <div className="mt-4 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+          <div
+            className="mt-4 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+            aria-live="polite"
+            role="status"
+          >
             <p className="text-3xl font-bold text-[var(--primary)]">
               {ratio.ratio === null ? DASH : `${NUM.format(ratio.ratio)}:1`}
             </p>
@@ -409,7 +417,11 @@ export default function ToolHome() {
           </p>
         ) : null}
 
-        <div className="mt-4 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+        <div
+          className="mt-4 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+          aria-live="polite"
+          role="status"
+        >
           <p className="text-base leading-relaxed font-semibold text-[var(--foreground)]">
             {statement.error ? DASH : statement.statement}
           </p>

@@ -97,41 +97,45 @@ function CalculatorContent({ slug, pascal, icon, iconColor, name, result, setRes
 
   return (
     <>
-      {fields.map((field) => (
-        <div key={field.key}>
-          <label className="mb-1.5 block text-sm font-semibold text-(--foreground)">
-            {field.label}
-          </label>
-          <div className="relative">
-            {field.prefix && (
-              <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-(--muted-foreground) font-medium">
-                {field.prefix}
-              </span>
-            )}
-            <input
-              type="number"
-              value={form[field.key] ?? ""}
-              onChange={(e) => handleChange(field.key, e.target.value)}
-              placeholder={field.placeholder || ""}
-              className={`h-12 w-full rounded-xl border ${
-                errors[field.key]
-                  ? "border-red-500 focus:border-red-500 focus:ring-red-500/30"
-                  : "border-(--border) focus:border-(--primary) focus:ring-(--primary)/30"
-              } bg-(--background) px-4 ${
-                field.prefix ? "pl-8" : ""
-              } text-sm font-medium text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:ring-2`}
-            />
-            {field.suffix && (
-              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-sm text-(--muted-foreground)">
-                {field.suffix}
-              </span>
+      {fields.map((field) => {
+        const inputId = `${slug}-${field.key}`;
+        return (
+          <div key={field.key}>
+            <label htmlFor={inputId} className="mb-1.5 block text-sm font-semibold text-(--foreground)">
+              {field.label}
+            </label>
+            <div className="relative">
+              {field.prefix && (
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-(--muted-foreground) font-medium">
+                  {field.prefix}
+                </span>
+              )}
+              <input
+                id={inputId}
+                type="number"
+                value={form[field.key] ?? ""}
+                onChange={(e) => handleChange(field.key, e.target.value)}
+                placeholder={field.placeholder || ""}
+                className={`h-12 w-full rounded-xl border ${
+                  errors[field.key]
+                    ? "border-red-500 focus:border-red-500 focus:ring-red-500/30"
+                    : "border-(--border) focus:border-(--primary) focus:ring-(--primary)/30"
+                } bg-(--background) px-4 ${
+                  field.prefix ? "pl-8" : ""
+                } text-sm font-medium text-(--foreground) outline-none transition placeholder:text-(--muted-foreground) focus:ring-2`}
+              />
+              {field.suffix && (
+                <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-sm text-(--muted-foreground)">
+                  {field.suffix}
+                </span>
+              )}
+            </div>
+            {errors[field.key] && (
+              <p role="alert" className="mt-1 text-xs text-red-500">{errors[field.key]}</p>
             )}
           </div>
-          {errors[field.key] && (
-            <p className="mt-1 text-xs text-red-500">{errors[field.key]}</p>
-          )}
-        </div>
-      ))}
+        );
+      })}
 
       {getExtraControls(slug, form, setForm)}
 
@@ -170,7 +174,7 @@ function ResultsPanel({ result, showDetails, slug, name }) {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-5" aria-live="polite" role="status">
       {result.primary !== undefined && (
         <div className="rounded-xl bg-(--primary)/5 border border-(--primary)/10 p-6 text-center">
           <p className="text-sm font-medium text-(--muted-foreground) mb-1">{result.primaryLabel || "Result"}</p>
@@ -404,7 +408,12 @@ function getValidationRules(slug) {
   const rules = {};
   const fields = getFormFields(slug);
   for (const f of fields) {
-    rules[f.key] = { label: f.label, min: 0 };
+    let min = 0;
+    if (slug === "loan-prepayment-calculator" && f.key === "years") {
+      // A 0-year tenure is not a coherent loan term (unlike 0% interest, which is valid).
+      min = 1;
+    }
+    rules[f.key] = { label: f.label, min };
   }
   return rules;
 }
@@ -598,7 +607,9 @@ function computeResult(slug, form) {
       const prepayMonthly = Number(f.prepayMonthly) || 0;
       const monthlyRate = rate / 12;
       const totalMonths = years * 12;
-      const emi = amount * monthlyRate * Math.pow(1 + monthlyRate, totalMonths) / (Math.pow(1 + monthlyRate, totalMonths) - 1);
+      const emi = monthlyRate === 0
+        ? amount / totalMonths
+        : amount * monthlyRate * Math.pow(1 + monthlyRate, totalMonths) / (Math.pow(1 + monthlyRate, totalMonths) - 1);
       let balance = amount;
       let totalInterest = 0;
       let monthsToPay = 0;

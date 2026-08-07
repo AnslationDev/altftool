@@ -149,7 +149,9 @@ export default function ToolHome() {
           "Spend needed to cover the fee",
           best.breakEvenReachable
             ? `${money(best.breakEvenMonthlySpend)} a month`
-            : "Not reachable at this card's cap",
+            : best.breakEvenUnreachableReason === "zero-value"
+              ? "Not reachable — this card's points/value settings mean redemptions are worth nothing"
+              : "Not reachable at this card's cap",
         ],
       ];
 
@@ -218,7 +220,10 @@ export default function ToolHome() {
             />
           </div>
         </div>
-        <p className="mt-3 text-sm text-[var(--muted-foreground)]">
+        <p
+          role={derivedPointValue.error ? "alert" : undefined}
+          className="mt-3 text-sm text-[var(--muted-foreground)]"
+        >
           {derivedPointValue.error
             ? derivedPointValue.error
             : `That redemption values one point at ₹${num4(derivedPointValue.valuePerPoint)} — copy it into the cards below if it matches how you redeem.`}
@@ -329,7 +334,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               {hasError ? "Best card, net of fee" : `Best card: ${best.name}`}
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p aria-live="polite" className="mt-1 text-4xl font-semibold text-[var(--primary)]">
               {hasError ? DASH : money(best.netValue)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">

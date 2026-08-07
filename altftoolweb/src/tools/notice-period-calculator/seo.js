@@ -17,7 +17,7 @@ const seo = {
     ],
     [
       "Flags the service thresholds it uses",
-      "Crossing three, five, ten or fifteen years surfaces a note about the enhanced tier that applies at that point in the model.",
+      "Crossing five, ten, fifteen or twenty-four years surfaces a note about the enhanced tier that applies at that point in the model.",
     ],
   ],
   faqs: [
