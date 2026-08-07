@@ -66,14 +66,14 @@ export const COMPLEXITY_ENTRIES = [
   { name: "Binary search", category: "searching", best: "O(1)", average: "O(log n)", worst: "O(log n)", space: "O(1)", note: "Requires sorted input; iterative version needs no extra space." },
 
   // Data structures — operation costs; CLRS chapters 10–13, 6, 11.
-  { name: "Array (access / search / insert / delete)", category: "data-structure", best: "O(1) access", average: "O(n) search", worst: "O(n) insert/delete", space: "O(n)", note: "Index access is O(1); inserting or deleting mid-array shifts elements." },
+  { name: "Array (linear search)", category: "data-structure", best: "O(1)", average: "O(n)", worst: "O(n)", space: "O(n)", note: "Case analysis is for scanning to find a value. Indexed access is always O(1); inserting or deleting mid-array is O(n) because it shifts elements." },
   { name: "Dynamic array append", category: "data-structure", best: "O(1)", average: "O(1) amortised", worst: "O(n)", space: "O(n)", note: "Occasional resize copies everything, but doubling keeps the amortised cost constant." },
-  { name: "Singly linked list", category: "data-structure", best: "O(1) insert at head", average: "O(n) search", worst: "O(n) access", space: "O(n)", note: "Insertion/deletion is O(1) once you hold the node; finding it is O(n)." },
+  { name: "Singly linked list (search)", category: "data-structure", best: "O(1)", average: "O(n)", worst: "O(n)", space: "O(n)", note: "Case analysis is for finding a value by traversal. Insertion/deletion is O(1) once you hold the node — indexed access needs the same O(n) traversal as search." },
   { name: "Stack / Queue", category: "data-structure", best: "O(1)", average: "O(1)", worst: "O(1)", space: "O(n)", note: "Push, pop, enqueue and dequeue are all constant time." },
   { name: "Hash table (chaining)", category: "data-structure", best: "O(1)", average: "O(1) expected", worst: "O(n)", space: "O(n)", note: "Worst case is every key colliding into one bucket; a good hash makes it O(1) expected." },
   { name: "Binary search tree (unbalanced)", category: "data-structure", best: "O(log n)", average: "O(log n)", worst: "O(n)", space: "O(n)", note: "Degenerates to a linked list when keys arrive in sorted order." },
   { name: "Balanced BST (AVL / red-black)", category: "data-structure", best: "O(log n)", average: "O(log n)", worst: "O(log n)", space: "O(n)", note: "Rotations keep height Θ(log n), so search, insert and delete are all logarithmic." },
-  { name: "Binary heap", category: "data-structure", best: "O(1) find-min", average: "O(log n) insert/extract", worst: "O(log n)", space: "O(n)", note: "Building a heap from n items is O(n), not O(n log n)." },
+  { name: "Binary heap (insert)", category: "data-structure", best: "O(1)", average: "O(log n)", worst: "O(log n)", space: "O(n)", note: "Case analysis is for inserting a value (sift-up). find-min is always O(1); extract-min is always O(log n) (sift-down). Building a heap from n items is O(n), not O(n log n)." },
   { name: "Trie (prefix tree)", category: "data-structure", best: "O(m)", average: "O(m)", worst: "O(m)", space: "O(alphabet × nodes)", note: "m is the key length — independent of how many keys are stored." },
 
   // Graph algorithms — CLRS chapters 20–23 (4th ed. numbering).
@@ -93,7 +93,7 @@ export const GROWTH_SIZES = [10, 100, 1000, 1000000];
 const formatOps = (value) => {
   if (!Number.isFinite(value) || value > OPS_DISPLAY_CEILING) return ">10^18";
   if (value < 10) return String(Math.round(value * 10) / 10);
-  if (value < 1e6) return Math.round(value).toLocaleString("en-US");
+  if (value <= 1e6) return Math.round(value).toLocaleString("en-US");
   return value.toExponential(1).replace("e+", "×10^");
 };
 

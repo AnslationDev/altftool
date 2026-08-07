@@ -17,7 +17,7 @@ const seo = {
     ],
     [
       "No layout guesswork presented as fact",
-      "The overlay is an adjustable review aid and says so, instead of hard-coding pixel margins that platforms change without notice.",
+      "The overlay is a fixed 9:16 review aid and says so, instead of hard-coding pixel margins that platforms change without notice.",
     ],
   ],
   faqs: [
@@ -27,7 +27,7 @@ const seo = {
     ],
     [
       "Does this tool know the exact safe-zone pixels for TikTok, Reels and Shorts?",
-      "No, and that is deliberate. The overlay gives you an adjustable 9:16 frame with top and bottom boundary guides; each platform moves its interface between app versions, so confirm your final placement in that app's own upload preview before publishing.",
+      "No, and that is deliberate. The overlay gives you a fixed 9:16 frame with top and bottom boundary guides you compare your footage against; each platform moves its interface between app versions, so confirm your final placement in that app's own upload preview before publishing.",
     ],
     [
       "Is my video uploaded anywhere?",

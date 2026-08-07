@@ -232,12 +232,12 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section aria-live="polite" aria-atomic="true" className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
-          Greeting used
+          {!failed && result.tone.id === "status" ? "Occasion (for reference)" : "Greeting used"}
         </p>
         <p className="mt-1 text-2xl font-semibold leading-snug text-[var(--primary)] sm:text-3xl">
-          {failed ? EM_DASH : result.greetingUsed}
+          {failed ? EM_DASH : result.tone.id === "status" ? result.occasion.label : result.greetingUsed}
         </p>
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
@@ -256,7 +256,7 @@ export default function ToolHome() {
       </section>
 
       {!failed ? (
-        <section className="mt-6 space-y-4">
+        <section aria-live="polite" className="mt-6 space-y-4">
           {result.wishes.map((wish, index) => (
             <article key={wish.id} className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
               <div className="flex flex-wrap items-center justify-between gap-2">

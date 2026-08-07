@@ -13,8 +13,8 @@ const seo = {
   ],
   faqs: [
     [
-      "How many litres of soil does a 12 inch pot need?",
-      "About 13 litres for a typical tapered 12-inch pot roughly 28 cm deep, once you leave 3 cm of headspace below the rim. A straight-sided 12-inch grow bag of the same depth takes closer to 17 litres, because none of the volume is lost to the taper.",
+      "How much potting mix does a 12 inch pot need?",
+      "About 13 litres of mix for a typical tapered 12-inch pot roughly 28 cm deep, once you leave 3 cm of headspace below the rim — at the general 2:1:1:0.5 ratio that is roughly 5.7 litres of soil, 2.9 litres each of compost and cocopeat, and 1.4 litres of perlite. A straight-sided 12-inch grow bag of the same depth takes closer to 17 litres of mix total, because none of the volume is lost to the taper.",
     ],
     [
       "What is the best potting mix ratio?",

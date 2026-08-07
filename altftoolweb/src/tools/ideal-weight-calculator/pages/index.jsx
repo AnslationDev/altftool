@@ -150,9 +150,14 @@ export default function ToolHome() {
     if (next === heightUnit) return;
     if (next === "ftin") {
       const totalInches = toNum(heightCmInput) / CM_PER_INCH;
-      const wholeFeet = Math.floor(totalInches / 12);
+      let wholeFeet = Math.floor(totalInches / 12);
+      let inchesRemainder = round(totalInches - wholeFeet * 12, 1);
+      if (inchesRemainder >= 12) {
+        wholeFeet += 1;
+        inchesRemainder = 0;
+      }
       setFeet(String(Math.max(0, wholeFeet)));
-      setInches(String(round(totalInches - wholeFeet * 12, 1)));
+      setInches(String(inchesRemainder));
       setWrist(String(round(toNum(wrist) / CM_PER_INCH, 1)));
     } else {
       setHeightCmInput(String(round((toNum(feet) * 12 + toNum(inches)) * CM_PER_INCH, 1)));
@@ -380,6 +385,7 @@ export default function ToolHome() {
                       key={item.id}
                       type="button"
                       onClick={() => setGender(item.id)}
+                      aria-pressed={gender === item.id}
                       className={`h-11 rounded-md border text-sm font-semibold transition ${
                         gender === item.id
                           ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
@@ -403,6 +409,7 @@ export default function ToolHome() {
                       key={item.id}
                       type="button"
                       onClick={() => switchHeightUnit(item.id)}
+                      aria-pressed={heightUnit === item.id}
                       className={`h-10 rounded-md border text-sm font-semibold transition ${
                         heightUnit === item.id
                           ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
@@ -471,6 +478,7 @@ export default function ToolHome() {
                         key={unit}
                         type="button"
                         onClick={() => switchMassUnit(unit)}
+                        aria-pressed={massUnit === unit}
                         className={`h-12 rounded-md border text-sm font-semibold transition ${
                           massUnit === unit
                             ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
@@ -504,6 +512,7 @@ export default function ToolHome() {
                       key={item.id}
                       type="button"
                       onClick={() => setFrame(item.id)}
+                      aria-pressed={frame === item.id}
                       className={`rounded-md border px-2 py-2 text-xs font-semibold transition ${
                         frame === item.id
                           ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"
@@ -570,6 +579,7 @@ export default function ToolHome() {
                       key={item.id}
                       type="button"
                       onClick={() => setStandardId(item.id)}
+                      aria-pressed={standardId === item.id}
                       className={`rounded-md border px-3 py-2 text-left text-sm font-semibold transition ${
                         standardId === item.id
                           ? "border-[var(--primary)] bg-[var(--primary)] text-[var(--primary-foreground)]"

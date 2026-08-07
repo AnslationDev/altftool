@@ -192,7 +192,7 @@ export function emomTimerState(plan, elapsedSeconds) {
     secondsIntoRound,
     secondsLeftInRound: intervalSeconds - secondsIntoRound,
     secondsLeftInPhase: working
-      ? workPerRoundSeconds - secondsIntoRound
+      ? Math.min(workPerRoundSeconds - secondsIntoRound, intervalSeconds - secondsIntoRound)
       : intervalSeconds - secondsIntoRound,
     repsDone: repsPerRound * index,
     secondsLeftInSession,

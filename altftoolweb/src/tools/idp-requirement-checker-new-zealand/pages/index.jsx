@@ -29,7 +29,10 @@ const TONE_CLASS = {
   success: "bg-[var(--success-soft)] text-[var(--success-text)]",
 };
 
-const todayIso = () => new Date().toISOString().slice(0, 10);
+const todayIso = () => {
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+};
 
 const prettyDate = (iso) => {
   if (!iso) return DASH;

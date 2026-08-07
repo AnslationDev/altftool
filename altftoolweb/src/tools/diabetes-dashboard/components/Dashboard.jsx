@@ -93,8 +93,8 @@ export default function Dashboard({ logs, profile, onDelete, onGoToLog, onGoToPr
   );
 
   const avgReading = Math.round(readingsMgDl.reduce((a, b) => a + b, 0) / readingsMgDl.length);
-  const highest = Math.max(...readingsMgDl);
-  const lowest = Math.min(...readingsMgDl);
+  const highest = Math.round(Math.max(...readingsMgDl));
+  const lowest = Math.round(Math.min(...readingsMgDl));
 
   const inRangeCount = readingsMgDl.filter(r => r >= profile.targetMin && r <= profile.targetMax).length;
   const inRangePercentage = Math.round((inRangeCount / readingsMgDl.length) * 100);

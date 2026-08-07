@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "Do I have to deduct TDS on rent as an individual tenant?",
-      "Only if your accounts were subject to tax audit under section 44AB in the preceding financial year. Other individuals and HUFs paying more than Rs 50,000 a month fall under section 194-IB instead, which requires a 2% deduction once in the year using Form 26QC and needs no TAN. Confirm which section applies with a tax professional.",
+      "Only if your accounts were subject to tax audit under section 44AB in the preceding financial year. Other individuals and HUFs paying more than Rs 50,000 a month for land or a building fall under section 194-IB instead (2% via Form 26QC, no TAN needed) — 194-IB does not extend to plant, machinery or equipment rent, which stays outside TDS for an unaudited individual/HUF. Confirm which section applies with a tax professional.",
     ],
   ],
 };

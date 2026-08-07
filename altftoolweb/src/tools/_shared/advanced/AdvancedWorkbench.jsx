@@ -1341,7 +1341,7 @@ function CreatorLab({ slug }) {
       : slug === "short-video-hook-marker"
         ? "00:00.000 | Hook | Opening claim\n00:02.500 | Beat | Visual change\n00:07.000 | Review | Evidence on screen"
         : slug === "vertical-video-safe-zone-previewer"
-          ? "Top safe-zone: clear of platform UI\nBottom safe-zone: caption/controls not obstructed\nObstructions found: none"
+          ? "Top safe-zone: [describe]\nBottom safe-zone: [describe]\nObstructions found: [list, or 'none observed — confirm before publishing']"
           : "Sponsored partnership with Example Brand",
   );
   const [file, setFile] = useState(null);

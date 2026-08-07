@@ -254,7 +254,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               {failed ? "Timer" : phaseLabel}
             </p>
@@ -305,7 +305,7 @@ export default function ToolHome() {
             style={{ width: `${roundProgress}%` }}
           />
         </div>
-        <p className="mt-2 text-xs text-[var(--muted-foreground)]" aria-live="polite">
+        <p className="mt-2 text-xs text-[var(--muted-foreground)]">
           {failed
             ? DASH
             : `Reps completed: ${state.repsDone} of ${plan.totalReps} · elapsed ${formatClock(elapsed)}`}
