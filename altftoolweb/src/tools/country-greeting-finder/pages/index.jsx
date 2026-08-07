@@ -43,7 +43,8 @@ export default function ToolHome() {
       (g) =>
         g.country.toLowerCase().includes(q) ||
         g.language.toLowerCase().includes(q) ||
-        g.greeting.toLowerCase().includes(q)
+        g.greeting.toLowerCase().includes(q) ||
+        g.pronunciation.toLowerCase().includes(q)
     );
   }, [query]);
 
@@ -122,6 +123,7 @@ export default function ToolHome() {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Search country or language…"
+                aria-label="Search country or language"
                 className="w-full rounded-xl border border-(--border) bg-(--background) py-2.5 pl-9 pr-3 text-sm text-(--foreground) outline-none focus:border-(--primary) focus:shadow-[0_0_0_3px_rgba(20,184,166,0.25)] transition"
               />
             </div>

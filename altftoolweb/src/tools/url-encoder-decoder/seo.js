@@ -55,7 +55,7 @@ const seo = {
     ],
     [
       "What characters does this tool encode?",
-      "Everything except the 66 characters encodeURIComponent leaves alone: A–Z, a–z, 0–9 and - _ . ! ~ * ' ( ). Anything else becomes one or more %XX pairs based on its UTF-8 bytes, so é encodes to %C3%A9 and an emoji expands to four pairs. Character counts for both the input and the output are shown above each box.",
+      "Everything except the 71 characters encodeURIComponent leaves alone: A–Z, a–z, 0–9 and - _ . ! ~ * ' ( ). Anything else becomes one or more %XX pairs based on its UTF-8 bytes, so é encodes to %C3%A9 and an emoji expands to four pairs. Character counts for both the input and the output are shown above each box.",
     ],
     [
       "Is this URL encoder free, and are my URLs uploaded anywhere?",

@@ -105,6 +105,7 @@ function ImagePicker({ label, src, onSrc, square }) {
           value={src.startsWith("data:") ? "" : src}
           onChange={(e) => onSrc(e.target.value)}
           placeholder={src.startsWith("data:") ? "Uploaded image in use" : "https://…/image.png (recommended)"}
+          aria-label={label}
           className={INPUT_CLASS}
         />
         <button
@@ -147,7 +148,7 @@ function ColorField({ label, value, onChange }) {
       <label className={LABEL_CLASS}>{label}</label>
       <div className="flex items-center gap-2">
         <input type="color" value={value} onChange={(e) => onChange(e.target.value)} className="h-9 w-10 cursor-pointer rounded-md border border-(--border) bg-transparent p-0.5" aria-label={label} />
-        <input type="text" value={value} onChange={(e) => onChange(e.target.value)} className={`${INPUT_CLASS} font-mono uppercase`} maxLength={7} />
+        <input type="text" value={value} onChange={(e) => onChange(e.target.value)} aria-label={label} className={`${INPUT_CLASS} font-mono uppercase`} maxLength={7} />
       </div>
     </div>
   );

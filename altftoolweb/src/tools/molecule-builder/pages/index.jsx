@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { Atom, RotateCcw, Plus, Trash2, Info, Sparkles } from "lucide-react";
+import { Atom, RotateCcw, Plus, Info } from "lucide-react";
 
 const ATOM_TYPES = {
   H: { name: "Hydrogen", sym: "H", valency: 1, mass: 1.008, color: "#F8FAFC", r: 16 },
@@ -96,6 +96,7 @@ export default function MoleculeBuilder() {
       y: 150 + Math.random() * 100,
     };
     setAtoms((prev) => [...prev, newAtom]);
+    setCurrentPreset(null);
   };
 
   // Calculate total molecular weight
@@ -173,6 +174,7 @@ export default function MoleculeBuilder() {
 
     if (clicked) {
       draggingIdRef.current = clicked.id;
+      e.currentTarget.setPointerCapture(e.pointerId);
       if (selectedAtomId && selectedAtomId !== clicked.id) {
         // Toggle bond between selected and clicked
         setBonds((prev) => {
@@ -185,6 +187,7 @@ export default function MoleculeBuilder() {
           return [...prev, { a1: selectedAtomId, a2: clicked.id, order: 1 }];
         });
         setSelectedAtomId(null);
+        setCurrentPreset(null);
       } else {
         setSelectedAtomId(clicked.id);
       }
@@ -194,7 +197,7 @@ export default function MoleculeBuilder() {
   };
 
   const handlePointerMove = (e) => {
-    if (!draggingIdRef.current) return;
+    if (!draggingIdRef.current || e.buttons !== 1) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const rect = canvas.getBoundingClientRect();
@@ -270,7 +273,7 @@ export default function MoleculeBuilder() {
                     key={p.name}
                     onClick={() => handlePresetSelect(p)}
                     className={`px-3 py-2 rounded-lg border text-left font-medium transition ${
-                      currentPreset.name === p.name ? "bg-primary text-white border-primary" : "border-border hover:bg-surface-soft"
+                      currentPreset?.name === p.name ? "bg-primary text-white border-primary" : "border-border hover:bg-surface-soft"
                     }`}
                   >
                     {p.name}
@@ -287,13 +290,13 @@ export default function MoleculeBuilder() {
               <div className="grid grid-cols-2 gap-3 text-xs">
                 <div className="p-3 rounded-lg bg-surface-soft border border-border">
                   <div className="text-muted-foreground">Molecular Weight</div>
-                  <div className="text-sm font-bold font-mono text-foreground mt-0.5">
+                  <div className="text-sm font-bold font-mono text-foreground mt-0.5" aria-live="polite">
                     {totalWeight.toFixed(2)} g/mol
                   </div>
                 </div>
                 <div className="p-3 rounded-lg bg-surface-soft border border-border">
                   <div className="text-muted-foreground">VSEPR Shape</div>
-                  <div className="text-xs font-bold text-foreground mt-0.5">
+                  <div className="text-xs font-bold text-foreground mt-0.5" aria-live="polite">
                     {currentPreset?.geometry || "Custom"}
                   </div>
                 </div>
@@ -305,6 +308,8 @@ export default function MoleculeBuilder() {
           <div className="lg:col-span-8 flex flex-col space-y-4">
             <div
               className="relative rounded-2xl border border-border bg-card overflow-hidden shadow-sm flex-1 min-h-[440px] cursor-pointer"
+              role="application"
+              aria-label="Molecule builder canvas: click two atoms to bond, drag to reposition"
               onPointerDown={handlePointerDown}
               onPointerMove={handlePointerMove}
               onPointerUp={handlePointerUp}

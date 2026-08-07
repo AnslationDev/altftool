@@ -296,8 +296,10 @@ export function planSunsetTrip(input) {
     fitnessFactor: level.factor,
   });
 
+  const noGoldenHour = target === "golden" && sun.goldenStart === null;
   const targetTime = target === "sunset" ? sun.sunset : sun.goldenStart ?? sun.sunset;
-  const targetLabel = target === "sunset" ? "sunset" : "the start of golden hour";
+  const targetLabel =
+    target === "sunset" ? "sunset" : noGoldenHour ? "sunset (no golden hour today)" : "the start of golden hour";
 
   const arriveBy = targetTime - setup;
   const startWalking = arriveBy - walk.minutes;
@@ -324,6 +326,9 @@ export function planSunsetTrip(input) {
     .sort((a, b) => a.at - b.at);
 
   const notes = [];
+  if (noGoldenHour) {
+    notes.push("There is no golden hour at this latitude on this date — timed to sunset instead.");
+  }
   if (sun.blueEnd !== null && sun.sunset !== null) {
     notes.push(
       `You have about ${formatMinutes(sun.blueEnd - sun.sunset)} of usable light after sunset before civil twilight ends. Below that you are walking down by torchlight.`,

@@ -45,12 +45,19 @@ const LESSONS = [
 ];
 
 const KEYBOARD_ROWS = [
+  ["1","2","3","4","5","6","7","8","9","0"],
   ["q","w","e","r","t","y","u","i","o","p","[","]","\\"],
   ["a","s","d","f","g","h","j","k","l",";","'"],
   ["z","x","c","v","b","n","m",",",".","/"],
 ];
 
+const SHIFT_SYMBOL_MAP = {
+  "1":"!","2":"@","3":"#","4":"$","5":"%","6":"^","7":"&","8":"*","9":"(","0":")",
+};
+
 const FINGER_MAP = {
+  "1":"left-pinky","2":"left-ring","3":"left-middle","4":"left-index","5":"left-index",
+  "6":"right-index","7":"right-index","8":"right-middle","9":"right-ring","0":"right-pinky",
   q:"left-pinky",a:"left-pinky",z:"left-pinky",
   w:"left-ring",s:"left-ring",x:"left-ring",
   e:"left-middle",d:"left-middle",c:"left-middle",
@@ -138,7 +145,7 @@ function KeyboardVisual({ targetKeys, lastKey }) {
         {KEYBOARD_ROWS.map((row, ri) => (
           <div key={ri} className="flex gap-1">
             {row.map((key) => {
-              const isActive = targetSet.has(key);
+              const isActive = targetSet.has(key) || targetSet.has(SHIFT_SYMBOL_MAP[key]);
               const finger = isActive ? FINGER_MAP[key] : null;
               const color = finger ? FINGER_COLORS[finger] : null;
               const justPressed = lastKey === key;
@@ -404,10 +411,11 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
   const [running, setRunning] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [lastKey, setLastKey] = useState(null);
-  const [wpmHistory, setWpmHistory] = useState([]);
 
   const inputRef = useRef(null);
   const startTimeRef = useRef(null);
+  const lastKeyTimeoutRef = useRef(null);
+  const completeHeadingRef = useRef(null);
 
   const TEXT = lesson.text;
 
@@ -428,27 +436,8 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
 
   useEffect(() => {
     if (running) {
-      const interval = setInterval(() => {
-        setTimeElapsed((p) => p + 1);
-        setWpmHistory((prev) => [
-          ...prev,
-          {
-            wpm: Math.round(
-              (typed.split("").filter((c, i) => c === TEXT[i]).length / 5) /
-                ((timeElapsed + 1) / 60 || 1 / 60),
-            ),
-            accuracy:
-              totalKeystrokes > 0
-                ? Math.round(
-                    (typed.split("").filter((c, i) => c === TEXT[i]).length /
-                      totalKeystrokes) *
-                      100,
-                  )
-                : 100,
-          },
-        ]);
-      }, 1000);
-      return () => clearInterval(interval);
+      const id = setInterval(() => setTimeElapsed((p) => p + 1), 1000);
+      return () => clearInterval(id);
     }
   }, [running]);
 
@@ -476,7 +465,8 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
         e.preventDefault();
         if (e.key === "Shift") {
           setLastKey("Shift");
-          setTimeout(() => setLastKey(null), 150);
+          clearTimeout(lastKeyTimeoutRef.current);
+          lastKeyTimeoutRef.current = setTimeout(() => setLastKey(null), 150);
           return;
         }
 
@@ -485,7 +475,8 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
         }
 
         setLastKey(e.key.toLowerCase());
-        setTimeout(() => setLastKey(null), 150);
+        clearTimeout(lastKeyTimeoutRef.current);
+        lastKeyTimeoutRef.current = setTimeout(() => setLastKey(null), 150);
 
         const index = typed.length;
         if (index < TEXT.length) {
@@ -547,6 +538,12 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
     }
   }, [completed]);
 
+  useEffect(() => {
+    if (completed) completeHeadingRef.current?.focus();
+  }, [completed]);
+
+  useEffect(() => () => clearTimeout(lastKeyTimeoutRef.current), []);
+
   const resetLesson = useCallback(() => {
     setTyped("");
     setErrors(0);
@@ -555,7 +552,6 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
     setRunning(false);
     setCompleted(false);
     setLastKey(null);
-    setWpmHistory([]);
     startTimeRef.current = null;
     inputRef.current?.focus({ preventScroll: true });
   }, []);
@@ -660,9 +656,15 @@ function LessonScreen({ lesson, progress, onComplete, onBack }) {
       </div>
 
       {completed && (
-        <div className="mt-6 border border-[var(--primary)]/30 bg-[var(--primary)]/5 rounded-xl p-6 text-center">
+        <div role="status" aria-live="polite" className="mt-6 border border-[var(--primary)]/30 bg-[var(--primary)]/5 rounded-xl p-6 text-center">
           <CheckCircle2 className="h-10 w-10 mx-auto mb-2 text-[var(--primary)]" />
-          <h3 className="text-xl font-black text-[var(--foreground)]">Lesson Complete!</h3>
+          <h3
+            ref={completeHeadingRef}
+            tabIndex={-1}
+            className="text-xl font-black text-[var(--foreground)] rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--primary)]/40"
+          >
+            Lesson Complete!
+          </h3>
           <p className="text-sm text-[var(--muted-foreground)] mt-1">
             {wpm} WPM — {accuracy}% accuracy — {errors} errors
           </p>

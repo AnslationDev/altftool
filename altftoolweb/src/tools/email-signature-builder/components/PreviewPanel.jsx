@@ -102,6 +102,7 @@ function ExportButton({ icon: Icon, label, onClick, disabled, busy }) {
 export default function PreviewPanel({
   state,
   html,
+  exportHtml,
   client,
   onClientChange,
   darkPreview,
@@ -116,6 +117,7 @@ export default function PreviewPanel({
 }) {
   const previewRef = useRef(null);
   const qrWrapRef = useRef(null);
+  const copyTimeoutRef = useRef(null);
   const [copied, setCopied] = useState("");
   const [busy, setBusy] = useState("");
   const [listTab, setListTab] = useState("recent");
@@ -140,13 +142,20 @@ export default function PreviewPanel({
     return () => window.clearTimeout(handle);
   }, [qrEnabled, qrValue, onQrDataUrl]);
 
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) window.clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
+
   async function flash(id, fn) {
     setBusy(id);
     try {
       const ok = await fn();
       if (ok !== false) {
         setCopied(id);
-        window.setTimeout(() => setCopied(""), 1600);
+        if (copyTimeoutRef.current) window.clearTimeout(copyTimeoutRef.current);
+        copyTimeoutRef.current = window.setTimeout(() => setCopied(""), 1600);
       }
     } finally {
       setBusy("");
@@ -204,9 +213,9 @@ export default function PreviewPanel({
         </div>
 
         <div className="flex flex-nowrap items-center gap-2 overflow-x-auto border-t border-(--border) p-3 sm:flex-wrap">
-          <ExportButton icon={copied === "sig" ? Check : Copy} label={copied === "sig" ? "Copied" : "Copy signature"} disabled={!hasContent} busy={busy === "sig"} onClick={() => flash("sig", () => copyRenderedSignature(html))} />
-          <ExportButton icon={copied === "html" ? Check : Code2} label={copied === "html" ? "Copied" : "Copy HTML"} disabled={!hasContent} busy={busy === "html"} onClick={() => flash("html", () => copyHtmlSource(html))} />
-          <ExportButton icon={FileDown} label="HTML" disabled={!hasContent} onClick={() => downloadHtml(html, fileBase)} />
+          <ExportButton icon={copied === "sig" ? Check : Copy} label={copied === "sig" ? "Copied" : "Copy signature"} disabled={!hasContent} busy={busy === "sig"} onClick={() => flash("sig", () => copyRenderedSignature(exportHtml))} />
+          <ExportButton icon={copied === "html" ? Check : Code2} label={copied === "html" ? "Copied" : "Copy HTML"} disabled={!hasContent} busy={busy === "html"} onClick={() => flash("html", () => copyHtmlSource(exportHtml))} />
+          <ExportButton icon={FileDown} label="HTML" disabled={!hasContent} onClick={() => downloadHtml(exportHtml, fileBase)} />
           <ExportButton icon={ImageDown} label="PNG" disabled={!hasContent} busy={busy === "png"} onClick={() => flash("png", () => downloadPng(previewRef.current, fileBase))} />
           <ExportButton icon={FileText} label="PDF" disabled={!hasContent} busy={busy === "pdf"} onClick={() => flash("pdf", () => downloadPdf(previewRef.current, fileBase))} />
           <ExportButton icon={Contact} label="vCard" disabled={!state.personal.fullName.trim()} onClick={() => downloadVCard(buildVCard(state), fileBase)} />
@@ -214,7 +223,7 @@ export default function PreviewPanel({
         </div>
       </div>
 
-      <div className="rounded-2xl border border-(--card-border) bg-(--card)/80 p-5 shadow-lg backdrop-blur-xl">
+      <div className="rounded-2xl border border-(--card-border) bg-(--card)/80 p-5 shadow-lg backdrop-blur-xl" aria-live="polite" role="status">
         <div className="mb-3 flex items-center justify-between">
           <h3 className="flex items-center gap-2 text-sm font-semibold text-(--foreground)">
             <ShieldCheck className="h-4 w-4 text-(--primary)" aria-hidden="true" /> Signature quality
@@ -259,7 +268,9 @@ export default function PreviewPanel({
           {listTab === "recent" && recents.length > 0 && (
             <button
               type="button"
-              onClick={onClearRecents}
+              onClick={() => {
+                if (window.confirm(`Clear all ${recents.length} recent signature(s)? This can't be undone.`)) onClearRecents();
+              }}
               className="ml-auto inline-flex shrink-0 cursor-pointer items-center gap-1 whitespace-nowrap rounded-full border border-(--border) px-3 py-1.5 text-xs font-medium text-(--muted-foreground) transition-colors hover:border-danger hover:text-danger"
             >
               <Trash2 className="h-3.5 w-3.5" aria-hidden="true" /> Clear

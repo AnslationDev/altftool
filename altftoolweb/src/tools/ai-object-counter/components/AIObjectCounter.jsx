@@ -115,6 +115,7 @@ export default function AIObjectCounter() {
 
   const baseCanvasRef = useRef(null);
   const annotatedCanvasRef = useRef(null);
+  const requestIdRef = useRef(0);
 
   const { error: modelError, modelReady, modelLoadingState, loadModel, detect, reset: resetDetection } = useObjectDetection();
 
@@ -123,7 +124,11 @@ export default function AIObjectCounter() {
   /* --------------------------- image + detection --------------------------- */
   const handleImage = useCallback(
     async ({ src, file, img }) => {
-      setImage({ src, file, img });
+      requestIdRef.current += 1;
+      setImage((prev) => {
+        if (prev?.src?.startsWith("blob:")) URL.revokeObjectURL(prev.src);
+        return { src, file, img };
+      });
       setRawResult(null);
       setProcessedImage(null);
       setThumbs({});
@@ -136,6 +141,7 @@ export default function AIObjectCounter() {
 
   const runDetection = useCallback(async () => {
     if (!image) return;
+    const myRequestId = requestIdRef.current;
     setDetecting(true);
     try {
       const img = await loadImage(image.src);
@@ -151,7 +157,7 @@ export default function AIObjectCounter() {
 
       // run the model ONCE at a low threshold; the confidence slider filters client-side.
       const raw = await detect(img, 0.2);
-      if (raw) {
+      if (raw && requestIdRef.current === myRequestId) {
         setRawResult(raw);
         // per-detection thumbnails cropped from the clean image
         const map = {};
@@ -175,8 +181,7 @@ export default function AIObjectCounter() {
 
   useEffect(() => {
     if (modelReady && image && !rawResult && !detecting) runDetection();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [modelReady, image]);
+  }, [modelReady, image, detecting]);
 
   /* ------------------------- redraw annotated image ------------------------ */
   useEffect(() => {
@@ -277,7 +282,10 @@ export default function AIObjectCounter() {
     setTimeout(() => setCopied(false), 1600);
   };
   const removeImage = () => {
-    setImage(null);
+    setImage((prev) => {
+      if (prev?.src?.startsWith("blob:")) URL.revokeObjectURL(prev.src);
+      return null;
+    });
     setRawResult(null);
     setProcessedImage(null);
     setThumbs({});
@@ -356,7 +364,7 @@ export default function AIObjectCounter() {
                   <label className="mb-1 block text-[12px] font-medium text-(--muted-foreground)">Model</label>
                   <div className="flex items-center justify-between rounded-xl border border-(--border) bg-(--background) px-3 py-2 text-[13px] font-medium">
                     <span className="inline-flex items-center gap-1.5"><Cpu className="w-3.5 h-3.5 text-(--primary)" /> COCO-SSD</span>
-                    <span className="text-[11px] text-(--muted-foreground)">High Accuracy</span>
+                    <span className="text-[11px] text-(--muted-foreground)">Fast (lite_mobilenet_v2)</span>
                   </div>
                 </div>
 
@@ -365,7 +373,7 @@ export default function AIObjectCounter() {
                     <span className="font-medium text-(--muted-foreground)">Confidence Threshold</span>
                     <span className="font-semibold text-(--foreground)">{minConfidence}%</span>
                   </div>
-                  <input type="range" min="10" max="95" step="5" value={minConfidence} onChange={(e) => setMinConfidence(Number(e.target.value))} className="w-full accent-(--primary)" />
+                  <input type="range" min="20" max="95" step="5" value={minConfidence} onChange={(e) => setMinConfidence(Number(e.target.value))} className="w-full accent-(--primary)" />
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -391,7 +399,7 @@ export default function AIObjectCounter() {
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="flex items-center gap-2">
                   <h2 className="text-[15px] font-bold">Image Analysis</h2>
-                  <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold ${busy ? "bg-amber-500/10 text-amber-600 dark:text-amber-400" : "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"}`}>
+                  <span className={`inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold ${busy ? "bg-amber-500/10 text-amber-600 dark:text-amber-400" : "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400"}`} aria-live="polite" role="status">
                     {busy ? <RefreshCw className="w-3 h-3 animate-spin" /> : <Check className="w-3 h-3" />}
                     {busy ? "Analyzing" : "Completed"}
                   </span>
@@ -587,7 +595,7 @@ export default function AIObjectCounter() {
                     {[
                       result.avg >= 85 ? "Excellent detection confidence" : "Reasonable detection confidence",
                       dims.w >= 1280 ? "High-resolution image" : "Standard-resolution image",
-                      "Objects clearly visible",
+                      result.avg >= 60 ? "Objects clearly visible" : "Some objects may be ambiguous",
                       result.total > 20 ? "Dense scene analyzed" : "Clean, uncluttered scene",
                     ].map((t) => (
                       <div key={t} className="flex items-center gap-2 text-[12px] text-(--muted-foreground)">

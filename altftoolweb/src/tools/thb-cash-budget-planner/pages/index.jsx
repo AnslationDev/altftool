@@ -47,6 +47,7 @@ const DEFAULTS = {
   cardTypeId: "credit",
   atmWithdrawalSize: String(CURRENCY.defaultAtmWithdrawal),
   atmFeeInr: "200",
+  localAtmFeeUnits: String(CURRENCY.defaultLocalAtmFeeUnits),
   lrsAlreadyUsedInr: "0",
 };
 
@@ -83,6 +84,7 @@ export default function ToolHome() {
   const [cardTypeId, setCardTypeId] = useState(DEFAULTS.cardTypeId);
   const [atmWithdrawalSize, setAtmWithdrawalSize] = useState(DEFAULTS.atmWithdrawalSize);
   const [atmFeeInr, setAtmFeeInr] = useState(DEFAULTS.atmFeeInr);
+  const [localAtmFeeUnits, setLocalAtmFeeUnits] = useState(DEFAULTS.localAtmFeeUnits);
   const [lrsAlreadyUsedInr, setLrsAlreadyUsedInr] = useState(DEFAULTS.lrsAlreadyUsedInr);
   const [copied, setCopied] = useState(false);
 
@@ -102,6 +104,7 @@ export default function ToolHome() {
         cardTypeId,
         atmWithdrawalSize: toNumber(atmWithdrawalSize),
         atmFeeInr: toNumber(atmFeeInr),
+        localAtmFeeUnits: toNumber(localAtmFeeUnits),
         lrsAlreadyUsedInr: String(lrsAlreadyUsedInr).trim() === "" ? 0 : Number(lrsAlreadyUsedInr),
       }),
     [
@@ -118,6 +121,7 @@ export default function ToolHome() {
       cardTypeId,
       atmWithdrawalSize,
       atmFeeInr,
+      localAtmFeeUnits,
       lrsAlreadyUsedInr,
     ],
   );
@@ -175,6 +179,7 @@ export default function ToolHome() {
     setCardTypeId(DEFAULTS.cardTypeId);
     setAtmWithdrawalSize(DEFAULTS.atmWithdrawalSize);
     setAtmFeeInr(DEFAULTS.atmFeeInr);
+    setLocalAtmFeeUnits(DEFAULTS.localAtmFeeUnits);
     setLrsAlreadyUsedInr(DEFAULTS.lrsAlreadyUsedInr);
     setCopied(false);
   };
@@ -474,7 +479,26 @@ export default function ToolHome() {
               onChange={(event) => setAtmFeeInr(event.target.value)}
             />
             <p className={HINT_CLASS}>
-              Your bank&rsquo;s charge, before the local operator&rsquo;s own fee. GST applies on top.
+              Your bank&rsquo;s charge, in addition to the local operator&rsquo;s own fee below. GST applies on top.
+            </p>
+          </div>
+
+          <div>
+            <label className={LABEL_CLASS} htmlFor="cash-atm-local-fee">
+              Local ATM operator&rsquo;s fee per withdrawal ({CURRENCY.code})
+            </label>
+            <input
+              id="cash-atm-local-fee"
+              className={INPUT_CLASS}
+              type="number"
+              inputMode="decimal"
+              min="0"
+              step="10"
+              value={localAtmFeeUnits}
+              onChange={(event) => setLocalAtmFeeUnits(event.target.value)}
+            />
+            <p className={HINT_CLASS}>
+              Charged directly by the Thai bank that owns the ATM, in baht, on top of your own bank&rsquo;s fee above. Has been around ฿220 for several years; no Indian GST applies to it.
             </p>
           </div>
 
@@ -509,7 +533,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section aria-live="polite" className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">

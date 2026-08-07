@@ -3,7 +3,7 @@ const sslCertificateInspectorConfig = {
   name: "SSL Certificate Inspector Studio",
   category: "Developer",
   description:
-    "Real-time SSL certificate lookup, HTTPS validation, TLS detection, expiry monitoring, certificate chain viewing, and exportable security reports.",
+    "Paste a PEM certificate or chain to decode its X.509 fields, check expiry and hostname matching, and validate chain order — entirely in your browser.",
   icon: "shield-check",
   iconColor: "text-cyan-600",
 };

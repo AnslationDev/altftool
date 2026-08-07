@@ -4,7 +4,7 @@ const seo = {
   useCases: [
     "Check the magic number of a Base64 attachment — 89 50 4E 47 means PNG, 25 50 44 46 means PDF",
     "Paste a Base64-encoded key or certificate and read the DER byte structure instead of guessing at it",
-    "Turn a Base64 test vector into a 0x-prefixed C array you can drop straight into firmware source",
+    "Turn a Base64 test vector into a 0x-prefixed, comma-separated hex list you can drop into a C array initializer",
   ],
   benefits: [
     ["Exact byte view", "Every byte becomes two hex digits, so the output length confirms the decoded size at a glance."],

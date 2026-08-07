@@ -539,6 +539,7 @@ function useCamera() {
       setError("");
       setActive(true);
     } catch (cameraError) {
+      stop();
       setError(cameraError?.message || "Camera permission was not available.");
     } finally {
       startingRef.current = false;
@@ -597,7 +598,7 @@ function CameraMagnifier() {
             onChange={setGrayscale}
           />
           {error ? (
-            <p className="text-sm text-[var(--destructive)]">{error}</p>
+            <p className="text-sm text-[var(--destructive)]" role="alert">{error}</p>
           ) : null}
         </div>
       }

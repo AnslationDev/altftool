@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Plus, RotateCcw, Timer, Trash2 } from "lucide-react";
 
 import {
   MAX_BPM,
+  MAX_SESSION_MINUTES,
   MIN_BPM,
   buildTempoLadder,
   describeTempo,
@@ -87,6 +88,7 @@ export default function ToolHome() {
 
   const [copied, setCopied] = useState(false);
   const [copyError, setCopyError] = useState("");
+  const copyTimeoutRef = useRef(null);
 
   useEffect(() => {
     const iso = localIso(new Date());
@@ -121,6 +123,12 @@ export default function ToolHome() {
     }
   }, [entries, today]);
 
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
+
   const referenceDate = today || entries[entries.length - 1]?.date || "2000-01-01";
   const summary = useMemo(
     () => summarisePractice(entries, referenceDate),
@@ -153,8 +161,8 @@ export default function ToolHome() {
     if (!Number.isFinite(bpm) || bpm < MIN_BPM || bpm > MAX_BPM) {
       return setFormError(`Tempo must be between ${MIN_BPM} and ${MAX_BPM} BPM.`);
     }
-    if (!Number.isFinite(minutes) || minutes <= 0) {
-      return setFormError("Minutes must be greater than zero.");
+    if (!Number.isFinite(minutes) || minutes <= 0 || minutes > MAX_SESSION_MINUTES) {
+      return setFormError(`Minutes must be greater than zero and at most ${MAX_SESSION_MINUTES}.`);
     }
 
     setFormError("");
@@ -202,7 +210,7 @@ export default function ToolHome() {
       "",
       ...summary.exercises.map(
         (item) =>
-          `${item.exercise}: ${NUM1.format(item.minutes)} min, ${item.firstBpm} to ${item.lastBpm} BPM (${item.bpmGain >= 0 ? "+" : ""}${item.bpmGain})`,
+          `${item.exercise}: ${NUM1.format(item.minutes)} min, ${item.firstBpm} to ${item.lastBpm} BPM (${item.bpmGain > 0 ? "+" : ""}${item.bpmGain})`,
       ),
     ].join("\n");
   }, [failed, empty, summary]);
@@ -213,7 +221,8 @@ export default function ToolHome() {
       await navigator.clipboard.writeText(clipboardText);
       setCopied(true);
       setCopyError("");
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
       setCopyError("Could not copy to the clipboard. Select and copy the summary manually.");
@@ -270,6 +279,7 @@ export default function ToolHome() {
               id="mpl-date"
               className={`mt-2 ${CONTROL}`}
               type="date"
+              max={today || undefined}
               value={formDate}
               onChange={(event) => setFormDate(event.target.value)}
             />
@@ -355,7 +365,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        role="status"
+        aria-live="polite"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

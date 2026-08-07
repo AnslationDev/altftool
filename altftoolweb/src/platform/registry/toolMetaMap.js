@@ -27497,7 +27497,7 @@ export const toolMetaMap = {
   },
   "ssl-certificate-inspector": {
     "name": "SSL Certificate Inspector Studio",
-    "description": "Real-time SSL certificate lookup, HTTPS validation, TLS detection, expiry monitoring, certificate chain viewing, and exportable security reports.",
+    "description": "Paste a PEM certificate or chain to decode its X.509 fields, check expiry and hostname matching, and validate chain order — entirely in your browser.",
     "category": "Developer",
     "icon": "shield-check",
     "iconColor": "text-cyan-600"

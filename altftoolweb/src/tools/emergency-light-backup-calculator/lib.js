@@ -191,7 +191,9 @@ export function calculateBackup({
   if (stateOfHealthPercent <= 0 || stateOfHealthPercent > 100) {
     return { error: "State of health must be between 1% and 100%." };
   }
-  if (lampCount < 1) return { error: "There must be at least one lamp on the circuit." };
+  if (lampCount < 1 || !Number.isInteger(lampCount)) {
+    return { error: "Number of LED heads must be a whole number of at least 1." };
+  }
   if (wattsPerLamp <= 0) return { error: "Lamp wattage must be greater than zero." };
   if (driverEfficiencyPercent <= 0 || driverEfficiencyPercent > 100) {
     return { error: "Driver efficiency must be between 1% and 100%." };
@@ -230,9 +232,14 @@ export function calculateBackup({
   const designRuntimeH = Math.min(runtimeEnergyH, runtimePeukertH);
   const meetsTarget = designRuntimeH >= targetHours;
 
-  // Capacity needed to hold the target for the same load.
+  // Capacity needed to hold the target for the same load -- take the larger
+  // of the energy-only bound and the Peukert-derated bound (whichever binds).
   const requiredWh = drawW * targetHours;
-  const requiredAh = requiredWh / (voltage * dod * soh);
+  const requiredAhEnergy = requiredWh / (voltage * dod * soh);
+  const requiredAhPeukert =
+    ((currentA * battery.ratedHourRate) / soh) *
+    (targetHours / (dod * battery.ratedHourRate)) ** (1 / battery.peukertExponent);
+  const requiredAh = Math.max(requiredAhEnergy, requiredAhPeukert);
   const extraAh = Math.max(0, requiredAh - capacityAh);
 
   // Amp-hours removed at the design runtime, and the charge time to put them back.
