@@ -117,8 +117,8 @@ export default function ToolHome() {
               onChange={(event) => setGender(event.target.value)}
             >
               <option value="any">Any (includes unisex)</option>
-              <option value="boy">Boy</option>
-              <option value="girl">Girl</option>
+              <option value="boy">Boy (includes unisex)</option>
+              <option value="girl">Girl (includes unisex)</option>
               <option value="unisex">Unisex only</option>
             </select>
           </div>

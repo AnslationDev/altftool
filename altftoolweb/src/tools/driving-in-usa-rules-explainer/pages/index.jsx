@@ -5,6 +5,8 @@ import { CarFront, Check, Copy, RotateCcw, TriangleAlert, Wine } from "lucide-re
 
 import {
   COUNTRY,
+  EQUIPMENT,
+  KEY_RULES,
   LICENCE_ORIGINS,
   STATES,
   assessTrip,
@@ -268,7 +270,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className={`mt-6 ${CARD}`}>
+      <section className={`mt-6 ${CARD}`} aria-live="polite" role="status">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -313,7 +315,14 @@ export default function ToolHome() {
             ["International Driving Permit", ok ? (trip.permit.needsIdp ? "Carry one with your licence" : "Not required") : DASH],
             ["Why this alcohol limit", ok ? trip.alcohol.reason : DASH],
             ["What happens if you exceed it", ok ? trip.alcohol.penalty : DASH],
-            ["Highest speed limit in this state", ok ? `${trip.state.maxMph} mph` : DASH],
+            [
+              "Highest speed limit in this state",
+              ok
+                ? `${trip.state.maxMph} mph${
+                    trip.state.notableMaxMph ? ` (${trip.state.notableMaxMph} mph on one specific toll road — see the speed table below)` : ""
+                  }`
+                : DASH,
+            ],
             ["Emergency number", COUNTRY.emergencyNumbers.map(([number, use]) => `${number} — ${use}`).join(" · ")],
             ["Tolls", COUNTRY.tolls],
             ["Fuel", COUNTRY.fuelNote],
@@ -448,7 +457,7 @@ export default function ToolHome() {
         )}
       </section>
 
-      <section className={`mt-6 ${CARD}`} aria-labelledby="us-alcohol">
+      <section className={`mt-6 ${CARD}`} aria-labelledby="us-alcohol" aria-live="polite" role="status">
         <h2 id="us-alcohol" className="flex items-center gap-2 text-base font-semibold">
           <Wine className="h-4 w-4 text-[var(--primary)]" aria-hidden="true" />
           Morning-after estimate
@@ -596,7 +605,7 @@ export default function ToolHome() {
           What has to be in the car
         </h2>
         <ul className="mt-3 space-y-3 text-sm">
-          {(trip.equipment ?? []).map(([item, detail]) => (
+          {EQUIPMENT.map(([item, detail]) => (
             <li key={item}>
               <span className="font-semibold">{item}</span>
               <span className="block text-[var(--muted-foreground)]">{detail}</span>
@@ -610,7 +619,7 @@ export default function ToolHome() {
           Rules that catch visitors out
         </h2>
         <ul className="mt-3 space-y-3 text-sm">
-          {(trip.keyRules ?? []).map(([title, detail]) => (
+          {KEY_RULES.map(([title, detail]) => (
             <li key={title}>
               <span className="font-semibold">{title}</span>
               <span className="block text-[var(--muted-foreground)]">{detail}</span>

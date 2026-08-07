@@ -299,7 +299,7 @@ export function safeImageCssUrl(url) {
 }
 
 /** Reference markup for the card, ready to paste into <head>. */
-export function buildMetaMarkup({ card, title, description, imageUrl, site, imageAlt, url }) {
+export function buildMetaMarkup({ card, title, description, imageUrl, site, creator, imageAlt, url }) {
   const escape = (value) =>
     String(value ?? "")
       .replace(/&/g, "&amp;")
@@ -310,6 +310,7 @@ export function buildMetaMarkup({ card, title, description, imageUrl, site, imag
   const rows = [
     ["twitter:card", card],
     ["twitter:site", site],
+    ["twitter:creator", creator],
     ["twitter:title", title],
     ["twitter:description", description],
     ["twitter:image", imageUrl],

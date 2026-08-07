@@ -197,7 +197,7 @@ export default function ToolHome() {
       if (parsed < 0) return `${label.charAt(0).toUpperCase()}${label.slice(1)} cannot be negative.`;
       if (parsed > 1e11) return `${label.charAt(0).toUpperCase()}${label.slice(1)} is unrealistically large.`;
     }
-    if (num(expenses) > num(receipts)) {
+    if (!presumptive && num(expenses) > num(receipts)) {
       return "Business expenses cannot exceed gross professional receipts.";
     }
     if (presumptive && num(receipts) > 7500000) {
@@ -279,6 +279,8 @@ export default function ToolHome() {
       result.liable
         ? "Advance tax applies (liability is ₹10,000 or more)."
         : "Advance tax not payable — liability after TDS is below ₹10,000.",
+      `Advance tax already paid: ${money(num(alreadyPaid))}`,
+      `Still to pay: ${money(result.netPayable)}`,
       "",
       "Instalments:",
       ...result.instalments.map(
@@ -287,7 +289,7 @@ export default function ToolHome() {
       ),
     ];
     return lines.join("\n");
-  }, [result, fyLabel, regime, presumptive, tdsDeducted]);
+  }, [result, fyLabel, regime, presumptive, tdsDeducted, alreadyPaid]);
 
   const copyResult = async () => {
     if (!report) return;
@@ -499,6 +501,13 @@ export default function ToolHome() {
                   <span className="mt-0.5 block text-[var(--muted-foreground)]">
                     Income is taken as 50% of receipts and the whole advance tax is due by 15 March.
                   </span>
+                  <span className="mt-1.5 block text-[var(--muted-foreground)]">
+                    The ₹75,00,000 receipts ceiling used below assumes the enhanced-limit condition
+                    is met — cash receipts not exceeding 5% of total receipts. This tool does not ask
+                    for or verify your cash-receipts share; if it is above 5%, the applicable ceiling
+                    is lower. Confirm your eligibility with the current Section 44ADA text or your tax
+                    adviser before relying on this.
+                  </span>
                 </span>
               </label>
 
@@ -522,7 +531,7 @@ export default function ToolHome() {
           </div>
 
           <div className="grid gap-6">
-            <div className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+            <div className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite">
               {validation ? (
                 <p
                   role="alert"
@@ -536,7 +545,7 @@ export default function ToolHome() {
                     Advance tax payable for {fyLabel}
                   </p>
                   <p className="mt-2 text-4xl font-semibold text-[var(--primary)] sm:text-5xl">
-                    {money(result.afterTds)}
+                    {money(result.liable ? result.afterTds : 0)}
                   </p>
                   <p className="mt-2 text-sm text-[var(--muted-foreground)]">
                     {result.liable
@@ -619,7 +628,9 @@ export default function ToolHome() {
                     </thead>
                     <tbody>
                       {result.instalments.map((item) => {
-                        const overdue = today ? item.due < today : false;
+                        const overdue = today
+                          ? item.due < today && item.cumulative > num(alreadyPaid)
+                          : false;
                         return (
                           <tr key={item.label} className="border-b border-[var(--border)] last:border-0">
                             <td className="py-2 pr-3 whitespace-nowrap">{dateFmt.format(item.due)}</td>

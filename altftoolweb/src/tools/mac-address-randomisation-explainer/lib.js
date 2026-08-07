@@ -242,7 +242,9 @@ export function explainMac(raw) {
 
   const oui = toColonForm(hex).slice(0, 8);
 
-  const affected = NETWORK_IMPACTS.filter((entry) => entry.breaksWhenRandom);
+  // Exclude positiveOutcome entries (e.g. venue-tracking): the UI badges those
+  // green as "Protects you", never red as "Breaks", so the tally must match.
+  const affected = NETWORK_IMPACTS.filter((entry) => entry.breaksWhenRandom && !entry.positiveOutcome);
 
   return {
     input: raw.trim(),
@@ -258,10 +260,19 @@ export function explainMac(raw) {
     kind,
     headline,
     meaning,
-    oui: locallyAdministered ? null : oui,
-    ouiNote: locallyAdministered
-      ? "No manufacturer lookup is possible: locally administered addresses are not drawn from an IEEE OUI."
-      : `Look ${oui} up in the IEEE OUI registry to identify the manufacturer.`,
+    // Gate on kind === "universal" rather than just !locallyAdministered: a
+    // special (e.g. all-zero, IPv4/IPv6 multicast) or group/multicast address
+    // is not a device either, even when its U/L bit happens to be clear, so an
+    // OUI lookup prompt would contradict the headline/meaning shown above it.
+    oui: kind === "universal" ? oui : null,
+    ouiNote:
+      kind === "universal"
+        ? `Look ${oui} up in the IEEE OUI registry to identify the manufacturer.`
+        : kind === "special"
+          ? "No manufacturer lookup applies: this is a defined placeholder or protocol address, not an IEEE-assigned device identity."
+          : kind === "multicast"
+            ? "No manufacturer lookup applies: this addresses a group of receivers, not a single manufactured device."
+            : "No manufacturer lookup is possible: locally administered addresses are not drawn from an IEEE OUI.",
     stableIdentifier: kind === "universal",
     impacts: NETWORK_IMPACTS,
     // A locally administered unicast address may or may not actually be an

@@ -70,6 +70,10 @@ export const COUNTRY = {
  * Selected states with the two figures that actually differ for a visitor: the highest posted
  * speed limit found in the state, and the adult per se blood-alcohol limit.
  * `towingMph` is set only where the state caps a vehicle towing a trailer below the general limit.
+ * `maxMph` is the typical rural-interstate ceiling, used for the speed table and the headline
+ * "highest speed limit" figure. `notableMaxMph` is set only where a single road (e.g. a toll
+ * road) posts something higher than the general state maximum — it must never be surfaced as the
+ * unqualified headline number, only alongside the explanation in `note`.
  */
 export const STATES = [
   { id: "typical", label: "Not sure / typical state", maxMph: 70, bacPct: 0.08, towingMph: null, note: "Most states top out between 65 and 75 mph on rural interstates." },
@@ -83,7 +87,7 @@ export const STATES = [
   { id: "nevada", label: "Nevada", maxMph: 80, bacPct: 0.08, towingMph: null, note: "80 mph on parts of I-80 and US 93." },
   { id: "new-york", label: "New York", maxMph: 65, bacPct: 0.08, towingMph: null, note: "65 mph maximum, and New York City bans right turn on red citywide." },
   { id: "south-dakota", label: "South Dakota", maxMph: 80, bacPct: 0.08, towingMph: null, note: "80 mph on rural interstates." },
-  { id: "texas", label: "Texas", maxMph: 85, bacPct: 0.08, towingMph: null, note: "85 mph on the SH-130 toll road — the highest posted limit in the country. Most rural interstates are 75 or 80." },
+  { id: "texas", label: "Texas", maxMph: 80, bacPct: 0.08, towingMph: null, notableMaxMph: 85, note: "80 mph on most rural interstates. The SH-130 toll road near Austin posts 85 mph — the highest speed limit in the country — but that is one specific toll road, not the state's general maximum." },
   { id: "utah", label: "Utah", maxMph: 80, bacPct: 0.05, towingMph: null, note: "The only state with a 0.05 % blood-alcohol limit, in force since 30 December 2018." },
   { id: "washington", label: "Washington", maxMph: 70, bacPct: 0.08, towingMph: null, note: "70 mph on rural interstates, 60 mph for trucks." },
   { id: "wyoming", label: "Wyoming", maxMph: 80, bacPct: 0.08, towingMph: null, note: "80 mph on rural interstates; wind closures are frequent in winter." },

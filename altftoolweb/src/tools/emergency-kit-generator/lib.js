@@ -536,10 +536,10 @@ export function buildEmergencyKit({
 
   const waterFactor = hotClimate ? HOT_CLIMATE_WATER_FACTOR : 1;
   const peopleWaterL = people * days * WATER_L_PER_PERSON_DAY * waterFactor;
-  const petWaterL = pets * days * WATER_L_PER_PET_DAY;
+  const petWaterL = pets * days * WATER_L_PER_PET_DAY * waterFactor;
   const waterL = peopleWaterL + petWaterL;
 
-  const kcalPerDay = (adults + infants) * KCAL_PER_ADULT_DAY + children * KCAL_PER_CHILD_DAY;
+  const kcalPerDay = adults * KCAL_PER_ADULT_DAY + children * KCAL_PER_CHILD_DAY;
   const totalKcal = kcalPerDay * days;
   const foodKg = totalKcal / KCAL_PER_GRAM_FOOD / 1000;
 

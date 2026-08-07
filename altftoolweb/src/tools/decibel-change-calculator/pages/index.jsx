@@ -22,6 +22,7 @@ const PERCENT_FORMAT = new Intl.NumberFormat("en-US", {
   maximumFractionDigits: 1,
   signDisplay: "exceptZero",
 });
+const MAGNITUDE_FORMAT = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
 
 const INPUT_CLASS =
   "h-11 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 text-[var(--foreground)] focus:border-[var(--primary)] focus:ring-[3px] focus:ring-[var(--primary)]/25 focus:outline-none";
@@ -132,6 +133,16 @@ export default function ToolHome() {
         ["Equivalent distance (point source)", `×${formatRatio(result.distanceRatio)}`],
         ["Equivalent identical sources", `×${formatRatio(result.sourceCount)}`],
       ];
+
+  // distanceDoublings is sign-inverted relative to deltaDb (louder = closer = fewer doublings,
+  // hence negative) - rendering it directly reads as ungrammatical/confusing (e.g. "-1 doublings
+  // of distance") for any louder (positive) change. Show the magnitude and say the direction in
+  // words instead, reusing the already-correct distanceRatio for the "×N the distance" figure.
+  const distanceMagnitude = hasError ? 0 : Math.abs(result.distanceDoublings);
+  const distanceDirection = !hasError && result.deltaDb < 0 ? "further from" : "closer to";
+  // Compare the ROUNDED (displayed) value for singular/plural, not the raw one - otherwise a
+  // value that rounds to "1" at 2dp (e.g. 0.9966) would still read as "1 doublings".
+  const distanceMagnitudeIsOne = Math.round(distanceMagnitude * 100) / 100 === 1;
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -272,7 +283,11 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Level change
             </p>
-            <p className="mt-1 text-4xl font-semibold tabular-nums text-[var(--primary)]">
+            <p
+              className="mt-1 text-4xl font-semibold tabular-nums text-[var(--primary)]"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {hasError ? DASH : `${DB_FORMAT.format(result.deltaDb)} dB`}
             </p>
             <p className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]">
@@ -306,7 +321,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-start justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
@@ -318,9 +333,10 @@ export default function ToolHome() {
         {!hasError ? (
           <p className="mt-4 rounded-md bg-[var(--muted)] px-3 py-2 text-sm text-[var(--muted-foreground)]">
             That is {DB_FORMAT.format(result.powerDoublings)} doublings of power, and the
-            same change would come from moving to{" "}
-            {DB_FORMAT.format(result.distanceDoublings)} doublings of distance from a
-            point source in free field.
+            same change would come from moving {distanceDirection} a point source in free
+            field — {MAGNITUDE_FORMAT.format(distanceMagnitude)} doubling
+            {distanceMagnitudeIsOne ? "" : "s"} of distance, i.e. ×{formatRatio(result.distanceRatio)}{" "}
+            the distance.
           </p>
         ) : null}
       </section>

@@ -184,7 +184,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               In US gallons
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite" aria-atomic="true">
               {ok ? `${n4(result.byUnit.usgal)} US gal` : DASH}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -215,24 +215,26 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
-          {UNITS.map((u) => (
-            <div key={u.id} className="flex items-center justify-between gap-4 py-2.5">
-              <dt
-                className={
-                  HIGHLIGHT.includes(u.id)
-                    ? "font-semibold text-[var(--foreground)]"
-                    : "text-[var(--muted-foreground)]"
-                }
-              >
-                {u.label}
-              </dt>
-              <dd className="text-right font-semibold">
-                {ok ? `${n4(result.byUnit[u.id])} ${u.short}` : DASH}
-              </dd>
-            </div>
-          ))}
-        </dl>
+        <div aria-live="polite" aria-atomic="true">
+          <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+            {UNITS.map((u) => (
+              <div key={u.id} className="flex items-center justify-between gap-4 py-2.5">
+                <dt
+                  className={
+                    HIGHLIGHT.includes(u.id)
+                      ? "font-semibold text-[var(--foreground)]"
+                      : "text-[var(--muted-foreground)]"
+                  }
+                >
+                  {u.label}
+                </dt>
+                <dd className="text-right font-semibold">
+                  {ok ? `${n4(result.byUnit[u.id])} ${u.short}` : DASH}
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </section>
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">

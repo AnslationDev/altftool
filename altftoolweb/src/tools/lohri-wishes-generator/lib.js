@@ -86,12 +86,12 @@ export const TEMPLATES = {
       text: "Lohri diyan lakh lakh vadhaiyan! Agg da niggh te gur di mithas tuhade ghar sada bani rahe.",
       tags: ["family", "work"],
     },
-    { text: "Navi fasal, navi umeed, nava chaa — Lohri mubarak hove ji!", tags: ["family", "friends"] },
+    { text: "Navi fasal, navi umeed, nava chaa - Lohri mubarak hove ji!", tags: ["family", "friends"] },
     {
-      text: "Til, gur, gajak te reoriyan — aj diet band, bas bhangra chalu. Lohri mubarak!",
+      text: "Til, gur, gajak te reoriyan - aj diet band, bas bhangra chalu. Lohri mubarak!",
       tags: ["friends", "caption"],
     },
-    { text: "Agg balo, gidha pao, dhol vajao — Lohri diyan vadhaiyan!", tags: ["friends", "caption"] },
+    { text: "Agg balo, gidha pao, dhol vajao - Lohri diyan vadhaiyan!", tags: ["friends", "caption"] },
     {
       text: "Ghar de nikke jehe mehmaan di pehli Lohri mubarak! Rabb ohnu lammi umar te khushiyan bakhshe.",
       tags: ["newborn"],
@@ -102,7 +102,7 @@ export const TEMPLATES = {
     },
     { text: "Viah ton baad pehli Lohri mubarak! Tuhadi jodi sada salamat rahe.", tags: ["newlywed"] },
     {
-      text: "Navi jodi di pehli Lohri — agg vangu niggh te gur vangu mithas sada bani rahe.",
+      text: "Navi jodi di pehli Lohri - agg vangu niggh te gur vangu mithas sada bani rahe.",
       tags: ["newlywed", "family"],
     },
     {
@@ -151,7 +151,7 @@ export const TEMPLATES = {
       tags: ["family", "friends"],
     },
     {
-      text: "Til, gur, gajak and rewri — the diet is off, the bhangra is on. Happy Lohri!",
+      text: "Til, gur, gajak and rewri - the diet is off, the bhangra is on. Happy Lohri!",
       tags: ["friends", "caption"],
     },
     {
@@ -163,7 +163,7 @@ export const TEMPLATES = {
       tags: ["newborn"],
     },
     {
-      text: "Happy first Lohri to your baby. One small arrival, twice the noise in the house — enjoy every bit of it.",
+      text: "Happy first Lohri to your baby. One small arrival, twice the noise in the house - enjoy every bit of it.",
       tags: ["newborn", "family"],
     },
     {
@@ -171,7 +171,7 @@ export const TEMPLATES = {
       tags: ["newlywed"],
     },
     {
-      text: "Your first Lohri together — warmth like the fire, sweetness like the gur, for many years to come.",
+      text: "Your first Lohri together - warmth like the fire, sweetness like the gur, for many years to come.",
       tags: ["newlywed", "family"],
     },
     {
@@ -265,10 +265,16 @@ export function daysUntilLohri(fromIsoDate) {
     target = Date.UTC(targetYear, LOHRI_MONTH - 1, LOHRI_DAY);
   }
 
+  // The rollover above can push targetYear one past MAX_YEAR; re-validate via
+  // lohriDateFor so that case surfaces the existing range error instead of an
+  // undefined lohriDate.
+  const targetLohri = lohriDateFor(targetYear);
+  if (targetLohri.error) return targetLohri;
+
   return {
     fromDate: `${match[1]}-${match[2]}-${match[3]}`,
     lohriYear: targetYear,
-    lohriDate: lohriDateFor(targetYear).isoDate,
+    lohriDate: targetLohri.isoDate,
     daysAway: Math.round((target - from) / MS_PER_DAY),
   };
 }
@@ -352,7 +358,7 @@ export function generateWishes({
     const parts = [];
     if (name) parts.push(salutation.replace("{name}", name));
     parts.push(item.text);
-    if (sender) parts.push(`— ${sender}`);
+    if (sender) parts.push(`- ${sender}`);
     const text = parts.join("\n");
     const sms = countSmsSegments(text);
     return {

@@ -298,6 +298,13 @@ export default function ToolHome() {
   };
 
   const resetAll = () => {
+    if (
+      !window.confirm(
+        "Reset all flats and expense heads back to the sample data? This clears everything you've entered."
+      )
+    ) {
+      return;
+    }
     setFlats(defaultFlats());
     setHeads(defaultHeads());
     setSocietyName("Green Meadows CHS Ltd.");
@@ -346,7 +353,9 @@ export default function ToolHome() {
     return [
       `${societyName} — maintenance split for ${month}`,
       "",
-      [header, basisRow, ...body, footer].map((row) => row.join(",")).join("\n"),
+      [header, basisRow, ...body, footer]
+        .map((row) => row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(","))
+        .join("\n"),
       "",
       `Total expenses,${totals.expense}`,
       `Sum of flat bills,${split.billed}`,

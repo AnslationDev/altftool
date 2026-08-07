@@ -235,6 +235,14 @@ export function buildWeddingPrompt(input) {
   const total = allocation.total;
   const phase = planningPhaseFor(months);
   const priorityEntry = PRIORITIES.find((item) => item.id === priority) || PRIORITIES[0];
+  // The "guest-comfort" rule mentions protecting the accommodation/"stay" line,
+  // but not every budget model has one (the single-day split has no stay row) —
+  // drop that half of the rule when the chosen model's split has nothing to protect.
+  const modelHasStayLine = allocation.model.split.some((row) => /stay/i.test(row.label));
+  const priorityRule =
+    priorityEntry.id === "guest-comfort" && !modelHasStayLine
+      ? "protect transport first"
+      : priorityEntry.rule;
 
   const cateringRow =
     allocation.rows.find((row) => row.id === allocation.model.cateringId) || allocation.rows[0];
@@ -260,8 +268,8 @@ export function buildWeddingPrompt(input) {
     contingencyRow
       ? `${contingencyRow.percent}% (${currencyEntry.id} ${round(contingencyRow.amount)}) is held back as contingency, so plan against ${currencyEntry.id} ${round(spendableTotal)} of committed spend.`
       : null,
-    `${months === 0 ? "The wedding is this month" : `There are ${months} month${months === 1 ? "" : "s"} to go`}, which puts us in the "${phase.label}" phase.`,
-    `My priority is ${priorityEntry.label.toLowerCase()} — ${priorityEntry.rule} and take the cut from the lowest-priority lines.`,
+    `${months === 0 ? "The wedding is this month" : `There ${months === 1 ? "is" : "are"} ${months} month${months === 1 ? "" : "s"} to go`}, which puts us in the "${phase.label}" phase.`,
+    `My priority is ${priorityEntry.label.toLowerCase()} — ${priorityRule} and take the cut from the lowest-priority lines.`,
     city.trim() ? `Location: ${city.trim()}. Use local vendor categories and local norms.` : null,
     mustHave.trim() ? `Non-negotiable: ${mustHave.trim()}.` : null,
     dealBreaker.trim() ? `Explicitly avoid: ${dealBreaker.trim()}.` : null,

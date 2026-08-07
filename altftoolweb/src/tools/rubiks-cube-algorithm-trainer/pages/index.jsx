@@ -5,6 +5,14 @@ import { BookOpen, Brain, CheckCircle2, ChevronDown, ChevronRight, Clock, Layers
 
 const STORAGE_KEY = "altf:rubiks:progress";
 const FACES = ["U", "D", "F", "B", "L", "R"];
+const SLICE_FACES = ["M", "S", "E"];
+// Whole-cube rotations are composed from the equivalent face + slice turns (standard cubing
+// identities): x = R M' L', y = U E' D', z = F S B'.
+const ROTATION_MOVES = {
+  x: { normal: ["R", "M'", "L'"], prime: ["R'", "M", "L"], double: ["R2", "M2", "L2"] },
+  y: { normal: ["U", "E'", "D'"], prime: ["U'", "E", "D"], double: ["U2", "E2", "D2"] },
+  z: { normal: ["F", "S", "B'"], prime: ["F'", "S'", "B"], double: ["F2", "S2", "B2"] },
+};
 const FACE_COLORS = { U: "#FFFFFF", D: "#FFFF00", F: "#00FF00", B: "#0000FF", L: "#FF8C00", R: "#FF0000" };
 const FACE_LABELS = { U: "Top", D: "Bottom", F: "Front", B: "Back", L: "Left", R: "Right" };
 
@@ -12,12 +20,14 @@ const FACE_LAYOUT = { U: [1, 0], D: [3, 0], F: [2, 0], B: [0, 0], L: [2, -1], R:
 const FACE_ROTATION = { U: 0, D: 0, F: 0, B: 180, L: -90, R: 90 };
 
 const algorithmData = {
+  // Note: "White Cross" / "Yellow Cross" entries were removed here (wave-54 audit finding 6) -
+  // the first-layer cross has no single memorized algorithm (it's solved intuitively piece by
+  // piece), and the two entries had been assigned OLL 1's notation ("F R U R' U' F'") verbatim,
+  // which misrepresents that OLL corner-orientation case as a cross-forming algorithm.
   "Beginner": [
-    { name: "White Cross", notation: "F R U R' U' F'", category: "Cross", description: "Create white cross on top" },
     { name: "White Corners", notation: "R U R' U'", category: "Corners", description: "Insert white corner pieces" },
     { name: "Second Layer", notation: "U R U' R' U' F' U F", category: "F2L", description: "Insert edge into second layer (right)" },
     { name: "Second Layer Left", notation: "U' L' U L U F U' F'", category: "F2L", description: "Insert edge into second layer (left)" },
-    { name: "Yellow Cross", notation: "F R U R' U' F'", category: "OLL", description: "Create yellow cross on top" },
     { name: "Yellow Corners", notation: "R U R' U R U2 R'", category: "OLL", description: "Orient yellow corners (Sune)" },
     { name: "Corner Permutation", notation: "R' F R' B2 R F' R' B2 R2", category: "PLL", description: "Permute corners (A Perm)" },
     { name: "Edge Permutation", notation: "F2 U' L R' F2 L' R U' F2", category: "PLL", description: "Permute edges (H Perm)" },
@@ -73,11 +83,22 @@ function solvedCube() {
 }
 
 function applyMove(cube, move) {
-  const newCube = JSON.parse(JSON.stringify(cube));
   const isPrime = move.includes("'");
   const isDouble = move.includes("2");
   const face = move[0];
-  if (!FACES.includes(face)) return newCube;
+
+  // Whole-cube rotations (x/y/z) are composed from the equivalent face + slice turns rather than
+  // handled as a distinct sticker-cycle case, since they move all six faces at once.
+  if (face === "x" || face === "y" || face === "z") {
+    const seqs = ROTATION_MOVES[face];
+    const seq = isDouble ? seqs.double : isPrime ? seqs.prime : seqs.normal;
+    let result = cube;
+    for (const m of seq) result = applyMove(result, m);
+    return result;
+  }
+
+  const newCube = JSON.parse(JSON.stringify(cube));
+  if (!FACES.includes(face) && !SLICE_FACES.includes(face)) return newCube;
 
   function rotateFace(f, times) {
     for (let t = 0; t < times; t++) {
@@ -93,7 +114,8 @@ function applyMove(cube, move) {
   }
 
   const times = isDouble ? 2 : isPrime ? 3 : 1;
-  rotateFace(face, times);
+  // Slice moves (M/S/E) have no face grid of their own - only the surrounding sticker cycle applies.
+  if (FACES.includes(face)) rotateFace(face, times);
 
   let affected;
   switch (face) {
@@ -127,6 +149,25 @@ function applyMove(cube, move) {
                    ["U", 1, 2, "B", 1, 0, "D", 1, 2, "F", 1, 2],
                    ["U", 2, 2, "B", 0, 0, "D", 2, 2, "F", 2, 2]];
       break;
+    // Slice moves: M is the layer between L and R (moves with L's handedness), S is the layer
+    // between F and B (moves with F's handedness), E is the layer between U and D (moves with
+    // D's handedness) - all interpolated directly from the (already-correct) adjacent face cases
+    // above, using the middle row/column instead of an outer one.
+    case "M":
+      affected = [["U", 0, 1, "F", 0, 1, "D", 0, 1, "B", 2, 1],
+                   ["U", 1, 1, "F", 1, 1, "D", 1, 1, "B", 1, 1],
+                   ["U", 2, 1, "F", 2, 1, "D", 2, 1, "B", 0, 1]];
+      break;
+    case "S":
+      affected = [["U", 1, 0, "R", 0, 1, "D", 1, 2, "L", 2, 1],
+                   ["U", 1, 1, "R", 1, 1, "D", 1, 1, "L", 1, 1],
+                   ["U", 1, 2, "R", 2, 1, "D", 1, 0, "L", 0, 1]];
+      break;
+    case "E":
+      affected = [["F", 1, 0, "L", 1, 0, "B", 1, 0, "R", 1, 0],
+                   ["F", 1, 1, "L", 1, 1, "B", 1, 1, "R", 1, 1],
+                   ["F", 1, 2, "L", 1, 2, "B", 1, 2, "R", 1, 2]];
+      break;
     default:
       return newCube;
   }
@@ -137,7 +178,9 @@ function applyMove(cube, move) {
       vals.push(newCube[cycle[i * 3]][cycle[i * 3 + 1]][cycle[i * 3 + 2]]);
     }
     for (let i = 0; i < 4; i++) {
-      const idx = isPrime ? (i + 1) % 4 : (i + 3) % 4;
+      // A double turn (e.g. U2) must cycle stickers TWO steps around, not one - matching the
+      // 180 degree face rotation above (wave-54 audit finding 1).
+      const idx = isDouble ? (i + 2) % 4 : isPrime ? (i + 1) % 4 : (i + 3) % 4;
       newCube[cycle[i * 3]][cycle[i * 3 + 1]][cycle[i * 3 + 2]] = vals[idx];
     }
   }
@@ -248,7 +291,6 @@ export default function ToolHome() {
   const [expanded, setExpanded] = useState({});
   const [activeAlgo, setActiveAlgo] = useState(null);
   const [cube, setCube] = useState(() => solvedCube());
-  const [hasSolved, setHasSolved] = useState(true);
   const [progress, setProgress] = useState({});
   const [hydrated, setHydrated] = useState(false);
   const [practiceInput, setPracticeInput] = useState("");
@@ -289,15 +331,16 @@ export default function ToolHome() {
     setPracticeInput("");
 
     const solved = solvedCube();
-    const scrambled = applyNotation(solved, alg.notation);
-    setCube(scrambled);
-    setHasSolved(false);
+    setCube(solved);
 
     const moves = parseNotation(alg.notation);
     let idx = 0;
+    let current = solved;
     if (animRef.current) clearTimeout(animRef.current);
     const animate = () => {
       if (idx >= moves.length) { setAnimatedMove(null); return; }
+      current = applyMove(current, moves[idx]);
+      setCube(current);
       setAnimatedMove(moves[idx].replace(/[2']/g, ""));
       idx++;
       animRef.current = setTimeout(animate, 400);
@@ -307,7 +350,6 @@ export default function ToolHome() {
 
   const handleReset = useCallback(() => {
     setCube(solvedCube());
-    setHasSolved(true);
     setActiveAlgo(null);
     setPracticeMode(false);
     setPracticeResult(null);
@@ -350,11 +392,6 @@ export default function ToolHome() {
   const handleViewSolution = useCallback(() => {
     setShowSolution(true);
   }, []);
-
-  const activeAlgoData = useMemo(
-    () => allAlgorithms.find((a) => a.notation === activeAlgo?.notation),
-    [allAlgorithms, activeAlgo]
-  );
 
   const totalLearned = useMemo(() => Object.values(progress).filter((p) => p.learned).length, [progress]);
 
@@ -450,16 +487,18 @@ export default function ToolHome() {
                       Cancel
                     </button>
                   </div>
-                  {practiceResult === true && (
-                    <div className="flex items-center justify-center gap-2 rounded-[6px] bg-green-500/10 p-2 text-sm font-semibold text-green-600">
-                      <CheckCircle2 className="h-4 w-4" /> Correct!
-                    </div>
-                  )}
-                  {practiceResult === false && (
-                    <div className="flex items-center justify-center gap-2 rounded-[6px] bg-red-500/10 p-2 text-sm font-semibold text-red-600">
-                      <XCircle className="h-4 w-4" /> Incorrect. Expected: {activeAlgo.notation}
-                    </div>
-                  )}
+                  <div aria-live="polite" role="status">
+                    {practiceResult === true && (
+                      <div className="flex items-center justify-center gap-2 rounded-[6px] bg-green-500/10 p-2 text-sm font-semibold text-green-600">
+                        <CheckCircle2 className="h-4 w-4" /> Correct!
+                      </div>
+                    )}
+                    {practiceResult === false && (
+                      <div className="flex items-center justify-center gap-2 rounded-[6px] bg-red-500/10 p-2 text-sm font-semibold text-red-600">
+                        <XCircle className="h-4 w-4" /> Incorrect. Expected: {activeAlgo.notation}
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
               {showSolution && (
