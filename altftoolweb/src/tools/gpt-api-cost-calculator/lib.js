@@ -83,8 +83,9 @@ export function computeGptCost({
   if (!Number.isFinite(cached) || cached < 0 || cached > 100) {
     return { error: "Cached-input share must be between 0 and 100 percent." };
   }
-  // Accept either 0–1 fraction or 0–100 percent; UI passes percent.
-  const cachedFraction = cached > 1 ? cached / 100 : cached;
+  // The UI field is labeled "Cached input share (%)" and always sends a
+  // 0-100 percentage (validated above), so always convert from percent.
+  const cachedFraction = cached / 100;
 
   const discount = useBatch ? BATCH_DISCOUNT : 1;
 

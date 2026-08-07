@@ -9,12 +9,12 @@ const seo = {
   benefits: [
     ["Rotating coverage", "Consecutive breaks work different areas — the plan cycles a nine-stretch bank instead of repeating the same three moves."],
     ["Guideline-based dosage", "Every hold sits inside the ACSM 10-30 second, 2-repetition flexibility recommendation."],
-    ["Costs almost nothing", "A six-hour day needs roughly 10 minutes of total stretching — about 100 seconds per break."],
+    ["Costs almost nothing", "A six-hour day needs about 12 minutes of total stretching — about 100 seconds per break."],
   ],
   faqs: [
     [
       "How often should I stretch during a long study session?",
-      "A short movement break roughly every 50-60 minutes is the widely used ergonomic rule for seated work, and this tool defaults to 50 minutes. Each break here takes under two minutes, so a six-hour study day costs only about ten minutes of stretching in total.",
+      "A short movement break roughly every 50-60 minutes is the widely used ergonomic rule for seated work, and this tool defaults to 50 minutes. Each break here takes under two minutes, so a six-hour study day costs only about 12 minutes of stretching in total.",
     ],
     [
       "How long should I hold each stretch?",

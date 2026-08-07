@@ -123,6 +123,7 @@ export function computeTds194C({
     tdsAlreadyDeducted: round2(tdsAlreadyDeducted),
     totalTdsForYear: round2(tdsAlreadyDeducted),
     netPayable: round2(invoiceAmount),
+    shortfallCarriedForward: 0,
     singleHeadroom: round2(Math.max(0, SINGLE_PAYMENT_LIMIT - base)),
     annualHeadroom: round2(Math.max(0, ANNUAL_AGGREGATE_LIMIT - aggregateBase)),
     panFurnished,
@@ -139,30 +140,28 @@ export function computeTds194C({
       `No tax is deducted. The payee owns ${SMALL_TRANSPORTER_CARRIAGE_LIMIT} or fewer goods carriages and has furnished the section 194C(6) declaration with a PAN, so the payment goes out in full — but it must still be reported in Form 26Q.`,
     );
   }
-  if (transporterExempt && !panFurnished) {
-    const tds = round2((base * NO_PAN_RATE) / 100);
-    return {
-      ...nilResult(""),
-      reason: `Section 194C(6) needs the transporter's PAN alongside the declaration. Without a PAN the exemption fails and section 206AA forces deduction at ${NO_PAN_RATE}%.`,
-      appliedRate: NO_PAN_RATE,
-      trigger: "no-pan",
-      deductionRequired: tds > 0,
-      tdsOnThisPayment: tds,
-      totalTdsForYear: round2(tdsAlreadyDeducted + tds),
-      netPayable: round2(invoiceAmount - tds),
-    };
-  }
-
+  // A transporter's declaration without a PAN fails the section 194C(6)
+  // exemption, so the payment does NOT get an unconditional 20% deduction —
+  // it falls back to the ordinary 194C(5) single-payment/annual-aggregate
+  // thresholds below (at the no-PAN section 206AA rate), exactly like any
+  // other payee without a PAN.
   const rate = panFurnished ? payee.rate : NO_PAN_RATE;
 
   let trigger = null;
   let tdsOnThisPayment = 0;
   let totalTdsForYear = round2(tdsAlreadyDeducted);
+  let shortfallCarriedForward = 0;
 
   if (aggregateBase > ANNUAL_AGGREGATE_LIMIT) {
     trigger = "annual";
     const dueForYear = round2((aggregateBase * rate) / 100);
-    tdsOnThisPayment = round2(Math.max(0, dueForYear - tdsAlreadyDeducted));
+    const catchUpDue = round2(Math.max(0, dueForYear - tdsAlreadyDeducted));
+    // Catch-up TDS on earlier payments can never exceed the value of the
+    // current bill — a deductor cannot recover more tax than the payment is
+    // worth. Any remainder is surfaced separately instead of pushing the net
+    // payable amount negative.
+    tdsOnThisPayment = round2(Math.min(invoiceAmount, catchUpDue));
+    shortfallCarriedForward = round2(Math.max(0, catchUpDue - tdsOnThisPayment));
     totalTdsForYear = round2(tdsAlreadyDeducted + tdsOnThisPayment);
   } else if (base > SINGLE_PAYMENT_LIMIT) {
     trigger = "single";
@@ -180,8 +179,16 @@ export function computeTds194C({
   } else {
     reason = `No deduction. This bill of ${inr(base)} is within the ${inr(SINGLE_PAYMENT_LIMIT)} single-payment limit and the year's aggregate of ${inr(aggregateBase)} is within ${inr(ANNUAL_AGGREGATE_LIMIT)}.`;
   }
-  if (!panFurnished && deductionRequired) {
+  if (transporterExempt && !panFurnished) {
+    reason = `Section 194C(6) needs the transporter's PAN alongside the declaration, so the small-transporter exemption does not apply here. ${reason}`;
+    if (deductionRequired) {
+      reason += ` Section 206AA sets the no-PAN rate at ${NO_PAN_RATE}% since no PAN is on record.`;
+    }
+  } else if (!panFurnished && deductionRequired) {
     reason += ` No PAN is on record, so section 206AA raises the rate to ${NO_PAN_RATE}%.`;
+  }
+  if (shortfallCarriedForward > 0) {
+    reason += ` This payment of ${inr(invoiceAmount)} only covers ${inr(tdsOnThisPayment)} of the ${inr(round2(tdsOnThisPayment + shortfallCarriedForward))} now due on the year's aggregate, leaving ${inr(shortfallCarriedForward)} to recover from the payee or a future payment.`;
   }
 
   return {
@@ -202,6 +209,7 @@ export function computeTds194C({
     tdsAlreadyDeducted: round2(tdsAlreadyDeducted),
     totalTdsForYear,
     netPayable: round2(invoiceAmount - tdsOnThisPayment),
+    shortfallCarriedForward,
     singleHeadroom: round2(Math.max(0, SINGLE_PAYMENT_LIMIT - base)),
     annualHeadroom: round2(Math.max(0, ANNUAL_AGGREGATE_LIMIT - aggregateBase)),
     panFurnished,

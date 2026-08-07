@@ -5,6 +5,7 @@ import { Check, CloudRain, Copy, RotateCcw } from "lucide-react";
 import {
   ACTIVITY_LEVELS,
   MAX_HOURLY_INTAKE_ML,
+  MAX_SWEAT_L_PER_HOUR,
   SAFE_WATER_L_PER_PERSON_DAY,
   computeMonsoonHydration,
 } from "../lib";
@@ -316,6 +317,18 @@ export default function ToolHome() {
             {result.intakeCapped
               ? ` Your losses exceed the ${NUM.format(MAX_HOURLY_INTAKE_ML)} ml/hour your stomach can safely absorb — shorten the exposure rather than drinking faster.`
               : ""}
+          </p>
+        )}
+
+        {!hasError && result.sweatCapped && (
+          <p
+            role="alert"
+            className="mt-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          >
+            The heat-driven sweat rate this works out to is above the{" "}
+            {MAX_SWEAT_L_PER_HOUR.toFixed(1)} L/hour a body can physiologically sweat, so the
+            figure shown is capped at that ceiling — your actual fluid needs may be higher than
+            this plan states.
           </p>
         )}
 

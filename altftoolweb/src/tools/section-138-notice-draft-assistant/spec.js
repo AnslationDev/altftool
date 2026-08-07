@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "section-138-notice-draft-assistant",
   "title": "Section 138 Notice Draft Assistant",
-  "description": "Versioned checklist ke saath cheque-bounce notice draft structure kare.",
+  "description": "Structure a Section 138 cheque-bounce notice draft against a versioned checklist.",
   "badge": "India-Specific Utilities",
   "category": [
     "Text & Writing",
@@ -83,9 +83,16 @@ export const spec = {
 },
   compute: (values) => {
       const amount = Math.max(0, Number(values.amount) || 0);
-      const returnDate = new Date(values.return_date + "T00:00:00");
+      // Parsed and walked forward entirely in UTC (explicit "Z" suffix on
+      // construction, plus the UTC-prefixed accessor below) so construction
+      // and the final toISOString() formatting always agree, regardless of
+      // the runtime's local timezone. Mixing local-time construction/
+      // arithmetic with UTC-based formatting shifted the review-target date
+      // back by one day for any user in a positive UTC-offset timezone
+      // (e.g. IST, this tool's whole audience).
+      const returnDate = new Date(values.return_date + "T00:00:00Z");
       const reviewBy = new Date(returnDate);
-      if (!Number.isNaN(reviewBy.getTime())) reviewBy.setDate(reviewBy.getDate() + 30);
+      if (!Number.isNaN(reviewBy.getTime())) reviewBy.setUTCDate(reviewBy.getUTCDate() + 30);
       const money = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(amount);
       const paragraphs = [
         "To: " + values.drawer,

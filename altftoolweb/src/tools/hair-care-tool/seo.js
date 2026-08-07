@@ -8,8 +8,8 @@ const seo = {
   ],
   benefits: [
     [
-      "Type and texture treated separately",
-      "Fine curly hair gets different advice from thick curly hair, because strand thickness decides how much product weight it can carry.",
+      "Type and texture inform the match",
+      "Hair type and texture both feed the quiz, with more dedicated type-and-texture routine combinations being added over time — profiles without a specific match get a solid basic routine instead.",
     ],
     [
       "Split into morning and night",

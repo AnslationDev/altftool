@@ -85,8 +85,8 @@ export default function ToolHome() {
     : [
         ["Stretch breaks", NUM.format(plan.breakCount)],
         ["Stretches per break", NUM.format(STRETCHES_PER_BREAK)],
-        ["Total stretch time", `${Math.round(plan.totalStretchSeconds / 60)} min ${plan.totalStretchSeconds % 60} s`],
-        ["Body areas covered", plan.areasCovered.join(", ")],
+        ["Total stretch time", `${Math.floor(plan.totalStretchSeconds / 60)} min ${plan.totalStretchSeconds % 60} s`],
+        ["Body areas covered", plan.breakCount === 0 ? DASH : plan.areasCovered.join(", ")],
       ];
 
   return (
@@ -152,7 +152,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -204,8 +208,14 @@ export default function ToolHome() {
         </dl>
       </section>
 
+      {!hasError && plan.breakCount === 0 ? (
+        <p className="mt-6 text-sm text-[var(--muted-foreground)]">
+          No breaks fit in this session length — try a shorter break interval.
+        </p>
+      ) : null}
+
       {!hasError ? (
-        <section className="mt-6 space-y-4">
+        <section className="mt-6 space-y-4" aria-live="polite" aria-atomic="true">
           {plan.breaks.map((b) => (
             <div key={b.index} className="rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
               <h2 className="text-base font-semibold">

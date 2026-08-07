@@ -1488,7 +1488,9 @@ function VoiceSteadiness() {
   const audioContextRef = useRef(null);
   const streamRef = useRef(null);
   const frameRef = useRef(null);
+  const startingRef = useRef(false);
   const [active, setActive] = useState(false);
+  const [starting, setStarting] = useState(false);
   const [error, setError] = useState("");
   const [volume, setVolume] = useState(0);
   const [pitch, setPitch] = useState(0);
@@ -1505,7 +1507,17 @@ function VoiceSteadiness() {
   useEffect(() => stop, [stop]);
 
   const start = async () => {
+    // Guard against a rapid double-click re-entering start() while the
+    // previous getUserMedia() call is still in flight. Without this, two
+    // overlapping calls can each resolve with their own MediaStream/
+    // AudioContext/requestAnimationFrame loop; the second assignment to
+    // streamRef.current/audioContextRef.current orphans the first set and
+    // its microphone + rAF loop keep running even after stop() is pressed.
+    if (startingRef.current) return;
+    startingRef.current = true;
+    setStarting(true);
     try {
+      stop();
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const AudioContext = window.AudioContext || window.webkitAudioContext;
       const context = new AudioContext();
@@ -1540,6 +1552,9 @@ function VoiceSteadiness() {
       frameRef.current = requestAnimationFrame(loop);
     } catch (microphoneError) {
       setError(microphoneError?.message || "Microphone permission was not available.");
+    } finally {
+      startingRef.current = false;
+      setStarting(false);
     }
   };
 
@@ -1567,9 +1582,10 @@ function VoiceSteadiness() {
             type="button"
             className={active ? secondaryButton : primaryButton}
             onClick={active ? stop : start}
+            disabled={starting}
           >
             <Mic className="h-4 w-4" />
-            {active ? "Stop microphone" : "Start microphone"}
+            {active ? "Stop microphone" : starting ? "Starting microphone…" : "Start microphone"}
           </button>
           <p className="text-sm leading-6 text-[var(--muted-foreground)]">
             Sustain a comfortable vowel or read a short sentence. The tool
@@ -1577,13 +1593,13 @@ function VoiceSteadiness() {
             noise, microphones, and voice quality can make pitch unavailable.
           </p>
           {error ? (
-            <p className="text-sm text-[var(--destructive)]">{error}</p>
+            <p className="text-sm text-[var(--destructive)]" role="alert">{error}</p>
           ) : null}
         </div>
       }
       preview={
         <div className="grid gap-4">
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2" aria-live="polite">
             <Metric label="Current volume" value={`${volume}/100`} />
             <Metric
               label="Estimated pitch"
@@ -1637,7 +1653,32 @@ function estimatePitch(buffer, sampleRate) {
       bestOffset = offset;
     }
   }
-  return bestOffset > 0 ? sampleRate / bestOffset : 0;
+  if (bestOffset <= 0) return 0;
+
+  // At high sample rates (e.g. a 96 kHz interface), buffer.length/2 caps
+  // maxOffset below what a true 70 Hz period needs, so a genuinely
+  // in-range low voice can have no real periodic match inside
+  // [minOffset, maxOffset]. The raw-sum correlation above is then biased
+  // toward small offsets purely because the summation window is largest
+  // there, and can "win" with a weak, non-periodic match instead of the
+  // dash the out-of-range case is supposed to show. Guard against that by
+  // checking how strong the winning match actually is: normalize the
+  // correlation by the geometric mean of the two windows' energy (a
+  // Pearson-style coefficient bounded in [-1, 1]) and only trust matches
+  // that are close to a genuine periodic lock, regardless of sample rate.
+  let energyA = 0;
+  let energyB = 0;
+  const count = buffer.length - bestOffset;
+  for (let index = 0; index < count; index += 1) {
+    energyA += buffer[index] * buffer[index];
+    energyB += buffer[index + bestOffset] * buffer[index + bestOffset];
+  }
+  const energyProduct = energyA * energyB;
+  const normalizedConfidence =
+    energyProduct > 0 ? bestCorrelation / Math.sqrt(energyProduct) : 0;
+  if (normalizedConfidence < 0.85) return 0;
+
+  return sampleRate / bestOffset;
 }
 
 function CopyButton({ text }) {
