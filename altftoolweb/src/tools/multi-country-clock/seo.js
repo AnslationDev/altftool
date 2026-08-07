@@ -39,7 +39,7 @@ const seo = {
     ],
     [
       "How do I add a country or city to the clock?",
-      "Type into the search box — a country, city, region, or partial zone name such as London, Tokyo, or America — then click any result to add it. The search matches anywhere in the IANA identifier and lists the first 50 matches, so narrow the term when you search a whole region.",
+      "Type into the search box — a city, region, or partial zone name such as London, Tokyo, or America — then click any result to add it. The search matches anywhere in the IANA identifier and lists the first 50 matches, so narrow the term when you search a whole region.",
     ],
     [
       "Does the world clock adjust for daylight saving time automatically?",
@@ -67,7 +67,7 @@ const seo = {
     ],
   ],
   steps: [
-    "Type a country, city, or region into the search box — try London, Tokyo, or America.",
+    "Type a city, region, or partial zone name into the search box — try London, Tokyo, or America.",
     "Click a result to add that zone; its card appears with the live time, weekday, and date for that country.",
     "Choose 12-hour or 24-hour time, and remove clocks with the x in their corners when you no longer need them.",
   ],

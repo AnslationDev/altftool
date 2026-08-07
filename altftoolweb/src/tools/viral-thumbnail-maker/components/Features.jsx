@@ -5,7 +5,7 @@ const faqItems = [
   {
     question: "How does the Viral Thumbnail Maker generate thumbnails?",
     answer:
-      "Describe your video topic, pick a visual style and color theme. The tool translates your inputs into a highly optimized AI prompt and generates 4 unique high-quality 16:9 thumbnail variations, typically in well under a minute.",
+      "Describe your video topic, pick a visual style and color theme. The tool translates your inputs into a highly optimized AI prompt and requests 4 unique high-quality 16:9 thumbnail variations from a free third-party AI service, typically in well under a minute. If the service drops a request, you may see fewer than 4 — Regenerate to fill in the rest.",
   },
   {
     question: "Can I customize the generated thumbnail?",
@@ -20,7 +20,7 @@ const faqItems = [
   {
     question: "What resolution does it export in?",
     answer:
-      "All thumbnails are exported at exactly 1280x720 pixels, which is the standard 16:9 resolution recommended by YouTube for maximum clarity across desktop and mobile devices.",
+      "Thumbnails are upscaled to 1280x720 pixels, the standard 16:9 resolution recommended by YouTube for maximum clarity across desktop and mobile devices. In the rare case the upscale step fails, a lower-resolution fallback image is used instead.",
   },
 ];
 

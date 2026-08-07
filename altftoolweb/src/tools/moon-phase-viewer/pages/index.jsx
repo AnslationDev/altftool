@@ -192,7 +192,7 @@ export default function ToolHome() {
       `Date: ${formatDay(today)}`,
       `Phase: ${todayInfo.name}`,
       `Illumination: ${todayInfo.illumination.toFixed(1)}%`,
-      `Moon age: ${todayInfo.age.toFixed(1)} days of the ${SYNODIC_MONTH.toFixed(2)}-day cycle`,
+      `Moon age: ${todayInfo.age.toFixed(1)} days since the last new moon (average cycle: ${SYNODIC_MONTH.toFixed(2)} days)`,
       ...events.map((event) => `Next ${event.name}: ${formatDay(event.date)}, ${formatTime(event.date)}`),
       `Generated: ${new Date().toLocaleString()}`,
     ].join("\n");
@@ -300,7 +300,7 @@ export default function ToolHome() {
                     />
                   </div>
                   <p className="mt-2 text-xs text-[var(--muted-foreground)]">
-                    Day {todayInfo.age.toFixed(1)} of the 29.53-day lunar cycle (new moon to new moon)
+                    Day {todayInfo.age.toFixed(1)} since the last new moon (average cycle: 29.53 days)
                   </p>
                 </div>
                 <p className="mt-4 flex items-start gap-2 rounded-md bg-[var(--muted)] p-3 text-xs leading-5 text-[var(--muted-foreground)]">
@@ -421,6 +421,7 @@ export default function ToolHome() {
                   <div
                     key={cell.day}
                     title={`${cell.name} · ${cell.illumination.toFixed(0)}% lit`}
+                    aria-label={`${cell.day}: ${cell.name}, ${cell.illumination.toFixed(0)}% illuminated`}
                     className={`flex flex-col items-center gap-1 rounded-md border p-1.5 sm:p-2 ${
                       isTodayCell(cell.day)
                         ? "border-[var(--primary)] bg-[var(--muted)]"

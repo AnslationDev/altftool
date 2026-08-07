@@ -167,7 +167,14 @@ export default function ToolHome() {
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Estimated due date
             </p>
-            <p className="mt-1 text-3xl font-semibold text-[var(--primary)] sm:text-4xl">
+            {/* Scoped to just the headline so screen readers announce a single short
+                sentence when the transfer date/type or "as of" date changes, instead
+                of re-reading the whole results block (matches pregnancy-due-date). */}
+            <p
+              aria-live="polite"
+              role="status"
+              className="mt-1 text-3xl font-semibold text-[var(--primary)] sm:text-4xl"
+            >
               {hasError ? DASH : LONG_DATE.format(result.dueDate)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">

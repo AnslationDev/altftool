@@ -1,10 +1,12 @@
 "use client";
 
-import React, {useState, useMemo } from "react";
-import {BrainCircuit } from "lucide-react";
+import React, {useState, useMemo, useRef, useEffect } from "react";
+import {BrainCircuit, X } from "lucide-react";
 
 const ExplainChanges = ({ diff }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const modalRef = useRef(null);
+    const triggerRef = useRef(null);
 
     const explanations = useMemo(() => {
   if (!diff || diff.length === 0) return [];
@@ -103,9 +105,29 @@ const ExplainChanges = ({ diff }) => {
 //     );
 //   }
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // Move focus into the dialog on open.
+    modalRef.current?.focus();
+
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      // Restore focus to the trigger button on close.
+      triggerRef.current?.focus();
+    };
+  }, [isOpen]);
+
   return (
     <div className="rounded-xl bg-gray-50">
-      <button className="px-4 py-2 bg-(--primary) text-white rounded-lg flex items-center gap-2 text-sm cursor-pointer" onClick={() => setIsOpen(true)}>
+      <button ref={triggerRef} className="px-4 py-2 bg-(--primary) text-white rounded-lg flex items-center gap-2 text-sm cursor-pointer" onClick={() => setIsOpen(true)}>
         <BrainCircuit size={15}/>Explain Changes
       </button>
 
@@ -121,12 +143,26 @@ const ExplainChanges = ({ diff }) => {
 
           {/* Modal Content */}
           <div
-            className="relative z-10 w-[90%] max-w-lg bg-(--background)/90 rounded-xl shadow-lg p-5"
+            ref={modalRef}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="explain-changes-title"
+            tabIndex={-1}
+            className="relative z-10 w-[90%] max-w-lg bg-(--background)/90 rounded-xl shadow-lg p-5 focus:outline-none"
             onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
           >
-            <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-              <BrainCircuit /> Explain Changes
-            </h3>
+            <div className="flex items-center justify-between mb-3">
+              <h3 id="explain-changes-title" className="text-lg font-semibold flex items-center gap-2">
+                <BrainCircuit /> Explain Changes
+              </h3>
+              <button
+                onClick={() => setIsOpen(false)}
+                aria-label="Close Explain Changes dialog"
+                className="p-1 rounded-md text-(--muted-foreground) hover:bg-(--muted) transition focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35"
+              >
+                <X size={18} />
+              </button>
+            </div>
 
             {explanations.length === 0 ? (
               <p className="text-md text-(--muted-foreground)">

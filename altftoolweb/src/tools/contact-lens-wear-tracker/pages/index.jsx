@@ -18,11 +18,13 @@ const DASH = "—";
 const DEFAULTS = {
   lensType: "monthly",
   opened: "2026-07-05",
-  today: "2026-07-28",
   caseChanged: "2026-06-01",
   hours: "10",
   days: "6",
 };
+
+/** Real current date as YYYY-MM-DD, read fresh each call — never frozen at build time. */
+const todayIso = () => new Date().toISOString().slice(0, 10);
 
 const DATE_FMT = new Intl.DateTimeFormat("en-GB", {
   day: "numeric",
@@ -49,7 +51,7 @@ const toNumber = (raw) => {
 export default function ToolHome() {
   const [lensType, setLensType] = useState(DEFAULTS.lensType);
   const [opened, setOpened] = useState(DEFAULTS.opened);
-  const [today, setToday] = useState(DEFAULTS.today);
+  const [today, setToday] = useState(todayIso);
   const [caseChanged, setCaseChanged] = useState(DEFAULTS.caseChanged);
   const [hours, setHours] = useState(DEFAULTS.hours);
   const [days, setDays] = useState(DEFAULTS.days);
@@ -106,7 +108,7 @@ export default function ToolHome() {
   const reset = () => {
     setLensType(DEFAULTS.lensType);
     setOpened(DEFAULTS.opened);
-    setToday(DEFAULTS.today);
+    setToday(todayIso());
     setCaseChanged(DEFAULTS.caseChanged);
     setHours(DEFAULTS.hours);
     setDays(DEFAULTS.days);
@@ -263,6 +265,8 @@ export default function ToolHome() {
               {hasError ? "Lens status" : result.statusLabel}
             </p>
             <p
+              aria-live="polite"
+              aria-atomic="true"
               className={`mt-1 text-4xl font-semibold ${
                 !hasError && result.status === "overdue" ? "text-[var(--danger)]" : "text-[var(--primary)]"
               }`}
@@ -313,7 +317,7 @@ export default function ToolHome() {
           </div>
         )}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl aria-live="polite" className="mt-5 divide-y divide-[var(--border)] text-sm">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-start justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>

@@ -24938,7 +24938,7 @@ export const toolMetaMap = {
   },
   "rubiks-cube-algorithm-trainer": {
     "name": "Rubik's Cube Algorithm Trainer",
-    "description": "Learn and practice Rubik's Cube algorithms for PLL, OLL, F2L, and beginner methods with an interactive 3D cube visualization.",
+    "description": "Learn and practice Rubik's Cube algorithms for PLL, OLL, F2L, and beginner methods with an animated cube-net visualization.",
     "category": [
       "Education & Science",
       "Games"
@@ -31683,7 +31683,7 @@ export const toolMetaMap = {
   },
   "viral-thumbnail-maker": {
     "name": "Viral Thumbnail Maker",
-    "description": "Generate high-converting, viral YouTube thumbnails using AI. Answer a few questions about your video, generate the layout, customize text overlays, and download.",
+    "description": "Generate high-converting, viral YouTube thumbnails using AI. Answer a few questions about your video, generate the layout, add an optional headline woven into the AI prompt, and download.",
     "category": [
       "AI Tools",
       "Design & Color"

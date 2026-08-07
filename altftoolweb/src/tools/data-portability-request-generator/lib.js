@@ -82,6 +82,7 @@ export const LEGAL_BASES = [
   { id: "legitimate-interests", label: "Legitimate interests", portable: false, article: "Art. 6(1)(f)" },
   { id: "legal-obligation", label: "Legal obligation", portable: false, article: "Art. 6(1)(c)" },
   { id: "public-task", label: "Public task", portable: false, article: "Art. 6(1)(e)" },
+  { id: "vital-interests", label: "Vital interests", portable: false, article: "Art. 6(1)(d)" },
 ];
 
 /**
@@ -201,6 +202,9 @@ export function buildPortabilityRequest({
   const basis = BASIS_BY_ID.get(legalBasis);
   if (!basis) return { error: "Choose the lawful basis the organisation relies on." };
 
+  const gdprFamily = law.id === "gdpr" || law.id === "uk-gdpr";
+  const portabilityApplies = law.hasPortabilityRight && (!gdprFamily || basis.portable);
+
   const chosenFormat = FORMAT_BY_ID.get(format);
   if (!chosenFormat) return { error: "Choose an export format." };
 
@@ -213,10 +217,17 @@ export function buildPortabilityRequest({
     return { error: "Select at least one category of data you want exported." };
   }
 
-  const inScope = selected.filter((item) => item.origin !== "inferred");
-  const outOfScope = selected.filter((item) => item.origin === "inferred");
+  // WP242 rev.01's provided/observed-vs-inferred distinction is specific to GDPR/UK GDPR
+  // Article 20. CCPA's "personal information" definition (Cal. Civ. Code s.1798.140(v)(1)(K))
+  // expressly includes inferences, and India's DPDP Act has no portability right for the
+  // distinction to narrow, so only gdpr/uk-gdpr exclude inferred categories from scope.
+  const inScope = gdprFamily ? selected.filter((item) => item.origin !== "inferred") : selected;
+  const outOfScope = gdprFamily ? selected.filter((item) => item.origin === "inferred") : [];
 
-  if (inScope.length === 0) {
+  // Only hard-block when the letter would genuinely be issued as an Art. 20 portability
+  // request — an access request (non-portable basis, CCPA, or India-DPDP) can still ask for
+  // inferred data, so it must not be blocked by a portability-only restriction.
+  if (portabilityApplies && inScope.length === 0) {
     return {
       error: `The categories you selected (${outOfScope.map((item) => item.label).join(", ")}) are data the organisation derived or inferred about you, which falls outside the data portability right (WP242 rev.01). Select at least one category of data you actively provided or that was observed from your use of the service, or use an access request instead.`,
     };
@@ -231,9 +242,6 @@ export function buildPortabilityRequest({
     law.deadlineKind === "months"
       ? `${law.deadlineValue} calendar month${law.deadlineValue === 1 ? "" : "s"}`
       : `${law.deadlineValue} calendar days`;
-
-  const gdprFamily = law.id === "gdpr" || law.id === "uk-gdpr";
-  const portabilityApplies = law.hasPortabilityRight && (!gdprFamily || basis.portable);
 
   const rightCited = portabilityApplies
     ? gdprFamily
@@ -284,16 +292,19 @@ export function buildPortabilityRequest({
     );
   }
   if (!chosenFormat.machineReadable) {
-    warnings.push(
-      "PDF is not a machine-readable format for the purposes of Article 20(1). Ask for JSON, CSV or XML; a PDF export is a common way of technically complying while making the data useless.",
-    );
+    const formatWarning = gdprFamily
+      ? "PDF is not a machine-readable format for the purposes of Article 20(1). Ask for JSON, CSV or XML; a PDF export is a common way of technically complying while making the data useless."
+      : law.id === "ccpa"
+        ? "PDF does not meet Cal. Civ. Code s.1798.100(d)'s requirement for a portable and, to the extent technically feasible, readily useable format. Ask for JSON, CSV or XML; a PDF export is a common way of technically complying while making the data useless."
+        : "PDF is not a usable, re-importable format. Ask for JSON, CSV or XML; a PDF export is a common way of technically complying while making the data useless.";
+    warnings.push(formatWarning);
   }
   if (outOfScope.length > 0) {
     warnings.push(
       `${outOfScope.length} of the categories you selected are data the controller derived rather than data you provided. WP242 rev.01 puts inferred data such as scores and interest profiles outside Article 20, so expect those to come back under the access right instead.`,
     );
   }
-  if (directTransfer && !clean(recipient)) {
+  if (directTransfer && gdprFamily && !clean(recipient)) {
     warnings.push(
       "You asked for a direct controller-to-controller transfer but did not name the receiving organisation. Article 20(2) only bites where the destination and the technical route are identifiable.",
     );

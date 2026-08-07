@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   Check,
@@ -162,11 +162,24 @@ export default function ColorblindSafePaletteFixer() {
   const [issues, setIssues] = useState([]);
   const [copied, setCopied] = useState("");
   const [nextId, setNextId] = useState(INITIAL_ROWS.length + 1);
+  const errorSummaryRef = useRef(null);
 
   const report = useMemo(
     () => (result ? buildPrivacySafeCountsReport(result) : null),
     [result],
   );
+
+  const formIssues = issues.filter((issue) => issue.rowIndex === undefined);
+
+  // Move focus to the whole-form error summary the moment it appears so
+  // screen-reader users are told a submission was rejected, instead of
+  // focus silently staying on the just-clicked submit button.
+  useEffect(() => {
+    if (formIssues.length > 0) {
+      errorSummaryRef.current?.focus();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [issues]);
 
   const clearOutcome = () => {
     setResult(null);
@@ -382,13 +395,16 @@ export default function ColorblindSafePaletteFixer() {
             })}
           </div>
 
-          {issues.filter((issue) => issue.rowIndex === undefined).length ? (
-            <ul className="mt-4 rounded-lg border border-danger bg-danger-soft p-4 text-sm text-foreground">
-              {issues
-                .filter((issue) => issue.rowIndex === undefined)
-                .map((issue) => (
-                  <li key={issue.id}>{issue.message}</li>
-                ))}
+          {formIssues.length ? (
+            <ul
+              ref={errorSummaryRef}
+              tabIndex={-1}
+              role="alert"
+              className="mt-4 rounded-lg border border-danger bg-danger-soft p-4 text-sm text-foreground"
+            >
+              {formIssues.map((issue) => (
+                <li key={issue.id}>{issue.message}</li>
+              ))}
             </ul>
           ) : null}
 

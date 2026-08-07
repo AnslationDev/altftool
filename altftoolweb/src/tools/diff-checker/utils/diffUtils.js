@@ -3,7 +3,12 @@
 export const preprocessText = (text, ignoreWhitespace, ignoreCase) => {
   let processed = text;
   if (ignoreWhitespace) {
-    processed = processed.replace(/\s+/g, " ").trim();
+    // Collapse whitespace per line only (not \n itself), so line/semantic
+    // splitting still has newlines to split on after this transform.
+    processed = processed
+      .split("\n")
+      .map((line) => line.replace(/[ \t]+/g, " ").trim())
+      .join("\n");
   }
   if (ignoreCase) {
     processed = processed.toLowerCase();
@@ -16,9 +21,11 @@ export const computeDiffLogic = (
   modifiedText,
   ignoreWhitespace,
   ignoreCase,
-  mode
+  mode,
+  ignorePatterns = []
 ) => {
   const splitByMode = (text, mode) => {
+  if (text === "") return [];
   switch (mode) {
     case "word":
       return text.split(/\s+/);
@@ -30,7 +37,8 @@ export const computeDiffLogic = (
       // for now same as line (we improve later)
       return text.split("\n");
 
-    case "line": return text.split("");
+    case "line":
+      return text.split("\n");
     default:
       return text.split("\n");
   }
@@ -52,7 +60,7 @@ const applyIgnorePatterns = (text, patterns) => {
 
   if (patterns.includes("emails")) {
     result = result.replace(
-      /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/i,
+      /\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b/gi,
       ""
     );
   }
@@ -64,20 +72,20 @@ const applyIgnorePatterns = (text, patterns) => {
   return result;
 };
 
-  const processedOriginal = preprocessText(
+  let processedOriginal = preprocessText(
     originalText,
     ignoreWhitespace,
     ignoreCase
   );
 
-  const processedModified = preprocessText(
+  let processedModified = preprocessText(
     modifiedText,
     ignoreWhitespace,
     ignoreCase
   );
 
-  // processedOriginal = applyIgnorePatterns(processedOriginal, ignorePatterns);
-  // processedModified = applyIgnorePatterns(processedModified, ignorePatterns);
+  processedOriginal = applyIgnorePatterns(processedOriginal, ignorePatterns);
+  processedModified = applyIgnorePatterns(processedModified, ignorePatterns);
 
   const original = splitByMode(processedOriginal, mode);
   const modified = splitByMode(processedModified, mode);

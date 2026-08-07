@@ -40,27 +40,37 @@ const DiffChecker = () => {
   useEffect(() => {
   if (!originalText && !modifiedText) return;
 
-  const existing = JSON.parse(localStorage.getItem("versions") || "[]");
+  // Debounce: only persist a version after a pause in typing, instead of
+  // on every keystroke, so meaningful older states aren't evicted in seconds.
+  const timeoutId = setTimeout(() => {
+    try {
+      const existing = JSON.parse(localStorage.getItem("versions") || "[]");
 
-  const newVersion = {
-    id: Date.now(),
-    originalText,
-    modifiedText,
-    createdAt: new Date().toLocaleString(),
-  };
+      const newVersion = {
+        id: Date.now(),
+        originalText,
+        modifiedText,
+        createdAt: new Date().toLocaleString(),
+      };
 
-  // Avoid duplicate saves (optional but clean)
-  if (
-    existing.length > 0 &&
-    existing[0].originalText === originalText &&
-    existing[0].modifiedText === modifiedText
-  ) {
-    return;
-  }
+      // Avoid duplicate saves (optional but clean)
+      if (
+        existing.length > 0 &&
+        existing[0].originalText === originalText &&
+        existing[0].modifiedText === modifiedText
+      ) {
+        return;
+      }
 
-  const updated = [newVersion, ...existing].slice(0, 10);
-  localStorage.setItem("versions", JSON.stringify(updated));
-}, [diff, modifiedText, originalText]); // triggers when diff updates
+      const updated = [newVersion, ...existing].slice(0, 10);
+      localStorage.setItem("versions", JSON.stringify(updated));
+    } catch {
+      // Ignore storage errors (quota exceeded, private browsing, etc.)
+    }
+  }, 1500);
+
+  return () => clearTimeout(timeoutId);
+}, [modifiedText, originalText]); // triggers when the text settles, not on every diff recompute
 
   const stats = useMemo(() => {
   let added = 0;
@@ -187,18 +197,20 @@ const DiffChecker = () => {
           setIgnorePatterns={setIgnorePatterns}
         />
 
-        <DiffStats stats={stats} diff={diff} mode={mode}/>
+        <div aria-live="polite" role="status">
+          <DiffStats stats={stats} diff={diff} mode={mode}/>
+
+          {(originalText || modifiedText) && (
+            <SimilarityIndicator score={similarityScore} />
+          )}
+        </div>
 
         {originalText || modifiedText ? (
-          <>
-          <SimilarityIndicator score={similarityScore} />
-
-          {viewMode === "split" ? (
+          viewMode === "split" ? (
             <SplitView diff={diff} />
           ) : (
             <UnifiedView diff={diff} />
-          )}
-          </>
+          )
         ) : (
           <div className="bg-(--card) border border-(--border) text-(--primary)/20 rounded-lg p-6 flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-(--primary)" />

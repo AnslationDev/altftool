@@ -164,7 +164,7 @@ export function aggregatePercentageFromMarks(semesters) {
  * CGPA from a list of courses, weighting each grade point by its credits.
  *
  * @param {Array<{ credits: number, point: number }>} courses
- * @returns {{ cgpa: number, totalCredits: number, totalPoints: number } | { error: string }}
+ * @returns {{ cgpa: number, totalCredits: number, totalPoints: number, counted: number } | { error: string }}
  */
 export function cgpaFromCourses(courses) {
   if (!Array.isArray(courses)) return { error: "Add at least one course." };
@@ -179,6 +179,7 @@ export function cgpaFromCourses(courses) {
     cgpa: round2(totalPoints / totalCredits),
     totalCredits: round2(totalCredits),
     totalPoints: round2(totalPoints),
+    counted: rows.length,
   };
 }
 

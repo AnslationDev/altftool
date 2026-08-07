@@ -8,8 +8,8 @@ const seo = {
   ],
   benefits: [
     [
-      "Four seeded variations per run",
-      "Each generation issues two parallel batches with independent random seeds, so you are choosing between four takes instead of regenerating one image until it lands.",
+      "Up to four seeded variations per run",
+      "Each generation issues two parallel batches with independent random seeds, so you are usually choosing between four takes instead of regenerating one image until it lands. If the third-party image service drops a request, you may get fewer and can hit Regenerate for the rest.",
     ],
     [
       "Style and palette become prompt structure",

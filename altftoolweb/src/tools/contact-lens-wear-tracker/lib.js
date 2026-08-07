@@ -136,8 +136,12 @@ export function trackLensWear({
 
   const daysElapsed = Math.round((today - opened) / MS_PER_DAY);
   const replacementDays = type.replacementDays;
-  const daysRemaining = replacementDays - daysElapsed;
-  const replacementDateIso = addDaysIso(opened, replacementDays);
+  // Daily disposables are single-use: they're due for discard the day they're opened,
+  // not one day later, so the countdown treats their window as zero days long instead
+  // of running the generic multi-day math (which would misreport "1 day left" on day 0).
+  const daysRemaining = replacementDays === 1 ? -daysElapsed : replacementDays - daysElapsed;
+  const replacementDateIso =
+    replacementDays === 1 ? addDaysIso(opened, 0) : addDaysIso(opened, replacementDays);
 
   const percentUsed = Math.max(0, Math.min(100, (daysElapsed / replacementDays) * 100));
 
