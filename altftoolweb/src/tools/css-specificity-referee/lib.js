@@ -621,7 +621,7 @@ function buildSide(input, order, label) {
  * current / wanted: { selector, important, inline, layer }
  * options: { layerOrder: string[], wantedIsLater: boolean }
  *
- * Returns { current, wanted, winner, criterion, reason, wantedWins, flips[] }
+ * Returns { incumbent, challenger, layerOrder, winner, criterion, reason, wantedWins, flips[] }
  * or { error }.
  */
 export function refereeTwoSelectors(current, wanted, options = {}) {

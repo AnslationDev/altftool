@@ -43,6 +43,27 @@ export default function ToolHome() {
 
   const setField = (key, value) => setForm((current) => ({ ...current, [key]: value }));
 
+  // Impossible-rectangle needs height strictly greater than size (see lib.js buildScene).
+  // Cross-clamp both directions so no reachable slider position blanks the figure:
+  // bumping size up past the stored height pulls height up with it, and the height
+  // slider's own min (form.size + 1, set on its <input> below) stops it being dragged
+  // at or below the current size.
+  const setSize = (value) =>
+    setForm((current) => {
+      if (current.kind === "impossible-rectangle" && value >= current.height) {
+        return { ...current, size: value, height: Math.min(MAX_SIZE * 2, value + 1) };
+      }
+      return { ...current, size: value };
+    });
+
+  const setKind = (value) =>
+    setForm((current) => {
+      if (value === "impossible-rectangle" && current.height <= current.size) {
+        return { ...current, kind: value, height: Math.min(MAX_SIZE * 2, current.size + 1) };
+      }
+      return { ...current, kind: value };
+    });
+
   const scene = useMemo(() => buildScene(form), [form]);
   const hasError = Boolean(scene.error);
 
@@ -109,7 +130,7 @@ export default function ToolHome() {
               id="kind"
               className={`mt-2 ${INPUT_CLASS}`}
               value={form.kind}
-              onChange={(event) => setField("kind", event.target.value)}
+              onChange={(event) => setKind(event.target.value)}
             >
               {OBJECT_KINDS.map((item) => (
                 <option key={item.id} value={item.id}>
@@ -134,7 +155,7 @@ export default function ToolHome() {
               max={MAX_SIZE}
               step="1"
               value={form.size}
-              onChange={(event) => setField("size", Number(event.target.value))}
+              onChange={(event) => setSize(Number(event.target.value))}
             />
           </div>
 
@@ -147,7 +168,7 @@ export default function ToolHome() {
                 id="height"
                 className={RANGE_CLASS}
                 type="range"
-                min="2"
+                min={form.size + 1}
                 max={MAX_SIZE * 2}
                 step="1"
                 value={form.height}

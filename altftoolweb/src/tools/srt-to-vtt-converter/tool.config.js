@@ -3,7 +3,7 @@ const toolConfig = {
   name: "SRT To VTT Converter",
   category: ["Converters"],
   description:
-    "Convert SubRip (.srt) subtitles to WebVTT in the browser, with timing offset, alignment tags and encoding fixes.",
+    "Convert SubRip (.srt) subtitles to WebVTT in the browser, with timing offset, alignment tag conversion and BOM/line-ending cleanup.",
   icon: "captions",
   iconColor: "text-[var(--primary)]",
 };

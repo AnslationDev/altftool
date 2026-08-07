@@ -103,17 +103,36 @@ export function perDayPay(monthlyAmount, dayBasisId) {
  */
 export function handoverSchedule(startIso, servedDays) {
   if (parseIsoDate(startIso) === null || !isNum(servedDays) || servedDays <= 0) return [];
+  const totalDays = Math.max(1, Math.round(servedDays));
+
+  // Largest-remainder apportionment: split `totalDays` across HANDOVER_PHASES
+  // by `share` using floor + biggest-fractional-remainder-first to fill the
+  // gap. Unlike rounding/flooring each phase independently (which could
+  // allocate more days in total than were actually served), this guarantees
+  // the phase day counts always sum to exactly `totalDays`. A phase whose
+  // apportioned share rounds down to zero collapses out of the schedule
+  // entirely instead of being forced to claim a day it wasn't given.
+  const raw = HANDOVER_PHASES.map((phase) => totalDays * phase.share);
+  const floors = raw.map((value) => Math.floor(value));
+  let leftover = totalDays - floors.reduce((sum, value) => sum + value, 0);
+  const remainders = raw
+    .map((value, index) => ({ index, remainder: value - floors[index] }))
+    .sort((a, b) => b.remainder - a.remainder);
+  const days = floors.slice();
+  for (let i = 0; i < remainders.length && leftover > 0; i += 1) {
+    days[remainders[i].index] += 1;
+    leftover -= 1;
+  }
+
   const phases = [];
   let allocated = 0;
   HANDOVER_PHASES.forEach((phase, index) => {
-    const isLast = index === HANDOVER_PHASES.length - 1;
-    const days = isLast
-      ? Math.max(1, servedDays - allocated)
-      : Math.max(1, Math.round(servedDays * phase.share));
+    const phaseDays = days[index];
+    if (phaseDays <= 0) return;
     const start = addDays(startIso, allocated);
-    const end = addDays(startIso, allocated + days - 1);
-    allocated += days;
-    phases.push({ id: phase.id, label: phase.label, days, start, end });
+    const end = addDays(startIso, allocated + phaseDays - 1);
+    allocated += phaseDays;
+    phases.push({ id: phase.id, label: phase.label, days: phaseDays, start, end });
   });
   return phases;
 }

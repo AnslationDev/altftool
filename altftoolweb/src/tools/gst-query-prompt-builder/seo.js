@@ -8,7 +8,7 @@ const seo = {
   ],
   benefits: [
     ["Statute-anchored prompts", "Each of ten topics carries its governing sections, rules and known traps, so the AI reasons from the law, not vibes."],
-    ["Real threshold check", "Section 22/24 registration logic with the actual Rs 40/20/10 lakh figures runs on your turnover before the prompt is built."],
+    ["Real threshold check", "Section 22 registration logic with the actual Rs 40/20/10 lakh figures runs on your turnover before the prompt is built; section 24's compulsory-registration triggers are covered qualitatively in the prompt's watchouts, not computed from your inputs."],
     ["Non-advisory by design", "The prompt orders the model to separate settled law from contested positions and to route final conclusions to a CA."],
   ],
   faqs: [

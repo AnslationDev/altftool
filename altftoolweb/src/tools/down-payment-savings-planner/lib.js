@@ -67,6 +67,8 @@ export function maxLoanUnderLtvCap(propertyValue) {
       return { maxLoan: candidate, maxLtvPct: slab.maxLtvPct, slabLabel: slab.label };
     }
   }
+  // Unreachable: LTV_SLABS' final entry has upTo = Infinity, so the loop above
+  // always returns before falling through here for any propertyValue > 0.
   const last = LTV_SLABS[LTV_SLABS.length - 1];
   return {
     maxLoan: (propertyValue * last.maxLtvPct) / 100,

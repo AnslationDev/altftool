@@ -190,8 +190,10 @@ export function parseSrt(raw) {
     }
 
     // Preserve the SRT's own cue number when it had one; only synthesize a
-    // dense sequential id (matching prior behaviour) for counterless files.
-    cues.push({ number: originalNumber ?? cues.length + 1, startMs, endMs, lines: body });
+    // sequential id for counterless files, using the same counter as
+    // `cueLabel` above so a warning always points at the cue that carries
+    // the matching identifier in the emitted VTT.
+    cues.push({ number: originalNumber ?? attemptIndex, startMs, endMs, lines: body });
   }
 
   return { cues, issues };
@@ -278,12 +280,14 @@ export function srtToVtt(raw, options = {}) {
   }
 
   const last = cues[cues.length - 1];
+  const shiftedFirstStart = Math.max(0, cues[0].startMs + shift);
+  const shiftedLastEnd = Math.max(0, last.endMs + shift);
   return {
     vtt: out.join("\n"),
     cueCount: cues.length,
-    firstStart: formatVttTimestamp(Math.max(0, cues[0].startMs + shift)),
-    lastEnd: formatVttTimestamp(Math.max(0, last.endMs + shift)),
-    durationMs: Math.max(0, last.endMs - cues[0].startMs),
+    firstStart: formatVttTimestamp(shiftedFirstStart),
+    lastEnd: formatVttTimestamp(shiftedLastEnd),
+    durationMs: Math.max(0, shiftedLastEnd - shiftedFirstStart),
     lineCount: cues.reduce((sum, cue) => sum + cue.lines.length, 0),
     warnings,
   };

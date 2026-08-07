@@ -14,7 +14,12 @@ const seo = {
   faqs: [
     [
       "How much value does a smartphone lose in the first year?",
-      "Roughly 40-50% of its launch price for a mainstream handset, and closer to 25-35% for models with the strongest resale demand. After the first year the fall flattens to about 30% of the remaining value per year, which is why a two-year-old phone typically fetches around a third of what it cost new.",
+      // The age-based retention curve is identical for every demand tier (see
+      // DEMAND_TIERS in lib.js) — demand only scales the final value via a
+      // separate multiplier, it does not change how fast value falls with age.
+      // Default first-year drop is 45%, default later-year drop is 30% —
+      // keep these figures in sync with DEFAULT_FIRST_YEAR_DROP / DEFAULT_LATER_YEAR_DROP in lib.js.
+      "Roughly 40-50% of its launch price in the first year — the default model here assumes 45%. This age-based curve is the same regardless of brand or resale demand; after the first year the fall flattens to about 30% of what is left per year, which is why a two-year-old phone typically fetches around a third of what it cost new. Resale demand instead moves the estimate through a separate demand factor applied on top of the age curve, not by changing how fast it depreciates.",
     ],
     [
       "Does a cracked screen affect resale value much?",
@@ -22,7 +27,10 @@ const seo = {
     ],
     [
       "Should I sell to a buyback site or privately?",
-      "A buyback site or exchange offer usually pays around 10-20% less than a private sale, in return for an instant, guaranteed price with no meetings, no haggling and no payment risk. Selling privately is worth the effort mainly on higher-value handsets, where that percentage is real money.",
+      // The instant-vs-patient spread is fixed by INSTANT_QUOTE_FACTOR (0.85)
+      // and PATIENT_SALE_FACTOR (1.12) in lib.js: 1 - 0.85/1.12 ≈ 24%. Keep
+      // this figure in sync with those two constants if they ever change.
+      "In this calculator's model, a buyback site or exchange offer pays about 24% less than the patient private-sale figure shown alongside it (before the launch-price cap or scrap-value floor kick in), in return for an instant, guaranteed price with no meetings, no haggling and no payment risk. Selling privately is worth the effort mainly on higher-value handsets, where that percentage is real money.",
     ],
     [
       "Does battery health matter when selling a phone?",

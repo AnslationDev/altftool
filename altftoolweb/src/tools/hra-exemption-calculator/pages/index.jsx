@@ -94,7 +94,6 @@ export default function ToolHome() {
         `Taxable HRA: ${formatINR(result.taxableMonthly)}/mo · ${formatINR(result.taxableAnnual)}/yr`,
         `Estimated tax saved at ${slabRate}% slab: ${formatINR(taxSaved)}/yr`,
         "Note: HRA exemption is available only under the old tax regime.",
-        `Generated: ${new Date().toLocaleString()}`,
       ].join("\n"),
     [metro, result, slabRate, taxSaved]
   );
@@ -115,7 +114,8 @@ export default function ToolHome() {
   };
 
   const copySummary = async () => {
-    const success = await safeCopyText(summary);
+    const finalSummary = `${summary}\nGenerated: ${new Date().toLocaleString()}`;
+    const success = await safeCopyText(finalSummary);
     if (!success) return;
     setCopied(true);
     setTimeout(() => setCopied(false), 1200);
@@ -146,7 +146,7 @@ export default function ToolHome() {
                   min="0"
                   step="1000"
                   value={basic}
-                  onChange={(event) => setBasic(event.target.value)}
+                  onChange={(event) => setBasic(Math.max(0, Number(event.target.value) || 0))}
                   className="mt-2 h-12 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 outline-none focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
                 />
               </label>
@@ -157,7 +157,7 @@ export default function ToolHome() {
                   min="0"
                   step="500"
                   value={hra}
-                  onChange={(event) => setHra(event.target.value)}
+                  onChange={(event) => setHra(Math.max(0, Number(event.target.value) || 0))}
                   className="mt-2 h-12 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 outline-none focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
                 />
               </label>
@@ -168,7 +168,7 @@ export default function ToolHome() {
                   min="0"
                   step="500"
                   value={rent}
-                  onChange={(event) => setRent(event.target.value)}
+                  onChange={(event) => setRent(Math.max(0, Number(event.target.value) || 0))}
                   className="mt-2 h-12 w-full rounded-md border border-[var(--border)] bg-[var(--background)] px-3 outline-none focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)]"
                 />
               </label>

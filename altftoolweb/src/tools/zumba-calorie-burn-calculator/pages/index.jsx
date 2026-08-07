@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Check, Copy, Music4, RotateCcw } from "lucide-react";
 
-import { ZUMBA_FORMATS, computeZumbaBurn } from "../lib";
+import { LB_TO_KG, MIN_WEIGHT_KG, ZUMBA_FORMATS, computeZumbaBurn } from "../lib";
 
 const NUM0 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 const NUM1 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
@@ -66,6 +66,9 @@ export default function ToolHome() {
   );
 
   const hasError = Boolean(result.error);
+
+  const weightMinAttr =
+    weightUnit === "lb" ? String(Math.round(MIN_WEIGHT_KG / LB_TO_KG)) : String(MIN_WEIGHT_KG);
 
   const summary = useMemo(() => {
     if (hasError) return "";
@@ -154,7 +157,7 @@ export default function ToolHome() {
                 className={INPUT_CLASS}
                 type="number"
                 inputMode="decimal"
-                min="25"
+                min={weightMinAttr}
                 step="0.5"
                 value={weight}
                 onChange={(event) => setWeight(event.target.value)}
@@ -298,7 +301,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

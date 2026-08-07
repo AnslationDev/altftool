@@ -3,10 +3,17 @@ import { motion } from 'framer-motion';
 import { useHabits } from '../context/HabitContext';
 import Card from './ui/Card';
 
+// True maximum calculateImpactScore (HabitContext.jsx) can ever return: the
+// lifestyle average tops out at 24 (4 dimensions x max 8*3=24, averaged), and
+// costScore/timeScore are each capped at 24, so 24 + 24 + 24 = 72. The 76-100
+// "Life Draining" band was previously unreachable because the UI displayed a
+// /100 scale; this constant must stay in sync with that formula.
+const MAX_IMPACT_SCORE = 72;
+
 const ImpactCircle = ({ score, size = 200 }) => {
   const radius = size / 2 - 10;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (score / 100) * circumference;
+  const offset = circumference - (score / MAX_IMPACT_SCORE) * circumference;
 
   const getColor = () => {
     return 'var(--primary)';
@@ -14,9 +21,9 @@ const ImpactCircle = ({ score, size = 200 }) => {
 
   const getLabel = () => {
     if (score === 0) return 'Not Rated';
-    if (score <= 25) return 'Low Impact';
-    if (score <= 50) return 'Moderate Impact';
-    if (score <= 75) return 'Serious Impact';
+    if (score <= 18) return 'Low Impact';
+    if (score <= 36) return 'Moderate Impact';
+    if (score <= 54) return 'Serious Impact';
     return 'Life Draining';
   };
 
@@ -60,7 +67,7 @@ const ImpactCircle = ({ score, size = 200 }) => {
             <div className="text-5xl font-bold text-(--primary)">
               {score}
             </div>
-            <div className="text-xs text-(--primary) font-medium">/ 100</div>
+            <div className="text-xs text-(--primary) font-medium">/ {MAX_IMPACT_SCORE}</div>
           </motion.div>
         </div>
       </div>
@@ -123,19 +130,19 @@ export const HabitImpactScore = ({ habit }) => {
 
         <div className="grid grid-cols-2 gap-3 mt-6">
           <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
-            <p className="text-xs text-gray-500 font-medium">0–25</p>
+            <p className="text-xs text-gray-500 font-medium">0–18</p>
             <p className="text-sm font-semibold text-(--primary)">Low Impact</p>
           </div>
           <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
-            <p className="text-xs text-gray-500 font-medium">26–50</p>
+            <p className="text-xs text-gray-500 font-medium">19–36</p>
             <p className="text-sm font-semibold text-(--primary)">Moderate</p>
           </div>
           <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
-            <p className="text-xs text-gray-500 font-medium">51–75</p>
+            <p className="text-xs text-gray-500 font-medium">37–54</p>
             <p className="text-sm font-semibold text-(--primary)">Serious</p>
           </div>
           <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
-            <p className="text-xs text-gray-500 font-medium">76–100</p>
+            <p className="text-xs text-gray-500 font-medium">55–72</p>
             <p className="text-sm font-semibold text-(--primary)">Life Draining</p>
           </div>
         </div>

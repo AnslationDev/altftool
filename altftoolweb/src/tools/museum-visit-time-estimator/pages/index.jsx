@@ -303,8 +303,8 @@ export default function ToolHome() {
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
-            ["Objects you will stop at", result.error ? DASH : result.stoppedObjects.toLocaleString("en-IN")],
-            ["Objects you will walk past", result.error ? DASH : result.skippedObjects.toLocaleString("en-IN")],
+            ["Objects you will stop at", result.error ? DASH : result.stoppedObjects.toLocaleString("en-US")],
+            ["Objects you will walk past", result.error ? DASH : result.skippedObjects.toLocaleString("en-US")],
             ["Share of the collection seen", result.error ? DASH : `${Math.round(result.coverageOfCollectionPct)}%`],
             ["Time looking", result.error ? DASH : formatDuration(result.viewingMinutes)],
             ["Time walking between rooms", result.error ? DASH : formatDuration(result.transitMinutes)],
@@ -335,7 +335,7 @@ export default function ToolHome() {
           {result.reverse.feasible && (
             <dl className="mt-4 divide-y divide-[var(--border)] text-sm">
               {[
-                ["Objects you can stop at", result.reverse.objectsPossible.toLocaleString("en-IN")],
+                ["Objects you can stop at", result.reverse.objectsPossible.toLocaleString("en-US")],
                 ["Share of the collection", `${Math.round(result.reverse.coveragePct * 10) / 10}%`],
                 ["Gallery time inside the budget", formatDuration(result.reverse.galleryBudgetMinutes)],
               ].map(([label, value]) => (

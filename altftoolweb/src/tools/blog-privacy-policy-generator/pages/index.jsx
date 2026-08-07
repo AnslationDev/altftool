@@ -127,9 +127,17 @@ export default function ToolHome() {
     const next = practices.includes(id)
       ? practices.filter((item) => item !== id)
       : [...practices, id];
+    const previousRequired = requiredSections(practices).map((section) => section.id);
     const nextRequired = requiredSections(next).map((section) => section.id);
+    // A section that was auto-included because a practice required it, but
+    // is no longer required by anything still ticked, must drop out too —
+    // otherwise the policy silently keeps content for a practice the user
+    // just unchecked.
+    const droppedRequired = previousRequired.filter((sectionId) => !nextRequired.includes(sectionId));
     setPractices(next);
-    setIncludedIds([...new Set([...includedIds, ...nextRequired])]);
+    setIncludedIds((current) => [
+      ...new Set([...current.filter((sectionId) => !droppedRequired.includes(sectionId)), ...nextRequired]),
+    ]);
   };
 
   const toggleSection = (id) => {
