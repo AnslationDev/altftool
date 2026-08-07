@@ -106,7 +106,7 @@ export default function ToolHome() {
   };
 
   const verdictTone =
-    error || result.verdict === "within-limit" ? "text-[var(--success)]" : "text-[var(--danger)]";
+    !error && result.verdict === "within-limit" ? "text-[var(--success)]" : "text-[var(--danger)]";
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -253,7 +253,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section aria-live="polite" className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
@@ -305,7 +305,7 @@ export default function ToolHome() {
         </dl>
       </section>
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section aria-live="polite" className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <h2 className="text-base font-semibold">Will it sag?</h2>
         <p className={`mt-3 text-sm font-semibold ${verdictTone}`}>
           {error ? DASH : VERDICT_COPY[result.verdict]}

@@ -1354,8 +1354,19 @@ function CreatorLab({ slug }) {
       doc.text("Creator media kit", 18, 24);
       doc.setFontSize(11);
       const lines = doc.splitTextToSize(text, 170);
-      doc.text(lines, 18, 38);
-      doc.text("Generated locally with ALTFTool · Verify all metrics and permissions.", 18, 275);
+      const footer = "Generated locally with ALTFTool · Verify all metrics and permissions.";
+      const lineHeight = (11 * doc.getLineHeightFactor() * 25.4) / 72;
+      let y = 38;
+      for (const line of lines) {
+        if (y > 265) {
+          doc.text(footer, 18, 275);
+          doc.addPage();
+          y = 20;
+        }
+        doc.text(line, 18, y);
+        y += lineHeight;
+      }
+      doc.text(footer, 18, 275);
       doc.save("altftool-media-kit.pdf");
       setMessage("Media-kit PDF downloaded.");
       return;
@@ -1395,28 +1406,37 @@ function CreatorLab({ slug }) {
       </Section>
       <Section>
         <h2 className="text-lg font-semibold">Preview</h2>
-        <div className="relative mt-4 aspect-[9/16] max-h-[36rem] overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--muted)]">
-          {file && file.type.startsWith("image/") && previewUrl && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={previewUrl} alt="Uploaded creator preview" className="absolute inset-0 h-full w-full object-cover" />
-          )}
-          {file && file.type.startsWith("video/") && previewUrl && (
-            <video
-              src={previewUrl}
-              controls
-              muted
-              loop
-              playsInline
-              aria-label="Uploaded creator preview"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          )}
-          <div className="absolute inset-x-4 top-16 border border-dashed border-[var(--primary)] bg-[var(--card)]/85 p-2 text-center text-xs">Top safe-zone boundary</div>
-          <div className="absolute inset-x-4 bottom-28 border border-dashed border-[var(--primary)] bg-[var(--card)]/85 p-2 text-center text-xs">Caption / controls obstruction review</div>
-          {slug === "sponsored-disclosure-placement-checker" && (
-            <div className="absolute left-4 top-4 rounded-md bg-[var(--card)] px-3 py-2 text-sm font-semibold text-[var(--foreground)] shadow-md">{text}</div>
-          )}
-        </div>
+        {slug === "influencer-media-kit-builder" ? (
+          <div className="relative mt-4 aspect-[210/297] max-h-[36rem] overflow-y-auto rounded-lg border border-[var(--border)] bg-[var(--card)] p-4">
+            <p className="text-sm font-semibold text-[var(--foreground)]">Creator media kit</p>
+            <pre className="mt-2 whitespace-pre-wrap break-words font-sans text-xs leading-5 text-[var(--muted-foreground)]">
+              {text}
+            </pre>
+          </div>
+        ) : (
+          <div className="relative mt-4 aspect-[9/16] max-h-[36rem] overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--muted)]">
+            {file && file.type.startsWith("image/") && previewUrl && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img src={previewUrl} alt="Uploaded creator preview" className="absolute inset-0 h-full w-full object-cover" />
+            )}
+            {file && file.type.startsWith("video/") && previewUrl && (
+              <video
+                src={previewUrl}
+                controls
+                muted
+                loop
+                playsInline
+                aria-label="Uploaded creator preview"
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            )}
+            <div className="absolute inset-x-4 top-16 border border-dashed border-[var(--primary)] bg-[var(--card)]/85 p-2 text-center text-xs">Top safe-zone boundary</div>
+            <div className="absolute inset-x-4 bottom-28 border border-dashed border-[var(--primary)] bg-[var(--card)]/85 p-2 text-center text-xs">Caption / controls obstruction review</div>
+            {slug === "sponsored-disclosure-placement-checker" && (
+              <div className="absolute left-4 top-4 rounded-md bg-[var(--card)] px-3 py-2 text-sm font-semibold text-[var(--foreground)] shadow-md">{text}</div>
+            )}
+          </div>
+        )}
       </Section>
     </div>
   );

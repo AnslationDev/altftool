@@ -130,7 +130,8 @@ export function generateAdr(input = {}) {
   if (!formatEntry) return { error: "Pick a record format: nygard or madr." };
 
   const cleanOptions = (Array.isArray(options) ? options : [])
-    .map((option) => ({
+    .map((option, i) => ({
+      i,
       name: clean(option && option.name),
       pros: clean(option && option.pros),
       cons: clean(option && option.cons),
@@ -145,10 +146,8 @@ export function generateAdr(input = {}) {
     return { error: "Describe the context: the forces and constraints that make this a decision." };
   }
 
-  const chosenIndex =
-    Number.isInteger(chosenOptionIndex) && chosenOptionIndex >= 0 && chosenOptionIndex < cleanOptions.length
-      ? chosenOptionIndex
-      : 0;
+  const matchIdx = cleanOptions.findIndex((o) => o.i === chosenOptionIndex);
+  const chosenIndex = matchIdx !== -1 ? matchIdx : 0;
   const chosenName = cleanOptions.length > 0 ? cleanOptions[chosenIndex].name : "";
   const decisionText = clean(decision) || (chosenName ? `Adopt ${chosenName}.` : "");
 

@@ -203,7 +203,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section aria-live="polite" aria-atomic="true" className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -298,7 +298,7 @@ export default function ToolHome() {
                 {plan.slots
                   .filter((_, index) => index % 2 === 0)
                   .map((slot) => {
-                    const band = bandForScore(slot.score);
+                    const band = bandForScore(Math.round(slot.score));
                     const inBest = slot.start >= plan.best.start && slot.end <= plan.best.end;
                     return (
                       <tr key={slot.start} className="border-b border-[var(--border)] last:border-0">

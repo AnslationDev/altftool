@@ -153,8 +153,9 @@ export const REQUEST_CONTEXTS = [
 
 /**
  * Commitments and documents a resident can offer. `weight` is how much each
- * contributes to the readiness score; licence and vaccination carry the most
- * because they are the two things a committee can legitimately ask to see.
+ * contributes to the readiness score; licence, vaccination and waste clean-up
+ * carry the most weight because they are what a committee can most
+ * legitimately ask to see or verify.
  */
 export const COMMITMENTS = [
   { id: "licence", label: "Municipal pet licence / registration obtained", weight: 3, text: "the pet is registered with the municipal authority and I will keep the registration current", petOnly: true },
@@ -325,7 +326,9 @@ export function buildPetNocRequest({
 
   const readinessLabel =
     readinessScore >= 85
-      ? "Strong — licence, vaccination and hygiene all covered"
+      ? pet.licensable
+        ? "Strong — licence, vaccination and hygiene all covered"
+        : "Strong — hygiene and conduct commitments all covered"
       : readinessScore >= 60
         ? "Reasonable — a few gaps a committee may query"
         : "Weak — close the gaps below before sending";

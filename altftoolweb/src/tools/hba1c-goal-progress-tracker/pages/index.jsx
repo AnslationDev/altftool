@@ -171,7 +171,7 @@ export default function ToolHome() {
               className={`mt-2 ${INPUT_CLASS}`}
               type="number"
               inputMode="decimal"
-              min="3"
+              min={unit === "mmol" ? "9" : "3"}
               step={unit === "mmol" ? "1" : "0.1"}
               value={target}
               onChange={(event) => {
@@ -213,7 +213,7 @@ export default function ToolHome() {
                   className={`mt-2 ${INPUT_CLASS}`}
                   type="number"
                   inputMode="decimal"
-                  min="3"
+                  min={unit === "mmol" ? "9" : "3"}
                   step={unit === "mmol" ? "1" : "0.1"}
                   value={reading.value}
                   onChange={(event) => updateReading(reading.id, "value", event.target.value)}
@@ -264,7 +264,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite">
         <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
           Latest HbA1c
         </p>

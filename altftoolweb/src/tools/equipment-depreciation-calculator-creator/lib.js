@@ -66,11 +66,11 @@ export function buildDepreciationSchedule({
   if (usefulLifeYears < 1 || usefulLifeYears > MAX_LIFE_YEARS) {
     return { error: `Useful life should be between 1 and ${MAX_LIFE_YEARS} years.` };
   }
-  if (decliningFactor <= 0 || decliningFactor > 5) {
-    return { error: "Declining balance factor should be between 0 and 5." };
-  }
   if (!DEPRECIATION_METHODS.some((item) => item.key === method)) {
     return { error: "Choose one of the three depreciation methods." };
+  }
+  if (method === "declining-balance" && (decliningFactor <= 0 || decliningFactor > 5)) {
+    return { error: "Declining balance factor should be between 0 and 5." };
   }
 
   const life = Math.round(usefulLifeYears);
@@ -170,7 +170,7 @@ export function bookValueAfter(schedule, years) {
   }
   if (!isNum(years) || years < 0) return { error: "Years must be zero or more." };
   const whole = Math.floor(years);
-  if (whole === 0) return { value: schedule.cost, years: 0 };
+  if (whole === 0) return { value: schedule.cost, years: 0, lostSoFar: 0 };
   const row = schedule.rows[Math.min(whole, schedule.rows.length) - 1];
   return {
     value: whole >= schedule.rows.length ? schedule.endingBookValue : row.closing,

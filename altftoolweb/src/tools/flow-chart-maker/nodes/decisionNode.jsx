@@ -27,7 +27,19 @@ export function DecisionNode({ data, selected }) {
   }, [label, data]);
 
   return (
-    <div className="relative" onDoubleClick={handleDoubleClick}>
+    <div
+      className="relative"
+      onDoubleClick={handleDoubleClick}
+      tabIndex={0}
+      role="button"
+      aria-label="Double-click or press Enter to rename"
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleDoubleClick();
+        }
+      }}
+    >
       <Handle type="target" position={Position.Top} className="!w-3 !h-3 !bg-amber-500 !border-2 !border-white !top-[-6px]" />
       <div
         className={`w-[130px] h-[130px] flex items-center justify-center rotate-45 border-2 bg-amber-50 shadow-md transition-all ${

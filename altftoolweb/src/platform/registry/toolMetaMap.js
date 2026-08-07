@@ -797,7 +797,7 @@ export const toolMetaMap = {
   },
   "ai-object-counter": {
     "name": "AI Object Counter",
-    "description": "Detect and count objects in images using TensorFlow.js COCO-SSD. Supports 90+ object categories with confidence scoring and visualization.",
+    "description": "Detect and count objects in images using TensorFlow.js COCO-SSD. Supports 80 COCO object categories with confidence scoring and visualization.",
     "category": [
       "AI Tools",
       "Image & Photo",
@@ -2553,7 +2553,7 @@ export const toolMetaMap = {
   },
   "basic-calculator": {
     "name": "Basic Calculator",
-    "description": "A premium glassmorphic calculator. Supports basic arithmetic operators (+, -, *, /), memory storage, signs, and calculation history.",
+    "description": "A premium glassmorphic calculator. Supports basic arithmetic operators (+, -, *, /), signs, and calculation history.",
     "category": "Calculators",
     "topics": [
       "Math"
@@ -7603,7 +7603,7 @@ export const toolMetaMap = {
   },
   "debt-payoff-planner": {
     "name": "Debt Payoff Planner",
-    "description": "Compare Snowball vs Avalanche debt payoff methods. Find the fastest and most cost-effective way to become debt-free.",
+    "description": "See how long it takes to pay off a single debt balance and how much interest you'll pay, based on your minimum and extra monthly payments.",
     "category": [
       "Finance Calculators",
       "Productivity"
@@ -10353,7 +10353,7 @@ export const toolMetaMap = {
   },
   "exif-timestamp-geotag-editor": {
     "name": "EXIF Timestamp & Geotag Editor",
-    "description": "Bulk-edit the dates and GPS coordinates stored in photos you own.",
+    "description": "Write a sidecar file recording corrected dates and GPS coordinates for photos you own, without changing the originals.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -17248,7 +17248,7 @@ export const toolMetaMap = {
   },
   "loanword-origin-finder-indian-english": {
     "name": "Indian English Loanword Finder",
-    "description": "Trace 61 everyday English words back to Sanskrit, Hindi, Tamil, Malayalam, Telugu and Bengali, with the route, era and how settled each etymology is.",
+    "description": "Trace 61 everyday English words back to Sanskrit, Hindi, Urdu, Tamil, Malayalam, Telugu, Marathi, Bengali and Odia, with the route, era and how settled each etymology is.",
     "category": "Education & Science",
     "icon": "globe",
     "iconColor": "text-[var(--primary)]"
@@ -18210,7 +18210,7 @@ export const toolMetaMap = {
   },
   "meeting-agenda-builder": {
     "name": "Meeting Agenda Builder",
-    "description": "Create meetings, manage attendees, build real-time draggable agendas, track actions, reminders, and export meeting summaries.",
+    "description": "Turn a list of agenda items into a timed running order with clock start/end times, a 10% scheduling buffer, and an estimated loaded meeting cost.",
     "category": [
       "Productivity",
       "Business"
@@ -23588,7 +23588,7 @@ export const toolMetaMap = {
   },
   "raw-photo-developer": {
     "name": "RAW Photo Developer",
-    "description": "Develop RAW photos with exposure and white balance controls, then export to JPEG.",
+    "description": "Preview RAW photos with a simple exposure control, then export to JPEG.",
     "category": [
       "Image & Photo",
       "Productivity"
@@ -31470,7 +31470,7 @@ export const toolMetaMap = {
   },
   "video-frame-to-sprite-extractor": {
     "name": "Video Frame-to-Sprite Extractor",
-    "description": "Export selected video frames as a PNG sequence or a single sprite sheet.",
+    "description": "Export selected video frames as a single tiled sprite sheet PNG.",
     "category": [
       "Video & Audio",
       "Productivity"

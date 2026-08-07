@@ -206,7 +206,7 @@ function inspectWord(entries) {
     check(
       "table-headers",
       "Table header-row markers",
-      tableCount && !headerRows ? "review" : "present",
+      tableCount > headerRows ? "review" : "present",
       Math.max(0, tableCount - headerRows),
       tableCount
         ? `${headerRows} header-row marker(s) were observed across ${tableCount} table(s); this count cannot verify individual table semantics.`
@@ -388,6 +388,23 @@ function pdfMarkerCount(source, expression) {
   return countMatches(source, expression);
 }
 
+/**
+ * Extract the body of the Info dictionary object referenced by the trailer's
+ * `/Info N G R` indirect reference, so title metadata can be scoped to the
+ * document's actual Info dictionary instead of matching any `/Title` key
+ * anywhere in the raw byte stream (including inside unrelated bookmark or
+ * outline item dictionaries).
+ */
+function extractInfoDict(source) {
+  const ref = String(source || "").match(/\/Info\s+(\d+)\s+(\d+)\s+R/u);
+  if (!ref) return "";
+  const [, num, gen] = ref;
+  const body = String(source || "").match(
+    new RegExp(`\\b${num}\\s+${gen}\\s+obj([\\s\\S]*?)endobj`, "u"),
+  );
+  return body?.[1] || "";
+}
+
 export function inspectPdfMarkers(bytesInput) {
   const bytes =
     bytesInput instanceof Uint8Array
@@ -403,8 +420,9 @@ export function inspectPdfMarkers(bytesInput) {
   const source = new TextDecoder("latin1").decode(bytes);
   const tagged = /\/StructTreeRoot\b/u.test(source);
   const marked = /\/Marked\s+true\b/u.test(source);
+  const infoDict = extractInfoDict(source);
   const language = /\/Lang\s*(?:\(|<)/u.test(source);
-  const title = /\/Title\s*(?:\(|<)/u.test(source);
+  const title = /\/Title\s*(?:\(|<)/u.test(infoDict);
   const outlines = /\/Outlines\b/u.test(source);
   const imageObjects = pdfMarkerCount(source, /\/Subtype\s*\/Image\b/gu);
   const altEntries = pdfMarkerCount(source, /\/Alt\s*(?:\(|<)/gu);
@@ -426,7 +444,7 @@ export function inspectPdfMarkers(bytesInput) {
       language ? "present" : "review",
       Number(language),
       language
-        ? "A /Lang marker was observed."
+        ? "A /Lang marker was observed somewhere in the file; its location as the document's default language was not verified."
         : "A /Lang marker was not observable in the raw PDF scan.",
     ),
     check(

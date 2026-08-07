@@ -121,9 +121,13 @@ export default function ToolHome() {
   };
 
   const removeOption = (id) => {
+    const removedIndex = options.findIndex((item) => item.id === id);
     const next = options.filter((item) => item.id !== id);
     setOptions(next);
-    setChosen((current) => Math.min(current, Math.max(0, next.length - 1)));
+    setChosen((current) => {
+      const shifted = removedIndex !== -1 && removedIndex < current ? current - 1 : current;
+      return Math.min(shifted, Math.max(0, next.length - 1));
+    });
   };
 
   const copyResult = async () => {
@@ -466,7 +470,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div className="min-w-0">
+          <div className="min-w-0" aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               File name
             </p>
@@ -499,7 +503,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
           {[
             ["Record id", result.error ? dash : result.id],
             ["Format", result.error ? dash : result.format === "madr" ? "MADR 4.0" : "Nygard"],

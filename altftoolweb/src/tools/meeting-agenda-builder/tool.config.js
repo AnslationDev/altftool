@@ -2,7 +2,7 @@ const meetingAgendaBuilderConfig = {
   slug: "meeting-agenda-builder",
   name: "Meeting Agenda Builder",
   description:
-    "Create meetings, manage attendees, build real-time draggable agendas, track actions, reminders, and export meeting summaries.",
+    "Turn a list of agenda items into a timed running order with clock start/end times, a 10% scheduling buffer, and an estimated loaded meeting cost.",
   category: ["Productivity", "Business"],
   icon: "clipboard-list",
   iconColor: "text-blue-500",
