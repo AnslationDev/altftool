@@ -2,7 +2,7 @@
 
 import { AlertCircle, CheckCircle, Info, ShieldCheck } from "lucide-react";
 
-export default function StatusPanels({ messages, stats, history, restoreHistory }) {
+export default function StatusPanels({ messages, stats, history, restoreHistory, hasInput = false }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <section className="rounded-3xl p-4 bg-(--card) border border-(--border) shadow-xl">
@@ -10,7 +10,7 @@ export default function StatusPanels({ messages, stats, history, restoreHistory 
           <ShieldCheck className="w-5 h-5 text-indigo-500" />
           Validation
         </h3>
-        <div className="space-y-2 max-h-40 overflow-auto">
+        <div className="space-y-2 max-h-40 overflow-auto" aria-live="polite" role="status">
           {messages.map((message, index) => (
             <div key={`${message.text}-${index}`} className="flex items-start gap-2 text-sm text-(--foreground)">
               {message.type === "error" ? (
@@ -23,11 +23,14 @@ export default function StatusPanels({ messages, stats, history, restoreHistory 
               <span className="break-words">{message.text}</span>
             </div>
           ))}
-          {messages.length === 0 && (
+          {messages.length === 0 && hasInput && (
             <div className="flex items-start gap-2 text-sm text-(--foreground)">
               <CheckCircle className="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" />
               <span>Valid PHP syntax. No errors detected.</span>
             </div>
+          )}
+          {messages.length === 0 && !hasInput && (
+            <p className="text-sm text-(--secondary)">Paste PHP to validate.</p>
           )}
         </div>
       </section>

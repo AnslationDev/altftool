@@ -97,11 +97,7 @@ export function calculateWallTiles({
     wallRunFt,
     tilingHeightFt,
     doorCount,
-    doorWidthFt,
-    doorHeightFt,
     windowCount,
-    windowWidthFt,
-    windowHeightFt,
     tileWidthMm,
     tileHeightMm,
     tilesPerBox,
@@ -118,7 +114,22 @@ export function calculateWallTiles({
     return { error: "Wall run and tiling height must be greater than zero." };
   }
   if (doorCount < 0 || windowCount < 0) return { error: "Opening counts cannot be negative." };
-  if (doorWidthFt < 0 || doorHeightFt < 0 || windowWidthFt < 0 || windowHeightFt < 0) {
+
+  // Door/window width & height only matter when there is at least one such
+  // opening — a blank width/height with a count of 0 should not fail the
+  // whole calculator.
+  const hasDoors = Math.floor(doorCount) > 0;
+  const hasWindows = Math.floor(windowCount) > 0;
+  if (hasDoors && (!isNum(doorWidthFt) || !isNum(doorHeightFt))) {
+    return { error: "Enter a valid number in every field." };
+  }
+  if (hasWindows && (!isNum(windowWidthFt) || !isNum(windowHeightFt))) {
+    return { error: "Enter a valid number in every field." };
+  }
+  if (
+    (hasDoors && (doorWidthFt < 0 || doorHeightFt < 0)) ||
+    (hasWindows && (windowWidthFt < 0 || windowHeightFt < 0))
+  ) {
     return { error: "Opening sizes cannot be negative." };
   }
   if (tileWidthMm <= 0 || tileHeightMm <= 0) {
@@ -139,8 +150,8 @@ export function calculateWallTiles({
     return { error: `Wall area above ${MAX_WALL_AREA_SQFT.toLocaleString("en-IN")} sqft is out of range for this tool.` };
   }
 
-  const doorAreaSqft = Math.floor(doorCount) * doorWidthFt * doorHeightFt;
-  const windowAreaSqft = Math.floor(windowCount) * windowWidthFt * windowHeightFt;
+  const doorAreaSqft = hasDoors ? Math.floor(doorCount) * doorWidthFt * doorHeightFt : 0;
+  const windowAreaSqft = hasWindows ? Math.floor(windowCount) * windowWidthFt * windowHeightFt : 0;
   const openingAreaSqft = doorAreaSqft + windowAreaSqft;
 
   if (openingAreaSqft >= grossAreaSqft) {

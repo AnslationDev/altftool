@@ -81,7 +81,11 @@ export function normaliseHandle(raw) {
   if (hostMatch) value = hostMatch[1];
   value = value.replace(/^@/, "").replace(/\/+$/, "");
 
-  if (value === "") return { error: "That link has no username or profile id in it." };
+  if (value === "" || value === PROFILE_HOST) {
+    return {
+      error: "That link has no username or profile id in it. Paste the URL of your own profile page instead.",
+    };
+  }
   if (NUMERIC_ID_PATTERN.test(value)) return { handle: value, kind: "id" };
 
   if (value.length < HANDLE_MIN) {

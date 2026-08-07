@@ -4280,7 +4280,7 @@ export const toolMetaMap = {
   },
   "calibration-curve-lod-loq-workbench": {
     "name": "Calibration Curve LOD/LOQ Workbench",
-    "description": "Enter calibration points to compute the linear fit, residuals, and confidence bands, then derive the LOD and LOQ.",
+    "description": "Enter calibration points to compute the linear fit, residuals, and R², then derive the LOD and LOQ.",
     "category": [
       "Education & Science",
       "Calculators"
@@ -4367,7 +4367,7 @@ export const toolMetaMap = {
   },
   "camera-color-eyedropper": {
     "name": "Camera Color Eyedropper",
-    "description": "Sample the approximate HEX and RGB color of an object through your live camera.",
+    "description": "Sample the approximate RGB color of an object through your live camera.",
     "category": [
       "Developer",
       "Productivity"
@@ -16047,7 +16047,7 @@ export const toolMetaMap = {
   },
   "kebab-case-converter": {
     "name": "Kebab Case Converter",
-    "description": "Convert any phrase to kebab-case — plus snake_case and a URL slug.",
+    "description": "Convert any phrase to kebab-case — plus snake_case and dot.case.",
     "category": "Developer",
     "icon": "case-sensitive",
     "iconColor": "text-amber-600"

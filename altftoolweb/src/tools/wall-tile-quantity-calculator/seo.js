@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     ["Openings deducted properly", "Doors and windows come off at full size, the way a tiler measures."],
     ["Course layout preview", "Shows full courses plus the leftover cut so you can adjust the tile size or start height."],
-    ["Adhesive and grout included", "Sizes both from the tile dimensions and joint width, not a rough guess."],
+    ["Adhesive and grout included", "Grout is sized from your tile dimensions and joint width; adhesive is estimated from net wall area at a standard 3mm bed."],
   ],
   faqs: [
     [

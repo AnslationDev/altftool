@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, Plus, RotateCcw, Trash2, Users } from "lucide-react";
-import { PATERNITY_POLICIES, getPolicy, planPaternityLeave } from "../lib";
+import { PATERNITY_POLICIES, addDays, getPolicy, parseISODate, planPaternityLeave, toISODate } from "../lib";
 
 const DATE_FMT = new Intl.DateTimeFormat("en-IN", {
   dateStyle: "medium",
@@ -77,7 +77,7 @@ export default function ToolHome() {
       `Birth / due date: ${showDate(plan.birthDate)}`,
       `Permitted window: ${showDate(plan.windowStart)} to ${showDate(plan.windowEnd)}`,
       `Allowance: ${plan.totalDays} days · planned ${plan.usedDays} · remaining ${plan.remainingDays}`,
-      ...plan.orderedBlocks.map(
+      ...plan.blocks.map(
         (block, index) =>
           `Block ${index + 1}: ${showDate(block.start)} to ${showDate(block.end)} (${block.days} days)`,
       ),
@@ -117,7 +117,16 @@ export default function ToolHome() {
     setBlocks((prev) => {
       const nextId = prev.reduce((max, block) => Math.max(max, block.id), 0) + 1;
       const last = prev[prev.length - 1];
-      return [...prev, { id: nextId, start: last ? last.start : birthDate, days: "7" }];
+      let start = birthDate;
+      if (last) {
+        const lastStartTs = parseISODate(last.start);
+        const lastDays = Number(last.days);
+        start =
+          lastStartTs !== null && Number.isFinite(lastDays) && lastDays > 0
+            ? toISODate(addDays(lastStartTs, lastDays))
+            : last.start;
+      }
+      return [...prev, { id: nextId, start, days: "7" }];
     });
   };
 
@@ -278,6 +287,26 @@ export default function ToolHome() {
               onChange={(event) => updateField("maxBlocks", event.target.value)}
             />
           </div>
+
+          <div>
+            <label className={LABEL_CLASS} htmlFor="pl-step">
+              Block length step (days)
+            </label>
+            <input
+              id="pl-step"
+              className={`mt-2 ${INPUT_CLASS}`}
+              type="number"
+              inputMode="numeric"
+              min="1"
+              max="365"
+              step="1"
+              value={fields.blockStepDays}
+              onChange={(event) => updateField("blockStepDays", event.target.value)}
+            />
+            <p className="mt-2 text-xs leading-5 text-[var(--muted-foreground)]">
+              Each block must be a whole number of this many days — e.g. 7 means whole weeks only.
+            </p>
+          </div>
         </div>
       </section>
 
@@ -382,7 +411,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section aria-live="polite" className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

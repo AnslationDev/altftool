@@ -10,8 +10,10 @@
  * and smoking rules belong in that group: both are enforced with fines rather
  * than disapproval.
  *
- * The readiness score is the share of the selected rule set, by priority
- * weight, that you have already ticked as known.
+ * The readiness score is the share of the rules currently shown (i.e. within
+ * the "how many rules to show" cap), by priority weight, that you have
+ * already ticked as known — every rule counted in the score also has a
+ * checkbox on screen.
  *
  * The organising idea behind almost every rule here is relative age and
  * seniority. It decides who speaks first, who pours, who starts eating, who
@@ -418,12 +420,13 @@ export function buildEtiquetteBriefing({
       b.priority - a.priority || b.severityWeight - a.severityWeight || a.id.localeCompare(b.id),
   );
 
-  const totalWeight = ranked.reduce((sum, rule) => sum + rule.priority, 0);
-  const knownWeight = ranked.reduce((sum, rule) => sum + (rule.known ? rule.priority : 0), 0);
+  const shown = ranked.slice(0, maxItems);
+
+  const totalWeight = shown.reduce((sum, rule) => sum + rule.priority, 0);
+  const knownWeight = shown.reduce((sum, rule) => sum + (rule.known ? rule.priority : 0), 0);
   const readinessPct = totalWeight > 0 ? Math.round((knownWeight / totalWeight) * 100) : 0;
 
-  const shown = ranked.slice(0, maxItems);
-  const topMistakes = ranked.filter((rule) => !rule.known).slice(0, 5);
+  const topMistakes = shown.filter((rule) => !rule.known).slice(0, 5);
   const legalRisks = ranked.filter((rule) => rule.legal);
 
   const bySeverity = SEVERITIES.map((severity) => {

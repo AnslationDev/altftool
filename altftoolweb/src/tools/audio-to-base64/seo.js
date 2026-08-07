@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "Can I convert a Base64 string back into an audio file?",
-      "Yes. Paste the data URL into the inspector on this page and it reports the declared MIME type and the exact decoded size in bytes; the audio player above plays the same string directly, which is the quickest way to confirm a payload is intact.",
+      "Not directly on this page: paste the data URL into the inspector below and it reports the declared MIME type, the exact decoded size in bytes, and the Base64 character count, which confirms the payload is well-formed, but it does not play or download the result. To decode a data URL into a playable, downloadable audio file, use the sister base64-audio-converter tool.",
     ],
   ],
 };

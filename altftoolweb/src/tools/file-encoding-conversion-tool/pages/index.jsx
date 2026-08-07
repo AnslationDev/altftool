@@ -62,7 +62,7 @@ export default function ToolHome() {
   const activeError = activeRecord?.validation?.find((message) => message.type === "error")?.text || "";
   const convertedCompareText = activeRecord?.canDownload ? formatEncodedPreview(activeRecord.outputBytes, activeRecord.targetEncoding) : activeError;
   const convertedPreviewText = activeRecord?.canDownload ? activeRecord.convertedText : activeError;
-  const garbled = activeRecord ? looksGarbled(activeRecord.originalText) : false;
+  const garbled = activeRecord ? looksGarbled(activeRecord.conversionInputText) : false;
   const activeHistorySnapshot = useMemo(() => {
     if (!activeRecord) return null;
     return {
@@ -139,10 +139,14 @@ export default function ToolHome() {
   const copyConverted = async () => {
     if (!activeRecord?.convertedText) return flash("No converted text to copy yet.");
     if (!activeRecord.canDownload) return flash("Fix validation errors before copying converted text.");
-    await navigator.clipboard.writeText(activeRecord.convertedText);
-    setCopied(true);
-    flash("Converted text copied.");
-    window.setTimeout(() => setCopied(false), 1200);
+    try {
+      await navigator.clipboard.writeText(activeRecord.convertedText);
+      setCopied(true);
+      flash("Converted text copied.");
+      window.setTimeout(() => setCopied(false), 1200);
+    } catch {
+      flash("Unable to copy — check clipboard permissions.");
+    }
   };
 
   const downloadActive = () => {
@@ -163,6 +167,7 @@ export default function ToolHome() {
   };
 
   const clearWorkspace = () => {
+    if (records.length > 1 && !window.confirm(`Clear all ${records.length} queued files? This cannot be undone.`)) return;
     setRecords([]);
     setActiveId("");
     flash("Workspace cleared.");
@@ -187,7 +192,11 @@ export default function ToolHome() {
           <Header activeFile={activeRecord?.name} convertedCount={convertedRecords.length} historyCount={history.length} />
 
           {notice && (
-            <div className="fixed right-4 top-4 z-50 max-w-[calc(100vw-2rem)] rounded-2xl border border-emerald-400/40 bg-emerald-500 px-4 py-3 text-sm font-semibold text-white shadow-xl">
+            <div
+              role="status"
+              aria-live="polite"
+              className="fixed right-4 top-4 z-50 max-w-[calc(100vw-2rem)] rounded-2xl border border-emerald-400/40 bg-emerald-500 px-4 py-3 text-sm font-semibold text-white shadow-xl"
+            >
               <span className="break-words [overflow-wrap:anywhere]">{notice}</span>
             </div>
           )}
@@ -256,9 +265,11 @@ export default function ToolHome() {
                       />
                       <span className="min-w-0 break-words">Repair garbled UTF-8 text decoded as ANSI or ISO</span>
                     </label>
-                    {garbled && repairMode === "none" && (
+                    {garbled && (
                       <p className="break-words rounded-lg border border-amber-400/30 bg-amber-500/10 p-2.5 text-xs font-semibold text-amber-600">
-                        Garbled text patterns were detected. Enable repair if the preview contains mojibake.
+                        {repairMode === "mojibake"
+                          ? "Garbled text patterns are still present after repair. This file may not match the supported mojibake pattern."
+                          : "Garbled text patterns were detected. Enable repair if the preview contains mojibake."}
                       </p>
                     )}
                   </div>
@@ -346,7 +357,7 @@ export default function ToolHome() {
               </Panel>
 
               <Panel title="Validation Panel" icon={ShieldCheck}>
-                <div className="space-y-2">
+                <div className="space-y-2" role="status" aria-live="polite">
                   {(activeRecord?.validation || [{ type: "info", text: "Waiting for a file." }]).map((message) => (
                     <div
                       key={message.text}

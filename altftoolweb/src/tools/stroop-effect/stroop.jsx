@@ -10,13 +10,16 @@ import {
 } from 'lucide-react';
 
 // Stroop test configuration
+// Hex values are the lightest Tailwind shade (600/700) of each hue that
+// still clears WCAG AA 4.5:1 contrast for bold 14-16px white button text
+// (the 500 shades used previously ranged 1.9:1-4.2:1 and failed AA).
 const COLORS = [
-  { name: 'Red', hex: '#ef4444', textColor: 'text-red-500' },
-  { name: 'Blue', hex: '#3b82f6', textColor: 'text-blue-500' },
-  { name: 'Green', hex: '#10b981', textColor: 'text-green-500' },
-  { name: 'Yellow', hex: '#eab308', textColor: 'text-yellow-500' },
-  { name: 'Purple', hex: '#8b5cf6', textColor: 'text-purple-500' },
-  { name: 'Orange', hex: '#f97316', textColor: 'text-orange-500' },
+  { name: 'Red', hex: '#dc2626', textColor: 'text-red-600' },
+  { name: 'Blue', hex: '#2563eb', textColor: 'text-blue-600' },
+  { name: 'Green', hex: '#047857', textColor: 'text-emerald-700' },
+  { name: 'Yellow', hex: '#a16207', textColor: 'text-yellow-700' },
+  { name: 'Purple', hex: '#7c3aed', textColor: 'text-violet-600' },
+  { name: 'Orange', hex: '#c2410c', textColor: 'text-orange-700' },
 ];
 
 const TOTAL_TRIALS = 30;
@@ -91,10 +94,22 @@ export default function StroopEffect() {
   const countdownRef = useRef(null);
   const colorButtonsRef = useRef(null);
   const handleColorClickRef = useRef(null);
+  // Refs kept in sync with the latest render so time-critical control flow
+  // (handleTimeout/handleResponse, invoked from setInterval/setTimeout
+  // callbacks that may belong to a stale render closure) always reads the
+  // real current values instead of a frozen closure snapshot.
+  const currentTrialIndexRef = useRef(currentTrialIndex);
+  const responsesRef = useRef(responses);
+  const scoreRef = useRef(score);
+
+  useEffect(() => {
+    currentTrialIndexRef.current = currentTrialIndex;
+    responsesRef.current = responses;
+    scoreRef.current = score;
+  });
 
   // Global stats
   const [globalStats] = useState({
-    total: 12456,
     avgReaction: 850,
     avgStroopEffect: 120,
     accuracyRate: 94
@@ -170,10 +185,10 @@ export default function StroopEffect() {
     
     const reactionTime = Date.now() - trialStartTime;
     setLastReactionTime(reactionTime);
-    
-    const currentTrial = trials[currentTrialIndex];
+
+    const currentTrial = trials[currentTrialIndexRef.current];
     const correct = selectedColor.name === currentTrial.color.name;
-    
+
     handleResponse(selectedColor, reactionTime, false, correct);
   };
 
@@ -183,8 +198,14 @@ export default function StroopEffect() {
 
   // Process response
   const handleResponse = (selectedColor, reactionTime, timeout, correct = false) => {
-    const currentTrial = trials[currentTrialIndex];
-    
+    // Read from refs, not the closed-over state variables: this function
+    // (and handleTimeout, which calls it) can be invoked from a setInterval
+    // callback armed by a stale render's startTrialTimer(), so the plain
+    // `currentTrialIndex`/`responses`/`score` locals here could otherwise be
+    // frozen at an old value.
+    const idx = currentTrialIndexRef.current;
+    const currentTrial = trials[idx];
+
     // Set feedback
     setFeedback({
       correct: !timeout && correct,
@@ -193,7 +214,7 @@ export default function StroopEffect() {
       selectedColor: selectedColor?.name || 'None',
       reactionTime: Math.round(reactionTime)
     });
-    
+
     // Record response
     const response = {
       trialId: currentTrial.id,
@@ -205,34 +226,38 @@ export default function StroopEffect() {
       timeout,
       reactionTime: Math.round(reactionTime),
     };
-    
+
     setResponses(prev => [...prev, response]);
-    
+
+    const updatedScore = (!timeout && correct) ? scoreRef.current + 1 : scoreRef.current;
     if (!timeout && correct) {
-      setScore(prev => prev + 1);
+      setScore(updatedScore);
     }
-    
+
+    // Full response list including this trial, built from the ref-synced
+    // snapshot rather than the closed-over `responses` state, so the final
+    // trial's response is never missing when finishGame runs.
+    const updatedResponses = [...responsesRef.current, response];
+
     // Move to next trial after delay
     setTimeout(() => {
       setFeedback(null);
-      
-      if (currentTrialIndex + 1 >= TOTAL_TRIALS) {
-        finishGame();
+
+      if (idx + 1 >= TOTAL_TRIALS) {
+        finishGame(updatedResponses, updatedScore);
       } else {
-        setCurrentTrialIndex(prev => prev + 1);
+        setCurrentTrialIndex(idx + 1);
         startTrialTimer();
       }
     }, 800);
   };
 
   // Finish game
-  const finishGame = () => {
+  const finishGame = (allResponses, finalScore) => {
     if (timerRef.current) clearInterval(timerRef.current);
     setGamePhase('results');
     setHasPlayed(true);
-    
-    const allResponses = [...responses];
-    
+
     // Calculate stats
     const correctResponses = allResponses.filter(r => r.correct);
     const congruentResponses = allResponses.filter(r => r.type === 'congruent' && r.correct);
@@ -254,8 +279,8 @@ export default function StroopEffect() {
     setCongruentAvg(congAvg);
     setIncongruentAvg(incongAvg);
     setStroopEffect(incongAvg - congAvg);
-    
-    if (score > bestScore) setBestScore(score);
+
+    if (finalScore > bestScore) setBestScore(finalScore);
   };
 
   // Generate share stats
@@ -417,10 +442,13 @@ export default function StroopEffect() {
                   )}
                 </div>
 
-                {/* Global Stats */}
+                {/* Typical results (reference figures from Stroop-effect research,
+                    not a live count of this tool's own users) */}
+                <p className="text-xs text-(--muted-foreground) mb-2">
+                  Typical results reported in Stroop Effect research
+                </p>
                 <div className="tool-card-grid bg-(--muted) rounded-xl p-4">
                   {[
-                    { label: 'Tested', value: globalStats.total.toLocaleString() },
                     { label: 'Avg Reaction', value: `${globalStats.avgReaction}ms` },
                     { label: 'Stroop Effect', value: `${globalStats.avgStroopEffect}ms` },
                     { label: 'Accuracy', value: `${globalStats.accuracyRate}%` }

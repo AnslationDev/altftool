@@ -403,7 +403,7 @@ export const advancedCatalog = {
     "id": 206,
     "slug": "camera-color-eyedropper",
     "name": "Camera Color Eyedropper",
-    "description": "Live camera object ka approximate HEX/RGB color sample kare.",
+    "description": "Live camera object ka approximate RGB color sample kare.",
     "category": "Device Sensors & Hardware Diagnostics",
     "priority": "P2"
   },

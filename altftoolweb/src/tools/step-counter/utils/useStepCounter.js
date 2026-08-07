@@ -43,6 +43,11 @@ export default function useStepCounter() {
   const [dayKey, setDayKey] = useState(todayKey);
 
   const isActive = status === "tracking";
+  // Mirrors StepAppV2's local `counting` derivation: tracking status alone
+  // does not mean anything is actually being measured — motion access can be
+  // blocked, or the device can have no usable sensor. Only this narrower flag
+  // should drive stats that claim to reflect real activity (see below).
+  const counting = isActive && sensorMode === "motion" && !errorMsg;
 
   /* ------------------------------ persistence ------------------------------ */
 
@@ -249,7 +254,7 @@ export default function useStepCounter() {
   // tick — setInterval drifts (and background tabs throttle it), so summing
   // actual elapsed time keeps the stat accurate.
   useEffect(() => {
-    if (!isActive) return undefined;
+    if (!counting) return undefined;
 
     let last = Date.now();
     const tick = window.setInterval(() => {
@@ -264,7 +269,7 @@ export default function useStepCounter() {
     }, 1000);
 
     return () => window.clearInterval(tick);
-  }, [isActive, addActiveTime]);
+  }, [counting, addActiveTime]);
 
   /* -------------------------------- selectors -------------------------------- */
 

@@ -94,6 +94,29 @@ const CREATOR_SLUGS = new Set([
   "short-video-hook-marker",
   "sponsored-disclosure-placement-checker",
 ]);
+// Every SensorLab slug whose readings are built via the shared `append()`
+// helper (setReadings((current) => [...current.slice(-199), row])) appends
+// newest-last, so its ResultTable must read the tail (mostRecent) or every
+// reading past the 100th becomes permanently invisible. Excludes the only
+// SENSOR_SLUGS members that don't feed readings through `append()`:
+// animated-qr-file-beam, dead-pixel-screen-test, multi-touch-tester.
+const MOST_RECENT_READING_SLUGS = new Set([
+  "chromatic-instrument-tuner",
+  "local-sound-event-logger",
+  "headphone-balance-test",
+  "calibrated-camera-ruler",
+  "camera-color-eyedropper",
+  "led-pwm-flicker-detector",
+  "gps-speedometer",
+  "road-roughness-logger",
+  "digital-level-inclinometer",
+  "digital-compass",
+  "surface-vibration-recorder",
+  "device-sensor-calibration-checker",
+]);
+// sampleCamera() appends a fixed 5-cell [timestamp, R, G, B, rgb()] row for
+// every slug in this set (see the "Sample" button branch of SensorLab).
+const CAMERA_RGB_SLUGS = new Set(["calibrated-camera-ruler", "camera-color-eyedropper", "led-pwm-flicker-detector"]);
 
 export default function AdvancedWorkbench({ slug }) {
   const meta = advancedCatalog[slug] || {
@@ -1003,10 +1026,15 @@ function SensorLab({ slug }) {
     setReadings((current) => [...current.slice(-199), row]);
   }, []);
 
+  // Unmount-only safety net. This must NOT depend on [camera]: start()/stop()
+  // already reassign cleanupRef.current synchronously at the right moments
+  // to tear down whichever stream is actually live, so a [camera]-triggered
+  // cleanup fired the teardown for the just-acquired stream before any
+  // consumer (sampleCamera) could read a live frame from it. cleanupRef is a
+  // ref, so cleanupRef.current?.() is always correct even with no deps.
   useEffect(() => () => {
     cleanupRef.current?.();
-    camera?.getTracks().forEach((track) => track.stop());
-  }, [camera]);
+  }, []);
 
   // Move focus into the full-screen overlay as soon as it mounts so a
   // keyboard-only user (no working pointer yet, e.g. testing a fresh
@@ -1310,8 +1338,14 @@ function SensorLab({ slug }) {
           <>
             <ResultTable
               rows={readings}
-              mostRecent={["chromatic-instrument-tuner", "local-sound-event-logger"].includes(slug)}
-              headers={slug === "local-sound-event-logger" ? ["Timestamp", "RMS", "Frequency (Hz)", "Note"] : undefined}
+              mostRecent={MOST_RECENT_READING_SLUGS.has(slug)}
+              headers={
+                slug === "local-sound-event-logger"
+                  ? ["Timestamp", "RMS", "Frequency (Hz)", "Note"]
+                  : CAMERA_RGB_SLUGS.has(slug)
+                    ? ["Timestamp", "R", "G", "B", "RGB"]
+                    : undefined
+              }
             />
             {!readings.length && !camera && slug !== "multi-touch-tester" && (
               <p className="mt-2 text-sm text-[var(--muted-foreground)]">

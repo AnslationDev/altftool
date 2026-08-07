@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-import { Check, Minus, Plus, X } from "lucide-react";
-import { MAX_GOAL, MIN_GOAL, VOICE_INTERVALS, formatNumber } from "../utils/stepStore";
+import { useEffect, useRef, useState } from "react";
+import { Check, Lock, Minus, Plus, X } from "lucide-react";
+import { ACHIEVEMENTS, MAX_GOAL, MIN_GOAL, VOICE_INTERVALS, formatNumber } from "../utils/stepStore";
 import {
   MAX_HEIGHT_CM,
   MAX_WEIGHT_KG,
@@ -116,12 +116,36 @@ export function SettingsBody({ app, onClose }) {
     justSaved,
     onSave,
     onReset,
+    achievements,
   } = app;
+
+  const unlockedCount = Object.keys(achievements || {}).length;
 
   const closeRef = useRef(null);
   useEffect(() => {
     closeRef.current?.focus();
   }, []);
+
+  // "Reset today" permanently discards today's recorded steps and active
+  // time with no undo, so a single accidental tap (easy mid-walk, inside a
+  // settings sheet) must not be enough — the first tap arms a short-lived
+  // confirm state, and only a second tap within the window actually resets.
+  const RESET_CONFIRM_MS = 3000;
+  const [confirmingReset, setConfirmingReset] = useState(false);
+  const resetTimerRef = useRef(0);
+
+  useEffect(() => () => window.clearTimeout(resetTimerRef.current), []);
+
+  const handleResetClick = () => {
+    if (!confirmingReset) {
+      setConfirmingReset(true);
+      resetTimerRef.current = window.setTimeout(() => setConfirmingReset(false), RESET_CONFIRM_MS);
+      return;
+    }
+    window.clearTimeout(resetTimerRef.current);
+    setConfirmingReset(false);
+    onReset();
+  };
 
   const haptics = supportsVibration();
 
@@ -322,13 +346,60 @@ export function SettingsBody({ app, onClose }) {
           <button
             type="button"
             disabled={!canReset}
-            onClick={onReset}
+            onClick={handleResetClick}
+            aria-label={confirmingReset ? "Tap again to confirm resetting today's steps" : "Reset today"}
             className="h-12 flex-1 rounded-lg text-[15px] font-bold transition-transform active:scale-[.98] disabled:opacity-40 motion-reduce:transition-none"
-            style={{ background: C.dangerSoft, color: C.dangerText }}
+            style={
+              confirmingReset
+                ? { background: C.dangerText, color: C.accentInk }
+                : { background: C.dangerSoft, color: C.dangerText }
+            }
           >
-            Reset today
+            {confirmingReset ? "Tap again to confirm" : "Reset today"}
           </button>
         </div>
+      </Section>
+
+      <Section
+        title="Achievements"
+        hint={`${unlockedCount} of ${ACHIEVEMENTS.length} unlocked — based on the steps, streaks and active days saved on this device.`}
+      >
+        <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+          {ACHIEVEMENTS.map((def) => {
+            const isUnlocked = Boolean(achievements?.[def.id]);
+            return (
+              <li
+                key={def.id}
+                className="flex items-center gap-2.5 rounded-lg px-3 py-2.5"
+                style={{
+                  background: isUnlocked ? C.chip : "transparent",
+                  border: `1px solid ${C.border}`,
+                  opacity: isUnlocked ? 1 : 0.55,
+                }}
+              >
+                {isUnlocked ? (
+                  <Check
+                    size={16}
+                    strokeWidth={2.6}
+                    aria-hidden="true"
+                    className="flex-none"
+                    style={{ color: C.accentText }}
+                  />
+                ) : (
+                  <Lock size={16} strokeWidth={2.2} aria-hidden="true" className="flex-none" style={{ color: C.muted }} />
+                )}
+                <div className="min-w-0">
+                  <div className="truncate text-[14px] font-semibold" style={{ color: C.ink }}>
+                    {def.name}
+                  </div>
+                  <div className="truncate text-[12px]" style={{ color: C.muted }}>
+                    {def.description}
+                  </div>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </Section>
     </div>
   );

@@ -190,7 +190,7 @@ export default function ToolHome() {
 
       <section className={`mt-6 ${CARD_CLASS}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">
               Etiquette readiness
             </p>
@@ -205,7 +205,6 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label={`Copy the ${COUNTRY.name} etiquette briefing`}
               className={GHOST_BTN}
               disabled={hasError}
             >

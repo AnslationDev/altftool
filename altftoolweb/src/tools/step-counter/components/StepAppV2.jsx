@@ -127,6 +127,7 @@ export default function StepAppV2({ counter }) {
     errorMsg,
     last7,
     streak,
+    achievements,
     voiceEnabled,
     voiceInterval,
     setVoiceEnabled,
@@ -434,6 +435,7 @@ export default function StepAppV2({ counter }) {
     justSaved,
     onSave,
     onReset,
+    achievements,
   };
 
   /* --------------------------------- notice -------------------------------- */

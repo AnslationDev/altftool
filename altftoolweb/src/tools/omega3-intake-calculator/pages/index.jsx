@@ -4,24 +4,34 @@ import { useState } from "react";
 import { Fish, Pill, Leaf, Calculator, Info, RefreshCcw, Brain } from "lucide-react";
 
 export default function Omega3IntakeCalculator() {
-  const [formData, setFormData] = useState({
-    salmon: 0,
-    sardines: 0,
-    otherFish: 0,
-    seeds: 0,
-    walnuts: 0,
-    supplement: 0
-  });
+  const EMPTY_FORM = {
+    salmon: "",
+    sardines: "",
+    otherFish: "",
+    seeds: "",
+    walnuts: "",
+    supplement: ""
+  };
+
+  const [formData, setFormData] = useState(EMPTY_FORM);
 
   const [results, setResults] = useState(null);
 
+  // Keep the raw string in state so in-progress input like "0", "0." or "0.5"
+  // is preserved verbatim in the DOM. Clamping/parsing happens once, at
+  // calculateIntake() time via servingsOf(), not on every keystroke — storing
+  // a parsed number here and rendering it with `value={x || ""}` used to
+  // reset the field to "" the instant a user typed a leading "0" (since the
+  // number 0 is falsy), which silently turned an intended "0.5" into "5".
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: Math.max(0, parseFloat(value) || 0)
+      [name]: value
     }));
   };
+
+  const servingsOf = (field) => Math.max(0, parseFloat(formData[field]) || 0);
 
   const calculateIntake = () => {
     // Approximate EPA+DHA content per serving (in mg)
@@ -33,12 +43,12 @@ export default function Omega3IntakeCalculator() {
     // Supplements: Daily mg of EPA+DHA
 
     let weeklyMg = 0;
-    weeklyMg += formData.salmon * 1500;
-    weeklyMg += formData.sardines * 1200;
-    weeklyMg += formData.otherFish * 300;
-    weeklyMg += formData.seeds * 100;
-    weeklyMg += formData.walnuts * 100;
-    weeklyMg += formData.supplement * 7; // supplement is daily
+    weeklyMg += servingsOf("salmon") * 1500;
+    weeklyMg += servingsOf("sardines") * 1200;
+    weeklyMg += servingsOf("otherFish") * 300;
+    weeklyMg += servingsOf("seeds") * 100;
+    weeklyMg += servingsOf("walnuts") * 100;
+    weeklyMg += servingsOf("supplement") * 7; // supplement is daily
 
     const dailyMg = Math.round(weeklyMg / 7);
 
@@ -68,14 +78,7 @@ export default function Omega3IntakeCalculator() {
 
   const resetForm = () => {
     setResults(null);
-    setFormData({
-      salmon: 0,
-      sardines: 0,
-      otherFish: 0,
-      seeds: 0,
-      walnuts: 0,
-      supplement: 0
-    });
+    setFormData(EMPTY_FORM);
   };
 
   return (
@@ -104,15 +107,15 @@ export default function Omega3IntakeCalculator() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label htmlFor="omega3-salmon" className="text-sm font-semibold text-[var(--muted-foreground)]">Salmon / Mackerel</label>
-                    <input id="omega3-salmon" type="number" min="0" name="salmon" value={formData.salmon || ""} onChange={handleChange} placeholder="0" className="w-full bg-[var(--section-highlight)] border border-[var(--border)] rounded-lg px-4 py-2" />
+                    <input id="omega3-salmon" type="number" min="0" name="salmon" value={formData.salmon} onChange={handleChange} placeholder="0" className="w-full bg-[var(--section-highlight)] border border-[var(--border)] rounded-lg px-4 py-2" />
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="omega3-sardines" className="text-sm font-semibold text-[var(--muted-foreground)]">Sardines / Anchovies</label>
-                    <input id="omega3-sardines" type="number" min="0" name="sardines" value={formData.sardines || ""} onChange={handleChange} placeholder="0" className="w-full bg-[var(--section-highlight)] border border-[var(--border)] rounded-lg px-4 py-2" />
+                    <input id="omega3-sardines" type="number" min="0" name="sardines" value={formData.sardines} onChange={handleChange} placeholder="0" className="w-full bg-[var(--section-highlight)] border border-[var(--border)] rounded-lg px-4 py-2" />
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="omega3-other-fish" className="text-sm font-semibold text-[var(--muted-foreground)]">Other Fish (Tuna, Cod, etc)</label>
-                    <input id="omega3-other-fish" type="number" min="0" name="otherFish" value={formData.otherFish || ""} onChange={handleChange} placeholder="0" className="w-full bg-[var(--section-highlight)] border border-[var(--border)] rounded-lg px-4 py-2" />
+                    <input id="omega3-other-fish" type="number" min="0" name="otherFish" value={formData.otherFish} onChange={handleChange} placeholder="0" className="w-full bg-[var(--section-highlight)] border border-[var(--border)] rounded-lg px-4 py-2" />
                   </div>
                 </div>
               </div>
@@ -128,11 +131,11 @@ export default function Omega3IntakeCalculator() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <label htmlFor="omega3-seeds" className="text-sm font-semibold text-[var(--muted-foreground)]">Chia / Flaxseeds (1 Tbsp)</label>
-                    <input id="omega3-seeds" type="number" min="0" name="seeds" value={formData.seeds || ""} onChange={handleChange} placeholder="0" className="w-full bg-[var(--section-highlight)] border border-[var(--border)] rounded-lg px-4 py-2" />
+                    <input id="omega3-seeds" type="number" min="0" name="seeds" value={formData.seeds} onChange={handleChange} placeholder="0" className="w-full bg-[var(--section-highlight)] border border-[var(--border)] rounded-lg px-4 py-2" />
                   </div>
                   <div className="space-y-2">
                     <label htmlFor="omega3-walnuts" className="text-sm font-semibold text-[var(--muted-foreground)]">Walnuts (1 oz / Handful)</label>
-                    <input id="omega3-walnuts" type="number" min="0" name="walnuts" value={formData.walnuts || ""} onChange={handleChange} placeholder="0" className="w-full bg-[var(--section-highlight)] border border-[var(--border)] rounded-lg px-4 py-2" />
+                    <input id="omega3-walnuts" type="number" min="0" name="walnuts" value={formData.walnuts} onChange={handleChange} placeholder="0" className="w-full bg-[var(--section-highlight)] border border-[var(--border)] rounded-lg px-4 py-2" />
                   </div>
                 </div>
               </div>
@@ -143,7 +146,7 @@ export default function Omega3IntakeCalculator() {
                 </h3>
                 <div className="space-y-2">
                   <label htmlFor="omega3-supplement" className="text-sm font-semibold text-[var(--muted-foreground)]">Fish / Algae Oil Supplement (Combined EPA+DHA in mg per day)</label>
-                  <input id="omega3-supplement" type="number" min="0" step="50" name="supplement" value={formData.supplement || ""} onChange={handleChange} placeholder="e.g. 500" className="w-full bg-[var(--section-highlight)] border border-[var(--border)] rounded-lg px-4 py-2" />
+                  <input id="omega3-supplement" type="number" min="0" step="50" name="supplement" value={formData.supplement} onChange={handleChange} placeholder="e.g. 500" className="w-full bg-[var(--section-highlight)] border border-[var(--border)] rounded-lg px-4 py-2" />
                 </div>
               </div>
 

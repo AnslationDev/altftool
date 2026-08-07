@@ -25,6 +25,10 @@ export const DEFAULT_SETTINGS = {
   braceStyle: "1tbs",
 };
 
+// The only braceStyle values @prettier/plugin-php actually accepts (see its
+// src/options.mjs). Anything else throws on every format call.
+export const BRACE_STYLES = ["1tbs", "per-cs"];
+
 export const formatPhp = async (code, settings = DEFAULT_SETTINGS) => {
   if (!code || !code.trim()) {
     return { output: "", messages: [] };
@@ -47,7 +51,7 @@ export const formatPhp = async (code, settings = DEFAULT_SETTINGS) => {
       output: fallbackOutput,
       messages: [
         {
-          type: "info",
+          type: "error",
           text: `Live fallback formatter used. Prettier PHP could not format this input: ${errorMessage}`,
         },
       ],
@@ -65,10 +69,15 @@ export const getPhpStats = (input, output) => {
 
 function fallbackFormatPhp(code, settings = DEFAULT_SETTINGS) {
   const indentText = settings.useTabs ? "\t" : " ".repeat(settings.tabWidth || 4);
+  // Only spaces/tabs are stripped around structural characters here, never
+  // newlines: a `//`/`#` line comment relies on its trailing newline to know
+  // where the comment ends, and every real statement break already gets its
+  // own line from pushCurrent() below regardless of source newlines, so
+  // keeping them is a no-op for normal code but required for comments.
   const compact = code
     .replace(/\r\n/g, "\n")
     .replace(/[ \t]+/g, " ")
-    .replace(/\s*([{};])\s*/g, "$1")
+    .replace(/[ \t]*([{};])[ \t]*/g, "$1")
     .replace(/\s*(<\?php|\?>)\s*/g, "$1 ")
     .trim();
 
@@ -77,6 +86,8 @@ function fallbackFormatPhp(code, settings = DEFAULT_SETTINGS) {
   let depth = 0;
   let inSingle = false;
   let inDouble = false;
+  let inLineComment = false;
+  let inBlockComment = false;
   let escaped = false;
 
   const pushCurrent = () => {
@@ -87,8 +98,31 @@ function fallbackFormatPhp(code, settings = DEFAULT_SETTINGS) {
     current = "";
   };
 
-  for (const char of compact) {
+  const chars = Array.from(compact);
+  for (let i = 0; i < chars.length; i += 1) {
+    const char = chars[i];
+    const next = chars[i + 1];
     current += char;
+
+    // Comment content is never real PHP structure: braces/semicolons inside
+    // `//`, `#` or `/* */` comments must not be treated as code boundaries.
+    if (inLineComment) {
+      if (char === "\n") {
+        inLineComment = false;
+        pushCurrent();
+      }
+      continue;
+    }
+
+    if (inBlockComment) {
+      if (char === "*" && next === "/") {
+        current += next;
+        i += 1;
+        inBlockComment = false;
+        pushCurrent();
+      }
+      continue;
+    }
 
     if (escaped) {
       escaped = false;
@@ -98,6 +132,25 @@ function fallbackFormatPhp(code, settings = DEFAULT_SETTINGS) {
     if (char === "\\") {
       escaped = true;
       continue;
+    }
+
+    if (!inSingle && !inDouble) {
+      if (char === "/" && next === "/") {
+        inLineComment = true;
+        current += next;
+        i += 1;
+        continue;
+      }
+      if (char === "#") {
+        inLineComment = true;
+        continue;
+      }
+      if (char === "/" && next === "*") {
+        inBlockComment = true;
+        current += next;
+        i += 1;
+        continue;
+      }
     }
 
     if (char === "'" && !inDouble) inSingle = !inSingle;

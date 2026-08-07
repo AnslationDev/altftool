@@ -883,6 +883,8 @@ export default function FlashMotionSafetyAnalyzer() {
       {result ? (
         <>
           <section
+            role="status"
+            aria-live="polite"
             className={`rounded-lg border p-4 ${
               rollingReviewCue
                 ? "border-warning/30 bg-warning-soft"
