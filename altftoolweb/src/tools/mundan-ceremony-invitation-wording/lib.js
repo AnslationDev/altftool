@@ -492,7 +492,7 @@ export function buildInvitation({
     ];
   } else if (chosen === "english-warm") {
     lines = [
-      `Our little ${child} turns ${ageLine} this ${assessment.weekday}, and it is time for the first haircut.`,
+      `Our little ${child} will be ${ageLine} this ${assessment.weekday}, and it is time for the first haircut.`,
       "",
       `We are holding ${child}'s mundan sanskar on ${dateLine}. The priest has given us ${muhurat} for the first lock, so do try to be with us by ${arrival} — the puja starts before that and we would love you there for all of it.`,
       "",

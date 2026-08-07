@@ -27,6 +27,7 @@ export default function ExportCenter({
   result,
 }) {
   const [copied, setCopied] = useState(false);
+  const [copyFailed, setCopyFailed] = useState(false);
 
   if (!result || !result.ok || !report) return null;
 
@@ -65,10 +66,20 @@ ${report.profiles.map((p) => `- ${p.id}: ${p.status.toUpperCase()} (${p.gapCount
     downloadFile(md, "local-ai-readiness-report.md", "text/markdown");
   };
 
-  const handleCopyClipboard = () => {
-    navigator.clipboard.writeText(JSON.stringify(report, null, 2));
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopyClipboard = async () => {
+    if (!navigator.clipboard || typeof navigator.clipboard.writeText !== "function") {
+      setCopyFailed(true);
+      setTimeout(() => setCopyFailed(false), 2000);
+      return;
+    }
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(report, null, 2));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopyFailed(true);
+      setTimeout(() => setCopyFailed(false), 2000);
+    }
   };
 
   return (
@@ -118,7 +129,13 @@ ${report.profiles.map((p) => `- ${p.id}: ${p.status.toUpperCase()} (${p.gapCount
             className="inline-flex h-10 items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-4 text-xs font-bold text-[var(--foreground)] transition-all hover:bg-[var(--surface)]"
           >
             {copied ? <Check className="size-4 text-[var(--success)]" /> : <Copy className="size-4" />}
-            <span>{copied ? "Copied JSON" : "Copy to Clipboard"}</span>
+            <span>
+              {copied
+                ? "Copied JSON"
+                : copyFailed
+                  ? "Copy failed — try again"
+                  : "Copy to Clipboard"}
+            </span>
           </button>
         </div>
       </div>

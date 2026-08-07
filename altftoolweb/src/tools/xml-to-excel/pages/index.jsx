@@ -95,7 +95,13 @@ export default function ToolHome() {
 
   const copy = async () => {
     if (result.error) return;
-    const text = result.aoa.map((row) => row.map((cell) => (cell === "" ? "" : String(cell))).join("\t")).join("\n");
+    const text = result.aoa
+      .map((row) =>
+        row
+          .map((cell) => (cell === "" ? "" : String(cell).replace(/\r\n|\r|\n/g, " ")))
+          .join("\t"),
+      )
+      .join("\n");
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
@@ -105,6 +111,12 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset to the sample XML? Your pasted/uploaded document will be lost.")
+    ) {
+      return;
+    }
     setXml(SAMPLE_XML);
     setSheetName("");
     setFormat("xlsx");
@@ -257,6 +269,12 @@ export default function ToolHome() {
       {error ? (
         <p role="alert" className="mt-4 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm text-[var(--danger)]">
           {error}
+        </p>
+      ) : null}
+
+      {!error && result.warning ? (
+        <p role="status" className="mt-4 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm text-[var(--warning-text)]">
+          {result.warning}
         </p>
       ) : null}
 

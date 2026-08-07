@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Heart, RefreshCw, Copy, Download, Info, Check, Sparkles, User, HelpCircle, MapPin, ChevronRight } from "lucide-react";
 import { getDeterministicMatch } from "../../love-calculator/utils/compatibilityUtils";
 
@@ -41,6 +41,15 @@ export default function ToolHome() {
   const [answers, setAnswers] = useState({});
   const [result, setResult] = useState(null);
   const [copied, setCopied] = useState(false);
+  const calculatingTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (calculatingTimeoutRef.current) {
+        clearTimeout(calculatingTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const QUESTIONS = [
     {
@@ -79,15 +88,23 @@ export default function ToolHome() {
       setCurrentQ(currentQ + 1);
     } else {
       setStage("calculating");
-      
+
       // Run deterministic generation based on name and traits
-      setTimeout(() => {
+      calculatingTimeoutRef.current = setTimeout(() => {
         const seed = getDeterministicMatch(name, zodiac);
         const choiceSum = Object.values(nextAnswers).reduce((a, b) => a + b, 0);
-        
-        const finalSeed = seed + choiceSum;
+        // Fold gender + preferred gender into the seed so these required
+        // fields actually influence the generated profile.
+        const genderSeed = `${gender}|${prefGender}`
+          .split("")
+          .reduce((acc, ch) => acc + ch.charCodeAt(0), 0);
+
+        const finalSeed = seed + choiceSum + genderSeed;
         const jobIndex = finalSeed % JOBS.length;
-        const meetIndex = (finalSeed * 3) % MEET_SCENARIOS.length;
+        // Use a multiplier coprime with MEET_SCENARIOS.length (6) so every
+        // scenario is reachable (3 shares a factor with 6 and collapses to
+        // only 2 possible outcomes).
+        const meetIndex = (finalSeed * 11) % MEET_SCENARIOS.length;
         
         // Deterministic compatibility percentages
         const compatibility = Math.round(((finalSeed * 7) % 16) + 84); // 84% - 99%
@@ -154,6 +171,14 @@ Compatibility Analysis:
   };
 
   const handleReset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm(
+        "Reset the future partner prediction? This clears your name, zodiac sign, gender preferences and quiz result."
+      )
+    ) {
+      return;
+    }
     setName("");
     setZodiac("");
     setGender("");
@@ -280,8 +305,15 @@ Compatibility Analysis:
                   <span>DETERMINING LIFESTYLE VALUES</span>
                   <span>QUESTION {currentQ + 1} OF {QUESTIONS.length}</span>
                 </div>
-                <div className="w-full h-2 bg-[var(--anslation-ds-soft)] rounded-full overflow-hidden">
-                  <div 
+                <div
+                  className="w-full h-2 bg-[var(--anslation-ds-soft)] rounded-full overflow-hidden"
+                  role="progressbar"
+                  aria-label="Quiz progress"
+                  aria-valuenow={currentQ + 1}
+                  aria-valuemin={1}
+                  aria-valuemax={QUESTIONS.length}
+                >
+                  <div
                     className="h-full bg-indigo-500 transition-all duration-300"
                     style={{ width: `${((currentQ + 1) / QUESTIONS.length) * 100}%` }}
                   />
@@ -309,7 +341,11 @@ Compatibility Analysis:
 
           {/* Stage 3: Loading calculations */}
           {stage === "calculating" && (
-            <div className="flex flex-col items-center justify-center py-12 text-center">
+            <div
+              className="flex flex-col items-center justify-center py-12 text-center"
+              aria-live="polite"
+              role="status"
+            >
               <div className="alt-ui-spinner alt-ui-spinner--lg mb-6 border-t-indigo-500" />
               <h4 className="font-semibold text-lg text-foreground animate-pulse">Consulting Astral Projections...</h4>
               <p className="text-sm text-muted-foreground mt-2">Running zodiac correlation and lifestyle mapping formulas.</p>
@@ -318,8 +354,8 @@ Compatibility Analysis:
 
           {/* Stage 4: Results */}
           {stage === "result" && result && (
-            <div className="space-y-8">
-              
+            <div className="space-y-8" aria-live="polite" role="status">
+
               {/* Partner Card */}
               <div className="bg-[var(--anslation-ds-soft)] border border-border rounded-2xl p-6 relative overflow-hidden flex flex-col sm:flex-row items-center gap-6 shadow-sm">
                 <div className="text-6xl p-4 bg-card rounded-2xl border border-border shadow-sm flex items-center justify-center min-w-[100px] h-[100px]">
@@ -363,25 +399,46 @@ Compatibility Analysis:
                       <span>Overall Harmony Index</span>
                       <span>{result.compatibility}%</span>
                     </div>
-                    <div className="w-full h-2.5 bg-[var(--anslation-ds-soft)] rounded-full overflow-hidden">
+                    <div
+                      className="w-full h-2.5 bg-[var(--anslation-ds-soft)] rounded-full overflow-hidden"
+                      role="progressbar"
+                      aria-label="Overall Harmony Index"
+                      aria-valuenow={result.compatibility}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                    >
                       <div className="h-full bg-indigo-500 rounded-full" style={{ width: `${result.compatibility}%` }} />
                     </div>
                   </div>
                   <div className="space-y-1">
                     <div className="flex justify-between text-xs font-bold text-foreground">
-                      <span>Communication Resonance</span>
+                      <span>Emotional Harmony</span>
                       <span>{result.patience}%</span>
                     </div>
-                    <div className="w-full h-2.5 bg-[var(--anslation-ds-soft)] rounded-full overflow-hidden">
+                    <div
+                      className="w-full h-2.5 bg-[var(--anslation-ds-soft)] rounded-full overflow-hidden"
+                      role="progressbar"
+                      aria-label="Emotional Harmony"
+                      aria-valuenow={result.patience}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                    >
                       <div className="h-full bg-pink-500 rounded-full" style={{ width: `${result.patience}%` }} />
                     </div>
                   </div>
                   <div className="space-y-1">
                     <div className="flex justify-between text-xs font-bold text-foreground">
-                      <span>Lifestyle Synchronicity</span>
+                      <span>Shared Energy Level</span>
                       <span>{result.energy}%</span>
                     </div>
-                    <div className="w-full h-2.5 bg-[var(--anslation-ds-soft)] rounded-full overflow-hidden">
+                    <div
+                      className="w-full h-2.5 bg-[var(--anslation-ds-soft)] rounded-full overflow-hidden"
+                      role="progressbar"
+                      aria-label="Shared Energy Level"
+                      aria-valuenow={result.energy}
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                    >
                       <div className="h-full bg-teal-500 rounded-full" style={{ width: `${result.energy}%` }} />
                     </div>
                   </div>

@@ -135,8 +135,6 @@ export function estimateSession({
     days,
     usablePerSession,
     minutesPerFinishedMinute: readMinutes > 0 ? boothMinutes / readMinutes : 0,
-    lastSessionMinutes:
-      sessions > 0 ? workMinutes - usablePerSession * (sessions - 1) + setup : 0,
   };
 }
 

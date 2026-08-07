@@ -159,7 +159,18 @@ export const FRAMEWORK_CATALOG = [
 
 export function evaluateModelCompatibility(hardware, model) {
   if (!hardware) return "Unknown";
-  const { ramGb = 0, vramGb = 0, freeDiskGb = 0, acceleration = "none" } = hardware;
+  const {
+    ramGb: rawRamGb = 0,
+    vramGb: rawVramGb = 0,
+    freeDiskGb: rawFreeDiskGb = 0,
+    acceleration = "none",
+  } = hardware;
+  // Defense-in-depth: coerce to Number in case an un-normalized (string-typed)
+  // hardware object reaches this function, so `+` below can't silently become
+  // string concatenation.
+  const ramGb = Number(rawRamGb) || 0;
+  const vramGb = Number(rawVramGb) || 0;
+  const freeDiskGb = Number(rawFreeDiskGb) || 0;
   const effectiveMem = Math.max(ramGb, vramGb + (ramGb > 16 ? ramGb * 0.5 : 0));
 
   if (ramGb < model.minRamGb * 0.75 || freeDiskGb < model.minDiskGb) {
@@ -249,6 +260,7 @@ export function normalizeHardware(input = {}) {
     "rocm",
     "metal",
     "directml",
+    "webgpu",
     "other",
     "unknown",
   ]);
@@ -375,14 +387,14 @@ export function assessReadiness(input = {}, profileIds = []) {
   };
 }
 
-export function buildReadinessReport(result) {
+export function buildReadinessReport(result, { manuallyEntered = true } = {}) {
   if (!result?.ok) return null;
   return {
     schema: "altftool.local-ai-readiness-summary.v1",
     createdAt: new Date().toISOString(),
     scope: {
       localOnly: true,
-      manuallyEnteredSpecifications: true,
+      manuallyEnteredSpecifications: Boolean(manuallyEntered),
       deviceWasScanned: false,
       modelCompatibilityWasTested: false,
     },

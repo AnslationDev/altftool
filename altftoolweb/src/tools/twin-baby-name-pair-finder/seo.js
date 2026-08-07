@@ -23,7 +23,7 @@ const seo = {
     ],
     [
       "How similar is too similar for twin names?",
-      "As a working line, if the two names differ by only one or two letters — Aarav and Aarava, or Aanya and Aarya — teachers, doctors and relatives will mix them up. This tool marks any pair whose spellings overlap by more than 80 percent as confusing and awards it no distinctness points.",
+      "As a working line, if the two names differ by only one or two letters — Aarav and Aarava, or Ishaan and Ishaana — teachers, doctors and relatives will mix them up. This tool marks any pair whose spellings overlap by more than 80 percent as confusing and awards it no distinctness points.",
     ],
     [
       "How is the pairing score calculated?",

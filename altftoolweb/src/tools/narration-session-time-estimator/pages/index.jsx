@@ -309,7 +309,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the session estimate"
+              aria-label={copied ? "Copied to clipboard" : "Copy the session estimate"}
               className={GHOST_BTN}
               disabled={Boolean(result.error)}
             >

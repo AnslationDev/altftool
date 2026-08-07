@@ -54,6 +54,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset? Your pasted letter text and checklist progress will be lost.")) {
+      return;
+    }
     setSelected([DEFAULT_GROUND_ID]);
     setCompleted([]);
     setLetter("");
@@ -188,7 +191,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Reapplication readiness
             </p>
@@ -201,7 +204,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the refusal explanation and fix checklist"
+              aria-label={copied ? "Copied to clipboard" : "Copy the refusal explanation and fix checklist"}
               className={GHOST_BTN}
             >
               {copied ? (
@@ -221,6 +224,7 @@ export default function ToolHome() {
         <div
           className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
           role="img"
+          aria-live="polite"
           aria-label={plan.error ? "No readiness score yet" : `${plan.readiness}% of the fixes are done`}
         >
           <span

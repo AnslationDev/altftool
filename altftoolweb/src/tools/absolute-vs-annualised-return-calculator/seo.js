@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     ["Both directions", "Absolute to annualised and annualised to absolute in one tool, no formula juggling."],
     ["Months-level precision", "Handles part-year holding periods such as 2 years 7 months rather than rounding to whole years."],
-    ["Context built in", "Shows doubling time, value multiple and how the same total gain looks over 1, 3, 5 and 10 years."],
+    ["Context built in", "Shows doubling time, value multiple and how the same total gain looks over several periods from 6 months to 10 years."],
   ],
   faqs: [
     [

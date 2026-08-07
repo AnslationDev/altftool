@@ -236,7 +236,14 @@ export function getGround(id) {
   return GROUND_BY_ID.get(id) || null;
 }
 
-const norm = (value) => String(value).toLowerCase().replace(/[^a-z0-9]+/g, " ").trim();
+const norm = (value) =>
+  String(value)
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    // Stem the plural in "N days"-style terms so a hyphenated singular phrasing in source text
+    // (e.g. "60-day", which collapses to "60 day" above) still matches keywords like "60 days".
+    .replace(/(\d+) days\b/g, "$1 day")
+    .trim();
 
 /**
  * Match the rejection wording against each ground's keyword list. Deterministic: score is

@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This XML to Excel converter reads an XML document, finds the element that repeats, and writes one worksheet row per record as a real .xlsx file — not a renamed CSV. Numbers and TRUE/FALSE values are written as typed cells so they sort and sum correctly, while identifiers with leading zeros and references longer than 15 digits are kept as text, which is where most XML-to-spreadsheet conversions quietly corrupt data. It follows the Office Open XML (ECMA-376) worksheet limits of 1,048,576 rows, 16,384 columns and 31-character sheet names.",
+    "This XML to Excel converter reads an XML document, finds the element that repeats, and writes one worksheet row per record as a real .xlsx file — not a renamed CSV. Numbers and TRUE/FALSE values are written as typed cells so they sort and sum correctly, while identifiers with leading zeros and references above 9,007,199,254,740,991 are kept as text, which is where most XML-to-spreadsheet conversions quietly corrupt data. It follows the Office Open XML (ECMA-376) worksheet limits of 1,048,576 rows and 31-character sheet names, with columns capped at 512 to keep the generated sheet usable.",
   useCases: [
     "Turn an XML invoice export into an .xlsx your accountant can filter and pivot.",
     "Convert an XML product feed into a spreadsheet without a leading-zero SKU losing its zeros.",
@@ -22,7 +22,9 @@ const seo = {
     ],
     [
       "How many rows can the output have?",
-      "Up to 1,048,576 rows and 16,384 columns — the hard limits of the Office Open XML worksheet format. Documents that would exceed either limit are rejected with a message rather than being silently truncated.",
+      // 512 mirrors lib.js's MAX_COLUMNS constant, which is stricter than (and
+      // enforced before) the Office Open XML worksheet's true 16,384-column cap.
+      "Up to 1,048,576 rows — the hard limit of the Office Open XML worksheet format — and up to 512 columns, a stricter cap this tool applies to keep the generated sheet usable. Documents that would exceed either limit are rejected with a message rather than being silently truncated.",
     ],
     [
       "What name does the worksheet get?",

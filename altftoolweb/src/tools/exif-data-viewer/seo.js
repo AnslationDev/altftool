@@ -7,7 +7,7 @@ const seo = {
     "You are settling an argument about how a shot was taken — pull up the F-number, shutter speed, ISO and focal length the camera recorded instead of guessing from the look of the image.",
   ],
   benefits: [
-    ["Every tag, not a curated few", "Unrecognised fields are still listed with their hex tag ID and decoded value, so a viewer that names 21 tags does not silently drop the rest."],
+    ["Every tag, not a curated few", "Unrecognised fields are still listed with their hex tag ID and decoded value, so a viewer that names 22 tags does not silently drop the rest."],
     ["GPS is followed automatically", "When the file contains a GPS pointer at tag 0x8825, the tool jumps into that directory and lists latitude, longitude, altitude and their reference letters."],
     ["Shooting settings pulled to the top", "Camera make, model, original date, ISO, F-number and focal length are surfaced as cards above the full table so you do not have to scan for them."],
   ],

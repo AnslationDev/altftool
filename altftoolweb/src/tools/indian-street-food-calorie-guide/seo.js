@@ -23,7 +23,7 @@ const seo = {
     ],
     [
       "Are steamed momos a healthy street food choice?",
-      "Steamed momos are one of the lighter options: six vegetable momos are around 250 kcal against roughly 380 kcal for the same six fried. They are still refined flour, so the protein content is low unless you choose a chicken or paneer filling.",
+      "Steamed momos are one of the lighter options: six vegetable momos are around 250 kcal against roughly 380 kcal for the same six fried. They are still refined flour, so the protein content is low unless you choose the chicken filling, which carries about double the protein of the vegetable version — for a paneer-based option instead, the paneer roll under Rolls and wraps is the closer match.",
     ],
     [
       "How accurate are street food calorie estimates?",

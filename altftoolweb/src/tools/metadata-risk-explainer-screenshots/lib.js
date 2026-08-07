@@ -85,8 +85,14 @@ export const CHANNELS = Object.freeze([
  *  - "container" → lives in bytes after the visible image (trailing data);
  *                  destroyed only by a full re-encode.
  *  - "pixels"    → visible in the picture itself; survives everything.
+ *  - "local"     → OS-level file system metadata (created/modified time).
+ *                  It is never part of the uploaded bytes — a standard
+ *                  upload/attach transfers file content, not file-system
+ *                  inode fields — so no channel carries it to the
+ *                  recipient. The recipient's own device stamps its own
+ *                  local timestamp when it saves a copy instead.
  */
-export const CARRIERS = Object.freeze(["embedded", "filename", "container", "pixels"]);
+export const CARRIERS = Object.freeze(["embedded", "filename", "container", "pixels", "local"]);
 
 export const METADATA_ITEMS = Object.freeze([
   {
@@ -96,18 +102,18 @@ export const METADATA_ITEMS = Object.freeze([
     carrier: "filename",
     severity: "medium",
     reveals:
-      "macOS writes 'Screenshot 2026-07-28 at 14.03.22.png' and Android writes 'Screenshot_20260728-140322_Chrome.jpg' — your local date, minute-accurate time and, on Android, the app that was open.",
+      "macOS writes 'Screenshot 2026-07-28 at 14.03.22.png' and Android writes 'Screenshot_20260728-140322_Chrome.jpg' — your local date, second-accurate time and, on Android, the app that was open.",
     fix: "Rename the file to something neutral before you attach it.",
   },
   {
     id: "fs-timestamps",
     group: "Filename and file system",
     label: "File created / modified timestamps",
-    carrier: "embedded",
+    carrier: "local",
     severity: "low",
     reveals:
-      "The file system records creation and last-modified time to the second, which pins when you were at the keyboard.",
-    fix: "Re-export or re-save the image; the copy takes a fresh timestamp.",
+      "Your own file system records creation and last-modified time to the second, which pins when you were at the keyboard — but this lives in local file-system metadata, not in the file's bytes.",
+    fix: "Nothing to send here — this timestamp is set locally by whichever device saves the file and is not transmitted with it, so there is no upload-side fix to apply.",
   },
   {
     id: "png-text-chunks",
@@ -242,11 +248,14 @@ export function getChannel(channelId) {
 /**
  * Does this signal still reach the recipient over the given channel?
  * Embedded tags die to metadata stripping, filenames die to renaming,
- * trailing container bytes die to re-encoding, pixels always survive.
+ * trailing container bytes die to re-encoding, pixels always survive,
+ * and local file-system metadata never travelled with the upload in the
+ * first place, so it never reaches the recipient over any channel.
  */
 export function survivesChannel(item, channel) {
   if (!item || !channel) return false;
   if (item.carrier === "pixels") return true;
+  if (item.carrier === "local") return false;
   if (item.carrier === "filename") return !channel.renamesFile;
   if (item.carrier === "container") return !channel.reencodes;
   return !channel.stripsMetadata;

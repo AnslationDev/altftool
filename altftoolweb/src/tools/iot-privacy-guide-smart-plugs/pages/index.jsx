@@ -45,6 +45,7 @@ export default function ToolHome() {
   const [deviceCount, setDeviceCount] = useState(DEFAULTS.deviceCount);
   const [headroom, setHeadroom] = useState(DEFAULTS.headroom);
   const [copied, setCopied] = useState(false);
+  const [copyError, setCopyError] = useState(false);
 
   const score = useMemo(() => scoreChecklist(done), [done]);
   const segmentation = useMemo(
@@ -120,9 +121,12 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
+      setCopyError(false);
       setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
+      setCopyError(true);
+      setTimeout(() => setCopyError(false), 2500);
     }
   };
 
@@ -152,7 +156,7 @@ export default function ToolHome() {
         aria-labelledby="score-heading"
       >
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p
               id="score-heading"
               className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]"
@@ -171,7 +175,13 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the smart plug security result"
+              aria-label={
+                copied
+                  ? "Smart plug security result copied to clipboard"
+                  : copyError
+                    ? "Copy failed, try again"
+                    : "Copy the smart plug security result"
+              }
               className={GHOST_BTN}
             >
               {copied ? (
@@ -179,18 +189,26 @@ export default function ToolHome() {
               ) : (
                 <Copy className="h-4 w-4" aria-hidden="true" />
               )}
-              {copied ? "Copied!" : "Copy result"}
+              {copied ? "Copied!" : copyError ? "Copy failed" : "Copy result"}
             </button>
             <button type="button" onClick={reset} aria-label="Reset the guide" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
           </div>
+          <span className="sr-only" aria-live="polite" role="status">
+            {copied
+              ? "Result copied to clipboard."
+              : copyError
+                ? "Copy failed. Select and copy the result manually."
+                : ""}
+          </span>
         </div>
 
         <div
           className="mt-4 h-2.5 w-full overflow-hidden rounded-full bg-[var(--muted)]"
           role="img"
+          aria-live="polite"
           aria-label={hasScore ? `Setup score ${score.percent} out of 100` : "Score unavailable"}
         >
           <span

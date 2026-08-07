@@ -191,7 +191,9 @@ export function formatShortDate(value) {
 /**
  * Work out the state of one notice.
  *
- * @param {object} notice One row from the board.
+ * @param {object} notice One row from the board. `causeOfActionDate`
+ *   ("YYYY-MM-DD") is optional and, when supplied, anchors a consumer
+ *   notice's two-year limitation period instead of the dispatch date.
  * @param {Date} today    The date to evaluate against.
  * @returns {object} the row with computed fields, or with an `error` string.
  */
@@ -244,8 +246,21 @@ function evaluateNotice(notice, today) {
 
   let limitation = null;
   if (type.limitationYears) {
-    const expires = addYears(dispatch, type.limitationYears);
-    limitation = { expires: toISODate(expires), daysLeft: daysBetween(today, expires) };
+    // Section 69 of the Consumer Protection Act, 2019 runs the two-year
+    // limitation from the date the cause of action arose, not from the date
+    // the pre-complaint notice was dispatched. Use the cause-of-action date
+    // when the user has entered one; only fall back to the dispatch date
+    // (which understates how much of the period has already run) when it is
+    // not available.
+    const causeOfAction = parseISODate(notice.causeOfActionDate);
+    const anchor = causeOfAction || dispatch;
+    const expires = addYears(anchor, type.limitationYears);
+    limitation = {
+      expires: toISODate(expires),
+      daysLeft: daysBetween(today, expires),
+      anchorDate: toISODate(anchor),
+      anchorBasis: causeOfAction ? "cause-of-action" : "dispatch-date-fallback",
+    };
   }
 
   let status = clean(notice.status) || "auto";
@@ -270,6 +285,11 @@ function evaluateNotice(notice, today) {
   }
   if (limitation && limitation.daysLeft < 90) {
     issues.push(`Only ${limitation.daysLeft} days left of the two-year limitation period.`);
+  }
+  if (limitation && limitation.anchorBasis === "dispatch-date-fallback") {
+    issues.push(
+      "No cause-of-action date entered — the limitation expiry is estimated from the dispatch date, which may overstate how much time is left.",
+    );
   }
 
   return {

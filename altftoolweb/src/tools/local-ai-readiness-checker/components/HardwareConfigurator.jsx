@@ -82,6 +82,7 @@ export default function HardwareConfigurator({
               <option value="cuda">NVIDIA CUDA (RTX / GTX Series)</option>
               <option value="rocm">AMD ROCm (Radeon GPUs)</option>
               <option value="directml">DirectML (Windows DirectX 12 GPU)</option>
+              <option value="webgpu">WebGPU (Linux / ChromeOS / Vulkan-backed)</option>
               <option value="other">Other Confirmed Acceleration Engine</option>
             </select>
           </label>

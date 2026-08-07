@@ -72,6 +72,12 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      typeof window !== "undefined" &&
+      !window.confirm("Reset all fields to the sample listing? Your typed input will be lost.")
+    ) {
+      return;
+    }
     setSql(DEFAULTS.sql);
     setPlanText(DEFAULTS.planText);
     setEngineId(DEFAULTS.engineId);

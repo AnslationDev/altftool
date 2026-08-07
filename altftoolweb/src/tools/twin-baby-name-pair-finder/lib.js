@@ -220,14 +220,21 @@ export function scorePair(rawA, rawB) {
   ];
 
   const score = factors.reduce((sum, factor) => sum + factor.earned, 0);
-  const verdict = VERDICT_BANDS.find(([floor]) => score >= floor)[1];
+  const confusing = closeness > SIMILARITY_CONFUSING;
+  // A pair that scores 0 on Distinctness can still reach the numeric floor of
+  // the top verdict band on the other four factors alone. When the pair is
+  // flagged as confusing, cap the score used to pick a verdict just below the
+  // top band's floor so it can never be called a "Strong pair" while also
+  // being flagged as nearly the same word.
+  const verdictScore = confusing ? Math.min(score, VERDICT_BANDS[0][0] - 1) : score;
+  const verdict = VERDICT_BANDS.find(([floor]) => verdictScore >= floor)[1];
 
   return {
     score,
     verdict,
     factors,
     similarity: closeness,
-    confusing: closeness > SIMILARITY_CONFUSING,
+    confusing,
     syllablesA,
     syllablesB,
     nameA: String(rawA).trim(),

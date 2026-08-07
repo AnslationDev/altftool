@@ -50,10 +50,12 @@ export default function BrowserCapabilitiesScanner({
     else if (/Android/i.test(ua)) platformOs = "Android Mobile";
     else if (/iPhone|iPad/i.test(ua)) platformOs = "iOS Device";
 
-    // Auto-detect acceleration recommendation (Metal on Mac, CUDA/DirectML on Windows/Linux)
+    // Auto-detect acceleration recommendation (Metal on Mac, DirectML on Windows,
+    // generic WebGPU label for other WebGPU-capable platforms like Linux/ChromeOS)
     let autoAcceleration = "none";
     if (/Mac/i.test(ua)) autoAcceleration = "metal";
-    else if (hasWebGpu) autoAcceleration = "directml";
+    else if (/Win/i.test(ua) && hasWebGpu) autoAcceleration = "directml";
+    else if (hasWebGpu) autoAcceleration = "webgpu";
 
     setCapabilities({
       platformOs,

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, MonitorSmartphone, RotateCcw } from "lucide-react";
 
 import {
@@ -37,6 +37,13 @@ export default function ToolHome() {
   const [selected, setSelected] = useState(DEFAULT_SELECTED);
   const [channelId, setChannelId] = useState(DEFAULT_CHANNEL);
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () => assessScreenshotRisk({ selectedIds: selected, channelId }),
@@ -75,7 +82,11 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => {
+        setCopied(false);
+        copyTimerRef.current = null;
+      }, 1500);
     } catch {
       setCopied(false);
     }
