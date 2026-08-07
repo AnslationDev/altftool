@@ -235,7 +235,7 @@ export function buildEmergencyCard(input = {}) {
   push("PREFERRED HOSPITAL", input.preferredHospital);
   push("LANGUAGE", input.language);
   push("ADDRESS", input.address);
-  if (clean(input.doctorName)) {
+  if (clean(input.doctorName) || clean(input.doctorPhone)) {
     push("DOCTOR", [clean(input.doctorName), clean(input.doctorPhone)].filter(Boolean).join(" · "));
   }
   if (clean(input.insurer) || clean(input.policyNumber)) {

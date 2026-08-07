@@ -15,7 +15,7 @@ const seo = {
   faqs: [
     [
       "What should an emergency medical card include?",
-      "At minimum: full name, date of birth, blood group, allergies, current diagnoses, current medicines with doses, and at least two emergency contacts with dialable numbers. Add implants or devices such as a pacemaker or stent, your regular doctor, insurer and policy number, and the languages you speak.",
+      "At minimum: full name, blood group, allergies (write “None known” if none), current diagnoses, current medicines with doses, and one reachable emergency contact with a dialable number. Date of birth and a second emergency contact are strongly recommended but not required. Add implants or devices such as a pacemaker or stent, your regular doctor, insurer and policy number, and the languages you speak.",
     ],
     [
       "Which blood types can I receive red cells from?",

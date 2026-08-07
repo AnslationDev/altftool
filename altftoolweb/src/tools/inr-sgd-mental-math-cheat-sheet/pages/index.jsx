@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Coins, Copy, RotateCcw } from "lucide-react";
 import {
   CURRENCY,
@@ -50,6 +50,13 @@ export default function ToolHome() {
   const [service, setService] = useState(DEFAULTS.service);
   const [gst, setGst] = useState(DEFAULTS.gst);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const sheet = useMemo(
     () =>
@@ -64,7 +71,11 @@ export default function ToolHome() {
 
   const ok = !sheet.error;
   const forward = ok ? sheet.forward : null;
-  const rules = ok ? [forward.quick, forward.tuned, forward.fraction] : [];
+  const rules = ok
+    ? [forward.quick, forward.tuned, forward.fraction].filter(
+        (rule) => rule.id !== "fraction" || rule.worthwhile,
+      )
+    : [];
 
   const summary = useMemo(() => {
     if (!ok) return "";
@@ -74,7 +85,7 @@ export default function ToolHome() {
       "",
       "Singapore dollars to rupees:",
       ...sheet.priceLadder.map(
-        (row) => `${CURRENCY.symbol}${row.amount} = ${money(row.exactInr)} (rule ${money(row.tunedInr)})`,
+        (row) => `${CURRENCY.symbol}${row.amount} = ${money(row.exactInr)} (rule ${money(row.ruleInr)})`,
       ),
       "",
       "Rupees to Singapore dollars:",
@@ -96,7 +107,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -201,7 +213,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        role="status"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -342,10 +358,10 @@ export default function ToolHome() {
                     <span className="block text-xs text-[var(--muted-foreground)]">{row.note}</span>
                   </td>
                   <td className="py-2 pr-3 text-right font-semibold">{money(row.exactInr)}</td>
-                  <td className="py-2 pr-3 text-right">{money(row.tunedInr)}</td>
+                  <td className="py-2 pr-3 text-right">{money(row.ruleInr)}</td>
                   <td className="py-2 text-right text-[var(--muted-foreground)]">
-                    {row.tunedGapInr >= 0 ? "+" : "−"}
-                    {money(Math.abs(row.tunedGapInr))}
+                    {row.ruleGapInr >= 0 ? "+" : "−"}
+                    {money(Math.abs(row.ruleGapInr))}
                   </td>
                 </tr>
               ))}

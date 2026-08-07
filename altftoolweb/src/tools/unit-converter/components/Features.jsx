@@ -15,7 +15,7 @@ const Features = () => {
     {
       title: "Supports Multiple Categories",
       description:
-        "Easily switch between categories like distance, mass, speed, time, energy, and pressure.",
+        "Easily switch between the three supported categories — length, weight, and temperature — covering 17 units in total.",
     },
     {
       title: "Simple & User-Friendly Interface",

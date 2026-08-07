@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Check, Copy, Download, Music, RotateCcw } from "lucide-react";
 
 import {
@@ -38,6 +38,7 @@ const int = (value) => (Number.isFinite(value) ? INT.format(value) : DASH);
 const num = (value) => (Number.isFinite(value) ? NUM.format(value) : DASH);
 
 export default function ToolHome() {
+  const fileInputRef = useRef(null);
   const [fileName, setFileName] = useState("");
   const [mimeType, setMimeType] = useState(SAMPLE_MIME);
   const [byteLength, setByteLength] = useState(null);
@@ -131,6 +132,7 @@ export default function ToolHome() {
     setFileError("");
     setInspectInput("");
     setCopied(false);
+    if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
   const preview =
@@ -156,6 +158,7 @@ export default function ToolHome() {
         </label>
         <input
           id="audio-file"
+          ref={fileInputRef}
           type="file"
           accept="audio/*"
           onChange={onFile}

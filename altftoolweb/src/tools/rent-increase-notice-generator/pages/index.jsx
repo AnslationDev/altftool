@@ -116,6 +116,7 @@ export default function ToolHome() {
   );
 
   const invalid = Boolean(result.error);
+  const nonCompliant = !invalid && result.compliant === false;
 
   const copy = async (text, key) => {
     if (!text) return;
@@ -404,6 +405,8 @@ export default function ToolHome() {
 
         {!invalid && (
           <p
+            aria-live="polite"
+            role="status"
             className={`mt-4 flex items-start gap-2 rounded-md px-3 py-2 text-sm font-medium ${
               result.compliant
                 ? "bg-[var(--success-soft)] text-[var(--success)]"
@@ -532,9 +535,18 @@ export default function ToolHome() {
           <button
             type="button"
             onClick={() => copy(letter, "letter")}
-            aria-label="Copy the rent increase notice letter"
+            aria-label={
+              nonCompliant
+                ? "Notice period is non-compliant; fix the effective date before copying the letter"
+                : "Copy the rent increase notice letter"
+            }
+            title={
+              nonCompliant
+                ? "This notice does not meet the required notice period. Adjust the effective date before copying."
+                : undefined
+            }
             className={GHOST_BTN}
-            disabled={invalid}
+            disabled={invalid || nonCompliant}
           >
             {copied === "letter" ? (
               <Check className="h-4 w-4" aria-hidden="true" />
@@ -544,6 +556,13 @@ export default function ToolHome() {
             {copied === "letter" ? "Copied!" : "Copy letter"}
           </button>
         </div>
+        {nonCompliant ? (
+          <p className="mt-2 text-xs font-medium text-[var(--danger)]">
+            Copying is disabled because this notice does not meet the required notice period —
+            move the effective date to {formatLongDate(parseISODate(result.earliestEffectiveDate))}{" "}
+            or later.
+          </p>
+        ) : null}
         <label className="sr-only" htmlFor="rin-letter">
           Generated notice letter
         </label>

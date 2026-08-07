@@ -1,15 +1,15 @@
 const seo = {
   intro:
-    "This periodic table query tool searches all 118 confirmed elements by name, symbol or atomic number and filters them by category, orbital block, period and standard state, then sorts on any measured property — atomic mass, Pauling electronegativity, first ionisation energy, radius, density, melting and boiling point. Period, group and block are derived from the atomic number using the standard IUPAC 18-column layout rather than stored as data. It is built for chemistry students, teachers and anyone who needs a specific number faster than a wall chart allows.",
+    "This periodic table query tool lets you search all 118 confirmed elements by name, symbol, atomic number, or category, then explore each one in depth. Filter with category pills — alkali metal, noble gas, lanthanoid, and more — and review atomic mass, electron configuration, electronegativity, density, melting and boiling point, and other measured properties. Compare any two elements side by side, save favorites, and revisit recent searches from history. The Chemistry Section looks up predefined classroom reactions or builds a valence-balanced compound formula for pairs without one, an animated Atom Model Canvas and Atomic Structure Diagram visualize protons, neutrons, and electron shells, and a temperature slider simulates standard state across 0-6500K. Export the selected element's full profile as JSON or plain text, or copy a formatted report with one click.",
   useCases: [
-    "Sort every element by electronegativity to confirm fluorine tops the Pauling scale at 3.98.",
-    "Filter to the f-block to list all 30 lanthanides and actinides for a homework question.",
-    "Compare iron and copper side by side on melting point, density and ionisation energy, then export the filtered set as CSV.",
+    "Search for 'iron' or 'Fe' to instantly pull up atomic mass, electron configuration, and physical properties.",
+    "Compare two elements side by side — for example, iron and copper on melting point, density, and ionization energy.",
+    "Open the Chemistry Section to look up a predefined reaction, like sodium and chlorine forming NaCl, or generate a valence-balanced compound formula for a pair without one, like magnesium and oxygen forming MgO.",
   ],
   benefits: [
-    ["Derived layout, not guesswork", "Period, group and block come from the IUPAC 18-column rule, so the f-block series are handled correctly."],
-    ["Sortable on any property", "Unmeasured values sort to the bottom instead of masquerading as zero."],
-    ["CSV out in one click", "Copy or download the filtered set with 15 columns for a spreadsheet or a lab report."],
+    ["Real element data, offline", "All 118 confirmed elements load from a local dataset, so search, filtering, and comparisons run instantly with no network calls."],
+    ["Compare, favorite, and revisit", "Compare two elements at once, star favorites for quick access, and jump back into recent searches from history."],
+    ["Export a single element's data", "Download the selected element's full profile as JSON or TXT, or copy a formatted report to your clipboard in one click."],
   ],
   faqs: [
     [

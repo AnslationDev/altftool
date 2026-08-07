@@ -17,8 +17,12 @@ const PERIODS = [
 ];
 
 const getLayout = (atomicNumber) => {
-  if (atomicNumber >= 58 && atomicNumber <= 71) return { group: atomicNumber - 54, period: 6, tableRow: 8, tableColumn: atomicNumber - 54 };
-  if (atomicNumber >= 90 && atomicNumber <= 103) return { group: atomicNumber - 86, period: 7, tableRow: 9, tableColumn: atomicNumber - 86 };
+  // Lanthanides/actinides are pulled out into their own grid rows below the main table.
+  // `tableColumn`/`tableRow` position them in the CSS grid only — they are NOT real IUPAC
+  // group numbers, so `group` stays null here to avoid colliding with the real d/p-block
+  // elements that happen to share that same 1-18 numeric range (e.g. group 4 = Hafnium).
+  if (atomicNumber >= 58 && atomicNumber <= 71) return { group: null, period: 6, tableRow: 8, tableColumn: atomicNumber - 54 };
+  if (atomicNumber >= 90 && atomicNumber <= 103) return { group: null, period: 7, tableRow: 9, tableColumn: atomicNumber - 86 };
 
   const periodIndex = PERIODS.findIndex((period) => period.includes(atomicNumber));
   const period = periodIndex + 1;

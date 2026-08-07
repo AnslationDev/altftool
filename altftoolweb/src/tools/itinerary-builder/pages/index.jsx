@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   CalendarDays,
@@ -202,16 +202,25 @@ function buildConflicts(activities) {
   }, {});
 
   Object.values(byDay).forEach((dayActivities) => {
-    const sorted = [...dayActivities].sort((a, b) => timeToMinutes(a.start) - timeToMinutes(b.start));
-    sorted.forEach((activity, index) => {
-      const next = sorted[index + 1];
-      if (!next) return;
-      const end = timeToMinutes(activity.start) + (Number(activity.duration) || 0);
-      if (end > timeToMinutes(next.start)) {
-        conflicts.add(activity.id);
-        conflicts.add(next.id);
+    const sorted = [...dayActivities]
+      .map((activity) => ({
+        activity,
+        start: timeToMinutes(activity.start),
+        end: timeToMinutes(activity.start) + (Number(activity.duration) || 0),
+      }))
+      .sort((a, b) => a.start - b.start);
+
+    // Sweep left to right, comparing every activity against all later
+    // activities that start before it ends (not just its immediate
+    // neighbor), so a long block that overlaps a non-adjacent later
+    // activity is still caught.
+    for (let i = 0; i < sorted.length; i += 1) {
+      for (let j = i + 1; j < sorted.length; j += 1) {
+        if (sorted[j].start >= sorted[i].end) break;
+        conflicts.add(sorted[i].activity.id);
+        conflicts.add(sorted[j].activity.id);
       }
-    });
+    }
   });
 
   return conflicts;
@@ -258,6 +267,11 @@ function buildMarkdown(trip, activities, stats) {
   ].join("\n\n");
 }
 
+function neutralizeFormula(value) {
+  const text = String(value ?? "");
+  return /^[=+\-@]/.test(text) ? `'${text}` : text;
+}
+
 function exportCsv(trip, activities) {
   const rows = [
     ["Destination", "Day", "Date", "Start", "End", "Duration Minutes", "Title", "Place", "Category", "Cost", "Booked", "Note"],
@@ -268,12 +282,12 @@ function exportCsv(trip, activities) {
       activity.start,
       activityEnd(activity),
       activity.duration,
-      activity.title,
-      activity.place,
+      neutralizeFormula(activity.title),
+      neutralizeFormula(activity.place),
       activity.category,
       activity.cost,
       activity.booked ? "Yes" : "No",
-      activity.note,
+      neutralizeFormula(activity.note),
     ]),
   ];
   const csv = rows.map((row) => row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(",")).join("\n");
@@ -354,6 +368,15 @@ export default function ItineraryBuilder() {
     note: "",
   });
 
+  const [toast, setToast] = useState("");
+  const toastTimer = useRef(null);
+
+  const showToast = (message) => {
+    setToast(message);
+    if (toastTimer.current) window.clearTimeout(toastTimer.current);
+    toastTimer.current = window.setTimeout(() => setToast(""), 3000);
+  };
+
   const conflicts = useMemo(() => buildConflicts(activities), [activities]);
 
   const stats = useMemo(() => {
@@ -433,8 +456,13 @@ export default function ItineraryBuilder() {
   };
 
   const addBreaks = () => {
-    const hasLunch = activities.some((activity) => Number(activity.day) === Number(selectedDay) && activity.category === "Food");
-    if (hasLunch) return;
+    const hasLunch = activities.some(
+      (activity) => Number(activity.day) === Number(selectedDay) && /lunch/i.test(activity.title),
+    );
+    if (hasLunch) {
+      showToast(`Day ${selectedDay} already has a lunch activity.`);
+      return;
+    }
     setActivities((current) => [
       ...current,
       {
@@ -450,6 +478,7 @@ export default function ItineraryBuilder() {
         note: "Add a buffer meal so the day does not become too rushed.",
       },
     ]);
+    showToast(`Lunch added to Day ${selectedDay}.`);
   };
 
   const copyPlan = async () => {
@@ -459,6 +488,9 @@ export default function ItineraryBuilder() {
   };
 
   const resetSample = () => {
+    if (typeof window !== "undefined" && !window.confirm("Reset to the sample itinerary? Your trip settings and activities will be lost.")) {
+      return;
+    }
     setTrip({
       destination: "Jaipur, India",
       startDate: "2026-05-20",
@@ -485,6 +517,15 @@ export default function ItineraryBuilder() {
 
   return (
     <main className="mx-auto max-w-[1240px] px-4 pb-12 pt-8 text-(--foreground)">
+      {toast ? (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed inset-x-0 top-4 z-50 mx-auto w-fit max-w-[90vw] rounded-lg border border-[var(--border)] bg-[var(--background)] px-4 py-3 text-sm font-bold text-[var(--foreground)] shadow-lg"
+        >
+          {toast}
+        </div>
+      ) : null}
       <header className="text-center">
         <div className="mx-auto max-w-5xl">
           <div className="mb-3 flex flex-wrap items-center justify-center gap-2 sm:mb-4">
@@ -492,7 +533,11 @@ export default function ItineraryBuilder() {
               <Sparkles className="h-4 w-4 shrink-0" />
               <span className="min-w-0 truncate">Smart trip planner</span>
             </span>
-            <span className={`inline-flex max-w-full items-center gap-2 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wide ${conflicts.size ? "tool-status-bad" : "tool-status-good"}`}>
+            <span
+              role="status"
+              aria-live="polite"
+              className={`inline-flex max-w-full items-center gap-2 rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wide ${conflicts.size ? "tool-status-bad" : "tool-status-good"}`}
+            >
               {conflicts.size ? <AlertTriangle className="h-4 w-4 shrink-0" /> : <CheckCircle2 className="h-4 w-4 shrink-0" />}
               {conflicts.size ? "Timing conflict" : "Schedule ready"}
             </span>
@@ -944,7 +989,7 @@ export default function ItineraryBuilder() {
                   <p className="mt-1 break-words text-sm text-[var(--muted-foreground)]">Quick quality checks for the plan.</p>
                 </div>
               </div>
-              <div className="grid gap-3">
+              <div className="grid gap-3" role="status" aria-live="polite">
                 <div className={`rounded-lg border p-4 ${conflicts.size ? "tool-callout-bad" : "tool-callout-good"}`}>
                   <p className="text-sm font-black text-[var(--foreground)]">Timing</p>
                   <p className="mt-1 text-sm text-[var(--muted-foreground)]">{conflicts.size ? `${conflicts.size} activities overlap.` : "No visible overlaps."}</p>

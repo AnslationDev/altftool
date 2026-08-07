@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How much compost do you get from kitchen waste?",
-      "Around 25 to 35% of the wet weight you put in, once the browns are included. Most of the loss is water evaporating, with roughly half the dry organic matter respired away as carbon dioxide, so 60 kg of mixed feedstock a year yields something like 20 kg of finished compost.",
+      "Roughly 25 to 41% of the wet weight you put in, once the browns are included — the exact figure depends on which greens and browns you pair. Most of the loss is water evaporating, with roughly half the dry organic matter respired away as carbon dioxide, so 60 kg of mixed feedstock a year yields something like 20 kg of finished compost.",
     ],
     [
       "What is the right carbon to nitrogen ratio for compost?",

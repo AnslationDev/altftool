@@ -309,7 +309,17 @@ export function planFestivalDay(input) {
     );
   }
   if (values.earlyExitMin === 0 && fullClearMin > 15) {
-    warnings.push(`Leaving even ten minutes early would cut roughly ${formatMinutes(averageWaitIfStayingMin - earlyLeavers / egressCapacity)} off the crush at the gates.`);
+    warnings.push(`Leaving even ten minutes early would cut roughly ${formatMinutes(averageWaitIfStayingMin - earlyLeavers / egressCapacity)} off your wait to get out of the venue.`);
+  }
+  // earlyExitMin is only checked against a fixed [0, 600] range above, with no cross-check
+  // against how long the event itself actually runs — so a short event plus a large early-exit
+  // value can compute a "leave your seat" time before the event has even started (or before
+  // you're even through the gate). Surface that instead of silently rendering a backwards timeline.
+  const earliestPlausibleLeaveMin = Math.max(start, throughGate);
+  if (values.earlyExitMin > 0 && leaveSeatAt < earliestPlausibleLeaveMin) {
+    warnings.push(
+      `"Leaving early by" (${formatMinutes(values.earlyExitMin)}) is longer than the event itself, so it works out to leaving your seat at ${formatClock(leaveSeatAt)} — before you'd even be inside for the start at ${formatClock(start)}. Lower it so it fits within the event's length.`,
+    );
   }
 
   return {

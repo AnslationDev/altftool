@@ -1,7 +1,6 @@
 "use client";
 
 const HISTORY_KEY = "uc_history";
-const ROUNDING_KEY = "uc_rounding";
 const MAX_HISTORY_ITEMS = 10;
 
 export function getHistory() {
@@ -64,34 +63,3 @@ export function clearHistory() {
   }
 }
 
-export function getHistoryStats() {
-  const history = getHistory();
-  const categoryStats = history.reduce((acc, item) => {
-    acc[item.category] = (acc[item.category] || 0) + 1;
-    return acc;
-  }, {});
-
-  return {
-    totalConversions: history.length,
-    categoryStats,
-    oldestConversion:
-      history.length > 0 ? Math.min(...history.map((h) => h.ts)) : null,
-    newestConversion:
-      history.length > 0 ? Math.max(...history.map((h) => h.ts)) : null,
-  };
-}
-
-export function saveRounding(r) {
-  localStorage.setItem(ROUNDING_KEY, JSON.stringify(r));
-}
-
-export function loadRounding() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(ROUNDING_KEY) || "");
-    if (parsed && (parsed.mode === "auto" || parsed.mode === "fixed"))
-      return parsed;
-    return { mode: "auto" };
-  } catch {
-    return { mode: "auto" };
-  }
-}

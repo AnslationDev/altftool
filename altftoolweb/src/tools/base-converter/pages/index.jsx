@@ -74,7 +74,8 @@ export default function ToolHome() {
     if (hasError) return "";
     const lines = [`Input: ${value} (base ${sourceBase})`];
     for (const row of result.results) {
-      lines.push(`${row.label} (base ${row.base}): ${row.prefix}${row.text}${row.truncated ? " …(recurring)" : ""}`);
+      const suffix = row.recurring ? " …(recurring)" : row.truncated ? " …(cut off, increase fraction digits)" : "";
+      lines.push(`${row.label} (base ${row.base}): ${row.prefix}${row.text}${suffix}`);
     }
     lines.push(`Bit length: ${result.bitLength} bits (${result.byteLength} bytes)`);
     lines.push(
@@ -215,6 +216,7 @@ export default function ToolHome() {
         </p>
       )}
 
+      <div role="status" aria-live="polite">
       <section className={`mt-6 ${CARD}`}>
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="min-w-0">
@@ -234,7 +236,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy every base conversion to clipboard"
+              aria-label={copied ? "Copied every base conversion to clipboard" : "Copy every base conversion to clipboard"}
               className={GHOST_BTN}
               disabled={hasError}
             >
@@ -263,9 +265,13 @@ export default function ToolHome() {
                 <dd className="min-w-0 text-right font-mono font-semibold break-all">
                   {row.prefix}
                   {row.text}
-                  {row.truncated ? (
+                  {row.recurring ? (
                     <span className="ml-1 font-sans text-xs font-normal text-[var(--muted-foreground)]">
                       …recurring
+                    </span>
+                  ) : row.truncated ? (
+                    <span className="ml-1 font-sans text-xs font-normal text-[var(--muted-foreground)]">
+                      …cut off
                     </span>
                   ) : null}
                 </dd>
@@ -347,6 +353,7 @@ export default function ToolHome() {
           )}
         </section>
       )}
+      </div>
 
       <p className="mt-6 text-xs leading-5 text-[var(--muted-foreground)]">
         Everything is computed with BigInt and exact rational fractions, so a 200-digit number and a

@@ -100,6 +100,9 @@ export default function ToolHome() {
     : result.verdict.level === "ok"
       ? "text-[var(--success)]"
       : "text-[var(--danger)]";
+  const announcement = hasError
+    ? result.error
+    : `${num(result.charsPerLine)} characters per line. ${result.verdict.text}`;
 
   return (
     <main className="mx-auto w-full max-w-3xl px-4 py-8 text-[var(--foreground)] sm:px-6">
@@ -294,6 +297,9 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

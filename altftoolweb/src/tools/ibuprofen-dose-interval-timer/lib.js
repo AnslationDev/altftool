@@ -60,7 +60,7 @@ export const IBUPROFEN_PROFILES = {
   adultRx: {
     key: "adultRx",
     label: "Adult prescription strength",
-    doseMin: 200,
+    doseMin: 400,
     doseMax: 800,
     defaultDose: 400,
     intervalMin: 6,
