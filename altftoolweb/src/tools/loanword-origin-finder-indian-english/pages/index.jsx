@@ -159,27 +159,29 @@ export default function ToolHome() {
           </p>
         )}
 
-        <p className="mt-3 text-3xl font-semibold leading-snug text-[var(--primary)] sm:text-4xl">
-          {featured ? featured.word : DASH}
-        </p>
+        <div aria-live="polite">
+          <p className="mt-3 text-3xl font-semibold leading-snug text-[var(--primary)] sm:text-4xl">
+            {featured ? featured.word : DASH}
+          </p>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
-          {[
-            ["Source language", featured ? featured.sourceLanguage : DASH],
-            ["Original word", featured ? featured.sourceWord : DASH],
-            ["Literal meaning", featured ? featured.sourceMeaning : DASH],
-            ["Route into English", featured ? featured.route : DASH],
-            ["First English use", featured ? approxYear(featured.firstUse) : DASH],
-            ["Field", featured ? domainLabel(featured.domain) : DASH],
-            ["Etymology status", featured ? certaintyLabel(featured.certainty) : DASH],
-            ["Note", featured ? featured.note : DASH],
-          ].map(([label, value]) => (
-            <div key={label} className="grid gap-1 py-2.5 sm:grid-cols-[11rem_1fr] sm:gap-4">
-              <dt className="text-[var(--muted-foreground)]">{label}</dt>
-              <dd className="font-medium">{value}</dd>
-            </div>
-          ))}
-        </dl>
+          <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+            {[
+              ["Source language", featured ? featured.sourceLanguage : DASH],
+              ["Original word", featured ? featured.sourceWord : DASH],
+              ["Literal meaning", featured ? featured.sourceMeaning : DASH],
+              ["Route into English", featured ? featured.route : DASH],
+              ["First English use", featured ? approxYear(featured.firstUse) : DASH],
+              ["Field", featured ? domainLabel(featured.domain) : DASH],
+              ["Etymology status", featured ? certaintyLabel(featured.certainty) : DASH],
+              ["Note", featured ? featured.note : DASH],
+            ].map(([label, value]) => (
+              <div key={label} className="grid gap-1 py-2.5 sm:grid-cols-[11rem_1fr] sm:gap-4">
+                <dt className="text-[var(--muted-foreground)]">{label}</dt>
+                <dd className="font-medium">{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
 
         {featuredSearch.matched > 1 ? (
           <div className="mt-4">

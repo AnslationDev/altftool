@@ -96,7 +96,9 @@ export default function ToolHome() {
       result.minutesPerCard
         ? `Runtime on a ${toNumber(cardGb)} GB card: ${NUM.format(result.minutesPerCard)} minutes`
         : "",
-      result.cardsNeeded ? `Cards needed: ${result.cardsNeeded}` : "",
+      result.cardsNeeded !== null && result.cardsNeeded !== undefined
+        ? `Cards needed: ${result.cardsNeeded}`
+        : "",
     ]
       .filter(Boolean)
       .join("\n");
@@ -138,7 +140,12 @@ export default function ToolHome() {
       "Runtime on one card",
       hasError || !result.minutesPerCard ? DASH : `${num(result.minutesPerCard)} minutes`,
     ],
-    ["Cards needed", hasError || !result.cardsNeeded ? DASH : NUM0.format(result.cardsNeeded)],
+    [
+      "Cards needed",
+      hasError || result.cardsNeeded === null || result.cardsNeeded === undefined
+        ? DASH
+        : NUM0.format(result.cardsNeeded),
+    ],
   ];
 
   return (

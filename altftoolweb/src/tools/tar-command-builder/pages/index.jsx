@@ -244,21 +244,23 @@ export default function ToolHome() {
             </div>
           ) : null}
 
-          <div>
-            <label className={LABEL_CLASS} htmlFor="tar-cd">
-              {mode === "extract" ? "Extract into directory (-C)" : "Run from directory (-C)"}
-            </label>
-            <input
-              id="tar-cd"
-              className={`mt-2 ${INPUT_CLASS}`}
-              type="text"
-              autoComplete="off"
-              spellCheck={false}
-              placeholder="leave blank for current directory"
-              value={changeDir}
-              onChange={(event) => setChangeDir(event.target.value)}
-            />
-          </div>
+          {mode !== "list" ? (
+            <div>
+              <label className={LABEL_CLASS} htmlFor="tar-cd">
+                {mode === "extract" ? "Extract into directory (-C)" : "Run from directory (-C)"}
+              </label>
+              <input
+                id="tar-cd"
+                className={`mt-2 ${INPUT_CLASS}`}
+                type="text"
+                autoComplete="off"
+                spellCheck={false}
+                placeholder="leave blank for current directory"
+                value={changeDir}
+                onChange={(event) => setChangeDir(event.target.value)}
+              />
+            </div>
+          ) : null}
 
           {mode === "extract" ? (
             <div>
@@ -324,7 +326,7 @@ export default function ToolHome() {
             <button
               type="button"
               onClick={copyResult}
-              aria-label="Copy the generated tar command"
+              aria-label={copied ? "Copied" : "Copy the generated tar command"}
               className={GHOST_BTN}
               disabled={Boolean(result.error)}
             >

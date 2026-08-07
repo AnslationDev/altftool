@@ -176,6 +176,7 @@ export default function ToolHome() {
     setFlat(preset.defaults.flat);
     setPct(preset.defaults.pct);
     setCap(preset.defaults.cap);
+    setDpCharge(DEFAULT_DP);
     if (!Object.keys(preset.exchange).includes(exchange)) setExchange("NSE");
     setCopied(false);
   };

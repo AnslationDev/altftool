@@ -251,7 +251,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Verdict
             </p>
@@ -280,7 +280,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
           {(failed ? [] : result.checks).map((check) => (
             <div key={check.id} className="flex flex-col gap-1 py-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
               <dt className="flex shrink-0 items-center gap-2 font-semibold">

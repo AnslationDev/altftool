@@ -63,6 +63,7 @@ export default function ToolHome() {
   const [ceilingHeight, setCeilingHeight] = useState(DEFAULTS.ceilingHeight);
   const [crewSize, setCrewSize] = useState(DEFAULTS.crewSize);
   const [copied, setCopied] = useState(false);
+  const [copyError, setCopyError] = useState("");
 
   const result = useMemo(
     () =>
@@ -88,7 +89,7 @@ export default function ToolHome() {
       `Painted area: ${num(result.paintableArea)} sqft`,
       `Finish: ${result.gradeLabel}`,
       `Location: ${result.tierLabel}`,
-      `Labour rate: ${money2(result.ratePerSqft)} per sqft`,
+      `Labour rate: ${money2(result.effectiveRatePerSqft)} per sqft`,
       `Finish labour: ${money(result.finishCost)}`,
       `Putty labour: ${money(result.puttyCost)}`,
       `Height surcharge: ${money(result.heightSurcharge)}`,
@@ -102,9 +103,11 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
+      setCopyError("");
       setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
+      setCopyError("Couldn't copy automatically — select and copy the summary text manually.");
     }
   };
 
@@ -118,6 +121,7 @@ export default function ToolHome() {
     setCeilingHeight(DEFAULTS.ceilingHeight);
     setCrewSize(DEFAULTS.crewSize);
     setCopied(false);
+    setCopyError("");
   };
 
   const rows = [
@@ -301,7 +305,7 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {failed
                 ? "Fix the highlighted input to see an estimate."
-                : `${money2(result.ratePerSqft)} per sqft over ${num(result.paintableArea)} sqft of surface`}
+                : `${money2(result.effectiveRatePerSqft)} per sqft over ${num(result.paintableArea)} sqft of surface`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
@@ -323,8 +327,17 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <p aria-live="polite" role="status" className="sr-only">
+              {copied ? "Painter labour estimate copied to clipboard." : ""}
+            </p>
           </div>
         </div>
+
+        {copyError && (
+          <p role="alert" className="mt-2 text-xs font-medium text-[var(--danger)]">
+            {copyError}
+          </p>
+        )}
 
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {rows.map(([label, value]) => (

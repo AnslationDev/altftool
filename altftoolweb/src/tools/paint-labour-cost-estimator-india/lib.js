@@ -95,6 +95,13 @@ export const PUTTY_OUTPUT_FACTOR = 0.6;
 export const HEIGHT_SURCHARGE_THRESHOLD_FT = 10;
 export const HEIGHT_SURCHARGE_RATE = 0.15;
 
+/**
+ * Erecting and striking staging/scaffolding takes a fixed chunk of calendar
+ * time that painting output rates don't cover. Added once per job (not per
+ * painter) when staging is needed.
+ */
+export const STAGING_SETUP_DAYS = 1;
+
 /** Typical crew size assumed when the caller does not pass one. */
 export const DEFAULT_CREW_SIZE = 2;
 
@@ -168,7 +175,11 @@ export function estimatePaintLabour({
   const totalLabourCost = subtotal + heightSurcharge;
 
   const dailyOutput = grade.outputSqftPerDay * (withPutty ? PUTTY_OUTPUT_FACTOR : 1);
-  const painterDays = paintableArea / dailyOutput;
+  const stagingSetupDays = needsStaging ? STAGING_SETUP_DAYS : 0;
+  // Setup is whole-crew work, so it adds `stagingSetupDays` to the calendar
+  // schedule regardless of crew size: contribute crewSize worth of
+  // painter-days so dividing back by crewSize recovers that same figure.
+  const painterDays = paintableArea / dailyOutput + stagingSetupDays * crewSize;
   const calendarDays = painterDays / crewSize;
 
   return {

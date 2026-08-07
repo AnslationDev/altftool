@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, PaintRoller, RotateCcw } from "lucide-react";
 
 import { CONDITIONS, MATERIALS, calculateSealer } from "../lib";
@@ -54,6 +54,13 @@ export default function ToolHome() {
   const [crackFeet, setCrackFeet] = useState(DEFAULTS.crackFeet);
   const [pricePerPail, setPricePerPail] = useState(DEFAULTS.pricePerPail);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -119,7 +126,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }

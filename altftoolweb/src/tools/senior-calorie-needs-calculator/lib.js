@@ -47,7 +47,7 @@ export const KCAL_PER_G_PROTEIN = 4;
 export const GOALS = [
   { key: "maintain", label: "Keep weight steady", delta: 0, note: "Energy in matches energy out." },
   { key: "gentle-loss", label: "Lose weight slowly", delta: -500, note: "About 0.45 kg a week. Slower loss protects muscle in later life." },
-  { key: "gentle-gain", label: "Regain lost weight", delta: 300, note: "About 0.25 kg a week, paired with resistance exercise so the gain is muscle." },
+  { key: "gentle-gain", label: "Regain lost weight", delta: 300, note: "About 0.27 kg a week, paired with resistance exercise so the gain is muscle." },
 ];
 
 export const KCAL_PER_KG_BODY_MASS = 7700;

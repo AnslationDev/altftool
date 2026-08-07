@@ -25,6 +25,7 @@ const DEFAULT_ENTRIES = [
 ];
 
 const DASH = "—";
+const MAX_ENTRIES = 50;
 
 export default function ToolHome() {
   const [owner, setOwner] = useState(DEFAULT_OWNER);
@@ -46,6 +47,7 @@ export default function ToolHome() {
 
   const addRow = () => {
     setEntries((current) => {
+      if (current.length >= MAX_ENTRIES) return current;
       const nextId = current.reduce((max, entry) => Math.max(max, entry.id), 0) + 1;
       return [...current, { id: nextId, org: "", number: "", source: "cardBack" }];
     });
@@ -184,7 +186,7 @@ export default function ToolHome() {
                 </div>
 
                 {row && row.issues.length > 0 && (
-                  <ul className="mt-2 grid gap-1">
+                  <ul className="mt-2 grid gap-1" aria-live="polite">
                     {row.issues.map((issue) => (
                       <li
                         key={issue}
@@ -200,11 +202,21 @@ export default function ToolHome() {
           })}
         </ul>
 
-        <div className="mt-4 flex flex-wrap gap-2">
-          <button type="button" onClick={addRow} className={GHOST_BTN}>
+        <div className="mt-4 flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            onClick={addRow}
+            className={GHOST_BTN}
+            disabled={entries.length >= MAX_ENTRIES}
+          >
             <Plus className="h-4 w-4" aria-hidden="true" />
             Add another organisation
           </button>
+          {entries.length >= MAX_ENTRIES && (
+            <p className="text-sm text-[var(--muted-foreground)]">
+              Card limit reached — 50 entries max. Remove one to add another.
+            </p>
+          )}
         </div>
       </section>
 
@@ -219,7 +231,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Numbers safe to call back on
             </p>

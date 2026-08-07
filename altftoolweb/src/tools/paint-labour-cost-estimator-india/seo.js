@@ -14,7 +14,7 @@ const seo = {
   faqs: [
     [
       "How much do painters charge per square foot in India?",
-      "Labour-only rates typically run about Rs 5 to Rs 9 per sqft for distemper and basic emulsion repaint work, Rs 12 to Rs 20 for premium washable emulsion with full putty, and Rs 35 or more per sqft for texture and designer finishes. Metro rates sit roughly 25% above small-city rates because painter day wages are higher there.",
+      "Labour-only rates typically run about Rs 5 to Rs 9 per sqft for distemper and basic emulsion repaint work, Rs 12 to Rs 20 for premium washable emulsion with full putty, and roughly Rs 27 to Rs 38 or more per sqft for texture and designer finishes, depending on city tier. Metro rates run 45-75% above smaller-city rates because painter day wages are higher there.",
     ],
     [
       "Is paint included in a per-sqft painting rate?",

@@ -278,7 +278,11 @@ export function computeFootageStorage({
   const cardBytes = cardGb * BYTES_PER_GB;
   const minutesPerCard = cardBytes > 0 && bytesPerSecond > 0 ? cardBytes / bytesPerSecond / 60 : null;
   const cardsNeeded =
-    cardBytes > 0 ? Math.max(1, Math.ceil((bytesPerSecond * secondsTotal) / cardBytes)) : null;
+    cardBytes > 0 && secondsTotal > 0
+      ? Math.max(1, Math.ceil((bytesPerSecond * secondsTotal) / cardBytes))
+      : secondsTotal === 0
+        ? 0
+        : null;
 
   return {
     codecLabel: codec.label,

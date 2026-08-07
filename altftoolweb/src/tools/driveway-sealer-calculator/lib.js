@@ -109,15 +109,19 @@ export function calculateSealer({
   const cond = CONDITIONS[condition];
   if (!cond) return { error: "Choose one of the listed surface conditions." };
 
-  const coatCount = Math.round(toNumber(coats));
+  const coatCountRaw = toNumber(coats);
   const waste = toNumber(wastePct);
   const cracks = toNumber(crackFeet);
   const price = toNumber(pricePerPail);
   const extra = toNumber(extraArea);
 
-  if ([coatCount, waste, cracks, price, extra].some((v) => Number.isNaN(v))) {
+  if ([coatCountRaw, waste, cracks, price, extra].some((v) => Number.isNaN(v))) {
     return { error: "Enter valid numbers for coats, waste, cracks, extra area and price." };
   }
+  if (!Number.isInteger(coatCountRaw)) {
+    return { error: "Coats must be a whole number." };
+  }
+  const coatCount = coatCountRaw;
   if (coatCount < 1 || coatCount > MAX_COATS) {
     return { error: `Number of coats must be between 1 and ${MAX_COATS}.` };
   }

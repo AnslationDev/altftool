@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "vehicle-document-reminder",
   "title": "Vehicle Document Reminder",
-  "description": "RC, insurance, PUC aur licence expiry track kare.",
+  "description": "Track RC, insurance, PUC and driving licence expiry dates in one place.",
   "badge": "India-Specific Utilities",
   "category": [
     "India",
@@ -53,7 +53,7 @@ export const spec = {
       const rows = String(values.documents || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean).map((line) => {
         const [name = "Item", dateText = "", reference = "—"] = line.split("|").map((cell) => cell.trim());
         const date = new Date(dateText + "T00:00:00");
-        const days = Math.ceil((date - asOf) / 86400000);
+        const days = Math.round((date - asOf) / 86400000);
         const status = Number.isNaN(days) ? "Invalid date" : days < 0 ? Math.abs(days) + "d overdue" : days <= warning ? days + "d · renew soon" : days + "d";
         return [name, dateText || "—", reference, status];
       });

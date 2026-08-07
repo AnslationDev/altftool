@@ -32,6 +32,13 @@ export const ENVELOPE_BLANK_FACTOR = 2.3;
 export const INSERT_STEP_MM = 6;
 
 /**
+ * Sanity cap on the flat (unfolded) artwork/document size a fold can produce.
+ * Multi-panel folds multiply the finished size by the panel count, so this is
+ * wider than the per-side 900 mm cap on the finished card itself.
+ */
+export const MAX_FLAT_ARTWORK_MM = 2000;
+
+/**
  * Sheet weight: grams = area in square metres x GSM. This is the definition
  * of GSM (grams per square metre), so it is exact.
  */
@@ -72,7 +79,7 @@ export const FOLD_TYPES = [
   { id: "bifold", label: "Bi-fold (one centre fold)", panels: 2, layers: 2 },
   { id: "gatefold", label: "Gate fold (two flaps meet)", panels: 2, layers: 2 },
   { id: "trifold", label: "Tri-fold / roll fold", panels: 3, layers: 3 },
-  { id: "quadfold", label: "Four-panel / cross fold", panels: 4, layers: 4 },
+  { id: "quadfold", label: "Four-panel accordion fold", panels: 4, layers: 4 },
 ];
 
 /** Which edge the panels repeat along. */
@@ -160,7 +167,6 @@ export function computeWeddingCardSpec({
     safeMm,
     cardGsm,
     insertCount,
-    insertGsm,
     envelopeGsm,
     quantity,
   ];
@@ -181,14 +187,19 @@ export function computeWeddingCardSpec({
   if (safeMm * 2 >= Math.min(wMm, hMm)) {
     return { error: "Safe margin is too large - it leaves no printable area inside the card." };
   }
-  if (cardGsm <= 0 || insertGsm <= 0 || envelopeGsm <= 0) {
-    return { error: "Paper GSM values must be greater than zero." };
-  }
-  if (cardGsm > 800 || insertGsm > 800 || envelopeGsm > 800) {
-    return { error: "GSM above 800 is board, not card stock - check the value." };
-  }
   if (insertCount < 0 || insertCount > 10) {
     return { error: "Enter between 0 and 10 insert cards." };
+  }
+  // Insert GSM only matters when there is at least one insert card.
+  const needsInsertGsm = insertCount > 0;
+  if (needsInsertGsm && !isNum(insertGsm)) {
+    return { error: "Enter a number in every field." };
+  }
+  if (cardGsm <= 0 || envelopeGsm <= 0 || (needsInsertGsm && insertGsm <= 0)) {
+    return { error: "Paper GSM values must be greater than zero." };
+  }
+  if (cardGsm > 800 || envelopeGsm > 800 || (needsInsertGsm && insertGsm > 800)) {
+    return { error: "GSM above 800 is board, not card stock - check the value." };
   }
   if (quantity < 1 || quantity > 100000) {
     return { error: "Order quantity must be between 1 and 100000 invitations." };
@@ -200,6 +211,13 @@ export function computeWeddingCardSpec({
   // Flat (unfolded) artwork size.
   const flatWmm = foldAxis === "width" ? wMm * fold.panels : wMm;
   const flatHmm = foldAxis === "height" ? hMm * fold.panels : hMm;
+
+  if (flatWmm > MAX_FLAT_ARTWORK_MM || flatHmm > MAX_FLAT_ARTWORK_MM) {
+    return {
+      error:
+        "The flat artwork size for this fold and dimensions exceeds normal print bounds - reduce the card size or choose a simpler fold.",
+    };
+  }
 
   const docWmm = flatWmm + bleedMm * 2;
   const docHmm = flatHmm + bleedMm * 2;

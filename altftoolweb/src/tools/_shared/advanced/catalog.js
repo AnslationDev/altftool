@@ -75,7 +75,7 @@ export const advancedCatalog = {
     "id": 165,
     "slug": "video-frame-to-sprite-extractor",
     "name": "Video Frame-to-Sprite Extractor",
-    "description": "Selected frames ko PNG sequence ya sprite sheet me export kare.",
+    "description": "Export selected video frames as a single tiled sprite sheet PNG.",
     "category": "Audio & Video Processing",
     "priority": "P2"
   },

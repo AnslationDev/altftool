@@ -127,9 +127,22 @@ export default function ToolHome() {
           result.subsidised ? "None (subsidised)" : money.format(result.capitalisedInterest),
         ],
         ["Balance when repayment starts", money.format(result.startingBalance)],
-        ["Interest paid over the term", money.format(result.totalInterest)],
-        ["Total repaid", money.format(result.totalPaid)],
-        ["Total cost of borrowing", money.format(result.totalCostOfBorrowing)],
+        [
+          "Interest paid over the term",
+          money.format(result.withExtra ? result.withExtra.totalInterest : result.totalInterest),
+        ],
+        [
+          "Total repaid",
+          money.format(result.withExtra ? result.withExtra.totalPaid : result.totalPaid),
+        ],
+        [
+          "Total cost of borrowing",
+          money.format(
+            result.withExtra
+              ? result.capitalisedInterest + result.withExtra.totalInterest
+              : result.totalCostOfBorrowing,
+          ),
+        ],
         [
           "Payoff time",
           result.withExtra
@@ -359,7 +372,7 @@ export default function ToolHome() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-[var(--border)]">
-                {result.schedule.map((row) => (
+                {(result.withExtra ? result.withExtra.rows : result.schedule).map((row) => (
                   <tr key={row.year}>
                     <td className="py-2.5 pr-3">{row.year}</td>
                     <td className="py-2.5 pr-3">{money.format(row.interest)}</td>

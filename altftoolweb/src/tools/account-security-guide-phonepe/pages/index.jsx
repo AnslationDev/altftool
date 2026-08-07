@@ -95,7 +95,12 @@ export default function ToolHome() {
         </p>
       </header>
 
-      <section className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-labelledby="score-heading">
+      <section
+        className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-labelledby="score-heading"
+        aria-live="polite"
+        role="status"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p id="score-heading" className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

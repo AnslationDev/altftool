@@ -119,9 +119,15 @@ const SCRIPT_RANGES = [
   ["Han", 0x4e00, 0x9fff],
 ];
 
-/** Digits, hyphen and combining marks belong to no single script. */
+/**
+ * Digits, punctuation and combining marks belong to no single script. This includes every
+ * ASCII character that is not a Latin letter — RFC3986 reg-names legally contain far more
+ * than "[a-z0-9.-]" (underscore, tilde, and the sub-delims ! $ & ' ( ) * + , ; =), and none
+ * of that ASCII punctuation is a script-mixing signal on its own.
+ */
 function scriptOf(codePoint) {
-  if ((codePoint >= 0x30 && codePoint <= 0x39) || codePoint === 0x2d || codePoint === 0x2e) return "Common";
+  const isAsciiLetter = (codePoint >= 0x41 && codePoint <= 0x5a) || (codePoint >= 0x61 && codePoint <= 0x7a);
+  if (codePoint < 0x80 && !isAsciiLetter) return "Common";
   if (codePoint >= 0x0300 && codePoint <= 0x036f) return "Common";
   for (const [name, start, end] of SCRIPT_RANGES) {
     if (codePoint >= start && codePoint <= end) return name;
@@ -145,7 +151,7 @@ const CONFUSABLES = {
   "а": "a", "е": "e", "о": "o", "р": "p", "с": "c", "у": "y",
   "х": "x", "і": "i", "ј": "j", "ѕ": "s", "һ": "h", "ԁ": "d",
   "ԛ": "q", "ѵ": "v", "м": "m", "н": "h", "т": "t", "ӏ": "l",
-  "к": "k", "в": "b", "г": "r", "Ү": "y", "ɡ": "g",
+  "к": "k", "в": "b", "г": "r", "Ү": "y", "ү": "y", "ɡ": "g",
   // Greek
   "ο": "o", "α": "a", "ν": "v", "ρ": "p", "κ": "k", "τ": "t",
   "ι": "i", "ε": "e", "υ": "u", "χ": "x", "η": "n", "β": "b",
@@ -226,14 +232,19 @@ const CHEAP_SUFFIXES = new Set([
 
 const FILE_LIKE_TLDS = new Set(["zip", "mov"]);
 
+/** Every distinct label-count that appears among MULTI_SUFFIXES, smallest first. */
+const MULTI_SUFFIX_LENGTHS = Array.from(new Set(Array.from(MULTI_SUFFIXES, (suffix) => suffix.split(".").length))).sort(
+  (a, b) => a - b,
+);
+
 export function splitDomain(host) {
   const labels = host.split(".");
   if (labels.length < 2) return { publicSuffix: "", registrable: host, subdomain: "" };
-  const lastTwo = labels.slice(-2).join(".");
-  const lastThree = labels.length >= 3 ? labels.slice(-3).join(".") : "";
   let suffixLabels = 1;
-  if (MULTI_SUFFIXES.has(lastTwo)) suffixLabels = 2;
-  if (lastThree && MULTI_SUFFIXES.has(lastThree)) suffixLabels = 3;
+  for (const n of MULTI_SUFFIX_LENGTHS) {
+    if (labels.length < n) continue;
+    if (MULTI_SUFFIXES.has(labels.slice(-n).join("."))) suffixLabels = n;
+  }
   const registrableCount = suffixLabels + 1;
   if (labels.length < registrableCount) {
     return { publicSuffix: labels.join("."), registrable: labels.join("."), subdomain: "" };
@@ -348,8 +359,17 @@ function parseQuery(query) {
 }
 
 function hostOf(url) {
-  const match = url.match(/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\/(?:[^@/]*@)?([^/?#:]+)/);
-  return match ? match[1].toLowerCase() : "";
+  const schemeMatch = url.match(/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//);
+  if (!schemeMatch) return "";
+  const afterScheme = url.slice(schemeMatch[0].length);
+  const authorityEnd = afterScheme.search(/[/?#]/);
+  const authority = authorityEnd === -1 ? afterScheme : afterScheme.slice(0, authorityEnd);
+  // Userinfo can itself contain "@" (e.g. "a@b@evil.com"); the host starts after the LAST "@",
+  // matching the main parser's authority.lastIndexOf('@') logic above.
+  const at = authority.lastIndexOf("@");
+  const hostPart = at === -1 ? authority : authority.slice(at + 1);
+  const host = hostPart.split(":")[0];
+  return host.toLowerCase();
 }
 
 /* ------------------------------------------------------------------ analyse */
@@ -436,6 +456,15 @@ export function analyseUrl(input) {
     return { error: "The address has no host between the scheme and the path." };
   }
 
+  const hasEmptyLabel = host.split(".").some((label) => label === "");
+  if (hasEmptyLabel) {
+    add(
+      "low",
+      "The host has an empty label",
+      `"${host}" has two dots in a row (or a leading dot), leaving a blank part of the name. No real domain parses this way — browsers and the registrable-domain breakdown below cannot resolve it to anything meaningful.`,
+    );
+  }
+
   const queryStart = rest.indexOf("?");
   const hashStart = rest.indexOf("#");
   const pathEnd = queryStart === -1 ? (hashStart === -1 ? rest.length : hashStart) : queryStart;
@@ -477,7 +506,11 @@ export function analyseUrl(input) {
         `Browsers still accept decimal, hexadecimal and octal forms of an IPv4 address. They exist in phishing links for exactly one reason: to stop the destination being recognisable. This resolves to ${numeric.dotted}.`,
       );
     }
-  } else if (/^[a-z0-9.-]+$/.test(host)) {
+  } else {
+    // A host is only genuinely "non-ASCII" if it contains actual unicode characters — RFC3986
+    // reg-names legally carry plenty of ASCII punctuation beyond [a-z0-9.-] (underscore, tilde,
+    // sub-delims), and none of that should disable per-label punycode decoding below.
+    const isAsciiHost = /^[\x00-\x7f]*$/.test(host);
     domain = splitDomain(host);
     labels = host.split(".").map((label) => {
       const isPuny = label.startsWith("xn--");
@@ -492,17 +525,9 @@ export function analyseUrl(input) {
         skeleton: skeleton(display),
       };
     });
-  } else {
-    labels = host.split(".").map((label) => ({
-      raw: label,
-      punycode: false,
-      decoded: null,
-      display: label,
-      scripts: scriptsIn(label),
-      skeleton: skeleton(label),
-    }));
-    domain = splitDomain(host);
-    add("high", "The host contains characters outside the ASCII set browsers show", "A hostname that is not plain ASCII is normally converted to punycode before it is sent. Seeing raw non-ASCII in a pasted link means the display form is being relied on, and the display form is what an attacker controls.");
+    if (!isAsciiHost) {
+      add("high", "The host contains characters outside the ASCII set browsers show", "A hostname that is not plain ASCII is normally converted to punycode before it is sent. Seeing raw non-ASCII in a pasted link means the display form is being relied on, and the display form is what an attacker controls.");
+    }
   }
 
   if (hostPercentDecoded !== hostRaw) {

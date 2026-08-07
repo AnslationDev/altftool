@@ -30,6 +30,14 @@ export const MAX_REPS = 300;
 export const MIN_DURATION_SECONDS = 10;
 export const MAX_DURATION_SECONDS = 600;
 
+/**
+ * Highest sustained rate a human can plausibly hold on a bent-knee curl-up,
+ * in reps per second. Even elite/record-pace sit-ups don't sustain much above
+ * this, so a higher implied rate means the reps/duration pairing is not
+ * physically plausible rather than merely an exceptional score.
+ */
+export const MAX_PLAUSIBLE_REPS_PER_SECOND = 2.5;
+
 /** Rating names, best first. Anything below the lowest cut-off is "Very poor". */
 export const BANDS = [
   "Excellent",
@@ -109,6 +117,11 @@ export function classifySitups({ age, sex, reps, durationSeconds = STANDARD_DURA
   if (durationSeconds < MIN_DURATION_SECONDS || durationSeconds > MAX_DURATION_SECONDS) {
     return {
       error: `Test length must be between ${MIN_DURATION_SECONDS} and ${MAX_DURATION_SECONDS} seconds.`,
+    };
+  }
+  if (reps / durationSeconds > MAX_PLAUSIBLE_REPS_PER_SECOND) {
+    return {
+      error: "That's more sit-ups than is physically possible in this time — check your numbers.",
     };
   }
 

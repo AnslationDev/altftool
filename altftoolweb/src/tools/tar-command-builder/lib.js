@@ -86,7 +86,7 @@ export const COMPRESSIONS = [
 export const MAX_STRIP_COMPONENTS = 20;
 
 /** Characters that never need shell quoting in POSIX sh. */
-const SAFE_ARG = /^[A-Za-z0-9_@%+=:,./-]+$/;
+const SAFE_ARG = /^[A-Za-z0-9_@%+=:,./~-]+$/;
 
 /** Quote a single shell argument using POSIX single-quote escaping. */
 export function shellQuote(value) {
@@ -257,7 +257,9 @@ export function buildTarCommand(options = {}) {
   const warnings = [];
   if (compression !== "auto" && detected && detected !== comp.id) {
     warnings.push(
-      `The file name looks like ${detected} but you picked ${comp.id}. Rename it to ${comp.canonicalExtension} so the archive is self-describing.`,
+      detected === "none"
+        ? `The file name doesn't indicate any compression, but you picked ${comp.id}. Rename it to ${comp.canonicalExtension} so the archive is self-describing.`
+        : `The file name looks like ${detected} but you picked ${comp.id}. Rename it to ${comp.canonicalExtension} so the archive is self-describing.`,
     );
   }
   if (compression === "auto" && detected === null) {

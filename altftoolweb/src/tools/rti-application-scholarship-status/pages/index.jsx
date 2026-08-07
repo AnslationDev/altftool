@@ -131,6 +131,9 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (!window.confirm("Reset all fields? This clears your entered application details and cannot be undone.")) {
+      return;
+    }
     setStudentName(DEFAULTS.studentName);
     setAddress(DEFAULTS.address);
     setPhone(DEFAULTS.phone);
@@ -425,7 +428,7 @@ export default function ToolHome() {
               type="button"
               onClick={copyApplication}
               disabled={hasError}
-              aria-label="Copy the RTI application"
+              aria-label={copied ? "Copied" : "Copy the RTI application"}
               className={`${GHOST_BTN} disabled:opacity-50`}
             >
               {copied ? (
@@ -453,6 +456,7 @@ export default function ToolHome() {
             ["Reply due (Section 7(1))", hasError ? DASH : result.timeline.replyDue.long],
             ["First appeal by (Section 19(1))", hasError ? DASH : result.timeline.firstAppealBy.long],
             ["Appeal decided by", hasError ? DASH : result.timeline.faaDecisionDue.long],
+            ["Outer limit with recorded reasons", hasError ? DASH : result.timeline.faaExtendedDue.long],
             ["Second appeal by (Section 19(3))", hasError ? DASH : result.timeline.secondAppealBy.long],
             ["Application fee", hasError ? DASH : isBpl ? "Nil (Section 7(5))" : `Rs ${APPLICATION_FEE_INR}`],
           ].map(([label, value]) => (

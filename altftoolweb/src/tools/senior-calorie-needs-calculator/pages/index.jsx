@@ -45,7 +45,12 @@ export default function ToolHome() {
   const [activity, setActivity] = useState(DEFAULTS.activity);
   const [goal, setGoal] = useState(DEFAULTS.goal);
   const [illness, setIllness] = useState(DEFAULTS.illness);
-  const { copy: copyToClipboard, isCopied, reset: resetCopyState } = useCopyToClipboard();
+  const {
+    copy: copyToClipboard,
+    isCopied,
+    reset: resetCopyState,
+    announcement,
+  } = useCopyToClipboard();
 
   const result = useMemo(
     () =>
@@ -264,6 +269,9 @@ export default function ToolHome() {
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {announcement}
+            </span>
           </div>
         </div>
 

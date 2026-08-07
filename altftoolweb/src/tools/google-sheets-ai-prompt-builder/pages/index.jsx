@@ -311,7 +311,7 @@ export default function ToolHome() {
           </p>
         ) : null}
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite">
           {rows.map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="shrink-0 text-[var(--muted-foreground)]">{label}</dt>
@@ -321,7 +321,7 @@ export default function ToolHome() {
         </dl>
 
         {!hasError && result.warnings.length > 0 ? (
-          <ul className="mt-5 space-y-2">
+          <ul className="mt-5 space-y-2" aria-live="polite">
             {result.warnings.map((warning) => (
               <li
                 key={warning}

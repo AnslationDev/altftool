@@ -255,6 +255,12 @@ export function planRecoveryStorage({
 
   const circularRisk =
     (protectsPasswordManager || protectsEmail) && independent.length === 0 && copies > 0;
+  // When every copy fails to be "independent", that can be because copies are
+  // genuinely circular (locked behind an account these codes protect), because
+  // they merely share a device with the authenticator, or a mix of both. The
+  // three are factually different failures and need different explanations.
+  const nonIndependentCircularCount = chosen.filter((location) => location.circular).length;
+  const nonIndependentSameDeviceCount = chosen.filter((location) => location.sameDevice).length;
 
   const checks = [
     {
@@ -302,9 +308,13 @@ export function planRecoveryStorage({
       detail:
         copies === 0
           ? "Nothing is stored anywhere, so there is nothing to fall back to."
-          : circularRisk
-            ? "Every copy is behind an account these codes are meant to recover. Add one offline copy."
-            : "At least one copy is reachable without signing in anywhere first.",
+          : !circularRisk
+            ? "At least one copy is reachable without signing in anywhere first."
+            : nonIndependentCircularCount === 0
+              ? "All your copies are on the same device as the accounts these codes protect. Add one copy stored somewhere independent."
+              : nonIndependentSameDeviceCount === 0
+                ? "Every copy is behind an account these codes are meant to recover. Add one offline copy."
+                : "None of your copies are reachable independently — some sit on the same device as your authenticator, others are only reachable through an account these codes are meant to recover. Add one copy stored somewhere independent.",
     },
     {
       id: "encrypted",

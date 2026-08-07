@@ -314,15 +314,62 @@ const mediaOptions = {
     label: "Sampling",
     choices: ["1 frame/second", "1 frame/2 seconds", "1 frame/5 seconds"],
     extension: "png",
-    command: (input, output, choice) => [
-      "-i",
-      input,
-      "-vf",
-      `fps=1/${choice.includes("5") ? 5 : choice.includes("2") ? 2 : 1},scale=240:-1,tile=5x5`,
-      "-frames:v",
-      "1",
-      output,
-    ],
+    // tile=5x5 always needs 25 sampled frames to fill the sheet. A source
+    // shorter than (25 * interval) seconds runs out of frames before the
+    // grid is full, and ffmpeg silently pads the remaining tiles with solid
+    // black rather than erroring — so a too-short source used to produce a
+    // mostly-black sprite sheet with no warning. We probe the real duration
+    // with ffprobe (same pattern as voiceprint-anonymizer above) and refuse
+    // to run rather than hand back a result that looks broken. `ffmpeg` is
+    // passed in as an extra 6th argument by the MediaLab runner below;
+    // every other entry in this file still declares `command` with 3-5
+    // params and simply ignores it, so this is scoped to this one tool.
+    command: async (input, output, choice, _second, _fontPath, ffmpeg) => {
+      const interval = choice.includes("5") ? 5 : choice.includes("2") ? 2 : 1;
+      const requiredSeconds = interval * 25;
+      let duration = null;
+      if (ffmpeg?.ffprobe) {
+        const probeOutput = "video-frame-to-sprite-extractor-probe.txt";
+        try {
+          await ffmpeg.ffprobe([
+            "-v",
+            "error",
+            "-show_entries",
+            "format=duration",
+            "-of",
+            "default=noprint_wrappers=1:nokey=1",
+            input,
+            "-o",
+            probeOutput,
+          ]);
+          const bytes = await ffmpeg.readFile(probeOutput);
+          const text =
+            typeof bytes === "string" ? bytes : new TextDecoder().decode(bytes);
+          const parsed = parseFloat(text.trim());
+          if (Number.isFinite(parsed) && parsed > 0) duration = parsed;
+        } catch {
+          // If the probe fails for any reason (unusual container, older
+          // core build, etc.) skip the duration check rather than blocking
+          // a conversion that might otherwise be fine.
+        } finally {
+          await ffmpeg.deleteFile(probeOutput).catch(() => {});
+        }
+      }
+      if (duration !== null && duration < requiredSeconds) {
+        throw new Error(
+          `This video is only about ${Math.round(duration)}s long, but "${choice}" needs at least ${requiredSeconds}s of footage to fill the 5×5 sprite grid without blank tiles. Pick a shorter sampling interval or a longer source video.`,
+        );
+      }
+      return [
+        "-i",
+        input,
+        "-vf",
+        `fps=1/${interval},scale=240:-1,tile=5x5`,
+        "-frames:v",
+        "1",
+        output,
+      ];
+    },
   },
   "voiceprint-anonymizer": {
     accept: "audio/*",

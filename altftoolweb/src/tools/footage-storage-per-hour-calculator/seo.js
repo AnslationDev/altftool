@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This calculator converts a codec's data rate into storage: gigabytes per hour equals the combined video and audio bitrate in megabits per second multiplied by 3,600 and divided by 8. Intraframe codecs such as ProRes and DNxHR are scaled by pixels per second, so changing resolution or frame rate updates the figure the way the camera actually behaves. Shooters, DITs and producers use it to size cards, shuttle drives and archive budgets before a shoot rather than after.",
+    "This calculator converts a codec's data rate into storage: gigabytes per hour equals the combined video and audio bitrate in megabits per second multiplied by 3,600, divided by 8, then divided by 1,000. Intraframe codecs such as ProRes and DNxHR are scaled by pixels per second, so changing resolution or frame rate updates the figure the way the camera actually behaves. Shooters, DITs and producers use it to size cards, shuttle drives and archive budgets before a shoot rather than after.",
   useCases: [
     "Working out how many 256 GB CFexpress cards a two-camera 4K ProRes 422 HQ day needs before a rental order goes in",
     "Sizing a shuttle SSD and an LTO archive for a documentary that will record 40 hours of DNxHR SQ",

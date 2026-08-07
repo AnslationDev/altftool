@@ -8,14 +8,14 @@ const seo = {
     "Spot that the range you picked is open-ended (A2:E), so the assistant has no idea how many data rows it is actually reading.",
   ],
   benefits: [
-    ["Correct A1 quoting", "Applies the real rule — quote the tab name unless it is letters, digits and underscores and starts with a letter."],
+    ["Correct A1 quoting", "Applies the real rule — quote the tab name unless it is letters, digits and underscores and starts with a letter or underscore."],
     ["QUERY-aware column map", "Each header is listed with its column letter and its Col index, which is where most QUERY formulas go wrong."],
     ["Cell budget checked", "Flags a range past the 10,000,000-cell spreadsheet limit instead of letting the assistant invent an answer."],
   ],
   faqs: [
     [
       "How do I reference a sheet with a space in its name?",
-      "Wrap the tab name in single quotes: 'Q1 Sales'!A1:E500. Quotes are needed whenever the name is anything other than letters, digits and underscores starting with a letter, and a single quote inside the name is escaped by doubling it, as in 'Bob''s Data'.",
+      "Wrap the tab name in single quotes: 'Q1 Sales'!A1:E500. Quotes are needed whenever the name is anything other than letters, digits and underscores starting with a letter or underscore, and a single quote inside the name is escaped by doubling it, as in 'Bob''s Data'.",
     ],
     [
       "What is the cell limit in Google Sheets?",
