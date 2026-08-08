@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Seat Cost vs API: Break-Even Messages Per Day",
+  metaDescription:
+    "Cost per active user instead of per seat, idle-seat spend in currency, and the break-even messages per user per day against your API token prices.",
+  steps: [
+    "Enter Paid seats, Price per seat per month, People who actually used it, Annual-billing discount (%) and Messages per active user per day.",
+    "Under Pay-as-you-go comparison, set Input tokens per message, Output tokens per message and the input and output price per 1M tokens.",
+    "Read Cost per active user, the Idle seats row and Break-even usage in messages per user per day, then press Copy result.",
+  ],
   intro:
     "The Team AI Seat Cost Calculator divides your per-seat AI subscription by the people who actually used it, so you see cost per active user rather than cost per licence, plus the idle spend sitting on unused seats. It then prices the same volume on pay-as-you-go API rates — (input tokens x input price + output tokens x output price) / 1,000,000 per message — and reports the break-even point: the number of messages per user per day at which usage billing costs exactly one seat. Every rate is yours to enter, so the answer reflects your contract rather than a generic list price.",
   useCases: [

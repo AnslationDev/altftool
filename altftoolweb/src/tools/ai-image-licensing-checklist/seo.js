@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Image Commercial Use Checklist: 8 Rights Questions",
+  metaDescription:
+    "Score an AI image on licence tier, likeness, trademarks and copyrightability across 8 questions — high-risk items weigh double and can block publishing.",
+  steps: [
+    "Answer the eight numbered questions with Yes, Unsure or No, starting with \"Does your plan's licence expressly allow commercial use?\", each tagged high risk or medium risk.",
+    "Work down through likeness, trademarks, artist-style prompts, copyrightability, indemnification, platform rules and record-keeping — high-risk items carry double weight, and one high-risk 'No' marks the image not ready.",
+    "Read the Readiness score out of 100 alongside Passed, Failed, Unsure and High-risk failures, check the 'Resolve before publishing' list, then press 'Copy result' for the project file.",
+  ],
   intro:
     "This checklist scores how ready an AI-generated image is for commercial use across eight usage-rights questions — licence tier, real-person likeness, trademarks, artist-style prompts, copyrightability, indemnification, platform rules and record-keeping. High-risk items weigh double, and any high-risk failure marks the image not ready regardless of the overall score. It reflects documented positions such as the US Copyright Office's March 2023 guidance that purely AI-generated material is not copyrightable, and provider terms like Midjourney's non-commercial free tier.",
   useCases: [

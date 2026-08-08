@@ -1,4 +1,12 @@
 const seo = {
+  title: "Scientific Notation Calculator: Sig Figs & SI Prefix",
+  metaDescription:
+    "Convert a number to a x 10^n and to engineering form with its SI prefix, or combine two values and see which significant-figure rule set the answer.",
+  steps: [
+    "Choose a Mode - \"Convert one number\" or \"Calculate with two numbers\" - and type the value as 0.000123, 1.23e-4 or 1.23 x 10^-4.",
+    "Set \"Significant figures to display (1-17)\", and in calculate mode pick Add (a + b), Subtract (a - b), Multiply (a x b) or Divide (a / b).",
+    "Read the Scientific notation, Engineering notation, SI prefix and Expanded decimal rows, then press Copy result.",
+  ],
   intro:
     "This scientific notation calculator rewrites any number as a × 10^n, where the coefficient a satisfies 1 ≤ |a| < 10 and n is a whole number, and also gives the engineering form in which n is forced to a multiple of 3 so it lines up with an SI prefix such as kilo (10^3) or micro (10^-6). It applies the standard significant-figure rules to arithmetic: multiplication and division keep the fewest significant figures of the operands, addition and subtraction round to the coarsest decimal place. It is built for physics, chemistry and engineering students and for anyone reading data sheets full of very large or very small numbers.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Utility Name Transfer Letter: Electricity, Gas and Water",
+  metaDescription:
+    "Drafts the name-transfer application and its document checklist, applying the Rule 4(3) cap of 7, 15 or 30 days as a completion date.",
+  steps: [
+    "Choose the Utility, Why the connection is changing hands, and the Type of area that sets the 7, 15 or 30-day statutory cap.",
+    "Fill in the Date of application, Consumer number on the bill and the party details, then tick the Documents already in hand.",
+    "Read the Transfer expected by date and the Documents ready count, then press Copy application.",
+  ],
   intro:
     "This generator drafts the application to move an electricity, piped gas, LPG, municipal water or broadband connection into a new name, and builds the document checklist that goes with it. For electricity it applies the statutory cap in Rule 4(3) of the Electricity (Rights of Consumers) Rules, 2020 — 7 days in a metropolitan area, 15 in other municipal areas and 30 in rural areas — to produce a date the transfer should be completed by. It is written for buyers, tenants, landlords taking a property back and heirs, each of whom has to prove title or occupancy differently.",
   useCases: [

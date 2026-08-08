@@ -1,4 +1,12 @@
 const seo = {
+  title: "XML to JSON Converter: 5 Parser Output Conventions",
+  metaDescription:
+    "Convert XML into the exact JSON shape your code expects — fast-xml-parser, xml2js, xml-js compact, BadgerFish or plain keys — with a force-array list.",
+  steps: [
+    "Paste markup into the XML input box, or use Upload .xml for a file up to 8 MB.",
+    "Pick an Output convention — fast-xml-parser (default), xml2js (explicitArray), xml-js compact, BadgerFish or Plain (no markers) — set Indentation and name any tags under Always array for these tags (comma separated).",
+    "Read the JSON output panel with its Convention, Root element and Elements / attributes counts, then press Copy JSON or Download .json.",
+  ],
   intro:
     "There is no single correct JSON representation of XML, which is why fast-xml-parser, xml2js and xml-js all hand you a different object for the same file. This converter parses XML 1.0 once and then emits it in whichever of five documented conventions you choose — fast-xml-parser's @_ prefix and #text, xml2js's $ and _ with explicitArray, xml-js compact's _attributes and _text, the BadgerFish convention's @ and $, or plain keys with no markers at all. It is for developers who need converted output to drop straight into code already written against one of those shapes.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Meal Plan Prompt Builder With Mifflin-St Jeor Macros",
+  metaDescription:
+    "Turns Mifflin-St Jeor calories, protein and fat grams, a per-serving budget and named allergen exclusions into one AI meal-planning prompt.",
+  steps: [
+    "Fill in Sex used by the equation, Age (years), Weight (kg), Height (cm), Activity level and Goal, then choose a Protein target from 0.8 g/kg (the adult RDA) to 2.0 g/kg, and Fat as % of calories.",
+    "Set People eating, Meals a day, Days to plan, Currency and Total food budget for the plan, tick anything under Allergens to exclude absolutely, and cap Max hands-on minutes per meal.",
+    "Check the Daily energy target headline and the Rough split per meal table, then press Copy prompt to take the assembled text shown under Your prompt to an AI assistant.",
+  ],
   intro:
     "The Meal Plan Prompt Builder works out an estimated daily energy and macronutrient target, converts a food budget into a per-serving figure, and folds both into a single prompt an AI assistant can plan a week of meals from. Energy is estimated with the Mifflin-St Jeor equation (Am J Clin Nutr, 1990) multiplied by a physical activity level, and macros are converted using the Atwater factors of 4 kcal per gram of protein and carbohydrate and 9 per gram of fat. It is a planning estimate, not dietetic advice, and the prompt it writes instructs the assistant to say so too.",
   useCases: [

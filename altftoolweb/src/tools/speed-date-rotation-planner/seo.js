@@ -1,4 +1,12 @@
 const seo = {
+  title: "Speed Dating Rotation Planner: Every Pair Meets Once",
+  metaDescription:
+    "Circle-method round-robin for speed dating or networking: n-1 rounds, no repeated pair, a start time per round and the total running time.",
+  steps: [
+    "Paste one name per line into Participants, or load the Six participants preset that fills in Asha, Ben, Chirag, Dia, Eli and Faye.",
+    "Set Minutes per meeting and Break between rounds; the circle method holds the first name fixed and rotates the rest one seat a round, and an odd list gains a (sitting out) placeholder so 9 people run as 10.",
+    "Read the headline count of non-repeating round(s) and the total minutes, then work down the Round, Starts, Participant A, Participant B and Type table - rows marked Break are the sit-out.",
+  ],
   intro:
     "The Speed-Date Rotation Planner builds a round-robin schedule using the circle method — one participant stays fixed while the rest rotate one seat each round — so every person meets every other person exactly once and no pair ever repeats. Paste a list of names, set the minutes per meeting and the break between rounds, and you get a table of rounds with each pairing, its start time in minutes from the beginning, and the total running time. It is for anyone running speed dating, speed networking, mentor matching, interview carousels or classroom conversation rotations.",
   useCases: [

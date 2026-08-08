@@ -1,4 +1,12 @@
 const seo = {
+  title: "Society Maintenance Charge Splitter by Bye-law 68",
+  metaDescription:
+    "Split a society's monthly budget flat by flat: service charges equally, repairs and sinking fund by built-up area, water by inlets, 10% non-occupancy cap.",
+  steps: [
+    "Enter this month's budget under each head in INR — Service charges, Repairs and maintenance fund, Sinking fund, Building insurance, Lease rent, Water charges and Parking charges — and set the non-occupancy charge on let-out flats, which is capped at 10%.",
+    "Use Add flat for each flat and fill its Flat number, Built-up area (sq ft), Water inlets, Parking slots and Municipal property tax for the month, ticking \"Let out to a tenant\" where the surcharge applies.",
+    "Read the Flat-wise bill table, which splits every flat into Service, Area based, Water, Parking, Tax, Non-occupancy and Total columns, then press Copy result.",
+  ],
   intro:
     "This splitter apportions a housing society's monthly budget between flats using the basis set out in bye-law 68 of the model bye-laws for co-operative housing societies: service charges divided equally per flat, repairs and sinking fund in proportion to built-up area, water charges by the number of inlets, parking per slot and municipal tax at the actual amount billed. Enter the budget heads and each flat's details to get a flat-wise bill you can put before the managing committee. It also applies the 10% ceiling on non-occupancy charges for flats let out to tenants.",
   useCases: [

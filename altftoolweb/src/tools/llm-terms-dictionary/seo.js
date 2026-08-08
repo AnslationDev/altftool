@@ -1,4 +1,5 @@
 const seo = {
+  title: "LLM Terms Dictionary: Definition Briefs by Audience",
   metaDescription:
     "List the LLM terms your team keeps hitting — temperature, top-p, RAG, embeddings — pick an audience and depth, and copy a definition brief.",
   steps: [

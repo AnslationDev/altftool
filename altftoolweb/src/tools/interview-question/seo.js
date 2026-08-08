@@ -1,4 +1,12 @@
 const seo = {
+  title: "150 Interview Questions for 15 Roles, Answers Hidden",
+  metaDescription:
+    "A practice bank of 150 questions, ten each for 15 roles from frontend to HR. Answers stay hidden until you press Show Answer; filter by difficulty.",
+  steps: [
+    "Pick a role card on the landing grid — Frontend Developer, Backend Developer, Mobile Developer and twelve more — to open its ten questions.",
+    "Narrow the set with the Search keywords... box and the All Difficulties select (Beginner, Intermediate, Advanced); the results count updates as you type.",
+    "Answer aloud first, then press Show Answer to reveal the model answer; Back to Domains returns you to the role list.",
+  ],
   intro:
     "Interview Question is a practice bank of 150 technical and behavioural interview questions, ten for each of 15 roles — frontend, backend, mobile, DevOps, cybersecurity, data science, UI/UX, product, QA, cloud, game development, blockchain, networking, database administration and HR behavioural. Every question carries a model answer that stays hidden until you tap to reveal it, so you can attempt it first, and each is tagged Beginner, Intermediate or Advanced with a filter and keyword search over the set. It is a self-testing drill, not a list of answers to memorise.",
   useCases: [

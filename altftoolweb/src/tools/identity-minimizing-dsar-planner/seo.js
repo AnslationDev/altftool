@@ -1,4 +1,12 @@
 const seo = {
+  title: "DSAR Identity Verification Planner: 1-3 Factors",
+  metaDescription:
+    "Set DSAR identity checks by disclosure risk: 1 factor for low, 2 medium, 3 high, plus one more for sensitive data, chosen from proof you already hold.",
+  steps: [
+    "Pick the Request type - Access / copy, Correction, Deletion or Account control - and set Disclosure risk to Low, Medium or High.",
+    "List the Already-held verification factors you can check, such as a signed-in session, verified email or recent support ticket ID, then switch on Sensitive data involved where third-party data may be exposed.",
+    "Read the chosen factors against the target of 1, 2 or 3 plus the sensitive uplift, with the standing reminder to delete temporary proof, then use Download for identity-minimizing-dsar-planner.txt.",
+  ],
   intro:
     "The Identity-Minimizing DSAR Planner works out how many identity factors you should require before answering a data subject access, correction, deletion or account-control request, and picks them from proof you already hold rather than asking for new documents. It maps disclosure risk to a target of 1 factor for low risk, 2 for medium and 3 for high, adding one more when the response may expose sensitive or third-party data. Privacy operations staff and small-team DPOs get a proportionate verification plan plus a reminder to delete temporary proof on a documented schedule.",
   useCases: [

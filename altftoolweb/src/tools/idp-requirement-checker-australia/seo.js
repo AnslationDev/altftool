@@ -1,4 +1,12 @@
 const seo = {
+  title: "Do You Need an IDP to Drive in Australia? Checker",
+  metaDescription:
+    "Australia only requires an IDP or English translation if your licence is not in English. Check by state, plus the 3 or 6-month resident deadline.",
+  steps: [
+    "Answer where your driving licence was issued and what you already hold — an International Driving Permit, a translation or nothing.",
+    "Choose the state or territory, whether you are a visitor or a permanent resident, and the arrival or residency start date.",
+    "The verdict gives the paperwork required, how long the overseas licence lasts, the date a local licence is due, and the 0.05 blood-alcohol limit.",
+  ],
   intro:
     "This checker tells you whether Australia expects an International Driving Permit or an official English translation alongside your overseas licence, and how long the state you are heading for lets you keep using it. Licensing is state and territory law, and every jurisdiction applies the same first test: if the licence is not in English, the driver must carry an IDP or an accepted English translation with it. The second test is status - a temporary visitor generally faces no deadline at all, while a permanent resident gets three months in most states and six in Victoria.",
   useCases: [

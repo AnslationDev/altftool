@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bulk Discount Calculator: Flat vs Graduated Tier Pricing",
+  metaDescription:
+    "Prices a quantity order on flat or graduated volume tiers, folds in freight and GST, and shows the effective and landed cost per unit.",
+  steps: [
+    "Enter Quantity (units), Shipping / freight (INR), GST on goods and freight (%) and Free shipping above goods value (INR).",
+    "Press Add tier for each quantity break — the first must start at quantity 1 — then choose 'Flat rate for the whole order' or 'Graduated, band by band'.",
+    "Read the Effective cost per unit, the band-by-band table, and the flag when ordering more units costs less in total.",
+  ],
   intro:
     "Bulk price lists come in two shapes and they give different totals for the same order. Flat (non-cumulative) tiers charge every unit at the rate of the band the quantity reaches, so 60 units on a 50+ break at Rs 80 costs Rs 4,800. Graduated (slab) tiers charge each unit at its own band's rate, so the same 60 units cost 9 × 100 + 40 × 90 + 11 × 80 = Rs 5,380. This calculator prices an order either way, adds freight and GST on goods plus freight, and reports the effective and landed cost per unit — including the flat-tier cases where ordering more units lowers the total.",
   useCases: [

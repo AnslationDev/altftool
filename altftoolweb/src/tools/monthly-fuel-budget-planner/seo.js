@@ -1,4 +1,12 @@
 const seo = {
+  title: "Monthly Fuel Budget Planner: Petrol, Diesel and CNG",
+  metaDescription:
+    "Costs up to 10 vehicles at once from monthly km and mileage, then works out the kilometres to cut to fit inside your fuel cap.",
+  steps: [
+    "Press Add vehicle, then set each one's Fuel, Distance per month (km), Mileage (km per litre or kg) and Price per litre or kg.",
+    "Enter your Monthly fuel budget (0 for none) to test the fleet total against a cap.",
+    "Read the Fuel spend per month, the per-vehicle Cost / month and Share table, and the kilometres to trim to get under the cap.",
+  ],
   intro:
     "The Monthly Fuel Budget Planner costs a household's whole set of vehicles at once: for each one it works out fuel used as monthly km ÷ mileage, multiplies by the price per litre or per kilogram, and adds the money up across petrol, diesel and CNG vehicles together. Set a monthly cap and it tells you the overspend and, using the fleet's fuel-weighted cost per kilometre, exactly how many kilometres you would have to drop to fit inside it. It is for the person running two or three vehicles in one house who wants one number for the month rather than three separate guesses.",
   useCases: [

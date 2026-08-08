@@ -1,4 +1,12 @@
 const seo = {
+  title: "JSON Flatten and Unflatten: Dot Notation Both Ways",
+  metaDescription:
+    "Flatten nested JSON to dot-notation paths or rebuild it, with bracket [0] or dot .0 array indices; conflicting paths error instead of overwriting.",
+  steps: [
+    "Set Direction to 'Flatten — nested to dot notation' or 'Unflatten — dot notation to nested', then paste your document into the input box, which is labelled 'Nested JSON input' or 'Flat JSON input (path keys)' to match.",
+    "Pick the Array index style — 'Bracket indices — users[0].name' or 'Dot indices — users.0.name' — and the Output formatting: 2 spaces, 4 spaces or Minified.",
+    "Read the headline leaf or path count with the Max depth or Null-filled indices row and any warnings about dotted keys, then press 'Copy JSON' to take the converted document.",
+  ],
   intro:
     "This tool flattens nested JSON into a single-level object of dot-notation paths — user.address.city or users[0].name — and rebuilds the nested structure from those paths, in either direction. It supports both common conventions: lodash-style bracket indices ([0]) and flat-package-style dot indices (.0), keeps empty objects and arrays as leaves so round-trips are lossless, and treats conflicting paths as errors rather than silent overwrites. It is built for developers preparing JSON for CSV export, diffing deeply nested API responses, or authoring config as flat key lists.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Heat Pump vs Furnace Cost: COP Break-Even Estimator",
+  metaDescription:
+    "Divides your annual heat demand by seasonal COP and furnace efficiency at your own tariffs, and shows the break-even COP where the two cost the same.",
+  steps: [
+    "Enter Annual useful heat need (kWh), Seasonal heat-pump COP, Electricity price / kWh, Fuel price / kWh input and Furnace seasonal efficiency (%), or press the 12 MWh heat need example.",
+    "Add any Heat-pump annual fixed cost and Furnace annual fixed cost; the Result line updates live and names which system is lower and by how much.",
+    "Read the Heat-pump electricity, Heat-pump cost, Furnace fuel input, Furnace cost and Break-even COP rows, then use Copy, or Download to save heat-pump-vs-furnace-estimator.txt.",
+  ],
   intro:
     "This estimator compares the annual running cost of a heat pump against a fuel furnace by dividing your yearly useful heat need by each system's efficiency — the seasonal COP for the heat pump, the seasonal efficiency percentage for the furnace — and pricing the resulting energy at your own electricity and fuel tariffs. It reports both annual bills, the gap between them, and the break-even COP at which the heat pump stops being cheaper. It is for homeowners and installers weighing a heating swap who want the arithmetic on their own numbers rather than a generic claim.",
   useCases: [

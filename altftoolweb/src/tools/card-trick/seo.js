@@ -1,4 +1,7 @@
 const seo = {
+  title: "Card Trick: Prediction, Memory & 52-Card Free Play",
+  metaDescription:
+    "Four modes on one 52-card deck: Free Play with a Fisher-Yates shuffle, Pick a Card, a forced-card Prediction, and an eight-card Memory round.",
   intro:
     "Card Trick is an interactive 52-card deck with four modes: Free Play (shuffle, draw 1, draw 5, random card), Pick a Card, Prediction, and a Memory round. Pick a Card fans out seven cards to memorise and then reveals your choice; Prediction picks its card first and uses the classic magician's force to place it in whichever of six face-down slots you tap; Memory flashes one card, hides it among eight, and tracks how many attempts you needed. The deck is shuffled with a Fisher-Yates algorithm, and your best Memory score, card theme and sound setting are remembered on your device.",
   useCases: [

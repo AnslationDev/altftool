@@ -1,4 +1,12 @@
 const seo = {
+  title: "No Dues Certificate Format and RBI 30-Day Deadline",
+  metaDescription:
+    "Draft the lender's no dues certificate or the borrower's request, date the RBI 30-day document release deadline, and price delay at ₹5,000 a day.",
+  steps: [
+    "Choose No dues certificate issued by the lender (fill-in format) or Borrower's request to the lender for the NDC and documents, then the Account type.",
+    "Fill the lender, borrower, Account / loan number and Closure date fields; the RBI 30-day window is counted from the closure you enter.",
+    "The drafted letter appears with Closure date, Days allowed and Release deadline rows plus any ₹5,000 a day delay compensation; press Copy document.",
+  ],
   intro:
     "The No Dues Certificate Generator produces either the certificate a lender signs confirming a loan or account is fully repaid, or the borrower's letter asking for it along with the original documents. It dates the release deadline set by the Reserve Bank of India circular of 13 September 2023, which requires a regulated entity to return all original movable and immovable property documents and remove any registered charge within 30 days of full repayment, and computes the ₹5,000 per day compensation payable when that deadline is missed through the lender's fault.",
   useCases: [

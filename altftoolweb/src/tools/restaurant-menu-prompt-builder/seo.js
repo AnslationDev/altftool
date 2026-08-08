@@ -1,4 +1,12 @@
 const seo = {
+  title: "Menu Prompt Builder with EU 14 / US 9 Allergen Check",
+  metaDescription:
+    "Build a menu-writing prompt and screen ingredients against the EU's 14 allergens, the US's 9 or the Codex list — each flag names the trigger word.",
+  steps: [
+    "Fill in Restaurant name, Cuisine and Menu section, then list Dishes — one per line and their ingredients, comma separated.",
+    "Pick the Allergen declaration regime — EU/UK 14, United States 9 or the Codex-aligned list — plus pricing presentation and words per description.",
+    "Copy prompt lifts the finished prompt; Allergen groups flagged and the Matched by keyword table name the ingredient behind each hit.",
+  ],
   intro:
     "This builder turns a dish list and its ingredients into a menu-writing prompt, and screens those ingredients for the allergen groups your jurisdiction requires you to declare. You can select the EU list of 14 groups from Regulation (EU) No 1169/2011 Annex II, the nine United States major food allergens under FALCPA including sesame, or the Codex-aligned list that underpins several national rules including the FSSAI labelling regulations. Every match is shown with the ingredient word that triggered it, so a chef can confirm or correct it rather than trusting the software.",
   useCases: [

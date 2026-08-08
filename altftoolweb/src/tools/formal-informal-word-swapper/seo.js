@@ -1,4 +1,12 @@
 const seo = {
+  title: "Informal to Formal Word Swapper: 112 Register Pairs",
+  metaDescription:
+    "Swap wording between registers with 112 paired equivalents — 80 safe, 32 context-dependent and opt-in — keeping your original capitalisation.",
+  steps: [
+    "Paste an email, a paragraph or a whole draft into Your text.",
+    "Set Direction to 'Informal → formal' or 'Formal → informal', optionally use 'Limit to a category' for phrasal verbs, contractions, hedges or email openings, and tick the context-dependent swaps to include them.",
+    "Read Swaps applied and the Converted text with every replacement listed by category and warning, then press Copy text.",
+  ],
   intro:
     "Formal Informal Word Swapper rewrites a block of text between registers using 112 paired equivalents — phrasal verbs, everyday vocabulary, connectives, contractions, hedges and email openings. Eighty of the pairs are marked safe, meaning the swap holds in essentially any sentence; the other thirty-two depend on the sentence and are applied only if you ask for them, because 'about' should not become 'regarding' in 'about ten kilos'. Longer phrases are replaced before shorter ones and your original capitalisation is preserved, so 'Can't' becomes 'Cannot' rather than 'cannot'.",
   useCases: [

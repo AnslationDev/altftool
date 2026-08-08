@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hair Fall Count Log: Is 100 Hairs a Day Normal?",
+  metaDescription:
+    "Log daily shed counts, keep wash days separate, and see your average against the normal 50-100 a day range, with the post-trigger timeline.",
+  steps: [
+    "For each day in the Daily log, enter the Date and Hairs collected, and tick \"I washed my hair on this day\" on wash days.",
+    "Press Add a day for extra rows, and set the optional Trigger date if a fever, surgery or childbirth preceded the shedding.",
+    "Read Average per day against the 50-100 band, compare the Wash-day average with the Non-wash-day average, then press Copy result.",
+  ],
   intro:
     "The Hair Fall Count Log records how many hairs you shed each day and averages them across the whole period, so the figure can be compared against the normal adult range of roughly 50 to 100 hairs a day. Wash days are logged separately because hairs that detach on dry days stay caught in the hair until the next wash, which is why a single wash-day count of 200 usually means nothing on its own. An optional trigger date maps the 2 to 3 month delay and roughly 6 month settling pattern typical of telogen effluvium after illness, surgery, childbirth or sharp weight loss.",
   useCases: [

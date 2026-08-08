@@ -1,4 +1,12 @@
 const seo = {
+  title: "Data Correction Request Letter: GDPR Art. 16 Template",
+  metaDescription:
+    "Draft a rectification letter listing each wrong field, its correct value and your evidence, with the one-month GDPR or 45-day CCPA reply date calculated.",
+  steps: [
+    "Fill Your full name, Organisation holding the data, Your postal address, Your email address and Account or customer reference, then set Date you send the request, Applicable law (EU — GDPR and the other regimes) and How you will send it.",
+    "Press Add correction for each error and complete its Field, Value currently on file, Correct value and Evidence you can supply rows; optionally tick \"Ask for processing to be restricted while accuracy is checked\" and \"Ask for everyone the data was shared with to be told\".",
+    "The \"They must reply by\" panel gives the deadline date alongside Right relied on, Corrections listed, Corrections with evidence and Deadline if they take the extension; press Copy letter for the drafted request, or Reset.",
+  ],
   intro:
     "The Data Correction Request Letter Generator builds a rectification request that names each inaccurate field, the value currently on file, the correct value and the supporting evidence, then calculates the exact date the organisation must reply by. It applies the real response periods: one calendar month under GDPR Art. 12(3), extendable by two further months, and 45 calendar days under Cal. Civ. Code s.1798.130(a)(2), extendable once by 45. For anyone whose date of birth, address, employment record or credit file is wrong and who wants a request that is hard to ignore.",
   useCases: [

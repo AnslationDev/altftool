@@ -1,4 +1,12 @@
 const seo = {
+  title: "XIRR Calculator for SIPs and Irregular Cash Flows",
+  metaDescription:
+    "Enter dated cash flows — money in negative, out positive — for the annualised XIRR, shown beside point-to-point CAGR, invested and redeemed.",
+  steps: [
+    "Fill each row's 'Date' and 'Amount (₹)' following the stated sign convention — money you put in is negative, money you take out is positive — pressing 'Add transaction' for more rows, or paste one 'date,amount' pair per line into 'Paste transactions' and press 'Import (replaces rows)'.",
+    "Set the 'Valuation date' and 'Current value (₹)' in the 'Current value today' box, or start from the 'SIP + lump top-up' or 'Irregular investing' preset. There is no calculate button: the rate re-solves as you edit.",
+    "Read the annualised percentage under 'Your true annualized return' with the Total invested, Total redeemed, Current value and Period tiles, the 'Why XIRR ≠ CAGR here' comparison, and the Date / Type / Amount / 'Invested so far' table, then press 'Copy result'.",
+  ],
   intro:
     "XIRR is the annualised rate that makes the present value of a set of dated cash flows sum to zero, and this calculator solves it for investments paid in at irregular dates — SIP instalments, top-ups, partial withdrawals and a closing valuation. Enter each flow as a date and an amount (money in negative, money out or current value positive), and it returns the annual rate along with total invested, total redeemed and the period in years. It also shows the naive point-to-point CAGR beside it so you can see how much the timing of your instalments actually changed the answer.",
   useCases: [

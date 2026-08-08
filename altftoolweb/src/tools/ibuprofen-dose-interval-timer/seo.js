@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ibuprofen Timer: Next Dose and mg Left in 24 Hours",
+  metaDescription:
+    "Enter the last dose time to get the earliest next dose and the mg still left under the 1200 mg OTC, 3200 mg Rx or 40 mg/kg child ceiling.",
+  steps: [
+    "Under \"Who is the dose for?\" pick Adult / 12+ over-the-counter, Adult prescription strength or Child (weight based).",
+    "Enter Single dose (mg), Gap between doses (hours), Last dose taken at and Total taken in the last 24 h (mg).",
+    "Read the earliest permitted next dose and Remaining doses in this 24-hour window, then press Copy result.",
+  ],
   intro:
     "The Ibuprofen Dose Interval Timer converts the time of your last dose into the earliest hour the next one is due and shows how many milligrams remain under the 24-hour ceiling. It follows the dosing rules printed on the pack: 200-400 mg every 4-6 hours with a 1200 mg daily maximum for adult over-the-counter use, 400-800 mg every 6-8 hours up to 3200 mg on prescription, and 5-10 mg/kg every 6-8 hours capped at 40 mg/kg a day for children. It is a timing and arithmetic aid for people already taking ibuprofen as directed, not a substitute for the label or a pharmacist.",
   useCases: [

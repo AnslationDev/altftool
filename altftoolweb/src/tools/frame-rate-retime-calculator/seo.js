@@ -1,4 +1,12 @@
 const seo = {
+  title: "Frame Rate Conform and Retime Speed Calculator",
+  metaDescription:
+    "60 fps on a 24 fps timeline is 40% speed and 2.5x longer. Get the exact speed, new duration, timecode, frame count and audio pitch shift in semitones.",
+  steps: [
+    "Pick Conform (interpret footage) or Retime to a target speed, then enter Source frame rate (fps) and Timeline frame rate (fps), or tap a preset such as 60 → 24.",
+    "Set Clip length (seconds), and in retime mode add Target speed (%) to see how many frames the timeline needs against how many were recorded.",
+    "Read the playback speed, duration multiplier, new duration with timecode and the audio pitch shift in semitones, then press Copy result.",
+  ],
   intro:
     "Conforming footage means reinterpreting every recorded frame as one timeline frame, and this calculator gives the exact result: speed = timeline fps ÷ source fps, and the clip lasts source fps ÷ timeline fps times as long. Sixty-frame footage on a 24 fps timeline therefore plays at 40% speed and runs 2.5 times longer, with the frame count unchanged. The tool also covers the other direction — set a target speed and it works out how many frames the timeline needs versus how many were actually recorded, which is what determines whether you get clean slow motion or blended frames.",
   useCases: [

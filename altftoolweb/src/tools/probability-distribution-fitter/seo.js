@@ -1,4 +1,7 @@
 const seo = {
+  title: "Fit Normal, Exponential or Lognormal by AIC Rank",
+  metaDescription:
+    "Paste a numeric sample and rank normal, exponential and lognormal fits by AIC = 2k − 2·lnL, with method-of-moments parameters for each.",
   intro:
     "This fitter takes a numeric sample, estimates the parameters of the normal, exponential and lognormal distributions from it, and ranks those candidates by AIC = 2k − 2·lnL so you can see which shape describes your data best. Parameters come from the sample moments: the normal gets the sample mean and the population standard deviation, the exponential gets λ = 1/mean, and the lognormal gets the mean and standard deviation of the logged values. It is a quick exploratory comparison for students and analysts deciding which model is worth pursuing, not a goodness-of-fit test.",
   useCases: [

@@ -1,4 +1,10 @@
 const seo = {
+  title: "Ovulation Calculator: Fertile Window for 6 Cycles",
+  steps: [
+    "Enter First day of your last period and your Average cycle length (days), anywhere from 21 to 40.",
+    "Check the banner, which names today's fertility level and the cycle day you are on out of your cycle length.",
+    "Read the Next 6 cycles table for period start, fertile window, ovulation and best days to conceive, check the Calendar view, then press Copy schedule.",
+  ],
   intro:
     "The Ovulation Calculator projects your ovulation day, six-day fertile window and best conception days across the next six cycles from two inputs: the date your last period started and your usual cycle length. It works from the calendar method, placing ovulation 14 days before the next period is due — cycle day 14 on a 28-day cycle — and marking the fertile window as the five days before ovulation through one day after. Results are laid out on a month calendar and in a per-cycle table you can copy. This is general information for planning, not a substitute for medical advice.",
   useCases: [

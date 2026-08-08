@@ -1,4 +1,12 @@
 const seo = {
+  title: "Earthy Palette Generator: Ochre, Sienna, Umber Hues",
+  metaDescription:
+    "Seven earth-pigment roles from limestone to umber, a six-step lead ramp, warm share and lightness spread readings, and kraft-board label contrast.",
+  steps: [
+    "Type a Seed word or phrase and choose a Lead pigment family: Clay-led (terracotta and sienna), Moss-led (green earth and olive) or Ochre-led (yellow ochre and sienna).",
+    "Drag the Earthiness slider from 0 to 100 — higher pulls saturation towards raw pigment — or press Shuffle seed for a new draw.",
+    "Check Warm share of the palette against the 55% target, plus the Packaging labels and Contrast panels, then press Copy hex codes.",
+  ],
   intro:
     "The Earthy Organic Palette Generator builds a natural palette from the hue positions of real mineral pigments — yellow ochre, raw and burnt sienna, terracotta, green earth and raw umber — rather than from arbitrary browns. It returns seven roles from limestone through to umber, a six-step ramp of the lead pigment, and three numbers worth checking before you commit: the warm share of the palette, the mean saturation and the lightness spread. It also previews the palette on unbleached kraft board and picks the label ink that clears the WCAG 4.5:1 minimum on each fill.",
   useCases: [

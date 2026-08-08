@@ -1,4 +1,12 @@
 const seo = {
+  title: "South Korea Etiquette: Hoesik, Subway and Photo Rules",
+  metaDescription:
+    "Ranks Korean etiquette for the places you will actually be - restaurants, hoesik, subway, palaces, homes and offices - with legal rules always shown.",
+  steps: [
+    "Tick where you will actually be - restaurants and cafés, drinking and hoesik, subway and taxis, palaces and temples, shops, a Korean home, offices or the street.",
+    "Choose the kind of trip - sightseeing, business, food, visiting family, or first time in Korea - and set how many rules to show, between 3 and 60.",
+    "Work down the ranked briefing, ticking each rule you already know to raise the etiquette readiness score, then press Copy briefing.",
+  ],
   intro:
     "This guide turns Korean etiquette into a ranked briefing for the situations you will actually be in, built around the one idea that explains most of it: relative age and seniority decide who greets first, who pours, who starts eating and who pays. Tick the restaurants, drinking occasions, subway journeys, palaces, shops, homes, offices and streets on your trip, and it returns the rules that apply, weighted by severity and trip type, with a readiness score for what you already know. Rules with legal consequences — photography and smoking above all — are shown whatever you tick.",
   useCases: [

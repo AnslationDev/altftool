@@ -1,4 +1,12 @@
 const seo = {
+  title: "CAA Record Generator: RFC 8659 issue, issuewild, iodef",
+  metaDescription:
+    "Build RFC 8659 CAA records — issue, issuewild and iodef tags with the flags octet — to limit which CAs may issue TLS certificates for your domain.",
+  steps: [
+    "Enter the Domain and TTL (seconds), then tick the certificate authorities allowed to issue — Let's Encrypt, DigiCert, Sectigo, Google Trust Services and others are listed with their identifiers.",
+    "Set Wildcard certificates (issuewild) to \"Same CAs as normal certificates\", \"Different CA list for wildcards\" or \"Forbid wildcard issuance entirely\", add an address under Violation reports to (iodef, optional), and tick the issuer-critical flag (128) if you want it.",
+    "The CAA record set panel shows the zone-file lines and how many records to publish, with warning notes underneath; press Copy records to take the zone lines, or Reset to restore the defaults.",
+  ],
   intro:
     "This generator builds CAA (Certification Authority Authorization) records as defined by RFC 8659 — DNS records that name the certificate authorities permitted to issue TLS certificates for a domain, using the issue, issuewild and iodef tags with the correct flags octet. Public CAs have been required to check CAA before every issuance since 8 September 2017 under the CA/Browser Forum Baseline Requirements, so a correct record set meaningfully reduces mis-issuance risk. It is for site owners, security teams and anyone completing a security questionnaire that asks for CAA.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Retirement Corpus Calculator: Inflation-Adjusted SIP",
+  metaDescription:
+    "Inflates today's expenses to your retirement year, then discounts the drawdown at the real return to give the corpus and the monthly SIP that funds it.",
+  steps: [
+    "Enter Current age, Retire at, Current monthly expenses and Existing retirement corpus, or tap a preset such as \"Classic plan, 30\".",
+    "Open Assumptions to set Plan till age (life expectancy), Inflation, Pre-retirement return and Post-retirement return.",
+    "Read the corpus-needed tile and Monthly SIP to get there, then press Copy plan for the year-wise build and drawdown.",
+  ],
   intro:
     "The Retirement Corpus Calculator works out the lump sum you need on your retirement date and the monthly SIP that gets you there, by inflating today's expenses to your retirement year and then discounting the whole retirement period at the real return — (1 + post-retirement return) ÷ (1 + inflation) − 1 — as an annuity due. It is for anyone who knows roughly what they spend each month and wants a defensible target number rather than a round-figure guess. You also see how much of the target your existing savings already cover, and what a five-year delay in starting would cost.",
   useCases: [

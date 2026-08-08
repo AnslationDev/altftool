@@ -1,4 +1,12 @@
 const seo = {
+  title: "Car Loan 20/4/10 Rule Check & Down Payment Planner",
+  metaDescription:
+    "Work out the monthly saving for a 20% down payment, test the EMI against the 20/4/10 rule, and see ownership cost after India Motor Tariff resale.",
+  steps: [
+    "Under Buying it, fill in On-road price today, Down payment (% of price), Car loan rate (% per year), Loan tenure (years) and Gross monthly income.",
+    "Under Owning it, add Kilometres driven a year, Fuel efficiency (km per litre), Fuel price, Insurance a year and Service & repairs a year.",
+    "Read the monthly saving figure, the 20/4/10 affordability rule checks and the Net cost of ownership row, then press Copy result.",
+  ],
   intro:
     "This planner answers the three questions a car purchase actually turns on: what to save each month for the down payment, whether the EMI is affordable, and what the car costs across the years you keep it. Affordability is tested against the 20/4/10 rule — at least 20% down, a loan of no more than four years, and total car costs including fuel, insurance and servicing under 10% of gross monthly income. Ownership cost is down payment plus EMIs plus running costs, less a resale value estimated from the India Motor Tariff depreciation schedule used to fix Insured Declared Value.",
   useCases: [

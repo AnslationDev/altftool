@@ -1,4 +1,12 @@
 const seo = {
+  title: "What Size Rug Do I Need? Living, Dining, Bedroom",
+  metaDescription:
+    "Enter room, sofa or table size and get the smallest standard rug (5x8, 8x10, 9x12 and up) that keeps 60 cm clear past a dining table.",
+  steps: [
+    "Pick Living room, Dining room or Bedroom, switch between Centimetres and Feet, and enter Room width and Room length.",
+    "Enter the Sofa width and depth (or Table length and width, or Bed mattress size) and choose a Placement such as \"Front legs on the rug\".",
+    "Read \"Rug to buy\" for the smallest standard size from 3 x 5 ft up to 12 x 15 ft plus runners, with the bare-floor border verdict, then press Copy result.",
+  ],
   intro:
     "This selector applies the standard interior-design clearance rules for rug size rather than eyeballing it: a dining rug must extend at least 60 cm beyond every edge of the table so a chair pulled back keeps all four legs on it; a living-room rug on a front-legs-on layout runs about 30 cm past the sofa on each side; and a bedroom rug should show 60 cm of soft floor down each side and past the foot. It converts those clearances into the smallest standard size — 5x8, 6x9, 8x10, 9x12 and the rest — and checks the 45 cm border of bare floor that should remain around it.",
   useCases: [

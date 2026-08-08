@@ -1,4 +1,12 @@
 const seo = {
+  title: "Icon Naming Checker: kebab, snake, camel or Pascal",
+  metaDescription:
+    "Audit icon file names against one convention, flag case-only collisions, illegal characters and reserved device names, and get git mv commands.",
+  steps: [
+    "Paste your list into 'Icon file names (one per line)'; the sample loads ArrowLeft.svg, arrow-right.svg, arrow_up.svg, chevronDown-24.svg, Chevron-Down-24.svg, user profile.svg and con.svg.",
+    "Choose the Naming convention — kebab-case, snake_case, camelCase or PascalCase — set 'Required extension (blank to allow any)' and 'Required prefix (blank for none)', list the allowed final tokens such as 16, 24, 32, and tick 'Treat a digit run as its own word' if arrowLeft24 should become arrow-left-24.",
+    "Read the conforming percentage and the Current name / Suggested / Problems table, check the collision, case-clash and reserved-device-name warnings, then press 'Copy rename plan' to take the git mv commands.",
+  ],
   intro:
     "The Icon Naming Consistency Checker audits a list of icon file names against a single convention - kebab-case, snake_case, camelCase or PascalCase - and returns the corrected name for each one. It tokenises each name at separator, camel-hump and acronym boundaries, then re-joins it in the target style, and separately flags names that collide after renaming, differ only by letter case, exceed the 255 character path-component limit, contain characters Windows or POSIX forbid, or match a reserved MS-DOS device name. The output includes a ready-to-run list of git mv commands.",
   useCases: [

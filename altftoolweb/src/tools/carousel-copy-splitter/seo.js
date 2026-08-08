@@ -1,4 +1,12 @@
 const seo = {
+  title: "Carousel Copy Splitter for Instagram and LinkedIn",
+  metaDescription:
+    "Split long copy into slides at sentence boundaries inside your characters-per-slide budget, hook slide first, CTA last, up to 20 Instagram slides.",
+  steps: [
+    "Choose a Platform preset — Instagram carousel up to 20 slides, LinkedIn document post up to 12, or TikTok photo post up to 35 — which fills in Characters per slide and Slide limit for you.",
+    "Paste your text into Body copy, and optionally write \"Slide one (hook)\" and \"Final slide (call to action)\"; leaving the hook blank uses your first sentence.",
+    "\"Slides needed\" reports the slide count and how full each slide is against the character budget; press Copy slides to take the plan into your design file.",
+  ],
   intro:
     "This splitter packs long-form copy into carousel slides greedily on sentence boundaries: sentences are added to a slide until the next one would pass your characters-per-slide budget, then a new slide begins. A sentence longer than the budget is broken at a clause and then at a word, so no word is ever cut in half. Slide one is reserved for the hook and the last slide for the call to action, and the result reports how balanced the slide lengths are against the platform's slide limit — 20 items on an Instagram carousel, fewer in practice on a LinkedIn document post.",
   useCases: [

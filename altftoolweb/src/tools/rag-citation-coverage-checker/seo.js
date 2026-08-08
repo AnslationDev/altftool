@@ -1,4 +1,12 @@
 const seo = {
+  title: "RAG Citation Coverage Checker: Claim-to-Source Map",
+  metaDescription:
+    "Splits an answer into claims and marks each linked, mixed, unknown or missing against your retrieval set. Structural check, not a support check.",
+  steps: [
+    "Paste the answer into Generated answer and the retrieval set into Retrieved sources — JSON, or one line per source as ID | passage — or use Open text for a .json or .txt file up to 1 MB.",
+    "Press Check coverage to fill the Coverage, Claims, Linked, No citation, Unknown only and Sources tiles.",
+    "Work down the Claim map, where each sentence reads Linked, Mixed references, Unknown references or No citation, then use Counts-only report to download rag-citation-coverage-report.json.",
+  ],
   intro:
     "The RAG Citation Coverage Checker splits a generated answer into claim sentences and reports, for each one, whether it carries a citation marker that resolves to an ID in the retrieval set you paste alongside it. Every claim comes back as linked, mixed, unknown or missing, and the coverage figure is the share of claims carrying at least one recognised source ID, to one decimal place. This is a structural check for people evaluating RAG pipelines: it tells you whether a citation points at a real retrieved chunk, never whether that chunk actually supports the sentence.",
   useCases: [

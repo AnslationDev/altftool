@@ -1,4 +1,12 @@
 const seo = {
+  title: "194C TDS Calculator: 1% or 2% on Contractor Bills",
+  metaDescription:
+    "Section 194C TDS at 1% for an individual or HUF, 2% for others, tested against the Rs 30,000 single and Rs 1,00,000 yearly limits.",
+  steps: [
+    "Pick the Status of the contractor, then enter the Bill amount excluding GST and any Material value shown separately.",
+    "Add earlier 194C payments to this payee this year, and tick whether a valid PAN or a small transporter declaration is on file.",
+    "Read the TDS to deduct on this bill with the rate applied and the net amount payable to contractor, then press Copy result.",
+  ],
   intro:
     "This calculator applies section 194C of the Income-tax Act to a contractor bill: 1% where the payee is an individual or HUF and 2% for every other payee, tested against the Rs 30,000 single-payment ceiling and the Rs 1,00,000 financial-year aggregate ceiling in section 194C(5). It also handles separately billed material under Explanation (iv) to the section, the small goods-carriage exemption in section 194C(6), and the 20% no-PAN rate under section 206AA. Built for accounts payable teams and small business owners settling labour, transport, catering and job-work bills.",
   useCases: [

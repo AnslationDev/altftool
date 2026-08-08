@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Description Template with Chapter Checks",
+  metaDescription:
+    "Assemble hook, chapters, links and hashtags into a reusable description, checked against the 5,000-character limit and YouTube's chapter rules.",
+  steps: [
+    "Write the Opening line (first 157 characters show before \"Show more\"), then the Summary and Call to action.",
+    "Add Chapters, one per line — \"0:00 Title\", Links, one per line — \"Label | https://...\", plus Hashtags and a Disclosure or legal line; any {{placeholder}} you use gets its own field.",
+    "Characters used counts against the 5,000-character limit while Chapters detected, Chapters valid, Hashtags and Unfilled placeholders report the checks; Copy description copies the finished text.",
+  ],
   intro:
     "Video Description Template Builder assembles a reusable description from a hook, summary, chapters, links, hashtags and a disclosure line, then checks it against the platform rules before you publish. It counts against the 5,000-character description limit, validates chapters (first timestamp at 0:00, at least three of them, each at least 10 seconds long, in ascending order) and warns when hashtags pass 15, the point at which YouTube ignores every hashtag on the video. Placeholders written as double braces let you keep one template and swap the episode-specific parts each time.",
   useCases: [

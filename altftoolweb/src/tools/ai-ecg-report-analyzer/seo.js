@@ -1,4 +1,12 @@
 const seo = {
+  title: "ECG Report Analyzer: PR, QRS and QTc Reference Bands",
+  metaDescription:
+    "Grades typed heart rate, PR, QRS and QTc against adult reference ranges into a weighted 0-25 score. An educational reference, not a diagnostic device.",
+  steps: [
+    "Type Heart Rate (bpm), PR Interval (ms), QRS Duration (ms) and the optional QTc (ms) off your printout, and set Gender so the right QTc band applies.",
+    "Pick Rhythm, Axis, ST Segment and T Waves under Morphology, then press Analyze ECG.",
+    "Read Overall Risk out of 25 with the Interval Analysis and Morphology Assessment bands, then use Copy Report or Download for the .txt.",
+  ],
   intro:
     "The AI ECG Report Analyzer takes the numbers already printed on an ECG report — heart rate, PR interval, QRS duration and QTc — plus rhythm, axis, ST segment and T wave morphology, and classifies each one against standard adult reference ranges before combining them into a weighted 0–25 severity score. It is an educational reference for students, trainees and patients trying to read their own printout, not a diagnostic device: it does not read the tracing itself, only the measurements you type. Every classification and the plain-text report it generates stay in your browser.",
   useCases: [

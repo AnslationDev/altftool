@@ -1,4 +1,12 @@
 const seo = {
+  title: "Badminton Calorie Burn Calculator: Singles vs Doubles",
+  metaDescription:
+    "Rally time is priced at 5.5 to 7.0 METs and breaks at 1.3, so two hours at the hall is not counted as two hours of play. Four match formats.",
+  steps: [
+    "Enter your Body weight and switch the unit beside it between kg and lb.",
+    "Choose a Match format — Social doubles (5.5 MET), Social singles (6.0 MET), Competitive doubles (6.5 MET) or Competitive singles (7.0 MET) — then fill \"Time actually playing (minutes)\" and \"Breaks between games (minutes)\", which are charged at the 1.3 MET standing rate.",
+    "The \"Total calories burned\" headline updates live with the format and minutes on court beneath it; press Copy result to take the figures away.",
+  ],
   intro:
     "The Badminton Calorie Burn Calculator converts your body weight, rally time and break time into an estimated calorie burn using the MET equation kcal/min = MET x 3.5 x kg / 200. The Compendium of Physical Activities rates competitive badminton at 7.0 METs and social singles or doubles at 5.5 METs, and this tool prices the singles-versus-doubles gap in between, while breaks between games are counted separately at the 1.3 MET standing rate. It suits club players and coaches who want a session figure that reflects real time on court rather than total time at the hall.",
   useCases: [

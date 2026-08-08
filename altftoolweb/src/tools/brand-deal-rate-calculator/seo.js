@@ -1,4 +1,12 @@
 const seo = {
+  title: "Brand Deal Rate Calculator: CPM, Usage and Exclusivity",
+  metaDescription:
+    "Prices a sponsorship as reach ÷ 1,000 × CPM × deliverables, plus production, usage and exclusivity uplifts and agency fee, with an 85-125% band.",
+  steps: [
+    "Enter Expected qualified reach, Base CPM and Number of deliverables, or press the \"50k reach campaign\" example to load 50,000 reach at a 20 CPM.",
+    "Add Production cost / time value, then Paid usage uplift (%), Exclusivity uplift (%) and Agency / management fee (%).",
+    "Read the estimated quote with its 85%-125% conversation range, itemised as Media value, Production, Usage + exclusivity, Management fee and Deliverables.",
+  ],
   intro:
     "A brand deal rate calculator prices a sponsorship from the bottom up: media value (reach ÷ 1,000 × CPM × number of deliverables), plus your production cost, plus a rights uplift applied to that subtotal for paid usage and exclusivity, plus a management or agency fee on the whole thing. It gives creators a defensible starting number and a negotiation band of 85% to 125% of it, instead of a figure pulled from a follower-count chart. Every component is itemised — media, production, usage and exclusivity, fee — so you can show a brand exactly what they are paying for.",
   useCases: [

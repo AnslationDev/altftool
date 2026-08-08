@@ -1,4 +1,12 @@
 const seo = {
+  title: "Slack AI Prompt Builder for Summaries and Recaps",
+  metaDescription:
+    "Build thread summary, recap, action-item or escalation prompts with fixed headings, sized against Slack's 40,000-character message limit.",
+  steps: [
+    "Fill in Channel, 'Time window' and 'How many messages?', then pick under 'What should it produce?' — Summarise a thread, Recap a channel, Extract action items, Build a decision log, Escalation summary and the rest each force their own fixed headings.",
+    "Describe 'What is the conversation about?' and 'Who reads the summary?', list the 'People in the conversation' so decisions can be attributed, set 'Total bullet points' and 'Words per bullet', and leave 'Use Slack mrkdwn formatting' ticked so the answer uses *bold* rather than Markdown.",
+    "Check the Requested length panel — Estimated characters, 'Fits one Slack message' against the 40,000-character limit, and 'Section blocks needed' for the 3,000-character block cap — then press 'Copy prompt' to take the text shown under 'Your prompt'.",
+  ],
   intro:
     "Slack AI Prompt Builder writes the prompt for a thread summary, channel recap, action-item list or escalation note, fixing the headings the answer must use and the number of bullets it may contain. It then sizes that answer against Slack's real limits — 40,000 characters in one message, 3,000 characters in a Block Kit section block and 50 blocks per message — so you find out before posting that a recap will not fit. It is for anyone who gets summaries back that are three times too long, attribute decisions to nobody, or quietly invent conclusions the thread never reached.",
   useCases: [

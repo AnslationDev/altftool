@@ -1,4 +1,5 @@
 const seo = {
+  title: "Mental Math Trainer: Timed Drills, 13 Question Types",
   metaDescription:
     "Drill addition to ratios across five difficulty bands, in Practice, Timed, Daily, Survival, Speed or Endless mode, then export a per-question CSV.",
   steps: [

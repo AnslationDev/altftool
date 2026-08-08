@@ -1,4 +1,12 @@
 const seo = {
+  title: "Doctor Visit Question Builder: SOCRATES and Ask Me 3",
+  metaDescription:
+    "Answer the eight SOCRATES symptom questions in advance, rank your questions, and see how many actually fit a 10-minute appointment slot.",
+  steps: [
+    "Fill in 'Reason for the visit, in one line', the 'Slot length (minutes)' — 10 by default — and the Appointment date, then answer the eight SOCRATES fields from S — Site through to S — Severity (0–10).",
+    "List your questions and set each one to 'Must ask today', 'Should ask if there is time' or 'Nice to know'; tap a chip under 'Commonly forgotten — tap to add' to add one, and tick anything in the urgent-symptom list.",
+    "Read 'Questions that fit this slot', the numbered 'Ask these, in this order' list, the questions held for next time and the three closing Ask Me 3 questions, then press 'Copy brief' or take the Printable brief.",
+  ],
   intro:
     "A ten-minute appointment is the standard slot in most primary care systems, and most of it goes on the clinician's own history taking and typing — which leaves room for roughly three or four questions. This builder answers the SOCRATES symptom history (Site, Onset, Character, Radiation, Associations, Time course, Exacerbating and relieving factors, Severity) in advance, ranks your questions by must-ask, should-ask and nice-to-know, and cuts the list to what actually fits the slot. It closes with the Ask Me 3 questions every patient should be able to answer on the way out.",
   useCases: [

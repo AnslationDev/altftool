@@ -1,4 +1,7 @@
 const seo = {
+  title: "Cron Expression Generator With Next 5 Run Times",
+  metaDescription:
+    "Turn hourly, daily, weekly, monthly or every-N-minutes into a five-field cron string, with a plain-English reading and the next five run times.",
   intro:
     "The Cron Expression Generator turns a plain schedule choice — every minute, hourly, daily, weekly, monthly, or every N minutes — into a standard five-field cron string (minute, hour, day-of-month, month, day-of-week) and shows the next five times it will actually fire. It is for anyone wiring up a crontab entry, a CI job, or a scheduled task who wants to confirm the expression means what they think before it goes live. Alongside the expression you get a plain-English summary such as \"Runs every Monday at 09:30\" and a list of the upcoming run times in your local timezone.",
   useCases: [

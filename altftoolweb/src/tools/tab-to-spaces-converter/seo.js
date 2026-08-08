@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tab to Spaces Converter with Real Tab Stops (expand)",
+  metaDescription:
+    "Expands each tab to the next tab stop like POSIX expand — a tab at column 6 gives 2 spaces at size 4 — and converts back, showing bytes before and after.",
+  steps: [
+    "Paste code into Input, set Direction to Tabs → spaces or Spaces → tabs, and pick a Tab size (columns).",
+    "Choose Line endings, keep Indentation only (safer for string literals) ticked for the reverse direction, and optionally Trim trailing whitespace.",
+    "Lines changed sits above the indentation before/after, tab-character and byte figures; Copy result or Download writes converted.txt.",
+  ],
   intro:
     "A tab to spaces converter replaces tab characters with the spaces that actually reach the next tab stop, rather than blindly swapping every tab for a fixed number of spaces. Tab stops sit at every multiple of the tab size, so with a size of 4 a tab at column 0 becomes four spaces but a tab at column 6 becomes two — the rule POSIX `expand` follows, and the reason naive converters wreck aligned comments. The tool also runs the conversion backwards like `unexpand`, detects what the file currently uses, and can normalise line endings and trailing whitespace at the same time.",
   useCases: [

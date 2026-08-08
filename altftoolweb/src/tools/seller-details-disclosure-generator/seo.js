@@ -1,4 +1,12 @@
 const seo = {
+  title: "Seller Details Disclosure Generator (GSTIN, PAN, CIN)",
+  metaDescription:
+    "Build the e-commerce seller identity block Rules 4(2) and 5(3) require, with the GSTIN checksum, PAN pattern and 21-character CIN checked as you type.",
+  steps: [
+    "Pick your Legal form and Where you sell, then fill Legal name, Website address and the Registered or principal place of business.",
+    "Add the Customer care email, phone and hours, then the GSTIN (15 characters), PAN (10) and CIN (21) — the fifteenth GSTIN character is recomputed from the first fourteen by the mod-36 algorithm and flagged if it disagrees.",
+    "The \"Fields in the disclosure block\" counter names any mandatory particular still missing; switch the output between Plain text and HTML, then press Copy block.",
+  ],
   intro:
     "The Seller Details Disclosure Generator builds the identity block an online store must publish — legal name, legal form, principal and branch addresses, website, customer care email, phone and hours, plus GSTIN, PAN and CIN. Rules 4(2) and 5(3) of the Consumer Protection (E-Commerce) Rules, 2020 make those particulars mandatory for e-commerce entities and for sellers listing on a marketplace. It also validates the GSTIN against its mod-36 check character, the PAN against its five-letters-four-digits-one-letter pattern, and the CIN against its 21-character structure.",
   useCases: [

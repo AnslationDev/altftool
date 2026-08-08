@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mindfulness Bell Timer: Fixed or Random Bell Gaps",
+  metaDescription:
+    "Ring a bell through a 1-180 minute session at a fixed interval or at random gaps you bound, with opening and closing bells and the full schedule.",
+  steps: [
+    "Set 'Session length (minutes)' anywhere from 1 to 180 and choose the Bell spacing: 'Fixed interval' or 'Random gaps'.",
+    "For a fixed interval set 'Minutes between bells'; for random gaps set 'Shortest gap (minutes)' and 'Longest gap (minutes)' and press 'New random pattern' to redraw the schedule, then tick 'Opening bell at the start', 'Closing bell at the end' and 'Play the bell sound' as you want them.",
+    "Press Start and watch the Time remaining clock, the next-bell countdown and the Bell schedule table turning each row from Waiting to Rung; 'Copy schedule' takes every bell time as text.",
+  ],
   intro:
     "The Mindfulness Bell Timer rings a bell through a session so you can stop, stay still and follow three breaths before carrying on — the 'bell of mindfulness' practice associated with Thich Nhat Hanh and the Plum Village tradition. Bells can be evenly spaced, which suits formal sitting practice, or scheduled at random gaps inside a minimum and maximum you set, which suits informal practice during a working day because the interruption cannot be anticipated. Opening and closing bells are optional, and the full schedule is listed so you know exactly what the session will do.",
   useCases: [

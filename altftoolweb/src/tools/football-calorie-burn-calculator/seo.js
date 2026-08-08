@@ -1,4 +1,7 @@
 const seo = {
+  title: "Football Calorie Burn Calculator: MET by Position",
+  metaDescription:
+    "Calories burned playing football from MET 10 for competitive play, scaled by the distance your position covers — 5.6 km keeper to 11.5 km midfield.",
   intro:
     "The Football Calorie Burn Calculator estimates how many calories a match or training session costs you, using the MET equation kcal/min = MET x 3.5 x body weight in kg / 200 from the Compendium of Physical Activities. Competitive 11-a-side play is rated at 10 METs and casual play at 7 METs, and the result is then scaled by how far your position actually runs — from roughly 5.6 km for a goalkeeper to about 11.5 km for a central midfielder over 90 minutes. It is built for players, coaches and five-a-side regulars who want a defensible number rather than a wristwatch guess.",
   useCases: [

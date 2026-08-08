@@ -1,4 +1,12 @@
 const seo = {
+  title: "Festive Palette Generator with WCAG Contrast Audit",
+  metaDescription:
+    "Six-role campaign palettes for Black Friday, Winter holiday and more, every pairing graded against WCAG contrast, copyable as CSS custom properties.",
+  steps: [
+    "Pick a Season — Winter holiday, Spring sale, Black Friday, New Year or Valentine — and set Hue rotation (degrees).",
+    "Press Next variation, or type a Variation number from 0 to 11, to regenerate the same palette deterministically.",
+    "Read the Swatches, the Contrast audit grades and the CSS variables block, then press Copy CSS or Copy result.",
+  ],
   intro:
     "Festive Seasonal Palette Generator builds a six-role campaign palette — background, surface, primary, accent, highlight and neutral text — for a chosen season, then audits every text-on-background pairing with the WCAG 2.x contrast formula. Each season stores hue offsets from a base hue rather than fixed colours, so rotating the base hue keeps the relationships intact while changing the mood. Output is deterministic: the same season, hue rotation and variation number always return the same palette, which matters when a team needs to reproduce a campaign palette months later.",
   useCases: [

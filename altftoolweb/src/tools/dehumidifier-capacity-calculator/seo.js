@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dehumidifier Size Calculator: Litres per Day Needed",
+  metaDescription:
+    "Size a unit from room volume, humidity and moisture sources, derated from the 30 °C / 80% RH nameplate, with runtime and monthly running cost.",
+  steps: [
+    "Enter Floor area in sq ft or sq m and Ceiling height in feet or metres, then answer \"How damp does it feel?\" — Slightly damp, Moderately damp, Very damp or Wet / seepage.",
+    "Set Room temperature (°C), Current humidity (% RH), Target humidity (% RH) and your Electricity tariff (₹ per kWh), then add the moisture sources: People usually in the space, Wash loads dried indoors per day and Showers taken in this space per day.",
+    "\"Buy a dehumidifier rated\" gives the L/day nameplate at 30 °C / 80% RH along with the derating, expected runtime, kWh per month and running cost; press Copy result.",
+  ],
   intro:
     "A dehumidifier capacity calculator converts the litres of water a room gains each day into the nameplate extraction rate you need to buy. It builds a moisture balance from room volume, air changes per hour, and the humidity ratio difference between your current and target relative humidity — using the Magnus saturation-vapour equation rather than a generic square-footage chart — then adds the water people, laundry and showers release. Because catalogue litres are measured at 30 °C and 80% RH, the result is also derated to the conditions the machine will really see.",
   useCases: [

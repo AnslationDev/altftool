@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pinned Comment Generator for YouTube, IG & LinkedIn",
+  metaDescription:
+    "Build a pinned comment in order - correction, timestamps, links, question - checked against the 10,000 YouTube, 2,200 Instagram and 1,250 LinkedIn limits.",
+  steps: [
+    "Enter the Video topic and pick the Platform: YouTube at 10,000 characters, Instagram at 2,200 or LinkedIn at 1,250.",
+    "Add a Correction, Links one per line as Label | https://, Timestamps as 0:00 Label, and a Community prompt style, ticking Links are affiliate or sponsored where you earn from them.",
+    "Read the Draft pinned comment with its character count against that platform limit and any link or timestamp warnings, then press Copy comment.",
+  ],
   intro:
     "A pinned comment is the one comment that sits above the thread, and it does four jobs a description cannot: it corrects anything wrong in the video, carries the links people ask for, gives the audience a single thing to reply to, and stays visible on mobile where descriptions are collapsed. This generator assembles those parts in that order and checks the result against the comment character limit for the platform — 10,000 on YouTube, 2,200 on Instagram, 1,250 on LinkedIn — along with link count, timestamp formatting and whether an affiliate disclosure is actually present.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Probation Confirmation Date: Extensions, Unpaid Leave",
+  metaDescription:
+    "Turns a joining date and probation months into the last day of probation and the confirmation date, adjusted for extensions and unpaid leave days.",
+  steps: [
+    "Enter the Joining date, Today's date and Probation in the offer letter (months), or tap one of the 3, 6, 9 or 12 months presets.",
+    "Add any Extension granted (months) and Leave without pay (days), plus Notice during probation (days) and Notice after confirmation (days).",
+    "Read Confirmation effective from with Last day of probation, Originally due, Days served and the Review timeline, then press Copy result.",
+  ],
   intro:
     "This calculator turns a joining date and a probation length into the exact last day of probation and the date confirmation takes effect, then adjusts both for any extension granted and for days of leave without pay. It uses the standard reading of a period stated in months — a six-month probation from 1 April runs to 30 September, with confirmation effective 1 October — and clamps month-end arithmetic so 31 January plus one month is 28 February. Built for HR teams writing confirmation letters and for employees who want to know exactly when the notice period changes.",
   useCases: [

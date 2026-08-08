@@ -1,4 +1,12 @@
 const seo = {
+  title: "Do You Need an IDP in Canada? Province-by-Province",
+  metaDescription:
+    "A licence in English or French needs no permit. Check the provincial window — Ontario 60 days, BC and Quebec about six months.",
+  steps: [
+    "Choose where your driving licence was issued and what you already hold, then answer Which province will you drive in?",
+    "Enter Date you arrive and Your age (years), pick why you are in Canada, and add Date you leave (optional).",
+    "The verdict card reports how long your licence works here, the date a provincial licence is needed by, the IDP format recognised and the lowest provincial driving age; Copy result puts that summary on the clipboard.",
+  ],
   intro:
     "This checker tells you whether an International Driving Permit is expected alongside your national licence in Canada, and how many days the province you are heading for allows before its own licence becomes compulsory. Licensing in Canada is provincial rather than federal, so the answer turns on two things: whether your licence is printed in English or French, Canada's two official languages, and which province you drive in. Canada ratified the 1949 Geneva Convention on Road Traffic and never joined the 1968 Vienna Convention, which decides the permit format you should ask for.",
   useCases: [

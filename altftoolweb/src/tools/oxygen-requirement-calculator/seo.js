@@ -1,4 +1,12 @@
 const seo = {
+  title: "Oxygen Requirement Calculator: FiO2 by Device and Flow",
+  metaDescription:
+    "Classify SpO2 as normal to critical, estimate FiO2 at about 4% per L/min, and compare nasal cannula, simple mask, rebreathers and Venturi.",
+  steps: [
+    "Enter Current SpO2 (%) and pick an Age Group — Adult, Child (1-12 yrs), Infant, Neonate or COPD / Chronic Lung Disease; Weight (kg) is optional.",
+    "Choose a Device Type and Flow Rate (L/min) — picking Venturi also shows the colour-coded adapter table — then press Calculate.",
+    "Read the hypoxemia level, All Devices Comparison and Recommendations, then press Copy Report or Download for an Oxygen_Report_94SpO2_*.txt file.",
+  ],
   intro:
     "The Oxygen Requirement Calculator classifies a patient's SpO2 into normal, mild, moderate, severe or critical hypoxemia, estimates the FiO2 delivered by a chosen device at a given flow rate using the roughly 4% per litre per minute rule, and compares five delivery devices side by side. It applies target saturations of 94–98% for most adults and children and 88–92% where a COPD-style controlled-oxygen target applies. It is an educational reference for students and clinicians revising oxygen delivery — every real prescribing decision belongs to the treating clinician.",
   useCases: [

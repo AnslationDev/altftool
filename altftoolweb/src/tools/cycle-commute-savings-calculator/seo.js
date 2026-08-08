@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cycle to Work Savings Calculator: Payback and CO2",
+  metaDescription:
+    "Fuel or fare, parking, tolls and per-km maintenance you stop paying, less bicycle running cost — with months to payback and CO2 avoided at 2.31 kg/litre.",
+  steps: [
+    "Enter One-way distance (km) and Commuting days a month, then set What you are replacing to Petrol motorcycle or scooter, Petrol car, CNG car or Cab or auto-rickshaw.",
+    "Edit the fuel or fare price, Parking a day (INR), Tolls or congestion charges a day (INR), Vehicle maintenance per km (INR) and Bicycle purchase cost (INR).",
+    "Read Net saving a year, the Bicycle payback in months and the Emissions avoided card in kg of CO2, then press Copy result.",
+  ],
   intro:
     "This calculator totals the money you stop spending when you cycle to work — fuel or fare, parking, tolls and per-kilometre vehicle maintenance — nets off what the bicycle costs to run, and reports the payback period on the bike itself. Emissions avoided come from tank-to-wheel combustion factors: 2.31 kg of CO2 per litre of petrol, 2.68 kg per litre of diesel, 2.75 kg per kilogram of CNG, and about 0.71 kg per kWh for grid electricity in India. Every default is editable, so the answer reflects your route, your vehicle and your local prices rather than an average.",
   useCases: [

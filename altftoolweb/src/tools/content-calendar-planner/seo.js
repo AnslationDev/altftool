@@ -1,4 +1,7 @@
 const seo = {
+  title: "Editorial Content Calendar with Platform Checklists",
+  metaDescription:
+    "Plan blog, YouTube, Instagram, LinkedIn, X and newsletter posts on one month grid, with pre-filled production checklists, budget and average progress.",
   intro:
     "Content Calendar Planner is a month-grid editorial calendar where each piece carries a platform, content type, publish date, status, budget, target reach, notes and its own production checklist. It covers six channels — blog, YouTube, Instagram, LinkedIn, Twitter/X and newsletter — and pre-fills each with that channel's usual production steps, then rolls the whole plan up into total budget, total target reach and an average completion percentage. It is for solo creators and small marketing teams who need one view of what ships when and how much of it is actually done.",
   useCases: [

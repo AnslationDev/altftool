@@ -1,4 +1,12 @@
 const seo = {
+  title: "Palindrome Checker with Character Match Grid",
+  metaDescription:
+    "Test a word, sentence or number against its exact reverse, with each character coloured teal where it matches and red where it breaks.",
+  steps: [
+    "Type into Verify Input String, or load a sample such as Radar, 12321 or Was it a car or a cat I saw?",
+    "Set the Ignore Letter Case and Ignore Spaces & Punctuation toggles to control how the string is normalised.",
+    "Read the Validation Report verdict and the Character Comparison Grid, where teal cells mark matching mirrored positions and red cells mark the mismatches.",
+  ],
   intro:
     "A palindrome checker tests whether a word, phrase, sentence or number reads the same backwards as forwards, and this one shows the comparison character by character rather than just returning yes or no. It normalises your text — lowercasing it and stripping everything except letters and digits, both optional — then compares the cleaned string against its exact reverse and highlights every position where the two disagree. Useful for word-game players, teachers demonstrating string reversal, and anyone settling an argument about whether a name or phrase really is a palindrome.",
   useCases: [

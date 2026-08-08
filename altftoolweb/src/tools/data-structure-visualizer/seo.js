@@ -1,4 +1,12 @@
 const seo = {
+  title: "Data Structure Visualizer: Stack, Queue, Tree, List",
+  metaDescription:
+    "Build an array, stack, queue, linked list or binary tree box by box, with TOP, FRONT and REAR labels and each structure's own O(1) or O(n) costs.",
+  steps: [
+    "Pick Array, Stack, Queue, Linked List or Tree from the row of buttons above the panel.",
+    "For the first four, type into the Push value or Enqueue value box and use the plus button to add an element and the minus button to remove one; for Tree, type comma-separated numbers such as 10, 5, 15, 2, 7, 12, 20 into Tree Values (comma separated).",
+    "Watch TOP mark the stack's last element and FRONT and REAR mark the queue's ends, while the Operations panel switches to that structure's costs - Push O(1), linked-list Append O(n).",
+  ],
   intro:
     "The Data Structure Visualizer draws five core data structures — array, stack, queue, linked list and binary tree — as labelled boxes you can add to and remove from, so the effect of each operation is visible immediately. Stacks mark the TOP element, queues mark FRONT and REAR, linked list nodes are joined by arrows, and tree values entered comma-separated are laid out level by level with 1, 2, 4, 8 nodes per row. Each structure also shows the time complexity of its own operations, so you can see why pushing to a stack is O(1) while appending to a linked list is O(n).",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Iron Tablet Timing: Tea, Dairy and Antacid Gaps",
+  metaDescription:
+    "Checks the gap between your iron tablet and tea, dairy, antacids and levothyroxine, and converts tablet strength into milligrams of elemental iron.",
+  steps: [
+    "Choose the Iron salt on the pack - ferrous sulfate, fumarate, gluconate or ascorbate - and enter Tablet strength (mg), Tablets per dose and How often.",
+    "Set Iron tablet taken at, then add clock times for Main meal, Tea or coffee, Milk, dairy or calcium tablet, Antacid or PPI, Levothyroxine and Vitamin C source.",
+    "Each gap is marked clear or too close against its required separation, alongside elemental iron per dose, day and week and a suggested tablet time; press Copy result.",
+  ],
   intro:
     "The Iron Supplement Timing Planner measures the gap between an oral iron tablet and every food or drug that blocks its absorption, and converts the tablet strength on the pack into milligrams of elemental iron. It applies the labelled separations — 1 hour before food or 2 hours after a meal, 1 hour either side of tea or coffee, 2 hours from dairy and calcium, iron 2 hours before or 4 hours after an antacid, and 4 hours from levothyroxine — plus the fact that vitamin C taken with the dose increases uptake. Built for people treating iron deficiency who want each tablet to count.",
   useCases: [

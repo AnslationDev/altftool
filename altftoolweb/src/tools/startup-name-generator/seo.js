@@ -1,4 +1,12 @@
 const seo = {
+  title: "Startup Name Generator: 50 Names With Logo Mockups",
+  metaDescription:
+    "Type a keyword, pick an industry and style, then get a deduplicated batch of 50 names, each with a tagline, three brand hex colours and an SVG logo mark.",
+  steps: [
+    "Enter a Primary Keyword such as Code or Nexus, add an optional Secondary Keyword, then set Target Industry, Style Tone and Name Format.",
+    "Press \"Run Naming Engine (50 Names)\" to build the deduplicated batch, then narrow it with the \"Search names...\" box or reorder by Best Score, Alphabetical or Newest.",
+    "Open a name to see its tagline, three brand hex colours and SVG logo mark in the Identity Sandbox, and keep it with Show Favorites.",
+  ],
   intro:
     "The Startup Name Generator builds 50 unique candidate names per run by combining your own keywords with industry-specific prefixes and suffixes across five naming patterns — one word, two words, compound, prefix plus word, and word plus suffix. Pick an industry such as Technology, Finance, Healthcare or Food and a brand style, and each name arrives with a matching identity sketch: a tagline, a five-colour palette you can copy as hex, a font suggestion and a simple logo mark in minimal, geometric or gradient form. It is for founders and side-project builders who need a shortlist to react to rather than a blank page.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Qatar Entry Rules: Visa Days & Compulsory Insurance",
+  metaDescription:
+    "Check your stay against the 90-in-180 or 30+30 waiver, count six months of passport validity from arrival, and price the 30-day health cover.",
+  steps: [
+    "Pick your route under How you are entering, from Visa waiver, wider band (90 days in any 180) through Visa waiver, 30 days extendable by 30 to GCC resident visa on arrival, and set Purpose of the visit.",
+    "Enter Days you will stay, Arrival date, Passport expiry date, Travellers in the party, how many are children, and the Price of one 30-day insurance policy in QAR.",
+    "Read Admission on arrival against your planned stay, the Passport valid to (6-month rule) row and Insurance policy periods per person, tick off the Required documents, then press Copy checklist.",
+  ],
   intro:
     "Qatar waives the visa for roughly a hundred nationalities, split into a band admitted for 90 days in any rolling 180-day period and a band admitted for 30 days extendable once by 30 — but since 1 February 2023 every visitor, of any age, must hold health insurance bought from a company registered with Qatar's Ministry of Public Health. This checklist tests your stay against the right band, counts six months of passport validity from your arrival date, works out how many 30-day policy periods your trip needs, and lists what immigration and customs will actually ask for.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Security Guard Sleep Planner: 3 Day-Sleep Schedules",
+  metaDescription:
+    "Three daytime sleep plans for an overnight shift - straight after, delayed or split - with lights-out times, last caffeine and dark-glasses hours.",
+  steps: [
+    "Enter Shift starts and Shift ends, then Journey home (minutes), Journey to the next shift (minutes) and Getting ready before leaving (minutes).",
+    "Set Sleep target per 24 hours (hours), Time you take to fall asleep (minutes) and Split plan: anchor sleep after the shift (hours), then pick Straight after, Delayed or Split under Sleep strategy.",
+    "Read the Sleep window headline with the Last caffeine and Dark glasses on rows and the Daytime bedroom targets for lux, dB(A) and temperature, then press Copy plan.",
+  ],
   intro:
     "This planner lays out three workable daytime sleep schedules around an overnight security shift: sleeping straight after the shift, delaying sleep until just before the next one, or splitting it into an anchor sleep plus a pre-shift nap. Each schedule is built by adding the commute, a wind-down and your usual time to fall asleep to the shift end time, then checking the result still fits the gap before the next start. It also fixes the two things that actually decide whether day sleep works — the last caffeine of the shift and blocking morning daylight on the way home.",
   useCases: [

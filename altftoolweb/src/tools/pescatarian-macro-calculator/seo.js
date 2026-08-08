@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pescatarian Macros + EPA/DHA from Your Fish Habit",
+  metaDescription:
+    "Mifflin-St Jeor calories and protein, plus daily EPA + DHA from your weekly fish, checked against the 250 mg/day intake using USDA figures.",
+  steps: [
+    "Fill the About you fields: Sex (for the BMR equation), Age (years), Weight (kg), Height (cm), Activity level, Goal and Protein target (g per kg).",
+    "Under Your fish habit pick a Fish or seafood such as Salmon, Atlantic farmed (cooked) or Tilapia (cooked), then set Servings a week and Serving size (g cooked).",
+    "Read your calorie and macro targets alongside daily EPA + DHA as a share of the 250 mg a day target, then press Copy result.",
+  ],
   intro:
     "A pescatarian diet drops meat and poultry but keeps fish, so two numbers matter rather than one: total protein and long-chain omega-3. This calculator sets daily calories from the Mifflin-St Jeor equation, converts your weekly fish habit into an average daily protein and EPA + DHA intake using USDA composition data, and compares it against the 250 mg/day EPA + DHA adequate intake set by EFSA and the FAO/WHO. It also works out how many grams of your chosen fish a week would actually reach that target — about 82 g of farmed Atlantic salmon, but over 1.5 kg of tilapia.",
   useCases: [

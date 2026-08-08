@@ -1,4 +1,12 @@
 const seo = {
+  title: "Font Subsetter: Glyph Coverage Check and Manifest",
+  metaDescription:
+    "Load a font locally, paste the characters you need, and see which ones it renders. Exports a JSON subset manifest; browsers have no WOFF2 encoder.",
+  steps: [
+    "Pick your font with the \"Local file(s)\" chooser — it is read in the browser session and never uploaded, which is what makes this usable on a licence that forbids sending the file out.",
+    "Paste the exact characters your page needs into \"Characters, metadata edits, or processing notes\" — leave it blank to test A–Z, a–z and 0–9 — then press Run local workbench.",
+    "The result reads \"N/M requested characters supported\", lists the characters that resolved, and downloads altftool-font-subset-manifest.json; the WOFF2 subset row states that a dedicated encoder such as pyftsubset is required.",
+  ],
   intro:
     "This tool plans a font subset: you load a font from your own machine, paste the exact characters your site needs, and it reports which of them the font can render and exports a JSON manifest recording the source file, the requested character set and the covered set. It deliberately does not fabricate a WOFF2 file — browsers have no native WOFF2 encoder, so the manifest is the honest output and the actual repackaging is done by a dedicated tool such as pyftsubset from fonttools. The font never leaves your browser, which matters when the licence forbids uploading it.",
   useCases: [

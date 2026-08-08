@@ -1,4 +1,7 @@
 const seo = {
+  title: "Income Tax Slab Visualizer: Old vs New, FY 2025-26",
+  metaDescription:
+    "See the rupee tax each slab adds under both FY 2025-26 regimes, with the ₹75,000 standard deduction, 87A rebate, surcharge relief and 4% cess.",
   intro:
     "The Income Tax Slab Visualizer breaks your Indian income tax bill down slab by slab, so you can see precisely how much of the total comes from the 5% band, the 20% band, the 30% band and so on. It runs the old regime and the new regime (Section 115BAC) side by side for FY 2025-26, applying the standard deduction, the Section 87A rebate, surcharge with marginal relief, and the 4% health and education cess. It is built for salaried employees, pensioners and freelancers who want to understand where their tax actually comes from rather than just seeing one final number.",
   useCases: [

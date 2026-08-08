@@ -1,4 +1,12 @@
 const seo = {
+  title: "20-20-20 Rule Timer: Look 20 Feet Away Every 20 Min",
+  metaDescription:
+    "Runs the 20-20-20 cycle — 20 minutes of near work, then 20 seconds at 20 feet (6.1 m) — and counts breaks taken and total eye rest.",
+  steps: [
+    "Set Session length (minutes), Work interval (minutes) and Break length (seconds), then use the Chime on / Chime off toggle to decide whether a soft tone marks each switch.",
+    "Press Start to run the cycle; the phase card counts down and reports \"N of N breaks taken\", with Pause, Resume and Restart beside it.",
+    "Read Breaks in the session, Breaks per hour, Total eye rest and Screen time under \"What this session adds up to\", then press Copy plan or Reset all.",
+  ],
   intro:
     "The 20-20-20 rule says that after every 20 minutes of near work you should look at something about 20 feet (6.1 metres) away for at least 20 seconds, and this timer runs that cycle for you while counting the breaks you actually take. The distance is the part people get wrong: past roughly 6 metres the eye's focusing muscle is effectively relaxed, which is why 6 metres is also the standard distance for a Snellen eye chart. The rule is promoted by the American Academy of Ophthalmology and the American Optometric Association as the simplest habit against digital eye strain.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cycling Power to Weight Calculator: W/kg and VAM",
+  metaDescription:
+    "Divide FTP by body mass for W/kg, place it on the Coggan rider bands, and get climb VAM plus the watts or kilos needed for a target.",
+  steps: [
+    "Enter FTP / threshold power (watts) and Body mass (kg), then set the Category table to Men's bands or Women's bands.",
+    "Set Climb gradient (%), Climb height gain (m) and a Target power to weight (W/kg) — enter 0 to hide the target.",
+    "Read your W/kg with its rider band and Next band up, plus the VAM and climb figures, then press Copy result.",
+  ],
   intro:
     "Power to weight is functional threshold power in watts divided by body mass in kilograms, and it is the single number that predicts how fast a cyclist climbs. This calculator returns your W/kg, places it on the Coggan power-profile category bands from untrained through to world class, and converts it into vertical ascent metres per hour using the Ferrari VAM relation so you can estimate a real climb time. It also shows the two levers separately: the watts you would need at your current weight to reach a target, and the weight that would reach it at your current FTP.",
   useCases: [

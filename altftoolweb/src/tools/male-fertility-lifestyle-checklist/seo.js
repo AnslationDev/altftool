@@ -1,4 +1,12 @@
 const seo = {
+  title: "Male Fertility Checklist: 19 Habits, 88-Day Recheck",
+  metaDescription:
+    "Scores 19 evidence-weighted habits linked to semen quality and sets a re-test date one 88-day sperm cycle away, with the WHO 2021 reference limits.",
+  steps: [
+    "Answer each of the 19 habits under Heat, Substances, Body and sleep, Nutrition, Timing and Medical with Yes, consistently / Some of the time / No, rarely.",
+    "Set the Start date for the review countdown so the semen analysis re-test lands one 88-day sperm cycle ahead.",
+    "Read the weighted habit score, the per-category breakdown, the ranked biggest gains and the WHO 2021 lower reference limits, then press Copy result.",
+  ],
   intro:
     "Male Fertility Lifestyle Checklist scores nineteen habits with published links to semen quality — scrotal heat exposure, smoking, alcohol and cannabis, body weight, sleep, diet, ejaculation timing and occupational toxins — weighting each by how consistent the evidence is. Because one cycle of human spermatogenesis takes about 74 days plus roughly two weeks of epididymal transit, it also sets a review date about 88 days out, when a change could realistically show up in a semen analysis. It scores habits, not fertility: only a semen analysis interpreted by a clinician does that.",
   useCases: [

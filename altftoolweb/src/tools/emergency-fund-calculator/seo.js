@@ -1,4 +1,12 @@
 const seo = {
+  title: "Emergency Fund Calculator: 3 to 12 Months of Bills",
+  metaDescription:
+    "Itemise rent, groceries, utilities and fees, answer four risk questions, and get a 3, 6, 9 or 12-month target with the gap and a monthly plan.",
+  steps: [
+    "Under '1. Monthly essentials', edit the prefilled rows — 'Rent / home loan EMI', 'Groceries & household', 'Utilities, phone & internet', 'Insurance premiums', 'School fees / childcare' and 'Transport, medicines & misc' — or press 'Add expense row'; the 'Essentials total' updates as you type.",
+    "Answer the four selects under '2. Stability quiz' — 'Job / income stability', 'Household earners', Dependents and 'Health cover' — then enter 'Saved for emergencies so far (₹)' and 'Monthly set-aside (₹)' under Your progress.",
+    "Read which of the 3, 6, 9 and 12-month cards is tagged Recommended, with the profile score out of 9 that produced it, then the 'Gap remaining', 'Months to goal' and 'Fully funded by' tiles, and press 'Copy plan' or Download to save emergency-fund-plan.txt.",
+  ],
   intro:
     "The Emergency Fund Calculator sizes your safety net as monthly essential expenses multiplied by a months figure derived from a four-question risk score — job stability, number of earners, dependents and health cover — scored out of 9 and mapped to 3, 6, 9 or 12 months. You itemise rent or EMI, groceries, utilities, insurance, school fees and transport in rupees, enter what you have already saved, and it returns the target, the gap and how many months of set-asides close it. Figures are shown in INR and the output is a planning estimate, not personalised financial advice.",
   useCases: [

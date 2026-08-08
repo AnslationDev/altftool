@@ -1,4 +1,12 @@
 const seo = {
+  title: "Royalty Split Waterfall Calculator: Fees to Payouts",
+  metaDescription:
+    "Runs gross receipts past the distributor fee and recoupable balance, then splits the pool in whole cents so payouts reconcile exactly.",
+  steps: [
+    "Enter Gross receipts, the Platform / distributor fee (%) and the Recoupable balance, or load the 60/25/15 split example.",
+    "List each collaborator in the Collaborator splits box as Payee | percent, one per line.",
+    "Read the distributable pool with the Payee, Entered split and Allocated columns, then use Copy or Download.",
+  ],
   intro:
     "The Royalty Split Waterfall Calculator runs gross receipts down a four-step waterfall — gross, minus the platform or distributor fee percentage, minus the recoupable balance, leaving a distributable pool that is then divided between named collaborators by percentage. Splits are allocated in whole cents and normalised against the total percentage entered, with the last payee taking the rounding remainder so the payouts always add back to the pool exactly. It is for creators, producers and small labels reconciling a statement or agreeing a split sheet before money moves.",
   useCases: [

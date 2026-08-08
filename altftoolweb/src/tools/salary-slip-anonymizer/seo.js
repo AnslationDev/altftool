@@ -1,4 +1,12 @@
 const seo = {
+  title: "Salary Slip Anonymizer: Redact Payslip PDF Locally",
+  metaDescription:
+    "Draw boxes over payslip details, then rebuild the file rasterized so no text layer survives. PDF, PNG, JPEG and more up to 40 MB, all in your browser.",
+  steps: [
+    "Use Choose PDF or image to load a slip — PDF, PNG, JPEG, WebP, BMP or AVIF, maximum 40 MB, PDFs up to 30 pages.",
+    "Add a manual preset — Employee name & ID, Address, Bank, PAN & account details or Salary amounts — then drag and resize each rectangle to fit.",
+    "Tick the acknowledgement, pick 96, 144 or 216 DPI, press Create rasterized PDF, then Download final copy, saved with an -anonymized suffix.",
+  ],
   intro:
     "Salary Slip Anonymizer lets you draw opaque boxes over the private parts of a payslip and then rasterizes every page to an image before rebuilding the file, so the covered text is destroyed rather than hidden behind a shape. It accepts PDF, PNG, JPEG, WebP, BMP and AVIF files up to 40 MB (PDFs up to 30 pages), rendering pages with pdf.js and re-assembling the output with pdf-lib entirely inside your browser. Four one-click presets — employee name and ID, address, bank/PAN/account details, and salary amounts — put boxes on the usual regions so you only have to nudge them.",
   useCases: [

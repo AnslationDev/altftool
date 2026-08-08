@@ -1,4 +1,12 @@
 const seo = {
+  title: "Telegram 2FA Setup: 15-Control Hardening Checklist",
+  metaDescription:
+    "Score your Telegram account across 15 weighted controls — cloud password, recovery email, session cleanup. Four are critical; the score caps at 69%.",
+  steps: [
+    "Tick each control you have already set across the four groups: Cloud password, Device security, Privacy exposure and Message handling.",
+    "Set Target score (%), which starts at 90, to get the shortest route listed highest-impact control first.",
+    "Read the hardening score with Controls completed and Critical controls missing, then press Copy result for the still-to-do list.",
+  ],
   "intro": "This guide is a weighted, 15-control checklist for a Telegram account: the two-step verification cloud password, a confirmed recovery email, passcode lock, session cleanup, the privacy rules that hide your phone number, and an honest note on what Secret Chats do that ordinary chats do not. Telegram signs you in with a code sent to your phone number, so the cloud password is the only thing standing between a SIM swap and a full account takeover, which is why it carries the heaviest weight. Four controls are marked critical and the score stays at 69% until all four are complete.",
   "useCases": [
     "Adding the cloud password before travelling with a local SIM, when your usual number is unreachable.",

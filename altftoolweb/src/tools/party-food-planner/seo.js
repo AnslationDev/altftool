@@ -1,4 +1,12 @@
 const seo = {
+  title: "Party Food Quantity Calculator: Per-Guest Portions",
+  metaDescription:
+    "Guest count to kilos: 90 g raw rice and 2.5 rotis an adult for Indian dinner, 500 ml water and 500 g ice a head, +10% buffer, as a shopping list.",
+  steps: [
+    "Enter Adults and Kids (3-12 yrs), drag Party duration between 1 and 8 hours, and pick Meal type — Full dinner, Snacks & starters or High tea.",
+    "Set Cuisine style to Indian buffet, Western or Mixed, move Appetite level to Light, Normal or Hearty, and leave Add 10% host buffer ticked.",
+    "Each course table lists Item, Per adult, Kid share and Total to arrange; Copy list or Download writes party-food-shopping-list.txt.",
+  ],
   intro:
     "The Party Food Quantity Planner turns a guest count into exact catering quantities using the standard per-head formula: per-adult portion x (adults + kid share x kids) x appetite multiplier x a 10% host buffer. It carries real caterer figures — 90 g of raw basmati and 2.5 rotis a head for an Indian dinner, 180 g of cooked main and 240 g of sides for a Western one, 500 ml of drinking water and 500 g of ice per person — across full dinner, snacks and high-tea formats in Indian, Western or mixed menus. Hosts get a rounded, printable shopping list instead of a guess.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Upload Time Estimator: Size, Mbps, Overhead",
+  metaDescription:
+    "File size in bits over usable throughput: GB and GiB kept apart, protocol overhead and link utilisation applied, with 4G, DSL, cable and fibre presets.",
+  steps: [
+    "Enter File size and pick a Size unit — MB, GB or TB decimal, or MiB and GiB binary — so a Windows figure is not read as a macOS one.",
+    "Enter Upload speed with its unit (kbps, Mbps, Gbps or MB/s) or tap a preset such as Mobile 4G LTE or Gigabit fibre, then set Protocol overhead (%) and Link utilisation (%).",
+    "Read Estimated upload time with the usable throughput in Mbps underneath, then press Copy result.",
+  ],
   intro:
     "The Video Upload Time Estimator divides a file's size in bits by the usable throughput of your connection to predict how long an upload will actually take. It keeps the two unit systems straight — ISPs quote decimal megabits per second while file managers report megabytes, an eight-fold difference before you count anything else — and then applies a protocol overhead allowance and a link utilisation factor so the answer matches reality rather than the theoretical line rate. Useful for editors, videographers and anyone scheduling a large delivery against a deadline.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Screen Viewing Distance: Pixel Pitch, SMPTE, THX",
+  metaDescription:
+    "Eye-to-screen distance from diagonal, aspect ratio and resolution: the one-arcminute pixel limit, SMPTE 30, THX 40 and a 50-100 cm desk window.",
+  steps: [
+    "Enter Screen diagonal (inches), pick an Aspect ratio and set Horizontal resolution (px) and Vertical resolution (px), or hit a preset such as 27\" 1440p.",
+    "Choose what the screen is Mostly used for and type Your current distance (cm).",
+    "Read the Recommended eye-to-screen distance alongside Pixel-free distance (20/20 eye), SMPTE 30 degree distance and THX 40 degree distance.",
+  ],
   intro:
     "The Screen Viewing Distance Calculator works out how far your eyes should sit from a display by combining three independent rules: the distance at which one pixel subtends one arcminute (the 20/20 resolution limit, distance = pixel pitch x 3437.75), the SMPTE 30 degree and THX 40 degree horizontal viewing angles, and the 50 to 100 cm eye-to-screen window that OSHA and the American Optometric Association use for desk work. Enter a diagonal, an aspect ratio and a resolution and it returns the panel dimensions, pixel density and a recommended distance with the reason behind it.",
   useCases: [

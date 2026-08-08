@@ -1,4 +1,12 @@
 const seo = {
+  title: "CIDR to IP Range Converter with Wildcard Masks",
+  metaDescription:
+    "Convert CIDR blocks, start-end ranges and Cisco wildcard masks in bulk, one per line, splitting unaligned ranges into the fewest CIDR blocks.",
+  steps: [
+    "Paste your networks into 'Entries to convert (one per line)'; the accepted formats printed under the box are 10.0.0.0/24, 10.0.0.1 - 10.0.0.99, a wildcard pair such as 172.16.5.0 0.0.0.255, and a bare address like 10.0.0.5.",
+    "Every line is converted as you type — unaligned ranges are decomposed by the greedy algorithm into the fewest CIDR blocks, so 10.0.0.5 - 10.0.0.16 comes back as a /32, /31, /29 and /32, and unparseable lines are listed underneath.",
+    "Read the table columns Input, 'Start – end range', 'CIDR block(s)', 'Wildcard entry' and Addresses — a wildcard is shown only where the range is exactly one CIDR — then press 'Copy results'.",
+  ],
   intro:
     "This converter translates IPv4 networks between their three common notations — CIDR blocks (RFC 4632), start–end address ranges and Cisco ACL wildcard masks — in bulk, one entry per line. Arbitrary ranges that do not align to a power-of-two boundary are decomposed into the minimal list of CIDR blocks using the standard greedy alignment algorithm, and non-contiguous wildcard masks are detected and rejected with an explanation. It is built for network and cloud engineers moving allowlists between firewalls, ACLs and cloud security groups that each demand a different format.",
   useCases: [

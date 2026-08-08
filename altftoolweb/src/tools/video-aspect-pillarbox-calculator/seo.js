@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pillarbox & Letterbox Bar Calculator with ffmpeg Pad",
+  metaDescription:
+    "Fit any ratio inside any frame: exact bar thickness per side, scaled size, even-pixel encoder dimensions and a copy-paste ffmpeg pad filter.",
+  steps: [
+    "Enter the source ratio into Ratio width and Ratio height, or press one of the preset chips such as 16:9 or 9:16.",
+    "Set Frame width and Frame height in pixels — the 1920×1080, 1080×1920 and 3840×2160 chips fill both in — and the figures recalculate as you type.",
+    "Read Bar thickness per side, Encoder-safe size (even pixels) and Pad offset (x, y), then take the -vf \"scale=…,pad=…\" string from the ffmpeg filter panel or press 'Copy result'.",
+  ],
   intro:
     "Pillarbox Padding Calculator works out how thick the black bars are when content of one aspect ratio is fitted inside a frame of another without cropping. It applies the standard contain fit — if the content is wider than the frame it is limited by width and you get letterbox bars top and bottom, if it is narrower it is limited by height and you get pillarbox bars at the sides — then reports the scaled size, even-pixel encoder dimensions and the matching ffmpeg pad filter. Built for editors, motion designers and anyone re-framing a master for a different delivery spec.",
   useCases: [

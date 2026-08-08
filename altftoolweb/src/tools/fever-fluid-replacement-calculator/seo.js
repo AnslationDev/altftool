@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fever Fluid Replacement Calculator: Daily ml Target",
+  metaDescription:
+    "Adds about 10-12% per °C above 37 °C to Holliday-Segar or 30/25 ml/kg maintenance, prorated by hours febrile. Informational only.",
+  steps: [
+    "Enter 'Age (years)' and 'Weight (kg)', then the 'Body temperature (°C)' reading — the °C and °F buttons under 'Temperature unit' switch the box to whichever scale your thermometer uses.",
+    "Set 'Hours with a raised temperature today' anywhere from 0 to 24; the fever surcharge is prorated by that figure, and every number recalculates as you type with no calculate button.",
+    "Read 'Total fluid for the day' in ml, shown as maintenance plus the fever amount, alongside the 'Maintenance rule used', 'Degrees above 37 °C', 'Fever surcharge', 'Spread over 16 waking hours' and 'Roughly this many glasses' rows, then press 'Copy result'.",
+  ],
   intro:
     "The Fever Fluid Replacement Calculator estimates how much extra fluid a fever adds to normal daily needs, applying the clinical rule that maintenance requirement rises by about 10-12% for every 1 °C of body temperature above 37 °C. Baseline maintenance comes from the Holliday-Segar 100/50/20 ml per kg rule for children, 30 ml/kg/day for adults, and 25 ml/kg/day from age 65, and the surcharge is prorated by how many hours the temperature was actually raised. It is informational only — a way to see roughly how much more a sick person should be drinking, not a prescription.",
   useCases: [

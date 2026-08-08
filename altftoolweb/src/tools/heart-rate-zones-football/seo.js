@@ -1,4 +1,12 @@
 const seo = {
+  title: "Football Heart Rate Zones in bpm with 4 x 4 Intervals",
+  metaDescription:
+    "Turn your age or measured max HR into five football zones in bpm, each with the drill that hits it, plus the 4 x 4 minute interval session at 90-95%.",
+  steps: [
+    "Enter Age (years) and Resting heart rate (bpm), or type a Measured max heart rate (bpm) from a Yo-Yo test.",
+    "Pick the Max heart rate formula - Tanaka, Fox or Gulati - and a Zone method of % of maximum heart rate or Karvonen, then set Interval repetitions, Work (min) and Recovery (min).",
+    "Read the five zones in bpm with the drill for each, the match-average bpm at 85% of maximum, and the interval session total, then press Copy result.",
+  ],
   intro:
     "This calculator converts your age or measured maximum heart rate into five football-specific training zones in beats per minute, from regeneration work up to repeated-sprint efforts, and names the drill that reliably lands in each one. It also builds the aerobic interval session used in football research — 4 × 4 minutes at 90–95% of maximum heart rate with 3 minutes of active recovery near 70% — using your own numbers. Match heart rate studies put the mean intensity of a game at roughly 85% of maximum, about 70% of VO2 max, and that reference is shown alongside your zones.",
   useCases: [

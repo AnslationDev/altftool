@@ -1,4 +1,12 @@
 const seo = {
+  title: "Freelance Writing Contract With Kill Fee & Copyright",
+  metaDescription:
+    "Price a writing job per word, per piece or hourly, then generate a contract with deposit, kill fee, revision rounds and copyright assigned on payment.",
+  steps: [
+    "Fill in Client name, Writer name, What is being written, Delivery format, Byline name, Governing law, Start date and Final delivery date.",
+    "Choose a Pricing model of Per word, Flat fee per piece or Hourly, set Number of pieces, Words per piece and the rate, then Deposit (% of fee), Kill fee (% of fee), Payment terms (days) and Included revision rounds.",
+    "Read Total fee with the Deposit before work starts, Balance due by, Kill fee if cancelled mid-piece and Effective rate per word rows, then press Copy contract to take the drafted text.",
+  ],
   intro:
     "A freelance writing contract fixes four things before work starts: what is delivered, what it costs, how many revision rounds are included, and who owns the copy once it is paid for. This generator prices the engagement from a per-word, per-piece or hourly rate, computes the deposit, kill fee, balance due date and the statutory late-payment charge under the UK Late Payment of Commercial Debts (Interest) Act 1998, and assembles a contract with an express copyright assignment on payment rather than relying on the narrow work-made-for-hire rule in 17 U.S.C. section 101.",
   useCases: [

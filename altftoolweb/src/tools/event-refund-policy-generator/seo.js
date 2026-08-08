@@ -1,4 +1,12 @@
 const seo = {
+  title: "Event Refund Policy Generator with GST Split (India)",
+  metaDescription:
+    "Build a tiered event cancellation ladder by days before the event and price one booking — ticket, GST and booking fee — per CBIC Circular 178/10/2022.",
+  steps: [
+    "Build the Refund ladder — it opens at 100% from 30 days, 75% from 15, 50% from 7, 25% from 3 and 0% inside that — using Add tier and each row's Days before the event (from) and Refund percentage.",
+    "Under \"Price one cancellation\" enter Ticket price before GST (INR), Number of tickets, Booking fee per ticket (INR), GST on the ticket (%), Event date and Cancellation date, and set \"Who is cancelling and why\" to whether the attendee or the organiser cancelled.",
+    "Refund payable shows the amount with its tier and percentage, itemised into Refund of ticket price, Refund of GST, Refund of booking fees and Organiser retains; press Copy policy for the generated wording.",
+  ],
   intro:
     "The Event Refund Policy Generator builds a tiered cancellation policy in which the refund percentage falls as the event date gets closer, and prices any single booking against that ladder. It counts the whole days between the cancellation date and the event date, picks the matching tier, and splits the money into ticket price, GST and booking fee. The GST split follows CBIC Circular No. 178/10/2022-GST of 3 August 2022, under which the amount an organiser keeps is a cancellation charge taxed at the same rate as the ticket, so tax comes back only on the refunded portion.",
   useCases: [

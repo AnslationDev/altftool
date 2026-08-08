@@ -1,4 +1,12 @@
 const seo = {
+  title: "Calories Burned Cooking: MET Values by Kitchen Stage",
+  metaDescription:
+    "Six kitchen stages priced at compendium MET values, times your body weight: kcal/min = MET x 3.5 x kg / 200. Shows gross and net-of-resting calories.",
+  steps: [
+    "Enter Body weight, choose Kilograms (kg) or Pounds (lb), and put minutes against each of the six stages from Prep and chopping to Washing up afterwards.",
+    "Each stage is priced at its own compendium MET value — 2.0 for prep, 2.5 at the stove, 3.0 for dough work, 1.8 for washing up — times your weight and minutes.",
+    "Read Calories burned in kcal, Calories above resting (net burn), average METs and the stage-by-stage breakdown table, then press Copy result.",
+  ],
   intro:
     "This calculator estimates the calories you burn cooking a meal by pricing each kitchen stage at its published MET value and multiplying by your body weight and the minutes you spend on it. It uses the metabolic-equivalent formula kcal/min = MET x 3.5 x kg / 200, with MET values for prep, stove work, dough work, serving and washing up taken from the 2011 Compendium of Physical Activities. It is aimed at anyone who wants to see how much of a day's movement actually happens in the kitchen, and it separates gross calories from the net figure above resting metabolism.",
   useCases: [

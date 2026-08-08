@@ -1,4 +1,7 @@
 const seo = {
+  title: "Singapore Packing List: Temple Dress Code and Air-Con",
+  metaDescription:
+    "Pick your month and venues to get the mosque and temple cover-up rules, Marina Bay door policy and a counted packing list sized by your wash cycle.",
   intro:
     "This planner converts Singapore's venue rules and Changi's 1991–2020 climate normals into a counted packing list. It applies the house rules that actually get enforced — ankle-length cover and a headscarf inside Masjid Sultan, shoulders and knees covered at Sri Mariamman and the Buddha Tooth Relic Temple, smart casual at the Marina Bay and Clarke Quay doors — and sizes quantities from your laundry interval rather than one outfit per day. The awkward part of a Singapore wardrobe is not the heat, it is going from 31°C outside to roughly 24°C indoors twenty times a day.",
   useCases: [

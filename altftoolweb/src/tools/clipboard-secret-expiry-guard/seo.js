@@ -1,4 +1,7 @@
 const seo = {
+  title: "Clipboard Auto-Clear Timer for OTPs & Temp Secrets",
+  metaDescription:
+    "Copy an OTP or temporary password with a 10-second to 1-hour countdown that blanks the clipboard only if that exact value is still the one copied.",
   intro:
     "Clipboard Secret Expiry Guard copies a temporary value — an OTP, a recovery code, a one-off password — and starts a countdown of between 10 seconds and one hour, after which it reads the clipboard back and blanks it only if the exact same value is still there. That last check is the point: if you have copied something else in the meantime, your newer clipboard item is left alone. Before you copy, it also scans the text locally for six kinds of sensitive pattern, including API keys, labelled passwords, OTP codes, email addresses, phone-like numbers and card-like digit runs.",
   useCases: [

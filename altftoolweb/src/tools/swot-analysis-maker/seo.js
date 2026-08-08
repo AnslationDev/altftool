@@ -1,4 +1,12 @@
 const seo = {
+  title: "SWOT Analysis Maker + TOWS Strategies, Markdown/CSV",
+  metaDescription:
+    "Four plain lists become a SWOT grid, a check that flags empty or overloaded quadrants, and SO/WO/ST/WT crosses — as Markdown or swot-analysis.csv.",
+  steps: [
+    "Name the decision in What is this analysis about?, then put one item per line into the Strengths, Weaknesses, Opportunities and Threats boxes.",
+    "Watch the balance check as you type: it flags any quadrant with fewer than 3 or more than 7 items, and any entry over 120 characters.",
+    "Read the grid, the internal versus external split and the SO, WO, ST and WT crosses, then press Copy result for Markdown or CSV for swot-analysis.csv.",
+  ],
   intro:
     "A SWOT analysis sorts what you know about a decision onto two axes — internal versus external, helpful versus harmful — producing the four quadrants Strengths, Weaknesses, Opportunities and Threats. This maker builds that grid from four plain lists, flags quadrants that are empty or overloaded, and then crosses them into the four TOWS strategy types published by Heinz Weihrich in Long Range Planning in 1982: SO, WO, ST and WT. It is for founders writing a plan, managers preparing a strategy session, and students who need the grid and the reasoning that follows it.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "ISS Live Position and Distance From Your Location",
+  metaDescription:
+    "Live position of the ISS (NORAD 25544) with altitude, speed, sunlit or eclipsed state, and the great-circle distance from your coordinates.",
+  steps: [
+    "Enter your Latitude and Longitude — they start at 19.076 and 72.8777 — or press 'Use device location' to fill them from the browser's geolocation.",
+    "Press 'Get current result'; while it runs the button reads 'Checking source…' and it queries the Where the ISS at? live position API for satellite 25544.",
+    "Read the summary 'ISS is N km from your ground coordinates' plus the ISS latitude, ISS longitude, Altitude, Velocity, Visibility and Ground distance rows, with the update time and the source named underneath.",
+  ],
   intro:
     "The ISS Pass Finder reports where the International Space Station (NORAD catalogue number 25544) is right now and how far that sub-satellite point is from your own coordinates, using the great-circle haversine distance. Enter a latitude and longitude — or let the browser supply them — and you get the station's current ground track position, altitude, orbital speed and whether it is sunlit or in Earth's shadow. It is a live position readout rather than a pass prediction: a true visible pass also depends on orbital propagation, twilight timing, your horizon and the weather.",
   useCases: [

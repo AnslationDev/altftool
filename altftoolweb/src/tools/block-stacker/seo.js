@@ -1,4 +1,12 @@
 const seo = {
+  title: "Block Stacker: Falling Blocks with Hold and Ghost",
+  metaDescription:
+    "Falling-block puzzle on a 10x20 well with a seven-bag order, hold slot, ghost outline and wall kicks. Four-line clears pay 800 times your level.",
+  steps: [
+    "Press Play on the board, then move and rotate with the arrow keys or WASD, or tap the board to rotate on touch.",
+    "Press Space to hard-drop, C to park a shape in the Hold slot and P to pause; on touch, swipe down to hard-drop.",
+    "Watch Score, Lines, Level and Best above the well — clearing 1, 2, 3 or 4 rows scores 100, 300, 500 or 800 times your current level.",
+  ],
   intro:
     "Block Stacker is a falling-block puzzle game on the classic 10-column by 20-row well, where the seven tetromino shapes (I, O, T, S, Z, J, L) drop from a shuffled seven-bag so every shape appears once before any repeats. Clearing one, two, three or four rows at a time scores 100, 300, 500 or 800 points multiplied by your level, and the level rises every ten lines cleared, cutting the gravity interval by about 18% each time. It has a hold slot, a three-piece preview queue, a ghost outline showing where the piece will land, and wall kicks so rotations near the wall still work.",
   useCases: [

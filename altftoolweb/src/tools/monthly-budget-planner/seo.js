@@ -1,4 +1,12 @@
 const seo = {
+  title: "Monthly Budget Planner: Savings Rate & Needs vs Wants",
+  metaDescription:
+    "Set four income lines against your expense categories to see savings rate, needs vs wants, a daily spend limit, and export the plan as CSV.",
+  steps: [
+    "Enter Salary, Freelance / Side Income, Investment Income and Other Income under Income Sources, then set Target Monthly Savings.",
+    "Adjust the eight default Expense Categories — Rent / Home, Food & Groceries, EMI / Debt and the rest — or type a name in New category and press Add Category.",
+    "Read the Monthly Savings card with its savings rate, the Goal Gap card and the Daily Spend Limit figure, then use Copy Summary or Export CSV to download monthly-budget-planner.csv.",
+  ],
   intro:
     "The Monthly Budget Planner adds up four income streams — salary, freelance, investment and other — against your expense categories, then reports what is left as a savings rate (savings ÷ total income × 100) and splits your spending into needs and wants as a share of income. Each category is charted by its percentage of total expenses, so the one quietly eating the month is obvious at a glance. It is built for someone sitting down with a payslip and a bank statement who wants a single page showing whether the month actually balances and how far the plan is from a savings target.",
   useCases: [

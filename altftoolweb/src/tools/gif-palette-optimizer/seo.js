@@ -1,4 +1,12 @@
 const seo = {
+  title: "GIF Palette Optimizer: 64, 128 or 256 Colour Output",
+  metaDescription:
+    "Shrink a GIF or video clip with FFmpeg's two-pass palettegen and paletteuse at 15 fps and 960 px wide, running as WebAssembly in your own browser.",
+  steps: [
+    "Choose your animation with the Source file picker, which accepts a GIF or any video file (image/gif, video/*).",
+    "Set Palette to 64 colors, 128 colors or 256 colors — 256 is the GIF format's own ceiling — then press Process locally.",
+    "FFmpeg loads as WebAssembly and runs palettegen then paletteuse at 15 fps, scaled to 960 px wide with Sierra-2-4A dithering, and downloads altftool-gif-palette-optimizer.gif without your file leaving the browser.",
+  ],
   intro:
     "GIF Palette Optimizer rebuilds a GIF or a video clip with a smaller colour palette using FFmpeg's two-pass palettegen/paletteuse chain, which is what makes a GIF shrink without turning muddy. You choose 64, 128 or 256 colours; the tool analyses the whole clip first to build one optimal palette for it, then re-encodes at 15 frames per second, scaled to 960 pixels wide with Lanczos resampling and Sierra-2-4A dithering. FFmpeg runs as WebAssembly inside your browser, so the file is written to an in-memory filesystem and the finished GIF downloads straight back to you.",
   useCases: [

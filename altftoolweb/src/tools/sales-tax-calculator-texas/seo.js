@@ -1,4 +1,12 @@
 const seo = {
+  title: "Texas Sales Tax Calculator: 6.25% + Up to 2% Local",
+  metaDescription:
+    "Add the 6.25% state rate plus local tax capped at 2% (8.25% max), with taxable delivery under Rule 3.303, exempt groceries and a reverse mode.",
+  steps: [
+    "Pick a Location preset or type the Local rate (% on top of 6.25%), which is rejected above the 2% statutory ceiling.",
+    "Fill in taxable goods and services, exempt items such as groceries, and delivery, then tick whether the shipped item is taxable under Rule 3.303.",
+    "Total sales tax breaks into State tax (6.25%) and Local tax, with subtotal, total due and the effective rate on the whole invoice.",
+  ],
   intro:
     "This calculator adds the 6.25% Texas state sales tax under Tax Code § 151.051 to the local city, county, transit and special-district rate at your location, which the statute caps at 2% combined — so the maximum rate anywhere in Texas is 8.25%. It treats delivery and handling charges as part of the taxable sales price when the item shipped is taxable (Comptroller Rule 3.303), keeps groceries and prescription drugs out of the base, and can reverse tax out of a tax-inclusive total. A separate panel handles motor vehicles, which are taxed under Tax Code chapter 152 instead.",
   useCases: [

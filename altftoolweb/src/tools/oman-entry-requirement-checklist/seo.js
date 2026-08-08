@@ -1,4 +1,12 @@
 const seo = {
+  title: "Oman Entry: 14-Day Visa-Free vs e-Visa Checklist",
+  metaDescription:
+    "Test your stay against the 14-day waiver or the OMR 5, 20 and 50 e-visas, count six months of passport validity from arrival, and total the fee.",
+  steps: [
+    "Choose an Entry route — \"Visa-free entry, up to 14 days\" or an e-Visa at OMR 5, OMR 20 or OMR 50 — and the Purpose of the visit.",
+    "Enter Days you will stay, Arrival date, Passport or ID expiry date, Travellers in the party and Funds you can evidence, in Omani rials.",
+    "Work through the Required and Worth carrying document lists and the \"Check these before booking\" warnings, then press Copy checklist.",
+  ],
   intro:
     "Oman runs two parallel entry systems and picking the wrong one is the usual mistake: citizens of just over a hundred countries enter without a visa but only for 14 days and only with a return ticket, a confirmed hotel booking, health insurance and evidence of funds, while anything longer starts as a Royal Oman Police e-visa bought before departure. This checklist tests your stay against the route you pick, counts six months of passport validity from the arrival date, totals the visa fee for the party and flags when a cheaper or longer option would fit the same trip.",
   useCases: [

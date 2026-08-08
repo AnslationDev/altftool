@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI YouTube Thumbnail Maker: 4 Concepts at 1280x720",
+  metaDescription:
+    "Turn a video topic into four AI thumbnail concepts from 8 style presets and 6 colour palettes, exported as 1280x720 JPEG — the size YouTube asks for.",
+  steps: [
+    "Describe the video in the 'What is your video about?' box, and optionally type a headline into 'Text on thumbnail'.",
+    "Pick one of the eight Visual Style tiles (Gaming, Tech / Coding, Finance, Storytelling, Education, Fitness, Food, Travel) and one of the six Color Theme swatches, then press 'Generate AI Thumbnails'.",
+    "Four seeded takes appear under 'Your AI Thumbnails' — press Download on one to save it as thumbnail_1.jpg at 1280x720, press Regenerate for a fresh set, or reopen the last 20 under Recent Thumbnails.",
+  ],
   intro:
     "The Viral Thumbnail Maker generates four AI thumbnail concepts from your video topic by combining it with one of eight style presets, one of six colour palettes and your optional headline text into a single image prompt, then upscaling each result to YouTube's recommended 1280x720. You get four different seeds per run so you have real alternatives to compare rather than one take, and the last 20 images stay in your browser's local storage. It is a fast way for creators to get past the blank canvas, not a replacement for a designer on a channel that depends on its look.",
   useCases: [

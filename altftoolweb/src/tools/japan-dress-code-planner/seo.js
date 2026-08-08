@@ -1,4 +1,12 @@
 const seo = {
+  title: "Japan Packing List & Dress Code Planner by Month",
+  metaDescription:
+    "Pick your month, region and venues for a layering band from Sapporo-to-Naha climate normals, packing counts from your laundry cycle, and the onsen rules.",
+  steps: [
+    "Choose Month of travel and Region - Hokkaido, Kanto, Kansai, Kyushu or Okinawa - then set Trip length (days) and Laundry every (days).",
+    "Tick where you will actually go, from temples and shrines, ryokan and onsen to tatami izakaya, fine dining, offices, bars or snow country.",
+    "Read the layering band from that region's climate normals, the quantity-and-reason packing table and what each venue expects, then press Copy plan.",
+  ],
   intro:
     "This planner works out what to wear and how much to pack for Japan from three inputs: the month, the region and the places on your itinerary. Climate normals for Sapporo, Tokyo, Osaka, Fukuoka and Naha set the layering band, and the packing count comes from a simple rule — carry one laundry cycle plus a spare set while a wash dries, never more than the length of the trip. It then applies the venue rules that actually catch visitors out in Japan, which are far less about modesty than about shoes coming off, tattoo policies at onsen, and smart-casual minimums at restaurants.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gym Marketing Prompt Pack: Seven Message Types",
+  metaDescription:
+    "Build AI prompts for gym offers, class copy, check-ins and win-backs carrying the real channel limit: 160 SMS, 1024 WhatsApp, 2200 Instagram.",
+  steps: [
+    "Fill Gym or studio name and City or locality, then answer \"Who is this message for?\" and \"What is being sold or described?\".",
+    "Enter \"Package price (INR, 0 if not quoting one)\" and \"Package length (days)\", then choose a Message type — Membership offer, Class description, Member check-in, Lapsed member win-back, Free trial follow-up, Referral request or Social caption — and a Channel.",
+    "The panel reports \"Copy limit for this channel\" (160 for SMS, 1024 for a WhatsApp template, 2200 for an Instagram caption), plus Offer cost per day and Monthly equivalent baked into the prompt; press Copy result.",
+  ],
   intro:
     "Gym Marketing Prompt Pack builds a structured AI prompt — role, context, task, hard constraints and output format — for the seven messages a gym actually sends: membership offers, class descriptions, member check-ins, win-backs, trial follow-ups, referral asks and social captions. Each prompt carries the real character limit of the channel you picked (160 for an SMS segment, 1024 for a WhatsApp template body, 2200 for an Instagram caption) and the true per-day and per-month cost of the package, so the copy that comes back cannot invent a price or overrun the field.",
   useCases: [

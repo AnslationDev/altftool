@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lab Attendance Calculator: 75% Bar and Contact Hours",
+  metaDescription:
+    "Scores practical attendance against its own bar, shows the combined figure by session count and by contact hours, and counts unsigned experiments.",
+  steps: [
+    "Fill the Theory paper block: Lectures held, Lectures attended, Lectures still to come, Contact hours per lecture and Attendance required (%).",
+    "Do the same under Practical / lab course, adding Contact hours per lab session, Experiments prescribed and Experiments completed and signed.",
+    "Compare Combined, counting sessions against Combined, counting contact hours plus Experiments still pending, then press Copy result for the summary.",
+  ],
   intro:
     "This tracker scores practical attendance as its own head of account rather than folding it into the theory average, because that is how universities detain students. It computes the lab percentage as sessions attended ÷ sessions held × 100, tests it against a separate bar (usually 75%), and reports the combined figure two ways — counting sessions and counting contact hours, since a two-period lab slot is marked as two hours on the roll. Pending experiments are tracked alongside, because a complete record book is a second, independent condition for a practical course.",
   useCases: [

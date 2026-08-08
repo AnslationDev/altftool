@@ -1,4 +1,12 @@
 const seo = {
+  title: "What kg Washing Machine Do I Need? 6-12 kg Sizing",
+  metaDescription:
+    "Adds up weekly dry laundry from garment weights, divides by your washes and a 0.85 fill factor, then matches a 6 to 12 kg drum.",
+  steps: [
+    "Enter Adults, Children under 12, Beds whose linen you wash weekly and Washes you want to run per week.",
+    "Pick the machine type you prefer and tick 'I wash double quilts or blankets at home' if bulky bedding goes in the drum.",
+    "Read the Recommended capacity in kg with weight per wash and the drum needed at the 0.85 fill factor, then press Copy result.",
+  ],
   intro:
     "A washing machine's kg rating is the maximum weight of dry laundry it can wash in one cycle, so this selector works backwards from that definition: it adds up your household's weekly laundry from typical dry garment weights (a shirt 0.2 kg, jeans 0.7 kg, a double sheet 0.8 kg), divides by the number of washes you want to run, then divides again by a 0.85 fill factor because a drum packed to its rating cannot tumble. The result is matched to capacities actually sold, from 6 kg to 12 kg. It is aimed at anyone choosing between a 6.5 kg and an 8 kg machine without guessing.",
   useCases: [

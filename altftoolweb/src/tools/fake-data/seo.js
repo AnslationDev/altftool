@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fake Data Generator: 11 Fields, Up to 500 Records",
+  metaDescription:
+    "Generate up to 500 invented test records across 11 fields including name, email, phone, address and IP. Copy as tab-separated rows or download JSON.",
+  steps: [
+    "Tick the fields you want in the Select Fields panel — Name, Email, Phone Number, Password, Address, IP Address, Country, Gender, Age, Job Title and Company — or press Select All.",
+    "Set \"Number of Records to Generate\" anywhere from 1 to 500, then press Generate Data to build the table.",
+    "Use Copy Table for tab-separated rows that paste into Sheets or Excel, Copy JSON for the record array, or Export JSON to download fake-data.json.",
+  ],
   intro:
     "Fake Data generates batches of realistic-looking but entirely invented test records — name, email, phone, password, address, IP, country, gender, age, job title and company — with each field synthesised at random from its own built-in pool of sample values. Pick which of the eleven fields you want, choose how many records to build (1 to 500), and generate a table you can copy as tab-separated rows or download as a JSON array. It is for developers, QA testers and analysts who need placeholder rows that look plausible in a UI without ever touching real customer data.",
   useCases: [

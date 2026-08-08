@@ -1,4 +1,12 @@
 const seo = {
+  title: "CSV Carbon Footprint Calculator with Your Own Factors",
+  metaDescription:
+    "Paste rows as Activity | quantity | unit | kg CO₂e per unit to get the total in kg and tonnes CO₂e, a per-person split and a line-by-line breakdown.",
+  steps: [
+    "Enter one activity per line in Activity rows as Activity | quantity | unit | kg CO₂e per unit, for example Petrol | 180 | litre | 2.31.",
+    "Set People sharing footprint to split the household total, or leave it at 1.",
+    "Read the total kg CO₂e, the tonnes figure and the per-person split alongside the per-row contribution table, then use Download to save csv-carbon-footprint-analyzer.txt.",
+  ],
   intro:
     "The CSV Carbon Footprint Analyzer totals estimated emissions from a pasted list of activity rows, each written as Activity | quantity | unit | kg CO₂e per unit, by multiplying quantity by the emission factor you supply and summing the results. It reports the total in kilograms and tonnes CO₂e, a per-person figure when a household is sharing the footprint, and a line-by-line table showing what each activity contributed. Because you provide the factors, the arithmetic follows whatever inventory or supplier disclosure you are working from rather than a fixed built-in dataset.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Family Photo Backup Checker: 3-2-1 Redundancy Score",
+  metaDescription:
+    "Tick where your photos actually live - copies sharing a house, provider or sign-in count once - and score the archive against the 3-2-1-1-0 rule.",
+  steps: [
+    "Name the collection in \"Which archive are you checking?\" - one at a time, so the wedding video is scored separately from the phone camera roll.",
+    "Under \"1. Where this archive is stored\" tick every place holding the full archive, mark \"Checked in the last 12 months\" on the ones you have read back, then tick \"2. Habits already in place\".",
+    "Read Independent failure domains, Total copies, Different storage media and Copies a delete cannot reach, then press Copy result.",
+  ],
   intro:
     "The Family Photo Archive Redundancy Checker tests whether a photo or video collection genuinely exists in two independent places — copies that cannot be destroyed by the same fire, the same accidental delete or the same locked-out account. It scores your setup against the 3-2-1 backup rule (3 copies, 2 media types, 1 off site) and its 3-2-1-1-0 extension (1 offline or write-once copy, 0 unverified restores), and counts copies that share a failure domain only once. Built for families who assume the phone plus its own cloud sync is a backup, when structurally it is a single copy.",
   useCases: [

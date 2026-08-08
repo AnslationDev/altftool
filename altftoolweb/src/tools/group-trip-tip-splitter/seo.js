@@ -1,4 +1,11 @@
 const seo = {
+  metaDescription:
+    "Split each tip only between the travellers who were there, net off who paid, and settle in at most one fewer transfer than people. Whole-cent arithmetic.",
+  steps: [
+    "Name each traveller, adding rows with Add traveller, and start a line for every tip with Add a shared tip.",
+    "Per tip fill What was it for, the Tip amount, Who paid it (or Nobody yet — collect into a kitty) and tick Who was there.",
+    "Settle up lists the fewest transfers that clear the balances and Per traveller shows each net position; press Copy split.",
+  ],
   intro:
     "This splitter divides each shared travel tip only among the travellers who were actually present, nets that against who has already paid, and reduces the resulting web of debts to the fewest transfers that clears it — at most one fewer than the number of people. All the arithmetic runs in whole cents, so the individual shares always add back up to the exact total instead of drifting by a penny the way a decimal split does. It is for groups where attendance varies: one person skipped the group dinner, two took the private guide, everyone chipped in for the porter.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stress Level Self-Check: 10 Questions, Scored 0-40",
+  metaDescription:
+    "Rate ten questions about the last month from 0 to 4, four of them reverse scored, for a 0-40 total in the low, moderate or high band.",
+  steps: [
+    "Under 'In the last month, how often have you…', answer all ten items using the Never / Almost never / Sometimes / Fairly often / Very often dropdown on each row; anything left on 'Not answered' holds the score back.",
+    "The total recalculates as you answer — there is no submit button — and four positively worded items are reverse scored on the way in. 'Clear answers' empties all ten, and Reset restores the starting state.",
+    "Read 'Perceived stress score' as a total out of 40 with its band and range, then the 'Feeling out of control (6 items)', 'Low sense of coping (4 items)' and 'Bigger contributor' rows, and press 'Copy result' to take the score and next steps with you.",
+  ],
   intro:
     "The Stress Level Self-Check scores how unpredictable, uncontrollable and overloaded the last month has felt, using the ten-item perceived-stress format introduced by Cohen, Kamarck and Mermelstein in 1983. Each item is rated 0 (never) to 4 (very often), four positively worded items are reverse scored, and the 0-40 total falls into a low (0-13), moderate (14-26) or high (27-40) band. It also separates the two things the questionnaire measures — how out of control life feels, and how well you feel you are coping — so the next steps match what is actually driving the number.",
   useCases: [

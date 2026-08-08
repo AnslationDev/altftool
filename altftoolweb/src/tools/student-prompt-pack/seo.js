@@ -1,4 +1,12 @@
 const seo = {
+  title: "Student Prompt Pack: 9 AI Study Prompts to Fill In",
+  metaDescription:
+    "9 fill-in-the-blank prompts for the Feynman technique, active recall, spaced repetition and examiner marking — they make the model quiz you, not write.",
+  steps: [
+    "Narrow the 9 prompts with Search prompts or the Category menu, then open one such as \"Active recall quiz from your notes\".",
+    "Complete the Fill in the blanks fields, or press Use example values; Clear fields empties them again.",
+    "Check the estimated prompt size in tokens and the blanks-filled count, then press Copy prompt and paste it into your assistant.",
+  ],
   intro:
     "The Student Prompt Pack is a library of 9 fill-in-the-blank AI prompts built around evidence-backed study methods: the Feynman technique, active recall, spaced repetition, examiner-style marking and rubric-based feedback. Every prompt is written so the model checks, quizzes and critiques your work rather than doing it for you — quiz answers are withheld until you attempt the questions, essay feedback quotes your draft instead of rewriting it, and outlines organise your own thesis and evidence. Fill in the blanks in your browser and copy the finished prompt into any assistant.",
   useCases: [

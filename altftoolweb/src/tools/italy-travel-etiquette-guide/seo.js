@@ -1,4 +1,12 @@
 const seo = {
+  title: "Italy Etiquette Guide: ZTL Fines, Coperto, Churches",
+  metaDescription:
+    "Tick where you'll be and get a ranked briefing: ZTL camera zones, regional ticket validation, church dress code and coperto, with a readiness score.",
+  steps: [
+    "Under Where will you actually be?, tick your contexts — churches and basilicas, restaurants and trattorie, bars and cafés, trains and driving, shops, streets, homes, business or coastal.",
+    "Set What kind of trip and How many rules to show, which weight the ranking by severity.",
+    "Read the Etiquette readiness percentage, the Fix these first list and The briefing, where ZTL, ticket validation and decoro rules appear whatever you ticked, then press Copy briefing.",
+  ],
   intro:
     "This guide turns Italian etiquette into a ranked briefing for the places you will actually use, and it separates the customs from the rules that carry a fine. Tick churches, restaurants, bars, transport, shops, streets, homes, offices or the coast, and it returns the applicable rules weighted by severity and by the kind of trip you are on, with a readiness score for what you already know. The country's fineable rules — the camera-enforced ZTL zones, unvalidated regional train tickets, and the decoro ordinances in Rome, Florence and Venice — are shown whatever your itinerary.",
   useCases: [

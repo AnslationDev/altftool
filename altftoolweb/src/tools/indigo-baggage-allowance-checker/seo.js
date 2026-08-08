@@ -1,4 +1,12 @@
 const seo = {
+  title: "IndiGo Baggage Allowance Checker: 15 kg, 7 kg Cabin",
+  metaDescription:
+    "Test every bag against IndiGo's 15 kg combined check-in, the 7 kg 55x35x25 cm cabin bag and the 32 kg single-piece cap, and price the excess.",
+  steps: [
+    "Pick your Fare / route — \"Domestic — standard fare (15 kg check-in)\", the hand baggage only fare, or an international sector — then give the Cabin bag its Weight (kg) and Length, Width and Height.",
+    "Press Add bag for each checked piece and enter its weight and dimensions, tick \"I am carrying one\" if you have a personal item, and put the Excess rate per kg quoted in your booking under Excess baggage pricing.",
+    "Excess checked weight headlines the verdict, with Fare / route, Cabin bag, Free checked allowance, Total checked weight and Estimated excess charge listed, plus a Bag-by-bag table of each piece's weight and size check; press Copy result.",
+  ],
   intro:
     "This checker tests a bag's weight and its three dimensions against IndiGo's published cabin and check-in limits and reports the shortfall in kilograms. IndiGo works on a weight concept, not a piece concept: the free check-in allowance is one total figure — 15 kg on a standard domestic fare — that the sum of every checked bag must stay under, alongside one 7 kg cabin bag of 55 × 35 × 25 cm and a 3 kg personal article of 40 × 30 × 15 cm. Enter what your luggage scale and tape measure say and you get a bag-by-bag verdict plus an excess estimate at the rate you were quoted.",
   useCases: [

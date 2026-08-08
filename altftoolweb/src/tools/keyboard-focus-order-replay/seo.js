@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tab Order Checker: Replay Focus from Static HTML",
+  metaDescription:
+    "Paste up to 500 KB of HTML and step through the estimated tab stops with Tab and Shift+Tab; positive tabindex and unnamed stops are flagged.",
+  steps: [
+    "Paste markup into the Static HTML source box or use Open file for an .html, .htm or .txt file up to 500 KB — Load safe example fills it with a sample.",
+    "Press Estimate focus order, then walk the sequence with the Tab and Shift+Tab buttons or click any entry in Estimated sequence.",
+    "Read the Tab stops, Positive tabindex, Unnamed and Nodes parsed counters alongside the Structural cues list, then use Download counts-only summary to save keyboard-focus-order-summary.json.",
+  ],
   intro:
     "Keyboard Focus-Order Replay reads pasted static HTML without executing it and estimates the sequential focus order a browser would produce, then lets you step through the resulting tab stops forward and with Shift+Tab. It applies the HTML rule that elements with a positive tabindex come first in ascending order, followed by every tabindex=0 or natively focusable element in document order, and it resolves each stop's accessible name the way the browser would. It is for accessibility engineers and front-end developers auditing a template's tab sequence before they open a browser.",
   useCases: [

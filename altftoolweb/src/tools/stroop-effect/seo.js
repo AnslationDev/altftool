@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stroop Effect Test: 30 Trials, Interference in ms",
+  metaDescription:
+    "Name the ink colour, not the word, across 30 trials with a 5-second limit each. Get accuracy, average reaction time and incongruent minus congruent in ms.",
+  steps: [
+    "Press Start the Experiment, read the three instructions, then press Start Test and wait out the 3-second countdown.",
+    "For each of the 30 trials, click the colour button matching the ink colour — or press keys 1-6 — within the 5-second limit, ignoring what the word says.",
+    "On Your Stroop Test Results, read Accuracy, Avg Reaction, Congruent RT, Incongruent RT and the Stroop Effect, which is incongruent minus congruent in ms.",
+  ],
   intro:
     "The Stroop Effect Test shows you colour words printed in a mismatched ink colour and asks you to name the ink, not the word — then measures how much slower you are on those conflict trials than on matching ones. That difference in milliseconds is your Stroop effect: incongruent average reaction time minus congruent average reaction time, the standard way the effect is quantified since Ridley Stroop's 1935 experiment. You get 30 trials across six colours, a 5-second limit each, and a breakdown of accuracy, average reaction time and the interference cost at the end.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "YouTube Privacy Checklist: 26 Settings to Lock Down",
+  metaDescription:
+    "Scores 26 YouTube settings — private subscriptions and playlists, history retention, public comment history, ad data and channel access.",
+  steps: [
+    "Choose who you are locking this down for and set a Target score (%); anything above 69% needs every critical setting applied.",
+    "Tick the settings you have already applied across the five groups, or press Mark all applied and Clear all.",
+    "Read the Protection score, the remaining exposure by area, and the shortest route to your target.",
+  ],
   "intro": "This checklist covers the 26 YouTube settings that decide what your channel publishes about you and how long YouTube keeps your history. Two toggles on the Privacy tab hide subscriptions and saved playlists, but playlists you created, your Liked videos list and your entire comment history are governed separately — and comments carry your channel name and photo on every video you have ever replied to. Watch and search history retention is a Google account setting with 3, 18 and 36-month options, and ad personalisation lives in My Ad Center rather than in YouTube itself.",
   "useCases": [
     "Hide subscriptions and playlists before applying for a job, when a recruiter can find your channel from your name.",

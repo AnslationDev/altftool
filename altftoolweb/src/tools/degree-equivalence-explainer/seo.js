@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Degree Equivalence: US, UK, Canada, Australia",
+  metaDescription:
+    "How Class 10 to PhD, BTech and MBBS are recognised in the US, UK, Canada, Australia and Germany, following WES, ECCTIS, ECA, AQF and Anabin.",
+  steps: [
+    "Pick your Indian qualification — Class 10 or Class 12, a 3-year BA/BSc, a 4-year BTech, MBBS, master's or PhD — from the dropdown.",
+    "Choose a Destination country: United States, United Kingdom, Canada, Australia or Germany.",
+    "Read the equivalence verdict with its evaluator note, compare the \"across all destinations\" table, then press Copy result.",
+  ],
   intro:
     "This explainer shows how Indian qualifications — from Class 10 and Class 12 through 3-year BA/BSc degrees, 4-year BTech degrees, MBBS, master's and PhD — are typically recognised in the United States, United Kingdom, Canada, Australia and Germany. The summaries reflect the practice of the recognised evaluators for each country: ECCTIS in the UK, NACES members like WES in the US, ECA agencies for Canada, AQF comparison in Australia, and the Anabin database with uni-assist in Germany. It is built for students and migrants planning where their credentials will carry.",
   useCases: [

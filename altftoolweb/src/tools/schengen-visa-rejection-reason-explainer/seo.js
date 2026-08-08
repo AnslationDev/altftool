@@ -1,4 +1,12 @@
 const seo = {
+  title: "Schengen Visa Refusal: What Each Annex VI Box Means",
+  metaDescription:
+    "Decodes the boxes ticked on the standard Annex VI refusal form, names the Visa Code article behind each, and lists what to fix before you reapply.",
+  steps: [
+    "Paste the wording from your refusal notice to see the closest matching grounds, or skip that and tick the grounds yourself.",
+    "Select every ground marked on the notice - box 2 purpose of stay, box 3 means of subsistence, box 7 insurance, box 9 intention to leave - since several often apply.",
+    "Each ground shows its Visa Code basis, what triggers it and a fix checklist; ticking fixes raises the reapplication readiness score, then press Copy result.",
+  ],
   intro:
     "This explainer decodes the numbered tick-boxes on a Schengen visa refusal form and turns each one into a checklist of the evidence that normally answers it. Every Schengen consulate refuses on the same standard form set out in Annex VI of the Visa Code, Regulation (EC) No 810/2009 as amended by Regulation (EU) 2019/1155, so box 2, box 3 and box 9 mean exactly the same thing whether the decision came from Paris, Warsaw or Lisbon. Select the grounds that were ticked on your notice to see what the officer was actually saying, how serious it is, and what to fix before you reapply.",
   useCases: [

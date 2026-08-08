@@ -1,4 +1,7 @@
 const seo = {
+  title: "Kannada Gaade: 25 Proverbs With Meaning in English",
+  metaDescription:
+    "25 Kannada gaades in script and Roman transliteration, each with the literal image, how speakers actually use it, and the English equivalent.",
   intro:
     "Kannada Gaade Explorer is a searchable reference of 25 Kannada proverbs, each shown in Kannada script with a Roman transliteration, a word-for-word literal reading, the sense in which speakers actually use it, and the nearest English proverb. A gaade is a complete, self-standing sentence that states a general truth, which is what separates it from a fixed phrase used inside a sentence. It is built for students preparing Kannada language papers, writers looking for the right saying, and learners who want the literal image behind a proverb, not just a loose translation.",
   useCases: [

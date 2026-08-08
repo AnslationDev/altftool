@@ -1,4 +1,7 @@
 const seo = {
+  title: "Calorie Burn Calculator Using MET Values and Weight",
+  metaDescription:
+    "Estimate calories burned with MET × 3.5 × kg ÷ 200 across six activities, from brisk walking at 3.5 METs to jump rope at 8.5, plus per-minute rates.",
   intro:
     "This calculator estimates the calories an activity burns using the standard MET equation — kcal = MET × 3.5 × body weight in kg ÷ 200 × minutes — where a MET is a multiple of your resting oxygen uptake of 3.5 mL per kg per minute. Pick one of six activities (brisk walking 3.5 METs, weight training 5, swimming 6, cycling 7.5, running 8, jump rope 8.5), enter your weight and duration, and you get the total plus a per-minute and per-hour rate. It is an estimate of gross energy cost, not a measured reading, so treat it as a planning number rather than a precise ledger.",
   useCases: [

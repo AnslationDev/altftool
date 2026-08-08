@@ -1,4 +1,12 @@
 const seo = {
+  title: "Creatine Loading Calculator: 0.3 g/kg Dose Split",
+  metaDescription:
+    "Loading dose at 0.3 g/kg split into four servings, maintenance at 0.03 g/kg, with a dated schedule, 5 g scoop counts and days per tub.",
+  steps: [
+    "Enter your Bodyweight (kg), choose a Protocol, then set Loading days and Servings per day while loading.",
+    "Add a Start date, Maintenance days to list, and optionally Tub size (g) and Tub price to get scoops and cost per day.",
+    "Read the daily dose in grams, the Level 5 g scoops per loading day row and the Dated schedule table, then press Copy result.",
+  ],
   intro:
     "A creatine loading calculator converts your bodyweight into a daily loading dose of creatine monohydrate at 0.3 g per kg, splits it across four servings, and then drops to a maintenance dose of about 0.03 g per kg per day. Those rates come from the International Society of Sports Nutrition position stand on creatine, which describes 5-7 days of loading followed by ongoing maintenance, or a no-load route of 3-5 g per day that reaches the same muscle saturation in roughly 28 days. The output includes a dated day-by-day schedule, level-scoop counts and how long a tub will last.",
   useCases: [

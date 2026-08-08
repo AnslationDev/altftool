@@ -1,4 +1,7 @@
 const seo = {
+  title: "Skill Demand Analyzer: 0-100 Score from Job-Board Data",
+  metaDescription:
+    "Turn live openings, year-on-year growth, applicants per posting, salary premium and remote share into a 0-100 score weighted 30/30/20/15/5.",
   intro:
     "The Skill Demand Analyzer converts five job-board readings — live openings, openings 12 months ago, applicants per posting, median salary for postings naming the skill, the role-family median and the remote share — into a single 0-100 skill demand score. Volume is scored on a log10 curve that saturates at 10,000 live postings, growth is measured as the plain year-on-year change in openings, and the five sub-scores are combined with fixed weights of 30/30/20/15/5. It is for people choosing what to learn next, and for hiring teams deciding how hard a role will be to fill.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Penrose Triangle Generator: Build Impossible Objects",
+  metaDescription:
+    "Build a Penrose triangle, impossible rectangle or endless staircase from unit cubes, then move the azimuth and elevation sliders to break the illusion.",
+  steps: [
+    "Pick a figure in the Object menu - Penrose triangle (tribar), Impossible rectangle (four bars) or Endless staircase - then set Arm length in cells.",
+    "Drag the Azimuth and Elevation sliders off 45 degrees / 35.26 degrees to pull the join apart, or press \"Snap camera back to true isometric\" to close it again.",
+    "Read the \"On the (1, 1, 1) line?\" and \"True isometric?\" rows, then use Copy SVG or Download to save penrose-triangle.svg.",
+  ],
   intro:
     "This builder generates Penrose-style impossible objects — the tribar, a four-bar impossible rectangle and an endless staircase — out of unit cubes on a 3D lattice, then draws them with a general axonometric projection. They work for one precise reason: under a true isometric view (azimuth 45°, elevation asin(1/√3) ≈ 35.264°) the entire line of points t(1, 1, 1) collapses onto a single screen point, so a circuit of bars that travels n cells in x, n in y and n in z returns to exactly where it started in the picture while being nowhere near it in space. It is for designers, teachers and anyone who wants to see the illusion assembled and then deliberately broken.",
   useCases: [

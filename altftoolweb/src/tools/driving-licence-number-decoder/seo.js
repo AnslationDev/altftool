@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Driving Licence Number Decoder: State, RTO, Year",
+  metaDescription:
+    "Split a 15-character DL number into state code, 2-digit RTO, 4-digit year and 7-digit serial, naming the state — DL0420110012345 reads as Delhi, RTO 04.",
+  steps: [
+    "Type the licence into Driving licence number, or load the Delhi example preset which fills DL-0420110012345.",
+    "Leave the Normalize toggle on so Strip punctuation and use uppercase applies, or switch it off to test the raw string exactly as written.",
+    "The rows show State, RTO code, Issue-year field and Serial — DL0420110012345 reads Delhi, 04, 2011, 0012345 — with Copy and Download beside them.",
+  ],
   intro:
     "The Driving Licence Number Decoder splits an Indian driving licence number into its four parts — a two-letter state code, a two-digit RTO code, a four-digit issue-year field and a seven-digit serial — and names the state the code belongs to. Enter DL-0420110012345 and it returns Delhi, RTO 04, year field 2011 and serial 0012345, after stripping everything that is not a letter or digit and uppercasing the rest if you leave normalisation on. It is for anyone checking whether a licence number they have been given is even structurally plausible before they act on it.",
   useCases: [

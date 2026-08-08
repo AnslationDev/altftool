@@ -1,4 +1,12 @@
 const seo = {
+  title: "5-4-3-2-1 Grounding Exercise with Paced Breathing",
+  metaDescription:
+    "A guided 5-4-3-2-1 walkthrough, one sense at a time, with a 4-in 6-out breath cue and physical, cognitive and self-soothing backups.",
+  steps: [
+    "On 'Before we start', optionally rate yourself from Calm to Overwhelmed and switch on No-typing mode or Skip the breathing pauses.",
+    "Press 'Start with 5 things you can see', fill or tap each slot, and use Next sense to move through feel, hear, smell and taste with a breath cue between.",
+    "At the end review What you noticed, answer 'How do you feel now?' with A bit better, About the same or Worse, then choose Go again or Copy what I noticed.",
+  ],
   intro:
     "This is a guided walkthrough of the 5-4-3-2-1 grounding exercise: it takes you one sense at a time through five things you can see, four you can feel, three you can hear, two you can smell and one you can taste, with a paced 4-second-in, 6-second-out breath cue between steps. If the sensory version is not landing, three alternatives are one tap away — physical grounding, counting backwards from 100 in sevens, and self-soothing prompts. It is a self-help walkthrough, not treatment; if anxiety is frequent or severe, speak to a doctor or a qualified mental-health professional.",
   useCases: [

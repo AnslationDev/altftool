@@ -1,4 +1,12 @@
 const seo = {
+  title: "Appliance Warranty Tracker: Comprehensive + Part Cover",
+  metaDescription:
+    "Tracks both clocks, the 1-2 year comprehensive and the 10-year compressor or motor cover, plus AMC renewals and the 2-year Section 69 window.",
+  steps: [
+    "Under \"Add an appliance\", enter a Nickname, pick the Appliance type and set the Purchase date, Price paid (₹) and AMC cost per year (₹, 0 if none).",
+    "Press Add appliance for each item; the date field beside it is the reference date used for every countdown.",
+    "Read \"Appliances still in warranty\", the next-to-lapse date and AMC as share of value, then press Copy list — entries are saved in browser storage.",
+  ],
   intro:
     "The Appliance Warranty Tracker keeps both warranty clocks that run on every Indian appliance: the comprehensive cover on the whole unit, usually one or two years, and the far longer cover on one key part — typically ten years on a refrigerator compressor or washing machine motor. Enter the purchase date once and it dates the end of each, flags whether the extended-warranty purchase window is still open, schedules AMC renewals, and shows the two-year complaint deadline set by Section 69 of the Consumer Protection Act, 2019. Everything is stored in your own browser.",
   useCases: [

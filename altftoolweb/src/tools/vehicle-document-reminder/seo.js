@@ -1,4 +1,12 @@
 const seo = {
+  title: "RC, Insurance & PUC Expiry Tracker: Days Remaining",
+  metaDescription:
+    "Paste RC, insurance, PUC and licence expiry dates as 'Document | date | reference' and read days remaining, overdue flags and a 30-day warning window.",
+  steps: [
+    "Type one document per line into the Vehicle documents box as 'Document | expiry date | reference' — for example RC | 2027-06-30 | MH01AB1234 — or press the 'Example vehicle' chip under Examples.",
+    "Set the Review date the countdown runs from and the Warning window (days), which starts at 30 and marks anything inside it as 'renew soon'.",
+    "Read the Item / Expiry / Reference / Status table: a past date reads '92d overdue', an unparseable one reads 'Invalid date', and the caption counts how many need attention; Copy or Download saves the list.",
+  ],
   intro:
     "Vehicle Document Reminder takes a list of vehicle papers — RC, insurance, PUC, driving licence, permit, fitness — each written as 'Document | expiry date | reference', and returns days remaining against a review date you set, marking anything already past as overdue and anything inside your warning window as renew soon. The window defaults to 30 days, and the summary counts how many records need attention so one line tells you whether anything is due. It is for owners and small fleet operators who keep renewal dates in four different places and want them on one screen.",
   useCases: [

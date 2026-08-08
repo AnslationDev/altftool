@@ -1,4 +1,12 @@
 const seo = {
+  title: "Boiled Egg Timer: 6 Min Soft, 7 Jammy, 10 Hard-Boiled",
+  metaDescription:
+    "Base times of 6:00 soft to 12:00 very hard, adjusted for egg size, fridge or room temperature, boiling or steaming, and altitude above 1,000 m.",
+  steps: [
+    "Under \"How do you want the yolk?\" pick Soft 6:00, Jammy 7:00, Medium 8:00, Hard 10:00 or Very hard 12:00 — the base times assume a large, fridge-cold egg lowered into boiling water at sea level.",
+    "In Adjustments choose Egg size (Small, Medium, Large or XL), Starting temperature (Fridge cold or Room temp), Method (Boiling water start or Steam) and drag the Altitude slider up to 3,500 m.",
+    "Total cook time updates with each adjustment itemised; press Start timer to run the countdown, with Pause, Resume and Reset available, and an \"Ice bath now!\" prompt at zero. Copy plan copies the timing.",
+  ],
   intro:
     "Perfect Egg Timer works out how long to cook a boiled egg by taking a base time for the yolk you want — 6:00 soft, 7:00 jammy, 8:00 medium, 10:00 hard, 12:00 very hard — and adjusting it for egg size, whether the egg came out of the fridge, boiling versus steaming, and your altitude. The base times assume a large egg, fridge cold, lowered into already-boiling water at sea level, and the running countdown uses a fixed finish timestamp so it stays accurate in a background tab. It shows every adjustment as a separate line so you can see exactly where the minutes came from.",
   useCases: [

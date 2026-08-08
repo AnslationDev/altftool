@@ -1,4 +1,12 @@
 const seo = {
+  title: "Adhesive Selector: Which Glue for Which Material",
+  metaDescription:
+    "Scores 12 adhesive and sealant families against your substrates, gap, water, movement and load, with the surface-energy check that explains failures.",
+  steps: [
+    "Choose First material and Second material, then type the Gap to bridge (mm) and the Highest service temperature (°C).",
+    "Tick the Conditions that apply: Wet, damp or outdoors; The joint flexes or expands; Carries real load; Must be painted over.",
+    "Read the Best match with its score out of the maximum, Gap it suits and Typical lap shear in MPa, then press Copy result for the ranked shortlist.",
+  ],
   intro:
     "Scores twelve adhesive and sealant families against the specific joint you are making: both substrates, the gap between them, whether it gets wet, whether it moves, whether it carries load and whether it has to be painted. The reasoning follows the three things a bond actually needs — the adhesive must wet the surface (substrates below about 34 mN/m surface energy, like polypropylene at 29 and PTFE at 18, will not accept an ordinary glue), it must suit the gap, and it must tolerate the movement. Strengths quoted are typical lap-shear figures for comparison between families.",
   useCases: [

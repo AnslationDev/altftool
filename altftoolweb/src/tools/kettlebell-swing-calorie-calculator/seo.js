@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kettlebell Swing Calories by Bell Weight and Cadence",
+  metaDescription:
+    "Estimates swing calories from the measured 9.8 MET cost of two-hand swings, scaled by bell-to-body-mass ratio, with rest costed at 2 METs.",
+  steps: [
+    "Enter Body weight (kg), Bell weight (kg), Sets and Swings per set — the defaults are 75 kg, a 16 kg bell and 10 sets of 15.",
+    "Set Cadence (swings/min) and Rest between sets (seconds), plus a Target calories for swing estimate.",
+    "The Swing calorie estimate panel returns Net calories, Calories per swing, work and rest minutes and Swings for target; press Copy output.",
+  ],
   intro:
     "This calculator estimates the energy cost of a kettlebell swing session from swing count, bell weight, cadence and rest between sets. It is anchored on the measured oxygen cost of continuous two-hand swings — about 9.8 METs with a 16 kg bell in Farrar, Mayhew and Koch's 2010 study — then scaled for how heavy your bell is relative to your own body mass and how fast you swing, and converted with the ACSM equation kcal/min = METs x 3.5 x kg / 200. Rest between sets is costed separately at 2 METs, because that is where most of the clock in a swing session actually goes.",
   useCases: [

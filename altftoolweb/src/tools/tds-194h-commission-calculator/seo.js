@@ -1,4 +1,12 @@
 const seo = {
+  title: "TDS on Commission Calculator: Section 194H at 2%",
+  metaDescription:
+    "Section 194H TDS at 2% from 1 October 2024 (5% before) against the Rs 20,000 yearly limit, with the catch-up deduction when the limit is crossed.",
+  steps: [
+    "Enter Commission or brokerage being paid (INR), Commission already paid to this payee this year (INR) and the Date of payment or credit, which decides the 5% or 2% rate.",
+    "Untick Agent has furnished a valid PAN to apply the 20% section 206AA rate, or untick Payer is required to deduct under 194H for an individual or HUF not audited under section 44AB.",
+    "Read TDS to deduct now with the Rate applied, Annual exemption limit, Yearly aggregate and Net amount payable to the agent rows, then press Copy result.",
+  ],
   intro:
     "This calculator applies section 194H of the Income-tax Act to a commission or brokerage payment, picking the rate and the threshold from the date of payment: 2% for payments made on or after 1 October 2024 (5% before that), against an annual exemption of Rs 20,000 from FY 2025-26 and Rs 15,000 earlier. Because the limit is tested on the financial-year aggregate paid to one agent, it also shows the catch-up deduction on the payment that breaches the limit. Built for businesses paying sales agents, distributors and brokers, and for agents checking their own net receipt.",
   useCases: [

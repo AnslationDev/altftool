@@ -1,4 +1,12 @@
 const seo = {
+  title: "South Indian Breakfast Calories: Idli, Dosa, Vada, Pongal",
+  metaDescription:
+    "Builds a plate from 25 standard portions and derives calories from protein, carbs and fat with Atwater factors, against your budget.",
+  steps: [
+    "Set your Daily calorie target (kcal) and the Share of the day taken at breakfast (%).",
+    "Under 'Choose your items', add portions from the Steamed, Griddle, Fried, Rice & rava, Accompaniments and Drinks groups.",
+    "Read the Breakfast total in kcal, its share of the day and the protein, carbohydrate and fat split, then press Copy plate.",
+  ],
   intro:
     "This tool totals the calories and macronutrients of a South Indian breakfast built from 25 standard portions — idli, appam, plain and masala dosa, medu vada, upma, ven pongal, sambar, chutneys, molagapodi and filter coffee. Energy is never stored separately: it is derived from each portion's protein, carbohydrate and fat using the Atwater general factors of 4, 4 and 9 kcal per gram, so the calorie total and the macro split can never contradict each other. It then compares the plate against a breakfast budget, taken by default as 25 percent of your daily calorie target.",
   useCases: [

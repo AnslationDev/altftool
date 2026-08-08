@@ -1,4 +1,12 @@
 const seo = {
+  title: "Future Baby Generator: Eye and Hair Odds From Parents",
+  metaDescription:
+    "Enter both parents' names, eye colour and hair type; optional photos are analysed in your browser. Output is a text trait report, not a baby picture.",
+  steps: [
+    "Enter Father's Name and Mother's Name, pick each parent's eye colour and hair type, and optionally add two images under 10 MB each.",
+    "Press Generate Future Baby Profile — face detection and 68-point landmarking run in your browser and seed the report, so identical inputs repeat identically.",
+    "Read the eye and hair percentage tables plus the name, personality and hobby suggestions, then Copy Report or Download future-baby-report.txt.",
+  ],
   intro:
     "Future Baby Generator takes both parents' names, eye colour and hair type — plus optional photos — and returns a simplified Punnett-square style probability table for the baby's eye colour and hair, along with name, personality and hobby suggestions. If you upload two photos, face detection and 68-point facial landmarking run entirely inside your browser and the landmark coordinates seed the result, so the same pair of faces always produces the same report. It does not draw a baby picture: the output is a text report of trait percentages you can copy or download.",
   useCases: [

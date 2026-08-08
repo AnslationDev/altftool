@@ -1,4 +1,12 @@
 const seo = {
+  title: "PPF Calculator: Year-Wise Growth at the 7.1% Rate",
+  metaDescription:
+    "Project PPF maturity year by year at 7.1%, within the ₹500-₹1,50,000 yearly limits, over 15, 20 or 25 years with loan and withdrawal caps.",
+  steps: [
+    "Type your deposit into the 'Yearly investment (₹)' box or drag its slider, staying inside the '₹500 min' and '₹1,50,000 max / year' bounds printed beneath it, then set 'Interest rate (% p.a.)', which opens at the notified 7.1%.",
+    "Pick a Duration button — '15 years' (Base term), '20 years' (+5 extension) or '25 years' (+10 extension). There is no calculate button: the maturity figure recomputes the moment a field changes, and 'Reset to defaults' returns you to ₹50,000 at 7.1% over 15 years.",
+    "Read the maturity amount with the Total invested, Total interest and Effective multiple tiles, scan the Year-wise growth table's Year, Deposit, Interest earned and Closing balance columns where post-15 years carry an 'Ext' badge, then press 'Copy summary'.",
+  ],
   intro:
     "The PPF Calculator projects a Public Provident Fund balance year by year, compounding annually on the assumption that each year's deposit goes in at the start of the year, so the closing balance is (previous balance + deposit) x (1 + rate). It is for anyone deciding how much to put into PPF this financial year and wanting to see the maturity figure, the split between money invested and interest earned, and how a 5-year extension changes the curve. The rate is prefilled at 7.1% per annum and the yearly deposit is capped at the statutory ₹1,50,000, with ₹500 as the minimum.",
   useCases: [

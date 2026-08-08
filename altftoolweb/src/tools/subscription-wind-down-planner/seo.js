@@ -1,4 +1,12 @@
 const seo = {
+  title: "Subscription Wind-Down Planner for Digital Inheritance",
+  metaDescription:
+    "List recurring charges and get an ordered cancellation sheet: next renewal date, cost per year, and whether Apple, Google Play, a card or UPI bills it.",
+  steps: [
+    "Add each recurring charge with its service name, amount per charge in INR, billing cycle, last charged date and whether it is billed through Apple, Google Play, a card mandate or UPI AutoPay.",
+    "Set Plan from this date and the Unattended window (months), then tick the box on any subscription holding files, photos or a domain the family would lose.",
+    "Read the Wind-down order for each next charge date, cost per year and cancellation route, then press Copy sheet to save the handover list.",
+  ],
   intro:
     "Subscription Wind-Down Planner converts a list of recurring charges into an ordered cancellation sheet, showing the next renewal date, the annualised cost and the exact channel each subscription can be stopped through. Renewal dates are projected with calendar-month arithmetic and end-of-month clamping, so a 31st anchor correctly falls to the 28th or 29th in February and returns to the 31st afterwards. It is built for anyone preparing a digital-inheritance file, an executor working through someone's accounts, or a person who has just lost the card every mandate was tied to.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Live AQI by Coordinates: US and European Index",
+  metaDescription:
+    "Current US AQI and European AQI for any latitude and longitude, with PM2.5, PM10, ozone, NO2, SO2 and CO readings from Open-Meteo CAMS data.",
+  steps: [
+    "Enter a Latitude and Longitude, or press Use device location to fill both from your device's reported position.",
+    "Press Get current result to request the reading for those coordinates from the Open-Meteo Air Quality API.",
+    "Read the Current result panel: US AQI and European AQI plus PM2.5, PM10, ozone, nitrogen dioxide, sulphur dioxide and carbon monoxide, each with its unit and update timestamp.",
+  ],
   intro:
     "The AQI Live Dashboard reports the current air quality index for a set of coordinates along with the pollutant-by-pollutant readings behind it — PM2.5, PM10, ozone, nitrogen dioxide, sulphur dioxide and carbon monoxide — pulled on demand from the Open-Meteo Air Quality API, which is built on the Copernicus CAMS model. It shows both the US AQI and the European AQI for the same location, because the two scales are computed differently and rarely agree. Enter a latitude and longitude or use your device location, and each reading comes back with its unit and an update timestamp.",
   useCases: [

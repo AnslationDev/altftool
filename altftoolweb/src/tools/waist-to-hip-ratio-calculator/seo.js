@@ -1,4 +1,12 @@
 const seo = {
+  title: "Waist to Hip Ratio Calculator With WHO Risk Bands",
+  metaDescription:
+    "Divides waist by hip and maps it onto WHO bands, low risk below 0.90 for men and 0.80 for women, plus the 90/80 cm South Asian waist cut-offs.",
+  steps: [
+    "Choose Centimetres or Inches, set Sex at birth to Male or Female, and enter your Waist and Hips measurements.",
+    "Measure the waist midway between the bottom rib and the top of the hip bone after breathing out, and the hips at the widest part of the buttocks.",
+    "Read the Waist-to-hip ratio with its WHO band, the Body shape and the \"Waist for a low-risk ratio\" target, then press Copy result.",
+  ],
   "intro": "Waist to Hip Ratio Calculator divides your waist circumference by your hip circumference and maps the result onto the WHO (2008) risk bands, which differ by sex: below 0.90 is low risk for men and below 0.80 for women, while 1.00 and above for men or 0.85 and above for women marks substantially increased metabolic risk. It also names your fat-distribution pattern (apple or pear), checks your waist against the 94/102 cm WHO thresholds and the 90/80 cm cut-offs used for South Asian populations, and shows the waist measurement that would put you in the low-risk band.",
   "useCases": [
     "Track fat distribution during a fat-loss phase when the scale has stalled but your waist is still shrinking.",

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chat Export Anonymizer for TXT, JSON and CSV Logs",
+  metaDescription:
+    "Replace speakers with Person 1, plus emails, phones, links and IDs, in an export up to 5 MB. Parsing runs in your browser, nothing is uploaded.",
+  steps: [
+    "Paste the transcript into the 'Chat export' box or press 'Choose file' for a TXT, JSON or CSV up to 5 MB — 'Load demo' fills a sample and Clear empties it.",
+    "In 'Anonymization settings' pick an 'Input format' of 'Detect automatically', 'TXT / plain text', JSON or CSV, and tick 'Replace participants' (stable labels such as Person 1) and 'Remove timestamps'. There is no run button: processing starts locally as you type.",
+    "Check the 'Privacy summary' replacement counts and the 'Side-by-side preview', where changed lines are highlighted and the preview stops at the first 120 lines, then press 'Download anonymized' for anonymized-chat.txt, .json or .csv, or 'Copy output'.",
+  ],
   intro:
     "This tool takes a chat log you exported from a messaging app, helpdesk or support platform and replaces the identifying parts with consistent pseudonyms — the first speaker becomes Person 1, the first email becomes [EMAIL_1], and so on — while leaving the actual conversation intact. It reads TXT transcripts, JSON message arrays and CSV exports (auto-detecting which), and can optionally strip leading timestamps from each line. The mapping is consistent within a single run, so the same person stays the same pseudonym throughout and the thread still reads as a conversation.",
   useCases: [

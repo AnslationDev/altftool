@@ -1,4 +1,12 @@
 const seo = {
+  title: "Field Hockey Calories Burned: 7.8 MET, Rolling Subs",
+  metaDescription:
+    "Enter body weight and minutes on the pitch. Match play uses the Compendium's 7.8 MET; bench minutes are priced at the 1.3 MET standing rate.",
+  steps: [
+    "Enter your Body weight in kg or lb, then Minutes actually on the pitch and Minutes on the bench.",
+    "Pick a Session type — Match play (7.8 MET), Training drills (7.0 MET) or Skills session (5.0 MET) — or tap the Full match (4 x 15 min), Club format (2 x 35 min) or One quarter chip.",
+    "Read Total calories burned in kcal, with Burned on the bench, Per 15-minute quarter and Per 35-minute half broken out below, then press Copy result.",
+  ],
   intro:
     "The Field Hockey Calorie Calculator estimates the energy cost of a match, a training session or a skills session from your body weight and the minutes you were actually on the pitch, using the MET equation kcal/min = MET x 3.5 x kg / 200. Match play uses the Compendium of Physical Activities value of 7.8 METs for field hockey; training and skills work use clearly named proxies because the Compendium publishes no hockey-specific training entries. Because hockey allows unlimited rolling substitutions, bench minutes are priced separately at the 1.3 MET standing rate.",
   useCases: [

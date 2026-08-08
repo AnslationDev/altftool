@@ -1,4 +1,12 @@
 const seo = {
+  title: "Roll Number Format Validator: Length, O vs 0, Spaces",
+  metaDescription:
+    "Checks a roll or application number for length, character set, prefix and hidden spaces, and flags O typed for 0 or I for 1 before the portal does.",
+  steps: [
+    "Paste the number into Roll / registration number and pick an Expected format — 12-digit numeric for a JEE Main application number, 8-digit numeric for a CBSE board roll number.",
+    "Choose Custom rule to set Allowed characters, Required prefix (optional), Minimum length and Maximum length straight from your admit card.",
+    "The Verdict reads Looks valid or Fix needed with every check marked Pass or Fail; take the Cleaned value to submit, or press Copy result for the whole report.",
+  ],
   intro:
     "This validator checks a roll or registration number against structural rules — exact length, allowed characters, required prefix and stray whitespace — before you type it into an exam portal. It is built for candidates filling application, admit-card download or answer-key challenge forms, where a single lookalike character (letter O for zero, letter I for one) causes a 'record not found' error. Presets cover common formats such as 12-digit JEE Main application numbers and 8-digit CBSE roll numbers, and a custom mode lets you encode any rule from your own admit card.",
   useCases: [

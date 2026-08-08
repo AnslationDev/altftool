@@ -1,4 +1,12 @@
 const seo = {
+  title: "Girl Child Scholarships: NSIGSE, Pragati, Kanyashree",
+  metaDescription:
+    "Matches your study level, family income, community and state against 8 girl-only schemes, and names the rule that blocked each one that misses.",
+  steps: [
+    "Choose Study level and enter Annual family income (INR, optional).",
+    "Set Community category and State, and tick \"She is a single girl child\" if she has no brothers.",
+    "Read the Matching schemes count with each scheme's provider and amount, then press Copy result for the shortlist.",
+  ],
   intro:
     "The Girl Child Scholarship Finder filters major Indian scholarship schemes meant specifically for girl students — central schemes such as NSIGSE, the Begum Hazrat Mahal National Scholarship, the CBSE Single Girl Child scholarship, AICTE Pragati and the UGC Post Graduate Indira Gandhi Scholarship, plus state schemes like Kanyashree — against your study level, family income, community and state. It is built for parents and students who want a shortlist of schemes whose published eligibility rules they actually satisfy, with the reason shown for every scheme that does not match.",
   useCases: [

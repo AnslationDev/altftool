@@ -1,4 +1,12 @@
 const seo = {
+  title: "Form Abandonment Simulator: Multiply Step Rates",
+  metaDescription:
+    "Paste one line per step as name, visitors, completion %. Rates chain through the funnel to give end-to-end conversion and the biggest leak.",
+  steps: [
+    "Paste one step per line into the \"Steps: name, visitors, completion %\" box, for example Account fields,8600,72.",
+    "Edit any completion rate and the Step funnel re-models instantly, feeding each step's survivors into the next step.",
+    "Read Conversion, Completions and Biggest leak at the top, with entered, dropped and continued counts under every step.",
+  ],
   intro:
     "This simulator chains per-step completion rates into an end-to-end form conversion, so you can see what a multi-step signup actually loses. You paste one line per step as name, visitors, completion percentage; it takes the visitor count from the first step only, then feeds each step's survivors into the next — completed = entered x rate — and reports the final conversion, the number of completions, and the step that loses the most people in absolute terms. Because the rates multiply, five steps at 86, 72, 58, 61 and 88 percent come out at roughly 19 percent overall.",
   useCases: [

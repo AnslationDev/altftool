@@ -1,4 +1,12 @@
 const seo = {
+  title: "Smart Plug Security: 14 Controls, VLAN & Subnet Plan",
+  metaDescription:
+    "Score 14 weighted controls for cheap smart plugs and bulbs, get a segmentation plan matched to your router, and size the IoT subnet from usable hosts.",
+  steps: [
+    "Set What your router can do and How the devices are controlled, then enter Devices on the IoT network and Room to grow (%).",
+    "Tick the controls across Network segmentation, Accounts and apps, Local control and Devices and lifecycle; the three tagged Critical hold the score at 69% while open.",
+    "Read the Setup score out of 100, the Segmentation score with whether it Keeps working with the internet down, and the Subnet that fits with its usable addresses.",
+  ],
   intro:
     "This guide treats budget smart plugs and bulbs as what they are — the least-patched devices on a home network — and scores fourteen weighted controls across segmentation, vendor accounts, local control and end-of-life. It then builds a segmentation plan from what your router can actually do, adds points for Matter, Zigbee or local firmware over cloud-only Wi-Fi, and sizes the IoT subnet from usable IPv4 hosts (2^(32-prefix) - 2) against your device count plus growth. For anyone whose smart-home collection has quietly grown past a dozen devices on one flat network.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "TDEE Calculator: BMR, Maintenance, Cut and Bulk",
+  metaDescription:
+    "Mifflin-St Jeor BMR times activity 1.2-1.9 gives maintenance, a 500 kcal cut, a 300 kcal lean gain and 1.6-2.2 g/kg protein, live as you type.",
   intro:
     "This TDEE calculator estimates your maintenance calories from the Mifflin-St Jeor BMR equation (10 × kg + 6.25 × cm − 5 × age, +5 for men or −161 for women) multiplied by an activity factor between 1.2 and 1.9, then shows a fat-loss target 500 kcal below maintenance, a lean-gain target 300 kcal above it, and a daily protein range of 1.6-2.2 g per kg of body weight. Every figure updates as you type, so you can watch what a change in activity level or 5 kg of body weight actually does to the numbers. It is a planning estimate for healthy adults, not a clinical measurement.",
   useCases: [

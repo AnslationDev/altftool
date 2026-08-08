@@ -1,4 +1,12 @@
 const seo = {
+  title: "GST Return Due Dates: Monthly, QRMP & Composition",
+  metaDescription:
+    "Every GSTR-1, GSTR-3B, IFF, PMT-06, CMP-08 and annual return date for a financial year, with the QRMP 22nd/24th state split and a countdown.",
+  steps: [
+    "Type the year into Financial year starting in - 2025 covers April 2025 to March 2026 - then pick Regular taxpayer filing monthly, QRMP, Composition taxpayer or one of the six profiles under Kind of taxpayer.",
+    "For a QRMP registration set State (QRMP filers only) so the quarterly GSTR-3B lands on the 22nd or the 24th, and set Count down from to the date you are planning against.",
+    "Read Days to the next filing, work down the Due date, Form and Period table covering GSTR-1, IFF, PMT-06, CMP-08 and the annual return, then press Copy calendar.",
+  ],
   intro:
     "This calendar generates every GST return due date for a chosen financial year based on how you are registered: GSTR-1 on the 11th and GSTR-3B on the 20th for monthly filers, IFF on the 13th and PMT-06 on the 25th with quarterly GSTR-3B on the 22nd or 24th for QRMP filers, CMP-08 on the 18th for composition dealers, and the 31 December annual return. Dates follow section 39 of the CGST Act read with Rules 59 to 62 and Notification No. 29/2021-Central Tax, which fixed the two QRMP state groups. Useful for practitioners and finance teams laying out a compliance schedule.",
   useCases: [

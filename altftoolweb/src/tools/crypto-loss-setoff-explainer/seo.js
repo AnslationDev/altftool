@@ -1,4 +1,12 @@
 const seo = {
+  title: "Crypto Loss Set-Off Rules: What Section 115BBH Costs",
+  metaDescription:
+    "Section 115BBH taxes crypto gains at 30% and blocks every set-off. Enter your trades to see the extra tax, the 1% 194S TDS and disallowed fees.",
+  steps: [
+    "Press Add trade for each disposal and fill Asset, Cost of acquisition (INR), Sale consideration (INR) and Fees and gas paid (INR).",
+    "Choose your Surcharge on your total income and tick 'I am a specified person for Section 194S' if the higher TDS threshold applies.",
+    "Compare Total tax on your crypto gains with the 'If netting were allowed' column, plus Losses thrown away and TDS refundable, then press Copy result.",
+  ],
   intro:
     "Section 115BBH of the Income-tax Act taxes gains on virtual digital assets at a flat 30% and expressly refuses any set-off: a loss on a crypto trade cannot reduce a gain on another crypto trade, cannot reduce salary or capital gains, and cannot be carried forward to a later year. This explainer takes your year's trades and shows the tax you actually owe against the tax you would owe if gains and losses could be netted, so the cost of the rule is a number rather than a complaint. It also applies the Section 194S 1% TDS and shows that exchange fees and gas are not deductible.",
   useCases: [

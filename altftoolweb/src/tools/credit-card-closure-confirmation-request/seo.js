@@ -1,4 +1,12 @@
 const seo = {
+  title: "Credit Card Closure Letter: RBI 7-Working-Day Rule",
+  metaDescription:
+    "Draft a closure request that names the card and nil dues, counts the 7 working days RBI allows, and totals Rs 500 a day delay compensation.",
+  steps: [
+    "Under Cardholder and card, fill in Cardholder name, Card issuer, Card variant, Card last 4 digits and Reason for closing.",
+    "Under Dates and dues, set Closure request sent on, Status as on and Outstanding balance on the card (INR), then tick what you want confirmed in writing.",
+    "Read the Closure due by date and the Delay compensation claimable figure, then press Copy letter to take the draft from Letter preview.",
+  ],
   intro:
     "This tool drafts the letter that actually closes a credit card: a dated closure request naming the card, confirming nil dues, and demanding written confirmation, a no-dues certificate and a status update to the credit bureaus. It also applies para 7(b)(ii) of the RBI Master Direction on Credit Card and Debit Card - Issuance and Conduct Directions, 2022, which gives the issuer seven working days to complete closure and entitles you to Rs 500 for every day of delay once dues are nil. Enter the request date and the tool works out the deadline and the compensation you can claim.",
   useCases: [
