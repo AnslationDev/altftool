@@ -152,7 +152,11 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               TOEFL iBT total
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p
+              className="mt-1 text-4xl font-semibold text-[var(--primary)]"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {hasError ? DASH : `${result.total} / ${result.totalMax}`}
             </p>
             <p className="mt-1 max-w-md text-sm text-[var(--muted-foreground)]">
@@ -188,14 +192,16 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
-          {rows.map(([label, value]) => (
-            <div key={label} className="flex items-center justify-between gap-4 py-2.5">
-              <dt className="text-[var(--muted-foreground)]">{label}</dt>
-              <dd className="text-right font-semibold">{value}</dd>
-            </div>
-          ))}
-        </dl>
+        <div aria-live="polite" aria-atomic="true">
+          <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+            {rows.map(([label, value]) => (
+              <div key={label} className="flex items-center justify-between gap-4 py-2.5">
+                <dt className="text-[var(--muted-foreground)]">{label}</dt>
+                <dd className="text-right font-semibold">{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </section>
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">

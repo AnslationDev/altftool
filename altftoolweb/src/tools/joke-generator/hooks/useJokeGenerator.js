@@ -10,6 +10,12 @@ import {
 
 const FAVORITES_KEY = "altftool_joke_generator_favorites";
 
+// The live API's /types endpoint only exposes ["general","knock-knock","programming","dad"].
+// Categories not listed here fall back to a lowercase/underscore transform of the label.
+const CATEGORY_API_MAP = {
+  "Dad Joke": "dad",
+};
+
 export function useJokeGenerator() {
   const [jokes, setJokes] = useState([]);
   const [currentJoke, setCurrentJoke] = useState(null);
@@ -56,8 +62,8 @@ export function useJokeGenerator() {
     try {
       let url = API_URL;
       if (cat && cat !== "All" && cat !== "Random") {
-        const apiCat = cat.toLowerCase().replace(/\s+/g, "_");
-        url = `${API_CATEGORY_URL}/${apiCat}`;
+        const apiCat = CATEGORY_API_MAP[cat] || cat.toLowerCase().replace(/\s+/g, "_");
+        url = `${API_CATEGORY_URL}/${apiCat}/random`;
       }
       const res = await fetch(url);
       if (!res.ok) throw new Error("API returned non-OK status");
@@ -123,12 +129,21 @@ export function useJokeGenerator() {
     if (!joke) return;
 
     const truncated = historyRef.current.slice(0, historyIndexRef.current + 1);
-    const newHistory = [...truncated, joke];
+    const newHistory = [...truncated, joke].slice(-200);
 
     setHistory(newHistory);
     setHistoryIndex(newHistory.length - 1);
     setCurrentJoke(joke);
   }, [fetchFromAPI, getFallbackForCategory, pickRandomFromPool]);
+
+  const selectJoke = useCallback((joke) => {
+    if (!joke) return;
+    const truncated = historyRef.current.slice(0, historyIndexRef.current + 1);
+    const newHistory = [...truncated, joke].slice(-200);
+    setHistory(newHistory);
+    setHistoryIndex(newHistory.length - 1);
+    setCurrentJoke(joke);
+  }, []);
 
   // Initial load
   useEffect(() => {
@@ -224,12 +239,6 @@ export function useJokeGenerator() {
   const isFavorite = currentJoke ? favorites.some((f) => f.id === currentJoke.id) : false;
   const canGoPrevious = historyIndex > 0;
 
-  const filteredFavorites = favorites.filter((f) => {
-    if (!searchQuery || searchQuery.length < 2) return true;
-    return f.joke.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      (f.category && f.category.toLowerCase().includes(searchQuery.toLowerCase()));
-  });
-
   return {
     currentJoke,
     loading,
@@ -237,7 +246,6 @@ export function useJokeGenerator() {
     category,
     searchQuery,
     favorites,
-    filteredFavorites,
     isFavorite,
     canGoPrevious,
     autoPlay,
@@ -256,5 +264,7 @@ export function useJokeGenerator() {
     toggleAutoPlay,
     setShowFavorites,
     setCopied,
+    selectJoke,
+    showToast,
   };
 }

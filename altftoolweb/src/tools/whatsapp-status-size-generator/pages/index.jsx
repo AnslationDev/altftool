@@ -192,6 +192,7 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    requestIdRef.current += 1;
     setPresetId(PRESETS[0].id);
     setFit("cover");
     setFormat(EXPORT_FORMATS[0].id);
@@ -447,18 +448,28 @@ export default function ToolHome() {
             ["Source image", plan.error ? dash : `${plan.source.width} × ${plan.source.height} px (${plan.source.ratio})`],
             ["Scale applied", plan.error ? dash : `${NUM.format(plan.scalePercent)}%`],
             ["Cropped away", plan.error ? dash : `${NUM.format(plan.croppedPercent)}% of the scaled image`],
-            [
-              "Screen coverage",
-              plan.error || plan.screen.error
-                ? dash
-                : `${NUM.format(plan.screen.coveragePercent)}% of the status screen`,
-            ],
-            [
-              "Bars on screen",
-              plan.error || plan.screen.error
-                ? dash
-                : `${plan.screen.barVertical} px sides · ${plan.screen.barHorizontal} px top/bottom`,
-            ],
+            preset.onStatusScreen
+              ? [
+                  "Screen coverage",
+                  plan.error || plan.screen.error
+                    ? dash
+                    : `${NUM.format(plan.screen.coveragePercent)}% of the status screen`,
+                ]
+              : null,
+            preset.onStatusScreen
+              ? [
+                  "Bars on screen",
+                  plan.error || plan.screen.error
+                    ? dash
+                    : `${plan.screen.barVertical} px sides · ${plan.screen.barHorizontal} px top/bottom`,
+                ]
+              : null,
+            plan.fit === "contain"
+              ? [
+                  "Bars baked into export",
+                  plan.error ? dash : `${plan.bars.vertical} px sides · ${plan.bars.horizontal} px top/bottom`,
+                ]
+              : null,
             [
               "Text-safe area",
               plan.error || !preset.safeZone || plan.safe.error
@@ -470,7 +481,9 @@ export default function ToolHome() {
               clips.error ? dash : `${clips.clips} clip(s), last one ${NUM.format(clips.lastClipSeconds)}s`,
             ],
             ["Media ceiling", formatBytes(MAX_MEDIA_BYTES)],
-          ].map(([label, value]) => (
+          ]
+            .filter(Boolean)
+            .map(([label, value]) => (
             <div key={label} className="flex items-start justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{label}</dt>
               <dd className="text-right font-semibold">{value}</dd>
@@ -503,6 +516,17 @@ export default function ToolHome() {
             }`}
           >
             {plan.quality.message}
+          </p>
+        )}
+
+        {!plan.error && plan.distorted && (
+          <p
+            role="alert"
+            className="mt-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]"
+          >
+            Stretch fit scales width and height by different amounts, so the exported image will look
+            squashed or stretched. Switch to Fill or Fit if the source shape doesn&apos;t need to
+            change.
           </p>
         )}
 

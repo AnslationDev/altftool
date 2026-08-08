@@ -255,14 +255,32 @@ export function planBeam({ byteLength, fileName = "file.bin", ecLevel = "M", ver
     };
   }
 
-  const chunkBytes = bytesForBase64Budget(capacity - DATA_FRAME_OVERHEAD);
+  // First pass: size chunks against a flat overhead guess, just to learn
+  // roughly how many data frames this file will need.
+  let chunkBytes = bytesForBase64Budget(capacity - DATA_FRAME_OVERHEAD);
   if (chunkBytes <= 0) {
     return {
       error: `A version-${version} ${ecLevel} symbol holds only ${capacity} bytes, which is not enough for the ${DATA_FRAME_OVERHEAD}-byte frame header. Raise the QR version or lower the error-correction level.`,
     };
   }
+  let dataFrames = Math.ceil(byteLength / chunkBytes);
 
-  const dataFrames = Math.ceil(byteLength / chunkBytes);
+  // Second pass: a data frame's real non-payload part is
+  // `QFB1|<fileId>|<seq>|<total>|` — 16 fixed bytes (4-char protocol id, the
+  // 8 hex-char file id, and 4 "|" separators) plus the digit count of `seq`
+  // and `total`, which share the same maximum digit count. The flat guess
+  // above under-counts this once a file needs 1,000+ frames, so recompute
+  // the exact worst-case overhead for the frame count just found and
+  // re-derive chunkBytes once against it before committing to a size.
+  const exactOverhead = 16 + 2 * String(dataFrames).length;
+  chunkBytes = bytesForBase64Budget(capacity - exactOverhead);
+  if (chunkBytes <= 0) {
+    return {
+      error: `A version-${version} ${ecLevel} symbol holds only ${capacity} bytes, which is not enough for the ${exactOverhead}-byte frame header. Raise the QR version or lower the error-correction level.`,
+    };
+  }
+  dataFrames = Math.ceil(byteLength / chunkBytes);
+
   const nameBase64Length = base64Length(utf8Encode(fileName).length);
   const headerLength = PROTOCOL_ID.length + 1 + 8 + 3 + String(dataFrames).length * 2 + 20 + nameBase64Length;
   if (headerLength > capacity) {
@@ -300,7 +318,7 @@ export function buildBeam({ bytes, fileName = "file.bin", ecLevel = "M", version
   const data = bytes instanceof Uint8Array ? bytes : Uint8Array.from(bytes);
   const name = sanitiseFileName(fileName);
 
-  const plan = planBeam({ byteLength: data.length, fileName: name, ecLevel, version });
+  let plan = planBeam({ byteLength: data.length, fileName: name, ecLevel, version });
   if (plan.error) return { error: plan.error };
 
   const rate = Number(fps);
@@ -315,45 +333,66 @@ export function buildBeam({ bytes, fileName = "file.bin", ecLevel = "M", version
   const fileId = crc32Hex(idSource);
   const checksum = crc32Hex(data);
 
-  const total = plan.dataFrames;
-  const header = [
-    PROTOCOL_ID,
-    fileId,
-    "H",
-    String(total),
-    String(data.length),
-    checksum,
-    String(plan.chunkBytes),
-    bytesToBase64(nameBytes),
-  ].join("|");
+  const buildFrames = (activePlan) => {
+    const total = activePlan.dataFrames;
+    const header = [
+      PROTOCOL_ID,
+      fileId,
+      "H",
+      String(total),
+      String(data.length),
+      checksum,
+      String(activePlan.chunkBytes),
+      bytesToBase64(nameBytes),
+    ].join("|");
 
-  const frames = [
-    {
-      seq: 0,
-      kind: "header",
-      payload: header,
-      byteLength: header.length,
-      version: pickQrVersion(header.length, ecLevel),
-      label: "Header",
-    },
-  ];
+    const built = [
+      {
+        seq: 0,
+        kind: "header",
+        payload: header,
+        byteLength: header.length,
+        version: pickQrVersion(header.length, ecLevel),
+        label: "Header",
+      },
+    ];
 
-  for (let i = 0; i < total; i += 1) {
-    const start = i * plan.chunkBytes;
-    const chunk = data.subarray(start, Math.min(start + plan.chunkBytes, data.length));
-    const payload = [PROTOCOL_ID, fileId, String(i + 1), String(total), bytesToBase64(chunk)].join("|");
-    frames.push({
-      seq: i + 1,
-      kind: "data",
-      payload,
-      byteLength: payload.length,
-      version: pickQrVersion(payload.length, ecLevel),
-      label: `Frame ${i + 1} of ${total}`,
-    });
+    for (let i = 0; i < total; i += 1) {
+      const start = i * activePlan.chunkBytes;
+      const chunk = data.subarray(start, Math.min(start + activePlan.chunkBytes, data.length));
+      const payload = [PROTOCOL_ID, fileId, String(i + 1), String(total), bytesToBase64(chunk)].join("|");
+      built.push({
+        seq: i + 1,
+        kind: "data",
+        payload,
+        byteLength: payload.length,
+        version: pickQrVersion(payload.length, ecLevel),
+        label: `Frame ${i + 1} of ${total}`,
+      });
+    }
+    return built;
+  };
+
+  let frames = buildFrames(plan);
+  let widest = frames.reduce((max, frame) => Math.max(max, frame.byteLength), 0);
+  let renderVersion = Math.max(version, pickQrVersion(widest, ecLevel) ?? version);
+
+  // A frame that didn't fit the requested version bumps renderVersion up.
+  // Re-plan against that bigger symbol's real capacity so the QR selector's
+  // own choice is honoured — bigger chunks, fewer frames — instead of
+  // rendering a larger symbol while still only using the smaller one's
+  // byte budget per frame.
+  if (renderVersion > version) {
+    const biggerPlan = planBeam({ byteLength: data.length, fileName: name, ecLevel, version: renderVersion });
+    if (!biggerPlan.error) {
+      plan = biggerPlan;
+      frames = buildFrames(plan);
+      widest = frames.reduce((max, frame) => Math.max(max, frame.byteLength), 0);
+      renderVersion = Math.max(renderVersion, pickQrVersion(widest, ecLevel) ?? renderVersion);
+    }
   }
 
-  const widest = frames.reduce((max, frame) => Math.max(max, frame.byteLength), 0);
-  const renderVersion = Math.max(version, pickQrVersion(widest, ecLevel) ?? version);
+  const renderCapacity = capacityFor(renderVersion, ecLevel);
 
   return {
     fileId,
@@ -364,11 +403,11 @@ export function buildBeam({ bytes, fileName = "file.bin", ecLevel = "M", version
     requestedVersion: version,
     renderVersion,
     renderModules: moduleCount(renderVersion),
-    capacity: plan.capacity,
+    capacity: renderCapacity,
     chunkBytes: plan.chunkBytes,
-    dataFrames: total,
+    dataFrames: plan.dataFrames,
     totalFrames: frames.length,
-    payloadEfficiency: plan.payloadEfficiency,
+    payloadEfficiency: renderCapacity > 0 ? plan.chunkBytes / renderCapacity : plan.payloadEfficiency,
     fps: rate,
     frames,
   };

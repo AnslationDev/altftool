@@ -340,10 +340,22 @@ function analyseFlow(url, params) {
 
   if (!responseType) {
     findings.push(["warn", "No response_type", "The authorization endpoint requires response_type. Without it the request is not a valid OAuth 2.0 authorization request."]);
-  } else if (/\btoken\b/.test(responseType)) {
-    findings.push(["fail", "Implicit flow", `response_type=${responseType} returns an access token in the URL fragment. The implicit grant is removed in OAuth 2.1 and discouraged since RFC 9700 — tokens end up in browser history, referrers and logs. Use response_type=code with PKCE.`]);
-  } else if (responseType === "code") {
-    findings.push(["pass", "Authorization code flow", "response_type=code keeps the token off the front channel, which is the current recommendation."]);
+  } else {
+    const responseTypeTokens = responseType.split(/\s+/).filter(Boolean);
+    const hasCode = responseTypeTokens.includes("code");
+    const hasToken = responseTypeTokens.includes("token");
+    const hasIdToken = responseTypeTokens.includes("id_token");
+    if (hasToken) {
+      findings.push(["fail", "Implicit flow", `response_type=${responseType} returns an access token in the URL fragment. The implicit grant is removed in OAuth 2.1 and discouraged since RFC 9700 — tokens end up in browser history, referrers and logs. Use response_type=code with PKCE.`]);
+    } else if (hasCode && hasIdToken) {
+      findings.push(["warn", "Hybrid flow", `response_type=${responseType} is a hybrid flow: an id_token is returned in the URL fragment alongside the authorization code, so fragment-exposure risks still apply to the ID token even though the access token itself comes from the code exchange.`]);
+    } else if (hasIdToken) {
+      findings.push(["warn", "Implicit ID token", `response_type=${responseType} returns an id_token directly in the URL fragment with no authorization code. Prefer response_type=code with PKCE and treat any fragment-delivered token as exposed to browser history, referrers and logs.`]);
+    } else if (hasCode && responseTypeTokens.length === 1) {
+      findings.push(["pass", "Authorization code flow", "response_type=code keeps the token off the front channel, which is the current recommendation."]);
+    } else {
+      findings.push(["warn", "Unrecognised response_type", `response_type=${responseType} does not match a known OAuth 2.0/OIDC value (code, token, id_token, or a combination). Confirm it against the provider's documentation.`]);
+    }
   }
 
   const challenge = get("code_challenge");
@@ -370,7 +382,7 @@ function analyseFlow(url, params) {
   }
 
   if (redirectUri) {
-    if (/^http:\/\/(?!localhost|127\.0\.0\.1|\[::1\])/i.test(redirectUri)) {
+    if (/^http:\/\/(?!(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?(?:\/|\?|#|$))/i.test(redirectUri)) {
       findings.push(["fail", "Plaintext redirect URI", `redirect_uri=${redirectUri} is plain HTTP to a non-loopback host, so the authorization code travels unencrypted.`]);
     } else if (/^urn:ietf:wg:oauth:2\.0:oob/.test(redirectUri)) {
       findings.push(["fail", "Deprecated out-of-band redirect", "The oob redirect (copy the code by hand) was shut off by Google and is disallowed by current best practice."]);
@@ -476,16 +488,11 @@ export function explainScopes(input) {
     }
   }
 
-  const orgWide = scopes.filter((item) => item.breadth === "org").map((item) => item.scope);
-  const destructive = scopes.filter((item) => item.destructive).map((item) => item.scope);
-
   return {
     mode: isUrl ? "url" : "list",
     scopes,
     duplicates,
     redundant,
-    orgWide,
-    destructive,
     summary: {
       total: unique.length,
       counts,

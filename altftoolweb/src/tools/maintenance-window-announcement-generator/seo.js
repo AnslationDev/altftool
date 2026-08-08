@@ -2,7 +2,7 @@ const seo = {
   intro:
     "The Maintenance Window Announcement Generator converts one scheduled window — a wall-clock start in your own time zone plus a work length and a contingency buffer — into a publishable notice that states the same instant in UTC and in every reader time zone you select. It is built for SRE, DevOps and IT change managers who need the announcement to carry the four things readers actually look for: exact start and end, expected impact, what to do about it, and what happens if the change is rolled back. UTC instants are printed in ISO 8601 / RFC 3339 form (2026-08-14T22:00Z), zone conversions run through the IANA Time Zone Database so daylight-saving shifts are applied for you, and the tool warns when the window crosses a clock change or when the lead time is shorter than the notice usually contracted for that impact level.",
   useCases: [
-    "An SRE schedules a 90-minute database upgrade at 03:30 IST and needs the status-page post to show 2026-08-14T22:00Z alongside correct London, New York and Sydney times.",
+    "An SRE schedules a 90-minute database upgrade at 03:30 IST and needs the status-page post to show 2026-08-14T22:00Z alongside correct London and New York times, with Sydney or any other zone added in one click from the “Show local times for” checkboxes.",
     "A change manager checks whether a full-outage window announced 13 hours ahead meets the 7-day advance notice their enterprise agreement asks for before sending the customer email.",
     "A platform team planning a November window in America/New_York gets a warning that the clock changes offset mid-window, so the UTC times are published as the authoritative ones.",
   ],

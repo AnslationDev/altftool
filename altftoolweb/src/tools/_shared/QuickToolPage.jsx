@@ -32,9 +32,14 @@ export default function QuickToolPage({
 
   const copy = async () => {
     if (!output) return;
-    await navigator.clipboard?.writeText(output);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1400);
+    try {
+      if (!navigator.clipboard) throw new Error("Clipboard unavailable");
+      await navigator.clipboard.writeText(output);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1400);
+    } catch {
+      setCopied(false);
+    }
   };
 
   return (

@@ -9,11 +9,11 @@ const seo = {
   benefits: [
     ["Personalised prompt", "Uses names, memories, and tone instead of a generic greeting."],
     ["Fast draft", "Gives you a poem structure you can quickly polish."],
-    ["Flexible style", "Works for funny, heartfelt, simple, or formal messages."],
+    ["Flexible style", "Works for heartfelt, funny, classic, or playful/kid-friendly messages."],
   ],
   faqs: [
-    ["Can I make it funny?", "Yes. Add jokes, shared memories, and a light tone in the input."],
-    ["Can I use it for social captions?", "Yes. Ask for a compact version and trim it for the platform."],
+    ["Can I make it funny?", "Yes. Pick the Funny tone and, if you like, add a shared memory or inside joke."],
+    ["Can I use it for social captions?", "Yes. Switch the length to the short 2-line caption instead of the full poem."],
     ["Should I edit the result?", "Yes. Personal edits make the poem feel more authentic."],
   ],
 };

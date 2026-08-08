@@ -207,8 +207,10 @@ export function buildStopPaymentRequest(input = {}) {
     return { error: `That range covers ${chequeCount} cheques. Above ${MAX_CHEQUES_IN_RANGE}, banks handle it as a lost-chequebook report rather than a stop payment.` };
   }
 
-  if (!Number.isFinite(amount) || amount < 0) return { error: "The cheque amount cannot be negative. Use 0 if a blank cheque was lost." };
-  if (!Number.isFinite(feePerUnit) || feePerUnit < 0) return { error: "The stop payment charge cannot be negative." };
+  if (!Number.isFinite(amount)) return { error: "Enter the cheque amount, or 0 if it was blank." };
+  if (amount < 0) return { error: "The cheque amount cannot be negative. Use 0 if a blank cheque was lost." };
+  if (!Number.isFinite(feePerUnit)) return { error: "Enter the stop payment charge." };
+  if (feePerUnit < 0) return { error: "The stop payment charge cannot be negative." };
   if (!Number.isFinite(taxPercent) || taxPercent < 0 || taxPercent > MAX_TAX_PERCENT) {
     return { error: `Tax on the charge must be between 0% and ${MAX_TAX_PERCENT}%.` };
   }
@@ -289,7 +291,9 @@ export function buildStopPaymentRequest(input = {}) {
     "2. I accept the bank's stop payment charges and authorise you to debit them to the account above.",
     "3. I will indemnify the bank against any claim arising from acting on this instruction, provided the bank acts in accordance with it.",
     "",
-    `Please confirm in writing, quoting a service request number, that the stop payment has been registered and until what date it will remain in force. Please keep the instruction in force until at least ${formatLongDate(validity.validUntil)}.`,
+    validity.stale
+      ? `Please confirm in writing, quoting a service request number, that the stop payment has been registered. As the three-month presentation window lapsed on ${formatLongDate(validity.validUntil)}, this instrument can no longer be presented; please record the instruction for the account's records rather than keeping it "in force" for a future presentation.`
+      : `Please confirm in writing, quoting a service request number, that the stop payment has been registered and until what date it will remain in force. Please keep the instruction in force until at least ${formatLongDate(validity.validUntil)}.`,
     requestNewChequebook
       ? "\nI also request a fresh chequebook on the same account, to be collected at the branch on production of photo identity."
       : null,

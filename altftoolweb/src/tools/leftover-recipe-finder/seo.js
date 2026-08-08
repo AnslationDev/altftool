@@ -4,7 +4,7 @@ const seo = {
   useCases: [
     "There is a bowl of cold rice and half an onion left from last night and you want to know what that actually turns into before you order food instead.",
     "The gas has run out or it is too hot to cook, so you filter to no-stove dishes and see only what can be made without a flame.",
-    "You have fifteen minutes before you have to leave and want the quick filter to hide anything that takes longer, sorted so the fastest match comes first.",
+    "You have fifteen minutes before you have to leave and want the quick filter to hide anything that takes longer — matches are still ranked by how much of your fridge they use first, with faster ones only breaking ties.",
   ],
   benefits: [
     ["The one-item-away list", "Recipes missing exactly one required ingredient are shown separately, so a single stop at the shop unlocks a specific dish rather than a vague maybe."],

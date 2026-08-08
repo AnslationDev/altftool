@@ -141,7 +141,7 @@ export default function ToolHome() {
           <span>{result.error}</span>
         </div>
       ) : (
-        <>
+        <div aria-live="polite" aria-atomic="false">
           <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
             <h2 className="text-base font-semibold">Summary</h2>
             <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -357,7 +357,7 @@ export default function ToolHome() {
               it cannot tell you whether an app is trustworthy — only what it is asking for.
             </p>
           </section>
-        </>
+        </div>
       )}
     </main>
   );

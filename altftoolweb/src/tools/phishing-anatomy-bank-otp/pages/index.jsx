@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 
 import {
+  MARKERS,
   MAX_MARKER_SCORE,
   REAL_BANK_BEHAVIOUR,
   REPORTING,
@@ -60,7 +61,9 @@ export default function ToolHome() {
     if (!ok) return "";
     const lines = [
       "Bank OTP phishing check",
-      `Risk score: ${result.score} of ${MAX_MARKER_SCORE} marker points — ${result.bandLabel}`,
+      `Risk score: ${result.percent}% — ${result.bandLabel}`,
+      `Marker points: ${result.markerScore} of ${MAX_MARKER_SCORE}`,
+      `Link points: ${result.linkScore}`,
       `Message markers: ${result.matched.length} of ${result.matched.length + result.missed.length}`,
       `Link findings: ${result.links.reduce((sum, link) => sum + link.findings.length, 0)}`,
       "",
@@ -114,8 +117,8 @@ export default function ToolHome() {
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           A fake &ldquo;your account is suspended, share the OTP&rdquo; SMS taken apart line by line,
-          with a scanner that weighs the same {SIGNALS.length} tells against any message you paste.
-          Everything runs in this tab &mdash; nothing you paste is uploaded.
+          with a scanner that weighs {MARKERS.length} markers plus link structure against any message
+          you paste. Everything runs in this tab &mdash; nothing you paste is uploaded.
         </p>
       </header>
 
@@ -150,7 +153,7 @@ export default function ToolHome() {
         ) : null}
 
         <div className="mt-5 flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Risk score
             </p>

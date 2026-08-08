@@ -3,7 +3,7 @@ const toolConfig = {
   name: "Birthday Poem Generator",
   category: ["Text & Writing"],
   description:
-    "Create a personalised birthday poem draft from age, relationship, memories, tone and message notes.",
+    "Create a personalised birthday poem draft from a name, age, relationship, tone and a shared memory.",
   icon: "gift",
   iconColor: "text-[var(--primary)]",
 };

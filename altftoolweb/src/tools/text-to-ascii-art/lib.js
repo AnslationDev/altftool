@@ -8,8 +8,14 @@
  *
  * Because the font is a bitmap rather than a fixed set of pre-drawn banners,
  * one glyph set produces every style: change the ink character for a different
- * texture, keep only the boundary pixels for an outline, or overlay an offset
- * copy for a drop shadow.
+ * texture, or overlay an offset copy for a drop shadow.
+ *
+ * "Outline" is intentionally not offered as a style: with 1px-wide strokes on
+ * a 5 x 7 cell there is no interior fill to hollow out, so an erosion-based
+ * outline is byte-identical to solid for virtually every letter, and a real
+ * dilation-based silhouette floods the tiny grid into an unreadable blob (see
+ * outlineGlyph() below). Kept for reference in case a taller glyph cell makes
+ * a real outline viable later.
  */
 
 /** Glyph cell size. Every character occupies exactly this box. */
@@ -97,9 +103,9 @@ export const INK_STYLES = [
   { value: "custom", label: "Custom character", char: null },
 ];
 
+// "outline" deliberately isn't listed here — see the note above outlineGlyph().
 export const RENDER_STYLES = [
   { value: "solid", label: "Solid" },
-  { value: "outline", label: "Outline" },
   { value: "shadow", label: "Drop shadow" },
 ];
 
@@ -118,6 +124,13 @@ const isFilled = (glyph, x, y) =>
 /**
  * Keep only the boundary pixels of a glyph: a pixel stays if it is inked and at
  * least one of its four neighbours is not.
+ *
+ * NOT currently reachable from the UI (RENDER_STYLES has no "outline" entry)
+ * because this erosion approach is a no-op for 1px-wide strokes — there is no
+ * interior fill to remove, so the result is byte-identical to the solid glyph
+ * for virtually every letter and digit. A dilation-based alternative was
+ * evaluated too, but it floods this 5 x 7 cell into an unreadable near-solid
+ * block. Left in place for any future rewrite that grows the glyph cell.
  */
 export function outlineGlyph(glyph) {
   const out = [];
@@ -225,7 +238,7 @@ function addShadow(rows) {
  * @param {number} input.letterSpacing  Blank columns between letters (0-4).
  * @param {number} input.lineSpacing    Blank rows between banner lines (0-3).
  * @param {number} input.maxCharsPerLine Wrap the text at this many characters.
- * @param {string} input.style          "solid", "outline" or "shadow".
+ * @param {string} input.style          "solid" or "shadow".
  * @param {boolean} input.trimRight     Strip trailing blank cells from each row.
  */
 export function textToAsciiArt({
@@ -252,6 +265,11 @@ export function textToAsciiArt({
   if (ink === blank) {
     return {
       error: "Ink and background characters must be different, or the art will be invisible.",
+    };
+  }
+  if (style === "shadow" && ink === shadow) {
+    return {
+      error: `Ink character can't match the shadow character (${shadow}) — the shadow would blend into the letters instead of appearing offset.`,
     };
   }
 

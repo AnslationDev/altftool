@@ -48,6 +48,7 @@ export const PRESETS = [
     width: STATUS_SCREEN_WIDTH,
     height: STATUS_SCREEN_HEIGHT,
     safeZone: true,
+    onStatusScreen: true,
     note: "9:16 edge to edge. The only shape that fills the status viewport with no bars at all.",
   },
   {
@@ -56,6 +57,7 @@ export const PRESETS = [
     width: 1080,
     height: 1080,
     safeZone: false,
+    onStatusScreen: true,
     note: "1:1. Fits the screen width and sits between two background bars, which is fine for a logo card.",
   },
   {
@@ -64,6 +66,7 @@ export const PRESETS = [
     width: 1920,
     height: 1080,
     safeZone: false,
+    onStatusScreen: true,
     note: "16:9. Shows small in the middle of the screen with deep bars above and below.",
   },
   {
@@ -72,6 +75,7 @@ export const PRESETS = [
     width: STATUS_SCREEN_WIDTH,
     height: STATUS_SCREEN_HEIGHT,
     safeZone: true,
+    onStatusScreen: true,
     note: "Match your video's first frame so the still and the clip line up when the status opens.",
   },
   {
@@ -80,7 +84,8 @@ export const PRESETS = [
     width: 640,
     height: 640,
     safeZone: false,
-    note: "Square source displayed as a circle — keep the subject inside the inscribed circle.",
+    onStatusScreen: false,
+    note: "Square source displayed as a circle — keep the subject inside the inscribed circle. Not shown on the status screen itself, so screen-coverage figures don't apply.",
   },
 ];
 
@@ -244,15 +249,21 @@ export function planExport({ sourceWidth, sourceHeight, targetWidth, targetHeigh
   let scale;
   let drawWidth;
   let drawHeight;
+  let qualityScale;
   if (mode === "stretch") {
-    // Non-uniform: the geometric mean keeps the quality note meaningful.
+    // Non-uniform: the geometric mean keeps the "scale applied" summary meaningful,
+    // but the quality verdict below must use the worse axis — otherwise a big
+    // stretch on one axis can hide behind a shrink on the other and still read
+    // as "good" quality.
     scale = Math.sqrt(scaleX * scaleY);
+    qualityScale = Math.max(scaleX, scaleY);
     drawWidth = tw;
     drawHeight = th;
   } else {
     scale = mode === "cover" ? Math.max(scaleX, scaleY) : Math.min(scaleX, scaleY);
     drawWidth = sw * scale;
     drawHeight = sh * scale;
+    qualityScale = scale;
   }
 
   const drawX = (tw - drawWidth) / 2;
@@ -266,18 +277,19 @@ export function planExport({ sourceWidth, sourceHeight, targetWidth, targetHeigh
   const barHeight = mode === "contain" ? Math.max(0, Math.round(drawY)) : 0;
 
   const scalePercent = scale * 100;
+  const qualityScalePercent = qualityScale * 100;
   let quality;
-  if (scale <= 1) {
+  if (qualityScale <= 1) {
     quality = { level: "good", message: "Downscaling only — every exported pixel comes from real image data." };
-  } else if (scale <= UPSCALE_SOFT_LIMIT) {
+  } else if (qualityScale <= UPSCALE_SOFT_LIMIT) {
     quality = {
       level: "ok",
-      message: `Enlarged to ${scalePercent.toFixed(0)}% — under the ${Math.round(UPSCALE_SOFT_LIMIT * 100)}% mark, so softening should stay invisible.`,
+      message: `Enlarged to ${qualityScalePercent.toFixed(0)}% — under the ${Math.round(UPSCALE_SOFT_LIMIT * 100)}% mark, so softening should stay invisible.`,
     };
   } else {
     quality = {
       level: "warn",
-      message: `Enlarged to ${scalePercent.toFixed(0)}% — expect visible softness. Start from a source of at least ${tw}x${th} px.`,
+      message: `Enlarged to ${qualityScalePercent.toFixed(0)}% — expect visible softness. Start from a source of at least ${tw}x${th} px.`,
     };
   }
 

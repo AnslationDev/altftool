@@ -26,11 +26,11 @@ import {
 } from "lucide-react";
 
 const CURRENCIES = {
-  INR: { symbol: "₹", label: "INR" },
-  USD: { symbol: "$", label: "USD" },
-  EUR: { symbol: "€", label: "EUR" },
-  GBP: { symbol: "£", label: "GBP" },
-  AED: { symbol: "د.إ", label: "AED" },
+  INR: { symbol: "₹", label: "INR", locale: "en-IN" },
+  USD: { symbol: "$", label: "USD", locale: "en-US" },
+  EUR: { symbol: "€", label: "EUR", locale: "de-DE" },
+  GBP: { symbol: "£", label: "GBP", locale: "en-GB" },
+  AED: { symbol: "د.إ", label: "AED", locale: "en-AE" },
 };
 
 const TRIP_STYLES = {
@@ -90,9 +90,11 @@ const DEFAULT_COSTS = [
 ];
 
 function formatMoney(value, currency) {
-  const symbol = CURRENCIES[currency]?.symbol || "";
+  const meta = CURRENCIES[currency];
+  const symbol = meta?.symbol || "";
+  const locale = meta?.locale || "en-US";
   const safe = Number.isFinite(Number(value)) ? Number(value) : 0;
-  return `${symbol}${Math.round(safe).toLocaleString("en-IN")}`;
+  return `${symbol}${Math.round(safe).toLocaleString(locale)}`;
 }
 
 function costTotal(cost, trip, baseWithoutPercent, multiplier = 1) {
@@ -109,14 +111,6 @@ function costTotal(cost, trip, baseWithoutPercent, multiplier = 1) {
   if (cost.mode === "perPersonDay") return amount * travelers * days;
   if (cost.mode === "percent") return (baseWithoutPercent * (Number(cost.amount) || 0)) / 100;
   return amount;
-}
-
-function dailyShare(cost, trip, baseWithoutPercent, multiplier = 1) {
-  const total = costTotal(cost, trip, baseWithoutPercent, multiplier);
-  const days = Math.max(1, Number(trip.days) || 1);
-  if (cost.mode === "perNight") return total / days;
-  if (cost.mode === "perTrip" || cost.mode === "perPerson" || cost.mode === "percent") return total / days;
-  return total / days;
 }
 
 function downloadFile(filename, content, type) {
@@ -287,11 +281,6 @@ export default function TravelCostPerDay() {
     const perPersonDay = totalCost / travelers / days;
     const targetGap = perDay - (Number(trip.dailyTarget) || 0);
     const cashGap = timingTotals["On-trip"] + timingTotals.Reserve - (Number(trip.cashInHand) || 0);
-    const dailyRows = Array.from({ length: days }, (_, index) => {
-      const day = index + 1;
-      const dayTotal = costs.reduce((sum, cost) => sum + dailyShare(cost, trip, baseWithoutPercent, multiplier), 0);
-      return { day, total: dayTotal };
-    });
 
     return {
       baseWithoutPercent,
@@ -304,7 +293,6 @@ export default function TravelCostPerDay() {
       perPersonDay,
       targetGap,
       cashGap,
-      dailyRows,
     };
   }, [costs, trip, style]);
 
@@ -398,7 +386,7 @@ export default function TravelCostPerDay() {
           </p>
         </div>
 
-        <section className="tool-card-grid mx-auto mt-8 w-full max-w-6xl">
+        <section className="tool-card-grid mx-auto mt-8 w-full max-w-6xl" aria-live="polite" role="status">
           <MetricCard icon={Wallet} label="Total Trip Cost" value={formatMoney(stats.totalCost, trip.currency)} detail={`${trip.days} days, ${trip.travelers} traveler(s).`} />
           <MetricCard icon={CalendarDays} label="Cost Per Day" value={formatMoney(stats.perDay, trip.currency)} detail={capText} tone={dailyTone} />
           <MetricCard icon={Users} label="Person / Day" value={formatMoney(stats.perPersonDay, trip.currency)} detail={`${formatMoney(stats.perPerson, trip.currency)} per traveler total.`} />
@@ -773,27 +761,25 @@ export default function TravelCostPerDay() {
               </span>
               <div className="min-w-0">
                 <h2 className="break-words text-2xl font-black text-[var(--foreground)]">Daily Spread</h2>
-                <p className="mt-1 break-words text-sm text-[var(--muted-foreground)]">Average cost pressure across every travel day.</p>
+                <p className="mt-1 break-words text-sm text-[var(--muted-foreground)]">
+                  This planner spreads the trip total evenly, so every one of the {trip.days} travel day{trip.days === 1 ? "" : "s"} carries the same average share.
+                </p>
               </div>
             </div>
-            <div className="grid min-w-0 gap-3 md:grid-cols-2 2xl:grid-cols-3">
-              {stats.dailyRows.slice(0, 12).map((row) => {
-                const percent = trip.dailyTarget ? Math.min(140, Math.round((row.total / trip.dailyTarget) * 100)) : 0;
-                const over = row.total > Number(trip.dailyTarget || 0);
-                return (
-                  <div key={row.day} className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
-                    <div className="flex items-center justify-between gap-3">
-                      <p className="text-sm font-black text-[var(--foreground)]">Day {row.day}</p>
-                      <p className={`text-sm font-black ${over ? "tool-text-warn" : "tool-text-good"}`}>
-                        {formatMoney(row.total, trip.currency)}
-                      </p>
-                    </div>
-                    <div className="mt-3 h-2 overflow-hidden rounded-full bg-[var(--muted)]">
-                      <div className={`h-full rounded-full ${over ? "bg-amber-500" : "bg-[var(--primary)]"}`} style={{ width: `${Math.min(100, percent)}%` }} />
-                    </div>
-                  </div>
-                );
-              })}
+            <div className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
+              <div className="flex items-center justify-between gap-3">
+                <p className="text-sm font-black text-[var(--foreground)]">Average cost per day</p>
+                <p className={`text-sm font-black ${stats.perDay > Number(trip.dailyTarget || 0) ? "tool-text-warn" : "tool-text-good"}`}>
+                  {formatMoney(stats.perDay, trip.currency)}
+                </p>
+              </div>
+              <div className="mt-3 h-2 overflow-hidden rounded-full bg-[var(--muted)]">
+                <div
+                  className={`h-full rounded-full ${stats.perDay > Number(trip.dailyTarget || 0) ? "bg-amber-500" : "bg-[var(--primary)]"}`}
+                  style={{ width: `${trip.dailyTarget ? Math.min(100, Math.round((stats.perDay / trip.dailyTarget) * 100)) : 0}%` }}
+                />
+              </div>
+              <p className="mt-2 text-xs font-semibold text-[var(--muted-foreground)]">{capText}</p>
             </div>
           </article>
         </div>

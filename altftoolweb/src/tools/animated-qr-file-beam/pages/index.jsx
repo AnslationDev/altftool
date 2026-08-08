@@ -855,7 +855,8 @@ export default function ToolHome() {
 
               {received.rejected.length > 0 && (
                 <p className="mt-3 text-xs text-[var(--muted-foreground)]">
-                  {received.rejected.length} scanned code was not part of this beam and was ignored.
+                  {received.rejected.length} scanned code{received.rejected.length === 1 ? " was" : "s were"}{" "}
+                  not part of this beam and {received.rejected.length === 1 ? "was" : "were"} ignored.
                 </p>
               )}
             </section>

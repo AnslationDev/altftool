@@ -281,7 +281,7 @@ export default function ToolHome() {
     const success = await safeCopyText(text);
     if (!success) return;
     setCopiedId(recipe.id);
-    setTimeout(() => setCopiedId(null), 1200);
+    setTimeout(() => setCopiedId((current) => (current === recipe.id ? null : current)), 1200);
   };
 
   const filters = [

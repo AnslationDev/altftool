@@ -3069,7 +3069,7 @@ export const toolMetaMap = {
   },
   "birthday-poem-generator": {
     "name": "Birthday Poem Generator",
-    "description": "Create a personalised birthday poem draft from age, relationship, memories, tone and message notes.",
+    "description": "Create a personalised birthday poem draft from a name, age, relationship, tone and a shared memory.",
     "category": "Text & Writing",
     "icon": "gift",
     "iconColor": "text-[var(--primary)]"
@@ -29215,7 +29215,7 @@ export const toolMetaMap = {
   },
   "text-to-ascii-art": {
     "name": "Text to ASCII Art",
-    "description": "Turns typed text into large ASCII banner letters from a 5 by 7 bitmap font, with a choice of ink character, letter spacing, outline and drop shadow.",
+    "description": "Turns typed text into large ASCII banner letters from a 5 by 7 bitmap font, with a choice of ink character, letter spacing and drop shadow.",
     "category": [
       "Fun",
       "Text & Writing"
@@ -30439,7 +30439,7 @@ export const toolMetaMap = {
   },
   "two-line-shayari-composer": {
     "name": "Two-Line Shayari Composer",
-    "description": "Create a two-line shayari draft from mood, theme, language mix, rhyme and audience notes.",
+    "description": "Create a two-line shayari draft by choosing a mood/theme, a Hindi-English language mix, and an optional name to dedicate it to.",
     "category": "Text & Writing",
     "icon": "heart",
     "iconColor": "text-[var(--primary)]"
