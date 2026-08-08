@@ -73,7 +73,6 @@ export function summarizeBook({ name, statuses }) {
     readOrBetter,
     percentRead: (readOrBetter / total) * 100,
     percentRevised: (counts.revised / total) * 100,
-    complete: counts.revised === total,
   };
 }
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Handshake, Languages, RotateCcw, ShieldCheck } from "lucide-react";
 
 import {
@@ -82,12 +82,17 @@ export default function ToolHome() {
     ].join("\n");
   }, [hasError, result]);
 
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimeoutRef.current), []);
+
   const copyResult = async () => {
     if (!summary) return;
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -117,8 +122,9 @@ export default function ToolHome() {
       <section className={CARD_CLASS}>
         <h2 className="text-base font-semibold">Where will you actually be?</h2>
         <p className={HINT_CLASS}>
-          Rules are filtered to these places. Anything carrying a legal penalty is shown whatever you
-          tick.
+          Rules are filtered to these places. Anything carrying a legal penalty is never filtered out
+          by your context selection — though a low &ldquo;how many rules to show&rdquo; limit below can
+          still push one out of the main list; the legal risks section always shows the full set.
         </p>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           {CONTEXTS.map((context) => (

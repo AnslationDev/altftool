@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Sparkles, HelpCircle, RefreshCw, Compass } from "lucide-react";
 
 const FUTURISTIC_JOBS = [
@@ -13,10 +13,16 @@ const FUTURISTIC_JOBS = [
 export default function FunFeatures() {
   const [activeJob, setActiveJob] = useState(FUTURISTIC_JOBS[0]);
   const [spinning, setSpinning] = useState(false);
+  const spinTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => clearTimeout(spinTimeoutRef.current);
+  }, []);
 
   const handleSpin = () => {
     setSpinning(true);
-    setTimeout(() => {
+    clearTimeout(spinTimeoutRef.current);
+    spinTimeoutRef.current = setTimeout(() => {
       const idx = Math.floor(Math.random() * FUTURISTIC_JOBS.length);
       setActiveJob(FUTURISTIC_JOBS[idx]);
       setSpinning(false);

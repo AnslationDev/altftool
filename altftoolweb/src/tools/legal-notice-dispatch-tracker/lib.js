@@ -264,11 +264,13 @@ function evaluateNotice(notice, today) {
   let complaintWindow = null;
   if (type.complaintWindowMonths) {
     const opens = addDays(replyDeadline, 1);
-    const closes = addMonths(replyDeadline, type.complaintWindowMonths);
+    // The one-calendar-month complaint window runs from its own start date
+    // (opens), not from replyDeadline — using replyDeadline here would land
+    // the close date one day short of a true calendar month from opens.
+    const closes = addMonths(opens, type.complaintWindowMonths);
     complaintWindow = {
       opens: toISODate(opens),
       closes: toISODate(closes),
-      daysToClose: daysBetween(today, closes),
     };
   }
 

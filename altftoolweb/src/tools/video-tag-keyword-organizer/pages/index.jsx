@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, Check, Copy, RotateCcw, Tags } from "lucide-react";
 
 import { buildTagSet, LONG_TAG_CHARS, MAX_TAG_CHARS, parseGroups } from "../lib";
@@ -28,6 +28,7 @@ export default function ToolHome() {
   const [selected, setSelected] = useState(["Channel core", "Topic - colour", "Brand"]);
   const [budget, setBudget] = useState(String(MAX_TAG_CHARS));
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
 
   const groups = useMemo(() => parseGroups(groupText), [groupText]);
 
@@ -37,6 +38,12 @@ export default function ToolHome() {
   );
 
   const hasError = Boolean(result.error);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const toggleGroup = (name) => {
     setSelected((current) =>
@@ -49,13 +56,17 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(result.tagString);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
   };
 
   const reset = () => {
+    if (groupText !== DEFAULT_GROUPS && !window.confirm("Reset the keyword groups back to the default example? Your edits will be lost.")) {
+      return;
+    }
     setGroupText(DEFAULT_GROUPS);
     setSelected(["Channel core", "Topic - colour", "Brand"]);
     setBudget(String(MAX_TAG_CHARS));
@@ -145,7 +156,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

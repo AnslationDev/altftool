@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Plane, RotateCcw } from "lucide-react";
 
 import { CITY_TIERS, MEAL_SHARES, PART_DAY_PERCENT, computePerDiem } from "../lib";
@@ -47,6 +47,13 @@ const toNumber = (raw) => {
 export default function ToolHome() {
   const [state, setState] = useState(START);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const setField = (key, value) => setState((current) => ({ ...current, [key]: value }));
 
@@ -119,7 +126,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(text);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -335,7 +343,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div className="min-w-0">
+          <div className="min-w-0" aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Total allowance
             </p>
@@ -353,7 +361,7 @@ export default function ToolHome() {
               type="button"
               onClick={copy}
               disabled={!ok}
-              aria-label="Copy the per diem claim"
+              aria-label={copied ? "Copied to clipboard" : "Copy the per diem claim"}
               className={`${GHOST_BTN} disabled:opacity-40`}
             >
               {copied ? (
@@ -370,7 +378,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 grid gap-3 sm:grid-cols-2">
+        <dl className="mt-5 grid gap-3 sm:grid-cols-2" aria-live="polite" aria-atomic="true">
           {[
             ["Full days", ok ? `${result.fullDays} → ${money(result.fullDayAmount)}` : "—"],
             [

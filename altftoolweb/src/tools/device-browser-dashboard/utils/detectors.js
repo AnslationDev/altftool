@@ -14,7 +14,8 @@ const formatNumber = (value, suffix = "") => {
 
 export const formatBytes = (bytes) => {
   const value = Number(bytes);
-  if (!Number.isFinite(value) || value <= 0) return UNKNOWN;
+  if (!Number.isFinite(value) || value < 0) return UNKNOWN;
+  if (value === 0) return "0 B";
 
   const units = ["B", "KB", "MB", "GB", "TB"];
   const power = Math.min(Math.floor(Math.log(value) / Math.log(1024)), units.length - 1);
@@ -54,6 +55,7 @@ export const detectBrowserDetails = () => {
     { name: "Microsoft Edge", pattern: /Edg\/([\d.]+)/ },
     { name: "Opera", pattern: /OPR\/([\d.]+)/ },
     { name: "Samsung Internet", pattern: /SamsungBrowser\/([\d.]+)/ },
+    { name: "Vivaldi", pattern: /Vivaldi\/([\d.]+)/ },
     { name: "Mozilla Firefox", pattern: /Firefox\/([\d.]+)/ },
     { name: "Google Chrome", pattern: /Chrome\/([\d.]+)/ },
     { name: "Apple Safari", pattern: /Version\/([\d.]+).*Safari/ },

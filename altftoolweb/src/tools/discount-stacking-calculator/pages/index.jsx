@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, CircleDollarSign, Copy, Plus, RotateCcw, Trash2 } from "lucide-react";
 
 import { DEFAULT_TAX_PERCENT, TAX_PRESETS, priceStack, stackLedger } from "../lib";
@@ -69,6 +69,11 @@ export default function ToolHome() {
   const [cashbackPercent, setCashbackPercent] = useState(DEFAULTS.cashbackPercent);
   const [cashbackCap, setCashbackCap] = useState(DEFAULTS.cashbackCap);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => clearTimeout(copyTimeoutRef.current);
+  }, []);
 
   const result = useMemo(
     () =>
@@ -134,7 +139,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(lines.join("\n"));
       setCopied(true);
-      window.setTimeout(() => setCopied(false), 1800);
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = window.setTimeout(() => setCopied(false), 1800);
     } catch {
       setCopied(false);
     }
@@ -460,6 +466,8 @@ export default function ToolHome() {
 
       <section
         aria-labelledby="result-heading"
+        aria-live="polite"
+        aria-atomic="true"
         className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
       >
         <h2 id="result-heading" className="text-sm font-semibold text-[var(--muted-foreground)]">

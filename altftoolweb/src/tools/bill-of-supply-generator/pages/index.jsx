@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Plus, Printer, Receipt, RotateCcw, Trash2 } from "lucide-react";
 
 import { SUPPLIER_TYPES, buildBillOfSupply } from "../lib";
@@ -127,15 +127,24 @@ export default function ToolHome() {
       `Round off: ${money(bill.roundOffAmount)}`,
       `Total: ${money(bill.total)}`,
       `In words: ${bill.amountInWords}`,
+      "",
+      `Place: ${place || "—"}`,
+      `For ${bill.supplier.name}`,
+      "Authorised signatory",
     ].join("\n");
-  }, [bill, hasError]);
+  }, [bill, hasError, place]);
+
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimeoutRef.current), []);
 
   const copyResult = async () => {
     if (!summary) return;
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -472,7 +481,7 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

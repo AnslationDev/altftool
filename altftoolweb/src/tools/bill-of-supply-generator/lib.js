@@ -49,9 +49,9 @@ export const SUPPLIER_TYPES = {
   },
 };
 
-/** 15-char GSTIN shape: 2 state digits + 10-char PAN + entity code + Z + checksum. */
+/** 15-char GSTIN shape: 2 state digits + 10-char PAN + entity code + literal Z + checksum. */
 export const GSTIN_PATTERN =
-  /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[A-Z]{1}[0-9A-Z]{1}$/;
+  /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}Z[0-9A-Z]{1}$/;
 
 /** GSTIN state / UT codes as notified for the first two digits. */
 export const GST_STATE_CODES = {
@@ -79,6 +79,7 @@ export const GST_STATE_CODES = {
   22: "Chhattisgarh",
   23: "Madhya Pradesh",
   24: "Gujarat",
+  25: "Daman and Diu (pre-2020; merged into Dadra and Nagar Haveli and Daman and Diu)",
   26: "Dadra and Nagar Haveli and Daman and Diu",
   27: "Maharashtra",
   29: "Karnataka",

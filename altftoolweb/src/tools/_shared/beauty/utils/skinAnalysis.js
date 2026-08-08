@@ -44,7 +44,7 @@ export function analyzeAcne(imageData, region) {
   return { spots, coverage, score, severity, confidence, description };
 }
 
-export function analyzePigmentation(imageData, region, categoryMask) {
+export function analyzePigmentation(imageData, region) {
   const { data, width, height } = imageData;
   const blockData = [];
   let totalLum = 0;
@@ -114,7 +114,16 @@ export function analyzePigmentation(imageData, region, categoryMask) {
   else if (variation > 18) severity = "Moderate";
   else if (variation > 8) severity = "Mild";
 
-  const confidence = 88 + Math.random() * 8;
+  // "Confidence" is not a real ML/statistical confidence score — it's a rough,
+  // illustrative estimate of how completely the padded face region could be
+  // sampled, derived from the actual block coverage (count) versus the number
+  // of 10x10 blocks the region geometry allows. Low coverage (e.g. the face
+  // region was clipped by the image edges) means fewer data points backed the
+  // variation/severity read above, so this number should drop accordingly.
+  const maxBlocksX = Math.max(1, Math.ceil((endX - step - startX) / step));
+  const maxBlocksY = Math.max(1, Math.ceil((endY - step - startY) / step));
+  const maxBlocks = maxBlocksX * maxBlocksY;
+  const confidence = Math.min(100, Math.round((count / maxBlocks) * 100));
   const description = `Skin tone variation score is ${variation}%, with an average luminance of ${Math.round(meanLum)}. The AI identified ${spots} minor hyperpigmented spots, indicating a ${severity.toLowerCase()} pigmentation level.`;
 
   return { variation, spots, confidence, score, severity, description, blockData };

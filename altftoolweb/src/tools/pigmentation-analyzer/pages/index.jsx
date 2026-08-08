@@ -6,7 +6,6 @@ import { toast } from "sonner";
 import * as faceapi from "@vladmandic/face-api";
 import { analyzePigmentation } from "@/tools/_shared/beauty/utils/skinAnalysis";
 import { extractFaceBox } from "@/tools/_shared/beauty/utils/faceAnalysis";
-import { initImageSegmenter } from "@/tools/_shared/beauty/utils/hairPreview";
 import BeautyUploader from "@/tools/_shared/beauty/components/BeautyUploader";
 import { ScoreBar, ConfidenceBadge, MetricGrid, DetailRow } from "@/tools/_shared/beauty/components/ResultCard";
 
@@ -49,7 +48,39 @@ export default function PigmentationAnalyzer() {
   const [meanLum, setMeanLum] = useState(0);
   const canvasRef = useRef(null);
   const overlayRef = useRef(null);
+  const imgRef = useRef(null);
   const modelsLoaded = useRef(false);
+  const prevSrcRef = useRef(null);
+
+  // The overlay canvas is drawn at the source image's natural pixel size, but
+  // the <img> is shown with object-contain inside a box whose aspect ratio
+  // can differ from the image's (it's capped at max-h-[500px]), which
+  // letterboxes the visible photo. Position/size the canvas to match the
+  // actual letterboxed photo rect instead of stretching across the full box,
+  // so heatmap pixels land over the correct photo pixels.
+  const positionOverlay = useCallback(() => {
+    const imgEl = imgRef.current;
+    const overlay = overlayRef.current;
+    const srcCanvas = canvasRef.current;
+    if (!imgEl || !overlay || !srcCanvas || !srcCanvas.width || !srcCanvas.height) return;
+    const boxW = imgEl.clientWidth;
+    const boxH = imgEl.clientHeight;
+    if (!boxW || !boxH) return;
+    const imgRatio = srcCanvas.width / srcCanvas.height;
+    const boxRatio = boxW / boxH;
+    let dispW, dispH;
+    if (imgRatio > boxRatio) {
+      dispW = boxW;
+      dispH = boxW / imgRatio;
+    } else {
+      dispH = boxH;
+      dispW = boxH * imgRatio;
+    }
+    overlay.style.left = `${(boxW - dispW) / 2}px`;
+    overlay.style.top = `${(boxH - dispH) / 2}px`;
+    overlay.style.width = `${dispW}px`;
+    overlay.style.height = `${dispH}px`;
+  }, []);
 
   useEffect(() => {
     if (!blockData || !canvasRef.current || !overlayRef.current) return;
@@ -64,9 +95,34 @@ export default function PigmentationAnalyzer() {
       ctx.fillStyle = getHeatmapColor(block.lum, meanLum);
       ctx.fillRect(block.bx, block.by, 10, 10);
     }
-  }, [blockData, meanLum]);
+    positionOverlay();
+  }, [blockData, meanLum, positionOverlay]);
+
+  useEffect(() => {
+    if (!blockData || !imgRef.current) return;
+    const imgEl = imgRef.current;
+    const ro = new ResizeObserver(() => positionOverlay());
+    ro.observe(imgEl);
+    window.addEventListener("resize", positionOverlay);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", positionOverlay);
+    };
+  }, [blockData, positionOverlay]);
+
+  // Revoke the previously-created blob object URL whenever it's replaced or
+  // the component unmounts, so uploaded images don't leak memory.
+  useEffect(() => {
+    return () => {
+      if (prevSrcRef.current) URL.revokeObjectURL(prevSrcRef.current);
+    };
+  }, []);
 
   const handleImage = useCallback(async ({ src, img }) => {
+    if (prevSrcRef.current && prevSrcRef.current !== src) {
+      URL.revokeObjectURL(prevSrcRef.current);
+    }
+    prevSrcRef.current = src;
     setError(null);
     setResult(null);
     setBlockData(null);
@@ -109,17 +165,8 @@ export default function PigmentationAnalyzer() {
       };
 
       setLoadingStep(3);
-      let categoryMask = null;
-      try {
-        const segmenter = await initImageSegmenter();
-        const result = segmenter.segment(img);
-        categoryMask = result.categoryMask.getAsUint8Array();
-      } catch (err) {
-        console.warn("AI Segmentation failed", err);
-      }
-
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const analysis = analyzePigmentation(imageData, region, categoryMask);
+      const analysis = analyzePigmentation(imageData, region);
       if (!analysis || analysis.confidence === 0) {
         throw new Error("Insufficient skin area for pigmentation analysis in the detected face region.");
       }
@@ -142,6 +189,10 @@ export default function PigmentationAnalyzer() {
   }, []);
 
   const reset = useCallback(() => {
+    if (prevSrcRef.current) {
+      URL.revokeObjectURL(prevSrcRef.current);
+      prevSrcRef.current = null;
+    }
     setImage(null);
     setResult(null);
     setError(null);
@@ -156,7 +207,7 @@ export default function PigmentationAnalyzer() {
     ? [
         { label: "Variation Score", value: `${result.variation}%`, sub: "tone unevenness" },
         { label: "Spots Detected", value: result.spots, sub: "pigmented areas" },
-        { label: "Confidence", value: `${Math.round(result.confidence)}%`, sub: "analysis reliability" },
+        { label: "Confidence", value: `${Math.round(result.confidence)}%`, sub: "rough estimate, region coverage" },
       ]
     : [];
 
@@ -165,7 +216,7 @@ export default function PigmentationAnalyzer() {
       <div className="container py-12 px-4 md:px-6">
         <div className="max-w-5xl mx-auto text-center space-y-4 mb-12 animate-fade-in">
           <div className="inline-block">
-            <h1 className="heading text-center animate-fade-up pt-5 mt-[-40]">Pigmentation Analyzer</h1>
+            <h1 className="heading text-center animate-fade-up pt-5 -mt-10">Pigmentation Analyzer</h1>
             <div className="h-1 bg-gradient-primary rounded-full" />
           </div>
           <p className="text-lg text-(--muted-foreground) max-w-2xl mx-auto">
@@ -184,6 +235,7 @@ export default function PigmentationAnalyzer() {
             {error && (
               <motion.div
                 key="error"
+                role="alert"
                 initial={{ opacity: 0, y: -8 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -8 }}
@@ -201,6 +253,8 @@ export default function PigmentationAnalyzer() {
           {loading && (
             <motion.div
               key="loading"
+              role="status"
+              aria-live="polite"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               className="rounded-xl border border-(--border) bg-(--card) shadow-md p-8 text-center space-y-4"
@@ -231,6 +285,8 @@ export default function PigmentationAnalyzer() {
           {result && !loading && (
             <motion.div
               key="result"
+              role="status"
+              aria-live="polite"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="space-y-6"
@@ -289,15 +345,21 @@ export default function PigmentationAnalyzer() {
                       <h3 className="text-sm font-semibold text-(--foreground) mb-3">Pigmentation Variation Map</h3>
                       <div className="rounded-xl border border-(--border) overflow-hidden bg-(--background) relative">
                         <div className="relative">
-                          <img src={image.src} alt="Analysis" className="w-full h-auto max-h-[500px] object-contain" />
+                          <img
+                            ref={imgRef}
+                            src={image.src}
+                            alt="Analysis"
+                            className="w-full h-auto max-h-[500px] object-contain"
+                            onLoad={positionOverlay}
+                          />
                           <canvas
                             ref={overlayRef}
-                            className="absolute inset-0 w-full h-full pointer-events-none"
+                            className="absolute pointer-events-none"
                             style={{ imageRendering: "pixelated" }}
                           />
                         </div>
                         <div className="p-3 flex items-center justify-between text-xs text-(--muted-foreground) border-t border-(--border)">
-                          <span>Red = darker variation</span>
+                          <span>Red = strong variation (darker or lighter)</span>
                           <span>Green = even tone</span>
                         </div>
                       </div>

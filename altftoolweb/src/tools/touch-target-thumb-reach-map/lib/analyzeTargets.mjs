@@ -10,6 +10,7 @@ const EXCEPTIONS = new Set([
 ]);
 
 function finiteNumber(value) {
+  if (value === "" || value === null || value === undefined) return null;
   const number = Number(value);
   return Number.isFinite(number) ? number : null;
 }
@@ -132,6 +133,7 @@ export function parseTargets(source) {
         ? errors
         : ["No target rows were found in the supplied data."],
     truncated: parsed.rows.length > MAX_TARGETS,
+    truncatedCount: Math.max(0, parsed.rows.length - MAX_TARGETS),
   };
 }
 
@@ -262,6 +264,11 @@ export function analyzeTargets(
       farReach: targets.filter((target) => target.reach.id === "far").length,
     },
     limitations: [
+      ...(parsed.truncated
+        ? [
+            `Only the first ${MAX_TARGETS} target rows were analyzed; ${parsed.truncatedCount} additional row(s) in the supplied data were not included.`,
+          ]
+        : []),
       "Only supplied CSS-pixel rectangles are checked; transformed, clipped, irregular, overlapping, dynamic, and visually obscured targets can behave differently.",
       "Exceptions require manual evidence. A spacing candidate is not an automatic WCAG pass.",
       "Thumb reach is a geometric heuristic, not an ergonomic or accessibility standard; grip, device, hand, posture, and mobility differ.",
@@ -274,6 +281,7 @@ export function buildTargetReport(result) {
   return {
     schema: "altftool.touch-target-map.v1",
     createdAt: new Date().toISOString(),
+    truncated: Boolean(result.truncated),
     counts: { ...result.counts },
     statusCounts: result.targets.reduce((counts, target) => {
       counts[target.status] = (counts[target.status] || 0) + 1;

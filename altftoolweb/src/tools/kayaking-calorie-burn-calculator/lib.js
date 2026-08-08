@@ -134,7 +134,7 @@ export function computePaddleSession({
 
   const band = flatWaterBand(speedMph);
   const met = water.met === null ? band.met : water.met;
-  const intensityLabel = water.met === null ? band.label : water.label;
+  const intensityLabel = water.met === null ? band.label : water.note;
 
   const grossKcal = kcalFromMet(met, weightKg, minutes);
   const restingKcal = kcalFromMet(RESTING_MET, weightKg, minutes);
@@ -147,9 +147,7 @@ export function computePaddleSession({
   return {
     waterLabel: water.label,
     waterNote: water.note,
-    speedDrivesMet: water.met === null,
     intensityLabel,
-    bandLabel: band.label,
     met,
     speedKmh,
     speedMph,

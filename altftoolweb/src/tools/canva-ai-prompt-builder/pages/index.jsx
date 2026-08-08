@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Palette, RotateCcw, TriangleAlert } from "lucide-react";
 
 import {
@@ -8,6 +8,7 @@ import {
   STYLE_PRESETS,
   TONE_PRESETS,
   buildCanvaPrompt,
+  clean,
 } from "../lib";
 
 const DASH = "—";
@@ -45,6 +46,13 @@ const DEFAULTS = {
 export default function ToolHome() {
   const [form, setForm] = useState(DEFAULTS);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () => buildCanvaPrompt({ ...form, variations: Number(form.variations) }),
@@ -67,7 +75,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(result.prompt);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -212,7 +221,7 @@ export default function ToolHome() {
             <p className={HELP}>
               {hasError
                 ? "Budget appears once the brief is valid."
-                : `${form.headline.trim().length} of about ${result.budget.headlineMax} characters`}
+                : `${clean(form.headline).length} of about ${result.budget.headlineMax} characters`}
             </p>
           </div>
           <div>
@@ -229,7 +238,7 @@ export default function ToolHome() {
             <p className={HELP}>
               {hasError
                 ? "Budget appears once the brief is valid."
-                : `${form.subheadline.trim().length} of about ${result.budget.subheadMax} characters`}
+                : `${clean(form.subheadline).length} of about ${result.budget.subheadMax} characters`}
             </p>
           </div>
           <div>
@@ -246,7 +255,7 @@ export default function ToolHome() {
             <p className={HELP}>
               {hasError
                 ? "Budget appears once the brief is valid."
-                : `${form.cta.trim().length} of ${result.budget.ctaMax} characters`}
+                : `${clean(form.cta).length} of ${result.budget.ctaMax} characters`}
             </p>
           </div>
         </div>
@@ -325,7 +334,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite" role="status">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -405,7 +414,7 @@ export default function ToolHome() {
         </dl>
 
         {!hasError && result.warnings.length > 0 ? (
-          <ul className="mt-4 grid gap-2">
+          <ul className="mt-4 grid gap-2" aria-live="polite" aria-atomic="true">
             {result.warnings.map((w) => (
               <li
                 key={w}
@@ -420,7 +429,7 @@ export default function ToolHome() {
       </section>
 
       {!hasError ? (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5" aria-live="polite">
           <h2 className="text-base font-semibold">Your Canva prompt</h2>
           <p className="mt-1 text-xs text-[var(--muted-foreground)]">
             Paste this into Canva&apos;s Magic Design or Magic Media box, or any AI design assistant.

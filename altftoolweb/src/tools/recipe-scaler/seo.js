@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     [
       "Fractions a cook can actually measure",
-      "Scaled amounts snap to 1/8, 1/4, 1/3, 1/2, 2/3, 3/4 or 7/8 within a 0.02 tolerance, falling back to a decimal only when nothing fits.",
+      "Scaled amounts snap to 1/8, 1/6, 1/4, 1/3, 3/8, 1/2, 5/8, 2/3, 3/4, 5/6 or 7/8 within a 0.03 tolerance, falling back to a decimal only when nothing fits.",
     ],
     [
       "Pan conversion by area, not diameter",

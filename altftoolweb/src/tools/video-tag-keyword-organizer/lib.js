@@ -37,18 +37,15 @@ export function parseGroups(text) {
       .slice(0, MAX_TAGS_PER_GROUP);
     if (tags.length === 0) continue;
     const existing = groups.find((group) => group.name.toLowerCase() === name.toLowerCase());
-    if (existing) existing.tags.push(...tags);
-    else groups.push({ name, tags });
-    if (groups.length > MAX_GROUPS) break;
+    if (existing) {
+      existing.tags.push(...tags);
+      if (existing.tags.length > MAX_TAGS_PER_GROUP) existing.tags.length = MAX_TAGS_PER_GROUP;
+    } else {
+      if (groups.length >= MAX_GROUPS) continue;
+      groups.push({ name, tags });
+    }
   }
   return groups;
-}
-
-/** How many characters a tag list costs in the tags field: tags plus the commas between them. */
-export function charCost(tags) {
-  const list = Array.isArray(tags) ? tags : [];
-  if (list.length === 0) return 0;
-  return list.reduce((sum, tag) => sum + String(tag).length, 0) + (list.length - 1);
 }
 
 /**
@@ -140,10 +137,7 @@ export function buildTagSet({ groups = [], selected = [], maxChars = MAX_TAG_CHA
       .forEach((word) => words.add(word));
   });
 
-  const groupCounts = {};
-  included.forEach((entry) => {
-    groupCounts[entry.group] = (groupCounts[entry.group] || 0) + 1;
-  });
+  const totalTagChars = included.reduce((sum, entry) => sum + entry.length, 0);
 
   return {
     included,
@@ -155,20 +149,7 @@ export function buildTagSet({ groups = [], selected = [], maxChars = MAX_TAG_CHA
     warnings,
     tagCount: included.length,
     uniqueWords: words.size,
-    averageTagLength: included.length > 0 ? chars / included.length : 0,
-    groupCounts,
+    averageTagLength: included.length > 0 ? totalTagChars / included.length : 0,
     tagString: included.map((entry) => entry.tag).join(TAG_SEPARATOR),
   };
-}
-
-/** Compare two tag sets: what a new video shares with the channel's core set. */
-export function overlap(setA, setB) {
-  const a = new Set((Array.isArray(setA) ? setA : []).map((tag) => String(tag).trim().toLowerCase()).filter(Boolean));
-  const b = new Set((Array.isArray(setB) ? setB : []).map((tag) => String(tag).trim().toLowerCase()).filter(Boolean));
-  if (a.size === 0 || b.size === 0) return { shared: 0, percent: 0 };
-  let shared = 0;
-  a.forEach((tag) => {
-    if (b.has(tag)) shared += 1;
-  });
-  return { shared, percent: (shared / Math.min(a.size, b.size)) * 100 };
 }

@@ -1,20 +1,12 @@
 "use client";
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState } from "react";
 import {
   Sparkles,
-  ArrowRight,
-  TrendingUp,
-  Award,
-  Globe,
-  Star,
   RefreshCw,
   FolderOpen,
   DollarSign,
-  TrendingDown,
-  Clock,
   Printer,
   ChevronRight,
-  CheckCircle2,
 } from "lucide-react";
 import CareerCharts from "../components/CareerCharts";
 import CareerRoadmap from "../components/CareerRoadmap";
@@ -264,8 +256,9 @@ export default function FutureJobPredictorApp() {
                     Your bio helps us tailor future recommendations. It does not currently move your match score &mdash; skill ratings and work preferences drive the numbers.
                   </p>
                   <div>
-                    <label className="block text-xs font-bold text-foreground mb-1 uppercase tracking-wider">Age</label>
+                    <label htmlFor="fjp-age" className="block text-xs font-bold text-foreground mb-1 uppercase tracking-wider">Age</label>
                     <input
+                      id="fjp-age"
                       type="number"
                       value={age}
                       onChange={(e) => setAge(Number(e.target.value))}
@@ -273,8 +266,9 @@ export default function FutureJobPredictorApp() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-foreground mb-1 uppercase tracking-wider">Country</label>
+                    <label htmlFor="fjp-country" className="block text-xs font-bold text-foreground mb-1 uppercase tracking-wider">Country</label>
                     <input
+                      id="fjp-country"
                       type="text"
                       value={country}
                       onChange={(e) => setCountry(e.target.value)}
@@ -282,8 +276,9 @@ export default function FutureJobPredictorApp() {
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-foreground mb-1 uppercase tracking-wider">Education Level</label>
+                    <label htmlFor="fjp-education" className="block text-xs font-bold text-foreground mb-1 uppercase tracking-wider">Education Level</label>
                     <select
+                      id="fjp-education"
                       value={education}
                       onChange={(e) => setEducation(e.target.value)}
                       className="w-full px-3 py-2 text-xs border border-border rounded bg-card text-foreground focus:outline-none"
@@ -295,8 +290,9 @@ export default function FutureJobPredictorApp() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-foreground mb-1 uppercase tracking-wider">Current Occupation</label>
+                    <label htmlFor="fjp-occupation" className="block text-xs font-bold text-foreground mb-1 uppercase tracking-wider">Current Occupation</label>
                     <input
+                      id="fjp-occupation"
                       type="text"
                       value={occupation}
                       onChange={(e) => setOccupation(e.target.value)}
@@ -309,22 +305,26 @@ export default function FutureJobPredictorApp() {
               {/* Step 2: Skill Sliders */}
               {step === 2 && (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {SKILL_LIST.map((sk) => (
-                    <div key={sk} className="space-y-1">
-                      <div className="flex justify-between text-xs">
-                        <span className="font-semibold text-foreground">{sk}</span>
-                        <span className="text-muted-foreground">{skills[sk]}%</span>
+                  {SKILL_LIST.map((sk) => {
+                    const inputId = `fjp-skill-${sk.replace(/\s+/g, "-").toLowerCase()}`;
+                    return (
+                      <div key={sk} className="space-y-1">
+                        <div className="flex justify-between text-xs">
+                          <label htmlFor={inputId} className="font-semibold text-foreground">{sk}</label>
+                          <span className="text-muted-foreground">{skills[sk]}%</span>
+                        </div>
+                        <input
+                          id={inputId}
+                          type="range"
+                          min="0"
+                          max="100"
+                          value={skills[sk] || 50}
+                          onChange={(e) => handleSkillChange(sk, e.target.value)}
+                          className="w-full accent-primary"
+                        />
                       </div>
-                      <input
-                        type="range"
-                        min="0"
-                        max="100"
-                        value={skills[sk] || 50}
-                        onChange={(e) => handleSkillChange(sk, e.target.value)}
-                        className="w-full accent-primary"
-                      />
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               )}
 
@@ -426,7 +426,14 @@ export default function FutureJobPredictorApp() {
         ) : (
           /* Results Panel side-by-side Notion style split */
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
+
+            {/* Screen-reader announcement for simulate + match-selection changes */}
+            <div className="sr-only" aria-live="polite" aria-atomic="true">
+              {activeCareer
+                ? `Showing ${matches.length} matches. Top pick ${matches[0]?.name} at ${matches[0]?.matchScore}% fit. Currently viewing ${activeCareer.name} at ${activeCareer.matchScore}% fit.`
+                : `Showing ${matches.length} matches.`}
+            </div>
+
             {/* Left Col: Career matches catalog list (col-span-5) */}
             <div className="lg:col-span-4 bg-card border border-border p-6 rounded-2xl shadow-sm space-y-4">
               <span className="text-[10px] font-extrabold uppercase tracking-widest text-muted-foreground flex items-center gap-1.5">

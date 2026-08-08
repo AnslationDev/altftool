@@ -447,6 +447,7 @@ export default function ToolHome() {
   const [showPaste, setShowPaste] = useState(false);
   const [pasteText, setPasteText] = useState("");
   const [copied, setCopied] = useState(false);
+  const [rowsEdited, setRowsEdited] = useState(false);
 
   const factor = useMemo(() => {
     if (scaleMode === "servings") {
@@ -460,6 +461,15 @@ export default function ToolHome() {
     if (fromArea <= 0 || toArea <= 0) return 1;
     return toArea / fromArea;
   }, [scaleMode, origServings, targetServings, panFrom, panTo]);
+
+  const servingsInvalid =
+    scaleMode === "servings" &&
+    (!Number.isFinite(Number(origServings)) ||
+      !Number.isFinite(Number(targetServings)) ||
+      Number(origServings) <= 0 ||
+      Number(targetServings) <= 0);
+  const panInvalid = scaleMode === "pan" && (panArea(panFrom) <= 0 || panArea(panTo) <= 0);
+  const scaleInvalid = servingsInvalid || panInvalid;
 
   const modeSummary =
     scaleMode === "servings"
@@ -525,23 +535,34 @@ export default function ToolHome() {
   }, [recipeName, factor, modeSummary, scaledRows, advisoryNotes]);
 
   const updateRow = (id, patch) => {
+    setRowsEdited(true);
     setRows((prev) => prev.map((row) => (row.id === id ? { ...row, ...patch } : row)));
   };
 
   const removeRow = (id) => {
+    setRowsEdited(true);
     setRows((prev) => prev.filter((row) => row.id !== id));
   };
 
   const addRow = () => {
+    setRowsEdited(true);
     setRows((prev) => [...prev, makeRow("", "", "")]);
   };
 
   const applySample = (sample) => {
+    const hasUserData = rowsEdited && rows.some((row) => row.qty.trim() || row.name.trim());
+    if (hasUserData) {
+      const confirmed = window.confirm(
+        "Loading this recipe will replace your current ingredient rows and servings. Continue?"
+      );
+      if (!confirmed) return;
+    }
     setRecipeName(sample.name);
     setScaleMode("servings");
     setOrigServings(String(sample.servings));
     setTargetServings(String(sample.target));
     setRows(instantiateRows(sample.rows));
+    setRowsEdited(false);
   };
 
   const parsePasted = () => {
@@ -551,6 +572,7 @@ export default function ToolHome() {
       .filter(Boolean)
       .map((item) => makeRow(item.qty, item.unit, item.name));
     if (!parsed.length) return;
+    setRowsEdited(true);
     setRows((prev) => {
       const nonEmpty = prev.filter((row) => row.qty.trim() || row.name.trim());
       return [...nonEmpty, ...parsed];
@@ -638,6 +660,11 @@ export default function ToolHome() {
                       />
                     </label>
                   </div>
+                  {servingsInvalid && (
+                    <p className="text-xs font-semibold text-[var(--anslation-ds-danger)]">
+                      Enter positive numbers for both original and target servings to calculate a scale factor.
+                    </p>
+                  )}
                   <div className="flex flex-wrap gap-2">
                     {[
                       { label: "Half it", value: 0.5 },
@@ -679,6 +706,11 @@ export default function ToolHome() {
                   </div>
                   <PanEditor title="Original pan" pan={panFrom} onChange={setPanFrom} panUnit={panUnit} idPrefix="pan-from" />
                   <PanEditor title="Target pan" pan={panTo} onChange={setPanTo} panUnit={panUnit} idPrefix="pan-to" />
+                  {panInvalid && (
+                    <p className="text-xs font-semibold text-[var(--anslation-ds-danger)]">
+                      Enter valid, positive dimensions for both pans to calculate a scale factor.
+                    </p>
+                  )}
                   <p className="text-xs leading-5 text-[var(--muted-foreground)]">
                     Scaling uses the pan area ratio, assuming the same batter depth. Round area = π x (d/2)².
                   </p>
@@ -689,6 +721,11 @@ export default function ToolHome() {
                 <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">Scale factor</p>
                 <p className="mt-1 text-3xl font-semibold text-[var(--primary)]">x{trimNumber(factor)}</p>
                 <p className="mt-1 text-sm text-[var(--muted-foreground)]">{modeSummary}</p>
+                {scaleInvalid && (
+                  <p className="mt-1 text-xs font-semibold text-[var(--anslation-ds-danger)]">
+                    Not scaled — the values above are invalid, so x1 (no change) is shown until they are fixed.
+                  </p>
+                )}
               </div>
             </div>
 
@@ -855,7 +892,7 @@ export default function ToolHome() {
                 </div>
               </div>
 
-              <ul className="mt-4 grid gap-2">
+              <ul className="mt-4 grid gap-2" aria-live="polite">
                 {scaledRows
                   .filter((row) => row.name.trim() || row.qtyText)
                   .map((row) => (

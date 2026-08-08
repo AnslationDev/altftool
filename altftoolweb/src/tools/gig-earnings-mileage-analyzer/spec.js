@@ -3,7 +3,7 @@ export const spec = {
   ...{
   "slug": "gig-earnings-mileage-analyzer",
   "title": "Gig Earnings & Mileage Analyzer",
-  "description": "Expenses ke baad effective hourly earnings calculate kare.",
+  "description": "Calculate what you really earn per hour once mileage and expenses come out.",
   "badge": "Creator & Gig-Business Tools",
   "category": [
     "Finance",
@@ -49,12 +49,12 @@ export const spec = {
   compute: (values) => {
       const kmCost = Math.max(0, Number(values.cost_per_km) || 0), reserveRate = Math.max(0, Number(values.reserve) || 0) / 100;
       const rows = String(values.shifts || "").split(/\r?\n/).map((line) => line.trim()).filter(Boolean).map((line) => {
-        const [date, grossRaw, hoursRaw, kmRaw, expenseRaw] = line.split("|").map((cell) => cell.trim());
-        const gross = Number(grossRaw) || 0, hours = Math.max(0.01, Number(hoursRaw) || 0), km = Math.max(0, Number(kmRaw) || 0), expense = Math.max(0, Number(expenseRaw) || 0), vehicle = km * kmCost, preReserve = gross - vehicle - expense, net = preReserve * (1 - reserveRate);
-        return [date || "—", gross.toFixed(2), hours.toFixed(2), km.toFixed(1), vehicle.toFixed(2), expense.toFixed(2), net.toFixed(2), (net / hours).toFixed(2)];
+        const [date, grossRaw, hoursRaw, kmRaw, expenseRaw, tipsRaw] = line.split("|").map((cell) => cell.trim());
+        const gross = Number(grossRaw) || 0, hours = Math.max(0.01, Number(hoursRaw) || 0), km = Math.max(0, Number(kmRaw) || 0), expense = Math.max(0, Number(expenseRaw) || 0), tips = Math.max(0, Number(tipsRaw) || 0), vehicle = km * kmCost, preReserve = gross + tips - vehicle - expense, net = preReserve * (1 - reserveRate);
+        return [date || "—", gross.toFixed(2), hours.toFixed(2), km.toFixed(1), vehicle.toFixed(2), expense.toFixed(2), tips.toFixed(2), net.toFixed(2), (net / hours).toFixed(2)];
       });
-      const totals = rows.reduce((acc, row) => [acc[0] + Number(row[1]), acc[1] + Number(row[2]), acc[2] + Number(row[3]), acc[3] + Number(row[6])], [0, 0, 0, 0]);
-      return { result: totals[3].toFixed(2) + " estimated net", caption: totals[1] ? (totals[3] / totals[1]).toFixed(2) + " effective per hour" : "No hours", rows: [["Gross", totals[0].toFixed(2)], ["Hours", totals[1].toFixed(2)], ["Business km", totals[2].toFixed(1)]], table: { headers: ["Date", "Gross", "Hours", "km", "Vehicle cost", "Other expense", "Net", "Net/hour"], rows } };
+      const totals = rows.reduce((acc, row) => [acc[0] + Number(row[1]), acc[1] + Number(row[2]), acc[2] + Number(row[3]), acc[3] + Number(row[7])], [0, 0, 0, 0]);
+      return { result: totals[3].toFixed(2) + " estimated net", caption: totals[1] ? (totals[3] / totals[1]).toFixed(2) + " effective per hour" : "No hours", rows: [["Gross", totals[0].toFixed(2)], ["Hours", totals[1].toFixed(2)], ["Business km", totals[2].toFixed(1)]], table: { headers: ["Date", "Gross", "Hours", "km", "Vehicle cost", "Other expense", "Tips", "Net", "Net/hour"], rows } };
     },
 };
 

@@ -24,8 +24,6 @@
 
 export const COUNTRY = {
   name: "South Korea",
-  adjective: "Korean",
-  language: "Korean",
   currencyNote:
     "Card and phone payment work almost everywhere, including market stalls and buses, and a transit card doubles as a convenience-store card.",
   headline:
@@ -408,7 +406,6 @@ export function buildEtiquetteBriefing({
     severityLabel: severityFor(rule.severity).label,
     severityWeight: severityFor(rule.severity).weight,
     known: known.has(rule.id),
-    matchedContexts: rule.contexts.filter((id) => contextSet.has(id)),
   }));
 
   if (selected.length === 0) {
@@ -429,23 +426,16 @@ export function buildEtiquetteBriefing({
   const topMistakes = shown.filter((rule) => !rule.known).slice(0, 5);
   const legalRisks = ranked.filter((rule) => rule.legal);
 
+  // Derived from `shown` (the capped, currently-visible set), not the
+  // uncapped `ranked` list, so these counts never reference rules that
+  // aren't actually on screen — see Finding 18.
   const bySeverity = SEVERITIES.map((severity) => {
-    const rules = ranked.filter((rule) => rule.severity === severity.id);
+    const rules = shown.filter((rule) => rule.severity === severity.id);
     return {
       id: severity.id,
       label: severity.label,
       count: rules.length,
       knownCount: rules.filter((rule) => rule.known).length,
-    };
-  }).filter((entry) => entry.count > 0);
-
-  const byCategory = CATEGORIES.map((category) => {
-    const rules = ranked.filter((rule) => rule.category === category);
-    return {
-      category,
-      count: rules.length,
-      knownCount: rules.filter((rule) => rule.known).length,
-      emphasised: Boolean(purpose.emphasis[category]),
     };
   }).filter((entry) => entry.count > 0);
 
@@ -457,8 +447,8 @@ export function buildEtiquetteBriefing({
   return {
     purpose,
     contexts: validContexts.map((id) => CONTEXTS.find((entry) => entry.id === id)),
-    ruleCount: ranked.length,
-    knownCount: ranked.filter((rule) => rule.known).length,
+    ruleCount: shown.length,
+    knownCount: shown.filter((rule) => rule.known).length,
     totalWeight: Math.round(totalWeight * 100) / 100,
     knownWeight: Math.round(knownWeight * 100) / 100,
     readinessPct,
@@ -468,7 +458,6 @@ export function buildEtiquetteBriefing({
     topMistakes,
     legalRisks,
     bySeverity,
-    byCategory,
     phrases: PHRASES,
   };
 }

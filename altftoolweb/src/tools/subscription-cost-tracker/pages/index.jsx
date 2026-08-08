@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   BarChart3,
@@ -108,13 +108,25 @@ function formatRenewalText(days) {
         : `${days}d left`;
 }
 
+function nameOrDefault(value) {
+  return String(value || "").trim() || "Subscription";
+}
+
+function categoryOrDefault(value) {
+  return String(value || "").trim() || "Other";
+}
+
 function sanitizeSubscriptions(subscriptions) {
   return subscriptions.map((subscription) => ({
     ...subscription,
-    name: String(subscription.name || "Subscription").trim() || "Subscription",
+    // name/category are intentionally left as-is (not trimmed/defaulted) here: this
+    // sanitized list feeds the controlled <input> value props in SubscriptionRow, and
+    // forcing a fallback on every keystroke would make cleared fields snap back to a
+    // placeholder mid-edit. The "Subscription"/"Other" fallback is only applied where a
+    // display default is actually needed (CSV export, category grouping) via
+    // nameOrDefault()/categoryOrDefault().
     amount: clampNumber(subscription.amount),
     cycle: getCycleMeta(subscription.cycle).value,
-    category: String(subscription.category || "Other").trim() || "Other",
     status: subscription.status === "paused" ? "paused" : "active",
   }));
 }
@@ -122,7 +134,7 @@ function sanitizeSubscriptions(subscriptions) {
 function groupByCategory(subscriptions) {
   return Object.values(
     subscriptions.reduce((acc, subscription) => {
-      const key = subscription.category || "Other";
+      const key = categoryOrDefault(subscription.category);
       acc[key] ||= { name: key, monthly: 0, annual: 0, count: 0 };
       acc[key].monthly += getMonthlyCost(subscription);
       acc[key].annual += getAnnualCost(subscription);
@@ -149,10 +161,10 @@ function exportCsv(rows) {
   const csvRows = [
     ["Name", "Amount", "Cycle", "Category", "Status", "Renewal Date", "Monthly Cost", "Yearly Cost"],
     ...rows.map((subscription) => [
-      subscription.name,
+      nameOrDefault(subscription.name),
       subscription.amount,
       subscription.cycle,
-      subscription.category,
+      categoryOrDefault(subscription.category),
       subscription.status,
       subscription.renewalDate || "",
       Math.round(subscription.monthlyCost),
@@ -239,7 +251,7 @@ function SubscriptionRow({ subscription, onUpdate, onRemove }) {
         </label>
         <button
           type="button"
-          onClick={() => onRemove(subscription.id)}
+          onClick={() => onRemove(subscription.id, subscription.name)}
           className="btn-secondary min-h-11 px-3 sm:mt-5"
           aria-label={`Remove ${subscription.name}`}
         >
@@ -331,6 +343,15 @@ export default function SubscriptionCostTracker() {
   const [newName, setNewName] = useState("");
   const [monthlyBudget, setMonthlyBudget] = useState(2500);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) {
+        window.clearTimeout(copyTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const metrics = useMemo(() => {
     const rows = sanitizeSubscriptions(subscriptions).map((subscription) => ({
@@ -402,7 +423,17 @@ export default function SubscriptionCostTracker() {
     setSubscriptions((current) => current.filter((subscription) => subscription.id !== id));
   };
 
+  const requestRemoveSubscription = (id, name) => {
+    if (typeof window !== "undefined" && !window.confirm(`Remove ${nameOrDefault(name)}? This can't be undone.`)) {
+      return;
+    }
+    removeSubscription(id);
+  };
+
   const resetPlan = () => {
+    if (typeof window !== "undefined" && !window.confirm("Reset all subscriptions to the five starter plans? This clears everything you've added or edited.")) {
+      return;
+    }
     setSubscriptions(DEFAULT_SUBSCRIPTIONS);
     setMonthlyBudget(2500);
     setNewName("");
@@ -415,9 +446,15 @@ export default function SubscriptionCostTracker() {
   };
 
   const copySummary = async () => {
-    await navigator.clipboard?.writeText(buildSummary(metrics));
-    setCopied(true);
-    window.setTimeout(() => setCopied(false), 1400);
+    try {
+      if (!navigator.clipboard) throw new Error("Clipboard API unavailable");
+      await navigator.clipboard.writeText(buildSummary(metrics));
+      setCopied(true);
+      if (copyTimeoutRef.current) window.clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = window.setTimeout(() => setCopied(false), 1400);
+    } catch {
+      setCopied(false);
+    }
   };
 
   return (
@@ -438,7 +475,11 @@ export default function SubscriptionCostTracker() {
                 with renewal dates, category totals, and savings signals.
               </p>
             </div>
-            <div className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">
+            <div
+              className="min-w-0 rounded-lg border border-[var(--border)] bg-[var(--background)] p-4"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">
                 Active monthly cost
               </p>
@@ -452,7 +493,7 @@ export default function SubscriptionCostTracker() {
           </div>
         </section>
 
-        <section className="mt-6 grid gap-4 sm:grid-cols-2 2xl:grid-cols-4">
+        <section className="mt-6 grid gap-4 sm:grid-cols-2 2xl:grid-cols-4" aria-live="polite" aria-atomic="true">
           <MetricCard
             icon={WalletCards}
             label="Monthly Total"
@@ -509,6 +550,7 @@ export default function SubscriptionCostTracker() {
                   step="500"
                   value={monthlyBudget}
                   onChange={(event) => setMonthlyBudget(Number(event.target.value))}
+                  aria-label="Monthly Subscription Budget"
                   className="mt-3 w-full accent-[var(--primary)]"
                 />
                 <div className="mt-3 h-3 overflow-hidden rounded-full bg-[var(--muted)]">
@@ -648,7 +690,7 @@ export default function SubscriptionCostTracker() {
                     key={subscription.id}
                     subscription={subscription}
                     onUpdate={updateSubscription}
-                    onRemove={removeSubscription}
+                    onRemove={requestRemoveSubscription}
                   />
                 ))}
               </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AlertTriangle, Check, ClipboardList, Copy, Plus, RotateCcw, Trash2 } from "lucide-react";
 
 import {
@@ -124,6 +124,13 @@ export default function ToolHome() {
   const [state, setState] = useState(buildDefaults);
   const [copied, setCopied] = useState(false);
   const [seq, setSeq] = useState(0);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -217,7 +224,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -475,7 +483,7 @@ export default function ToolHome() {
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {ok && !result.empty
-                ? `${NUM.format(result.overdueCount)} overdue, ${NUM.format(result.openCount)} still open, ${NUM.format(result.issueCount)} issue(s) flagged.`
+                ? `${NUM.format(result.openCount)} still open (${NUM.format(result.overdueCount)} of them overdue), ${NUM.format(result.issueCount)} issue(s) flagged.`
                 : "Add a notice above to build the board."}
             </p>
           </div>
@@ -512,7 +520,7 @@ export default function ToolHome() {
               className="rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
             >
               {row.error ? (
-                <p className="text-sm font-medium text-[var(--danger)]">
+                <p role="alert" className="text-sm font-medium text-[var(--danger)]">
                   {row.recipient}: {row.error}
                 </p>
               ) : (

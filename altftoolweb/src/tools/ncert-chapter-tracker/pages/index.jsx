@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { BookOpenCheck, Check, Copy, Plus, RotateCcw, Trash2 } from "lucide-react";
 
 import {
@@ -8,6 +8,7 @@ import {
   MIN_CHAPTERS,
   NCERT_PRESETS,
   STATUSES,
+  STATUS_IDS,
   freshStatuses,
   nextStatus,
   resizeStatuses,
@@ -55,13 +56,36 @@ export default function ToolHome() {
   // (e.g. typing "24" fires onChange with "2", then "24") never triggers the
   // destructive array resize until the value is committed on blur/Enter.
   const [countDrafts, setCountDrafts] = useState({});
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => clearTimeout(copyTimeoutRef.current);
+  }, []);
 
   useEffect(() => {
     try {
       const saved = window.localStorage.getItem(STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) setBooks(parsed);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          // Repair/drop malformed entries so a corrupted payload can't crash
+          // the render on `.length`/`.map` of an undefined/null `statuses`.
+          const sanitized = parsed
+            .filter(
+              (book) =>
+                book &&
+                typeof book === "object" &&
+                typeof book.id === "string" &&
+                Array.isArray(book.statuses) &&
+                book.statuses.length > 0,
+            )
+            .map((book) => ({
+              ...book,
+              name: typeof book.name === "string" ? book.name : "",
+              statuses: book.statuses.map((status) => (STATUS_IDS.includes(status) ? status : STATUS_IDS[0])),
+            }));
+          if (sanitized.length > 0) setBooks(sanitized);
+        }
       }
     } catch {
       /* corrupted storage — keep defaults */
@@ -131,6 +155,17 @@ export default function ToolHome() {
         if (book.id !== id) return book;
         const count = Number(rawValue);
         if (!Number.isInteger(count) || count < MIN_CHAPTERS || count > MAX_CHAPTERS) return book;
+        if (count < book.statuses.length) {
+          const dropped = book.statuses.slice(count);
+          const hasProgress = dropped.some((status) => status !== "not-started");
+          if (hasProgress) {
+            const label = book.name?.trim() || "this book";
+            const confirmed = window.confirm(
+              `Shrink "${label}" to ${count} chapters? This permanently deletes progress on the last ${dropped.length} chapter${dropped.length === 1 ? "" : "s"}.`,
+            );
+            if (!confirmed) return book;
+          }
+        }
         return { ...book, statuses: resizeStatuses(book.statuses, count) };
       }),
     );
@@ -168,7 +203,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -323,7 +359,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Overall read
             </p>
@@ -351,6 +387,9 @@ export default function ToolHome() {
               )}
               {copied ? "Copied!" : "Copy summary"}
             </button>
+            <span className="sr-only" role="status" aria-live="polite">
+              {copied ? "Copied to clipboard" : ""}
+            </span>
             <button type="button" onClick={reset} aria-label="Reset the tracker" className={PRIMARY_BTN}>
               <RotateCcw className="h-4 w-4" aria-hidden="true" />
               Reset
@@ -358,7 +397,7 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {(hasError
             ? [
                 ["Chapters read", DASH],

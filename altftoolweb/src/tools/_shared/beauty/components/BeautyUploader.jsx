@@ -41,18 +41,33 @@ export default function BeautyUploader({ onImage }) {
     }
   }, [processFile]);
 
+  const triggerBrowse = useCallback(() => {
+    fileInputRef.current?.click();
+  }, []);
+
+  const handleKeyDown = useCallback((e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      triggerBrowse();
+    }
+  }, [triggerBrowse]);
+
   return (
     <div
+      role="button"
+      tabIndex={0}
+      aria-label="Upload a photo: drag and drop, or press Enter to browse files"
       onDragEnter={handleDrag}
       onDragLeave={handleDrag}
       onDragOver={handleDrag}
       onDrop={handleDrop}
-      className={`relative border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all duration-200 ${
+      className={`relative border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--primary) focus-visible:ring-offset-2 focus-visible:ring-offset-(--background) ${
         dragActive
           ? "border-(--primary) bg-(--primary)/5"
           : "border-(--border) hover:border-(--primary)/50 bg-(--card)"
       }`}
-      onClick={() => fileInputRef.current?.click()}
+      onClick={triggerBrowse}
+      onKeyDown={handleKeyDown}
     >
       <input
         ref={fileInputRef}
