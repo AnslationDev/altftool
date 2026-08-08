@@ -236,8 +236,10 @@ export default function ToolHome() {
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Log each notice&apos;s dispatch mode, tracking ID and dates. The board works out the date
           of service, the reply deadline, the s.138 complaint window and the consumer-limitation
-          countdown for you — using {DEEMED_SERVICE_STATUTE} to estimate service when no delivery
-          date is on record yet.
+          countdown for you — for post and courier modes it uses {DEEMED_SERVICE_STATUTE} to
+          estimate delivery when no delivery date is on record yet; email, WhatsApp and hand
+          delivery are instead treated as served the same day they are sent, as a working
+          assumption rather than a statutory deeming rule.
         </p>
       </header>
 
@@ -388,7 +390,9 @@ export default function ToolHome() {
                     />
                     <p className={HINT}>
                       {type.fixedReplyDays
-                        ? `Fixed by statute at ${type.defaultReplyDays} days (${type.statute}).`
+                        ? type.replyPeriodMonths
+                          ? `Fixed by statute at ${type.replyPeriodMonths === 1 ? "one calendar month" : `${type.replyPeriodMonths} calendar months`} (${type.statute}).`
+                          : `Fixed by statute at ${type.defaultReplyDays} days (${type.statute}).`
                         : `Leave blank to use the customary ${type.defaultReplyDays} days.`}
                     </p>
                   </div>

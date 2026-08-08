@@ -63,6 +63,13 @@ export default function ToolHome() {
   };
 
   const reset = () => {
+    if (
+      source !== DEFAULT_ENV &&
+      typeof window !== "undefined" &&
+      !window.confirm("Discard your pasted .env and restore the example?")
+    ) {
+      return;
+    }
     setSource(DEFAULT_ENV);
     setStyle("empty");
     setKeepComments(true);
@@ -97,9 +104,10 @@ export default function ToolHome() {
           Env to Example Generator
         </h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
-          Paste a real .env and get a commit-safe .env.example: every value is blanked, comments
-          and blank lines are kept, and keys that look like credentials (SECRET, TOKEN, API_KEY,
-          PASSWORD…) are always stripped. Runs entirely in your browser.
+          Paste a real .env and get a commit-safe .env.example: every value is blanked by
+          default — you can opt in to keep well-known non-secret values like NODE_ENV or PORT —
+          and keys that look like credentials (SECRET, TOKEN, API_KEY, PASSWORD…) are always
+          stripped regardless. Comments and blank lines are kept. Runs entirely in your browser.
         </p>
       </header>
 
@@ -179,7 +187,20 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      {!hasError && result.warning ? (
+        <p
+          role="status"
+          className="mt-6 rounded-md bg-[var(--warning-soft)] px-3 py-2 text-sm font-medium text-[var(--warning)]"
+        >
+          {result.warning}
+        </p>
+      ) : null}
+
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

@@ -75,7 +75,11 @@ export const VIDEO_STYLES = [
 
 function toInt(value) {
   const number = Number(String(value).replace(/,/g, "").trim());
-  return Number.isFinite(number) ? Math.round(number) : NaN;
+  // Reject non-integer input instead of silently rounding it: rounding would
+  // let the field show e.g. "10.5" while the stats panel and generated
+  // prompt disagree and say "11-minute video". Feeding NaN through here
+  // surfaces the existing "Enter whole numbers..." error instead.
+  return Number.isInteger(number) ? number : NaN;
 }
 
 /** Words spoken in a given number of seconds at the scripting pace. */

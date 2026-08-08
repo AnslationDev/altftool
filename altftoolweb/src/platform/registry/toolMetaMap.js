@@ -2805,7 +2805,7 @@ export const toolMetaMap = {
   },
   "bengali-probad-proverb-explorer": {
     "name": "Bengali Probad Explorer",
-    "description": "Explore Bengali probad with transliteration, literal translation, real meaning, a Bangla gloss and usage notes.",
+    "description": "Explore Bengali probad with transliteration, literal translation, real meaning, a Bangla gloss and English equivalents.",
     "category": "Education & Science",
     "icon": "scroll-text",
     "iconColor": "text-[var(--primary)]"
@@ -7011,7 +7011,7 @@ export const toolMetaMap = {
   },
   "cumulative-vs-noncumulative-fd": {
     "name": "Cumulative vs Non Cumulative FD Comparator",
-    "description": "Compare a reinvestment fixed deposit with a monthly or quarterly payout deposit, including the break-even reinvestment rate.",
+    "description": "Compare a reinvestment fixed deposit with a monthly, quarterly, half-yearly or annual payout deposit, including the break-even reinvestment rate.",
     "category": "Finance Calculators",
     "icon": "arrow-left-right",
     "iconColor": "text-[var(--primary)]"
@@ -8013,7 +8013,7 @@ export const toolMetaMap = {
   },
   "device-sensor-calibration-checker": {
     "name": "Device Sensor Calibration Checker",
-    "description": "Sanity-check the bias in your device's accelerometer, gyroscope and magnetometer.",
+    "description": "Sanity-check the bias in your device's accelerometer and gyroscope.",
     "category": [
       "Developer",
       "Productivity"
@@ -10095,7 +10095,7 @@ export const toolMetaMap = {
   },
   "eway-bill-validity-calculator": {
     "name": "E-Way Bill Distance Validity Calculator",
-    "description": "Work out e-way bill validity days and the exact expiry date and time from transport distance, cargo type and generation time.",
+    "description": "Work out e-way bill validity days and the exact expiry date from transport distance, cargo type and generation date.",
     "category": "Finance Calculators",
     "icon": "truck",
     "iconColor": "text-[var(--primary)]"
@@ -31922,7 +31922,7 @@ export const toolMetaMap = {
   },
   "vtt-to-srt-converter": {
     "name": "VTT To SRT Converter",
-    "description": "Convert WebVTT captions back to SubRip: strip cue settings, regions and styling tags, renumber cues and fix timing drift.",
+    "description": "Convert WebVTT captions back to SubRip: strip cue settings and regions, renumber cues, optionally flatten styling tags, and fix timing drift.",
     "category": "Converters",
     "icon": "subtitles",
     "iconColor": "text-[var(--primary)]"

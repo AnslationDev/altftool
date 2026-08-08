@@ -35,7 +35,7 @@ const seo = {
     ],
     [
       "Can I paste a very large Dockerfile?",
-      "Up to 200,000 characters, 5,000 physical lines, 2,000 logical instructions and 100 build stages; beyond that the parse stops with a limit message. At most 500 findings are listed, with high-severity ones kept in preference to lower ones if that cap is hit.",
+      "Up to 200,000 characters, 5,000 physical lines, 2,000 logical instructions and 100 build stages; beyond that the parse stops with a limit message. Up to 500 findings are counted internally, with high-severity ones kept in preference to lower ones if that cap is hit, but only the first 100 are shown as individual cards on screen — the aggregate counts and exported rule totals still reflect every one of the up-to-500.",
     ],
   ],
 };

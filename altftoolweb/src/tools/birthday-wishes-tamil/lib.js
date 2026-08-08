@@ -37,67 +37,109 @@ export const RELATIONSHIPS = [
     id: "friend",
     label: "Friend",
     register: "casual",
-    salutation: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+    salutation: {
+      respectful: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+      casual: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+    },
   },
   {
     id: "elder-brother",
     label: "Elder brother",
     register: "casual",
-    salutation: { native: "{name} அண்ணா,", roman: "{name} aṇṇā," },
+    salutation: {
+      respectful: { native: "{name} அண்ணா,", roman: "{name} aṇṇā," },
+      casual: { native: "{name} அண்ணா,", roman: "{name} aṇṇā," },
+    },
   },
   {
     id: "elder-sister",
     label: "Elder sister",
     register: "casual",
-    salutation: { native: "{name} அக்கா,", roman: "{name} akkā," },
+    salutation: {
+      respectful: { native: "{name} அக்கா,", roman: "{name} akkā," },
+      casual: { native: "{name} அக்கா,", roman: "{name} akkā," },
+    },
   },
   {
     id: "younger-sibling",
     label: "Younger brother or sister",
     register: "casual",
-    salutation: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+    salutation: {
+      respectful: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+      casual: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+    },
   },
   {
     id: "mother",
     label: "Mother",
     register: "respectful",
-    salutation: { native: "அன்புள்ள அம்மா,", roman: "Aṉpuḷḷa ammā," },
+    salutation: {
+      respectful: { native: "அன்புள்ள அம்மா,", roman: "Aṉpuḷḷa ammā," },
+      casual: { native: "அன்புள்ள அம்மா,", roman: "Aṉpuḷḷa ammā," },
+    },
   },
   {
     id: "father",
     label: "Father",
     register: "respectful",
-    salutation: { native: "அன்புள்ள அப்பா,", roman: "Aṉpuḷḷa appā," },
+    salutation: {
+      respectful: { native: "அன்புள்ள அப்பா,", roman: "Aṉpuḷḷa appā," },
+      casual: { native: "அன்புள்ள அப்பா,", roman: "Aṉpuḷḷa appā," },
+    },
   },
   {
     id: "partner",
     label: "Partner or spouse",
     register: "casual",
-    salutation: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+    salutation: {
+      respectful: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+      casual: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+    },
   },
   {
     id: "child",
     label: "Son or daughter",
     register: "casual",
-    salutation: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+    salutation: {
+      respectful: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+      casual: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+    },
   },
   {
     id: "colleague",
     label: "Colleague",
     register: "respectful",
-    salutation: { native: "{name} அவர்களே,", roman: "{name} avarkaḷē," },
+    // Respectful keeps the அவர்களே honorific; casual drops it for the same
+    // register-neutral "Dear {name}," greeting used elsewhere in this file,
+    // so an overridden casual register doesn't open with a formal honorific.
+    salutation: {
+      respectful: { native: "{name} அவர்களே,", roman: "{name} avarkaḷē," },
+      casual: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+    },
   },
   {
     id: "boss",
     label: "Manager or senior",
     register: "respectful",
-    salutation: { native: "மதிப்பிற்குரிய {name} அவர்களே,", roman: "Matippiṟkuriya {name} avarkaḷē," },
+    salutation: {
+      respectful: {
+        native: "மதிப்பிற்குரிய {name} அவர்களே,",
+        roman: "Matippiṟkuriya {name} avarkaḷē,",
+      },
+      casual: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+    },
   },
   {
     id: "teacher",
     label: "Teacher",
     register: "respectful",
-    salutation: { native: "மதிப்பிற்குரிய {name} ஆசிரியரே,", roman: "Matippiṟkuriya {name} āciriyarē," },
+    salutation: {
+      respectful: {
+        native: "மதிப்பிற்குரிய {name} ஆசிரியரே,",
+        roman: "Matippiṟkuriya {name} āciriyarē,",
+      },
+      casual: { native: "அன்புள்ள {name},", roman: "Aṉpuḷḷa {name}," },
+    },
   },
 ];
 
@@ -178,12 +220,12 @@ export const TEMPLATES = [
     id: "formal-health",
     tone: "formal",
     respectful: {
-      native: "நீண்ட ஆயுளும் நல்ல உடல்நலமும் பெற்று வாழ வாழ்த்துகிறேன். பிறந்தநாள் வாழ்த்துக்கள்!",
-      roman: "Nīṇṭa āyuḷum nalla uṭalnalamum peṟṟu vāḻa vāḻttukiṟēṉ. Piṟantanāḷ vāḻttukkaḷ!",
+      native: "உங்களுக்கு நீண்ட ஆயுளும் நல்ல உடல்நலமும் பெற்று வாழ வாழ்த்துகிறேன். பிறந்தநாள் வாழ்த்துக்கள்!",
+      roman: "Uṅkaḷukku nīṇṭa āyuḷum nalla uṭalnalamum peṟṟu vāḻa vāḻttukiṟēṉ. Piṟantanāḷ vāḻttukkaḷ!",
     },
     casual: {
-      native: "நீண்ட ஆயுளும் நல்ல உடல்நலமும் பெற்று வாழ வாழ்த்துகிறேன். பிறந்தநாள் வாழ்த்துக்கள்!",
-      roman: "Nīṇṭa āyuḷum nalla uṭalnalamum peṟṟu vāḻa vāḻttukiṟēṉ. Piṟantanāḷ vāḻttukkaḷ!",
+      native: "உனக்கு நீண்ட ஆயுளும் நல்ல உடல்நலமும் பெற்று வாழ வாழ்த்துகிறேன். பிறந்தநாள் வாழ்த்துக்கள்!",
+      roman: "Uṉakku nīṇṭa āyuḷum nalla uṭalnalamum peṟṟu vāḻa vāḻttukiṟēṉ. Piṟantanāḷ vāḻttukkaḷ!",
     },
     english: "Wishing you a long life and good health. Happy birthday!",
   },
@@ -424,9 +466,10 @@ export function generateTamilBirthdayWishes({
   const safeSeed = Math.abs(Math.trunc(seed)) || 1;
   const picked = seededShuffle(pool, safeSeed).slice(0, Math.min(count, pool.length));
 
+  const relationshipSalutation = relationship.salutation[usedRegister];
   const salutation = {
-    native: applyName(relationship.salutation.native, cleanedName),
-    roman: applyName(relationship.salutation.roman, cleanedName),
+    native: applyName(relationshipSalutation.native, cleanedName),
+    roman: applyName(relationshipSalutation.roman, cleanedName),
   };
   const closing = CLOSINGS[usedRegister];
   const signature = {

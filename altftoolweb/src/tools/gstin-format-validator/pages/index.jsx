@@ -1,16 +1,13 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useLayoutEffect, useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
-  Building2,
   CheckCircle,
   Clipboard,
   Copy,
   Download,
   EyeOff,
-  FileCheck2,
-  IdCard,
   KeyRound,
   ListChecks,
   MapPin,
@@ -20,7 +17,6 @@ import {
   ShieldCheck,
   Sparkles,
   Trash2,
-  XCircle,
 } from "lucide-react";
 
 const SAMPLE_GSTINS = [
@@ -89,6 +85,22 @@ function formatGstin(value) {
   return `${clean.slice(0, 2)} ${clean.slice(2, 12)} ${clean.slice(12, 14)} ${clean.slice(14)}`;
 }
 
+function countAlnumChars(value) {
+  return (String(value || "").match(/[0-9A-Za-z]/g) || []).length;
+}
+
+function caretIndexForAlnumCount(value, count) {
+  if (count <= 0) return 0;
+  let seen = 0;
+  for (let index = 0; index < value.length; index += 1) {
+    if (/[0-9A-Za-z]/.test(value[index])) {
+      seen += 1;
+      if (seen >= count) return index + 1;
+    }
+  }
+  return value.length;
+}
+
 function parseBulk(value) {
   return String(value || "")
     .split(/\n|,|;/)
@@ -116,7 +128,7 @@ function maskGstin(value) {
   const clean = normalizeGstin(value);
   if (!clean) return "NA";
   if (clean.length < 15) return `${clean.slice(0, 2)}${"X".repeat(Math.max(clean.length - 2, 0))}`;
-  return `${clean.slice(0, 2)} XXXXX1234X ${clean.slice(12, 14)} ${clean.slice(14)}`;
+  return `${clean.slice(0, 2)} XXXXX${clean.slice(7, 11)}X ${clean.slice(12, 14)} ${clean.slice(14)}`;
 }
 
 function analyzeGstin(raw, index = 0) {
@@ -257,6 +269,24 @@ export default function GstinFormatValidator() {
   const [bulkText, setBulkText] = useState(SAMPLE_GSTINS);
   const [mode, setMode] = useState("single");
 
+  const singleInputRef = useRef(null);
+  const pendingCaretAlnumRef = useRef(null);
+
+  const handleSingleInputChange = (event) => {
+    const element = event.target;
+    const caretPos = element.selectionStart ?? element.value.length;
+    pendingCaretAlnumRef.current = countAlnumChars(element.value.slice(0, caretPos));
+    setInput(normalizeGstin(element.value));
+  };
+
+  useLayoutEffect(() => {
+    if (pendingCaretAlnumRef.current == null || !singleInputRef.current) return;
+    const formatted = formatGstin(input);
+    const caretIndex = caretIndexForAlnumCount(formatted, pendingCaretAlnumRef.current);
+    singleInputRef.current.setSelectionRange(caretIndex, caretIndex);
+    pendingCaretAlnumRef.current = null;
+  }, [input]);
+
   const single = useMemo(() => analyzeGstin(input), [input]);
   const results = useMemo(() => {
     const source = mode === "single" ? [input] : parseBulk(bulkText);
@@ -342,8 +372,9 @@ export default function GstinFormatValidator() {
             <label className="block min-w-0">
               <span className="mb-2 block text-sm font-semibold text-[var(--foreground)]">GSTIN number</span>
               <input
+                ref={singleInputRef}
                 value={formatGstin(input)}
-                onChange={(event) => setInput(normalizeGstin(event.target.value))}
+                onChange={handleSingleInputChange}
                 placeholder="29 ABCDE1234F 1Z 5"
                 maxLength={19}
                 className="h-14 w-full min-w-0 rounded-md border border-[var(--border)] bg-[var(--background)] px-4 font-mono text-base font-black tracking-[0.03em] text-[var(--foreground)] outline-none focus:border-[var(--primary)] focus:shadow-[var(--anslation-ds-focus-ring)] sm:text-lg"
@@ -390,7 +421,7 @@ export default function GstinFormatValidator() {
         </section>
 
         <div className="grid min-w-0 content-start gap-4">
-          <section className="tool-card min-w-0 overflow-hidden">
+          <section className="tool-card min-w-0 overflow-hidden" aria-live="polite" aria-atomic="true">
             <div className="mb-5 flex min-w-0 items-start justify-between gap-3">
               <div className="min-w-0">
                 <h2 className="break-words text-2xl font-black text-[var(--foreground)]">Validation Result</h2>
@@ -497,7 +528,7 @@ export default function GstinFormatValidator() {
             </div>
           </div>
 
-          <div className="space-y-3">
+          <div className="space-y-3" aria-live="polite" aria-atomic="true">
             {results.length ? (
               results.map((item) => (
                 <div key={item.id} className="rounded-lg border border-[var(--border)] bg-[var(--background)] p-4">

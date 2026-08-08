@@ -84,7 +84,7 @@ export default function ToolHome() {
       `Left blank: ${result.unattempted}`,
       `Expected correct / wrong: ${n1(result.totalCorrect)} / ${n1(result.totalWrong)}`,
       `Marks gained: +${n1(result.marksGained)}`,
-      `Marks lost to negative marking: -${n1(result.marksLost)}`,
+      `Marks lost to negative marking: ${result.marksLost > 0 ? "-" : ""}${n1(result.marksLost)}`,
       `Expected score: ${n1(result.expectedScore)} / ${result.maxMarks} (${pct(result.percentOfMax)})`,
       `Range on the guessed block: ${n1(result.worstCase)} to ${n1(result.bestCase)}`,
       `Break-even accuracy: ${pct(result.breakEvenAccuracyPercent)}`,
@@ -118,7 +118,7 @@ export default function ToolHome() {
     ["Expected correct answers", ok ? n1(result.totalCorrect) : "—"],
     ["Expected wrong answers", ok ? n1(result.totalWrong) : "—"],
     ["Marks gained (+4 each)", ok ? `+${n1(result.marksGained)}` : "—"],
-    ["Marks lost (-1 each)", ok ? `-${n1(result.marksLost)}` : "—"],
+    ["Marks lost (-1 each)", ok ? `${result.marksLost > 0 ? "-" : ""}${n1(result.marksLost)}` : "—"],
     ["Grace marks added", ok ? n1(result.graceMarks) : "—"],
     ["Score from known answers", ok ? n1(result.knowledgeScore) : "—"],
     ["Score contributed by guesses", ok ? signed(result.guessScore) : "—"],
@@ -262,7 +262,11 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Expected NEET score
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p
+              className="mt-1 text-4xl font-semibold text-[var(--primary)]"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {ok ? `${n1(result.expectedScore)} / ${result.maxMarks}` : "—"}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">

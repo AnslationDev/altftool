@@ -920,6 +920,13 @@ function DocumentRecolor() {
   const [brightness, setBrightness] = useState(1);
   const [invert, setInvert] = useState(false);
   const [grayscale, setGrayscale] = useState(true);
+  // Tracks whether the picked file actually decoded into a renderable image
+  // (as opposed to merely being picked). HEIC/HEIF photos — a realistic
+  // input given this tool's own "phone photo of a whiteboard" copy — pick
+  // successfully but fail to decode in most desktop/Android <img> engines,
+  // which previously left a blank preview and a silently-dead Export button.
+  const [decoded, setDecoded] = useState(false);
+  const [decodeFailed, setDecodeFailed] = useState(false);
 
   const filter = `contrast(${contrast}) brightness(${brightness}) invert(${invert ? 1 : 0}) grayscale(${grayscale ? 1 : 0})`;
   const download = () => {
@@ -945,9 +952,13 @@ function DocumentRecolor() {
           <input
             id="recolor-file"
             type="file"
-            accept="image/*"
+            accept="image/jpeg,image/png,image/webp"
             className={input}
-            onChange={(event) => setFile(event.target.files?.[0] || null)}
+            onChange={(event) => {
+              setDecoded(false);
+              setDecodeFailed(false);
+              setFile(event.target.files?.[0] || null);
+            }}
           />
           <RangeControl
             label={`Contrast · ${contrast.toFixed(1)}×`}
@@ -971,7 +982,7 @@ function DocumentRecolor() {
             type="button"
             className={primaryButton}
             onClick={download}
-            disabled={!url}
+            disabled={!decoded}
           >
             <Download className="h-4 w-4" />
             Export PNG
@@ -987,12 +998,26 @@ function DocumentRecolor() {
               ref={imageRef}
               src={url}
               alt="Recolored local page preview"
-              style={{ filter }}
+              style={{ filter, display: decodeFailed ? "none" : undefined }}
               className="max-h-[70vh] max-w-full"
+              onLoad={() => {
+                setDecoded(true);
+                setDecodeFailed(false);
+              }}
+              onError={() => {
+                setDecoded(false);
+                setDecodeFailed(true);
+              }}
             />
-          ) : (
+          ) : null}
+          {!url && (
             <p className="text-sm text-[var(--muted-foreground)]">
               Choose a page image to preview it.
+            </p>
+          )}
+          {decodeFailed && (
+            <p className="text-sm text-[var(--destructive)]" role="alert">
+              This image couldn&apos;t be loaded — try a JPEG, PNG, or WebP file.
             </p>
           )}
         </div>

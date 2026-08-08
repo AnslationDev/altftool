@@ -36,16 +36,16 @@ export const DEFAULT_WORK_END = "18:00";
 
 export const WORK_ITEMS = [
   { id: "painting", label: "Painting, polishing and putty work", structural: false, wet: false, elevation: false },
-  { id: "flooring", label: "Breaking and relaying floor tiles", structural: false, wet: false, elevation: false, heavyDebris: true },
+  { id: "flooring", label: "Breaking and relaying floor tiles", structural: false, wet: false, elevation: false },
   { id: "false-ceiling", label: "False ceiling, cove lighting and carpentry", structural: false, wet: false, elevation: false },
   { id: "kitchen", label: "Modular kitchen and cabinetry", structural: false, wet: false, elevation: false },
   { id: "electrical", label: "Rewiring and new electrical points", structural: false, wet: false, elevation: false },
   { id: "plumbing", label: "Re-routing concealed plumbing lines", structural: false, wet: true, elevation: false },
-  { id: "bathroom", label: "Bathroom re-tiling and waterproofing", structural: false, wet: true, elevation: false, heavyDebris: true },
-  { id: "wall-removal", label: "Removing or shifting an internal wall", structural: true, wet: false, elevation: false, heavyDebris: true },
-  { id: "beam-column", label: "Any work touching a beam, column or slab", structural: true, wet: false, elevation: false, heavyDebris: true },
+  { id: "bathroom", label: "Bathroom re-tiling and waterproofing", structural: false, wet: true, elevation: false },
+  { id: "wall-removal", label: "Removing or shifting an internal wall", structural: true, wet: false, elevation: false },
+  { id: "beam-column", label: "Any work touching a beam, column or slab", structural: true, wet: false, elevation: false },
   { id: "window", label: "Changing windows, grills or the external elevation", structural: true, wet: false, elevation: true },
-  { id: "toilet-shift", label: "Shifting a toilet or its drainage stack", structural: true, wet: true, elevation: false, heavyDebris: true },
+  { id: "toilet-shift", label: "Shifting a toilet or its drainage stack", structural: true, wet: true, elevation: false },
 ];
 
 const DAY_MS = 24 * 60 * 60 * 1000;
@@ -94,7 +94,6 @@ export function classifyScope(selectedIds = []) {
     structural: chosen.some((item) => item.structural),
     elevation: chosen.some((item) => item.elevation),
     wet: chosen.some((item) => item.wet),
-    heavyDebris: chosen.some((item) => item.heavyDebris),
   };
 }
 

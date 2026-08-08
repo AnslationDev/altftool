@@ -475,7 +475,7 @@ export const advancedCatalog = {
     "id": 215,
     "slug": "device-sensor-calibration-checker",
     "name": "Device Sensor Calibration Checker",
-    "description": "Accelerometer, gyroscope aur magnetometer bias sanity-check kare.",
+    "description": "Accelerometer aur gyroscope bias sanity-check kare.",
     "category": "Device Sensors & Hardware Diagnostics",
     "priority": "P2"
   },

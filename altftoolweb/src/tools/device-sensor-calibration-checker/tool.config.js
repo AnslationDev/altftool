@@ -5,7 +5,7 @@ const toolConfig = {
     "Developer",
     "Productivity"
   ],
-  "description": "Sanity-check the bias in your device's accelerometer, gyroscope and magnetometer.",
+  "description": "Sanity-check the bias in your device's accelerometer and gyroscope.",
   "icon": "wrench",
   "iconColor": "text-primary",
   "wideWorkspace": true

@@ -207,7 +207,7 @@ export function parseVtt(raw) {
 
     const match = timingLine < lines.length ? VTT_TIMING_RE.exec(lines[timingLine]) : null;
     if (!match) {
-      issues.push(`Line ${index + 1}: skipped a block with no WebVTT timing line.`);
+      issues.push(`Line ${timingLine + 1}: skipped a block with no WebVTT timing line.`);
       while (index < lines.length && lines[index].trim() !== "") index += 1;
       continue;
     }
@@ -291,6 +291,7 @@ export function vttToSrt(raw, options = {}) {
 
   let clamped = 0;
   let settingsDropped = 0;
+  let emptyAfterClean = 0;
   const blocks = [];
 
   cues.forEach((cue, position) => {
@@ -310,6 +311,10 @@ export function vttToSrt(raw, options = {}) {
       .map((line) => cleanCueText(line, speakerLabels, keepStyling))
       .filter((line, lineIndex, all) => line !== "" || lineIndex < all.length - 1);
 
+    if (body.length === 0 || body.every((line) => line === "")) {
+      emptyAfterClean += 1;
+    }
+
     const first = alignTag ? `${alignTag}${body[0] || ""}` : body[0] || "";
     const rest = body.slice(1);
 
@@ -328,6 +333,11 @@ export function vttToSrt(raw, options = {}) {
   }
   if (settingsDropped > 0) {
     warnings.push(`${settingsDropped} cue(s) had positioning settings that SubRip cannot store.`);
+  }
+  if (emptyAfterClean > 0) {
+    warnings.push(
+      `${emptyAfterClean} cue(s) had no visible text left after stripping WebVTT-only markup.`,
+    );
   }
 
   const last = cues[cues.length - 1];

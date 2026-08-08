@@ -307,7 +307,7 @@ export default function ToolHome() {
         <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
           Customer receives
         </p>
-        <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+        <p aria-live="polite" aria-atomic="true" className="mt-1 text-4xl font-semibold text-[var(--primary)]">
           {calcError ? DASH : money(entitlement.customerKeeps)}
         </p>
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
@@ -587,7 +587,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Policy effective from
             </p>
-            <p className="mt-1 text-2xl font-semibold text-[var(--primary)]">
+            <p aria-live="polite" aria-atomic="true" className="mt-1 text-2xl font-semibold text-[var(--primary)]">
               {policyError ? DASH : policy.effectiveLong}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">

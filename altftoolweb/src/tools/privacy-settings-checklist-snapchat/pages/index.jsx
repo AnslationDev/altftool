@@ -167,7 +167,12 @@ export default function ToolHome() {
         </div>
       </section>
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-labelledby="pc-score">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-labelledby="pc-score"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p id="pc-score" className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -269,7 +274,7 @@ export default function ToolHome() {
       </section>
 
       {hasScore ? (
-        <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+        <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-live="polite">
           <h2 className="text-base font-semibold">Remaining exposure by area</h2>
           <p className="mt-1 text-sm text-[var(--muted-foreground)]">
             Weighted for the {score.profile.name.toLowerCase()} profile. A longer bar means more is still open.
@@ -297,7 +302,7 @@ export default function ToolHome() {
         </section>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]" aria-live="polite">
         <h2 className="text-base font-semibold">Shortest route to your target</h2>
         {plan.error ? (
           <p role="alert" className="mt-3 rounded-md bg-[var(--danger-soft)] px-3 py-2 text-sm font-medium text-[var(--danger)]">

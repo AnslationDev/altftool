@@ -1199,9 +1199,18 @@ function SensorLab({ slug }) {
         return;
       }
       if (["digital-level-inclinometer", "digital-compass"].includes(slug)) {
-        if (typeof DeviceOrientationEvent?.requestPermission === "function")
-          await DeviceOrientationEvent.requestPermission();
-        const listener = (event) =>
+        if (typeof DeviceOrientationEvent?.requestPermission === "function") {
+          const permission = await DeviceOrientationEvent.requestPermission();
+          if (permission !== "granted") {
+            setMessage("Orientation access was declined, so this browser does not expose readings.");
+            return;
+          }
+        }
+        const listener = (event) => {
+          if (event.alpha == null && event.beta == null && event.gamma == null) {
+            setMessage("This device is not exposing orientation data, so readings cannot be recorded.");
+            return;
+          }
           append([
             new Date().toISOString(),
             Number(event.alpha || 0).toFixed(2),
@@ -1209,17 +1218,41 @@ function SensorLab({ slug }) {
             Number(event.gamma || 0).toFixed(2),
             slug === "digital-compass" ? `${Number(360 - (event.webkitCompassHeading ?? event.alpha ?? 0)).toFixed(1)}°` : `${Math.hypot(event.beta || 0, event.gamma || 0).toFixed(2)}°`,
           ]);
+        };
         window.addEventListener("deviceorientation", listener);
         cleanupRef.current = () => window.removeEventListener("deviceorientation", listener);
         setActive(true);
         return;
       }
       if (["surface-vibration-recorder", "device-sensor-calibration-checker"].includes(slug)) {
-        if (typeof DeviceMotionEvent?.requestPermission === "function")
-          await DeviceMotionEvent.requestPermission();
+        if (typeof DeviceMotionEvent?.requestPermission === "function") {
+          const permission = await DeviceMotionEvent.requestPermission();
+          if (permission !== "granted") {
+            setMessage("Motion access was declined, so this browser does not expose readings.");
+            return;
+          }
+        }
+        // A declined-but-silent permission or hardware with no motion sensor
+        // both surface the same way: no devicemotion event, or one whose axis
+        // data is entirely null. Without this check, `a?.x || 0` etc. below
+        // would quietly render that as a real "0.000, 0.000, 0.000" reading,
+        // indistinguishable from a genuinely flat sensor.
+        let sawReading = false;
+        const noSensorTimer = setTimeout(() => {
+          if (!sawReading) {
+            setMessage("This device does not appear to expose a motion sensor: no readings arrived after starting.");
+          }
+        }, 3000);
         const listener = (event) => {
           const a = event.accelerationIncludingGravity;
           const r = event.rotationRate;
+          if (a == null && r == null) {
+            clearTimeout(noSensorTimer);
+            setMessage("This device does not appear to expose a motion sensor: readings came back empty.");
+            return;
+          }
+          sawReading = true;
+          clearTimeout(noSensorTimer);
           append([
             new Date().toISOString(),
             Number(a?.x || 0).toFixed(3),
@@ -1229,7 +1262,10 @@ function SensorLab({ slug }) {
           ]);
         };
         window.addEventListener("devicemotion", listener);
-        cleanupRef.current = () => window.removeEventListener("devicemotion", listener);
+        cleanupRef.current = () => {
+          clearTimeout(noSensorTimer);
+          window.removeEventListener("devicemotion", listener);
+        };
         setActive(true);
         return;
       }
@@ -1419,7 +1455,9 @@ function SensorLab({ slug }) {
                   ? ["Timestamp", "RMS", "Frequency (Hz)", "Note"]
                   : CAMERA_RGB_SLUGS.has(slug)
                     ? ["Timestamp", "R", "G", "B", "RGB"]
-                    : undefined
+                    : slug === "device-sensor-calibration-checker"
+                      ? ["Timestamp", "Accel X (m/s²)", "Accel Y (m/s²)", "Accel Z (m/s²)", "Rotation rate (°/s)"]
+                      : undefined
               }
             />
             {!readings.length && !camera && slug !== "multi-touch-tester" && (

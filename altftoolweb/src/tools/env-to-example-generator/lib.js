@@ -80,6 +80,7 @@ export function generateEnvExample(
   let totalVars = 0;
   let keptCount = 0;
   const keptKeys = [];
+  let warning = null;
 
   for (let i = 0; i < lines.length; i += 1) {
     const raw = lines[i];
@@ -116,6 +117,9 @@ export function generateEnvExample(
         buf += `\n${lines[i]}`;
       }
       const idx = findClosingQuote(buf, q);
+      if (idx === -1 && !warning) {
+        warning = `Unterminated quoted value for ${key} — later variables may have been swallowed into this one.`;
+      }
       value = idx === -1 ? buf : buf.slice(0, idx);
     } else {
       const hashIdx = rest.indexOf("#");
@@ -151,5 +155,6 @@ export function generateEnvExample(
     strippedCount: totalVars - keptCount,
     keptCount,
     keptKeys,
+    warning,
   };
 }

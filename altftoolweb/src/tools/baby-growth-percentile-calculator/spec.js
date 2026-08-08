@@ -31,19 +31,23 @@ export const spec = {
       "key": "age_months",
       "label": "Age (months)",
       "type": "number",
-      "default": "6"
+      "default": "6",
+      "min": 0,
+      "max": 24
     },
     {
       "key": "weight",
       "label": "Weight (kg)",
       "type": "number",
-      "default": "7.5"
+      "default": "7.5",
+      "min": 0
     }
   ],
   "note": "A simplified estimate — always use your pediatrician's official growth charts."
 },
   compute: (values) => { const num=(v)=>typeof v==="number"?v:Number(v); const money=(n)=>Number.isFinite(Number(n))?Number(n).toLocaleString(undefined,{maximumFractionDigits:2}):"—";
-      const a = Math.max(0, Math.min(24, num(values.age_months)));
+      const rawAge = num(values.age_months);
+      const a = Math.max(0, Math.min(24, rawAge));
       // WHO weight-for-age anchor points (median kg, SD kg) at 0, 3, 6, 9, 12,
       // 18 and 24 months, interpolated linearly between them.
       //
@@ -69,7 +73,14 @@ export const spec = {
       const percentile = Math.max(1, Math.min(99, pct));
       const mod100 = percentile % 100;
       const suffix = mod100 >= 11 && mod100 <= 13 ? "th" : percentile % 10 === 1 ? "st" : percentile % 10 === 2 ? "nd" : percentile % 10 === 3 ? "rd" : "th";
-      return { result: `~${percentile}${suffix} percentile`, caption: `Median for age ≈ ${median.toFixed(1)} kg`, rows: [["Your baby", num(values.weight).toFixed(1) + " kg"], ["Z-score", z.toFixed(2)]] };
+      // The chart only has anchor points for 0-24 months, so an age typed
+      // outside that range is silently clamped above to the nearest anchor.
+      // Say so in the caption instead of presenting the percentile as if it
+      // were computed for the age the user actually typed.
+      const clampNote = Number.isFinite(rawAge) && rawAge !== a
+        ? ` Age entered was ${rawAge} month${rawAge === 1 ? "" : "s"} — showing the ${a}-month estimate, the ${a === 24 ? "oldest" : "youngest"} this simplified table supports.`
+        : "";
+      return { result: `~${percentile}${suffix} percentile`, caption: `Median for age ≈ ${median.toFixed(1)} kg${clampNote}`, rows: [["Your baby", num(values.weight).toFixed(1) + " kg"], ["Z-score", z.toFixed(2)]] };
     },
 };
 

@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     ["Splits gain from loss", "Marks earned at +4 and marks deducted at -1 are shown separately instead of only a net figure."],
     ["Shows the guessing range", "Every projection carries a best case and worst case for the guessed block, not just an average."],
-    ["Break-even accuracy built in", "The 20% threshold where a NEET attempt becomes profitable is calculated from the marking scheme you enter."],
+    ["Break-even accuracy built in", "The 20% threshold where a NEET attempt becomes profitable is calculated for the official NEET +4/-1 marking scheme built into the calculator."],
   ],
   faqs: [
     [

@@ -3,7 +3,7 @@ const toolConfig = {
   name: "Bengali Probad Explorer",
   category: ["Education & Science"],
   description:
-    "Explore Bengali probad with transliteration, literal translation, real meaning, a Bangla gloss and usage notes.",
+    "Explore Bengali probad with transliteration, literal translation, real meaning, a Bangla gloss and English equivalents.",
   icon: "scroll-text",
   iconColor: "text-[var(--primary)]",
 };

@@ -129,14 +129,19 @@ export function buildGamerPlan({ sessionMinutes = 120, matchMinutes = 12, lobbyS
     }
   }
 
-  // Trim to exactly the requested session length.
+  // Trim to the requested session length - except a live MATCH phase, which
+  // can never be cut short (you cannot break mid-round). Break/lobby phases
+  // are still clamped to whatever room remains; a trailing match is left at
+  // its full length even when that pushes `used`/`totalSeconds` past
+  // sessionSeconds, so the running timer never truncates a live round.
   const trimmed = [];
   let used = 0;
   for (const phase of phases) {
     if (used >= sessionSeconds) break;
     const room = sessionSeconds - used;
-    trimmed.push({ ...phase, seconds: Math.min(phase.seconds, room) });
-    used += Math.min(phase.seconds, room);
+    const seconds = phase.kind === PHASE_KINDS.MATCH ? phase.seconds : Math.min(phase.seconds, room);
+    trimmed.push({ ...phase, seconds });
+    used += seconds;
   }
 
   const totalSeconds = used;

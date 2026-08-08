@@ -82,7 +82,7 @@ export default function ToolHome() {
       `Cost per litre: ${INR2.format(result.tankerCostPerLitre)}`,
       `Cost per kilolitre: ${INR.format(result.tankerCostPerKl)}`,
       `Blended cost of all water: ${INR.format(result.blendedCostPerKl)} per kL`,
-      `Estimated annual spend: ${INR.format(result.annualCost)}`,
+      `Estimated annual tanker spend: ${INR.format(result.annualCost)}`,
     ].join("\n");
   }, [hasError, result, demand, piped]);
 
@@ -120,7 +120,7 @@ export default function ToolHome() {
         ["Piped water bill for the month", DASH],
         ["Blended cost of all water", DASH],
         ["Share of supply bought by tanker", DASH],
-        ["Estimated annual spend", DASH],
+        ["Estimated annual tanker spend", DASH],
       ]
     : [
         ["Shortfall per day", `${NUM.format(result.dailyDeficit)} L`],
@@ -138,7 +138,7 @@ export default function ToolHome() {
         ["Piped water bill for the month", INR.format(result.pipedMonthlyCost)],
         ["Blended cost of all water", `${INR.format(result.blendedCostPerKl)} per kL`],
         ["Share of supply bought by tanker", `${NUM1.format(result.tankerShareOfSupply)}%`],
-        ["Estimated annual spend", INR.format(result.annualCost)],
+        ["Estimated annual tanker spend", INR.format(result.annualCost)],
       ];
 
   return (
@@ -302,7 +302,11 @@ export default function ToolHome() {
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Monthly tanker spend
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p
+              className="mt-1 text-4xl font-semibold text-[var(--primary)]"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               {hasError ? DASH : INR.format(result.monthlyCost)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">

@@ -187,7 +187,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Score
             </p>
@@ -196,7 +196,7 @@ export default function ToolHome() {
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
-                ? "Choose at least one category above"
+                ? quiz.error
                 : `${result.correct} right out of ${result.total} · ${result.unanswered} still blank`}
             </p>
           </div>
@@ -283,6 +283,8 @@ export default function ToolHome() {
                 </div>
                 {answered ? (
                   <div
+                    role="status"
+                    aria-live="polite"
                     className={`mt-3 rounded-md px-3 py-2 text-sm ${
                       right
                         ? "bg-[var(--muted)] text-[var(--success)]"
