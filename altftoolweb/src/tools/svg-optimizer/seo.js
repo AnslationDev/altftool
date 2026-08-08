@@ -9,7 +9,7 @@ const seo = {
   benefits: [
     ["Nothing is uploaded", "Parsing, rewriting and downloading all happen in the page, so unreleased artwork never leaves your machine."],
     ["Only spec defaults are dropped", "The default-value table is taken from the SVG 1.1 initial values, so removing an attribute cannot change rendering."],
-    ["Referenced ids survive", "Every url(#id) and href=\"#id\" in the file is collected first, so gradients, filters, clip paths and <use> targets keep their ids."],
+    ["Referenced ids survive", "Every url(#id), href=\"#id\" and inline <style> #id{...} selector in the file is collected first, so gradients, filters, clip paths, <use> targets and CSS-styled elements keep their ids."],
   ],
   faqs: [
     [
@@ -26,7 +26,7 @@ const seo = {
     ],
     [
       "Will this break my gradients or animations?",
-      "No, as long as the reference is written in the file. The tool scans the whole source for url(#id), href=\"#id\", xlink:href=\"#id\" and SMIL begin/end references before it removes anything, and keeps every id it finds. Ids referenced only from external CSS or JavaScript are the one exception — turn off \"Remove unreferenced ids\" in that case.",
+      "No, as long as the reference is written in the file. The tool scans the whole source for url(#id), href=\"#id\", xlink:href=\"#id\", SMIL begin/end references and #id CSS selectors inside inline <style> blocks before it removes anything, and keeps every id it finds. Ids referenced only from an external stylesheet or external JavaScript file are the one exception — turn off \"Remove unreferenced ids\" in that case.",
     ],
   ],
 };

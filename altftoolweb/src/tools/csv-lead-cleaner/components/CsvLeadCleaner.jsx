@@ -62,6 +62,9 @@ const downloadCSV = (data) => {
   a.href = url;
   a.download = "cleaned_leads.csv";
   a.click();
+
+  // Release the blob URL once the download has been handed off.
+  setTimeout(() => URL.revokeObjectURL(url), 0);
 };
 
 /* ================= COMPONENT ================= */
@@ -71,6 +74,7 @@ export default function CsvLeadCleaner() {
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState("No file chosen");
   const [result, setResult] = useState(null);
+  const [error, setError] = useState(null);
 
   const handleFileChange = (e) => {
     const f = e.target.files[0];
@@ -79,6 +83,7 @@ export default function CsvLeadCleaner() {
     setFile(f);
     setFileName(f.name);
     setResult(null);
+    setError(null);
   };
 
   const handleProcess = () => {
@@ -87,15 +92,26 @@ export default function CsvLeadCleaner() {
       return;
     }
 
+    setError(null);
+
     const reader = new FileReader();
     reader.onload = (e) => {
-      const rows = parseCSV(e.target.result);
-      const cleanedResult = cleanLeads(rows);
+      try {
+        const rows = parseCSV(e.target.result);
+        const cleanedResult = cleanLeads(rows);
 
-      setResult({
-        total: rows.length,
-        ...cleanedResult
-      });
+        setResult({
+          total: rows.length,
+          ...cleanedResult
+        });
+      } catch (err) {
+        setResult(null);
+        setError("We couldn't parse that file. Make sure it's a valid CSV and try again.");
+      }
+    };
+    reader.onerror = () => {
+      setResult(null);
+      setError("We couldn't read that file. Please choose a valid CSV file and try again.");
     };
     reader.readAsText(file);
   };
@@ -165,9 +181,29 @@ export default function CsvLeadCleaner() {
         Process CSV
       </button>
 
+      {/* ERROR MESSAGE */}
+      {error && (
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="
+            rounded-2xl
+            border border-(--danger)
+            bg-(--danger-soft)
+            p-5 text-center
+            shadow-sm
+          "
+        >
+          <p className="text-sm font-medium text-(--foreground)">{error}</p>
+        </div>
+      )}
+
       {/* RESULT SECTION */}
       {result && (
-        <div className="space-y-8">
+        <div className="space-y-8" role="status" aria-live="polite">
+          <p className="sr-only">
+            Processing complete: {result.cleaned.length} rows cleaned, {result.duplicates} duplicates removed, {result.invalid} invalid rows out of {result.total} total.
+          </p>
 
           {/* Stats */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
@@ -208,21 +244,39 @@ export default function CsvLeadCleaner() {
           </div>
 
           {/* Download */}
-          <button
-            onClick={() => downloadCSV(result.cleaned)}
-            className="
-              w-full
-              bg-green-600
-              text-white
-              py-3 rounded-xl
-              font-semibold
-              shadow-md hover:shadow-lg
-              transition-all duration-300
-              hover:bg-green-700
-            "
-          >
-            Download Cleaned CSV
-          </button>
+          {result.cleaned.length > 0 ? (
+            <button
+              onClick={() => downloadCSV(result.cleaned)}
+              className="
+                w-full
+                bg-green-600
+                text-white
+                py-3 rounded-xl
+                font-semibold
+                shadow-md hover:shadow-lg
+                transition-all duration-300
+                hover:bg-green-700
+              "
+            >
+              Download Cleaned CSV
+            </button>
+          ) : (
+            <div
+              role="status"
+              className="
+                w-full
+                border border-(--border)
+                bg-(--muted)
+                text-(--muted-foreground)
+                py-3 rounded-xl
+                font-medium
+                text-center
+                text-sm
+              "
+            >
+              No valid rows to export — check that your file has a recognized email column (email, email address, or e-mail).
+            </div>
+          )}
         </div>
       )}
     </div>

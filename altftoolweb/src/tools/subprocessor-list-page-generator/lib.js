@@ -114,8 +114,24 @@ export function formatLongDate(iso) {
   return `${day} ${MONTHS[month - 1]} ${match[1]}`;
 }
 
+/** Common alternate names/abbreviations mapped to the canonical name used in the lists above. */
+const COUNTRY_ALIASES = {
+  "czech republic": "czechia",
+  "slovak republic": "slovakia",
+  holland: "netherlands",
+  usa: "united states",
+  "u.s.": "united states",
+  "u.s.a.": "united states",
+  us: "united states",
+  "united states of america": "united states",
+  uk: "united kingdom",
+  "u.k.": "united kingdom",
+  "great britain": "united kingdom",
+};
+
 function normaliseCountry(value) {
-  return String(value || "").trim().toLowerCase();
+  const key = String(value || "").trim().toLowerCase();
+  return COUNTRY_ALIASES[key] || key;
 }
 
 /** Classifies a destination country as inside the EEA, adequate, or a third country. */
@@ -207,7 +223,8 @@ export function buildSubprocessorPage(input = {}) {
   });
 
   const countries = Array.from(new Set(enriched.map((row) => row.country).filter(Boolean)));
-  const outsideEea = enriched.filter((row) => row.classification.status !== "eea").length;
+  const outsideEea = enriched.filter((row) => row.classification.status !== "eea" && row.classification.status !== "unknown").length;
+  const unknownLocation = enriched.filter((row) => row.classification.status === "unknown").length;
   const gaps = enriched.filter((row) => row.gap);
 
   const warnings = [];
@@ -303,7 +320,14 @@ export function buildSubprocessorPage(input = {}) {
   if (dateText) htmlParts.push(`  <p><small>Last updated: ${escapeHtml(dateText)}.</small></p>`);
   htmlParts.push("</section>");
 
-  const csv = [header, ...bodyRows].map((row) => row.map(csvCell).join(",")).join("\n");
+  const csvRows = enriched.map((row) => [
+    row.entity ? `${row.vendor} (${row.entity})` : row.vendor,
+    row.purpose || "—",
+    row.dataTypes || "—",
+    row.country || "—",
+    row.mechanismText,
+  ]);
+  const csv = [header, ...csvRows].map((row) => row.map(csvCell).join(",")).join("\n");
 
   return {
     markdown: md.join("\n"),
@@ -315,6 +339,7 @@ export function buildSubprocessorPage(input = {}) {
       total: enriched.length,
       countryCount: countries.length,
       outsideEea,
+      unknownLocation,
       gapCount: gaps.length,
       noticeDays,
     },

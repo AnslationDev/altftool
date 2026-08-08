@@ -20,7 +20,7 @@ const Description = () => {
     {
       title: "Clean & Normalize Data",
       description:
-        "Standardize formatting, fix capitalization, and normalize inconsistent data fields.",
+        "Trims stray whitespace and lower-cases email addresses so matching records collapse together.",
     },
     {
       title: "Preview Cleaned Results",
@@ -39,7 +39,7 @@ const Description = () => {
       <div className="mx-auto max-w-6xl">
 
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16 mt-[-150]">
+        <div className="text-center mb-12 sm:mb-16 mt-[-150px]">
           <h2 className="text-3xl sm:text-4xl  text-(--foreground) mb-4">
             How It Works?
           </h2>

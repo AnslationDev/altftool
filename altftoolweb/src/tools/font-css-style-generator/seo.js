@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This generator writes a complete CSS text rule — family, size, weight, style, transform, letter-spacing, line-height, alignment, colour, gradient fill and text-shadow — from sliders you adjust against a live preview. Turn responsive on and the font-size is emitted as a clamp() with your minimum in px, a fluid vw middle value derived from the base size, and your maximum in px, which is the modern way to scale headings without media queries. You get the rule as copyable CSS or a downloadable style.css, plus the Google Fonts link tag when the family needs one.",
+    "This generator writes a complete CSS text rule — family, size, weight, style, transform, letter-spacing, line-height, alignment, colour, gradient fill and text-shadow — from sliders you adjust against a live preview. Turn responsive on and the font-size is emitted as a clamp() with your minimum in px, a fluid vw middle value derived from the base size, and your maximum in px, which is the modern way to scale headings without media queries. You get the rule as copyable CSS or a downloadable style.css, plus a Google Fonts @import line at the top of the output when the family needs one.",
   useCases: [
     "You have a hero headline that looks right at 64px on desktop and enormous on a phone, and you want the clamp() values rather than three breakpoint overrides",
     "A designer asked for a gradient headline and you need the exact background-clip incantation that makes gradient text work, not a screenshot of it",

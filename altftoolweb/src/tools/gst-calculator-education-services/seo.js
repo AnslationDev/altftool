@@ -1,6 +1,10 @@
+// NOTE: seo.js is loaded standalone at build time and must not import from ./lib. The SAC
+// codes named below (9992, 9972, 9985) are literal copies of the `authority` values on the
+// `coaching-classes`, `renting-to-institution` and `placement-services` entries in lib.js's
+// SCENARIOS array — keep them in sync if those entries ever change.
 const seo = {
   intro:
-    "This calculator decides whether an education, coaching or training supply is exempt under entry 66, 69 or 80 of Notification No. 12/2017-Central Tax (Rate), and where it is taxable, computes the 18% GST on SAC heading 9992 with the CGST/SGST or IGST split. The dividing line is the definition of 'educational institution' in clause 2(y) of that notification: schools, and institutions awarding a qualification recognised by law, are exempt; coaching centres and online course sellers are not. It is aimed at school and college accounts teams, coaching institutes and freelance trainers issuing invoices.",
+    "This calculator decides whether an education, coaching or training supply is exempt under entry 66, 69 or 80 of Notification No. 12/2017-Central Tax (Rate), and where it is taxable, computes the 18% GST due at the applicable SAC heading — 9992 for education, coaching and training itself; other headings such as 9972 for renting premises to an institution or 9985 for placement services apply to a few ancillary supplies — with the CGST/SGST or IGST split. The dividing line is the definition of 'educational institution' in clause 2(y) of that notification: schools, and institutions awarding a qualification recognised by law, are exempt; coaching centres and online course sellers are not. It is aimed at school and college accounts teams, coaching institutes and freelance trainers issuing invoices.",
   useCases: [
     "A coaching institute pricing a Rs 50,000 course and needing the GST-inclusive fee to advertise",
     "A school bursar checking whether a housekeeping contractor may charge GST on a bill to the school",

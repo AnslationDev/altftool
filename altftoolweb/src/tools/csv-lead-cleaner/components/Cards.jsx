@@ -10,7 +10,7 @@ export default function Cards() {
       <div className="max-w-6xl mx-auto px-6">
 
         {/* Section Header */}
-        <div className="text-center mb-12 mt-[-120]">
+        <div className="text-center mb-12 mt-[-120px]">
           <h2 className=" md:text-5xl text-(--foreground)">Powerful CSV Features</h2>
           <p className="description mt-3 mb-10 max-w-4xl mx-auto">
             Clean, optimize, and prepare your CSV files instantly — right in your browser.

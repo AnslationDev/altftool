@@ -241,7 +241,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -253,7 +257,9 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? "Fix the input above to see an estimate."
-                : `One per order, across about ${NUM.format(result.totalOrders)} orders`}
+                : selected.includes("orders")
+                  ? `One per order, across about ${NUM.format(result.totalOrders)} orders`
+                  : "Select “Order history” above to include this in your request"}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

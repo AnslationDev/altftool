@@ -5,13 +5,14 @@ import { fontFamilies, presets } from "../utils/typographyUtils";
 
 const weights = [100, 200, 300, 400, 500, 600, 700, 800, 900];
 
-function Field({ label, children }) {
+function Field({ label, children, hint }) {
   return (
     <label className="block min-w-0">
       <span className="block text-[11px] font-black uppercase tracking-widest text-[var(--muted-foreground)] mb-2">
         {label}
       </span>
       {children}
+      {hint && <span className="mt-1 block text-[11px] text-[var(--muted-foreground)]">{hint}</span>}
     </label>
   );
 }
@@ -36,7 +37,7 @@ export default function Controls({ settings, update, applyPreset, reset, undo, c
       <div className="flex items-center justify-between gap-3">
         <div className="min-w-0">
           <h2 className="text-lg font-black text-[var(--foreground)]">Controls</h2>
-          <p className="text-xs text-[var(--muted-foreground)]">Every field feeds the live preview and CSS output.</p>
+          <p className="text-xs text-[var(--muted-foreground)]">Every field feeds the live preview and CSS output (color fields pause while Gradient Text is on; Unit pauses while Responsive clamp() is on).</p>
         </div>
         <div className="flex gap-2 shrink-0">
           <button type="button" onClick={undo} disabled={!canUndo} title="Undo" className="font-css-icon-btn disabled:opacity-40">
@@ -84,8 +85,13 @@ export default function Controls({ settings, update, applyPreset, reset, undo, c
         <Field label="Font Size">
           <NumberInput value={settings.fontSize} min={1} max={240} onChange={(value) => update("fontSize", value)} />
         </Field>
-        <Field label="Unit">
-          <select value={settings.fontSizeUnit} onChange={(event) => update("fontSizeUnit", event.target.value)} className="font-css-input">
+        <Field label="Unit" hint={settings.responsive ? "Ignored while Responsive clamp() is on" : undefined}>
+          <select
+            value={settings.fontSizeUnit}
+            onChange={(event) => update("fontSizeUnit", event.target.value)}
+            disabled={settings.responsive}
+            className="font-css-input disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             {["px", "rem", "em", "%"].map((unit) => <option key={unit}>{unit}</option>)}
           </select>
         </Field>
@@ -103,16 +109,27 @@ export default function Controls({ settings, update, applyPreset, reset, undo, c
             {["left", "center", "right", "justify"].map((item) => <option key={item}>{item}</option>)}
           </select>
         </Field>
-        <Field label="Color Format">
-          <select value={settings.colorMode} onChange={(event) => update("colorMode", event.target.value)} className="font-css-input">
+        <Field label="Color Format" hint={settings.gradientEnabled ? "Inactive while Gradient Text is on" : undefined}>
+          <select
+            value={settings.colorMode}
+            onChange={(event) => update("colorMode", event.target.value)}
+            disabled={settings.gradientEnabled}
+            className="font-css-input disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             {["hex", "rgb", "hsl"].map((item) => <option key={item}>{item.toUpperCase()}</option>)}
           </select>
         </Field>
       </div>
 
       <div className="grid sm:grid-cols-2 gap-4">
-        <Field label="Text Color">
-          <input type="color" value={settings.color} onChange={(event) => update("color", event.target.value)} className="font-css-color" />
+        <Field label="Text Color" hint={settings.gradientEnabled ? "Inactive while Gradient Text is on" : undefined}>
+          <input
+            type="color"
+            value={settings.color}
+            onChange={(event) => update("color", event.target.value)}
+            disabled={settings.gradientEnabled}
+            className="font-css-color disabled:opacity-50 disabled:cursor-not-allowed"
+          />
         </Field>
         <Field label="Responsive clamp()">
           <button type="button" onClick={() => update("responsive", !settings.responsive)} className={`font-css-toggle ${settings.responsive ? "is-on" : ""}`}>

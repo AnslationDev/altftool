@@ -91,10 +91,14 @@ export default function ToolHome() {
     ) {
       return;
     }
-    setPan(DEFAULTS.pan);
-    setName(DEFAULTS.name);
-    setBulk(DEFAULTS.bulk);
-    setBulkMode(false);
+    // Only clear the fields for the mode the confirm text warned about — switching modes
+    // on Reset was never mentioned in that warning, so it must not switch modes either.
+    if (bulkMode) {
+      setBulk(DEFAULTS.bulk);
+    } else {
+      setPan(DEFAULTS.pan);
+      setName(DEFAULTS.name);
+    }
     resetCopyState();
   };
 
@@ -401,11 +405,6 @@ export default function ToolHome() {
                   <td className="py-2 pr-3 font-mono font-semibold">{code}</td>
                   <td className="py-2">
                     <span className="font-semibold">{type.label}</span>
-                    {!type.common && (
-                      <span className="ml-2 rounded-full bg-[var(--muted)] px-2 py-0.5 text-xs text-[var(--muted-foreground)]">
-                        uncommon
-                      </span>
-                    )}
                     <span className="block text-[var(--muted-foreground)]">{type.description}</span>
                   </td>
                 </tr>

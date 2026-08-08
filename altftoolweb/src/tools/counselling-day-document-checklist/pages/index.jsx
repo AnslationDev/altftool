@@ -54,7 +54,7 @@ const DEFAULT_TYPE = "josaa";
 const DEFAULT_CATEGORY = "general";
 
 export default function ToolHome() {
-  const seed = defaultFeesFor(DEFAULT_TYPE, DEFAULT_CATEGORY);
+  const seed = defaultFeesFor(DEFAULT_TYPE, DEFAULT_CATEGORY, DEFAULT_PROFILE.pwd);
 
   const [typeId, setTypeId] = useState(DEFAULT_TYPE);
   const [categoryId, setCategoryId] = useState(DEFAULT_CATEGORY);
@@ -71,8 +71,8 @@ export default function ToolHome() {
   const [readyIds, setReadyIds] = useState([]);
   const [copied, setCopied] = useState(false);
 
-  const applyDefaults = (nextType, nextCategory) => {
-    const fees = defaultFeesFor(nextType, nextCategory);
+  const applyDefaults = (nextType, nextCategory, nextPwd = profile.pwd) => {
+    const fees = defaultFeesFor(nextType, nextCategory, nextPwd);
     if (fees) {
       setSeatFee(String(fees.fee));
       setSecurityDeposit(String(fees.deposit));
@@ -124,7 +124,14 @@ export default function ToolHome() {
     [documents, readyIds],
   );
 
-  const toggleProfile = (key) => setProfile((current) => ({ ...current, [key]: !current[key] }));
+  const toggleProfile = (key) =>
+    setProfile((current) => {
+      const next = { ...current, [key]: !current[key] };
+      // PwD status changes the MCC reduced-fee default, so re-seed seatFee/securityDeposit
+      // live when it flips, the same way chooseType/chooseCategory already do.
+      if (key === "pwd") applyDefaults(typeId, categoryId, next.pwd);
+      return next;
+    });
   const toggleReady = (id) =>
     setReadyIds((current) =>
       current.includes(id) ? current.filter((entry) => entry !== id) : [...current, id],
@@ -161,7 +168,7 @@ export default function ToolHome() {
   const reset = () => {
     setTypeId(DEFAULT_TYPE);
     setCategoryId(DEFAULT_CATEGORY);
-    applyDefaults(DEFAULT_TYPE, DEFAULT_CATEGORY);
+    applyDefaults(DEFAULT_TYPE, DEFAULT_CATEGORY, DEFAULT_PROFILE.pwd);
     setProfile(DEFAULT_PROFILE);
     setInstituteFee("80000");
     setTravelCost("6000");
@@ -387,7 +394,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

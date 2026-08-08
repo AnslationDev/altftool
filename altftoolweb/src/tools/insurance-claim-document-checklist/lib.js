@@ -23,6 +23,10 @@ export const SURVEY_REPORT_DAYS = 15;
 export const LIFE_SETTLEMENT_DAYS = 30;
 export const LIFE_INVESTIGATION_DAYS = 90;
 export const SECTION_45_YEARS = 3;
+/** Cashless pre-authorisation and discharge run on an hour-based clock, not the
+ *  15-day reimbursement clock — see the top-of-file basis note. */
+export const CASHLESS_PREAUTH_HOURS = 1;
+export const CASHLESS_DISCHARGE_HOURS = 3;
 
 /** Typical policy conditions for intimating a claim. */
 export const INTIMATION_RULES = {
@@ -41,7 +45,10 @@ export const CLAIM_SCENARIOS = {
   "health-cashless": {
     category: "health",
     label: "Health — cashless treatment at a network hospital",
-    settlementDays: HEALTH_SETTLEMENT_DAYS,
+    // Cashless is decided on an hour-based clock (see CASHLESS_PREAUTH_HOURS /
+    // CASHLESS_DISCHARGE_HOURS), not the 15-day reimbursement clock — settlementDays
+    // is intentionally null here so settlementDeadline() doesn't apply the wrong basis.
+    settlementDays: null,
     base: [
       doc("Pre-authorisation request form", "Filled by the hospital insurance desk and signed by you"),
       doc("Health insurance card or policy number", "Carry a printed or digital copy"),
@@ -280,6 +287,16 @@ export function formatIsoDate(ts) {
 export function settlementDeadline(submittedIso, scenarioId, investigated = false) {
   const scenario = CLAIM_SCENARIOS[scenarioId];
   if (!scenario) return { error: "Choose a claim type first." };
+  if (scenario.settlementDays === null) {
+    // Cashless: no day-based deadline runs from a submission date — decision is on the
+    // hour-based clock instead (see CASHLESS_PREAUTH_HOURS / CASHLESS_DISCHARGE_HOURS).
+    return {
+      days: null,
+      basis: `Cashless is decided within ${CASHLESS_PREAUTH_HOURS} hour of the pre-authorisation request and within ${CASHLESS_DISCHARGE_HOURS} hours for final discharge approval — this isn't a day-based deadline counted from a submission date`,
+      submitted: null,
+      deadline: null,
+    };
+  }
   const ts = parseIsoDate(submittedIso);
   if (Number.isNaN(ts)) {
     return { error: "Enter the submission date as a real calendar date." };

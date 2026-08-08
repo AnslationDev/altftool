@@ -314,7 +314,7 @@ export function verifyAuditStructure(entries, config = {}) {
   const idIssues =
     idResult.missingCount + idResult.invalidCount + idResult.duplicateEntryCount;
   idResult.state = resultState({
-    checkable: Boolean(config.idPath) && idResult.checkedCount > 0,
+    checkable: Boolean(config.idPath) && entries.length > 0,
     issueCount: idIssues,
   });
 
@@ -385,7 +385,7 @@ export function verifyAuditStructure(entries, config = {}) {
   const timestampIssues =
     timestampResult.invalidCount + timestampResult.regressionCount;
   timestampResult.state = resultState({
-    checkable: Boolean(config.timestampPath) && timestampResult.checkedCount > 0,
+    checkable: Boolean(config.timestampPath) && entries.length > 0,
     issueCount: timestampIssues,
   });
 

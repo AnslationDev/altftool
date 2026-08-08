@@ -46,7 +46,6 @@ export default function ToolHome() {
         operations,
         requireAuth,
         pagination,
-        idParamNumeric: false,
       }),
     [resource, basePath, moduleSystem, expressVersion, validator, operations, requireAuth, pagination],
   );
@@ -245,7 +244,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -335,7 +338,11 @@ export default function ToolHome() {
       </section>
 
       {!hasError && result.warnings.length > 0 && (
-        <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+        <section
+          aria-live="polite"
+          aria-atomic="true"
+          className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        >
           <h2 className="flex items-center gap-2 text-base font-semibold">
             <TriangleAlert className="h-4 w-4 text-[var(--primary)]" aria-hidden="true" />
             Things the scaffold accounts for

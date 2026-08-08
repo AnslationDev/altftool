@@ -105,6 +105,9 @@ export function analyseSubject({
   if ([held, attended].some((value) => typeof value !== "number" || !Number.isFinite(value))) {
     return { error: `${name}: enter both the classes held and the classes attended.` };
   }
+  if (!Number.isInteger(held) || !Number.isInteger(attended)) {
+    return { error: `${name}: classes held and attended must be whole numbers.` };
+  }
   if (held < 0 || attended < 0) return { error: `${name}: class counts cannot be negative.` };
   if (held === 0) return { error: `${name}: no classes held yet, so there is no percentage.` };
   if (attended > held) {

@@ -149,7 +149,7 @@ export default function ToolHome() {
         ) : null}
 
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Naming syllable
             </p>
@@ -228,7 +228,7 @@ export default function ToolHome() {
             {search.error}
           </p>
         ) : (
-          <ul className="mt-4 grid gap-2 sm:grid-cols-2">
+          <ul className="mt-4 grid gap-2 sm:grid-cols-2" aria-live="polite" aria-atomic="true">
             {search.matches.map((match) => (
               <li key={`${match.nakshatraNumber}-${match.pada}`}>
                 <button
@@ -280,7 +280,7 @@ export default function ToolHome() {
               {byLongitude.error}
             </p>
           ) : (
-            <p className="mt-3 text-sm">
+            <p className="mt-3 text-sm" aria-live="polite" aria-atomic="true">
               <span className="font-semibold">{formatLongitude(Number(longitude))}</span> falls in{" "}
               <span className="font-semibold text-[var(--primary)]">
                 {byLongitude.name} pada {byLongitude.pada}

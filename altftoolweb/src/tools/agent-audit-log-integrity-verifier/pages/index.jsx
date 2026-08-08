@@ -198,6 +198,7 @@ export default function AgentAuditLogIntegrityVerifier() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const fileInputRef = useRef(null);
+  const runTokenRef = useRef(0);
 
   const numberFormatter = useMemo(() => new Intl.NumberFormat("en-IN"), []);
 
@@ -214,6 +215,7 @@ export default function AgentAuditLogIntegrityVerifier() {
     ) {
       return;
     }
+    runTokenRef.current += 1;
     setSource("");
     setSourceName("Pasted log");
     setArrayPath("");
@@ -228,6 +230,8 @@ export default function AgentAuditLogIntegrityVerifier() {
   };
 
   const parseSource = (text = source, name = sourceName) => {
+    runTokenRef.current += 1;
+    setIsVerifying(false);
     setError("");
     setMessage("");
     setVerification(null);
@@ -272,6 +276,8 @@ export default function AgentAuditLogIntegrityVerifier() {
   };
 
   const useSample = () => {
+    runTokenRef.current += 1;
+    setIsVerifying(false);
     setSource(SAMPLE_LOG);
     setArrayPath("");
     setError("");
@@ -297,6 +303,9 @@ export default function AgentAuditLogIntegrityVerifier() {
       setError("Parse an audit log before running checks.");
       return;
     }
+    // Captured so a slow run that finishes after the source/config was reset, reparsed,
+    // or replaced can detect it has been superseded and avoid overwriting newer state.
+    const token = runTokenRef.current;
     setError("");
     setMessage("");
     setIsVerifying(true);
@@ -314,6 +323,7 @@ export default function AgentAuditLogIntegrityVerifier() {
               reason: "SHA-256 recomputation is disabled.",
             }
           : await verifySha256Chain(parseResult.entries, config);
+      if (runTokenRef.current !== token) return;
       setVerification({ structure, hash });
       setMessage(
         config.hashRecipe === "disabled"
@@ -321,9 +331,13 @@ export default function AgentAuditLogIntegrityVerifier() {
           : "Structural and configured SHA-256 checks complete. Read each state and limitation before drawing conclusions.",
       );
     } catch (verificationError) {
-      setError(verificationError.message || "The local verification could not be completed.");
+      if (runTokenRef.current === token) {
+        setError(verificationError.message || "The local verification could not be completed.");
+      }
     } finally {
-      setIsVerifying(false);
+      if (runTokenRef.current === token) {
+        setIsVerifying(false);
+      }
     }
   };
 
@@ -421,10 +435,10 @@ export default function AgentAuditLogIntegrityVerifier() {
               </p>
             </div>
             <div className="flex flex-wrap gap-2">
-              <ActionButton icon={Sparkles} onClick={useSample}>
+              <ActionButton icon={Sparkles} disabled={isVerifying} onClick={useSample}>
                 Use safe sample
               </ActionButton>
-              <ActionButton icon={RefreshCw} onClick={resetAll}>
+              <ActionButton icon={RefreshCw} disabled={isVerifying} onClick={resetAll}>
                 Clear memory
               </ActionButton>
             </div>
@@ -438,6 +452,8 @@ export default function AgentAuditLogIntegrityVerifier() {
               <textarea
                 value={source}
                 onChange={(event) => {
+                  runTokenRef.current += 1;
+                  setIsVerifying(false);
                   setSource(event.target.value);
                   setSourceName("Pasted log");
                   setParseResult(null);
@@ -446,8 +462,9 @@ export default function AgentAuditLogIntegrityVerifier() {
                 }}
                 rows={16}
                 spellCheck={false}
+                disabled={isVerifying}
                 placeholder={'{"id":"evt-1","sequence":1,"timestamp":"2026-01-01T00:00:00Z"}\n{"id":"evt-2","sequence":2,"timestamp":"2026-01-01T00:00:01Z"}'}
-                className="w-full rounded-md border border-border bg-surface-soft p-3 font-mono text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-[3px] focus:ring-primary/35"
+                className="w-full rounded-md border border-border bg-surface-soft p-3 font-mono text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary focus:ring-[3px] focus:ring-primary/35 disabled:cursor-not-allowed disabled:opacity-60"
               />
             </label>
 
@@ -461,10 +478,13 @@ export default function AgentAuditLogIntegrityVerifier() {
                   value={arrayPath}
                   placeholder="Example: data.audit.entries"
                   onChange={(event) => {
+                    runTokenRef.current += 1;
+                    setIsVerifying(false);
                     setArrayPath(event.target.value);
                     setParseResult(null);
                     setVerification(null);
                   }}
+                  disabled={isVerifying}
                   className={CONTROL_CLASS}
                 />
                 <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
@@ -475,7 +495,7 @@ export default function AgentAuditLogIntegrityVerifier() {
               <ActionButton
                 icon={ScanLine}
                 primary
-                disabled={!source.trim()}
+                disabled={!source.trim() || isVerifying}
                 onClick={() => parseSource()}
                 className="w-full"
               >
@@ -483,6 +503,7 @@ export default function AgentAuditLogIntegrityVerifier() {
               </ActionButton>
               <ActionButton
                 icon={Upload}
+                disabled={isVerifying}
                 onClick={() => fileInputRef.current?.click()}
                 className="w-full"
               >

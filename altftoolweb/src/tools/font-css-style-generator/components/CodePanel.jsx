@@ -2,7 +2,7 @@
 
 import { Check, Copy, Download } from "lucide-react";
 
-export default function CodePanel({ css, copied, onCopy, onDownload }) {
+export default function CodePanel({ css, copied, copyFailed, onCopy, onDownload }) {
   return (
     <section className="font-css-card p-4 sm:p-5">
       <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
@@ -11,9 +11,13 @@ export default function CodePanel({ css, copied, onCopy, onDownload }) {
           <p className="text-xs text-[var(--muted-foreground)]">Ready to paste into your stylesheet.</p>
         </div>
         <div className="flex gap-2">
-          <button type="button" onClick={onCopy} className="font-css-action">
+          <button
+            type="button"
+            onClick={onCopy}
+            className={`font-css-action ${copyFailed ? "text-[var(--danger-text)]" : ""}`}
+          >
             {copied ? <Check size={16} /> : <Copy size={16} />}
-            {copied ? "Copied" : "Copy"}
+            {copyFailed ? "Copy failed" : copied ? "Copied" : "Copy"}
           </button>
           <button type="button" onClick={onDownload} className="font-css-action">
             <Download size={16} />
@@ -21,7 +25,11 @@ export default function CodePanel({ css, copied, onCopy, onDownload }) {
           </button>
         </div>
       </div>
-      <pre className="max-h-[360px] overflow-auto rounded-2xl bg-slate-950 p-4 text-sm leading-relaxed text-slate-100 whitespace-pre-wrap break-words">
+      <pre
+        aria-live="polite"
+        aria-atomic="true"
+        className="max-h-[360px] overflow-auto rounded-2xl bg-slate-950 p-4 text-sm leading-relaxed text-slate-100 whitespace-pre-wrap break-words"
+      >
         <code>{css}</code>
       </pre>
     </section>

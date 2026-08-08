@@ -152,7 +152,12 @@ function SupportCard({ highlight = false }) {
                   <Phone className="h-3.5 w-3.5" />
                   {line.name}
                 </p>
-                <p className="mt-1 text-lg font-semibold text-[var(--primary)]">{line.number}</p>
+                <a
+                  href={`tel:${line.number}`}
+                  className="mt-1 block text-lg font-semibold text-[var(--primary)] underline decoration-transparent hover:decoration-current focus:outline-none focus:shadow-[var(--anslation-ds-focus-ring)] rounded-sm"
+                >
+                  {line.number}
+                </a>
                 <p className="mt-0.5 text-xs text-[var(--muted-foreground)]">{line.note}</p>
               </div>
             ))}
@@ -292,7 +297,9 @@ function FeelingCheck({ value, onSelect }) {
 
 function SlotRow({ slot, index, sense, noTyping, onText, onTap }) {
   const inputId = `${sense.id}-slot-${index}`;
-  const filled = noTyping ? slot.done : slot.text.trim().length > 0;
+  // "Filled" reflects entries from either mode, so toggling typing/tapping mid-exercise
+  // never hides items already entered under the other mode.
+  const filled = slot.done || slot.text.trim().length > 0;
 
   if (noTyping) {
     return (
@@ -391,9 +398,12 @@ export default function ToolHome() {
   }, []);
 
   const persist = useCallback((next) => {
-    setLog(next);
+    // Cap once and reuse the same capped array for both state and storage, so in-memory
+    // stats/log never disagree with what a reload actually recovers.
+    const capped = next.slice(-200);
+    setLog(capped);
     try {
-      window.localStorage.setItem(LOG_KEY, JSON.stringify(next.slice(-200)));
+      window.localStorage.setItem(LOG_KEY, JSON.stringify(capped));
     } catch {
       /* storage unavailable — the session still works, it just won’t be remembered */
     }
@@ -409,9 +419,9 @@ export default function ToolHome() {
         before: id === "54321" ? before : null,
         after: feeling,
       };
-      const cutoff = now.getTime() - 10 * 60000;
-      const kept = log.filter((item) => !(item.technique === id && new Date(item.at).getTime() > cutoff));
-      persist([...kept, entry]);
+      // Every completed round gets its own log entry — no dedup window, so repeated
+      // practice of the same technique is counted rather than silently overwritten.
+      persist([...log, entry]);
     },
     [before, log, persist]
   );
@@ -430,7 +440,7 @@ export default function ToolHome() {
 
   const currentSense = senses[stepIndex];
   const filledCount = currentSense
-    ? slots[currentSense.id].filter((slot) => (noTyping ? slot.done : slot.text.trim().length > 0)).length
+    ? slots[currentSense.id].filter((slot) => slot.done || slot.text.trim().length > 0).length
     : 0;
 
   const setSlotText = (index, text) => {
@@ -473,7 +483,7 @@ export default function ToolHome() {
     const lines = ["5-4-3-2-1 grounding — my session", ""];
     senses.forEach((sense) => {
       const items = slots[sense.id]
-        .map((slot, index) => (noTyping ? (slot.done ? `found #${index + 1}` : "") : slot.text.trim()))
+        .map((slot, index) => slot.text.trim() || (slot.done ? `found #${index + 1}` : ""))
         .filter(Boolean);
       if (items.length) lines.push(`${sense.title}: ${items.join(", ")}`);
     });
@@ -482,7 +492,7 @@ export default function ToolHome() {
     if (after) lines.push(`After: ${after}`);
     lines.push(`Finished: ${new Date().toLocaleString()}`);
     return lines.join("\n");
-  }, [after, before, noTyping, slots]);
+  }, [after, before, slots]);
 
   const copySummary = async () => {
     const ok = await safeCopyText(summary);
@@ -784,14 +794,14 @@ export default function ToolHome() {
                     </p>
 
                     {senses.some((sense) =>
-                      slots[sense.id].some((slot) => (noTyping ? slot.done : slot.text.trim().length > 0))
+                      slots[sense.id].some((slot) => slot.done || slot.text.trim().length > 0)
                     ) && (
                       <div className="mt-6 rounded-md border border-[var(--border)] bg-[var(--muted)] p-4">
                         <p className="text-xs font-semibold uppercase text-[var(--muted-foreground)]">What you noticed</p>
                         <div className="mt-3 grid gap-2">
                           {senses.map((sense) => {
                             const items = slots[sense.id]
-                              .map((slot, index) => (noTyping ? (slot.done ? `#${index + 1}` : "") : slot.text.trim()))
+                              .map((slot, index) => slot.text.trim() || (slot.done ? `#${index + 1}` : ""))
                               .filter(Boolean);
                             if (!items.length) return null;
                             const Icon = sense.icon;
@@ -1151,7 +1161,11 @@ export default function ToolHome() {
                   </div>
                   <button
                     type="button"
-                    onClick={() => persist([])}
+                    onClick={() => {
+                      if (window.confirm("Clear your entire session log? This can’t be undone.")) {
+                        persist([]);
+                      }
+                    }}
                     className="mt-3 text-xs font-semibold text-[var(--muted-foreground)] underline"
                   >
                     Clear my log

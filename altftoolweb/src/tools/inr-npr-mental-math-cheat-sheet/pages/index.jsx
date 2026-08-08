@@ -63,6 +63,15 @@ export default function ToolHome() {
   const recommended = hasError
     ? null
     : rules.find((rule) => rule.id === sheet.forward.recommendedId);
+  // The headline and summary must show the worked value for whichever rule the
+  // engine actually recommends, not always the quick rule — the two can differ.
+  const recommendedWorkedInr = hasError
+    ? null
+    : recommended.id === "fraction"
+      ? sheet.worked?.fractionInr
+      : recommended.id === "tuned"
+        ? sheet.worked?.tunedInr
+        : sheet.worked?.quickInr;
   const reverseRules = hasError
     ? []
     : [sheet.reverse.quick, sheet.reverse.tuned, sheet.reverse.fraction];
@@ -88,11 +97,11 @@ export default function ToolHome() {
     if (sheet.worked) {
       lines.push(
         "",
-        `${CURRENCY.symbol}${FOREIGN.format(sheet.worked.amount)} = ${INR2.format(sheet.worked.exactInr)} exact, ${INR2.format(sheet.worked.quickInr)} in your head`,
+        `${CURRENCY.symbol}${FOREIGN.format(sheet.worked.amount)} = ${INR2.format(sheet.worked.exactInr)} exact, ${INR2.format(recommendedWorkedInr)} in your head`,
       );
     }
     return lines.join("\n");
-  }, [hasError, sheet, recommended, reverseRecommended]);
+  }, [hasError, sheet, recommended, reverseRecommended, recommendedWorkedInr]);
 
   const copyResult = async () => {
     if (!summary) return;
@@ -222,7 +231,7 @@ export default function ToolHome() {
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
               {hasError
                 ? "Fix the rate above to see the cheat sheet."
-                : `In your head you would say ${money(sheet.worked?.quickInr)} — ${signedPct(sheet.forward.quick.errorPercent)} out.`}
+                : `In your head you would say ${money(recommendedWorkedInr)} — ${signedPct(recommended.errorPercent)} out.`}
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

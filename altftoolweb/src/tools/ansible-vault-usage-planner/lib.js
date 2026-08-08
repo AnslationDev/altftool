@@ -164,15 +164,31 @@ export function planVault({ namesText, strategy, envsText = "dev, prod", useVaul
     }
   });
 
-  const vaultLines = ["# vault.yml — encrypted with ansible-vault, never commit in plaintext"];
-  encrypted.forEach((entry) => {
-    vaultLines.push(`${VAULT_PREFIX}${entry.name}: "<secret value>"`);
-  });
-  if (encrypted.length === 0) vaultLines.push("# (no secrets detected — vault file not needed)");
+  // encrypt-string never creates a vault.yml — the secrets live as inline
+  // !vault blocks in vars.yml instead, so don't fabricate a vault file for it.
+  const vaultLines =
+    strategy === "encrypt-string"
+      ? [
+          "# encrypt_string strategy: no separate vault file — each secret lives",
+          "# as an inline !vault block directly inside vars.yml.",
+        ]
+      : ["# vault.yml — encrypted with ansible-vault, never commit in plaintext"];
+  if (strategy !== "encrypt-string") {
+    encrypted.forEach((entry) => {
+      vaultLines.push(`${VAULT_PREFIX}${entry.name}: "<secret value>"`);
+    });
+    if (encrypted.length === 0) vaultLines.push("# (no secrets detected — vault file not needed)");
+  }
 
   const idFlag = (label) => (useVaultIds ? `--vault-id ${label}@prompt` : "--ask-vault-pass");
   const commands = [];
-  if (strategy === "single") {
+  if (encrypted.length === 0) {
+    // Nothing classified as a secret — vault/encrypt commands would be noise.
+    commands.push({
+      title: "No secrets detected",
+      cmd: "# None of these variables matched a sensitive-name pattern, so there's nothing to vault yet. Add secret-looking variables and re-run this planner.",
+    });
+  } else if (strategy === "single") {
     commands.push(
       { title: "Create the vault file", cmd: `ansible-vault create group_vars/all/vault.yml${useVaultIds ? " --vault-id all@prompt" : ""}` },
       { title: "Edit it later", cmd: `ansible-vault edit group_vars/all/vault.yml${useVaultIds ? " --vault-id all@prompt" : ""}` },
@@ -207,17 +223,22 @@ export function planVault({ namesText, strategy, envsText = "dev, prod", useVaul
   }
   // encrypt-string never creates a vault.yml — the secrets live as inline
   // !vault blocks in vars.yml instead, so the CI check has to look there.
-  commands.push(
-    strategy === "encrypt-string"
-      ? {
-          title: "Stop plaintext leaks in CI",
-          cmd: "grep -rL '!vault' group_vars/*/vars.yml && echo 'POSSIBLE UNENCRYPTED INLINE SECRET' ",
-        }
-      : {
-          title: "Stop plaintext leaks in CI",
-          cmd: "grep -rL '$ANSIBLE_VAULT;' group_vars/*/vault.yml && echo 'UNENCRYPTED VAULT FILE' ",
-        },
-  );
+  // Only run the check when there's actually a secret to look for: scope it to
+  // files that declare a vault_-prefixed variable (an expected secret), so a
+  // vars.yml that legitimately has no secrets at all isn't flagged.
+  if (encrypted.length > 0) {
+    commands.push(
+      strategy === "encrypt-string"
+        ? {
+            title: "Stop plaintext leaks in CI",
+            cmd: "grep -rl 'vault_' group_vars/*/vars.yml | xargs -r grep -L '!vault' && echo 'POSSIBLE UNENCRYPTED INLINE SECRET' ",
+          }
+        : {
+            title: "Stop plaintext leaks in CI",
+            cmd: "grep -rL '$ANSIBLE_VAULT;' group_vars/*/vault.yml && echo 'UNENCRYPTED VAULT FILE' ",
+          },
+    );
+  }
 
   return {
     classified,

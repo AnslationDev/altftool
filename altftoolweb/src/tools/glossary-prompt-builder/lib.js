@@ -288,7 +288,8 @@ export function buildGlossaryPrompt({
     "OUTPUT: alphabetical by term, one entry per term, as a Markdown definition list.",
   );
 
-  if (collected.found.acronyms > 0) {
+  const hasAcronymTerm = collected.terms.some((item) => item.source === "acronym");
+  if (hasAcronymTerm) {
     lines.push(
       "- For every acronym, expand it in full on first use, then give the definition of the expanded form.",
     );

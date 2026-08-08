@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "Periodic Table Explorer is a browsable reference card set for 25 of the most-studied chemical elements — hydrogen through calcium, plus iron, copper, silver, gold and uranium — showing atomic number, atomic mass in unified mass units, electron configuration in noble-gas shorthand, melting and boiling points in °C, density, year of discovery and real industrial uses. Search by name, symbol or atomic number, or filter to one of nine families such as alkali metals, halogens or noble gases. Built for students meeting periodic trends for the first time and anyone who needs one element's numbers quickly.",
+    "Periodic Table Explorer is a browsable reference card set for all 118 IUPAC-recognized chemical elements, from hydrogen to oganesson, showing atomic number, atomic mass in unified mass units, electron configuration in noble-gas shorthand, melting and boiling points in °C, density, year of discovery and real industrial uses. Search by name, symbol or atomic number, or filter to one of ten families such as alkali metals, lanthanides, halogens or noble gases. Built for students meeting periodic trends for the first time and anyone who needs one element's numbers quickly.",
   useCases: [
     "Checking that sodium's configuration is [Ne] 3s¹ before writing out an ionic bonding answer in homework",
     "Comparing the alkali metals side by side to see why melting point falls as you go down group 1 — lithium 180.5 °C, sodium 97.8 °C, potassium 63.5 °C",
@@ -9,12 +9,12 @@ const seo = {
   benefits: [
     ["Configuration in noble-gas shorthand", "Each card gives the condensed form, such as [Ar] 3d⁶ 4s² for iron, which is what exams expect you to write."],
     ["Physical constants on one card", "Melting point, boiling point, density and atomic mass sit together, so trend questions do not need four lookups."],
-    ["Family filter with colour coding", "Nine categories from alkali metal to actinide are colour-tagged, making blocks and groups visible at a glance."],
+    ["Family filter with colour coding", "Ten categories from alkali metal to actinide are colour-tagged, making blocks and groups visible at a glance."],
   ],
   faqs: [
     [
       "Which elements are included in this explorer?",
-      "Twenty-five: every element from hydrogen (1) to calcium (20), plus iron (26), copper (29), silver (47), gold (79) and uranium (92). These cover the first four periods' teaching examples along with the metals most commonly asked about.",
+      "All 118: every IUPAC-recognized element from hydrogen (1) through oganesson (118), including the full lanthanide and actinide series. Superheavy synthetic elements past uranium carry the same physical-property cards, with fields marked 'Unknown' where no value has ever been measured.",
     ],
     [
       "What does a notation like [Ne] 3s² 3p² mean?",

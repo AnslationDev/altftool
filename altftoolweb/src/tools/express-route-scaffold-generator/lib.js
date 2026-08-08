@@ -62,7 +62,6 @@ export const DEFAULT_INPUT = {
   operations: ["list", "get", "create", "update", "remove"],
   requireAuth: true,
   pagination: true,
-  idParamNumeric: false,
 };
 
 /** JavaScript reserved words that cannot become a variable name. */
@@ -105,6 +104,10 @@ export function pluralize(word) {
   if (UNCHANGED_PLURALS.has(lower)) return lower;
   if (IRREGULAR_PLURALS[lower]) return IRREGULAR_PLURALS[lower];
   if (/[^aeiou]y$/.test(lower)) return `${lower.slice(0, -1)}ies`;
+  // A single, un-doubled trailing z (quiz, fez) doubles the z before -es, matching
+  // standard English orthography (quiz -> quizzes). An already-doubled zz (buzz)
+  // falls through to the general sibilant rule below, which is already correct.
+  if (/[^z]z$/.test(lower)) return `${lower}zes`;
   if (/(s|sh|ch|x|z)$/.test(lower)) return `${lower}es`;
   if (/[^f]fe$/.test(lower)) return `${lower.slice(0, -2)}ves`;
   if (/[aeilnorsu]f$/.test(lower)) return `${lower.slice(0, -1)}ves`;
@@ -239,10 +242,7 @@ export function buildRouteScaffold(input = {}) {
   const close = wrap ? ")" : "";
   const guards = cfg.requireAuth ? "requireAuth, " : "";
 
-  const idPattern = cfg.idParamNumeric ? "/:id(\\\\d+)" : "/:id";
-  const idNote = cfg.idParamNumeric
-    ? "  // Express 4 accepts an inline pattern on the parameter. On Express 5 validate the id in the handler instead."
-    : "";
+  const idPattern = "/:id";
 
   /* ---------------- route handlers ---------------- */
   const routes = [];
@@ -260,9 +260,11 @@ export function buildRouteScaffold(input = {}) {
     } else {
       body.push("    const query = {};");
     }
+    body.push(`    const { rows, total } = await ${pluralCamel}Service.list(query);`);
     body.push(
-      `    const { rows, total } = await ${pluralCamel}Service.list(query);`,
-      "    res.status(200).json({ data: rows, total, limit: query.limit, offset: query.offset });",
+      cfg.pagination
+        ? "    res.status(200).json({ data: rows, total, limit: query.limit, offset: query.offset });"
+        : "    res.status(200).json({ data: rows, total });",
     );
     routes.push({
       id: "list",
@@ -284,7 +286,6 @@ export function buildRouteScaffold(input = {}) {
       path: idPattern,
       code: [
         `// GET ${mountPath}/:id — 200, or 404 when the row does not exist`,
-        idNote,
         `router.get("${idPattern}", ${guards}${open}async (req, res) => {`,
         `    const record = await ${pluralCamel}Service.findById(req.params.id);`,
         "    if (!record) {",
@@ -444,6 +445,29 @@ export function buildRouteScaffold(input = {}) {
     });
   }
 
+  if (cfg.requireAuth) {
+    files.push({
+      name: `middleware/require-auth${ext}`,
+      language: "javascript",
+      code: [
+        "// STUB — this only checks that an Authorization header is present. It does NOT verify",
+        "// a session or a token, so every request with any Bearer value is let through. Replace",
+        "// the body below with real session lookup or JWT verification (and set req.user) before",
+        "// this ever reaches a real deployment.",
+        `${esm ? "export " : ""}function requireAuth(req, res, next) {`,
+        '  const header = req.headers.authorization || "";',
+        '  if (!header.startsWith("Bearer ")) {',
+        '    return res.status(401).json({ error: "Authentication required" });',
+        "  }",
+        "  // TODO: verify header.slice(7) (e.g. jwt.verify) and attach the user to req.user.",
+        "  next();",
+        "}",
+        ...(esm ? [] : ["", "module.exports = { requireAuth };"]),
+        "",
+      ].join("\n"),
+    });
+  }
+
   files.push({
     name: `middleware/error-handler${ext}`,
     language: "javascript",
@@ -498,8 +522,12 @@ export function buildRouteScaffold(input = {}) {
         `${esm ? "export " : ""}const ${camel}UpdateSchema = ${camel}CreateSchema.partial().strict();`,
         "",
         `${esm ? "export " : ""}const ${camel}QuerySchema = z.object({`,
-        `  limit: z.coerce.number().int().min(1).max(${MAX_PAGE_SIZE}).default(${DEFAULT_PAGE_SIZE}),`,
-        "  offset: z.coerce.number().int().min(0).default(0),",
+        ...(cfg.pagination
+          ? [
+              `  limit: z.coerce.number().int().min(1).max(${MAX_PAGE_SIZE}).default(${DEFAULT_PAGE_SIZE}),`,
+              "  offset: z.coerce.number().int().min(0).default(0),",
+            ]
+          : []),
         "});",
         ...(esm
           ? []
@@ -543,7 +571,7 @@ export function buildRouteScaffold(input = {}) {
     routes: routes.map((route) => ({
       id: route.id,
       method: route.method.toUpperCase(),
-      path: `${mountPath}${route.path === "/" ? "" : route.path.replace("(\\\\d+)", "")}`,
+      path: `${mountPath}${route.path === "/" ? "" : route.path}`,
       status: OPERATION_BY_ID.get(route.id).status,
     })),
     names: { camel, pascal, kebab, plural: pluralPath, pluralCamel, mountPath },
