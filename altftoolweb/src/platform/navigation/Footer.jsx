@@ -14,14 +14,27 @@ import {
 } from "react-icons/fa6";
 import { Heart, ShieldCheck } from "lucide-react";
 
+/**
+ * This is the footer nearly every page renders: `usesLandingChrome` is true
+ * unless the path is on the hidden-shell list, and FOOTER_ROUTE_GROUPS — which
+ * does carry the embed hub — only renders on that minority.
+ *
+ * So the three pages built specifically for other people to link to were
+ * reachable from tool pages and /site-map and nowhere else. A publisher, a
+ * developer or a journalist browsing the site never saw them. They are the
+ * cheapest links to earn and the hardest to earn if nobody can find the page.
+ *
+ * "All Categories" made room: it pointed at /tools/all, the same URL as "Tools"
+ * directly above it.
+ */
 const HOME_FOOTER_GROUPS = [
   {
     title: "Product",
     links: [
       { label: "Tools", href: "/tools/all" },
       { label: "Extensions", href: "/extensions" },
+      { label: "Embed widgets", href: "/embed" },
       { label: "Deals", href: "/exclusivedeals" },
-      { label: "All Categories", href: "/tools/all" },
     ],
   },
   {
@@ -30,6 +43,7 @@ const HOME_FOOTER_GROUPS = [
       { label: "Academy", href: "/academy" },
       { label: "Blog", href: "/blogs" },
       { label: "News", href: "/news" },
+      { label: "Open data", href: "/open-data" },
       { label: "Brand Ratings", href: "/brandrating" },
     ],
   },
@@ -37,6 +51,7 @@ const HOME_FOOTER_GROUPS = [
     title: "Company",
     links: [
       { label: "About Us", href: "/policypages/about" },
+      { label: "Press kit", href: "/press" },
       { label: "Privacy Policy", href: "/policypages/privacy" },
       { label: "Terms of Use", href: "/policypages/termsandconditions" },
       { label: "Contact Us", href: "/policypages/contact" },

@@ -1,0 +1,28 @@
+
+> altftools@0.1.0 prebuild
+> npm run generate:registry
+
+
+> altftools@0.1.0 generate:registry
+> node scripts/generate-tool-meta.mjs && node scripts/generate-tool-runtime-map.mjs && node scripts/generate-tool-seo-map.mjs
+
+✅ toolMetaMap generated
+✅ toolRuntimeMap generated (3816 tools)
+✅ toolSeoMap generated (2685 tools, 7 shards)
+
+> altftools@0.1.0 build
+> node scripts/use-patched-next-dependencies.mjs && node scripts/assert-no-server-tool-loader.mjs && node scripts/assert-transform-manifest.mjs && node scripts/run-with-node-memory.mjs next build --webpack && node scripts/prune-amplify-build.mjs && node scripts/check-prerender-size.mjs
+
+Using patched postcss 8.5.22 for Next.js.
+Using patched sharp 0.35.3 for Next.js.
+Server-side tool loader guard failed. These non-client modules reference the tool runtime map or its resolver, but next.config.mjs stubs the map out of the server compilation, so they would read an empty map:
+  - src/app/tools/all/[slug]/opengraph-image.jsx
+
+Either mark the module "use client", or remove the server stub in next.config.mjs (which costs ~36 MiB of Amplify artifact).
+npm error Lifecycle script `build` failed with error:
+npm error code 1
+npm error path /Users/niki/knworkspace/kn1/altftool-geo/altftoolweb
+npm error workspace altftools@0.1.0
+npm error location /Users/niki/knworkspace/kn1/altftool-geo/altftoolweb
+npm error command failed
+npm error command sh -c node scripts/use-patched-next-dependencies.mjs && node scripts/assert-no-server-tool-loader.mjs && node scripts/assert-transform-manifest.mjs && node scripts/run-with-node-memory.mjs next build --webpack && node scripts/prune-amplify-build.mjs && node scripts/check-prerender-size.mjs
