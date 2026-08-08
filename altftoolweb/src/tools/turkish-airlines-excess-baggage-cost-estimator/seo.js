@@ -1,4 +1,12 @@
 const seo = {
+  title: "Turkish Airlines Excess Baggage: Kilos or Pieces?",
+  metaDescription:
+    "The route decides: Americas itineraries price by piece, the rest by the kilo. Pools the allowance across the booking and applies the online discount.",
+  steps: [
+    "Choose \"Where the journey starts\" and \"Where the journey ends\" — an end in the Americas switches the estimator to the piece concept — then set \"Currency of the quoted rates\" and \"Passengers on the booking\".",
+    "On a weight-concept route fill \"Allowance printed on the ticket\", \"Total checked baggage weight (kg)\", \"Heaviest single bag (kg)\", the airport rate per kg and the \"Advance-purchase discount (%)\".",
+    "The headline reads the cost and whether \"buy before you fly\" or \"pay at the airport\" is cheaper against the pooled allowance, warnings flag any bag over the 32 kg ceiling, and \"Copy result\" copies the full breakdown.",
+  ],
   intro:
     "This estimator prices Turkish Airlines excess baggage using the rule that decides everything else: the route, not the cabin, picks the system. Journeys with one end in the Americas are assessed under the IATA piece concept for the whole itinerary — a fixed number of bags with a 23 kg or 32 kg ceiling on each — while the rest of the network runs on the weight concept, where a single kilogram allowance covers all your bags and anything above it is billed per kilo. It pools allowances across everyone on the booking and applies the advance-purchase discount so you can see what buying early actually saves.",
   useCases: [

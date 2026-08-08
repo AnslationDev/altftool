@@ -1,4 +1,12 @@
 const seo = {
+  title: "Singapore Visa Cost Estimator: Fees in SGD and INR",
+  metaDescription:
+    "Split the SGD 30 processing fee you lose on rejection from the on-approval issuance fee, then total agent, photo and courier charges in rupees.",
+  steps: [
+    "Choose the 'Visa or pass type', set Applicants (each person needs their own application and fee) and the 'Exchange rate (rupees per SGD 1)'.",
+    "Under 'Charges you pay in India' add 'Authorised agent charge, per applicant (INR)', photographs, travel insurance, courier, other charges and any card cross-currency markup.",
+    "Read the rupee total with the amount 'spent even if the application is rejected' and the 'Line by line' breakdown, then press 'Copy result'.",
+  ],
   intro:
     "A Singapore visa cost estimator separates the two stages Singapore actually charges in — a processing fee taken when the application is submitted, which is kept whatever the outcome, and an issuance fee charged only once the visa or pass is granted — and totals both alongside agent charges, photographs and courier in rupees. The short-visit entry visa carries a processing fee of SGD 30 with no issuance fee, while work and long-stay passes issued by the Ministry of Manpower carry both. Splitting the stages gives travellers and HR teams a clear figure for what is genuinely at risk if an application is turned down.",
   useCases: [

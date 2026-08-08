@@ -1,4 +1,12 @@
 const seo = {
+  title: "Discount Stacking Calculator: The Real Basket Total",
+  metaDescription:
+    "Stack sale prices, coupons, a capped card offer, shipping, tax and cashback in the order shops apply them. Percentages multiply: 20% then 10% is 28% off.",
+  steps: [
+    "Enter the Basket subtotal before offers (₹) and a tax rate, then add each percentage offer and each flat-amount coupon by name and value.",
+    "Fill in the card or bank offer's instant discount (%), maximum discount cap and minimum spend to qualify, plus shipping charge, free-shipping threshold and cashback.",
+    "Read the effective cost after cashback, what you pay at checkout, the total saved and the combined percentage offers, with the coupon-ordering warning.",
+  ],
   intro:
     "The Discount Stacking Calculator works out what a basket really costs once a sale price, extra coupons, a flat voucher, a card offer, shipping, tax and cashback have all been applied in sequence. It uses the two rules that decide every stacked total: percentage discounts multiply rather than add, so 20% then 10% is 28% off, not 30%; and a percentage applied before a flat coupon always beats the reverse order by exactly the flat amount times the combined percentage. It is for shoppers comparing sale-day offers and for anyone who wants to know whether a card offer's cap makes a bigger basket worth it.",
   useCases: [

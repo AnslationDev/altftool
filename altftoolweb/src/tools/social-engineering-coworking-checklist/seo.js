@@ -1,4 +1,12 @@
 const seo = {
+  title: "Coworking Security Checklist: 20 Habits, 5 Categories",
+  metaDescription:
+    "Scores screens, printing, devices, network and people separately, weighted by impact and by whether you sit at a hot desk or a lockable cabin.",
+  steps: [
+    "Set \"Where do you sit?\" to Open-floor hot desk, Dedicated desk in a shared room, Private lockable cabin or Meeting rooms and lounge only, and \"How busy is the floor?\" from Quiet — a few regulars up to Event or open day with visitors.",
+    "Tick the controls you already have in each of the five sections — Screens and what is visible, Printing and paper, Devices and lock-up, Shared network, and People and access — using \"Tick everything\" or \"Clear all\" to set them in one go.",
+    "\"Workspace exposure index\" scores out of 100 with controls in place, coverage by weight, the setting multiplier and your weakest category listed, \"Coverage by category\" bars all five separately, \"Close these, highest impact first\" ranks the gaps with their fixes, and Copy result copies the summary.",
+  ],
   intro:
     "The Coworking Space Security Checklist scores twenty habits across five categories — screens, printing and paper, devices, the shared network, and people and access — and reports each category separately so a weak area is visible instead of averaged away. It is built for the actual threat model of a shared office, where the people around you have legitimate access to the floor, the printer tray and the door, rather than for a network attacker. The overall index scales with where you sit and how busy the space is, because an open hot desk on an event day is not the same as a lockable cabin on a quiet morning.",
   useCases: [

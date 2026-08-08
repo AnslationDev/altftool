@@ -1,4 +1,12 @@
 const seo = {
+  title: "Redact PII From Text Before Sending It to an AI",
+  metaDescription:
+    "15 checks with Luhn-validated cards and MOD-97 IBANs. Swap hits for [EMAIL_1] labels, a partial mask or [REDACTED] — all in your browser.",
+  steps: [
+    "Paste text into the source box, or press Load safe demo to fill it with the bundled sample.",
+    "Enable or disable individual checks under Detection scope (15 in all), then choose Smart labels, Partial mask or Remove values under Redaction style.",
+    "Read the Safer output line by line, then press Copy safe text, or Download text to save redacted-ai-input.txt.",
+  ],
   intro:
     "The Universal PII & AI Input Redactor scans pasted text for 15 categories of sensitive data — names, emails, phones, addresses, dates of birth, Aadhaar, PAN, passport, US SSN, payment cards, bank accounts, IBAN, IP and MAC addresses, and API keys or tokens — and rewrites them before you send the text to a chatbot, a vendor or a colleague. Detection is not pure pattern matching: card numbers must pass the Luhn checksum, IBANs must satisfy MOD-97, and IPv4 octets must be within range, which cuts the false positives that plain regex tools produce. You choose how each hit is replaced, and the text never leaves the page.",
   useCases: [

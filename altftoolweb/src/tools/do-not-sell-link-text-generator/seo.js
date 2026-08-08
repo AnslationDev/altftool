@@ -1,4 +1,12 @@
 const seo = {
+  title: "Do Not Sell or Share Link Text, CCPA and CPRA Wording",
+  metaDescription:
+    "The statutory titles from Cal. Civ. Code s.1798.135, or the single Your Privacy Choices link, plus landing copy with the 15-day and 45-day deadlines.",
+  steps: [
+    "Enter \"Business name\", \"Privacy email address\" and a toll-free number, then tick under \"What your business actually does\": you sell personal information, you share identifiers for cross-context behavioural advertising, or you use sensitive personal information beyond permitted purposes.",
+    "Under \"Ways a consumer can submit the request\" choose from a web form, privacy email, toll-free number, an account toggle and the Global Privacy Control signal, and decide whether to use the single \"Your Privacy Choices\" link instead of two.",
+    "The \"Footer link text\" appears with its statutory basis, alongside the landing-page steps, confirmation message and the 15-business-day opt-out and 45-day verifiable-request deadlines; \"Copy all copy\" copies every block.",
+  ],
   intro:
     "The Do Not Sell Link Text Generator produces the statutory opt-out link label, footer wording and landing page copy the CCPA as amended by the CPRA requires, using the prescribed titles from Cal. Civ. Code s.1798.135 rather than a paraphrase. It works out whether you need the sale link, the sensitive-information link, both, or the single 'Your Privacy Choices' alternative link permitted by CCPA Regulations s.7015, and states the real deadlines: 15 business days to action an opt-out and 45 calendar days for a verifiable request. Intended for site owners preparing copy for review by California counsel.",
   useCases: [

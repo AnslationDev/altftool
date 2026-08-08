@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Form Correction Window Tracker: NTA, SSC, IBPS",
+  metaDescription:
+    "See which fields NTA, SSC, RRB or IBPS actually let you edit, the ₹200/₹500 SSC correction charge, and the days left in the window.",
+  steps: [
+    "Select the body conducting the exam — NTA, SSC, RRB, IBPS or a state commission — then enter the dates the window opens and closes and how many corrections you have already made.",
+    "Tick what you need to fix from the 15 fields, from name spelling and category to the registered mobile number, and flag whether the change moves you into a higher fee band.",
+    "Read the days left, how many requested changes are not editable for that body, and the charge for the next correction, then press \"Copy plan\".",
+  ],
   intro:
     "This tracker counts down an exam form correction window and, more usefully, tells you in advance which of the changes you want that body will actually allow. Correction windows are narrow and unequal: SSC charges ₹200 for a first correction and ₹500 for a second and permits no third, NTA opens a short window in which the registered mobile number and email address stay locked because they are the login channel, and IBPS normally opens no edit facility at all. It also flags the fee-band rule — a change that raises your fee has to be paid for inside the window, and a change that lowers it earns no refund.",
   useCases: [

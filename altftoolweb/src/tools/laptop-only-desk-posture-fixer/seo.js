@@ -1,4 +1,12 @@
 const seo = {
+  title: "Laptop Riser Height Calculator for Neck and Posture",
+  metaDescription:
+    "Work out the cm to raise a laptop so the screen top sits 5 cm below seated eye height, with the gaze angle and neck load before and after.",
+  steps: [
+    "Enter your height (cm), seat height floor to cushion (cm) and desk height floor to surface (cm).",
+    "Enter the screen size in inches diagonal, the screen aspect ratio and the eye-to-screen distance (cm), then tick \"I already have a separate keyboard and mouse\" if you do.",
+    "Read \"Raise the laptop by\" in cm, the downward gaze angle and estimated cervical load before and after, and whether the desk sits above your elbow height; press \"Copy result\".",
+  ],
   intro:
     "This calculator works out how many centimetres a laptop has to be raised so the top of its screen sits about 5 cm below your seated eye height — the position ANSI/HFES 100 and the OSHA computer-workstation guidance both recommend. It derives your seated eye and elbow heights from your body height and seat height using 50th-percentile adult proportions, converts the screen diagonal and aspect ratio into a real vertical screen height, and reports the downward gaze angle before and after the fix. It is aimed at anyone whose laptop is their only display and who wants numbers rather than 'sit up straight'.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Myopia Progression Log: Dioptres Per Year Tracker",
+  metaDescription:
+    "Log dated sphere and cylinder powers to get a D/year rate, least-squares trend line, IMI severity band and an axial-length equivalent at 2.7 D per mm.",
+  steps: [
+    "Enter each spectacle prescription as Date, Sphere (D) and Cylinder (D), pressing Add a reading for every extra appointment.",
+    "Set Project ahead (years) — the log combines sphere with half the cylinder and fits a least-squares trend line across all readings.",
+    "Read the Progression rate in D/yr with its severity band, trend line slope and axial-length equivalent, then press Copy result.",
+  ],
   intro:
     "The Myopia Progression Log turns a list of dated spectacle prescriptions into a progression rate in dioptres per year, calculated as the change in spherical equivalent divided by the elapsed time. It fits a least-squares trend line across every reading, places the current power on the International Myopia Institute severity bands (myopia at -0.50 D, high myopia at -6.00 D) and converts the dioptric change into an approximate axial-length equivalent at about 2.7 D per millimetre. Parents tracking a child's glasses and adults watching their own power drift get a record worth bringing to an appointment.",
   useCases: [

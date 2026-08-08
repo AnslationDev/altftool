@@ -1,4 +1,12 @@
 const seo = {
+  title: "Barbell Plate Calculator: Plates Per Side, kg or lb",
+  metaDescription:
+    "Subtracts the bar and both collars, halves the rest, then picks plates from the pairs you own. Shows the shortfall when a target cannot be made.",
+  steps: [
+    "Set Units to Kilograms or Pounds, choose the Bar (Men's bar — 20 kg or Women's bar — 15 kg), then enter Target weight and Collar weight, each side.",
+    "Under \"What is in your rack\", set how many pairs you own of each disc from 25 kg down to 0.25 kg, and enter 0 for any denomination you do not have.",
+    "Read Loaded bar weight and the \"Per side, sleeve outwards\" list, largest disc first, then press Copy result — any shortfall against your target is stated.",
+  ],
   intro:
     "This calculator turns a target bar weight into plates to hang on each sleeve: weight per side is (target − bar − both collars) ÷ 2, and an exact bounded search finds a closest combination from the denominations you actually own. The selected combination is listed from the largest plate to the smallest for sleeve loading. Bar weights and disc sizes follow IWF and IPF competition specifications — a 20 kg men's bar, a 15 kg women's bar, 2.5 kg collars and 25/20/15/10/5/2.5/1.25 kg discs — with a pound mode for 45 lb bars. When a number cannot be made, it shows the closest loading and how much it falls short.",
   useCases: [

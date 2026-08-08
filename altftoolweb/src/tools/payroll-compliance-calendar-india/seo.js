@@ -1,4 +1,12 @@
 const seo = {
+  title: "India Payroll Due Dates: PF, ESI, TDS, Prof. Tax",
+  metaDescription:
+    "PF and ESI by the 15th, salary TDS by the 7th (30 April for March), Form 24Q quarters and state PT dates for any wage month, with late-payment cost.",
+  steps: [
+    "Set the Wage month and Year, pick your Professional tax state, and set Treat this date as today so overdue items are marked.",
+    "Read Monthly deadlines with its Due date, Obligation and Rule columns — Para 38(1) for PF, Regulation 31 for ESI, Rule 30 for salary TDS — and the Financial year deadlines table for the Form 24Q quarters.",
+    "Under What a late deposit costs pick EPF (12% interest + Section 14B damages), ESI (12% interest) or Salary TDS (1.5% per month or part), enter Amount payable (₹), Statutory due date and Date actually paid, then press Copy calendar.",
+  ],
   intro:
     "This payroll compliance calendar turns one Indian wage month into the exact dates you must deposit PF, ESI, salary TDS and state professional tax, and shows what a late deposit costs. It applies Para 38(1) of the EPF Scheme 1952 and Regulation 31 of the ESI (General) Regulations 1950 (both the 15th of the following month), Rule 30 of the Income-tax Rules 1962 (the 7th, or 30 April for March deductions), Rule 31A for the quarterly Form 24Q statements, and each state's own professional tax Act. It is built for payroll executives, HR generalists and accountants running monthly salary cycles for Indian employers.",
   useCases: [

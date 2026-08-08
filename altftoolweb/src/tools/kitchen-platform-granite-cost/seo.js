@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kitchen Granite Cost: Running Feet to Square Feet",
+  metaDescription:
+    "Converts counter running feet into granite square feet with skirting, front band and wastage, then prices polishing, cutouts and fitting.",
+  steps: [
+    "Under Counter measurements enter Counter length (running feet), Platform depth (feet), Skirting height against the wall (inches), Front band height (inches), Wastage allowance (%) and the Granite rate (₹ per sq ft).",
+    "Under Cutouts and edges add Edges to polish (running feet), Sink cutouts with their length and width in inches, and Hob cutouts, then set the Labour and delivery rates.",
+    "Read Total platform cost with the square feet of granite ordered and the all-in cost per running foot, then press Copy result.",
+  ],
   intro:
     "This calculator converts a kitchen counter measured in running feet into the square feet of granite you actually have to buy, and prices the job line by line. Area is the counter length times its depth — 2 feet over standard Indian base units — plus the skirting upstand against the wall and the band under the front edge, all increased by a wastage allowance of around 8% to 10% for cutting loss. Sink and hob openings are charged as fabrication, not deducted from the area, because the slab is bought whole and the hole is cut from it; the offcut is usable stone and its size is reported so you can ask for it back.",
   useCases: [

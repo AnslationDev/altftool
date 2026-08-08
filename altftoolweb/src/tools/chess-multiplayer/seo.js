@@ -1,4 +1,7 @@
 const seo = {
+  title: "Pass-and-Play Chess With a Clock and SAN Notation",
+  metaDescription:
+    "Two players on one device: a legal-move engine with castling, en passant, promotion and every draw rule, plus clocks from bullet to 30-minute classical.",
   intro:
     "This is a full pass-and-play chess board for two people sharing one device, with a complete rules engine behind it: only legal moves are accepted, and castling, en passant, promotion, check and checkmate are all handled properly. It also recognises every standard draw — stalemate, insufficient material, the 50-move rule and threefold repetition — and runs a clock offering five choices on the New Match card, from 1-minute bullet up to 30-minute classical plus an Unlimited option. Move history is recorded in standard algebraic notation with correct disambiguation, alongside captured pieces and the running material count.",
   useCases: [

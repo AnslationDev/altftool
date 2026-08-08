@@ -1,4 +1,7 @@
 const seo = {
+  title: "Proxy Editing Storage Calculator for ProRes Workflows",
+  metaDescription:
+    "Sizes originals, proxies, render previews and cache separately, from ProRes rates scaled by pixel count. Only originals multiply across backups.",
   intro:
     "This calculator sizes every kind of file a proxy editing workflow puts on disk: camera originals (footage hours × acquisition data rate), proxies (the same hours at a codec rate scaled to the proxy's own pixel count), render previews (timeline length × preview codec rate, not footage length), and media cache as a share of the source media. It uses Apple's published ProRes target rates at 1920×1080 29.97 as the reference point — 45 Mb/s for Proxy, 102 for LT, 147 for 422 — and scales them by pixel rate. Backup copies multiply only the originals, because proxies, previews and cache can all be regenerated.",
   useCases: [

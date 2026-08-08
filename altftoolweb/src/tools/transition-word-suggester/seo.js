@@ -1,4 +1,12 @@
 const seo = {
+  title: "Transition Words by Relationship, With Punctuation",
+  metaDescription:
+    "94 connectives sorted by contrast, cause, result, sequence and more — each with its grammatical type and the comma or semicolon it takes.",
+  steps: [
+    "Pick a Relationship such as contrast or cause, narrow with the Register and Grammatical type selectors, or type a word like \"however\" into Search within the list.",
+    "Paste a draft into Your text under \"Check a paragraph you have written\" and tick \"Count everyday words too (and, as, for, if, so, since, while)\" to run the repetition scan.",
+    "Read the Transitions matched count with each entry's punctuation rule and example sentence, then press Copy list.",
+  ],
   intro:
     "A transition word suggester lists connectives by the relationship they express — contrast, cause, result, sequence, concession, condition and six more — rather than as one undifferentiated word bank. Each of the 94 entries is tagged with its grammatical type, which is what decides the punctuation: a conjunctive adverb like however takes a semicolon before it and a comma after, a coordinating conjunction like but takes a comma before it, and a subordinating conjunction like although takes a comma only when its clause comes first. A built-in scan reads a paragraph back and reports which connectives you are repeating.",
   useCases: [

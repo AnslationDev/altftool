@@ -1,4 +1,12 @@
 const seo = {
+  title: "Git Commit Metadata Checker: Email, Timezone, Hours",
+  metaDescription:
+    "Paste git log output to see the author email, UTC offsets, your busiest 8-hour window and off-hours share, scored out of 100 — parsed in your browser.",
+  steps: [
+    "Paste output of git log --date=iso-strict --pretty=\"%aI %ae %s\" into the 'Paste git log output' box, which opens on a sample; plain git log output parses too.",
+    "Parsing runs in the browser as you type, with no upload and no run button, scoring Identity out of 30, Location out of 20, Routine predictability out of 30 and Off-hours out of 20.",
+    "Read the exposure score out of 100, the UTC offsets seen, the busiest 8-hour window, the Weekend and 00:00-05:59 shares and the commits-by-local-hour chart, then press Copy result.",
+  ],
   intro:
     "Code Repository Metadata Explainer reads pasted git log output and reports the identity, location and routine it publishes: the author email attached to every commit, the UTC offset stored alongside each timestamp, the busiest eight-hour window of your day, and the share of commits landing at weekends or between midnight and 06:00. Parsing happens in your browser, and the score is a documented rubric — 30 points for identity, 20 for location, 30 for how concentrated your commit hours are, 20 for off-hours patterns. For developers who publish under their own name and would rather know what the history says about them.",
   useCases: [

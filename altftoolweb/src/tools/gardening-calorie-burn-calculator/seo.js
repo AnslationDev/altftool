@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gardening Calorie Calculator: MET Values by Garden Job",
+  metaDescription:
+    "Calories from MET x 3.5 x kg / 200 — watering 1.5, weeding 3.5, digging 5.0, push mowing 6.0 — with weekly MET-minutes vs the WHO 150-minute target.",
+  steps: [
+    "Enter Body weight, pick Weight unit — Kilograms (kg) or Pounds (lb) — and set Gardening sessions per week.",
+    "Under Minutes per session enter time against each job: Watering the lawn or garden at 1.5 METs, Weeding and cultivating beds at 3.5, Digging, spading, turning compost at 5.0 and Mowing with a push hand mower at 6.0, each showing its compendium code.",
+    "Read Calories per session with Average intensity, Burn rate, Calories per week, MET-minutes per week and the Against the WHO weekly target panel, then press Copy result.",
+  ],
   intro:
     "This calculator converts time spent on individual garden jobs into calories using the metabolic-equivalent formula kcal/min = MET x 3.5 x kg / 200, with the published lawn-and-garden MET values: 1.5 for watering, 3.5 for weeding, 4.0 for raking, 5.0 for digging and for power mowing, and 6.0 for a push hand mower. It then sorts those minutes into the WHO intensity bands — light below 3.0 METs, moderate 3.0 to 5.9, vigorous 6.0 and above — and shows how much of the 150-minute weekly moderate-activity target your gardening covers. Useful for gardeners who want their beds and borders counted properly as physical activity.",
   useCases: [

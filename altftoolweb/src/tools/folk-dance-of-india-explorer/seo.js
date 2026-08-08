@@ -1,4 +1,12 @@
 const seo = {
+  title: "Folk Dances of India: 51 Dances by State & Form",
+  metaDescription:
+    "51 Indian folk dances with the festival each belongs to, performers, instruments and costume. Filter by state, region or form; 3 are UNESCO-listed.",
+  steps: [
+    "Type into 'Search names, festivals, instruments and costumes' — the box suggests harvest, dhol, mask or Navratri.",
+    "Narrow the list with the 'State', 'Region', 'Form' and 'Performed by' selects to separate ritual, martial, folk-theatre and social dances.",
+    "Read each dance grouped under its state with Occasion, instruments and costume, plus the UNESCO inscription year where one applies, then press 'Copy result'.",
+  ],
   intro:
     "This explorer covers 51 Indian folk dances state by state, recording for each one the festival or occasion it belongs to, who performs it, the instruments that carry the rhythm, the costume and what the dance is actually about. It separates social folk dances such as Bhangra and Garba from ritual forms such as Theyyam and Padayani, martial forms such as Chhau and Thang Ta, and folk theatre such as Yakshagana and Raslila, because those are performed under very different conditions. Filters cover state, region, form and performers, and three entries carry their UNESCO intangible heritage inscription year.",
   useCases: [

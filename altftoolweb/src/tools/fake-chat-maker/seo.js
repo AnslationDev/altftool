@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fake Chat Maker: WhatsApp, iMessage & Discord Mockups",
+  metaDescription:
+    "Build labelled mock chat screenshots in six interfaces — WhatsApp, Instagram, Telegram, iMessage, KakaoTalk, Discord — and export SVG, 2x PNG or JSON.",
+  steps: [
+    "Pick one of the six interface templates — WhatsApp, Instagram, Telegram, iMessage, KakaoTalk or Discord — from the 'Create New' grid.",
+    "Fill in Person, Time, Status and 'Message text' and press 'Add Bubble', then set the phone clock, 'Battery %', 'Read ticks', 'Watermark' and 'Dark mode'.",
+    "'Export PNG' saves fake-chat-mockup.png at 2x the 430 px SVG; 'Export SVG' and the JSON button save fake-chat-mockup.svg and fake-chat-maker.json.",
+  ],
   intro:
     "The Fake Chat Maker builds mock messaging screenshots for storyboards, UI demos, scripts and social posts, in six interface styles — WhatsApp, Instagram, Telegram, iMessage, KakaoTalk and Discord. You write both sides of the conversation, set the names, avatars, timestamps, phone clock, battery level, read ticks and light or dark mode, and it renders a 430-pixel-wide phone frame you can export as SVG, as a PNG at 2x scale, or as JSON to reload later. It is a mockup builder, not an evidence generator: the labelling toggle is on by default and the tool warns you when you switch it off before a public export.",
   useCases: [

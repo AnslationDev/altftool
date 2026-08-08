@@ -1,4 +1,12 @@
 const seo = {
+  title: "Address Change Request Letter for Bank, School or RTO",
+  metaDescription:
+    "Write an address update letter to a bank, school, utility or RTO — with the right proof list, the 30-day section 49 deadline and the 2-month bill rule.",
+  steps: [
+    "Pick who you are writing to from the Writing to list — Bank or NBFC, School or college, Electricity board / discom, LPG / piped gas agency, Insurance company, Employer / HR department, Post office (redirection), RTO / registering authority or Telecom / broadband provider — then fill Date you moved (or will move), Date of this letter, Proof of address you are enclosing and Date on that document.",
+    "Complete Your full name, the recipient's own reference field, Old address and New address; the panel then reports RTO intimation due (30 days from the move), Address proof age, Usable as proof until (2 months) and Still within the two-month rule, alongside the documents that office usually accepts.",
+    "The Your address change letter section shows the finished draft with its word count; Copy letter puts the letter on the clipboard, Copy summary copies just the dates, and Reset restores the sample values.",
+  ],
   intro:
     "An address change request letter is the written intimation you send to a bank, school, utility, insurer, employer or RTO so they update the residential address held against your account, admission number, consumer number or vehicle registration. This builder swaps the addressee, reference field and accepted proof list to match whoever you are writing to, and it applies two hard rules: section 49 of the Motor Vehicles Act, 1988 gives you thirty days to intimate a new address to the registering authority, and the RBI's KYC Master Direction only accepts a utility bill that is under two months old as proof of address.",
   useCases: [

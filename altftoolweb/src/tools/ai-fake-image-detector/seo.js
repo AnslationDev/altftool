@@ -1,4 +1,7 @@
 const seo = {
+  title: "AI Fake Image Detector: 8 In-Browser Forensic Checks",
+  metaDescription:
+    "Eight weighted checks — noise, JPEG blocks, EXIF, lighting, texture, edges, colour, faces — score a JPEG, PNG, WebP or TIFF 0-100 in your browser.",
   intro:
     "The AI Fake Image Detector runs eight forensic checks on a JPEG, PNG, WebP or TIFF in your browser — noise consistency, JPEG compression artifacts, EXIF metadata, lighting distribution, texture gradients, edge sharpness, colour histograms and skin-tone face regions — and combines them into a single 0–100 AI-likelihood score. Each check is weighted (lighting 18, noise and texture 15 each, compression and edges 12, metadata and colour 10, faces 8) and then scaled by its own confidence, so a check that could not read much contributes less. It is a signal-gathering aid for anyone triaging a suspicious image, not a verdict.",
   useCases: [

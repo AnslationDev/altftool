@@ -1,4 +1,12 @@
 const seo = {
+  title: "ITR Deadline Tracker: Belated, Revised and ITR-U Dates",
+  metaDescription:
+    "Section 139(1) due date, the 31 December belated and revised cut-off, and the 48-month ITR-U window with the 25-70% section 140B additional tax.",
+  steps: [
+    "Pick an Assessment year from the list, shown as 'AY 2025-26 (income of FY 2024-25)', and set the Reference date you are counting from.",
+    "Under 'Which due date applies to you?' choose Individual / HUF, no audit, Accounts require tax audit (44AB), or Section 92E report applies.",
+    "Read the days left on the next deadline alongside the Due date under section 139(1), Belated return under section 139(4), Revised return under section 139(5), Updated return under section 139(8A) and the additional tax under section 140B if you file today, then press Copy result.",
+  ],
   intro:
     "This tracker maps every filing window for one Indian assessment year onto a calendar: the original due date under section 139(1), the belated and revised return cut-off under sections 139(4) and 139(5), and the updated return (ITR-U) deadline under section 139(8A) with the section 140B additional tax that applies in each slab. Choose the assessment year and whether your accounts need a tax audit or a section 92E report, and it returns the exact dates plus how many days are left on each one. It is meant for salaried filers, small business owners and accountants who need to know which door is still open for an old year.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Cost Per Conversation Calculator with Escalation",
+  metaDescription:
+    "Models the resent transcript that makes input tokens grow quadratically, adds prompt-cache rates and expected human escalation cost.",
+  steps: [
+    "Enter Assistant replies per conversation, System prompt + retrieved context tokens, Tokens in one user message and Tokens in one assistant reply.",
+    "Add Input price per 1M tokens, Cached input price per 1M tokens, Input tokens served from cache (%), and Conversations escalated to a human (%) with Agent minutes on an escalated conversation.",
+    "Read \"All-in cost per conversation\" split into model cost plus expected escalation, then press Copy result.",
+  ],
   intro:
     "The Cost Per Conversation Calculator prices a full multi-turn AI conversation, including the part most estimates miss: because chat APIs are stateless, every turn resends the system prompt and the transcript so far, so total input tokens grow as n*s + n*u + (u+a)*n(n-1)/2 rather than linearly with turns. It applies prompt-cache pricing to whatever share of input is cached, adds the expected cost of human escalation, and compares the all-in figure with handling the same conversation entirely by hand. Support, sales and product teams use it to set a defensible cost-per-contact number before committing to volume.",
   useCases: [

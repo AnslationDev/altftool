@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fractal Explorer: Mandelbrot, Julia, Burning Ship",
+  metaDescription:
+    "Render Mandelbrot, Julia, Burning Ship and Tricorn sets with typed centre coordinates, 50-2000 iterations and smooth colouring, then export a PNG.",
+  steps: [
+    "Pick Mandelbrot, Julia, Burning Ship or Tricorn from the Fractal Type select, then type exact Center X and Center Y values.",
+    "Drag Max Iterations (50 to 2000) and Escape Radius (2 to 20), and click the canvas to zoom in, right-click to zoom out, drag to pan.",
+    "Set Supersample to 2x or 3x, then press Export PNG to download the canvas as fractal-<timestamp>.png.",
+  ],
   intro:
     "Fractal Explorer renders four escape-time fractals — Mandelbrot, Julia, Burning Ship and Tricorn — on a canvas you can click to zoom, drag to pan and export as a PNG. Every pixel is iterated under z → z² + c (with the sign flips that define Burning Ship and Tricorn) until it passes the escape radius or hits the iteration cap, and the escape count is mapped through a two-colour gradient with optional smooth log-log shading. It is aimed at anyone who wants a specific, reproducible fractal image rather than a random one: the centre coordinates, zoom, iteration count and Julia constant are all typed in and visible.",
   useCases: [

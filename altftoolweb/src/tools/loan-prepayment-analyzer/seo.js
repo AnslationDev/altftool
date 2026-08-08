@@ -1,4 +1,12 @@
 const seo = {
+  title: "Prepay Loan or Invest? Break-Even Return Calculator",
+  metaDescription:
+    "Weighs interest saved by prepaying against the same money invested to the loan's original end date, and solves the break-even annual return.",
+  steps: [
+    "Enter Outstanding principal, Remaining tenure, Loan interest rate, Lump sum available, Extra monthly amount and Expected investment return.",
+    "Choose the Prepayment mode — 'Reduce tenure' keeps the same EMI, 'Reduce EMI' keeps the same tenure — and optionally 'Apply rough tax haircuts'.",
+    "The verdict names the winner and the margin at the loan's original end date, with the Break-even return percentage; 'Copy analysis' copies it.",
+  ],
   intro:
     "The Loan Prepayment vs Investment Analyzer answers one question with numbers: if you have spare money and a running loan, are you better off prepaying the loan or investing the same amount until the loan's original end date? It simulates the loan month by month from the EMI formula P x r x (1+r)^n / ((1+r)^n - 1), compares the interest saved against the future value of the same money compounded at your expected return, and solves for the break-even annual return at which investing starts to win. It is for anyone sitting on a bonus, a maturity payout or a monthly surplus and unsure where to put it.",
   useCases: [

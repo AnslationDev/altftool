@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mocktail Mixer: 46 Recipes From Your Own Shelf",
+  metaDescription:
+    "Tick what you have and get alcohol-free drinks in exact millilitres, with a ratio bar per pour and scaling from one glass to a pitcher for eight.",
+  steps: [
+    "Under What have you got?, tick the bottles on your shelf across juices, fizz, lemon/mint/ginger, fresh fruit, syrups, dairy and masala extras — use the Search an ingredient box or a Start from a preset shortcut, and Clear all to begin again.",
+    "Set Servings with the x1, x2, x4 or Pitcher x8 buttons, choose a Sweetness and a Tang level to rewrite only the sweet and sour quantities, or press Mix me something for a random pour from what is ready.",
+    "Mix it now lists every drink you can make, each with its pour in millilitres, a ratio bar and the method; One bottle away shows the drinks blocked by a single item, and Copy on any card puts that recipe on your clipboard.",
+  ],
   intro:
     "The Mocktail & Drink Mixer matches what is actually on your shelf against 46 alcohol-free recipes and returns each one as an exact pour in millilitres, plus a ratio bar showing what share of the glass is fizz, sour, sweet, creamy or flavour. Tick ingredients from 56 items across seven shelf groups — juices, fizz, lemon-mint-ginger, fresh fruit, syrups, dairy and masala extras — and the list splits into drinks you can make right now and drinks that are one ingredient short. Quantities scale straight from a single glass to a pitcher for eight, and separate sweetness and tang dials rewrite only the sugar and citrus amounts.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Audio Delivery Checklist: ACX, Podcast, R128 Specs",
+  metaDescription:
+    "Builds the file list per destination with real specs: ACX 192 kbps MP3, podcasts at -16 LUFS and -1 dBTP, EBU R128 at -23 LUFS, plus the gain change.",
+  steps: [
+    "Set The job: Project type such as Audiobook or Podcast episode, Total runtime (minutes), Chapters or parts and Channels.",
+    "Tick your Destinations, for instance ACX / Audible audiobook or Podcast RSS (Apple, Spotify), plus Also deliver extras such as Stems or Caption file (SRT/VTT).",
+    "Read Files to deliver with the estimated package size and the per-item Delivery list, then press Copy checklist.",
+  ],
   intro:
     "An audio deliverables checklist is the list of files a finished job actually has to ship — masters, per-platform encodes, stems, transcripts and artwork — each with the format, sample rate and loudness target its destination requires. This builder assembles that list from the destinations you pick and applies the published specs: ACX at 192 kbps MP3 with RMS between -23 and -18 dB, podcasts at -16 LUFS with true peak at -1 dBTP, EBU R128 broadcast at -23 LUFS ±0.5 LU, and streaming platforms normalising to about -14 LUFS. It also works out the gain change your mix needs to hit any of those targets.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Thai Visa Rejection Reasons: Funds, Bans, What to Fix",
+  metaDescription:
+    "Maps a Thai e-Visa refusal line to the rule behind it: the 20,000 baht benchmark, 500 baht/day overstay fine and the 1-to-10-year re-entry bans.",
+  steps: [
+    "Paste the wording from your refusal notice into the optional box and the page suggests the closest matching grounds with a percentage match.",
+    "Tick the grounds under Which reason was ticked on your notice? to see the requirement behind each, the baht figures and the fixes it needs.",
+    "Tick off fixes to raise Reapplication readiness, then press Copy result for the explanation and checklist before you reapply.",
+  ],
   intro:
     "This explainer takes the one-line rejection a Thai e-Visa application comes back with and connects it to the requirement behind it under the Immigration Act B.E. 2522 (1979). It covers the causes that account for most rejections - bank statements that do not meet the benchmark, photograph and passport specifications, missing accommodation or onward tickets, applying in the wrong visa class, applying to a mission that does not cover where you live - as well as the overstay bans and blacklist entries that no consular application can fix. Select what applies to see how serious it is and what to change.",
   useCases: [

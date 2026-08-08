@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chladni Pattern Simulator: 50-2000 Hz, Six Modes",
+  metaDescription:
+    "Draw Chladni nodal figures from 50 to 2000 Hz or 21 note buttons from C3 to B5, across six modes, with damping and 6,000 to 26,000 particles.",
+  steps: [
+    "Drag the Frequency slider between 50 and 2000 Hz, or tap a Musical Note button from C3 to B5.",
+    "Pick a Vibration Pattern — radial, star, mandala, square, hex or spiral — and move Damping between 0.001 and 0.030.",
+    "Raise Particles toward 26,000 while watching the FPS pill, then press Pause to freeze one nodal figure on the canvas.",
+  ],
   intro:
     "This cymatics simulator draws Chladni-style nodal figures by scattering thousands of particles across a virtual plate and keeping only the ones that land where the standing wave is near zero — the same thing that makes sand collect into lines on a bowed metal plate. Set a frequency from 50 to 2000 Hz, pick one of six vibration modes (radial, star, mandala, square, hex, spiral) and adjust damping, and the pattern redraws live on canvas. It is built for physics and music teachers, students and sound-art tinkerers who want to see how pitch changes geometry without setting up a signal generator and a plate.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "pH Scale Visualizer: H+ and OH- Concentration, 0-14",
+  metaDescription:
+    "Drag the slider from pH 0 to 14 and watch [H+] and [OH-] in mol/L, with eleven presets from battery acid at 0 to drain cleaner at 14.",
+  steps: [
+    "Drag the 'pH Level' slider across 0 to 14 in 0.1 steps, or press a Substance Preset such as Lemon Juice 2.0, Human Blood 7.4 or Bleach 13.0.",
+    "The pH Spectrum Bar pointer moves and the reading is classified Strongly Acidic, Weakly Acidic, Neutral, Weakly Alkaline or Strongly Alkaline.",
+    "Read the hydronium and hydroxide concentrations in mol/L in exponential form under 'Aqueous Ion Data'; 'Reset' returns the slider to pH 7.0.",
+  ],
   intro:
     "The pH Scale Visualizer turns any pH between 0 and 14 into the two numbers behind it — hydronium concentration from pH = -log₁₀[H⁺], and hydroxide concentration from the water constraint [H⁺][OH⁻] = 10⁻¹⁴ at 25 °C — and shows both in scientific notation as you drag the slider. Eleven household benchmarks from battery acid at pH 0 to drain cleaner at pH 14 snap the slider to a known value so the abstract number has something concrete attached. It is aimed at students meeting the logarithmic scale for the first time, and at anyone who needs to see why one pH unit is a tenfold change rather than a small step.",
   useCases: [

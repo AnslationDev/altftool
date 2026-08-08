@@ -1,4 +1,12 @@
 const seo = {
+  title: "Landlord PAN for HRA: the ₹1,00,000 Rent Threshold",
+  metaDescription:
+    "Test your annual rent against the ₹1,00,000 PAN limit, the ₹3,000 receipt relaxation and the ₹50,000 section 194-IB TDS trigger, shared flats included.",
+  steps: [
+    "Enter Total monthly rent for the house (INR), Months of rent paid this financial year and Your share of the rent (%) if you split the flat with someone.",
+    "Tick Landlord has given you a PAN or Landlord is a non-resident (NRI) as they apply, and pick the Section 194-IB rate to apply — 2% on or after 1 October 2024, or 5% up to 30 September 2024.",
+    "Annual rent paid by you comes back with the verdict on the landlord's PAN, your distance from the ₹1,00,000 threshold and any Rent TDS payable by you, plus a What you have to produce list marking each proof Required or Not mandatory.",
+  ],
   intro:
     "This checker tells you which rent proofs your HRA claim legally needs: it compares the rent you pay against the ₹1,00,000 annual limit at which CBDT Circular 8/2013 makes the landlord's PAN compulsory, the ₹3,000 monthly relaxation for rent receipts, and the ₹50,000 monthly trigger for section 194-IB rent TDS. Enter the total rent, how many months you paid and your share if you split the flat, and it returns the annual figure plus a checklist of what your employer and the Income Tax Department can ask for. It also shows the tax you would have to deduct yourself, including the 20% no-PAN rate capped at one month's rent.",
   useCases: [

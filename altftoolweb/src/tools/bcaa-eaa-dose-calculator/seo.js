@@ -1,4 +1,12 @@
 const seo = {
+  title: "BCAA and EAA Dose Calculator — Leucine per Serving",
+  metaDescription:
+    "Set a leucine target and get the grams of BCAA 2:1:1, 4:1:1, 8:1:1, EAA or whey it takes — with WHO/FAO daily requirements and whole-food equivalents.",
+  steps: [
+    "Enter 'Bodyweight (kg)' and pick a Supplement — BCAA 2:1:1, 4:1:1, 8:1:1, EAA blend (all 9), whey, casein or soy protein isolate.",
+    "Set 'Leucine target per serving (g)' between 1 and 6 and the servings per day; the Serving size in grams recalculates as you type.",
+    "Press 'Copy result' for the serving size, indispensable amino acids per serving and the WHO/FAO daily requirement at your bodyweight.",
+  ],
   intro:
     "A BCAA and EAA dose calculator works backwards from a leucine target: you choose how much leucine you want in a serving, and it returns the grams of BCAA 2:1:1, 4:1:1, 8:1:1, EAA blend or protein powder that delivers it. Roughly 2.5 to 3 g of leucine per feeding is the amount usually associated with a maximal muscle protein synthesis response, and 10 to 15 g of total indispensable amino acids is the matching per-serving figure. It also shows the WHO/FAO/UNU adult daily requirements for all nine indispensable amino acids at your bodyweight, and how much chicken, whey, tofu or milk supplies the same leucine.",
   useCases: [

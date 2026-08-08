@@ -1,4 +1,10 @@
 const seo = {
+  title: "Appliance Electricity Cost Calculator: Watts to Units",
+  steps: [
+    "Press a Quick Presets chip — Air Conditioner 1500 W, Refrigerator 250 W, Ceiling Fan 75 W, LED Bulb 12 W — or type your own Appliance Name and Power (Watts).",
+    "Fill Usage (Hrs/Day), Quantity and Rate (₹/kWh), which opens at 8.0, then press Add Appliance to put the row in the list.",
+    "Read Daily Consumption, Monthly Units, Monthly Bill and Top Consumer at the top, then use Export PDF, Download CSV or Reset All.",
+  ],
   intro:
     "The Appliance Power Usage Estimator converts an appliance's wattage, daily running hours and quantity into electricity units using kWh per day = watts × hours × quantity ÷ 1000, then multiplies by 30 for the month and 365 for the year and by your tariff to give a cost. Add every appliance in the house and it ranks them by monthly cost, names the biggest contributor, and exports the whole list as CSV or PDF. It ships with wattage presets for common appliances — 1500 W air conditioner, 2000 W water heater, 250 W refrigerator, 75 W ceiling fan, 12 W LED bulb — and defaults to a rate of ₹8.0 per unit that you can change.",
   useCases: [

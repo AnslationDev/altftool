@@ -1,4 +1,7 @@
 const seo = {
+  title: "Attendance Calculator: Classes You Can Skip at 75%",
+  metaDescription:
+    "Work out your attendance percentage, how many classes in a row you must attend to reach 75%, and how many you can still skip — with the algebra shown.",
   intro:
     "The Attendance Percentage Calculator works out your current attendance as attended ÷ total held × 100 and then answers the question that actually matters: how many classes in a row you must attend to reach the cutoff, using x ≥ (p × total − attended) ÷ (1 − p), or how many you can skip while staying above it, using z ≤ attended ÷ p − total. Enter the classes remaining in the semester and it also reports your maximum safe bunks, your final percentage if you attend everything, and your final percentage if you attend nothing. It shows the algebra behind each answer, with one-click targets at 65%, 70%, 75%, 80% and 85%.",
   useCases: [

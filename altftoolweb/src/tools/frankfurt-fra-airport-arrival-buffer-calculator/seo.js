@@ -1,4 +1,12 @@
 const seo = {
+  title: "Frankfurt Airport: When to Leave Home for FRA",
+  metaDescription:
+    "Work backwards from your FRA departure through gate close, passport control, security and bag drop to one leave-home time; Schengen flights skip it.",
+  steps: [
+    "Set 'Scheduled departure time' to the time printed on the ticket, then choose Flight type and Baggage — 'Checked bag to drop' or 'Cabin bag only, checked in online'.",
+    "Pick your origin under 'Starting from' and enter 'Driving time with no traffic (minutes)' so the traffic factor can be applied to the road leg.",
+    "Read the 'Leave home by' time alongside 'Be inside the terminal by', 'Bag drop / check-in closes' and 'Boarding gate closes', then press 'Copy plan'.",
+  ],
   intro:
     "This calculator turns a Frankfurt Airport departure time into the single time you need to leave home, working backwards through the boarding-gate close, passport control, security, bag drop and the drive itself. It applies the larger of three deadlines - the airport's advice of about 2 hours for a European flight and 3 hours for an intercontinental one, the airline check-in cut-off, and the time your own queue and walking estimates need - then subtracts the road journey after a traffic factor. Schengen departures skip passport control entirely, which is the single biggest difference between the two flight types.",
   useCases: [

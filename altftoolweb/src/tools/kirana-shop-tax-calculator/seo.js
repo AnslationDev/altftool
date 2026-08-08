@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kirana Shop Tax Calculator: 44AD, GST and Net Profit",
+  metaDescription:
+    "Build the trading account from stock and purchases, then compare tax on real profit with section 44AD at 6% digital and 8% cash receipts.",
+  steps: [
+    "Fill the Trading account block: Annual sales (turnover), Opening stock, Purchases during the year, Closing stock and 'Collected by UPI / card / bank (%)'.",
+    "Enter the Running costs lines, pick an Age category, add Section 80C and Section 80D, then tick 'Declare under section 44AD' or 'GST composition scheme' to price each route.",
+    "Read Income tax payable with the cheaper regime named, the Cost of goods sold to Net profit rows and the 44AD presumptive figure, plus Compliance flags for GST registration, books and audit; press Copy result.",
+  ],
   intro:
     "A kirana shop's taxable profit starts with the trading account — cost of goods sold is opening stock plus purchases minus closing stock, gross profit is sales minus that, and net profit is what survives rent, wages, electricity and delivery costs. This calculator builds that account, then computes income tax under both FY 2025-26 regimes and puts it beside the section 44AD presumptive figure of 6% on digital receipts and 8% on cash receipts, so a shopkeeper can see which basis costs less. GST registration, composition-scheme eligibility, books of account and audit thresholds are flagged from the same turnover figure.",
   useCases: [

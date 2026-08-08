@@ -1,4 +1,12 @@
 const seo = {
+  title: "Redis Key Naming Builder: app:env:tenant:entity:id",
+  metaDescription:
+    "Build a colon-separated Redis key convention with env, tenant and version segments and cluster hash tags, checked against 128 characters.",
+  steps: [
+    "Enter the App namespace, Entity (object type), Sample object id and an optional Trailing attribute, then choose a Separator.",
+    "Switch on the Environment segment, Tenant segment (multi-tenant), Schema version segment and Redis Cluster hash tag {…} as your scheme needs.",
+    "Read the worked example key, its Template and the character count against the 128-character guideline, then press Copy convention.",
+  ],
   intro:
     "This builder designs a namespaced Redis key convention — app:env:tenant:entity:id:attribute — following the object-type:id scheme recommended in the Redis documentation, with colon separators, optional schema-version segments and Redis Cluster hash tags. Every segment is validated against practical key hygiene: no whitespace or control characters, no separator collisions, no stray braces, case-consistency, and a length check against a 128-character team guideline (Redis itself allows up to 512 MB). It is for teams standardising cache and session keys before ad-hoc names spread through the codebase.",
   useCases: [

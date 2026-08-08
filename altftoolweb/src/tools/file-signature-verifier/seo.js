@@ -1,4 +1,12 @@
 const seo = {
+  title: "Check a File's Magic Bytes Against Its Extension",
+  metaDescription:
+    "Reads only the first 64 bytes locally and compares them with the extension and browser MIME across 22 signature families — PNG, %PDF-, PK ZIP, ELF.",
+  steps: [
+    "Press Choose file under Local file and pick any file on your machine; the complete file is never uploaded or opened.",
+    "Press Run local inspection — only the leading 64 bytes are read and matched against the signature table.",
+    "Read the verdict with the Extension check, MIME check and Bytes read rows plus the Leading signature bytes in hex, then press Download report to save file-signature-review.json.",
+  ],
   intro:
     "This tool reads the first 64 bytes of a file you pick on your own machine and compares that leading magic-byte signature against the file's extension and the MIME type the browser reports for it, then tells you whether the three agree. It recognises 22 common signature families — PNG (89 50 4E 47 0D 0A 1A 0A), JPEG (FF D8 FF), %PDF-, the PK ZIP headers behind DOCX/XLSX/APK/EPUB, gzip, 7z, RAR, OLE compound files, ELF, MZ executables, Mach-O, SQLite, WebAssembly, FLAC, Ogg, WAV, MP3, Matroska/WebM and ISO base media (ftyp). The verdict is consistent, mismatch, detected or unrecognised, plus the leading bytes in hex.",
   useCases: [

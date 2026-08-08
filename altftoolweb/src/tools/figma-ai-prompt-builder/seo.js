@@ -1,4 +1,12 @@
 const seo = {
+  title: "Figma AI Prompt Builder with Real Column-Grid Maths",
+  metaDescription:
+    "Build Figma AI prompts for wireframes, layer naming or dev handoff, with column width computed from your frame, gutter and margin, plus 8px grid checks.",
+  steps: [
+    "Click a frame preset — Desktop — 1440 x 1024, Tablet — 768 x 1024 or Mobile — 375 x 812 — or type Frame width (px), Columns, Gutter (px) and Side margin (px).",
+    "Pick \"What should the assistant do?\": Describe a wireframe, Clean up layer names, Plan component variants, Name design tokens, Audit the design system, Accessibility review or Write dev handoff notes, then name the screen or component.",
+    "Read the calculated column width and any off-8px-grid warnings, then press \"Copy prompt\" to take the prompt into Figma AI.",
+  ],
   intro:
     "Figma AI Prompt Builder writes a design prompt that carries real measurements instead of adjectives, working out your column width from the standard layout grid formula: (frame width − 2 × margin − (columns − 1) × gutter) ÷ columns. Choose the job — wireframe, layer naming scheme, variant plan, token names, system audit, accessibility pass or dev handoff — and the prompt arrives with fixed rules for each, including the 8-point spacing convention and Figma's slash-nesting rule for component names. It is for designers who keep getting back layouts described in vague spacing and layer names like Frame 27.",
   useCases: [

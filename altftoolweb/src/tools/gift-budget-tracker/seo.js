@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gift Budget Tracker: Per-Person Spend vs Budget",
+  metaDescription:
+    "Track one gift budget against actual spend per recipient, with an amber warning at 90% used, 7-day delivery alerts and CSV export.",
+  steps: [
+    "Open Edit Total Budget and set Total Budget ($), then press Add Gift for each recipient, gift, occasion, budget and actual spent.",
+    "Watch the banner turn amber at Approaching Budget Limit once 90% of the budget is used, and red when remaining budget drops below zero.",
+    "Press CSV to download gift_budget_tracker_export.csv with recipient, gift, occasion, category, priority, status, budget, actual spent and both dates.",
+  ],
   intro:
     "The Gift Budget Tracker keeps a running total of one overall gift budget against the actual amount spent per recipient, so remaining budget is simply total budget minus actual spending and each gift shows its own budget-versus-actual variance. Every gift you add carries a recipient, occasion, category, priority, status and optional purchase and delivery dates, and the list is saved in your browser so it survives a page reload. It is built for anyone running a multi-person gift list — a holiday season, a wedding party, a team's year-end presents — who needs to know what is left before buying the next one.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Battery Health and Lifespan Predictor from Habits",
+  metaDescription:
+    "Estimate capacity lost to age, heat, fast charging and full cycles, with an itemised penalty breakdown and a 12-month curve against gentler habits.",
   intro:
     "The Battery Health and Lifespan Predictor estimates how much capacity a lithium battery has likely lost by starting at 100 percent and subtracting modelled penalties for age, heat, charging habits, depth of discharge and workload, then projecting that curve out 3, 6 and 12 months. It is for anyone deciding whether a phone, laptop, EV or power bank is worth keeping, and it also plots a second curve showing where the same device would land on gentler habits. This is a habit-based model, not a reading taken from the battery's own controller, so treat the number as a planning estimate rather than a diagnostic.",
   useCases: [

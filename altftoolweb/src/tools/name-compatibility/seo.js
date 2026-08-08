@@ -1,4 +1,12 @@
 const seo = {
+  title: "Name Compatibility Calculator - Numerology Match Score",
+  metaDescription:
+    "Two names give Pythagorean Name, Soul Urge, Personality and Destiny numbers, plus love, friendship, soulmate and business scores. Fun, not science.",
+  steps: [
+    "Type a First Name and a Second Name into the Enter Names card.",
+    "Press Check Compatibility; every letter is scored on the Pythagorean scale and reduced to a single digit, except totals landing on the master numbers 11, 22 or 33, which are kept whole.",
+    "An overall score appears with a label from Cosmic Soulmates (85+) down through Perfect Match, Great Connection and Interesting Dynamic to Complex Bond, above a Score Breakdown of Love, Friendship, Soulmate and Business percentages and Numerology Profiles giving each name's Name Number, Soul Urge, Personality and Destiny.",
+  ],
   intro:
     "The Name Compatibility checker converts two names into Pythagorean numerology values — letters A–I map to 1–9, J–R repeat 1–9 and S–Z run 1–8 — and derives a Name number, Soul Urge from the vowels, Personality number from the consonants and a Destiny number for each person. It then scores four kinds of match, love, friendship, soulmate and business, on a 10–100 scale and averages them into one overall figure with a label such as Cosmic Soulmates or Complex Bond. It is a numerology-based entertainment tool, not a prediction: the arithmetic is fixed and repeatable, but nothing about it forecasts a real relationship.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "HAR File Sanitizer - Strip Cookies, Tokens and Bodies",
+  metaDescription:
+    "Remove Authorization and Cookie headers, tokens in URLs and request or response bodies from a HAR before you share it. Runs locally; 15M-character cap.",
+  steps: [
+    "Paste your capture into the HAR JSON box, press Choose file to pick a local .har or .json, or press Load HAR sample — the input is capped at 15,000,000 characters.",
+    "Under Sanitization options leave all five boxes ticked — Sensitive headers, Cookies, Sensitive URL values, Request bodies and Response bodies — and press Run local inspection.",
+    "The HAR privacy summary reports Entries, Headers removed, Cookies removed, URL secrets removed and Total removals, shows a Sanitized HAR preview, and Download report saves the cleaned copy as sanitized-network-log.har.",
+  ],
   intro:
     "This tool strips the secrets out of a HAR file before you attach it to a bug report or a support ticket. It walks every entry in log.entries and removes credential-bearing headers (Authorization, Cookie, Set-Cookie, Proxy-Authorization, x-api-key and the usual token headers), empties the request and response cookie arrays, drops sensitive query parameters such as token, access_token, code, password, secret and signature from both the queryString array and the URL itself, and deletes request and response bodies. Each of the five protections is a toggle, and the run reports exactly how many of each kind it removed.",
   useCases: [

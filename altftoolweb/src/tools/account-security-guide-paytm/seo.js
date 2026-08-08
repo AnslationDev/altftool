@@ -1,4 +1,12 @@
 const seo = {
+  title: "Paytm Security Checklist: 15 Weighted Controls",
+  metaDescription:
+    "Work through 15 weighted controls for app lock, UPI PIN, automatic payments, wallet top-up and Postpaid. Five are critical and hold the score at 69%.",
+  steps: [
+    "Tick the controls you already have under Login and app lock, UPI and PIN, Money controls and Scams and monitoring.",
+    "Set Target score (%) to list the shortest route there, highest-weight control first; the score is held at 69% while any Critical control is open.",
+    "Read the Hardening score, Controls completed, Weighted points and Critical controls missing, then press Copy result.",
+  ],
   "intro": "This guide is a weighted, 15-control checklist for a Paytm account: app lock, UPI PIN rules, automatic payments, wallet auto top-up, Postpaid limits and the scam patterns behind most UPI losses. The rule that matters most is an NPCI rule rather than a Paytm setting: the UPI PIN authorises money leaving your account and is never required to receive a payment. Five controls are marked critical, and the score is capped at 69% while any of them is missing, even if every other box is ticked. This is general security information, not financial advice; contact your bank and the 1930 helpline about any actual loss.",
   "useCases": [
     "Locking down the app after losing a phone, or before handing an old handset on.",

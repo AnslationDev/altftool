@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vitamin D Dose Schedule: Dates and Daily IU Average",
+  metaDescription:
+    "Turns 60,000 IU weekly or a monthly sachet into dated doses and an average daily IU, set against the 600 IU RDA and 4,000 IU adult upper limit.",
+  steps: [
+    "Fill Dose taken each time and choose Unit on the label: IU (International Units) or mcg / µg (micrograms).",
+    "Choose How often it is taken - Once a week, Once every 2 weeks or Once a month (same date) - then Number of doses in the course and First dose date.",
+    "Read the Average daily equivalent against the RDA, check the Dose dates table of dates and running totals, and press Copy schedule.",
+  ],
   intro:
     "This scheduler converts an intermittent vitamin D instruction — 60,000 IU once a week, 50,000 IU weekly, one sachet a month — into the exact calendar dates the doses fall on, and divides the course total by the days it covers to give the average daily intake in IU and micrograms. That average is compared against the Institute of Medicine reference values quoted by the NIH: an RDA of 600 IU a day for ages 1 to 70, 800 IU from 71, and a tolerable upper intake level of 4,000 IU a day for adults. It is a planning and understanding aid for a dose someone has already been given, not a dose recommendation.",
   useCases: [

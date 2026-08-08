@@ -1,4 +1,12 @@
 const seo = {
+  title: "When to Leave Home for Mumbai Airport (T1 or T2)",
+  metaDescription:
+    "Work backwards from your BOM departure through gate close, security, bag drop and the drive, with a monsoon traffic factor.",
+  steps: [
+    "Enter the Scheduled departure time from the ticket, pick the Flight type, and set Baggage to \"Checked bag to drop\" or \"Cabin bag only, checked in online\".",
+    "Choose your Starting from area, adjust \"Driving time with no traffic (minutes)\", and set Road conditions from \"Clear (night / early morning)\" to \"Severe (monsoon flooding, waterlogging, accident)\".",
+    "Read the Leave home by clock time and the step-by-step timeline, then press Copy plan.",
+  ],
   intro:
     "This calculator turns a Mumbai BOM departure time into the single time you need to leave home, by working backwards through the boarding-gate close, security, emigration, bag drop and the drive itself. It takes the larger of three deadlines - the reporting time the airport advises (2 hours domestic, 3 hours international at Chhatrapati Shivaji Maharaj International), your airline's bag-drop cut-off, and the time your own queue and walking estimates actually need - then subtracts the road journey after applying a traffic factor. Built for a city where the Western Express Highway can turn a 20-minute run into an hour.",
   useCases: [

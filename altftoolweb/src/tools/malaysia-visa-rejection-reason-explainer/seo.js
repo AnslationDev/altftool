@@ -1,4 +1,12 @@
 const seo = {
+  title: "Why Your Malaysia eVISA Was Rejected, and How to Fix It",
+  metaDescription:
+    "Match your eVISA refusal to the Immigration Act 1959/63 provision behind it, and see which defects are a same-week fix.",
+  steps: [
+    "Paste the wording from your refusal notice into the optional textarea, or skip it and go straight to the ground list.",
+    "Tick every ground under \"Which reason was ticked on your notice?\" — photograph or documents off specification, details not matching the passport, a previous overstay, or the arrival card confused with the visa.",
+    "Read the Reapplication readiness percentage with the count of fixes ticked off, then press Copy result.",
+  ],
   intro:
     "Malaysian eVISA applications are decided on the uploaded file, so most rejections come from the photograph, the passport scan, a data mismatch or missing travel evidence rather than from any judgement about the traveller. This explainer maps each cause to the provision behind it in the Immigration Act 1959/63 and the Immigration Regulations 1963, and separates the defects you can fix this week from the records - overstays, removals, monitoring-list entries - that no new paperwork can overcome. It also untangles the Malaysia Digital Arrival Card, which is a free declaration submitted before arrival and is not a visa.",
   useCases: [

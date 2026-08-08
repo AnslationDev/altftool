@@ -1,4 +1,7 @@
 const seo = {
+  title: "Fake Parcel SMS: Redelivery Fee Scam, Line by Line",
+  metaDescription:
+    "Paste a parcel-on-hold message and score it against 13 weighted markers; the link inspector reads the registrable domain, not the brand word. Runs in-tab.",
   intro:
     "This explainer takes the fake delivery SMS apart — the \"your parcel is on hold, pay a small redelivery fee\" message — and names the tell in each line, from the tiny fee that exists only to open a card form to the OTP that approves a far larger amount than the page shows. A scanner scores any message you paste against 13 weighted markers of the same family and inspects every link separately, reading the registrable domain rather than the brand word so indiapost-redelivery.top is shown for what it is. Written for anyone in India who gets three delivery messages a week and cannot check each one against an order.",
   useCases: [

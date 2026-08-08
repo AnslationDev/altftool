@@ -1,4 +1,12 @@
 const seo = {
+  title: "USB Drive Hygiene Checklist: Residual Risk Score",
+  metaDescription:
+    "Pick your USB scenario, tick the controls you use, and get a residual risk score out of 100 across six threats, plus the ones giving false comfort.",
+  steps: [
+    "Choose Your USB situation from the eight scenarios — a drive you found, a conference giveaway, a client handover, an air-gapped transfer, a print-shop kiosk, a charging port you do not control.",
+    "Under Controls you already have, tick only what you actually use: antivirus scanning, a throwaway virtual machine, a hardware write blocker, full-disk or hardware encryption, a data blocker or charge-only cable.",
+    "Read the Residual risk score out of 100 with Threats, largest residual first, then work the False comfort, Uncovered threats and Biggest wins available lists; Copy result saves the assessment.",
+  ],
   intro:
     "The USB Drive Hygiene Checklist scores the residual risk of a USB situation against the controls you say you have in place. Pick a scenario — a drive you found, a conference giveaway, a client handover, your own personal drive, moving files across an air gap, a print-shop kiosk, or charging a phone from a strange port — and tick the controls you actually use. Each control only reduces the specific threats it targets, so the tool can separate real coverage from controls that merely feel protective, and it names the false comfort out loud when a habit you rely on does not touch the biggest risk in that scenario.",
   useCases: [

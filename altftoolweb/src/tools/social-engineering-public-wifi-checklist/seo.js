@@ -1,4 +1,12 @@
 const seo = {
+  title: "Public Wi-Fi Safety Checklist, Weighted by Impact",
+  metaDescription:
+    "Score 11 controls that still change the outcome on a network you do not own, scaled by venue and activity, with your gaps ranked by weight.",
+  steps: [
+    "Set Where are you connecting? — cafe, airport, hotel, conference, transport or an open network with no obvious owner — and What will you do on it?, from casual browsing up to admin access to systems or customer data.",
+    "Tick the habits you already keep across the Non-negotiable, High impact and Useful groups, from never clicking through a certificate warning to forgetting the network when you leave; Tick everything and Clear all set them in one go.",
+    "The Residual risk index out of 100 arrives with its band, Controls in place, Coverage by weight, the Setting multiplier and Non-negotiable gaps, and Fix these first orders your missing controls by weight — Copy result saves the lot.",
+  ],
   intro:
     "The Public Wi-Fi Safety Checklist scores eleven controls that still change the outcome on a network you do not own, weights them by real impact, and scales the total by where you are and what you plan to do. It is built on how browsing works now: HTTPS already encrypts the content of nearly everything, so the meaningful risks are the ones that need your cooperation — clicking through a certificate warning, typing a Google or work password into a captive portal, installing something a portal demands, or joining a lookalike network. The output ranks your gaps by weight so you fix the two that matter instead of all eleven.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "What Layer Names and XMP Leak in Design Exports",
+  metaDescription:
+    "See which signals — layer names as SVG ids, hidden layers, linked paths, XMP ancestors — survive an SVG, PNG, PDF, live link or stripped export.",
+  steps: [
+    "Choose your delivery under How are you handing it over? — Send the working file (.psd / .ai / .indd / .sketch), Share a live link, Export SVG with default settings, Export PNG or JPG, Export a print or presentation PDF, or Flatten, then strip metadata from the export.",
+    "Under What is in the document?, tick each signal that is true of your file — Layer and group names, Hidden layers and rejected concepts, XMP document ancestors, Paths to linked source files, Slug area, printer marks and job numbers — every one tagged with its severity.",
+    "Read the Travelling with the hand-off score out of 100 with its exposure band, plus Reaching the recipient and High-severity items left, then work through Clean these before you send the files and press Copy result to take the fix list with you.",
+  ],
   intro:
     "Design File Metadata Explainer shows how client work escapes through the export rather than the presentation: layer and artboard names become SVG element ids and PDF layer names, hidden layers and masked image data stay in the file, linked assets record the full path to your client folders, and the XMP packet on a Photoshop export can list the document ancestry of everything pasted into it. Pick a hand-off method — source file, live link, SVG, raster, PDF or a flattened and stripped export — and see which of those signals still reaches the recipient. For studios and freelancers juggling several clients out of one folder.",
   useCases: [

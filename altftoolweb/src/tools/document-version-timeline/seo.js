@@ -1,4 +1,12 @@
 const seo = {
+  title: "Changelog to Version Timeline: Date, Owner, Theme",
+  metaDescription:
+    "Paste date | version | owner | summary lines and get a card per revision, themed Approval, Reporting, Governance or Content, with distinct owners counted.",
+  steps: [
+    "Paste your revision notes into the \"Date | version | owner | summary\" box, one revision per line — for example 2026-07-14 | v2.0 | Asha | Finalized executive summary.",
+    "The \"Versions\", \"Owners\" and \"Latest\" cards recount as you type, and any line missing one of the four fields is skipped instead of breaking the timeline.",
+    "Each revision becomes a Timeline card carrying its version badge, date and owner, with a Theme of Approval, Reporting, Governance or Content picked from keywords in the summary.",
+  ],
   intro:
     "The Document Version Timeline turns pipe-separated changelog lines — date | version | owner | summary — into a readable timeline card per revision, counting how many versions exist, how many distinct owners touched the document and which version is latest. Each entry is auto-labelled with a change theme: Approval when the summary mentions final, approve or sign; Reporting for budget, metric or table; Governance for compliance, legal or risk; and Content for everything else. It is for anyone who keeps revision notes in a text file and needs to show a stakeholder how a brief or policy actually evolved.",
   useCases: [

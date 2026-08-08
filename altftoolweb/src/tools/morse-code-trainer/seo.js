@@ -1,4 +1,12 @@
 const seo = {
+  title: "Morse Code Trainer with Audio Quiz and 5-40 WPM Tones",
+  metaDescription:
+    "Learn all 36 Morse characters in four groups, unlocked at 80% accuracy over 5 attempts, with tone playback at 5-40 WPM and a listening quiz.",
+  steps: [
+    "Open the Learn tab to see the chart for your unlocked group, which starts with E T A N I S.",
+    "Switch to Practice and tap \"Dot (.)\" or \"Dash (-)\" to build each character, or Quiz to hear a character and pick it from four options; Playback sounds typed text at 5 to 40 WPM.",
+    "Watch the Mastered count and the Group counter — a character counts as mastered at 80% accuracy over at least 5 attempts — with scores kept in your browser's local storage.",
+  ],
   intro:
     "The Morse Code Trainer teaches the 36 International Morse characters — 26 letters and 10 digits — in four progressive groups, unlocking the next set only once you can hit 80 percent accuracy over at least five attempts on every character in the current one. Six modes cover it from both directions: a reference chart, text-to-Morse and Morse-to-text conversion, tone playback at 5 to 40 WPM, a tap-the-dots practice drill, and a listening quiz that plays a character and asks you to name it. Per-character accuracy, streaks and unlocked groups are kept in your browser, so progress survives between sessions.",
   useCases: [

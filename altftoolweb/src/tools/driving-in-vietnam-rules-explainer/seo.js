@@ -1,4 +1,12 @@
 const seo = {
+  title: "Driving in Vietnam: Speed Limits, IDP, Zero Alcohol",
+  metaDescription:
+    "Vietnam drives on the right. Speed by vehicle class from Circular 31/2019, zero alcohol under Law 36/2024, and only a 1968 Vienna IDP is valid.",
+  steps: [
+    "Pick What are you driving? and What kind of road? — built-up with a median or 2+ lanes each way, ordinary two-way, outside built-up areas, or expressway (duong cao toc).",
+    "Set Where was your driving licence issued? and What permit do you already hold? — no international permit, a 1968 Vienna Convention IDP, a 1949 Geneva Convention IDP or a Vietnamese licence — plus Your age (years) and Days in Vietnam.",
+    "Read the Can you drive here? verdict, the speed limits for your vehicle class in km/h and mph, and the Alcohol band, then press Copy summary.",
+  ],
   intro:
     "This explainer sets out the road rules a visitor actually needs in Vietnam: which side you drive on, the default speed limit for your road and vehicle class, the alcohol law, and whether the driving licence in your pocket is recognised. Speed figures come from Circular 31/2019/TT-BGTVT, the alcohol rule from Article 9(2) of the Law on Road Traffic Order and Safety No. 36/2024/QH15, and the penalty bands from Decree 168/2024/ND-CP. It also settles the question most travellers get wrong: Vietnam is a party to the 1968 Vienna Convention and not to the 1949 Geneva Convention, so a Geneva permit is worthless here.",
   useCases: [

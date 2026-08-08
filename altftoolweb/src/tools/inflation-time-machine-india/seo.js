@@ -1,4 +1,12 @@
 const seo = {
+  title: "India Inflation Calculator: CPI FY 2011-12 Onwards",
+  metaDescription:
+    "Restates a rupee amount into another financial year on India's CPI (Combined) series from FY 2011-12, with cumulative and compound annual inflation.",
+  steps: [
+    "Enter the 'Amount (INR)' and choose the year it belongs to under 'In the money of financial year'.",
+    "Choose the target year under 'Restate into financial year'; years beyond the published series are marked (projected) and use the 'Assumed inflation after FY 2024-25 (%)' rate.",
+    "Read cumulative inflation, average annual inflation, purchasing power lost and the 'CPI index used' pair on FY 2011-12 = 100, then press 'Copy result'.",
+  ],
   intro:
     "This tool restates a rupee amount in the money of a different financial year by chaining India's published annual average all-India CPI (Combined) inflation rates into a price index. It runs in both directions — forward to show what an old salary or price would need to be today, and backwards to express a current figure in older money — and reports cumulative inflation, the compound average annual rate and the share of purchasing power lost. Because a single consistent rural-plus-urban index only exists from FY 2011-12, the series starts there rather than splicing on the older and non-comparable CPI-IW.",
   useCases: [

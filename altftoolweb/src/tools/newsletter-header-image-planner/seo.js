@@ -1,4 +1,12 @@
 const seo = {
+  title: "Newsletter Header Image Size and Retina Export Planner",
+  metaDescription:
+    "Get export pixels, phone render size, the smallest text that still reads at 14px and a KB budget for a 600px-wide email header.",
+  steps: [
+    "Enter Email body width (px) — 600 is the standard — then choose an Aspect ratio, Export multiplier and Image format.",
+    "Set Phone viewport width (px), Body padding each side (px) and a Weight budget (KB) so mobile scaling and file weight are both checked.",
+    "Read the export dimensions, the phone render size as a percentage of design size, and the Smallest text that still reads at 14px, then press Copy plan.",
+  ],
   intro:
     "An email header image has to be exported at twice its display size for high-density screens, then survive being scaled down again on a phone — and this planner does that arithmetic. Enter the body width (600px is the long-standing standard), an aspect ratio and a phone viewport, and it returns the export dimensions, the size the header actually renders at on the phone, the smallest text you can draw inside the image and still have it read at 14px, and whether your file-weight budget is realistic for the format you picked. It also runs the dark-mode and Outlook checks that catch most broken headers.",
   useCases: [

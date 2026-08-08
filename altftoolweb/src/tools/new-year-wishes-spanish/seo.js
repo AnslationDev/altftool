@@ -1,4 +1,12 @@
 const seo = {
+  title: "Spanish New Year Wishes for Tú, Usted and Ustedes",
+  metaDescription:
+    "Feliz Año Nuevo greetings written out for tú, usted, vosotros and ustedes, each with stress-marked pronunciation, English meaning and its SMS count.",
+  steps: [
+    "Fill in Their name (optional) and Who is it for?, then set Address form — Automatic (match the relationship), or tú, usted, vosotros or ustedes yourself — plus Grammatical gender, Occasion, Tone and Which year.",
+    "Choose How many messages and a Pronunciation guide accent, and tick Show pronunciation and Show SMS-safe version; Other wordings reshuffles the phrasing without changing your settings.",
+    "Your message shows the greeting with its English meaning, the address form used and the SMS unit and segment count; each card below carries its own pronunciation line and SMS-safe text, with Copy per message or Copy all for the set.",
+  ],
   intro:
     "Spanish New Year Wishes Generator writes a complete greeting — salutation, wish and sign-off — for the relationship and tone you pick. Spanish marks respect and number in the pronoun, the object clitic and the verb ending all at once, so \"te deseo\", \"le deseo\", \"os deseo\" and \"les deseo\" are four different sentences rather than one with a word swapped; every wording here is written out separately for tú, usted, vosotros and ustedes. Each message comes with a syllable-by-syllable pronunciation guide with the stress marked, a plain English meaning so you can check what you are sending, and the number of SMS parts it needs.",
   useCases: [

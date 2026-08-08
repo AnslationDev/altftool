@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ideal Weight Calculator: Devine, Robinson, Miller, Hamwi",
+  metaDescription:
+    "Run all four ideal body weight formulas from one height, adjust for a small, medium or large frame, and switch between WHO and ICMR BMI cut-offs.",
+  steps: [
+    "Choose Gender, then enter Height in cm or switch the toggle to ft + in and fill Feet and Inches; add your Age, pick kg or lb as the Weight unit and enter Your current weight.",
+    "Set Frame size to Small, Medium or Large — or type a Wrist circumference and press Apply to let the height ÷ wrist ratio pick it — then choose WHO standard or Asian / Indian (ICMR) under BMI standard.",
+    "Your healthy target range and Current BMI appear above a weight scale for your height, and \"Every classic formula, side by side\" lists Hamwi, Devine, Robinson and Miller with each formula's year, ideal weight and frame-adjusted figure; Copy report copies the lot and Reset to defaults clears it.",
+  ],
   intro:
     "This calculator runs the four classic ideal body weight formulas side by side — Hamwi (1964), Devine (1974), Robinson (1983) and Miller (1983) — each of which starts from a base weight at 5 feet and adds a fixed amount per inch above it, then adjusts the result for a small, medium or large frame. Alongside them it gives a healthy weight range from your height and a BMI band, using either the WHO cut-offs (18.5–24.9) or the lower ICMR Asian ones (18.5–22.9), and shows where your current weight sits. It is a general-information estimate, not a clinical target — a doctor or dietitian should set an actual goal weight.",
   useCases: [

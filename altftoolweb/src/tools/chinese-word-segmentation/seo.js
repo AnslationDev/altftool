@@ -1,4 +1,7 @@
 const seo = {
+  title: "Chinese Word Segmentation With Intl.Segmenter (zh-Hans)",
+  metaDescription:
+    "Tokenise Chinese, Hindi and Latin text by script using the browser's ICU segmenter, up to 12,000 characters, with per-token labels and TXT or JSON export.",
   intro:
     "Chinese is written without spaces, so before you can count words or process a sentence you have to decide where each word ends — this tool does that using the browser's built-in Intl.Segmenter with word granularity and the zh-Hans locale. It first splits your text into runs by script, detecting Chinese, Hindi, Latin and numeric characters, then segments each run with the right locale, so a mixed sentence is tokenised correctly rather than being forced through one rule. Each token is listed with its script, character length and an optional gloss you supply, and the whole result exports as TXT or JSON.",
   useCases: [

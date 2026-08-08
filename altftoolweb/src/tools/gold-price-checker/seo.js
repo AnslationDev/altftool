@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gold Price Checker: XAU, XAG, XPT, XPD by Gram or Oz",
+  metaDescription:
+    "Gold, silver, platinum and palladium rates in 10 currencies, per troy ounce, gram or kilogram, converted at 31.1035 g per troy ounce.",
+  steps: [
+    "Choose your Currency from the ten codes (USD, EUR, GBP, INR and more) and a Weight Unit of Troy Ounce (oz), Gram (g) or Kilogram (kg).",
+    "Press Refresh Prices, or tick Auto-Refresh (60s) to re-check the source every 60 seconds.",
+    "Read the gold (XAU), silver (XAG), platinum (XPT) and palladium (XPD) cards, and use the Weight Converter below to move between ounces, grams and kilograms.",
+  ],
   intro:
     "Gold Price Checker fetches the current market rate for gold and three other precious metals — XAU, XAG, XPT and XPD, the ISO codes for gold, silver, platinum and palladium — and shows the price per troy ounce, per gram or per kilogram in any of ten currencies. The per-gram figure is derived by dividing the ounce price by 31.1035, the number of grams in a troy ounce, so the units line up with how jewellers and refiners actually quote. It also includes a standalone weight converter for moving between ounces, grams and kilograms, and an optional auto-refresh that re-checks the source every 60 seconds.",
   useCases: [

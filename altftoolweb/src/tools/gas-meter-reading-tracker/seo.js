@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gas Meter Reading Tracker - PNG Bill in SCM and Slabs",
+  metaDescription:
+    "Log piped gas meter readings in SCM to get SCM per day, a next-cycle bill on your own telescopic slabs plus fixed charge and VAT, and the LPG equivalent.",
+  steps: [
+    "Under \"Meter readings in SCM, oldest first\", enter a Reading 1 date and Meter value (SCM) for each reading, using \"Add a reading\" to append rows.",
+    "Copy your distributor's card into \"Tariff slabs from your bill\" — a Slab 1 up to (SCM) limit and Rate (₹ per SCM) for each block, with the final row covering everything above the previous limit — then set Billing cycle (days), Fixed charge per cycle (₹), State VAT on the bill (%) and People in the household.",
+    "\"Estimated bill for the next cycle\" gives the projected total, with rows for Average use in SCM per day, Projected consumption this cycle, Slab energy charge, Effective cost per SCM and \"Same energy as LPG\" in 14.2 kg cylinders, plus a table showing how each slab priced the cycle; Copy result copies it all.",
+  ],
   intro:
     "This tracker converts a log of piped natural gas meter readings into SCM per day, a projected next bill, and the LPG-cylinder equivalent of what the kitchen burns. Consumption is the difference between two readings in standard cubic metres, and the bill is rebuilt the way a city gas distributor computes it: telescopic slabs where each block of SCM is charged at its own rate, plus a fixed charge per cycle and state VAT — domestic PNG is outside GST. Slab limits, rates, the cycle length and the tax rate are all yours to set from your latest bill, because tariff cards differ by distributor and are revised regularly.",
   useCases: [

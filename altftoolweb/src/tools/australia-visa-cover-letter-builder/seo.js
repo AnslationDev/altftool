@@ -1,4 +1,12 @@
 const seo = {
+  title: "Australia Subclass 600 Visitor Visa Cover Letter",
+  metaDescription:
+    "Frames the genuine visitor test in clause 600.211, tests condition 8558's 12-months-in-18 limit, and flags the 3-month study cap.",
+  steps: [
+    "Fill in the Applicant card — Full name (as in passport), Nationality, Passport number, Passport expiry date, Occupation, Employer or institution, Home address, and Email and phone.",
+    "Under \"Application and trip\" set the Subclass 600 stream, Purpose of visit, Application (lodgement) date, Arrival in Australia, Departure from Australia, \"Days in Australia in the last 18 months\" and the visa application charge per applicant, then add the Itinerary (one line per leg), Accommodation, Australian host or sponsor, Funds available (AUD) and Ties to your home country.",
+    "\"Length of stay\" reports the days and which 3, 6 or 12-month stay period covers them, the grid adds days in the 18-month window out of 365, days left under condition 8558, funds per person per day and the total application charge, and \"Your statement\" holds the finished letter that Copy letter puts on the clipboard.",
+  ],
   intro:
     "The Australia Visa Cover Letter Builder writes the personal statement that supports a Visitor visa (subclass 600) application, built around the genuine visitor requirement in clause 600.211 of the Migration Regulations 1994. It works out which standard stay period — 3, 6 or 12 months from arrival — covers your dates, adds your planned trip to days already spent in Australia to test the twelve-months-in-eighteen limit under condition 8558, and reminds you that study on a visitor visa stops at three months. Written for tourists, family visitors and business travellers preparing their own ImmiAccount lodgement.",
   useCases: [

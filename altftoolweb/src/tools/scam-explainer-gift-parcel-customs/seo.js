@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gift Parcel Customs Fee Scam: Score It, Check the Duty",
+  metaDescription:
+    "Score the parcel-stuck-at-customs demand on 12 weighted red flags and compare it with real Indian duty - gifts up to Rs 5,000 CIF are exempt.",
+  steps: [
+    "Tick every line under What has happened so far?; each carries a weight of 1 to 4 and three are tagged decisive.",
+    "Fill Declared parcel value (INR), Amount they are demanding (INR), Basic customs duty rate (%) and IGST rate (%), and tick Treat it as a bona fide gift.",
+    "Compare the Red-flag score with Duty actually payable and the only lawful ways duty is collected, then press Copy result to keep a record.",
+  ],
   intro:
     "The gift parcel customs fee scam is an advance-fee fraud in which an online contact claims to have posted you a valuable gift, then a fake customs officer demands a release fee that no real customs process would ever charge. This explainer walks the eight stages of the script, scores your own encounter against a weighted twelve-point red-flag checklist, and computes what Indian customs would genuinely levy — bona fide gifts up to a CIF value of INR 5,000 are duty free under Notification 171/93-Cus, and anything above that is assessed at a published rate with an itemised Bill of Entry you can verify.",
   useCases: [

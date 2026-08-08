@@ -1,4 +1,12 @@
 const seo = {
+  title: "Thai Airways Baggage Allowance and Excess Fee Checker",
+  metaDescription:
+    "Check bags against TG weight allowances from 20 to 50 kg, the 56x45x25 cm and 115 cm cabin rules, and Americas 2-piece routes.",
+  steps: [
+    "Choose your Cabin, fare or route, then give the cabin bag its Weight (kg) and Length, Width and Height in cm.",
+    "Press Add bag for each checked bag and enter its weight and dimensions, then set the Currency and Excess rate per kg for your sector.",
+    "Read which bags breach the 115 cm cabin total or the free allowance, how many kg you are over and the Estimated excess charge, then press Copy result.",
+  ],
   intro:
     "This checker tests your bags against Thai Airways' published cabin and check-in limits and reports how far over you are. Thai uses a weight concept on almost the whole network — a single allowance in kilograms, from 20 kg on the cheapest Economy fares up to 50 kg in Royal First, shared across every checked bag — and switches to IATA piece rules of 2 × 23 kg or 2 × 32 kg on journeys to and from the Americas. The cabin bag is judged against two rules at once: 56 × 45 × 25 cm per side and 115 cm for the three sides added together, so a case built to the maximum on every side measures 126 cm and fails.",
   useCases: [

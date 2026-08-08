@@ -1,4 +1,12 @@
 const seo = {
+  title: "TC Request Letter for School with RTE Section 5(3)",
+  metaDescription:
+    "Builds a transfer certificate application from admission number, class, reason and date needed, citing RTE section 5(3) only for classes I to VIII.",
+  steps: [
+    "Under Student and dates, set Who is the TC for?, Class (1 to 12), Date of birth, Last day of attendance and New school needs it by.",
+    "Complete Names and contact with the student name, admission number, school and addressee, and untick All fees and dues are cleared if fees are outstanding.",
+    "Read the draft under Your TC request letter with its word count, then press Copy letter to paste it into an email or print it.",
+  ],
   intro:
     "A transfer certificate request letter is the written application a parent or student gives the head of an institution asking for the TC that releases the student's record so they can join elsewhere. This builder assembles that letter from the admission number, class, reason for transfer and the date the new school needs it, and it checks the student's age and class against the Right to Education Act, 2009 so the letter cites section 5(3) only when that rule actually applies. Section 5(3) requires the school last attended to issue the transfer certificate immediately for a child in classes I to VIII.",
   useCases: [

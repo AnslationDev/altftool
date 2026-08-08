@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kids Game Permission Audit: What to Revoke and Why",
+  metaDescription:
+    "Score the 16 permissions a child's game can hold, from precise location to the Advertising ID, and see which to revoke and exactly what each one breaks.",
+  steps: [
+    "Enter the Player's age (years) and tick what the game honestly does — voice chat, photo or avatar import, map-based play, same-room multiplayer.",
+    "Under Permissions the game currently has, tick each of the 16 permissions it holds, using Select all or Clear all to start quickly.",
+    "Read the Exposure score out of 100, the red-flag count and the Revoke these now list, which names the feature each revoke breaks.",
+  ],
   intro:
     "This audit scores the permissions a children's game app holds on a phone and tells you which to revoke, which to keep, and exactly what each one breaks. It weighs 16 real Android and iOS permissions — from ACCESS_FINE_LOCATION and READ_CONTACTS to the Advertising ID and accessibility services — by how much harm they cause on a child's device, then escalates the verdict when a high-harm permission has no gameplay justification. Guidance is anchored to COPPA (16 CFR Part 312) for under-13s, India's DPDP Act 2023 section 9 for under-18s, and the Google Play Families and Apple Kids Category store rules.",
   useCases: [

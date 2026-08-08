@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gift Finder: 3 Questions, 28 Curated Gift Ideas",
+  metaDescription:
+    "Pick occasion, relationship and budget and get a shortlist from 28 gift ideas across 8 occasions and 3 price bands under $50 to $150+.",
+  steps: [
+    "On What's the occasion? pick birthday, anniversary, wedding, graduation, festival, Valentine's, Mother's or Father's Day.",
+    "Answer Who is this gift for?, choose a budget of Under $50, $50 - $150 or $150+, and press Get Recommendations.",
+    "Read the matching ideas under Your Personalized Gift Recommendations, or press New Search to change occasion, relationship or budget.",
+  ],
   intro:
     "Gift Finder is a three-question suggestion wizard: pick the occasion, pick who the gift is for, pick a price band, and it filters a built-in list of 28 curated gift ideas down to the ones that match all three. The occasions cover birthday, anniversary, wedding, graduation, festival, Valentine's Day, Mother's Day and Father's Day; the relationships run from spouse or partner through parent, child, sibling, friend, colleague, grandparent and other family. It is for anyone staring at a blank search box a week before an event who just needs a starting shortlist rather than another endless product feed.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pet Boarding Consent Form + Daily Food Portions",
+  metaDescription:
+    "Build a kennel consent form with vet treatment authority and a spend cap, plus daily grams from RER = 70 x kg^0.75 and your food's kcal per 100 g.",
+  steps: [
+    "Fill the 'Owner, pet and facility' block — owner and alternative contact, facility, pet, breed, microchip and the drop-off and collection dates — and tick 'Vaccinations are in date and the certificate is available'.",
+    "Under Feeding pick 'Species and life stage' (each option shows its x RER factor) and enter 'Weight (kg)', 'Food energy (kcal per 100 g)' and 'Meals per day'.",
+    "Set the vet, 'Treatment authorised without calling me' cap and the group play, grooming and photo permissions, then press 'Copy form' to take the finished agreement.",
+  ],
   intro:
     "A pet boarding consent form is the document a kennel needs before it can feed, exercise and, if things go wrong, get veterinary treatment for an animal in its care. This generator writes that agreement and works out the feeding sheet alongside it, using the standard small-animal energy equation RER = 70 x bodyweight(kg)^0.75 multiplied by the life-stage factor for your pet, then converting the result to grams using the calories printed on the food bag. Useful to owners filling in a booking and to boarding facilities that want one form covering vet authority, medication handover, activity permissions and charges.",
   useCases: [

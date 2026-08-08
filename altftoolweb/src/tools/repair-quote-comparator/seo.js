@@ -1,4 +1,12 @@
 const seo = {
+  title: "Repair Quote Comparator: Totals, Warranty, Exclusions",
+  metaDescription:
+    "Paste quotes as Provider | parts | labour | other | hours | warranty | exclusions, add your tax rate, and rank tax-inclusive totals cheapest first.",
+  steps: [
+    "In the \"Repair quotes\" box, paste one quote per line as Provider | parts | labour | other | turnaround hours | warranty | exclusions.",
+    "Set \"Tax rate to add (%)\" — 18 by default, or 0 when the quotes you were given already include tax.",
+    "Read the ranked Provider / Subtotal / Total / Hours / Warranty / Exclusions table with the lowest total named, then Copy it or Download repair-quote-comparator.txt.",
+  ],
   intro:
     "The Repair Quote Comparator turns competing repair estimates into one ranked table: it adds parts, labour and other charges into a subtotal, applies your tax rate (18% by default) to get the real total, and sorts the quotes cheapest first while keeping each one's turnaround hours, warranty terms and exclusions visible in the same row. It is for anyone holding two or more workshop or service-centre quotes that are written in different formats and hard to line up. Enter one quote per line as Provider | parts | labour | other | hours | warranty | exclusions and you get totals that are actually comparable.",
   useCases: [

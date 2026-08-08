@@ -1,4 +1,12 @@
 const seo = {
+  title: "Standing Desk Routine: Sit-Stand Blocks and Heights",
+  metaDescription:
+    "Build a sit-stand rotation, see the real standing minutes against the BJSM 2-hour target, and get desk, seat and monitor heights from your body height.",
+  steps: [
+    "Enter Start time, Workday length (hours), Stand block (minutes), Sit block (minutes) and your Body height (cm).",
+    "Pick a Standing target level — standing blocks are capped at 60 minutes to avoid one long uninterrupted stint.",
+    "Read Standing accumulated against that target, the standing desk, seat and monitor heights in cm, and the Time / Mode / Cue rotation table.",
+  ],
   intro:
     "This planner converts your working day into an alternating sit-stand rotation and tells you exactly how many minutes you end up standing, with micro-movement prompts every 30 minutes of standing. It also derives your standing desk, seated desk, chair and monitor heights from your body height using 50th-percentile adult proportions from Pheasant's Bodyspace anthropometric tables. The daily targets follow the 2015 British Journal of Sports Medicine expert statement on the sedentary office, which recommends at least two hours a day of standing and light activity during work hours, building towards four.",
   useCases: [

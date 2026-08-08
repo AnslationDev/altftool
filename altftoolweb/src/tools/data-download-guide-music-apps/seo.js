@@ -1,4 +1,12 @@
 const seo = {
+  title: "Spotify Data Export: 3 Tiers, 5 to 30 Day Waits",
+  metaDescription:
+    "Spotify splits an export into three requests: account data in about 5 days, extended streaming history and technical logs in up to 30.",
+  steps: [
+    "Tick the files you want under Choose the data — extended streaming history, playlists, library, search history or inferences — each tagged with its request tier.",
+    "Enter Years on the service, Listening per day (minutes) and Average track length (minutes) under Describe your listening.",
+    "Read the Estimated archive size, Separate requests to submit and Longest tier wait, then press Copy plan.",
+  ],
   intro:
     "A Spotify data export is not one request but three separate tiers, each with its own confirmation email and its own wait: account data, which Spotify quotes at about 5 days, and extended streaming history and technical log information, both quoted at up to 30 days. This planner shows which tier each file belongs to, estimates how many individual play records your history holds from your daily listening time and average track length, and flags the files that reveal your routine rather than your taste. Apple Music, YouTube Music and Amazon Music are requested through their own portals, not through Spotify.",
   useCases: [

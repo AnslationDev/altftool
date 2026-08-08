@@ -1,4 +1,12 @@
 const seo = {
+  title: "Yoga Calorie Estimator From Published MET Values",
+  metaDescription:
+    "Calories from MET x 3.5 x kg / 200 across twelve yoga styles, with the net-of-resting figure, MET-minutes and share of 150 weekly minutes.",
+  steps: [
+    "Pick a Yoga style from the twelve listed with their MET numbers — Hatha 2.5, Surya Namaskar 3.3, Power 4.0 — then set Session length (minutes) and Sessions per week.",
+    "Enter your Body weight and switch Weight unit between kilograms and pounds.",
+    "Calories this session shows the kcal total and the kcal per minute at that MET, with Net of resting metabolism, MET-minutes, whether it Counts as moderate intensity and the share of the 150 min weekly target, plus a table of every style at your weight.",
+  ],
   intro:
     "This estimator converts a yoga session into calories using MET values and the standard ACSM relationship: kcal per minute = MET × 3.5 × body weight in kg ÷ 200. Four of the twelve styles use MET values published directly in the Compendium of Physical Activities — Hatha at 2.5, Surya Namaskar at 3.3, Power at 4.0 and breath-led practice at 2.0 — and the rest are positioned against those anchors and labelled as estimates. It also shows the net figure after subtracting resting metabolism, MET-minutes, and whether the style is intense enough to count toward the 150 minutes of weekly moderate activity recommended for adults.",
   useCases: [

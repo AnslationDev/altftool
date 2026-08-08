@@ -1,4 +1,10 @@
 const seo = {
+  title: "Emergency Fund Calculator: Months of Cover You Need",
+  steps: [
+    "Choose a Currency, then enter Essential monthly expenses and Loan & card instalments a month.",
+    "Set How your income is earned and People depending on this income, and tick Only one earner in the household or Household has health insurance.",
+    "Read the Emergency fund target and Runway recommended, then open the table headed How the months were built to see each factor.",
+  ],
   intro:
     "An emergency fund calculator sizes the cash you should keep liquid as a number of months of essential outgo — rent or mortgage, food, utilities, transport, insurance and any contractual loan instalment. This tool starts from the standard three-month floor, adds months for freelance or commission income, dependants, a single-earner household and missing health cover, caps the result at twelve months, and then raises it if you expect a job search to take longer than the score suggests. Amounts are shown in the currency you pick, so the same model works whether you are budgeting in rupees, dollars or euros.",
   useCases: [

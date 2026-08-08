@@ -1,4 +1,12 @@
 const seo = {
+  title: "18:6 Fasting Window Planner with Hydration Schedule",
+  metaDescription:
+    "Sets your 6-hour eating window and 18-hour fast, then times drinks from the EFSA 2.5 L / 2.0 L intake minus the ~20% water food supplies.",
+  steps: [
+    "Set 'Anchor the window to' to your first meal or last bite, enter that time, and set 'Eating window length (hours)'.",
+    "Pick the 'Water intake reference' (2.5 L a day for men, 2.0 L for women), then enter 'Training per day (minutes)' and a 'Sweat rate while training' of 0.4, 0.6 or 0.8 L/h.",
+    "Read the drink-by-drink hydration schedule with its Time and Amount columns plus 'Sodium in that sweat', then press 'Copy result'.",
+  ],
   intro:
     "The 18:6 Fasting Window Planner lays out a two-meal, 6-hour eating window and the 18-hour fast that surrounds it, then solves the problem a short window creates: hydration. Around 20% of daily water normally arrives with food, so a 6-hour window pushes most of the day's fluid into the fasting hours — the planner works from the EFSA adequate intake of 2.5 litres of total water a day for men and 2.0 for women, adds an allowance for training sweat at 0.4 to 0.8 litres an hour, and turns the result into timed drinks. It also estimates the sodium lost in sweat against the WHO guidance of under 2000 mg a day.",
   useCases: [

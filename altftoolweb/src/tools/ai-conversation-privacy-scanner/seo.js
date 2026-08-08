@@ -1,4 +1,10 @@
 const seo = {
+  title: "AI Chat Privacy Scanner: Redact PII in Your Browser",
+  steps: [
+    "Paste the log into Chat text or export JSON, or use Open file to load a .json or .txt export of up to 2 MB; anything past 5,000 messages is cut off with a truncation warning.",
+    "Pick a Redaction style — Stable labels, Partial masking or Remove values — narrow the list under Choose detector categories, then press Scan locally.",
+    "Read Messages, Flagged, Signals and Format above the redacted transcript, then use Copy transcript, Download TXT for redacted-ai-conversation.txt, or Counts-only report for ai-conversation-privacy-report.json.",
+  ],
   intro:
     "The AI Conversation Privacy Scanner reads a pasted chat log or an exported ChatGPT/Claude-style JSON file in your browser and flags personal data and credentials across 15 detector categories — names, emails, phone numbers, addresses, dates of birth, Aadhaar, Indian PAN, passport numbers, US SSN, payment cards, bank accounts, IBAN, IP addresses, MAC addresses, and API keys, tokens and passwords. It rebuilds the conversation as a redacted transcript you can copy or download, plus a counts-only JSON report that contains no conversation text. Nothing is uploaded — the parsing and the pattern matching both run in the tab.",
   useCases: [

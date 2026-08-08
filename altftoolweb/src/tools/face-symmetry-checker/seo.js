@@ -1,4 +1,12 @@
 const seo = {
+  title: "Face Symmetry Checker: 68 Landmarks, 6 Feature Pairs",
+  metaDescription:
+    "Detects 68 facial landmarks in your browser and scores eyes, brows, cheeks, jaw, nose and lips against the nose-bridge midline.",
+  steps: [
+    "Drag an image onto \"Upload a clear front-facing photo\", or click to browse and pick one from your device.",
+    "Detection runs in the page and draws the 68-point landmark overlay with the nose-bridge symmetry line and a confidence badge over your photo.",
+    "Read the Symmetry Score percentage and the Feature Breakdown for eyes, brows, cheeks, jaw, nose and lips, then press Analyze Another for a different shot.",
+  ],
   intro:
     "The Face Symmetry Checker detects 68 facial landmarks in a front-facing photo and scores how evenly six paired features sit either side of your facial midline: eyes, brows, cheeks, jaw, nose and lips. Each pair is scored as the ratio of the shorter side's distance from the midline to the longer side's, times 100 — so a left eye corner 90 px out and a right at 100 px scores 90% — and the overall figure is the average of the six. The landmark model runs in your browser, and the result comes with an overlay showing the detected points, the midline drawn through the bridge of the nose, and the paired measurements.",
   useCases: [

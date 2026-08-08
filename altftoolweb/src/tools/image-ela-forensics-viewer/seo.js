@@ -1,4 +1,12 @@
 const seo = {
+  title: "Error Level Analysis (ELA) Viewer With Residual Stats",
+  metaDescription:
+    "Re-encodes your JPEG, PNG or WebP in the browser at 30-95% quality and reports mean, RMS, median, p95 and p99 residuals per region. No verdict given.",
+  steps: [
+    "Press \"Choose raster image\" and pick a local JPEG, PNG or WebP up to 20 MB; SVG is refused, and sources over 6,000 px per edge or 16 megapixels are rejected before decode.",
+    "Set JPEG re-encode quality between 30% and 95%, Heatmap display gain from 1x to 30x, and the Numerical region grid to 2 x 2, 4 x 4 or 8 x 8, then press \"Run local ELA\".",
+    "Compare the residual heatmap against the Mean, Median, 95th percentile, Maximum and Non-zero pixels cards, then press \"Download summary JSON\" for image-ela-numerical-summary.json.",
+  ],
   intro:
     "The Image ELA Forensics Viewer re-encodes your image as a JPEG at a quality you choose, subtracts it from the original, and renders the per-pixel residual — the mean of the absolute red, green and blue differences — as a gain-adjusted grayscale heatmap with numeric statistics. It reports mean, RMS, median, 95th and 99th percentile, maximum and non-zero pixel share for the whole frame and for each cell of a grid up to 8 x 8. It deliberately produces no authenticity verdict: Error Level Analysis shows where a second compression pass changed pixels, which is not the same as showing where an image was edited.",
   useCases: [

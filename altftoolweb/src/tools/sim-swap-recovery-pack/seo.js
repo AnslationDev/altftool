@@ -1,4 +1,12 @@
 const seo = {
+  title: "SIM Swap Recovery Checklist: 24 Actions, 5 Domains",
+  metaDescription:
+    "Orders 24 recovery actions across carrier, bank, email, sessions and evidence. No phone number, account name or secret is ever entered.",
+  steps: [
+    "Tick what you noticed under What did you observe? and the categories under Which account groups may be linked? - no phone number or account name is asked for.",
+    "Work down Your prioritised recovery order, carrier and SIM control first, then bank, email and sessions, ticking off each of the 24 actions.",
+    "Mark saved items under Evidence preserved outside this tool, then press Download counts for a sim-swap-recovery-counts-YYYY-MM-DD.txt file holding totals only.",
+  ],
   intro:
     "The SIM Swap Recovery Pack turns what you are seeing — sudden loss of mobile service, an unrequested SIM or eSIM notice, sign-in codes that stopped arriving — into an ordered recovery checklist across five domains: carrier and SIM control first, then bank and payment, primary email, account sessions, with evidence preservation running throughout. You tick the symptoms you observed and the account types tied to that number, and it prioritises 24 recovery actions accordingly. It asks for no phone number, no account name and no secret of any kind, and the only file it produces is a counts-only summary.",
   useCases: [

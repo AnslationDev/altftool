@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cycling Cadence Calculator: Speed, Gear Inches, Gain",
+  metaDescription:
+    "Enter chainring, cog, wheel circumference and cadence for speed in km/h, gear ratio, development per crank turn, gear inches and crank-aware gain ratio.",
+  steps: [
+    "Enter Chainring (teeth), Rear cog (teeth) and Cadence (rpm), then pick a Wheel and tyre or type your measured Wheel circumference (mm).",
+    "Set Crank length (mm), which the gain ratio depends on, and a Target speed (km/h, optional) to see the cadence that gear would need.",
+    "Read the speed in km/h with gear ratio, development per crank turn, gear inches and gain ratio, plus the 60 to 120 rpm sweep.",
+  ],
   intro:
     "Cadence, gearing and speed are locked together by one relationship: one turn of the cranks moves the bike forward by (chainring ÷ cog) × wheel circumference, so speed in km/h is simply that development in metres times cadence times 60, divided by 1000. This calculator applies it and also reports gear inches (ratio × wheel diameter in inches) and Sheldon Brown's gain ratio (wheel radius ÷ crank length × ratio), which is the only common measure that accounts for crank length. Wheel circumferences come from the standard rollout tables used by cycle computers, and you can enter your own measured figure.",
   useCases: [

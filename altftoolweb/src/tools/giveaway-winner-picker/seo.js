@@ -1,4 +1,12 @@
 const seo = {
+  title: "Random Giveaway Winner Picker with a Published Seed",
+  metaDescription:
+    "Draws winners with a seeded Fisher-Yates shuffle and prints the seed, so the same list and seed reproduce the same names. Duplicates handled.",
+  steps: [
+    "Paste one name per line into the Entries box, adding x3 or , 3 after a name to give that entrant extra tickets.",
+    "Set Winners to draw and Alternates (backup winners), tick One ticket per person (merge duplicates) if repeats should count once, then press Draw again.",
+    "Read the winners above the Draw seed row and press Copy result to save the names and seed, so anyone can re-run the same draw.",
+  ],
   intro:
     "The Giveaway Winner Picker draws winners from a pasted entry list using a seeded mulberry32 random generator and the Fisher-Yates shuffle — the standard unbiased shuffle, in which every possible order is equally likely. It is built for creators and small brands running comment or email giveaways who need the draw to be defensible: the seed is published with the result, so anyone with the same list can re-run it and get the same names. Duplicate entries are detected and can either be merged to one ticket each or counted as extra tickets, and winners are drawn without replacement so nobody wins twice.",
   useCases: [

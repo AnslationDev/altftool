@@ -1,4 +1,12 @@
 const seo = {
+  title: "Concrete Volume Calculator: m³, Cement Bags, Sand",
+  metaDescription:
+    "Slab, column or sloped-footing volume in m³ and cft, then 50 kg cement bags, sand, aggregate and water by IS 456 mix from M5 to M25.",
+  steps: [
+    "Choose the Member shape — Rectangular (slab, beam, footing, square column), Circular column / pile or Trapezoidal (sloped footing) — and the Dimension unit in m, cm, mm, ft or in.",
+    "Type the dimensions and Number of identical members, then pick a Concrete grade such as \"M20 — 1 : 1.5 : 3\", a Wastage allowance (%) and a Water-cement ratio.",
+    "Read \"Concrete to order\" in m³ and cft with the Dry material volume (x 1.54) line and Cement bags (50 kg), then press Copy result.",
+  ],
   intro:
     "A concrete volume calculator converts the dimensions of a slab, beam, column, pile or sloped footing into the cubic metres of concrete to order and the cement, sand, aggregate and water inside it. Volumes come straight from the geometry — length × width × depth for rectangular members, πr²h for circular columns and the frustum formula h/3 × (A₁ + A₂ + √(A₁A₂)) for sloped footings — then the placed volume is multiplied by the 1.54 dry-volume factor and split by the IS 456:2000 nominal mix ratio you pick. It is written for site engineers, contractors and self-builders who need a purchase list, not just a number.",
   useCases: [

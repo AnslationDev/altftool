@@ -1,4 +1,12 @@
 const seo = {
+  title: "UK Tipping Calculator: 10% and Service Charge",
+  metaDescription:
+    "Work out a UK tip at the customary 10%, taken before any discretionary 12.5% service charge, with rates for cabs, hotels, porters and guides.",
+  steps: [
+    "Pick the Service — Restaurant, table service; Pub, drinks at the bar; Black cab or private hire; Porter, per bag; Tour guide — and enter Bill as printed (GBP).",
+    "Set How was the service? to Nothing extra, As expected (10%) or Excellent (12.5%), fill Taxes and service already on the bill (%), and tick the service-charge box.",
+    "Read the Customary tip, the Amount the percentage applies to, the Effective rate on the printed bill and Per person, then press Copy result.",
+  ],
   "intro": "This calculator applies customary British tipping ranges — around 10% for table service, nothing at all for drinks bought at the pub bar, £1-2 a bag for porters — and works the percentage out before any discretionary service charge so the two are never stacked. It is written for visitors and for anyone unsure whether an automatically added 12.5% means they are done. UK tipping is modest because hospitality staff are paid at least the statutory minimum wage, and since the Employment (Allocation of Tips) Act 2023 took effect on 1 October 2024 employers must pass 100% of tips and service charges on to workers.",
   "useCases": [
     "Decide whether to add anything after a London restaurant has already put 12.5% service on the bill.",

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Media Release Checklist: Model, Music & Drone Clearances",
+  metaDescription:
+    "Describe the shoot and where it runs; get only the releases and licences that apply, split into required and recommended, with a residual-risk score.",
+  steps: [
+    "Set 'Type of use', 'Music in the piece' and the Channels it runs on, then tick what is in the material — recognisable people, minors, stock assets, drone, AI likeness.",
+    "The list rebuilds into Required and Recommended items, each carrying the doctrine or regulator that puts it there.",
+    "Tick items as they are signed and watch 'Clearance readiness', 'Residual risk score' and 'Safe to publish on this checklist'; 'Copy checklist' exports the list.",
+  ],
   intro:
     "A media release checklist is the list of signed permissions and licences a photo, audio piece or video needs before it can be published — model and property releases, music sync and master licences, stock and archive terms, location agreements and drone authorisation. This builder asks what is in the material and where it will run, then returns only the clearances that actually apply, separated into required and recommended, and scores how much residual risk is left unticked. Written for producers, marketers, agencies and independent creators who need to know what is still outstanding before a launch date.",
   useCases: [

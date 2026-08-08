@@ -1,4 +1,12 @@
 const seo = {
+  title: "TikTok Caption Checker: 2,200 Chars and Safe Zones",
+  metaDescription:
+    "Count a TikTok caption by code point against the 2,200 limit, see what shows before more, and test text against 1080x1920 safe zones.",
+  steps: [
+    "Paste your draft into the Caption box and set a Hashtag target (soft limit).",
+    "Read Characters remaining against the 2,200 limit, the Hashtags and Mentions character split, and What shows before \"more\" at 100 characters.",
+    "Enter Frame width (px), Frame height (px) and the Text box left, top, width and height to see safe-zone overlap, then press Copy result.",
+  ],
   intro:
     "The TikTok Caption Spec Checker measures a caption against TikTok's 2,200 character field and tests whether burned-in on-screen text clears the app's interface. It counts characters by Unicode code point (so an emoji counts once, not twice), separates hashtag and mention characters from the readable hook, shows the opening 100 characters that appear before the \"more\" link, and maps a text block against the standard 1080 x 1920 safe-zone margins used in creator templates. Built for editors and social managers who need a caption and a title card to survive the upload without being clipped or covered.",
   useCases: [

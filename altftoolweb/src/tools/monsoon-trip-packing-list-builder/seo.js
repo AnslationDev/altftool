@@ -1,4 +1,12 @@
 const seo = {
+  title: "Monsoon Packing List Sized by Humidity and Rainfall",
+  metaDescription:
+    "Sizes the list from drying time at your humidity and the IMD 24-hour rainfall band, and drops the wash-mid-trip assumption when nothing dries.",
+  steps: [
+    "Enter Trip length (days), Travellers, Relative humidity (%), Rainfall per day (mm) and \"Laundry every N days (0 = none)\", then tick \"Quick-dry wardrobe (synthetic / merino)\" or \"Sandals only, no closed shoes\" if either applies.",
+    "The panel converts that into an IMD 24-hour band — Light rain at 2.5-15.5 mm, Moderate rain at 15.6-64.4 mm, Heavy rain at 64.5-115.5 mm — and reports the drying multiplier plus hours for quick-dry fabric, cotton, denim and soaked shoes.",
+    "\"Items to pack\" gives the count and approximate weight, the grouped list underneath can be ticked line by line, a red note appears when nothing you wash will dry inside the 12-hour overnight window so the list is sized for the whole trip, and Copy list exports it as text.",
+  ],
   intro:
     "This builder sizes a monsoon packing list from the two things that actually decide it: how long fabric takes to dry at the local humidity, and how hard it rains. Drying time is modelled as reference-hours divided by (1 − RH/100), so at 88% humidity everything takes roughly eight times longer than it would in dry air — and if a garment cannot dry within one overnight window, the laundry credit is withdrawn and you pack for the full trip. Rain gear steps up with the India Meteorological Department 24-hour rainfall bands, from light rain at 2.5-15.5 mm through moderate at 15.6-64.4 mm to heavy at 64.5-115.5 mm.",
   useCases: [

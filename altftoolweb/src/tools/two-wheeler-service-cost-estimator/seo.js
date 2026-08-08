@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bike Service Cost Estimate by Odometer and CC",
+  metaDescription:
+    "Itemised two-wheeler service bill: engine oil for the cc band, only the wear parts due at that odometer, labour and 18% GST.",
+  steps: [
+    "Enter Engine capacity (cc), \"Odometer at this service (km)\", \"Service interval (km)\" and \"Riding per year (km)\".",
+    "Pick an Engine oil grade of Mineral, Semi-synthetic or Full synthetic, optionally override the oil price per litre, and set Workshop type to Authorised service centre, Multi-brand chain or Local mechanic.",
+    "Read the Estimated service bill with each part, why it is due at this odometer, and 18% GST on parts and labour, then press Copy result.",
+  ],
   intro:
     "This estimator turns an odometer reading into a periodic service bill for a bike or scooter: engine oil for the displacement band, every wear part whose replacement interval falls inside the current service window, chain lube and shop consumables, workshop labour and 18% GST. A part is treated as due when the odometer crosses a multiple of its interval since the last service — the same rule printed in OEM maintenance charts, so a 12,000 km service picks up the air filter and spark plug while a 9,000 km service does not. It is built for owners who want to sanity-check a workshop estimate before signing the job card.",
   useCases: [

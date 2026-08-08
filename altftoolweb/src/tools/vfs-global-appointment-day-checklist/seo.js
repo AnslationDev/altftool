@@ -1,4 +1,12 @@
 const seo = {
+  title: "VFS Global Appointment Checklist + Leave-Home Time",
+  metaDescription:
+    "Build a carry, wear and leave-behind list for your VFS centre visit — scheme-aware, with biometric age rules and a leave-home time from your slot.",
+  steps: [
+    "Choose the centre — Schengen, United Kingdom (UKVI), Canada (IRCC), Australia or another country's VFS centre — and enter the applicant's age.",
+    "Enter 'Appointment time (24h)', 'Travel time to the centre (minutes)' and a contingency buffer to get a 'Leave home by' time.",
+    "Tick items off; 'Essentials ticked off' counts the make-or-break ones, and 'Copy checklist' takes the carry, wear and leave-behind list with you.",
+  ],
   intro:
     "This checklist covers the day of a VFS Global visa application centre appointment — the documents to carry, how to turn up so the biometric photo and fingerprint capture actually work, and what security will refuse at the door. It adjusts to the scheme you are applying under and the applicant's age, applying the client governments' own biometric age rules: Schengen skips fingerprints under 12, the UK under 5, and Canada collects biometrics only from ages 14 to 79. It also works backwards from your slot to a leave-home time, using the roughly 15 minutes before the appointment that centres ask you to arrive.",
   useCases: [

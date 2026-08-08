@@ -1,4 +1,12 @@
 const seo = {
+  title: "Docstring Prompt Builder for JSDoc, TSDoc, rustdoc",
+  metaDescription:
+    "Build an AI prompt carrying one convention's exact skeleton, tag spelling and column limit — 72 columns for PEP 8 docstrings, 100 for rustfmt.",
+  steps: [
+    "Choose a Documentation convention — JSDoc, TSDoc, Google style, numpydoc, Sphinx, Javadoc, Doxygen, C# XML, rustdoc or Go doc — and a Detail level.",
+    "Paste 10 to 12,000 characters into Code to document, then tick Document parameters, Document the return value, Document errors / exceptions and Include a usage example.",
+    "Check the Line limit row — 72 columns under PEP 8, 100 under rustfmt — and Language detected in snippet, then press Copy prompt.",
+  ],
   intro:
     "The Code Comment Prompt Builder turns a documentation convention into a ready-to-paste AI prompt that carries that convention's exact skeleton, tag spelling and column limit. It covers ten published standards — JSDoc 3 block tags, TSDoc, Google-style and numpydoc Python docstrings, Sphinx reST field lists, Javadoc, Doxygen, C# XML documentation comments, rustdoc and Go doc comments — and pins each to its own line width, such as PEP 8's 72-column docstring limit or rustfmt's 100. It is for developers who want ChatGPT, Claude or Copilot to emit comments their linter and doc generator accept on the first pass.",
   useCases: [

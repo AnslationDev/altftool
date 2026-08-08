@@ -1,4 +1,12 @@
 const seo = {
+  title: "Whole30 Macro Planner: Palms, Cups, Fat Portions",
+  metaDescription:
+    "Mifflin-St Jeor calories and per-kg protein turned into the Whole30 meal template - palms of protein, cups of veg and added-fat portions.",
+  steps: [
+    "Enter Sex (for the BMR equation), Age (years), Weight (kg), Height (cm), Activity level and Goal, then set Protein (g per kg body weight).",
+    "Set Non-starchy vegetables (cups/day), Starchy vegetables (cups/day) and Fruit servings per day — all your carbohydrate comes from those.",
+    "Read the Daily calorie target and the \"Meal template (3 meals, no snacking)\" in palms and cups, then press Copy result.",
+  ],
   intro:
     "This planner converts your body size and activity into a Whole30 day: a protein target set per kilogram of body weight, carbohydrate that comes only from the vegetables and fruit you choose, and dietary fat sized to close the remaining calorie gap. Energy needs use the Mifflin-St Jeor equation and an activity factor, and the finished grams are translated back into the programme's own units — palms of protein, cups of vegetables and added-fat portions across three meals. It also lays out the full elimination list, including the exceptions such as ghee, green beans and fruit juice that trip people up in week one.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vacuum Suction Calculator: Air Watts, Pa and HEPA",
+  metaDescription:
+    "Enter floor area, carpet pile, pets and allergies to get a machine type, minimum air watts and pascals, filtration grade, bin size and battery runtime.",
+  steps: [
+    "Enter Floor area to clean with Area unit set to Square metres (m²) or Square feet (ft²), then choose Dominant flooring from hard floors to high-pile, shag or deep wool carpet.",
+    "Set Pets in the home, Levels to clean and Machine preference, and tick 'Someone in the home has allergies or asthma'; the recommendation updates with no calculate button.",
+    "Read the Recommended machine plus Minimum suction in AW and Pa, Filtration, Bin or bag capacity and Battery runtime needed in 40-minute packs, then press Copy result or Reset.",
+  ],
   intro:
     "This selector converts your floor area, pile depth, pet load and allergy status into a concrete vacuum specification: machine type, minimum suction in both air watts and pascals, filtration grade, bin capacity and the battery runtime the home actually needs. Air watts follow the ASTM F558 definition — 0.117254 × airflow in CFM × sealed suction in inches of water — while pascals describe sealed suction alone, which is why cordless and corded machines are given separate targets. It is written for anyone comparing spec sheets who wants to know which numbers matter for their floors rather than which brand markets hardest.",
   useCases: [

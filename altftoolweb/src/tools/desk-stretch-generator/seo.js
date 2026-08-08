@@ -1,4 +1,12 @@
 const seo = {
+  title: "Desk Stretch Routine Generator: 2, 5, 10 or 15 Min",
+  metaDescription:
+    "Fills the minutes you have with stretches for neck, shoulders, wrists, hips and eyes, rotating areas, with timed 15-30 second holds.",
+  steps: [
+    "Pick your Time available — 2 min, 5 min, 10 min or 15 min — and tick Target areas from Neck, Shoulders, Upper back, Lower back, Wrists, Hips, Legs and Eyes.",
+    "Set Intensity to Gentle or Moderate, and under \"What you have\" select Chair, Desk or Wall so only stretches you can actually do are drawn.",
+    "Press Start guided routine to run the sequence with 15 to 30 second holds, a countdown ring, per-side prompts and chimes at each transition.",
+  ],
   intro:
     "The Desk Stretch Routine Generator assembles a stretch sequence that fits the time you actually have — 2, 5, 10 or 15 minutes — by filling that second budget from a library of 65 stretches covering neck, shoulders, upper back, lower back, wrists, hips, legs and eyes. It rotates between the body areas you pick so consecutive moves never hit the same area, holds each position for 15 to 30 seconds, runs both sides where the stretch is one-sided, and counts you through with a ring timer and chimes. It is for anyone who has been at a desk too long and wants a routine that starts now rather than a video to schedule.",
   useCases: [

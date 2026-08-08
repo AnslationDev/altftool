@@ -1,4 +1,7 @@
 const seo = {
+  title: "Acronym Generator: Phrase to Initials, or Backronym",
+  metaDescription:
+    "Takes the first letter of every word in your phrase, or expands letters into a backronym from a tech, business, creative or health word list.",
   intro:
     "The Acronym Generator works in both directions: give it a phrase and it takes the first letter of every whitespace-separated word and uppercases them into an acronym, or give it a set of letters and it builds a backronym by matching each letter to a word from one of four themed vocabularies — tech, business, creative or health. It is aimed at anyone naming a project, product, team or process who needs the initials and the expansion to line up. Results are deterministic, so the same letters and theme always return the same expansion, and the copy button hands you the finished 'ACRONYM: expanded words' string.",
   useCases: [

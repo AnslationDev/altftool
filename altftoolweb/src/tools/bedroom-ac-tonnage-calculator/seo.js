@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bedroom AC Tonnage Calculator: BTU to 0.8-2.5 Ton",
+  metaDescription:
+    "Sizes a bedroom AC from area, ceiling height, roof and sun exposure, occupants and electronics, rounding up to 0.8, 1, 1.5, 2 or 2.5 ton.",
+  steps: [
+    "Fill Room length (ft), Room width (ft), Ceiling height (ft), People sleeping in the room and Electronics left running in the room (watts).",
+    "Choose Sun exposure and Climate, and tick Top floor with a sun-exposed roof directly above when a sun-baked slab sits over the bedroom.",
+    "Read the Recommended AC size in tons alongside the BTU/hr load and every multiplier, then press Copy result.",
+  ],
   intro:
     "This calculator estimates the cooling load of a bedroom in BTU per hour and converts it to air-conditioner tonnage, where one ton of refrigeration equals 12,000 BTU/hr. It starts from a base load of about 80 BTU/hr per square foot at a 10 ft ceiling under Indian summer design conditions, then applies the standard field corrections: ceiling height, a sun-exposed roof overhead, window sun exposure, climate zone, occupants beyond two at 600 BTU/hr each, and the waste heat of electronics at 3.41 BTU/hr per watt. The result is rounded up to the nearest capacity actually sold — 0.8, 1, 1.5, 2 or 2.5 ton.",
   useCases: [

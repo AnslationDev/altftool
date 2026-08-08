@@ -1,4 +1,12 @@
 const seo = {
+  title: "JSON to Query Params, form-data & urlencoded Converter",
+  metaDescription:
+    "Convert JSON to query params, form-data or x-www-form-urlencoded and back, with tags[] / tags / tags[0] array styles, headers and a cURL command.",
+  steps: [
+    "Paste the payload into the Live Input Editor, or use Upload for a .json, .txt or .csv file.",
+    "Choose a Conversion Mode - JSON to Query Params, JSON to form-data, JSON to x-www-form-urlencoded, Params to JSON or Raw JSON - and an Array Handling chip: tags[], tags or tags[0].",
+    "Copy the Synced Output Preview or Download it as output.json or params.txt, with Dynamic Headers and Dynamic cURL generated beside it.",
+  ],
   intro:
     "This converter moves an API payload between the four shapes a request can take — nested JSON, a query string, a form-data key list and an x-www-form-urlencoded body — and back again. Nested objects are flattened with dot notation (`user.role`), arrays are emitted in whichever of three conventions your backend expects (`tags[]`, a repeated `tags`, or indexed `tags[0]`), and parsing in the reverse direction rebuilds the nesting and coerces `true`, `false`, `null` and numeric strings back to real JSON types. Each conversion also produces the matching Content-Type header and a ready-to-run cURL command.",
   useCases: [

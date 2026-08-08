@@ -1,4 +1,7 @@
 const seo = {
+  title: "Constellation Finder - Map 16 Constellations by Season",
+  metaDescription:
+    "An interactive star chart with 16 constellations — Orion, Ursa Major, Scorpius and more. Filter by season; click any star for its magnitude and distance.",
   intro:
     "Constellation Finder is an interactive star chart that draws 16 major constellations — Orion, Ursa Major, Ursa Minor, Cassiopeia, Scorpius, Leo, Cygnus, Taurus, Gemini, Canis Major, Lyra, Crux, Pegasus, Andromeda, Draco and Sagittarius — as pannable, zoomable line figures on a simulated night sky. Each constellation carries its genitive form, brightest star with apparent magnitude, mythological story and observing notes, and every plotted star shows its magnitude, distance in light-years and spectral type. It is built for beginners learning to star-hop and for anyone trying to identify a shape they saw last night.",
   useCases: [

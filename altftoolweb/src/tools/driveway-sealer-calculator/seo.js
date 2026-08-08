@@ -1,4 +1,12 @@
 const seo = {
+  title: "Driveway Sealer Calculator: Gallons, Pails & Coats",
+  metaDescription:
+    "Turn driveway area, surface porosity and coat count into gallons, litres and 5-gallon pails at ~75 sq ft/gal asphalt or 250 for concrete sealer.",
+  steps: [
+    "Set \"Measure by\" to Length × width or Total area and enter the driveway in Feet or Metres, plus any extra apron or pad.",
+    "Choose the surface and sealer type — asphalt emulsion/coal-tar or concrete acrylic/silane-siloxane — the surface condition, the number of coats (1-4) and the waste / overlap allowance (%).",
+    "Read \"Sealer to buy\" in 5-gallon pails with the total gallons and litres, check the coat-by-coat table, then press \"Copy result\".",
+  ],
   intro:
     "This calculator turns a driveway's area, surface porosity and coat count into gallons, litres and 5-gallon pails of sealer, using the spread rates manufacturers actually publish — roughly 75 square feet per gallon per coat for asphalt emulsion or coal-tar sealer on an average surface, and about 250 for a concrete acrylic or silane-siloxane sealer. It applies a 25% higher coverage to the second and later coats, because the first coat has already filled the surface pores, and adds a waste allowance for overlap and spillage. Intended for homeowners buying sealer once and not wanting to make a second trip.",
   useCases: [

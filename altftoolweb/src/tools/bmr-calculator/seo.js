@@ -1,4 +1,7 @@
 const seo = {
+  title: "BMR Calculator (Mifflin-St Jeor) With TDEE and Macros",
+  metaDescription:
+    "Mifflin-St Jeor BMR, then TDEE at activity factors 1.2 to 1.9, a 0.25-0.5 kg/week target and 25/45/30 protein, carb and fat grams.",
   intro:
     "This BMR Calculator estimates the calories your body burns at complete rest using the Mifflin-St Jeor equation — 10 x weight in kg plus 6.25 x height in cm minus 5 x age, then +5 for men or -161 for women — and multiplies it by an activity factor from 1.2 to 1.9 to give your total daily energy expenditure. From that it builds a target for losing or gaining 0.25 to 0.5 kg a week, splits the calories 25 percent protein, 45 percent carbohydrate and 30 percent fat, and adds BMI, a Deurenberg body-fat estimate and protein and water targets. It is a planning estimate for healthy adults, not a clinical measurement.",
   useCases: [

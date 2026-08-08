@@ -1,4 +1,12 @@
 const seo = {
+  title: "Travel Cost Per Day and Per Person Per Day Calculator",
+  metaDescription:
+    "Each cost scales as per trip, night, person or person-day, so you get total, per day, per person per day, a category split and your cash gap.",
+  steps: [
+    "Fill Trip Inputs: Destination, Days (1-90), Nights, Travelers, Currency, Travel style and Daily target, plus Cash in hand.",
+    "In Add Cost, name each expense and set Mode to Trip total, Per day, Per night, Per person, Person/day or % buffer, with Timing as Pre-trip, On-trip or Reserve.",
+    "Read Total Trip Cost, Cost Per Day, Person / Day and Cash Gap, then press Copy Summary or CSV to save travel-cost-per-day.csv.",
+  ],
   intro:
     "Travel Cost Per Day converts a list of trip expenses into a single daily figure by scaling each line by how it actually accrues — per trip, per day, per night, per person, per person per day, or as a percentage buffer on everything else — then dividing the total by your number of days and travellers. Enter the destination, days, nights, party size and each cost once, and you get total cost, cost per day, cost per person per day, a category breakdown and a check against your daily target. It suits anyone comparing two destinations, or working out whether the cash they are carrying covers the on-trip spend.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Colorblind Palette Checker: OKLab Pairs + Contrast",
+  metaDescription:
+    "Screens up to 12 hex colors through protanopia, deuteranopia and tritanopia matrices, ranks the closest OKLab pairs and checks text contrast ratios.",
+  steps: [
+    "Enter each 'Hex value' as an exact opaque #RRGGBB, add an 'Optional label', and set its 'Intended role' — 'Add color' takes the palette up to 12.",
+    "Press 'Screen palette' to re-render every color through the protanopia, deuteranopia and tritanopia matrices and score all pairs in OKLab.",
+    "Read the 'Very close cues' count and 'Role contrast checks', the WCAG ratio for each text-on-background pairing, and the bounded replacement hex offered for colors that collapse.",
+  ],
   intro:
     "The Colorblind-Safe Palette Fixer screens up to 12 hex colors by re-rendering each one through the Machado-Oliveira-Fernandes severity-1 matrices for protanopia, deuteranopia and tritanopia, then measuring how far apart every pair stays in OKLab under each of those views. Designers and data-visualisation authors get a ranked list of the pairs that collapse into each other, the WCAG contrast ratio for every text-on-background combination, and a bounded alternative hex for the colors that are too close. It flags where a palette leans on hue alone; it does not diagnose color vision or certify conformance.",
   useCases: [

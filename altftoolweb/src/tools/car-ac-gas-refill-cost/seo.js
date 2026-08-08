@@ -1,4 +1,12 @@
 const seo = {
+  title: "Car AC Gas Refill Cost: R134a vs R1234yf with GST",
+  metaDescription:
+    "Cost a regas by charge weight and rate per gram, plus labour, parts and 18% GST, and compare R134a against the far pricier R1234yf.",
+  steps: [
+    "Pick a Refrigerant (R134a or R1234yf) and a Vehicle size, or type the exact Charge weight (grams) from the underbonnet AC label.",
+    "Set Gas rate (₹ per gram) and Labour (₹), tick anything under Parts being replaced, and leave Add 18% GST on the invoice ticked.",
+    "Read the itemised gas, labour, parts and tax lines beside the same job on the other refrigerant, then press Copy result.",
+  ],
   intro:
     "The Car AC Gas Refill Cost calculator builds a regas estimate the way a workshop builds the invoice: refrigerant charged by weight at a rate per gram, plus labour, plus any parts and service-bay charges, with 18% GST — the Indian rate on motor vehicle servicing — applied to the total. Every money figure is editable, because rates differ sharply by city and workshop, while the charge weight itself is fixed by the manufacturer and printed on the underbonnet AC label. It also compares the same job on R134a and R1234yf, which is where most of the price difference between an older and a newer car comes from.",
   useCases: [

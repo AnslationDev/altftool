@@ -1,4 +1,12 @@
 const seo = {
+  title: "Roka, Sagai & Engagement Invitation Wording Generator",
+  metaDescription:
+    "Writes roka, sagai, tilak or engagement invitation text in English, Hindi or Hinglish, with side-correct phrasing and the weekday checked.",
+  steps: [
+    "Choose a Ceremony - Roka, Sagai / Ring ceremony, Engagement or Tilak - and Who is inviting: bride's family, groom's family or both.",
+    "Fill Inviting family name, Bride's name, Groom's name, Date, Start time, Venue and City, then set Language (English, Hindi, Hinglish) and Wording style.",
+    "Check the Ceremony day weekday shown above the draft, then press Copy wording to send the invitation on WhatsApp or hand it to the printer.",
+  ],
   intro:
     "The Engagement Invitation Wording Tool turns family names, a date, a start time and a venue into complete invitation text for a roka, sagai, tilak or engagement ceremony, in English, Hindi or Hinglish. The wording changes with which side is inviting — a bride's family says 'their daughter', a groom's family says 'their son', and a joint invitation names both — because that is what printed Indian cards actually do. The date is validated against the Gregorian calendar, including the leap-year rule, and the weekday is computed with Zeller's congruence so the card never shows a day that does not exist.",
   useCases: [

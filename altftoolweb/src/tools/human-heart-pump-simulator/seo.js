@@ -1,4 +1,7 @@
 const seo = {
+  title: "Heart Pump Simulator: Cardiac Output from HR x SV",
+  metaDescription:
+    "Drag heart rate 40-180 BPM and stroke volume 40-120 mL on a beating four-chamber heart; cardiac output in L/min and cycle time update live.",
   intro:
     "This simulator animates the cardiac cycle on a four-chamber heart — right and left atria and ventricles, separated by the septum, with the tricuspid and mitral valves opening during systole and closing during diastole — while computing cardiac output as heart rate multiplied by stroke volume. Move the heart rate slider from 40 to 180 BPM and stroke volume from 40 to 120 mL and the readout updates output in litres per minute alongside cycle time. It is for biology and physiology students who want to see how the two variables behind cardiac output interact, and how the pulmonary and systemic circuits differ.",
   useCases: [

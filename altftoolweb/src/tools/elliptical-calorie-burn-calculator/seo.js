@@ -1,4 +1,12 @@
 const seo = {
+  title: "Elliptical Calorie Burn Calculator by Heart Rate",
+  metaDescription:
+    "Estimates cross-trainer calories from average heart rate with the Keytel equation, or from console watts at 10.8 mL O2 per watt per minute.",
+  steps: [
+    "Under 'Which measurement do you have?' pick 'Average heart rate', then enter 'Body weight' in kg or lb, 'Duration (minutes)', 'Average heart rate (bpm)', 'Age (years)' and sex.",
+    "Switch to 'Console watts' and enter 'Average power (watts)' if your machine reports power; 'Resistance level (logged only)' and 'Ramp angle in degrees (logged only)' are recorded, never turned into multipliers.",
+    "Read 'Calories burned (gross)' with 'Net calories (above resting)', 'Average intensity' in METs and 'Oxygen uptake', then press 'Copy result'.",
+  ],
   intro:
     "Cross-trainers have no standardised work-rate scale, so this calculator estimates elliptical calorie burn from average heart rate using the Keytel equation (Journal of Sports Sciences, 2005), which predicts energy expenditure in kJ per minute from heart rate, body mass, age and sex. If your console reports average watts, a second mode prices that external work at the ACSM figure of 10.8 mL of oxygen per watt per minute plus a 7 mL/kg/min baseline. Resistance level and ramp angle are logged with the session but never applied as invented multipliers — their real effect already shows up in your heart rate.",
   useCases: [

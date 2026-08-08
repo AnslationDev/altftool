@@ -1,4 +1,12 @@
 const seo = {
+  title: "Document Scanner: 4-Corner Perspective Fix in Browser",
+  metaDescription:
+    "Drag four corners onto a page photo to remove the keystone, tune brightness, contrast and B&W threshold, then download PNG or JPEG. No upload.",
+  steps: [
+    "Press 'Upload document photo' for a PNG, JPEG, WebP or other browser-supported image up to 30 MB, or 'Use device camera' then 'Capture document'.",
+    "Drag the four crop corners onto the page edges — arrow keys nudge them, Shift takes larger steps — then choose Color, Grayscale or Black & white and set brightness, contrast and threshold.",
+    "Pick PNG or JPEG under 'File format' and press 'Download cleaned image' to save yourfile-cleaned.png locally.",
+  ],
   intro:
     "This scanner turns a phone photo of a page into a flat, straight, readable scan by dragging four corners onto the document and applying a perspective transform that maps that quadrilateral back to a rectangle. It solves a full 8-parameter homography — the same projective correction a desk scanner avoids by holding the page flat — then applies brightness, contrast and an optional grayscale or black-and-white pass using Rec. 709 luminance weights before exporting PNG or JPEG. It is for anyone who needs a clean copy of an ID, a receipt or a signed form without sending that page to a scanning app's servers.",
   useCases: [

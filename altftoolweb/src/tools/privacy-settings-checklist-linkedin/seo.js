@@ -1,4 +1,12 @@
 const seo = {
+  title: "LinkedIn Privacy Settings Checklist: 29 Controls",
+  metaDescription:
+    "29 LinkedIn settings scored by exposure: profile-update broadcasts, Open to Work audience, connections, contact sync and generative-AI training.",
+  steps: [
+    "Answer \"Who are you locking this down for?\" — Job hunting while employed, or Recruiter, founder or salesperson — and set your Target score (%).",
+    "Tick each of the 29 settings in its group as you apply it inside LinkedIn, or use \"Mark all applied\" and \"Clear all\".",
+    "Watch the Protection score and \"Remaining exposure by area\", work through \"Shortest route to your target\", then press \"Copy result\".",
+  ],
   "intro": "This checklist audits the 29 LinkedIn settings that decide who sees your profile, what your activity broadcasts, who can contact you and how your data is shared. It covers the three that cost people jobs — profile-update broadcasting, the Open to Work audience and a visible connections list — plus the public-profile editor, profile viewing mode, contact and calendar sync, advertising data, the generative-AI training setting and permitted third-party services. Each control is weighted by how much exposure it removes, and re-weighted for whether you are job hunting quietly or need to stay maximally visible.",
   "useCases": [
     "Update your profile during a quiet job search without a notification reaching your manager.",

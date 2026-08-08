@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Stress Journal Prompts for Every Stage of the Cycle",
+  metaDescription:
+    "Prompts for weeks before, the night before, exam morning, after a paper and waiting for results — about 3 minutes each, ending in one next action.",
+  steps: [
+    "Answer 'Where are you in the exam cycle?' by picking Weeks before the exam, Night before the exam, Exam morning, Right after a paper or Waiting for results.",
+    "Set Number of prompts — capped at the number that stage holds, 8 for Weeks before the exam — at about 3 minutes of writing each, then press Different prompts to draw another set and type into the box under each numbered prompt.",
+    "Read Your reflection session's suggested minutes and the three 'Close every session the same way' steps — name it, sort it, one next action — then press Copy journal to take the prompts and your answers away as text.",
+  ],
   intro:
     "This tool serves short guided journalling prompts matched to where you are in the exam cycle — weeks before, the night before, exam morning, straight after a paper, or waiting for results — and closes every session with the same three steps: name the worry, sort it by control, choose one next action. The structure draws on expressive-writing research (Ramirez & Beilock, Science 2011, found ~10 minutes of writing about test worries before an exam improved scores for anxious students) and on standard cognitive techniques for separating controllable from uncontrollable concerns. Everything you type stays in your browser.",
   useCases: [

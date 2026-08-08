@@ -1,4 +1,7 @@
 const seo = {
+  title: "Annual Financial Checklist: Indian FY Deadlines",
+  metaDescription:
+    "Tick what describes you and get the year's money tasks in deadline order: advance tax on 15 June/Sept/Dec/March, 31 July return, 31 March 80C cut-off.",
   intro:
     "This builder turns your financial profile into a dated year-end money checklist pinned to the real deadlines of the Indian financial year — the section 211 advance tax instalments of 15 June, 15 September, 15 December and 15 March, the 31 July return date under section 139(1), the 31 March cut-off for deductible investments, and the minimum deposits that keep PPF, Sukanya Samriddhi and NPS accounts alive. Salaried employees, freelancers and families get only the tasks that apply to them, sorted by the next deadline, with undated housekeeping like nominee updates and free credit report checks listed alongside.",
   useCases: [

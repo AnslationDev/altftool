@@ -1,4 +1,12 @@
 const seo = {
+  title: "Discount Calculator: Stacked % Off Plus Sales Tax",
+  metaDescription:
+    "Applies a second discount to the already-reduced price, then adds sales tax up to 25% to the discounted subtotal. Shows final price, saving and tax.",
+  steps: [
+    "Type the ticket price into Original Item Price and drag the Discount Rate slider between 0 and 100%.",
+    "Tick 'Add Secondary Stacked Discount' to reveal the Secondary Discount Rate slider, and set Sales Tax Rate anywhere from 0 to 25%.",
+    "Read Final Price Paid, Total Discount Savings and Sales Tax Amount, with the Price Breakdown Proportions bar splitting paid, saved and tax.",
+  ],
   intro:
     "The Discount Calculator works out what a marked-down item actually costs by applying each discount in sequence — the second discount is taken off the already-reduced price, not added to the first — and then adding sales tax to the discounted subtotal. Enter the original price, a discount rate, an optional stacked second discount and a tax rate up to 25%, and it returns the final price, total saved and tax amount together with a bar showing what share of the original price each part represents. It is built for shoppers and retail staff who need to check a till total or a coupon claim before paying.",
   useCases: [

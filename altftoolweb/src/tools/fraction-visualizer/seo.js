@@ -1,4 +1,10 @@
 const seo = {
+  title: "Fraction Visualizer: Pie, Bar, Number Line, Grid",
+  steps: [
+    "Choose one of the 12 cards in Learning Module — Equivalent Fractions, Simplifying Fractions, Fraction Addition, Fraction to Percentage and the rest.",
+    "Enter a numerator and denominator under Fraction 1, or tap a quick fraction such as 3/4, then switch Visualization between Pie Chart, Fraction Bar, Number Line and Area Model.",
+    "Read Fraction Details for the simplified form, decimal and percentage, then use Practice Mode's New Question and Check buttons to score yourself.",
+  ],
   intro:
     "Fraction Visualizer draws any fraction you type four different ways — as a pie chart, a segmented bar, a point on a number line and a filled grid area model — and updates all of them as you change the numerator or denominator. It covers twelve learning modules, from equivalent fractions and simplifying by the GCD through addition, subtraction, multiplication and division to decimal and percentage conversion, and includes a practice mode that generates random questions and keeps a running score. It is made for learners and teachers who need to see why 3/4 and 6/8 are the same amount rather than be told so.",
   useCases: [

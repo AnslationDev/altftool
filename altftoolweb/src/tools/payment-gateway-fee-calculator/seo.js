@@ -1,4 +1,12 @@
 const seo = {
+  title: "Payment Gateway Fees: Net Settlement and Gross-Up",
+  metaDescription:
+    "Amount × rate + fixed fee, with cross-border and conversion uplifts and tax on the fee. Also solves the charge needed to net an exact amount.",
+  steps: [
+    "Pick a preset under \"Start from published pricing\", then enter \"Amount charged to the customer\" and the Currency.",
+    "Set Percentage rate (%), Fixed fee per transaction, Cross-border uplift (%), Currency conversion uplift (%) and Tax charged on the fee (%), ticking International card where it applies.",
+    "Read the Net settlement figure with the share of the sale lost to fees, then press Copy result.",
+  ],
   intro:
     "This calculator works out what actually settles into your account after a payment gateway takes its cut, using the standard fee shape every card processor shares: amount × percentage rate + fixed fee per transaction, with optional cross-border and currency-conversion uplifts, and tax charged on the fee itself where local rules require it. It also solves the reverse question exactly — charge = (target net + fixed × (1 + tax)) ÷ (1 − percentage × (1 + tax)) — so you can price a product to land on a round number after fees. A ticket-size ladder shows why the fixed fee matters far more on small payments than large ones.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Designer Prompt Pack: 12 Fill-in-the-Blank AI Prompts",
+  metaDescription:
+    "Twelve prompts for moodboards, palettes, empty states, critique and WCAG 2.2 AA review. Fill the blanks in your browser and copy the finished prompt.",
+  steps: [
+    "Narrow the 12 prompts with Search prompts or the Category select, then click a prompt card to open it.",
+    "Complete the inputs under Fill in the blanks; Use example values loads the sample text and Clear fields empties them, and anything left empty stays visible as a {{placeholder}} listed under 'Still blank'.",
+    "Check Estimated prompt size in tokens, then press Copy prompt to take the assembled text to your assistant; Reset returns the pack to its default state.",
+  ],
   intro:
     "The Designer Prompt Pack is a library of 12 fill-in-the-blank AI prompts covering the design tasks that most often produce vague output: moodboard direction, colour palettes, landing page structure, empty states, microcopy, critique, accessibility review, tokens, component specs and research scripts. Each prompt already states the role, the constraints and the exact output format, so the model returns a structured answer instead of a paragraph of generalities. You fill the blanks in your browser, the tool substitutes them and shows the estimated size, then you copy the finished prompt into whichever assistant you use.",
   useCases: [

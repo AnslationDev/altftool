@@ -1,4 +1,12 @@
 const seo = {
+  title: "Freelance Late-Fee Tracker: Invoice Evidence Register",
+  metaDescription:
+    "Paste pipe-separated invoice lines into an eight-column register with the agreed late-fee term and its evidence, and see how many rows are incomplete.",
+  steps: [
+    "Paste one invoice per line into Records, one per line, using | between Invoice, Client, Issued, Due, Amount, Paid date / status, Agreed late-fee term and Evidence.",
+    "Leave Flag rows with missing columns switched on so the completeness review counts any line with a blank field.",
+    "Read the Complete and Needs review counts above the eight-column register, which lists up to 200 invoice records.",
+  ],
   intro:
     "The Freelance Payment & Late-Fee Tracker turns a plain list of invoice lines into a structured eight-column register — Invoice, Client, Issued, Due, Amount, Paid date or status, the agreed late-fee term, and the evidence backing it — and flags any row that is missing a field. It is a record organiser rather than an interest calculator: it does not compute a fee, it makes sure every claim you might later make is written down with the contract clause or bank reference beside it. It suits freelancers and small studios chasing overdue invoices who need their paperwork straight before sending a reminder.",
   useCases: [

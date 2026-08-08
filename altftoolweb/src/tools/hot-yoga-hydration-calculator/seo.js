@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hot Yoga Hydration Calculator: Sweat Rate and Sips",
+  metaDescription:
+    "Before, during and after fluid plan built on ACSM targets: 5-7 mL/kg pre-class, under 2% body-mass loss, 125-150% of the deficit after.",
+  steps: [
+    "Choose \"Estimate it from the room\" or \"I weighed before and after\", then set the Class length (minutes); in estimate mode add Body weight (kg), Room temperature (C), Relative humidity (%) and a Class style of Gentle / hot yin / restorative, Hot vinyasa / Bikram sequence, or Power / sculpt with weights.",
+    "In weigh-in mode enter Weight before class (kg), Weight after class (kg) and Fluid drunk during class (ml) instead, and tick \"Add the 2-hour top-up (urine dark or none passed since waking)\" if you started the day short.",
+    "\"Carry into class\" gives the millilitres to take in and the sip size to drink every 15 minutes, while the list below splits before class, the 2-hour top-up, during, after and the total, alongside sweat rate, sweat lost, deficit percentage against the 2% threshold and sodium lost; Copy plan copies it as text.",
+  ],
   intro:
     "This calculator turns a hot yoga class into a fluid plan: how much to drink in the hours before, how much to sip during, and how much to replace afterwards. It uses the sweat-rate equation from the ACSM Position Stand on Exercise and Fluid Replacement — sweat loss equals pre-class weight minus post-class weight plus anything drunk — and applies the same guideline's targets of 5-7 mL per kg beforehand, keeping body-mass loss under 2%, and replacing 125-150% of any remaining deficit. If you have not weighed yourself, it will model a sweat rate from room temperature, humidity, class style and body size instead.",
   useCases: [

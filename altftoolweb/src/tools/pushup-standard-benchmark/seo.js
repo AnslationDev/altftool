@@ -1,4 +1,12 @@
 const seo = {
+  title: "Push-Up Test by Age: CSEP Norms and Rating Bands",
+  metaDescription:
+    "Score your max unbroken push-up set against CSEP age and sex norms: your band from Excellent to Needs improvement, and the reps to the next band up.",
+  steps: [
+    "Enter Age (years) and pick the reference table under Sex: 'Male — standard push-up' or 'Female — modified (knee) push-up'.",
+    "Type your best count into 'Max push-ups in one unbroken set'; the rating recalculates immediately, with no submit button.",
+    "Your rating names the band and age band, with Approximate percentile, Next band, Reps to next band and 'Excellent starts at' over the Reference bands table; press Copy result or Reset.",
+  ],
   intro:
     "The Pushup Standard Benchmark scores the maximum number of push-ups you can do in one unbroken set against the age and sex norms published in the CSEP Canadian Physical Activity, Fitness & Lifestyle Approach manual — the same five-band table (Excellent, Very good, Good, Fair, Needs improvement) used by ACSM textbooks and most gym assessments. It shows your band, the rep range for every other band in your age group, and exactly how many more reps would move you up. Male norms are for the standard push-up on the toes; female norms were collected with the modified knee push-up, so the two tables are not interchangeable.",
   useCases: [

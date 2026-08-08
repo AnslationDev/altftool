@@ -1,4 +1,12 @@
 const seo = {
+  title: "Study Room Layout Planner: Desk, Shelves, Lumens",
+  metaDescription:
+    "Turn room length and width into the desk run, the 900 mm chair clearance, shelf metres for your books and lumens at 300 and 500 lux.",
+  steps: [
+    "Enter Room length (m), Room width (m), People studying here, Books to store, Main user's height (cm) and Lumens per ceiling fitting.",
+    "Read Desk and chair zone off the wall — the desk depth plus 900 mm of chair clearance — and the warning shown when the longest wall cannot take the desk run.",
+    "Check the Lighting panel's Ambient target (300 lux) and Desk task light (500 lux) and the Shelving panel's Bookcase bays (5 shelves each), then press Copy result.",
+  ],
   intro:
     "This planner turns a room's length and width into the working numbers for a study: how wide the desk run must be, how much depth the desk plus a pushed-back chair takes off the wall, how many shelves the books need and how many lumens the room and the desk should get. Lighting uses the lumen method — target lux × floor area ÷ (utilisation factor × maintenance factor) — with the 300 lux general and 500 lux task levels that interior lighting standards set for reading and writing. Clearances follow the usual ergonomic minimums: 600 mm of desk depth, 900 mm behind the desk for the chair and 750 mm for a walkway.",
   useCases: [

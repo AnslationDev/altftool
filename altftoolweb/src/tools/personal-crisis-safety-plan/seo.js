@@ -1,4 +1,12 @@
 const seo = {
+  title: "Personal Crisis Safety Plan: Warning Signs to Contacts",
+  metaDescription:
+    "Write a safety plan in the order a crisis unfolds: warning signs, coping steps, safer place, trusted contacts, risk reduction. Assembled in your browser.",
+  steps: [
+    "In the Inputs panel fill Personal warning signs, Self-selected grounding or coping steps, Safer place, Trusted contacts and how to reach them, and User-chosen ways to reduce immediate risk, one item per line; the Private starter example chip loads a skeleton to edit.",
+    "Tick the checkbox 'There may be immediate danger or inability to stay safe' if it applies: the result heading switches from Personal safety plan to Immediate-support plan and a get-help-now line is placed at the very top of the ordered list.",
+    "Read the Result panel counts for Warning signs, Coping steps, Trusted contacts and Risk-reduction steps, then use the Copy or Download icon buttons to save personal-crisis-safety-plan.txt.",
+  ],
   intro:
     "A personal safety plan is a written list you prepare while you are calm, so that during a crisis you are following steps you already chose rather than deciding in the moment. This tool organises what you enter into the order safety plans are normally used in — early warning signs first, then your own coping and grounding steps, a safer place to go, trusted people and how to reach them, and finally the ways you have chosen to reduce access to anything risky — and marks the plan as immediate-support if you flag that you may not be able to stay safe right now. It is a private planning aid, not treatment or emergency care.",
   useCases: [

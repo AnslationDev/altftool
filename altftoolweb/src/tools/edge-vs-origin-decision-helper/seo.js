@@ -1,4 +1,12 @@
 const seo = {
+  title: "Edge vs Origin Decision Helper for API Endpoints",
+  metaDescription:
+    "Model edge latency as user-to-edge RTT plus miss rate × origin calls × edge-to-origin RTT, against origin — and see the break-even cache hit ratio.",
+  steps: [
+    "Enter the three round trips in ms: User → nearest edge RTT, User → origin region RTT and Edge PoP → origin region RTT.",
+    "Set the sequential origin data calls per request, the edge cache / replica hit ratio (%) and the handler compute time (ms), then tick any hard blockers — consistency, compute limits or data residency — that force origin.",
+    "Read whether to run the endpoint at the edge or the origin, with expected latency each way, the origin data cost from the edge and the break-even cache-hit ratio; press \"Copy analysis\".",
+  ],
   intro:
     "This helper decides whether an API endpoint belongs on an edge runtime or at the origin by modelling the latency that actually matters: edge latency = user-to-edge RTT + (miss rate × origin data calls × edge-to-origin RTT), compared against simply serving from the origin region. It also applies the hard blockers — strong consistency against a single-region database, compute beyond edge runtime limits, and data-residency rules — that force origin regardless of latency. It is for developers choosing between edge functions (Cloudflare Workers, Vercel Edge, Lambda@Edge) and regional serverless or servers.",
   useCases: [

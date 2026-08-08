@@ -1,4 +1,12 @@
 const seo = {
+  title: "Body Frame Size Calculator: Wrist and Height Bands",
+  metaDescription:
+    "Small, medium or large frame from wrist circumference and height, using the MedlinePlus bands and the height/wrist ratio, plus a Hamwi ideal weight.",
+  steps: [
+    "Choose the Reference table (Female or Male) and the Method for the headline result: Wrist + height bands (MedlinePlus) or Height ÷ wrist ratio.",
+    "Give your height in Centimetres or Feet & inches, then the Wrist circumference measured just past the wrist bone, in cm or inches.",
+    "Read Your body frame with both methods listed and the Frame-adjusted ideal weight in kg and lb, then press Copy result.",
+  ],
   intro:
     "Body frame size classifies your skeleton as small, medium or large by reading your wrist circumference against your height — the same wrist-and-height table published by MedlinePlus, plus the height-divided-by-wrist ratio used in clinical nutrition. Enter a wrist measurement taken just above the wrist bone and your height, and both methods are shown side by side along with a Hamwi ideal-weight figure adjusted 10% down for a small frame or 10% up for a large one. It is a quick way to understand why two people of the same height can carry visibly different amounts of bone and still be built normally.",
   useCases: [

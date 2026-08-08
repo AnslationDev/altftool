@@ -1,4 +1,12 @@
 const seo = {
+  title: "PhonePe Security Checklist: 15 Weighted Controls",
+  metaDescription:
+    "15 weighted controls for app lock, UPI PIN discipline, autopay mandates and limits. Five are critical: the score stays at 69% until all five are done.",
+  steps: [
+    "Tick the controls you already have under Phone and app lock, UPI PIN discipline, Limits and mandates and Scams and reporting.",
+    "Set Target score (%) for the shortest route there, highest-weight control first; the score is held at 69% while any Critical control is open.",
+    "Read the Hardening score, Controls completed, Weighted points and Critical controls missing, then press Copy result.",
+  ],
   "intro": "This guide is a weighted, 15-control checklist for PhonePe and UPI: app lock, a UPI PIN that is not guessable, autopay mandate cleanup, transaction limits, and the PIN discipline that stops the scams behind most UPI losses. The single most important rule is an NPCI rule rather than a PhonePe setting: a UPI PIN authorises money leaving your account and is never needed to receive money. Five controls are marked critical and the score is capped at 69% until all five are done. It is general security information, not financial advice; contact your bank and the 1930 helpline for anything involving an actual loss.",
   "useCases": [
     "Setting up a new phone and getting the app lock, SIM PIN and UPI PIN right before moving money.",

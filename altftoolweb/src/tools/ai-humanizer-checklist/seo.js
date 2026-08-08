@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Humanizer Checklist: Sentence Variation & Phrases",
+  metaDescription:
+    "Counts filler connectors, hedges, em dashes and -ly adverbs per 1,000 words plus sentence-length std dev, then ranks 15 edits. Not an AI detector.",
+  steps: [
+    "Paste the text into 'Your draft' — it is analysed in your browser and never uploaded.",
+    "Work down 'The edits, most urgent first', where any item whose signal fired in the scan carries a 'signal raised' badge and is pinned to the top.",
+    "Read 'Checklist completed' with the sentence-length std dev and the phrase, hedge, dash and -ly adverb rates per 1,000 words, then press 'Copy report'.",
+  ],
   intro:
     "This checklist measures the surface habits that make an AI draft read mechanically — over-used connectors such as 'moreover' and 'in conclusion', hedge words, em-dash density, -ly adverb rate, repeated sentence openers and low sentence-length variation — then orders fifteen concrete edits so the ones your draft actually needs come first. Sentence-length variation is reported as a standard deviation in words, because uniform sentence length is the loudest single tell in generated prose. It is an editing workflow for writers and editors, not an AI detector, and it makes no claim about who wrote the text.",
   useCases: [

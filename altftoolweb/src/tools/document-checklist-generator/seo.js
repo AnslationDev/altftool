@@ -1,4 +1,12 @@
 const seo = {
+  title: "Document Checklist Generator: Visa, Loan, KYC, Job",
+  metaDescription:
+    "Seven templates of eight documents each, sorted High to Low priority with copy counts and masked-copy flags, exported to Markdown or CSV.",
+  steps: [
+    "Choose a Document workflow — Visa Application, Job Joining, Home / Personal Loan, Rental Agreement, College Admission, KYC / Account Opening or Business Setup — and set the Applicant / project name and Deadline.",
+    "Tick items off as you collect them, and use Add custom document with a name and Category, then Add Document, for anything the template does not cover.",
+    "Watch High Priority Pending fall to zero, then press Markdown to copy a tick-box list or CSV to download document-checklist.csv.",
+  ],
   intro:
     "The Document Checklist Generator turns one of seven ready-made templates — visa, job joining, home or personal loan, rental agreement, college admission, KYC account opening and business setup — into a working checklist of eight documents each, tagged High, Medium or Low priority, grouped by category, and marked where a document is sensitive enough to share as a masked copy. It defaults to two copies for every High-priority item and one otherwise, tracks completion as a percentage, and exports the whole list to Markdown or CSV. Add your own rows for anything a specific embassy, bank or college asks for on top.",
   useCases: [

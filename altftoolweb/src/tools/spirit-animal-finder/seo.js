@@ -1,4 +1,12 @@
 const seo = {
+  title: "Spirit Animal Finder: 10-Question Quiz, 16 Animals",
+  metaDescription:
+    "Ten questions scored against 16 archetypes — each option feeds three animals 3, 2 and 1 points. Get a primary match plus second and third. For fun.",
+  steps: [
+    "Answer all ten questions — the card counts \"Question 1 of 10\" and the bar tracks how many are answered — moving with Previous and Next.",
+    "Press Find My Spirit Animal on the last question; every option feeds three animals 3, 2 and 1 points, and the highest total across all ten answers wins.",
+    "Read your primary animal with its match percentage and full profile, the Companion Spirits second and third matches, then press Take Quiz Again to retry.",
+  ],
   intro:
     "Spirit Animal Finder is a ten-question quiz that scores your answers against 16 animal archetypes — wolf, eagle, bear, owl, dolphin, tiger, fox, elephant, butterfly, snake, raven, lion, hummingbird, turtle, hawk and deer — and returns your closest match plus a secondary and tertiary animal. Every answer option points to three animals in ranked order and awards them 3, 2 and 1 points, so the result reflects the pattern across all ten answers rather than any single choice. Each match comes with an element, core traits, strengths and weaknesses, suggested career directions, a relationship style and a life lesson.",
   useCases: [

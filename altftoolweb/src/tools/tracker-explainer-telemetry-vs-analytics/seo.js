@@ -1,4 +1,12 @@
 const seo = {
+  title: "Telemetry vs Analytics: Which Signals Need Consent",
+  metaDescription:
+    "Tick the signals your product collects and see which trigger ePrivacy Article 5(3) consent, scored on five checks, with a drafted measurement notice.",
+  steps: [
+    "Enter the Product or site name and any analytics processor, then tick every signal you actually collect — crash stacks, page paths, session replay, persistent visitor ids.",
+    "Set Retention (days, 1–3650) to what your store really keeps, so the 25-month checkpoint can be tested.",
+    "Read the Honesty score across the five checks and the telemetry vs analytics split, then press Copy notice for the drafted measurement notice.",
+  ],
   intro:
     "Telemetry vs Analytics Explainer sorts 20 real product-measurement signals — crash stacks, cold-start timings, page paths, session replay, persistent visitor ids — into telemetry (measures the build) and analytics (measures the person), then runs a consent test against the ePrivacy Directive's Article 5(3) device-storage rule and the GDPR's personal-data rule. Tick what your product actually collects, set a retention period, and it scores the plan against five concrete checks, flags anything that needs consent, and drafts a plain-language measurement notice you can paste into a privacy page and edit.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Help Article Prompt Builder Using DITA Topic Types",
+  metaDescription:
+    "Turns rough steps into a prompt shaped by the DITA task, concept, reference or troubleshooting type, with alt text required and TODO(verify) for unknowns.",
+  steps: [
+    "Fill \"Article title — write it the way a user would search\" and \"Product or service name\", then paste your rough procedure into \"Steps — one action per line\" with anything needed first under \"Prerequisites — one per line\".",
+    "Pick an \"Article type\" of task, concept, reference or troubleshooting, a \"Reader\" level such as First-time user, and a \"Screenshots\" policy of none, key steps only or every step.",
+    "\"Generated prompt\" appears with the DITA section list for that topic type, alt-text demands for every screenshot marker and TODO(verify) for unknown menu names and limits, while \"Steps to expand\" counts the steps and asks for stage headings past twelve; \"Copy prompt\" copies it.",
+  ],
   intro:
     "A knowledge base article prompt builder converts a rough list of steps, prerequisites and screenshot notes into a structured AI prompt that produces a publishable help-centre article. It shapes the output using the OASIS DITA 1.3 information types — task, concept, reference and troubleshooting — so each article answers one reader question with the right sections, and it flags steps that are not written in the imperative mood before the model expands them. Support leads, technical writers and founders writing their own docs get a consistent article skeleton instead of a different structure every time.",
   useCases: [

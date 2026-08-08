@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cookie Banner Text for GDPR, PECR, DPDP or CPRA",
+  metaDescription:
+    "Writes first-layer and settings-panel copy in the opt-in or opt-out model, and flags pre-ticked toggles, a missing reject button and 13-month lifetimes.",
+  steps: [
+    "Fill \"Site or company name\", \"Cookie policy URL\", \"Persistent settings URL\", \"Privacy contact email\" and \"Longest non-essential cookie lifetime (months)\".",
+    "Pick a \"Privacy regime\" — EU GDPR + ePrivacy, UK PECR, India's DPDP Act 2023, California CCPA/CPRA or the global baseline — tick the \"Non-essential categories you actually use\", and set whether a first-layer \"Reject all\" button is shown.",
+    "Out comes the banner headline, body and button labels plus the \"Settings panel (second layer)\" category table, with a \"Fix before you ship\" list for pre-ticked toggles or a lifetime past 13 months; \"Copy all copy\" takes every block.",
+  ],
   intro:
     "The Cookie Consent Banner Text Generator writes the first-layer banner copy and the settings-panel text behind it, switching between the opt-in model used under the ePrivacy Directive Art. 5(3), UK PECR reg. 6 and India's DPDP Act, 2023, and the opt-out model used under the CCPA as amended by the CPRA. It produces a headline, body, button labels, per-category descriptions and a withdrawal line, then flags the drafting mistakes regulators penalise most, such as a missing first-layer reject button or pre-ticked non-essential toggles. Aimed at product and marketing teams preparing copy for legal review.",
   useCases: [

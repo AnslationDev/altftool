@@ -1,4 +1,12 @@
 const seo = {
+  title: "Form D Attendance Register Format for Any Wage Month",
+  metaDescription:
+    "One column per calendar day with leap years handled, weekly offs marked WO, holidays PH, the code legend printed, and CSV for Excel or Google Sheets.",
+  steps: [
+    "Enter \"Name of establishment\", pick the \"Wage month\" and \"Year\", choose the \"Weekly off day\", and list \"Paid holiday dates (day numbers)\" such as 1, 14, 26.",
+    "Paste your staff into \"Employees — one per line, as 'code, name'\" and tick \"Include the overtime hours column\" if the sheet needs it.",
+    "The register renders with one column per calendar day, WO and PH already marked and the marking-code legend printed underneath; \"Copy CSV\" puts the whole grid on the clipboard for Excel or Google Sheets.",
+  ],
   intro:
     "This generator lays out an attendance register for one wage month: a header block for the establishment, one row per employee, one column per calendar day, and totals for days worked, days absent and overtime hours. The column structure follows Form D, the combined Attendance Register introduced by the Ease of Compliance to Maintain Registers under various Labour Laws Rules, 2017, which replaced 56 separate registers under nine central labour laws with five. It is aimed at HR and admin staff in factories, shops, contract-labour sites and small offices who keep attendance on paper or in a spreadsheet.",
   useCases: [

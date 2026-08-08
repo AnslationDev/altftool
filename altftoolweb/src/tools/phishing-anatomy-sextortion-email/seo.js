@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sextortion Email Check: Is That Password Threat Real?",
+  metaDescription:
+    "Score the email against the 10 hallmarks of the mass-mailed bluff: an old leaked password, no evidence attached, a crypto demand, a forged From line.",
+  steps: [
+    "Under \"Check the message against the pattern\", tick each hallmark your email shows — a password you stopped using years ago, no video or file included, a bitcoin demand, a 24 to 72 hour deadline, a From line showing your own address — and tick the separate red box only if genuine intimate images were actually shown.",
+    "Read the \"Bluff hallmarks present\" count out of 10 and the band beside it, from \"Matches the mass-mailed bluff almost exactly\" down to \"Does not fit the bluff pattern\", then fill \"Accounts using that password\" and \"Of those, with two-factor authentication\".",
+    "\"Openable with the password alone\" shows what the leak actually costs you, \"Copy result\" puts the score, band and \"What not to do\" list on the clipboard, and \"Where to get help\" gives ic3.gov, Action Fraud and cybercrime.gov.in.",
+  ],
   intro:
     "An email that opens with a password you recognise and demands cryptocurrency is a mass-mailed extortion attempt built on a leaked credential list, not on access to your device. This page lists the ten hallmarks of that automated version — an old password, no evidence attached, nothing personal beyond the password, a crypto address, a 48-hour clock, a forged From line showing your own address — and reports how many of them your message matches. It also separates the real risk, which is password reuse and credential stuffing, from the claimed one, and gives the reporting routes for the US, UK and India.",
   useCases: [

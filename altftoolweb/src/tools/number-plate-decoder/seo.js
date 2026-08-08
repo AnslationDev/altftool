@@ -1,4 +1,12 @@
 const seo = {
+  title: "Decode an Indian Number Plate: State, RTO, Series",
+  metaDescription:
+    "Split MH 12 AB 1234 into state, RTO district, series and number. Handles BH-series and CD/CC/UN diplomatic plates, plus the nine plate colours.",
+  steps: [
+    "Type a registration into the Registration number box — spaces, hyphens and lower case are all fine — or tap one of the Try an example buttons.",
+    "Watch the decode update as you type against the three valid formats listed: XX 00 AB 0000, 00 BH 0000 A and 00 CD 0000.",
+    "Read the state, RTO district, series and number rows plus \"What the plate colour tells you\", then press Copy decoded.",
+  ],
   intro:
     "The Indian Number Plate Decoder breaks a registration number into its four parts — the two-letter state or UT code, the two-digit RTO district code, the series letters and the four-digit vehicle number — and names the RTO the vehicle was registered at. It also handles the formats that do not follow that pattern: Bharat-series numbers like 22 BH 1234 A, where the leading digits are a year rather than an RTO, and diplomatic plates carrying CD, CC or UN instead of a state code. Alongside the decode it explains the nine plate colour combinations in use, from white-on-private to green-with-yellow-text for commercial EVs.",
   useCases: [

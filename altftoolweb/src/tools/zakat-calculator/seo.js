@@ -1,4 +1,12 @@
 const seo = {
+  title: "Zakat Calculator: 2.5% Against Gold or Silver Nisab",
+  metaDescription:
+    "List cash, deposits, stock, shares, gold and silver by gram, deduct debts due now, and check 2.5% against the 87.48 g or 612.36 g nisab.",
+  steps: [
+    "Fill in Cash & bank, Business assets and Investments, then Gold you own (grams) and Silver you own (grams) with today's rate per gram.",
+    "Deduct Immediate debts you owe, Bills due now and Short-term loans & card dues, then choose the Silver standard or Gold standard nisab.",
+    "Read the zakat due — 2.5% of net zakatable wealth — and press Copy summary for the line-by-line breakdown.",
+  ],
   intro:
     "The Zakat Calculator works out what you owe using the mainstream rule — (zakatable assets − immediate liabilities) × 2.5%, payable only when the net clears the nisab of 87.48 g of gold or 612.36 g of silver at the rate you enter. You list cash, bank balances, business stock, receivables, shares, gold and silver by weight, then deduct debts and bills due now, and it shows the line-by-line breakdown, the threshold under both standards, and the amount payable in rupees. It is an informational estimate: schools of thought differ on jewellery, debts and pensions, so confirm the final figure with a scholar you trust.",
   useCases: [

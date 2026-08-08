@@ -1,4 +1,12 @@
 const seo = {
+  title: "LUFS Loudness Normalizer: -14, -16 or -23 at -1.5 dBTP",
+  metaDescription:
+    "Run FFmpeg loudnorm on audio or video in your browser to hit -14, -16 or -23 LUFS with a -1.5 dBTP ceiling, and download a WAV.",
+  steps: [
+    "Pick an audio or video file under Source file — the picker accepts audio/* and video/* input.",
+    "Set Target to -14 LUFS, -16 LUFS or -23 LUFS and press Process locally; FFmpeg WebAssembly runs loudnorm=I=target:TP=-1.5:LRA=11 on the file in memory.",
+    "The normalised audio downloads as altftool-loudness-true-peak-normalizer.wav, with the FFmpeg log shown in the Local processing report.",
+  ],
   intro:
     "Loudness & True-Peak Normalizer runs the EBU R128 loudness normalisation pass (FFmpeg's loudnorm filter) over an audio or video file, retargeting integrated loudness to -14, -16 or -23 LUFS while holding true peak at -1.5 dBTP and loudness range at 11 LU. Unlike peak normalisation, which just scales the waveform until the loudest sample hits 0 dBFS, this measures perceived loudness across the whole programme, so two files normalised to the same LUFS target actually sound equally loud. Podcasters, video editors and musicians get a WAV that meets the platform spec instead of guessing at a fader move.",
   useCases: [

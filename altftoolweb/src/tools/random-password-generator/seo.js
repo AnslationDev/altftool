@@ -1,4 +1,10 @@
 const seo = {
+  title: "Random Password Generator with Entropy in Bits",
+  steps: [
+    "Drag Password Length anywhere from 8 to 128, then tick the Character Options you want: Uppercase (A–Z), Lowercase (a–z), Numbers (0–9) and Symbols (!@#$%).",
+    "Press Generate New; the Password Strength panel reports the entropy in bits and a crack-time estimate for that exact pool.",
+    "Press Copy Password to take the result, or the show/hide button to reveal it first.",
+  ],
   intro:
     "Random Password Generator builds passwords of 8 to 128 characters using the browser's cryptographic random source (crypto.getRandomValues) with rejection sampling, so no character is more likely than another, then guarantees at least one character from every set you enabled and shuffles the result. It scores each password by true entropy — length x log2(pool size) — rather than by a checklist, so the default 24-character password drawn from uppercase, lowercase, digits and 26 symbols reports about 155 bits. Nothing is transmitted or stored: the password is generated in the page and disappears when you close it.",
   useCases: [

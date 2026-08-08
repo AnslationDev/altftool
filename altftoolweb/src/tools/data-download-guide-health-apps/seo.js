@@ -1,4 +1,12 @@
 const seo = {
+  title: "Health App Data Export Guide + Record Count Estimate",
+  metaDescription:
+    "Choose the categories, enter wear hours, and see the heart-rate, activity and sleep record counts in a health export — and which are GDPR Art. 9 data.",
+  steps: [
+    "Tick the categories to export — Heart rate and variability, Sleep, Workouts with GPS, Cycle and reproductive tracking and the rest — or use 'Select all'.",
+    "Enter 'Years of history', 'Hours a day the device is worn', 'Recorded workouts per week' and 'Average workout length (minutes)'.",
+    "Read the sensor-record count, estimated archive size and special-category flags, then press 'Copy plan' to save the whole summary.",
+  ],
   intro:
     "A wearable writes a heart-rate sample roughly every 5 seconds it is worn, a step and energy record every minute, and a sleep-stage score every 30 seconds — which is why a few years of tracking becomes millions of records. This planner turns your wear time and workout habit into that record count, sizes the export, and separates the categories that count as special-category health data under GDPR Art. 9 and sensitive personal information under India's SPDI Rules 2011. It also names the right export route for each platform, since Apple Health, Google Fit, Fitbit, Strava, Samsung Health and Garmin all differ.",
   useCases: [

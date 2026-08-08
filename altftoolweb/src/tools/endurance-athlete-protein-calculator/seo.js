@@ -1,4 +1,12 @@
 const seo = {
+  title: "Endurance Protein Calculator: g/kg by Training Hours",
+  metaDescription:
+    "Place weekly training hours in the ACSM 1.2-2.0 g/kg range for a daily protein target, with the 0.3 g/kg post-session dose and a per-meal split.",
+  steps: [
+    "Enter Bodyweight (kg), Training hours per week, Sessions per week and Age (years).",
+    "Set Protein meals per day, add Daily calories (optional), and tick Currently eating in a calorie deficit if that applies.",
+    "Read the Daily protein target in grams and g/kg, the 0.3 g/kg post-session dose, protein per meal, and the share of stated calories against the 10-35% AMDR.",
+  ],
   intro:
     "This calculator sets a daily protein target for endurance athletes by placing your weekly training hours inside the 1.2-2.0 g per kg bodyweight range published in the 2016 ACSM, Academy of Nutrition and Dietetics and Dietitians of Canada joint position stand on nutrition and athletic performance. It also gives the 0.3 g/kg post-session dose the same stand recommends, splits the daily total across your meals, and checks the result against the 10-35% AMDR for protein energy. It is built for runners, cyclists, swimmers and triathletes whose needs move with training block, not for a single fixed number.",
   useCases: [

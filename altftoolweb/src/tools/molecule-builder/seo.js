@@ -1,4 +1,12 @@
 const seo = {
+  title: "Molecule Builder: Covalent Bonds and Molar Mass",
+  metaDescription:
+    "Drop H, C, O, N or Cl atoms on a canvas, click two to bond them, and read molar mass in g/mol. Water, methane, CO2 and ammonia presets carry VSEPR shapes.",
+  steps: [
+    "Add atoms from the Add Atom Elements palette — hydrogen, carbon, oxygen, nitrogen or chlorine — or load a preset such as Methane (CH₄) or Carbon Dioxide (CO₂).",
+    "Click two atoms on the canvas to make or break a covalent bond between them, and drag any atom to reposition it.",
+    "Read Structure Properties for the molecular weight in g/mol and the VSEPR shape; Reset Workspace returns you to the water preset.",
+  ],
   intro:
     "The Molecule Builder is a 2D chemical structure sketchpad: drop hydrogen, carbon, oxygen, nitrogen or chlorine atoms onto a canvas, click any two of them to form or break a covalent bond, drag them into position, and read the molecular weight update as the sum of the standard atomic masses. It is aimed at students meeting covalent bonding and VSEPR geometry for the first time, and at teachers who want a structure they can redraw live on a screen. Four worked presets — water, methane, carbon dioxide and ammonia — load with their formula, molar mass and the VSEPR shape and bond angle that go with them.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Inverter Backup Time Calculator with Peukert's Law",
+  metaDescription:
+    "Realistic backup hours from battery Ah, bank voltage, load and inverter efficiency, corrected with Peukert's law rather than watt-hours over watts.",
+  steps: [
+    "Enter Battery capacity per block (Ah at C20), Battery voltage (V) and Batteries in series, then pick Battery type — Tubular lead-acid, Flat plate lead-acid, SMF / VRLA sealed or Lithium LiFePO4.",
+    "Set Connected load (W), adding appliances with the + preset buttons, and adjust Inverter efficiency (%) and Battery state of charge (%).",
+    "Read Realistic backup time, which applies Peukert's law on top of the plain watt-hour sum, then enter Backup you want (hours) to get the rated Ah under Battery size for your target backup.",
+  ],
   intro:
     "This calculator estimates how many hours a home inverter will run a given load, using the energy balance backup hours = usable battery watt-hours divided by (load watts / inverter efficiency), then correcting it with Peukert's law t = H x (C / (I x H))^k. That second step matters because inverter batteries are rated at the 20-hour rate (C20) but a real household load drains them in three or four hours, where a lead-acid bank delivers materially less than its printed Ah. It is aimed at homeowners sizing a new inverter battery and anyone wondering why a 150 Ah battery does not give the runtime the box promised.",
   useCases: [

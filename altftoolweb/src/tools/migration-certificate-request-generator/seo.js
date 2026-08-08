@@ -1,4 +1,12 @@
 const seo = {
+  title: "Migration Certificate Request: Letter, Fee, Date",
+  metaDescription:
+    "Draft the application to your university or board, with the document checklist, the total fee and the working-day date the certificate reaches you.",
+  steps: [
+    "Under Who you are writing to, pick the Issuing body and First issue or duplicate, then fill in Your record — Name exactly as on the marksheet, Roll or enrolment number, Course or class completed and Year of passing.",
+    "In Timeline and fees, set the Date you submit the application, Processing time quoted (working days), Office working week and How you will receive it, then enter the Prescribed fee, Duplicate surcharge, Late or tatkal charge and Postage or courier charge in INR.",
+    "Read Certificate in hand by against Total payable, Ready at the office by and Meets the admission deadline, run through What to enclose, then press Copy letter for the Application letter alone or Copy result for the whole summary.",
+  ],
   intro:
     "A migration certificate is the document your last examining body issues to confirm it has no objection to you leaving its rolls and enrolling elsewhere, and this tool drafts the application for it. It works out the document set the body actually asks for — prescribed form, marksheet copy, no-dues clearance, and for a lost certificate an affidavit sworn before a notary — adds up the fee, and counts the quoted processing time in working days plus postal transit to show the date the certificate realistically reaches you. Useful for anyone whose new university has made admission provisional until the certificate is produced.",
   useCases: [

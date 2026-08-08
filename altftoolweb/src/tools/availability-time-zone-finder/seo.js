@@ -1,4 +1,10 @@
 const seo = {
+  title: "Time Zone Meeting Finder: Slots That Fit Everyone",
+  steps: [
+    "In 'Members and UTC offsets' write one person per line as Name | UTC offset hours | HH:MM-HH:MM, for example Asha | 5.5 | 09:00-18:00.",
+    "Set 'Meeting duration (minutes)' from 15 to 480 and 'Search step (minutes)' from 15 to 120.",
+    "The result counts the common start times and the table lists up to 100 UTC slots with each person's local start and end; Download saves availability-time-zone-finder.txt.",
+  ],
   metaDescription:
     "Find UTC meeting starts that keep the full meeting inside every participant's stated local hours, using manually entered UTC offsets.",
   intro:

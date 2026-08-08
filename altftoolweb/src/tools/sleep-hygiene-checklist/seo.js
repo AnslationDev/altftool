@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sleep Hygiene Checklist: 16 Habits Ranked by Impact",
+  metaDescription:
+    "Score 16 habits across bedroom, daytime and in-bed behaviour, then turn your bedtime into caffeine, alcohol, meal and wind-down cut-off clock times.",
+  steps: [
+    "Tick the sixteen items under Bedroom environment, Daytime and evening habits, and Bedtime routine and in-bed behaviour, each tagged High impact, Moderate or Supporting.",
+    "Enter Target bedtime (24-hour, HH:MM) so the cut-offs can be dated against it.",
+    "Read the Sleep hygiene score with each group's percentage, Impact points earned and Weakest area, the impact-ranked 'Fix these first' list, and the last caffeine, last alcohol, last large meal and start wind-down clock times, then press Copy result.",
+  ],
   intro:
     "The Sleep Hygiene Checklist scores sixteen evidence-based habits across three areas — the bedroom itself, what you do during the day and evening, and what happens once you are in bed — and returns a percentage with the gaps ranked by impact. The items come from standard sleep hygiene and stimulus-control guidance: a fixed wake time seven days a week, a bedroom around 16-19 C (60-67 F), dark and quiet, caffeine stopped about six hours before bed, and the bed reserved for sleep only. It also converts your target bedtime into concrete cut-off clock times for caffeine, alcohol, large meals and the start of your wind-down.",
   useCases: [

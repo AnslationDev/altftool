@@ -1,4 +1,12 @@
 const seo = {
+  title: "TC String Decoder for IAB TCF v2.2 Consent Strings",
+  metaDescription:
+    "Unpacks a TCF v2/v2.2 TC String's bit fields in your browser: purposes, special features, vendor IDs, timestamps and CMP id. No vendor list fetched.",
+  steps: [
+    "Paste the string into the 'TC String' box — a bare string, a euconsent-v2= cookie line, or a URL containing gdpr_consent= all work.",
+    "The page decodes the core segment locally into 'Core string header': TCF version, CMP id, Global Vendor List version, and the Created and LastUpdated timestamps.",
+    "Read the Purposes, Special features, Vendors and Publisher restrictions sections plus the 'Consistency checks', then press 'Copy decoded JSON'.",
+  ],
   intro:
     "A TC String is the IAB Europe Transparency & Consent Framework's record of what a user agreed to. It looks like an opaque blob — `CP1TeJAP5UWFQAHADBENB7Eo…` — because it is a raw bit stream packed into web-safe Base64: 6 bits of version, two 36-bit timestamps, a 12-bit CMP id, then bitfields for the eleven purposes, the two special features, and every vendor id. This decoder unpacks those fields in your browser and shows what each bit actually permits. It reads vendor IDs, not vendor names: resolving an id to a company requires the Global Vendor List, which is a network fetch, and this page makes none.",
   useCases: [

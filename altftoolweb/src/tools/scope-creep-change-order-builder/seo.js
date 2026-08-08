@@ -1,4 +1,12 @@
 const seo = {
+  title: "Scope Creep Change Order Builder: Price + Deadline",
+  metaDescription:
+    "Price an out-of-scope client request as extra hours x your rate plus expenses, with the calendar-day deadline extension and an acceptance clause.",
+  steps: [
+    "Fill Project, 'Original included scope' and 'New request', or click the 'Extra pages' example preset to load a worked case.",
+    "Enter Additional hours, your Hourly / blended rate, Additional expenses and 'Deadline extension (days)' — the Result panel recomputes as you type.",
+    "Read the '<total> change-order value' with its '<n> calendar-day extension' caption and the acceptance line, then Copy it or Download scope-creep-change-order-builder.txt.",
+  ],
   intro:
     "The Scope-Creep Change-Order Builder prices an out-of-scope client request as (additional hours × your hourly or blended rate) + additional expenses, and pairs that figure with a calendar-day deadline extension. You type the original included scope, the new request, the hours it adds and your rate, and it returns a change-order value with the old scope, the requested change and an acceptance line spelling out price, schedule, dependencies, revision count and the authorized approver. It is for freelancers and small agencies who need to say 'yes, and here is what it costs' in writing before starting the extra work.",
   useCases: [

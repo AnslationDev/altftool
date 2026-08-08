@@ -1,4 +1,12 @@
 const seo = {
+  title: "One-Way NDA Generator: Term, Survival, Governing Law",
+  metaDescription:
+    "Drafts a unilateral NDA with four-limb exclusions and separate term and survival dates, under India, England and Wales, Singapore, Delaware, NY or CA law.",
+  steps: [
+    "Name the disclosing and receiving parties with their entity types and addresses, and describe the 'Purpose the information may be used for'.",
+    "Set 'Term of the agreement (years)', 'Confidentiality survives for (years)', 'Return or destroy materials within (days)', Governing law and Forum city.",
+    "Tick the optional clauses — trade secrets indefinite, residuals, non-solicitation, US trade secret immunity — then 'Copy result' takes the numbered draft.",
+  ],
   intro:
     "A one-way, or unilateral, NDA places confidentiality obligations on only one side: the party receiving the information. It is the correct structure when a single party is doing the sharing — a startup showing a deck to an investor, a company opening its codebase to a vendor, a manufacturer sending drawings to a supplier. This generator assembles the full draft with the standard architecture: definition of confidential information, four-limb exclusions, permitted disclosures to representatives, a term, a separately stated survival period, return or destruction, and governing law with a named forum.",
   useCases: [
