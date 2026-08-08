@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ad Copy Prompt Builder with Real Character Limits",
+  metaDescription:
+    "Build an AI ad prompt that enforces Google's 30/90, Meta's 125/40/30, LinkedIn or X limits, one of five angles, and finance or health guardrails.",
+  steps: [
+    "Fill in 'Product or service (required)' and 'Key benefit — the one true claim (required)', then add Target audience, 'Proof points the AI may cite verbatim', Offer / promotion and Call to action.",
+    "Choose the Platform (Google Ads responsive search ad, Meta feed ad, LinkedIn sponsored content or X promoted post), an Angle such as Problem → solution, a Regulated category like Finance / credit / investing, and the Number of ad variants (1-10).",
+    "Check the Platform limits, Angle, Compliance profile and Prompt length rows, then press Copy prompt to take the Generated prompt to your AI tool.",
+  ],
   intro:
     "The Ad Copy Prompt Builder assembles an AI prompt for writing paid ad copy that respects each platform's real character limits — 30-character headlines and 90-character descriptions for Google responsive search ads, 125/40/30 recommendations for Meta feed ads, roughly 150/70 truncation points for LinkedIn sponsored content and X's 280-character posts. It also encodes your chosen angle, verbatim proof points and compliance guardrails for regulated categories. It is built for performance marketers and founders who are tired of AI ad drafts that blow past the limits or invent claims.",
   useCases: [

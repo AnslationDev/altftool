@@ -1,4 +1,12 @@
 const seo = {
+  title: "Eid Mubarak Wishes in Urdu, Hindi and 10 More",
+  metaDescription:
+    "Eid greetings written in 12 languages and four tones, with Roman transliteration and an SMS check: 160 GSM-7 characters, or 70 once the script is UCS-2.",
+  steps: [
+    "Pick one of 12 languages, a tone of Formal, Warm, Short or Devotional, and whether it is Eid al-Fitr or Eid al-Adha.",
+    "Add their name and your name, then tick “Add the Roman transliteration line” or “Add a crescent emoji”.",
+    "Check the Message length panel for the encoding and SMS parts, then press Copy greeting.",
+  ],
   intro:
     "This generator writes an Eid greeting in the script your reader actually uses — Urdu, Arabic, Hindi, Bengali, Tamil, Telugu, Malayalam, Marathi, Gujarati, Punjabi, Kannada or English — in one of four tones, with a Roman transliteration line and the sender's and recipient's names in place. It also scores the finished message against the real SMS rules from 3GPP TS 23.038, so you can see whether it goes out as one 160-character GSM-7 message or as several 70-character UCS-2 parts. Useful for anyone sending Eid wishes to a mixed contact list of family, friends, clients and colleagues.",
   useCases: [

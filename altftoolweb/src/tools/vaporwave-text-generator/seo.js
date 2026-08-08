@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vaporwave Text Generator: 4 Full-Width Unicode Styles",
+  metaDescription:
+    "Maps every ASCII character to its full-width Unicode twin and renders Full-Width, Wide Spaced, Aesthetic and Vaporwave at once, with copy buttons.",
+  steps: [
+    "Type or paste into the Input Text box — the character count updates beneath it.",
+    "Click Full-Width, Wide Spaced, Aesthetic or Vaporwave to highlight a style; all four cards render from the same input at once.",
+    "Press Copy on the card you want — the output is plain Unicode text wrapped in 『 』, not an image, so it pastes into a bio or chat.",
+  ],
   intro:
     "The Vaporwave Text Generator converts ordinary text into the wide 'aesthetic' look by mapping every printable ASCII character to its full-width Unicode twin — adding 0xFEE0 to each code point so A becomes Ａ and 7 becomes ７ — and turning the plain space into the ideographic space U+3000. It renders four variants at once: Full-Width, Wide Spaced with a gap between every character, Aesthetic with a random decorative symbol on each side, and Vaporwave framed by ＼ and ／, each wrapped in Japanese corner brackets 『 』. Everything it produces is real text you can copy and paste, not an image.",
   useCases: [

@@ -1,4 +1,10 @@
 const seo = {
+  title: "Audio-Transcript Alignment Checker for SRT and VTT",
+  steps: [
+    "Press 'Choose an audio file' (maximum 30 MB, decoded maximum 10 minutes) and paste your Candidate timed transcript as SRT or WebVTT, adding a Reference timed transcript if you want a diff.",
+    "Set Audio activity threshold (Sensitive -50 dBFS through Strong audio only -20 dBFS) and Cue timing tolerance (250 ms to 2 seconds), then press 'Run alignment screen'.",
+    "Read the percentage of active windows overlapping a cue under 'Playback and coverage' with the uncovered ranges and findings, then press 'Export counts and timings' to save audio-transcript-alignment-screen.json.",
+  ],
   intro:
     "The Audio-Transcript Alignment Checker measures your audio in 50 ms RMS windows, marks every window above -40 dBFS as speech activity, and reports what percentage of that activity falls inside an SRT or WebVTT cue — plus the specific stretches of audio that no cue covers. Paste a second transcript and it also pairs cues by time overlap and flags text differences using a Dice token-similarity score below 0.85 and boundary shifts beyond 500 ms. It is for captioners, QC reviewers and accessibility teams who need to find the missing or drifted cue rather than proofread the whole file.",
   useCases: [

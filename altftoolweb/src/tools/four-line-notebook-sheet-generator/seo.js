@@ -1,4 +1,12 @@
 const seo = {
+  title: "Four Line Paper Generator: Set Band Heights in mm",
+  metaDescription:
+    "Rule printable four, three, two or single line paper with your own mm bands, and see how many rows fit on A4, A5, Letter or Legal before printing.",
+  steps: [
+    "Choose a Ruling of Four line, Three line, Two line or Single line and a Page size of A4, A5, US Letter or US Legal.",
+    "Set Middle band / x-height (mm), Top band / ascenders (mm), Bottom band / descenders (mm), Gap between rows (mm) and Margin (mm), or tap a preset such as UKG / Class 1.",
+    "Check Rows on the page against the ruled preview, then press Print and set the print dialog scale to 100% so the bands measure as shown.",
+  ],
   intro:
     "The Four Line Notebook Sheet Generator rules printable handwriting paper to millimetre band heights you choose: a four line sheet with ascender, x-height and descender bands, a three line sheet, a two line sheet, or plain single-line paper. It calculates the row pitch as band height plus row gap, then divides the usable page height by that pitch to tell you exactly how many rows fit on A4, A5, Letter or Legal before you print. Single-line presets use the real commercial rulings — wide rule 11/32 inch (8.73 mm), college rule 9/32 inch (7.14 mm) and narrow rule 1/4 inch (6.35 mm).",
   useCases: [

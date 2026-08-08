@@ -1,4 +1,12 @@
 const seo = {
+  title: "Allen Key Size Chart: Metric to Imperial Clearance",
+  metaDescription:
+    "Grades every hex key swap by clearance: under 1% is the same tool, over 3% rounds the socket. Fastener sizes from ISO 4762, 7380, 4026 and ASME B18.3.",
+  steps: [
+    "Pick 'The key or socket you have' — Metric, in millimetres or Imperial, in inch fractions — then the 'Size across flats' from that system's list; the hint below converts the size into the other unit.",
+    "Read the 'Closest in the other system' headline with the millimetre comparison, and the colour-coded verdict beneath it that says whether the swap is interchangeable, needs care, will round the socket or is too large to enter.",
+    "In 'Key size for a fastener' choose a Fastener standard — Socket head cap screw (ISO 4762 / DIN 912), Button head screw (ISO 7380), Countersunk socket screw (ISO 10642), Socket set screw / grub screw (ISO 4026) or ASME B18.3 — and a Screw size; Copy result copies the match, and a cross-reference table and printable gauge sit below.",
+  ],
   intro:
     "Matches hex key sizes across the metric and imperial systems and grades every swap by clearance, the number that decides whether a substitution works or destroys the fastener. A key that is nominally larger than the socket does not enter at all; among keys that do fit, one that leaves under 1% slack is the same tool with a different name, 1 to 3% turns a lightly torqued screw, and over 3% loads the corners of the socket instead of the flats and rounds it out. Fastener sizes come from the published standards — ISO 4762, 7380, 10642 and 4026, and ASME B18.3 for the imperial series.",
   useCases: [

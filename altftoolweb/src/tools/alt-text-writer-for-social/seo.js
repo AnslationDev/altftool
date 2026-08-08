@@ -1,4 +1,12 @@
 const seo = {
+  title: "Social Alt Text Writer: LinkedIn 120, X 1,000 Limits",
+  metaDescription:
+    "Scores a draft against the platform field limit and the 125-character screen reader guideline, flagging \"image of\", file names, hashtags and emoji.",
+  steps: [
+    "Choose Where the image will be posted and paste your draft into Your alt text — LinkedIn caps at 120 characters and X at 1,000.",
+    "Read the Alt text score out of 100 with the flags for \"image of\" openers, leftover file names, hashtags and emoji; the score updates as you type.",
+    "Press Copy alt text, or fill Main subject, What they are doing and Where it happens to have a first sentence assembled for you.",
+  ],
   intro:
     "Social Alt Text Writer scores a draft image description against the platform's own field limit and the long-standing 125-character screen reader guideline, then names each thing that would make it awkward to listen to. It flags redundant openers like \"image of\", leftover file names, hashtags, all-caps runs, emoji pile-ups and keyword repetition, and it can assemble a first draft from the subject, the action, the setting and any words printed in the picture. WCAG 2.2 success criterion 1.1.1 requires a text alternative for non-text content; this tool helps you write one that is actually useful.",
   useCases: [

@@ -1,4 +1,10 @@
 const seo = {
+  title: "Lost Phone Checklist: What to Do in the First Hour",
+  steps: [
+    "Set Phone platform to Android, iPhone / iOS or Other, and enter your Mobile number / SIM reference.",
+    "Toggle Phone had PIN/password/biometric lock, Banking, wallet, UPI, or saved cards are present, and Work email, admin, health, or other sensitive access is present.",
+    "Read the ordered plan — labelled Urgent or Critical, with remote erase placed last — then Copy or Download it as lost-phone-response-planner.txt.",
+  ],
   intro:
     "Lost Phone Response Planner turns 'my phone is gone' into a numbered, correctly ordered action list — from marking the device lost in Find My Device or Find My, to suspending the SIM, to changing the account password that everything else recovers through. It reorders the steps based on four facts about the device: platform, whether a screen lock was set, whether banking or wallet apps were on it, and whether work or other sensitive access was signed in. If the phone had no screen lock, session and financial revocation is promoted to the top, because in that case the attacker is already inside.",
   useCases: [

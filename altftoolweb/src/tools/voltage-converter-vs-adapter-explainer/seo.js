@@ -1,4 +1,12 @@
 const seo = {
+  title: "Voltage Converter vs Plug Adapter: Read Your Label",
+  metaDescription:
+    "A 100-240V label needs only a plug adapter anywhere. A single-voltage one gets a converter sized in VA — 1.25x heating, 1.5x electronics, 3x motor.",
+  steps: [
+    "Pick your destination under Where you are going, then copy the range off the appliance plate into Label voltage: from (V) and to (V).",
+    "Enter Rated power (W) and choose What kind of appliance is it — the 1.25x, 1.5x or 3x headroom factor follows from that class.",
+    "Read the Verdict with Minimum converter rating in VA and Acceptable converter type, then press Copy result.",
+  ],
   intro:
     "This explainer reads the input range printed on your appliance against the mains at your destination and says whether a plug adapter is enough or a real voltage converter is required. A plug adapter changes only the pin shape; a converter or transformer changes the voltage; neither changes frequency. If the label says 100-240V ~ 50/60Hz the appliance is dual voltage and needs nothing but a shape adapter anywhere, and if it names a single voltage the tool sizes the converter using the standard headroom rules — 1.25× nameplate watts for a heating element, 1.5× for electronics and 3× for a motor.",
   useCases: [

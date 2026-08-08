@@ -1,4 +1,12 @@
 const seo = {
+  title: "Find and Replace Text Online with Regex Support",
+  metaDescription:
+    "Replaces every match, not just the first: the pattern always compiles with the global flag. Literal mode escapes your term; regex mode adds $1 groups.",
+  steps: [
+    "Paste your text into the Input panel, or press Load sample to start from \"cats are great, cats are cute\".",
+    "Enter the search term under Find and its substitute under Replace, then set the Regex and Ignore case toggles.",
+    "The Result panel rewrites as you type and prints the JavaScript engine's message on a broken pattern; press Copy to take the output.",
+  ],
   intro:
     "Paste text, type what to find and what to put in its place, and every occurrence is swapped at once — the replacement always runs with the global flag, so it never stops at the first match. By default the search term is escaped and matched literally, so characters like a dot, a plus sign or a bracket mean themselves; flip the regex toggle to interpret the pattern as a JavaScript regular expression with capture groups, and flip the ignore-case toggle to add the case-insensitive flag. Output updates as you type and an invalid pattern prints the engine's own error instead of silently failing.",
   useCases: [

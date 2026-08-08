@@ -1,4 +1,12 @@
 const seo = {
+  title: "PHP Beautifier: Prettier + plugin-php in Your Browser",
+  metaDescription:
+    "Format PHP with Prettier and @prettier/plugin-php in the page: pick indent, print width, quotes and brace style, then download formatted.php.",
+  steps: [
+    "Paste code into the PHP Input Editor, or press Upload .php to load a file from disk.",
+    "Set Indent (2, 4 or 8 spaces), Print Width (80, 120 or 160 chars), Quotes and Brace Style (1TBS, Perl or Allman); the output reformats as you type.",
+    "Read the Beautified Output with its original and formatted byte sizes, then press Copy or Download to save formatted.php.",
+  ],
   intro:
     "PHP Beautifier Studio reformats PHP source in the browser using Prettier with the official @prettier/plugin-php parser, so the output follows the same deterministic rules a Prettier-based CI check would apply. You control indent width (2, 4 or 8 spaces, or tabs), print width (80, 120 or 160 characters), single versus double quotes and brace placement, and the formatted file can be copied or downloaded as formatted.php. If a snippet has a syntax error that Prettier refuses to parse, a built-in brace-and-semicolon fallback still re-indents it and tells you why, instead of returning nothing.",
   useCases: [

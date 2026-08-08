@@ -1,4 +1,12 @@
 const seo = {
+  title: "Asus Router Hardening Checklist: 25 Scored Steps",
+  metaDescription:
+    "Score an ASUSWRT router across 25 weighted steps — admin login, WPS, WAN access, AiCloud, SSH keys, DDNS, UPnP, firmware — with an exposure index.",
+  steps: [
+    "Pick what the router carries under “What is this router carrying?” — Ordinary home broadband, Remote access enthusiast, Work from home, or Smart home with many IoT devices — which re-weights all 25 steps for that use.",
+    "Work through the 25 steps grouped as Admin account, Wi-Fi, Facing the internet, Devices on your LAN and Firmware and lifecycle, each naming its ASUSWRT page; then tick what is switched on under “What is your router publishing to the internet?” (Web access from WAN, Telnet, SSH from the WAN, DMZ host, AiCloud, FTP share, UPnP, ASUS DDNS), enter Port forwards configured and tick “My ISP uses CGNAT” if you have no public IPv4.",
+    "Read the Hardening score % with its band — Hardened, Solid, Partly hardened or Exposed — held at 60% while a critical step is open, alongside the exposure index out of 100 with its worst single item and the “Do these next” list; Copy result copies the summary.",
+  ],
   intro:
     "This Asus hardening checklist runs a weighted 25-point pass over an ASUSWRT router — admin login and Two-Step Verification, WPA2/WPA3 mode, WPS, Web Access from WAN, AiCloud, SSH authorised keys, DDNS, UPnP and firmware — and scores what is still open instead of just counting ticks. A separate exposure index adds up the services you have published to the internet, weighting an interactive session on the router itself above a file share and a file share above a DDNS name. Every step gives the exact ASUSWRT menu path, and a CGNAT option adjusts the index for connections with no public IPv4.",
   useCases: [

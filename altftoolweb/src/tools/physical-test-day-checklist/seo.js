@@ -1,4 +1,12 @@
 const seo = {
+  title: "SSC GD PET Pace Splits, Height and Chest Check",
+  metaDescription:
+    "Turns 5 km in 24 minutes into 4:48 per km and 1:55 per 400 m lap, checks height and chest for your category, and lists the documents and kit to carry.",
+  steps: [
+    "Choose the Standard you are being tested against — SSC GD by category, Army Agniveer (GD) Group I or II, or \"Another force — I will enter the standard\" — which fills Run distance (metres) and the qualifying time.",
+    "Add your trial time in minutes and seconds, then under Physical Standard Test enter Your height (cm), Chest relaxed (cm) and Chest expanded (cm).",
+    "Read Qualifying time, Per kilometre, Average speed and Laps of 400 m with the Split table, tick off Documents for the ground and Kit, then press Copy plan.",
+  ],
   intro:
     "This planner converts a recruitment run standard into the pace you have to hold, lap by lap, and checks your measured height and chest against the standard for your category. The SSC Constable (GD) male run is 5 km in 24 minutes, which is 4 minutes 48 seconds per kilometre or 1 minute 55 seconds per 400-metre lap at 12.5 km/h; the female standard is 1.6 km in 8 minutes 30 seconds. Height and chest standards vary by category — 170 cm and 80/85 cm chest for a male general candidate, 162.5 cm for a Scheduled Tribe candidate — and the tool works out how far above or below the line you are.",
   useCases: [

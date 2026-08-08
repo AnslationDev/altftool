@@ -1,4 +1,7 @@
 const seo = {
+  title: "Flashlight and Cleaner App Permission Audit Score",
+  metaDescription:
+    "Scores a torch, cleaner or battery-saver app out of 100 and weights All files access, overlays and accessibility highest — a torch needs no permission.",
   intro:
     "The Utility App Permission Audit scores flashlight, junk-cleaner and battery-saver apps against the job they advertise, and returns a 0-100 privacy score plus a ranked revoke list. It is the app class with the widest gap between function and permissions: Android's torch API (CameraManager.setTorchMode) needs no permission at all, yet flashlight apps routinely hold Camera, Location and Contacts. Special app access grants — All files access, usage access, overlays and accessibility — carry the heaviest weight because Google Play requires a core-functionality declaration for each.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Resume PII Stripper: Redact CVs for Blind Hiring",
+  metaDescription:
+    "Replace names, emails, phones and IDs with stable tokens like [NAME_1], or delete them. Exports anonymised TXT and a counts-only JSON report.",
+  steps: [
+    "Paste your CV into the Resume text box, or use Optional local file to open a TXT, DOCX or text-based PDF up to 15 MB.",
+    "Untick any of the eight detection categories you want to keep, then pick Stable placeholders (repeats reuse [EMAIL_1]) or Remove detected values.",
+    "Check the Anonymized preview, then Copy preview or Download TXT; Download JSON saves the counts-only <name>-pii-counts.json report.",
+  ],
   intro:
     "The Resume PII Stripper redacts a resume for blind hiring by detecting eight categories of personal data — names, emails, phone numbers, addresses, profile links, social handles, dates of birth and identity numbers — and either deleting them or replacing them with stable placeholders such as [NAME_1] and [EMAIL_2]. The same value always maps to the same token, so a candidate stays traceable through the document without ever being identifiable. It is for recruiters and hiring panels who need anonymised CVs, and for candidates who want to share a work history without handing over contact details.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stopword Impact Tester: 179 NLTK Stopwords Removed",
+  metaDescription:
+    "Strip the 179-word NLTK English stopword list and filler, see words, characters, tokens and reading time saved — with negations protected.",
+  steps: [
+    "Paste into 'Your text', which starts on a worked onboarding-copy example, and add domain terms to 'Also remove these words' or 'Never remove these words', comma or space separated.",
+    "Tick 'Remove standard English stopwords' for the 179-word NLTK list, 'Remove filler and hedge words (really, basically, actually)', and 'Protect negations and contrastives (not, no, but, than)' — untick the last to see what a naive filter destroys.",
+    "The panel reports Words removed as a percentage, then Words, Characters, Estimated tokens and 'Reading time at 238 wpm' before and after, lists 'What was removed' by frequency, and Copy result takes the stripped text.",
+  ],
   intro:
     "Stopword Impact Tester removes the 179-word English stopword list distributed with NLTK, plus common prose filler like really, basically and actually, and reports exactly what that saved in words, characters and estimated tokens. Its more useful half is the cost side: negations and contrastives such as not, no, but and than are protected by default, because stripping them turns 'does not scale' into 'scale' and silently reverses what the text says. Reading time is estimated at 238 words per minute, the mean silent reading rate for English non-fiction from Brysbaert's 2019 meta-analysis.",
   useCases: [

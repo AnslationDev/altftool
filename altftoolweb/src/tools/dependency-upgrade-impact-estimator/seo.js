@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dependency Upgrade Impact Estimator: Semver Risk",
+  metaDescription:
+    "Scores each upgrade 0-100 from the semver jump — patch 12, minor 34, major 68 — plus 18 for next, react, react-dom, firebase, typescript or eslint.",
+  steps: [
+    "Paste your manifest into the package.json box; both dependencies and devDependencies are read, and Load sample fills in a next, react, firebase and lucide-react example.",
+    "In the Target versions box put one \"name version\" pair per line, such as next 16.2.6; any package you leave out is compared against itself and counts as no version jump.",
+    "Read Average risk and Major upgrades beside the Upgrade matrix, where each row shows current to target, the jump type, and a badge reading Review carefully above 65 or Low friction at or below it.",
+  ],
   intro:
     "The Dependency Upgrade Impact Estimator scores each package upgrade from 0 to 100 by comparing your current version against a target version and grading the semantic-version jump — 0 for no change, 12 for a patch, 34 for a minor, 68 for a major — then adding 18 points when the package is framework-critical. Paste a package.json on one side and a list of 'name version' targets on the other, and you get a per-package risk score, an average risk figure, and a count of major jumps. It is for anyone planning an upgrade sprint who needs to decide what to batch together and what to isolate.",
   useCases: [

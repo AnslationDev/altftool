@@ -1,4 +1,12 @@
 const seo = {
+  title: "Used Furniture Value Calculator: Teak, MDF, Modular",
+  metaDescription:
+    "Depreciates teak, sheesham, plywood, MDF or particle board by age and condition, deducts restoration, and gives private-sale, asking and dealer prices.",
+  steps: [
+    "Choose Material — Solid teak, Solid sheesham / rosewood, MDF / HDF board, Particle board (flat-pack) or Upholstered sofa — and Original purchase price (INR).",
+    "Enter Age (months), pick Condition from Like new to Broken, and tick Modular or built into the wall or Complete set with all matching pieces.",
+    "Read the Estimated private-sale value, the asking range and the Second-hand dealer offer to expect, then Copy result.",
+  ],
   intro:
     "This estimator prices used furniture by applying a material-specific declining-balance depreciation curve to the original price, then adjusting for condition, whether the piece is modular or built in, and whether a set is still complete. Material is the dominant factor: solid teak or sheesham loses only a few percent a year and can be repolished repeatedly, while particle board and MDF lose most of their value within a few years because the fixings will not hold a second assembly. The result is a private-sale figure, an asking range and the lower number a second-hand dealer is likely to offer.",
   useCases: [

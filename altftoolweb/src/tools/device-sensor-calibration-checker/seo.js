@@ -1,4 +1,12 @@
 const seo = {
+  title: "Phone Accelerometer and Gyroscope Bias Checker",
+  metaDescription:
+    "Stream DeviceMotion samples and log accelerometer X, Y and Z including gravity to three decimals plus the combined gyroscope rotation rate, locally.",
+  steps: [
+    "Lay the phone flat and still, press \"Start with permission\" and allow motion access when the browser asks.",
+    "Watch the Live local readings table add one timestamped row per sample: accelerometer X, Y and Z including gravity to three decimals, plus the combined rotation-rate magnitude.",
+    "Check that a face-up handset reads about 9.8 on the Z axis with X, Y and the rotation rate near zero, then press \"Stop sensor\".",
+  ],
   intro:
     "The Device Sensor Calibration Checker streams your phone's motion sensors through the browser's DeviceMotion API and logs a timestamped row for each sample: accelerometer X, Y and Z including gravity, to three decimals, plus the combined gyroscope rotation-rate magnitude across alpha, beta and gamma. Rest the device on a flat surface and the readings tell you whether its sensors sit near their expected at-rest values or carry a visible bias. It is a quick sanity check for anyone whose compass drifts, whose step count looks wrong, or who wants to see raw sensor output before blaming an app.",
   useCases: [

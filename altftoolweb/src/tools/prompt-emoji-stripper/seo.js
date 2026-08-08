@@ -1,4 +1,12 @@
 const seo = {
+  title: "Prompt Emoji Remover: Strip Zero-Width Characters",
+  metaDescription:
+    "Removes emoji as whole grapheme clusters plus zero-width space, ZWJ, word joiner, soft hyphen and BOM, and reports the exact UTF-8 bytes saved.",
+  steps: [
+    "Paste or type into the 'Your prompt' textarea, which opens pre-filled with a five-line sample prompt carrying rocket, tick and cross emoji.",
+    "Leave or clear the five checkboxes — Remove emoji and pictographs, Remove invisible characters, Remove decorative symbols, Strip variation selectors, Tidy leftover spacing — and use 'Replace each removed symbol with (optional)', capped at 16 characters, to swap a status emoji for a marker like [ok] instead of deleting it.",
+    "Read the Symbols removed headline with the Characters and UTF-8 bytes before-and-after rows and the 'What was taken out' chips, then press Copy result for the stripped prompt; Reset restores the sample and all five toggles.",
+  ],
   intro:
     "Prompt Emoji Stripper removes emoji, decorative symbols and invisible zero-width characters from a prompt, and reports the exact UTF-8 byte saving. Emoji are identified by the Unicode Extended_Pictographic property defined in UTS #51 and counted as whole grapheme clusters, so a country flag, a skin-tone modifier or a zero-width-joiner family sequence each count as one symbol rather than as their component code points. The invisible characters it catches — zero-width space, zero-width joiner, word joiner, soft hyphen and byte order mark — render as nothing but still consume tokens.",
   useCases: [

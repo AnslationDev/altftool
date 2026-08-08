@@ -1,4 +1,11 @@
 const seo = {
+  metaDescription:
+    "Drill addition to ratios across five difficulty bands, in Practice, Timed, Daily, Survival, Speed or Endless mode, then export a per-question CSV.",
+  steps: [
+    "Pick a Game Mode — Practice, Timed Challenge, Daily Challenge, Survival Mode, Speed Mode or Endless Mode.",
+    "Choose a Question Type from Addition through Ratios and Average, set the Difficulty Level from Beginner to Expert, then press Start Training.",
+    "Answer the set, then read per-topic accuracy and average time per question and use Export CSV or Export Report.",
+  ],
   intro:
     "The Mental Math Trainer generates arithmetic drills on demand across 13 question types — addition, subtraction, multiplication, division, mixed operations, squares, square roots, cubes, percentages, fractions, decimals, ratios and averages — at five difficulty bands from single digits up to five-digit numbers. Six modes cover practice, a fixed-time challenge, a date-seeded daily set, survival on three lives, a 15-second-per-question speed run and endless play. Students and anyone doing arithmetic under pressure get per-topic accuracy, average time per question and a CSV report of every answer.",
   useCases: [

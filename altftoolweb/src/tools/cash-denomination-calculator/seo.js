@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cash Denomination Calculator: Fewest ₹ Notes and Coins",
+  metaDescription:
+    "Round an amount to a ₹1, ₹5, ₹10, ₹50 or ₹100 step, then split it into the fewest notes and coins — correct even with denominations switched off.",
+  steps: [
+    "Enter Amount per packet (₹) and how many Identical packets you are preparing.",
+    "Pick Round to the nearest (₹1 to ₹100) and a Rounding direction of Nearest, Round up or Round down, then untick anything missing under Denominations available.",
+    "Read the cash to hand over, the Rounding difference and the per-denomination table, then press Copy result.",
+  ],
   intro:
     "This calculator does the two jobs a cashier does before opening the cash box: it rounds an amount to a figure that can physically be paid — a whole rupee, or a ₹5, ₹10, ₹50 or ₹100 step — and then splits that figure into the smallest possible number of notes and coins. The split uses a minimum-piece dynamic program rather than simple largest-first counting, so it still returns a correct answer when a denomination has run out; ₹600 with only ₹500 and ₹200 notes available comes back as three ₹200 notes instead of failing. Denominations follow the Reserve Bank of India series in circulation.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "NPS Tier 1 Calculator: Corpus, 40% Annuity, Pension",
+  metaDescription:
+    "Project your NPS Tier 1 corpus from monthly contribution, annual step-up and return, then split it into the 40% minimum annuity and the lump sum.",
+  steps: [
+    "Enter Current age (years), Exit age (years), Monthly contribution (INR), Annual step-up (%) and Expected return (% p.a.).",
+    "Set Annuity share (% of corpus, min 40) and Annuity rate (% p.a.); the field will not accept a share below 40.",
+    "Read the estimated corpus, the annuity purchase and lump sum withdrawal split and the expected monthly pension, then press Copy result.",
+  ],
   "intro": "NPS Tier 1 Corpus Calculator projects what your National Pension System retirement account could be worth at exit, using your monthly contribution, an optional annual step-up, the years left to retirement and an expected market-linked return. It then splits that corpus the way the scheme actually requires — at least 40% must buy an annuity, up to 60% can be taken as a tax-free lump sum — and converts the annuity portion into an expected monthly pension. It is built for salaried and self-employed subscribers who want a realistic picture of both the lump sum and the income NPS will produce.",
   "useCases": [
     "Check whether a Rs 10,000 monthly NPS contribution started at 30 will fund the pension you want at 60.",

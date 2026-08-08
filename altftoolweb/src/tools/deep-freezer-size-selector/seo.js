@@ -1,4 +1,12 @@
 const seo = {
+  title: "Deep Freezer Size Selector: Litres and Holdover Hours",
+  metaDescription:
+    "Converts household size or kg of food into gross litres at 0.56 kg/L, allows 80% chest or 70% upright packing, and gives holdover hours in a power cut.",
+  steps: [
+    "Set Size it by to Household size or Weight of food to store, then give People in the household with a Buying habit, or the kilograms.",
+    "Pick Freezer style — Chest freezer (lid on top) or Upright freezer (front door, baskets) — and set Power backup wanted (hours).",
+    "Read the litres to buy with Packed food it holds, Safe holdover in a power cut and the battery bank in Ah, then press Copy result.",
+  ],
   intro:
     "This selector converts either household head-count or a weight of food into the deep freezer capacity you should buy, using the standard storage density of 35 lb of packed food per cubic foot — 0.56 kg per litre — and an allowance of 1.5 cubic feet per person. It then divides by packing efficiency (about 80% in a chest freezer, 70% in an upright) to get gross litres, and reports how long the load stays frozen in a power cut under USDA guidance of 48 hours full and 24 hours half-full. Written for households comparing 200 L against 300 L cabinets and for small shops sizing frozen stock.",
   useCases: [

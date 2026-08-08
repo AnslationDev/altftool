@@ -1,4 +1,7 @@
 const seo = {
+  title: "Clothing Size Converter: US, UK, EU & Body Measures",
+  metaDescription:
+    "Convert women's, men's and kids' sizes across US, UK, EU and XS-XXL with the bust, waist, hip or foot length behind each row, plus inches to cm at 2.54.",
   intro:
     "This tool does two jobs: it converts clothing sizes between the US, UK, EU and international (XS-XXL) systems for women's, men's and kids' apparel and shoes, and it converts body measurements between inches, centimetres and feet-plus-inches using the exact 1 inch = 2.54 cm factor. Each size row also shows the body measurements it is built around — bust, waist, hip, neck, chest, sleeve, inseam or foot length — so you can check a size against a tape measure rather than trusting the label. It covers eleven tables in all, from women's dresses and jeans to men's suits and children's shoe sizes by age.",
   useCases: [

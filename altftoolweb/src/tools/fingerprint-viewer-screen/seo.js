@@ -1,4 +1,12 @@
 const seo = {
+  title: "What Your Screen Tells Every Site You Visit",
+  metaDescription:
+    "See the screen size, available area, pixel ratio and colour depth any page reads without a prompt, each marked stable or session-only, common or rare.",
+  steps: [
+    "Leave “Readings to analyse” on This browser (live), or choose a Compare profile to see how an ordinary machine reports itself.",
+    "Resize the window or open developer tools, then press Re-read to take the readings again.",
+    "Study “Every reading, and what it leaks” for each signal, its stability and its crowd rarity, plus the FNV-1a combination id.",
+  ],
   intro:
     "Screen and Display Fingerprint Viewer shows the display readings every website can take without a permission prompt: screen width and height in CSS pixels, available area, device pixel ratio, colour depth and current viewport. Each reading is labelled stable or session-only and marked as common or distinctive against widely reported values, and the stable set is hashed with FNV-1a into a short id so you can watch the same combination reproduce on every reload. It is for anyone who wants to see what browser fingerprinting actually collects before deciding whether to change anything.",
   useCases: [

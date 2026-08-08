@@ -1,4 +1,12 @@
 const seo = {
+  title: "SPPU SGPA and CGPA Calculator on the 10-Point Scale",
+  metaDescription:
+    "Credit-weighted SGPA on SPPU's O-to-F scale, CGPA weighted by each semester's credits, and the SGPA your remaining credits need for a target CGPA.",
+  steps: [
+    "In each row of \"This semester's courses\" enter the Credits and pick a Grade from the SPPU list — O 10 pt down through A+ 9, A 8, B+ 7, B 6, C 5, P 4 to F 0 — adding rows with 'Add course'.",
+    "Under 'Past semesters' record each completed semester's Label, SGPA and Credits with 'Add semester', so the CGPA is weighted by credit load rather than averaged.",
+    "Read Semester SGPA, credit points, credits registered and earned, and 'CGPA including this semester' beside the plain average of the SGPAs; set Target CGPA and 'Credits still to be attempted' for the SGPA still required, then press Copy result.",
+  ],
   intro:
     "SPPU computes SGPA as the credit-weighted mean of your grade points for one semester — the sum of credits multiplied by grade points, divided by total credits — and CGPA as the same weighted mean across every semester, using each semester's credit load as the weight. This calculator applies both formulas on SPPU's 10-point letter scale (O = 10 down to F = 0) and shows how far the correct credit-weighted CGPA sits from the plain average of SGPAs that students often calculate by mistake. It also works backwards to the SGPA you need in your remaining credits to land on a target CGPA.",
   useCases: [

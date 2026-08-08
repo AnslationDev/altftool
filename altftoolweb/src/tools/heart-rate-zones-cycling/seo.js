@@ -1,4 +1,7 @@
 const seo = {
+  title: "Cycling Heart Rate Zones from LTHR and FTP Watts",
+  metaDescription:
+    "Friel bike zones built from your threshold heart rate — Zone 2 at 81-89% of LTHR — each paired with the Coggan power band in watts from your FTP.",
   intro:
     "This calculator builds cycling heart rate zones from lactate threshold heart rate rather than maximum heart rate, following Joe Friel's bike zone table — Zone 2 at 81–89% of LTHR, Zone 4 at 94–99%, Zone 5b at 103–106% — and pairs each band with the Coggan power zone that belongs next to it, calculated from your FTP in watts. If you have not tested your threshold, it is estimated at 85% of a cycling maximum heart rate, which itself sits around 5–10 beats below your running maximum. It is aimed at riders training with both a heart rate strap and a power meter who want the two data streams to agree.",
   useCases: [

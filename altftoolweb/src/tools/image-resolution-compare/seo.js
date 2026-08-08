@@ -1,4 +1,12 @@
 const seo = {
+  title: "Compare Image Resolution & Quality: 8-Metric Score",
+  metaDescription:
+    "Score two images on resolution, sharpness, compression, noise and colour out of 100, check 12 social sizes, and export PDF, CSV or JSON.",
+  steps: [
+    "Drop a file into the Image A zone and a second into Image B — the zones accept SVG, PNG, JPG and GIF.",
+    "Read the side-by-side comparison and the 0-100 quality score, which weights resolution and sharpness at 20% each and the other six metrics at 10%.",
+    "Check which of the 12 social presets each image fits, then use Export PDF, Export CSV, Export JSON or Export PNG Preview.",
+  ],
   intro:
     "Image Resolution Compare puts two images side by side and scores each on eight measured axes — resolution, sharpness, compression, noise, colour, brightness, contrast and dynamic range — weighting resolution and sharpness at 20% apiece and the other six at 10% each to produce a 0-100 quality score. It also reports pixel dimensions, megapixels, aspect ratio, orientation, file size and a compression ratio of uncompressed bytes to actual bytes, and checks both images against 12 social platform size presets. Results export as PDF, CSV or JSON so a comparison can be attached to a brief or a ticket.",
   useCases: [

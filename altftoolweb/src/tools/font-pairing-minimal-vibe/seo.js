@@ -1,4 +1,12 @@
 const seo = {
+  title: "Minimal Font Pairings with Type Scale and CSS Output",
+  metaDescription:
+    "Six minimal Google Fonts pairs with a modular scale, a column width from your target line length, body line height at the WCAG 1.5 minimum, copyable CSS.",
+  steps: [
+    "Choose a Font pair such as Inter + IBM Plex Sans or Space Grotesk + Inter, then set Body size (px).",
+    "Pick a Scale ratio — Major third 1.25, Perfect fourth 1.333 or Golden ratio 1.618 — and drag Target line length (characters).",
+    "Check the Live preview and Type scale table, then press Copy CSS for the custom properties and Copy URL for the Google Fonts request.",
+  ],
   intro:
     "Minimal Vibe Font Pairing gives six restrained heading and body combinations built from open-licence Google Fonts, then turns each one into a working type system: a modular scale from a ratio you choose, a column width derived from your target line length, and a line height that starts at the WCAG 2.2 minimum of 1.5 for blocks of text. Line length uses the typographic convention that running lowercase Latin text averages half an em per character, so a 66-character measure at 17 px body text lands at roughly 561 px. The output is copyable CSS custom properties rather than a mood board.",
   useCases: [

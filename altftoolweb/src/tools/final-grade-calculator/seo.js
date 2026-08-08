@@ -1,4 +1,12 @@
 const seo = {
+  title: "Final Grade Calculator: What You Need on the Exam",
+  metaDescription:
+    "Solves required final = (target − current × (1 − weight)) ÷ weight, flags impossible targets and lists the score needed for 90, 80, 70, 60 and 40%.",
+  steps: [
+    "Pick Required final score, I scored X on the final, or Weighted average, then enter Current grade (%) and Final exam weight (%).",
+    "Set Desired overall grade (%), or in Weighted average use Add component and fill in each Score % and Weight %.",
+    "Read the required score, the best achievable overall and the 90/80/70/60/40 target table, then Copy result.",
+  ],
   intro:
     "This calculator solves required final = (target − current × (1 − weight)) ÷ weight, so you can see the exact percentage you need on the final exam to land a given overall grade. It has three modes: the required-score mode above, a reverse mode that computes overall = current × (1 − weight) + final × weight once you know your exam result, and a weighted-average mode that totals any number of coursework components as Σ(score × weight) ÷ Σ weight. It also tells you the best overall grade still achievable, so an impossible target is labelled as such instead of quietly returning a number above 100.",
   useCases: [

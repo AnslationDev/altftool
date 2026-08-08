@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kirana Shop AI Prompt Pack: Offers & Udhaar Notes",
+  metaDescription:
+    "Builds a structured AI prompt for six kirana jobs — reorder notes, offer broadcasts, udhaar reminders — in nine languages including Hinglish.",
+  steps: [
+    "Pick one of the six jobs under \"What do you need written?\" — Reorder note for the distributor, Offer / discount broadcast or Udhaar (credit) payment reminder — then fill in its fields, such as Amount pending and Pending since.",
+    "Choose a Language (Hinglish in Roman script, Hindi, Marathi, Tamil and five more), a Tone such as Friendly regular-customer, and set the Message length limit (characters).",
+    "Check the \"Fits one WhatsApp message\" line and the SMS part count, then press Copy prompt — the prompt tells the assistant never to invent a price, date or quantity you did not supply.",
+  ],
   intro:
     "Kirana Shop AI Prompt Pack builds a complete, structured AI prompt for the six messages a neighbourhood grocery shop writes most: a distributor reorder note, an offer broadcast, a customer reply, an udhaar payment reminder, a weekly rate list and a new-stock announcement. Each prompt is assembled in the standard role / task / constraints / output-format layout, with your language, tone and a character cap written in, so the assistant returns something you can send without editing. Built for shop owners and staff who already use WhatsApp for orders and want the wording done in seconds.",
   useCases: [

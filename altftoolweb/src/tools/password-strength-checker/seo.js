@@ -1,4 +1,12 @@
 const seo = {
+  title: "Password Strength Checker: Entropy and Crack Time",
+  metaDescription:
+    "Scores a password by entropy (length x log2 pool), penalises dictionary words and keyboard runs, and times it against five attack speeds.",
+  steps: [
+    "Type or paste into the Password to test box — the wordlists are bundled in the page and nothing is uploaded.",
+    "Read Length, Character pool, Raw entropy and After patterns, then open Patterns found to see which dictionary word or keyboard run capped the score.",
+    "Compare the Time to crack table across the five attacker speeds, or use Generate a passphrase instead with the Words slider between 4 and 7.",
+  ],
   intro:
     "This password strength checker scores a password by entropy — raw bits are computed as length x log2(character pool size), where the pool is 26 for lowercase, 26 for uppercase, 10 for digits and 33 for symbols — and then subtracts for patterns a real cracker exploits. It matches the entry against a list of 100 of the most-used passwords, a dictionary of common words and names, keyboard runs like qwerty and 1qaz2wsx, repeats and date-shaped digits, and converts the surviving entropy into estimated crack times across five attack speeds. The password is analysed in the page and is never transmitted.",
   useCases: [

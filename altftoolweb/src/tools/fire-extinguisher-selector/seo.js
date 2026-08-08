@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fire Extinguisher Selector: Right Agent + NFPA 10 Count",
+  metaDescription:
+    "Pick the agent for a kitchen, garage or server room, see the ones that make it worse, and get NFPA 10 counts, A/B ratings and travel distances.",
+  steps: [
+    "Choose What are you protecting? — Home kitchen, Commercial kitchen or canteen, Living room, bedroom or hallway, office and other spaces.",
+    "Enter Floor area (sq ft) and set Hazard level to Light, Ordinary or Extra, ticking the box if flammable liquids are stored or used there.",
+    "Read the Buy this first agent and suggested size, the agents to avoid, and the NFPA 10 extinguisher count, A and B ratings and max travel distances, then Copy result.",
+  ],
   intro:
     "This selector matches an extinguishing agent to the fire class a space actually presents, then works out coverage from NFPA 10. Class letters differ by standard, so both are used: A for ordinary combustibles, B for flammable liquids, C for gases in EN 2 or energised electrical equipment in NFPA 10, D for combustible metals, and F or K for cooking oils. Coverage follows NFPA 10's limits — a maximum of 11,250 sq ft per Class A extinguisher, one unit of A rating per 3,000, 1,500 or 1,000 sq ft depending on hazard level, a maximum 75 ft travel distance to a Class A unit and 30 ft to a Class B one.",
   useCases: [

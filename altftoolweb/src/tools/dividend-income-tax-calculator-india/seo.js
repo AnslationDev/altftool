@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dividend Tax Calculator India: Slab Rate & 194 TDS",
+  metaDescription:
+    "Dividend taxed at your slab rate with surcharge capped at 15%, 4% cess, the section 57 interest cap of 20%, and section 194 TDS credited per company.",
+  steps: [
+    "List each payer under \"Dividend received in the financial year\" — Company or fund 1 with its Dividend received (INR) — and press \"Add another payer\" for the rest, so the ₹10,000 section 194 threshold is applied company by company.",
+    "Under \"Your tax position\" set \"Interest on money borrowed to invest (INR)\", \"Your marginal slab rate\" (0 to 30%) and \"Surcharge on total income\", and tick \"PAN furnished to the registrar\" or \"Form 15G / 15H filed for nil TDS\" as they apply.",
+    "\"Total tax on dividend income\" appears with rows for \"Interest deduction allowed (max 20%)\", Taxable dividend, \"Health and education cess at 4%\", \"TDS already deducted under section 194\" and Balance tax payable or Refund due, plus a \"TDS company by company\" table; Copy result copies it.",
+  ],
   intro:
     "This calculator works out the income tax a resident individual owes on dividends from Indian companies and mutual funds, which since the Finance Act 2020 are taxed at the shareholder's own slab rate as income from other sources under section 56(2)(i). It applies the only deduction the law allows — interest on money borrowed to buy the shares, capped at 20% of the dividend under the second proviso to section 57(1) — then credits the tax already withheld under section 194 and shows what is still payable. It is aimed at retail investors reconciling their Annual Information Statement before filing.",
   useCases: [

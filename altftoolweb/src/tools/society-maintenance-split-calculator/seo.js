@@ -1,4 +1,12 @@
 const seo = {
+  title: "Society Maintenance Split: Per Sq Ft, Equal or Hybrid",
+  metaDescription:
+    "Divides a housing society's monthly budget across flat types equally, per sq ft of carpet area or a hybrid mix, with parking and sinking fund added.",
+  steps: [
+    "Enter 'Monthly common expenses (INR)' and pick a Split basis — Equal per flat, Per square foot of area, or Hybrid (part equal, part by area), which reveals a 'Share recovered equally' slider running 0 to 100% in 5% steps.",
+    "Under 'Flat types in the society' give each type a Label, Carpet area (sq ft), Number of flats and Parking slots per flat, using 'Add type' for more, then set 'Parking charge per slot / month (INR)' and 'Sinking fund (% on top of maintenance)'.",
+    "The 'Average monthly bill per flat' headline and the Flat type, Maintenance, Extras and Payable table update live; Copy result copies the rate per sq ft, the equal component, every per-flat bill and the monthly and annual collection.",
+  ],
   intro:
     "This calculator takes a housing society's monthly expense budget and divides it across every flat, either equally, strictly per square foot of carpet area, or on a hybrid basis where you choose what proportion is recovered as a flat charge and what proportion follows area. It handles several flat types at once, adds parking charges per slot and an optional sinking fund percentage, and shows the per-flat bill alongside the total the society will collect. It is built for managing committees, treasurers and residents who want to check that the maintenance bill is arithmetically fair.",
   useCases: [

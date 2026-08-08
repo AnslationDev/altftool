@@ -1,4 +1,12 @@
 const seo = {
+  title: "Outdoor Time for Myopia: Weekly Daylight Planner",
+  metaDescription:
+    "Totals weekday, weekend and school outdoor minutes against the 2-hour, 11-hour and 40-minute research targets, and estimates the dose in lux-hours.",
+  steps: [
+    "Enter Outdoor minutes on a weekday, Outdoor minutes at school or work (per weekday) and Outdoor minutes on a weekend day.",
+    "Choose Typical light while outdoors, from Overcast at about 5,000 lux to Direct summer sun, and a Target of 2 hours a day, 11 hours a week or 40 extra minutes each school day.",
+    "Read Daylight per week with the Shortfall and Light dose rows, then use the Before school or work, Lunch break outdoors and After school or work slots to close the gap.",
+  ],
   intro:
     "The Outdoor Time For Eyes Planner measures the daylight a child or adult actually gets each week against the targets used in myopia research: about 2 hours a day, the 11 hours a week figure from school-based programmes, or the 40 extra minutes per school day tested in the Guangzhou Outdoor Activity Longitudinal Trial. That trial, published in JAMA in 2015, cut 3-year myopia incidence from 39.5% to 30.4%. The planner totals weekday, weekend and school outdoor minutes, reports the shortfall, and estimates the light dose in lux-hours from the conditions you are usually outdoors in.",
   useCases: [

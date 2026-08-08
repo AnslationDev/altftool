@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pulse Pressure Calculator with MAP and Reference Bands",
+  metaDescription:
+    "Systolic minus diastolic gives pulse pressure in mmHg, plus MAP = diastolic + PP/3, placed on the narrow, low, normal, elevated and wide bands.",
+  steps: [
+    "Type your reading into the Systolic (mmHg) and Diastolic (mmHg) boxes, e.g. 120 and 80.",
+    "Press Calculate Pulse Pressure — the button stays disabled until both fields have a value, and readings where diastolic exceeds systolic are refused.",
+    "Read the gauge for pulse pressure in mmHg, the MAP figure in the Pressure Breakdown panel, and your highlighted row in the Reference Ranges table (Narrow, Low, Normal, Elevated, Wide).",
+  ],
   intro:
     "The Pulse Pressure Calculator subtracts your diastolic reading from your systolic reading to give pulse pressure in mmHg, and also derives mean arterial pressure using the standard MAP = diastolic + (pulse pressure / 3). It then places the result on a five-band reference scale - narrow below 25, low 25-29, normal 30-50, elevated 51-60, and wide above 60 mmHg - with a gauge and a bar showing how much of the systolic figure is diastolic versus pulse pressure. This is general health information for understanding a home reading, not a diagnosis; discuss anything unusual with a clinician.",
   useCases: [

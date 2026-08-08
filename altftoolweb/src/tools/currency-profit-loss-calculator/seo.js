@@ -1,4 +1,7 @@
 const seo = {
+  title: "Currency Profit/Loss Calculator: P&L and % Return",
+  metaDescription:
+    "Forex P&L from (sell rate − buy rate) × amount, with total buy cost, total sell value and return on cost. Gross only — spread and commission excluded.",
   intro:
     "The Currency Profit/Loss Calculator works out the gain or loss on a foreign exchange position using the standard formula P&L = (sell rate − buy rate) × amount, and expresses it as a percentage of what the position cost you. Enter the rate you bought at, the rate you exited at, and the size of the position in the foreign currency, and it returns the total buy cost, the total sell value, the rupee gain or loss and the return percentage rounded to two decimals. It is arithmetic on the numbers you supply, so it works for a travel-money exchange just as well as for a closed forex trade.",
   useCases: [

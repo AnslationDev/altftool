@@ -1,4 +1,12 @@
 const seo = {
+  title: "South Korea Packing List: Dress Code by Month",
+  metaDescription:
+    "Pick your month and venues — temples, jjimjilbang, hanbok palaces — and get a counted packing list sized to your wash cycle, with Seoul climate normals.",
+  steps: [
+    "Set \"Month of travel\", \"Trip length (days)\" and \"Laundry every (days)\", and tick \"I will be asked to cover my hair\" if that applies to you.",
+    "Under \"Where are you going?\" tick the venues on your itinerary — \"Buddhist temples and templestay\", \"Jjimjilbang and public bathhouses\", \"Palaces in hanbok (Gyeongbokgung, Changdeokgung)\", \"Floor-seating restaurants and guesthouses\" and the rest.",
+    "The result gives the item count and estimated kg alongside \"Average daytime high\", \"Average night low\" and \"Monthly rainfall\", then \"Rules your itinerary triggers\" and the \"Packing list\"; \"Copy plan\" copies the whole thing.",
+  ],
   intro:
     "This planner turns South Korea's clothing expectations and Seoul's KMA climate normals into a counted packing list. Korea's rules are social rather than legal, and the ones that catch visitors out are specific: shoes come off at temples, guesthouses and floor-seating restaurants many times a day, jjimjilbang bathing floors are gender-separated and fully nude so swimwear stays out of the baths, and all four Seoul palaces admit visitors free when they are wearing hanbok that meets the published criteria. The weather does the rest, swinging from a January mean minimum of -5.5°C to a wet, 30°C August.",
   useCases: [

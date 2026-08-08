@@ -1,4 +1,12 @@
 const seo = {
+  title: "Goa Trip Budget: Cost Per Person Per Day Breakdown",
+  metaDescription:
+    "Splits a Goa trip into flights, stay, food, scooter, activities and a buffer, prices the season on the room rate alone, and says what your cap buys.",
+  steps: [
+    "Pick a Travel style — Backpacker, Comfort or Premium — and a Season, from Monsoon at ×0.6 to Christmas & New Year week at ×2.2, then enter Travellers and Nights in Goa.",
+    "Adjust the rates: return fare per person, room rate per night, food, scooter or cab and activities per person per day, People sharing each room, the contingency buffer percentage and an optional group budget cap.",
+    "Read the total with cost per person and per person per day, the line-by-line table showing each line's share, rooms booked, the cost of one extra night, and how many nights your cap actually covers.",
+  ],
   intro:
     "This planner turns a Goa holiday into a six-line budget — return travel, stay, food, local transport, activities and a contingency buffer — and divides it into cost per person and cost per person per day. It uses the multipliers that decide the real bill: rooms are charged for nights while food and scooters are charged for the extra arrival day, rooms are counted as ceil(travellers ÷ people per room), and a season factor is applied to the room rate alone because that is the line Goa reprices. Enter a group budget cap and it also solves for the number of nights that cap actually buys.",
   useCases: [

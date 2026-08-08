@@ -1,4 +1,12 @@
 const seo = {
+  title: "Singapore Visa Cover Letter Builder for Form 14A",
+  metaDescription:
+    "Writes the letter that goes with a Form 14A entry visa and checks dates: six-month passport rule, five-week visa validity, SGD 30 fee, SG Arrival Card.",
+  steps: [
+    "Complete the Applicant panel: Full name (as in passport), Passport number, Passport expiry date, Occupation and Home address.",
+    "Under Application and trip set Visa type, Purpose of visit, Who submits Form 14A?, Arrival in Singapore, Departure from Singapore, Accommodation and Funds available (SGD).",
+    "Check the SG Arrival Card window, Passport must stay valid to and Processing fee total tiles, then press Copy letter to take the drafted letter and Document checklist.",
+  ],
   intro:
     "The Singapore Visa Cover Letter Builder writes the covering letter that accompanies a Form 14A entry visa application and checks the dates that trip people up. It applies the Immigration & Checkpoints Authority rules that matter in practice: a passport valid at least six months from the date of entry, the SGD 30 processing fee per applicant, the five-week entry window on a single or double-journey visa, and the SG Arrival Card submission window, which opens two days before your flight and closes on arrival day. Only nationals of Assessment Level I and II countries need a visa at all.",
   useCases: [

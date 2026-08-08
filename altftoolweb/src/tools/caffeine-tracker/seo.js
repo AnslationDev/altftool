@@ -1,4 +1,7 @@
 const seo = {
+  title: "Caffeine Half-Life Tracker & Last-Cup Cutoff Time",
+  metaDescription:
+    "Log drinks and see caffeine decay on a 5-hour half-life, your day against the 400 mg limit, and the latest hour to drink and be under 50 mg at bedtime.",
   intro:
     "This tracker logs each coffee, tea, cola or energy drink with the time you had it, then models how much caffeine is still in your body using a 5-hour half-life — every dose decays as mg × 0.5^(hours ÷ 5). It plots the resulting curve across the day, compares your running total against a 400 mg daily reference (200 mg if you tick the pregnancy option), and works backwards from your bedtime to tell you the latest hour you can have a given drink and still be under 50 mg when you sleep. It is an informational estimate for people trying to work out why they are lying awake, not a clinical measurement.",
   useCases: [

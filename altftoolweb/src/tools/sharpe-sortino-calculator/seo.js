@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sharpe & Sortino Calculator from a Return Series",
+  metaDescription:
+    "Paste periodic returns for annualised Sharpe and Sortino ratios, plus mean, standard deviation and downside deviation. Periods per year: 12 or 252.",
+  steps: [
+    "Paste your series into 'Periodic returns (%)' — comma, space or semicolon separated, at least two values.",
+    "Set 'Risk-free return per period (%)' for Sharpe, 'Minimum acceptable return (%)' for Sortino, and 'Periods per year' to 12 for monthly or 252 for daily.",
+    "Read the annualised Sharpe headline and Sortino caption, with observations, mean per period, standard deviation and downside deviation listed underneath.",
+  ],
   intro:
     "The Sharpe ratio measures excess return per unit of total volatility, and the Sortino ratio measures it per unit of downside volatility only — this calculator computes both from a pasted series of periodic returns. It takes the mean of your returns, subtracts the risk-free rate (Sharpe) or your minimum acceptable return (Sortino), divides by the sample standard deviation or the downside deviation, and annualises by multiplying by the square root of the periods per year. It is for anyone comparing funds, strategies or their own portfolio track record on a like-for-like risk basis.",
   useCases: [

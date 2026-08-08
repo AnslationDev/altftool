@@ -1,4 +1,12 @@
 const seo = {
+  title: "Nitrogen vs Air in Tyres: Is It Worth the Money?",
+  metaDescription:
+    "Prices nitrogen's slower leak against the fill charge using 0.2% fuel economy lost per psi, and gives the break-even cost per tyre per fill.",
+  steps: [
+    "Under How you run the tyres enter Placard cold pressure (psi), Pressure lost on air (psi per month), Tyres on the vehicle and the Nitrogen charge per tyre per fill (INR).",
+    "Set the top-up interval with the Monthly, Quarterly, Twice a year or Once a year buttons, then complete Running costs: Distance a year (km), Fuel economy (km per litre), Fuel price (INR per litre) and Tread life at correct pressure (km).",
+    "See whether the headline reads Nitrogen saves a year or Nitrogen costs you a year, take the break-even charge per tyre per fill and the Where the money goes table, then press Copy result.",
+  ],
   intro:
     "This calculator prices the one real advantage nitrogen tyre filling has — slower pressure loss — against what workshops charge for it. Ordinary air is already about 78% nitrogen, and a nitrogen fill takes that to roughly 95-99%; because oxygen permeates a butyl liner three to four times faster than nitrogen, a nitrogen-filled tyre loses pressure at roughly a third of the usual 1-2 psi a month. The saving is valued using the US Department of Energy figure of about 0.2% of fuel economy lost per psi of under-inflation, plus the tread life given up, and compared against the filling charge.",
   useCases: [

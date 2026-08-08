@@ -1,4 +1,12 @@
 const seo = {
+  title: "SMS Sender ID Explained: DLT Header Prefix and Suffix",
+  metaDescription:
+    "Splits an Indian SMS header into provider and service-area prefix, six-character header code and -P, -S, -T or -G suffix. Format only, never proof.",
+  steps: [
+    "Paste sender IDs into \"Enter sender IDs or headers\", one entry per line and up to 100 entries — the box shows the shape it expects, such as VD-KOTAKB-S — or press \"Load sample\" for synthetic examples.",
+    "Press \"Explain formats\" and each entry is split into its two-letter provider and service-area prefix, six-character header code and -P, -S, -T or -G category suffix, with any segment it cannot match flagged rather than the whole string rejected.",
+    "\"Structural explanations\" cards appear beside the \"Current suffix guide\", and \"Download format counts\" saves altftool-sms-header-format-counts.json — a counts-only report that excludes the sender IDs, header codes and phone numbers you entered.",
+  ],
   intro:
     "The DLT SMS Sender ID Explainer breaks an Indian commercial SMS header such as VZ-HDFCBK-T into its three documented parts — a two-letter provider and service-area prefix, a six-character Principal Entity header code, and a -P, -S, -T or -G category suffix — and explains what each segment means using TRAI's published 2020 prefix reference. It also recognises the 127xxx consent short-code family and plain ten-digit numbers, and it can explain up to 100 header lines at once. It describes format only: it performs no live DLT or Header Information Portal lookup and never claims a sender is genuine.",
   useCases: [

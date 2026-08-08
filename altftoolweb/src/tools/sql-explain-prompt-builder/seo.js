@@ -1,4 +1,12 @@
 const seo = {
+  title: "SQL EXPLAIN Prompt Builder: Read a Slow Query Plan",
+  metaDescription:
+    "Flags non-sargable predicates and costly plan nodes, then writes a prompt for a node-by-node plan read and costed fixes. PostgreSQL, MySQL, SQL Server.",
+  steps: [
+    "Pick your engine under Database engine and paste the query into SQL statement — PostgreSQL, MySQL and MariaDB, SQLite, SQL Server and Oracle are supported.",
+    "Paste any plan into EXPLAIN output (optional); the Patterns flagged in the SQL count updates as you type, since the page has only Copy prompt and Reset, no submit button.",
+    "Press Copy prompt to take the generated prompt, which asks for the plan read node by node, the single most expensive step, and fixes ordered by effort against expected gain.",
+  ],
   intro:
     "A SQL explain prompt builder scans a query for predicates that stop an index being used — a function wrapped around a filtered column, a LIKE with a leading wildcard, NOT IN, ORDER BY with no row limit — and scans any pasted EXPLAIN output for the plan nodes your engine prints when it falls back to scanning or sorting on disk. It then writes a prompt that asks for the plan read node by node, the single most expensive step, and fixes ordered by effort against expected gain. Supports PostgreSQL, MySQL and MariaDB, SQLite, SQL Server and Oracle, each with its own plan command and node vocabulary.",
   useCases: [

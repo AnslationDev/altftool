@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reading Reformatter: Font, Spacing and Line Width",
+  metaDescription:
+    "Paste text and re-render it live: 14-42px type, 1.2-2.4 line height, 0-0.18em letter spacing and a 32-90ch measure. Nothing leaves your browser.",
+  steps: [
+    "Paste the passage you want in the Reading text box.",
+    "Drag Font size (14 to 42 px), Line height (1.2 to 2.4), Letter spacing (0 to 0.18em) and Line width (32 to 90ch), and set Alignment to Left, Center or Justified.",
+    "The Reading preview restyles your own words as you drag, so you can hold WCAG 2.1's 1.5 line height and 0.12em spacing and judge the result.",
+  ],
   intro:
     "The Adjustable Reading Reformatter takes any text you paste and re-renders it live with five controls you set yourself: font size from 14 to 42 px, line height from 1.2 to 2.4, letter spacing from 0 to 0.18em, line width from 32 to 90 characters, and left, centred or justified alignment. It is for readers with dyslexia, low vision, ADHD or simple screen fatigue who already know that default web typography does not suit them and want to find the settings that do. The text never leaves your device — the preview is styled entirely in the browser, and nothing is uploaded or stored.",
   useCases: [

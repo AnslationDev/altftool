@@ -1,4 +1,12 @@
 const seo = {
+  title: "SIM Block Warning Scam Explained: Stages & Scoring",
+  metaDescription:
+    "The fake TRAI disconnection call, stage by stage. Score the call on a 12-point checklist and check your SIM count against the DoT ceiling of nine.",
+  steps: [
+    "Tick what happened on the call from the red-flag list — weights run from 2 to 4, and the items marked 'decisive' have no lawful counterpart.",
+    "Enter 'Connections listed against your ID', how many you do not recognise, and your licensed service area.",
+    "Read the red-flag score and band, your connections against the ceiling of 9 (6 in J&K, Assam and the North East), and the remote-access exposure.",
+  ],
   intro:
     "The SIM block warning scam is a vishing script that opens with a recorded call claiming your mobile number will be disconnected within hours, then escalates through a fake TRAI or police officer to a remote-access app install and a money transfer. This explainer maps all eight stages, scores the call you received on a weighted twelve-point checklist, and checks your genuine SIM count against the Department of Telecommunications ceiling of nine connections per person — six in the Jammu & Kashmir, Assam and North East service areas — which is the real rule the script misrepresents.",
   useCases: [

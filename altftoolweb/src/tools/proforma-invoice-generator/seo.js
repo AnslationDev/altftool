@@ -1,4 +1,12 @@
 const seo = {
+  title: "Proforma Invoice Generator with Incoterms and CIF",
+  metaDescription:
+    "Builds an export proforma: line items with HS codes, freight, insurance and packing, an Incoterms 2020 rule, the CIF value and the total in words.",
+  steps: [
+    "Fill Seller / exporter and Buyer / consignee, choose an Incoterms 2020 rule with its Named place or port, and set Currency, Issue date and Validity (days).",
+    "Press Add line for each item and give Description of goods, HS code, Quantity, Unit price, Discount (%) and Tax (%), then Freight, Insurance, Packing and Other charges.",
+    "Read the Grand total with the amount spelled out in words and the CIF value used for customs row, then press Copy invoice.",
+  ],
   intro:
     "A proforma invoice is a binding quotation issued before goods ship — customs authorities accept it for valuation and import licensing, and buyers use it to release an advance payment or open a letter of credit, but it is not a demand for payment and no input tax can be claimed against it. This generator totals each line as quantity x unit price less discount plus tax, adds freight, insurance, packing and other charges, reports the CIF value customs will use, applies an Incoterms 2020 rule, works out the validity date and spells the grand total out in words the way banks require.",
   useCases: [

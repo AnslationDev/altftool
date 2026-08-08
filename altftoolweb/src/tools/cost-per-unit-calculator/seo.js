@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cost Per Unit Calculator with Rejects and Break-Even",
+  metaDescription:
+    "Absorb overhead across a batch, recover the cost of rejects from good units, and get full cost per unit, contribution, break-even and target price.",
+  steps: [
+    "Enter the batch: Units started in the batch, Reject / scrap rate (%), and the four variable lines — Direct material per unit, Direct labour per unit, Packaging per unit and Other variable cost per unit.",
+    "Add Fixed overhead for the period and Batches sharing that overhead so the run absorbs only its share, then set Selling price per unit and Target net margin (%).",
+    "Read “Full cost per good unit” above the saleable-of-started count, with Contribution per unit, Contribution margin, Break-even volume, Margin of safety, Batch profit, Net margin and the price your target margin needs, plus the “What a bigger run would cost” table at half, double and five times the run; “Copy result” copies the sheet.",
+  ],
   intro:
     "Cost per unit is total batch cost divided by the units you can actually sell, so it has to absorb both the variable cost of every unit started and the fixed overhead allotted to the run. This calculator takes batch size, reject rate, the four standard variable cost lines, the period's fixed overhead and how many batches share it, then returns absorption cost per good unit, contribution per unit, break-even volume and the price a target margin requires. It follows the marginal-costing identity contribution = price minus variable cost, with break-even = fixed cost divided by contribution.",
   useCases: [

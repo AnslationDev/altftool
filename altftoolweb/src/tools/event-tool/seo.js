@@ -1,4 +1,12 @@
 const seo = {
+  title: "Event Planner: Head Count, Sq Ft, Tables and Staff",
+  metaDescription:
+    "Turns invitations into expected attendance, then floor area at 12 sq ft per banquet guest, round tables, 1 server per 10 plated guests and a budget.",
+  steps: [
+    "Enter People invited with RSVP acceptance rate (%) and No-show rate among acceptances (%), which together set the expected head count.",
+    "Pick Room layout — banquet at 12 sq ft per guest, theatre at 8, classroom at 17, reception at 6 — then Banquet table size and Service style.",
+    "Read Expected head count with Floor space needed, banquet tables, servers and the costed budget, then press Copy plan.",
+  ],
   intro:
     "The Event Planner converts an invite list into the bookable numbers behind an event: expected head count, floor area, table count, serving staff, food and drink quantities, and a costed budget. It applies standard venue capacity allowances — 12 sq ft per guest for seated banquet rounds, 8 for theatre rows, 17 for classroom seating and 6 for a standing reception — together with the catering ratios of 1 server per 10 plated guests, 1 per 25 for buffet, and 1 bartender per 75 guests. Head count uses the two-stage shrink planners rely on: expected = invited x acceptance rate x (1 - no-show rate).",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Avatar Generator: Seeded SVG Faces, PNG Download",
+  metaDescription:
+    "Builds a vector avatar from seven feature choices, four styles and six backgrounds. The same seed always redraws the same face. Export PNG at 3x.",
   intro:
     "The Avatar Generator builds a vector portrait as inline SVG from seven feature choices — face shape, eyes, eyebrows, mouth, hair, facial hair and accessory — across four illustration styles, four editable colours and six background treatments. Every avatar is produced by a seeded mulberry32 pseudo-random generator, so the same seed always redraws exactly the same face and any avatar you like can be reproduced later. It is for anyone who needs a profile picture, a placeholder headshot or a set of matching team portraits without hiring an illustrator or using a photo of themselves.",
   useCases: [

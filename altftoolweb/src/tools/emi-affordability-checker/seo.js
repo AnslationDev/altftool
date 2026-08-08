@@ -1,4 +1,12 @@
 const seo = {
+  title: "EMI Affordability Check: FOIR and Rate-Rise Stress Test",
+  metaDescription:
+    "Computes the reducing-balance EMI, puts your FOIR against a ceiling you choose, shows the surplus after essentials, and re-prices 2 points higher.",
+  steps: [
+    "Enter Net monthly income (INR), EMIs you already pay (INR), Essential monthly expenses (INR) and the FOIR ceiling to test against (%).",
+    "Enter the Loan amount (INR), Interest rate (% a year) and Tenure (years) you are being offered.",
+    "Read FOIR after this loan with the Proposed EMI and Left after EMIs and essentials, plus the panel for a 2 percentage point rate rise.",
+  ],
   intro:
     "FOIR, the fixed obligation to income ratio, is the share of net monthly income already committed to EMIs, and it is the number a lender underwrites against: (existing EMIs + proposed EMI) ÷ net monthly income × 100. This checker computes the proposed EMI from the standard reducing-balance formula, places the resulting FOIR against a chosen ceiling, shows the surplus left after essential expenses, and re-runs the EMI two percentage points higher to see whether the loan survives a rate rise. It is for anyone about to sign a sanction letter who wants the arithmetic before the commitment.",
   useCases: [

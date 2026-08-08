@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pounds to Rupees in Your Head: Rules and Error Rates",
+  metaDescription:
+    "Turns the GBP-INR rate into head maths — round multipliers, an eighth nudge, simple fractions — each with its error stated, plus VAT and service charge.",
+  steps: [
+    "Enter Rupees per £1 (today's rate) and A price on the tag or menu (£).",
+    "Set Discretionary service charge (%), leaving it at 0 for shops, supermarkets and pub bar service.",
+    "Compare the three rule cards, each showing how far it lands from the exact answer, then press Copy sheet.",
+  ],
   intro:
     "This cheat sheet turns today's rupee-pound rate into a multiplication you can run at a till. It rewrites the rate as a decimal shift plus a working multiplier between 1 and 10, then tests three families of approximation — rounding to the nearest quarter or half, adding an easy percentage nudge such as a tenth or an eighth, and the closest simple fraction — and reports each rule's error as a fixed percentage of the exact answer. The pound is the case where the nudge matters: near a round hundred, \"add two zeros, then add an eighth\" is far more accurate than any single round multiplier.",
   useCases: [

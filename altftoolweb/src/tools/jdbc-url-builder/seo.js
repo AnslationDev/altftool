@@ -1,4 +1,12 @@
 const seo = {
+  title: "JDBC URL Builder for PostgreSQL, MySQL, Oracle",
+  metaDescription:
+    "Build a JDBC URL with each driver’s own grammar — ?key=value, ;key=value or none for Oracle thin — plus driver class, Maven and Gradle lines.",
+  steps: [
+    "Choose the Database engine — PostgreSQL, MySQL, Oracle, SQL Server, H2 or SQLite — and fill Host, Port, Database and User; Oracle adds an Oracle naming style select, H2 an H2 mode, SQLite a SQLite storage select, and SQL Server takes a named instance such as SQLEXPRESS.",
+    "Add one connection property in Extra property name and Extra property value (the placeholders read ApplicationName and billing-service) and tick “Require an encrypted connection” if the server needs TLS.",
+    "The JDBC URL appears with Driver class, Port used and Parameter style (?key=value&key=value or ;key=value;key=value) plus a “Things to watch” list; Copy URL copies the string, and the Java (DriverManager), Maven and Gradle (Kotlin DSL) snippets each have their own Copy button.",
+  ],
   intro:
     "The JDBC URL Builder assembles a valid JDBC connection string for PostgreSQL, MySQL, Oracle, SQL Server, H2 and SQLite, applying each driver's own grammar rather than one generic template. That matters because the grammars genuinely differ: PostgreSQL and MySQL take `?key=value&key=value`, SQL Server and H2 take `;key=value;`, and the Oracle thin driver takes no URL parameters at all. It returns the URL plus the driver class name, the Maven and Gradle coordinate and a DriverManager snippet, so Java and Kotlin developers can paste a working connection instead of debugging a malformed one.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "EPS Pension Calculator: Salary x Service / 70 (EPS-95)",
+  metaDescription:
+    "EPS-95 monthly pension from pensionable salary x service / 70, with the 2 bonus years past 20, the 4% early/deferred change, family pension and Table D.",
+  steps: [
+    "Enter Pensionable salary — monthly basic + DA (INR), Years of EPS service, and Age when pension starts (50-60).",
+    "Leave Apply ₹15,000 wage ceiling ticked to use the statutory cap, or use the Start at 50 / 55 / 58 / 60 buttons to move the commencement age.",
+    "Read Monthly EPS pension with the Formula row, Widow / widower pension (50%) and the Pension if you start at a different age table; under 10 years of service it shows the Table D one-time withdrawal benefit instead.",
+  ],
   intro:
     "This EPS Pension Calculator estimates the monthly pension payable under the Employees' Pension Scheme, 1995 using EPFO's statutory formula: pensionable salary × pensionable service ÷ 70. It adds the two bonus years granted once you complete 20 years of service, applies the 4% per year reduction for pension drawn before 58 (or the 4% increase for deferring to 59 or 60), and shows the family pension your spouse and children would receive. If your service is under 10 years it switches to the Table D withdrawal benefit instead, because no monthly pension is payable below that threshold.",
   useCases: [

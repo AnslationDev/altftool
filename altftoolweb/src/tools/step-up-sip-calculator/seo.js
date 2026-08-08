@@ -1,4 +1,12 @@
 const seo = {
+  title: "Step-Up SIP Calculator: Month-by-Month vs Flat SIP",
+  metaDescription:
+    "Raise your SIP a fixed % each year and see the corpus month by month, next to a flat SIP. Goal seek solves the starting instalment for a target.",
+  steps: [
+    "Enter your Monthly SIP, drag Annual step-up (10% by default), and set Expected return (% a year) and the Horizon slider up to 40 years.",
+    "Switch to the Goal seek tab and enter a Target corpus — it binary-searches the starting SIP over the same month-by-month simulation.",
+    "Compare the Step-up SIP card against Flat SIP (no step-up), scan the Year-wise breakdown table, then press Copy summary.",
+  ],
   intro:
     "The Step-Up SIP Calculator projects a systematic investment plan whose instalment rises by a fixed percentage every year, running the maths month by month — each contribution is added and then grown at the annual return divided by 12 — and comparing the result against the same starting SIP left flat. It also works backwards: give it a target corpus and it solves, by bisection, for the monthly amount you would need to start with at your chosen step-up rate. It is for salaried investors who get an annual increment and want to know what routing part of it into an existing SIP is actually worth.",
   useCases: [

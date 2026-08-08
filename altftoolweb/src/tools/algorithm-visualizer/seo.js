@@ -1,4 +1,7 @@
 const seo = {
+  title: "Algorithm Visualizer: Bubble Sort on Your Own Array",
+  metaDescription:
+    "Type up to 16 numbers and watch every comparison and swap as bars — scrub, pause, live counters, plus 12 algorithms with their Big-O complexities.",
   intro:
     "The Algorithm Visualizer steps through a comparison sort on your own array, drawing every comparison and swap as a bar chart you can play, pause, scrub and rewind. Type up to 16 numbers or generate a random set, and it builds the full list of steps up front — highlighting the two indices being compared in amber, the elements already in their final position in green, and running counters for comparisons and swaps. Alongside it sits a browsable catalogue of twelve classic algorithms with their Big-O complexities, and a merge-sort divide-and-merge walkthrough with the Python and JavaScript source.",
   useCases: [

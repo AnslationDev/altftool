@@ -1,4 +1,7 @@
 const seo = {
+  title: "Break-Even Calculator: Units, Revenue, Safety Margin",
+  metaDescription:
+    "Break-even units = fixed cost ÷ (price − variable cost). Returns contribution per unit, break-even revenue, target-profit units and margin of safety.",
   intro:
     "The Break-Even Calculator works out how many units you must sell before a product stops losing money, using the standard formula break-even units = fixed cost ÷ (selling price − variable cost per unit). Enter your fixed cost, per-unit variable cost, selling price, expected sales and a profit target, and it returns contribution per unit, contribution margin, break-even revenue, the units needed to hit your target profit, and margin of safety. A cost-volume-profit chart marks the exact unit count where the revenue and total-cost lines cross, and the whole scenario table exports to CSV.",
   useCases: [

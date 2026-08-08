@@ -1,4 +1,12 @@
 const seo = {
+  title: "Manglik Dosha Checker: Mars House From Your Moon Sign",
+  metaDescription:
+    "Computes sidereal Moon and Mars longitudes from your birth date and time, then reports the house Mars occupies from the Moon and the severity.",
+  steps: [
+    "Under Your Birth Details, enter your Name and your birth Day, Month and Year.",
+    "Add Birth Time (optional, 24h IST); leave it blank and the calculation uses 12:00 noon IST.",
+    "Press Check Manglik Dosha to see your Moon rashi and nakshatra, Mars from Moon as a house number, and the severity.",
+  ],
   intro:
     "Manglik Dosha Checker works out whether Mars falls in one of the six Manglik houses counted from the Moon — the 1st, 2nd, 4th, 7th, 8th or 12th — by computing sidereal longitudes for the Moon and Mars from your birth date and time and taking the sign offset between them. It reports your Moon rashi and nakshatra, the rashi and degree Mars occupies, which house it sits in from the Moon, and a severity label, with the 7th house treated as the most serious. Everything runs in your browser and is offered as information about a traditional Vedic astrology rule, not as guidance on whom to marry.",
   useCases: [

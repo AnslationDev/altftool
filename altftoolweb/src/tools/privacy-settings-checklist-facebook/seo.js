@@ -1,4 +1,12 @@
 const seo = {
+  title: "Facebook Privacy Settings Checklist: 30 Scored Steps",
+  metaDescription:
+    "Audit 30 Facebook privacy settings — Limit Past Posts, friends-list audience, tag review, off-Facebook activity — weighted for your risk profile.",
+  steps: [
+    "Choose your case under “Who are you locking this down for?” — Job hunting or professional reputation, Public page or community role, Leaving an unsafe situation, or Worried about scams and impersonation — then set a Target score (%).",
+    "Tick each of the 30 settings as you apply it, grouped under Who can find you, What people can see, Who can reach you, Data and advertising and Account security; every row shows the exact Facebook path under “Where” and the consequence under “If you skip it”. Mark all applied and Clear all set the whole list at once.",
+    "Read the Protection score %, which is held at 69% while any of the 8 Critical settings is still open, plus Remaining exposure by area and “Shortest route to your target” listing the fewest settings that reach your target; Copy result copies the summary.",
+  ],
   "intro": "This checklist audits the 30 Facebook settings that decide who finds your profile, what they can read on it, who can message you and how much off-platform data feeds your ad profile. It covers the Limit Past Posts bulk action, the friends-list audience, timeline and tag review, the search-engine link toggle, off-Meta activity, connected apps, location history and two-factor authentication, each ranked by how much exposure it removes. Choose a risk profile — job seeker, public figure, scam target or someone leaving an unsafe situation — and the scoring shifts to what matters for that case.",
   "useCases": [
     "Clean up a fifteen-year-old profile before a job search, when a recruiter will read whatever is still public.",

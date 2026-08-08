@@ -1,4 +1,12 @@
 const seo = {
+  title: "Voice Memo Review Time and Backlog Calculator",
+  metaDescription:
+    "Totals your voice memos into listening time at your playback speed, real review time, transcription hours and the days needed to clear the queue.",
+  steps: [
+    "List each memo under Recordings to review — the Duration field accepts M:SS, H:MM:SS or plain minutes — using Add recording for extra rows.",
+    "Under How you review, set Playback speed, Review factor (1 = pure playback), Transcription ratio, Review minutes available per day and Recording bitrate (kbps).",
+    "Read Real review time above rows for Review sessions needed, Days to clear with new audio arriving and Estimated storage, then press Copy result.",
+  ],
   intro:
     "The Audio Note Duration Budgeter totals a list of voice memos and converts that raw duration into the time it will really take to deal with them: listening time is the total divided by your playback speed, review time multiplies that by a factor covering pausing, rewinding and writing notes, and transcription time is the raw audio multiplied by your typing ratio. It then converts the result into review sessions, days at your daily capacity, and days to clear the queue while new recordings keep arriving. Useful for anyone whose voice-memo folder has quietly become a second inbox.",
   useCases: [

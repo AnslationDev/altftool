@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lesson Plan Prompt Builder: Bloom's + Timed 5E Plan",
+  metaDescription:
+    "Turns a topic, year group and period length into an AI prompt: measurable Bloom's objectives and 5E, Hunter or Gagné phases timed to the minute.",
+  steps: [
+    "Enter the Topic, Subject, Year group or age band, Lesson length in minutes (5 to 480) and Class size, then choose an Instructional model: 5E, Hunter's Elements, Gagné's Nine Events or Gradual Release.",
+    "Tick the Bloom's levels you want an objective for, from Remember to Create, then pick Assessment types such as Exit ticket and Differentiation levers such as Language support (EAL/ESL).",
+    "Check the phase table, where every phase's minutes add up to the lesson length you entered, then press Copy prompt to take the prompt into your AI assistant.",
+  ],
   intro:
     "This builder turns a topic, a year group and a lesson length into a structured prompt that makes an AI model write a usable lesson plan instead of generic teaching advice. It writes objectives against the six levels of the revised Bloom's taxonomy (Anderson & Krathwohl, 2001) in Mager's A-B-C-D shape, and time-boxes the lesson minute by minute across the phases of the 5E model, Hunter's Elements of Effective Instruction, Gagné's Nine Events or Gradual Release. It is for classroom teachers, trainee teachers and instructional designers who want a plan that fits the actual period length.",
   useCases: [

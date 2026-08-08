@@ -1,4 +1,12 @@
 const seo = {
+  title: "Eclipse Simulator: Umbra and Penumbra Shadow Cones",
+  metaDescription:
+    "Drag orbital alignment and Earth-Moon distance to watch the umbra and penumbra cones decide total, annular, partial or penumbral. Not drawn to scale.",
+  steps: [
+    "Press Solar Eclipse for the Sun-Moon-Earth arrangement or Lunar Eclipse for Sun-Earth-Moon.",
+    "Drag Orbital Alignment Shift across its -45 to 45 range and move Earth-Moon Distance between Perigee (Near) and Apogee (Far).",
+    "Read Umbra Coverage and the Shadow Zone label of Umbra Cone, Penumbra Cone or Outside Shadow, or press Animate Transit to sweep the whole alignment range.",
+  ],
   intro:
     "Solar & Lunar Eclipse Simulator draws the Sun–Moon–Earth shadow geometry on a live canvas so you can see why an eclipse is total, annular, partial or penumbral. You switch between the solar arrangement (Sun → Moon → Earth) and the lunar one (Sun → Earth → Moon), slide the alignment off centre, and move the Moon between perigee and apogee, while the umbra and penumbra cones and the resulting eclipse classification update in real time. It is a schematic teaching model rather than a to-scale ephemeris, aimed at students and teachers who need to see the shadow cones rather than compute a date.",
   useCases: [

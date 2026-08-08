@@ -1,4 +1,12 @@
 const seo = {
+  title: "Credit Utilisation Calculator: Overall and Per Card",
+  metaDescription:
+    "Balance ÷ limit for every card: overall utilisation, each card’s ratio, a healthy/watch/high band and the rupees to clear to get under 30%.",
+  steps: [
+    "Fill in every card under “Your cards” — Card, Limit (INR) and Balance (INR) — pressing “Add a card” for as many as you hold and the remove button on a row to drop one.",
+    "Each row recalculates as you type, showing that card's percentage and either the rupees of room left before 30% or the amount it is already over.",
+    "“Overall utilisation” gives the combined percentage with a Healthy, Watch or High band and a bar, plus Total limit, Total balance and “Room before 30%” or “Pay down by”, and names the highest single card; “Copy summary” copies the whole breakdown.",
+  ],
   intro:
     "The Credit Utilisation Ratio Calculator divides your outstanding balance by your credit limit (balance ÷ limit × 100) for every card you enter, then reports both the combined ratio across all cards and the ratio on each card separately. It is built for anyone with two or more credit cards who wants to know exactly how much spend room is left before crossing the 30% mark most scoring models stop penalising below. Enter each card's limit and balance in rupees and you get the overall percentage, a healthy/watch/high band, the worst single card, and the rupee amount you would need to clear.",
   useCases: [

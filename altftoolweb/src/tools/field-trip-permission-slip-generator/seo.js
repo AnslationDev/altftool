@@ -1,4 +1,12 @@
 const seo = {
+  title: "School Trip Permission Slip Generator with Ratios",
+  metaDescription:
+    "Writes the slip and the arithmetic: adults needed from the age-band ratio, per-student cost from shared transport plus contingency, and a reply-by date.",
+  steps: [
+    "Fill the trip and destination details, then set Age band, Students going and Adults confirmed.",
+    "Enter \"Total transport cost (shared)\", Entry fee per student, Meals per student, Contingency (%) and \"Slips due back (days before)\".",
+    "Read Collect per student with any supervision shortfall warning, then press Copy slip to take the finished permission slip text.",
+  ],
   intro:
     "A field trip permission slip is the signed record that a parent knows where their child is going, agrees to the activity, and has told the school every medical fact staff need on the day. This generator writes that slip and does the planning arithmetic behind it: adults required = students divided by the pupils-per-adult figure for the age band (rounded up), the per-student charge from a shared transport cost plus per-head charges and contingency, and the reply-by date counted back from departure. It is aimed at class teachers, trip leaders and school office staff putting a visit together.",
   useCases: [

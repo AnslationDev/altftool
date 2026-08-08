@@ -1,4 +1,12 @@
 const seo = {
+  title: "GST Prompt Builder for AI, with CGST Act Citations",
+  metaDescription:
+    "Frames a GST question for AI with citations required, checks the Rs 40/20/10 lakh registration thresholds and gives GSTR-1 and GSTR-3B due dates.",
+  steps: [
+    "Choose a GST topic — Registration and thresholds through to Notices, demands and appeals — then type Your question and your Aggregate turnover (INR, PAN-level).",
+    "Set the Answer format to a plain-language explainer, compliance checklist, comparison table or notice-reply outline, and keep \"Require a section/rule citation for every statement\" ticked.",
+    "Read the Registration threshold check, then press Copy prompt to take the Generated prompt to an AI assistant.",
+  ],
   intro:
     "This builder frames a GST question as an AI prompt with informational, non-advisory guardrails: it anchors the answer to the governing sections of the CGST Act, demands a citation for every substantive statement, and forbids the model from concluding on your specific liability. It also runs a real registration check against the section 22 thresholds (Rs 40 lakh for goods, Rs 20 lakh for services, Rs 10 lakh in special category states) and computes statutory return due dates. Built for Indian business owners and freelancers who use AI to understand GST before talking to their CA.",
   useCases: [

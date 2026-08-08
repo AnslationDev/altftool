@@ -1,4 +1,12 @@
 const seo = {
+  title: "Life Stats: Heartbeats, Breaths and Steps Since Birth",
+  metaDescription:
+    "Enter your date of birth for 25+ lifetime totals — heartbeats at 80 a minute, 8,000 steps a day, dreams, meals and orbits — in six themed chapters.",
+  steps: [
+    "Type your Date of Birth into the date field, which accepts anything from 1900-01-01 up to today.",
+    "Press Reveal My Stats — every figure is computed in your browser from your exact age against rates such as 80 heartbeats a minute and 8,000 steps a day.",
+    "Scroll the six chapters from Your Body through Sleep & Dreams to Calendar, then press Copy Stats or Share on Twitter.",
+  ],
   intro:
     "Life Stats turns a single date of birth into more than 25 lifetime totals — heartbeats, breaths, blinks, steps, dreams, meals and trips around the Sun — by multiplying your elapsed time alive by published human averages such as 80 beats per minute, 16 breaths per minute and 8,000 steps a day. It is built for anyone who wants a vivid sense of scale behind an ordinary birthday: enter the date, and every figure is recalculated from your exact age in days, hours and minutes. The results are grouped into six chapters — Your Body, Sleep & Dreams, Food & Drink, Daily Life, The Universe and Calendar.",
   useCases: [

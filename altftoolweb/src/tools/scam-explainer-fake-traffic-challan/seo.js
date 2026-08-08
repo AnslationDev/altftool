@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fake Traffic Challan Scam: Score the SMS You Got",
+  metaDescription:
+    "Scores the message on a weighted 12-point checklist, validates the registration number offline including the BH series, and totals the real MV Act fine.",
+  steps: [
+    "Under \"What does the message do?\", tick every red flag the SMS matches — weights run from 1 to 4 and three items are decisive on their own.",
+    "Type the plate into \"Registration number quoted in the message\" and the amount into \"Fine the message demands (INR)\".",
+    "Read the Red-flag score out of its maximum with the offline registration verdict and the Motor Vehicles Act figure, then press Copy result.",
+  ],
   intro:
     "The fake traffic challan scam is a smishing campaign in which an SMS or WhatsApp message impersonates an e-challan notice and pushes the reader either to install an Android package file or to pay a fine into a private UPI ID. This explainer breaks the campaign into seven stages, scores the message you received against a weighted twelve-point checklist, validates the registration number it quotes against the real Indian format including the Bharat (BH) series, and totals the statutory penalty under the Motor Vehicles Act, 1988 as amended in 2019 so you can see how the demanded amount compares.",
   useCases: [

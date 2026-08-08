@@ -1,4 +1,5 @@
 const seo = {
+  title: "Company Info Lookup: DuckDuckGo Summary & Source",
   intro:
     "The Company Info Explorer looks up a company name against the DuckDuckGo Instant Answer API and returns the encyclopedic summary, its named source, the infobox fields such as founding date, headquarters and industry, and a list of related topics with links. It is a fast first-pass research step for anyone about to write a pitch, a competitor sheet or a candidate brief who wants the basic facts and a citable source in one screen. The lookup sends your query to a public API, so it is not a local-only tool and returns whatever that index holds rather than filings-grade financial data.",
   useCases: [

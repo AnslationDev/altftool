@@ -1,4 +1,12 @@
 const seo = {
+  title: "Currency Markup Calculator: Mid-Market vs Your Rate",
+  metaDescription:
+    "(mid - offered) / mid x 100 gives the spread; add fixed and % fees for one all-in cost in your currency, derive mid from bid/ask, and rank quotes.",
+  steps: [
+    "Enter Amount to convert, the From and To currencies, the Mid-market rate and the Rate you were offered, then set Both rates are quoted as.",
+    "Add the Fixed fee and Fee (%), or type a Bid and Ask under Work out the mid from a two-way price and press Use this mid.",
+    "Read True all-in cost as a percentage with Rate markup (spread only), Hidden cost in the rate, Visible fees and Shortfall against mid, and rank rivals in Compare providers by You get.",
+  ],
   intro:
     "The mid-market rate is the midpoint between the buy and sell prices of a currency pair on the interbank market, and the gap between it and the rate you are actually offered is the markup — calculated here as (mid − offered) ÷ mid × 100. This tool goes further and converts both the hidden spread and the visible fees back into your starting currency, giving one true all-in cost percentage that lets you compare a provider with a good rate and a big fee against one with the reverse. It also derives the mid from a dealer's bid and ask, and ranks competing quotes by what actually arrives.",
   useCases: [

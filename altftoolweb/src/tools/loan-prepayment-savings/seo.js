@@ -1,4 +1,12 @@
 const seo = {
+  title: "Loan Prepayment Calculator: Interest Saved & Months Cut",
+  metaDescription:
+    "Runs your EMI schedule with and without prepayments, one-time to yearly, and reports interest saved, new closure month and a month-by-month CSV.",
+  steps: [
+    "Under Loan Details set Loan Amount, Interest Rate and Loan Term (Years), and pick a Currency of INR, USD, EUR or GBP.",
+    "Choose a Prepayment Frequency — One-Time, Monthly, Quarterly, Half-Yearly or Yearly — and enter the Prepayment Amount.",
+    "Read the Monthly EMI, Interest Saved and Time Saved cards and the Remaining Balance chart, then Copy Summary or Export CSV to get loan-prepayment-comparison.csv.",
+  ],
   intro:
     "Loan Prepayment Savings runs your loan twice — once on the plain EMI schedule and once with your prepayments added — and reports the difference in total interest, total payment and closure month. It computes the EMI from the standard amortisation formula P x r x (1+r)^n / ((1+r)^n - 1), then applies a prepayment on one of five schedules (one-time, monthly, quarterly, half-yearly or yearly), charting the two balance curves side by side and exporting the full month-by-month comparison as CSV. It suits anyone planning a bonus, a windfall or a recurring top-up against a home, car or personal loan.",
   useCases: [

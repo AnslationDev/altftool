@@ -1,4 +1,12 @@
 const seo = {
+  title: "Radioactive Decay Calculator: Half-Life to Amount Left",
+  metaDescription:
+    "Enter half-life and elapsed time in any matching unit: get the remaining quantity, decay constant λ = ln2/t½, half-lives elapsed, and time to a target.",
+  steps: [
+    "Under Inputs, type the Initial quantity / activity and the Half-life — any time unit works, as long as Elapsed time (same units) uses the same one.",
+    "Enter Elapsed time (same units) and a Target remaining quantity; the Result panel recomputes live as you type, or tap the \"100 over 12 years\" chip under Examples to load a worked set.",
+    "Read the remaining amount and its % of initial, plus the Decay constant, Elapsed half-lives, Decayed quantity and \"Time to entered target\" rows; Copy or Download saves radioactive-decay-calculator.txt.",
+  ],
   intro:
     "The Radioactive Decay Calculator applies the exponential decay law N = N₀·e^(−λt), with the decay constant λ derived from the half-life as ln(2)/t½, to tell you how much of a sample or how much activity remains after a given elapsed time. It also reports the decay constant, how many half-lives have passed, the quantity that has decayed, and - working the equation backwards as t = ln(N₀/N)/λ - how long it takes to fall to a target you specify. Students, lab staff and anyone planning around a source's usable life can use any consistent time unit, as long as the half-life and elapsed time share it.",
   useCases: [

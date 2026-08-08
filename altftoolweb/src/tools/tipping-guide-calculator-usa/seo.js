@@ -1,4 +1,12 @@
 const seo = {
+  title: "USA Tipping Calculator on the Pre-Tax Subtotal",
+  metaDescription:
+    "Works the customary US tip out on the pre-tax subtotal and splits it per person, with rates for bars, delivery, taxis, housekeeping and porters.",
+  steps: [
+    "Pick a Service — Restaurant, table service, Bar, per drink, Food delivery and so on — and enter the Bill as printed (USD).",
+    "Give Taxes and service already on the bill (%) so the tip lands on the pre-tax amount, set People splitting it, and answer How was the service?",
+    "Read the Customary tip with the tip and total per person, and tick \"A service charge is already printed on my bill\" if one was applied. Press Copy result.",
+  ],
   "intro": "This calculator applies customary United States tipping ranges — 15-20% for table service, $1-2 a drink at the bar, $2-5 per night for housekeeping — to your actual bill, and works the percentage out on the pre-tax subtotal as the convention requires. It is aimed at visitors and at anyone tired of guessing at a card terminal that suggests 25%. US ranges are higher than most of the world because federal law lets an employer pay a tipped worker a cash wage as low as $2.13 an hour and count tips toward the $7.25 federal minimum, so the tip functions as the wage rather than a bonus.",
   "useCases": [
     "Check what to leave on a $120 dinner for four in New York when sales tax is already on the bill.",

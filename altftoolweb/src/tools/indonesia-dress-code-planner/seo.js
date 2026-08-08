@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indonesia Dress Code Planner: Bali, Aceh, Mosques",
+  metaDescription:
+    "Pick your month and stops — Balinese temples, mosques, Aceh, volcano hikes — and get only the rules that apply plus a counted, weighed packing list.",
+  steps: [
+    "Choose Month of travel, Trip length (days) and Laundry every (days), and tick 'I will be asked to cover my hair' where that applies.",
+    "Under 'Where are you going?' tick only the stops on your itinerary — Balinese temples (Besakih, Uluwatu, Tirta Empul), Mosques (Istiqlal, Jakarta and nationwide), Aceh province, Volcano sunrise hikes (Bromo, Ijen, Batur, Rinjani), beaches, malls or Jakarta business meetings.",
+    "Read 'Rules your itinerary triggers' and the Item / Qty / Why packing table, sized for your wash cycle and weighed against the 7 kg cabin allowance Garuda and Lion Air apply on domestic legs; Copy plan takes the list.",
+  ],
   intro:
     "This planner applies Indonesia's province-by-province clothing rules to your actual itinerary and turns the result into a counted packing list. Indonesia has no single national dress code: Balinese Hindu temples require a sarong plus a sash tied at the waist with shoulders covered, mosques require ankle-length clothing and a headscarf with shoes off, and Aceh is the one province applying Islamic criminal law under its Qanun Jinayat, where a headscarf and loose clothing are required in public. Climate figures are Jakarta monthly normals, with separate handling for pre-dawn volcano hikes.",
   useCases: [

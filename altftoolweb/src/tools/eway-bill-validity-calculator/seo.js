@@ -1,4 +1,12 @@
 const seo = {
+  title: "E-Way Bill Validity Calculator: Days and Expiry Time",
+  metaDescription:
+    "Enter distance and cargo type to get validity days under Rule 138(10) — 200 km or 20 km per day — and the exact midnight the e-way bill lapses.",
+  steps: [
+    "Type the Approximate distance (km), or tap the 100, 350, 800, 1400 or 2200 km chip, then set Cargo / vehicle type to Regular cargo (road, rail, air), Over dimensional cargo (ODC) or Multimodal shipment with a leg by ship.",
+    "Set Date of generation, Time of generation and Consignment value (INR); the Validity period figure updates as you type, applying Rule 138(10) at one day per 200 km, or per 20 km for ODC and ship legs.",
+    "Read Valid through, Expires at — 00:00 on the named date — plus Distance headroom in this slab and Next extra day starts at, then press Copy result to take the whole summary.",
+  ],
   intro:
     "The E-Way Bill Distance Validity Calculator converts an approximate transport distance into the number of validity days allowed under Rule 138(10) of the CGST Rules, and then shows the exact midnight at which the bill lapses. It handles both the normal slab of one day per 200 km and the tighter one day per 20 km slab that applies to over dimensional cargo and multimodal shipments with a leg by ship. Transporters, dispatch clerks and accounts teams can use it to plan a run, spot when a consignment will need an extension, and see how much distance headroom is left inside the current slab.",
   useCases: [

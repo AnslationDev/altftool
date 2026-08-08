@@ -1,4 +1,12 @@
 const seo = {
+  title: "Git LFS Storage, Bandwidth and Data-Pack Cost Estimator",
+  metaDescription:
+    "Projects LFS storage from versions kept forever, clone bandwidth from the working set, and the cost in $5 GitHub data packs beyond the 1 GiB free tier.",
+  steps: [
+    "Enter LFS-tracked files at HEAD, Average file size (MiB) and New versions per file per month.",
+    "Set the Projection horizon (months) and Fresh clones per month (incl. CI).",
+    "Read Estimated GitHub LFS cost per month with Storage on server, Monthly clone bandwidth and Data packs needed, then press Copy result.",
+  ],
   intro:
     "This calculator estimates Git LFS server storage, monthly bandwidth and cost from five inputs: tracked file count, average file size, new versions per file per month, a projection horizon and clone frequency. The model reflects how LFS actually behaves — every pushed version is stored forever by default, while a fresh clone downloads only the current version of each file — and prices the result in GitHub data packs ($5/month for 50 GiB storage plus 50 GiB bandwidth, beyond the 1 GiB free tier). It is for game, media and ML teams sizing LFS before committing their first large binaries.",
   useCases: [

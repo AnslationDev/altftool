@@ -1,4 +1,12 @@
 const seo = {
+  title: "Car Detailing Cost Calculator: Wax vs Ceramic vs PPF",
+  metaDescription:
+    "Compares wax, sealant, Teflon, ceramic, graphene and PPF on cost per year over the years you keep the car, with the same routine washing in every row.",
+  steps: [
+    "Pick your Car size, from Hatchback at ×1 to Full-size SUV / MPV at ×1.6, enter how long you will keep the car in years, and set Routine wash type, Cost per wash and Washes per month.",
+    "Tick the treatments to compare — Carnauba wax, Polymer paint sealant, Ceramic coating (9H), Graphene coating, front-end or full-body Paint protection film — each listed with its durability in months.",
+    "Read the lowest total cost over the period, then the comparison table of per application, times needed, total and per year, with routine washing alone as the baseline row. Copy result saves the breakdown.",
+  ],
   intro:
     "The Car Detailing Cost Calculator compares wax, polymer sealant, Teflon, ceramic coating, graphene coating and paint protection film on cost per year rather than sticker price, by dividing the ownership period by each treatment's real durability and counting how many times you would have to buy it. A carnauba wax lasting about three months is applied twenty times across a five-year period, which changes the arithmetic completely against a ceramic coating rated for two years. Routine washing is added identically to every option, so the difference between rows is purely the protection.",
   useCases: [

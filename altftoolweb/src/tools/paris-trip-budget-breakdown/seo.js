@@ -1,4 +1,12 @@
 const seo = {
+  title: "Paris Trip Cost: Per-Person Budget With Tourist Tax",
+  metaDescription:
+    "Split a Paris trip into flights, room, food, metro and activities, with taxe de séjour at the real rate plus 10% and 15% surtaxes, per person per day.",
+  steps: [
+    "Pick a Travel style — Budget, Comfort or Premium — to seed the rates, then set Season (moves the room rate), Adults (18 and over), Under-18s (tax exempt) and Nights in Paris.",
+    "Set Accommodation category to fill the 'Municipal taxe de séjour per adult per night', from €1 for a hostel to €8 for a 5-star hotel, and overwrite any rate line: return fare, room, food, metro, activities or museum passes.",
+    "The Line / Party / Per person / Share table splits the trip and the rows below give the taxe de séjour per adult per night, its 10% plus 15% surtax part and the cost of one extra night; Copy result takes the breakdown.",
+  ],
   intro:
     "This planner breaks a Paris trip into flights or rail, accommodation, taxe de séjour, food, metro travel, activities and a contingency buffer, then reports the cost per person and per person per day. The tourist tax follows the French rule rather than a flat guess: it is charged per person per night by accommodation category, guests under 18 are exempt, and the municipal rate carries a 10% departmental additional tax plus the 15% Île-de-France regional tax that funds the Grand Paris transport works. Rooms are billed for nights while meals and travel are billed for the extra arrival day.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hinglish Glossary Builder: 28 Starter Terms + Export",
+  metaDescription:
+    "Start from 28 documented Hinglish terms like jugaad and prepone, add your own with example and origin, then export Markdown, CSV, JSON or text.",
+  steps: [
+    "Type the word into Term or phrase, pick its Origin and Register, and write what it means in Indian usage in the Meaning box.",
+    "Press Add to glossary; duplicates are rejected after trimming and lowercasing, so Jugaad and jugaad cannot both be stored.",
+    "Set Format to Markdown table, CSV spreadsheet, JSON or Plain text, then press Copy result to take the glossary off the page.",
+  ],
   intro:
     "A Hinglish glossary is a shared list of Hindi-English blend words and Indian English terms with the meaning each one actually carries in Indian usage, not the dictionary gloss of the source language. This builder starts you with 28 documented entries such as jugaad, prepone, godown, out of station and paisa vasool, lets you add your own campus, team or family words with an example sentence and an origin, and exports the result as a Markdown table, RFC 4180 CSV, JSON or plain text. Editors, onboarding leads and ESL teachers use it to settle what a term means before it appears in a document.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "End of Tenancy Cleaning Checklist with Time Costs",
+  metaDescription:
+    "Room-by-room move-out clean with a minute allowance per task — about 16-17 hours for a 2-bed, 2-bath — and unticked work priced at your rate.",
+  steps: [
+    "Enter Bedrooms, Bathrooms and Living / dining rooms, your Cleaner's rate (₹ per hour) and the Deposit held (₹).",
+    "Work down each room ticking tasks; the ones tagged Deduction magnet — oven, limescale, grout mould, carpet stains — carry triple weight.",
+    "Read Cleaning still to do in hours, Remaining work priced at your rate and its share of the deposit, then press Copy plan.",
+  ],
   intro:
     "This checklist covers an end-of-tenancy clean room by room, built from the jobs that repeatedly appear as deposit deductions rather than from a general tidying routine — the oven, the extractor filter, limescale, grout mould, carpet stains, wall marks and rubbish left behind. Each task carries a professional time allowance, so multiplying by your number of bedrooms and bathrooms gives the real length of the job: about 16 to 17 hours for a two-bedroom, two-bathroom flat. Enter a cleaner's hourly rate and the unticked work is priced, which is close to how a landlord's contractor bill is calculated.",
   useCases: [

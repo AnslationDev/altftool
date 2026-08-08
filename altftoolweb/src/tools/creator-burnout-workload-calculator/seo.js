@@ -1,4 +1,12 @@
 const seo = {
+  title: "Creator Workload Calculator: 48h & 55h Risk Check",
+  metaDescription:
+    "Turn your posting schedule into weekly hours and score it against the 48-hour EU ceiling, the 55-hour WHO/ILO level and the 7-hour sleep floor.",
+  steps: [
+    "Under \"Weekly output\" set \"Pieces per week\" and \"Hours per piece\" for each format — \"Long-form video (8-15 min)\" starts at 9 hours, \"Short / Reel / vertical clip\" at 1.5.",
+    "In \"Everything else\" add \"Admin, comms & brand deals (h/week)\", \"Full days off per week (0-6)\", \"Average sleep (h/night)\", \"Weeks since a full week off\" and your \"Target working week (h)\".",
+    "The \"Weekly load score\" out of 100 lands in a band, and the rows give \"Total weekly hours\", \"Vs 55 h WHO/ILO threshold\", \"Weekly sleep debt\" and \"Gap to your target week\"; \"Copy result\" copies the breakdown.",
+  ],
   intro:
     "The Creator Workload Burnout Calculator converts a content schedule into total weekly working hours and scores it against published working-time and sleep guidance. It multiplies each format's weekly output by the real hours it takes end to end, adds admin and community time, then compares the total with the 48-hour average ceiling in the EU Working Time Directive and the 55-hour mark the WHO/ILO links to raised stroke and heart-disease risk. It is built for solo creators, freelancers and small studios who want to know whether a posting calendar is physically sustainable before they commit to it.",
   useCases: [

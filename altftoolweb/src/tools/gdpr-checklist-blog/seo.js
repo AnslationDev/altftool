@@ -1,4 +1,12 @@
 const seo = {
+  title: "GDPR Checklist for Blogs, Scoped to Features You Use",
+  metaDescription:
+    "Shows only the GDPR duties your analytics, ads, newsletter or non-EU hosting trigger, names the article behind each, and counts critical items triple.",
+  steps: [
+    "Tick what your blog uses — Analytics, Advertising or affiliate tracking, Email newsletter sign-up, Hosting or vendors outside the EU/UK.",
+    "Work down Your checklist, narrowing it with the Show filter to Critical only or Outstanding only, and tick what is already done.",
+    "Read the weighted completion score, then press Copy to-do list for the outstanding items and the GDPR article behind each.",
+  ],
   intro:
     "GDPR Compliance Checklist for Blogs turns a list of the features your blog actually uses — analytics, ads, a newsletter, comments, embeds, non-EU hosting — into the subset of obligations that follow from them, each labelled with the provision it comes from. It covers the GDPR duties most blogs meet in practice (Articles 5, 6, 7, 8, 12-17, 20, 21, 28, 30, 32, 33 and 44-46) plus the cookie consent rule that actually bites, Article 5(3) of the ePrivacy Directive. Items are weighted by severity so the score reflects whether the critical things are done, not just how many boxes are ticked.",
   useCases: [

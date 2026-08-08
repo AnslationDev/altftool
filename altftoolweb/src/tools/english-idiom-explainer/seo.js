@@ -1,4 +1,7 @@
 const seo = {
+  title: "English Idiom Explainer: 45 Idioms With Register Tags",
+  metaDescription:
+    "45 English idioms with the literal image, the real meaning, an example sentence and whether the phrase is safe in business writing.",
   intro:
     "English Idiom Explainer looks up 45 common English idioms and shows four things for each: the literal picture the words paint, the figurative meaning, a natural example sentence, and whether the phrase is safe in business writing or belongs in conversation only. An idiom is a fixed expression whose meaning cannot be worked out from its individual words, which is exactly why word-by-word translation fails on it. Origins are given only where they are documented — where the popular story is folk etymology, such as 'raining cats and dogs', the entry says so rather than repeating it as fact.",
   useCases: [

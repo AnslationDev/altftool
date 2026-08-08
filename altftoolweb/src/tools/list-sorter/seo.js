@@ -1,4 +1,12 @@
 const seo = {
+  title: "List Sorter: Sort A-Z, by Number, Length or Random",
+  metaDescription:
+    "Sort a pasted list A-Z, by numeric value, by length, reversed or shuffled. Split on newline, comma, semicolon or pipe, then download sorted-list.txt.",
+  steps: [
+    "Paste your items into the list box and pick a List Separator: New Line, Comma (,), Semicolon (;) or Pipe (|).",
+    "Choose an ordering — A-Z, Z-A, 0-9 Ascending, 9-0 Descending, Shortest First, Longest First, Reverse List or Shuffle List — and toggle 'Trim Whitespace & Skip Empty'.",
+    "Read the sorted output, then press Copy or Download to save sorted-list.txt.",
+  ],
   intro:
     "List Sorter reorders a pasted list eight ways — A–Z, Z–A, numeric ascending or descending, shortest or longest item first, straight reverse, or a Fisher-Yates shuffle — and re-splits the list on your chosen separator: newline, comma, semicolon or pipe. Alphabetical sorting uses locale-aware comparison and is case-insensitive unless you switch case sensitivity on; numeric sorting strips out everything except digits, a decimal point and a minus sign, so \"$1,200\" and \"42 kg\" still sort by their value. The result updates as you type and can be copied or downloaded as sorted-list.txt.",
   useCases: [

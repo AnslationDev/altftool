@@ -1,4 +1,12 @@
 const seo = {
+  title: "F1 Score Calculator: Precision, Recall, F-beta, MCC",
+  metaDescription:
+    "Enter TP, FP, FN and TN to get precision, recall, F1, F-beta, balanced accuracy, MCC and Cohen's kappa; zero denominators show as undefined.",
+  steps: [
+    "Enter the four confusion-matrix counts: True positives, False positives, False negatives and True negatives.",
+    "Set Beta, or click a preset — F0.5 when precision matters twice as much, F1 for equal weighting, F2 when recall matters twice as much.",
+    "Read the F1 score headline with Precision, Recall, Specificity, Accuracy, Balanced accuracy, MCC and Cohen's kappa; metrics with a zero denominator read undefined, and Copy result copies the set.",
+  ],
   intro:
     "Precision Recall F1 Calculator turns the four cells of a binary confusion matrix into every standard classification metric: precision as TP/(TP+FP), recall as TP/(TP+FN), F1 as their harmonic mean, and the F-beta generalisation that lets you weight recall above precision or the reverse. It also reports specificity, negative predictive value, balanced accuracy, the Matthews correlation coefficient and Cohen's kappa, which is what you need when accuracy alone is flattering an imbalanced dataset. Metrics with a zero denominator are labelled undefined rather than silently shown as zero.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "FINDRISC: 8 Questions, 10-Year Diabetes Risk Score",
+  metaDescription:
+    "Age, BMI, waist, activity, diet, BP medication, past glucose and family history give a FINDRISC score out of 26 and its risk band. No blood test needed.",
+  steps: [
+    "In the About you card enter Age, Weight, Height and Waist circumference at navel level, and pick your sex for the waist cut-offs.",
+    "Answer the five Habits and history questions on daily activity, vegetables and fruit, blood pressure medication, past high blood glucose and family history.",
+    "Read the FINDRISC score out of 26 with its 10-year risk band, then the “Where your points came from” table showing the points behind each answer.",
+  ],
   intro:
     "The FINDRISC Diabetes Risk Score converts eight questions — age, BMI, waist circumference, physical activity, fruit and vegetable intake, blood pressure medication, any past high blood glucose reading and family history — into a score from 0 to 26 that maps to a 10-year risk of developing type 2 diabetes. It uses the point values published by Lindström and Tuomilehto in Diabetes Care (2003), the same instrument used in Finnish and wider European screening programmes. No blood test is involved, so it works as a first-pass check on whether a glucose or HbA1c test is worth asking for.",
   useCases: [

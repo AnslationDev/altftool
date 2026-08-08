@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bank Exam Countdown: IBPS, SBI and RBI Stage Dates",
+  metaDescription:
+    "Days to each stage and the prelims-to-mains gap, plus seconds per question by section and the attempts a cutoff needs after 1/4 negative marking.",
+  steps: [
+    "Set Today's date and choose a Recruitment exam — IBPS PO, IBPS Clerk, SBI PO, SBI Clerk, RBI Grade B (DR General) or RBI Assistant — to load that cycle's stages.",
+    "Fill in a date for each stage you know, such as Preliminary exam, Main exam and Interview, and leave the rest blank; only dated stages appear on the board.",
+    "The 'Next:' headline counts the days and weeks to the nearest stage and the gaps between stages follow, while 'Attempts needed to clear a cutoff' turns 'Target cutoff (marks)' and 'Your accuracy in mocks (%)' into attempts after one-fourth negative marking; Copy result copies the board.",
+  ],
   intro:
     "This countdown board tracks every stage of a bank recruitment cycle — preliminary exam, main exam, interview or language test — from the dates you enter, and shows the gap between each one so the switch from prelims practice to mains preparation is planned rather than improvised. It also prices the two numbers that decide a bank result: the seconds per question a sectionally timed paper allows, and the attempts a target cutoff needs once one fourth negative marking is deducted. Stage structures are pre-filled for IBPS PO and Clerk, SBI PO and Clerk, RBI Grade B and RBI Assistant.",
   useCases: [

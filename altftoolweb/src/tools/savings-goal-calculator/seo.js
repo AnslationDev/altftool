@@ -1,4 +1,12 @@
 const seo = {
+  title: "Savings Goal Calculator: Monthly Amount to Target",
+  metaDescription:
+    "Solve the sinking-fund formula for the monthly saving that hits your target on time, after compounding the savings you already have.",
+  steps: [
+    "Enter Target Amount and Current Savings in ₹, plus Time Horizon (Years) and Expected Return (% p.a.).",
+    "Press Calculate — current savings are grown at the annual rate first, then the shortfall is solved with PMT = FV × i / ((1 + i)^n − 1).",
+    "Read 'Monthly Savings Needed' as the headline figure, with 'Future Value of Current Savings' beneath it.",
+  ],
   intro:
     "This calculator works out the monthly contribution needed to hit a savings target by a chosen date, using the sinking-fund formula PMT = FV x i / ((1 + i)^n - 1), where i is your annual return divided by 12 and n is the number of months. It first grows whatever you have already saved at the annual rate for the full horizon, subtracts that future value from the target, and solves only for the shortfall. Enter a target, a time horizon in years, an expected annual return and your current savings, and you get the monthly figure plus what today's savings will be worth by the deadline.",
   useCases: [

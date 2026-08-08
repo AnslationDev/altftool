@@ -1,4 +1,12 @@
 const seo = {
+  title: "Line Height Calculator: Font Size, Measure, WCAG",
+  metaDescription:
+    "Get a line height from font size and column width, with characters per line, the 45-75 measure band, a baseline-grid value and a WCAG 1.5 check.",
+  steps: [
+    "Enter 'Font size (px)' and 'Measure / column width (px)', then pick a Text role.",
+    "Set 'Average character width (× font size)' — about 0.5 for a typical sans — and the 'Baseline grid unit (px)'.",
+    "Read the recommended ratio, characters per line against the 45-75 band, the snapped baseline value and the WCAG 1.4.8 line spacing verdict, then press 'Copy CSS'.",
+  ],
   intro:
     "Line Height Calculator recommends leading from the two things that actually determine it: the font size and how wide the column is. It converts the column width into characters per line (measure ÷ average glyph advance), then adjusts a role-appropriate base ratio upward for long lines and downward for large type, because longer lines need more leading to guide the eye back and larger type already carries a bigger gap. It also reports whether the measure sits inside the 45-75 character band and whether the result clears the 1.5 line spacing WCAG 2.x SC 1.4.8 asks for in body text.",
   useCases: [

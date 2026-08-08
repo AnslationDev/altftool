@@ -1,4 +1,12 @@
 const seo = {
+  title: "Depth of Field Estimator with Hyperfocal & Diffraction",
+  metaDescription:
+    "Near limit, far limit and hyperfocal from H = f²/(N×c) + f, with a real circle of confusion per sensor and a warning when diffraction outruns it.",
+  steps: [
+    "On the Calculator tab, pick Camera Sensor Size — each format carries its own circle of confusion, from 0.030 mm for full frame down to 0.005 mm for a phone sensor.",
+    "Set Focal Length, Aperture (f-stop) and Subject Focus Distance with the sliders or number fields, switching the M and FT buttons for your units.",
+    "Read Total Depth of Field with Near Limit of Sharpness, Far Limit of Sharpness and the Hyperfocal figure on the diagram, plus the diffraction warning.",
+  ],
   intro:
     "The Depth of Field Estimator works out the near limit, far limit and hyperfocal distance for a given sensor, focal length, aperture and subject distance using the standard circle-of-confusion formulas — hyperfocal H = f² / (N × c) + f, with the near and far limits derived from H. It covers eight formats from medium format through full frame, APS-C and Micro Four Thirds down to a 6.0x smartphone sensor, each with its own circle-of-confusion value, and it warns when diffraction starts to outrun that value. It is for photographers who want to know before the shot how much will actually be sharp.",
   useCases: [

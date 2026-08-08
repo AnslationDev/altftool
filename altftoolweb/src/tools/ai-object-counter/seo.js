@@ -1,4 +1,7 @@
 const seo = {
+  title: "AI Object Counter: Count 80 COCO Classes in Browser",
+  metaDescription:
+    "Runs COCO-SSD via TensorFlow.js in your tab to box and tally 80 object classes; re-threshold from 10-95% without re-detecting. Images never uploaded.",
   intro:
     "AI Object Counter runs the COCO-SSD detector on TensorFlow.js inside your browser to find and count the 80 everyday object classes in the COCO dataset — people, cars, bottles, chairs, dogs, laptops and the rest — drawing a labelled bounding box around each one and a per-class tally beside it. The model is run once at a 20% confidence floor and the results are re-filtered live by a slider, so you can raise or lower the threshold and watch the count change without re-detecting. Nothing is uploaded: the model weights are fetched once and the image is processed on a canvas in the tab.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "HTML to PHP Converter: Escaped Echo Placeholders",
+  metaDescription:
+    "Turn {{ placeholders }} into htmlspecialchars($var, ENT_QUOTES, 'UTF-8') echoes with a strict_types block, or convert PHP back to plain HTML.",
+  steps: [
+    "Choose the HTML to PHP or PHP to HTML card, then paste markup under \"Source code\" or press Upload code for a .html, .htm, .php, .phtml or .txt file.",
+    "Switch the conversion options: Safe echoes, Strict types, Base-path assets and Add PHP block for HTML to PHP; Strip config, Echo placeholders, Logic as comments and PHP comments for the reverse.",
+    "Press Download in the Generated PHP panel to save converted.php, or converted.html when running PHP to HTML.",
+  ],
   intro:
     "This converter turns static HTML into a PHP template and back again: HTML to PHP rewrites every {{ placeholder }} as <?= htmlspecialchars($var, ENT_QUOTES, 'UTF-8') ?>, prepends a <?php declare(strict_types=1); ?> block declaring each variable, and makes root-relative src/href/action paths base-path aware by prefixing $basePath. PHP to HTML runs the same mapping in reverse, stripping the config block and converting echoes back to {{ }} placeholders so a designer can work in plain markup. Control-flow blocks such as <?php if ... ?> are kept as HTML comments so nothing is lost in translation.",
   useCases: [

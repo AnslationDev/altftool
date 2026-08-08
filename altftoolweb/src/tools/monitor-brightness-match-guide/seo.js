@@ -1,4 +1,10 @@
 const seo = {
+  title: "Monitor Brightness Match: Room Lux to Screen Nits",
+  steps: [
+    "Enter Room light (lux) or tap a preset button such as 500 lux, then pick the surface behind the display from the Wall / desk behind the screen list (0.75 white down to 0.15 dark).",
+    "Set Panel peak brightness (nits) and Your brightness slider right now (%), and leave Target screen : surround ratio at 1.5 or raise it toward the 3 ceiling.",
+    "Recommended screen luminance reports the target in cd/m² and roughly which slider percentage that is, with rows for surround luminance, the comfortable band, your current screen-to-surround ratio and the ISO 3664 floor / preferred figures; Copy result copies the summary and Reset restores the defaults.",
+  ],
   intro:
     "The Monitor Brightness Match Guide calculates the screen luminance that matches your room, rather than leaving the brightness slider wherever it shipped. It converts room illuminance into the luminance of the wall behind the display with the Lambertian relation L = E x reflectance / pi, applies the roughly 3:1 screen-to-immediate-surround luminance ratio that ISO 9241-303 and ANSI/HFES 100 set as an ergonomic limit, and never recommends less than the 80 cd/m2 display white minimum in ISO 3664:2009. The output is a target in cd/m2 plus the approximate slider percentage on your panel.",
   useCases: [

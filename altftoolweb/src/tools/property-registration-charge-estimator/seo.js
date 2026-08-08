@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stamp Duty & Property Registration Charge Estimator",
+  metaDescription:
+    "Add up stamp duty, cess, registration fee and its state cap, scanning and franking on the higher of agreement value or circle rate, plus 194-IA TDS.",
+  steps: [
+    "Pick your State — Maharashtra (Mumbai) through Haryana, or \"Other state — enter my own rates\" — then fill \"Agreement value (INR)\" and \"Circle / ready reckoner value (INR)\"; duty is charged on whichever of the two is higher.",
+    "Edit the rates for your district: \"Stamp duty (% of chargeable value)\", \"Cess or surcharge (% of stamp duty)\", \"Registration fee (% of chargeable value)\" and its \"Registration fee cap (INR)\" (leave blank where the state does not cap it), plus \"Pages in the deed\" and \"Scanning charge per page (INR)\".",
+    "Read the Charge/Amount table and the rows for \"Chargeable value\", \"Registration fee before any cap\", \"All-in cost including the price\" and \"Section 194-IA TDS at 1%\", then press \"Copy result\" for the plain-text estimate.",
+  ],
   intro:
     "Registering a sale deed costs more than the stamp duty alone, and this estimator adds up every line: stamp duty, any cess or transfer duty, the state registration fee with its rupee cap where one exists, scanning charges per page, franking or e-stamping service fees and the deed-writer's fee. Duty is computed on the chargeable value, which is the higher of the agreement value and the government circle or ready reckoner rate, the basis states use under section 47-A of the Indian Stamp Act, 1899. It also flags the 1% TDS a buyer must deduct under section 194-IA when that value is Rs 50 lakh or more.",
   useCases: [

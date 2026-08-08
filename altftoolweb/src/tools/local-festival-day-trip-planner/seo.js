@@ -1,4 +1,12 @@
 const seo = {
+  title: "Festival Day Planner: Gate Queue, Exit Time, Last Train",
+  metaDescription:
+    "Builds the day backwards from the gate: queue growth from lane throughput, exit clear time at 82 people/min per metre, and the margin on the last service.",
+  steps: [
+    "Under \"The event\" enter Expected attendance, \"Standing area (m², 0 to skip)\", Start time and Finish time.",
+    "Under \"Getting in\" set \"Search lanes or turnstiles\", \"People per lane per minute\", \"Share arriving in the peak (%)\", \"Peak window before the start (min)\" and \"Queue time you will accept (min)\"; under \"Getting out and home\" pick an Exit route — \"Level exits and gateways\" at 82/min per metre or \"Stairways or a stepped exit\" at 73/min per metre — plus \"Total exit width (m)\", the travel times and \"Last service home\".",
+    "\"Leave home at\" gives your departure time, over rows for Gate capacity, \"Queue if you arrive at the last moment\", \"Time to clear the whole venue\", \"Margin on the last service\" and \"Latest you can leave your spot\", alongside \"The day, in order\" and Crowd density; \"Copy plan\" copies the timeline.",
+  ],
   intro:
     "Builds a festival day backwards from the gate using crowd-engineering arithmetic rather than guesswork. The entry queue is a deterministic fluid model — while arrivals outrun the gates, the queue grows at the difference between the two rates, so arriving t minutes into the peak means (arrival rate minus service rate) times t people stand in front of you. The exit uses the UK Guide to Safety at Sports Grounds figures of 82 persons per minute per metre of level exit width and 73 per metre for stairways, and crowd density is checked against the same guidance's limit of 4.7 people per square metre.",
   useCases: [

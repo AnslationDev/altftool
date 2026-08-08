@@ -1,4 +1,12 @@
 const seo = {
+  title: "End-to-End Encryption: Who Can Read Your Message",
+  metaDescription:
+    "Trace one message hop by hop — device, carrier, provider, backup, recipient — and see where the content is readable and the metadata visible.",
+  steps: [
+    "Under “How are you sending it?” pick a channel — SMS / MMS, WhatsApp, Signal, iMessage or workspace chat.",
+    "In “What else is true?” tick the conditions that apply: chat backup to iCloud or Google Drive, an employer-managed MDM device, a shared or unlocked handset.",
+    "Read the Hop by hop table, where each hop is marked Readable or Encrypted for content and Visible or Hidden for metadata, above a protection score out of 100.",
+  ],
   intro:
     "This explainer walks a message along its real path — your device, your network, the provider's servers, any cloud backup, a lawful request, the recipient's network, their device — and marks at each hop whether the content is readable and whether the metadata is visible. The distinction it makes concrete is between transport encryption, where every machine on the path decrypts, and end-to-end encryption, where only the two endpoints hold keys. It also counts what encryption never covers: metadata, cloud backups the provider can open, and anything with access to an unlocked endpoint.",
   useCases: [

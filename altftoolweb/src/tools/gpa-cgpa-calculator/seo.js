@@ -1,4 +1,12 @@
 const seo = {
+  title: "GPA & CGPA Calculator: 10-Point Scale to Percentage",
+  metaDescription:
+    "Credit-weighted SGPA and CGPA on the O=10 to F=0 scale, percentage via (CGPA − 0.75) × 10, and the GPA you need next semester.",
+  steps: [
+    "On the Semester GPA tab use Add Subject, then set Credits and pick a Grade from O Grade (10 Points) down to F Grade (0 Points).",
+    "Switch to Overall CGPA to weight each semester by its credits, or GPA Predictor to enter a Target CGPA and Upcoming Credits.",
+    "Read the credit-weighted result and the Percentage Converter's (CGPA - 0.75) × 10 figure, then Copy Summary or Reset Calculator.",
+  ],
   intro:
     "This GPA and CGPA calculator works out your grade point average on the 10-point scale by dividing total credit-weighted grade points by total credits — the same weighted formula Indian universities print on a marksheet. Enter each subject's grade (O=10, A+=9, A=8, B+=7, B=6, C=5, P=4, F=0) and credit value for a semester GPA, add semester GPAs with their credit loads for a cumulative CGPA, then convert to a percentage or ask the predictor what you need to score next semester. It is for students checking a result before the official one arrives, or planning how to lift a CGPA before placements.",
   useCases: [

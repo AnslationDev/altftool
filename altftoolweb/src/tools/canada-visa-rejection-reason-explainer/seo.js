@@ -1,4 +1,12 @@
 const seo = {
+  title: "Canada Visa Refusal Reasons: IRCC Checkbox Explainer",
+  metaDescription:
+    "Maps the ticked boxes on an IRCC refusal letter to the IRPR provision behind each, s.179(b) or 216(1)(b), with a fix checklist and readiness score.",
+  steps: [
+    "Optionally paste your wording into Paste the wording from your refusal notice — the keyword matching runs in the page and offers suggestions to verify.",
+    "Under Which reason was ticked on your notice? tick every ground that applies; more than one is common.",
+    "Read each ground's regulation code, What usually triggers it and Fix this before you reapply, tick the fixes to raise Reapplication readiness, then press Copy result.",
+  ],
   intro:
     "This explainer translates the checkboxes on an IRCC refusal letter into the regulation behind them and a checklist of what to fix. Nearly every refused visitor visa or study permit ends with the same sentence - the officer is not satisfied you will leave Canada at the end of your stay, under section 179(b) or 216(1)(b) of the Immigration and Refugee Protection Regulations - followed by ticked factors such as travel history, purpose of visit, family ties or financial status. Select the factors on your letter to see what each one means, how serious it is, and what evidence answers it.",
   useCases: [

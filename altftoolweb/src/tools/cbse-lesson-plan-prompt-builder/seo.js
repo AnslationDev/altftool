@@ -1,4 +1,12 @@
 const seo = {
+  title: "CBSE Lesson Plan Prompt Builder: 5E or Herbartian",
+  metaDescription:
+    "Splits a 40 or 45 minute period across 5E or Herbartian phases by largest remainder, and writes the right CBSE marks scheme into the lesson-plan prompt.",
+  steps: [
+    "Pick the Stage and Class, choose the Subject, and type the Chapter or topic — for example Chemical Reactions and Equations.",
+    "Set Period length (minutes) and Number of periods, choose the Framework — 5E learning cycle or Herbartian five steps — and tick Include a 4-level rubric or Include homework.",
+    "Read Teaching time planned with the per-phase minutes and the Marks scheme written into the prompt panel, then press Copy prompt.",
+  ],
   intro:
     "The CBSE Lesson Plan Prompt Builder converts a class, subject, chapter and period length into an AI prompt that already contains a minute-by-minute time split and the CBSE marks scheme that applies to that class. Time is divided using either the 5E learning cycle (Engage 10%, Explore 25%, Explain 30%, Elaborate 20%, Evaluate 15%) or the five Herbartian steps, allocated by the largest-remainder method so the phase minutes always add back to the full period. It is built for CBSE teachers and heads of department who need an inspection-ready plan file without hand-calculating the timings.",
   useCases: [

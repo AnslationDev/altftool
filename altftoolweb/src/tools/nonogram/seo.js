@@ -1,4 +1,7 @@
 const seo = {
+  title: "Nonogram Puzzle: 5x5, 10x10 and 15x15 Picture Logic",
+  metaDescription:
+    "Solve generated nonograms at 5x5, 10x10 or 15x15 in easy, medium or hard. Clues dim as you satisfy them and best times are kept per grid size.",
   intro:
     "Nonogram is a picture-logic puzzle where the numbers beside each row and above each column give the lengths of the filled runs in that line, in order, with at least one empty square between runs — fill the grid so every clue is satisfied and a picture appears. This version generates fresh 5x5, 10x10 and 15x15 boards at three difficulties, dims each clue as you satisfy it, and keeps a separate best time for every grid size. A Fill mode paints squares and a Mark mode (or right-click) flags the ones that must stay empty, which is how experienced solvers make progress on a stubborn line.",
   useCases: [

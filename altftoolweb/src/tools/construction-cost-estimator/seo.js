@@ -1,4 +1,12 @@
 const seo = {
+  title: "House Construction Cost Estimator per Sq Ft, India",
+  metaDescription:
+    "Built-up area and finish grade to a rupee total: economy ₹1,600 to luxury ₹3,600 per sq ft, a city factor, 12 work heads and material quantities.",
+  steps: [
+    "Enter \"Built-up area per floor (sq ft)\" and Number of floors, then pick a Quality of construction — Economy / basic finish at ₹1,600/sq ft up to Luxury finish at ₹3,600/sq ft — and a Location from Metro to \"Tier 3 / small town\".",
+    "Add \"Compound wall & external works (INR)\", \"Design & professional fees (% of civil cost)\" and \"Contingency (% of civil cost)\", or tick \"Use my own rate per sq ft\" to replace the benchmark with your own \"Rate per sq ft (INR, before city factor)\".",
+    "The Estimated construction cost headline gives the all-in per-sq-ft rate and a likely range, over rows for City factor applied, Civil construction cost and Total estimated cost, plus \"Where the civil cost goes\" and \"Approximate material requirement\"; Copy result copies the estimate.",
+  ],
   intro:
     "This estimator turns a built-up area and a quality grade into a rupee figure for building a house, using per-square-foot rates for economy, standard, premium and luxury finishes adjusted by a metro, tier-1, tier-2 or tier-3 city factor. On top of the civil cost it adds design and professional fees, a contingency and any external works, then splits the civil cost across twelve work heads and converts the area into thumb-rule quantities of cement, steel, sand, aggregate and bricks. It is meant for plot owners, self-builders and small contractors sizing a budget before a bill of quantities exists.",
   useCases: [

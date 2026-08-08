@@ -1,4 +1,12 @@
 const seo = {
+  title: "HRA Exemption Calculator: Section 10(13A) Three Rules",
+  metaDescription:
+    "Shows actual HRA, rent minus 10% of basic + DA, and 50% metro or 40% non-metro side by side, marks which one binds, and the tax saved at your slab.",
+  steps: [
+    "Enter Monthly basic salary + DA (₹), Monthly HRA received (₹) and Monthly rent paid (₹).",
+    "Set City type to Metro (50%) or Non-metro (40%) — only Delhi, Mumbai, Kolkata and Chennai count as metro.",
+    "The lowest of the three rule cards is tagged Your exemption; set Your income tax slab for the tax saved, then press Copy summary.",
+  ],
   intro:
     "Under Section 10(13A) of the Income-tax Act, the tax-free part of your house rent allowance is the lowest of three figures: the actual HRA received, rent paid minus 10% of basic + DA, and 50% of basic + DA in a metro or 40% elsewhere. This calculator takes your monthly basic + DA, HRA and rent, shows all three rule amounts side by side, and reports which one binds, the exempt and taxable HRA per month and per year, and the tax that exemption saves at your slab. It is for salaried employees under the old tax regime working out what to claim or what their payroll declaration should say.",
   useCases: [

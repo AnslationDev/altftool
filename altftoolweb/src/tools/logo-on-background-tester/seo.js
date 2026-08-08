@@ -1,4 +1,12 @@
 const seo = {
+  title: "Logo Contrast Tester: 3:1 WCAG Check and Scrim Fix",
+  metaDescription:
+    "Measure a logo colour on light, dark, grey and custom surfaces against WCAG 1.4.11's 3:1 bar, and get the black or white scrim opacity that fixes it.",
+  steps: [
+    "Enter the Logo colour (hex) or use the swatch picker, choose a Target contrast, and tick Include my surface in the test to add your own hex.",
+    "Load a PNG, JPEG or WebP under \"Optional: test against a photo\" so the mark is scored against that image's luminance histogram.",
+    "Read Worst contrast across the surfaces with the pass count and the solved scrim opacity for each failing surface, then press Copy result.",
+  ],
   intro:
     "The Logo On Background Tester computes the WCAG 2.1 contrast ratio between a logo colour and a set of light, dark, mid-grey and custom surfaces, then reports which ones miss the 3:1 threshold that WCAG SC 1.4.11 sets for graphical objects. For every failing surface it solves for the exact black or white scrim opacity that lifts the mark back over the target, and if you load a photograph it builds a luminance histogram and tells you what percentage of that image's pixels the logo would disappear against. Everything is computed locally from the relative-luminance formula; no image is uploaded.",
   useCases: [

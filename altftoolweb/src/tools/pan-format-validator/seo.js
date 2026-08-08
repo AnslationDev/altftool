@@ -1,4 +1,12 @@
 const seo = {
+  title: "PAN Format Validator: Check ABCDE1234F Structure",
+  metaDescription:
+    "Checks an Indian PAN against the 10-character ABCDE1234F pattern, names the holder type from the 4th letter, masks it and validates bulk lists.",
+  steps: [
+    "Type a PAN into the PAN number field on the Single PAN tab, or switch to Bulk List and paste one per line; Sample loads ABCDE1234F and Clear empties the box.",
+    "Read Result Details — Normalized, Masked, Holder type from the fourth character and Name initial — plus a listed issue for every rule that broke, such as digits in the first five positions.",
+    "Press Summary or Copy PANs for the clipboard, or CSV to download pan-format-validation.csv with Input, Normalized PAN, Masked PAN, Status, Holder Type and Issues columns.",
+  ],
   intro:
     "The PAN Format Validator checks an Indian Permanent Account Number against the official 10-character pattern — five letters, four digits, one letter, as in ABCDE1234F — and decodes what those characters mean. It reads the fourth character as the holder type (P for an individual, C for a company, H for a HUF, F for a firm or LLP, and so on), the fifth as the first letter of the holder's surname or name, and it can mask, normalise and bulk-check whole lists. It is a format and structure check for finance, HR and onboarding teams, not a lookup against the Income Tax Department's records.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Podcast Episode Titles Scored on 40 and 60 Chars",
+  metaDescription:
+    "Eight title patterns from one topic, scored on length against the 60-character search cut, the 100-character YouTube cap and where the keyword starts.",
+  steps: [
+    "Enter the Topic or keyword a listener would search for, plus the Angle, Contrarian claim, Guest name and Audience.",
+    "Choose Sentence case or Title Case, and a number for the numbered-lessons pattern.",
+    "Compare the eight scored candidates and their notes on the 40-character episode list cut and the 100-character YouTube cap, then press Copy all.",
+  ],
   intro:
     "Podcast Episode Title Generator writes candidate titles from eight editorial patterns — keyword-first, guest-led, how-to, numbered, contrarian and others — and scores each on the things that decide whether anyone finds the episode. Scoring covers character count against the roughly 60-character search-result cut and the 100-character YouTube cap, how early the keyword appears, and whether the title still makes sense after the roughly 40 characters a phone episode list shows. It is for hosts and producers who need a title that works in a directory search, not just in the edit notes.",
   useCases: [

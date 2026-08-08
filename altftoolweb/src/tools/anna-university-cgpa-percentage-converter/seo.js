@@ -1,4 +1,12 @@
 const seo = {
+  title: "Anna University CGPA to Percentage Converter (x10)",
+  metaDescription:
+    "Convert CGPA with the x10 rule, the (CGPA - 0.5) x 10 variant or UGC x 9.5, build CGPA from semester credits, and check the 8.50 / 7.00 class.",
+  steps: [
+    "Enter 'Your CGPA (0 to 10)' and pick a Conversion rule — Anna University standard (Percentage = CGPA x 10), the Deducted variant ((CGPA - 0.5) x 10) or UGC equivalence (CGPA x 9.5).",
+    "Tick 'Passed every subject at the first appearance, within the normal duration' if it applies, and under 'Build your CGPA from semester credits' fill each Semester credits and Semester GPA box, using 'Add a semester' for more rows.",
+    "Read Percentage with Formula applied and Degree classification, compare all three formulas under 'The same CGPA under each rule', then press Copy result.",
+  ],
   intro:
     "Anna University converts a 10-point CGPA to a percentage with a linear rule — the regulations state Percentage = CGPA x 10 — and this converter applies that rule, along with the deducted and UGC variants that appear on some statements, so you can reproduce whichever figure your own document quotes. It also builds the CGPA itself from semester credits, because CGPA is the credit-weighted average of grade points: the sum of credits times grade points, divided by total credits. Degree classification and the GPA still needed to reach a target CGPA are worked out from the same numbers.",
   useCases: [

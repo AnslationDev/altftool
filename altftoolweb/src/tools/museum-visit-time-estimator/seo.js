@@ -1,4 +1,12 @@
 const seo = {
+  title: "Museum Visit Time Estimator: How Long It Really Takes",
+  metaDescription:
+    "Estimates a visit from objects on display and your pace, using the 17-21 second median look recorded at the Met and the Art Institute of Chicago.",
+  steps: [
+    "Enter the Museum, Objects on display and Gallery rooms, then pick 'Your viewing pace' — each option prints its seconds per object and the share of works you stop at.",
+    "Set 'Works you will give real time to' and 'Seconds on each of those', then fill 'Everything that is not looking': queue and tickets, cloakroom, café, shop, Rest break length and 'Time you actually have (min, 0 to skip)'.",
+    "Read Total visit time with 'Objects you will stop at', 'Share of the collection seen' and the rest-break count, check 'In the time you actually have', then press Copy estimate.",
+  ],
   intro:
     "Estimates how long a museum visit actually takes by combining the collection's size with measured visitor behaviour: timing studies at the Metropolitan Museum of Art recorded a median of 17 seconds spent in front of a single work, and a repeat at the Art Institute of Chicago recorded 21 seconds. Those medians, the share of objects a visitor stops at, walking time between rooms, queue and cloakroom time, and a sit-down break for each hour of gallery time are added together — and the calculation also runs backwards to say how much of a collection fits in the hours you actually have.",
   useCases: [

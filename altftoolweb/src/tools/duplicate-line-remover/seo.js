@@ -1,4 +1,12 @@
 const seo = {
+  title: "Duplicate Line Remover: Keep First, Count Dupes",
+  metaDescription:
+    "Strip repeated lines and keep the first copy in original order. Switch case matching, trimming and blank lines; see unique, removed and duplicate %.",
+  steps: [
+    "Paste your list, log or keyword export into the Original Text box, or press Load Sample.",
+    "Switch Case Sensitive Match, Trim Spacing and Remove Empty Lines on or off to decide what counts as the same line.",
+    "Check Total Lines, Unique Lines, Removed and Duplicate Pct, then press Copy or Download for deduplicated-text.txt.",
+  ],
   intro:
     "Duplicate Line Remover strips repeated lines from any block of text, keeping the first occurrence of each line in its original order and discarding every later copy. It compares lines through a normalisation step you control — case-insensitive matching, whitespace trimming and empty-line removal are on or off by choice — so 'Apple', 'apple' and '  apple  ' can count as the same entry or as three different ones. Paste a list, keyword export, log file or code block and you get the deduplicated text plus a count of total lines, unique lines, removed lines and the duplicate percentage.",
   useCases: [

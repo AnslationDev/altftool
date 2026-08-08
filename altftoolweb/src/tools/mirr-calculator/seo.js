@@ -1,4 +1,12 @@
 const seo = {
+  title: "MIRR Calculator with Finance and Reinvestment Rates",
+  metaDescription:
+    "Discounts outflows at the finance rate, compounds inflows at the reinvestment rate, and returns one MIRR per period with the PV and FV used.",
+  steps: [
+    "In Cash flows from period 0 enter one value per period, negatives for outflows, e.g. -100000, 25000, 30000, 35000, 40000.",
+    "Set Finance rate (%) for discounting the negative flows and Reinvestment rate (%) for compounding the positive ones.",
+    "Read the % MIRR per period alongside Periods, PV of negative flows and FV of positive flows, then Copy or Download mirr-calculator.txt.",
+  ],
   intro:
     "The MIRR Calculator computes the modified internal rate of return from a series of cash flows using two separate rates: negative flows are discounted to period 0 at the finance rate, positive flows are compounded to the final period at the reinvestment rate, and MIRR is the nth root of (future value of inflows / present value of outflows) minus 1. Unlike plain IRR it does not assume every interim cash inflow is reinvested at the project's own return. Analysts, finance students and anyone comparing projects get a rate that reflects the borrowing cost and the reinvestment yield they actually face.",
   useCases: [

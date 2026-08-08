@@ -1,4 +1,10 @@
 const seo = {
+  title: "Event Planning Prompt Builder: Run of Show & Sizing",
+  steps: [
+    "Fill the Agenda box — one line each, as \"Segment name | minutes\" — then set Expected attendance and Start time (24-hour HH:MM).",
+    "Pick the Event type, Seating layout and Catering style, and add the optional Venue and Known risks fields.",
+    "Read Total runtime with the Ends at, Floor area needed, Check-in stations, On-site crew and Buffet lines rows, check the Run of show table, then press Copy prompt.",
+  ],
   intro:
     "Event Planning Prompt Builder converts an agenda written as durations into a clock-accurate run of show, then sizes the room, crew, check-in desks and catering lines from the headcount using standard event planning allowances — roughly 8 sq ft per person theatre style, 13 sq ft banquet, 18 sq ft classroom, plus a 25% allowance for stage, aisles and back of house. It also applies the common operational ratios of one check-in station per 100 attendees and one crew member per 50. The result is a single logistics prompt that carries real numbers instead of a vague description of the event.",
   useCases: [

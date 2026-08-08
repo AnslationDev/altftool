@@ -1,4 +1,12 @@
 const seo = {
+  title: "Medicine Spoon to mL Converter: Teaspoon Is 5 mL",
+  metaDescription:
+    "A medicine teaspoon is 5 mL, a dessertspoon 10 mL, a tablespoon 15 mL (20 mL in Australia). Convert either way and see the mg the dose delivers.",
+  steps: [
+    "Set Convert to 'Spoons into millilitres' or 'Millilitres into spoons', type the amount, and pick Which spoon: Medicine teaspoon (5 mL), Dessertspoon (10 mL), Medicine tablespoon (15 mL), Australian tablespoon (20 mL) or US customary teaspoon (4.929 mL).",
+    "Optionally type the bottle's 'Label strength per 5 mL, in mg' — 250 for a 250 mg per 5 mL suspension — and every figure recalculates as you type.",
+    "Read Exact volume, 'Rounded to a syringe mark' at 0.1 mL steps, 'In 5 mL medicine teaspoons', Dose delivered in mg and 'This spoon versus a 5 mL teaspoon' as a percentage; Copy result takes the lot.",
+  ],
   intro:
     "The Medicine Spoon to Millilitre Converter turns a spoon-based dosing instruction into an exact volume, using the defined capacities rather than a guess: 5 mL for the medicine teaspoon, 10 mL for a dessertspoon, 15 mL for the metric tablespoon, 20 mL for the Australian tablespoon and 4.92892 mL for the US customary teaspoon. It also works backwards from millilitres to spoons and, if you enter the label strength per 5 mL, shows the milligrams that volume delivers. It exists because ordinary kitchen spoons hold between about 2.5 and 7 mL, a spread wide enough to matter for a child's dose.",
   useCases: [

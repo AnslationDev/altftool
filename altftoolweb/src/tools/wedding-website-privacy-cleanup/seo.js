@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wedding Website Privacy Cleanup: 19-Point Audit",
+  metaDescription:
+    "Tick what your public wedding page shows across 19 over-shared details and get a severity-ranked cleanup plan plus a 30-day check on guest RSVP records.",
+  steps: [
+    "Under What is on the page right now? tick every visible item across Location & timing, Guest data you collected, Identity & security answers, Who can find the page and Photos, video & extras.",
+    "Enter Guest records stored in the RSVP form and Days the page stays online after the event.",
+    "Read the Exposure score percentage with Severity points, Critical items to fix first and the Data retention check against the 30-day mark, then press Copy plan for the ranked cleanup list.",
+  ],
   intro:
     "Wedding Website Privacy Cleanup scores a public wedding or event page against 19 commonly over-shared details — home address, honeymoon dates, RSVP fields, security-question trivia and search indexing — and returns a ranked cleanup plan. Each item carries a severity rank from 1 to 5, and the tool converts the ticked items into a percentage of the maximum possible exposure. It also checks your guest-record retention against the storage-limitation principle in Article 5(1)(e) of the GDPR, which says personal data should not be kept in identifiable form longer than the purpose requires.",
   useCases: [

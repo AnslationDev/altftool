@@ -1,4 +1,10 @@
 const seo = {
+  title: "Driving Break Planner and Car Seat Posture Targets",
+  steps: [
+    "Enter Time behind the wheel (hours), Departure time and Your height (cm).",
+    "Set Which break rule applies to Private driving — 15 min every 2 h, or Professional — 45 min after 4.5 h.",
+    "Read the door-to-door figure, the Journey schedule with clock times and the Seat set-up targets, then press Copy result.",
+  ],
   intro:
     "This planner does two jobs for long drives: it converts your body height into measurable seat targets — head restraint top height, backset, chest-to-air-bag distance, seat back angle and knee angle — and it builds a break schedule from the published rules rather than guesswork. Private journeys follow UK Highway Code Rule 91, which asks for at least a 15-minute break every two hours; professional drivers follow EU Regulation (EC) No 561/2006, which requires a 45-minute break after no more than 4.5 hours of driving. Each break comes with a six-move stretch sequence that fits inside it.",
   useCases: [

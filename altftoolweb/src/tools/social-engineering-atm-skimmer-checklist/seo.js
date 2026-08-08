@@ -1,4 +1,12 @@
 const seo = {
+  title: "ATM Skimmer Checklist: 16 Checks Before You Insert",
+  metaDescription:
+    "Sixteen physical ATM checks — card slot, keypad, fascia, dispenser — with a stop-or-proceed verdict. Three findings alone prove tampering.",
+  steps: [
+    "Work through the four groups — Before you touch anything, The card slot, The keypad and the area above it, While you transact — marking each of the 16 checks Fine, Problem or Skip.",
+    "Watch the three checks badged \"stop finding\": a card slot that moves when tugged, a keypad that flexes, and a pinhole or extra panel above the keys. Any one of them ends the inspection.",
+    "Read the Verdict with checks completed, problems found, stop findings and the risk score, then press Copy result; \"Still to check\" lists what a half-finished inspection is missing.",
+  ],
   intro:
     "The ATM Skimmer Inspection Checklist walks you through 16 physical checks — card slot, keypad, fascia, surroundings and dispenser — and turns what you find into a stop-or-proceed verdict. Three checks are treated as stop findings because each one alone proves tampering: a card slot that moves when tugged, a keypad that flexes or sits proud of the panel, and a pinhole, mirror or extra panel above or beside the keypad. Everything else, including an outward-angled leaflet holder, is weighted by how strongly it indicates a fitted skimmer rather than an ATM that is simply badly maintained.",
   useCases: [

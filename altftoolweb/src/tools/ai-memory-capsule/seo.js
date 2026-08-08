@@ -1,4 +1,7 @@
 const seo = {
+  title: "AI Memory Capsule: Mood-Scored Private Journal",
+  metaDescription:
+    "Journal entries scored -100 to +100 by a word-list sentiment model, tagged with 10 moods, sealed until an unlock date, stored only in your browser.",
   intro:
     "AI Memory Capsule is a private journal that scores each entry you write with a lexicon-based sentiment analysis — counting matches against a built-in list of positive and negative words, adjusting for intensifiers and diminishers, and returning a −100 to +100 score — then tracks how those scores, moods and topics move over time. You tag each entry with one of 10 moods and a 1–5 intensity, and can seal a capsule behind a future unlock date so its content stays hidden until then. Everything is stored in your browser's localStorage, with JSON and CSV export so the archive is always yours.",
   useCases: [

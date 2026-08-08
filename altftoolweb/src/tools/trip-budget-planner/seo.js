@@ -1,4 +1,12 @@
 const seo = {
+  title: "Trip Budget Planner: Target Gap, Savings Gap, Per Head",
+  metaDescription:
+    "Scale each cost per day, per night, per person or as a % buffer, then see the gap to your target budget and the shortfall against what you have saved.",
+  steps: [
+    "In Trip Setup fill Destination, Travelers, Days, Nights, Currency (INR, USD, EUR, GBP or AED) and a Travel style — Budget ×0.82, Balanced ×1, Comfort ×1.28 or Premium ×1.72.",
+    "In Expense Planner tick the costs you want and set each Amount, Mode (Trip total, Per day, Per night, Per person, Person/day or % buffer) and Payment (Pre-trip, On-trip or Reserve); set Target budget and Already saved under Budget Controls.",
+    "Read the Total Trip Cost, Per Person, Per Day and Target Gap cards with Target Status and Savings Gap below, then press CSV to export trip-budget-plan.csv or Copy for a text summary.",
+  ],
   intro:
     "The Trip Budget Planner totals a trip against two lines you set yourself — the budget you are aiming at and the money you have already saved — and reports how far over or under each one you are. Every expense is entered once with the way it scales (trip total, per day, per night, per person, per person per day, or a percentage buffer on all the other lines), so changing the party size or adding a night updates the whole plan, including the per-person split and the pre-trip versus on-trip breakdown. It is for anyone deciding whether a trip is affordable as planned, or which line has to come down.",
   useCases: [

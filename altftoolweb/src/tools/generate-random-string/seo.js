@@ -1,4 +1,12 @@
 const seo = {
+  title: "Random String Generator with Entropy Bits and QR",
+  metaDescription:
+    "crypto.getRandomValues with rejection sampling, 1-256 characters, up to 100 de-duplicated strings a batch, live Shannon entropy, TXT and CSV export.",
+  steps: [
+    "In the Settings Panel set String length (1-256) and Batch count (1-100), toggle Uppercase, Lowercase, Numbers and Symbols, or paste a Custom character set.",
+    "Optionally give the Pattern Builder a mask like AAA-999, where A is an uppercase letter and 9 or # a digit, then press Generate.",
+    "Check the bit count in the Entropy Panel, scan the QR of the first string, then Copy all or export random-strings.txt or random-strings.csv.",
+  ],
   intro:
     "Generate Random String produces cryptographically random strings using the browser's crypto.getRandomValues with rejection sampling, so no character is more likely than another. You can set a length from 1 to 256, generate up to 100 de-duplicated strings at once, mix uppercase, lowercase, digits and 26 symbols or supply your own character set, and it reports live Shannon entropy in bits — the default 16 characters over the full 88-character pool works out at about 103 bits. Results export as TXT or CSV, the first string renders as a QR code, and the last 12 batches are kept in local history.",
   useCases: [

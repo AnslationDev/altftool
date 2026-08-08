@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cost Per Support Ticket: AI vs Agent Break-Even",
+  metaDescription:
+    "Prices an AI queue against agents only using occupancy-adjusted cost per ticket, charges every AI attempt, and reports the break-even containment rate.",
+  steps: [
+    "Enter Tickets per month, Resolved by AI alone (%), Agent average handle time (minutes), Agent occupancy (%) and the fully loaded agent cost per hour.",
+    "Under AI costs, set Model cost per attempt, Extra cost when it escalates and Fixed platform fee per month, in USD, EUR, GBP or INR.",
+    "Read the blended cost per ticket against the agents-only figure, plus Break-even containment, then press Copy result.",
+  ],
   intro:
     "The Cost Per Support Ticket AI Calculator compares an AI-assisted queue with an all-human one and reports a blended cost per ticket. Agent cost uses the standard contact-centre method — handle time divided by occupancy, multiplied by the fully loaded hourly rate — because an agent paid for an hour only handles tickets for the occupied part of it. Every ticket is charged for the AI attempt whether or not it is contained, reopened tickets are pulled back out of the containment figure, and the tool solves for the break-even containment rate at which the AI layer starts paying for itself.",
   useCases: [

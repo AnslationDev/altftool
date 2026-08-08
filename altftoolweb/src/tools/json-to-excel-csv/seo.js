@@ -1,4 +1,12 @@
 const seo = {
+  title: "Convert JSON to CSV, TSV or Excel-Ready XLS",
+  metaDescription:
+    "Finds the record array even under data.results, flattens nested objects into dot-path columns, and exports comma CSV, semicolon CSV, TSV or .xls.",
+  steps: [
+    "Paste records into the JSON content box or press Upload JSON to load a .json or .txt file; Sample loads a two-record example.",
+    "Set Delimiter to Comma CSV, Semicolon CSV or Tab TSV, type a Sheet name, and leave Flatten nested objects on to get customer.name columns.",
+    "Check the Generated Table preview of the first 10 rows, then press CSV for a .csv or .tsv, or Excel XLS for a .xls named after your source file.",
+  ],
   intro:
     "This converter turns a JSON array of records into a spreadsheet: it finds the first tabular array anywhere in the document — even nested under `data.results` — flattens each object into dot-path columns like `customer.name`, and takes the union of every record's keys as the header row, so records with missing fields still line up. Values are escaped the CSV way, quoting any field containing the delimiter, a line break or a quote and doubling embedded quotes. You can download comma CSV, semicolon CSV, tab-separated TSV, or an `.xls` file that opens directly in Excel with the sheet name you choose.",
   useCases: [

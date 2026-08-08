@@ -1,4 +1,12 @@
 const seo = {
+  title: "Furniture Assembly Time Estimator (Flat-Pack)",
+  metaDescription:
+    "Costs a flat-pack build from the box contents — 0.8 min a panel, 0.4 a screw, 0.6 a cam lock — then adjusts for skill, tools, helpers and repeat items.",
+  steps: [
+    "Pick the Item — Wardrobe, 2 doors, Chest of 4 drawers, Dining chair and nine more — or type your own counts into Panels and major parts, Screws and bolts, Cam locks and Wooden dowels.",
+    "Set Experience from \"First flat-pack I have built\" to \"Professional assembler\", Tools on hand from the Allen key in the box to a drill-driver with clutch, and People building, where 2 people are worth ×1.6.",
+    "Read Estimated build time with its likely range and finish clock time, the split across unpacking, instructions, assembly, clearing up and breaks, and the tool checklist to have ready before you open the carton.",
+  ],
   intro:
     "This estimator predicts how long a flat-pack furniture build will take by costing the work that is actually in the box: about 0.8 minutes to handle each panel, 0.4 to drive each screw, 0.6 per cam lock and 0.2 per dowel, on top of a base time for the item. That work content is scaled by experience and tools, divided by an effective team size — two people are worth about 1.6 builders once handing and holding are counted — and, when you are building several identical items, reduced by Wright's 90% learning curve. It also lists the tools to have on the floor before the carton is opened.",
   useCases: [

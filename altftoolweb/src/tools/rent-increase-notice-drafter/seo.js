@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rent Increase Notice Drafter: 3-Month Notice Rule",
+  metaDescription:
+    "Draft a rent revision notice with the new rent, effective date and deposit top-up, checked against the Model Tenancy Act’s three-month notice rule.",
+  steps: [
+    "Under 'The revision' choose Percentage increase or New rent amount, type the Present monthly rent, and set 'Date of this notice', 'Revised rent effective from' and 'Rent last fixed on'.",
+    "Fill 'Parties, premises and payment' — landlord and tenant names, Address of the premises, 'Rent due on day of month (1 to 28)' — and leave 'Ask for a matching deposit top-up' ticked to bill the deposit shortfall.",
+    "The summary lists Change per month, Change over twelve months, the annualised rate since the rent was last fixed and whether the Model Tenancy Act 3-month notice is Met or short by N days; Copy notice takes the drafted letter, Copy summary the figures.",
+  ],
   intro:
     "A rent revision notice is the written intimation a landlord gives a tenant fixing a new monthly rent and the date it starts. This drafter takes the present rent and either a percentage or a flat new figure, then works out the change per month, the change over twelve months, the annualised rate since the rent was last fixed, and any deposit top-up that follows from a deposit expressed in months of rent. It also checks the notice against section 9 of the Model Tenancy Act, 2021, which asks for three months' written notice before the revised rent becomes due in states that have enacted it.",
   useCases: [

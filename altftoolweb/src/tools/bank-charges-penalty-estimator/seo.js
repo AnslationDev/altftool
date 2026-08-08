@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bank Charges Calculator: Balance Penalty and ATM Fees",
+  metaDescription:
+    "A year of Indian savings-account cost: the RBI percentage-of-shortfall penalty, ATM uses past the free limit, return charges and 18% GST.",
+  steps: [
+    "Enter Required monthly average balance, Average balance you actually keep, Months below the requirement (0-12) and the Bank's penalty, as % of the shortfall.",
+    "Add Own-bank ATM uses per month, Other-bank ATM uses per month, Charge per excess ATM use, cheque return charges and the debit card and SMS fees.",
+    "Read Cost of this account for a year with its GST line and Of which you could avoid entirely, then press Copy result.",
+  ],
   intro:
     "This estimator totals a year of Indian savings account charges: the non-maintenance penalty on your minimum balance shortfall, ATM uses beyond the RBI free allowance, cheque and NACH return charges, debit card and SMS fees, and 18% GST on the lot. It follows the RBI rule that a minimum balance penalty must be a fixed percentage of the shortfall rather than a flat fee, and the free-transaction allowance of five own-bank and three metro or five non-metro other-bank ATM uses a month. The result separates the charges you can eliminate by changing habits from the ones that are baked into the account.",
   useCases: [

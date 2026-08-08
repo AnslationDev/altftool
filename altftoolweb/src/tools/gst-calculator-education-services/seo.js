@@ -1,4 +1,12 @@
 const seo = {
+  title: "Education GST Calculator: Exempt or 18% on SAC 9992",
+  metaDescription:
+    "Pick the supply — school fees, coaching, online course, school bus — to see if entry 66, 69 or 80 exempts it, or get 18% split into CGST/SGST or IGST.",
+  steps: [
+    "Choose \"What is being supplied?\" from the 16 scenarios, such as \"Coaching classes for JEE, NEET, UPSC, CA or school subjects\" or \"Transport of students or staff supplied to a school (up to higher secondary)\".",
+    "Enter the \"Fee or invoice amount (INR)\", set \"Amount is\" to \"GST exclusive (add tax on top)\" or \"GST inclusive (extract tax from it)\", and pick the \"Place of supply\" — \"Within the same state — CGST + SGST\" or \"Across states — IGST\".",
+    "\"Total GST payable\" reads either \"Exempt supply — no GST is charged\" or \"Taxable at 18% under SAC 9992\", with Taxable value, CGST @ 9% and SGST / UTGST @ 9% (or IGST @ 18%), Invoice total and the notification entry the verdict rests on.",
+  ],
   intro:
     "This calculator decides whether an education, coaching or training supply is exempt under entry 66, 69 or 80 of Notification No. 12/2017-Central Tax (Rate), and where it is taxable, computes the 18% GST on SAC heading 9992 with the CGST/SGST or IGST split. The dividing line is the definition of 'educational institution' in clause 2(y) of that notification: schools, and institutions awarding a qualification recognised by law, are exempt; coaching centres and online course sellers are not. It is aimed at school and college accounts teams, coaching institutes and freelance trainers issuing invoices.",
   useCases: [

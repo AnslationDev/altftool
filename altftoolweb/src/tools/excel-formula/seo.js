@@ -1,4 +1,12 @@
 const seo = {
+  title: "Excel Formula Reference: 24 Functions with Examples",
+  metaDescription:
+    "Search 24 Excel functions by name, syntax, description or example across Mathematical, Statistical, Logical, Text, Lookup, Date & Time and Conditional.",
+  steps: [
+    "Type into Search formulas by name, syntax, or description — the search also matches each function's worked example.",
+    "Narrow the list with the Filter by Category buttons: All, Conditional, Date & Time, Logical, Lookup, Mathematical, Statistical or Text.",
+    "Click Learn More on a card to expand its Syntax, Description and Example, such as =COUNTIF(A1:A10, \">50\") for the COUNTIF entry.",
+  ],
   intro:
     "This is a searchable reference of 24 core Excel functions, each card showing the exact syntax with its required and optional arguments, a plain-English description and a worked example on real cell ranges. Functions are grouped into seven categories — Mathematical, Statistical, Logical, Text, Lookup, Date & Time and Conditional — and the search box matches on function name, syntax, description or example, so you can find a function by what you want it to do rather than by remembering its name. It is for anyone building a spreadsheet who needs the argument order right the first time.",
   useCases: [

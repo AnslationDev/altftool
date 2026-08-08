@@ -1,4 +1,12 @@
 const seo = {
+  title: "Convert RAW to JPEG in Browser: DNG, NEF, CR2, ARW",
+  metaDescription:
+    "Open a DNG, NEF, CR2 or ARW file, pick -1 stop, neutral or +1 stop, and export a JPEG at -q:v 2 quality — FFmpeg WebAssembly, in your browser.",
+  steps: [
+    "Choose a Source file — the picker accepts .dng, .nef, .cr2 and .arw alongside ordinary image types.",
+    "Set Exposure to -1 stop, neutral or +1 stop and press Process locally; the button counts up as \"Processing 45%\" while FFmpeg WebAssembly runs.",
+    "The frame downloads as altftool-raw-photo-developer.jpg written at -q:v 2, and the Local processing report lists File, Size, Type and Profile with the FFmpeg decoder log underneath.",
+  ],
   intro:
     "RAW Photo Developer opens a camera RAW file (DNG, NEF, CR2, ARW) or any ordinary image in your browser, applies a one-click exposure adjustment, and exports a high-quality JPEG using FFmpeg compiled to WebAssembly. You pick -1 stop, neutral, or +1 stop, and the tool runs an FFmpeg `eq` filter at brightness ±0.12 with a gentle contrast lift of 1.04 and saturation of 1.03, writing the result at JPEG quality -q:v 2. It is a fast exposure preview and format conversion step, not a colour-managed RAW pipeline, so treat it as a quick look rather than a replacement for a full raw converter.",
   useCases: [

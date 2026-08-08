@@ -1,4 +1,12 @@
 const seo = {
+  title: "Exam Burnout Self Check: 12 Questions, 3 Scores",
+  metaDescription:
+    "Rate 12 statements from Never to Almost always for low, moderate or high signals on exhaustion, cynicism and reduced study efficacy. Not a diagnosis.",
+  steps: [
+    "Rate each of the 12 numbered statements against the last few weeks using the Never, Rarely, Sometimes, Often and Almost always chips.",
+    "Each answer rescores instantly: the four efficacy items are reverse-scored and every dimension takes the mean of its four items on the 0-4 scale.",
+    "Read the Overall burnout signal with the Exhaustion, Cynicism / detachment and Reduced study efficacy rows plus Recovery suggestions, then press Copy result.",
+  ],
   intro:
     "This self-check screens for signs of study burnout by scoring 12 statements across the three dimensions used in academic burnout research — exhaustion, cynicism and reduced study efficacy — on a 0-4 frequency scale. It follows the dimensional model behind the Maslach Burnout Inventory Student Survey (MBI-SS) while using its own plain-language items, and it returns a low, moderate or high signal per dimension together with practical recovery suggestions. It is built for school, college and competitive-exam aspirants who want an honest snapshot of how their preparation is affecting them.",
   useCases: [

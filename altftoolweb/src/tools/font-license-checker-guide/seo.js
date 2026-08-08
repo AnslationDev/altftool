@@ -1,4 +1,12 @@
 const seo = {
+  title: "Font Licence Checker: Desktop, Web, App & Server Use",
+  metaDescription:
+    "Check 14 uses — @font-face, app embedding, ePub, server rendering, logos, modification — against a retail EULA, the OFL 1.1 or Apache 2.0.",
+  steps: [
+    "Choose the \"Licence you hold\" — \"Commercial retail EULA (desktop licence held)\", \"SIL Open Font License 1.1\", \"Apache License 2.0\" or \"Custom or unknown foundry agreement\".",
+    "Under \"How will the font be used?\" tick the categories that apply, from \"Self-hosted @font-face on your website\" to \"Hand the font files to a client or contractor\" and \"Redistribute or sell the font files themselves\".",
+    "Fill \"Workstations with the font installed\", \"Monthly pageviews (all domains)\", \"App or ebook titles\" and \"Servers rendering text on demand\" to get the counts for \"Covered outright\", \"Need a separate licence\" and \"Not permitted\", the category-by-category verdicts and the \"Numbers to declare when you buy\" list.",
+  ],
   intro:
     "This guide checks a project's intended font uses against the licence you actually hold, category by category: desktop, self-hosted webfont, app embedding, ePublication, server rendering, broadcast, logo use, modification and redistribution. It encodes how the three common licence shapes behave — a retail foundry EULA that covers desktop only and sells the rest as add-ons, the SIL Open Font License 1.1, and Apache License 2.0 — and tells you which uses are covered, which need a separate purchase and which are prohibited. Informational only; the licence file shipped with your font is the authority.",
   useCases: [

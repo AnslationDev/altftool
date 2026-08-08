@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kabaddi Calorie Burn Calculator by Role and Mat Time",
+  metaDescription:
+    "Uses kcal/min = MET x 3.5 x kg / 200, with a raider at 8.3 METs borrowed from rugby union and bench minutes priced at 1.3. Kabaddi has no MET entry.",
+  steps: [
+    "Enter Body weight and switch the unit to kg or lb, then choose Role and setting — each option prints the MET value it borrows.",
+    "Type Time on the mat (minutes) and Time out or on the bench (minutes), or press the Full match (2 x 20 min) chip to fill the standard match length.",
+    "Read Total calories burned with the MET basis and its named source printed underneath, then press Copy result.",
+  ],
   intro:
     "The Kabaddi Calorie Burn Calculator estimates the energy cost of raiding, defending or playing all-rounder from your body weight and the minutes you actually spent on the mat, using the MET equation kcal/min = MET x 3.5 x kg / 200. Because the Compendium of Physical Activities has no kabaddi entry, each role is anchored to a listed sport with the same sprint-and-grapple demand — competitive rugby union at 8.3 METs, touch rugby at 6.3 and wrestling at 6.0 — and the tool states which anchor it used. It is built for players and coaches sizing up the load of a standard two-by-twenty-minute match.",
   useCases: [

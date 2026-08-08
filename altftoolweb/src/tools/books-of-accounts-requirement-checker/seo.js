@@ -1,4 +1,12 @@
 const seo = {
+  title: "Section 44AA Books of Accounts Requirement Checker",
+  metaDescription:
+    "Applies the Rule 6F test — Rs 1,50,000 receipts in all three preceding years — and the Rs 25,00,000 / Rs 2,50,000 limits for an individual or HUF.",
+  steps: [
+    "Pick What do you carry on — specified profession under section 44AA(1) or business or any other profession — and set Who is the assessee to Individual or HUF, or another entity.",
+    "Enter gross receipts and income for each of the three preceding years, so the all-three-years Rule 6F test or the any-one-year income and turnover test can be applied.",
+    "Read Do you have to keep books, which names the Rule 6F registers, the six-year retention rule and the section 271A penalty, then press Copy result.",
+  ],
   intro:
     "Section 44AA of the Income-tax Act decides who must keep books of account, and this checker applies its two separate tests: the Rule 6F prescribed list for a specified profession whose receipts exceed Rs 1,50,000 in all three preceding years, and the income and turnover tests for every other business. It also applies the higher limits an individual or HUF gets under the Finance Act 2017 proviso, and flags the section 44AA(2)(iv) trap that catches anyone declaring less than the presumptive profit. The output names the registers to keep, the six-year retention rule and the section 271A penalty.",
   useCases: [

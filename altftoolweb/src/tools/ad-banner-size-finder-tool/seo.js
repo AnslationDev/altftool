@@ -1,4 +1,7 @@
 const seo = {
+  title: "Ad Banner Sizes: Google, Meta, LinkedIn, TikTok",
+  metaDescription:
+    "Every standard ad size with its ratio in lowest terms and file cap — 300x250, 728x90, 1080x1920 — plus nearest-slot matching for your own artwork.",
   intro:
     "The Ad Banner Size Finder lists the exact pixel dimensions, aspect ratio and file-size cap of every standard ad placement across Google Display, Meta, LinkedIn, X, Pinterest, TikTok and YouTube, and matches any custom artwork you already have to the nearest standard slot. It is built for designers and media buyers who need to know whether a 1200x630 hero image can be reused as a Google responsive display asset before uploading it. The catalogue follows the IAB Standard Ad Unit Portfolio for display units and each network's own published creative specification for social placements.",
   useCases: [

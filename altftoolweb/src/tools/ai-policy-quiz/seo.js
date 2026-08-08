@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Policy Quiz: 10 Workplace Scenarios, 80% Pass",
+  metaDescription:
+    "Ten scenario questions on confidential data, verification, disclosure, IP and accountability. Instant explanation per answer, scored at the 80% pass band.",
+  steps: [
+    "Answer all ten workplace scenarios by selecting one option each; the counter beside the buttons tracks how many of the 10 are answered.",
+    "Press \"Check my answers\" to score the quiz and reveal the explanation under every question.",
+    "Read Your score out of 10 with the percentage and band, where 90% is Excellent, 80% is Pass and below 50% is High risk, then press Copy result.",
+  ],
   intro:
     "The AI Policy Quiz scores you on ten workplace scenarios covering acceptable AI use — confidential data in prompts, verifying model output, disclosure, intellectual property, hiring bias, meeting notetakers and accountability — with an instant explanation for every answer. The result is graded against the 80% pass mark common in compliance training, with themes drawn from typical enterprise acceptable-use policies and the NIST AI Risk Management Framework. It is built for team leads onboarding staff to an AI policy and for anyone checking their own judgement before using AI with work data.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "FSSAI Licence Selector: Basic, State or Central",
+  metaDescription:
+    "Apply the Rs 12 lakh and Rs 20 crore turnover bands, Schedule 1 capacity and central triggers to get your FSSAI category, Form A or B, fee and checklist.",
+  steps: [
+    "Choose \"What kind of food business is it\" and enter your annual turnover in INR.",
+    "Enter the figure the Capacity field asks for, such as kg or litres produced per day or MT of storage capacity, then tick anything under \"Does any of this apply?\" like importing food.",
+    "Read the category under \"You need\", the form to file on the FoSCoS portal, the government fee a year and the \"Documents to keep ready\" checklist.",
+  ],
   intro:
     "This selector tells a food business operator whether it needs FSSAI basic registration, a state licence or a central licence under the Food Safety and Standards (Licensing and Registration of Food Businesses) Regulations, 2011. It applies the turnover ladder — petty registration up to Rs 12 lakh, state licence up to Rs 20 crore, central licence above that — together with the Schedule 1 capacity thresholds and the categories that force a central licence irrespective of turnover. It is built for restaurant owners, cloud kitchens, traders and food manufacturers preparing a FoSCoS application.",
   useCases: [

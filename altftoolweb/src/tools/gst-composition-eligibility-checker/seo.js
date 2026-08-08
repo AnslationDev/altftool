@@ -1,4 +1,12 @@
 const seo = {
+  title: "GST Composition Scheme Eligibility: Section 10 Check",
+  metaDescription:
+    "Test turnover, state and activity against all eight section 10 conditions. Returns your 1%, 5% or 6% composition rate, or the clause that blocks you.",
+  steps: [
+    "Pick \"What does the business do?\" and your State or union territory, then enter aggregate turnover for last financial year in INR.",
+    "Tick anything that applies under inter-state sales, marketplace TCS, alcohol or petrol supply, ice cream, pan masala or bricks.",
+    "Read the composition levy rate of 1%, 5% or 6%, or the count of conditions not met, then press Copy result.",
+  ],
   intro:
     "This checker tests a business against every condition in section 10 of the CGST Act, 2017 that governs the GST composition scheme: the Rs 1.5 crore turnover ceiling (Rs 75 lakh in eight listed states), the Rs 50 lakh limit for the section 10(2A) service route, the 10%-or-Rs-5-lakh cap on services supplied alongside goods, and the six outright disqualifications in section 10(2). It returns the flat levy rate that would apply — 1% for traders and manufacturers, 5% for restaurants, 6% for service suppliers — or names the exact clause that blocks you. Useful before filing Form CMP-02 to opt in.",
   useCases: [

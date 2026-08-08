@@ -1,4 +1,12 @@
 const seo = {
+  title: "Treadmill Calorie Calculator (ACSM Equations, Incline)",
+  metaDescription:
+    "Enter weight, speed, incline and minutes; the ACSM walking and running equations give gross and net kcal, METs, VO2 and distance covered.",
+  steps: [
+    "Enter Body weight in kg or lb, Speed in km/h or mph, Incline (%) and Duration (minutes).",
+    "Leave Walking or running on Auto (by speed), or force the ACSM walking or running equation yourself.",
+    "Read Calories burned (gross), Net calories (above resting), Intensity in METs, Oxygen uptake and Distance covered, then press Copy result.",
+  ],
   intro:
     "This calculator estimates treadmill calorie burn from oxygen uptake using the ACSM metabolic equations: VO2 = 0.1 × speed + 1.8 × speed × grade + 3.5 for walking, and VO2 = 0.2 × speed + 0.9 × speed × grade + 3.5 for running, with speed in metres per minute and grade as a fraction. Oxygen uptake is converted to energy at 5 kcal per litre of O2 and scaled by your body weight, so incline and body mass change the answer the way they change the actual effort. Both gross calories and net calories above resting metabolism are shown, because they differ by a surprising amount over a long session.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Motion-Reduced Media Preview: No Autoplay, PNG Still",
+  metaDescription:
+    "Loads a GIF, MP4 or WebM up to 80 MB without autoplay, captures any frame as a PNG fallback, and checks the four WCAG 2.2.2 conditions. Nothing uploads.",
+  steps: [
+    "Press \"Choose a GIF, MP4, or WebM\" — the file is read locally up to the 80 MB limit, with no upload and no automatic playback.",
+    "Drag Fallback frame time to the moment you want, press Capture still fallback, then Download PNG to save motion-reduced-fallback.png.",
+    "Fill the Delivery checklist against the four WCAG 2.2.2 conditions and press Export local review report for motion-reduced-media-local-review-report.json.",
+  ],
   intro:
     "Motion-Reduced Media Preview loads a GIF, MP4 or WebM without autoplaying it, lets you capture any frame as a still PNG fallback, and runs your intended delivery settings against the four conditions of WCAG 2.2.2 Pause, Stop, Hide: the motion starts automatically, lasts more than five seconds, runs in parallel with other content, and is not essential. Accessibility reviewers and content authors get a poster image plus a written list of findings and an exportable JSON review report. Files stay on the device: nothing is uploaded, and the report deliberately excludes the media and the file name.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Board Exam Day Checklist: Gate Time to Wake-Up Clock",
+  metaDescription:
+    "CBSE gates shut 30 minutes before the paper. Enter the 10:30 start and your journey to get a wake-up time, plus the kit list for that paper.",
+  steps: [
+    "Choose your Board and the Paper you are sitting, then set Writing starts at (24-hour) and Journey to the centre (minutes).",
+    "Adjust Getting ready at home and Arrive this long before the gate closes — 30 minutes is the default, for the frisking queue.",
+    "Read the Be awake by clock with Leave home, Gate closes and Paper ends, tick items off the Documents list, then press Copy plan.",
+  ],
   intro:
     "This planner turns a board paper's start time into the rest of the morning: it works backwards through the gate-closing time, the arrival buffer and the journey to give you a wake-up hour, then builds the kit list for that paper. On the standard CBSE sitting the writing runs 10:30 to 13:30, the centre gate shuts at 10:00 and the question paper reaches the desk at 10:15 for a 15-minute reading period — every one of those offsets is adjustable because the admit card for your own centre is the authority. It is meant for Class 10 and Class 12 candidates and the parent doing the 6 a.m. bag check.",
   useCases: [

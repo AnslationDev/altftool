@@ -1,4 +1,12 @@
 const seo = {
+  title: "Heart Rate Zones Calculator: Tanaka, Fox or Gulati",
+  metaDescription:
+    "Five training zones in real bpm from the Tanaka, Fox or Gulati max-HR formula, by % of max or Karvonen reserve, plus the zone your goal needs.",
+  steps: [
+    "Enter your Age and Resting heart rate (bpm), or tick I have a tested max HR and fill Measured max HR (bpm).",
+    "Pick a Max HR formula — Tanaka 208 − 0.7 × age, Fox 220 − age or Gulati (women) 206 − 0.88 × age — then a Zone method, % of max HR or Karvonen (HR reserve).",
+    "Choose Fat loss, Endurance base, Race speed or General health under Which zone should I train in?, then press Copy zone card.",
+  ],
   intro:
     "This tool gives you your estimated maximum heart rate and all five training zones in real beats per minute, using your choice of three max-HR formulas — Tanaka (208 - 0.7 x age), Fox (220 - age) or Gulati for women (206 - 0.88 x age) — and either percentage of max or the Karvonen heart rate reserve method. Pick a goal such as fat loss, endurance base, race speed or general health and it names the single zone to train in and the bpm window that goes with it. You can also override the estimate with a measured max from a lab or field test, and copy the whole zone card as text for your training log.",
   useCases: [

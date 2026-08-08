@@ -1,4 +1,12 @@
 const seo = {
+  title: "Weight-Loss Protein Calculator (1.2-2.0 g/kg Floor)",
+  metaDescription:
+    "Find the daily protein floor that protects lean mass in a deficit, using adjusted body weight above BMI 30 and comparing it to the 0.8 g/kg RDA.",
+  steps: [
+    "Enter Current weight (kg), Height (cm), Sex (for the ideal-weight formula) and Protein meals per day.",
+    "Pick Activity and training — each option prints its own g/kg figure — and optionally enter 'Daily calorie target while dieting' to price the protein against your budget.",
+    "Read the Daily protein floor in grams with BMI, Ideal body weight (Devine), Adjusted body weight, the RDA baseline and Calories left for carbs and fat, then press Copy result.",
+  ],
   intro:
     "This calculator finds the daily protein floor that protects lean mass while you are eating in a calorie deficit — the amount below which weight loss starts costing you muscle as well as fat. It uses the 1.2-2.0 g per kg bands reported for energy-restricted diets, and from BMI 30 upward it scales to adjusted body weight (ideal weight plus a quarter of the excess) rather than scale weight, which is standard clinical practice because fat tissue does not create a protein requirement. It also compares the result against the 0.8 g/kg RDA so you can see how much of a step up it really is.",
   useCases: [

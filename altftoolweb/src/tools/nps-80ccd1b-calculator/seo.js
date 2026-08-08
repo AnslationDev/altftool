@@ -1,4 +1,12 @@
 const seo = {
+  title: "NPS 80CCD(1B): How Much of Rs 50,000 You Really Get",
+  metaDescription:
+    "Split an NPS Tier-I contribution between 80CCD(1) inside the Rs 1.5 lakh 80CCE cap and the extra Rs 50,000 of 80CCD(1B), and price the tax it saves.",
+  steps: [
+    "Say whether you are Salaried or Self-employed, choose Old regime or New regime, and give your annual basic pay plus DA or your gross total income.",
+    "Enter your NPS Tier-I contribution, any other 80C or 80CCC investments, and your marginal tax rate from the 0, 5, 20 and 30 percent options.",
+    "Read the extra deduction from 80CCD(1B) alongside the 80CCD(1) ceiling of 10 percent of salary or 20 percent of gross total income, and the tax saved with cess.",
+  ],
   intro:
     "Section 80CCD(1B) of the Income-tax Act, 1961 allows an extra deduction of up to Rs 50,000 for your own contribution to an NPS Tier-I account, and this calculator shows how much of that extra Rs 50,000 you actually get. It splits your contribution between 80CCD(1) — which shares the Rs 1,50,000 aggregate ceiling of section 80CCE with 80C and 80CCC, and is separately capped at 10% of salary or 20% of gross total income — and 80CCD(1B), which sits outside both limits. Built for salaried and self-employed taxpayers on the old regime who want to know whether topping up NPS is worth it.",
   useCases: [
