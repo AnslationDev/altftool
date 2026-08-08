@@ -1,4 +1,7 @@
 const seo = {
+  title: "Electricity Bill Complaint Letter with Meter Proof",
+  metaDescription:
+    "Compare metered units with billed units, get the overcharge in rupees, and draft a DISCOM letter citing CGRF under section 42(5) of the Electricity Act.",
   intro:
     "This tool compares the units your electricity meter actually recorded against the units the DISCOM charged you, then drafts a formal billing complaint around that gap. It derives the effective per-unit rate from your own bill, shows how much of the demand the meter does not support, and cites the escalation ladder created by the Electricity Act, 2003 — section office, then the Consumer Grievance Redressal Forum under section 42(5), then the Electricity Ombudsman under section 42(6). It is meant for households and small commercial consumers who have received an estimated, doubled or unexplained bill and want a letter that quotes numbers instead of adjectives.",
   useCases: [

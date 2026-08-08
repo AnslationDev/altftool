@@ -1,4 +1,12 @@
 const seo = {
+  title: "Camera Color Eyedropper: RGB from the Centre Pixel",
+  metaDescription:
+    "Point the rear camera, press Sample centre frame, and it reads the single pixel under the reticle — logging R, G, B and a timestamped rgb() string.",
+  steps: [
+    "Press \"Start with permission\" and allow camera access — the tool asks for the rear-facing camera and opens a live preview under \"Live local readings\" with a circular reticle at the centre of the frame.",
+    "Aim the reticle at the wall, swatch or printed sheet and press \"Sample centre frame\"; that frame is drawn to a local canvas and the single pixel at the exact centre is read.",
+    "Each sample appends a timestamped row of the red, green and blue values plus the rgb() string to the readings table, so several surfaces can be compared from one session; \"Stop sensor\" ends the stream and stops the camera track.",
+  ],
   intro:
     "This eyedropper turns your phone's rear camera into a colour sampler: it opens a live video preview with a circular reticle at the centre of the frame, and each time you press \"Sample centre frame\" it draws that frame to a canvas and reads the single pixel at the exact centre, logging its red, green and blue values as an rgb() string with a timestamp. Point it at a wall, a fabric swatch or a printed sheet and you get a numeric approximation of what the camera saw. Because it reads one raw pixel through the camera's own auto-exposure and white balance, treat the result as an approximate reference, not a colorimeter reading.",
   useCases: [

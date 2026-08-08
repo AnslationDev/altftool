@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home Maintenance Schedule: Due Dates and Budget",
+  metaDescription:
+    "Add last-done date and frequency; get next due dates, Overdue and Due Soon flags, a monthly load view and an annualised cost. Export JSON to keep it.",
+  steps: [
+    "Press \"+ Add Task\" or \"Load Preset Pack\", then set each job's category, frequency (Weekly to Yearly), last-completed date, Hours and Estimated Cost.",
+    "The scheduler adds the frequency interval to the last-completed date and marks every job Overdue, Due Soon, Scheduled, Completed or Need Date.",
+    "Read Next Actions, Monthly Schedule Load and the Annual Budget total, then press \"Export JSON\" to save home-maintenance-plan.json.",
+  ],
   intro:
     "This scheduler turns a list of recurring home maintenance jobs into dated actions by adding each task's frequency interval to the date you last did it — weekly 7 days, biweekly 14, monthly 30, quarterly 90, half-yearly 182, yearly 365 — and flagging anything past due as Overdue and anything landing within 7 days as Due Soon. Enter a task's category, frequency, last completion date, estimated hours and cost, and you get a status for every job, a ranked next-actions list, a month-by-month view of when the work clusters, and an annualised budget. It is built for homeowners and landlords who want the servicing calendar and its cost in one place.",
   useCases: [

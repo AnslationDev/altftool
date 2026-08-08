@@ -1,4 +1,5 @@
 const seo = {
+  title: "Rubik’s Cube Algorithm Trainer — PLL, OLL, F2L Drill",
   intro:
     "The Rubik's Cube Algorithm Trainer is a reference and drill for 36 standard cube algorithms grouped into Beginner, F2L, OLL and PLL, each shown in Singmaster notation and played back move by move on a live cube net. Selecting an algorithm applies its turns to a solved cube in the standard colour scheme — white top, yellow bottom, green front, blue back, orange left, red right — so you can watch what a sequence like the T Perm (R U R' U' R' F R2 U' R' U' R U R' F') actually does to the stickers. Practice mode hides the notation and asks you to type it from memory, tracking attempts and correct recalls per algorithm so you can see which ones have really stuck.",
   useCases: [

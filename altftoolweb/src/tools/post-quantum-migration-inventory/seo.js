@@ -1,4 +1,12 @@
 const seo = {
+  title: "Post-Quantum Migration Inventory: RSA to ML-KEM Scan",
+  metaDescription:
+    "Scan pasted code, config or certificate metadata for RSA, EC, DSA, DH, TLS and ML-KEM or ML-DSA names. Reports counts and line numbers, not the text.",
+  steps: [
+    "Paste code, configuration, logs or certificate metadata into 'Paste text to inventory' — capped at 250,000 characters — or press 'Load sample' to try it.",
+    "Every line is matched by name against ten families: RSA, elliptic curve, DSA, Diffie-Hellman, TLS protocol context, and the NIST names ML-KEM, ML-DSA, SLH-DSA, FN-DSA and HQC.",
+    "Read 'Observed families' and the 'Migration discovery questions' list, then press 'Counts-only JSON' to download post-quantum-migration-counts-only.json, which omits lines and source snippets.",
+  ],
   intro:
     "The Post-Quantum Migration Inventory scans pasted code, configuration, or certificate metadata line by line for references to ten algorithm families — RSA, elliptic curve, DSA, Diffie-Hellman, TLS protocol context, and the NIST post-quantum names ML-KEM, ML-DSA, SLH-DSA, FN-DSA and HQC — and reports counts plus line numbers only, never the matched text itself. It is built for engineers and risk owners starting a quantum-readiness discovery pass, who need a first list of where classical public-key cryptography appears before anyone can plan a replacement. Each run also returns a set of migration questions (ownership and purpose, data lifetime, runtime evidence, dependencies, crypto-agility) that expand when RSA, discrete-log, TLS, or post-quantum references are actually found.",
   useCases: [

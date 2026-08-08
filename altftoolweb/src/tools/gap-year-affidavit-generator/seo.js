@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gap Year Affidavit: 8 Clauses + Verification Wording",
+  metaDescription:
+    "Drafts the education-gap affidavit: eight clauses plus the verification paragraph, the gap computed from your dates, and a notary checklist.",
+  steps: [
+    "Under \"The deponent\" fill \"Student's full name\", \"Relationship line\", \"Parent or guardian's name\", \"Age (years)\" and \"Residential address\".",
+    "In \"Study record and the gap\" set \"Gap started on\", \"Gap ended on\" and \"Reason for the gap\", then complete \"Admission and execution\" with \"Course applied for\", \"Institution applied to\", \"Place of execution\" and \"Date of the affidavit\".",
+    "Read \"Length of the gap\" and the \"Your affidavit\" text — eight numbered clauses plus the VERIFICATION paragraph — clear anything under \"Check these before you print it\", then press \"Copy affidavit\".",
+  ],
   intro:
     "Gap Year Affidavit Generator produces the sworn declaration that Indian colleges and universities ask for when there is a break between one qualification and the next. It assembles the eight standard clauses — identity, last examination passed, the exact gap period, the reason, a statement that no other institution was joined, a no-criminal-case declaration, the admission purpose, and the truth clause — followed by the verification paragraph in its conventional form. The gap length is calculated from the dates you enter, and the tool flags the situations that usually cause a rejection, such as a deponent under 18 or a gap longer than two academic years with no supporting proof.",
   useCases: [

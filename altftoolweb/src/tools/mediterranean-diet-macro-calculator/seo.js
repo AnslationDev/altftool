@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mediterranean Diet Macros in Olive Oil Tablespoons",
+  metaDescription:
+    "Mifflin-St Jeor calories split 35-40% fat and 15-18% protein, with the fat budget in tablespoons of olive oil and PREDIMED's 30 g nut serving.",
+  steps: [
+    "Set Sex (for the BMR equation), Age (years), Weight (kg), Height (cm), Activity level and Goal so the Mifflin-St Jeor equation has what it needs.",
+    "Tune Fat share of calories (%) inside the traditional 35-40% band, Protein share of calories (%) at 15-18%, and Share of fat from olive oil (%), then tick or clear \"Include 30 g mixed nuts daily\".",
+    "The Daily energy target reads out in kcal alongside your olive oil in tablespoons and mL, protein/fat/carbohydrate in grams and percent, the saturated fat ceiling, the fibre target of 14 g per 1,000 kcal and your resting metabolic rate; Copy result takes the lot.",
+  ],
   intro:
     "This calculator converts your body size, age and activity into a Mediterranean-style daily intake: Mifflin-St Jeor energy needs split into roughly 35-40% of calories from fat, 15-18% from protein and the rest from whole-grain and legume carbohydrate, which is the distribution described in the 2011 Mediterranean Diet Pyramid. Because olive oil is the pattern's principal added fat, the fat budget is also expressed in tablespoons — one tablespoon is 15 mL, 13.5 g of fat and 119 kcal — next to the 30 g mixed-nut serving (15 g walnuts, 7.5 g almonds, 7.5 g hazelnuts) used in the PREDIMED trial. It suits anyone who wants the Mediterranean diet as portions and grams rather than as general advice.",
   useCases: [

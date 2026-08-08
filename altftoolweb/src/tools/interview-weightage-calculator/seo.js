@@ -1,4 +1,12 @@
 const seo = {
+  title: "Interview Weightage Calculator: UPSC, IBPS PO, SBI PO",
+  metaDescription:
+    "Combine written and interview marks under UPSC 1750:275, IBPS PO 80:20 or SBI PO 75:25, and see how many written marks one interview mark is worth.",
+  steps: [
+    "Pick the Selection scheme — UPSC Civil Services, IBPS PO, SBI PO or Custom scheme — which loads its written and interview maximums and weights.",
+    "Enter your written and interview scores, then \"Their written score\" and \"Their interview score\" under \"Compare against another candidate\".",
+    "Read the Final merit score, \"One interview mark, in written marks\" and the interview score needed to draw level, then press \"Copy result\".",
+  ],
   intro:
     "This interview weightage calculator combines a written score and an interview score into the final merit figure a recruiting body actually publishes, using the weighted-sum rule merit = (written ÷ written max) × written weight + (interview ÷ interview max) × interview weight. It carries the published schemes for UPSC Civil Services, where Mains 1750 and the Personality Test 275 are simply added to give a merit out of 2025, and for IBPS PO and SBI PO, where the stages are normalised to 80:20 and 75:25. Beyond the total, it converts the interview into its written-mark equivalent so you can see what one interview mark is really worth.",
   useCases: [

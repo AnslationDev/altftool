@@ -1,4 +1,12 @@
 const seo = {
+  title: "Windows 11 Privacy Settings Checklist: 28 Controls",
+  metaDescription:
+    "Score a Windows 11 PC on 28 weighted settings — advertising ID, diagnostic data, Recall snapshots, activity and clipboard history, OneDrive, BitLocker.",
+  steps: [
+    "Pick the machine you are hardening in \"Who are you locking this down for?\" — Personal laptop, Shared or family PC, Handling confidential work — and set the Target score (%) field.",
+    "Tick the 28 Windows 11 settings you have already changed in the grouped cards, or use Mark all applied and Clear all to start from either end.",
+    "Read the Protection score, Remaining exposure by area and \"Shortest route to your target\", then press Copy result; the score is held at 69% while any critical setting is still open.",
+  ],
   "intro": "This checklist scores a Windows 11 PC against 28 real privacy and security settings — the advertising ID, diagnostic data level, Recall snapshots, activity and clipboard history, cloud content search, OneDrive folder backup, location and microphone permissions, and BitLocker device encryption — weighting each by how much data it actually stops leaving the machine or sitting readable on it. Four settings are marked critical and hold the score at 69% while any of them is open, because an unencrypted disk or a fully enabled Recall index outweighs any number of minor toggles. Five risk profiles re-score the same list, so a shared family PC is graded on local recording while a machine you want quiet on the network is graded on telemetry and cloud sync.",
   "useCases": [
     "Harden a new Windows 11 laptop straight out of the setup wizard, before it starts reporting defaults you never chose.",

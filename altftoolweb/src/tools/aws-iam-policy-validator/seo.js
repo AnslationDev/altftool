@@ -1,4 +1,12 @@
 const seo = {
+  title: "AWS IAM Policy Validator: Wildcards & PassRole",
+  metaDescription:
+    "Paste a policy JSON and get per-statement high, medium and review findings for wildcard Action, NotAction, wildcard Principal and iam:PassRole.",
+  steps: [
+    "Paste an identity or resource policy into the IAM policy JSON box — the local limit is 200,000 characters — or press Choose file to pick a .json, or Load policy sample for a scoped S3 example.",
+    "Press Run local inspection; the policy is parsed in the tab and each statement is graded high, medium or review, with no call out to AWS.",
+    "Read the Statements, High, Medium and Review counts and the per-statement entries under Review findings, then press Download report to save aws-iam-policy-counts-only.json, or Copy report.",
+  ],
   intro:
     "The AWS IAM Policy Validator parses a pasted identity or resource policy JSON in your browser and returns per-statement findings graded high, medium or review — covering structural mistakes, broad Allow patterns such as Action \"*\" or a service-wide wildcard, wildcard Principal, the inverted NotAction, NotPrincipal and NotResource selectors, iam:PassRole, and ten privilege-management action patterns. It is for engineers reviewing a policy in a pull request or a console tab who want the risky lines pointed at before it ships. Nothing is sent to AWS: it is a lexical review of the one document you paste, so it flags cues to check rather than deciding what access is actually authorised.",
   useCases: [

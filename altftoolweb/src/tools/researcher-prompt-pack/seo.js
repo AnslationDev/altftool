@@ -1,4 +1,10 @@
 const seo = {
+  title: "Researcher Prompt Pack: 9 Anti-Confabulation Prompts",
+  steps: [
+    "Narrow the nine prompts with 'Search prompts' or the Category dropdown, then click the prompt card you want from the list.",
+    "Under 'Fill in the blanks' type into each labelled field, or press 'Use example values' to load the worked example; 'Clear fields' empties them again.",
+    "Watch 'Estimated prompt size' and the blanks-filled count, then press 'Copy prompt' and paste the finished text into any assistant.",
+  ],
   intro:
     "The Researcher Prompt Pack is a library of 9 fill-in-the-blank AI prompts for academic work: literature mapping, critical appraisal of single papers, research question sharpening, study-design pre-mortems, qualitative coding second opinions, statistical plan checks, abstracts, reviewer responses and grant significance paragraphs. Every prompt is built around the central failure mode of AI in research — confabulation — so each one restricts the model to material you paste, forbids invented citations outright, and requires 'not determinable from provided text' where the source is silent. Fill the blanks in your browser and copy the finished prompt into any assistant.",
   useCases: [

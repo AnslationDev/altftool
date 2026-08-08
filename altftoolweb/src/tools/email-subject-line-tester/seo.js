@@ -1,4 +1,7 @@
 const seo = {
+  title: "Email Subject Line Tester — 9 Metrics, Inbox Preview",
+  metaDescription:
+    "Score a subject line on nine weighted metrics, see spam-dictionary matches highlighted in place, and where Gmail, Outlook and Apple Mail cut it off.",
   intro:
     "The Email Subject Line Tester grades a subject line out of 100 using nine weighted metrics — length 20%, spam safety 15%, readability 15%, personalisation 10%, urgency 10%, power words 10%, capitalisation 10%, numbers 5% and emoji 5% — and shows how the line truncates in Gmail, Outlook and Apple Mail. It is for email marketers and anyone scheduling a campaign who wants a reproducible read on a line before it goes out. Every score is rule-based and deterministic: readability uses the real Flesch Reading Ease formula, and spam risk comes from a 75-phrase trigger dictionary plus penalties for exclamation marks, ALL-CAPS words and repeated symbols.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Sponsored Disclosure Placement Checker for Reels",
+  metaDescription:
+    "Preview your paid-partnership wording on a 9:16 frame with the top safe zone and caption/controls band marked, then export a timestamped review report.",
   intro:
     "The Sponsored Disclosure Placement Checker previews your paid-partnership wording on a 9:16 vertical frame with the top safe zone and the caption/controls obstruction area marked, so you can see whether the disclosure survives the crop, the overlay UI and the thumbnail before you publish. Load a reference frame from your clip, type the disclosure exactly as it will appear, and check it against the standard every major regulator applies: a disclosure has to be clear, conspicuous and hard to miss, not buried. You can then export a plain-text review report recording the wording you checked and the placement review notes alongside it.",
   useCases: [

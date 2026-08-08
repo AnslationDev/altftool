@@ -1,4 +1,12 @@
 const seo = {
+  title: "Paper Size Chart: A4, Legal, Foolscap, SRA3, Demy",
+  metaDescription:
+    "A4, Legal, Foolscap/F4, SRA3 and Crown, Demy, Royal in mm, cm, inches, points and pixels at your DPI, plus how many pieces fit on a press sheet.",
+  steps: [
+    "Pick a Paper size — A4, Legal (8.5 x 14 in), F4 / Folio (210 x 330 mm), SRA3, Crown or Demy — and set \"Resolution for pixel figures (DPI)\".",
+    "For imposition choose the Press sheet and Finished piece, then set \"Gripper / edge margin (mm)\" and \"Knife gap between pieces (mm)\".",
+    "Read Centimetres, Inches, Points (PDF / PostScript), Pixels at your DPI and CSS pixels at 96 PPI, plus \"Pieces per sheet (ups)\" and the Grid, then press \"Copy result\".",
+  ],
   intro:
     "This reference converts any standard print sheet size between millimetres, centimetres, inches, PostScript points and pixels at a chosen DPI, and tells you how many finished pieces fit on a press sheet. It covers ISO 216 A and B series, ISO 269 C envelopes, ISO 217 RA and SRA raw sheets, North American Letter and Legal, the foolscap and folio sizes Indian offices and printer drivers still list as FS or F4, and British trade names such as Crown, Demy, Royal and Imperial that Indian paper markets sell by. Useful for designers setting up artboards, print buyers checking a quote, and anyone deciding which sheet wastes the least paper.",
   useCases: [

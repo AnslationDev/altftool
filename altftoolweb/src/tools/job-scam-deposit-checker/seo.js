@@ -1,4 +1,12 @@
 const seo = {
+  title: "Job Scam Deposit Checker — 8 Signals, Scored 0-100",
+  metaDescription:
+    "Paste a job offer or recruiter chat and see eight scam signals scored 0-100: deposits, gift cards, money-mule forwarding, domain mismatch. Runs locally.",
+  steps: [
+    "Paste the message into Job offer text, or use Choose text file for a local TXT, MD, EML, HTML or HTM file under 1 MB, and set the source to Email, WhatsApp, Telegram, Job portal or Other.",
+    "Optionally add the Recruiter contact and the Official company site/domain you found independently, then press Review job offer.",
+    "Read the band and the eight signal categories — upfront fee or deposit, hard-to-recover payment, money movement or reshipping, personal-account payment, urgency, contact or domain mismatch, compensation claim and identity-document pressure — then use Copy safe summary, or Download safe summary to save job-offer-deposit-check-safe-summary.txt.",
+  ],
   intro:
     "The Job Scam Deposit Checker reads a job offer, recruiter message or chat transcript in your browser and flags the patterns associated with advance-fee and money-mule recruitment: candidate payments, gift-card or crypto demands, receive-and-forward money instructions, personal-account payment destinations, urgency pressure, recruiter-domain mismatch, outsized pay claims and early identity-document requests. Each matched rule carries a weight, the weights add up to a signal score capped at 100, and the score plus the mix of high-severity categories sets one of four bands. It is deterministic triage of the wording you paste — it verifies no company, person, domain or bank account, so a clean result is not proof an offer is genuine.",
   useCases: [

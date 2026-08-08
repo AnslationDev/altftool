@@ -1,4 +1,12 @@
 const seo = {
+  title: "Flat Renovation Permission Letter to Your Society",
+  metaDescription:
+    "Writes the committee letter with scope, dates, hours, contractor and debris plan, and flags when a structural engineer or a C&D waste plan is needed.",
+  steps: [
+    "Tick the scope — painting, floor tiles, false ceiling, plumbing, bathroom waterproofing, removing an internal wall, or work touching a beam, column or slab.",
+    "Set the start and finish dates, the daily start and finish times, contractor name and phone, workers on site, debris trips and tonnes per trip.",
+    "Debris to be removed shows tonnes per day, whether an engineer's certificate, local authority permission or a C&D waste plan is due; Copy letter takes it.",
+  ],
   intro:
     "A renovation permission request is the written application a flat owner gives the managing committee before interior work begins, and this generator drafts it with the four things committees actually ask for: scope of work, dates and daily hours, contractor and worker details, and a debris disposal plan. It reads the scope you tick to decide whether the job needs a licensed structural engineer's certificate and local authority permission, and it measures your debris against the 20-tonne-a-day and 300-tonne-a-month thresholds in rule 4 of the Construction and Demolition Waste Management Rules 2016. Owners, interior designers and contractors get a letter that answers the committee's questions before they are asked.",
   useCases: [

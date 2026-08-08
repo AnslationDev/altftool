@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Image Disclosure Label & IPTC Source Type Tagger",
+  metaDescription:
+    "Turn how a photo or video was made into a badge, caption, alt-text ending and the IPTC DigitalSourceType term, with the ExifTool command to embed it.",
+  steps: [
+    "Set Publishing on, Media type and \"How much did the model do?\" — from Fully generated from a prompt through Algorithmic, not model-based.",
+    "Tick the flags that apply: Photorealistic, identifiable real person, advertising or endorsement, and Content Credentials (C2PA) already embedded.",
+    "Press Copy caption for wording that fits the platform limit (2,200 characters on Instagram), then Copy command for the ExifTool line writing Iptc4xmpExt:DigitalSourceType.",
+  ],
   intro:
     "This generator turns a short description of how a piece of media was made into a matching disclosure set: a visible badge, a caption sentence, an alt-text ending and the IPTC Digital Source Type term that belongs inside the file. It maps each level of AI involvement to the correct IPTC NewsCodes value — trainedAlgorithmicMedia for a fully generated image, compositeWithTrainedAlgorithmicMedia for a photo with generative fill, algorithmicallyEnhanced for upscaling — and flags where the EU AI Act's Article 50 transparency duties or the FTC's testimonial rule are likely to bite. It is aimed at social teams, publishers and freelancers who need the label to be accurate rather than decorative.",
   useCases: [

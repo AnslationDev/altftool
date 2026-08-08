@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vastu Colours by Direction, with Compass Lookup",
+  metaDescription:
+    "Colours, guardian, element and planet for each of the eight vastu directions and the centre, plus a compass-bearing lookup corrected to true north.",
+  steps: [
+    "Choose the Room, then set How do you know the direction? to From a compass bearing.",
+    "Enter the Compass bearing (degrees, magnetic) taken from the centre of the plan and the Magnetic declination (degrees, east positive) for your town; the reading is corrected to true north and matched to its 45-degree zone.",
+    "Read the zone's Sanskrit name, element and planet, the colour swatches for that direction and the all-eight-directions table of guardian, element, planet and colours, then press Copy result.",
+  ],
   intro:
     "This guide sets out the colours Vastu Shastra traditionally associates with each of the eight directions and the Brahmasthan at the centre, together with the guardian deity, element and planet each direction is linked to. It also converts a compass reading into the right sector: Vastu divides a plan into eight 45-degree zones centred on the cardinal and ordinal points, so north runs from 337.5 to 22.5 degrees, and the tool corrects a magnetic reading to true north using the local declination before deciding which zone a room sits in. Vastu is a traditional architectural practice rather than a measurable science, and everything here is a record of what the tradition holds, offered for interest and for people who want to follow it.",
   useCases: [

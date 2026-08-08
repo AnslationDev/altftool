@@ -1,4 +1,12 @@
 const seo = {
+  title: "Solar Self-Consumption Optimizer: Best Appliance Hour",
+  metaDescription:
+    "Paste Time | solar kWh | load kWh rows to get direct self-consumption, the highest-surplus start time and your percentage after one shifted load.",
+  steps: [
+    "Paste one row per interval into Generation and load intervals as Time | solar kWh | household load kWh, or tap the Day profile example.",
+    "Set Flexible appliance energy (kWh) to the dishwasher, immersion heater or EV top-up you are willing to move to another hour.",
+    "Read the highest-surplus start time, direct self-consumption in kWh and self-consumption after one shift, then Download the summary as .txt.",
+  ],
   intro:
     "The Solar Self-Consumption Optimizer reads a list of time intervals with solar generation and household load in kWh, works out how much of each interval's output you already use directly (the smaller of generation and load), and points to the interval with the largest leftover surplus as the best moment to start a flexible appliance. It is built for rooftop solar owners who want to stop exporting cheap kWh and run the dishwasher, washing machine, water heater or EV charger inside the surplus window instead. You get total generation, direct self-consumption in kWh, your current self-consumption percentage, and what that percentage becomes after shifting one flexible load.",
   useCases: [

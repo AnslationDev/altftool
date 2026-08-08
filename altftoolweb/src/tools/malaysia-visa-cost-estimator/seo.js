@@ -1,4 +1,12 @@
 const seo = {
+  title: "Malaysia Visa Cost Estimator: Waiver or eVISA Fees",
+  metaDescription:
+    "Checks whether your stay fits the 30-day visa waiver first, then totals the eVISA fee, portal charge, agent handling and card markup in rupees.",
+  steps: [
+    "Pick the entry route: visa-free entry, eVISA single or multiple entry, or a sticker visa at a Malaysian mission.",
+    "Set the length of stay in days, the number of travellers, the visa fee in MYR and the rupees-per-MYR exchange rate.",
+    "Read the total entry cost line by line, including the Malaysia Digital Arrival Card, which is free.",
+  ],
   intro:
     "A Malaysia visa cost estimator starts from the question that actually decides the bill — whether the trip fits inside Malaysia's visa waiver — and only then prices a visa. Eligible nationalities, Indian passport holders among them, may make a social or business visit of up to 30 days with no visa and no government fee, and the only compulsory formality is the Malaysia Digital Arrival Card, which is free and can be filed from three days before arrival. Push the stay past the waiver limit and the tool switches you to a paid route, totalling the eVISA fee, processing charge, agent handling and card markup in rupees for every traveller.",
   useCases: [

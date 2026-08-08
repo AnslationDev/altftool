@@ -1,4 +1,12 @@
 const seo = {
+  title: "UPI Transaction Limit Checker: NPCI + Bank Caps",
+  metaDescription:
+    "See which ceiling actually blocks a UPI payment — the NPCI category cap, your bank's cap, or what's left of today's ₹ quota and 20-transaction count.",
+  steps: [
+    "Choose the rail in \"What is the payment for?\" — Person to person transfer and Person to merchant sit at the ₹1,00,000 NPCI ceiling, capital markets at ₹2,00,000, IPO and RBI Retail Direct at ₹5,00,000, with UPI Lite, 123Pay and AutoPay handled separately.",
+    "Fill \"Amount you want to pay\", your bank's per-payment and daily caps (the ₹25,000 / ₹50,000 / ₹1,00,000 / ₹2,00,000 chips set both at once), \"Already sent through UPI today\" and \"UPI payments already made today\", and tick \"Account linked in the last 24 hours\" for a fresh account.",
+    "Read \"Binding limit for this payment\" and whether it should go through, with rows for the NPCI cap for this category, binding daily limit, left of today's quota and transactions left of 20; \"Copy result\" copies the verdict, the blockers and any split-payment workaround.",
+  ],
   intro:
     "Every UPI payment passes three ceilings at once — the NPCI cap for that payment category, your own bank's per-payment and per-day cap, and whatever is left of the day's quota in both rupees and transaction count — and the smallest of them decides whether the payment goes through. This checker takes the payment type, your bank's caps and what you have already spent today, then names the binding limit, says whether the payment will succeed, and shows how many transactions of the NPCI daily count of 20 you have left. It covers person-to-person and merchant payments, the raised categories for capital markets, IPOs, tax and verified hospitals and schools, plus UPI Lite, UPI 123Pay and AutoPay mandates.",
   useCases: [

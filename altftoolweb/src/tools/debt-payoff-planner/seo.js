@@ -1,4 +1,12 @@
 const seo = {
+  title: "Debt Payoff Planner: Months and Interest to Clear",
+  metaDescription:
+    "Charges interest at the annual rate ÷ 12 on the falling balance each month and reports months to payoff and total interest for Snowball and Avalanche.",
+  steps: [
+    "Enter Total Debt Amount, Interest Rate (% p.a.), Minimum Monthly Payment and Extra Monthly Payment — the defaults are ₹5,00,000 at 18% with ₹5,000 plus ₹2,000.",
+    "Press Calculate; the projection charges the annual rate divided by 12 on the outstanding balance each month and runs for up to 600 months.",
+    "The results panel shows Total Debt with four tiles — Snowball and Avalanche \"Months to Pay Off\" and \"Total Interest\" — and reads N/A when the monthly payment never outruns the interest charge.",
+  ],
   intro:
     "The Debt Payoff Planner amortises your total debt month by month — charging interest at the annual rate divided by 12, then applying your minimum payment plus any extra straight to principal — and reports how many months the balance takes to clear and how much interest you pay along the way, under both the Snowball and Avalanche headings. Because it works from one combined balance, the two figures match: the ordering choice only changes the outcome once you split the balance into separate debts at different rates. It is for anyone deciding how much extra to put toward debt each month and wanting to see the payoff date move.",
   useCases: [

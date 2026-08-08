@@ -1,4 +1,12 @@
 const seo = {
+  title: "Do You Need an IDP to Drive in the UK? 12-Month Rule",
+  metaDescription:
+    "British law asks visitors for no international driving permit: drive on a full foreign licence for 12 months. Dates your window and exchange deadline.",
+  steps: [
+    "Answer Where was your driving licence issued?, What do you already hold? and Why are you in the UK?",
+    "Enter the Date you last entered (or Date you became resident if you live here), an optional Date you leave, and Your age (years).",
+    "Read the verdict, the date your 12-month window closes with days remaining, any exchange-application deadline, the minimum age for a car and the England/Wales/NI versus Scotland blood-alcohol limits, then press Copy result.",
+  ],
   intro:
     "This checker settles whether the UK expects an International Driving Permit alongside your national licence - for almost every visitor, it does not - and then dates the windows that actually matter. A visitor may drive any small vehicle shown on a full, valid licence from any country for 12 months from the day they last entered Great Britain, under the framework of the Road Traffic Act 1988 and the Motor Vehicles (International Circulation) Order 1975. What changes with your country is what happens after those 12 months once you are resident: an EU or EEA licence runs to age 70, a designated-country licence can be exchanged without a test within five years, and everything else means a provisional licence and both driving tests.",
   useCases: [

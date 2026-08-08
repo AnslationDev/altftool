@@ -1,4 +1,7 @@
 const seo = {
+  title: "Attention Span Test: A-not-X CPT in 1, 2 or 5 Minutes",
+  metaDescription:
+    "A browser Continuous Performance Task: letters flash for 250 ms, press space for all but X. Get accuracy, reaction time, omission and commission errors.",
   intro:
     "The Attention Span Test runs an A-not-X Continuous Performance Task in the browser: single letters flash for 250 ms every 1.25 seconds and you press the spacebar for every letter except X, which appears on roughly 15% of trials. It is built for anyone who wants a repeatable, timed measure of sustained attention rather than a personality-style quiz — students checking focus before study blocks, shift workers gauging fatigue, or people curious how their vigilance holds up over minutes. You pick a 1-, 2- or 5-minute run and finish with accuracy, average reaction time, omission errors and commission errors broken out separately.",
   useCases: [

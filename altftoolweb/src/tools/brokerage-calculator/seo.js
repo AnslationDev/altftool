@@ -1,4 +1,7 @@
 const seo = {
+  title: "Brokerage Calculator: STT, GST, Stamp Duty, Net P&L",
+  metaDescription:
+    "Prices an equity or F&O round trip across brokerage, STT, exchange, SEBI, stamp duty, GST and DP charges, and solves the breakeven sell price.",
   intro:
     "The Brokerage & Trading Charges Calculator prices a complete buy-and-sell round trip on an Indian equity or F&O trade and breaks the contract note into its seven line items — brokerage, STT/CTT, exchange transaction charges, SEBI turnover fees, stamp duty, 18 percent GST and DP charges — then subtracts the total from your gross P&L. Pick equity delivery, intraday, futures or options, enter your buy and sell price with quantity or lots, and it shows the net profit you keep plus the exact sell price you need just to break even. Every charge is shown with the formula it came from, so you can check the arithmetic against your broker's statement.",
   useCases: [

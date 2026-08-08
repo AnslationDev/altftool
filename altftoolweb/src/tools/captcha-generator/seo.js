@@ -1,4 +1,7 @@
 const seo = {
+  title: "CAPTCHA Image Generator: 4-10 Characters, PNG Export",
+  metaDescription:
+    "Draw a distorted-text CAPTCHA on a 640x180 canvas: 4 to 10 characters, noise and line sliders, an ambiguous-character filter, then copy the answer or PNG.",
   intro:
     "This generator draws a distorted-text CAPTCHA onto a 640×180 canvas: it picks 4 to 10 characters using the browser's crypto.getRandomValues, then renders each one at its own jittered position, rotation and size over a layer of noise dots and bezier curves you control with sliders. You choose the character sets, the distortion level, the font style and the colour scheme, then copy the answer text, copy the image, or download it as a PNG. It is a design and prototyping tool — the page itself notes that a production CAPTCHA must be generated and validated on the server, since anything decided in the browser can be read by the client.",
   useCases: [

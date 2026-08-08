@@ -1,4 +1,12 @@
 const seo = {
+  title: "Interview Consent Form Builder (GDPR Elements)",
+  metaDescription:
+    "Build a recording release naming controller, purpose, uses, retention and withdrawal, scored against GDPR Articles 7 and 13 plus a reading grade.",
+  steps: [
+    "Fill in Organisation or person recording, Project name, and Why you are recording in one or two plain sentences.",
+    "Tick the Permitted uses, choose attribution and territory, then set Keep the recording for (years) and the Withdrawal window (days).",
+    "Check Required elements covered plus the Flesch-Kincaid reading grade, then hit Copy form to take the finished release.",
+  ],
   intro:
     "An interview consent form records, in writing, that the person you are recording understands what the recording is for, how it may be used, how long you keep it and how to change their mind. This builder assembles that page from your answers and scores it against the elements GDPR Article 7 and Article 13 expect — a named controller, a specific purpose, listed uses, a retention period, a withdrawal route and a signature block — then checks the wording with the Flesch-Kincaid reading grade. Aimed at journalists, podcasters, documentary teams, HR and UX researchers who need a defensible release without a bespoke legal draft.",
   useCases: [

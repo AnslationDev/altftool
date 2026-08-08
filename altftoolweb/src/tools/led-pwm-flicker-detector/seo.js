@@ -1,4 +1,12 @@
 const seo = {
+  title: "LED PWM Flicker Detector: Camera Banding Check",
+  metaDescription:
+    "Watch rolling-shutter banding through your rear camera and log centre-pixel RGB per sample. A visual check, not a calibrated flicker meter in Hz.",
+  steps: [
+    "Press Start with permission to open the rear camera preview, then aim the circular centre reticle at the bulb, screen or headlight under test.",
+    "Press Sample centre frame several times while the lamp is lit; each press logs that frame's centre-pixel red, green and blue values with a timestamp.",
+    "Compare the rows under Live local readings — a steady lamp repeats near-identical RGB, a modulated one swings — then press Stop sensor.",
+  ],
   intro:
     "The LED PWM Flicker Detector opens your device's rear camera as a live preview so you can look for the rolling-shutter banding that appears when a lamp is switching on and off faster than the eye can follow, and it logs the RGB value of the centre pixel each time you press Sample centre frame. Point the reticle at a bulb, screen or headlight, sample repeatedly, and a light that holds steady returns near-identical values while a heavily modulated one produces readings that swing between bright and dark. The last 200 samples are kept in a timestamped table. This is an approximate visual check on your own hardware, not a calibrated flicker meter.",
   useCases: [

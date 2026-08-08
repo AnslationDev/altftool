@@ -1,4 +1,7 @@
 const seo = {
+  title: "Reconcile Payouts After FX, Platform Fees and Tax",
+  metaDescription:
+    "Paste one pipe-separated row per payout and see expected base = gross x FX - fee - withholding, the variance, and a Match or Review flag per invoice.",
   intro:
     "Multi-Currency Payout Reconciler checks each foreign-currency payout against what the invoice should have produced, computing expected base amount = gross foreign x FX rate - platform fee - withholding, then flagging any row whose received amount differs from that by more than your tolerance. You paste one pipe-separated line per payout (invoice, currency, gross, FX rate, fee, withholding, received) and get a per-row variance plus a Match or Review status and a count such as 1/2 payouts match. It is aimed at freelancers, agencies and creators settling USD or EUR invoices into a base currency where fees and tax withholding are deducted before the money lands.",
   useCases: [

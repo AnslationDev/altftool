@@ -1,4 +1,10 @@
 const seo = {
+  title: "Smart Meter Interval Analyzer: kWh by Tariff Band",
+  steps: [
+    "Paste your readings into Interval energy rows, one line each as timestamp | kWh | tariff label; a missing third column is grouped under Unlabelled.",
+    "Set High interval threshold (kWh), which starts at 2, to the draw you want flagged.",
+    "Read the total kWh, the Average and Maximum interval, the Tariff label / kWh / Share table and the top ten high intervals, then Copy or Download.",
+  ],
   intro:
     "The Smart-Meter Interval Analyzer reads a list of half-hourly or hourly meter readings in the form \"timestamp | kWh | tariff label\" and returns total consumption, the average and maximum interval, a per-tariff kWh breakdown with each label's percentage share, and the intervals that hit or exceed a threshold you set (2 kWh by default). It is for householders and small-site owners who have downloaded their interval data and want to see where the load actually sits before switching to a time-of-use plan. The arithmetic is a straight sum and share calculation over the rows you paste, so it reflects your own meter rather than a modelled profile.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fitness App Permission Audit: Score 16 Permissions",
+  metaDescription:
+    "Score the 16 permissions a fitness app holds — background location, body sensors, Health Connect, ad ID — weighted by sensitivity, with a revoke list.",
+  steps: [
+    "Type the App name for the report and stay on Checklist, or switch to \"Paste list\" and paste the permissions from the Play Store listing (About this app > App permissions > See more), one per line.",
+    "Tick every permission the tracker currently holds, or start from the \"Typical tracker\", \"Everything granted\" or \"Clear all\" presets; each row is marked \"Required for core features\", \"Optional feature only\" or \"Not needed by a fitness app\".",
+    "Read the privacy score out of 100 with its verdict band, the counts for Revoke now and Restricted / special access granted, and the \"Revoke these first\" list, with the Android manifest constant and iOS prompt for each of the 16 permissions in the table below.",
+  ],
   intro:
     "The Fitness App Permission Audit scores the permissions a workout or step-tracking app holds against the data-minimisation rule: a permission passes only when a core feature cannot work without it. Sixteen Android and iOS permissions — physical activity, body sensors, Health Connect, precise and background location, nearby devices, camera, contacts and the advertising ID — are weighted by sensitivity, with Google Play restricted permissions such as ACCESS_BACKGROUND_LOCATION and BODY_SENSORS_BACKGROUND carrying the heaviest weight. You get a 0-100 privacy score, a ranked revoke list and the exact manifest name to look for in Settings.",
   useCases: [

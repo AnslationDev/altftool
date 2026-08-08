@@ -1,4 +1,12 @@
 const seo = {
+  title: "Yen to Rupees in Your Head + Japan's 10% / 8% Tax",
+  metaDescription:
+    "Turns today's rupee-yen rate into a rule you can run at a till — drop a zero, then roughly halve — and states how far off it lands, plus 10% vs 8% tax.",
+  steps: [
+    "Enter \"Rupees per ¥1 (today's rate)\" and the price you are looking at in \"A price on the label (¥)\".",
+    "Leave \"That price already includes tax (税込)\" ticked unless the shop shows a pre-tax figure, and untick \"Eating in\" to price the item at the reduced 8% takeaway rate instead of 10%.",
+    "The sheet gives the exact rupee figure with \"Best rule to memorise\", \"How far off that rule is\" as a signed percentage, the pre-tax price, the consumption tax and the eat-in versus take-away totals; Copy sheet copies the ladder for your phone.",
+  ],
   intro:
     "This cheat sheet turns today's rupee-yen rate into a multiplication you can run at a till. It rewrites the rate as a decimal shift plus a working multiplier between 1 and 10, then tests rounding to the nearest quarter or half, an easy percentage nudge, and the closest simple fraction, reporting each rule's error as a fixed percentage of the exact answer. Because yen prices run in hundreds and thousands, the decimal shift does most of the work — the rule is usually \"drop a zero, then roughly halve it\". It also handles Japan's consumption tax, which is 10% but drops to a reduced 8% on food and non-alcoholic drinks taken away.",
   useCases: [

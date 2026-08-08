@@ -1,4 +1,12 @@
 const seo = {
+  title: "Telegram Privacy Settings Checklist: 26 Controls",
+  metaDescription:
+    "Score your Telegram account against 26 weighted privacy controls — number visibility, group adds, call IP leaks. Six critical ones cap it at 69%.",
+  steps: [
+    "Pick your situation in the \"Who are you locking this down for?\" menu — from Private personal account to Channel or community admin — and set the Target score (%) field, which starts at 90.",
+    "Tick each of the 26 Telegram settings you have already applied in the grouped cards, or use Mark all applied and Clear all; every row shows its \"Where\" Settings path and its point weight.",
+    "Read the Protection score with Critical settings still open and Remaining exposure by area — the score is held at 69% while any critical setting is open — then press Copy result.",
+  ],
   "intro": "This checklist scores your Telegram account against 26 real privacy and security controls — phone number visibility, who can find you by number, group and channel adds, peer-to-peer call routing, forward links, story audience, active sessions and two-step verification — and weights each one by how much exposure it actually closes rather than treating every toggle as equal. Pick a risk profile and the same checklist re-scores itself: a channel admin who must stay findable is graded on message and session controls, while someone leaving an unsafe situation is graded hardest on discoverability. Six controls are marked critical and cap the score at 69% while any of them is still open, because a hidden bio means nothing next to a number a stranger can search.",
   "useCases": [
     "Lock down a Telegram account after your number leaked in a data breach and strangers started adding you to crypto groups.",

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Nib Angle Practice Grid: Printable Calligraphy Sheets",
+  metaDescription:
+    "Rule a guide sheet in nib widths with pen-angle hatch marks — Foundational 30°/4 n.w., Italic 45°/5 — and see the stem width your stroke should measure.",
+  steps: [
+    "Choose a Calligraphic hand — each option lists its pen angle and x-height in nib widths — then set Nib width (mm) or tap a preset such as Pilot Parallel 3.8.",
+    "Set Page size, Margin (mm) and Gap between line sets (nib widths), add a Pen angle override (°, optional) if your exemplar differs, and keep or clear Show slant guides where the hand has a forward slope.",
+    "Check the x-height on the sheet in mm, the line sets per page and the Predicted stem width (vertical pull), then press Print with fit-to-page turned off so the sheet comes out at 100% scale.",
+  ],
   intro:
     "The Nib Angle Practice Grid generates printable broad-edge calligraphy guide sheets ruled in nib widths, which is how calligraphic hands are actually measured, and prints hatch marks at the correct pen angle along every baseline. Choose a hand — Foundational at 30° with a four-nib-width x-height, Italic at 45° with five, Blackletter at 40°, Uncial at 20° — plus your nib width and page size, and it works out the x-height, ascender and descender bands, the row pitch and how many line sets fit on the sheet. It also predicts the stroke widths a nib should produce, since a vertical pull at angle A gives a stem of nib width × cos A and a horizontal pull gives a bar of nib width × sin A.",
   useCases: [

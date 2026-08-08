@@ -1,4 +1,12 @@
 const seo = {
+  title: "Image Quality Checker: 9 Metrics, 0-100 Score & Grade",
+  metaDescription:
+    "Scores sharpness, noise, exposure, white balance and five more from real pixels, weighting sharpness 20%, with histograms and a downloadable report.",
+  steps: [
+    "Drop a JPG, PNG, WEBP or HEIC image up to 20MB on the uploader, or paste one from the clipboard.",
+    "The checker reads the canvas pixels and returns an overall score out of 100 with its grade — A+ at 90, A at 80, B+ at 70 — alongside Image Info and the Quality Metrics bars.",
+    "Open Histogram Analysis for the luminosity and RGB plots, then press Download Report for image-quality-report.txt.",
+  ],
   intro:
     "Image Quality Checker scores a photo on nine measured metrics — sharpness, brightness, contrast, noise, exposure, white balance, saturation, dynamic range and resolution — and combines them into one 0-100 score with a letter grade, weighting sharpness at 20%, noise and resolution at 15% each, brightness, contrast, exposure and white balance at 10% each, and saturation and dynamic range at 5% each. Every measurement runs on the image's real pixels through a canvas, using the standard 0.299R + 0.587G + 0.114B luma formula, alongside a luminance and per-channel RGB histogram. It ends with concrete suggestions such as which axis is dragging the score down, and a downloadable text report.",
   useCases: [

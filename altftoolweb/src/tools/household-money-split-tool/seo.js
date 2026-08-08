@@ -1,4 +1,12 @@
 const seo = {
+  title: "Household Money Split: Equal, Proportional, Leftover",
+  metaDescription:
+    "Compare an equal, income-proportional and equal-leftover split of shared bills, after each partner's personal loans and family support are removed.",
+  steps: [
+    "Enter both partners' names, their monthly take-home pay in INR, and each partner's personal obligations — an education loan, money sent to parents or a pre-existing EMI the other does not share.",
+    "List the bills under \"Shared monthly expenses\", using \"Add expense\" for rows such as Rent or home loan EMI, Groceries, Electricity and water and Internet and mobile, then choose a Splitting method: Equal split, Proportional to income or Equal leftover.",
+    "Read what each partner contributes, the percentage of their income it takes, the spending money each is left with and the gap between them, plus the bill-by-bill table for standing instructions; \"Copy result\" takes the summary.",
+  ],
   intro:
     "This tool divides a two-income household's shared expenses three ways and shows what each one costs each partner: an equal 50/50 split, a proportional split where both contribute the same percentage of available income, and an equal-leftover split solved so both end the month with identical spending money. Available income means take-home pay minus each partner's own non-shared commitments, such as an education loan or money sent to parents, so the ratio reflects what is actually spendable. It is for couples, flatmates and family members who share bills but not paycheques and want the arithmetic settled before the conversation starts.",
   useCases: [

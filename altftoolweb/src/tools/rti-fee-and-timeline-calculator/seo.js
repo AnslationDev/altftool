@@ -1,4 +1,12 @@
 const seo = {
+  title: "RTI Fee and Deadline Calculator: Rs 10 plus Rs 2 a Page",
+  metaDescription:
+    "Price an RTI under the 2012 Rules and date the reply under Section 7(1), with APIO +5 days, the 40-day third-party track and the BPL exemption.",
+  steps: [
+    "Enter the date the application was received and whether it went to the Public Information Officer or through an Assistant Public Information Officer.",
+    "Add the A-4 pages to be copied, inspection hours and discs, any further-fee dates, and tick life or liberty (48 hours) or third-party information (40 days).",
+    "Read the reply due date, the first and second appeal deadlines and the total payable itemised by Rule 3, 4(a), 4(d) and 4(f), then press Copy result.",
+  ],
   intro:
     "The RTI Fee and Timeline Calculator prices a Right to Information request under the Right to Information Rules 2012 and dates it under the Right to Information Act 2005. Fees follow Rule 3 (Rs 10 to apply), Rule 4(a) (Rs 2 per A-4 or A-3 page), Rule 4(d) (Rs 50 per disc) and Rule 4(f) (inspection free for the first hour, then Rs 5 an hour), with a full exemption for BPL applicants under Rule 8. The timeline applies the 30-day reply period in Section 7(1), the extra 5 days under Section 5(2) when an Assistant PIO takes the application, the 40-day third-party track in Section 11(3), and the days excluded under Section 7(3) while a further fee is unpaid.",
   useCases: [

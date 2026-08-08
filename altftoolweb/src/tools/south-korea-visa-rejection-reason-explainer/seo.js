@@ -1,4 +1,12 @@
 const seo = {
+  title: "Korean Visa Refusal Reasons and the Rule Behind Them",
+  metaDescription:
+    "Match the short reason line on a Korean visa refusal to the Immigration Act rule behind it, and fix the file before the six-month restriction bites.",
+  steps: [
+    "Paste the wording from your refusal notice into the optional box; the closest matching grounds appear as buttons with a % match you can click to select.",
+    "Under 'Which reason was ticked on your notice?' tick every ground that applies — each names the Immigration Act provision or published requirement it comes from.",
+    "Tick off the fix checklist to raise the Reapplication readiness score, then press Copy result for the grounds, severity, appeal route and remaining fixes.",
+  ],
   intro:
     "Korean missions publish a short reason line on the visa portal rather than a reasoned refusal, so this explainer matches that line to the requirement behind it under the Immigration Act and its Enforcement Rules. It covers the causes that account for most refusals - an incomplete or unverifiable document set, financial capacity, an unclear purpose that does not fit the status applied for, doubts about return, and the entry prohibitions in Article 11 - plus K-ETA denials for visa-free travellers. It matters more than usual to get the next application right, because Korean missions commonly refuse to accept a fresh application within six months of a refusal unless circumstances have materially changed.",
   useCases: [

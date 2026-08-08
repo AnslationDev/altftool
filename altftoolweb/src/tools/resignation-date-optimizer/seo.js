@@ -1,4 +1,7 @@
 const seo = {
+  title: "Resignation Date Optimizer: Gratuity, Notice, Tax Year",
+  metaDescription:
+    "Prices every candidate last working day in rupees: gratuity at 15÷26, notice buyout, leave encashment, bonus clawback and the tax year it lands in.",
   intro:
     "A resignation date optimizer prices every candidate last working day in rupees, so you can see what changes between them: gratuity, notice pay, leave encashment, a bonus or retention clause, and which financial year the settlement is taxed in. It applies the Payment of Gratuity Act, 1972 — gratuity of 15 ÷ 26 × last drawn monthly basic plus DA × qualifying years under section 4(2), five years of continuous service under section 4(1), and the 240-day (190-day for a five-day week) continuous service test in section 2A(2)(a) — alongside the section 10(10) and section 10(10AA) exemption limits of the Income-tax Act, 1961. It is built for salaried employees in India who have an offer in hand and a gratuity anniversary, a clawback date or 31 March sitting close to their exit, and it reports figures rather than telling anyone when to resign.",
   useCases: [

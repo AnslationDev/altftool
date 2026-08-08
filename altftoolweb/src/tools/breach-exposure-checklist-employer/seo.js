@@ -1,4 +1,12 @@
 const seo = {
+  title: "Employer Data Breach: Employee Response Checklist",
+  metaDescription:
+    "Tick the categories your company's breach notice lists — payroll banking, tax number, credentials — and get only the steps those categories make relevant.",
+  steps: [
+    "Under What does the notice say was involved?, tick the categories the letter names: Payroll bank account details, National ID or tax number, Work account credentials or password hashes and five more.",
+    "The plan rebuilds around those ticks — Data sensitivity priority rates the notice, while Steps that apply to you counts the checklist rather than every possible precaution.",
+    "Work through the grouped steps, ticking each one done; the ones badged Priority hold the percentage down while open. Press Copy result for the whole plan.",
+  ],
   intro:
     "The Employer Data Breach Employee Checklist turns the data categories listed in your company's breach notice into the specific steps that apply to you, then scores your progress against those steps only. Tick what the notice says was involved — payroll bank details, a tax or national ID number, health plan data, ID scans, work credentials — and the plan reshapes: payroll banking leads to salary-diversion defences, a tax number to credit and refund fraud defences, credentials to password-reuse work. It also rates the severity of the notice itself, because the monitoring an employer offers is a reporting service, not protection.",
   useCases: [

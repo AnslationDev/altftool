@@ -1,4 +1,7 @@
 const seo = {
+  title: "CSS Minifier and Formatter with a Real CSS Parser",
+  metaDescription:
+    "Minify or reformat CSS with a real parser: data URIs, quoted content and :is() commas survive, and /*! licence comments are kept.",
   intro:
     "This CSS tool parses a stylesheet into a real node tree and then prints it two ways: formatted with one declaration per line, or minified to a single line with comments and whitespace removed. Because it scans characters rather than matching regular expressions, it handles the cases that break naive minifiers — semicolons inside url(data:image/svg+xml;base64,…), braces inside quoted content values, and commas inside :is() and :not(). It is for front-end developers who want a quick, offline tidy-up or size check without wiring up a build step.",
   useCases: [

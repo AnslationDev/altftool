@@ -1,4 +1,12 @@
 const seo = {
+  title: "Childcare Calorie Burn Calculator: MET-Based Estimate",
+  metaDescription:
+    "Calories from feeding, standing care, pram walking and play using published MET values, counting only the active share of playtime at play intensity.",
+  steps: [
+    "Enter Body weight and pick kg or lb, then fill the minutes boxes for seated or kneeling care (2.0 MET), standing care (3.0), housework with a toddler in tow (3.5), pram walking (4.0), moderate play (3.5) and vigorous play (5.8).",
+    "Set Active share of play (%) — 60 by default — so the rest of playtime is credited at the 1.3 MET standing-quietly value instead of the play MET, and set Days per week; every figure recalculates as you type.",
+    "Read Daily gross calories in kcal with the kcal-above-resting line beneath it, then the Average MET, Weekly gross, Weekly net and Year gross tiles; the Reset button restores the 70 kg and 60% defaults.",
+  ],
   intro:
     "This calculator estimates the calories a day of looking after young children costs, using kcal/min = MET x 3.5 x kg / 200 with the published child-care MET values: 2.0 for seated or kneeling care such as feeding and dressing, 3.0 for standing care, 4.0 for walking with a pram, 3.5 for moderate active play and 5.8 for vigorous play. Crucially, the compendium defines those play values for active periods only, so the tool asks what share of playtime is genuinely active and credits the rest at the 1.3 MET standing-quietly value instead of inflating the total. That makes it useful for parents and carers who want a realistic number rather than a flattering one.",
   useCases: [

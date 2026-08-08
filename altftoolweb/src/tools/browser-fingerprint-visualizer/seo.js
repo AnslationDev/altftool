@@ -1,4 +1,7 @@
 const seo = {
+  title: "Browser Fingerprint Test: See Your Tracking Score",
+  metaDescription:
+    "Read your canvas, WebGL, audio, font, screen and hardware signals, hash them to SHA-256 in your own tab, and score how identifiable you are out of 100.",
   intro:
     "Browser Fingerprint Visualizer reads the signals a website can silently collect about your browser — canvas and WebGL rendering, an AudioContext waveform, installed fonts, screen geometry, CPU cores, timezone, languages, storage and media devices — and turns them into a single SHA-256 fingerprint plus a 0-100 tracking risk score. It exists for anyone who wants to see what \"cookieless tracking\" actually looks like before they change browsers or install a blocker. The weighting follows the entropy ranking from the EFF's Panopticlick research: canvas is worth 20 points, WebGL 15, audio 10 and fonts 10, because those four carry the most identifying information.",
   useCases: [

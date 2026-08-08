@@ -1,4 +1,12 @@
 const seo = {
+  title: "Zodiac Compatibility Score from the Classical Aspect",
+  metaDescription:
+    "Compare two sun signs or birth dates for a 0-100 score set by the aspect between them - trine 92, sextile 84, opposition 74 - with the working shown.",
+  steps: [
+    "Press 'Pick signs' or 'Use birth dates', then set each person's Zodiac sign or Birth date, with an optional name for each.",
+    "Read the Compatibility score out of 100 alongside the Aspect and its angle, Signs apart, Elements, Modalities, Ruling planets and Polarity.",
+    "Check the 'What works' list and any cusp note, then press Copy result to share the pairing summary.",
+  ],
   intro:
     "The Zodiac Compatibility Checker compares two sun signs — picked directly or worked out from two birth dates — and scores the pairing from 0 to 100 using the classical aspect between them on the 360° zodiac wheel. Each sign covers 30°, so the gap between two signs lands on a traditional aspect: trine (120°) and sextile (60°) are the easy ones, square (90°) and quincunx (150°) the difficult ones, with a small bonus when both signs share a classical ruling planet such as Mars for Aries and Scorpio. It is written for anyone curious how Western astrology reads their pairing, and it shows the element, modality and polarity behind every score instead of hiding them — for entertainment, not life decisions.",
   useCases: [

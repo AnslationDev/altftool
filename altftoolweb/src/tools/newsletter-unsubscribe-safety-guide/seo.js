@@ -1,4 +1,12 @@
 const seo = {
+  title: "Is It Safe to Click Unsubscribe? Score It First",
+  metaDescription:
+    "Score how unsolicited a message is, get the safest exit — RFC 8058 one-click, account settings or report as spam — and the date the sender must stop.",
+  steps: [
+    "Tick what the message shows: you never gave this sender your address, the unsubscribe link points at an unrelated domain, prize or invoice language.",
+    "Say whether you hold a real account with the company and whether your mail client shows its own unsubscribe button; the score out of 100 picks the route.",
+    "Numbered steps for that route appear, and the date you unsubscribed yields the CAN-SPAM, CASL, Gmail two-day and GDPR stop-by dates; Copy guidance saves it.",
+  ],
   intro:
     "This guide scores how likely a message is to be unsolicited, then names the safest way out: your mail client's built-in unsubscribe button, the account's own notification settings, the link in the body, or reporting it as spam without touching anything. The built-in button comes from the List-Unsubscribe header defined in RFC 2369, and RFC 8058 one-click means your provider sends the request directly, so no page loads in your browser and no tracking pixel fires. It also works out the date the sender is required to stop, using CAN-SPAM's 10 business days, CASL's 10 business days, the GDPR one-month response window and the two-day processing rule bulk senders to Gmail and Yahoo have had to meet since February 2024.",
   useCases: [

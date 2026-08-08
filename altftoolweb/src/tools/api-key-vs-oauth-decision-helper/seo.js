@@ -1,4 +1,12 @@
 const seo = {
+  title: "API Key vs OAuth: Pick the Right Auth Mechanism",
+  metaDescription:
+    "Scores API keys, client credentials, PKCE, the device grant and mutual TLS for one consumer, ruling out what structurally cannot work before ranking.",
+  steps: [
+    "Pick Who is calling the API? - from Internal service to Browser single-page app - plus Data sensitivity and your Credential rotation plan.",
+    "Tick the Requirements that apply, such as Client can keep a secret or Access must be revocable for one user alone.",
+    "Read the Recommended mechanism with its RFC, percentage fit and Wire format, the Runner-up, and how many of the 5 mechanisms stay viable.",
+  ],
   intro:
     "This decision helper ranks the five credential mechanisms available to an HTTP API — a static API key, the OAuth 2.0 client credentials grant (RFC 6749 §4.4), authorization code with PKCE (RFC 7636), the device authorization grant (RFC 8628) and mutual TLS (RFC 8705) — against one specific consumer. It runs two passes: structural gates that rule a mechanism out entirely, such as a public client being unable to hold a secret under RFC 6749 §2.1, then a weighted rubric across delegation, scoping, revocation, blast radius, rotation and integration cost. It is aimed at the person writing the API's authentication section before any code exists.",
   useCases: [

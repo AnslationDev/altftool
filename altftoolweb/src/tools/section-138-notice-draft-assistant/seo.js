@@ -1,4 +1,12 @@
 const seo = {
+  title: "Section 138 Cheque Bounce Notice Draft + 30-Day Date",
+  metaDescription:
+    "Turn cheque, amount, return-memo date and reason into a To/From/Subject demand skeleton with a 30-day review target. Drafting aid, not legal advice.",
+  steps: [
+    "Enter Cheque drawer, Payee / claimant, Cheque number, Cheque amount (₹), Cheque date and the Bank return memo date.",
+    "Type the Return reason exactly as the bank memo words it, and record the Underlying liability and evidence — invoice number, delivery acknowledgement and date.",
+    "Read the Draft structure: the To/From/Subject block, the factual and demand paragraphs, and the initial issue-review target dated 30 days after the return memo; use Download to save section-138-notice-draft-assistant.txt for a lawyer to review.",
+  ],
   intro:
     "The Section 138 Notice Draft Assistant turns the details of a dishonoured cheque — drawer, payee, cheque number, amount, cheque date, bank return-memo date, return reason and the underlying liability — into a structured demand-notice skeleton with a To/From/Subject block, a factual paragraph and a demand paragraph, and it dates an issue-review target 30 days after the bank return memo. It exists because the Negotiable Instruments Act attaches strict timing to a cheque-bounce demand notice and the sequence is easy to lose track of when the memo is sitting on your desk. It is a drafting and checklist aid for the payee organising the facts before a lawyer takes over — it is not legal advice and produces no filing-ready document.",
   useCases: [

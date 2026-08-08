@@ -1,4 +1,12 @@
 const seo = {
+  title: "California Sales Tax Calculator: 7.25% + District",
+  metaDescription:
+    "Split California sales tax into 6.00% state, 1.25% local and district tax at the delivery address, with exempt groceries and a reverse mode.",
+  steps: [
+    "Choose a Destination preset, from \"No district (statewide minimum)\" at 7.25% up to Oakland or Santa Monica at 10.25%, or type the District rate yourself as a percentage on top of the 7.25% base.",
+    "Enter Taxable goods (USD), Exempt items e.g. grocery food (USD), the Delivery / shipping charge and the Handling charge, and tick \"Delivery is by common carrier, separately stated and at actual cost\" where Regulation 1628 applies.",
+    "Read Total sales tax broken into State tax (6.00%), Uniform local tax (1.25%) and District tax, plus Total due and the effective rate — or tick \"The taxable figures above already include sales tax\" to back the tax out instead.",
+  ],
   intro:
     "This calculator builds California sales tax from its two parts: the 7.25% statewide base rate — 6.00% state plus a 1.25% uniform local share made of the 1.00% Bradley-Burns tax and the 0.25% county transportation tax — and the district transactions and use tax voted at the delivery address, which pushes combined rates as high as about 10.75%. It separates exempt grocery food under Revenue & Taxation Code section 6359 and exempt separately stated common-carrier delivery under Regulation 1628 from the taxable base. Sellers, marketplace sellers shipping into California and buyers checking a receipt all get the same state, local and district split.",
   useCases: [

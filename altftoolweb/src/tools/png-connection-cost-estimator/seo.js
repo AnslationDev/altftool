@@ -1,4 +1,12 @@
 const seo = {
+  title: "PNG Connection Cost Estimator: Deposit vs Real Cost",
+  metaDescription:
+    "Itemise registration, refundable deposit, piping past the free length and extra points, then pay back only the non-refundable part against LPG.",
+  steps: [
+    "Under Connection charges enter Registration or application fee (₹), Refundable security deposit (₹), Installation and commissioning (₹) and Hob or appliance conversion (₹)",
+    "Under Piping and points set Internal piping needed (m) against Piping included free (m) with the Piping rate (₹ per m), plus extra gas points and Core-drilled wall holes; under Compared with your LPG enter Cylinders used per month (14.2 kg), Cylinder price you pay (₹), PNG rate (₹ per SCM) and PNG fixed charge per month (₹)",
+    "Cost you never get back heads the panel, with Refundable security deposit, Total paid upfront, Net cash needed today, LPG cost per month now, Piped gas per month in SCM, Saving per month and Payback on non-refundable charges beneath it; Copy result copies the estimate and Reset restores the defaults",
+  ],
   intro:
     "This estimator itemises what a new domestic piped natural gas connection costs and separates the part you get back from the part you do not. A distributor's connection bill is a registration fee, an interest-free security deposit, installation and commissioning of the riser, meter and regulator, internal piping charged per metre beyond the length included free, extra gas points, core drilling and hob conversion. Because only the non-refundable charges are a true cost, the payback against LPG is computed on those, comparing the two fuels on energy — a 14.2 kg cylinder carries about the same energy as 16.7 SCM of piped gas.",
   useCases: [

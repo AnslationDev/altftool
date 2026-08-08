@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tutor & Coaching Income Tax Calculator FY 2025-26",
+  metaDescription:
+    "Coaching fees are business income, not salary. Compare the old and new FY 2025-26 regimes against section 44AD at 6% digital and 8% cash receipts.",
+  steps: [
+    "Enter Annual tuition / coaching receipts, the Received by bank / UPI / card (%) share, any Salary from a school or college, and your age category.",
+    "List classroom rent, study material and assistant salaries under Expenses claimed, or tick Declare under section 44AD for the 6% and 8% presumptive figure.",
+    "Read Tax payable under the better regime, the Section 44AD presumptive income line and the Compliance flags, then press Copy result.",
+  ],
   intro:
     "Tuition and coaching fees earned on your own account are taxed as business income under the head 'Profits and gains of business or profession', not as salary, so classroom rent, study material, assistant salaries and equipment depreciation are deductible under section 37(1). This calculator applies the FY 2025-26 slabs for both regimes — including the section 87A rebate, surcharge and 4% cess with marginal relief — and shows the section 44AD presumptive figure of 6% on digital receipts and 8% on cash receipts alongside your actual-expense computation. It is built for private tutors, coaching-centre owners and teachers who tutor on the side.",
   useCases: [

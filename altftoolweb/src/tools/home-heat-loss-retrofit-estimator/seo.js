@@ -1,4 +1,12 @@
 const seo = {
+  title: "Heat Loss Calculator: U-Value Retrofit Savings in kWh",
+  metaDescription:
+    "Enter each wall, roof and window as area, current U and improved U to get watts saved per surface, the % drop in fabric loss and kWh and cost a year.",
+  steps: [
+    "List every element in Building surfaces as Surface | area m² | current U | improved U, for example Walls | 120 | 1.5 | 0.3.",
+    "Set the design indoor-outdoor difference in K, the annual equivalent heating hours and your useful heat cost per kWh.",
+    "Read the Saved W column per surface with the Reduction percentage and the kWh/year fabric saving, then Copy or Download it.",
+  ],
   intro:
     "Fabric heat loss through a surface is area × U-value × temperature difference, and this estimator applies that steady-state formula to each wall, roof and window you list, once at its current U-value and again at the U-value you would reach after insulating. Enter surfaces as name | area m² | current U | improved U, plus a design indoor-outdoor difference in kelvin and your annual equivalent heating hours, and you get the watts saved per surface, the percentage the fabric loss drops, and the kWh and cost that represents over a year. It is a fabric-only comparison for ranking retrofit options, not a survey or a grant assessment.",
   useCases: [

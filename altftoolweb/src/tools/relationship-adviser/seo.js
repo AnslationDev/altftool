@@ -1,4 +1,12 @@
 const seo = {
+  title: "Relationship Adviser: NVC and Gottman Framework Prompts",
+  metaDescription:
+    "Build a four-part NVC statement, check your week against Gottman's 5:1 ratio and the 360-minute Magic Six Hours budget. Not therapy.",
+  steps: [
+    "Choose a situation in \"What is going on right now?\" — the list runs from \"We keep having the same argument\" to \"I need to apologise properly\" — then fill the four boxes: When…, I feel…, Because I need…, Would you be willing to…",
+    "Enter your real week in the connection budget: days a week you are together, plus minutes for Partings, Reunions, Appreciation, Affection, the Weekly date and the State of the union, and your counts of positive and negative moments.",
+    "Read the assembled statement, your ritual total against the 360-minute target and your ratio against 5:1, then press Copy statement — the builder refuses an observation containing always, never, lazy or selfish and says why.",
+  ],
   intro:
     "This relationship adviser turns three published relationship-education frameworks into something you can act on today: Nonviolent Communication's four-part statement (observation, feeling, need, request), the Gottman Institute's Four Horsemen with their antidotes, and the Magic Six Hours a Week ritual budget of 360 minutes. Pick the situation you are actually in, get prompts you can say out loud, and check your week's connection time and your positive-to-negative ratio against the 5:1 mark. It is a communication aid for everyday friction, not therapy and not a diagnosis.",
   useCases: [

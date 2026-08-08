@@ -1,4 +1,12 @@
 const seo = {
+  title: "Windfall Planner: Tax, Emergency Fund, Debt, Then Split",
+  metaDescription:
+    "Runs a bonus, inheritance or sale proceeds through a waterfall — tax, emergency cover, then debt in avalanche order — to what is genuinely free.",
+  steps: [
+    "Enter Windfall amount, before tax (INR) and Marginal tax rate on it (%) — set 0 for money already taxed, such as an inheritance — then Monthly essential expenses (INR), Emergency fund you already hold (INR) and Months of cover to target.",
+    "Under Debts you owe press Add debt and give each row an Outstanding balance (INR) and an Interest rate (% a year), or tap a preset chip, then set Clear debt above this rate (% a year), which starts at 10.",
+    "Read the headline Free to invest, allocate or spend and the numbered waterfall from 1 · Tax set aside through 3 · High-interest debt cleared to 4 · Guilt-free spending, check the Payoff order (highest rate first) table, then press Copy result.",
+  ],
   intro:
     "A windfall allocation planner runs a lump sum — an annual bonus, an inheritance, ESOP or property sale proceeds, salary arrears — through a priority waterfall instead of an arbitrary percentage split: tax set-aside first, then an emergency fund topped up to a chosen number of months of essential expenses, then high-interest debt cleared in avalanche order (highest interest rate first, which minimises total interest paid), and only the survivor is divided between investing, a named goal and guilt-free spending. It is built for anyone who has just received more money at once than a normal month brings and does not want it absorbed by lifestyle before a decision is made. Because paying off a loan is a risk-free, tax-free return equal to its interest rate, the planner uses an editable rate cut-off to decide which debts get cleared ahead of any investment.",
   useCases: [

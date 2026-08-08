@@ -1,4 +1,12 @@
 const seo = {
+  title: "Traditional Indian Colour Palettes, Contrast-Checked",
+  metaDescription:
+    "Six-role palettes from indigo, madder, lac, turmeric and ochre — each swatch named for its source, with 4.5:1 contrast and single-ink print checks.",
+  steps: [
+    "Choose a Tradition — Ajrakh block print (Kutch), Pichwai painting (Nathdwara), Madhubani / Mithila painting, Kalamkari (Srikalahasti) and more — and set Variation (0-5).",
+    "Press \"Next combination\" to walk the variations; each rebuilds a six-role palette from historical dyes, pigments and minerals with its material source attached.",
+    "Read \"Motif pairs that survive a single-ink print\", the Contrast audit table against the 4.5:1 body-text threshold, Screen-adapted tones and Palette and provenance, then press Copy CSS or Copy result.",
+  ],
   intro:
     "The Heritage India Palette Generator assembles six-role palettes from a library of historical Indian dyes, pigments and mineral colours — indigo from Indigofera tinctoria, madder root, lac resin, turmeric, red and yellow ochre, malachite green, lampblack and gold leaf — assigned to the roles a layout needs and labelled with the material each colour came from. Every palette is then measured twice: WCAG 2.x contrast for the text and motif pairings, and a greyscale separation check for the single-ink reproduction that block printing, screen printing and letterpress reduce artwork to. It is built for designers working on craft brands, museum and exhibition material, festival identities and packaging that has to look traditional without becoming unreadable.",
   useCases: [

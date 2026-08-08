@@ -1,4 +1,12 @@
 const seo = {
+  title: "Weather Front Simulator: Cold, Warm, Occluded Fronts",
+  metaDescription:
+    "Animated atmospheric cross-section of the four frontal boundaries, each with its expected weather, cloud sequence and barometric pressure signature.",
+  steps: [
+    "Pick Cold Front, Warm Front, Stationary Front or Occluded Front under \"Weather Front Type\".",
+    "Drag Temperature Contrast between 5 and 30 °C and Air Moisture Content between 20 and 100%.",
+    "Watch the cross-section, read the Expected Weather, Cloud Formations and Barometric Pressure card, and press \"Pause Airflow\" to freeze it.",
+  ],
   intro:
     "Weather Front Simulator draws an animated atmospheric cross-section of the four frontal boundaries — cold, warm, stationary and occluded — showing how the colder, denser air mass sits against the warmer one and what that geometry does to cloud and rain. Each front comes with its reference card: expected weather, the cloud sequence to look for, and the barometric pressure signature, alongside sliders for temperature contrast (5–30 °C) and air moisture (20–100%). It is a teaching illustration for geography and earth-science students learning why a cold front brings a short violent burst and a warm front brings hours of steady drizzle.",
   useCases: [

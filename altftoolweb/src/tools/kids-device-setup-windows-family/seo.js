@@ -1,4 +1,12 @@
 const seo = {
+  title: "Windows Child Account Setup: Family Safety Checklist",
+  metaDescription:
+    "Set up a Windows child account: standard-user rights first, screen-time schedules, Store age ratings, purchase approval, and the Edge-only catch.",
+  steps: [
+    "Enter the child's age in years (3-17) and the school-night and weekend limits in minutes a day; the table then lists each day's limit.",
+    "Work through the four checklist groups — Create the child account, Set screen time and schedules, Filter web, apps and games, and Spending and review — ticking each step as you do it.",
+    "The Setup score is held at 69% while a Critical step such as the standard-user account is open; read Screen time a week and Hours a year at this rate, then press Copy result.",
+  ],
   intro:
     "The Windows Family Account Setup Guide walks through creating a child account in Microsoft Family Safety and making it stick: the child's own Microsoft account inside your family group, a standard-user Windows profile rather than an administrator, screen time and allowed-hours schedules, age rating limits for the Microsoft Store, and purchase approval. It is built around the two facts that catch most parents out — an administrator account can uninstall every control, and Microsoft's web filtering works only in Microsoft Edge, so switching it on blocks other browsers for that account by design. It also converts the weekday and weekend daily limits into the weekly and yearly totals they really mean.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Docker Volume Mount Planner: -v, --mount and Compose",
+  metaDescription:
+    "Describe one bind, named volume or tmpfs mount and get all four syntaxes - -v, --mount, Compose short and long - with read-only and propagation.",
+  steps: [
+    "Choose a Mount type: Bind mount (host path), Named volume (Docker managed) or tmpfs (in-memory, Linux only).",
+    "Fill Host path (source) or Volume name (blank = anonymous) and Container path (target), then set Bind propagation, SELinux relabel or tmpfs size (blank = Docker default) and tick Mount read-only inside the container.",
+    "Four snippets are generated - docker run -v short flag, docker run --mount (explicit), Compose short syntax and Compose long syntax - alongside a Things to watch list; press Copy all.",
+  ],
   intro:
     "The Docker Volume Mount Planner turns one mount description — bind, named volume or tmpfs — into the four syntaxes Docker actually accepts: the `-v` short flag, the explicit `--mount` flag, and Compose short and long syntax. It applies the rules from the Docker Engine storage documentation and the Compose file specification, including the daemon's volume-name pattern, the six bind-propagation modes with `rprivate` as the default, and the fact that SELinux `z`/`Z` relabelling works with `-v` but not with `--mount`. It is for developers writing Dockerfiles, run commands and compose.yaml who keep hitting the differences between the two flag styles.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Protein for Adults 60+: PROT-AGE and ESPEN Targets",
+  metaDescription:
+    "Daily grams from the 1.0-1.2, 1.2-1.5 and up-to-2.0 g/kg bands, split per meal against the 25-30 g threshold, on adjusted body weight above BMI 30.",
+  steps: [
+    "Enter \"Sex (for ideal body weight)\", \"Age (years)\" (60 or over), \"Weight (kg)\" and \"Height (cm)\".",
+    "Pick a \"Health status\" band — \"Healthy and independent\", \"Living with a chronic illness\", \"Acute illness, injury, surgery or malnutrition\" or \"Severe kidney disease, not on dialysis\" — then set \"Resistance training\" and \"Protein meals a day\".",
+    "Read \"Protein a day\" in grams with the per-meal dose checked against the 25-30 g threshold, plus the adjusted-body-weight note above BMI 30, then press \"Copy result\".",
+  ],
   intro:
     "This calculator gives an adult aged 60 or over a daily protein target in grams, using the bands agreed by the PROT-AGE Study Group (JAMDA 2013) and the ESPEN expert group (Clinical Nutrition 2014): 1.0-1.2 g per kg of body weight for healthy older adults, 1.2-1.5 g/kg with chronic illness, and up to 2.0 g/kg during acute illness, injury or malnutrition. It also splits that total across your meals, because ageing muscle responds to the size of each meal rather than the daily figure alone — roughly 25-30 g of protein per meal is needed to trigger muscle protein synthesis. At a BMI of 30 or more it doses on adjusted body weight instead of actual weight, as clinical practice does.",
   useCases: [

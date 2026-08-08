@@ -1,4 +1,12 @@
 const seo = {
+  title: "Friendship Meter: Score Your Bond Out of 100",
+  metaDescription:
+    "A for-fun friendship score from a name hash plus your answers — 4 points per shared activity, up to +15 for a 2 AM crisis call. Same inputs, same score.",
+  steps: [
+    "Type Your Name and Friend's Name, then tick the Shared Activities & Chemistry that apply — Gaming together, Deep late-night talks, Travel & road trips, Inside jokes & memes and four more.",
+    "Pick a 2 AM Crisis Reaction and an Interaction Frequency from the two dropdowns, then press Calculate Friendship Index.",
+    "Read the Friendship Index percentage, its band from Ride-or-Die Besties down to Casual Acquaintances, and the Friendship Pillars bars for Loyalty, Trust, Fun & Humor and Mutual Support, then press Download to save friendship-meter-report.txt, or Copy Report.",
+  ],
   intro:
     "Friendship Meter scores a friendship out of 100 by combining a deterministic hash of the two names with three things you answer about the bond itself: how your friend would react to a crisis call, how often you two actually talk, and how many of eight shared activities you have in common. Each shared interest adds 4 points, the crisis answer swings the score by -5 to +15 and contact frequency adds 5 to 15, with the total clamped between 15 and 99 and broken out into loyalty, trust, fun and mutual support. It is a for-fun compatibility toy — the same pair of names always returns the same base score, in either order — and the result can be copied or downloaded as a short text report.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "X (Twitter) Privacy Settings Checklist: 30 Controls",
+  metaDescription:
+    "Weighted audit of 30 X settings: phone and email discoverability, location on past posts, message requests and the Grok AI training switch.",
+  steps: [
+    "Choose Who are you locking this down for?, such as Pseudonymous account, and set a Target score (%).",
+    "Tick each of the 30 settings already applied, from phone and email discoverability to the Grok AI training switch; a Critical one open caps the score at 69%.",
+    "Read the Protection score, the critical settings still open, the biggest remaining exposure and the shortest route to your target.",
+  ],
   "intro": "This checklist covers the 30 settings on X, formerly Twitter, that decide whether people can find you by phone number or email, what your posts and location tags reveal, who can message you and how your data is shared. It includes the discoverability pair that most often unmasks a pseudonymous account, the bulk removal of location information from past posts, the message-request options, the Grok AI training setting that was enabled by default for existing accounts, business-partner data sharing and connected apps. Each is weighted by exposure removed and re-weighted for whether you are anonymous, public, being harassed or minimising data.",
   "useCases": [
     "Stop a pseudonymous account being matched to your real identity through your phone number or email address.",

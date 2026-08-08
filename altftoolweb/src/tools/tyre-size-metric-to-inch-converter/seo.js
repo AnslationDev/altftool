@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tyre Size Converter: 205/55R16 to 31x10.50R15",
+  metaDescription:
+    "Convert metric tyre sizes to inch flotation sizes and back with overall diameter, rolling circumference, revs per km and speedometer error.",
+  steps: [
+    "Type a sidewall size such as 205/55R16 or 31x10.50R15 into Paste a size from the sidewall and press Read size.",
+    "Tick Compare against the factory size and fill the stock section width, aspect ratio and rim diameter.",
+    "Read the overall diameter, rolling circumference and revolutions per km, plus the 3% fitment window check and true speed at the indicated reading.",
+  ],
   intro:
     "The two tyre sizing systems describe the same rubber in different terms, and this converter moves between them exactly. A metric size such as 205/55R16 gives section width in millimetres, sidewall height as a percentage of that width, and rim diameter in inches, so overall diameter is rim × 25.4 + 2 × (width × aspect ÷ 100). An inch or flotation size such as 31x10.50R15 states overall diameter and width directly in inches, from which aspect ratio falls out as (diameter − rim) ÷ 2 ÷ width. Enter either and you get the other, plus rolling circumference, revolutions per kilometre and the speedometer error against your factory size.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "CBC Report Interpreter: Read Your Blood Count Values",
+  metaDescription:
+    "Flag each CBC value high, low or normal on sex-specific ranges, classify anaemia from MCV, MCH and MCHC, and turn the differential into absolute counts.",
+  steps: [
+    "Choose Male or Female, then type your WBC, RBC, Hemoglobin, Hematocrit and Platelet figures, plus the MCV, MCH, MCHC, RDW and MPV indices and the differential percentages.",
+    "Press Interpret CBC to grade every value against the adult reference ranges and multiply the differential percentages by the WBC into absolute counts.",
+    "Read the anaemia morphology call and the flagged highs and lows, then use Copy Report or Download to save a CBC_Report text file.",
+  ],
   intro:
     "The CBC Report Interpreter takes the numbers off a Complete Blood Count and flags each one high, low or normal against standard adult reference ranges, then reads the pattern across them — classifying anaemia from the red-cell indices, converting the differential percentages into absolute counts, and pairing the platelet count with MPV. Haemoglobin, RBC and haematocrit ranges switch by sex (haemoglobin 13.5-17.5 g/dL male, 12.0-16.0 g/dL female), while WBC 4.5-11.0 K/uL, platelets 150-400 K/uL and MCV 80-100 fL are shared. It is an educational reading aid for students and for patients trying to follow a report before their appointment, not a diagnosis.",
   useCases: [

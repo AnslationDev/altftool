@@ -1,4 +1,12 @@
 const seo = {
+  title: "Thailand Visa Cost: Exemption, e-Visa, Overstay Fine",
+  metaDescription:
+    "Price a Thai trip in rupees — 1,000 baht tourist visa, 1,900 baht extension, 500 baht a day overstay capped at 20,000 — plus agent and insurance.",
+  steps: [
+    "Pick your route under \"How are you entering\" — visa exemption, tourist visa single or multiple entry, transit, or Non-Immigrant — then set \"Travellers\" and \"Exchange rate (rupees per THB 1)\".",
+    "Add \"Extensions of stay per traveller\" at 1,900 baht each, a \"Re-entry permit\", any \"Overstay days\", and the charges you pay in India: agent or e-Visa handling, photographs, travel insurance, courier and card cross-currency markup.",
+    "Read \"Total entry cost\" and the per-traveller figure, the baht lines for visa fee, extensions, re-entry permit and the overstay fine capped at 20,000 baht, then press \"Copy result\".",
+  ],
   intro:
     "A Thailand visa cost estimator prices whichever entry route actually applies to a trip — visa exemption, a single or multiple entry tourist e-Visa, a non-immigrant visa, an extension of stay, or a re-entry permit — and converts the Thai baht fees into rupees alongside agent charges, photographs and insurance. It uses the published consular fee schedule together with the two Immigration Bureau rules travellers most often need: an extension of stay costs 1,900 baht per person per application, and an overstay is fined 500 baht a day up to a statutory ceiling of 20,000 baht. Since many nationalities including Indian passport holders can now enter Thailand for tourism without any visa, the tool starts from exemption and lets you switch route.",
   useCases: [

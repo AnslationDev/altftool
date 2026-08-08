@@ -1,4 +1,12 @@
 const seo = {
+  title: "Multi-Currency Invoice Calculator with Your Own Rates",
+  metaDescription:
+    "Convert each invoice line at the rate you were quoted, round to ISO 4217 minor units, and see the tax, bank spread, fixed fee and net you receive.",
+  steps: [
+    "Choose the Settlement currency, then press Add line for each Description, Amount and Currency on the invoice.",
+    "On every foreign line type the Exchange rate, set Rate is quoted as, and fill Tax on taxable lines (%), Bank / gateway spread (%) and Fixed transfer fee.",
+    "Read Invoice total with the Converted subtotal, Tax, spread and Net you actually receive rows, then press Copy totals.",
+  ],
   intro:
     "This calculator totals an invoice whose lines are priced in different currencies by converting each line at a rate you enter and rounding it to the settlement currency's ISO 4217 minor units before summing — two decimals for USD and EUR, none for JPY, three for KWD. It handles both quote directions, so a rate written as 1 USD = 83.50 INR and one written as 1 INR = 0.01198 USD give the same answer, and it shows the bank or gateway spread and fixed transfer fee separately so you can see what actually lands in your account. No rates are fetched or bundled; you supply the rate you have been quoted and record its date on the invoice.",
   useCases: [

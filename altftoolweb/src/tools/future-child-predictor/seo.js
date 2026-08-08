@@ -1,4 +1,12 @@
 const seo = {
+  title: "Future Child Predictor: Eye Color and Hair Type Odds",
+  metaDescription:
+    "Pick both parents' eye color and hair type for a percentage split of your child's traits, plus name ideas. Entertainment only - no photo, no upload.",
+  steps: [
+    "Type Father's Name and Mother's Name, then choose Father's Eye Color and Mother's Eye Color from Brown, Blue or Green.",
+    "Set Father's Hair Type and Mother's Hair Type to Straight, Wavy or Curly, then press \"Predict Future Child Profile\".",
+    "Read the Genetics & Trait Profile percentages with the name, personality and hobby suggestions, then press Download to save child-genetics-report.txt.",
+  ],
   intro:
     "Future Child Predictor takes both parents' names plus their eye colour (brown, blue or green) and hair type (straight, wavy or curly) and returns a percentage split for the child's likely eye colour and hair, with name, personality and hobby suggestions attached. The trait percentages come from a fixed dominant/recessive style lookup — for instance straight-haired and curly-haired parents produce 70% wavy, 15% straight and 15% curly. No photos or uploads are involved: everything is derived from the six fields you pick, and the name-based parts are seeded by an order-independent hash so the same couple always gets the same report.",
   useCases: [

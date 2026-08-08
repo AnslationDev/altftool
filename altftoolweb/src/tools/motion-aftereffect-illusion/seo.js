@@ -1,4 +1,12 @@
 const seo = {
+  title: "Motion Aftereffect Illusion: Run the Waterfall Demo",
+  metaDescription:
+    "Adapt to a spiral, stripes, rings or wheel, then watch a still pattern drift. Predicts aftereffect seconds from adaptation time, speed and contrast.",
+  steps: [
+    "Choose an Adapting pattern of Rotating spiral, Waterfall (downward stripes), Expanding rings or Rotating wheel, and set Adaptation time (seconds) anywhere from 10 to 120.",
+    "Set Drift speed in degrees of visual angle per second (0.5 to 32) and Pattern contrast (0.05 to 1), press Start adapting, and hold your gaze on the fixation point while the countdown runs.",
+    "When the centre label reads 'Look away now', the striped test panel should appear to drift; the results card gives the Predicted aftereffect duration with the speed tuning and contrast multipliers.",
+  ],
   intro:
     "The motion aftereffect is the illusion that a stationary scene drifts in the opposite direction after you have watched sustained motion — the waterfall illusion Robert Addams described at the Falls of Foyers in 1834. This tool runs the adaptation period for you with four classic stimuli (rotating spiral, downward stripes, expanding rings, spinning wheel) and predicts how long the aftereffect should last from the logarithmic adaptation-duration function, the band-pass speed tuning of motion neurons and Naka-Rushton contrast saturation. It is built for psychology students, teachers and anyone curious about how direction-selective cells in V1 and MT behave.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "OBS Stream Settings Calculator: Bitrate, Keyframe, VBV",
+  metaDescription:
+    "Set platform, resolution, fps and upload speed for a bitrate capped at 70% of upload and the Twitch 6,000 or YouTube 9,000 kbps ceiling. Exports JSON.",
+  steps: [
+    "Choose the platform — YouTube, Twitch, Kick, TikTok Live or Custom RTMP — plus resolution, FPS and your upload speed in Mbps.",
+    "Set content type, encoder (NVENC, x264, AV1 or HEVC), latency mode, CBR or VBR, packet loss and CPU headroom percentages.",
+    "Read the video bitrate, 2s keyframe, B-frames and VBV buffer, then press Copy Preset or Export JSON for stream-settings-profile.json.",
+  ],
   intro:
     "The Stream Settings Calculator turns your resolution, frame rate, content type and upload speed into a complete OBS-ready encoder profile — video bitrate, audio bitrate, keyframe interval, B-frames, buffer size and encoder preset. It starts from a 4,500 kbps baseline for 720p30 and scales it by resolution (1.6× for 1080p, 3.8× for 4K), frame rate (1.45× for 60 fps), motion (1.35× for sports, 0.85× for a slide presentation), then caps the result at 70% of your upload speed and at the platform's own ceiling — 6,000 kbps on Twitch, 9,000 on YouTube. It is for streamers who keep dropping frames and want settings matched to their actual connection rather than a copied preset.",
   useCases: [

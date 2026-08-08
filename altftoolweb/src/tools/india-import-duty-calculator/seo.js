@@ -1,4 +1,7 @@
 const seo = {
+  title: "India Import Duty Calculator: Courier vs Baggage Rates",
+  metaDescription:
+    "CIF, Basic Customs Duty, 10% Social Welfare Surcharge and IGST line by line for a courier parcel — or the flat 38.5% above a ₹50,000 baggage allowance.",
   intro:
     "An India import duty and landed cost calculator works out what a foreign purchase actually costs by the time it clears customs, across the two routes that carry completely different rates: a courier or postal import, and goods carried in on a flight. For a courier import it builds the statutory waterfall — assessable value as CIF under Section 14 of the Customs Act 1962, Basic Customs Duty on that value, Social Welfare Surcharge at 10% of the BCD under Section 110 of the Finance Act 2018, then IGST under Section 3(7) of the Customs Tariff Act 1975 charged on value plus duties. For baggage it applies the Baggage Rules 2016 — the ₹50,000 free allowance for an adult passenger of Indian origin and a flat 38.5% on everything above it. It is built for travellers, online shoppers and small importers who need to see where each rupee came from before they buy.",
   useCases: [

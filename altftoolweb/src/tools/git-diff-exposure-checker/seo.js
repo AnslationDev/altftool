@@ -1,4 +1,7 @@
 const seo = {
+  title: "Git Diff Exposure Checker: Scan Added Lines Only",
+  metaDescription:
+    "Scans only added diff lines for keys, tokens, JWTs, emails and .env-style paths. Findings are redacted to a code, file and line, and stay in your browser.",
   intro:
     "The Git Diff Exposure Checker scans a pasted unified diff for eight added-line patterns — private-key headers, AWS access-key IDs, GitHub and Slack tokens, JWT-like values, Authorization bearer headers, email addresses and phone numbers — plus secret-like variable assignments and sensitive destination filenames such as .env, id_rsa or *.pem. It inspects only added lines and the +++ destination paths, and every finding is reported redacted, as a code, severity, file index and line number rather than the matched value. It is for developers doing a last look before `git push`, or before pasting a patch into an issue, a chat or a model prompt.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "PDF, DOCX, XLSX & PPTX Accessibility Checker",
+  metaDescription:
+    "Checks a PDF, DOCX, XLSX or PPTX up to 20 MB in your browser for title, language, headings, table headers, alt text and bookmarks.",
+  steps: [
+    "Press the 'Choose PDF, DOCX, XLSX, or PPTX' picker under 'Document file' and select a file up to the stated maximum of 20 MB.",
+    "Press 'Inspect locally' to parse the file in the page; 'Clear' drops it again without anything being uploaded.",
+    "Read the screening summary — Marker present, Needs review, Manual only — then press 'Export counts-only JSON' to save document-accessibility-cues-counts-only.json.",
+  ],
   intro:
     "This checker opens a PDF, DOCX, XLSX or PPTX in the browser and reports the accessibility markers actually present in the file: a document title, a default language, heading or outline structure, table header rows, alternative-text metadata on images, and bookmarks. For PDFs it scans the raw bytes for /StructTreeRoot with /Marked true, /Lang, /Title, /Alt entries against image objects and /Outlines; for Office files it unzips the package and reads docProps/core.xml and the document XML for language, heading styles, table header markers and drawing descriptions. Each result comes back as present, needs review, or manual — it never claims conformance it cannot observe.",
   useCases: [

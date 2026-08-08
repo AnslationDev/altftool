@@ -1,4 +1,12 @@
 const seo = {
+  title: "Car Air Filter Change Interval Planner: Engine, Cabin",
+  metaDescription:
+    "Engine and cabin filters get separate schedules from 20,000 km and 15,000 km baselines, cut to 40% for severe dust, with an inspection point between.",
+  steps: [
+    "Pick your dust exposure on your usual roads, from severe unpaved and construction dust down to a mostly clean garaged highway car.",
+    "Enter km and months since the engine filter change and since the cabin filter change, plus your average kilometres per month.",
+    "Read which filter is next due, its remaining distance, and the inspection point to check the element between replacements.",
+  ],
   intro:
     "The Air Filter Change Planner works out separate replacement schedules for the engine air element and the cabin (AC) filter by taking each one's normal-service interval — typically 20,000 km or 24 months for the engine filter and 15,000 km or 12 months for the cabin filter — and shortening it for dust exposure and driving pattern. Both are volume filters, so what loads them is the quantity of dirty air passed rather than distance alone, which is why a car on unpaved roads can exhaust an element in a fifth of its rated distance. It also gives an inspection interval, since a paper element should be checked several times over its life.",
   useCases: [

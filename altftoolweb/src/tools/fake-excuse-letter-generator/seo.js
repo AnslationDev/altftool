@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fake Excuse Letter Generator: Work, School, Medical",
+  metaDescription:
+    "Fill a work, school, medical or family absence-letter template with names, date and reason, then copy it or download excuse-letter-work.txt.",
+  steps: [
+    "Pick Work, School, Medical or Family, then fill the fields that template uses: Manager's name and Your name for Work; Student name and Parent/Guardian name for School; Patient name, Doctor name and License number for Medical; Family member, Your name and Event name for Family.",
+    "Add the Date (e.g., Jan 15, 2024) and an optional Reason, then press \"Generate Letter\".",
+    "The letter appears as plain text, with anything left blank rendered as a visible placeholder such as [Patient Name] or MED-00000; the download button saves it as excuse-letter-work.txt for the work template.",
+  ],
   intro:
     "The Fake Excuse Letter Generator fills one of four fixed absence-letter templates — work, school, medical and family — with the names, date and reason you type, and returns the finished formal letter as plain text you can copy or download. Each template has its own fields: work asks for manager and sender, school for student and parent or guardian, medical for patient, doctor and licence number, family for the event and the family member you are writing to. It is a novelty and drafting aid for people who want the structure and tone of a formal absence note, not a substitute for a genuine document from an employer, school or clinician.",
   useCases: [

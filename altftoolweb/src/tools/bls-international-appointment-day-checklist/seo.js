@@ -1,4 +1,12 @@
 const seo = {
+  title: "BLS International Visa Appointment Day Checklist",
+  metaDescription:
+    "What to carry to a BLS International centre, how many photocopies to print, and your leave-home time — set by Schengen or Indian consular service.",
+  steps: [
+    "Choose Which service are you attending for? — a Schengen visa at a BLS centre, or Indian passport, OCI and consular work — and the applicant's age.",
+    "Enter the appointment time, travel minutes and contingency buffer, then the document pages and copies per page in the Photocopy planner.",
+    "Read Leave home by, the photocopy and duplex-sheet counts, then press Copy checklist for the carry, wear and leave-behind list.",
+  ],
   intro:
     "This checklist covers a BLS International application centre visit on the day itself: the papers to carry, how to arrive so the photo and fingerprint capture succeed first time, and the items security will turn away at the door. It adapts to the service you booked — a Schengen visa, where the EU Visa Code exempts children under 12 from fingerprinting and requires travel insurance of at least €30,000, or Indian consular work such as a passport re-issue or OCI, where no live biometrics are taken at the counter. A photocopy planner counts the pages to print beforehand, because BLS checklists ask for a self-attested copy of every sheet and the on-site copy desk is chargeable.",
   useCases: [

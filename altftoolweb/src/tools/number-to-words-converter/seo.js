@@ -1,4 +1,12 @@
 const seo = {
+  title: "Number to Words Converter: Indian Lakh or Million",
+  metaDescription:
+    "Spells a figure in English and in the \"Rupees ... only\" cheque line, switching between Indian lakh-crore grouping and international thousand-million.",
+  steps: [
+    "Type the amount into the Number box, which opens on 1234567.",
+    "Choose Indian for lakh and crore grouping, or International for thousand, million and billion.",
+    "Read the Words panel and the Cheque format line reading Rupees ... only, then press Copy words.",
+  ],
   intro:
     "The Number to Words Converter spells a figure out in English using either the Indian numbering system — thousand, lakh, crore — or the international one of thousand, million, billion, and returns it in the ready-to-write cheque form \"Rupees … only\". Switching systems changes the grouping, so 1,234,567 reads as twelve lakh thirty four thousand five hundred sixty seven in Indian and one million two hundred thirty four thousand five hundred sixty seven internationally. It is aimed at anyone filling in the amount-in-words line on a cheque, invoice, receipt or affidavit, where the written figure is what governs if it disagrees with the digits.",
   useCases: [

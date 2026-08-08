@@ -1,4 +1,12 @@
 const seo = {
+  title: "Car Storage Checklist: Battery Days and Tyre PSI",
+  metaDescription:
+    "Get the days until a parked car's 12 V battery will not crank, from parasitic drain plus self-discharge, then before, during and return task lists.",
+  steps: [
+    "Enter 'Weeks in storage' and pick the Powertrain, Transmission, '12 V battery type' and 'Where it will stand'.",
+    "Set 'Battery capacity (Ah)' and 'Parasitic drain (mA)' — 20 to 50 mA on most modern cars once asleep — plus the average and coldest storage temperatures, 'Normal cold tyre pressure (psi)' and 'Sidewall maximum pressure (psi)'.",
+    "Read 'Days before it will not start' with the rows for 'Days to 80% (sulfation starts)', 'Days to 50% (will not crank)' and the storage tyre pressure, then tick off the three generated lists — 'Before you walk away', 'While it is standing' and 'Bringing it back'; Copy result copies the ticked checklist.",
+  ],
   intro:
     "This checklist works out how long a parked car can actually be left before its 12 V battery stops it starting, and builds the preparation list around that answer. On a modern car the deciding factor is parasitic drain — the alarm, body control module and telematics keep drawing 20 to 50 mA once the car is asleep — which is added to self-discharge that roughly doubles for every 10 °C rise, giving the days to the 80 percent sulfation point and to the 50 percent point where a cold engine will not crank. The rest of the list adapts to the powertrain, the transmission, the temperature and the storage location, and includes a separate list for bringing the car back.",
   useCases: [

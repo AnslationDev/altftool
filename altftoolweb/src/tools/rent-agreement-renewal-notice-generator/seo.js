@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rent Renewal Notice Generator: 11-Month Term & Rent",
+  metaDescription:
+    "Draft a tenancy renewal intimation with the new term dates, escalated rent, deposit top-up capped at the Model Tenancy Act limit, and a reply deadline.",
+  steps: [
+    "Set Current term ends on, Date of this notice and Renewed term (months) with the 11 mo preset.",
+    "Fill Current monthly rent (INR), Escalation for the new term (%), Deposit currently held (INR), Days to respond and Notice the agreement requires (days).",
+    "Read the Revised monthly rent with the new term dates, rent increase and revised security deposit, then press Copy notice.",
+  ],
   intro:
     "This generator drafts the renewal intimation for a tenancy: it computes the new term dates, the escalated rent, the deposit differential and the date by which the other side must reply. The renewed term starts the day after the current one ends and runs the number of months you pick, which is why the standard Indian tenancy is eleven months — Section 17(1)(d) of the Registration Act, 1908 makes registration compulsory for a lease from year to year or for a term exceeding one year. Deposits are held to the ceiling in Section 11(1) of the Model Tenancy Act, 2021: two months' rent for residential premises, six for non-residential.",
   useCases: [

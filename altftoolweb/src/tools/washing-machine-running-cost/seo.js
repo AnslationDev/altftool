@@ -1,4 +1,12 @@
 const seo = {
+  title: "Washing Machine Running Cost Per Wash Calculator",
+  metaDescription:
+    "Splits one cycle into electricity, water and detergent for front load, top load or semi automatic, from cold to a 90 °C boil wash, on your own tariffs.",
+  steps: [
+    "Choose front load, top load or semi automatic and set the rated capacity in kg and washes per week.",
+    "Pick the wash programme from cold tap water up to a 90 °C boil wash, then enter your electricity, water and detergent tariffs.",
+    "Read the cost per wash with water heating shown separately from drum energy, plus the monthly and yearly bill.",
+  ],
   intro:
     "This calculator works out the true cost of one wash cycle by splitting it into the three things you actually pay for: the electricity the drum and heater consume, the water the machine draws, and the detergent you pour in. The energy side uses the standard heat equation — litres × 4.186 kJ per kg per °C × temperature rise ÷ 3600 — added to the mechanical energy of the drum, pump and spin, which is why raising the programme from cold to 60 °C multiplies the bill several times over. It is aimed at anyone deciding between a front loader and a top loader, or wondering whether the warm-wash habit is worth what it adds to the monthly bill.",
   useCases: [

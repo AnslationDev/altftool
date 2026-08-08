@@ -1,4 +1,12 @@
 const seo = {
+  title: "Monsoon Palette Generator With WCAG Scrim Opacity Solver",
+  metaDescription:
+    "Six-role rain-season palettes plus the exact scrim opacity a headline needs over a bright, mid or dark photo to reach 3:1, 4.5:1 and 7:1.",
+  steps: [
+    "Pick a Mood - First rain, Overcast afternoon, Deep monsoon, Petrichor earth or Storm night - and set Overlay text colour to Plain white or Palette paper colour.",
+    "Choose a Scrim colour, then set Hue rotation (degrees) from -60 to 60 and Variation, or press Next variation for the next set.",
+    "The Scrim solver table gives the minimum opacity per Photo tone under Large 3:1, Body 4.5:1 and AAA 7:1; take the result with Copy CSS or Copy result.",
+  ],
   intro:
     "The Monsoon India Palette Generator builds six-role rain-season palettes — sky, rain slate, water teal, wet green, wet earth and a paper tone — and then solves the problem monsoon campaigns actually hit: type over a photograph. For an assumed mean photo tone it steps a scrim's opacity one percent at a time and reports the lowest value at which the headline reaches 3:1, 4.5:1 and 7:1 under the WCAG 2.x contrast formula, compositing with the standard source-over rule. It is meant for designers producing seasonal sale creatives, travel campaigns, editorial covers and app banners where the artwork is a rain photo and the text still has to be readable.",
   useCases: [

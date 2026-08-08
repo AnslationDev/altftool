@@ -1,4 +1,12 @@
 const seo = {
+  title: "Malayalam Birthday Wishes with Romanisation, Meaning",
+  metaDescription:
+    "Pick the relationship and tone for a Malayalam birthday message in the familiar, polite or formal form, with romanisation, English and SMS length.",
+  steps: [
+    "Set 'Who is it for?' (Friend, Elder brother and the rest), pick a 'Tone' and 'How many messages', and optionally fill 'Their name (optional)' and 'Sign it from (optional)'.",
+    "Leave 'Politeness' on 'Automatic (match the relationship)' or force one of the three registers — 'നീ — familiar', 'നിങ്ങൾ — respectful' or 'താങ്കൾ — formal honorific' — and press 'Other wordings' to reshuffle the pool written for that pairing.",
+    "Tick 'Romanised' and 'English meaning' to show them under each message, check the 'Pronoun used', 'Opening line', 'Sign-off', 'Wordings available' and 'SMS length' rows, then press 'Copy all'.",
+  ],
   intro:
     "Malayalam Birthday Wishes Generator writes a complete Malayalam birthday message — opening line, wish and sign-off — from the relationship you pick and the tone you want. Malayalam separates നീ from നിങ്ങൾ, and adds താങ്കൾ for formal writing; the pronoun changes the possessive (നിന്റെ, നിങ്ങളുടെ, താങ്കളുടെ) and the dative (നിനക്ക്, നിങ്ങൾക്ക്, താങ്കൾക്ക്), so each wording is stored twice rather than patched, and the register is set automatically from the relationship. Wordings written for a parent, a partner, a child, a teacher or a manager are only offered to that relationship, so two people never get the same sentence with a different name pasted in. Every message comes with romanised Malayalam, an English meaning, and the number of SMS parts it needs.",
   useCases: [

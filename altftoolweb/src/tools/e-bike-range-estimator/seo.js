@@ -1,4 +1,12 @@
 const seo = {
+  title: "E-Bike Range Estimator: Wh per Km, Assist, Grade",
+  metaDescription:
+    "Estimate e-bike range from battery watt-hours, assist level, gradient and headwind, with the 250 W / 25 km/h pedelec cap and cold derating applied.",
+  steps: [
+    "Enter Battery voltage (V) and Battery capacity (Ah), then Rider weight (kg), E-bike weight (kg) and Cargo and luggage (kg).",
+    "Set Riding speed (km/h), Bike and surface, Assist level, E-bike class, Average gradient (%), Headwind (km/h) and Ambient temperature (deg C).",
+    "Read the range in km with its Wh per km and riding hours, compare the Range at every assist level list, then press Copy result.",
+  ],
   intro:
     "This estimator works out electric bicycle range from first principles rather than quoting a brochure figure. It computes the power needed to hold your chosen speed against rolling resistance, air drag and gradient, splits that between you and the motor at the assist ratio you select, caps the motor at the legal limit for your class — 250 W and 25 km/h for an EU or Indian pedelec, 750 W for US classes — and then divides usable battery watt-hours by the resulting watt-hours per kilometre. Battery capacity is derated for the reserve the BMS keeps and for cold weather, where lithium-ion delivers roughly 82% of its rated capacity at freezing point.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "ROC Filing Calendar: AOC-4, MGT-7 Dates & Late Fee",
+  metaDescription:
+    "From your incorporation date: AGM, AOC-4, MGT-7/7A, ADT-1 and LLP Form 11/8 due dates, plus the MCA additional fee accrued on anything late.",
+  steps: [
+    "Choose the \"Entity type\", then enter the \"Date of incorporation\", the \"Financial year end\" and the \"Accrue additional fee to\" date.",
+    "Enter the paid-up share capital (or, for an LLP, contribution and turnover) and, under \"Dates the forms were filed\", the dates for ADT-1, AOC-4 and MGT-7 / MGT-7A.",
+    "Read \"Timeline and fee per form\" for each due date, normal fee and additional fee with the section that produced it, then press \"Copy result\".",
+  ],
   intro:
     "The MCA / ROC Filing Calendar & Penalty Calculator derives your annual Registrar of Companies deadlines from a single input — the date of incorporation — and then prices the additional fee that has accrued on anything already late. It works backwards from Companies Act 2013 section 96(1): the first AGM falls within 9 months of the close of the first financial year, every later AGM within 6 months of the year end and never more than 15 months after the previous one. AOC-4 then follows within 30 days of that AGM under section 137(1), MGT-7 or MGT-7A within 60 days under section 92(4), and ADT-1 within 15 days of the appointment meeting under section 139(1). An OPC, which section 96 excludes from holding an AGM at all, files AOC-4 within 180 days of the year end instead. An LLP files Form 11 within 60 days of 31 March and Form 8 within 30 days of the six-month point, so 30 May and 30 October. It is built for company secretaries, practising CAs and founders who need the exact date and the exact rupee figure, with the section that produced each one printed beside it.",
   useCases: [

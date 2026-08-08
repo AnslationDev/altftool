@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vietnam e-Visa Rejection Reasons and How to Fix Them",
+  metaDescription:
+    "Match a refusal to its ground — photo spec, data mismatch, the six-month passport rule, Article 21 suspension — and the fixes to make before reapplying.",
+  steps: [
+    "Paste the reason lines into Paste the wording from your refusal notice (optional) and Closest matching grounds appears, each chip carrying a percentage match.",
+    "Under Which reason was ticked on your notice? select every ground that applies, from Photograph or passport page did not meet the specification to Article 21 entry suspension.",
+    "Each ground opens its requirement and triggers; tick the fixes to move Reapplication readiness off 0%, then press Copy result before you pay the fee again.",
+  ],
   intro:
     "Vietnamese e-Visa applications are decided on the uploaded file alone, with no interview, so most rejections come from the portrait photo, the passport scan or a mistyped field rather than from anything about the traveller. This explainer maps each rejection cause to the requirement behind it under Law No. 47/2014/QH13 on Entry, Exit, Transit and Residence of Foreigners, and gives a checklist for each - image specifications, exact data matching, the six-month passport rule, the approved checkpoint list, entry dates, and the entry suspensions in Article 21. Select what applies to see what to change before you pay the fee again.",
   useCases: [

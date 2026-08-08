@@ -1,4 +1,12 @@
 const seo = {
+  title: "Buffer pH Calculator: Henderson-Hasselbalch",
+  metaDescription:
+    "Enter pKa with acid and conjugate-base amounts for pH to six decimals, the base/acid ratio and each mole fraction. Concentrations or moles work.",
+  steps: [
+    "Enter Acid pKa, Acid concentration or moles and Conjugate-base concentration or moles, and add a Temperature note (°C) if you want it recorded.",
+    "Press the Equal acetate buffer example under Examples to load pKa 4.76 with 0.1 and 0.1, or Reset to restore the defaults.",
+    "Read the estimated pH to six decimals with the Base / acid ratio, Acid fraction and Base fraction rows, then use Copy or Download.",
+  ],
   intro:
     "The Buffer pH Calculator applies the Henderson–Hasselbalch equation, pH = pKa + log10([A⁻]/[HA]), to return the estimated pH of a buffer from the acid's pKa and the amounts of weak acid and conjugate base you enter. It reports the pH to six decimals along with the base-to-acid ratio and the mole fraction of each species, and accepts either concentrations or moles because the equation depends only on their ratio. It is an approximation: activity coefficients, ionic strength, dilution, competing equilibria and the temperature dependence of pKa are not modelled, so the temperature field is recorded as a note rather than used in the calculation.",
   useCases: [

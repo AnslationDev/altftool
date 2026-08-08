@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fuel Cost Per Km Calculator: Petrol, Diesel, CNG, EV",
+  metaDescription:
+    "Divide fuel price by mileage for petrol, diesel, CNG or EV, add servicing, insurance and depreciation, and see the km a CNG kit takes to pay back.",
+  steps: [
+    "Pick the Fuel — Petrol, Diesel, CNG or Electric — then enter its price per litre, kilogram or kWh, your mileage and Kilometres driven a month.",
+    "Under 'Standing costs a year' add servicing and tyres, insurance premium, parking and tolls, the vehicle's current value and Value lost a year (%).",
+    "Read 'True cost of one kilometre' with the fuel share split out, then use 'Would switching fuel pay off?' for the kilometres and months to recover a CNG kit or EV premium.",
+  ],
   intro:
     "Fuel cost per kilometre is the price of one unit of fuel divided by the distance that unit covers — rupees per litre divided by kilometres per litre for petrol and diesel, rupees per kilogram divided by kilometres per kilogram for CNG, and rupees per kWh divided by kilometres per kWh for an electric vehicle. This calculator adds the standing costs most people forget, spreading annual servicing, insurance, tolls and depreciation over the distance actually driven, so you see the true cost of a kilometre rather than just the pump cost. It also works out how many kilometres a CNG kit or an electric vehicle's price premium takes to pay back.",
   useCases: [

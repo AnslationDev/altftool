@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cyclist Hydration Calculator: Bottles, Carbs, Salt",
+  metaDescription:
+    "Turn weight, ride length, heat and humidity into bottles per hour, refill stops, carb grams and drink sodium using the ACSM fluid and fuelling bands.",
+  steps: [
+    "Enter Rider weight (kg), Ride length (hours), Air temperature (C) and Relative humidity (%), then pick a Ride intensity.",
+    "Set Bottle cages on the bike and Bottle size (ml), or fill in Measured sweat rate (L/h) to override the temperature and intensity model.",
+    "Read Bottles to fill in total, Refill stops with your cages, Carbohydrate target and Sodium to put in the bottles, then press Copy plan.",
+  ],
   intro:
     "This calculator converts a planned ride into bottles per hour, refill stops, carbohydrate grams and drink sodium. It models sweat rate from rider weight, ride intensity, air temperature and humidity, then applies the ACSM Position Stand on Exercise and Fluid Replacement: drink at your sweat rate but no faster than the gut can absorb it (about 1 L per hour), finish under 2% body-mass loss, and replace 1.5 litres for every kilogram still down. Carbohydrate follows the duration bands in the ACSM joint position on Nutrition and Athletic Performance — roughly 30 g/h from one hour, 60 g/h from two, and up to 90 g/h past two and a half.",
   useCases: [

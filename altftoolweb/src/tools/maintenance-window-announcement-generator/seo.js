@@ -1,4 +1,12 @@
 const seo = {
+  title: "Maintenance Window Notice: UTC Times, Impact, Rollback",
+  metaDescription:
+    "Enter the window once in your zone; get an ISO 8601 UTC instant, a per-zone table, a notice-period check and an update cadence in a ready notice.",
+  steps: [
+    "Fill Service name and Reason for the work, set Start date and Start time (24-hour), pick Those times are in, then enter Work length (minutes) and Contingency buffer (minutes).",
+    "Choose Expected impact and Channel, list the Affected services or features one per line, write the Rollback statement the notice refuses to generate without, and tick the zones under Show local times for.",
+    "Read Total window length with its Start (UTC), End (UTC), Update cadence and Notice given rows, check any warnings about lead time or a clock change inside the window, then press Copy announcement.",
+  ],
   intro:
     "The Maintenance Window Announcement Generator converts one scheduled window — a wall-clock start in your own time zone plus a work length and a contingency buffer — into a publishable notice that states the same instant in UTC and in every reader time zone you select. It is built for SRE, DevOps and IT change managers who need the announcement to carry the four things readers actually look for: exact start and end, expected impact, what to do about it, and what happens if the change is rolled back. UTC instants are printed in ISO 8601 / RFC 3339 form (2026-08-14T22:00Z), zone conversions run through the IANA Time Zone Database so daylight-saving shifts are applied for you, and the tool warns when the window crosses a clock change or when the lead time is shorter than the notice usually contracted for that impact level.",
   useCases: [

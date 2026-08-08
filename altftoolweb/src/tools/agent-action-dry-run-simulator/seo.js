@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dry-Run AI Agent Tool Calls Before You Approve",
+  metaDescription:
+    "Paste agent tool-call JSON to see which calls write, delete, message or move money, the target, the missing safeguard and a review score. Nothing runs.",
+  steps: [
+    "Paste into 'Proposed tool calls' one JSON object, a bare array, or a calls/toolCalls/tool_calls/actions wrapper — up to 200 calls — or press 'Load safe demo'.",
+    "Analysis updates locally as you type: check the Calls, Side effects, Highest review and Missing prompts metrics for the batch.",
+    "Read each call's effect type, extracted target and named missing safeguard, then use Copy report or Download report to save agent-action-dry-run-report.txt.",
+  ],
   intro:
     "The Agent Action Dry-Run Simulator reads a proposed AI tool call as JSON and tells you what it would probably do before anything runs: it classifies each call into write, deletion, message, money movement, external side effect, code execution or read-only, pulls out the concrete targets from the arguments, checks which safeguards are present, and scores how much review the call deserves. It is for anyone wiring up an agent — a developer testing a new tool schema, or a reviewer looking at a plan an agent produced — who wants a second opinion before granting execution. No call is connected, sent or executed; the analysis is deterministic pattern matching over the JSON you paste, entirely in the browser.",
   useCases: [

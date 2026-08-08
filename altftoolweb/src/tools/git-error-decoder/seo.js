@@ -1,4 +1,7 @@
 const seo = {
+  title: "Git Error Decoder: Is That Command Safe to Run?",
+  metaDescription:
+    "Paste a git error and get what happened in git's object and ref model, plus every fix command graded SAFE, REWRITES HISTORY or DESTRUCTIVE.",
   intro:
     "This decoder takes a git error message — pasted verbatim or picked from a list of 20 — and returns three things: what actually happened inside git's object and ref model, the commands that resolve it, and a blast radius grade on every one of those commands. The grades are fixed: SAFE means local only and reversible, REWRITES HISTORY means commits get new object ids or a published ref moves so other clones diverge, and DESTRUCTIVE means work no reflog can return — uncommitted edits, untracked files, or commits that existed only on the remote you overwrote. Every behavioural claim is quoted from the git 2.50.1 manual pages (git-merge, git-push, git-reset, git-reflog, git-gc, git-config, git-submodule), read 2026-07-29. It is for the moment when a command has failed, the terminal is red, and the real question is not which command to run but which command is safe to run.",
   useCases: [

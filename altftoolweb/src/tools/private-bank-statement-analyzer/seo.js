@@ -1,4 +1,10 @@
 const seo = {
+  title: "CSV Bank Statement Analyzer That Never Uploads Data",
+  steps: [
+    "Paste the rows or press Choose text file for a CSV, TSV or .txt export up to 10 MB and 25,000 rows, then press Parse locally.",
+    "Confirm the Date, Description, Debit / money out and Credit / money in mappings, pick DD/MM/YYYY or MM/DD/YYYY, then press Analyze in memory.",
+    "Money in, money out and net movement appear with outflow by category and month; Download summary saves private-statement-aggregate-summary.csv.",
+  ],
   intro:
     "This analyzer reads a CSV, TSV or delimited bank-statement export in your browser, maps its columns to date, description and debit/credit (or a single signed amount), then classifies every transaction with a fixed keyword rulebook and totals inflow, outflow and net movement by category and by month. The rulebook is deterministic — 15 spending categories from Housing and Groceries through Transport, Utilities, Subscriptions, Bank fees, Transfers and Insurance & tax, plus an Income bucket for salary, pension, dividend, refund, cashback and reimbursement credits — so the same file always produces the same figures. It is built for anyone who wants a spend breakdown without handing their statement to a budgeting service.",
   useCases: [

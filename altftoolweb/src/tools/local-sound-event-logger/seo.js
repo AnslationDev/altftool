@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sound Event Logger: Timestamp, RMS, Hz and Note",
+  metaDescription:
+    "Log loud events from your mic as ISO timestamp, RMS, dominant frequency in Hz and nearest note. Rows are written above RMS 0.08 and no audio is stored.",
+  steps: [
+    "Press Start with permission and allow microphone access; the stream feeds a 4096-point Web Audio analyser and no audio buffer is retained.",
+    "On roughly every twelfth animation frame the window's RMS is measured and a row is written only when it exceeds 0.08, with pitch found by autocorrelation.",
+    "Watch Live local readings fill with its Timestamp, RMS, Frequency (Hz) and Note columns, newest last, then press Stop sensor to end the session.",
+  ],
   intro:
     "The Local Sound-Event Logger listens through your microphone and writes a timestamped row every time the signal crosses a loudness threshold, recording the ISO 8601 time, the RMS amplitude, the dominant frequency in hertz and the nearest musical note with its cent deviation. It uses a 4096-point Web Audio analyser, computes RMS from the float time-domain buffer, estimates pitch by autocorrelation across lag offsets of 20 to 1000 samples, and only logs when RMS exceeds 0.08 — so background hum is ignored and loud events are not. Nothing is uploaded and no audio is stored; only the derived numbers stay in the on-screen timeline.",
   useCases: [

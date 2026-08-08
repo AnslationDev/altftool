@@ -1,4 +1,7 @@
 const seo = {
+  title: "Gmail Email Template Builder: 600px Table HTML",
+  metaDescription:
+    "Drag nine block types onto a 600px table layout and export email-safe HTML with inline styles, or the JSON block array. Undo, redo and autosave.",
   intro:
     "Gmail Template Builder is a drag-and-drop email composer that outputs table-based HTML with inline styles — a 600px-wide centred layout, MSO table hints and a max-width: 600px media query — which is the structure email clients like Gmail and Outlook actually render reliably. You stack nine block types (text, header, image, logo, button, divider, signature, social links and footer), edit padding, colour, size and alignment per block, then export the finished HTML or the layout as JSON. It is for marketers and developers who need a campaign or transactional template that survives Gmail's HTML stripping without hand-writing nested tables.",
   useCases: [

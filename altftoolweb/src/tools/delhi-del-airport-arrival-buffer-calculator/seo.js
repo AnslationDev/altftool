@@ -1,4 +1,12 @@
 const seo = {
+  title: "Delhi Airport (DEL): When to Leave Home for Your Flight",
+  metaDescription:
+    "Work back from your DEL departure through gate close, security, bag drop and the drive to one leave-home time — and see which deadline sets it.",
+  steps: [
+    "Enter the \"Scheduled departure time\" printed on the ticket, pick the flight type, and say whether you have a checked bag to drop or cabin bag only.",
+    "Pick \"Starting from\" to fill the \"Driving time with no traffic (minutes)\", then set road conditions, terminal queues, parking or drop-off minutes and your personal buffer.",
+    "Read the \"Leave home by\" time, the minute-by-minute timeline through bag drop and gate close, and the \"Driven by\" row naming the deadline that bound it; press \"Copy plan\".",
+  ],
   intro:
     "This calculator turns a Delhi DEL departure time into the single time you need to leave home, by working backwards through the boarding-gate close, security, emigration, bag drop and the drive itself. It takes the larger of three deadlines — the airport's published reporting time (2 hours for domestic, 3 hours for international at Indira Gandhi International), your airline's bag-drop cut-off, and the time your own queue and walking estimates actually need — then subtracts the road journey after applying a traffic factor. In practice the airport's published reporting time is already generous enough to clear the airline's bag-drop cut-off, so your leave-by time ends up governed by that reporting time or by your own queue and walking estimate; the bag-drop cut-off is still checked and called out if it would ever bind. Useful for early-morning T3 departures from Gurugram, Noida or South Delhi where the drive is the least predictable part of the trip.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tool-Call Argument Policy Linter for Agent Logs",
+  metaDescription:
+    "Lint agent tool calls in JSON or JSONL against seven policy keys: tools, path prefixes, domains, recipients, numeric limits and confirmation flags.",
+  steps: [
+    "Paste your rules into Policy JSON and the agent trace into Tool-call JSON or JSONL — an array, a wrapped calls array, or one JSON object per line.",
+    "Press Lint calls to check up to 500 calls; Load sample fills both boxes with a worked example, and Clear empties them.",
+    "Read Per-call findings and Counts by rule, then press Download counts-only report, which omits tool names, paths, domains and recipients.",
+  ],
   intro:
     "Tool-Call Argument Policy Linter checks a log of AI agent tool calls against a JSON policy with seven rule types — allowedTools, deniedTools, allowedPathPrefixes, allowedDomains, allowedRecipients, numericLimits and confirmation — and reports each call as a pass, a warning or a violation without executing anything. It is for engineers reviewing what an agent actually tried to do, from an OpenAI-style function-call trace or a JSONL transcript. Findings are labelled by rule, from tool-denied and path-not-allowed through to confirmation-required, and can be exported as a counts-only report that carries no tool names, paths, domains or recipients.",
   useCases: [

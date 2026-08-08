@@ -1,4 +1,12 @@
 const seo = {
+  title: "Second-Hand Appliance Value: Fridge, AC, Washing Machine",
+  metaDescription:
+    "Price a used fridge, AC or washing machine from original cost, age, condition, BEE star rating and warranty left, with an added discount for R-22 units.",
+  steps: [
+    "Pick the Appliance — Refrigerator, Split air conditioner, Window air conditioner or a washing machine — then fill Original purchase price (INR) and Age (months, 0-300).",
+    "Set Condition, BEE star rating, Compressor / motor warranty left (years) and Known repair cost to deduct (INR); an air conditioner also offers Uses R-22 refrigerant.",
+    "Read Estimated private-sale value with its ask-between range, the Second-hand dealer offer to expect and the Scrap-value floor, then press Copy result.",
+  ],
   intro:
     "This estimator prices a used refrigerator, air conditioner or washing machine by applying a category-specific declining-balance depreciation curve to its original price, then adjusting for condition, BEE star rating, remaining compressor or motor warranty and how close the unit is to the end of its rated service life. White goods hold value differently from electronics: a fridge rated for about 12 years falls slowly at first, then collapses toward scrap as replacement age approaches. Older air conditioners running R-22 refrigerant carry an extra discount because that refrigerant is being phased out under the Montreal Protocol.",
   useCases: [

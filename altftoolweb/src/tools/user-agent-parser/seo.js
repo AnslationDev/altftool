@@ -1,4 +1,12 @@
 const seo = {
+  title: "User Agent Parser: Browser, OS, Engine and Device",
+  metaDescription:
+    "Break a User-Agent string into browser, engine, OS, device and CPU. Edge and Opera are matched before Chrome, and the frozen version tokens are flagged.",
+  steps: [
+    "Paste the header into the User-Agent string box, press Use my browser to fill in your own, or pick an entry from the Load a sample list.",
+    "Matching runs most specific first, so Chromium forks such as Edg and OPR are identified before the Chrome token and Safari is tested last.",
+    "Read the Detected browser panel and its rows — Rendering engine, OS version, Device type, CPU architecture, Automated client — then press Copy result.",
+  ],
   intro:
     "The User Agent Parser splits a User-Agent header into its real components — browser and version, rendering engine, operating system, device class and CPU architecture. The User-Agent field is defined in RFC 9110 as a list of product tokens, but every browser copies fragments of every other browser's tokens for compatibility, so parsing has to be ordered from most specific to least: Chromium forks such as Edg and OPR are matched before Chrome, and Safari is matched last because almost everyone claims it. It is for developers reading analytics logs, debugging device-specific bugs, or checking what their own browser is announcing.",
   useCases: [

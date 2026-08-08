@@ -1,4 +1,12 @@
 const seo = {
+  title: "Office Worker Protein Calculator: Daily and Per Meal",
+  metaDescription:
+    "Set a desk-job protein target from Mifflin-St Jeor, your step count and gym sessions, then split it per meal against 0.24 g/kg, or 0.40 from age 60.",
+  steps: [
+    "Enter sex, age, weight and height, then hours seated at work, average daily steps, resistance sessions a week and minutes per session.",
+    "Choose a goal — maintain weight and keep muscle, lose fat and keep muscle, or build muscle — and how many meals with protein you eat a day.",
+    "Read the daily protein target in grams with its range and the per-meal dose across your meals, then press Copy result.",
+  ],
   intro:
     "This calculator sets a daily protein target for a desk-based adult and splits it across meals, starting from the fact that the 0.8 g per kg RDA prevents deficiency rather than preserving muscle. It uses 1.0-1.2 g/kg for simply holding on to lean mass, up to about 1.6 g/kg where there is regular resistance training (the breakpoint Morton's 2018 meta-analysis found), and 1.6-2.2 g/kg in a calorie deficit. Daily energy comes from the Mifflin-St Jeor equation with an activity factor chosen from your step count using the Tudor-Locke bands, plus gym sessions costed separately with the ACSM metabolic equation so a low step count does not erase your training.",
   useCases: [

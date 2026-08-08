@@ -1,4 +1,12 @@
 const seo = {
+  title: "Motorcycle Winter Storage Checklist: Battery, Fuel, Tyres",
+  metaDescription:
+    "Weeks stored, temperature and battery type set the list: projected state of charge, tyre pressure 25% above normal, fuel steps gated by duration.",
+  steps: [
+    "Enter Weeks in storage, average and coldest temperature, fuel system, battery type and your normal front, rear and sidewall tyre pressures.",
+    "Pick Where it will stand — heated indoor garage, unheated garage or shed, outdoors under a cover — and tick paddock stands or ethanol-blended petrol.",
+    "Work through the generated tasks with the projected state of charge and the storage tyre pressure capped at the sidewall maximum, then press Copy result.",
+  ],
   intro:
     "This checklist is generated from how long the bike will stand, how cold the space gets, whether it is carburetted or injected, and which battery chemistry it has, rather than being a fixed list. It projects battery self-discharge using the rule that the rate roughly doubles for every 10 °C rise — about 4% a month at 20 °C for flooded lead-acid and 2% for AGM and LiFePO4 — and flags a maintainer once the projected state of charge would fall below the 80% point where sulfation accelerates. It also sets a storage tyre pressure 25% above normal, capped at the sidewall maximum, and adds the carburettor and stabiliser steps only past the durations where they actually matter.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Which Planets Are Retrograde Right Now? Station Dates",
+  metaDescription:
+    "Retrograde status for Mercury through Pluto on any date 1900–2100, with station-retrograde and station-direct instants in UT and both shadow windows.",
   intro:
     "This page answers whether Mercury, Venus, Mars, Jupiter, Saturn, Uranus, Neptune or Pluto is retrograde on any given date by computing the planet's apparent geocentric ecliptic longitude and checking whether that longitude is decreasing. It is built for anyone who needs the station dates rather than a remembered rule of thumb — astronomy students, ephemeris checkers, calendar and almanac builders, and astrology readers who want the underlying geometry stated plainly. Longitudes are referred to the true ecliptic and equinox of date and corrected for light travel time and annual aberration using the astronomy-engine v2 ephemeris (VSOP87 for Mercury through Neptune; Pluto from a numerically-integrated gravity simulation); stations are the instants where the rate of change of longitude crosses zero, located by bisection to one minute of time, and the pre- and post-retrograde shadow boundaries are solved as the instants the planet crosses the two station degrees while moving direct.",
   useCases: [

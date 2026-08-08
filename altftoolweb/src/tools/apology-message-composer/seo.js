@@ -1,4 +1,12 @@
 const seo = {
+  title: "Apology Message Composer: Six-Component Structure",
+  metaDescription:
+    "Build an apology from the six components Lewicki (2016) tested, score its completeness out of 100, and catch \"sorry if\" and \"sorry, but\" phrasing.",
+  steps: [
+    "Enter \"Who are you apologising to\", \"Your name\" and a \"Tone\" — Sincere & personal, Professional or Short and direct.",
+    "Fill the components you want included: \"Expression of regret\", \"Acknowledgement of responsibility\", \"Offer of repair\", \"Declaration of repentance\" and the rest.",
+    "Read the \"Completeness score\" out of 100 — responsibility is worth 30 and repair 25 — plus any flagged conditional or \"Sorry, but\" phrasing, then press \"Copy apology\".",
+  ],
   intro:
     "An apology is more likely to be accepted when it contains six specific components: an expression of regret, an explanation of what went wrong, an acknowledgement of responsibility, a declaration of repentance, an offer of repair, and a request for forgiveness — the structure set out in Lewicki, Polin and Lount's 2016 study of apology effectiveness. This composer builds the message from those parts using your own details, scores how complete the result is, and flags non-apology phrasing such as 'sorry if you were offended' or 'sorry, but'. In that research, acknowledging responsibility mattered most and asking for forgiveness mattered least.",
   useCases: [

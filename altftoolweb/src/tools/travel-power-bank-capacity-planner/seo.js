@@ -1,4 +1,12 @@
 const seo = {
+  title: "Power Bank Size Calculator: mAh, Wh and 100 Wh Limit",
+  metaDescription:
+    "Convert every device battery to watt-hours, add recharges per day and 75-90% transfer losses, and get the mAh to buy against the 100 Wh airline limit.",
+  steps: [
+    "For each device choose a Device type, then set Battery capacity (mAh), Battery voltage (V) and Full recharges per day; press Add device for another.",
+    "Enter the days without a mains socket, the transfer efficiency percentage — real banks land near 75-90% — and a safety reserve.",
+    "Read the power bank to buy in mAh, the stored watt-hours, banks to carry and the airline verdict against the 100 Wh threshold, then press Copy result.",
+  ],
   intro:
     "This planner works out the power bank capacity a trip actually needs by converting every device battery to watt-hours (Wh = mAh ÷ 1000 × nominal cell voltage), multiplying by how often each one is recharged, then dividing by the bank's real transfer efficiency so the conversion losses are included rather than ignored. It is built for travellers, hikers, festival-goers and photographers who have to pick one bank and live with it for several days. It also checks the result against the ICAO/IATA lithium battery limits airlines enforce: no approval needed up to 100 Wh, operator approval between 100 and 160 Wh, and nothing above 160 Wh in passenger baggage.",
   useCases: [

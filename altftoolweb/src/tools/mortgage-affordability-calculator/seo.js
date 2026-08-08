@@ -1,4 +1,7 @@
 const seo = {
+  title: "Mortgage Affordability Calculator: 28/36 DTI Rule",
+  metaDescription:
+    "Caps housing at 28% of gross income or 36% minus existing debts, then converts that payment into a maximum loan and price at your rate and term.",
   intro:
     "The Mortgage Affordability Calculator applies the 28/36 debt-to-income rule to your gross income: it caps the housing payment at 28 percent of monthly gross income, or at 36 percent minus your existing monthly debts, whichever is lower, and then converts that payment back into the loan it supports at your rate and term using the standard annuity formula. Add your down payment and you get the home price the rule allows. It is for the stage before you talk to a lender, when you want a defensible ceiling rather than an estate agent's optimism. This is general information, not lending or financial advice — a lender's own underwriting will differ.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Grocery List Builder: Auto-Sorts into 8 Store Aisles",
+  metaDescription:
+    "Type onion or pyaz and it files into one of 8 aisles automatically. Lists stay on your device and copy out as aisle-grouped text for any chat.",
+  steps: [
+    "Under Quick add, type an Item name such as paneer, haldi or dishwash liquid, then set the Quantity and Unit.",
+    "Category stays on \"Auto\" and shows the aisle the keyword map matched; press \"Add to Weekly Groceries\" to file the item, or tap a Restock suggestions chip to re-add something you ticked off before.",
+    "Turn on Shopping mode to tick items off against the in-the-cart progress bar, then use Copy / share for aisle-grouped text, Download for a weekly-groceries.txt file, or Print.",
+  ],
   intro:
     "The Smart Grocery List Builder sorts whatever you type into eight store categories automatically — produce, dairy, staples, spices, snacks, frozen, household and personal care — by matching the item name against a keyword dictionary that understands both English and everyday Hinglish, so 'pyaz' and 'onion' both land in Fruits & Vegetables. Each category is tagged with its aisle, from Fresh aisle to Chiller to Masala aisle, so the finished list reads in the order you actually walk the shop. It keeps your lists on your own device, remembers what you have bought before, and copies out as clean text you can paste into any chat.",
   useCases: [

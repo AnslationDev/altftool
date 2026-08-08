@@ -1,4 +1,12 @@
 const seo = {
+  title: "EPF Calculator: Corpus, EPS Split and Year-Wise Table",
+  metaDescription:
+    "Projects EPF year by year with the 8.33% EPS diversion capped at ₹1,250 a month, a VPF comparison and the pensionable salary × service ÷ 70 estimate.",
+  steps: [
+    "Set Current age, Retirement age, Current basic + DA (monthly), Annual increase %, Interest rate % and Current EPF balance, or press a Quick presets button such as Mid-career, 32, basic 45,000",
+    "Tick 'Restrict to ₹15,000 wage ceiling' if your employer caps PF at the statutory wage, and press a +5%, +10%, +15% or +20% VPF button under 'Consider VPF before any other debt option' to compare a voluntary top-up",
+    "EPF corpus at age N heads the panel with Your contributions, Employer EPF share and Interest earned, and Year-wise projection lists Age, Monthly basic + DA, Your share, Employer EPF, EPS, Interest and Closing balance for every year; Copy summary copies the report and Reset restores the defaults",
+  ],
   intro:
     "This EPF calculator projects your Employees' Provident Fund corpus year by year using the actual statutory split: 12% of basic plus DA from you, 12% from your employer, of which 8.33% of wages up to the ₹15,000 ceiling (a maximum of ₹1,250 a month) is diverted to EPS instead of EPF. It compounds each year's balance at the interest rate you set, grows your wage by your expected annual hike, and shows the EPS pension estimate from the standard pensionable salary × pensionable service ÷ 70 formula. It is for salaried employees in India who want to see how much of the final corpus is their own money and how much is interest.",
   useCases: [

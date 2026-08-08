@@ -1,4 +1,12 @@
 const seo = {
+  title: "SIP Goal Reverse Calculator: Monthly Amount Needed",
+  metaDescription:
+    "Enter a target amount and date to get the monthly SIP required: annuity-due maths, credit for money already invested, step-up and inflation options.",
+  steps: [
+    "Enter Target amount (INR), First instalment date and Target date, or tap one of the 3 / 5 / 10 / 15 / 20 years buttons to set the target date from the start date.",
+    "Set 'Expected return (% per year)', 'Already invested for this goal (INR)', 'Annual SIP step-up (%)' and 'Inflate the goal by (% per year)' — leave inflation at 0 if the target is already in future rupees.",
+    "Read 'Monthly SIP needed' with the number of instalments, alongside rows for 'Goal in target-date rupees', 'Existing investment grows to', 'Gap the SIP must fund', 'Total you invest' and 'Projected value on target date'; Show opens the Year-by-year projection table and Copy result copies the summary.",
+  ],
   intro:
     "A SIP goal reverse calculator solves the standard future-value-of-an-annuity formula backwards: instead of asking what a fixed instalment grows into, it asks what instalment is needed to reach a stated amount on a stated date. It treats each contribution as an annuity due — invested at the start of the month, as a real SIP mandate debits — credits whatever you have already invested for the goal, and can layer on an annual step-up or restate the goal in future rupees at an assumed inflation rate. It is meant for anyone with a fixed-date goal such as a down payment, a school admission fee or a wedding, who needs the instalment figure rather than a maturity figure.",
   useCases: [

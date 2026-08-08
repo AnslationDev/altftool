@@ -1,4 +1,12 @@
 const seo = {
+  title: "Five Paragraph Essay Word Budget and Time Planner",
+  metaDescription:
+    "Split an essay word target into intro, three body paragraphs and conclusion with a word budget, sentence count, evidence chunks and drafting minutes.",
+  steps: [
+    "Set Target word count (150 to 5,000, or tap the 250 / 500 / 800 / 1200 / 2000 words presets), choose 2 to 6 Body paragraphs, and write your Thesis statement (one arguable sentence) plus one reason per body paragraph.",
+    "Enter Drafting speed (words per minute) or choose from the 'Or pick a typical speed' menu — the plan recalculates on every keystroke, so there is no calculate button.",
+    "Read Total time to write plus the rows for Evidence to gather and Planning / drafting / revising, then the Paragraph-by-paragraph plan giving words, sentences and share per section; Copy outline puts the whole outline on your clipboard.'",
+  ],
   intro:
     "A five paragraph essay planner converts a word-count target into a per-paragraph writing budget: introduction, three body paragraphs and conclusion, each with its own word allowance, sentence count and evidence requirement. It uses the standard composition proportions — about 12% of the words for the introduction, 11% for the conclusion and the remaining 77% split evenly across the body — and builds each body paragraph on the Jane Schaffer pattern of one topic sentence, then repeating chunks of one concrete detail plus two commentary sentences. Useful for timed exams, coursework and anyone who can plan an argument but keeps running out of words in the wrong place.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Is This MAC Address Randomised? U/L and I/G Bits",
+  metaDescription:
+    "Paste any MAC address to read the U/L and I/G flag bits: a private Wi-Fi address always has 2, 6, A or E as its second hex digit. Nothing is sent.",
+  steps: [
+    "Paste a MAC address into the MAC address box — colon, hyphen, Cisco dotted or bare hex all work — or tap one of the example chips such as 3A:2F:19:8C:41:0D.",
+    "The page reads the U/L bit (0x02) and I/G bit (0x01) of the first octet, per IEEE Std 802-2014, to say whether the address came from an IEEE manufacturer block or was made up locally.",
+    "Read the Verdict headline and what it means, including which router rules a rotating address breaks — DHCP reservations, MAC allow-lists, per-device schedules — then press Copy result.",
+  ],
   intro:
     "This explainer classifies any MAC address by reading the two flag bits IEEE Std 802-2014 defines in the first octet: the U/L bit (0x02) says whether the address was assigned from an IEEE manufacturer block or made up locally, and the I/G bit (0x01) says whether it addresses one interface or a group. Because operating systems build private Wi-Fi addresses by setting U/L and clearing I/G, a randomised address always has 2, 6, A or E as its second hex digit — which the page shows alongside the router features a rotating address breaks. Useful to anyone puzzled by unfamiliar devices in a router list or by parental controls that quietly stopped applying.",
   useCases: [

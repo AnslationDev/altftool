@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hook Timing Planner: Reels, TikTok, YouTube Ads",
+  metaDescription:
+    "Turn a video length and frame rate into a beat sheet pinned to real thresholds: 3s Meta view, 15s ThruPlay, 5s YouTube skip. Frames and MM:SS:FF.",
+  steps: [
+    "Pick the Platform, from Instagram Reels to YouTube skippable in-stream, and enter the Video length in seconds.",
+    "Choose a Frame rate between 23.976 and 60 fps, then set Pattern interrupt every (seconds) and CTA length.",
+    "Read Hook must land by, then the Beat sheet table of in/out timecode, frames and beat, and hit Copy beat sheet.",
+  ],
   intro:
     "The Hook Retention Timing Planner converts a short video's runtime and frame rate into a beat sheet anchored to each platform's own measurement thresholds — the point a view is credited, the point a skip button appears, and the point a completion or ThruPlay is counted. Meta counts a video view at 3 seconds and a ThruPlay at 15 seconds or completion; TikTok reports 2-second and 6-second views; YouTube skippable in-stream shows the skip button at 5 seconds and credits a paid view at 30 seconds. Editors and paid-social creatives use it to place the hook, the pattern interrupts and the CTA on exact frames rather than by feel.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "EPF Claim Rejected? Decode the Remark and Who Must Fix It",
+  metaDescription:
+    "26 EPFO rejection families decoded: what the remark means, whether you, the employer or the field office can clear it, and the correction route.",
   intro:
     "An EPF claim rejection reason decoder turns the one-line remark EPFO shows against a rejected claim into three answers: what the remark means, who alone can clear it — you, the ex-employer, or the EPFO field office — and the correction route defined for it, whether that is an online Joint Declaration, an Aadhaar e-KYC, a Form 13 transfer, or a grievance on EPFiGMS. It is for members whose Form 19, Form 10C or Form 31 came back rejected and who cannot tell from the wording whose desk the problem sits on. The catalogue covers 26 rejection families and cites the provision behind each one — Paras 68B, 68HH, 68J, 68K, 68NN and 69 of the Employees' Provident Funds Scheme 1952, Paras 10, 12 and 14 of the Employees' Pension Scheme 1995, Sections 7A, 7Q, 14B and 17 of the EPF and Miscellaneous Provisions Act 1952, and Section 192A of the Income-tax Act 1961.",
   useCases: [

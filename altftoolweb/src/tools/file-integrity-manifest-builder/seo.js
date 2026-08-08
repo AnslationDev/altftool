@@ -1,4 +1,12 @@
 const seo = {
+  title: "File Integrity Manifest Builder: SHA-256 in Your Browser",
+  metaDescription:
+    "Hash up to 200 files with SHA-256 into a deterministic JSON manifest, then diff it against an earlier one — files never leave the tab.",
+  steps: [
+    "Press Choose files or Choose folder to select up to 200 files, 64.0 MB per file and 256.0 MB combined; folder selection keeps the browser-provided relative paths.",
+    "Optionally press Import manifest to load an earlier JSON manifest (up to 2.0 MB), then press Build manifest to read each file in turn and digest it locally with SHA-256.",
+    "Review Ordered file entries, Duplicate digest visibility and the Earlier-manifest comparison, then press Download manifest for file-integrity-manifest.json or Download counts only for file-integrity-counts-only.json.",
+  ],
   intro:
     "File Integrity Manifest Builder hashes every file in a folder or selection with SHA-256 and writes a deterministic JSON manifest listing each file's relative path, size, media type, last-modified time and 64-character digest, sorted by path so the same set always produces the same file. Load a manifest you saved earlier and it diffs the two, reporting digest matches, digest differences, files present only now, files present only in the baseline, and metadata-only changes. It is for anyone who needs to prove a set of files has not changed between two points in time — archives, evidence sets, design masters, release bundles — without uploading any of them.",
   useCases: [

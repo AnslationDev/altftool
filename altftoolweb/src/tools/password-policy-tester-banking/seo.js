@@ -1,4 +1,12 @@
 const seo = {
+  title: "Net Banking Password Tester: Which Rule Fails",
+  metaDescription:
+    "Test 8-20 characters, case, digit, special-character and no-user-ID rules one at a time, plus entropy in bits and guessing time at three attack rates.",
+  steps: [
+    "Type a password you are about to set into Candidate password (press Show to reveal it), then fill Customer / user ID, Date of birth (DDMMYYYY) and Days since last change so the tool can catch a password built from details the bank already holds.",
+    "Read Rules passed as a count out of the full rule set — when it fails, the line names the rejected constraints — then open Rule by rule for the PASS/FAIL verdict and reason behind each requirement.",
+    "Check Estimated strength in bits, Character pool, Deduction for guessable patterns and the three cracking times (throttled login form, stolen bcrypt hash, stolen fast hash), then press Copy result.",
+  ],
   intro:
     "Bank Password Policy Tester checks a candidate net-banking password against the rule set retail banks publish: 8 to 20 characters, at least one uppercase letter, one lowercase letter, one digit and one special character from a restricted list, no spaces, no run of three identical characters, and nothing taken from your user ID or date of birth. Each rule is reported separately, so you see exactly which constraint a rejected password broke instead of a generic error. It also estimates strength in bits of entropy and converts that into guessing time at three realistic attack rates, because passing a bank's form and being hard to guess are two different things.",
   useCases: [

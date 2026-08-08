@@ -1,4 +1,12 @@
 const seo = {
+  title: "Senior Protein Calculator: Daily Target by Meal",
+  metaDescription:
+    "Turn body weight into a PROT-AGE/ESPEN daily protein target, split across meals and checked against the 0.4 g/kg (25-30 g) per-meal dose.",
+  steps: [
+    "Enter Body weight (kg) and Age (years), then pick a Health situation — each option shows its g/kg/day band.",
+    "Choose an Activity level and Main meals per day, and tick \"Carve out a pre-sleep milk, curd or casein feeding\" if you want a fourth occasion.",
+    "Read the Meal-by-meal split table — Eating occasion, Protein, Share and \"Clears dose?\" — then press Copy plan.",
+  ],
   intro:
     "The Senior Protein Distribution Planner converts an older adult's body weight into a daily protein target using the PROT-AGE and ESPEN bands — 1.0-1.2 g/kg/day when healthy, 1.2-1.5 g/kg/day with chronic illness or regular resistance training — and then splits that total across meals. Each meal is checked against the per-meal dose that research puts at roughly 0.4 g/kg or 25-30 g, the amount needed to overcome the blunted muscle-protein-synthesis response of older muscle. It is aimed at older adults, carers and family members who want to see whether the protein is landing in useful amounts rather than piled into one evening meal.",
   useCases: [

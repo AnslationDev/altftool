@@ -1,4 +1,12 @@
 const seo = {
+  title: "Marketing AI Prompts: 10 Fill-in-the-Blank Briefs",
+  metaDescription:
+    "Ten marketer prompts by funnel stage — positioning, ads, SEO briefs, nurture emails, landing-page audits, retros. Fill the blanks and Copy prompt.",
+  steps: [
+    "Narrow the library with \"Search prompts\" or the \"Category\" select, then pick one of the 10 prompts (positioning, ad variants, SEO brief, nurture email, comparison page, landing-page audit, launch plan, retro, win-back).",
+    "Complete the \"Fill in the blanks\" fields for that prompt, or press \"Use example values\" to see it populated.",
+    "Check the Words, Characters and Estimated tokens readout, then press \"Copy prompt\" to paste it into any assistant.",
+  ],
   intro:
     "The Marketer Prompt Pack is a library of 10 fill-in-the-blank AI prompts organised by funnel stage: positioning and audience mapping, ad variants and SEO briefs for awareness, nurture emails and comparison pages for consideration, landing page audits and launch messaging for conversion, and retrospectives and win-backs for retention. Each prompt fixes the audience, the offer and the output format, and bakes in the discipline good marketing already follows — one test variable per ad batch, claims traced to evidence, and honest concessions on comparison pages. You fill the blanks in your browser and copy the finished prompt into any assistant.",
   useCases: [

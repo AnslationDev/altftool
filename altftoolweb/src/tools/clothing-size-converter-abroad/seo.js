@@ -1,4 +1,12 @@
 const seo = {
+  title: "Clothing Size Converter: US, UK, EU, Italy, Japan",
+  metaDescription:
+    "Convert a size or a bust/chest measurement between US, UK/India, EU, French, Italian and Japanese charts, with the cm each row actually represents.",
+  steps: [
+    "Pick the Size chart — Women's dresses and tops, or Men's jackets, suits and tops — and whether to Start from a size you already know or your body measurement.",
+    "Give the size and the system it is in, or the bust or chest measurement in cm or inches, then set \"I am shopping in\" to US, UK / India / Australia, EU, France, Italy or Japan.",
+    "Read the \"Ask for size\" figure with the bust or chest and waist on that row and every other system's equivalent, then press \"Copy result\".",
+  ],
   intro:
     "This converter maps a clothing size between the US, UK, EU, French, Italian and Japanese systems, either from a size you already wear or from a bust or chest measurement in centimetres or inches. It works from body-measurement tables rather than arithmetic tricks, because sizes are nominal labels rather than units — the European standard EN 13402 exists precisely to put the body dimensions on the label. Across mainstream charts the pattern is stable: for women UK = EU − 28, US = EU − 32, France = EU + 2 and Italy = EU + 4; for men the EU jacket number is half the chest in centimetres and the UK or US number is the chest in inches.",
   useCases: [

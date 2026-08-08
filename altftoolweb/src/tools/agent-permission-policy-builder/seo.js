@@ -1,4 +1,12 @@
 const seo = {
+  title: "Agent Permission Policy Builder: Validated JSON Rules",
+  metaDescription:
+    "Build agent guardrails as JSON: allowed and denied tools, path prefixes, hostnames, recipients, numeric ceilings and confirmation flags, validated live.",
+  steps: [
+    "Under Tool names, list Allowed tool patterns and Denied tool patterns one per line or comma-separated, up to 200 entries of 500 characters each.",
+    "Under Targets add Allowed path prefixes, Allowed domains as bare hostnames such as example.com or *.example.com, and Allowed recipients; under Limits and confirmation add Numeric ceilings in the form field = maximum, plus Tools requiring confirmation and the Accepted confirmation flags.",
+    "Clear the errors and warnings shown above the Policy JSON pane — colliding allow/deny patterns, relative path prefixes, confirmation with no accepted flag — then press Copy JSON, or Download to save agent-permission-policy.json.",
+  ],
   intro:
     "The Agent Permission Policy Builder turns plain lists into a validated JSON permission policy for an AI agent, covering seven rule groups: allowed tools, denied tools, allowed filesystem path prefixes, allowed domains, allowed message recipients, named numeric ceilings, and which tools require a confirmation flag before they run. It validates as you type — hostnames are parsed properly so a URL with a path or port is rejected, numeric limits must be non-negative numbers, and requiring confirmation without naming an accepted flag is treated as an error rather than a silent gap. It is for developers and platform owners writing the guardrail file itself; the document is generated in your browser and enforces nothing on its own.",
   useCases: [

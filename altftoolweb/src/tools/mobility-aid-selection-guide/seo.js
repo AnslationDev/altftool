@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mobility Aid Selection Guide: Cane, Walker, Rollator",
+  metaDescription:
+    "Ranks sticks, quad canes, crutches, frames, rollators, knee walkers and wheelchairs on support, stability and grip, with the wrist-crease fitting height.",
+  steps: [
+    "Answer how much support is needed, how steady walking is, how far before a rest, hand and arm strength, and where the aid will mostly be used.",
+    "Tick anything else that matters - needs one hand free, carries shopping, uses stairs, memory difficulties - and add a standing height in cm.",
+    "Read the Closest match and its trade-offs, the Runner-up, and the handgrip height that puts the elbow at 15 to 20 degrees of bend.",
+  ],
   intro:
     "The Mobility Aid Selection Guide ranks walking sticks, quad canes, forearm crutches, pick-up frames, two-wheeled walkers, rollators, knee walkers and wheelchairs against one person's needs, because support, stability, portability and manoeuvrability trade off against each other rather than improving together. It scores each option on the weight relief it gives, the base of support it adds, the hand strength it demands and how it behaves indoors, outdoors and on stairs. It also gives the standard fitting rule: the handgrip should sit level with the wrist crease when standing with arms relaxed, putting the elbow at 15 to 20 degrees of bend.",
   useCases: [

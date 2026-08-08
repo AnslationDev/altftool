@@ -1,4 +1,12 @@
 const seo = {
+  title: "Freelance Rate Calculator: Take-Home to Hourly Rate",
+  metaDescription:
+    "Works backwards from your target take-home: adds tax and costs, then divides by billable hours — 48 weeks x 40h at 60% is 1,152, not 1,920.",
+  steps: [
+    "Under '1. The life you want' enter 'Target annual take-home', then list every yearly cost under '2. What the business costs' using its Add button.",
+    "In '3. Tax set-aside' choose 'Flat % of profit' or '44ADA presumptive', then in '4. Billable reality' set Working weeks, Hours per week and the 'Billable share of your week' slider.",
+    "Read the per-billable-hour rate with the day rate and monthly retainer, check it against the editable Junior, Mid and Senior bands, then press 'Copy rate card'.",
+  ],
   intro:
     "The Freelance Rate & Retainer Calculator works backwards from the take-home income you want to the hourly, day, project and monthly retainer rates you actually have to charge, by grossing your target up for tax, adding your annual business costs, and dividing by billable hours only. Billable hours come from working weeks times hours per week times your billable percentage — 48 weeks at 40 hours with 60% billable is 1,152 hours, not 1,920 — which is why the rate it returns is usually higher than people expect. It then checks that rate against editable junior, mid and senior market bands for development, design or writing so you can see whether the number is sellable.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stamp Duty & Registration Cost: 23 Indian States",
+  metaDescription:
+    "Charges duty on the higher of agreement value or circle rate, applies each state's cess, surcharge and registration cap, and ranks 23 states.",
+  steps: [
+    "Pick your State / UT, enter the Agreement value and the Circle / ready-reckoner value, then set Ownership / buyer and Property type.",
+    "The estimator charges duty on whichever of the two values is higher, adds the state's cess, surcharge and capped registration fee, plus Legal / documentation and your Brokerage percentage.",
+    "Read the one-time statutory cost and where your state ranks of 23, then use Copy estimate or Download to save stamp-duty-estimate-<state>.txt.",
+  ],
   intro:
     "The Property Stamp Duty & Registration Estimator works out the full one-time cash cost of buying property in 23 Indian states and union territories, charging duty on the higher of your agreement value or the circle rate exactly as a sub-registrar does. It applies each state's own structure — flat rates, Karnataka and Goa's value slabs, West Bengal's above-₹1-crore step-up, cesses and surcharges levied on the duty rather than the property, and registration fees with caps such as Maharashtra's ₹30,000 — then adds brokerage and legal fees to show the cash you need beyond the loan. It is built for buyers budgeting a purchase and for anyone comparing what the same property would cost to register in a different state.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Stock Average Calculator with Break-Even and Planner",
+  metaDescription:
+    "Weighted average from every buy lot, live P&L and a charge-adjusted break-even, plus the shares a target average takes: Q×(A−T)÷(T−P).",
+  steps: [
+    "Under Your buy lots fill Lot 1 quantity and Buy price (₹), pressing Add another lot for each further tranche, then set Current market price (₹) and Round-trip charges (%)",
+    "In Averaging planner switch to Reach a target average and enter Target average price (₹), or to I have a budget of ₹X and enter Budget for this buy (₹)",
+    "Position summary reports the Weighted average price with Total quantity, Total invested, Portfolio value and Break-even price, while the planner returns Buy N shares with Cost required, New total quantity and Achieved average; Copy summary copies the position and Reset clears the lots",
+  ],
   intro:
     "The Stock Average & Break-Even Calculator takes every buy lot in a position and returns the true weighted average price — total amount invested divided by total shares held — along with live unrealised profit and loss and the break-even price once round-trip charges are included. Its averaging-down planner solves the other direction: give it a target average and it computes the exact share count needed using shares = Q × (A − T) ÷ (T − P), or give it a budget and it shows the average you would end up with. It is for retail investors adding to an existing holding who want the arithmetic settled before they place the order.",
   useCases: [

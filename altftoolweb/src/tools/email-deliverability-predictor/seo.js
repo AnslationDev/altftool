@@ -1,4 +1,7 @@
 const seo = {
+  title: "Email Deliverability Predictor: Check Before Sending",
+  metaDescription:
+    "Scores content 30%, subject 20%, HTML 20%, links 15% and best practices 15%, with a spam-risk figure and an inbox estimate capped at 97%.",
   intro:
     "Email Deliverability Predictor audits a subject line, sender address and message body against a fixed set of content rules — spam-trigger phrases, stacked urgency, shouting caps, repeated punctuation, insecure or shortened links, missing unsubscribe and postal address, HTML that email clients cannot render — and scores five weighted categories: content 30%, subject 20%, HTML structure 20%, links 15% and best practices 15%. Each finding carries a penalty of 20 points for an error, 10 for a warning and 4 for an info note, producing an overall score, a spam-risk figure and an inbox-probability estimate deliberately capped at 97%. It is for marketers and developers who want to fix the content half of deliverability before hitting send; it cannot see sender reputation or your SPF, DKIM and DMARC setup.",
   useCases: [

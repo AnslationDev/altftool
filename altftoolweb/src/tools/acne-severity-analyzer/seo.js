@@ -1,4 +1,7 @@
 const seo = {
+  title: "Acne Severity Analyzer: Spot Count & Coverage %",
+  metaDescription:
+    "Upload a front-facing photo and get a blemish spot count, coverage percentage and a Clear-to-Severe band. Runs locally on your device.",
   intro:
     "The Acne Severity Analyzer is a browser-based photo tool that locates your face with a TinyFaceDetector plus a 68-point landmark model, samples the central 60% of the face box, and counts pixels that are strongly red relative to the green and blue channels to estimate a blemish count, a coverage percentage and a severity band. It is built for anyone tracking a skincare routine who wants a repeatable number instead of a vague feeling that things look better or worse. Everything — model inference, pixel scoring and the red heatmap overlay — happens locally on your device, and the result is an informational screening signal, not a clinical diagnosis.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Telecom Billing Complaint Letter with TRAI Deadlines",
+  metaDescription:
+    "Write a telecom overbilling or network complaint and get the TRAI four-week resolution date, the one-week credit date and the Appellate Authority date.",
+  steps: [
+    "Enter the number or connection in dispute, your operator, the docket or complaint number, the disputed amount and the date you first complained.",
+    "Pick What went wrong — a value-added service you never activated, roaming charges or billing after disconnection — plus the escalation stage and relief.",
+    "Read the escalation timeline of TRAI resolution, credit and appeal dates, then press Copy letter to take the drafted complaint.",
+  ],
   intro:
     "This generator writes a formal telecom billing or network complaint and calculates every escalation date that goes with it. It applies the TRAI Quality of Service benchmarks — a billing complaint must be resolved within four weeks of registration, and any credit or waiver must reach the account within one week of that resolution — and the TRAI Telecom Consumers Complaint Redressal Regulations, 2012, under which an appeal to the operator's Appellate Authority may be filed within three months of the redressal period ending. The letter names your docket number, the disputed amount and the exact relief you want, and the tool flags an escalation raised too early or too late.",
   useCases: [

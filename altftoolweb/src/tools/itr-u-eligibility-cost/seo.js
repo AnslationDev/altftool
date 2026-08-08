@@ -1,4 +1,12 @@
 const seo = {
+  title: "ITR-U: Section 139(8A) Bars and Section 140B Cost",
+  metaDescription:
+    "Check the twelve section 139(8A) bars, get the 24- or 48-month deadline, and price the return: tax, 234A/234B interest, 234F fee and 140B tax.",
+  steps: [
+    "In \"Step 1 — the section 139(8A) bars\" tick anything that is true of your year; a single tick closes the door, because the provisos are absolute rather than weighed against each other.",
+    "In \"Step 2 — the year and the filing date\" pick the assessment year, the date the ITR-U would be furnished, which section 139(1) due date applied and whether a return was already filed; in \"Step 3 — the money\" enter the tax due, the total income and any section 234C interest already worked out.",
+    "Read the verdict — either the bar with the proviso that produced it, or the deadline with days left, the section 140B(3) slab of 25%, 50%, 60% or 70% and the total payable itemised down to the section 234F fee — then press Copy result.",
+  ],
   intro:
     "This page answers two questions about an updated Indian income tax return: whether section 139(8A) lets you file ITR-U for a given assessment year at all, and what section 140B makes it cost. It runs the statutory bars first, because for a large share of people the honest answer is no — an updated return cannot reduce the tax already determined, cannot create or increase a refund, cannot be a return of a loss, and cannot be filed where a search under section 132, a survey under section 133A, a pending or completed assessment, or Chapter XXII prosecution touches that year. If nothing bars you, it names which form of section 139(8A) governs the year (the 24-month window as enacted by the Finance Act 2022, or the 48-month window substituted by the Finance Act 2025 with effect from 1 April 2025), gives the exact deadline date, and adds up the tax, the section 234A and 234B interest at 1% per month or part month, the section 234C interest you enter, the section 234F fee and the section 140B(3) additional tax of 25%, 50%, 60% or 70%. It is built for people who missed income on an old return and for the accountants who have to price the fix.",
   useCases: [

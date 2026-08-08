@@ -1,4 +1,12 @@
 const seo = {
+  title: "Animated QR File Beam: Send a File Across an Air Gap",
+  metaDescription:
+    "Split a file up to 256 KiB into numbered QR frames, loop them on screen, and rebuild it on another device's camera. CRC-32 verified, no server, no upload.",
+  steps: [
+    "On the \"Send a file\" tab, choose \"Pick a small file\" (up to 256 KiB) or the text pad, then set the QR version, error-correction level and frames per second.",
+    "Press \"Play loop\" to cycle the numbered QFB1 frames on screen, then on the receiving device open \"Receive a file\" and press \"Start camera\".",
+    "Watch \"Frames captured\" fill; once every numbered frame is in and the rebuilt CRC-32 matches the declared one, press \"Save file\".",
+  ],
   intro:
     "This tool carries a small file across an air gap using nothing but a screen and a camera. It chops the file into fixed-size chunks, Base64-encodes each chunk into a numbered frame of the form QFB1|fileId|seq|total|data, and plays those frames as a QR loop with a header frame — file name, byte count and CRC-32 — repeated throughout so a late-joining receiver still learns what it is catching. On the receiving device the same page reads frames with the camera, ignores duplicates, accepts them out of order, and rebuilds the file only when every sequence number is present and the CRC-32 matches. Frame sizing is not guesswork: it uses the ISO/IEC 18004 byte-mode capacity table, so a version-12 M symbol is treated as exactly 287 bytes and the payload per frame is the largest multiple of 3 whose Base64 form still fits after the frame header. There is no upload, no server, no pairing code and no network request of any kind.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gratuity Calculator: Payment of Gratuity Act Formula",
+  metaDescription:
+    "Applies (15 × basic + DA × years) ÷ 26 to your last drawn pay, with the 6-month rounding rule, 5-year eligibility and the ₹20 lakh tax-free ceiling.",
+  steps: [
+    "Enter your last drawn Monthly basic + DA (₹), then set Years of service and Extra months with the steppers.",
+    "Leave the 'Covered under Payment of Gratuity Act, 1972' switch on for the ÷ 26 formula and 6-month rounding, or turn it off for the ÷ 30 basis.",
+    "Read the payout, the rounding note and the split against the ₹20,00,000 exemption, then press Copy summary.",
+  ],
   intro:
     "This gratuity calculator applies the Payment of Gratuity Act formula — (15 × last drawn basic + DA × completed years of service) ÷ 26 — and shows how the six-month rounding rule, the five-year eligibility condition and the ₹20 lakh tax-free ceiling change the payout. Enter your monthly basic plus dearness allowance and your exact service in years and months, and it returns the amount, the exempt portion and any taxable balance, with the formula it used spelled out. It is for employees checking a full-and-final settlement figure before they sign it, and it is informational only — your employer's own computation and a tax adviser settle the final number.",
   useCases: [

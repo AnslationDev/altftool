@@ -1,4 +1,12 @@
 const seo = {
+  title: "Calories Burned Lifting Weights: MET by Set and Rest",
+  metaDescription:
+    "Times working sets, rest and warm-up separately at 3.5-6.0, 1.5 and 2.3 MET from the 2011 Compendium, using the ACSM equation. Gross and net kcal.",
+  steps: [
+    "Enter your Body weight in kg or lb, the Working sets in the session, Seconds per working set, Rest between sets (seconds) and Warm-up and cool-down (minutes).",
+    "Choose What the working sets were — each option shows its MET value, 3.5 for machines and isolation work, 5.0 for compound lifts, 6.0 for hard powerlifting or bodybuilding sets — or tap the Short rest (60s), Standard (90s) or Strength (180s) preset.",
+    "Read the Calories burned total with Where the energy actually went splitting sets, rest and warm-up, plus Net of resting metabolism and the same session at each Compendium intensity, then press Copy result.",
+  ],
   intro:
     "Most calorie calculators ask how long you were in the gym and multiply by one number. That is the wrong shape for weight training, where a ninety-minute session might contain fifteen minutes of actual work and an hour of standing between sets. This calculator times the three phases separately and applies the published MET value for each: 3.5, 5.0 or 6.0 for the working sets depending on what you lifted (Compendium codes 02054, 02052 and 02050), 1.5 for resting on your feet between them, and 2.3 for the warm-up. Energy comes from the ACSM oxygen-cost equation, kcal = MET x 3.5 x kg / 1000 x 5 x minutes, and the breakdown shows exactly how much of the total each phase contributed — usually a surprise the first time you look.",
   useCases: [

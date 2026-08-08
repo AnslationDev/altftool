@@ -1,4 +1,12 @@
 const seo = {
+  title: "Check package.json Install Scripts Without Running",
+  metaDescription:
+    "Nothing runs: paste a package.json and see which preinstall, install, postinstall and prepare hooks fire on npm install, flagged by six review cues.",
+  steps: [
+    "Paste your package.json into the JSON source box, or press Choose package.json to load a .json file — the limit is 500,000 characters and lockfiles are rejected rather than partially parsed.",
+    "Press Inspect without running: every command is read as inert text and pattern-matched against six cues — network or remote source, file write and permission change, shell or runtime invocation, native build toolchain, environment-variable access, and encoded or dynamic evaluation.",
+    "Read the Script summary tiles (All scripts, Install lifecycle, With cues, No pattern cue) and the Script evidence cards, then press Download local JSON to save package-install-script-inert-review.json.",
+  ],
   intro:
     "The Package Install-Script Inspector parses a pasted package.json as inert text and reports which of its scripts run automatically during npm install — preinstall, install, postinstall, prepare and the rest of the install lifecycle — flagging each command against six review cues: network or remote source, file write and permission changes, shell or runtime invocation, native build toolchain, environment-variable access, and encoded or dynamic evaluation. Nothing is executed, fetched or resolved; commands are only read and pattern-matched. It is for developers reviewing an unfamiliar dependency before they let its lifecycle hooks run on their machine or in CI.",
   useCases: [

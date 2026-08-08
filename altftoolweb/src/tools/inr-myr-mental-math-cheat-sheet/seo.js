@@ -1,4 +1,12 @@
 const seo = {
+  title: "Ringgit to Rupees Mental Math Cheat Sheet + Error %",
+  metaDescription:
+    "Enter the ringgit rate you actually pay and get a mental shortcut — multiplier, percentage nudge or fraction — with the exact error of each rule.",
+  steps: [
+    "Type the rate you actually pay into 'Rupees per 1 MYR' and a price you might see into 'A price to try (RM)'.",
+    "Compare 'The three rules, ranked by accuracy' — a whole-or-half multiplier, that multiplier with a percentage nudge, and the closest simple fraction — each showing its error against the exact figure.",
+    "Take the rule badged 'Use this one', confirm 'Good enough for shopping' says within 2%, memorise the price ladder and press Copy result.",
+  ],
   intro:
     "This cheat sheet turns whatever ringgit-to-rupee rate you are being given today into a rounding shortcut you can run in your head at a till in Kuala Lumpur. Every currency conversion is one multiplication, so it splits the rate into a decimal shift plus a working multiplier between 1 and 10, then searches three families of mentally executable rules — a whole-or-half multiplier, that multiplier plus an easy percentage nudge such as 10%, 25% or 2.5%, and the closest simple fraction — and reports the exact percentage error of each. It is for travellers and online shoppers who want a number that is within about 2% without unlocking a phone.",
   useCases: [

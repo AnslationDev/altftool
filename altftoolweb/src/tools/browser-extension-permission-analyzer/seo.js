@@ -1,4 +1,12 @@
 const seo = {
+  title: "Extension Permission Analyzer: Read a manifest.json",
+  metaDescription:
+    "Paste an extension manifest.json to see what each permission, host match pattern and content script allows, and which combinations add up to more.",
+  steps: [
+    "Paste the extension's manifest.json into the 'manifest.json' box — find it at chrome://extensions, then Details, then the extension folder or the unpacked source.",
+    "API permissions are split from host match patterns, every pattern is validated, content_scripts are read down to run_at, all_frames and world, and the background type and Content Security Policy are parsed.",
+    "Read 'Combinations that matter', then the 'Declared permissions' table's Permission, Class and 'What it allows' columns alongside 'Host access' and 'Content scripts', and press 'Copy report'.",
+  ],
   intro:
     "Paste an extension's manifest.json and this tool parses it the way a reviewer would: it separates API permissions from host match patterns (which Manifest V2 mixes into the same array), validates every pattern against the <scheme>://<host>/<path> grammar, reads the content_scripts entries down to run_at, all_frames and world, identifies the background type, and parses the Content Security Policy directives. Each permission is matched against a fixed catalogue that says what the API actually allows. On top of that it applies combination rules — broad host access plus scripting, cookies plus all sites, nativeMessaging plus page access — because the permissions that matter most are usually the ones that only become dangerous together. Nothing is uploaded and no store is contacted.",
   useCases: [

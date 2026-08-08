@@ -1,4 +1,12 @@
 const seo = {
+  title: "Coaching Institute Prompt Pack + CCPA Claim Screen",
+  metaDescription:
+    "10 fill-in-the-blank AI prompts for batch, doubt, result and fee messages, screened against 18 claims the CCPA's 2024 coaching guidelines restrict.",
+  steps: [
+    "Use Search prompts or the Category filter, then pick one of the 10 prompt cards — Announcements, Doubt replies, Result posts, Parent communication, Admissions or Operations.",
+    "Fill in the blanks for that prompt, or press Use example values; anything left empty stays visible as a {{placeholder}} in the copied text, and what you type is checked against the 18 restricted advertising claims.",
+    "Clear any flagged claim, check the Estimated prompt size, press Copy prompt, and paste finished poster or admissions copy into Screen finished copy for restricted claims to get the Claim / Why it is risky / Write instead table.",
+  ],
   intro:
     "Coaching Institute Prompt Pack is a library of fill-in-the-blank AI prompts for the messages a coaching centre sends every week — batch announcements, doubt replies, result posts, fee reminders and parent updates — paired with a screen that flags advertising claims India's coaching-sector rules restrict. The screen matches your copy against phrases such as \"100% selection\", \"guaranteed rank\" and unsubstantiated superlatives that the CCPA's Guidelines for Prevention of Misleading Advertisement in Coaching Sector, 2024 treat as misleading, and lists the particulars a result post must disclose when it names a successful candidate. Built for centre owners, academic heads and front-office staff who write this copy themselves.",
   useCases: [

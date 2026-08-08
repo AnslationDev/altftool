@@ -1,4 +1,12 @@
 const seo = {
+  title: "Volunteer Agreement Generator: POSH, Expenses, Hours",
+  metaDescription:
+    "Draft a volunteer agreement that stays clear of employment: hours, travel and meal reimbursement budget, and optional POSH and safeguarding clauses.",
+  steps: [
+    "Under Role and commitment set Role title, Location, Start date, Placement length (weeks), Hours per week, Days per week and Notice to end the placement (days).",
+    "Under Reimbursement enter Travel per week (km), Rate per km (INR), Meal or refreshment allowance per day (INR) and any Fixed monthly payment, then tick the optional clauses you need, such as Prevention of sexual harassment or Child protection and safeguarding.",
+    "Check Total volunteer hours, the travel and meal reimbursement budgets and the warning shown when the fixed payment exceeds them, then press Copy agreement to take the draft from the Agreement preview.",
+  ],
   intro:
     "A volunteer agreement records what an organisation and a volunteer have agreed — role, hours, supervision, confidentiality and expenses — while deliberately stopping short of creating an employment relationship. This generator builds that document from your inputs and does the arithmetic behind it: total hours across the placement, the travel and meal reimbursement budget, and a check on whether a fixed monthly payment exceeds the expenses actually budgeted, which is the point at which a payment starts to look like wages. It also offers the clauses Indian nonprofits are most often asked for, including the POSH clause that applies because Section 2(f) of the 2013 Act treats a person working on a voluntary basis as an employee.",
   useCases: [

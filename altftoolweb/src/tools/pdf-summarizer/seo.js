@@ -1,4 +1,5 @@
 const seo = {
+  title: "PDF Summarizer: Extractive Summaries, Up to 80 MB",
   intro:
     "PDF Summarizer extracts a PDF's text layer in the browser and condenses it by extractive scoring: it ranks each sentence on word frequency, then weights opening and closing sentences, sentences containing numbers or named entities, and sentences carrying cue phrases like \"in conclusion\" or \"key finding\". You choose the length — short, medium, detailed, bullet points or an executive brief — and get the top-ranked sentences back, alongside the top 12 keywords, a word count and a reading-time estimate at 200 words per minute. Every sentence in the output comes verbatim from your document; nothing is generated or paraphrased.",
   useCases: [

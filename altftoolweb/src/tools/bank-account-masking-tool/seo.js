@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bank Account Number Masking: PCI DSS and UIDAI",
+  metaDescription:
+    "Hide the middle digits of an account, card or Aadhaar number to the PCI DSS first-six-last-four rule or the UIDAI last-four rule, all in your browser.",
+  steps: [
+    "Type or paste the digits into \"Number to mask\" and choose a Masking rule: Payment card (PCI DSS: first 6, last 4), Bank account (last 4 only), Aadhaar (UIDAI masked: last 4), Strict (last 2 only) or Custom.",
+    "Fine-tune \"Digits visible at the start\" and \"Digits visible at the end\" from 0 to 19, pick a Mask character of X, *, • or #, and untick \"Keep spacing as typed\" to strip separators.",
+    "Read the Masked value with its Luhn checksum (cards) and Verhoeff checksum (Aadhaar) rows and any over-exposure warning, then press Copy result — or open \"Redact a block of text\" to mask every run of 9 digits or more in a pasted block.",
+  ],
   intro:
     "Masking a number means replacing its middle digits so it can still be recognised without being reusable, and the safe defaults are already written down: PCI DSS permits at most the first six and the last four digits of a payment card to be displayed, while a UIDAI masked Aadhaar reveals only the final four. This tool applies those presets to an account, card or Aadhaar number, verifies the Luhn checksum for cards and the Verhoeff checksum for Aadhaar to work out what it is looking at, and warns when your settings would expose more than the rule allows. It also redacts every long digit run inside a pasted block of text, entirely in the browser.",
   useCases: [

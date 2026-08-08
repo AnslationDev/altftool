@@ -1,4 +1,12 @@
 const seo = {
+  title: "RTI for Passport Status: File Movement, Police Check",
+  metaDescription:
+    "Section 6(1) draft to the Regional Passport Office for file movement, police verification dates and pendency reasons, with the 30-day and appeal dates.",
+  steps: [
+    "Under \"Your details and the file\" enter \"Your full name\", \"Regional Passport Office\", \"File or ARN number\", \"Application type\", \"Passport application submitted on\" and \"RTI filed on\".",
+    "Pick \"Where the application appears to be stuck\" — for example \"Police verification not started or not returned\" — and tick the extras you want under \"Questions to include\".",
+    "Read \"Reply is due by\" alongside the Section 6(3) transfer, Section 7(1) reply, Section 19(1) and 19(3) appeal dates and the Rs 10 fee, then press \"Copy application\" for the ready-to-file draft.",
+  ],
   intro:
     "This tool drafts a ready-to-file application under Section 6(1) of the Right to Information Act 2005 addressed to the Central Public Information Officer of a Regional Passport Office, asking for the movement of your own passport file, the despatch and receipt dates of the police verification, and the reason recorded for the delay. It also works out every statutory date that follows: the Section 7(1) reply deadline of 30 days, the Section 6(3) five-day transfer deadline, and the first and second appeal windows under Section 19. It is written for applicants whose passport status has stopped moving and who want a dated, answerable question rather than another grievance ticket.",
   useCases: [

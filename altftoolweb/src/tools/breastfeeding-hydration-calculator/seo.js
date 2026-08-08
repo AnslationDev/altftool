@@ -1,4 +1,12 @@
 const seo = {
+  title: "Breastfeeding Hydration Calculator From Milk Output",
+  metaDescription:
+    "Rebuilds EFSA's +700 ml lactation increment from your own milk volume x 87% water, scaled by stage, feeds and twins, on a 2.0 L or 35 ml/kg baseline.",
+  steps: [
+    "Choose your Breastfeeding stage, enter Feeds in 24 hours counting pumping sessions, and how many Babies nursing.",
+    "Pick the Baseline method — EFSA adequate intake (2.0 L/day) or Body weight (35 ml per kg per day) — then set Climate and Moderate activity (minutes a day); a measured 24-hour pumped volume overrides the estimate.",
+    "Read the 'Drink each day' litre target and the amount per feed, with milk produced, water leaving as milk and the EFSA flat lactation increment itemised, then press Copy result.",
+  ],
   intro:
     "This calculator works out how much extra fluid breastfeeding adds to your day by rebuilding the figure from milk output rather than quoting a flat number. EFSA adds 700 ml of total water a day for lactation because average exclusive-breastfeeding output is about 800 ml of milk a day and human milk is roughly 87% water — 800 x 0.87 = 696 ml. Enter your stage, feeds per day and number of babies (or a measured pumped volume) and the increment scales with your actual production, on top of your chosen baseline — the 2.0 L/day adequate intake for adult women by default, or 35 ml per kg of body weight if you switch to the weight-based method.",
   useCases: [

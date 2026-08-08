@@ -1,4 +1,12 @@
 const seo = {
+  title: "AQI Today: 36 Indian Cities Ranked, Worst Air First",
+  metaDescription:
+    "Live CPCB AQI for 36 cities, worst first, with the dominant pollutant, all six sub-indices and each city's band. Modelled data, not station readings.",
+  steps: [
+    "The board fetches current PM2.5, PM10, NO2, SO2, CO and O3 for 36 cities from Open-Meteo; narrow it with Find a city or the Zone list.",
+    "Press Sub-indices on a row for each pollutant's concentration, its 24-hour or 8-hour averaging window, hours used and CPCB sub-index.",
+    "Copy board writes the whole ranking as text; Refresh re-fetches, and any city whose request fails is marked unavailable instead of showing a stale figure.",
+  ],
   intro:
     "AQI Today is a national air-quality board that ranks 36 Indian cities worst-first on the CPCB National Air Quality Index and shows, for each one, the dominant pollutant and all six sub-indices behind the headline number. Current PM2.5, PM10, NO₂, SO₂, CO and O₃ concentrations are fetched live in your browser from the Open-Meteo Air Quality API, averaged over the CPCB windows — 24 hours for the particulates, NO₂ and SO₂, 8 hours for CO and ozone — and converted with the CPCB 2014 sub-index formula Ip = ((IHi − ILo) ÷ (BPHi − BPLo)) × (Cp − BPLo) + ILo, the AQI being the worst of the six. It is for anyone comparing cities at a glance, and the concentrations are modelled grid values, not official CPCB station telemetry.",
   useCases: [

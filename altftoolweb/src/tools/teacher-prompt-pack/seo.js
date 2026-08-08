@@ -1,4 +1,12 @@
 const seo = {
+  title: "10 Teacher AI Prompts: Lessons, Rubrics, Feedback",
+  metaDescription:
+    "Fill-in-the-blank AI prompts for lesson plans, rubrics, feedback, differentiation, parent emails and report comments, with no-student-name guardrails.",
+  steps: [
+    "Use Search prompts or the Category filter to pick one of the 10 prompts — lesson plan, unit outline, rubric, feedback comments, question bank, differentiation, parent email, report comments or routine reset.",
+    "Under 'Fill in the blanks' type into each field, or press 'Use example values'; 'Clear fields' empties them and anything left blank stays visible as a {{placeholder}}.",
+    "Check the Estimated prompt size in characters and tokens, then press Copy prompt and paste it into whichever assistant your school allows.",
+  ],
   intro:
     "The Teacher Prompt Pack is a library of 10 fill-in-the-blank AI prompts for the recurring jobs of classroom teaching: lesson and unit planning, rubrics, written feedback, retrieval questions, differentiation, parent emails, report comments and routine resets. Each prompt fixes the constraints and the output format up front, pins down the year level for the ones that need it, and the sensitive ones carry built-in guardrails — no student names, observed behaviour instead of diagnoses, facts instead of speculation. You fill the blanks in your browser, the tool substitutes them into the template and shows the estimated size, then you copy the finished prompt into whichever assistant your school allows.",
   useCases: [

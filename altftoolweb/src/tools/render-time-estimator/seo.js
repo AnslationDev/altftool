@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video Render Time Estimator: Codec, Effects, Hardware",
+  metaDescription:
+    "Estimate a video export from timeline length, resolution, frame rate, codec, effects coverage and machine class - as a range, with a finish time.",
+  steps: [
+    "Enter the timeline as Hours, Minutes and Seconds, then set Export resolution, Frame rate (fps), Output codec and Hardware class.",
+    "Under Effects load, drag each slider to the share of the timeline it covers - Colour correction and LUTs, Warp or gyro stabiliser, Temporal noise reduction or grain, Optical-flow retiming.",
+    "Estimated export time shows a likely range plus Finishes at, Speed versus realtime and Timeline rendered per minute; set Start the render at (24 h clock) and press Copy result.",
+  ],
   intro:
     "The Render Time Estimator predicts how long a video export will take, from timeline length, resolution, frame rate, output codec, effects load and hardware class. It uses a transparent multiplicative model — render time scales linearly with timeline length and with pixel rate, then multiplies by encoder cost, an effects factor built from what fraction of the timeline each effect covers, and divides by a machine speed index — anchored on a reference job of 1080p30 to hardware H.264 with no effects, which runs at about five times realtime. Because encoder speed and machine performance vary, the answer is given as a range rather than a single number.",
   useCases: [

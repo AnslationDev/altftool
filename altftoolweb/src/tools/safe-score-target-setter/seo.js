@@ -1,4 +1,12 @@
 const seo = {
+  title: "Safe Score Target Setter: Cutoff Buffer + Attempt Plan",
+  metaDescription:
+    "Turn past cutoffs into a target: their standard deviation times the z value for 80-99% confidence, then an attempt plan under negative marking.",
+  steps: [
+    "Enter Past cutoffs, one per year (comma separated), the Expected cutoff this year (marks) and Total marks in the paper.",
+    "Pick a Risk appetite - Aggressive at 80%, Balanced at 90%, Safe at 95% or Very safe at 99% confidence.",
+    "Target score to aim at reports the buffer added and headroom; fill Questions in the paper, Marks per correct answer and Negative marking per wrong answer to get Questions to attempt and Break-even accuracy.",
+  ],
   intro:
     "A safe score target is the expected cutoff plus a buffer sized from how far the cutoff has actually swung between years, so that landing on it clears the real cutoff at a confidence level you choose rather than at coin-flip odds. This tool takes past cutoffs, computes their sample standard deviation with Bessel's correction, multiplies it by the one-sided normal z value for 80%, 90%, 95% or 99% confidence, and adds that to your expectation. It then converts the target into a concrete attempt plan using the paper's marking scheme: expected net marks per attempt equal accuracy times marks per correct, minus the miss rate times the negative penalty.",
   useCases: [

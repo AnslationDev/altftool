@@ -1,4 +1,12 @@
 const seo = {
+  title: "Society Parking Complaint Letter: Bye-law 78 Grounds",
+  metaDescription:
+    "Drafts a dated letter to the managing committee over a denied, encroached or wrongly allotted slot, citing bye-laws 78 and 79 and the Nahalchand ruling.",
+  steps: [
+    "Pick the problem — no slot allotted, someone parking in yours, allotment not by draw of lots, a slot claimed as bought from the builder, or unapproved charges.",
+    "Add the society, your flat and wing, the letter date, the reply window in days, and optionally total slots against member vehicles and the monthly charge.",
+    "Written reply due by shows the date, with the s.164 notice ripening date and the slot shortfall; Copy letter takes the drafted complaint and its reliefs.",
+  ],
   intro:
     "This generator turns a housing society parking complaint into a dated written letter that cites the rule it relies on. It builds the grounds from the model co-operative housing society bye-laws — bye-law 78, which requires the committee to allot slots with first preference to members owning a vehicle and to settle competing claims by draw of lots, and bye-law 79, which leaves parking charges to the general body — plus Nahalchand Laloochand Pvt Ltd v Panchali CHS Ltd (2010) 9 SCC 536, where the Supreme Court held that stilt and open parking is common area a promoter cannot sell. Pick the problem, fill in your flat and slot details, and you get a letter with a reply deadline and the escalation dates that follow it.",
   useCases: [

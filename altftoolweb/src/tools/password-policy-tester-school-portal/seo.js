@@ -1,4 +1,12 @@
 const seo = {
+  title: "School Password Checker: 8 Rules, Passphrase Builder",
+  metaDescription:
+    "Checks a school login password against eight plain-language rules — no name, no birth year, no keyboard runs — and builds a 4-word passphrase.",
+  steps: [
+    "Type an idea into the 'Password idea' box, then fill 'Your name', 'School login name', 'School name' and 'Year you were born' so personal words get caught.",
+    "Read the 'Safety score' out of 100, then work down 'Every check, explained' and fix each of the eight rules badged 'Fix this' rather than 'Good'.",
+    "Set Words to 3, 4, 5 or 6 and press 'New passphrase', use 'Test this one above' to score the phrase, or press 'Copy result' to keep the report.",
+  ],
   intro:
     "School Portal Password Policy Tester checks a student login password against the threat that actually applies: a classmate who already knows the student's name, birth year, username and school. It tests eight plain-language rules — at least 8 characters, at least one number or symbol, no personal words, no birth year, not a famous password, no keyboard runs, no long repeats, and short enough to fit the login box — and estimates guessing time using the smallest of a character model, a repeat-collapsed model and a known-word model. It also builds a random four-word passphrase from a published 128-word list, so the strength shown assumes an attacker already has that list.",
   useCases: [

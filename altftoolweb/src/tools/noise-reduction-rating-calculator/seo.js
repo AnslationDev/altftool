@@ -1,4 +1,12 @@
 const seo = {
+  title: "NRR Calculator: OSHA, OSHA 50% and NIOSH Deratings",
+  metaDescription:
+    "Turn an NRR or SNR label into the level at the ear using dBA - (NRR - 7), OSHA's 50% factor or NIOSH deratings, against the 90 and 85 dBA limits.",
+  steps: [
+    "Enter the \"Measured noise level (dB)\", set \"Meter weighting used\" to A or C, choose the \"Label system\" (NRR or SNR) and type the labelled rating into \"Labelled NRR (dB)\".",
+    "Pick the \"Protector type\" and \"Hours in the noise per shift\", choose a \"Field-adjustment method\", and tick \"Dual protection — plugs and muffs worn together\" to add a second device rating.",
+    "Read \"Estimated level at the ear\" with the attenuation subtracted, compare the \"Same protector, all three methods\" table (Method, Attenuation, At the ear, OSHA PEL), then press \"Copy result\".",
+  ],
   intro:
     "The Noise Reduction Rating Calculator estimates the A-weighted sound level actually reaching a worker's ear by applying the published field-adjustment formulas to a hearing protector's labelled NRR or SNR. It covers the three methods safety officers are asked for: the plain OSHA formula (dBA − [NRR − 7]), OSHA's recommended 50% safety factor (dBA − [(NRR − 7) × 50%]), and the NIOSH deratings from Publication 98-126 that cut the label by 25% for earmuffs, 50% for formable foam earplugs and 70% for all other earplugs. It also handles dual protection using the 5 dB allowance added to the higher-rated device, then checks the resulting level against the OSHA permissible exposure limit of 90 dBA and the NIOSH recommended limit of 85 dBA.",
   useCases: [

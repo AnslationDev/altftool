@@ -1,4 +1,12 @@
 const seo = {
+  title: "WebAuthn Debugger: Decode clientDataJSON and authData",
+  metaDescription:
+    "Base64url-decodes clientDataJSON, walks the attestation CBOR, and unpacks authenticatorData: rpIdHash, all eight flag bits, counter, AAGUID, COSE key.",
+  steps: [
+    "Paste the serialised PublicKeyCredential into the box labelled Credential JSON, or a DOMException name, or press Registration example, Assertion example or Error example to load a sample.",
+    "Type your Expected RP ID — its SHA-256 is computed in the tab and compared with the rpIdHash the authenticator signed — and optionally an Expected origin, which is compared byte for byte with clientData.origin.",
+    "Read the findings list, then clientDataJSON, decoded, the Authenticator data table showing all eight flag bits set or clear, the RP ID check verdict and Attested credential data with its AAGUID and COSE public key, and press Copy report.",
+  ],
   intro:
     "Paste the JSON a WebAuthn ceremony produced and this decodes it properly. clientDataJSON is base64url-decoded and its type, challenge, origin and crossOrigin fields are read out and checked; the attestation object is walked as real CBOR to reach fmt, attStmt and authData; and the authenticator data is taken apart byte by byte — the 32-byte rpIdHash, all eight flag bits (UP, UV, BE, BS, AT, ED and the two reserved bits), the 4-byte signature counter, the AAGUID, the credential ID and the COSE public key with its kty, alg and curve. It also computes SHA-256 of an RP ID you supply, in pure JavaScript in the page, and compares it to the rpIdHash the authenticator actually signed — the check that catches a credential registered under the wrong domain. Paste a DOMException name instead of JSON and it explains what makes a browser throw it.",
   useCases: [

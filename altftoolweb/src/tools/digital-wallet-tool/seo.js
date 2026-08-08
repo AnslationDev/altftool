@@ -1,4 +1,12 @@
 const seo = {
+  title: "Digital Wallet Manager: Totals and HHI Concentration",
+  metaDescription:
+    "Total cash, crypto, funds, stocks and gold, see each holding's share, and score concentration on the HHI scale — no login, no API keys, nothing sent.",
+  steps: [
+    "For each row enter a Holding name, choose an Asset class, and type Quantity / units and Price per unit (₹); press Add holding for anything kept on another app, bank or exchange.",
+    "Each row shows its own Value as you type, and Target share for the largest holding (%) — 25 by default — turns into a Sell about figure in rupees.",
+    "Read Wallet value, Concentration (HHI), Effective holdings, Largest holding and Smallest holding, plus the Allocation tables of value and share by holding and by asset class; Copy result copies that summary as text.",
+  ],
   intro:
     "The Digital Wallet Manager totals every asset you hold — cash, crypto, funds, stocks, gold — and reports what share of the wallet each one carries, using value = quantity x unit price and share = value / total. It then scores how concentrated the wallet is with the Herfindahl-Hirschman Index, the sum of squared percentage shares defined in the US DOJ/FTC Horizontal Merger Guidelines, so you can see at a glance whether one position is quietly running your whole portfolio. It is built for anyone who keeps assets across several apps and exchanges and has never seen them added up in one place; every figure is typed in by you and never leaves the browser tab.",
   useCases: [

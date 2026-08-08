@@ -1,4 +1,12 @@
 const seo = {
+  title: "Topic Sentence Generator and Seven-Point Checker",
+  metaDescription:
+    "Turn a subject plus a controlling idea into topic sentence patterns keyed to paragraph position, then score a sentence you wrote on seven checks.",
+  steps: [
+    "Type the subject the paragraph is about and the controlling idea you claim about it.",
+    "Add an optional supporting reason or objection to concede, and say where this paragraph sits, to unlock the concessive shape.",
+    "Pick a pattern, press \"Send to the checker below\" to score it, then press Copy sentences.",
+  ],
   intro:
     "A topic sentence generator builds the opening sentence of a body paragraph from its two obligatory parts: the subject the paragraph is about, and the controlling idea — the arguable claim the rest of the paragraph will prove. Give it both and it produces the standard composition patterns, from claim-first to the concessive although-pivot, and adapts the wording to whether this is the first, middle or last body paragraph. A separate checker scores a sentence you have already written against seven things markers look for, including length, single-sentence form, and whether the sentence announces the paragraph instead of making a claim.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Vietnam Visa Cost by Entries and Validity Band",
+  metaDescription:
+    "Price a Vietnam e-visa, visa on arrival or embassy visa by entries and validity, in USD and rupees, with the under-14 rate and agency fee split out.",
+  steps: [
+    "Pick an 'Entries and validity' band — single entry up to 90 days at USD 25 through multiple entry up to 5 years at USD 155 — and how you are applying: e-visa, visa on arrival, or embassy.",
+    "Enter applicants aged 14 and over and applicants under 14, the agency approval letter fee per applicant in USD, and the exchange rate in rupees per USD 1.",
+    "Add photographs, travel insurance, courier and other charges in INR, then press Copy result for the line-by-line USD and rupee breakdown.",
+  ],
   intro:
     "A Vietnam visa cost estimator prices a visa the way Vietnamese immigration actually does — by number of entries and length of validity rather than by purpose of travel — and converts the dollar fee into rupees along with photographs, insurance and any agency charge. The published bands run from USD 25 for a single entry of up to 90 days and USD 50 for multiple entry over the same period, through USD 95, USD 135 and USD 145 for longer multiple-entry visas, up to USD 155 for a five-year visa, with a concessional flat rate for applicants under 14. It also separates the government fee from the sponsoring agency's pre-approval letter, which is a commercial charge that visa on arrival applicants pay on top.",
   useCases: [

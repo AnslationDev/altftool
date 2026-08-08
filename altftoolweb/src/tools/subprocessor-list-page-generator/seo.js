@@ -1,4 +1,12 @@
 const seo = {
+  title: "Subprocessor List Page Generator for GDPR Art. 28",
+  metaDescription:
+    "Build a public subprocessor page with vendor, purpose, data, hosting country and transfer mechanism, flagging non-adequate countries with no SCCs.",
+  steps: [
+    "Fill Publishing company, Product or service name, Change-notice subscription email, Advance notice before a new subprocessor (days) and Last updated.",
+    "Press Add subprocessor for each row, then complete Vendor, Contracting entity, Purpose of processing, Data processed, Hosting country and Transfer mechanism.",
+    "Switch the output between Markdown, HTML and CSV, check the Transfers with no documented tool count, then press Copy page.",
+  ],
   intro:
     "A subprocessor page is the public list of third parties a processor uses to handle customer personal data, and this generator builds it with the five columns customers and auditors look for: vendor, purpose of processing, data processed, hosting location and the transfer mechanism. It applies GDPR Article 28(2) — a general written authorisation requires you to announce new subprocessors so the controller can object — and checks every non-EEA destination against the European Commission adequacy list, flagging any row that needs Standard Contractual Clauses, Binding Corporate Rules or another Chapter V tool. Output copies out as Markdown, HTML or CSV.",
   useCases: [

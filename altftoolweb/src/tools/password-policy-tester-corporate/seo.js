@@ -1,4 +1,12 @@
 const seo = {
+  title: "Active Directory Password Rules vs NIST 800-63B",
+  metaDescription:
+    "Tests a password against the AD three-of-five category rule and the sAMAccountName check, then NIST SP 800-63B, with bcrypt and NTLM crack times.",
+  steps: [
+    "Type the Candidate password, then fill Username (sAMAccountName) and Display name so the token checks can run.",
+    "Set Policy minimum length, Maximum password age in days (0 = never expires) and Days since last change.",
+    "Read Rules passed under 'Active Directory complexity' and 'NIST SP 800-63B guidance', with the bcrypt and NTLM cracking rows, then press Copy result.",
+  ],
   intro:
     "Corporate Password Policy Tester evaluates a candidate password against the two rule sets that decide whether it is accepted and whether it is actually safe: the Active Directory complexity requirement — three of five character categories, and no sAMAccountName or display-name token longer than two characters inside it — and NIST SP 800-63B, which asks for at least 8 characters, a check against breached values, rejection of repetitive and sequential strings, and no composition rules or forced expiry. Each rule is reported separately alongside an entropy estimate and cracking times at online, bcrypt and NTLM attack rates, so you can see when a password passes the domain controller and still falls to a wordlist.",
   useCases: [

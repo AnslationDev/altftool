@@ -1,4 +1,12 @@
 const seo = {
+  title: "Secret Scanner: Find AWS, GitHub & Stripe Keys in Text",
+  metaDescription:
+    "Scan pasted text, a source file or a bounded ZIP against nine credential patterns. Findings show rule, line and column with the value redacted.",
+  steps: [
+    "Paste into the Text, source file, log, or ZIP box, which is capped at 2,000,000 characters, or press Choose file for a .env, .log, .json, .yaml, .conf or .zip source up to 10 MB, or press Load safe sample.",
+    "Press Run local inspection to match the nine provider patterns — PEM private key blocks, AWS AKIA/ASIA, GitHub ghp_ and github_pat_, Slack xox, Stripe sk_live/sk_test, Google AIza, JWT triplets, credential URLs and Authorization headers — plus the generic secret-like assignment rule.",
+    "Read Review findings for each match's severity and its source, line and column, with the value printed as [REDACTED · N characters], then press Download report for secret-scan-redacted-report.txt or Copy report.",
+  ],
   intro:
     "The Secret & Credential Leak Scanner matches pasted text, a local source or log file, or a bounded ZIP archive against nine provider-specific credential patterns — PEM private key blocks, AWS AKIA/ASIA access key IDs, GitHub ghp_/github_pat_ tokens, Slack xox tokens, Stripe sk_live/sk_test keys, Google AIza keys, three-segment JWTs, passwords embedded in postgres/mysql/mongodb/redis/amqp/http URLs, and Authorization: Bearer/Basic/Token header values — plus a generic rule for assignments whose key contains a segment like password, secret, token or api key. Every match is reported by rule, severity, source, line and column with the value itself replaced by a redacted length marker, so a finding can be shared without re-exposing the credential. It is for developers and reviewers checking a diff, a log paste or a config bundle before it leaves a trusted boundary.",
   useCases: [

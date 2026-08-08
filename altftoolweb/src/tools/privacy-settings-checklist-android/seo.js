@@ -1,4 +1,12 @@
 const seo = {
+  title: "Android Privacy Checklist: 27 Settings, Scored",
+  metaDescription:
+    "Advertising ID, Web & App Activity, Wi-Fi and Bluetooth scanning, precise location, accessibility access - 27 settings weighted by exposure, 8 critical.",
+  steps: [
+    "Pick who you are locking the phone down for and set a target score — anything above 69% needs every critical setting applied.",
+    "Tick each setting you have already changed, from deleting the advertising ID to Wi-Fi and Bluetooth scanning, precise location and accessibility access.",
+    "Read the protection score, the remaining exposure by area bars and the shortest route to your target, then press Copy result.",
+  ],
   "intro": "This checklist scores an Android phone against 27 real privacy settings — deleting the advertising ID, Web & App Activity, Location History, per-app precise versus approximate location, Wi-Fi and Bluetooth scanning, the Permission Manager, accessibility and notification access, Quick Share visibility, backup encryption and screen-lock strength — weighting each by how much exposure it actually closes rather than treating every toggle as equal. Eight controls are marked critical and hold the score at 69% while any is still open, because a precise-location grant or an unnoticed accessibility service outweighs a dozen cosmetic switches. Five risk profiles re-score the same list, so someone minimising what Google collects and someone worried about stalkerware are graded on different things.",
   "useCases": [
     "Do a full privacy pass on a new Android phone before it starts building an account-level history you never agreed to.",

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Logo & Slogan Generator: 5-7 Taglines from a Brief",
+  metaDescription:
+    "Enter a brand name (80 chars) and a positioning line (500 chars) and get 5-7 distinct taglines, numbering stripped. Rate limited to 8 runs a minute.",
   intro:
     "Logo & Slogan Generator turns a brand name plus a short description of your style, industry and audience into 5 to 7 concise, distinct taglines you can put under a logo. The request goes to a Gemini model briefed to answer as a branding specialist and return nothing but the list — no preamble, no explanation — so you get usable lines rather than an essay about your brand. It is built for founders, freelance designers and marketers who need a batch of directions to react to before committing to one. Generating a batch sends your brand details to AltFTool's own server, which produces the lines, so this tool needs a connection.",
   useCases: [

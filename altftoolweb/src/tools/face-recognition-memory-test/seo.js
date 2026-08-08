@@ -1,4 +1,12 @@
 const seo = {
+  title: "Face Recognition Memory Test: Old/New Recall Score",
+  metaDescription:
+    "Study faces, sit a 15-second distraction task, then mark each face seen or not. Scored as hits, misses, false alarms and correct rejections.",
+  steps: [
+    "Under Choose Difficulty pick Beginner (10 faces), Intermediate (20 faces) or Expert (40 faces), then press Start Memory Test.",
+    "Press Begin Challenge, memorise the Study These Faces grid before the countdown ends, then tap the named colour through the 15-second Distraction Game.",
+    "Answer each face with Yes, I saw or No, I didn't; the result gives accuracy plus hits, misses, false alarms and correct rejections.",
+  ],
   intro:
     "The Face Recognition Memory Test runs the classic old/new recognition paradigm used in memory research: you study a set of faces for a timed period, sit through a 15-second colour-matching distraction task to clear working memory, then judge one face at a time as seen or not seen. Your answers are scored as hits, misses, false alarms and correct rejections, and overall accuracy is the share of correct calls across the whole test — 85% or above is graded Excellent, 70% Good and 55% Average. Three levels set how much you have to hold: 10 faces studied for 20 seconds at Beginner, 20 faces in 20 seconds at Intermediate, and a longer set at Expert.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Accent Wall Colour Suggester: 8 Shades with LRV",
+  metaDescription:
+    "Enter your wall's hex and get eight colour-wheel harmonies, each with its LRV, the gap from your wall (10 points minimum) and a legible trim colour.",
+  steps: [
+    "Enter the existing wall colour as a hex value, or use the colour picker beside the field if you do not have one.",
+    "Set which way the room faces and the room size, so the orientation and room-size notes apply to the shortlist.",
+    "Compare the eight suggestions by LRV, gap and whether each Reads as an accent, then press Copy result.",
+  ],
   intro:
     "This suggester takes the hex value of a wall you already have and returns eight accent colours built from the standard colour-wheel harmonies — complementary, split-complementary, analogous, triadic, monochromatic and a near-neutral anchor — each reported with its Light Reflectance Value so it can be matched against a paint chip. LRV is the CIE Y value expressed as a percentage, identical to the WCAG relative luminance formula (0.2126R + 0.7152G + 0.0722B on linearised channels), which is the same number paint manufacturers print on the back of a sample. It is aimed at anyone repainting one wall and unsure whether a shade will read as a deliberate accent or as a patch, since the tool also checks that each candidate clears the trade rule of roughly 10 LRV points from the existing wall.",
   useCases: [

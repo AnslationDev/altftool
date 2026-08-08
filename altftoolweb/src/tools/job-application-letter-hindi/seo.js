@@ -1,4 +1,7 @@
 const seo = {
+  title: "नौकरी हेतु आवेदन पत्र — Hindi Job Application Letter",
+  metaDescription:
+    "Full patra format — सेवा में, विषय, सविनय निवेदन, भवदीय, संलग्न — with gendered verb forms, your age on the cut-off date and the category relaxation.",
   intro:
     "A Hindi job application letter (नौकरी हेतु आवेदन पत्र) is a formal application written in the standard औपचारिक पत्र layout — सेवा में, दिनांक, विषय, महोदय, a body that opens with सविनय निवेदन है कि, a request paragraph opening with अतः, then सधन्यवाद, भवदीय and a संलग्न list of enclosures. This builder produces that letter with the verb forms matched to your gender, dates and numbers optionally in Devanagari numerals, and your age on the recruitment cut-off date calculated exactly. It also applies the standard upper-age relaxations used in central government direct recruitment: three years for OBC, five for SC and ST, ten for persons with benchmark disabilities, and length of service plus three years for ex-servicemen.",
   useCases: [

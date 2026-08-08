@@ -1,4 +1,12 @@
 const seo = {
+  title: "How Many Smoke Alarms? NFPA 72 Count + Placement",
+  metaDescription:
+    "Counts alarms by bedrooms, sleeping areas and levels, plus distances: 4 in off a sidewall, 4-12 in below a ceiling, 10 ft from a cooking appliance.",
+  steps: [
+    "Enter Bedrooms, \"Separate sleeping areas\", \"Levels at or above ground\" and \"Levels that contain bedrooms\", then tick \"There is a basement or cellar\" if the home has one.",
+    "Tick \"There is a fuel-burning appliance or an attached garage (needs CO alarms)\", and optionally add a \"Price per alarm (₹)\" and the \"Manufacture year on existing alarms\".",
+    "Read \"Smoke alarms needed\" with the carbon monoxide count, total units to buy, estimated cost and the 10-year \"Replacement due\" year, then press \"Copy plan\".",
+  ],
   intro:
     "This planner counts the smoke and carbon monoxide alarms a dwelling needs using the NFPA 72 coverage rule — one smoke alarm inside every sleeping room, one outside each separate sleeping area, and one on every level including the basement — and returns the mounting distances that decide whether each alarm actually works. Those distances are stated rather than guessed: at least 4 in (100 mm) from a sidewall on a ceiling, 4-12 in (100-300 mm) below the ceiling on a wall, within 3 ft (0.9 m) of a peak but outside the top 4 in (100 mm), and never within 10 ft (3 m) of a cooking appliance. Enter the manufacture year printed on your existing units and it dates the 10-year replacement.",
   useCases: [

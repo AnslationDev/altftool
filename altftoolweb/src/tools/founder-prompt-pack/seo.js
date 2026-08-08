@@ -1,4 +1,12 @@
 const seo = {
+  title: "Founder Prompt Pack: 12 Briefs From One Context",
+  metaDescription:
+    "Twelve founder prompts — OKRs, pre-mortems, pricing tests, investor updates, hiring scorecards — auto-filled from your company, product, customer, stage.",
+  steps: [
+    "Fill \"Your context\" once: \"Company name\", \"What you build (one line)\", \"Who you sell to\", \"Stage\" and any \"Situation or extra detail\".",
+    "Pick one of the 12 prompts by \"Category\" or \"Search\" — investor update, strategy pre-mortem, role scorecard, churn diagnosis — and your details substitute in.",
+    "Check the \"Unfilled placeholders\" row and the Characters / Approximate tokens counts, then press \"Copy prompt\" or \"Copy all prompts\".",
+  ],
   intro:
     "The Founder Prompt Pack turns a library of twelve founder prompts — positioning, OKRs, pre-mortems, pricing tests, investor updates, pitch narrative, objection prep, hiring scorecards, interview design, 30/60/90 plans, discovery scripts and churn diagnosis — into briefs that already contain your company, product, customer and funding stage. You fill one context form; every prompt substitutes those details into its placeholder slots and flags anything left blank so nothing reaches the model half-written. It is built for founders and operators at bootstrapped through Series A companies who want a structured brief rather than a blank chat box.",
   useCases: [

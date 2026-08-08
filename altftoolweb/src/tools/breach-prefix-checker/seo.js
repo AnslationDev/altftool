@@ -1,4 +1,12 @@
 const seo = {
+  title: "Breach Prefix Checker: k-Anonymity SHA-1 Lookup",
+  metaDescription:
+    "SHA-1 a password in your browser, take the 5-character prefix the Pwned Passwords range API expects, and match the 35-character suffix locally.",
+  steps: [
+    "Type a string into \"Candidate password\" — Show and Hide toggle whether it is visible — and leave \"Request response padding\" ticked to include the Add-Padding: true header in the prepared request.",
+    "Copy the 5-character prefix, the Endpoint or one of the curl commands and run the range request yourself; the page makes no network call, and the 35-character suffix stays in the browser.",
+    "Paste the SUFFIX:COUNT body into \"Finish the check locally\" and the page says whether your suffix is present and with what count, alongside lines parsed, real entries, padding entries with count 0, duplicate suffixes and malformed lines.",
+  ],
   intro:
     "This tool prepares a k-anonymity breach lookup without ever handling your password outside the page. It computes the SHA-1 digest of the candidate in JavaScript, splits it into the 5-character prefix that the Pwned Passwords range endpoint expects and the 35-character suffix that must never leave your machine, and hands you the exact request to run. It makes no network call itself: you run the request, paste the SUFFIX:COUNT response back, and the match is performed here in the browser. That is the whole point of the k-anonymity design — the service answers a question about a bucket of 2^140 possible digests, not about your password.",
   useCases: [

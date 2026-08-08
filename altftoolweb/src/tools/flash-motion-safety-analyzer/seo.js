@@ -1,4 +1,7 @@
 const seo = {
+  title: "Flash and Motion Safety Analyzer for MP4 and WebM",
+  metaDescription:
+    "Sample a local MP4 or WebM at 8 to 15 frames a second to count general and red flash pairs per rolling second, with timings. Up to 80 MB, no upload.",
   intro:
     "This screener steps through a local MP4 or WebM file at 8 to 15 sampled frames per second, converts each sample to relative luminance and CIE u'v' chromaticity, and counts the transitions that look like general flash pairs, saturated-red flash pairs or large frame changes. It applies the thresholds used in flash-safety guidance: a general flash pair needs a relative-luminance change of at least 0.10 with the darker state below 0.80, a red flash pair needs a saturated red where R ÷ (R+G+B) is at least 0.80 plus a u'v' shift of at least 0.20, and a large frame-change cue fires when 25% or more of the frame changes luminance at once. It is a bounded screening pass that reports counts and timings — not a WCAG conformance ruling, a medical assessment or a safety guarantee.",
   useCases: [

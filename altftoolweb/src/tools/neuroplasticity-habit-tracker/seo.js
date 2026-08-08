@@ -1,4 +1,12 @@
 const seo = {
+  title: "Neuroplasticity Habit Tracker: 5 Daily Brain Habits",
+  metaDescription:
+    "Tick exercise, learning, sleep, meditation and social contact — each worth 20 points toward a 60% daily target. Saved in your browser and resets daily.",
+  steps: [
+    "Open \"Daily Neuro-Habits\" and read the five cards: \"Aerobic Exercise (30+ mins)\", \"Learned Something New\", \"Deep Quality Sleep (7-9 hrs)\", \"Meditation / Deep Focus\" and \"Meaningful Social Connection\", each with its mechanism (BDNF, synaptic connections, glymphatic clearance, cortical thickness, cognitive reserve).",
+    "Tap each card you actually completed today; the circle becomes a tick and the card takes its habit colour, adding 20 percentage points to the violet ring.",
+    "Read the \"Today's Brain Growth\" percentage against the stated aim of at least 60% a day; the ticks save to your browser's local storage against today's date and the board starts empty tomorrow.",
+  ],
   intro:
     "The Neuroplasticity Habit Tracker is a daily five-item checklist built around the behaviours most often linked in neuroscience literature to synaptic growth and cognitive health: 30 or more minutes of aerobic exercise, active learning, 7–9 hours of quality sleep, meditation or deep focus, and meaningful social connection. Each item you tick moves a ring dial by 20 percentage points, the tracker suggests hitting at least 60% — three of the five — on a given day, and the board resets automatically at midnight so yesterday's ticks do not inflate today's score. It is a self-tracking aid, not a clinical instrument; talk to a doctor about any concern with memory, mood or cognition.",
   useCases: [

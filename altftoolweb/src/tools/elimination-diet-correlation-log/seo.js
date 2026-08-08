@@ -1,4 +1,12 @@
 const seo = {
+  title: "Elimination Diet Log: Average Severity per Food",
+  metaDescription:
+    "Paste a diary as date | foods | symptom | severity 0-10 | hours after; get appearances, mean severity and symptoms per food. Co-occurrence, not cause.",
+  steps: [
+    "Type one dated observation per line into \"Food and reaction log\" using the hinted format — date | foods (comma-separated) | symptom | severity 0–10 | hours after — for example 2026-07-20 | Milk, oats | Bloating | 6 | 3.",
+    "Set \"Minimum food appearances\" to drop foods logged fewer times than that, or press the \"Example log\" button in the Examples strip to refill the box with a three-day sample.",
+    "Read the table of Food, Appearances, Average entered severity and Symptoms noted, sorted highest average first, above the Log entries and Foods meeting minimum counts; Copy takes the summary and Download saves elimination-diet-correlation-log.txt.",
+  ],
   intro:
     "Elimination Diet Correlation Log turns a pipe-separated food and symptom diary into a per-food summary: how many times each food appeared, the average severity you recorded on those days, and which symptoms were noted alongside it. Each line is entered as date | foods | symptom | severity 0–10 | hours after, foods are split on commas and matched case-insensitively, and the table is sorted by highest average severity with a minimum-appearances filter so single mentions do not dominate. It surfaces co-occurrence only — it is not a diagnosis, and elimination diets should be planned with a clinician or registered dietitian, particularly for children, pregnancy, chronic illness or severe reactions.",
   useCases: [

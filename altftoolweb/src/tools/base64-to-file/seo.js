@@ -1,4 +1,7 @@
 const seo = {
+  title: "Base64 to File: Decode and Save with the Right Extension",
+  metaDescription:
+    "Decode a Base64 string or data: URL, identify the file from its magic number across 30+ signatures, and save it with the correct extension.",
   intro:
     "Base64 to File decodes a Base64 string or a data: URL back into the original bytes, identifies what the file actually is by reading its magic number, and saves it with the correct extension. It checks more than 30 signatures — PNG's 89 50 4E 47, JPEG's FF D8 FF, PDF's %PDF-, the ZIP local-file header PK\\x03\\x04 and others — so a payload with a wrong or missing MIME type is still saved correctly. It is for developers pulling attachments out of API responses, logs and database rows.",
   useCases: [

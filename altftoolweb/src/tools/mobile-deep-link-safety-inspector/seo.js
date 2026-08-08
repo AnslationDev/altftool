@@ -1,4 +1,12 @@
 const seo = {
+  title: "Deep-Link Safety Inspector: Decode intent:// URLs",
+  metaDescription:
+    "Paste an intent:// URI and see its action, package, component, typed extras, decoded launchFlags bits and browser_fallback_url — nothing is opened.",
+  steps: [
+    "Paste the address into \"Deep link\" — an intent:// URI, a custom scheme or an https App Link — or tap one of the example chips.",
+    "Read the verdict banner with its high / medium / note counts, then \"Intent fields\": action, category, package, component, SEL selector, the typed extras table and the launchFlags table naming each set bit's Intent constant.",
+    "Check \"Fallback destination\" for the decoded browser_fallback_url, its host and how many percent-decode passes it took, then press \"Copy report\".",
+  ],
   intro:
     "Paste one deep link and this page works out what it actually asks a phone to do. Android intent:// URIs are taken apart in the format Intent.parseUri reads for URI_INTENT_SCHEME: the target scheme, action, categories, package, component, selector, typed extras (S. for String, i. for int, B. for boolean and the rest), and the launchFlags bitmask decoded bit by bit against the real android.content.Intent constants — so FLAG_GRANT_READ_URI_PERMISSION or FLAG_ACTIVITY_FORWARD_RESULT is named rather than left as a hex number. The browser_fallback_url is followed, redirect parameters inside it are percent-decoded layer by layer until they stop changing, and the authority is checked for the userinfo trick, backslashes, encoded null bytes and raw non-ASCII. Custom schemes, https App Links and Universal Links each get the treatment appropriate to them. Nothing is fetched and nothing is opened.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Job Description Prompt Builder: Word Budget and Bias",
+  metaDescription:
+    "Build one AI prompt that keeps must-haves apart from nice-to-haves, splits your word target across six sections, and flags 22 coded wordings.",
+  steps: [
+    "Fill in the job title, level, employment type, working pattern, location and team context, then list must-have requirements and nice-to-haves one per line.",
+    "Choose a tone and a target advert length between 150 and 900 words, and tick the equal-opportunity and interview-adjustments closing if you want one.",
+    "Read the flagged wordings with their suggested swaps and the six-section word budget, then press Copy prompt.",
+  ],
   intro:
     "The Job Description Prompt Builder converts role facts into a single AI prompt that forces hard requirements and optional extras into separate sections and allocates a word budget to each part of the advert. It splits your target length across six standard sections using the largest-remainder method, so the section figures always add up to the total, and it scans your input for gender-coded, age-coded and ableist wordings drawn from the masculine and feminine adjective lists used in Gaucher, Friesen and Kay's 2011 research on job-advert language. Written for hiring managers and recruiters who want a consistent advert structure instead of a blank page.",
   useCases: [

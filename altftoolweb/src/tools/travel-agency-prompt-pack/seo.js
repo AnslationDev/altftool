@@ -1,4 +1,12 @@
 const seo = {
+  title: "Travel Agency Prompt Pack + GST & TCS Quote Calculator",
+  metaDescription:
+    "10 fill-in-the-blank prompts for package copy, quotes and follow-ups, plus a quote calculator applying markup, 5% GST and the 5%/20% TCS slabs.",
+  steps: [
+    "In the Quote builder enter Net cost per person (INR), Markup (%) — or tap the 10%, 15%, 20% or 25% markup chip — and the number of Travellers.",
+    "Tick 'Overseas tour programme package (TCS applies)' and enter the overseas packages already sold to this buyer this year, so TCS splits at the Rs 10 lakh threshold.",
+    "Read 'Total payable by the client' with GST, the two TCS slabs and Agency margin itemised, press Copy quote, then pick a prompt, fill its blanks and press Copy prompt.",
+  ],
   intro:
     "Travel Agency Prompt Pack combines a tour package quote calculator with a library of fill-in-the-blank AI prompts for the writing a travel business does every day — package descriptions, custom quotes, follow-ups, itinerary changes, visa checklists, cancellation explanations and supplier negotiation. The calculator applies your markup, adds GST at 5% on tour operator services, and splits TCS on an overseas tour programme package at 5% up to Rs 10 lakh per buyer per financial year and 20% above it, so the number you send a client is the number they actually pay. Written for agency owners and consultants who quote and follow up themselves.",
   useCases: [

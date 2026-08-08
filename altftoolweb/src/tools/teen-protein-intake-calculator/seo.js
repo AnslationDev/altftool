@@ -1,4 +1,12 @@
 const seo = {
+  title: "Teen Protein Calculator: DRI Targets for Ages 9-18",
+  metaDescription:
+    "Daily protein for a 9-18 year old from the IOM DRIs — 0.95 g/kg at 9-13, 0.85 at 14-18 — raised for sport and checked against the 10-30% energy AMDR.",
+  steps: [
+    "Enter Age (years) between 9 and 18, Weight (kg), Height (cm) and Sex (for the energy equations).",
+    "Choose an Everyday activity level from Sedentary to Very active, pick a Sport and training level such as Competitive team or endurance sport, and set Meals and snacks with protein between 3 and 6.",
+    "Read Protein a day in grams with its Daily range and Age-band RDA, then check the bar showing protein as a share of energy against the 10-30% acceptable range, and press Copy result.",
+  ],
   intro:
     "This calculator sets a daily protein target for a 9 to 18 year old from the Institute of Medicine Dietary Reference Intakes — 0.95 g per kg of body weight for ages 9-13 and 0.85 g/kg for ages 14-18, both above the 0.8 g/kg adult RDA because tissue is still being built. Where a teenager plays sport, it raises the target inside the 1.2-2.0 g/kg athlete range from the 2016 joint position stand of the Academy of Nutrition and Dietetics, Dietitians of Canada and the American College of Sports Medicine. It also estimates daily energy with the IOM equations for children and checks the protein target against the 10-30% of energy AMDR, which is where a lot of teen diets quietly fall short.",
   useCases: [

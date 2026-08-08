@@ -1,4 +1,12 @@
 const seo = {
+  title: "Markdown to HTML Converter, and HTML Back to Markdown",
+  metaDescription:
+    "Convert Markdown to HTML with GitHub-flavoured tables and strikethrough, or turn HTML back into Markdown or plain text. Runs in your browser.",
+  steps: [
+    "Paste your text into the Input box and choose a Direction: Markdown → HTML, HTML → Markdown, or HTML → plain text.",
+    "Leave \"Allow raw HTML in the Markdown\" unticked so pasted tags stay escaped as text, or tick it to pass raw HTML straight through — the result re-renders on every keystroke, with no convert button.",
+    "Read the Result box, which reports output characters, words and lines plus reading time at 200 wpm, then press Copy result; Reset restores the sample release-note Markdown.",
+  ],
   intro:
     "This converter turns Markdown into HTML and takes HTML back to Markdown or plain text, entirely in your browser. The Markdown side covers the CommonMark constructs people actually type — ATX headings, paragraphs, hard line breaks, emphasis, inline and fenced code, links, images, blockquotes, ordered and unordered lists and thematic breaks — plus the GitHub Flavored Markdown extensions for tables and strikethrough. Text is HTML-escaped by default and only http, https, mailto, tel and relative URLs are emitted, so a pasted snippet cannot inject markup or a javascript: link into your page.",
   useCases: [

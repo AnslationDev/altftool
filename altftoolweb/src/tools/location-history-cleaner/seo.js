@@ -1,4 +1,12 @@
 const seo = {
+  title: "Location History Cleaner: Redact Home and Work GPS",
+  metaDescription:
+    "Deletes records inside a lat/lon/radius zone by haversine distance, then coarsens coordinates to 4, 3 or 2 decimals and times to 15 min, hour or day.",
+  steps: [
+    "Load a Google Takeout-style JSON, GeoJSON or CSV under History file, up to 25 MB, or paste it, then press Analyze locally.",
+    "Under 2. Define private places give each zone a Label, latitude, longitude and radius in metres, adding more with Add another zone.",
+    "Set Coordinate precision (4 decimals, roughly 11 m; 3, roughly 110 m; 2, roughly 1.1 km) and Timestamp precision, then Download sanitized JSON or CSV.",
+  ],
   intro:
     "Location History Cleaner strips sensitive places out of an exported location file by deleting every record whose coordinates fall inside a privacy zone you define, then optionally coarsening the coordinates and timestamps that remain. Zones are a latitude, longitude and radius in metres, and membership is tested with the haversine great-circle distance; coordinates can be rounded to 4, 3 or 2 decimal places (roughly 11 m, 110 m or 1.1 km) and timestamps floored to 15 minutes, the hour or the UTC day. It reads JSON, GeoJSON, CSV and TSV, including Google's latitudeE7 and longitudeE7 integer encoding, and everything happens in your browser.",
   useCases: [

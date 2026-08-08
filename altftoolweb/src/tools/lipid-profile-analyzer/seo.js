@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lipid Profile Analyzer: NCEP ATP III Cholesterol Bands",
+  metaDescription:
+    "Enter total cholesterol, LDL, HDL and triglycerides in mg/dL for NCEP ATP III bands, non-HDL, TC/HDL and LDL/HDL ratios and a 0-10 lipid score.",
+  steps: [
+    "Type your lab figures into Lipid Panel (mg/dL): Total Cholesterol, LDL Cholesterol, HDL Cholesterol and Triglycerides.",
+    "Add age and sex, tick Smoker, Diabetic or Hypertensive, then press Analyze Profile.",
+    "Read the NCEP ATP III band per value, the non-HDL figure, TC/HDL and LDL/HDL gauges and the /10 risk score, then Copy Report or Download the .txt.",
+  ],
   intro:
     "Lipid Profile Analyzer takes the four numbers from a standard lipid panel — total cholesterol, LDL, HDL and triglycerides in mg/dL — and classifies each one against the NCEP ATP III cut-points, then adds your age, sex, smoking, diabetes and blood-pressure status to list the risk factors that sit alongside those results. It also derives non-HDL cholesterol (total minus HDL), the TC/HDL and LDL/HDL ratios, and a 0–10 composite lipid score with plain-language notes on what usually gets addressed first. It is an educational reading of a lab report, not a diagnosis — treatment decisions belong with the clinician who ordered the test.",
   useCases: [

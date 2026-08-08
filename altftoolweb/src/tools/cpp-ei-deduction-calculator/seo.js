@@ -1,4 +1,12 @@
 const seo = {
+  title: "CPP, CPP2 and EI Deduction Calculator for Canada",
+  metaDescription:
+    "Employee and employer CPP, the 4% CPP2 tier and EI premiums with the $3,500 exemption, YMPE, YAMPE and EI ceilings applied — QPP and self-employed too.",
+  steps: [
+    "Enter annual pensionable earnings in CAD, pick the contribution year (or Custom to type this year's YMPE, YAMPE and rates) and your pay periods.",
+    "Tick Working in Quebec to switch to QPP with the lower federal EI rate, or Self-employed to pay both halves of the pension contribution.",
+    "The table splits first-tier CPP, second-tier CPP2 and EI across employee and employer columns, with per-pay amounts; Copy result takes the breakdown.",
+  ],
   intro:
     "This calculator works out Canada Pension Plan and Employment Insurance payroll contributions for both sides of the paycheque: CPP on earnings above the $3,500 basic exemption up to the Year's Maximum Pensionable Earnings, the 4% second additional CPP2 tier on earnings between the YMPE and the Year's Additional Maximum Pensionable Earnings, and EI premiums on insurable earnings up to the annual ceiling. Quebec employees are handled through QPP at its higher rate with the lower federal EI rate that reflects QPIP, and self-employed people see both halves of the pension contribution. Employees checking a T4, employers budgeting payroll cost and contractors planning instalments all get the same line-by-line breakdown.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Strip utm, gclid & fbclid Tracking From URLs in Bulk",
+  metaDescription:
+    "Clean up to 200 links at once: removes utm_, gclid, fbclid, msclkid and mc_eid, keeps the rest byte-for-byte, and lists what it took off each link.",
+  steps: [
+    "Paste your links into the 'Links, one per line' textarea, whose placeholder is https://example.com/page?utm_source=… . Over 200 lines it stops with 'That is more than 200 links — split the list into smaller batches.'",
+    "Leave 'Also strip site-specific tags' unticked to keep Amazon affiliate tags and YouTube share ids, or tick it to drop those too. The Parameters removed count and Characters saved update as you type.",
+    "Take the output from the Cleaned links box with Copy result. Each row beneath lists the cleaned URL with a chip such as −utm_source or −fbclid for every parameter dropped, or 'Nothing to remove on this one.'",
+  ],
   intro:
     "Tracking parameters are the part of a link that identifies the campaign, the ad click or the individual recipient — utm_source and its family, gclid from Google Ads, fbclid from Meta, msclkid from Bing, mc_eid from Mailchimp — and none of them affect which page loads. This tool removes them from one link or two hundred, matching both an explicit list and prefix rules such as utm_, pk_ and mtm_, and passes through everything it keeps with the original encoding intact. Site-specific tags like an Amazon affiliate tag or a YouTube share id sit behind a separate switch, because removing those changes who gets credit for the click.",
   useCases: [

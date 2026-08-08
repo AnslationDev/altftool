@@ -1,4 +1,12 @@
 const seo = {
+  title: "South Korea Visa Fee in Rupees: USD 40 to USD 90",
+  metaDescription:
+    "Converts the USD 40-90 Korean consular fee to rupees with centre service charge, photos and courier, and shows when multiple entry beats re-applying.",
+  steps: [
+    "Choose the Visa type — 'Single entry, intended stay of 90 days or less' at USD 40 through 'Multiple entry' at USD 90 — and set Applicants and Trips you expect to make.",
+    "Enter Exchange rate (rupees per USD 1), then the charges you pay in India: Visa centre service fee, Photographs, Supporting documents, Passport return courier and Card cross-currency markup (%).",
+    "Read Total application cost with Cost per usable entry and 'Re-applying before each of N trips' to see whether the multiple entry pays for itself, then press Copy result.",
+  ],
   intro:
     "A South Korea visa cost estimator prices a Korean visa the way the consular fee schedule does — by how many entries the visa allows and whether the intended stay runs past 90 days — and converts the dollar fee into rupees alongside the application centre's service charge, photographs and document costs. The published fees are USD 40 for a single entry of 90 days or less, USD 60 for a single entry over 90 days, USD 70 for a double entry and USD 90 for a multiple entry, with certain categories exempt. Because a multiple-entry visa costs roughly twice a single entry but covers unlimited trips within its validity, the tool also shows how many trips it takes before the more expensive visa is the cheaper choice.",
   useCases: [

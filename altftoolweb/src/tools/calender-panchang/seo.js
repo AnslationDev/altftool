@@ -1,4 +1,5 @@
 const seo = {
+  title: "Panchang Calendar: Tithi, Nakshatra, Yoga, Rahu Kaal",
   metaDescription:
     "Free Panchang: tithi, nakshatra, yoga, karana and the sunrise-to-sunrise day for any date and place, computed with the Lahiri ayanamsa.",
   intro:

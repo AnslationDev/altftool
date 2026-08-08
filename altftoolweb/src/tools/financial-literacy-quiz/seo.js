@@ -1,4 +1,12 @@
 const seo = {
+  title: "Financial Literacy Quiz: 16 Questions Scored by Topic",
+  metaDescription:
+    "16 questions on interest, inflation, insurance and tax — the 4% RBI target, the Rs 1,50,000 section 80C cap — with a worked explanation for each.",
+  steps: [
+    "Answer the 16 multiple-choice questions, each headed with its topic — Interest, Inflation, Insurance or Tax — while the panel tracks how many of 16 you have answered.",
+    "Press \"See my score\" when you are done; anything left blank is counted as unanswered rather than blocking the result.",
+    "Every question then reveals the correct option with a worked explanation, and the panel breaks the percentage down across the four topics, names your weakest and counts what you left blank; \"Copy result\" takes that breakdown and \"Start again\" clears every answer.",
+  ],
   intro:
     "This is a 16-question diagnostic that measures how well you understand the four ideas every money decision depends on: compound interest, inflation, insurance and income tax. The interest, inflation and real-return items follow the standard 'Big Three' financial literacy questions used in national surveys, and the India-specific items test real rules — the 4% inflation target under section 45ZA of the RBI Act, the Rs 1,50,000 section 80C ceiling, the compulsory third-party cover under the Motor Vehicles Act. Every question comes back with a worked explanation, and the score is broken down by topic so you can see which one is weakest.",
   useCases: [

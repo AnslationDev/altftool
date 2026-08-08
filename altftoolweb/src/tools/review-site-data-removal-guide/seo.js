@@ -1,4 +1,12 @@
 const seo = {
+  title: "Remove Your Personal Data From Review Sites: A Plan",
+  metaDescription:
+    "Pick what to remove and where you live, and get a dated escalation ladder — one month under GDPR Article 12(3), 15 days under India's IT Rules 2021.",
+  steps: [
+    "Choose \"What do you want removed\", the \"Kind of platform\", \"Where you live\" and the \"Starting on\" date.",
+    "Read the \"Route that applies\" — deleting your own contribution, a platform policy breach, a statutory erasure right, or contested content that normally needs a court order — plus \"Steps only you can do\" and \"Escalate to\".",
+    "Work the numbered plan, chasing each step on its own dated deadline up to \"Every route exhausted by\", then press \"Copy plan\".",
+  ],
   intro:
     "This guide turns a review-site removal request into an ordered plan with real dates, based on what you are removing and where you live. It distinguishes the four routes that actually exist — deleting your own contribution, a platform policy breach, a statutory erasure right, and content that is contested and normally needs a court order — because using the wrong one is why most removal attempts stall. Deadlines come from the rules themselves: one calendar month to respond under Article 12(3) of the GDPR, 15 days for an intermediary grievance under India's IT Rules 2021 with a 24-hour route for morphed or intimate images, and no statutory takedown right in the United States, where section 230 leaves removal to platform policy or a court.",
   useCases: [

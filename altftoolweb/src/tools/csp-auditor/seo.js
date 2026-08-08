@@ -1,4 +1,12 @@
 const seo = {
+  title: "CSP Auditor: Why Your Policy Doesn’t Stop XSS",
+  metaDescription:
+    "Paste a Content-Security-Policy header and see the resolved fallback chain, what each directive really permits, and findings ranked by severity.",
+  steps: [
+    "Paste the header value into Content-Security-Policy value — a leading Content-Security-Policy: prefix is stripped automatically, and the policy text is analysed without your site ever being fetched.",
+    "Choose Delivered as (HTTP response header or <meta http-equiv> tag) and tick Report-only mode where that applies, so rules such as frame-ancestors being inert inside a meta tag are taken into account.",
+    "Read the verdict line with Script protection, then work down Findings from Critical to Info, What each directive permits after the CSP Level 3 fallback chain is resolved, and Directives as written; press Copy report.",
+  ],
   intro:
     "Most Content Security Policies do not stop XSS. They contain `'unsafe-inline'`, which permits the exact injected `<script>` tag the policy was written to block; or they rely on a host allow-list containing a CDN that serves AngularJS; or they omit `base-uri`, so a single injected `<base>` tag re-points every relative script URL at an attacker's server. This auditor parses the header value you paste, resolves the CSP Level 3 fallback chain to work out which source list really governs each resource type, states in plain English what every directive permits, and reports the weaknesses in severity order. It analyses the policy text — it does not load your site.",
   useCases: [

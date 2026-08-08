@@ -1,4 +1,12 @@
 const seo = {
+  title: "GST Delivery Challan Generator (Rule 55 Format)",
+  metaDescription:
+    "Build a Rule 55 delivery challan for job work or branch transfer: GSTIN check-digit validation, CGST/SGST or IGST split and the ₹50,000 e-way bill flag.",
+  steps: [
+    "Fill in Challan number (16 characters max), Date of issue and Reason for movement, then the consigner and consignee names, GSTINs and addresses.",
+    "Add each line under \"Goods being moved\" with description, HSN code, unit, quantity and rate — the two state codes decide CGST/SGST or IGST.",
+    "Check the Challan summary — consignment value, tax split, movement type and the e-way bill flag — then press Copy challan.",
+  ],
   intro:
     "A GST delivery challan is the document that legally moves goods when no tax invoice can be raised yet, and this generator builds one to the nine particulars listed in Rule 55 of the CGST Rules, 2017. It validates both GSTINs with the base-36 check-digit test, keeps the challan number inside the 16-character limit, splits tax into CGST/SGST or IGST from the two state codes, flags the Rule 138 e-way bill trigger above ₹50,000 and dates the Section 143 job-work return deadline. It is built for manufacturers sending goods for job work, traders doing branch transfers, and anyone moving stock for repair, exhibition or sale-on-approval.",
   useCases: [

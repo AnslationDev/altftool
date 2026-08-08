@@ -1,4 +1,12 @@
 const seo = {
+  title: "Press Release Prompt Builder with AP Dateline Rules",
+  metaDescription:
+    "Build an AI press release prompt with a correct AP dateline and a 200-800 word budget split across lead, quotes and boilerplate. Runs in your browser.",
+  steps: [
+    "Enter the Organisation, Kind of announcement, The news in one sentence and Who it is aimed at.",
+    "Set the dateline City, State or country and Release date — AP rules capitalise the city and spell out the eight states AP never abbreviates.",
+    "Choose Target length in words (200-800) and Number of quotes, read the Body paragraph budget, then press Copy prompt.",
+  ],
   intro:
     "The Press Release Prompt Builder turns your announcement into a complete AI drafting prompt with an Associated Press dateline, a word budget split across the inverted pyramid, and the AP style rules the model must obey. It builds the dateline from AP's own rules — city in capitals, AP state abbreviations rather than postal codes, the eight states AP never abbreviates spelled out in full, and AP month forms such as Sept. 3, 2026 — then divides your target length into lead, body, quotes and boilerplate. It is for PR managers, founders and comms teams who want a release a reporter will actually read rather than a page of adjectives.",
   useCases: [

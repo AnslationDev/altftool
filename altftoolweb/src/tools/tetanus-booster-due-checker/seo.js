@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tetanus Booster Due Checker: 5- or 10-Year Rule",
+  metaDescription:
+    "Enter your last tetanus dose and wound type to get the due date — the 10-year routine interval, the 5-year dirty-wound rule, and when TIG is indicated.",
+  steps: [
+    "Set \"Date of last tetanus dose\" and, if you are checking against another day, \"Assessment date\".",
+    "Pick \"Previous doses\" (3 or more previous doses / Fewer than 3 previous doses / Unknown vaccination history) and \"Wound type\" (No wound — routine check, Clean, minor wound, or Dirty, deep, puncture, burn or crush wound), and tick \"Currently pregnant\" to add the Tdap-in-pregnancy check.",
+    "Read the Booster status headline with rows for Time since last dose, Interval that applies, Next routine 10-year booster, 5-year wound cut-off and Tetanus immune globulin (TIG); \"Copy result\" copies the whole assessment with its reasons.",
+  ],
   intro:
     "This checker tells you whether a tetanus booster is due by measuring the gap between your last tetanus-containing dose and today against the two intervals used in tetanus wound management: 10 years for routine cover after a complete primary course, and 5 years when the wound is dirty, deep, a puncture, a burn or a crush injury. It also flags the cases where a single booster is not enough — fewer than three lifetime doses or an unknown history, which call for completing the primary course and, for contaminated wounds, tetanus immune globulin alongside the vaccine. It is for anyone who has just cut themselves on something rusty or muddy, or who simply wants to know when their next Td or Tdap is due.",
   useCases: [

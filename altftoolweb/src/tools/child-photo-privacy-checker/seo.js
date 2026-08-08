@@ -1,4 +1,12 @@
 const seo = {
+  title: "Child Photo Privacy Checker: Mask Faces, Strip EXIF",
+  metaDescription:
+    "Six-point checklist, drag masks burnt into the pixels, and an EXIF and GPS readout for JPEG, PNG and WebP. Export re-encodes with no metadata.",
+  steps: [
+    "Press Choose a photo for a JPEG, PNG or WebP up to 40 MB, then read the metadata card for GPS, camera serial and stored date.",
+    "Drag rectangles over badges, plates or house numbers, or press Add centre mask, and pick Solid cover, Pixelate or Blur.",
+    "Tick all six areas of the Manual privacy checklist, press Create flattened copy, then Download copy as PNG or JPEG.",
+  ],
   intro:
     "This tool walks you through a six-point manual review of a photo you own — faces and reflections, school badges and name tags, house numbers and location clues, documents and screens, vehicle plates, and background details — then lets you drag rectangles over anything you want hidden and burn them in as a solid block, pixelation or blur. It also parses the file's own metadata, reporting EXIF blocks, GPS tags, camera make and model, serial number, capture time and embedded comments in JPEG, PNG and WebP. The exported copy is redrawn through a canvas, so the masks are permanent pixels and the original metadata is not carried over.",
   useCases: [

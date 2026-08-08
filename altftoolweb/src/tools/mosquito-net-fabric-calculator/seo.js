@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mosquito Net Fabric Calculator: Roll Cutting Plan",
+  metaDescription:
+    "Enter each window and door, pick a roll width, and get running feet of mesh, a per-opening cutting plan that avoids seams, frame section and tape.",
+  steps: [
+    "Enter Opening 1 width (ft), Height (ft) and How many, then press \"Add an opening\" for each extra window or door.",
+    "Set Roll width and Mesh grade; each opening is compared upright against turned 90 degrees and the orientation needing fewer panels is used.",
+    "Read the Cutting plan table — Size (ft), Qty, Cut, Panels, Mesh each, Frame each — then press Copy result for the material list.",
+  ],
   intro:
     "This calculator works out how much insect mesh to buy off the roll for a set of windows and doors, plus the frame section and fixing tape each opening needs. Because mesh is sold in fixed roll widths, the answer is a cutting plan rather than an area: for every opening it compares taking the net upright along the roll against turning it 90 degrees, and picks the orientation needing fewer panels — an extra panel means a seam, and a seam is where insects get through. Mesh grade is handled too, since 16 to 18 strands per inch is the standard mosquito screen at about 1.2 mm aperture and finer counts are needed only for smaller insects.",
   useCases: [

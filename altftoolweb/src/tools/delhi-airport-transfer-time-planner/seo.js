@@ -1,4 +1,12 @@
 const seo = {
+  title: "Delhi Airport (DEL): When to Leave Home for a Flight",
+  metaDescription:
+    "Works back from departure through bag-drop close, gate close and the 2-hour reporting advice. Airport Express metro skips the hourly congestion factor.",
+  steps: [
+    "Set \"Scheduled departure (24-hour)\" and \"Distance to the terminal (km)\", or tap a \"Starting from\" chip such as \"Connaught Place · 16 km\" or \"Gurugram Cyber City · 15 km\".",
+    "Choose Domestic or International under \"Flight type\", pick a mode in \"How are you getting there?\" — \"Airport Express metro (Orange Line)\" runs on rails so the congestion factor is not applied — and tick \"I have a bag to check in\" if relevant.",
+    "Read the \"Leave by\" clock time and the \"Deadline set by\" chip naming bag drop, gate close or reporting advice, compare the hour-by-hour journey table, then press \"Copy plan\".",
+  ],
   intro:
     "This planner tells you the clock time to walk out of your door for a flight from Delhi's Indira Gandhi International Airport (DEL), by working backwards from the scheduled departure through the strictest of three deadlines: the airline's bag-drop close, the boarding gate close, and the airport's reporting advice of two hours for a domestic flight and three for an international one. The road leg is free-flow time multiplied by a congestion factor for the hour you are actually travelling, so a 16 km run from Connaught Place is not treated the same at 07:00 and at 18:30. Airport Express metro journeys skip the congestion factor entirely, which is often the point of taking them.",
   useCases: [

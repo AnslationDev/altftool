@@ -1,4 +1,12 @@
 const seo = {
+  title: "Calendar Privacy Scrubber: Redact ICS Before Sharing",
+  metaDescription:
+    "Replace ICS event titles, attendees, locations and notes with placeholders, strip meeting links and shift dates - all in your browser.",
+  steps: [
+    "Under Add an ICS calendar, pick a Calendar file up to 2 MB or paste its plain-text contents into the box.",
+    "Set Event title, Attendee names & emails, Organizer, Location and Description & notes to keep, generalize or remove, toggle Remove conference links and Remove event alarms, and enter Shift event dates between -3650 and 3650 days.",
+    "Scrubbed calendar updates live with Events, Fields changed, Dates shifted and Alarms removed counts; use Copy scrubbed ICS or Download scrubbed ICS to save the -scrubbed.ics file.",
+  ],
   intro:
     "This tool rewrites an ICS calendar file in your browser, replacing the identifying parts of each event with neutral placeholders before you share it. Working line by line over RFC 5545 content lines, it can generalize event titles to \"Private event 3\", attendees to \"Attendee 2\" at a redacted.invalid address, locations to \"Private location\" and descriptions to \"Private event details\" — or delete those fields outright — while stripping the CN, EMAIL, DIR, SENT-BY and DELEGATED-TO parameters that carry real names. It is for anyone who has to hand over a calendar for scheduling, an audit or a support ticket without handing over who they met and where.",
   useCases: [

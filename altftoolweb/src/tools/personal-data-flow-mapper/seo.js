@@ -1,4 +1,7 @@
 const seo = {
+  title: "Personal Data Flow Mapper: 7-Column Flow Inventory",
+  metaDescription:
+    "Turn pipe-separated lines into a table of step, source, data, purpose, destination, retention rule and control, then flag rows missing a column.",
   intro:
     "Personal Data Flow Mapper turns pipe-separated lines into a structured data-flow inventory with seven fixed columns: step, source, data element, purpose, destination, retention or deletion rule, and control. Write one line per flow — for example '1 | Signup form | Email | Create account | Identity service | Account life + 30d | TLS and role access' — and it builds the table, counts complete rows, and flags any row with a missing column when the completeness check is on. The columns deliberately mirror what a processing record is normally expected to state: what data, why, where it goes, how long it is kept and what protects it.",
   useCases: [

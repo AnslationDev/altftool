@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tokens Per Second Calculator for Local LLM Benchmarks",
+  metaDescription:
+    "Turn llama.cpp timings into decode and prefill tok/s, TTFT and weight size at real bpw (Q4_K_M 4.83), against your memory-bandwidth ceiling.",
+  steps: [
+    "Fill Model, Hardware and Parameters (billions), then pick Quantisation from a dropdown that prints each format's effective bits per weight, such as Q4_K_M at 4.83 bpw",
+    "Enter Prompt tokens, Generated tokens, Prefill / prompt-eval time (s), Generation time (s) and the optional Memory bandwidth (GB/s, optional — enables the ceiling), then press Add to sheet",
+    "Decode throughput heads the panel with Prefill throughput, Time to first token, Weights in memory, With runtime overhead, Memory-bandwidth ceiling and Share of the ceiling reached below it; Saved runs collects each entry with Fastest and Slowest, and Copy markdown exports the comparison table",
+  ],
   intro:
     "Tokens Per Second Benchmark Sheet turns the raw timings a local LLM runner prints into decode throughput, prefill throughput and time to first token, and compares them against the memory-bandwidth ceiling for that model. Weight footprint is calculated from parameter count and the effective bits per weight of the quantisation format — 4.83 bpw for Q4_K_M, 5.69 for Q5_K_M, 8.5 for Q8_0 — and the ceiling is simply memory bandwidth divided by that footprint, because single-stream decoding must read every weight once per token. It is for anyone comparing the same model across machines, or the same machine across quantisations.",
   useCases: [

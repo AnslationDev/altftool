@@ -1,4 +1,12 @@
 const seo = {
+  title: "Leaked Card Number: 16-Step Response Checklist",
+  metaDescription:
+    "Tick which fields leaked with your card number, then work the 16-step plan — reissue with a new number first, then check pending card-testing charges.",
+  steps: [
+    "Under What else was in the same leak?, tick the categories that applied — Expiry date, CVV / CVC security code, Card PIN, Billing address, Online banking username or password — never the card number itself.",
+    "Work the four groups starting with Kill the number today, ticking steps such as Report the card as compromised, not lost or damaged and Confirm the replacement card has a different number.",
+    "Read the Response score, which is held at 69% while any critical step is open, plus the Do these next list, then press Copy result.",
+  ],
   intro:
     "The Card Number Exposure Checklist is for the specific case of a leaked card number without the CVV or expiry date — a lower-risk exposure than a full card dump, but not a harmless one. It scores two things: how far through the 16-step response you are, weighted towards killing the old number before card-testing scripts find it, and how much worse the leak gets if the dump also included the CVV, expiry, PIN or other identity fields. Unlike a home address or a date of birth, a card number can be rotated, and getting the issuer to reissue a genuinely new number — not just a new expiry on the same digits — is the single step that fully closes the leak.",
   useCases: [

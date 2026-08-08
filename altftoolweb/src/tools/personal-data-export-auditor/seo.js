@@ -1,4 +1,12 @@
 const seo = {
+  title: "Personal Data Export Auditor - Schema Only, No Values",
+  metaDescription:
+    "Scan a downloaded data export of JSON, CSV and TXT files for eight personal-data categories. Reads field names and counts only, never the values.",
+  steps: [
+    "Press 'Choose files' under 'Select extracted export files' and pick up to 24 JSON, CSV or TXT files (8 MB per file, 24 MB per batch), or press 'Load safe sample'; ZIP, TAR, GZ, RAR and 7Z are inventoried as unsupported only.",
+    "Each JSON file is walked for its property names and each CSV for its first non-empty header row, and those names are matched against eight category rules: location, contacts, messages, ads, searches, devices, identifiers and security.",
+    "Check the 'Files inventoried', 'Category signals', 'Records counted' and 'Fields counted' cards plus the per-file 'File inventory', then press 'Download metadata report' to save altftool-personal-data-export-audit.json.",
+  ],
   intro:
     "This auditor takes the JSON, CSV and TXT files from a 'download your data' export and tells you what categories of personal data the export actually contains, by matching JSON property names, CSV header rows and file names against keyword rules for eight categories: location, contacts and connections, messages, ads and inferred interests, searches and activity history, devices and network signals, account identifiers, and security and authentication. It reads structure only — field names, record counts and file sizes — and never records a single field value, replacing any key that looks like a value (an email address, a URL, a UUID, a long number) with a [dynamic key] placeholder. The output is a JSON metadata report you can keep or hand to someone else without leaking the contents.",
   useCases: [

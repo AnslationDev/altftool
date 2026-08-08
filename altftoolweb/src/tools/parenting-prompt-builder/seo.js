@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Parenting Prompt Builder: Activities by Age & Time",
+  metaDescription:
+    "Maps a child's age to a Piaget stage and a 2–5 minutes-per-year attention block, fits activities into the minutes you have, then writes the AI prompt.",
+  steps: [
+    "Enter Age in years and Minutes you have, then choose what the time is for and where you are — a small indoor flat, outdoors, a car or a quiet clinic.",
+    "Add what they are into right now and what you have to hand; the Piagetian stage, the block length and 3 minutes per changeover fix how many fit.",
+    "Activities that fit the time appears with the AAP media line and the sleep band; Copy prompt takes the wording with its word and token count.",
+  ],
   intro:
     "The Parenting Prompt Builder maps a child's age onto one of Piaget's four stages of cognitive development, converts that age into a realistic attention block using the 2–5 minutes per year of age planning heuristic, then works out how many activities fit the minutes you actually have once 3 minutes of setup and tidying between blocks is counted. Those figures go straight into an AI prompt, so the model plans for a 4-year-old with 45 minutes — two blocks of about 14 minutes with 14 minutes of slack — instead of an average child with unlimited time. It is written for parents and carers who want age-appropriate activities and conversation starters that match the space they are in and the objects already in the house.",
   useCases: [

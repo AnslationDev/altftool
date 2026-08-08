@@ -1,4 +1,12 @@
 const seo = {
+  title: "Email Signature Builder: 26 Table-Based HTML Templates",
+  metaDescription:
+    "Nested-table, inline-style HTML that Gmail, Outlook, Apple Mail and Yahoo render alike. Outlook preview plus checks for base64, http:// and 600px width.",
+  steps: [
+    "Fill \"Personal details\" — Full name, Job title, Company, Email, Phone, Mobile, Website, Address — and pick one of the 26 templates across the Professional, Modern, Minimal, Creative and Corporate sets.",
+    "Toggle the optional blocks (photo, logo, social icons, CTA \"Button text\" and URL, meeting links, banner, \"QR contents\" and disclaimer), then switch the preview tab from Gmail to Outlook to see the square corners Word's engine draws.",
+    "Check the \"Signature quality\" score out of 100 for base64 images, http:// sources, missing alt text and width over 600px, then press \"Copy signature\" or export HTML, PNG, PDF or vCard (files named from your full name, e.g. aarav-sharma.html).",
+  ],
   intro:
     "The Email Signature Builder generates an email-safe HTML signature built from nested tables and inline styles — the only markup dialect Gmail, Outlook, Apple Mail and Yahoo all render the same way — and lets you copy it straight into your mail client. You fill in your name, role and contact details, pick one of 26 templates across Professional, Modern, Minimal, Creative and Corporate sets, and toggle optional blocks for social icons, a CTA button, meeting links, a banner, a QR code and a legal disclaimer. A built-in checker scores the result and flags the things that actually break signatures: base64 images, http:// image URLs, missing alt text and tables wider than 600px.",
   useCases: [

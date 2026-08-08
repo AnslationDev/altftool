@@ -1,4 +1,12 @@
 const seo = {
+  title: "Used Bike Buying Checklist: 41 Weighted Inspection Points",
+  metaDescription:
+    "Score a used motorcycle on 41 weighted checks across 8 areas, with 5 deal-breakers, and turn each failure into an itemised opening offer.",
+  steps: [
+    "Enter Asking price, Odometer (km), Model year and Current year, then set your own Minor, Moderate, Major and Severe repair costs.",
+    "Work down The inspection marking each of the 41 points Pass, Fail or Skip - Mark all pass and Clear all set them in bulk.",
+    "Condition score reports checks completed with coverage, Deal-breakers failed, Repair allowance and Opening offer, and Take this list to the seller itemises every failure. Press Copy result.",
+  ],
   intro:
     "This is a 41-point inspection for a used motorcycle, weighted so that a mismatched frame number and a weeping fork seal do not count the same. It scores only the checks you actually completed — passed weight divided by checked weight — and reports coverage alongside the score, so a high number from a rushed look does not read as a clean bill of health. Every failure carries a repair cost band that you set, and the total is subtracted from the asking price to give an itemised opening offer. Five checks are treated as deal-breakers rather than negotiating points: frame and engine numbers, outstanding finance, seller identity and frame straightness.",
   useCases: [

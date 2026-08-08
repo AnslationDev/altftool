@@ -1,4 +1,12 @@
 const seo = {
+  title: "SPF, DKIM, DMARC & MX Record Checker for a Domain",
+  metaDescription:
+    "Check a domain's live SPF, DKIM, DMARC and MX records over DNS-over-HTTPS: pass, warn or fail on each, 12 DKIM selectors probed, and the text to fix it.",
+  steps: [
+    "Type the domain into Domain (or email address) — a full email address is accepted — and leave DKIM selector (optional) on auto-detect unless your provider names one.",
+    "Press Check domain. SPF, DKIM, DMARC and MX are queried live over DNS-over-HTTPS against Google's resolver, with 12 common DKIM selectors probed in parallel.",
+    "Read the score weighted SPF 30%, DKIM 30%, DMARC 30% and MX 10%, then expand any Pass, Warning or Fail card for the record text and its Fix line.",
+  ],
   intro:
     "Email Authentication Checker looks up a domain's live SPF, DKIM, DMARC and MX records over DNS-over-HTTPS and grades each one pass, warn or fail against fixed published rules — one v=spf1 record only, the RFC 7208 limit of 10 DNS-lookup mechanisms, a DMARC policy at _dmarc.<domain>, and a DKIM key of at least 2048 bits. It rolls the four verdicts into a single score weighted SPF 30%, DKIM 30%, DMARC 30% and MX 10%, and gives the exact record text to publish for anything that fails. It is for anyone who has just set up sending on a domain, or whose mail is landing in spam, and needs to know whether authentication is the reason.",
   useCases: [

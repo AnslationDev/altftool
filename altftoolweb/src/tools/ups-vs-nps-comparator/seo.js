@@ -1,4 +1,12 @@
 const seo = {
+  title: "UPS vs NPS: Break-Even Return and Lump Sum Compared",
+  metaDescription:
+    "Solve for the annual NPS return at which the annuity equals the UPS assured payout of 50% of last-12-month average basic pay, plus Dearness Relief.",
+  steps: [
+    "Under \"Your pay and service\", enter your current monthly basic pay, the Dearness Allowance now as a % of basic, years left to superannuation and total qualifying service.",
+    "Set the \"NPS assumptions\": corpus already accumulated, the 10% employee and 14% government contribution rates, the share of corpus annuitised (40% PFRDA floor) and the annuity rate.",
+    "Read \"NPS return needed to match the UPS payout\", compare the UPS and NPS monthly figures side by side, then press \"Copy result\".",
+  ],
   intro:
     "UPS vs NPS Comparator computes the annual NPS return at which a National Pension System annuity would pay exactly as much per month as the Unified Pension Scheme assured payout, on the same basic pay, service length and DA assumptions. It applies the UPS rules notified by the Department of Financial Services in F. No. FX-1/3/2024-PR dated 24 January 2025 and operative from 1 April 2025 — 50% of the average basic pay of the last twelve months at 25 years of qualifying service, proportionate below that, an assured minimum of Rs 10,000 a month at 10 years, Dearness Relief on top, a family payout of 60%, and a lump sum of one-tenth of monthly emoluments per completed six months — and sets them against an NPS corpus annuitised under the PFRDA (Exits and Withdrawals) Regulations, 2015, where at least 40% must buy an annuity and up to 60% may be commuted. It is built for Central Government employees who hold the one-time election between the two schemes and want the break-even return and the bequest difference stated in rupees rather than described in adjectives.",
   useCases: [

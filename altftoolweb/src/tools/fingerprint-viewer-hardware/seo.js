@@ -1,4 +1,12 @@
 const seo = {
+  title: "Browser Hardware Fingerprint: What Sites Can Read",
+  metaDescription:
+    "See the hardwareConcurrency, deviceMemory, maxTouchPoints and pointer/hover values your browser hands over with no prompt, flagged ordinary or unusual.",
+  steps: [
+    "Leave \"Readings to analyse\" on \"This browser (live)\", or pick a Compare profile to see how an ordinary reference machine reports itself.",
+    "Press \"Re-read\" to poll navigator and the pointer/hover media queries in this tab again.",
+    "Read the Signal / Value / Crowd table marking each reading Ordinary or Unusual, check \"Memory value follows the specification\", then use \"Copy report\".",
+  ],
   intro:
     "Hardware Capability Fingerprint Viewer shows the machine properties a website can read with no permission prompt: navigator.hardwareConcurrency, navigator.deviceMemory, navigator.maxTouchPoints and the CSS pointer, hover, any-pointer and any-hover media features. Each reading is checked against the values its specification allows — device memory, for example, is rounded to a power of two and capped at 8 GB — and labelled ordinary or unusual, with a device class inferred from input capability rather than the user-agent string. It exists so you can see what fingerprinting scripts collect at this layer before deciding whether it matters to you.",
   useCases: [

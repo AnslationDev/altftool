@@ -1,4 +1,12 @@
 const seo = {
+  title: "Which Time Period Do You Belong In? 10-Question Quiz",
+  metaDescription:
+    "Ten weighted questions match you to one of six eras: Ancient World, Medieval, Renaissance, Victorian, the Roaring Twenties or the Future Age past 2100.",
+  steps: [
+    "Answer question 1 of 10 by tapping one of its four options, starting with how you would spend a typical weekend.",
+    "Work through the remaining questions, on the role you take in a group and your ideal entertainment, while the progress bar tracks Question N/10.",
+    "Your Time Period names the era with its date range, four traits, three key inventions and a quote; Retake Quiz starts again.",
+  ],
   intro:
     "Which Time Period Do You Belong In? is a 10-question quiz that matches your values and habits to one of six eras: the Ancient World (before 500 AD), the Medieval Age (500-1500), the Renaissance (1300-1700), the Victorian Era (1837-1901), the Roaring Twenties (1920-1929) or the Future Age (2100 and beyond). Questions cover how you spend a weekend, the role you take in a group and what entertainment pulls you in, with each answer adding weighted points across the eras it resembles — usually two, but sometimes just one or as many as three. Your result names the era with its date range, four traits, three inventions that define it and a quote.",
   useCases: [

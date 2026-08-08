@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cold Weather Hydration Calculator: Breath & Sweat",
+  metaDescription:
+    "Adds respiratory water loss in dry cold air, sweat under layers and cold-induced diuresis to a 35 ml/kg baseline, and flags when you need sodium.",
+  steps: [
+    "Enter Body weight (kg), Outdoor temperature (°C), Relative humidity (%) and Hours outdoors today.",
+    "Pick your Activity level outdoors, which sets the minute ventilation used for the respiratory loss from the Magnus saturation-vapour equation.",
+    "Read Drink today in litres and 250 ml glasses, with the during-session share capped at 800 ml an hour and the sweat sodium estimate, then press Copy result.",
+  ],
   intro:
     "The Cold Weather Hydration Calculator estimates how much fluid you lose on a cold day by adding four separate losses: your baseline need of about 35 ml per kg of body mass, the extra water carried off by breathing dry sub-zero air, sweat trapped under insulating layers, and cold-induced diuresis. The breathing loss is calculated from psychrometrics rather than a rule of thumb — exhaled air leaves the airway saturated at 37 °C while air at -10 °C holds under 2 g of water per cubic metre, and that gap is water you never get back. It is aimed at hikers, skiers, construction and site crews and anyone who stops feeling thirsty once the temperature drops.",
   useCases: [

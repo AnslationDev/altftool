@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kundli Matching: Guna Milan Score Out of 36 + Manglik",
+  metaDescription:
+    "Match two birth charts on all eight Ashta Koota categories out of 36 gunas, with Moon nakshatra from sidereal longitudes and a Manglik check.",
+  steps: [
+    "Fill Person 1 (Boy) and Person 2 (Girl) with Name and the Day, Month and Year of birth.",
+    "Add Birth Time (optional, 24h IST) as HH:MM plus the birth Latitude and Longitude, then press Calculate Guna Milan.",
+    "Read the guna total out of 36, the Ashta Koota (8 Categories) cards showing points against each maximum, and the Manglik Dosha panel covering both charts.",
+  ],
   intro:
     "Kundli Matching (Guna Milan) scores the compatibility of two birth charts on the Ashta Koota system — eight categories worth 36 gunas in total: Varna 1, Vashya 2, Tara 3, Yoni 4, Graha Maitri 5, Gana 6, Bhakoot 7 and Nadi 8. It computes each person's Moon nakshatra, pada and rashi from their birth date and time using sidereal longitudes rather than a lookup table, then checks Mangal (Manglik) Dosha from the position of Mars relative to the Moon sign. The result is a guna total, a percentage and a per-koota breakdown you can read line by line. This is presented for cultural and informational interest, not as a decision to make on someone's behalf.",
   useCases: [

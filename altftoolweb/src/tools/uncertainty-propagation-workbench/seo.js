@@ -1,4 +1,12 @@
 const seo = {
+  title: "Uncertainty Propagation: Combined & Expanded, k=2",
+  metaDescription:
+    "Combine input uncertainties for a product-and-power model in root-sum-square or conservative mode, with expanded uncertainty at your coverage factor k.",
+  steps: [
+    "Enter one line per component in \"Product/power components\" as Name | value | standard uncertainty | exponent — the default rows read \"Length | 10 | 0.1 | 2\" — or click the \"Area-style product\" example.",
+    "Leave \"Assume independent inputs\" ticked to use root-sum-square relative uncertainty, or untick it for the conservative sum of relative terms, and set Coverage factor k (default 2, minimum 0.1).",
+    "The Result shows the value ± its expanded uncertainty with Combined standard uncertainty, Relative standard uncertainty and a Relative contribution column per component; Download saves uncertainty-propagation-workbench.txt.",
+  ],
   intro:
     "The Uncertainty Propagation Workbench combines the input uncertainties of a product-and-power measurement model, y = ∏ xᵢ^aᵢ, into a combined standard uncertainty and an expanded uncertainty using a coverage factor you choose. Each component contributes a relative term of |aᵢ · uᵢ / xᵢ|, and those terms are either combined in root-sum-square when the inputs are independent or added directly for a conservative worst case. Enter one line per component as name, value, standard uncertainty and exponent, and you get the result with its ± interval, the relative standard uncertainty as a percentage, and a table showing how much each input contributed.",
   useCases: [

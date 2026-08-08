@@ -1,4 +1,12 @@
 const seo = {
+  title: "Screenshot Metadata Risk: What Survives Sharing",
+  metaDescription:
+    "Tick the filename, timestamps, status bar or crop leftovers in your screenshot and see which survive Slack, email, a bug tracker or a public post.",
+  steps: [
+    "Pick the destination under \"Where will you share it?\" — public social post, work chat, email attachment, support ticket or messaging app.",
+    "Tick the signals your screenshot carries, such as Default screenshot filename, On-screen clock and battery percentage, or Recoverable data behind a crop.",
+    "Read the Exposure score out of 100 and the \"Fix these before you share\" list, then press Copy result.",
+  ],
   intro:
     "Screenshot Metadata Risk Explainer maps the identifying signals that travel with a screenshot — the default filename with its date and time, file system timestamps, PNG text chunks, on-screen status bar, visible file paths, and image data left behind an in-app crop — and scores how much of it survives the channel you share it on. Each signal is classified by where it lives (filename, embedded tag, trailing container bytes or the pixels themselves), because that determines whether a platform strips it or not. Written for anyone posting a bug report, a support screenshot or a social post who wants to know what they are handing over.",
   useCases: [

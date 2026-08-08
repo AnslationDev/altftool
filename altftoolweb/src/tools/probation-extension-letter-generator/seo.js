@@ -1,4 +1,12 @@
 const seo = {
+  title: "Probation Extension Letter: Revised End Date + Review",
+  metaDescription:
+    "Drafts a probation extension letter and works out the revised end date with month-end clamping, a review meeting date and total probation served.",
+  steps: [
+    "Fill the employer and employee fields, then under Dates set 'Date of joining', 'Original probation end date', 'Letter date' and 'Extension length (months)'.",
+    "Enter at least one line in 'Reasons for the extension (one per line)' — the letter will not build without one — and set the review lead days and Tone (Supportive or Formal).",
+    "Check 'Revised probation ends' and the 'Review meeting by' date, read any warning about a late letter, then press 'Copy letter'.",
+  ],
   intro:
     "A probation extension letter is the written record that an employee's probationary period has been prolonged, why, and when the decision to confirm or not will now be taken. This generator produces that letter and does the date arithmetic behind it: it adds the extension to the original probation end date with proper month-end clamping, books a review meeting a set number of days before the new end date, and totals how long the person will have been on probation from the date of joining. It flags the two mistakes that cause disputes — issuing the letter after probation has already lapsed, and letting total probation run past twelve months without a contractual basis.",
   useCases: [

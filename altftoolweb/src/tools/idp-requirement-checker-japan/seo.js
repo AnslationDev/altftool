@@ -1,4 +1,12 @@
 const seo = {
+  title: "International Driving Permit Japan: 1949 Geneva Only",
+  metaDescription:
+    "Japan refuses 1968 Vienna and 1926 Paris permits. Check your format, see which licences need a JAF translation, and date the one-year window from entry.",
+  steps: [
+    "Choose where your licence was issued, what you already hold — a 1949 Geneva, 1968 Vienna or 1926 Paris permit, or a JAF translation — and why you are in Japan.",
+    "Enter the date you entered Japan, plus the permit's issue date, your departure date and your age if you have them.",
+    "Read the verdict, the earlier of the two one-year expiry dates and the 'Carry in the car' list, then press Copy result.",
+  ],
   intro:
     "This checker tells you whether the international driving permit in your bag is actually valid in Japan, because Japan recognises only one format. Article 107-2 of the Road Traffic Act accepts a permit issued under the 1949 Geneva Convention on Road Traffic and refuses the 1968 Vienna and 1926 Paris versions outright. A separate group of countries - Switzerland, Germany, France, Belgium, Monaco, Taiwan, Slovenia and Estonia - is handled without permits at all, using an official Japanese translation from JAF or an embassy. The tool also dates the one-year window, which runs from your entry into Japan or from the permit's issue date, whichever ends first.",
   useCases: [

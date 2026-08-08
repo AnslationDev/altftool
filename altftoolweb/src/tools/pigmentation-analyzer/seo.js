@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pigmentation Analyzer: Skin Tone Evenness Score",
+  metaDescription:
+    "Detects the face, samples the inner 60% in 10x10 blocks, and scores tone variation 0-100 across five bands with a per-block heatmap. Not a diagnosis.",
+  steps: [
+    "Drop a photo on the 'Upload a clear front-facing photo' panel or click it to browse; any image file works, and the tool asks for natural lighting with no makeup or filters.",
+    "No button is needed — the face detection model and face landmark model load, the face is located from its 68 landmarks, and the inner face region is measured in 10x10 pixel blocks.",
+    "Read the severity band (Even, Mild, Moderate, Significant or Severe) with Variation Score, Spots Detected, Confidence and Avg Luminance, and the Pigmentation Variation Map where red marks darker variation; Analyze Another clears the photo.",
+  ],
   intro:
     "Pigmentation Analyzer measures how evenly a face photo's skin tone reads by detecting the face with a TinyFaceDetector and 68-point landmark model, sampling the central 60% of the face region in 10×10 pixel blocks, and reporting the standard deviation of block luminance as a variation score from 0 to 100. That score maps to five bands — Even up to 8, Mild to 18, Moderate to 30, Significant to 45 and Severe above it — alongside a count of darker reddish-brown patches and a heatmap that colours each block by how far it sits from the face's mean brightness. It is a photo-measurement aid for tracking evenness over time, not a diagnosis of any skin condition.",
   useCases: [

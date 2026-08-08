@@ -1,4 +1,7 @@
 const seo = {
+  title: "AC Tonnage Calculator: BTU Load, Not a Rule of Thumb",
+  metaDescription:
+    "Size a room AC by adding real heat load — 34 BTU/sq ft, 600 per person, 165 per sq ft of sunlit glass — then compare 3, 4 and 5 star running costs.",
   intro:
     "This calculator sizes a room air conditioner by adding up the actual heat load in BTU rather than applying a rule of thumb: floor area at 34 BTU per sq ft scaled by ceiling height, 600 BTU per person, 165 BTU per sq ft of sunlit glass (55 if shaded), 150 BTU per window for leakage, appliance watts at 3.412 BTU each, plus 28 BTU per sq ft if you are on the top floor. The subtotal is multiplied by a climate factor for your city — 1.15 hot and humid, 1.10 hot and dry, 1.05 composite, 0.92 moderate — then divided by 12,000 BTU to give tons and rounded up to the nearest standard size. It then estimates the monthly running cost at 3, 4 and 5 star for both inverter and fixed-speed units.",
   useCases: [

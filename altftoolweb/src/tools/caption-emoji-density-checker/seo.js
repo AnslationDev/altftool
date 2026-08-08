@@ -1,4 +1,12 @@
 const seo = {
+  title: "Caption Emoji Density Checker: Emoji per 100 Words",
+  metaDescription:
+    "Counts emoji as grapheme clusters and flags runs over 2, more than 5 in a caption, over 10 per 100 words, mid-sentence emoji and a leading emoji.",
+  steps: [
+    "Paste your post text into the Caption box; it is analysed on this page as you type and the caption never leaves the browser.",
+    "Check the flags against the stated thresholds: more than 5 emoji in one caption, more than 2 in a row, above 10 emoji per 100 words, or an emoji inside a sentence.",
+    "Read Unique emoji, Per 100 words, Longest run in a row, Emoji inside a sentence and Opens with an emoji, then press \"Copy without emoji\" for the stripped caption.",
+  ],
   intro:
     "Emoji density is the number of emoji measured against the words around them, and it matters because a screen reader announces each emoji by its Unicode name in the position it appears — so a caption reading 'we just 🚀 shipped it' is heard as 'we just rocket shipped it'. This checker counts emoji as whole grapheme clusters (a flag or a family sequence counts as one, not four), reports emoji per 100 words, and flags the four placements that cause trouble: long runs, emoji inside a sentence, an emoji opening the caption, and the same one repeated. Written for social managers who want emoji to stay decorative rather than load-bearing.",
   useCases: [

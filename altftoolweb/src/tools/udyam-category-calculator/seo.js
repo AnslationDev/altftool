@@ -1,4 +1,12 @@
 const seo = {
+  title: "Udyam MSME Category Calculator: Micro, Small, Medium",
+  metaDescription:
+    "Apply the composite MSME test on the 1 April 2025 limits or the 2020 set: investment and turnover together, export turnover excluded, plus your headroom.",
+  steps: [
+    "Enter Investment in plant, machinery and equipment (INR) at written-down value, then Total turnover for the year (INR) and Of which export turnover (INR).",
+    "Choose Which notified limits apply — Current limits (from 1 April 2025) or Earlier limits (1 July 2020 to 31 March 2025).",
+    "Read Your MSME category with the Deciding test that settled it, the percentage of each limit used, and the Investment and Turnover headroom before moving up, then press Copy result.",
+  ],
   intro:
     "This calculator tells you whether a business is a micro, small or medium enterprise by applying the composite classification test under the Micro, Small and Medium Enterprises Development Act, 2006 — an enterprise must be within both the investment-in-plant-and-machinery limit and the turnover limit of a category, and breaching either one moves it up. It uses the enhanced limits applicable from 1 April 2025 by default and keeps the 1 July 2020 limits available for earlier years, and it excludes export turnover exactly as the classification rules require. Useful before filing a Udyam registration, claiming an MSME benefit, or answering the enterprise-category question in a tender.",
   useCases: [

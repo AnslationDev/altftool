@@ -1,4 +1,12 @@
 const seo = {
+  title: "JavaScript Formatter, Minifier and Complexity Checker",
+  metaDescription:
+    "Re-indent, strip comments and whitespace, or count lines, functions and McCabe cyclomatic complexity. A // inside a string is never a comment.",
+  steps: [
+    "Paste a snippet into the JavaScript box, then choose Format, Minify or Inspect under \"What to do\" and an indent of 2 spaces, 4 spaces or Tab.",
+    "Format re-indents one statement per line, Minify strips comments and redundant whitespace while keeping every newline so automatic semicolon insertion is unchanged, and Inspect counts code, comment and blank lines, functions, console.* calls and TODO / FIXME / HACK markers.",
+    "Read the headline figure — output lines, percentage saved, or cyclomatic complexity — then press Copy result to take the output or the inspection summary; Reset asks before replacing your code with the sample.",
+  ],
   intro:
     "JavaScript Tools formats, minifies and inspects a JavaScript snippet entirely in your browser, using a lexical scanner that separates code from strings, template literals, regular expressions and comments before it touches a single character. Formatting re-indents one statement per line without adding or removing a token; minifying strips comments and redundant whitespace while keeping every newline, so automatic semicolon insertion behaves exactly as it did in the original. Inspection reports line and token counts plus McCabe cyclomatic complexity, which is the number of decision points plus one.",
   useCases: [

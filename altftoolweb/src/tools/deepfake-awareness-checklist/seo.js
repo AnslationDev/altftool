@@ -1,4 +1,12 @@
 const seo = {
+  title: "Deepfake Checklist: 15 Red Flags, 6 Verify Steps",
+  metaDescription:
+    "Score a video, voice note or call against 15 weighted red flags and 6 verification steps; any money or OTP ask stays high until you call back.",
+  steps: [
+    "Under \"1. Red flags you can observe\", tick only what is genuinely present across the Request and pressure, Media artifacts and Provenance groups — \"Asks for money, a wire transfer, gift cards or crypto\" carries a severity weight of 5, warped hands or mismatched lighting only 2.",
+    "Under \"2. Verification steps already completed\", tick a check only if you ran it and it passed; the two marked decisive are the callback on a number you already had and the pre-agreed code word, and all six together remove at most 60% of the assessed risk.",
+    "Read \"Residual risk after verification\" as a percentage with its band — Low concern, Elevated concern, High concern or Critical — plus the group severity table and the \"Still to run\" list; \"Copy result\" copies the verdict and the outstanding checks.",
+  ],
   intro:
     "The Deepfake Awareness Checklist scores a suspicious video, voice note or call against 15 weighted red flags and 6 verification steps, then reports the risk that remains after the checks you have actually completed. It follows the guidance that matters in practice rather than pixel forensics: the FBI IC3 advice to call the person back on a number you already hold, the FTC finding that the request for money or gift cards is the reliable tell in voice-cloning scams, and CISA/NSA's position that provenance and out-of-band confirmation beat automated detectors on re-shared, recompressed media. It is built for anyone facing an urgent ask that appears to come from a family member, a manager or a bank.",
   useCases: [

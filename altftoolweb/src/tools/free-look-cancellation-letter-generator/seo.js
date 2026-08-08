@@ -1,4 +1,12 @@
 const seo = {
+  title: "Free Look Cancellation Letter: 30-Day IRDAI Window",
+  metaDescription:
+    "Count the 30-day free look window from the date the policy reached you, estimate the refund after deductions, and draft the letter to the insurer.",
+  steps: [
+    "Enter Policy document received on, Risk commencement date and Date of the cancellation request, then Premium paid (₹), Annual risk / mortality premium (₹), Medical examination expense (₹) and Stamp duty charged (₹).",
+    "Choose the Kind of policy — a unit-linked option adds Fund value on cancellation date and Unallocated premium and charges recovered — pick a Reason for returning the policy, and fill in the policyholder's name, policy number, insurer, refund account number and IFSC.",
+    "The panel shows the estimated refund, the day the free look window closes, days on cover and each deduction itemised; press Copy letter to take the drafted cancellation request to the insurer.",
+  ],
   intro:
     "The free look period is the window in which a policyholder can return a newly issued insurance policy and get the premium back less a few defined deductions; under the IRDAI (Protection of Policyholders' Interests, Operations and Allied Matters of Insurers) Regulations, 2024 that window is 30 days from the date the policy document is received. This tool counts the window from your receipt date, estimates the refund after the proportionate risk premium for the days you were on cover, the medical examination expense and stamp duty, and drafts the cancellation request. It is for anyone who has just received a life, health or unit-linked policy and finds the terms are not what was sold to them.",
   useCases: [

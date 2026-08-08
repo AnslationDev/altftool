@@ -1,4 +1,12 @@
 const seo = {
+  title: "Society Maintenance Splitter: Equal vs Per Sq Ft",
+  metaDescription:
+    "Set each expense head to equal, per sq ft, per parking slot or custom %, and get whole-rupee flat bills that reconcile exactly to the total.",
+  steps: [
+    "Under Flats, set each Flat no., Carpet area (sq ft) and Parking slots, and toggle any row between Occupied and Vacant; Add flat appends another row.",
+    "In Expense heads, give each head its monthly amount and pick Equal, Per sq ft, Per slot or Custom %, then switch \"Vacant flats charged\" to \"Vacant flats skipped\" on usage-driven heads such as the water tanker.",
+    "The Full split table allocates whole rupees by the largest-remainder method and reconciles to the expense total; use Copy table or Download CSV, or choose a flat and press Print bill for its head-wise bill.",
+  ],
   intro:
     "The Society Maintenance Charge Splitter divides a housing society's monthly expenses across its flats, letting you set the basis separately for every expense head — equal per flat, per sq ft of carpet area, per parking slot, or a hand-entered custom percentage — and produces a per-flat total plus a printable bill. It is built for committee members and treasurers who have to defend a maintenance figure at a general body meeting, because it shows the same total split both ways so you can see exactly which flats gain or lose under each method. Shares are allocated in whole rupees using largest-remainder rounding, so every head's shares add back to the amount you entered with no rounding drift.",
   useCases: [

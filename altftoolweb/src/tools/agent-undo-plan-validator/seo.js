@@ -1,4 +1,12 @@
 const seo = {
+  title: "Agent Undo Plan Validator: Reversible or Irreversible?",
+  metaDescription:
+    "Paste an agent plan as JSON or one step per line: each step is graded reversible, recoverable or irreversible, and each safeguard detailed or vague.",
+  steps: [
+    "Paste the plan into the Action plan box as JSON with an actions key, or as numbered or line-separated steps; Load JSON sample fills an example.",
+    "The review updates as you type, tagging every action Reversible, Recoverable or Irreversible and quoting the matched phrase behind it.",
+    "Check Backup, Checkpoint, Confirmation and Rollback as Detailed, Too vague or Not found, then press Download report for agent-undo-plan-validation.txt.",
+  ],
   intro:
     "The Agent Undo Plan Validator reads a proposed AI agent plan — as a JSON action array or as one step per line — and labels every step reversible, recoverable or irreversible, then checks the plan for the four safeguards that would make an undo real: backup, checkpoint, confirmation and rollback. Crucially it grades each safeguard twice, as merely mentioned or as actually detailed, so 'we will take a backup first' is treated differently from a line that says where the backup goes and how it is restored. It is for anyone reviewing an agent plan before granting execution, and it never runs, sends or verifies anything — the analysis is local keyword classification over the text you paste.",
   useCases: [

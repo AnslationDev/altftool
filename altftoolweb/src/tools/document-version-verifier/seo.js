@@ -1,4 +1,12 @@
 const seo = {
+  title: "Document Version Verifier: Diff, Hashes, Tampering",
+  metaDescription:
+    "Compare two PDF, DOCX or text versions in your browser: line diff, CRC32, MD5, SHA-1, SHA-256 and SHA-512 hashes, plus a 100-point tamper score.",
+  steps: [
+    "Press Select Files, or drop files on 'Drop your documents here or click to browse' — up to 10 files, 200MB max per file, accepting .pdf, .docx, .txt, .rtf, .csv, .json, .xml, .html and .md; Try Demo loads two sample agreement versions instead.",
+    "Assign '1. Original Document (Version A)' and '2. Updated Document (Version B)' from the uploaded list — the comparison pipeline reruns whenever that selection changes, with no submit button.",
+    "Work through the tabs: Content Comparison for the line diff, Hash Verification for the CRC32, MD5, SHA-1, SHA-256 and SHA-512 digests, Security for the tamper score, then Export PDF, JSON, CSV, TXT or HTML from the Export tab (Export PDF saves document-version-audit-report.pdf).",
+  ],
   intro:
     "The Document Version Verifier compares two versions of the same document in the browser: it extracts the text layer from PDF, DOCX, TXT, JSON, CSV, HTML, XML or Markdown, runs a line-level diff between them, and independently fingerprints each file with CRC32, MD5, SHA-1, SHA-256 and SHA-512 so a byte-identical pair is proved by a matching SHA-256 rather than by eye. Alongside the diff it scores tampering cues out of 100 — author or creating-software changes, a created date later than the modified date, a drop in page count, zero-width hidden characters, embedded scripts — and reports Low, Medium, High or Critical risk. Files are read locally and never uploaded.",
   useCases: [

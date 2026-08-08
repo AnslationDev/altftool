@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pune Airport (PNQ): When to Leave Home for a Flight",
+  metaDescription:
+    "Works back from departure through bag-drop close, gate close and the 2-hour reporting advice, with an hourly traffic factor. No metro serves Lohegaon.",
+  steps: [
+    "Set \"Scheduled departure (24-hour)\" and \"Distance to the terminal (km)\", or tap a \"Starting from\" chip such as \"Hinjawadi · 24 km\" or \"Viman Nagar · 4 km\".",
+    "Choose Domestic or International under \"Flight type\", pick a mode in \"How are you getting there?\" (app cab, own car, auto rickshaw or PMPML bus — all road-bound at Lohegaon), and set \"Traffic assumption\" to the typical hourly profile or a fixed level.",
+    "Read the \"Leave by\" clock time and the \"Deadline set by\" chip naming bag drop, gate close or reporting advice, then check \"The same X km by hour of departure\" table before pressing \"Copy plan\".",
+  ],
   intro:
     "This planner gives the clock time to walk out of your door for a flight from Pune International Airport (PNQ) at Lohegaon, by working backwards from the scheduled departure through the strictest of three deadlines: the airline's bag-drop close, the boarding gate close, and the airport's reporting advice of two hours for a domestic flight and three for an international one. The road leg is free-flow time multiplied by a congestion factor for the hour you actually travel. Pune is a case where the hour matters more than the distance: the airport is only 4 km from Viman Nagar, but a peak-hour run from Hinjawadi across the city can take longer than a clear-road trip twice its length.",
   useCases: [

@@ -1,4 +1,10 @@
 const seo = {
+  title: "Advance Tax Installment Calculator: 15%, 45%, 75%, 100%",
+  steps: [
+    "Enter your Estimated annual tax liability (₹), Expected TDS / TCS credits (₹) and Advance tax already paid (₹), or start from the Regular schedule preset.",
+    "Leave the Eligible presumptive taxpayer toggle off for the four cumulative dates, or tick \"Use single 100% target by 15 March\" for the single presumptive target.",
+    "Read the Target date / Cumulative target / Cumulative amount / Next amount table for 15 Jun, 15 Sep, 15 Dec and 15 Mar, then Download it as advance-tax-installment-planner.txt.",
+  ],
   metaDescription:
     "Plan India's cumulative advance-tax instalments from estimated liability, TDS/TCS credits, prior payments, and presumptive-taxpayer mode.",
   intro:

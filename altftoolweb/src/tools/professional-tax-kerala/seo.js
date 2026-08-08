@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kerala Professional Tax Calculator: Half-Year Slabs",
+  metaDescription:
+    "Place each half year's income on Kerala's nine-band slab — Rs 120 to Rs 1,250 — for the annual total, the monthly split and the Rs 2,500 yearly ceiling.",
+  steps: [
+    "Enter Monthly gross pay (INR) and choose the Collecting local body — Grama panchayat, Municipality or Municipal corporation.",
+    "Set Months worked Apr-Sep (0-6) and Months worked Oct-Mar (0-6), add any Bonus / arrears against the half it was received in, and pick a Marginal income-tax rate for relief such as 20% + cess.",
+    "Read Professional tax for the full year, the Half-year detail table with its If split monthly column, and Net cost after tax relief, then press Copy result.",
+  ],
   intro:
     "This calculator works out Kerala profession tax for each half year — 1 April to 30 September and 1 October to 31 March — by placing your half-yearly income on the nine-band slab used by grama panchayats, municipalities and corporations, then adds the two halves into an annual figure and a per-month payroll split. Kerala is unusual in that the tax is levied by the local body rather than a state department, under section 204 of the Kerala Panchayat Raj Act, 1994 and section 245 of the Kerala Municipality Act, 1994, and the slab is identical for all three body types. It is aimed at salaried employees checking a payslip deduction and at payroll staff sizing the half-yearly remittance.",
   useCases: [

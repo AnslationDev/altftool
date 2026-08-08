@@ -1,4 +1,10 @@
 const seo = {
+  title: "Parsi Baby Names: Yazatas, Shahnameh, Calendar Roj",
+  steps: [
+    "Set Gender, Source in the tradition, Language of origin and Syllables, or type into Search name or meaning (the placeholder suggests fire, sun, victory, Shahnameh) and pick a Starting letter.",
+    "Set Names to show to control how long the shortlist runs, then press Shuffle to draw a different slice of the same matches when the current set stops yielding candidates.",
+    "Read Names matching your filters with Shown below, the boys / girls split and Names in the full list of 89, each entry carrying its meaning, language-of-origin label and its Zoroastrian day or month number where it has one; press Copy list.",
+  ],
   intro:
     "This finder searches a curated list of Parsi and Zoroastrian names where every entry names its source: the seven Amesha Spentas in their Middle Persian forms — Bahman, Ardibehesht, Shehrevar, Aspandard, Khordad and Amardad — the yazatas such as Meher, Sarosh, Rashne and Behram, the Shahnameh's kings and heroes from Jamshed to Rustom, and historical figures including Zarathushtra, Cyrus and Ardeshir. Many of these names are also the names of days and months in the Zoroastrian calendar, which runs twelve months of thirty named days, and those day and month numbers are shown with the entry. Filter by gender, first letter, syllable count and language of origin.",
   useCases: [

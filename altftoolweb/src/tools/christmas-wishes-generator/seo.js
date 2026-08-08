@@ -1,4 +1,12 @@
 const seo = {
+  title: "Merry Christmas in 30 Languages + SMS Length Check",
+  metaDescription:
+    "Write a Christmas greeting in 30 languages in a warm, formal or short tone, with transliteration and whether it sends as one 160-character SMS.",
+  steps: [
+    "Choose a Language from the thirty listed and a Tone, then type Their name (optional) and Your name (optional) so the greeting is written with the names in place.",
+    "Tick \"Add the transliteration line for non-Latin scripts\" if the script is not Latin, and note that \"Add a tree emoji (this forces UCS-2 encoding)\" cuts the SMS allowance.",
+    "Message length reports the character count, the GSM-7 or UCS-2 Encoding and the SMS parts; Copy greeting copies the text, \"Other tones\" shows the same greeting in every tone, and the Year box lists Advent Sunday, Twelfth Night, Epiphany and Julian-calendar Christmas.",
+  ],
   intro:
     "This generator writes a Christmas greeting in thirty languages — from Spanish, French and German to Greek, Russian, Thai, Japanese, Korean, Hindi, Tamil and Malayalam — in a warm, formal or short tone, with the sender's and recipient's names in place and a transliteration line for non-Latin scripts. It scores the finished message against the SMS rules in 3GPP TS 23.038, so you can see whether it sends as one 160-character GSM-7 message or splits into 70-character UCS-2 parts. It also works out the Christmas calendar for any year: Advent Sunday, Twelfth Night, Epiphany, and the Julian-calendar date kept by Orthodox churches.",
   useCases: [

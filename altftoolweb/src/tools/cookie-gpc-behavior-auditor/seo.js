@@ -1,4 +1,7 @@
 const seo = {
+  title: "Cookie Banner & GPC Auditor — 6-Signal Checklist",
+  metaDescription:
+    "Grade your reject-button and Sec-GPC test notes against six consent signals for a coverage percentage. It reviews pasted evidence, not the live site.",
   intro:
     "Cookie & GPC Behavior Auditor scans the notes, request logs or response headers you paste in for six consent signals — a reject option exists, reject actually stops non-essential tags, the Sec-GPC signal was tested, the preference persists, there is a route back to change it, and nothing was preselected — and reports which were found as a percentage of coverage. It is a structured review of evidence you gathered yourself, not a crawler, so it works on whatever you recorded from DevTools or a manual test pass. It suits privacy engineers and compliance reviewers who want the same six questions asked of every banner they check.",
   useCases: [

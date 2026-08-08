@@ -1,4 +1,12 @@
 const seo = {
+  title: "Royal Enfield Service Due: 5,000 km or 6 Months?",
+  metaDescription:
+    "Next service date from your odometer, last service and monthly km — distance or calendar, whichever lands first — plus consumable life and fuel stops.",
+  steps: [
+    "Pick your Model to prefill the interval, then enter \"Current odometer (km)\", \"Odometer at last service (km)\", \"Last service date\" and \"Average riding (km per month)\".",
+    "Set \"Service interval (km)\" and \"Service interval (months)\" to match your own service booklet — 5,000 km / 6 months on the 350 and 650 platforms, 10,000 km / 12 months on the 450 — and fill Touring prep with \"Trip distance (km)\", \"Fuel tank (litres)\" and \"Real-world economy (km per litre)\".",
+    "Read the Next service due date with its Overdue / Due soon / On schedule pill, distance and days still to go, the due-on-distance versus due-on-calendar dates, the next four services table and the Consumable life left rows; Touring prep returns full-tank range, the 15%-reserve refuel range, fuel stops, chain lubes and riding days, and \"Copy plan\" copies it all.",
+  ],
   intro:
     "A motorcycle service falls due on whichever comes first — the distance limit or the calendar limit — and this planner works out that date for a Royal Enfield from your odometer, last service and how much you actually ride. It projects the next four services, shows which jobs belong at each one, tracks how much life is left on oil, filters, plugs, brake fluid and coolant, and sizes the fuel stops and chain-lube stops for a planned tour. Royal Enfield's published pattern is a 500 km or 45-day running-in service, then every 5,000 km or 6 months on the 350 J-platform and 650 twins and every 10,000 km or 12 months on the Sherpa 450 platform; every interval here is editable to match your own manual.",
   useCases: [

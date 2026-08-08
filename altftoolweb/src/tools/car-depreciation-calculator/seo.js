@@ -1,4 +1,12 @@
 const seo = {
+  title: "Car Depreciation & IDV Calculator: 10-Year Curve",
+  metaDescription:
+    "Declining-balance resale value out to 10 years from ex-showroom price, age and km run, beside the IDV your insurer uses (5%, 15%, 20%, 30%, 40%, 50%).",
+  steps: [
+    "Enter \"Ex-showroom price when new (INR)\", \"Age today (years)\" and \"Kilometres on the odometer\", and pick the Fuel type.",
+    "Set \"First-year depreciation (%)\", \"Each later year (%)\" and \"Residual floor (% of ex-showroom)\", and tick \"Adjust for kilometres run\" to apply the odometer discount.",
+    "Read Estimated value today with Depreciation cost per kilometre, the Insurance IDV (IRDAI schedule) panel and the Year-by-year curve table, then press \"Copy result\".",
+  ],
   intro:
     "Car depreciation follows a declining-balance curve — each year's loss is a percentage of what the car was worth at the start of that year, not of its original price — and this calculator plots that curve out to ten years alongside the separate IDV figure your insurer uses. It takes ex-showroom price, age, kilometres run and your own depreciation rates, then reports value today, total loss, loss per kilometre and the effective compound rate you have actually realised. The insurance side follows the Indian Motor Tariff schedule: 5% off in the first six months, 15% to one year, 20%, 30%, 40% and 50% at each subsequent year up to five.",
   useCases: [

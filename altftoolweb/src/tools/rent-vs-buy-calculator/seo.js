@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rent vs Buy Home Calculator: Find the Crossover Year",
+  metaDescription:
+    "Compares buyer net worth (home value minus loan) against a renter investing the down payment and every monthly saving, and reports the crossover year.",
+  steps: [
+    "Enter the home price, down payment %, loan interest rate and tenure, the monthly rent for the same home, and rent inflation.",
+    "Set home appreciation, investment return and maintenance + property tax, drag How long will you stay?, and switch on the home-loan tax benefit or 7% registration.",
+    "Read the verdict, the crossover year, the 3% / 5% / 8% appreciation sensitivity strip and the year-by-year net worth table, then press Copy summary.",
+  ],
   intro:
     "Rent vs Buy Home Calculator compares the net worth you would hold as a buyer against the net worth you would hold as a renter at the end of a chosen horizon, and reports the year in which one overtakes the other. The buyer's side is home value minus outstanding loan balance, plus any surplus invested for the months when owning (EMI plus maintenance, minus any tax saving) costs less than rent that month; the renter's side is the down payment, registration and every month's cost difference invested at your assumed return and compounded monthly. It amortises the loan month by month with the standard EMI formula, escalates rent and home value annually, prices maintenance as a percentage of the home's current value, and can layer on stamp duty plus the old-regime home-loan tax deductions.",
   useCases: [

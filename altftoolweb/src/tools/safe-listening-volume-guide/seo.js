@@ -1,4 +1,12 @@
 const seo = {
+  title: "Safe Headphone Volume: dB to Weekly Listening Hours",
+  metaDescription:
+    "Convert a dB(A) level into safe listening hours using the WHO-ITU H.870 allowance of 80 dB(A) for 40 hours a week, or 75 dB(A) for children.",
+  steps: [
+    "Enter Listening level, dB(A) or tap a reference-sound preset, then your hours of listening per day and days per week.",
+    "Set Listener profile to the adult 80 dB(A) reference or the 75 dB(A) reference for a child or sensitive listener.",
+    "Read the hours allowed per week at that level and the share of the weekly sound allowance your habit uses, then press Copy result.",
+  ],
   intro:
     "A safe listening allowance is the amount of sound energy your ears can take in a week before the risk of noise-induced hearing loss starts to climb, and the WHO-ITU standard for safe listening devices (Recommendation ITU-T H.870) sets it at 80 dB(A) sustained for 40 hours a week for adults, or 75 dB(A) for 40 hours for children and sensitive listeners. Because sound energy doubles for every 3 dB rise, the permitted time halves every 3 dB — so this guide converts any listening level into the hours it buys you, shows how much of the weekly allowance your current habit uses, and names the highest level that habit could sit at. It is informational and is not a hearing test.",
   useCases: [

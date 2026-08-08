@@ -1,4 +1,10 @@
 const seo = {
+  title: "Upanayanam Invitation Wording: Janeu, Munj, Janoi",
+  steps: [
+    "Fill in Boy's name, Father's name and Mother's name under Family details, plus the optional Grandparents line, Date of birth and RSVP contact.",
+    "Pick the Regional style — North Indian Janeu, Maharashtrian Munj, Tamil Brahmopadesam, Gujarati Janoi and more — then the Tone, Ceremony date, Muhurtham time and Venue.",
+    "Press \"Copy card\" for the full printed wording, or Copy under \"Short version for WhatsApp\" for the compact message.",
+  ],
   intro:
     "This generator writes the wording for a thread ceremony invitation — the Upanayana samskara, known regionally as janeu or yagyopavit sanskar, munj or vratabandha, brahmopadesam, janoi, or upanayan. You enter the boy's name, his parents, the muhurtham date and time and the venue, and it lays out the invocation, the honorific, the ceremony name in the right regional form, the muhurtham line and the closing request for blessings, plus a short WhatsApp version. It also shows the boy's exact age on the ceremony day, since Manusmriti 2.36 names the eighth year for a Brahmin boy, the eleventh for a Kshatriya and the twelfth for a Vaishya.",
   useCases: [

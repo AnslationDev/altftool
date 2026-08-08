@@ -1,4 +1,12 @@
 const seo = {
+  title: "Measure an Object from a Photo Using a Bank Card",
+  metaDescription:
+    "Calibrate on an ISO/IEC 7810 bank card, A4 sheet or coin, then click the two ends: mm per pixel gives a length with the error range your marks allow.",
+  steps: [
+    "Under \"1 · Calibrate\" pick the reference that is in the photo — Bank / ID card long edge at 85.6 mm, A4 sheet, CD or DVD disc at 120 mm, US quarter at 24.26 mm, or \"Something else — I will type the size\" — and set the mark placement slip in pixels.",
+    "Load the photo into the image/* file field, choose whether you are marking the Reference edge, the Object length / width or the Object height, and tap each length's two ends; the pixel distance is written straight into the field above.",
+    "Read the estimated length with the interval your ±px marks allow, plus the mm-per-pixel scale, height, diagonal, area and the same length in every unit, then press Copy result.",
+  ],
   intro:
     "A photograph records angles, not sizes — which is why a phone picture of a scratch on a wall tells you nothing about how long the scratch is. Put an object of published dimensions in the same shot and the picture gains a scale: millimetres per pixel is simply the reference object's real size divided by the number of image pixels it spans, and every other length in that plane follows. This tool does that arithmetic against a list of standards-defined references — the ISO/IEC 7810 ID-1 bank card at 85.60 × 53.98 mm, ISO 216 A4 at 210 × 297 mm, a 120 mm compact disc, a 24.26 mm US quarter — or any size you type yourself. It then does the part most photo-measuring tools skip: it propagates the error. Tell it how many pixels your marks might be off by and it reports the widest and narrowest lengths consistent with that slip, so a reading of 19.7 cm arrives as a range rather than as false precision. Two optional corrections are available when the geometry is not ideal — a pinhole depth ratio for when the object sits further from the lens than the reference, and a cosine foreshortening factor for a tilted surface. The photo is read by your own browser and never uploaded.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Salon Break-Even and Tax Calculator on Chair Revenue",
+  metaDescription:
+    "Revenue from chairs, clients per chair per day and average ticket, then break-even clients, both FY 2025-26 regimes and section 44AD at 6% or 8%.",
+  steps: [
+    "Enter working chairs / beds, clients per chair per day, open days in the year and the average service bill.",
+    "Set consumables and stylist commission as a percentage of service revenue, the fixed costs, and your age category.",
+    "Read break-even clients per chair per day beside net profit taxed under both regimes and the section 44AD alternative.",
+  ],
   intro:
     "A salon's profit is decided at the chair: service revenue is chairs multiplied by clients per chair per day, open days and average ticket, and what survives consumables, stylist commission, retail cost and rent is the taxable profit. This calculator builds that chain, works out contribution per client and the number of clients per chair per day needed to break even, then taxes the profit under both FY 2025-26 regimes and shows the section 44AD presumptive alternative at 6% of digital and 8% of cash turnover. GST registration at 20 lakh of service turnover and the 6% composition option up to 50 lakh are checked from the same numbers.",
   useCases: [

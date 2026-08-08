@@ -1,4 +1,12 @@
 const seo = {
+  title: "Do You Need an IDP to Drive in the USA? Checker",
+  metaDescription:
+    "Check if a US state expects an International Driving Permit with your licence, and the new-resident deadline: 10 days in California, 90 in Texas.",
+  steps: [
+    "Answer where your driving licence was issued and whether you hold a 1949 Geneva or 1968 Vienna permit, or neither.",
+    "Pick the state you will drive in, whether you are visiting or moving there, your arrival date and your age.",
+    "Read the verdict for that state, the new-resident switching deadline, and the Carry in the car list.",
+  ],
   intro:
     "This checker tells you whether an International Driving Permit is expected alongside your national licence in the United States, based on the language of your licence, the state you drive in and whether you are visiting or settling. There is no federal driving licence, so the answer comes from two places: Article 24 of the 1949 Geneva Convention on Road Traffic, which obliges the United States to recognise a visitor's valid foreign licence, and each state's own vehicle code, which sets the deadline for a new resident to switch. The tool also flags the format trap - the United States never joined the 1968 Vienna Convention.",
   useCases: [

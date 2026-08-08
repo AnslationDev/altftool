@@ -1,4 +1,7 @@
 const seo = {
+  title: "Tracking Link Decoder: Strip utm, gclid, fbclid & mc_eid",
+  metaDescription:
+    "Names each of 99 tracking parameters in a URL, flags the 39 that identify one person, keeps 50 functional keys, and copies a clean link.",
   intro:
     "A tracking link decoder takes any URL and names what each of its query parameters reports back, who appended it, and whether it identifies you personally or only the campaign you arrived from — then returns the same link with the tracking removed. It matches each key against a catalogue of 99 tracking parameters and 50 functional ones, splitting the query the way the WHATWG URL standard and HTML form-encoding rules define it, and re-emits kept parameters in their original raw form so nothing that the destination page depends on is rewritten. It is for anyone about to forward a marketing email, share a YouTube or Amazon link, or paste a URL into a public channel, and 39 of the catalogued tracking keys resolve to one named individual rather than to a campaign. Parsing happens entirely in your browser with its built-in URL API; the link is never sent anywhere.",
   useCases: [

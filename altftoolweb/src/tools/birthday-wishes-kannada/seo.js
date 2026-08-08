@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kannada Birthday Wishes with Roman Text and Meaning",
+  metaDescription:
+    "Every wish is written separately for ನೀನು and ನೀವು so the possessive and verb ending agree, with romanised Kannada, an English meaning and SMS parts.",
+  steps: [
+    "Type the name in \"Their name (optional)\", choose \"Who is it for?\", and set Politeness — Automatic (match the relationship), or force \"ನೀವು — respectful\" or \"ನೀನು — familiar\".",
+    "Pick a Tone and \"How many messages\" (1 to 6), tick \"Show romanised Kannada\", and press \"Other wordings\" to draw a different set from the matching pool.",
+    "Check the Pronoun used, Possessive / dative, Greeting line, Sign-off and SMS length rows, then press \"Copy all\" — or Copy on a single message card.",
+  ],
   intro:
     "Kannada Birthday Wishes Generator writes a complete Kannada birthday message — greeting line, wish and sign-off — from the relationship you pick and the tone you want. Kannada separates ನೀನು from ನೀವು, and that choice changes the pronoun, the possessive (ನಿನ್ನ versus ನಿಮ್ಮ), the dative (ನಿನಗೆ versus ನಿಮಗೆ) and the imperative ending (ಬಾಳು versus ಬಾಳಿ), so each wording here is stored twice rather than patched, and the register is set automatically from the relationship. Wordings written for a particular person — a grandparent, a manager, a small child — only appear for that relationship, so the body of the message changes too, not just the name. Every message comes with romanised Kannada, an English meaning, and the number of SMS parts it needs.",
   useCases: [

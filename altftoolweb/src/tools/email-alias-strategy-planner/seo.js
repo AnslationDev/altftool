@@ -1,4 +1,12 @@
 const seo = {
+  title: "Email Alias Planner: Plus Tags, Catch-All, Relays",
+  metaDescription:
+    "Compare five alias schemes for your provider, generate one address per service, and validate each against the RFC 64- and 254-character limits.",
+  steps: [
+    "Pick your Mail provider — Gmail / Google Workspace, iCloud Mail, Outlook.com / Hotmail, Proton Mail, Fastmail or Yahoo Mail — enter the mailbox everything should land in, and tick what the scheme has to do.",
+    "Read the ranked table of five strategies with its Fit, Hides real address, Can be switched off and Strippable columns, then set Strategy to generate for and a Tag naming scheme.",
+    "List your services one per line and read the generated addresses with Longest address and Headroom before the 254-character limit; Copy all takes the whole set, or Copy an individual alias.",
+  ],
   intro:
     "This planner picks an email aliasing strategy from your actual constraints — provider, budget, whether you own a domain, whether you need to reply — then generates the per-service addresses and validates them against the limits mail servers enforce: 64 characters for the local part (RFC 5321) and 254 for the whole address. It compares five workable approaches: a forwarding alias service, a catch-all on your own domain, subdomain addressing, RFC 5233 plus tagging, and Gmail's dot variations. The point of a unique address per service is attribution: when spam arrives at an address only one company ever had, you know exactly who leaked or sold it.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Verify Agent Audit Log Integrity: JSON/JSONL Chains",
+  metaDescription:
+    "Check JSON or JSONL logs for duplicate IDs, sequence gaps, backwards timestamps and broken previousHash links, and recompute a SHA-256 chain in-browser.",
+  steps: [
+    "Paste entries into the \"Audit log\" box or use \"Choose text file\" (.json, .jsonl, .ndjson or .txt, up to 10 MB and 25,000 checked entries), then press \"Parse locally\".",
+    "Confirm the audit schema — \"Entry ID field\", \"Sequence field\", \"Timestamp field\", \"Previous-hash field\" and \"Stored-hash field\" — pick a \"Documented SHA-256 recipe\" (canonical entry without stored hash, or previous hash + LF + canonical payload), then press \"Run configured checks\".",
+    "Read the verified, mismatch or not-checkable state for Entry IDs, sequence, timestamps and hash links, then press \"Download counts-only report\" to save agent-audit-integrity-counts.csv.",
+  ],
   intro:
     "The Agent Audit Log Integrity Verifier checks a JSON or JSONL audit log for internal continuity — duplicate or missing entry IDs, gaps and reordering in the sequence numbers, timestamps that run backwards, and broken previous-hash links where one entry's previousHash should equal the prior entry's hash — and can optionally recompute a SHA-256 hash chain using a recipe you select explicitly. It is for anyone who has to answer 'has this agent's log been altered or truncated?' with something better than a visual scan: platform engineers, auditors and incident responders. Parsing, canonicalisation and hashing all run locally through the browser's Web Crypto API, and the exportable report contains counts and states only, never log contents.",
   useCases: [

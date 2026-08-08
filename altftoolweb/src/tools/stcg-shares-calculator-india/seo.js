@@ -1,4 +1,12 @@
 const seo = {
+  title: "STCG Calculator on Shares: Section 111A at 20%",
+  metaDescription:
+    "Section 111A tax on listed equity sold within 12 months: 20% from 23 July 2024, 15% before, plus 4% cess. Deducts brokerage; STT is not deductible.",
+  steps: [
+    "Enter Purchase price per share, Sale price per share, Number of shares, \"Brokerage and transfer charges (INR)\", and the Purchase date and Sale date that decide the holding period.",
+    "Set \"Total income other than these gains\", the Tax regime (New regime Section 115BAC or Old regime with an age band), the surcharge on your total income, and tick \"Resident individual or HUF\" to allow the basic exemption adjustment.",
+    "Read the tax payable on the trade, the holding period in days, the basic exemption actually used, the taxable gain and the cess at 4%, plus the STT on both legs listed as not deductible; \"Copy result\" exports the whole working.",
+  ],
   intro:
     "Short term capital gains on listed equity are taxed under Section 111A: shares or equity-oriented fund units held for not more than 12 months, sold on a recognised exchange with securities transaction tax paid, attract a flat 20% for transfers made on or after 23 July 2024 and 15% before that, plus surcharge and 4% cess. This calculator applies the holding-period test from your actual purchase and sale dates, deducts brokerage and transfer charges as Section 48 permits, refuses to deduct STT as Section 48 requires, and applies the basic exemption adjustment available to a resident individual whose other income falls short of the limit.",
   useCases: [

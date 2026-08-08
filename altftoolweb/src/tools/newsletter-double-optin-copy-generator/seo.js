@@ -1,4 +1,12 @@
 const seo = {
+  title: "Double Opt-In Email Copy and Consent Record Writer",
+  metaDescription:
+    "Writes the signup consent line, post-signup screen, confirmation and welcome emails, plus the consent record GDPR Art. 7(1) makes you able to show.",
+  steps: [
+    "Enter the brand, newsletter name, what subscribers actually receive and how often, plus the physical postal address CAN-SPAM requires.",
+    "Set the link expiry in hours and your confirmation rate, then check the subject line against the length warnings.",
+    "Copy any of the five blocks: signup form consent wording, post-signup screen, confirmation email, welcome email and consent record to store.",
+  ],
   intro:
     "Double opt-in is the pattern where an address only joins a mailing list after its owner clicks a link in a confirmation email, and that click is the evidence that turns a form submission into provable consent. This generator writes the four pieces of copy the flow needs - the consent line on the form, the post-signup screen, the confirmation email and the welcome email - plus the consent record to store, since UK/EU GDPR Art. 7(1) puts the burden of demonstrating consent on the sender. It also checks your subject and preheader against the lengths mail clients show and projects how many signups a confirmed-subscriber target will take.",
   useCases: [

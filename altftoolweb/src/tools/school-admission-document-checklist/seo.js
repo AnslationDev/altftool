@@ -1,4 +1,12 @@
 const seo = {
+  title: "School Admission Documents by Board, Class & Scenario",
+  metaDescription:
+    "Build the admission document list by board, class and joining route, with the six-year Class 1 age check against your school's cut-off date.",
+  steps: [
+    "Choose the Board — CBSE, CISCE (ICSE / ISC), State board, IB or Cambridge — the Class applying for, and the How is the child joining? scenario: fresh admission, transfer from another state, changing board, returning from a school abroad, the RTE 25% free-seat quota or rejoining after a study gap.",
+    "Enter the Child's date of birth and the School's age cut-off date, then tick whatever fits under Anything else that applies, such as SC / ST / OBC category, EWS, a certified disability, single parent or guardian, or the defence quota.",
+    "Read Documents to arrange with its mandatory and conditional split, check the age verdict against the Minimum entry age for this class, tick each document off as you collect it, then press Copy checklist.",
+  ],
   intro:
     "This checklist assembles the exact documents an Indian school will ask for, driven by three choices: the board (CBSE, CISCE, a state board, IB or Cambridge), the class being applied for, and how the child is joining — fresh admission, a transfer, a board change, a return from abroad, an RTE 25% free seat, or a re-entry after a study gap. It also checks the child's completed age on the school's cut-off date against the entry floor for that class, using the six-years-for-Class-1 norm that the Ministry of Education adopted in line with NEP 2020. Every requirement names the statute or bye-law behind it, such as the birth certificate under the Registration of Births and Deaths Act, 1969.",
   useCases: [

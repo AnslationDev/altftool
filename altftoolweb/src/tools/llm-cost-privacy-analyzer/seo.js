@@ -1,4 +1,12 @@
 const seo = {
+  title: "LLM Cost & Privacy Analyzer for API Usage Logs",
+  metaDescription:
+    "Total tokens per model from a JSON, JSONL, CSV or TSV log up to 8 MB, price them with your own per-million rates, and count PII patterns in prompts.",
+  steps: [
+    "Drop a usage log on the Upload File dropzone or switch to the Paste Log Text tab — .json, .jsonl, .csv, .tsv and .txt are accepted up to 8 MB.",
+    "In Token Pricing Rates, replace the example presets with your own contracted rates per million tokens; a \"*\" entry prices any model not named.",
+    "Read the per-model cost table and the counts-only privacy findings, then take a JSON Summary, CSV Report or Markdown Summary that excludes prompt content and model names.",
+  ],
   intro:
     "LLM Cost & Privacy Analyzer reads an AI usage log — JSON, JSONL, CSV or TSV — in the browser, totals input and output tokens per model, and prices them with rate tables you supply yourself, using cost = (tokens ÷ 1,000,000) × your rate per million. Alongside the cost breakdown it scans message and prompt fields for personal-data patterns such as email addresses, phone numbers, payment cards, IP addresses and API keys, and reports only counts per category — never the matched values. It is built for the engineer or finance owner who has an export of API usage and needs a spend figure and a privacy sanity check without sending that log to a third party.",
   useCases: [

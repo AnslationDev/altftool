@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bank Charge Refund Letter: GST + RBI Escalation Dates",
+  metaDescription:
+    "Totals wrongly levied bank or card fees with 18% GST and drafts a refund letter carrying the 30-day reply deadline and Ombudsman filing cut-off.",
+  steps: [
+    "Fill 'Your details' — name, address, bank, branch and account or card number — then set the 'Letter date' and the 'GST rate on bank fees (%)'.",
+    "Under 'Disputed charges' choose each 'Charge N description', its 'Debit date' and 'Amount (INR)', pressing 'Add charge' for more rows, then tick the relief you are asking for.",
+    "Read 'Total refund claimed' with the 'Bank must reply by' and 'RBI Ombudsman filing deadline' rows, check the Letter preview, then press 'Copy letter'.",
+  ],
   intro:
     "The Excess Charges Refund Request Generator totals the bank or credit card fees that were debited without a valid basis, adds the 18% GST that banks levy on service charges, and drafts a formal refund letter addressed to the branch manager or nodal grievance officer. It fills in the two dates that decide your next move: the 30-day reply window a bank gets before an RBI Ombudsman complaint becomes maintainable, and the one-year outer limit for filing that complaint under the Reserve Bank - Integrated Ombudsman Scheme, 2021. Use it for minimum-balance penalties, annual fees on a card sold as lifetime free, duplicate debits, or insurance premiums taken without consent.",
   useCases: [

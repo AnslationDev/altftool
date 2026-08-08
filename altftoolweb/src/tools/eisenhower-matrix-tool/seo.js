@@ -1,4 +1,12 @@
 const seo = {
+  title: "Eisenhower Matrix: Sort Tasks by Urgency & Hours",
+  metaDescription:
+    "Score each task 1-10 for importance and urgency against one threshold (default 6) to get Do now, Schedule, Delegate and Drop, weighted by hours.",
+  steps: [
+    "Type each task title with Importance (1-10), Urgency (1-10) and Estimated hours, using Add task for more rows.",
+    "Set the High-score threshold, 6 by default, so any score at or above it counts as important or urgent.",
+    "Read the Do now, Schedule, Delegate and Drop quadrants, the share of planned hours in Q2, and the Every task, sorted table.",
+  ],
   intro:
     "The Eisenhower Matrix Tool sorts a task list into four quadrants by testing two 1-10 scores against a single threshold: important means importance is at or above the threshold, urgent means urgency is. That gives Do now (urgent and important), Schedule (important, not urgent), Delegate (urgent, not important) and Drop (neither) — the grid Stephen Covey drew from Eisenhower's 1954 remark that the urgent are not important and the important are never urgent. It is for anyone whose to-do list has stopped telling them what to work on next, and it adds an hours column so you can see how much of the week is going to firefighting.",
   useCases: [

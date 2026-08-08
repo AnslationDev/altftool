@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cloned Card Fraud Playbook: RBI Liability Deadlines",
+  metaDescription:
+    "Block, report on 1930 and notify in writing — then see your RBI liability: nil inside 3 working days, capped at ₹5,000/10,000/25,000 by day 7.",
+  steps: [
+    "Enter the date the bank's alert reached you, the date you notified the bank, the disputed amount in INR, and any extra bank holidays that fell in that gap.",
+    "Pick your account or card type — each option lists its own cap — and choose how the loss arose; working days are counted excluding Sundays and the second and fourth Saturday of each month.",
+    "Read the liability figure and its band (Zero customer liability, Limited liability, Decided by the bank's policy, or Loss borne until you reported), plus the shadow-reversal, 90-day resolution and Ombudsman dates, then press Copy result.",
+  ],
   intro:
     "This playbook sets out the order of actions after an unauthorised card transaction — block, report on 1930, notify the bank in writing, dispute, document — and then works out where you stand under the Reserve Bank of India circular on limiting customer liability in unauthorised electronic banking transactions, dated 6 July 2017. Reporting within three working days of the bank's communication carries zero liability in a third-party breach; a delay of four to seven working days caps liability at the lower of the transaction value and 5,000, 10,000 or 25,000 rupees depending on the account type. The working-day count treats Sundays and the second and fourth Saturday of each month as non-working.",
   useCases: [

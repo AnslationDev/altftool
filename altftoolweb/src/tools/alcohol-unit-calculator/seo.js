@@ -1,4 +1,7 @@
 const seo = {
+  title: "Alcohol Units & BAC Calculator (Widmark Formula)",
+  metaDescription:
+    "Count UK units as ml x ABV% / 1000, estimate BAC with the Widmark formula, and track your week against the 14-unit guidance. Not a fitness-to-drive test.",
   intro:
     "The Alcohol Units & BAC Calculator counts UK units from the real volume and ABV of what you drank using units = ml × ABV% ÷ 1000, then estimates blood alcohol with the Widmark formula: BAC% = (grams of alcohol × 100) ÷ (body weight in grams × r) − 0.015 × hours since the first drink. It converts the same session into US standard drinks (14 g of pure alcohol each), tracks a rolling seven days against the 14-unit low-risk guidance, and shows how long the estimate takes to fall back to zero. Everything is an informational estimate from population averages — it is not a measurement, and never a basis for deciding whether to drive.",
   useCases: [

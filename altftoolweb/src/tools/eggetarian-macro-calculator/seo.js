@@ -1,4 +1,12 @@
 const seo = {
+  title: "Eggetarian Macro Calculator: Eggs a Day for Protein",
+  metaDescription:
+    "Mifflin-St Jeor calories and a g/kg protein target turned into whole eggs and extra whites a day, with yolk cholesterol, choline, B12 and vitamin D.",
+  steps: [
+    "Enter sex, age, weight, height, Activity level and Goal so Mifflin-St Jeor can set your daily calories.",
+    "Set Protein target (g per kg), Egg size, Share of protein from eggs (%) and Extra egg whites a day.",
+    "Read Whole eggs a day beside Cholesterol from yolks, Choline, Vitamin B12 and Vitamin D, then press Copy result.",
+  ],
   intro:
     "An eggetarian diet is vegetarian plus eggs, and because egg protein is the reference protein of nutrition science — PDCAAS 1.00, DIAAS around 1.13 — it is worth counting to the gram. This calculator sets your daily calories from the Mifflin-St Jeor equation, decides how much of your protein target should come from eggs, and converts that into an actual number of eggs a day, using 12.56 g of protein and 372 mg of cholesterol per 100 g of edible whole egg (USDA). It splits whole eggs from extra whites so you can raise protein without raising cholesterol, and totals the choline, vitamin B12 and vitamin D the yolks bring with them.",
   useCases: [

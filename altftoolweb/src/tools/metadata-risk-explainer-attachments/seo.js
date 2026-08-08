@@ -1,4 +1,12 @@
 const seo = {
+  title: "Email Attachment Metadata: What Actually Gets Sent",
+  metaDescription:
+    "Pick the file type and your clean-up step to see which document properties, tracked changes, hidden content and image EXIF still leave with the email.",
+  steps: [
+    "Choose \"What are you attaching?\" — Word document (.docx), Spreadsheet (.xlsx), Presentation (.pptx), PDF, Photo or image (.jpg / .png), or Zip archive.",
+    "Choose \"What will you do before attaching?\" — attach as-is, Inspect Document, export a PDF copy, run a metadata stripper or rebuild — then tick the signals that apply.",
+    "Read the \"Leaving with the email\" score out of 100 with Still attached and Removed by your preparation, and work through \"Clear these before you press Send\".",
+  ],
   intro:
     "Email Attachment Metadata Explainer sets out what actually leaves your outbox with a file: SMTP carries an attachment byte-for-byte, so the recipient opens the identical document that sits on your disk, tracked changes and all. It classifies each risk by where it lives — Office core properties, editing history, hidden content, embedded pictures, the filename, or the mail headers — and shows which of the usual clean-up steps clears it, because Inspect Document, exporting a PDF and running a metadata stripper each remove different things. Intended for anyone sending contracts, proposals or spreadsheets outside their own organisation.",
   useCases: [

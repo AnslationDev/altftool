@@ -1,4 +1,12 @@
 const seo = {
+  title: "ZIP Safety Inspector: Preflight Without Extracting",
+  metaDescription:
+    "Reads a ZIP's central directory for path traversal, symlinks, encryption and 200:1 ratios — up to 30 MB, and nothing is decompressed.",
+  steps: [
+    "Press Choose file under ZIP-compatible archive and pick a zip, jar, apk, epub, whl, OOXML (docx, xlsx, pptx) or ODF file up to 30 MB",
+    "Press Run local inspection; it parses the end-of-central-directory record and per-entry headers only, stopping at 3,000 entries and an 8 MB central directory, and never decompresses an archived byte",
+    "The panel reports Entries, Files, Review markers and Declared expanded alongside findings such as Path traversal names, Symbolic links, Encrypted entries, Double extensions and High compression ratios; Download report saves archive-central-directory-counts-only.json, Copy report copies it and Reset clears the file",
+  ],
   intro:
     "The Archive Safety Inspector reads a ZIP file's end-of-central-directory record and per-entry headers to flag risky structure before you extract anything — path traversal (..), absolute paths, Unix symlink entries, encrypted or masked entries, control and bidi characters in filenames, double extensions like invoice.pdf.exe, duplicate names, central-versus-local header mismatches, and declared compression ratios of 200:1 or more. It never decompresses, opens or executes a single archived byte; every finding comes from metadata. It accepts ZIP and ZIP-based packages — JAR, APK, EPUB, DOCX/XLSX/PPTX, ODF, WHL — up to 30 MB.",
   useCases: [

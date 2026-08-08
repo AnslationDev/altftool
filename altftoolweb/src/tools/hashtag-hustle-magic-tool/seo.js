@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hashtag Generator From Your Caption, With Platform Caps",
+  metaDescription:
+    "Build a hashtag set from the words in your own caption, capped to each platform limit: 30 on Instagram, 15 on YouTube, one on Threads.",
+  steps: [
+    "Paste the caption into Post copy or topic - hashtags you already typed with a # are kept and cleaned.",
+    "Pick a Platform (Instagram caps at 30, YouTube at 15, Threads at 1), set How many hashtags, add Extra keywords (optional), and choose lowercase or CamelCase Casing.",
+    "Read the generated set with each tag's reach band, the Where each hashtag came from list and the Platform rules panel, then press Copy hashtags.",
+  ],
   intro:
     "This hashtag builder reads the post you paste, pulls out the phrases and keywords it actually contains, and turns them into a hashtag set sized for the platform you are publishing on — 30 on an Instagram post, 15 before YouTube ignores every hashtag on a video, one topic tag on Threads. Each tag is sorted into a reach band by how it was built: a two-word phrase lifted from your copy is specific, a repeated single keyword is topical, and a keyword joined to a community word such as tips or daily is broad. It is for creators and social managers writing the caption right now, and it runs entirely in your browser, so nothing you paste leaves the page.",
   useCases: [

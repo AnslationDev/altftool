@@ -1,4 +1,12 @@
 const seo = {
+  title: "iPhone Privacy Settings Checklist: 27 Real Controls",
+  metaDescription:
+    "Score your iPhone on 27 weighted settings — App Tracking, Significant Locations, Find My shares, Advanced Data Protection, Stolen Device Protection.",
+  steps: [
+    "Choose a profile in \"Who are you locking this down for?\" — Everyday personal iPhone is the first option — and set the Target score (%) field.",
+    "Work through the 27 settings in the grouped cards, ticking each one you have applied; every row prints the Settings path under \"Where:\" and the consequence under \"If you skip it:\".",
+    "Read the Protection score with Critical settings still open, Remaining exposure by area and \"Shortest route to your target\", then press Copy result.",
+  ],
   "intro": "This checklist scores an iPhone against 27 real privacy and security settings — App Tracking Transparency, Apple's separate personalised ads, Significant Locations, per-app Precise Location, photo GPS metadata, Find My sharing, Advanced Data Protection, lock screen access, Stolen Device Protection and Apple Account two-factor — weighting each by how much exposure it actually closes. Eight controls are marked critical and hold the score at 69% while any is still open, because a forgotten Find My share or an accessible lock screen outweighs any number of advertising toggles. Five risk profiles re-score the same list, so someone protecting against phone theft and someone worried a partner has their passcode are graded on completely different priorities.",
   "useCases": [
     "Set up a new iPhone properly, including the settings the setup assistant never asks about.",

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Compare Loan Offers on True APR, Not the Quoted Rate",
+  metaDescription:
+    "Effective APR as the IRR of real cash flows after fees, 18% GST, bundled insurance and foreclosure penalty — the RBI Key Facts Statement method.",
+  steps: [
+    "Set the repayment horizon — the month you expect to clear the loan, or a Year 1 / Year 3 / Full term shortcut — and decide whether bundled insurance counts as a cost of credit.",
+    "Fill each offer card: loan amount you need in hand, tenure in months, quoted rate and whether it is Reducing balance or Flat, processing fee as a percentage or a flat amount, documentation and legal charges, GST on fees, insurance premium and foreclosure penalty; Add offer takes you up to six.",
+    "Read the lowest effective APR at your horizon, the offer-by-offer table of EMI, upfront charges, net disbursed and APR at full term versus horizon, and the panel that names the pairs whose ranking inverts at that month; Copy result takes the comparison.",
+  ],
   intro:
     "The effective APR of a loan is the internal rate of return of its actual cash flows — the money that reaches your bank account on day one, and every rupee you pay back afterwards — and it is almost never the rate on the sanction letter. This comparator builds that cash-flow series for two to six offers: it deducts the processing fee, 18% GST on fees, documentation and legal charges and any bundled insurance premium from the sanctioned amount to get the net disbursed figure, then solves for the monthly IRR by bisection and annualises it. That is exactly the method the Reserve Bank of India prescribes in its Key Facts Statement circular (RBI/2024-25/18, DOR.STR.REC.13/13.03.00/2024-25, 15 April 2024), whose Annex B footnote 10 requires the APR to be \"computed on net disbursed amount using IRR approach and reducing balance method\". It restates any flat-rate quote as its reducing-balance equivalent, and it re-runs the whole comparison at a repayment horizon you choose, so an offer that is cheapest over the full tenure but carries a foreclosure penalty can be shown losing to a dearer one when you close in year three.",
   useCases: [

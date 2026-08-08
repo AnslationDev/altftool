@@ -1,4 +1,12 @@
 const seo = {
+  title: "Daily Panchang Calculator: Tithi, Nakshatra, Yoga",
+  metaDescription:
+    "All five limbs for any date 1900-2100 from sidereal Sun and Moon longitudes, with your own latitude and longitude driving Rahu Kaal and Abhijit.",
+  steps: [
+    "Under Select Date & Location, set Day, Month and Year (1900 to 2100), or tap one of the presets for the seven days either side of today.",
+    "Enter Latitude and Longitude — it opens on Delhi at 28.6139, 77.209 — so sunrise and sunset, and every muhurta window derived from that day length, are solved for your place.",
+    "Read the Tithi, Nakshatra, Yoga and Karana cards, the Moon Sign (Rashi) and Sun Sign (Rashi), and the Brahma Muhurta, Abhijit Muhurta, Rahu Kaal, Yamaganda and Gulik Kaal timings.",
+  ],
   intro:
     "A Panchang is the Hindu almanac's five limbs — Tithi, Nakshatra, Yoga, Karana and Vaar — and this calculator derives all five for any date from the sidereal (nirayana) longitudes of the Sun and Moon, after subtracting an ayanamsha correction of roughly 24 degrees. Enter a date and a latitude/longitude (it opens on Delhi, 28.61 N 77.21 E) and it also reports the Moon and Sun Rashi, the Hindu month, the Saka year, sunrise and sunset, and the day's Abhijit, Brahma, Rahu Kaal, Yamaganda and Gulik windows. It is for anyone checking a day before fixing a puja, a housewarming or a travel date, and for students learning how the almanac is actually derived.",
   useCases: [

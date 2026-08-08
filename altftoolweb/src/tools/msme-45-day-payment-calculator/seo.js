@@ -1,4 +1,12 @@
 const seo = {
+  title: "MSME 45-Day Payment Rule: s.16 Interest & 43B(h) Cost",
+  metaDescription:
+    "Enter the invoice and payment dates: get the MSMED s.15 due date (15 or 45 days), s.16 interest at 3x the RBI bank rate, and the 43B(h) deduction year.",
+  steps: [
+    "Pick \"What is the supplier?\" — a medium enterprise sits outside ss.15, 16 and 43B(h) — then enter the invoice / acceptance date and the invoice amount payable.",
+    "Say whether a payment term is agreed in writing, set the agreed credit period in days (capped at 45), the actual or planned payment date, the RBI notified bank rate and your marginal tax rate.",
+    "Read the 43B(h) verdict, the combined rupee cost of the delay, and the s.16 monthly-rest table with each rest date, opening balance and interest; press \"Copy result\".",
+  ],
   intro:
     "This calculator works out what paying an MSME supplier late actually costs a buyer in rupees, by applying three rules together: the statutory due date under section 15 of the MSMED Act 2006 (15 days where there is no agreement in writing, and whatever the contract says up to a hard ceiling of 45 days where there is one), the section 16 charge of compound interest with monthly rests at three times the bank rate notified by the Reserve Bank, and section 43B(h) of the Income-tax Act 1961, under which a sum owed to a micro or small enterprise and paid beyond the section 15 limit is deductible only in the year it is actually paid. It is built for the buyer's accounts and finance team, and it opens by settling the question people get wrong most often: section 43B(h) reaches micro and small suppliers only, because section 2(n) of the MSMED Act defines a \"supplier\" as a micro or small enterprise and leaves medium enterprises out entirely.",
   useCases: [

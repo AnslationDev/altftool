@@ -1,4 +1,12 @@
 const seo = {
+  title: "Price Evidence Locker: SHA-256 Record of an Offer",
+  metaDescription:
+    "Log a listing's URL, seller, price, offer terms and capture date, then hash them with your screenshot into one SHA-256 manifest. It does not notarise.",
+  steps: [
+    "Fill \"Product or offer URL\", \"Seller\", \"Observed price\", \"Offer claim and conditions\" and \"Capture date\".",
+    "Attach the optional \"Screenshot or saved page\" file — its name, size and contents are folded into the same SHA-256 digest.",
+    "Read the Evidence manifest with its 12-character reference and full 64-character SHA-256, then press Download to save price-evidence-locker.txt.",
+  ],
   intro:
     "The Price Evidence Locker records what a listing said and when — URL, seller, observed price, the offer claim and its conditions, and the capture date — then hashes all of it together with any screenshot you attach into a single SHA-256 checksum, producing a manifest you can keep alongside the original file. It is for shoppers dealing with a price that changed between the ad and the checkout, or a discount whose conditions quietly moved, who want a dated record instead of a vague memory. The checksum covers the attached file's name, size and contents, so a later alteration to either the metadata or the screenshot produces a different digest.",
   useCases: [

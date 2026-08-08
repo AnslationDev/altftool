@@ -1,4 +1,12 @@
 const seo = {
+  title: "Syllable Counter with Flesch Readability Scores",
+  metaDescription:
+    "Counts syllables word by word and line by line on the Lingua::EN::Syllable rules, and reports Flesch Reading Ease and Flesch–Kincaid Grade.",
+  steps: [
+    "Paste into \"Your text (one line per line of verse)\", replacing the sample haiku.",
+    "Every line is counted separately, and three lines are checked against the 5–7–5 haiku pattern.",
+    "Read the syllable total, syllables per word, Flesch Reading Ease and Flesch–Kincaid Grade, then press Copy result.",
+  ],
   intro:
     "A syllable counter tells you how many beats a word, a line or a whole passage has. This one applies the rule set of Greg Fast's Lingua::EN::Syllable — count the vowel runs, drop the silent final e except after \"-le\", ignore a leading y, then apply the published correction patterns for spellings like \"-cious\", \"-ion\" and \"-ism\" — and checks a list of common irregulars first. From those counts it also computes the two formulas that need them: Flesch Reading Ease (Flesch, 1948) and Flesch–Kincaid Grade Level (Kincaid et al., 1975). It is for poets writing to a metre, teachers checking reading level, and copywriters trimming a headline.",
   useCases: [

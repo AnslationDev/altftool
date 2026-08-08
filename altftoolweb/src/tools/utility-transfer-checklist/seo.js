@@ -1,4 +1,12 @@
 const seo = {
+  title: "Utility Transfer Checklist: Dates for Your Move",
+  metaDescription:
+    "Dates every connect and close action backwards from moving day, using the 7/15/30-day electricity limits in the Rights of Consumers Rules, 2020.",
+  steps: [
+    "Set Moving day and Today, then choose New address is in a Metropolitan area (7-day electricity SLA), Other municipal area (15-day) or Rural area (30-day).",
+    "Tick the Utilities to plan, then tick each connect and close action as you finish it; anything past its start date shows in red with the days lost.",
+    "Read Start the first application by, Electricity SLA for this area and Next thing to do, then press Copy plan.",
+  ],
   intro:
     "This planner splits every utility into two dated actions — connect at the new address, close or transfer at the old one — and counts each backwards from your moving date. The electricity lead time comes from the Electricity (Rights of Consumers) Rules, 2020, which cap a distribution licensee at 7 days in metropolitan areas, 15 days in other municipal areas and 30 days in rural areas for a new connection or modification, with a 7-day paperwork buffer added on top. Broadband and landline carry the longest lead at 21 days because a relocation can need a fresh line, while LPG is shortest because the termination voucher is issued over the counter.",
   useCases: [

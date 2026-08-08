@@ -1,4 +1,12 @@
 const seo = {
+  title: "Delivery Challan Format: Rule 55 CGST and E-Way Bill",
+  metaDescription:
+    "Lays out all nine Rule 55(2) particulars in triplicate, totals consignment value per Explanation 2 to Rule 138(1), and dates the e-way bill validity.",
+  steps: [
+    "Enter the challan number and date, pick why the goods are moving, and fill the consigner and consignee blocks with GSTIN and State.",
+    "Add each line of goods — description, HSN code, unit, quantity, value per unit — then the transport mode, vehicle number and approximate distance in km.",
+    "Check the consignment value and the e-way bill verdict, choose ORIGINAL FOR CONSIGNEE, DUPLICATE FOR TRANSPORTER or TRIPLICATE FOR CONSIGNER, and press Copy challan.",
+  ],
   intro:
     "A delivery challan is the document that lets goods move without a tax invoice, and Rule 55 of the CGST Rules, 2017 is what governs it: Rule 55(1) lists the four situations it covers, Rule 55(2) lists the nine particulars it must carry, and Rule 55(3) requires three copies marked for the consignee, the transporter and the consigner. This generator lays out that document from what you type, adds up the consignment value the way Explanation 2 to Rule 138(1) defines it, tells you whether an e-way bill is triggered and for how many days it would stay valid under Rule 138(10), and dates the section 143 job-work return along with the ITC-04 that follows it. It is aimed at accounts and despatch staff in manufacturing, textiles and trading who send goods out for job work, to a branch, on approval or for repair.",
   useCases: [

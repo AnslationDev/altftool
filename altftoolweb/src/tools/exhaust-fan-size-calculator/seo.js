@@ -1,4 +1,7 @@
 const seo = {
+  title: "Exhaust Fan Size Calculator: CFM and Duct Diameter",
+  metaDescription:
+    "Size a bathroom or kitchen extractor from room volume and air changes per hour, with duct-run losses, the 50/100 CFM minimums, and duct diameter.",
   intro:
     "This calculator sizes a bathroom or kitchen extractor fan using the air-change method — airflow equals room volume multiplied by the air changes per hour required for that room type — and then checks the answer against the Home Ventilating Institute rules and the ASHRAE 62.2 local-exhaust minimums of 50 CFM for a bathroom and 100 CFM for a vented range hood. It adds a duct-resistance allowance of about 2% per metre of run and 5% per 90-degree bend, then returns the fan rating, fan body size and round duct diameter at a 4.5 m/s design velocity. Useful for anyone specifying an extractor for a renovation and choosing between a 100 mm and a 150 mm unit.",
   useCases: [

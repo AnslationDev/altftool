@@ -1,4 +1,12 @@
 const seo = {
+  title: "Company Social Media Policy Generator with Gap Check",
+  metaDescription:
+    "Build an employee social media policy from clauses tied to the FTC Endorsement Guides, GDPR and the DPDP Act, plus an NLRA Section 7 savings clause.",
+  steps: [
+    "Enter Company name, \"Who owns escalations (team or role)\", the Effective date and \"Review every (months)\", which defaults to a review twelve months on.",
+    "Tick the Company profile boxes for where you employ people, whether you are listed and whether you run an advocacy programme — each tick adds the clauses it makes necessary — then add or drop any individual clause in the Clauses list below.",
+    "Required coverage reads out as a percentage with the word count and next review date, lists any \"Required clauses missing\" with the profile answer that made each necessary, and renders the assembled Policy; press Copy policy.",
+  ],
   intro:
     "This generator assembles an employee social media policy from clauses tied to identifiable rules — FTC Endorsement Guides disclosure of the employment relationship, confidentiality, data protection under the GDPR and India's Digital Personal Data Protection Act 2023, and a savings clause preserving employees' rights under Section 7 of the National Labor Relations Act — and then scores the draft against what your company profile actually requires. Ticking where you employ people, whether you are listed, and whether you run an advocacy programme changes which clauses become mandatory. It is written for HR, communications and legal teams producing a first policy or auditing an existing one.",
   useCases: [

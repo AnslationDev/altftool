@@ -1,4 +1,12 @@
 const seo = {
+  title: "Thai Airways Excess Baggage Cost: Per Kg or Per Piece",
+  metaDescription:
+    "Price excess baggage on the weight concept or the Americas piece concept, pooled across the booking, comparing prepaid blocks against the airport rate.",
+  steps: [
+    "Choose Weight concept (kg allowance) or Piece concept (Americas routes), then set Currency of the quoted rates, Passengers on the booking and Cabin and fare family.",
+    "On a weight route fill Total checked baggage weight (kg), Heaviest single bag (kg), the Airport rate and Prepaid rate per kg, and the Prepaid block size sold (kg).",
+    "See whether prepaying or the counter is cheaper against the pooled allowance, read the warning if any bag breaks the 32 kg ceiling, then press Copy result.",
+  ],
   intro:
     "This estimator prices Thai Airways excess baggage under both systems the airline uses: the weight concept that covers most of the network, where every kilogram above the pooled allowance is billed per kilo, and the piece concept on routes touching the Americas, where you pay a flat fee for each additional bag and a separate flat fee for a bag over its 23 kg or 32 kg ceiling. On weight routes it compares buying the kilos in advance — sold in fixed blocks, so a purchase always rounds up — against settling at the check-in desk. Rates are entered by you, because Thai Airways prices excess by route band and by the currency of sale.",
   useCases: [

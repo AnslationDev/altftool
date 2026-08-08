@@ -1,4 +1,12 @@
 const seo = {
+  title: "Empty State Copy Generator: 11 States, 4 Tones",
+  metaDescription:
+    "Deterministic empty, error and loading microcopy in plain, friendly, formal or playful tone, linted to a 50-char heading and 3-word button label.",
+  steps: [
+    "Pick a State such as Search returned nothing or Server error (500), and a Tone of Plain, Friendly, Formal or Playful.",
+    "Fill in What this screen lists (singular), Verb for making one and Product name; the heading, body and button label rewrite as you type.",
+    "Check the Microcopy score, with Heading length against 50 characters, Body length against 140 and Button label against 3 words, then press Copy copy.",
+  ],
   intro:
     "The Empty State Copy Generator produces a heading, supporting line and button label for eleven interface states - first run, no search results, filtered to nothing, all clear, offline, server error, permission denied, not found, form validation, first load and load more - in four tones. Wording is generated from fixed templates with your own noun substituted, so the same inputs always give the same result and nothing is sent to a model. Every draft is then linted against practical limits: headings under 50 characters, body under 140, button labels of three words or fewer, no blame directed at the reader, and no apology standing in for the fix.",
   useCases: [

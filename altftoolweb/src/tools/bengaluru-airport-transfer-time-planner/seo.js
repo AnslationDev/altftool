@@ -1,4 +1,12 @@
 const seo = {
+  title: "When to Leave for BLR: Bengaluru Airport Planner",
+  metaDescription:
+    "Work back from your BLR departure through bag-drop close, gate close and the 2h/3h reporting advice, with a congestion factor for your hour.",
+  steps: [
+    "Enter the scheduled departure in 24-hour time and the distance to the terminal in km, or tap an origin chip such as MG Road / city centre - 35 km.",
+    "Pick the flight type, how you are getting there — app cab, own car or the BMTC Vayu Vajra airport bus — and the traffic assumption.",
+    "Read the Leave by time, whether bag drop, the gate or the airport advice set it, and the hour-by-hour journey table, then press Copy plan.",
+  ],
   intro:
     "This planner gives the clock time to walk out of your door for a flight from Kempegowda International Airport (BLR), by working backwards from the scheduled departure through the strictest of three deadlines: the airline's bag-drop close, the boarding gate close, and the airport's reporting advice of two hours for a domestic flight and three for an international one. BLR sits about 35 km north of the city at Devanahalli, so the road leg is usually the largest block in the plan — and the one that swings most. Free-flow time is multiplied by a congestion factor for the hour you actually travel, and Bengaluru's peaks are the steepest of any Indian metro, which is why the same run from Koramangala can differ by close to fifty minutes depending on when you set off, and by nearly an hour if you hit a severe delay.",
   useCases: [

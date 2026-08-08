@@ -1,4 +1,7 @@
 const seo = {
+  title: "Base64 to PDF: Decode, Preview and Verify the File",
+  metaDescription:
+    "Decode a Base64 string or data:application/pdf URL back to a PDF, preview it in-browser, and check the %PDF header, startxref and %%EOF.",
   intro:
     "Base64 to PDF decodes a Base64 payload — raw, or wrapped in a `data:application/pdf;base64,` URL — back into a working PDF file and inspects its structure. It verifies the `%PDF-` header and version required by ISO 32000-1 §7.5.2, looks for the `startxref` pointer and closing `%%EOF` marker that mark a complete file, and reports encryption, linearization and visible page objects. It is for developers debugging an invoice API, a signed document webhook, or an email attachment that arrives as a string.",
   useCases: [

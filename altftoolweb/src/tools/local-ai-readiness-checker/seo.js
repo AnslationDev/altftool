@@ -1,4 +1,10 @@
 const seo = {
+  title: "Can My PC Run a Local LLM? RAM, VRAM & Disk Check",
+  steps: [
+    "Type System Memory (RAM GB), Accelerator Memory (VRAM GB), Free Disk Storage (GB) and Logical CPU Cores, then pick Apple Metal, NVIDIA CUDA, AMD ROCm or CPU only.",
+    "Press Compare Thresholds & Calculate Readiness to mark each of the four workload profiles as meeting, close to, or below its published thresholds.",
+    "Read the model grid from TinyLlama 1.1B to DeepSeek R1 Distill 14B, then take the CSV Report or Markdown Summary export.",
+  ],
   intro:
     "The Local AI Readiness Checker compares the RAM, accelerator memory, free disk space and logical CPU cores you enter against four published workload profiles — CPU-only experimentation (8 GB RAM, 4 cores), routine local text work (16 GB, 6 cores), GPU-accelerated text work (16 GB RAM plus 6 GB VRAM), and local media generation (32 GB RAM plus 8 GB VRAM) — and marks each one as meeting, close to, or below its thresholds. It also grades a catalogue of nine open local models from TinyLlama 1.1B up to DeepSeek R1 Distill 14B against the same specs. It is for anyone deciding whether their existing machine can run a local LLM before they download twenty gigabytes of weights.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "New York Sales Tax Calculator with Clothing Rule",
+  metaDescription:
+    "Split New York sales tax into the 4% state rate, the local rate and the 0.375% MCTD surcharge, with the under-$110 clothing exemption applied per item.",
+  steps: [
+    "Pick \"Where the customer takes delivery\" from the preset list, or type a Local rate (% on top of 4%).",
+    "Enter Taxable goods and services (USD), Delivery, shipping and handling (USD), and the clothing price per item and quantity.",
+    "Tick \"Inside the MCTD (0.375% surcharge)\" where it applies, then read State tax (4%), Local tax, MCTD surcharge and Total due, and press Copy result.",
+  ],
   intro:
     "This calculator assembles New York sales tax from its three layers: the 4% state rate under Tax Law § 1105, the county or city rate under article 29, and the 0.375% Metropolitan Commuter Transportation District surcharge that applies in the five boroughs and seven suburban counties. It also applies the clothing rule in § 1115(a)(30) correctly — items under $110 each escape the state rate and the MCTD surcharge, and escape local tax only where the jurisdiction has elected the same exemption, as New York City has. Retailers, e-commerce sellers shipping into New York and shoppers checking a receipt get the same layer-by-layer split.",
   useCases: [

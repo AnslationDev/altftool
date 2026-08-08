@@ -1,4 +1,7 @@
 const seo = {
+  title: "No-Refund Policy Generator for Digital Products",
+  metaDescription:
+    "Writes a 12-section digital refund policy with the Article 16(m) checkout waiver, and keeps faulty, undeliverable and misdescribed refunds in.",
   intro:
     "Digital Product Refund Policy Generator writes a twelve-section no-return policy for ebooks, courses, licence keys, templates and memberships, built around the one clause that makes it enforceable: the express checkout waiver. Under Article 16(m) of the EU Consumer Rights Directive and regulation 37 of the UK Consumer Contracts Regulations 2013, a seller can disapply the 14-day cancellation right for digital content only where the buyer gave prior express consent to immediate delivery and acknowledged losing that right. The generator flags a missing waiver, and refuses to let you quietly drop the refunds — faulty files, failed delivery, not as described — that consumer law does not allow a seller to switch off.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Emirates Excess Baggage Calculator: Per Kg or Per Bag",
+  metaDescription:
+    "Price excess baggage per kg on weight-concept routes, or per bag on Americas piece routes, and compare prepaid 5 kg steps against the airport rate.",
+  steps: [
+    "Pick \"Weight concept (kg allowance)\" or \"Piece concept (Americas routes)\", then the Currency of the quoted rates and Passengers on the booking.",
+    "On a weight route set the Fare brand / cabin, Total checked baggage weight (kg), Heaviest single bag (kg), Airport rate and Prepaid online rate; on a piece route set Checked pieces in total, Pieces over the per-bag weight limit and both piece fees.",
+    "Read whether prepaying online or paying at the airport is cheaper, the chargeable excess over the allowance and the warnings, then press \"Copy result\".",
+  ],
   intro:
     "This estimator prices Emirates excess baggage under both systems the airline uses: the weight concept that applies across most of the network, where kilograms above the fare brand's allowance are billed per kilogram, and the piece concept used on routes to and from the Americas, where you pay a flat fee for each additional bag and a separate flat fee for a bag over its weight ceiling. On weight-concept routes it also compares buying the weight in advance online — sold in 5 kg steps up to 50 kg per passenger — against paying at the airport counter. Rates are entered by you, because Emirates prices excess by route band and currency.",
   useCases: [

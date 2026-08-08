@@ -1,4 +1,12 @@
 const seo = {
+  title: "Nagpur Auto & Cab Fare: RTA Meter + 25% Night Charge",
+  metaDescription:
+    "Price a Nagpur auto, shared auto or app cab on the RTA meter card — minimum fare, per-km rate, waiting time and the midnight-to-5am 25% night charge.",
+  steps: [
+    "Pick the Vehicle — \"Auto rickshaw — RTA meter (whole vehicle)\", \"Shared auto — per seat on a fixed route\" or an app option such as \"Auto on an app (Ola / Uber / Rapido)\" — and enter \"Trip distance (km)\", or tap a Common Nagpur runs chip like \"Nagpur Jn to NAG airport · 8 km\".",
+    "Set \"Pickup time (24-hour)\", Passengers, \"Waiting time (minutes)\", \"Ride time (minutes)\", \"Surge multiplier\" and \"Tolls and parking (₹)\", then open \"Adjust the rate card\" to overwrite the minimum fare, distance included in it, rate per extra km, waiting rate and \"Night charge (% of meter)\" with the card printed in your vehicle.",
+    "Read the Estimated fare and its fair range, with rows for Distance fare, Waiting charge, Night charge, Surge, Fare per seat, Seats billed, Effective cost per km and \"Usually rounded up to\"; a midnight-to-5 am pickup shows the night-charge badge, and \"Copy result\" copies the breakdown.",
+  ],
   intro:
     "This estimator prices a Nagpur trip on the meter structure the Regional Transport Authority uses — a minimum fare covering the first stretch of the ride, a per-kilometre rate beyond it, waiting time billed by the minute, and Maharashtra's statutory 25% night charge between midnight and 5 am. Shared autos, which carry a large share of Nagpur's passengers on fixed routes, are priced per seat rather than per vehicle, and app cabs are modelled the aggregator way with base fare, distance, ride minutes and a demand multiplier. Auto tariffs in Maharashtra are revised region by region using the Hakim Committee formula, so every rupee figure here is editable against the card printed inside your vehicle.",
   useCases: [

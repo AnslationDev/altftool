@@ -1,4 +1,12 @@
 const seo = {
+  title: "Workout Planner: 4, 8 or 12-Week Periodized Blocks",
+  metaDescription:
+    "Turn goal, level, days and equipment into a 4, 8 or 12-week block with sets, reps, RPE-gated 2.5-5% progression and a week-4 deload at 35% less volume.",
+  steps: [
+    "Set \"Goal\" (Strength, Muscle Gain, Fat Loss or Endurance), \"Level\", \"Days\", session \"Duration\" and a 4, 8 or 12-week block under \"Weeks\".",
+    "Choose \"Equipment\" — None, Basic or Full Gym — add \"Weight\" and a \"Time Cap\", tick \"Injury-aware mode\" if it applies, then press \"Generate Pro Plan\".",
+    "Read the week-by-week sessions with their sets, reps and progression rule, log completion and RPE per session, then press \"Export JSON\" to save workout-plan.json or \"Print / PDF\".",
+  ],
   intro:
     "The Workout Planner turns a goal, a training level, the days you can train and the equipment you own into a week-by-week block: each session gets an exercise, a set and rep prescription, and a time split that targets roughly 20% warm-up and 65% main work, with cooldown taking whatever's left — scaled down proportionally, and never letting a block go negative, so all three still fit inside a short session. Choose a 4, 8 or 12-week block and every week carries a progression rule — add 2.5% for beginners or 5% otherwise while RPE stays at 8 or below — with week 4 written as a deload at 35% less volume. It also sizes daily calories, protein, water and sleep from your body weight, and tracks adherence and average RPE as you log sessions.",
   useCases: [

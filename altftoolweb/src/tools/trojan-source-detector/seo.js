@@ -1,4 +1,12 @@
 const seo = {
+  title: "Trojan Source Detector: Bidi & Homoglyph Scanner",
+  metaDescription:
+    "Scan pasted code for 12 bidirectional controls, 8 invisible characters and mixed-script identifiers, each reported with line, column and code point.",
+  steps: [
+    "Paste code into the Source text box (limit 1,000,000 characters) or use Choose file for a .js, .py, .go, .rs or other listed text source; Load Unicode sample drops in a Cyrillic-homoglyph example.",
+    "Press Run local inspection — nothing is parsed or executed, the scan only looks for the 12 bidirectional controls, 8 invisible characters and Latin/Cyrillic/Greek identifier mixes.",
+    "Read the Characters, Findings, Retained, High and Review metrics, each finding's line and column with its escaped evidence, and the \"Controls made visible\" preview of the first 12,000 characters; Download report saves trojan-source-redacted-report.txt.",
+  ],
   intro:
     "The Trojan Source Detector scans pasted source code for the Unicode tricks that make a file read differently to a human than it compiles — the 12 bidirectional formatting controls behind the Trojan Source attack, 8 normally invisible characters such as zero-width space and soft hyphen, and identifiers that mix Latin letters with look-alike Cyrillic or Greek ones. Every hit is reported with its line, column, code point and an escaped rendering, and the on-page preview echoes back up to 12,000 characters of the source with each control made visible as \\u{...}. It is for reviewers and maintainers who have to decide whether a patch really says what it appears to say, without running the code.",
   useCases: [

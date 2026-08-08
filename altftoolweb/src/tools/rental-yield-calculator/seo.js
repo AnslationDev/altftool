@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rental Yield Calculator: Gross, Net and Cash Flow",
+  metaDescription:
+    "Work out gross and net rental yield after vacancy and every running cost, plus post-EMI monthly cash flow, cash-on-cash return and a 6-year projection.",
+  steps: [
+    "Enter Purchase Price, Current Market Value and Monthly Rent with a Vacancy Rate %, plus Down Payment, Loan Amount, Interest Rate and Loan Tenure if it is EMI-funded.",
+    "Fill the Annual Expenses fields — Maintenance Cost, Property Tax, Insurance, HOA Charges, Repairs, Utilities, Other Expenses, and a Management Fee charged as a % of collected rent.",
+    "Read Gross Yield, Net Yield, Monthly Cash Flow, ROI and Break-even, then press Copy Summary or Export CSV to save rental-yield-calculation.csv.",
+  ],
   intro:
     "Rental Yield Calculator works out what a let property actually returns: gross yield is annual rent after a vacancy allowance divided by the purchase price, and net yield subtracts every running cost — maintenance, property tax, insurance, HOA, repairs, utilities and a management fee charged as a percentage of collected rent — before dividing by the same price. It then layers on the loan, reporting monthly cash flow after EMI, cash-on-cash return against your down payment, total ROI including capital appreciation, and a six-year projection where rent grows 3% a year and expenses 2%. It is for landlords and buy-to-let investors comparing one property against another on returns rather than on rent alone.",
   useCases: [

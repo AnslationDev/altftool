@@ -1,4 +1,12 @@
 const seo = {
+  title: "Caste Certificate Checklist: SC, ST and OBC Documents",
+  metaDescription:
+    "Checks the religion bar, migration and marriage rules and the ₹8 lakh creamy-layer test first, then lists the documents your SC, ST or OBC file needs.",
+  steps: [
+    "Pick the Category applied for — Scheduled Caste (SC), Scheduled Tribe (ST), OBC non-creamy-layer central format or OBC state list — and the Religion the applicant professes.",
+    "For an OBC category, enter the parents' annual income excluding salary and agriculture and tick whether that level held for three consecutive years; under Which of these apply? tick migration, marriage, inter-caste parents or minor.",
+    "Clear anything listed under Bars to clear first, tick off each item under Required documents to raise File readiness, then press Copy checklist.",
+  ],
   intro:
     "This checklist runs the eligibility bars on a caste certificate application before it lists the paperwork, because some of those bars no file can overcome. Paragraph 3 of the Constitution (Scheduled Castes) Order, 1950 limits Scheduled Caste status to persons professing the Hindu, Sikh or Buddhist religion, while the Scheduled Tribes Order carries no such condition. Scheduled Caste and Scheduled Tribe entries are notified state by state and do not travel when a family migrates. For an OBC non-creamy-layer certificate the ₹8,00,000 income ceiling applies over three consecutive years, with salary and agricultural income left out of the computation. Once those are checked, the tool builds the document list for your circumstances.",
   useCases: [

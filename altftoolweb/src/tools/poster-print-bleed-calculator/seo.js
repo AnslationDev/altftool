@@ -1,4 +1,12 @@
 const seo = {
+  title: "Poster Bleed Calculator: Trim, Safe Area and PPI",
+  metaDescription:
+    "Turn a trim size into the artboard with 3 mm or 1/8 in bleed, a safe margin, PPI from viewing distance, pixel dimensions and CMYK file size.",
+  steps: [
+    "Press a size preset — A3, A2, A1, A0, Roll-up 850x2000 or US 24x36 in — or type Finished width (trim) and Finished height (trim) with a Size unit of Millimetres, Centimetres or Inches.",
+    "Set Bleed per edge and Safe margin inside trim, or press a bleed chip (No bleed, 3 mm (ISO), 1/8 in (US), 5 mm, 10 mm), then enter the Typical viewing distance and leave Export resolution on Auto from viewing distance or switch to Set PPI myself.",
+    "Read Set up your document at for the artboard size, then Safe area (keep text inside), Export resolution, Pixel dimensions of the artboard, Flattened file size (CMYK 8-bit) and the Minimum text sizes table for that distance; press Copy result.",
+  ],
   intro:
     "A poster bleed calculator converts a finished (trim) poster size into the document you actually set up in Illustrator, InDesign or Photoshop: trim plus bleed on all four edges, a safe margin inside the trim, and the pixel dimensions needed at the export resolution. It applies the standard 3 mm ISO or 1/8 in US bleed allowance, picks an export PPI from the viewing distance, and sizes headline, sub-head and body text using the sign-industry rule of one inch of capital-letter height per ten feet of viewing distance. Designers, print buyers and event teams use it to avoid white slivers at the trim edge and text that is unreadable from where the audience stands.",
   useCases: [

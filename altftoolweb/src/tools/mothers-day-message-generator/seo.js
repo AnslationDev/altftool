@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mother's Day Messages in 20 Languages, 4 Tones",
+  metaDescription:
+    "Generate Mother's Day wishes in 20 languages - one-liner, heartfelt, full card or understated. Shows character count and SMS segments before you send.",
+  steps: [
+    "Choose a Language from the twenty offered and a Tone — one-liner, heartfelt, full card, or the understated version that skips the 'I love you' line.",
+    "Type what you call her (Amma, Aai, Mummy…) and a sign-off name, set how many messages, then press Shuffle for a different set.",
+    "Each message shows its character count and SMS segments — Unicode 70 or GSM-7 160 per segment — plus WhatsApp status fit; press Copy or Copy all.",
+  ],
   intro:
     "This generator writes Mother's Day messages in twenty languages — English, Hindi, Marathi, Bengali, Tamil, Telugu, Kannada, Malayalam, Gujarati, Punjabi, Urdu, Nepali, Spanish, French, German, Portuguese, Italian, Dutch, Indonesian and Japanese — in four tones: a one-liner, a heartfelt message, a full card and an understated version that leaves out the “I love you” line. Punctuation follows each language's own convention, so Spanish gets its inverted opening mark, French keeps the space before an exclamation, and Japanese uses full-width marks with no spaces between sentences. It also works out the date, since Mother's Day falls on the second Sunday of May in India, the United States and most of Europe.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lacto-Vegetarian Macros: Dairy vs Plant Protein Split",
+  metaDescription:
+    "Mifflin-St Jeor calories and macros, with milk, curd and paneer counted at face value and the remaining plant protein raised 12.5% for digestibility.",
+  steps: [
+    "Enter Sex, Age, Weight, Height, Activity level and Goal, then set \"Protein target (g per kg)\" and \"Fat share of calories (%)\".",
+    "Under \"Your daily dairy\", pick a Milk type and enter \"Milk (mL a day)\", \"Curd / dahi (katoris a day)\" — one katori is counted as 150 g — and \"Paneer (g a day)\".",
+    "Read the protein to eat, split into \"…from milk, curd and paneer\" and \"…from dal, soya, nuts and grains\", plus calcium, vitamin B12 and saturated fat from dairy against their RDA and ceiling, then press \"Copy result\".",
+  ],
   intro:
     "This calculator works out a lacto-vegetarian day's calories and macros and then splits the protein between dairy and plants, because milk, curd and paneer are the only complete, fully digestible protein sources available when meat, fish and eggs are all off the plate. Energy comes from the Mifflin-St Jeor equation, dairy protein counts at face value (milk protein has a PDCAAS of 1.00), and the remaining grams that must come from dal, soya, nuts and grains are raised by 12.5% to allow for lower plant-protein digestibility — the same reasoning behind the 0.9 g/kg figure the Academy of Nutrition and Dietetics cites for vegetarians against the 0.8 g/kg RDA. It also totals the calcium, vitamin B12 and saturated fat your dairy brings with it.",
   useCases: [

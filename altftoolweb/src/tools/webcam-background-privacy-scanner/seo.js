@@ -1,4 +1,12 @@
 const seo = {
+  title: "Webcam Background Privacy Scanner: Freeze & Cover",
+  metaDescription:
+    "Freeze a webcam frame, let the contrast scan flag documents and screens behind you, drop opaque covers, and download webcam-background-covered.png.",
+  steps: [
+    "Press Start camera preview to grant the browser camera permission, then Freeze frame — the stream stops and the rest of the work happens on that still image.",
+    "Press Suggest regions to run the local contrast scan, which lists candidates with a Heuristic score out of 100, and press Add cover on the ones you accept. Draw privacy zone lets you drag your own rectangle, and Adjust selected zone sets Left, Top, Width and Height as percentages.",
+    "Use Show cover preview to confirm nothing sensitive is still visible, then press Download covered PNG. The file saves as webcam-background-covered.png with the zones painted as opaque fills; the uncovered frame is never exported.",
+  ],
   intro:
     "Webcam Background Privacy Scanner freezes a single frame from your camera, scores it cell by cell for high-contrast, high-edge patterns — the visual signature of text on paper, whiteboards, screens and labels — and lets you drop opaque rectangles over anything sensitive before exporting a covered PNG. The scan combines edge density, contrast range, light/dark balance and luminance deviation into one confidence score and surfaces the strongest regions as suggestions you review rather than trust. It is for anyone about to go on camera from a room that also contains documents, sticky notes, a second monitor, or a delivery label.",
   useCases: [

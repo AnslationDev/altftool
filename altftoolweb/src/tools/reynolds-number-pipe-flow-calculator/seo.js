@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reynolds Number Calculator for Pipe Flow and Head Loss",
+  metaDescription:
+    "Re = ρvD/μ with the laminar, transitional or turbulent regime, plus the Darcy friction factor, pressure drop, head loss and volumetric flow.",
+  steps: [
+    "Enter fluid density in kg/m³, dynamic viscosity in mPa·s, mean velocity in m/s, and pipe inside diameter, length and absolute roughness — or load the 'Water in 50 mm pipe' example.",
+    "The result recalculates as you type, taking the friction factor from 64/Re below Re 2300 and the Swamee–Jain correlation above it.",
+    "Read the Reynolds number with its laminar, transitional or turbulent caption, then Copy or Download the friction factor, pressure drop, head loss and volumetric flow.",
+  ],
   intro:
     "This calculator works out the Reynolds number of a fluid in a round pipe as Re = ρvD/μ, classifies the flow as laminar, transitional or turbulent, and then returns the Darcy friction factor, pressure drop, head loss and volumetric flow for that run of pipe. It is built for piping and HVAC engineers, process technicians and fluid-mechanics students who have density, viscosity, velocity, diameter, length and roughness in hand and want the whole set of numbers at once. Friction factor comes from 64/Re in the laminar range and the Swamee–Jain explicit approximation to Colebrook–White above it, with pressure drop from Darcy–Weisbach: Δp = f · (L/D) · ρv²/2.",
   useCases: [

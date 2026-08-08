@@ -1,4 +1,10 @@
 const seo = {
+  title: "Income Certificate Calculator: EWS and OBC Limits",
+  steps: [
+    "Choose Which certificate are you applying for? - EWS certificate (10% reservation), OBC non-creamy-layer, or a state ceiling you type in.",
+    "Fill Annual family income by source (INR) for salary, pension, agriculture, business, rent and interest, plus the EWS land, flat and plot areas.",
+    "Read Income counted towards the test against the ceiling, the headroom left and the asset verdict, then press Copy result.",
+  ],
   intro:
     "This calculator aggregates family income the way an income certificate application actually tests it, which is not the same as adding up what the household earns. For an EWS certificate every source counts — salary, agriculture, business and profession alike — and eligibility needs gross annual family income below ₹8,00,000 under the DoPT order of 31 January 2019, plus four separate asset tests. For an OBC non-creamy-layer certificate the same ₹8,00,000 ceiling applies but income from salary and from agricultural land is expressly left out of the computation. Enter the figures once and the tool applies whichever rule your certificate uses.",
   useCases: [

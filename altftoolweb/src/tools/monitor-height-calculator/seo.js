@@ -1,4 +1,12 @@
 const seo = {
+  title: "Monitor Height Calculator: Screen Height Above Floor",
+  metaDescription:
+    "Top, centre and bottom of your screen in cm above the floor, from eye height, diagonal and aspect ratio — plus how far to raise or lower it.",
+  steps: [
+    "Enter 'Your height (cm)' and 'Seat height, floor to cushion (cm)', or switch 'How to work it out' to 'I have measured it' and give your eye height above the floor.",
+    "Set 'Screen size (inches, diagonal)' and the aspect ratio — 16:9, 21:9 ultrawide and the rest — plus eye-to-screen distance, desk height and the current desk-to-picture gap, and tick 'I wear bifocals or progressive lenses' if that applies.",
+    "Read 'Top of the picture, above the floor' with its acceptable band, the centre and bottom heights and the downward gaze angle, then press Copy result.",
+  ],
   intro:
     "This calculator gives the exact height above the floor for the top, centre and bottom of your screen, and the number of centimetres to raise or lower it from where it sits now. It solves two published rules at once: ANSI/HFES 100 and the OSHA computer-workstation guidance put the top of the viewable screen at, or up to about 5 cm below, eye height, while the centre of the screen should fall roughly 15–20 degrees below horizontal eye level. Panel height is computed from the diagonal and aspect ratio, so a 27-inch 16:9 monitor and a 34-inch ultrawide are treated differently, and bifocal or progressive lens wearers get an extra 7.5 cm drop.",
   useCases: [

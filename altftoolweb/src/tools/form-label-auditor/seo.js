@@ -1,4 +1,12 @@
 const seo = {
+  title: "Form Label Auditor: Find Inputs With No Accessible Name",
+  metaDescription:
+    "Paste up to 500 KB of HTML to see each control's accessible name and its source, plus broken aria-labelledby refs, duplicate IDs and missing legends.",
+  steps: [
+    "Paste markup into the HTML source box, or press Open file for an HTML or TXT file up to 500 KB; Load safe example fills a sample form.",
+    "Press Audit form labels to resolve every control's name through aria-labelledby, then aria-label, then a label, then native text or value, then title.",
+    "Read the Control inventory and Cue summary counts, then press Download counts-only summary for form-label-audit-summary.json.",
+  ],
   intro:
     "This auditor reads pasted HTML as inert text — script, style and template blocks are stripped and nothing is executed — and works out, for every form control in it, where its accessible name would come from. It follows the usual precedence of aria-labelledby, then aria-label, then an associated or wrapping label, then native text or value, then title, and flags controls that end up with nothing, plus broken aria-labelledby and aria-describedby references, duplicate IDs, labels pointing at controls that do not exist, radio and checkbox groups in a fieldset with no legend, and visible label text missing from the computed name. Findings are cues for you to check, not a conformance result.",
   useCases: [

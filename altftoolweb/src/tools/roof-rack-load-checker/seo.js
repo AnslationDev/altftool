@@ -1,4 +1,12 @@
 const seo = {
+  title: "Roof Rack Load Checker: Limits, Payload & Stability",
+  metaDescription:
+    "Takes the lower of your handbook dynamic roof load and the rack rating, subtracts bars and box, then checks GVM payload, NHTSA rollover and fuel cost.",
+  steps: [
+    "Under \"The roof\", enter Vehicle dynamic roof load (kg) from the owner's handbook and Rack system rated load (kg), then Weight of the bars and feet (kg), pick What is on the bars, and give the carrier and cargo weights.",
+    "Fill \"The vehicle (optional)\" — Kerb weight, Gross vehicle mass, Occupants, Luggage inside the car, Track width (mm), Centre of gravity height (mm) and Height of the roof load (mm) — plus Steady cruising speed (km/h) and Added drag area ΔCdA (m²) under Fuel penalty.",
+    "\"Cargo you can still add\" shows the spare kilograms against the binding limit and which rating set it, with Payload against GVM, Static Stability Factor before and after with the NHTSA star band, and extra litres per 100 km; Copy result saves the check.",
+  ],
   intro:
     "This checker works out how much cargo a roof can legally and safely take by subtracting the rack and any carrier from the lower of two ratings: the vehicle's dynamic roof load from the handbook, and the rack system's own rated load. It then checks that the roof load still fits inside gross vehicle mass, since roof weight is part of payload rather than extra to it, and shows what the load does to rollover resistance using NHTSA's Static Stability Factor, track width divided by twice the centre of gravity height. A fuel figure is included from the drag equation, because an added frontal area costs half the air density times CdA times speed squared in extra force for every kilometre driven.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "C2PA Content Credentials Checker for JPEG, PNG, MP4",
+  metaDescription:
+    "Inspect the C2PA JUMBF box tree in a JPEG, PNG, MP4 or .c2pa file locally. Counts manifests, claims and signatures — it does not verify them.",
+  steps: [
+    "Pick a file under \"Local media or manifest\" — JPEG, PNG, MP4, M4A, MOV, AVIF, HEIC, HEIF or .c2pa, maximum 24 MB.",
+    "Press \"Inspect structure\" to walk the JUMBF box tree and match the C2PA UUIDs for manifest stores, assertion stores, claim boxes and claim-signature boxes.",
+    "Read the per-box tallies, then use \"Export counts only\" to download c2pa-structure-counts.json, which omits the filename, media bytes and claim values.",
+  ],
   intro:
     "This inspector reads a file's C2PA Content Credentials container structure locally — the JPEG APP11 JUMBF fragments, the PNG caBX chunk, the BMFF uuid box carrying UUID d8fec3d6-1b0e-483c-9297-5828877ec481, or a standalone .c2pa store — and reports what JUMBF boxes are actually present. It walks the box tree, matches the C2PA UUIDs for the manifest store, standard and update manifests, assertion store, claim and signature, and counts them. It deliberately stops at structure: no COSE signature is verified, no CBOR claim is decoded, no trust list is consulted, so it tells you what shape the credential data is in, never whether it is authentic.",
   useCases: [

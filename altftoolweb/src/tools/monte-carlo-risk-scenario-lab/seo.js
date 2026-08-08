@@ -1,4 +1,12 @@
 const seo = {
+  title: "Monte Carlo Risk Lab: Seeded Lognormal Percentiles",
+  metaDescription:
+    "Run up to 20,000 seeded lognormal paths and read the 5th to 95th percentiles plus the share ending below your starting value. Same seed, same result.",
+  steps: [
+    "Set Starting value, Mean annual return (%), Annual volatility (%), Years, Simulations (100–20,000) and Seed, or click the 10-year scenario example.",
+    "Every edit reruns the seeded lognormal paths; keep the Seed at 424242 to reproduce identical percentiles, or change it to draw an independent sample.",
+    "Read the median outcome with the 5th, 25th, 75th and 95th percentile rows and Chance below start, then press Copy or Download for monte-carlo-risk-scenario-lab.txt.",
+  ],
   intro:
     "The Monte Carlo Risk Scenario Lab runs thousands of seeded lognormal paths for a starting value, projecting each year as value × exp((μ − σ²⁄2) + σZ), and reports the spread of outcomes as the 5th, 25th, 50th, 75th and 95th percentiles plus the share of paths that finish below where they started. It is for anyone who wants to see a range instead of a single compounded number — how wide the outcomes get, and how often the downside case appears. Because the random draws come from a seeded generator, the same inputs always reproduce the same distribution, so a scenario can be shared or re-checked exactly. This is an illustration of a statistical model, not a forecast or investment advice.",
   useCases: [

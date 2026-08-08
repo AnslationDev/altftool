@@ -1,4 +1,7 @@
 const seo = {
+  title: "Slug Generator: Title to Lowercase ASCII URL Slug",
+  metaDescription:
+    "Turns a title into a lowercase ASCII slug — NFKD flattens accents so Café Münchén becomes cafe-munchen, and spaces and underscores become hyphens.",
   intro:
     "The Slug Generator turns a title into a lowercase ASCII URL slug by applying Unicode NFKD normalisation, stripping every character that is not an ASCII letter, digit, underscore, space or hyphen, then collapsing runs of spaces and underscores into single hyphens. It is built for anyone who has to hand a CMS, router or file system a safe path segment — bloggers, developers and content editors — and it shows the finished slug the moment you type the title. Because NFKD splits accented Latin letters into a base letter plus a combining mark that then gets removed, \"Café Münchén\" comes out as cafe-munchen rather than a percent-encoded form.",
   useCases: [

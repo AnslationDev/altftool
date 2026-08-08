@@ -1,4 +1,12 @@
 const seo = {
+  title: "Salon Marketing Prompts: Instagram, WhatsApp, Reviews",
+  metaDescription:
+    "Name your salon type, offer and audience, then copy four prompts: Instagram captions, a WhatsApp broadcast, a Google Business post and review replies.",
+  steps: [
+    "Fill in \"Salon type\", \"Offer/service\" and \"Audience\" — the defaults are a hair salon running a monsoon hair repair package for local working professionals.",
+    "Set \"Channels\" to the places you actually post (Instagram, WhatsApp, Google Business); the \"Prompt pack\" panel rebuilds with your business, offer, audience and channels stamped at the top.",
+    "Press \"Copy output\" to take all four prompts — Instagram caption (5 options with a booking CTA), WhatsApp broadcast, Google Business post under 120 words, and review replies — into your AI assistant.",
+  ],
   intro:
     "Salon Marketing Prompt Pack fills ten ready-written AI prompts — offers, appointment reminders, before-and-after captions, rebooking nudges, review requests, stylist introductions, quiet-day fillers, cancellation-policy notes, package pitches and Google Business Profile updates — with your salon name, city, service and booking line, and stamps each one with the real character budget for its channel. SMS budgets come from GSM 03.38 itself: 160 characters in a single 7-bit segment, 153 per segment once a message concatenates, dropping to 70 and 67 the moment a single emoji or non-Latin character forces UCS-2. Other channels carry their published caps — WhatsApp 1,024, Instagram 2,200, Google Business Profile 1,500, in-salon poster 220.",
   useCases: [

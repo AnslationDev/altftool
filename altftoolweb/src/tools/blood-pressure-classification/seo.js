@@ -1,4 +1,12 @@
 const seo = {
+  title: "Blood Pressure Categories: ACC/AHA vs ESC/ESH 2018",
+  metaDescription:
+    "Name the category for a reading under ACC/AHA 2017 or ESC/ESH 2018 — 130/80 is Stage 1 under one and High Normal under the other. Keeps your last 30.",
+  steps: [
+    "Choose the ACC/AHA or ESC/ESH guideline button, then enter Systolic (mmHg) and Diastolic (mmHg), with Heart Rate (Optional) if you have it.",
+    "Press \"Classify BP\" — a reading is only placed in a category when both the systolic and the diastolic value fall inside it, so a high bottom number is not hidden by a normal top number.",
+    "The card names the category with its risk wording, Lifestyle Recommendations and the Guideline Categories reference table, and the reading joins Recent Readings (the last 30, kept in your browser) with an average; Copy Report copies it and Download saves a BP_Report_120_80.txt-style file.",
+  ],
   intro:
     "The Blood Pressure Classification Tool takes a systolic and diastolic reading in mmHg and names the category it falls into under either the ACC/AHA 2017 or the ESC/ESH 2018 guideline, which disagree about where hypertension begins. It is built for people tracking readings from a home cuff who want to know whether 132/78 counts as Elevated or High Normal, and it keeps your last 30 readings locally so you can see an average and a trend rather than one isolated number. Every reading also returns the guideline's own risk wording plus lifestyle notes, and it is informational only — diagnosis and treatment belong to a clinician.",
   useCases: [

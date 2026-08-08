@@ -1,4 +1,12 @@
 const seo = {
+  title: "Error Log Grouper: Mask IDs and Rank Repeat Errors",
+  metaDescription:
+    "Masks timestamps, IPs, UUIDs, paths and numbers, then ranks distinct error patterns with counts, trend, burst flag and shared stack frame. CSV/JSON/MD.",
+  steps: [
+    "Paste plain-text logs into Log input or press Sample; multiline stack traces stay attached to the entry that started them.",
+    "Filter with the severity select, search patterns or examples, and sort by Most frequent or Most recent.",
+    "Read each group's occurrence count, trend and Burst detected badge beside the Entries, Patterns and Recurring metrics, then export CSV as log-patterns.csv, JSON, or MD as log-pattern-report.md.",
+  ],
   intro:
     "This log grouper collapses a wall of log lines into a ranked list of distinct error patterns by masking the parts that vary — timestamps, IPs, UUIDs, hex and long ids, URLs, emails, file paths, query-string values and every bare number become placeholders like <ip>, <uuid> and <number> — and then counting the identical normalised messages that remain. Each group reports its severity, occurrence count, first and last seen times, whether it is increasing or decreasing, and the stack frame most of its entries share. It is for engineers triaging a log dump who need to know which three errors matter, not which two thousand lines exist.",
   useCases: [

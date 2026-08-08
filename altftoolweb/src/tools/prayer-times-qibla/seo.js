@@ -1,4 +1,12 @@
 const seo = {
+  title: "Prayer Times and Qibla Direction, Computed Offline",
+  metaDescription:
+    "Fajr to Isha and the Qibla bearing from true north for 92 cities or your own location, worked out on your device — MWL, ISNA, Umm al-Qura or Karachi.",
+  steps: [
+    "Use 'Search cities' to pick one of the 92 built-in cities or press 'Use my location', then set the Date.",
+    "Open Calculation settings to choose the convention — Muslim World League, ISNA, Umm al-Qura or Karachi — the Shafi or Hanafi Asr rule, and a high-latitude rule if Isha comes out undefined.",
+    "Read Fajr, Dhuhr, Asr, Maghrib and Isha with the next prayer called out, and the Qibla bearing in degrees from true north with the distance to the Kaaba, then press Copy times.",
+  ],
   intro:
     "This tool computes the five daily prayer times and the Qibla bearing from the standard solar equations — Julian date, solar declination, the equation of time and hour angles — entirely on your device, with no lookup or network request. Choose from 92 built-in cities or use your browser location, pick a calculation method (Muslim World League, ISNA, Umm al-Qura or Karachi) and the Shafi or Hanafi rule for Asr, and it returns Fajr, Dhuhr, Asr, Maghrib and Isha plus sunrise and Islamic midnight. The Qibla is the great-circle bearing to the Kaaba at 21.4225°N, 39.8262°E, given in degrees from true north alongside the distance in kilometres.",
   useCases: [

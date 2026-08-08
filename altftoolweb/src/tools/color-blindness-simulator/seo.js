@@ -1,4 +1,7 @@
 const seo = {
+  title: "Color Blindness Simulator: Protanopia to Achromatopsia",
+  metaDescription:
+    "Re-render your image as protanopia, deuteranopia, tritanopia or achromatopsia in LMS cone space, with a 0–1 severity slider and side-by-side compare.",
   intro:
     "Color Blindness Simulator re-renders an image or interface screenshot as someone with protanopia, deuteranopia, tritanopia or achromatopsia would see it, using the Viénot–Brettel–Mollon dichromacy model in LMS cone space. It is for designers and developers checking whether a chart, a status badge or a red/green button pair still reads when one cone type is missing. A severity slider covers the anomalous forms too — around 0.5 approximates deuteranomaly and protanomaly, where the cone is shifted rather than absent.",
   useCases: [

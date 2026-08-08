@@ -1,4 +1,7 @@
 const seo = {
+  title: "Logic Gate Simulator with Truth Table and K-Map",
+  metaDescription:
+    "Wire AND, OR, NOT, NAND, NOR, XOR and XNOR gates, then get the full 2^n truth table, a Karnaugh map and the minimised sum-of-products expression.",
   intro:
     "The Logic Gate Simulator lets you wire AND, OR, NOT, NAND, NOR, XOR and XNOR gates on a canvas, then propagates signals through the circuit and derives a complete truth table by evaluating all 2^n combinations of your n toggle inputs. It carries four signal states — 0, 1, high-impedance Z and error X — resolves feedback loops by iterating to a fixed point with a 20-pass cap, and turns any selected output into a Karnaugh map with Gray-code labels for 2, 3 or 4 variables plus a minimised Boolean expression. It is built for students and hobbyists learning combinational logic who want to see the table and the simplification fall out of a circuit they drew themselves.",
   useCases: [

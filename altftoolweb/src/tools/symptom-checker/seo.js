@@ -1,4 +1,12 @@
 const seo = {
+  title: "Symptom Checker: How Soon to Be Seen, Not a Diagnosis",
+  metaDescription:
+    "Tick symptoms, duration and severity: fixed red-flag rules - FAST, sepsis signs, neck stiffness - give one urgency band and name the rule that fired.",
+  steps: [
+    "Enter age in years — use a fraction such as 0.25 for a three-month-old — how many days so far, and overall severity: Mild, Moderate or Severe.",
+    "Tick the symptoms in each group and anything else that applies, such as taking an anticoagulant, pregnancy, or a head injury in the last 7 days.",
+    "Read the suggested urgency band and the Why this band table naming each warning-sign rule that matched, then press Copy summary to read out.",
+  ],
   intro:
     "This is a red-flag triage aid, not a diagnosis engine. Tick the symptoms you have, say how long they have run, how severe they feel and anything relevant in your background, and it runs the lot against a fixed, published list of warning-sign rules — the FAST stroke signs, fever with neck stiffness, the sepsis screening signs, chest pain with radiation or sweating, fever under three months old, a head injury while on an anticoagulant, the three-week cough and unexplained weight-loss referral triggers. The output is a single answer: how quickly to be seen, and exactly which rules produced that answer. There is no probability model and no ranked list of conditions, because a description alone cannot support one. Everything runs in your browser; nothing you tick is uploaded, stored or sent anywhere.",
   useCases: [

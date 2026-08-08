@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mundan Invitation Wording: Programme from the Muhurat",
+  metaDescription:
+    "Enter the muhurat and the arrival time is worked backwards through the puja, kalash sthapana and havan — plus the child's exact age, in four styles.",
+  steps: [
+    "Enter the Child's name, Child's date of birth, Ceremony date and the Mundan muhurat (24-hour time) your priest gave you.",
+    "Adjust any step length in the programme table — guests arrive and welcome, Ganesh puja and sankalp, kalash sthapana and navagraha puja, havan, snan, aarti, ashirwad, bhoj — and every other time moves around the mundan anchor; add the parents, venue and RSVP details below.",
+    "Pick an Invitation style — English formal card, English warm and personal, Hindi (Devanagari) or short WhatsApp / SMS message — then press Copy invitation, or Copy programme for the timings alone.",
+  ],
   intro:
     "Mundan — chudakarana, the first ritual cutting of a child's hair — is one of the sixteen samskaras, and the invitation for it has to carry three things guests actually need: the date, the muhurat, and the time to physically be in the room. This builder starts from the one time your priest gives you, the moment the first lock is cut, and works the rest of the day out from it: the arrival time is the muhurat minus the puja, the kalash sthapana and the havan that come before it, and every step after it is laid out forward. It also computes the child's exact age on the ceremony day from the date of birth, and writes the wording in a formal English card, a warm personal note, a Devanagari Hindi card and a short WhatsApp message.",
   useCases: [

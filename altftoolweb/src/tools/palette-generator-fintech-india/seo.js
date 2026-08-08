@@ -1,4 +1,12 @@
 const seo = {
+  title: "Fintech Palette Generator: Light, Dark, WCAG Audit",
+  metaDescription:
+    "One brand hue becomes a 50-900 ramp, Material 3 dark elevation surfaces, credit and debit money colours, and a WCAG contrast audit of both themes.",
+  steps: [
+    "Pick a Brand hue — Trust blue, Deep indigo, Bank teal, Ledger green or Royal violet — and nudge it with 'Hue rotation (degrees)' if you need an exact brand angle.",
+    "Set 'Dark ground lightness (4-16%)' and press Next variation to cycle Variation 0 to 4; both themes regenerate on every change.",
+    "Read 'Contrast checks passing across both themes' as a passing/total count, then the Brand ramp, the Dark elevation surfaces table of Material 3 tint opacities, the Money semantics table for Credit / money in, Debit / money out, Pending, Failed / declined and Saved / rewards, and the per-theme contrast audits; Copy CSS exports the CSS variables.",
+  ],
   intro:
     "The Fintech India Palette Generator takes one brand hue and returns a matched pair of themes: a 50-900 tonal ramp, light and dark surfaces, five money-semantic colours for credit, debit, pending, failed and rewards, and a WCAG 2.x contrast audit of every text and control pairing in both themes. Dark surfaces are built the way Material Design 3 specifies — a translucent brand tint composited over the darkest surface at the published elevation opacities of 5%, 8%, 11%, 12% and 14%. It is aimed at product and design teams building UPI apps, lending flows, neobank dashboards and investment products where balances have to stay legible in bright daylight and at night.",
   useCases: [

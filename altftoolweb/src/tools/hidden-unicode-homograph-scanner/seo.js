@@ -1,4 +1,12 @@
 const seo = {
+  title: "Hidden Unicode and Homograph Scanner for Any Text",
+  metaDescription:
+    "Find zero-width and bidi control characters, unbalanced Trojan Source overrides, hidden tag-character payloads and mixed-script homographs in text.",
+  steps: [
+    "Paste into the box labelled 'Text to scan — a message, a URL, a filename, a diff hunk'; the page opens on a sample you can replace, or wipe with 'Clear' and restore with 'Reset to sample'.",
+    "Every codepoint is classified, bidirectional embeddings and isolates are checked for balance, U+E0020 to U+E007E tag characters are decoded back to the ASCII they spell, and each hostname label is converted with the RFC 3492 Bootstring algorithm.",
+    "Read 'What was found', 'Every flagged codepoint', 'Hostnames' with its 'A-label (wire form)' column and 'Words that are not what they look like', then take the fixed string with 'Copy cleaned text' or the whole write-up with 'Copy report'.",
+  ],
   intro:
     "This scanner walks pasted text one codepoint at a time and names every character that is invisible, deceptive, or borrowed from a script it does not belong to. It reports zero-width and formatting characters, control codes, private-use codepoints and unusual whitespace; it tracks whether bidirectional embeddings and isolates are balanced, which is the mechanism behind the Trojan Source attack (CVE-2021-42574); it decodes the hidden ASCII payload carried by U+E0000-block tag characters; and it applies UTS #39 mixed-script detection per word, folding look-alike letters to a Latin skeleton so you can read what a string is pretending to be. Hostnames are converted in both directions with the RFC 3492 Punycode algorithm. Everything runs in the browser and nothing is uploaded.",
   useCases: [

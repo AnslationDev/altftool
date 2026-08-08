@@ -1,4 +1,12 @@
 const seo = {
+  title: "Missed Dose Checker: The Halfway-to-Next-Dose Rule",
+  metaDescription:
+    "Enter when the dose was due, the time now and how often you take it, to see how late you are against the halfway cut-off and when the next dose is due.",
+  steps: [
+    "Set \"When the dose was due\" and \"Time right now\", then choose how often you take it — Once a day, Twice a day (BD, every 12 h), TDS, QDS or your own interval.",
+    "Pick the Type of medicine; contraceptive pills, anticoagulants, insulin, anti-epileptics and transplant immunosuppressants are routed to their own instructions.",
+    "Read how late the dose is against the halfway point, the scheduled doses gone by and the next dose time, then press Copy summary.",
+  ],
   intro:
     "This helper applies the half-interval rule that most patient information leaflets print for a missed dose: take it as soon as you remember unless you are more than halfway to the next dose, in which case leave it out and carry on normally — and never take two together. Enter the time the dose was due, the time now and how often you take the medicine, and it shows how late you are, which side of the halfway point that falls on, how many scheduled doses have gone by, and when the next one is due. Medicine types with their own published missed-dose rules, such as contraceptive pills, anticoagulants, insulin and anti-epileptics, are flagged instead of being run through the general rule.",
   useCases: [

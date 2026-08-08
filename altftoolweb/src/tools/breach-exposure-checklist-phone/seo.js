@@ -1,4 +1,10 @@
 const seo = {
+  title: "Leaked Phone Number: SIM-Swap and Smishing Checklist",
+  steps: [
+    "Enter \"Date you learned about the exposure\" so every step is measured against its window — First 24 hours, First week, First month or Ongoing.",
+    "Tick your way through the four groups — \"Contain it today\", \"Lock down against SIM swap\", \"Triage smishing and spam calls\" and \"Demote the number as an identity check\" — where each step shows its weight and Critical steps hold the score at 69% while open.",
+    "Read the \"Response score\" percentage with \"Critical steps still open\", \"Steps past their window\" and the \"Do these next\" list, then press \"Copy result\"; the tool never asks for the number itself.",
+  ],
   intro:
     "The Phone Number Exposure Checklist scores your response to a leaked phone number across 17 weighted steps, grouped by the window each one belongs in — first 24 hours, first week, first month, and ongoing. A phone number is different from most leaked fields because it is the target of a specific attack, a SIM swap, and because banks, carriers and reset flows still treat knowing it as proof of identity. The score is weighted towards the port-out lock that blocks a SIM swap, the habit of never reading a one-time code to a caller, and replacing the number as a verification token. Enter the date you found out and the tool flags which steps have already slipped past their window.",
   useCases: [

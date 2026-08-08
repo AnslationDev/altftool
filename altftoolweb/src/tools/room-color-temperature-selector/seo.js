@@ -1,4 +1,12 @@
 const seo = {
+  title: "Room Color Temperature: Kelvin, CRI and Lumens",
+  metaDescription:
+    "Pick a room and mood to get a kelvin target, minimum CRI and an EN 12464-1 lux level, converted to lamp lumens and watts for your room size.",
+  steps: [
+    "Choose Room and Mood, then enter Room length (m) and Room width (m).",
+    "Set \"Lighting the…\" to the whole room or a task area, and adjust Lumens per fitting, Utilisation factor, Maintenance factor and LED efficacy.",
+    "Read the recommended kelvin with its colour swatch, plus Illuminance target, Lamp lumens needed, Fittings and LED load, then press Copy result.",
+  ],
   intro:
     "This selector recommends a light colour temperature in kelvin, a minimum CRI and an illuminance target for each room, then converts that target into the lamp lumens and wattage a room your size actually needs. Colour temperature follows the conventional bands — 2200–3000 K where people relax, 4000–5000 K where they work — shifted by the mood you choose, while light levels follow EN 12464-1 and the equivalent IES figures, such as 500 lux for writing and typing and 300 lux for general kitchen work. Lumens come from lux × area ÷ (utilisation factor × maintenance factor), so light that never reaches the working plane is accounted for.",
   useCases: [

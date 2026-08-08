@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Project Scoping Worksheet: 7 Questions, 1 Doc",
+  metaDescription:
+    "Answer problem, users, data, metric, baseline, target and fallback; get a completeness score and a markdown scope doc with TBD lines left visible.",
+  steps: [
+    "Enter the Project name and, optionally, Weeks to a go/no-go decision, then work through The seven core questions: Problem statement, Users & beneficiaries, Data sources, Success metric, Current baseline, Target and Fallback plan.",
+    "Add Optional context — Constraints and Accountable owner — or press Start blank to clear the worked example and score your own project from an empty worksheet.",
+    "Read Scope completeness as a percentage with its verdict, from Not scoped through Half scoped and Nearly scoped to Ready to build, then press Copy document to take the markdown Scope document, unanswered questions left in as explicit TBD lines.",
+  ],
   intro:
     "An AI project scoping worksheet forces seven answers out of an idea before any modelling starts: the problem, the users, the data sources, one primary success metric, today's measured baseline, the target that makes the work worthwhile, and the fallback for when the model is wrong or offline. This tool captures those answers, scores how complete the scope is out of seven, and emits a markdown scope document you can paste into a ticket or design doc. It follows the standard machine-learning project-scoping sequence — define the metric and the baseline before choosing a model — used in Google's People + AI guidance and in Andrew Ng's ML project scoping steps.",
   useCases: [

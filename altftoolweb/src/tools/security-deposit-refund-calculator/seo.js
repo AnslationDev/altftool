@@ -1,4 +1,12 @@
 const seo = {
+  title: "Security Deposit Refund Calculator (Model Tenancy Act)",
+  metaDescription:
+    "Itemise unpaid rent, notice shortfall, utilities and damage against the deposit, add agreed interest, and test it against the Model Tenancy Act cap.",
+  steps: [
+    "Enter Deposit paid (INR) and Monthly rent (INR), then pick Residential or Non-residential and a Daily rent basis for part months (30-day or 365-day).",
+    "Fill the Deductions grid: unpaid rent months, Notice period shortfall (days), unpaid utilities and society dues, Damage beyond normal wear and tear, and painting or deep cleaning.",
+    "Read Refund due to the tenant, the Deduction breakdown table and the Model Tenancy Act guide cap row, then press Copy result for the itemised statement.",
+  ],
   intro:
     "This calculator works out the rental security deposit due back on moving out, subtracting the amounts a landlord can lawfully hold — unpaid rent, a notice period cut short, unpaid utilities and society dues, damage beyond normal wear and tear, and any painting or cleaning the agreement allows. It converts a part month into a daily figure on either a 30-day or a 365-day basis, adds simple interest where the agreement promises it, and compares the deposit against the two-month residential and six-month non-residential ceilings in section 11(1) of the Model Tenancy Act, 2021. Landlord and tenant can both use the same breakdown to settle without argument.",
   useCases: [

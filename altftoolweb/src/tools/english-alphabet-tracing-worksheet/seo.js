@@ -1,4 +1,12 @@
 const seo = {
+  title: "Alphabet Tracing Worksheets: A to Z, Sized in mm",
+  metaDescription:
+    "Print A-Z tracing rows on four-line guides, in capitals, lower case or Aa pairs, at a real x-height in millimetres on A4, A5 or US Letter.",
+  steps: [
+    "Pick a Letter set — whole alphabet A–Z, vowels, consonants or a formation family — or type specific letters, then choose capitals, lower case or Aa pairs.",
+    "Set the letter x-height in millimetres, rows per letter up to 6, page size A4, A5 or US Letter, and the tracing style, leaving the four-line guides ticked.",
+    "Check the rows per page and total tracings, then press Print at 100% scale with 'fit to page' switched off.",
+  ],
   intro:
     "The English Alphabet Tracing Worksheet generates printable A to Z practice pages on four-line guides, in capitals, lower case, or Aa pairs on one row. Letters are sized by x-height in millimetres using the standard 0.52 em x-height ratio, so a 12 mm setting really produces 12 mm letters on paper, and the tool works out how many repetitions fit across each row and how many rows fit on A4, A5 or Letter. Letters can also be selected by formation family — the anticlockwise round letters c o a d g q, the straight down-and-up letters l i t u j y, the humped letters r n m h b p k and the zigzags v w x z — which is how most handwriting schemes introduce them.",
   useCases: [

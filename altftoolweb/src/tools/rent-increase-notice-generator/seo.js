@@ -1,4 +1,12 @@
 const seo = {
+  title: "Rent Increase Notice Generator (3-Month Notice)",
+  metaDescription:
+    "Draft a dated rent revision letter with the revised rent, annual extra outgo and deposit top-up, and check the effective date against a 3-month notice.",
+  steps: [
+    "Enter Current monthly rent (INR), set Express the revision as to A percentage increase or A new rent amount, and give the Agreed notice period (months).",
+    "Set Date of this notice and Revised rent effective from; the page flags exactly how many days short the notice falls and caps the deposit at two months' rent, or six for non-residential premises.",
+    "Fill Landlord name, Tenant name, Premises address and Tenancy agreement dated, then press Copy letter to take the Notice letter with its subject line and acknowledgement request.",
+  ],
   intro:
     "This generator turns a rent revision into a dated written notice: it works out the revised monthly rent, the extra outgo per year, the proportionate security deposit and whether the effective date leaves enough notice. The three-month default follows Section 9(2) of the Model Tenancy Act, 2021, which requires a landlord to give written notice three months before the revised rent becomes due, and the deposit is checked against the Section 11(1) ceiling of two months' rent for residential premises and six months for non-residential premises. It is meant for individual landlords, property managers and tenants who want to check the notice they received.",
   useCases: [
