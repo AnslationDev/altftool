@@ -218,3 +218,77 @@ theme: base tokens 3.54 / 2.02 / 3.10:1 (AA fail), `-text` variants 6.09 / 4.73
 - Whether the ~39 fictional-brand `/bops/housing-services` landers are intended.
 - `/top9`: Hero's search input is decorative, and 28 live list routes have no
   link from the hub.
+
+---
+
+## Added 8 August 2026 — share cards, footer reach, and the last unsourced numbers
+
+### Per-tool share cards
+
+`tools/all/[slug]/opengraph-image.jsx` generates a card per tool. Before this,
+all ~3,800 tool pages fell back to `/assets/og-default.png`, so every link
+looked the same wherever it was shared and nothing invited a click.
+
+Two traps worth knowing if you touch it:
+
+- `createPageMetadata` always sets `openGraph.images`, and an explicit images
+  array **overrides** Next's file-based `opengraph-image` convention. The route
+  must pass `image: /tools/all/<slug>/opengraph-image` or the file is generated
+  and never used. `blogs/[slug]` is wired the same way.
+- The catalog's `iconColor` is a Tailwind **class** (`"text-teal-600"`), not a
+  colour. Passing it to satori threw and returned 500 for every tool — a build
+  that passed while the feature was completely broken. It is resolved to a hue
+  and mapped to a shade readable on the dark card; the catalog's own shades were
+  picked for white backgrounds and most fail AA on navy.
+- The server tool-loader guard substring-matches the whole file, comments
+  included. Naming the guarded modules in a comment fails the build even when
+  nothing imports them.
+
+### The link-earning pages were unreachable
+
+`Footer.jsx` renders `HOME_FOOTER_GROUPS` whenever `usesLandingChrome` is true,
+which is nearly every page; `FOOTER_ROUTE_GROUPS` — the one carrying the embed
+hub — renders only on the hidden-shell minority. So `/embed`, `/open-data` and
+`/press` were reachable from tool pages and `/site-map` and nowhere else. All
+three are in the main footer now.
+
+### Academy ratings
+
+All 17 platform ratings were bare unsourced numbers about third parties. 16 are
+now sourced from each platform's own Google Play India listing with value,
+rating count, source URL, check date and a `measures` field stating that the
+number rates *that company's Android app* — not the platform, not its courses.
+One platform publishes no first-party rating anywhere and its rating is gone.
+
+**16 of 17 published figures were wrong.** Khan Academy showed 4.8 against an
+actual 4.4; Unacademy and upGrad showed 4.5 against 4.1.
+
+**This removes ratings from the live cards too, and that is deliberate.**
+`/academy` renders from Firestore, and `normalizeAcademy` coerces `rating` to a
+bare number, which the new `getAcademyRating` gate rejects. To bring ratings
+back on the live page, add a provenance field to the academy CMS record and pass
+it through `normalizeAcademy` — do not loosen the gate.
+
+### Still unsourced on /academy, not fixed
+
+Every `price` (17 claims about third parties, no source or date), the
+`description` superlatives ("Best platform for UPSC, JEE, NEET, SSC"), and the
+`badge`/`specs` feature assertions. Same class as the ratings were.
+
+### Document version verifier
+
+`collectBoundedPdfTextItems` existed only as a spec-first test that failed at
+import, so `npm run validate` could not pass. Implemented and wired into the PDF
+path with a 250,000-character budget — the exact threshold at which the
+comparator rejects a side, so extraction can no longer produce text the
+comparison will refuse. `npm run test:unit` is 923 pass / 0 fail.
+
+The `hasEOL` normalisation the test describes was deliberately **not** adopted in
+the live path: pdf.js sets it per visual line, which would turn a 100-page PDF
+from ~300 lines into 3,000-5,500, and `alignLineChanges` throws above 3,000. That
+would trade an unbounded-string risk for a new hard-failure class across much of
+the tool's supported range.
+
+Extraction `warnings` were produced by all three extractors and rendered
+nowhere, so a rejected 200 MB file looked like an empty document. They render
+now.

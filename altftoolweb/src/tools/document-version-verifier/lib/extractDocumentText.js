@@ -36,6 +36,148 @@ function validateFile(file) {
   return { extension, format };
 }
 
+const PDF_ITEM_WHITESPACE = /\s/u;
+
+/**
+ * Normalize one maximal run of whitespace with the page rules: drop spaces and
+ * tabs that sit in front of a newline, then collapse remaining runs of two or
+ * more spaces/tabs into a single space. Both rules only ever match whitespace,
+ * so applying them to a maximal run in isolation gives the same result as
+ * applying them to the whole page at once.
+ *
+ * @param {string} run
+ * @returns {string}
+ */
+function normalizePdfWhitespaceRun(run) {
+  return run.replace(/[ \t]+\n/gu, "\n").replace(/[ \t]{2,}/gu, " ");
+}
+
+/**
+ * @typedef {object} PdfTextItem
+ * @property {unknown} [str] Raw glyph run text as reported by pdf.js.
+ * @property {unknown} [hasEOL] Whether the item ends the visual line.
+ */
+
+/**
+ * @typedef {object} BoundedPdfText
+ * @property {string} text Normalized page text, never longer than `maxChars`.
+ * @property {boolean} truncated Whether content was dropped to stay in budget.
+ */
+
+/**
+ * Join pdf.js text items into normalized page text without ever building a
+ * string larger than `maxChars`.
+ *
+ * The items are consumed lazily and the walk stops the moment the budget is
+ * spent, mid-item if necessary, so a page that blows the budget on its first
+ * glyph run never pulls the rest of the page into memory. Trailing whitespace
+ * is held back until real text follows it, so a page that ends in blank lines
+ * is not reported as truncated when only that whitespace was dropped.
+ *
+ * @param {Iterable<PdfTextItem>} items
+ * @param {number} maxChars
+ * @returns {BoundedPdfText}
+ */
+export function collectBoundedPdfTextItems(items, maxChars) {
+  const budget = Number.isFinite(maxChars) ? Math.max(0, Math.trunc(maxChars)) : 0;
+  /** @type {string[]} */
+  const parts = [];
+  let length = 0;
+  let pendingWhitespace = "";
+  let started = false;
+  let truncated = false;
+  let stopped = false;
+
+  /**
+   * Commit a chunk of normalized text, clipping it to the remaining budget.
+   * @param {string} chunk
+   * @returns {boolean} False once the budget has run out.
+   */
+  const commit = (chunk) => {
+    if (!chunk) return true;
+    const room = budget - length;
+    if (chunk.length <= room) {
+      parts.push(chunk);
+      length += chunk.length;
+      return true;
+    }
+    if (room > 0) {
+      parts.push(chunk.slice(0, room));
+      length = budget;
+    }
+    truncated = true;
+    return false;
+  };
+
+  for (const item of items || []) {
+    const str = typeof item?.str === "string" ? item.str : "";
+    const chunk = `${str}${item?.hasEOL ? "\n" : " "}`;
+    let index = 0;
+
+    while (index < chunk.length) {
+      const isWhitespace = PDF_ITEM_WHITESPACE.test(chunk[index]);
+      let end = index + 1;
+      while (
+        end < chunk.length &&
+        PDF_ITEM_WHITESPACE.test(chunk[end]) === isWhitespace
+      ) {
+        end += 1;
+      }
+      const run = chunk.slice(index, end);
+      index = end;
+
+      if (isWhitespace) {
+        pendingWhitespace += run;
+        continue;
+      }
+      // Leading whitespace is dropped outright; interior whitespace is only
+      // committed now that we know real text follows it.
+      if (started && !commit(normalizePdfWhitespaceRun(pendingWhitespace))) {
+        stopped = true;
+        break;
+      }
+      pendingWhitespace = "";
+      started = true;
+      if (!commit(run)) {
+        stopped = true;
+        break;
+      }
+    }
+
+    if (stopped) break;
+  }
+
+  return { text: parts.join(""), truncated };
+}
+
+// A PDF longer than this cannot be compared anyway: compareDocumentVersions
+// rejects either side once it passes MAX_SOURCE_CHARACTERS. Budgeting the
+// extraction at the same number keeps a 200 MB, 100-page file from building an
+// unbounded string in the browser, and turns the hard "too long" comparison
+// error into a warning about how much of the document was read.
+const MAX_PDF_TEXT_CHARACTERS = MAX_SOURCE_CHARACTERS;
+
+/**
+ * Yield pdf.js text items lazily so `collectBoundedPdfTextItems` can stop
+ * pulling them once its budget is spent, recording fonts along the way.
+ *
+ * `hasEOL` is deliberately reported as false. pdf.js sets it once per visual
+ * line, and honouring it would turn a 100-page PDF into several thousand
+ * lines, past the MAX_COMPARISON_LINES ceiling that alignLineChanges enforces —
+ * documents that compare today would start failing outright. Pages therefore
+ * stay one line each, exactly as they were before the budget was added.
+ *
+ * @param {Iterable<PdfTextItem & { fontName?: unknown }>} items
+ * @param {Set<string>} fontList Mutated with every font name that is seen.
+ * @returns {Generator<PdfTextItem>}
+ */
+function* pdfTextItemsWithFonts(items, fontList) {
+  for (const item of items) {
+    if (item?.fontName) fontList.add(item.fontName);
+    yield { str: item?.str, hasEOL: false };
+  }
+}
+
 // Bounded PDF text extraction using pdfjs-dist
 async function extractPdfDocument(file) {
   const pdfjs = await import("pdfjs-dist");
@@ -53,19 +195,40 @@ async function extractPdfDocument(file) {
   const pageCount = pdfDoc.numPages;
   const eligiblePages = Math.min(pageCount, MAX_PDF_PAGES);
 
-  let fullText = "";
-  let fontList = new Set();
+  const textParts = [];
+  const fontList = new Set();
+  let remainingCharacters = MAX_PDF_TEXT_CHARACTERS;
+  let textTruncated = false;
+  let extractedPages = 0;
 
   for (let p = 1; p <= eligiblePages; p++) {
+    const header = `--- Page ${p} ---\n`;
+    // The header and the blank line that separates pages are part of the budget.
+    const overhead = header.length + 2;
+    if (remainingCharacters <= overhead) {
+      textTruncated = true;
+      break;
+    }
+
     const page = await pdfDoc.getPage(p);
     const content = await page.getTextContent();
-    const pageStrings = content.items.map((item) => {
-      if (item.fontName) fontList.add(item.fontName);
-      return item.str;
-    });
-    fullText += `--- Page ${p} ---\n` + pageStrings.join(" ") + "\n\n";
+    const collected = collectBoundedPdfTextItems(
+      pdfTextItemsWithFonts(content.items, fontList),
+      remainingCharacters - overhead,
+    );
     page.cleanup();
+
+    textParts.push(header, collected.text, "\n\n");
+    remainingCharacters -= overhead + collected.text.length;
+    extractedPages = p;
+
+    if (collected.truncated) {
+      textTruncated = true;
+      break;
+    }
   }
+
+  const fullText = textParts.join("");
 
   // Extract PDF Metadata if available
   let metaObj = {};
@@ -92,11 +255,22 @@ async function extractPdfDocument(file) {
   const chars = fullText.length;
   const lines = fullText.split("\n").length;
 
+  const warnings = [];
+  if (pageCount > MAX_PDF_PAGES) {
+    warnings.push(`Reading limited to first ${MAX_PDF_PAGES} pages.`);
+  }
+  if (textTruncated) {
+    warnings.push(
+      `Text extraction stopped at ${MAX_PDF_TEXT_CHARACTERS.toLocaleString("en-US")} characters, after ${extractedPages} of ${pageCount} pages. Every comparison below covers only the text that was read.`,
+    );
+  }
+
   return {
     text: fullText,
     sourceType: "PDF Document",
     pageCount,
-    extractedPages: eligiblePages,
+    extractedPages,
+    textTruncated,
     metadata: {
       filename: file.name,
       extension: "pdf",
@@ -115,7 +289,7 @@ async function extractPdfDocument(file) {
       tableCount: 0,
       fonts: Array.from(fontList).slice(0, 10),
     },
-    warnings: pageCount > MAX_PDF_PAGES ? [`Reading limited to first ${MAX_PDF_PAGES} pages.`] : [],
+    warnings,
   };
 }
 
