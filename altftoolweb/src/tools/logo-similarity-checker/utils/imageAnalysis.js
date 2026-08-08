@@ -233,8 +233,7 @@ export function computeAllSimilarity(img1, img2, data1, data2) {
       brightSim * 0.05 +
       contrastSim * 0.05 +
       symSim * 0.10 +
-      compSim * 0.05 +
-      Math.max(0, 1 - Math.abs(comp1 - comp2) * 0.15)) * 100
+      compSim * 0.20) * 100
   );
 
   return {

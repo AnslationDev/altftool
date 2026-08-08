@@ -236,6 +236,7 @@ export const VERDICTS = {
   required: { label: "IDP required", tone: "danger" },
   "translation-required": { label: "Certified translation required", tone: "danger" },
   satisfied: { label: "IDP expected - and you have it", tone: "success" },
+  "translation-satisfied": { label: "No IDP exists for this licence - your translation covers it", tone: "success" },
   recommended: { label: "IDP not required by law, but carry one", tone: "warning" },
   "not-required": { label: "No IDP needed", tone: "success" },
 };
@@ -355,10 +356,20 @@ export function checkIdpRequirement({
     reason =
       "Your licence is already in English, so the translation an International Driving Permit provides adds nothing. No state requires one from an English-language licence holder, and Article 24 of the 1949 Geneva Convention obliges the United States to recognise a valid foreign licence for a visitor. Carry the original licence and your passport.";
   } else if (origin.convention === "none") {
-    verdict = holdsTranslation ? "satisfied" : "translation-required";
-    reason = holdsTranslation
-      ? "Your issuing state belongs to neither convention, so no International Driving Permit exists for your licence - the certified English translation you hold is the practical substitute. Expect some rental branches to decline anyway."
-      : "Your issuing state has joined neither road-traffic convention, so no valid International Driving Permit exists for your licence. Get a certified English translation, and expect many rental companies to decline the booking regardless.";
+    const holdsIdpAnyway = hasGeneva || idpHeld === "vienna-1968";
+    if (holdsTranslation) {
+      verdict = "translation-satisfied";
+      reason =
+        "Your issuing state belongs to neither convention, so no International Driving Permit exists for your licence - the certified English translation you hold is the practical substitute. Expect some rental branches to decline anyway.";
+    } else if (holdsIdpAnyway) {
+      verdict = "translation-required";
+      reason =
+        "Your issuing state has joined neither road-traffic convention, so no authority there could have legitimately issued you a Geneva, Vienna or combined International Driving Permit - it does not apply to a licence from this state. Get a certified English translation instead, and expect many rental companies to decline the booking regardless.";
+    } else {
+      verdict = "translation-required";
+      reason =
+        "Your issuing state has joined neither road-traffic convention, so no valid International Driving Permit exists for your licence. Get a certified English translation, and expect many rental companies to decline the booking regardless.";
+    }
   } else if (hasGeneva) {
     verdict = "satisfied";
     reason =
@@ -421,7 +432,7 @@ export function checkIdpRequirement({
 
   const daysRemaining = windowEndDate === null ? null : daysBetweenISO(arrivalDate, windowEndDate);
 
-  if (origin.convention === "vienna" && !hasGeneva && origin.convention !== "domestic") {
+  if (origin.convention === "vienna" && !hasGeneva) {
     warnings.push(
       "Your country is a 1968 Vienna party. The United States only ratified the 1949 Geneva Convention, so ask specifically for the Geneva format - the two booklets look similar but hire desks check.",
     );
@@ -455,7 +466,12 @@ export function checkIdpRequirement({
     "Proof of insurance for the car, or the rental agreement",
     "The vehicle registration, which lives in the glovebox of a US car",
   ];
-  if (verdict === "required" || verdict === "satisfied" || verdict === "recommended") {
+  if (
+    verdict === "required" ||
+    verdict === "satisfied" ||
+    verdict === "recommended" ||
+    verdict === "translation-satisfied"
+  ) {
     checklist.unshift(
       holdsTranslation && !hasGeneva
         ? "The certified English translation of your licence"

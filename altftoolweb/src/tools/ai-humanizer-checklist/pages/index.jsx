@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, ListChecks, RotateCcw } from "lucide-react";
 
 import {
@@ -36,6 +36,13 @@ export default function ToolHome() {
   const [draft, setDraft] = useState(SAMPLE_DRAFT);
   const [checked, setChecked] = useState([]);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const scan = useMemo(() => scanDraft(draft), [draft]);
   const score = useMemo(() => scoreChecklist(checked), [checked]);
@@ -52,13 +59,21 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(report.text);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => {
+        setCopied(false);
+        copyTimeoutRef.current = null;
+      }, 1500);
     } catch {
       setCopied(false);
     }
   };
 
   const reset = () => {
+    const hasChanges = draft !== SAMPLE_DRAFT || checked.length > 0;
+    if (hasChanges && !window.confirm("Reset will replace your draft with the sample text and clear all checked edits. Continue?")) {
+      return;
+    }
     setDraft(SAMPLE_DRAFT);
     setChecked([]);
     setCopied(false);
@@ -74,7 +89,7 @@ export default function ToolHome() {
         <h1 className="text-3xl leading-tight font-semibold sm:text-4xl">AI Humanizer Checklist</h1>
         <p className="mt-2 text-sm leading-6 text-[var(--muted-foreground)]">
           Paste an AI draft. The scan measures the habits that make writing read mechanically —
-          over-used connectors, uniform sentence length, dash and adverb density, repeated openers —
+          over-used connectors, uniform sentence length, dash density, repeated openers —
           and pushes the matching edits to the top of a fifteen-step checklist.
         </p>
       </header>
@@ -110,7 +125,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Checklist completed
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite" aria-atomic="true">
               {INT.format(score.percent)}%
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -156,7 +171,7 @@ export default function ToolHome() {
           />
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl className="mt-5 divide-y divide-[var(--border)] text-sm" aria-live="polite" aria-atomic="true">
           {[
             ["Signals raised", scanOk ? `${INT.format(scan.flagCount)} of ${INT.format(scan.flagTotal)}` : DASH],
             ["Words / sentences", scanOk ? `${INT.format(scan.words)} / ${INT.format(scan.sentences)}` : DASH],
@@ -298,7 +313,7 @@ export default function ToolHome() {
             <thead>
               <tr className="border-b border-[var(--border)] text-xs tracking-wide uppercase text-[var(--muted-foreground)]">
                 <th scope="col" className="py-2 pr-3 font-semibold">Signal</th>
-                <th scope="col" className="py-2 text-right font-semibold">Flags above / below</th>
+                <th scope="col" className="py-2 text-right font-semibold">Threshold</th>
               </tr>
             </thead>
             <tbody>

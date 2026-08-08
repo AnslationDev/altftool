@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, IdCard, RotateCcw } from "lucide-react";
 
 import {
@@ -30,7 +30,13 @@ const TONE_CLASS = {
   success: "bg-[var(--success-soft)] text-[var(--success-text)]",
 };
 
-const todayIso = () => new Date().toISOString().slice(0, 10);
+const todayIso = () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
 
 const prettyDate = (iso) => {
   if (!iso) return DASH;
@@ -59,6 +65,9 @@ export default function ToolHome() {
   const [arrivalDate, setArrivalDate] = useState(todayIso);
   const [departureDate, setDepartureDate] = useState("");
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
 
   const result = useMemo(
     () =>
@@ -102,7 +111,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -266,7 +276,7 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className={`mt-6 ${CARD}`}>
+      <section className={`mt-6 ${CARD}`} aria-live="polite" aria-atomic="true">
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold tracking-wide text-[var(--muted-foreground)] uppercase">

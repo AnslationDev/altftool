@@ -18,7 +18,10 @@ const seo = {
     ],
     [
       "Do I go through passport control for a flight inside Schengen?",
-      "No. Flights between Schengen countries have no border check on departure, so you go from security straight to the gate - though the airline or the gate agent may still verify your identity document. Anything leaving the Schengen area, including flights to the United Kingdom, does pass through a Federal Police border check that typically takes 10 to 25 minutes.",
+      // Range must stay in sync with lib.js: journey.immigrationMinutes (20 for
+      // non-Schengen) * queue.multiplier (0.7 quiet / 1 typical / 1.5 peak) =
+      // 14 / 20 / 30 minutes, so the ceiling here has to cover the peak case.
+      "No. Flights between Schengen countries have no border check on departure, so you go from security straight to the gate - though the airline or the gate agent may still verify your identity document. Anything leaving the Schengen area, including flights to the United Kingdom, does pass through a Federal Police border check that typically takes 10 to 30 minutes, longer at peak times.",
     ],
     [
       "How long is the walk to the gate at Frankfurt Airport?",

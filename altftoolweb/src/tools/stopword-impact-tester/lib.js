@@ -99,10 +99,6 @@ function normalise(word) {
   return word.toLowerCase().replace(/’/g, "'");
 }
 
-function countWords(text) {
-  return String(text).split(/\s+/).filter(Boolean).length;
-}
-
 function parseCustomList(raw) {
   return String(raw ?? "")
     .split(/[\s,]+/)
@@ -151,6 +147,12 @@ export function analyseStopwordImpact({
   const pieces = String(text).match(TOKEN_PATTERN) || [];
   const kept = [];
   let originalWords = 0;
+  // Counted alongside originalWords, incremented only when a real word token
+  // (not leftover punctuation/whitespace) is kept, so filteredWords reflects
+  // an actual word count instead of a whitespace re-split of the rejoined
+  // text (which mis-tallies isolated punctuation like a lone em dash as a
+  // "word").
+  let filteredWords = 0;
 
   for (const piece of pieces) {
     if (!WORD_TEST.test(piece)) {
@@ -168,12 +170,14 @@ export function analyseStopwordImpact({
       (removeFillers && FILLER_SET.has(word));
 
     if (!targeted || keepSet.has(word)) {
+      filteredWords += 1;
       kept.push(piece);
       continue;
     }
 
     if (isCritical && protectMeaningCritical) {
       protectedCounts.set(word, (protectedCounts.get(word) || 0) + 1);
+      filteredWords += 1;
       kept.push(piece);
       continue;
     }
@@ -192,7 +196,6 @@ export function analyseStopwordImpact({
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 
-  const filteredWords = countWords(filteredText);
   const originalChars = text.length;
   const filteredChars = filteredText.length;
 

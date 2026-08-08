@@ -1,8 +1,9 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Upload, X, RefreshCw, Clipboard } from "lucide-react";
+import toast from "react-hot-toast";
 
 const ACCEPTED = { "image/png": [".png"], "image/svg+xml": [".svg"], "image/jpeg": [".jpg",".jpeg"], "image/webp": [".webp"] };
 
@@ -14,12 +15,20 @@ export default function UploadZone({ logoA, logoB, onUploadA, onUploadB, onSwap,
   const DropZone = ({ label, onUpload, currentFile, side }) => {
     const onDrop = useCallback((files) => { if (files?.[0]) onUpload(files[0]); }, [onUpload]);
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop, accept: ACCEPTED, multiple: false });
+    const [previewUrl, setPreviewUrl] = useState(null);
+
+    useEffect(() => {
+      if (!currentFile) { setPreviewUrl(null); return; }
+      const objectUrl = URL.createObjectURL(currentFile);
+      setPreviewUrl(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    }, [currentFile]);
 
     return (
       <div className="flex-1">
         {currentFile ? (
           <div className="relative rounded-xl border border-[--border] bg-[--surface] overflow-hidden">
-            <img src={URL.createObjectURL(currentFile)} alt={label} className="h-48 w-full object-contain bg-[--page]" />
+            <img src={previewUrl} alt={label} className="h-48 w-full object-contain bg-[--page]" />
             <div className="absolute inset-0 bg-black/0 transition-colors hover:bg-black/5" />
             <div className="absolute top-2 right-2 flex gap-1">
               <button onClick={() => onUpload(null)} className="rounded-lg bg-[--surface]/90 p-1.5 text-[--muted] shadow-sm transition-colors hover:bg-red-50 hover:text-red-500"><X className="h-4 w-4" /></button>
@@ -49,21 +58,28 @@ export default function UploadZone({ logoA, logoB, onUploadA, onUploadB, onSwap,
     if (!pasteText.trim()) return;
     try {
       const img = new Image();
+      img.crossOrigin = "anonymous";
       img.onload = () => {
-        const canvas = document.createElement("canvas");
-        canvas.width = img.width; canvas.height = img.height;
-        const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0);
-        canvas.toBlob((blob) => {
-          if (blob) {
-            const file = new File([blob], `pasted-${pastingFor}.png`, { type: "image/png" });
-            if (pastingFor === "A") onUploadA(file);
-            else onUploadB(file);
-            setPastingFor(null); setPasteText("");
-          }
-        });
+        try {
+          const canvas = document.createElement("canvas");
+          canvas.width = img.width; canvas.height = img.height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0);
+          canvas.toBlob((blob) => {
+            if (blob) {
+              const file = new File([blob], `pasted-${pastingFor}.png`, { type: "image/png" });
+              if (pastingFor === "A") onUploadA(file);
+              else onUploadB(file);
+              setPastingFor(null); setPasteText("");
+            } else {
+              toast.error("Could not load that image URL");
+            }
+          });
+        } catch {
+          toast.error("That image can't be loaded (blocked by the source site's CORS policy)");
+        }
       };
-      img.onerror = () => {};
+      img.onerror = () => { toast.error("Failed to load image from that URL"); };
       if (pasteText.startsWith("data:") || pasteText.startsWith("http")) img.src = pasteText;
     } catch {}
   };

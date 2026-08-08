@@ -106,7 +106,7 @@ function PaletteColorRow({ title, id, keyName, value, onChange, isCopied, onCopy
 
   return (
     <div className="flex items-center gap-3">
-      <div className="relative h-10 w-10 flex-shrink-0 rounded-lg overflow-hidden border border-[var(--border)] shadow-inner">
+      <div className="relative h-10 w-10 flex-shrink-0 rounded-lg overflow-hidden border border-[var(--border)] shadow-inner has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[var(--primary)] has-[:focus-visible]:ring-offset-2">
         <input
           id={colorInputId}
           type="color"
@@ -130,14 +130,28 @@ function PaletteColorRow({ title, id, keyName, value, onChange, isCopied, onCopy
             type="text"
             value={draft}
             onChange={(e) => {
-              const val = e.target.value.toUpperCase();
-              if (!/^#[0-9A-F]{0,6}$/.test(val)) return;
+              // Strip everything but hex digits and re-prepend "#" unconditionally,
+              // rather than requiring the raw event value to already start with
+              // "#". A native select-all-then-type replacement drops the leading
+              // "#" from e.target.value entirely, so requiring it here rejected
+              // every keystroke of that edit and snapped the field back to the
+              // stale value.
+              const raw = e.target.value.toUpperCase().replace(/[^0-9A-F]/g, "").slice(0, 6);
+              const val = `#${raw}`;
               setDraft(val);
-              // Commit to the palette only once the value is a complete
-              // #RGB or #RRGGBB color, so an in-progress value never
-              // reaches getLuminance/getContrast as "the" current color.
-              if (/^#([0-9A-F]{3}|[0-9A-F]{6})$/.test(val)) {
+              // Commit to the palette only once a full #RRGGBB value has been
+              // typed. A 3-char value is ambiguous while the field still has
+              // focus -- it's either a deliberate #RGB shorthand or the first
+              // half of an in-progress #RRGGBB -- so it is never auto-committed
+              // here; a complete 3-digit shorthand commits on blur instead (see
+              // onBlur below), once the user is done editing.
+              if (/^#[0-9A-F]{6}$/.test(val)) {
                 onChange(val);
+              }
+            }}
+            onBlur={() => {
+              if (/^#[0-9A-F]{3}$/.test(draft)) {
+                onChange(draft);
               }
             }}
             aria-label={`${title} ${keyName} hex value`}

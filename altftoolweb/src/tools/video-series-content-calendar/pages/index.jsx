@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CalendarDays, Check, Copy, RotateCcw } from "lucide-react";
 
 import {
@@ -46,6 +46,9 @@ export default function ToolHome() {
   const [formats, setFormats] = useState(DEFAULTS.formats);
   const [topics, setTopics] = useState(DEFAULTS.topics);
   const [copied, setCopied] = useState(false);
+  const copyTimerRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimerRef.current), []);
 
   const result = useMemo(
     () =>
@@ -62,6 +65,13 @@ export default function ToolHome() {
 
   const hasError = Boolean(result.error);
 
+  // Mirrors lib.js's chosenDays derivation: sorted publish days, rounded perWeek, first N kept.
+  const perWeekRounded = Math.round(Number(perWeek));
+  const activeDays =
+    Number.isFinite(perWeekRounded) && perWeekRounded > 0
+      ? [...days].sort((a, b) => a - b).slice(0, perWeekRounded)
+      : days;
+
   const toggleDay = (index) => {
     setDays((current) =>
       current.includes(index) ? current.filter((day) => day !== index) : [...current, index].sort((a, b) => a - b),
@@ -74,10 +84,19 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(tsv);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimerRef.current);
+      copyTimerRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
+  };
+
+  /** Rounds a typed field value to the nearest integer on blur, matching lib.js's Math.round(). */
+  const roundOnBlur = (setter) => () => {
+    setter((current) => {
+      const rounded = Math.round(Number(current));
+      return Number.isFinite(rounded) ? String(rounded) : current;
+    });
   };
 
   const reset = () => {
@@ -133,6 +152,7 @@ export default function ToolHome() {
                 step="1"
                 value={weeks}
                 onChange={(event) => setWeeks(event.target.value)}
+                onBlur={roundOnBlur(setWeeks)}
               />
             </div>
             <div>
@@ -149,6 +169,7 @@ export default function ToolHome() {
                 step="1"
                 value={perWeek}
                 onChange={(event) => setPerWeek(event.target.value)}
+                onBlur={roundOnBlur(setPerWeek)}
               />
             </div>
           </div>
@@ -157,24 +178,34 @@ export default function ToolHome() {
         <fieldset className="mt-4">
           <legend className={LABEL_CLASS}>Publish days</legend>
           <div className="mt-2 flex flex-wrap gap-2">
-            {WEEKDAYS.map((day) => (
-              <button
-                key={day.index}
-                type="button"
-                onClick={() => toggleDay(day.index)}
-                aria-pressed={days.includes(day.index)}
-                className={`min-h-11 min-w-[3.5rem] rounded-md border px-3 text-sm font-semibold transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
-                  days.includes(day.index)
-                    ? "border-[var(--primary)] bg-[var(--muted)] text-[var(--primary)]"
-                    : "border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)] hover:border-[var(--primary)]"
-                }`}
-              >
-                {day.short}
-              </button>
-            ))}
+            {WEEKDAYS.map((day) => {
+              const isSelected = days.includes(day.index);
+              const isActive = isSelected && activeDays.includes(day.index);
+              const isUnused = isSelected && !isActive;
+              return (
+                <button
+                  key={day.index}
+                  type="button"
+                  onClick={() => toggleDay(day.index)}
+                  aria-pressed={isSelected}
+                  title={isUnused ? "Selected, but not used — beyond the per-week count" : undefined}
+                  className={`min-h-11 min-w-[3.5rem] rounded-md border px-3 text-sm font-semibold transition active:scale-[0.98] motion-reduce:transform-none focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-[var(--primary)]/35 ${
+                    isActive
+                      ? "border-[var(--primary)] bg-[var(--muted)] text-[var(--primary)]"
+                      : isUnused
+                        ? "border-dashed border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)] opacity-60"
+                        : "border-[var(--border)] bg-[var(--background)] text-[var(--muted-foreground)] hover:border-[var(--primary)]"
+                  }`}
+                >
+                  {day.short}
+                  {isUnused && <span className="sr-only"> (selected, not used this week)</span>}
+                </button>
+              );
+            })}
           </div>
           <p className="mt-2 text-xs text-[var(--muted-foreground)]">
-            The first {perWeek} selected day{Number(perWeek) === 1 ? "" : "s"} of each week are used.
+            The first {perWeekRounded} selected day{perWeekRounded === 1 ? "" : "s"} of each week are used
+            {days.length > activeDays.length ? " — dashed days are selected but not used." : "."}
           </p>
         </fieldset>
 
@@ -214,7 +245,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -248,7 +283,12 @@ export default function ToolHome() {
           {[
             ["First episode", hasError ? DASH : result.episodes[0].pretty],
             ["Last episode", hasError ? DASH : result.endPretty],
-            ["Series runs for", hasError ? DASH : `${result.spanDays} days (${result.weeksUsed} weeks)`],
+            [
+              "Series runs for",
+              hasError
+                ? DASH
+                : `${result.spanDays} day${result.spanDays === 1 ? "" : "s"} (${result.weeksUsed}-week plan)`,
+            ],
             ["Publish days", hasError ? DASH : result.publishDays.join(", ")],
             [
               "Topics written",
@@ -257,6 +297,18 @@ export default function ToolHome() {
             [
               "Slots still blank",
               hasError ? DASH : result.topicsMissing === 0 ? "None" : String(result.topicsMissing),
+            ],
+            [
+              "Extra topics not scheduled",
+              hasError ? DASH : result.topicsSpare > 0 ? String(result.topicsSpare) : "None",
+            ],
+            [
+              "Format mix",
+              hasError
+                ? DASH
+                : Object.entries(result.formatCounts)
+                    .map(([format, count]) => `${format} ×${count}`)
+                    .join(", "),
             ],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">

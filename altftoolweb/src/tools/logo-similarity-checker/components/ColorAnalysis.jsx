@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import { Palette, Droplets, Eye, Layers } from "lucide-react";
 
 export default function ColorAnalysis({ paletteA, paletteB, colorComparison }) {

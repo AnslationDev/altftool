@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, PiggyBank, RotateCcw } from "lucide-react";
 import {
   DEFAULT_BIKE_COST_PER_KM,
@@ -67,6 +67,9 @@ export default function ToolHome() {
   const [drivingSpeedKmph, setDrivingSpeedKmph] = useState(DEFAULTS.drivingSpeedKmph);
   const [cyclingSpeedKmph, setCyclingSpeedKmph] = useState(DEFAULTS.cyclingSpeedKmph);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => () => clearTimeout(copyTimeoutRef.current), []);
 
   const config = MODES[mode] ?? MODES[DEFAULT_MODE];
   const isFare = config.pricing === "perKm";
@@ -125,9 +128,11 @@ export default function ToolHome() {
       `Maintenance saved: ${money(result.maintPerMonth)}`,
       `Less bicycle running cost: ${money(result.bicycleRunningPerMonth)}`,
       `Net saving: ${money(result.netPerMonth)} a month, ${money(result.netPerYear)} a year`,
-      result.paybackMonths
+      result.paybackState === "months"
         ? `Bicycle pays for itself in ${n1(result.paybackMonths)} months`
-        : "Bicycle does not pay back at these figures",
+        : result.paybackState === "noCost"
+          ? "No bicycle cost to recover"
+          : "Bicycle does not pay back at these figures",
       `CO2 avoided: ${n0(result.co2PerYearKg)} kg a year (${n1(result.treesEquivalent)} mature trees)`,
       `Extra time on the bike: ${n0(result.extraMinutesPerDay)} minutes a day`,
     ].join("\n");
@@ -138,7 +143,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -376,7 +382,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -428,9 +438,11 @@ export default function ToolHome() {
             [
               "Bicycle payback",
               ok
-                ? result.paybackMonths
+                ? result.paybackState === "months"
                   ? `${n1(result.paybackMonths)} months`
-                  : "Never at these figures"
+                  : result.paybackState === "noCost"
+                    ? "No bicycle cost to recover"
+                    : "Never at these figures"
                 : "—",
             ],
             [

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { Images, Upload, BarChart3, Palette, Shapes, Type, Eye, FileDown, Activity, Maximize2, RefreshCw } from "lucide-react";
 import UploadZone from "../components/UploadZone";
 import ResultsPanel from "../components/ResultsPanel";
@@ -33,6 +33,8 @@ export default function LogoSsimilarityCheckerPro() {
   const [logoB, setLogoB] = useState(null);
   const [imgA, setImgA] = useState(null);
   const [imgB, setImgB] = useState(null);
+  const [urlA, setUrlA] = useState(null);
+  const [urlB, setUrlB] = useState(null);
   const [dataA, setDataA] = useState(null);
   const [dataB, setDataB] = useState(null);
   const [results, setResults] = useState(null);
@@ -50,6 +52,7 @@ export default function LogoSsimilarityCheckerPro() {
   const [processing, setProcessing] = useState(false);
   const [processingTime, setProcessingTime] = useState(null);
   const [activeTab, setActiveTab] = useState("upload");
+  const reportRef = useRef(null);
 
   const analyzeImage = async (file, side) => {
     try {
@@ -77,11 +80,11 @@ export default function LogoSsimilarityCheckerPro() {
       };
 
       if (side === "A") {
-        setImgA(img); setDataA(data); setPaletteA(palette); setGeoA(geo); setTypoA(typo); setStatsA(fileStats);
+        setImgA(img); setUrlA(url); setDataA(data); setPaletteA(palette); setGeoA(geo); setTypoA(typo); setStatsA(fileStats);
         setLogoA(file);
         setResults(null);
       } else {
-        setImgB(img); setDataB(data); setPaletteB(palette); setGeoB(geo); setTypoB(typo); setStatsB(fileStats);
+        setImgB(img); setUrlB(url); setDataB(data); setPaletteB(palette); setGeoB(geo); setTypoB(typo); setStatsB(fileStats);
         setLogoB(file);
         setResults(null);
       }
@@ -94,23 +97,31 @@ export default function LogoSsimilarityCheckerPro() {
   };
 
   const handleUploadA = useCallback(async (file) => {
-    if (!file) { setLogoA(null); setImgA(null); setDataA(null); setPaletteA(null); setGeoA(null); setTypoA(null); setStatsA(null); setResults(null); return; }
+    if (!file) {
+      setUrlA((prev) => { if (prev) URL.revokeObjectURL(prev); return null; });
+      setLogoA(null); setImgA(null); setDataA(null); setPaletteA(null); setGeoA(null); setTypoA(null); setStatsA(null); setResults(null); return;
+    }
     await analyzeImage(file, "A");
   }, []);
 
   const handleUploadB = useCallback(async (file) => {
-    if (!file) { setLogoB(null); setImgB(null); setDataB(null); setPaletteB(null); setGeoB(null); setTypoB(null); setStatsB(null); setResults(null); return; }
+    if (!file) {
+      setUrlB((prev) => { if (prev) URL.revokeObjectURL(prev); return null; });
+      setLogoB(null); setImgB(null); setDataB(null); setPaletteB(null); setGeoB(null); setTypoB(null); setStatsB(null); setResults(null); return;
+    }
     await analyzeImage(file, "B");
   }, []);
 
   const handleSwap = useCallback(async () => {
-    const tmpFile = logoA, tmpImg = imgA, tmpData = dataA, tmpPalette = paletteA, tmpGeo = geoA, tmpTypo = typoA, tmpStats = statsA;
-    setLogoA(logoB); setImgA(imgB); setDataA(dataB); setPaletteA(paletteB); setGeoA(geoB); setTypoA(typoB); setStatsA(statsB);
-    setLogoB(tmpFile); setImgB(tmpImg); setDataB(tmpData); setPaletteB(tmpPalette); setGeoB(tmpGeo); setTypoB(tmpTypo); setStatsB(tmpStats);
+    const tmpFile = logoA, tmpImg = imgA, tmpUrl = urlA, tmpData = dataA, tmpPalette = paletteA, tmpGeo = geoA, tmpTypo = typoA, tmpStats = statsA;
+    setLogoA(logoB); setImgA(imgB); setUrlA(urlB); setDataA(dataB); setPaletteA(paletteB); setGeoA(geoB); setTypoA(typoB); setStatsA(statsB);
+    setLogoB(tmpFile); setImgB(tmpImg); setUrlB(tmpUrl); setDataB(tmpData); setPaletteB(tmpPalette); setGeoB(tmpGeo); setTypoB(tmpTypo); setStatsB(tmpStats);
     setResults(null); setColorComparison(null); setShapeComparison(null); setTypoComparison(null);
-  }, [logoA, logoB, imgA, imgB, dataA, dataB, paletteA, paletteB, geoA, geoB, typoA, typoB, statsA, statsB]);
+  }, [logoA, logoB, imgA, imgB, urlA, urlB, dataA, dataB, paletteA, paletteB, geoA, geoB, typoA, typoB, statsA, statsB]);
 
   const handleReset = useCallback(() => {
+    setUrlA((prev) => { if (prev) URL.revokeObjectURL(prev); return null; });
+    setUrlB((prev) => { if (prev) URL.revokeObjectURL(prev); return null; });
     setLogoA(null); setLogoB(null); setImgA(null); setImgB(null); setDataA(null); setDataB(null);
     setResults(null); setPaletteA(null); setPaletteB(null); setColorComparison(null);
     setGeoA(null); setGeoB(null); setShapeComparison(null);
@@ -127,7 +138,7 @@ export default function LogoSsimilarityCheckerPro() {
       const res = computeAllSimilarity(imgA, imgB, dataA, dataB);
       const palCmp = compareColorPalettes(paletteA || [], paletteB || []);
       const shapeCmp = compareShapes(geoA || { coverage: 0, edgeDensity: 0, roundness: 0, aspectRatio: 1 }, geoB || { coverage: 0, edgeDensity: 0, roundness: 0, aspectRatio: 1 });
-      const typoCmp = compareTypography(typoA || { textDetected: false, textPresence: 0, boldness: 0, estimatedFontStyle: "N/A", spacing: 0, uppercase: 0, lowercase: 0, alignment: "N/A" }, typoB || { textDetected: false, textPresence: 0, boldness: 0, estimatedFontStyle: "N/A", spacing: 0, uppercase: 0, lowercase: 0, alignment: "N/A" });
+      const typoCmp = compareTypography(typoA || { textDetected: false, textPresence: 0, boldness: 0, estimatedFontStyle: "N/A", alignment: "N/A" }, typoB || { textDetected: false, textPresence: 0, boldness: 0, estimatedFontStyle: "N/A", alignment: "N/A" });
       const styleA = getDesignStyle(paletteA || []);
       const styleB = getDesignStyle(paletteB || []);
 
@@ -195,8 +206,10 @@ export default function LogoSsimilarityCheckerPro() {
         {activeTab === "quality" && <ImageQuality statsA={statsA} statsB={statsB} />}
         {activeTab === "report" && (
           <div className="rounded-xl border border-[--border] bg-[--surface] p-4 sm:p-6">
-            <Stats statsA={statsA} statsB={statsB} processingTime={processingTime} />
-            <div className="mt-4"><ReportGenerator results={results} paletteA={paletteA} paletteB={paletteB} geoA={geoA} geoB={geoB} /></div>
+            <div ref={reportRef} className="bg-[--surface]">
+              <Stats statsA={statsA} statsB={statsB} processingTime={processingTime} />
+            </div>
+            <div className="mt-4"><ReportGenerator results={results} paletteA={paletteA} paletteB={paletteB} geoA={geoA} geoB={geoB} targetRef={reportRef} /></div>
           </div>
         )}
       </div>

@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import { Shield, AlertTriangle } from "lucide-react";
 
 export default function ResultsPanel({ results, onViewChange }) {
@@ -35,7 +34,7 @@ export default function ResultsPanel({ results, onViewChange }) {
         </div>
       </div>
 
-      <div className="flex flex-col items-center gap-3 rounded-xl border border-[--border] bg-[--surface] p-6">
+      <div className="flex flex-col items-center gap-3 rounded-xl border border-[--border] bg-[--surface] p-6" aria-live="polite" role="status">
         <div className="relative flex h-32 w-32 items-center justify-center">
           <svg className="h-32 w-32 -rotate-90" viewBox="0 0 120 120">
             <circle cx="60" cy="60" r="54" fill="none" stroke="var(--border)" strokeWidth="8" />

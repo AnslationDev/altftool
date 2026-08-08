@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useMemo } from "react";
+import { useState, useRef, useMemo, useEffect } from "react";
 import {
   UploadCloud,
   FileSpreadsheet,
@@ -16,6 +16,40 @@ import {
 import * as XLSX from "xlsx";
 import { safeCopyText } from "@/shared/utils/clipboard";
 
+// Escapes untrusted text before it is interpolated into a raw HTML string
+// (filenames / sheet names come straight from user-supplied files).
+const escapeHtml = (value) =>
+  String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+// Only these link schemes (plus relative/fragment links) are allowed to
+// survive into the generated HTML's <a href>. Anything else (javascript:,
+// data:, vbscript:, ...) is neutralized to a harmless "#" fragment.
+const ALLOWED_HREF_SCHEMES = ["http:", "https:", "mailto:"];
+
+const sanitizeTableHrefs = (html) =>
+  html.replace(/href="([^"]*)"/gi, (match, hrefValue) => {
+    const trimmed = hrefValue.trim();
+    if (
+      trimmed === "" ||
+      trimmed.startsWith("#") ||
+      trimmed.startsWith("/") ||
+      trimmed.startsWith("./") ||
+      trimmed.startsWith("../")
+    ) {
+      return match;
+    }
+    const schemeMatch = /^([a-zA-Z][a-zA-Z0-9+.-]*):/.exec(trimmed);
+    if (schemeMatch && !ALLOWED_HREF_SCHEMES.includes(schemeMatch[1].toLowerCase() + ":")) {
+      return 'href="#"';
+    }
+    return match;
+  });
+
 export default function ToolHome() {
   const [fileData, setFileData] = useState(null); // stores { name, size, workbook }
   const [activeSheetName, setActiveSheetName] = useState("");
@@ -23,8 +57,16 @@ export default function ToolHome() {
   const [copiedCode, setCopiedCode] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
   const [activeTab, setActiveTab] = useState("preview"); // "preview" or "code"
+  const [announcement, setAnnouncement] = useState("");
 
   const fileInputRef = useRef(null);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const handleFileUpload = (file) => {
     if (!file) return;
@@ -42,11 +84,18 @@ export default function ToolHome() {
         });
         setActiveSheetName(workbook.SheetNames[0]);
         setActiveTab("preview");
+        setAnnouncement(`Converted ${file.name}. Showing sheet ${workbook.SheetNames[0]}.`);
 
       } catch (error) {
         console.error("Error converting file:", error);
+        setAnnouncement(`Could not parse ${file.name}. Please ensure it's a valid Excel format.`);
         alert("There was an error parsing the file. Please ensure it's a valid Excel format.");
       }
+    };
+    reader.onerror = () => {
+      console.error("Error reading file:", reader.error);
+      setAnnouncement(`Could not read ${file.name}. Please try again.`);
+      alert("Could not read the selected file. Please try again.");
     };
     reader.readAsArrayBuffer(file);
   };
@@ -80,22 +129,29 @@ export default function ToolHome() {
     if (!fileData || !activeSheetName) return { htmlTable: "", fullHtml: "" };
 
     const worksheet = fileData.workbook.Sheets[activeSheetName];
-    // Generate HTML table string
-    const tableString = XLSX.utils.sheet_to_html(worksheet, { id: "excel-table", editable: false });
+    // Generate HTML table string, then neutralize any non-safe-scheme hyperlinks
+    // (e.g. javascript:) that SheetJS carries through verbatim from cell links.
+    const rawTableString = XLSX.utils.sheet_to_html(worksheet, { id: "excel-table", editable: false });
+    const tableString = sanitizeTableHrefs(rawTableString);
+
+    // fileData.name and activeSheetName originate from user-supplied file/sheet
+    // names and must be escaped before being interpolated into raw HTML below.
+    const safeFileName = escapeHtml(fileData.name);
+    const safeSheetName = escapeHtml(activeSheetName);
 
     const docHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>${fileData.name} - ${activeSheetName}</title>
+<title>${safeFileName} - ${safeSheetName}</title>
 <style>
   :root {
     --bg-color: #f8fafc;
     --text-color: #334155;
     --border-color: #e2e8f0;
     --header-bg: #f1f5f9;
-    --row-alt-bg: #fdfdfd;
+    --row-alt-bg: #f8fafc;
   }
   body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -105,6 +161,8 @@ export default function ToolHome() {
   }
   .table-container {
     overflow-x: auto;
+    overflow-y: auto;
+    max-height: 80vh;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
@@ -135,8 +193,8 @@ export default function ToolHome() {
 </head>
 <body>
   <div style="margin-bottom: 20px;">
-    <h2 style="margin:0 0 8px 0;">${fileData.name}</h2>
-    <p style="margin:0; color:#64748b; font-size:14px;">Sheet: <strong>${activeSheetName}</strong></p>
+    <h2 style="margin:0 0 8px 0;">${safeFileName}</h2>
+    <p style="margin:0; color:#64748b; font-size:14px;">Sheet: <strong>${safeSheetName}</strong></p>
   </div>
   <div class="table-container">
     ${tableString}
@@ -150,7 +208,8 @@ export default function ToolHome() {
   const handleCopyCode = async () => {
     if (!fullHtml) return;
     setCopiedCode(await safeCopyText(fullHtml));
-    setTimeout(() => setCopiedCode(false), 2000);
+    if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    copyTimeoutRef.current = setTimeout(() => setCopiedCode(false), 2000);
   };
 
   const handleDownloadHtml = () => {
@@ -175,6 +234,9 @@ export default function ToolHome() {
 
   return (
     <main className="min-h-screen bg-[var(--background)] px-4 py-8 text-[var(--foreground)] sm:px-6 lg:px-8">
+      <div role="status" aria-live="polite" className="sr-only">
+        {announcement}
+      </div>
       <div className="mx-auto max-w-7xl space-y-8">
         {/* Header Section */}
         <section className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-sm sm:p-10">
@@ -213,6 +275,7 @@ export default function ToolHome() {
                   ref={fileInputRef}
                   onChange={handleFileSelect}
                   accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                  aria-label="Upload spreadsheet file"
                 />
                 <div className="mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--primary)]/10 text-[var(--primary)] transition-transform duration-300 group-hover:scale-110">
                   <UploadCloud className="h-10 w-10" />
@@ -257,7 +320,10 @@ export default function ToolHome() {
                     {fileData.workbook.SheetNames.map((sheet) => (
                       <button
                         key={sheet}
-                        onClick={() => setActiveSheetName(sheet)}
+                        onClick={() => {
+                          setActiveSheetName(sheet);
+                          setAnnouncement(`Showing sheet ${sheet}.`);
+                        }}
                         className={`text-left px-3 py-2 rounded-lg text-sm transition-colors ${
                           activeSheetName === sheet
                             ? "bg-[var(--primary)] text-primary-foreground font-medium"
@@ -276,8 +342,10 @@ export default function ToolHome() {
           {/* RIGHT COLUMN: Output Preview & Code */}
           <div className="flex flex-col lg:col-span-8 h-full min-h-[500px]">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-              <div className="flex items-center rounded-lg bg-[var(--card)] p-1 border border-[var(--border)] shadow-sm">
+              <div role="tablist" className="flex items-center rounded-lg bg-[var(--card)] p-1 border border-[var(--border)] shadow-sm">
                 <button
+                  role="tab"
+                  aria-selected={activeTab === "preview"}
                   onClick={() => setActiveTab("preview")}
                   className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-all ${
                     activeTab === "preview"
@@ -289,6 +357,8 @@ export default function ToolHome() {
                   Visual Preview
                 </button>
                 <button
+                  role="tab"
+                  aria-selected={activeTab === "code"}
                   onClick={() => setActiveTab("code")}
                   className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-all ${
                     activeTab === "code"
@@ -333,6 +403,7 @@ export default function ToolHome() {
                   <iframe
                     title="HTML Preview"
                     srcDoc={fullHtml}
+                    sandbox="allow-same-origin"
                     className="h-full w-full border-none bg-white"
                   />
                 </div>

@@ -6,7 +6,7 @@ const features = [
   { icon: Image, title: "Upload Logos", description: "Upload PNG, SVG, JPG, WEBP. Drag & drop, browse, or paste image URLs." },
   { icon: Palette, title: "Color Analysis", description: "Extract dominant colors, compare palettes, get HEX/RGB values with coverage percentages." },
   { icon: Shapes, title: "Shape Detection", description: "Detect circles, squares, triangles, curves, lines. Analyze geometry and complexity." },
-  { icon: Type, title: "Typography Analysis", description: "Detect text presence, estimate font style, boldness, spacing, and alignment." },
+  { icon: Type, title: "Typography Analysis", description: "Detect text presence, estimate font style, boldness, and alignment." },
   { icon: Eye, title: "Visual Comparison", description: "Side-by-side, overlay with opacity, difference heatmap, and split view with draggable divider." },
   { icon: BarChart3, title: "Similarity Scores", description: "Animated circular scores for overall, shape, color, layout, edge, symmetry, and more." },
   { icon: Layers, title: "Difference Heatmap", description: "Pixel-level difference highlighting shows exactly where logos diverge." },

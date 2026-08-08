@@ -188,7 +188,23 @@ export function computeCommuteSavings({
   const bicycleRunningPerMonth = kmPerMonth * bikePerKm;
   const netPerMonth = grossPerMonth - bicycleRunningPerMonth;
 
-  const paybackMonths = netPerMonth > 0 && bikeCost > 0 ? bikeCost / netPerMonth : null;
+  // paybackMonths is null in two different situations that must not be shown
+  // with the same "never pays back" message: there is no bicycle cost to
+  // recover (bikeCost <= 0, e.g. already own a bike or left the field blank),
+  // or the bicycle genuinely never earns back its cost (netPerMonth <= 0).
+  // paybackState distinguishes the two so the UI can say the right thing.
+  let paybackState;
+  let paybackMonths;
+  if (bikeCost <= 0) {
+    paybackState = "noCost";
+    paybackMonths = null;
+  } else if (netPerMonth > 0) {
+    paybackState = "months";
+    paybackMonths = bikeCost / netPerMonth;
+  } else {
+    paybackState = "never";
+    paybackMonths = null;
+  }
   const firstYearNet = netPerMonth * MONTHS_PER_YEAR - bikeCost;
 
   const driveMinutesPerDay = (kmPerDay / driveSpeed) * 60;
@@ -215,6 +231,7 @@ export function computeCommuteSavings({
     firstYearNet,
     bicycleCost: bikeCost,
     paybackMonths,
+    paybackState,
     co2PerMonthKg,
     co2PerYearKg: co2PerMonthKg * MONTHS_PER_YEAR,
     treesEquivalent: (co2PerMonthKg * MONTHS_PER_YEAR) / KG_CO2_PER_TREE_YEAR,

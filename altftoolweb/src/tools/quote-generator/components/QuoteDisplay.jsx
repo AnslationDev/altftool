@@ -23,7 +23,7 @@ const QuoteDisplay = forwardRef(({ quote, themeId, fontId, fontSize = "text-2xl"
         <Quote size={80} />
       </div>
       
-      <div className={`relative z-10 flex flex-col items-center justify-center min-h-[250px] ${textAlign}`}>
+      <div className={`relative z-10 flex flex-col items-center justify-center min-h-[250px] ${textAlign}`} aria-live="polite" aria-atomic="true">
         <p className={`${fontSize} font-medium leading-relaxed mb-8 px-4 sm:px-8`}>
           "{quote.text}"
         </p>

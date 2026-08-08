@@ -23,7 +23,7 @@ const seo = {
     ],
     [
       "Is a bike commute enough exercise on its own?",
-      "Often yes. Cycling at 16 km/h or more is 6.8 MET, which is vigorous intensity, so a 27-minute ride each way five days a week is around 267 minutes of vigorous activity — well past the 75-minute weekly minimum in the WHO guidelines.",
+      "Often yes. Cycling at 16 km/h or more sits at 6.8 MET, which this calculator bands as \"Light effort, 16-19 km/h\", so a 27-minute ride each way five days a week comes to 270 minutes of riding a week — comfortably past the WHO's 150-minute weekly minimum for moderate-intensity activity.",
     ],
     [
       "Does riding faster always burn more calories?",

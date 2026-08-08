@@ -371,7 +371,7 @@ export default function ToolHome() {
             <p className="text-xs font-semibold tracking-wide uppercase text-[var(--muted-foreground)]">
               Amount payable after the concession
             </p>
-            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]">
+            <p className="mt-1 text-4xl font-semibold text-[var(--primary)]" aria-live="polite" aria-atomic="true">
               {error ? DASH : formatINR(concession.payable)}
             </p>
             <p className="mt-1 text-sm text-[var(--muted-foreground)]">

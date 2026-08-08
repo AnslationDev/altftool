@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { Heart, RefreshCw, Copy, Download, Share2, Sparkles, Check, Info } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Heart, RefreshCw, Copy, Download, Sparkles, Check, Info } from "lucide-react";
 import { getDeterministicMatch } from "../utils/compatibilityUtils";
 
 export default function ToolHome() {
@@ -10,16 +10,32 @@ export default function ToolHome() {
   const [calculating, setCalculating] = useState(false);
   const [result, setResult] = useState(null);
   const [copied, setCopied] = useState(false);
+  const [error, setError] = useState("");
+
+  const calcTimeoutRef = useRef(null);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (calcTimeoutRef.current) clearTimeout(calcTimeoutRef.current);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const handleCalculate = (e) => {
     e.preventDefault();
-    if (!name1.trim() || !name2.trim()) return;
+    if (!name1.trim() || !name2.trim()) {
+      setError("Please enter both names.");
+      return;
+    }
+    setError("");
 
     setCalculating(true);
     setResult(null);
 
     // Simulate analysis delay
-    setTimeout(() => {
+    if (calcTimeoutRef.current) clearTimeout(calcTimeoutRef.current);
+    calcTimeoutRef.current = setTimeout(() => {
       const score = getDeterministicMatch(name1, name2);
       
       // Calculate sub-scores deterministically using the score as a seed
@@ -80,7 +96,8 @@ ${verdict.text}
     try {
       await navigator.clipboard.writeText(formatReportText());
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error("Failed to copy", err);
     }
@@ -107,8 +124,15 @@ ${verdict.text}
 
   return (
     <div className="min-h-screen bg-background p-4 sm:p-6 lg:p-8">
+      <div role="status" aria-live="polite" className="sr-only">
+        {calculating
+          ? "Calculating compatibility."
+          : result
+            ? `${getMatchVerdict(result.score).label} Compatibility score ${result.score}%.`
+            : ""}
+      </div>
       <div className="max-w-3xl mx-auto space-y-8">
-        
+
         {/* Header */}
         <div className="text-center space-y-3">
           <div className="inline-flex p-3 bg-rose-500/10 rounded-2xl border border-rose-500/20 mb-1">
@@ -136,7 +160,10 @@ ${verdict.text}
                     type="text"
                     required
                     value={name1}
-                    onChange={(e) => setName1(e.target.value)}
+                    onChange={(e) => {
+                      setName1(e.target.value);
+                      setError("");
+                    }}
                     placeholder="Enter name"
                     className="w-full h-10 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/25 transition"
                   />
@@ -150,12 +177,21 @@ ${verdict.text}
                     type="text"
                     required
                     value={name2}
-                    onChange={(e) => setName2(e.target.value)}
+                    onChange={(e) => {
+                      setName2(e.target.value);
+                      setError("");
+                    }}
                     placeholder="Enter partner name"
                     className="w-full h-10 px-4 rounded-xl border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-3 focus:ring-primary/25 transition"
                   />
                 </div>
               </div>
+
+              {error ? (
+                <p role="alert" className="rounded-lg border border-danger bg-danger-soft px-3 py-2 text-sm font-medium text-danger">
+                  {error}
+                </p>
+              ) : null}
 
               <button
                 type="submit"
@@ -166,7 +202,7 @@ ${verdict.text}
             </form>
           ) : calculating ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="alt-ui-spinner alt-ui-spinner--lg mb-6 border-t-rose-500" />
+              <div className="alt-ui-spinner alt-ui-spinner--md mb-6 border-t-rose-500" />
               <h4 className="font-semibold text-lg text-foreground animate-pulse">Calculating Synergy...</h4>
               <p className="text-sm text-muted-foreground mt-2">Checking compatibility matching matrix.</p>
             </div>

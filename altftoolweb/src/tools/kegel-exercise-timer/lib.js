@@ -202,11 +202,16 @@ export function buildKegelPlan({
   const programmeContractions = weeklyContractions * GUIDELINE_PROGRAMME_WEEKS;
   const dailySeconds = totalSeconds * wholeSessions;
 
-  const meetsGuideline =
-    repsPerSession >= GUIDELINE_REPS_PER_SESSION &&
-    dailyContractions >= GUIDELINE_DAILY_CONTRACTIONS;
+  const meetsRepsPerSession = repsPerSession >= GUIDELINE_REPS_PER_SESSION;
+  const meetsDailyContractions = dailyContractions >= GUIDELINE_DAILY_CONTRACTIONS;
+  const meetsGuideline = meetsRepsPerSession && meetsDailyContractions;
 
-  const guidelineGap = Math.max(0, GUIDELINE_DAILY_CONTRACTIONS - dailyContractions);
+  // Two independent criteria can each fail on their own: report whichever one
+  // actually failed instead of always reporting the daily-count gap (which can
+  // read as 0 — and so contradict "not meeting the guideline" — when only the
+  // per-session rep count is short).
+  const guidelineGap = meetsDailyContractions ? 0 : GUIDELINE_DAILY_CONTRACTIONS - dailyContractions;
+  const repsPerSessionGap = meetsRepsPerSession ? 0 : GUIDELINE_REPS_PER_SESSION - repsPerSession;
 
   return {
     phases,
@@ -221,7 +226,10 @@ export function buildKegelPlan({
     programmeContractions,
     dailySeconds,
     meetsGuideline,
+    meetsRepsPerSession,
+    meetsDailyContractions,
     guidelineGap,
+    repsPerSessionGap,
     restToHoldRatio: hold > 0 ? rest / hold : 0,
     holdAtTarget: hold >= TARGET_HOLD_SECONDS,
     sets: wholeSets,

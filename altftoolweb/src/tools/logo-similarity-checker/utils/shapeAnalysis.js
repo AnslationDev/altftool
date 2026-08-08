@@ -170,9 +170,6 @@ export function analyzeTypography(data) {
     textPresence: Math.round(textPresence * 100),
     estimatedFontStyle: fontStyle,
     boldness: Math.round(boldness * 100),
-    spacing: Math.round(50 + (Math.random() - 0.5) * 20),
-    uppercase: Math.round(40 + Math.random() * 30),
-    lowercase: Math.round(30 + Math.random() * 30),
     alignment: textPresence > 0.03 ? "Center / Balanced" : "N/A",
   };
 }

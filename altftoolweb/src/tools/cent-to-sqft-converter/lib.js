@@ -99,20 +99,24 @@ export function convertLand({
   });
 
   let pricing = null;
+  let pricingError = null;
   if (isNum(rate) && rate > 0) {
     const ru = byId(LAND_UNITS, rateUnit);
-    if (!ru) return { error: "Pick a valid unit for the rate." };
-    const total = areas[ru.id] * rate;
-    const perUnit = {};
-    LAND_UNITS.forEach((lu) => {
-      perUnit[lu.id] = total / areas[lu.id];
-    });
-    pricing = { total, perUnit, rateUnit: ru.id };
+    if (!ru) {
+      pricingError = "Pick a valid unit for the rate.";
+    } else {
+      const total = areas[ru.id] * rate;
+      const perUnit = {};
+      LAND_UNITS.forEach((lu) => {
+        perUnit[lu.id] = total / areas[lu.id];
+      });
+      pricing = { total, perUnit, rateUnit: ru.id };
+    }
   } else if (isNum(rate) && rate < 0) {
-    return { error: "Rate cannot be negative." };
+    pricingError = "Rate cannot be negative.";
   }
 
-  return { sqft, areas, pricing };
+  return { sqft, areas, pricing, pricingError };
 }
 
 /**

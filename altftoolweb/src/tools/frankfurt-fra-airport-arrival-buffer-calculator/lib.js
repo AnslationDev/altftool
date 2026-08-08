@@ -326,10 +326,13 @@ export function computeArrivalPlan({
       `Your own step estimates need ${formatDuration(processLeadMinutes)} inside the terminal, which is more than the ${formatDuration(recommendedLeadMinutes)} the airport advises. The larger figure is used.`,
     );
   }
-  if (dayOffset(leaveByMinutes) < 0) {
-    warnings.push("You need to set off the day before the flight - check overnight road closures and cab availability.");
+  const leaveByOffsetDays = dayOffset(leaveByMinutes);
+  if (leaveByOffsetDays < 0) {
+    const daysBefore = Math.abs(leaveByOffsetDays);
+    const whenLabel = daysBefore === 1 ? "the day before" : `${daysBefore} days before`;
+    warnings.push(`You need to set off ${whenLabel} the flight - check overnight road closures and cab availability.`);
   }
-  if (spareMinutes < 15 && spareMinutes === terminalLeadMinutes - processLeadMinutes) {
+  if (spareMinutes < 15) {
     warnings.push("This plan leaves under 15 minutes of slack at the gate. Add to the personal buffer if you can.");
   }
 

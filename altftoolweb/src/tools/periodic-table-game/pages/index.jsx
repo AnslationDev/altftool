@@ -44,9 +44,21 @@ function shuffle(arr) {
   return a;
 }
 
+let sharedAudioCtx = null;
+function getAudioContext() {
+  if (typeof window === "undefined") return null;
+  const Ctor = window.AudioContext || window.webkitAudioContext;
+  if (!Ctor) return null;
+  if (!sharedAudioCtx) {
+    sharedAudioCtx = new Ctor();
+  }
+  return sharedAudioCtx;
+}
+
 function playTone(freq, duration, type) {
   try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const ctx = getAudioContext();
+    if (!ctx) return;
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.type = type || "sine";
@@ -101,7 +113,7 @@ const TIMER_OPTIONS = [
 
 const DIFFICULTIES = [
   { id: "easy", label: "Easy", desc: "Common elements" },
-  { id: "medium", label: "Medium", desc: "Main group elements" },
+  { id: "medium", label: "Medium", desc: "Main group + transition metals" },
   { id: "hard", label: "Hard", desc: "All 118 elements" },
 ];
 
@@ -192,7 +204,7 @@ function PeriodicGrid({
         cellsInRow.push(<div key={`${grp}-${per}`} className="aspect-square" />);
       } else {
         const el = ELEMENTS.find((e) => e.grp === grp && e.per === per) || null;
-        const isTarget = el && question && el.z === question.z;
+        const isTarget = answered && el && question && el.z === question.z;
         const isSel = el && selectedElement && el.z === (selectedElement?.z || selectedElement);
         const isHighlighted = hintRow !== null && per === hintRow && !isTarget;
         cellsInRow.push(
@@ -223,7 +235,7 @@ function PeriodicGrid({
         <div className="flex-1 grid gap-[2px] sm:gap-[3px]" style={{ gridTemplateColumns: "repeat(14, minmax(0, 1fr))" }}>
           {LANTHANIDE_CELLS.map(({ grp, per }) => {
             const el = ELEMENTS.find((e) => e.grp === grp && e.per === per) || null;
-            const isTarget = el && question && el.z === question.z;
+            const isTarget = answered && el && question && el.z === question.z;
             const isSel = el && selectedElement && el.z === (selectedElement?.z || selectedElement);
             const isHighlighted = hintRow !== null && per === hintRow && !isTarget;
             return (
@@ -245,7 +257,7 @@ function PeriodicGrid({
         <div className="flex-1 grid gap-[2px] sm:gap-[3px]" style={{ gridTemplateColumns: "repeat(14, minmax(0, 1fr))" }}>
           {ACTINIDE_CELLS.map(({ grp, per }) => {
             const el = ELEMENTS.find((e) => e.grp === grp && e.per === per) || null;
-            const isTarget = el && question && el.z === question.z;
+            const isTarget = answered && el && question && el.z === question.z;
             const isSel = el && selectedElement && el.z === (selectedElement?.z || selectedElement);
             const isHighlighted = hintRow !== null && per === hintRow && !isTarget;
             return (
@@ -267,14 +279,57 @@ function PeriodicGrid({
 }
 
 function ElementDetails({ element, onClose }) {
+  const dialogRef = useRef(null);
+  const previousFocusRef = useRef(null);
+
+  useEffect(() => {
+    if (!element) return;
+    previousFocusRef.current = document.activeElement;
+    dialogRef.current?.focus();
+
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        e.stopPropagation();
+        onClose();
+        return;
+      }
+      if (e.key === "Tab" && dialogRef.current) {
+        const focusable = dialogRef.current.querySelectorAll(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+        );
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      if (previousFocusRef.current && typeof previousFocusRef.current.focus === "function") {
+        previousFocusRef.current.focus();
+      }
+    };
+  }, [element, onClose]);
+
   if (!element) return null;
   const cat = CATEGORIES[element.cat];
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm" onClick={onClose}>
       <div
-        className="w-full max-w-sm rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-lg"
+        ref={dialogRef}
+        tabIndex={-1}
+        className="w-full max-w-sm rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-lg focus:outline-none"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
+        aria-modal="true"
         aria-label={`Element details for ${element.name}`}
       >
         <div className="mb-4 flex items-center gap-4">
@@ -427,6 +482,7 @@ export default function ToolHome() {
   const [bestStreak, setBestStreak] = useState(0);
   const [hintsLeft, setHintsLeft] = useState(3);
   const [activeHint, setActiveHint] = useState(null);
+  const [usedHints, setUsedHints] = useState([]);
   const [timeLeft, setTimeLeft] = useState(0);
   const [selectedElement, setSelectedElement] = useState(null);
   const [answered, setAnswered] = useState(false);
@@ -442,6 +498,7 @@ export default function ToolHome() {
   const [allTimeBestStreak, setAllTimeBestStreak] = useLocalStorage("ptg-best-streak", 0);
 
   const timerRef = useRef(null);
+  const finishGameRef = useRef(null);
   const sound = useSound(soundEnabled);
 
   const pool = useMemo(() => getElementPool(difficulty), [difficulty]);
@@ -476,7 +533,7 @@ export default function ToolHome() {
       setTimeLeft((t) => {
         if (t <= 1) {
           clearInterval(timerRef.current);
-          setGameState("finished");
+          finishGameRef.current?.();
           return 0;
         }
         if (t <= 6) playTick();
@@ -504,6 +561,7 @@ export default function ToolHome() {
     setAnswered(false);
     setFeedback(null);
     setActiveHint(null);
+    setUsedHints([]);
     setSelectedElement(null);
     setSelectedOption(null);
     clearInterval(timerRef.current);
@@ -523,7 +581,7 @@ export default function ToolHome() {
   useEffect(() => {
     if (gameState !== "playing" || !questions.length) return;
     if (questionIndex >= questions.length) {
-      setGameState("finished");
+      finishGameRef.current?.();
       return;
     }
     const el = questions[questionIndex];
@@ -532,6 +590,7 @@ export default function ToolHome() {
     setAnswered(false);
     setFeedback(null);
     setActiveHint(null);
+    setUsedHints([]);
     setSelectedOption(null);
     if (quizMode !== "find") {
       setOptions(generateOptions(el));
@@ -546,7 +605,7 @@ export default function ToolHome() {
         const nextIdx = questionIndex + 1;
         if (nextIdx >= questions.length) {
           clearInterval(timerRef.current);
-          setGameState("finished");
+          finishGameRef.current?.();
         } else {
           setQuestionIndex(nextIdx);
         }
@@ -610,11 +669,12 @@ export default function ToolHome() {
     if (hintsLeft <= 0 || answered || !question) return;
     setHintsLeft((h) => h - 1);
     const hints = ["group", "period", "category"];
-    const available = hints.filter((h) => activeHint !== h);
+    const available = hints.filter((h) => !usedHints.includes(h));
     if (available.length === 0) return;
     const hint = available[Math.floor(Math.random() * available.length)];
     setActiveHint(hint);
-  }, [hintsLeft, answered, question, activeHint]);
+    setUsedHints((u) => [...u, hint]);
+  }, [hintsLeft, answered, question, usedHints]);
 
   const finishGame = useCallback(() => {
     clearInterval(timerRef.current);
@@ -626,6 +686,10 @@ export default function ToolHome() {
       setAllTimeBestStreak(bestStreak);
     }
   }, [correct, incorrect, bestStreak, setGamesPlayed, setAllTimeCorrect, setAllTimeIncorrect, setAllTimeBestStreak]);
+
+  useEffect(() => {
+    finishGameRef.current = finishGame;
+  });
 
   const handleBrowseClick = useCallback((el) => {
     if (el) setShowDetails(el);
@@ -894,7 +958,11 @@ export default function ToolHome() {
                 )}
 
                 {hintMsg && (
-                  <div className="mx-auto mb-3 max-w-md rounded-lg bg-yellow-500/10 p-2 text-center text-sm font-semibold text-yellow-600 dark:text-yellow-400">
+                  <div
+                    role="status"
+                    aria-live="polite"
+                    className="mx-auto mb-3 max-w-md rounded-lg bg-yellow-500/10 p-2 text-center text-sm font-semibold text-yellow-600 dark:text-yellow-400"
+                  >
                     💡 {hintMsg}
                   </div>
                 )}
@@ -919,6 +987,8 @@ export default function ToolHome() {
 
                 {feedback !== null && (
                   <div
+                    role="status"
+                    aria-live="polite"
                     className={`mx-auto mb-3 max-w-md animate-in fade-in slide-in-from-top-2 rounded-xl p-3 text-center text-sm font-bold ${
                       feedback
                         ? "bg-green-500/10 text-green-600 dark:text-green-400"

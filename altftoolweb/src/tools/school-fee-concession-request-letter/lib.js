@@ -385,6 +385,12 @@ export function buildFeeConcessionLetter({
   if (concession?.error) return { error: concession.error };
   if (requestKind !== REQUEST_KINDS.CONCESSION && plan?.error) return { error: plan.error };
 
+  const ground = groundById(groundId);
+  const detail = clean(groundDetail);
+  if (ground.id === "other" && !detail) {
+    return { error: 'Describe the circumstances for "Other ground" before generating the letter.' };
+  }
+
   const parent = or(parentName, "[Your name]");
   const student = or(studentName, "[Student's name]");
   const cls = or(className, "[Class]");
@@ -393,8 +399,6 @@ export function buildFeeConcessionLetter({
   const to = or(addressee, "The Principal");
   const admission = or(admissionNumber, "[Admission number]");
   const year = or(academicYear, "[Academic year]");
-  const ground = groundById(groundId);
-  const detail = clean(groundDetail);
   const groundText = ground.id === "other" && detail ? detail : ground.line;
   const openingSentence = ACHIEVEMENT_GROUND_IDS.has(ground.id)
     ? "I am writing to request your consideration for a fee concession in recognition of my child's achievement."
@@ -436,7 +440,7 @@ export function buildFeeConcessionLetter({
   const subject = `Request for ${requestKind === REQUEST_KINDS.INSTALMENTS ? "permission to pay the fee in instalments" : requestKind === REQUEST_KINDS.CONCESSION ? "fee concession" : "fee concession and payment in instalments"} — ${student}, Class ${cls}${sec ? `-${sec}` : ""} (Admission No. ${admission})`;
 
   const body = [
-    formatLongDate(letterDateISO),
+    formatLongDate(letterDateISO) || "[Date]",
     "",
     "To,",
     `${to},`,

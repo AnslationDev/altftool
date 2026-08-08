@@ -1,6 +1,6 @@
 "use client";
 
-import { Type, Bold, AlignCenter, TextSelect, CaseLower, CaseUpper } from "lucide-react";
+import { Type, Bold, AlignCenter, TextSelect } from "lucide-react";
 
 export default function TypographyAnalysis({ typoA, typoB, typoComparison }) {
   if (!typoA && !typoB) return null;
@@ -33,15 +33,6 @@ export default function TypographyAnalysis({ typoA, typoB, typoComparison }) {
               </div>
             );
           })}
-        </div>
-
-        <div className="rounded-lg bg-[--surface-soft] p-2">
-          <p className="text-xs text-[--muted] mb-1">Character Analysis</p>
-          <div className="flex items-center gap-4 text-xs">
-            <span className="flex items-center gap-1"><CaseUpper className="h-3 w-3 text-primary" />{typo.uppercase}% Upper</span>
-            <span className="flex items-center gap-1"><CaseLower className="h-3 w-3 text-primary" />{typo.lowercase}% Lower</span>
-            <span className="flex items-center gap-1"><Type className="h-3 w-3 text-primary" />{typo.spacing}% Spacing</span>
-          </div>
         </div>
       </div>
     </div>

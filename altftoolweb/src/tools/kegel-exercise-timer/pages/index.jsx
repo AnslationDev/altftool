@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Pause, Play, RotateCcw, Timer } from "lucide-react";
 
 import {
@@ -48,6 +48,13 @@ export default function ToolHome() {
   const [elapsed, setElapsed] = useState(0);
   const [anchor, setAnchor] = useState(null);
   const [copied, setCopied] = useState(false);
+  const copyTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+    };
+  }, []);
 
   const plan = useMemo(() => {
     const values = {
@@ -132,7 +139,9 @@ export default function ToolHome() {
       `${GUIDELINE_PROGRAMME_WEEKS}-week programme total: ${plan.programmeContractions}`,
       plan.meetsGuideline
         ? `Meets the reference programme of ${GUIDELINE_DAILY_CONTRACTIONS} contractions a day.`
-        : `${plan.guidelineGap} contractions a day short of the reference ${GUIDELINE_DAILY_CONTRACTIONS} a day.`,
+        : !plan.meetsRepsPerSession
+          ? `${plan.repsPerSessionGap} contractions per session short of the reference ${GUIDELINE_REPS_PER_SESSION} per session.`
+          : `${plan.guidelineGap} contractions a day short of the reference ${GUIDELINE_DAILY_CONTRACTIONS} a day.`,
     ].join("\n");
   }, [hasError, plan]);
 
@@ -141,7 +150,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
     }
@@ -266,7 +276,12 @@ export default function ToolHome() {
           <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
             {hasError ? "Timer unavailable" : current.phase.label}
           </p>
-          <p className={`mt-1 text-5xl font-semibold tabular-nums ${phaseTone}`}>
+          {/* aria-hidden: this text re-renders roughly once a second while the
+              timer runs; keeping it out of the accessibility tree stops the
+              enclosing aria-live region from re-announcing the whole block on
+              every tick. The phase label/hint above and below still announce
+              normally since they only change on phase transitions. */}
+          <p aria-hidden="true" className={`mt-1 text-5xl font-semibold tabular-nums ${phaseTone}`}>
             {hasError ? DASH : formatClock(Math.ceil(current.remaining))}
           </p>
           <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -274,7 +289,11 @@ export default function ToolHome() {
               ? "Fix the inputs above to start the timer."
               : current.done
                 ? current.phase.hint
-                : `${current.phase.hint} · Set ${Math.max(1, current.phase.set)} of ${plan.sets}`}
+                : current.phase.kind === PHASE_KINDS.PREP
+                  ? current.phase.hint
+                  : current.phase.kind === PHASE_KINDS.SET_REST
+                    ? `${current.phase.hint} · Set ${current.phase.set + 1} of ${plan.sets}`
+                    : `${current.phase.hint} · Set ${current.phase.set} of ${plan.sets}`}
           </p>
         </div>
 
@@ -367,7 +386,9 @@ export default function ToolHome() {
           >
             {plan.meetsGuideline
               ? `This plan reaches the reference programme of ${GUIDELINE_DAILY_CONTRACTIONS} contractions a day.`
-              : `This plan is ${plan.guidelineGap} contractions a day below the reference programme of ${GUIDELINE_DAILY_CONTRACTIONS} a day.`}
+              : !plan.meetsRepsPerSession
+                ? `This plan has ${plan.repsPerSession} contractions per session, ${plan.repsPerSessionGap} short of the reference ${GUIDELINE_REPS_PER_SESSION} per session.`
+                : `This plan is ${plan.guidelineGap} contractions a day below the reference programme of ${GUIDELINE_DAILY_CONTRACTIONS} a day.`}
           </p>
         )}
       </section>

@@ -33,6 +33,13 @@ export const LIMITS = {
 
 const MS_PER_DAY = 24 * 60 * 60 * 1000;
 
+/** Joins list items with commas and a final "and", e.g. ["Sun","Tue","Fri"] -> "Sun, Tue and Fri". */
+function joinWithAnd(items) {
+  if (items.length <= 1) return items.join("");
+  if (items.length === 2) return items.join(" and ");
+  return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
+}
+
 /** Parse "YYYY-MM-DD" strictly, in UTC. Returns null when the date is not real. */
 export function parseISODate(value) {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value ?? "").trim());
@@ -189,7 +196,7 @@ export function buildCalendar({
     topicsMissing: Math.max(0, totalEpisodes - topicList.length),
     topicsSpare: Math.max(0, topicList.length - totalEpisodes),
     formatCounts,
-    cadence: `${perWeekCount} a week on ${chosenDays.map((day) => WEEKDAYS[day].short).join(" and ")}`,
+    cadence: `${perWeekCount} a week on ${joinWithAnd(chosenDays.map((day) => WEEKDAYS[day].short))}`,
   };
 }
 

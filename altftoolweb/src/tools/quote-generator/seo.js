@@ -1,6 +1,10 @@
+// NOTE: seo.js is loaded in isolation at build time and must not import from ./utils.
+// "76 quotes" and "9 marked Unknown" are literal copies of utils/quotesDb.js's quotesDb
+// array (76 entries, 9 with author === "Unknown") — keep these numbers in sync if the
+// quote list changes.
 const seo = {
   intro:
-    "Quote Generator pulls a quote at random from a built-in library of 76 attributed quotes across eight themes - Motivation, Success, Business, Leadership, Life, Wisdom, Technology and Programming - then lets you style the card and download it as a PNG rendered at 2x resolution. You pick one of eight background treatments, three typefaces, four text sizes and left, centre or right alignment, and the card you see is exactly what gets exported. It is aimed at people making social posts, slide openers or story graphics who do not want to open a design app for one line of text.",
+    "Quote Generator pulls a quote at random from a built-in library of 76 quotes across eight themes - Motivation, Success, Business, Leadership, Life, Wisdom, Technology and Programming - then lets you style the card and download it as a PNG rendered at 2x resolution. Most quotes carry a named author; 9 are marked Unknown. You pick one of eight background treatments, three typefaces, four text sizes and left, centre or right alignment, and the card you see is exactly what gets exported. It is aimed at people making social posts, slide openers or story graphics who do not want to open a design app for one line of text.",
   useCases: [
     "You need an image post for tomorrow morning and want a legible quote card with the author credited, sized and exported without opening Canva or Figma.",
     "A talk needs an opening slide, so you filter to Leadership or Technology, set the serif font at extra large, and download a PNG to drop straight into the deck.",
@@ -14,7 +18,7 @@ const seo = {
   faqs: [
     [
       "How many quotes are in the library?",
-      "76 quotes, grouped into eight categories - Motivation, Success, Business, Leadership, Life, Wisdom, Technology and Programming - plus an All option that draws from every category at once.",
+      "76 quotes, grouped into eight categories - Motivation, Success, Business, Leadership, Life, Wisdom, Technology and Programming - plus an All option that draws from every category at once. Most carry a named author; 9 (all in Motivation) are attributed to Unknown.",
     ],
     [
       "What resolution is the downloaded image?",

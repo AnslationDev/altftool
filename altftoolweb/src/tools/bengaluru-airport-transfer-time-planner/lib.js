@@ -98,6 +98,13 @@ export const ORIGINS = [
  * `freeFlowKmh` is the door-to-terminal average speed with no congestion; the fixed
  * overhead covers everything that does not scale with distance — waiting for the cab,
  * parking and the walk in, or the wait at the bus bay.
+ *
+ * Every mode below is currently road-based, so `trafficSensitive` is `true` for all
+ * of them today, and the `!mode.trafficSensitive` UI branches in pages/index.jsx
+ * (traffic-assumption select disabled state, "runs on rails" copy, hourly-table
+ * visibility) are dormant. They are kept intentionally for the day a rail option is
+ * added — Namma Metro's airport corridor (referenced in this tool's FAQ) is under
+ * construction — rather than removed as dead code.
  */
 export const MODES = [
   {
@@ -363,6 +370,20 @@ export function planTransfer({
     previous = leaveByMinute;
     leaveByMinute = next;
   }
+
+  // Canonicalize: leaveByTime below is formatMinutes(leaveByMinute), which
+  // rounds to the nearest minute, while the hour bucket used for factor/travel
+  // (trafficFactorAt, and the matching hourlyTravel row) floors to the hour.
+  // A raw leaveByMinute in the last ~30 seconds of an hour (e.g. 359.5) would
+  // therefore round up to the next hour for display while its factor/travel
+  // still came from the floor of the un-rounded value — describing two
+  // different hours on the same page. Rounding leaveByMinute itself first,
+  // then deriving factor/travel from that same rounded value, keeps every
+  // figure (leaveByTime, factor, travelMinutes, hourlyTravel row) pinned to
+  // one consistent hour.
+  leaveByMinute = Math.round(leaveByMinute);
+  factor = level.factor === null ? trafficFactorAt(leaveByMinute, { isWeekend }) : level.factor;
+  travel = journeyMinutes({ distanceKm: km, mode, factor });
 
   const freeFlowTravel = journeyMinutes({ distanceKm: km, mode, factor: 1 });
   const totalDoorToDeparture = departureMinute - leaveByMinute;
