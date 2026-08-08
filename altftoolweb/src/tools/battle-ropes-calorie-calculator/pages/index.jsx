@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Check, Copy, RotateCcw, Waves } from "lucide-react";
-import { EFFORT_LEVELS, WAVE_STYLES, computeBattleRopeCalories, roundsForTarget } from "../lib";
+import { EFFORT_LEVELS, LIMITS, WAVE_STYLES, computeBattleRopeCalories, roundsForTarget } from "../lib";
 
 const N0 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 0 });
 const N1 = new Intl.NumberFormat("en-IN", { maximumFractionDigits: 1 });
@@ -244,7 +244,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+        aria-live="polite"
+        aria-atomic="true"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -288,7 +292,7 @@ export default function ToolHome() {
             ["Session average intensity", ok ? `${one(result.averageMet)} METs` : DASH],
             ["Burned during work intervals", ok ? kcal(result.workKcal) : DASH],
             ["Burned during recovery", ok ? kcal(result.restKcal) : DASH],
-            ["Calories per round", ok ? one(result.kcalPerRound) : DASH],
+            ["Calories per round", ok ? kcal(result.kcalPerRound) : DASH],
             [
               "Work-to-rest ratio",
               ok ? (result.workRestRatio ? `${one(result.workRestRatio)} : 1` : "Continuous") : DASH,
@@ -299,7 +303,11 @@ export default function ToolHome() {
             ],
             [
               "Rounds to hit your calorie target",
-              ok && roundsNeeded ? `${N0.format(roundsNeeded)} rounds` : DASH,
+              ok && roundsNeeded
+                ? roundsNeeded > LIMITS.rounds[1]
+                  ? `${LIMITS.rounds[1]}+ rounds — split across sessions`
+                  : `${N0.format(roundsNeeded)} rounds`
+                : DASH,
             ],
           ].map(([label, value]) => (
             <div key={label} className="flex items-center justify-between gap-4 py-2.5">

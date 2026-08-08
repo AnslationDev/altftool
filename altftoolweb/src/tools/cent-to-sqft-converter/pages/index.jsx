@@ -270,7 +270,7 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <div className="flex flex-wrap items-start justify-between gap-3">
-          <div>
+          <div aria-live="polite" role="status">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               In square feet
             </p>
@@ -301,7 +301,11 @@ export default function ToolHome() {
           </div>
         </div>
 
-        <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
+        <dl
+          className="mt-5 divide-y divide-[var(--border)] text-sm"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {LAND_UNITS.map((lu) => (
             <div key={lu.id} className="flex items-center justify-between gap-4 py-2.5">
               <dt className="text-[var(--muted-foreground)]">{lu.label}</dt>
@@ -315,37 +319,39 @@ export default function ToolHome() {
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
         <h2 className="text-base font-semibold">Land value</h2>
-        {hasError || !result.pricing ? (
-          <p className="mt-2 text-sm text-[var(--muted-foreground)]">
-            {hasError ? DASH : "Enter a rate above to value this parcel."}
-          </p>
-        ) : (
-          <>
-            <p className="mt-2 text-3xl font-semibold text-[var(--primary)]">
-              {INR.format(result.pricing.total)}
+        <div aria-live="polite" aria-atomic="true">
+          {hasError || !result.pricing ? (
+            <p className="mt-2 text-sm text-[var(--muted-foreground)]">
+              {hasError ? DASH : "Enter a rate above to value this parcel."}
             </p>
-            <div className="mt-3 overflow-x-auto">
-              <table className="w-full min-w-[320px] text-left text-sm">
-                <thead>
-                  <tr className="border-b border-[var(--border)] text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
-                    <th scope="col" className="py-2 pr-3 font-semibold">Same price as</th>
-                    <th scope="col" className="py-2 text-right font-semibold">Rate</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {LAND_UNITS.map((lu) => (
-                    <tr key={lu.id} className="border-b border-[var(--border)] last:border-0">
-                      <td className="py-2 pr-3">Per {lu.short}</td>
-                      <td className="py-2 text-right font-semibold">
-                        {INR2.format(result.pricing.perUnit[lu.id])}
-                      </td>
+          ) : (
+            <>
+              <p className="mt-2 text-3xl font-semibold text-[var(--primary)]">
+                {INR.format(result.pricing.total)}
+              </p>
+              <div className="mt-3 overflow-x-auto">
+                <table className="w-full min-w-[320px] text-left text-sm">
+                  <thead>
+                    <tr className="border-b border-[var(--border)] text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
+                      <th scope="col" className="py-2 pr-3 font-semibold">Same price as</th>
+                      <th scope="col" className="py-2 text-right font-semibold">Rate</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </>
-        )}
+                  </thead>
+                  <tbody>
+                    {LAND_UNITS.map((lu) => (
+                      <tr key={lu.id} className="border-b border-[var(--border)] last:border-0">
+                        <td className="py-2 pr-3">Per {lu.short}</td>
+                        <td className="py-2 text-right font-semibold">
+                          {INR2.format(result.pricing.perUnit[lu.id])}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </>
+          )}
+        </div>
       </section>
 
       <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
@@ -366,7 +372,7 @@ export default function ToolHome() {
               onChange={(event) => setShares(event.target.value)}
             />
           </div>
-          <div className="flex flex-col justify-end">
+          <div className="flex flex-col justify-end" aria-live="polite" aria-atomic="true">
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Each share
             </p>

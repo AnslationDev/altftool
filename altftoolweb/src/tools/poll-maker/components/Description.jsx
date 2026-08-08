@@ -6,7 +6,7 @@ import React from "react";
 export const descriptionData = [
     { title: "Create Poll", description: "Easily create a poll with multiple options in seconds." },
   { title: "Multiple Chart Types", description: "View results as a bar, pie or donut chart that updates instantly as votes come in." },
-  { title: "Collect Votes", description: "Participants can vote anonymously or publicly." },
+  { title: "Collect Votes", description: "Vote anonymously, or add a fun randomly-generated voter name to your pick." },
   { title: "Real-time Results", description: "See live updates of votes as they come in." },
   { title: "Analyze Trends", description: "Get insights into which options are popular and trends over time." },
   { title: "Download Card", description: "Save your poll results as a shareable PNG image card." },

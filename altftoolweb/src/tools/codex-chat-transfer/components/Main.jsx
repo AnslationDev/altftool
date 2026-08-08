@@ -79,36 +79,46 @@ export default function MainComponent() {
       } else {
         // Parse raw Markdown/Text logs
         const lines = cleanInput.split("\n");
+        // Matches the full heading token (both "**Role:**" and "**Role**:" conventions)
+        // so the leftover text never keeps a stray "**" fragment from the marker.
+        const HEADER_PATTERNS = [
+          { role: "user", re: /^\*\*user\*\*:?\s*|^\*\*user:\*\*\s*/i },
+          { role: "assistant", re: /^\*\*assistant\*\*:?\s*|^\*\*assistant:\*\*\s*|^\*\*bot\*\*:?\s*|^\*\*bot:\*\*\s*/i },
+          { role: "system", re: /^\*\*system\*\*:?\s*|^\*\*system:\*\*\s*|^#\s*system\b:?\s*/i },
+        ];
         let currentRole = "user";
         let currentContent = [];
+        // Tracks whether a heading has actually opened the current block, so the
+        // very first block isn't pushed as a spurious empty message before any
+        // heading has been seen.
+        let hasOpenedBlock = false;
+
+        const flushBlock = () => {
+          const blockText = currentContent.join("\n").trim();
+          if (hasOpenedBlock || blockText) {
+            parsedMessages.push({ role: currentRole, content: blockText });
+          }
+        };
 
         for (const line of lines) {
-          const lower = line.toLowerCase();
-          if (lower.startsWith("**user:**") || lower.startsWith("**user**:")) {
-            if (currentContent.length || currentRole) {
-              parsedMessages.push({ role: currentRole, content: currentContent.join("\n").trim() });
+          let matchedHeader = null;
+          for (const { role, re } of HEADER_PATTERNS) {
+            const m = line.match(re);
+            if (m) {
+              matchedHeader = { role, rest: line.slice(m[0].length) };
+              break;
             }
-            currentRole = "user";
-            currentContent = [line.substring(line.indexOf(":") + 1)];
-          } else if (lower.startsWith("**assistant:**") || lower.startsWith("**assistant**:") || lower.startsWith("**bot:**") || lower.startsWith("**bot**:")) {
-            if (currentContent.length || currentRole) {
-              parsedMessages.push({ role: currentRole, content: currentContent.join("\n").trim() });
-            }
-            currentRole = "assistant";
-            currentContent = [line.substring(line.indexOf(":") + 1)];
-          } else if (lower.startsWith("**system:**") || lower.startsWith("**system**:") || lower.startsWith("# system")) {
-            if (currentContent.length || currentRole) {
-              parsedMessages.push({ role: currentRole, content: currentContent.join("\n").trim() });
-            }
-            currentRole = "system";
-            currentContent = [line.substring(line.indexOf(":") + 1)];
+          }
+          if (matchedHeader) {
+            flushBlock();
+            currentRole = matchedHeader.role;
+            currentContent = [matchedHeader.rest];
+            hasOpenedBlock = true;
           } else {
             currentContent.push(line);
           }
         }
-        if (currentContent.length || currentRole) {
-          parsedMessages.push({ role: currentRole, content: currentContent.join("\n").trim() });
-        }
+        flushBlock();
       }
     } catch (err) {
       setError(`Failed to parse input: ${err.message}. Make sure your JSON format is valid.`);
@@ -129,7 +139,10 @@ export default function MainComponent() {
       setOutputText(JSON.stringify(formatted, null, 2));
     } 
     else if (format === "anthropic") {
-      const systemMsg = parsedMessages.find((m) => m.role === "system")?.content || "";
+      const systemMsg = parsedMessages
+        .filter((m) => m.role === "system")
+        .map((m) => m.content)
+        .join("\n\n");
       const messages = parsedMessages
         .filter((m) => m.role !== "system")
         .map((m) => ({
@@ -139,7 +152,7 @@ export default function MainComponent() {
       setOutputText(JSON.stringify({ system: systemMsg, messages }, null, 2));
     }
     else if (format === "gemini") {
-      const systemMsg = parsedMessages.find((m) => m.role === "system");
+      const systemMessages = parsedMessages.filter((m) => m.role === "system");
       const contents = parsedMessages
         .filter((m) => m.role !== "system")
         .map((m) => ({
@@ -147,10 +160,10 @@ export default function MainComponent() {
           parts: [{ text: m.content }],
         }));
       const payload = { contents };
-      if (systemMsg) {
+      if (systemMessages.length) {
         payload.systemInstruction = {
           role: "system",
-          parts: [{ text: systemMsg.content }]
+          parts: [{ text: systemMessages.map((m) => m.content).join("\n\n") }]
         };
       }
       setOutputText(JSON.stringify(payload, null, 2));
@@ -192,9 +205,15 @@ export default function MainComponent() {
   };
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(outputText);
-    setIsCopied(true);
-    setTimeout(() => setIsCopied(false), 2000);
+    navigator.clipboard
+      .writeText(outputText)
+      .then(() => {
+        setIsCopied(true);
+        setTimeout(() => setIsCopied(false), 2000);
+      })
+      .catch(() => {
+        setError("Could not copy to clipboard.");
+      });
   };
 
   const handleDownload = () => {
@@ -230,7 +249,11 @@ export default function MainComponent() {
 
       {/* Alerts */}
       {success && (
-        <div className="mb-6 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-sm flex items-center justify-center transition-all animate-fade-in">
+        <div
+          role="status"
+          aria-live="polite"
+          className="mb-6 p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-600 text-sm flex items-center justify-center transition-all animate-fade-in"
+        >
           <span>{success}</span>
         </div>
       )}
@@ -274,7 +297,11 @@ export default function MainComponent() {
           </div>
           
           {error && (
-            <div className="px-4 py-3 bg-red-500/10 border-t border-red-500/30 text-red-600 text-xs flex items-start gap-2 max-h-32 overflow-y-auto">
+            <div
+              role="alert"
+              aria-live="assertive"
+              className="px-4 py-3 bg-red-500/10 border-t border-red-500/30 text-red-600 text-xs flex items-start gap-2 max-h-32 overflow-y-auto"
+            >
               <span className="font-mono break-all">{error}</span>
             </div>
           )}

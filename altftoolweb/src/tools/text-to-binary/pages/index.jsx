@@ -14,7 +14,7 @@ const SAMPLE_TEXT = "Hello, World!";
 const SAMPLE_BINARY = "01001000 01100101 01101100 01101100 01101111 00101100 00100000 01010111 01101111 01110010 01101100 01100100 00100001";
 
 function textToBinary(text) {
-  return [...text].map((ch) => ch.charCodeAt(0).toString(2).padStart(8, "0")).join(" ");
+  return [...text].map((ch) => ch.codePointAt(0).toString(2).padStart(8, "0")).join(" ");
 }
 
 function binaryToText(binary) {
@@ -22,8 +22,9 @@ function binaryToText(binary) {
   return bytes
     .map((b) => {
       if (!/^[01]+$/.test(b)) return null;
-      return String.fromCharCode(parseInt(b, 2));
+      return String.fromCodePoint(parseInt(b, 2));
     })
+    .filter((ch) => ch !== null)
     .join("");
 }
 
@@ -83,10 +84,13 @@ export default function ToolHome() {
   }, [mode, binaryInput, textInput]);
 
   const swap = useCallback(() => {
-    setTextInput(binaryInput);
-    setBinaryInput(textInput);
+    // The render layer already re-maps textInput/binaryInput to the input
+    // and output panes based on `mode` (see the textarea `value`s and the
+    // `output` memo below), so toggling mode alone is enough to swap which
+    // pane is editable. Also swapping the underlying values here would
+    // double-swap and invert the result.
     setMode((m) => (m === "to-binary" ? "from-binary" : "to-binary"));
-  }, [binaryInput, textInput]);
+  }, []);
 
   const handleClear = useCallback(() => {
     setTextInput("");
@@ -118,8 +122,8 @@ export default function ToolHome() {
 
   const downloadOutput = () => {
     if (!output) return;
-    const ext = mode === "to-binary" ? ".txt" : ".txt";
-    downloadTextFile(`binary-output${ext}`, output);
+    const filename = mode === "to-binary" ? "text-to-binary-output.txt" : "binary-to-text-output.txt";
+    downloadTextFile(filename, output);
   };
 
   return (
@@ -163,6 +167,7 @@ export default function ToolHome() {
                   ? handleTextChange(e.target.value)
                   : handleBinaryChange(e.target.value)
               }
+              aria-label={mode === "to-binary" ? "Text input" : "Binary input"}
               className="min-h-[240px] w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--background)] p-4 text-sm font-mono leading-7 outline-none focus:border-[var(--primary)]"
               placeholder={
                 mode === "to-binary"
@@ -200,6 +205,7 @@ export default function ToolHome() {
               readOnly
               ref={outputRef}
               value={output}
+              aria-label={mode === "to-binary" ? "Binary output" : "Text output"}
               className="min-h-[240px] w-full resize-y rounded-lg border border-[var(--border)] bg-[var(--muted)] p-4 text-sm font-mono leading-7 outline-none cursor-default"
               placeholder={
                 mode === "to-binary"
@@ -234,7 +240,10 @@ export default function ToolHome() {
         </section>
 
         {error && (
-          <div className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-500">
+          <div
+            role="alert"
+            className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-sm text-red-500"
+          >
             {error}
           </div>
         )}

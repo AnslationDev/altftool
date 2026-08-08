@@ -12,14 +12,22 @@ const GuessWinner = forwardRef(({ options, votes }, ref) => {
     },
   }));
 
-  const winnerIndex = votes.length
-    ? votes.indexOf(Math.max(...votes))
-    : null;
+  const maxVotes = votes.length ? Math.max(...votes) : null;
+
+  const winnerIndex =
+    maxVotes !== null ? votes.indexOf(maxVotes) : null;
 
   const winner =
     winnerIndex !== null && winnerIndex !== -1
       ? options[winnerIndex]
       : null;
+
+  // A tie exists when more than one option shares the top vote count.
+  const tiedOptions =
+    maxVotes !== null && maxVotes > 0
+      ? options.filter((_, i) => votes[i] === maxVotes)
+      : [];
+  const isTie = tiedOptions.length > 1;
 
   return (
     <div className="text-center mt-2">
@@ -41,9 +49,11 @@ const GuessWinner = forwardRef(({ options, votes }, ref) => {
 
       {locked && selected && winner && (
         <p className="mt-2" aria-live="polite" role="status">
-          {selected === winner
-            ? "You guessed it right!! "
-            : `Actual winner is ${winner}`}
+          {isTie
+            ? `It's a tie between ${tiedOptions.join(" and ")}`
+            : selected === winner
+              ? "You guessed it right!! "
+              : `Actual winner is ${winner}`}
         </p>
       )}
     </div>

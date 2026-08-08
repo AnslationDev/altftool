@@ -297,10 +297,19 @@ export default function ToolHome() {
               id="adv-scheme"
               className={`mt-2 ${INPUT_CLASS}`}
               value={scheme}
-              onChange={(event) => setScheme(event.target.value)}
+              onChange={(event) => {
+                const value = event.target.value;
+                setScheme(value);
+                // Presumptive taxation (44AD/44ADA) requires business/professional
+                // income, which is mutually exclusive with the senior-citizen
+                // exemption below (that exemption only applies with no such income).
+                if (value === "presumptive" && senior) setSenior(false);
+              }}
             >
               <option value="regular">Regular — four instalments</option>
-              <option value="presumptive">Presumptive 44AD / 44ADA — one instalment</option>
+              <option value="presumptive" disabled={senior}>
+                Presumptive 44AD / 44ADA — one instalment
+              </option>
             </select>
           </div>
           <div>
@@ -404,17 +413,32 @@ export default function ToolHome() {
 
         <label
           htmlFor="adv-senior"
-          className="mt-4 flex min-h-11 cursor-pointer items-center gap-3 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm font-medium text-[var(--foreground)]"
+          className={`mt-4 flex min-h-11 items-center gap-3 rounded-md border border-[var(--border)] bg-[var(--background)] px-3 py-2 text-sm font-medium text-[var(--foreground)] ${
+            scheme === "presumptive" ? "cursor-not-allowed opacity-60" : "cursor-pointer"
+          }`}
         >
           <input
             id="adv-senior"
             type="checkbox"
             className="h-4 w-4 accent-[var(--primary)]"
             checked={senior}
-            onChange={(event) => setSenior(event.target.checked)}
+            disabled={scheme === "presumptive"}
+            onChange={(event) => {
+              const checked = event.target.checked;
+              setSenior(checked);
+              // The presumptive scheme requires business/professional income,
+              // which rules out this exemption — keep the two consistent.
+              if (checked && scheme === "presumptive") setScheme("regular");
+            }}
           />
           Resident senior citizen (60+) with no income from business or profession
         </label>
+        {scheme === "presumptive" && (
+          <p className="mt-2 text-xs text-[var(--muted-foreground)]">
+            Not available with presumptive taxation (44AD/44ADA) — that scheme requires business or
+            professional income, which is mutually exclusive with this exemption.
+          </p>
+        )}
       </section>
 
       {result.error ? (
@@ -428,7 +452,7 @@ export default function ToolHome() {
         <>
           <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
             <div className="flex flex-wrap items-start justify-between gap-3">
-              <div>
+              <div aria-live="polite" aria-atomic="true">
                 <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
                   Total interest under 234B + 234C
                 </p>

@@ -36,7 +36,9 @@ export const EFFORT_LEVELS = {
 
 /**
  * Recovery between rope sets is rarely true rest; most people walk it off.
- * Compendium 17152, walking at 3.2 km/h, is 2.0 METs.
+ * Compendium 17151, walking at a very slow stroll under 2.0 mph (~3.2 km/h),
+ * is about 2.0 METs. (Not 17152 — that code is a faster 2.0-2.4 mph pace and
+ * reports 2.8 METs, not 2.0.)
  */
 export const REST_MET = 2;
 

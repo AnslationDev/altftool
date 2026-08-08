@@ -15,7 +15,7 @@ const faqItems = [
   {
     question: "Are my chat histories stored?",
     answer:
-      "Absolutely not. Your chat logs stay purely in memory on your local machine and never leave your web browser. No remote servers are contacted.",
+      "Absolutely not. Your chat log content is parsed and converted entirely in your browser and is never transmitted anywhere. (The code editor UI itself loads its assets from a CDN, but no chat data is ever sent there or to any other server.)",
   },
   {
     question: "Does this handle custom system prompt mappings?",
@@ -65,7 +65,7 @@ export default function Features() {
             </div>
             <h3 className="text-lg font-semibold text-(--foreground) mb-2">Fully Local</h3>
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              Safe execution that respects sensitive enterprise conversational assets offline.
+              Safe execution that keeps sensitive enterprise conversational data in-browser and never transmits it anywhere.
             </p>
           </div>
         </div>

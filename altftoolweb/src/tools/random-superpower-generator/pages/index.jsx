@@ -3,6 +3,8 @@
 import { useState, useCallback, useEffect } from "react";
 import { Shuffle, Copy, Check, Sparkles, Star, Zap, Shield, Brain, Eye, Wind, Flame, Droplets, Mountain, Clock, Atom } from "lucide-react";
 
+import { useCopyToClipboard } from "@/hooks/useCopyToClipboard";
+
 const POWERS = [
   { name: "Control Gravity", desc: "Manipulate gravitational fields around objects and people within a 50m radius.", weakness: "Motion sickness after heavy use", rarity: "Legendary", category: "Elemental", level: 9 },
   { name: "Freeze Time", desc: "Pause time for up to 12 seconds while you move freely.", weakness: "Aged 1 month per freeze", rarity: "Mythic", category: "Temporal", level: 10 },
@@ -49,7 +51,7 @@ function getRandomPower() {
 export default function ToolHome() {
   const [power, setPower] = useState(null);
   const [animating, setAnimating] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const { copy, isCopied, announcement } = useCopyToClipboard();
 
   const handleGenerate = useCallback(() => {
     setAnimating(true);
@@ -59,14 +61,10 @@ export default function ToolHome() {
     }, 250);
   }, []);
 
-  const handleCopy = async () => {
+  const handleCopy = () => {
     if (!power) return;
     const text = `${power.name}\n${power.desc}\nPower Level: ${power.level}/10 | Rarity: ${power.rarity} | Weakness: ${power.weakness}`;
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch {}
+    copy("power", text, { label: "superpower details" });
   };
 
   const CatIcon = power ? CATEGORY_ICONS[power.category] || Sparkles : Sparkles;
@@ -107,7 +105,12 @@ export default function ToolHome() {
           </button>
 
           {power && (
-            <div className={`rounded-2xl p-6 border transition-all duration-300 ${animating ? "opacity-0 scale-95" : "opacity-100 scale-100"}`} style={{ background: "var(--card)", borderColor: "var(--border)" }}>
+            <div
+              className={`rounded-2xl p-6 border transition-all duration-300 ${animating ? "opacity-0 scale-95" : "opacity-100 scale-100"}`}
+              style={{ background: "var(--card)", borderColor: "var(--border)" }}
+              aria-live="polite"
+              role="status"
+            >
               <div className="flex items-start gap-4 mb-4">
                 <div className="p-3 rounded-xl" style={{ background: "var(--background)" }}>
                   <CatIcon size={28} style={{ color: "var(--primary)" }} />
@@ -120,7 +123,7 @@ export default function ToolHome() {
                     </span>
                     <span className="text-[10px] font-black px-2 py-0.5 rounded-full uppercase tracking-wider" style={{
                       background: "var(--background)",
-                      color: power.rarity === "Mythic" ? "#EF4444" : power.rarity === "Legendary" ? "#F59E0B" : power.rarity === "Rare" ? "#8B5CF6" : power.rarity === "Uncommon" ? "#14B8A6" : "#6B7280",
+                      color: power.rarity === "Mythic" ? "#EF4444" : power.rarity === "Legendary" ? "#F59E0B" : power.rarity === "Rare" ? "#8B5CF6" : power.rarity === "Uncommon" ? "#14B8A6" : "var(--muted-foreground)",
                     }}>
                       {power.rarity}
                     </span>
@@ -133,9 +136,9 @@ export default function ToolHome() {
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div className="p-3 rounded-xl" style={{ background: "var(--background)" }}>
                   <p className="text-[10px] font-black uppercase tracking-wider mb-1" style={{ color: "var(--muted-foreground)" }}>Power Level</p>
-                  <div className="flex gap-1">
+                  <div className="flex gap-1" role="img" aria-label={`Power level ${power.level} out of 10`}>
                     {Array.from({ length: 10 }, (_, i) => (
-                      <div key={i} className="w-2.5 h-2.5 rounded-full" style={{ background: i < power.level ? "var(--primary)" : "var(--border)" }} />
+                      <div key={i} aria-hidden="true" className="w-2.5 h-2.5 rounded-full" style={{ background: i < power.level ? "var(--primary)" : "var(--border)" }} />
                     ))}
                   </div>
                 </div>
@@ -147,12 +150,16 @@ export default function ToolHome() {
 
               <button
                 onClick={handleCopy}
+                aria-label={isCopied("power") ? "Copied superpower details to clipboard" : "Copy superpower details"}
                 className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-bold border transition-all"
-                style={{ borderColor: "var(--border)", color: copied ? "var(--primary)" : "var(--foreground)" }}
+                style={{ borderColor: "var(--border)", color: isCopied("power") ? "var(--primary)" : "var(--foreground)" }}
               >
-                {copied ? <Check size={16} /> : <Copy size={16} />}
-                {copied ? "Copied!" : "Copy Power"}
+                {isCopied("power") ? <Check size={16} /> : <Copy size={16} />}
+                {isCopied("power") ? "Copied!" : "Copy Power"}
               </button>
+              <span className="sr-only" role="status" aria-live="polite">
+                {announcement}
+              </span>
             </div>
           )}
 

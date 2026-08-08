@@ -79,7 +79,7 @@ export default function ToolHome() {
       "",
       "Dirhams to rupees:",
       ...sheet.priceLadder.map(
-        (row) => `AED ${row.amount} = ${money(row.exactInr)} (rule ${money(row.tunedInr)})`,
+        (row) => `AED ${row.amount} = ${money(row.exactInr)} (rule ${money(row.ruleInr)})`,
       ),
       "",
       "Rupees to dirhams:",
@@ -213,7 +213,11 @@ export default function ToolHome() {
         </p>
       )}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -355,10 +359,10 @@ export default function ToolHome() {
                     <span className="block text-xs text-[var(--muted-foreground)]">{row.note}</span>
                   </td>
                   <td className="py-2 pr-3 text-right font-semibold">{money(row.exactInr)}</td>
-                  <td className="py-2 pr-3 text-right">{money(row.tunedInr)}</td>
+                  <td className="py-2 pr-3 text-right">{money(row.ruleInr)}</td>
                   <td className="py-2 text-right text-[var(--muted-foreground)]">
-                    {row.tunedGapInr >= 0 ? "+" : "−"}
-                    {money(Math.abs(row.tunedGapInr))}
+                    {row.ruleGapInr >= 0 ? "+" : "−"}
+                    {money(Math.abs(row.ruleGapInr))}
                   </td>
                 </tr>
               ))}

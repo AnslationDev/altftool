@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, Ear, RotateCcw } from "lucide-react";
 
 import {
@@ -62,6 +62,13 @@ export default function ToolHome() {
   const [cMinusA, setCMinusA] = useState(DEFAULTS.cMinusA);
   const [durationMinutes, setDurationMinutes] = useState(DEFAULTS.durationMinutes);
   const [copied, setCopied] = useState(false);
+  const copiedTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+    };
+  }, []);
 
   const result = useMemo(
     () =>
@@ -104,9 +111,21 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(summary);
       setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
+      if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+      copiedTimeoutRef.current = setTimeout(() => setCopied(false), 1500);
     } catch {
       setCopied(false);
+    }
+  };
+
+  const handleMethodChange = (nextMethod) => {
+    setMethod(nextMethod);
+    // The C-minus-A input only renders for SNR mode, but its state persists
+    // on the parent while unmounted. Reset it so stale/invalid text left
+    // over from a previous SNR entry can't resurface if the user switches
+    // back to SNR later.
+    if (nextMethod !== "snr") {
+      setCMinusA(DEFAULTS.cMinusA);
     }
   };
 
@@ -177,7 +196,7 @@ export default function ToolHome() {
               id="cep-method"
               className={`mt-2 ${INPUT_CLASS}`}
               value={method}
-              onChange={(event) => setMethod(event.target.value)}
+              onChange={(event) => handleMethodChange(event.target.value)}
             >
               {METHODS.map((entry) => (
                 <option key={entry.value} value={entry.value}>
@@ -269,7 +288,11 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5">
+      <section
+        aria-live="polite"
+        aria-atomic="true"
+        className="mt-6 rounded-xl ring-1 ring-[var(--border)] bg-[var(--card)] p-5"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
@@ -309,7 +332,7 @@ export default function ToolHome() {
         <dl className="mt-5 divide-y divide-[var(--border)] text-sm">
           {[
             [
-              "Label reduction (undereated)",
+              "Label reduction (before derating)",
               ok && result.labelReductionDb !== null
                 ? `${NUM1.format(result.labelReductionDb)} dB`
                 : DASH,

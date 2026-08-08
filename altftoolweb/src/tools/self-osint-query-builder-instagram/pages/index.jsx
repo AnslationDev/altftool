@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Check, Copy, ExternalLink, Instagram, RotateCcw, Search } from "lucide-react";
 
 import { GROUPS, SEARCH_ENGINES, buildQueries, searchUrl, toPlainText } from "../lib";
@@ -32,6 +32,7 @@ export default function ToolHome() {
   const [tag, setTag] = useState(DEFAULTS.tag);
   const [engine, setEngine] = useState(DEFAULTS.engine);
   const [copiedId, setCopiedId] = useState("");
+  const copyTimeoutRef = useRef(null);
 
   const result = useMemo(() => buildQueries({ handle, name, city, tag }), [handle, name, city, tag]);
   const ok = !result.error;
@@ -41,7 +42,8 @@ export default function ToolHome() {
     try {
       await navigator.clipboard.writeText(text);
       setCopiedId(id);
-      setTimeout(() => setCopiedId(""), 1500);
+      if (copyTimeoutRef.current) clearTimeout(copyTimeoutRef.current);
+      copyTimeoutRef.current = setTimeout(() => setCopiedId(""), 1500);
     } catch {
       setCopiedId("");
     }
@@ -164,7 +166,10 @@ export default function ToolHome() {
         </p>
       ) : null}
 
-      <section className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]">
+      <section
+        aria-live="polite"
+        className="mt-6 rounded-xl bg-[var(--card)] p-5 ring-1 ring-[var(--border)]"
+      >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">

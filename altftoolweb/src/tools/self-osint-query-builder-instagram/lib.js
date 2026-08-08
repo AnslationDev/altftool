@@ -24,6 +24,18 @@ export const TAG_PATH = "instagram.com/explore/tags";
 export const HANDLE_MAX = 30;
 const HANDLE_PATTERN = /^[a-z0-9._]+$/;
 
+/** Path segments that are Instagram pages, not usernames, so a pasted link to one of these should not be treated as a handle. */
+const NON_USERNAME_PATHS = new Set([
+  "p",
+  "reel",
+  "reels",
+  "explore",
+  "stories",
+  "accounts",
+  "direct",
+  "tv",
+]);
+
 /** Longest free-text field accepted, so a paste cannot produce a silly query. */
 const MAX_FIELD_LENGTH = 100;
 
@@ -52,7 +64,7 @@ export function searchUrl(engineId, query) {
 /** Strips characters that would break a quoted search phrase. */
 function cleanField(raw) {
   if (typeof raw !== "string") return "";
-  return raw.replace(/["'<>]/g, " ").replace(/\s+/g, " ").trim();
+  return raw.replace(/["<>]/g, " ").replace(/\s+/g, " ").trim();
 }
 
 /** Quotes a phrase so search treats it as one term. */
@@ -74,11 +86,21 @@ export function normaliseHandle(raw) {
 
   let value = raw.trim().toLowerCase();
   value = value.replace(/^https?:\/\//, "").replace(/^www\./, "");
+  const isBareHost = value === "instagram.com" || /^instagram\.com[/?#]/.test(value);
   const match = value.match(/^instagram\.com\/([^/?#]+)/);
-  if (match) value = match[1];
+  if (match) {
+    value = match[1];
+  } else if (isBareHost) {
+    return { error: "That URL has no username in it." };
+  }
   value = value.replace(/^@/, "").replace(/\/+$/, "");
 
   if (value === "") return { error: "That URL has no username in it." };
+  if (NON_USERNAME_PATHS.has(value)) {
+    return {
+      error: "That looks like a post, reel or page link, not a profile — paste your profile URL or username instead.",
+    };
+  }
   if (value.length > HANDLE_MAX) {
     return { error: `Instagram usernames are at most ${HANDLE_MAX} characters.` };
   }

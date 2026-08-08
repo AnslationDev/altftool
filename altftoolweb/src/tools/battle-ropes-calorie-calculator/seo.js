@@ -1,6 +1,6 @@
 const seo = {
   intro:
-    "This calculator estimates battle rope energy expenditure from the interval you actually run — rounds, seconds of work, seconds of rest — rather than a flat per-hour figure, because rope training is never continuous. Working intensity is anchored at 10 METs for standard double-arm waves, the middle of the roughly 8 to 11 MET range reported in published laboratory measurements of battling-rope bouts, then scaled by movement pattern and effort and converted with the ACSM equation kcal/min = METs x 3.5 x kg / 200. Recovery periods are costed at 2 METs and an EPOC range of 6 to 15 percent is reported separately.",
+    "This calculator estimates battle rope energy expenditure from the interval you actually run — rounds, seconds of work, seconds of rest — rather than a flat per-hour figure, because rope training is never continuous. Working intensity is anchored at 10 METs for standard double-arm waves, near the upper end of the roughly 8 to 11 MET range reported in published laboratory measurements of battling-rope bouts, then scaled by movement pattern and effort and converted with the ACSM equation kcal/min = METs x 3.5 x kg / 200. Recovery periods are costed at 2 METs and an EPOC range of 6 to 15 percent is reported separately.",
   useCases: [
     "Cost a ten-round Tabata-style rope finisher at the end of a strength session.",
     "Compare 30 seconds on with 30 seconds off against 20 on and 40 off across the same number of rounds.",

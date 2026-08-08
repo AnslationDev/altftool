@@ -9,8 +9,8 @@
  *    Laboratory NRR badly overstates real-world fit, so NIOSH (Criteria for a Recommended
  *    Standard: Occupational Noise Exposure, 1998) recommends derating the NRR before use —
  *    by 25% for earmuffs, 50% for slow-recovery formable earplugs and 70% for all other
- *    earplugs. This tool applies the NIOSH derating by default and shows the undereated
- *    OSHA figure alongside it for comparison.
+ *    earplugs. This tool applies the NIOSH derating by default and shows the figure
+ *    before derating alongside it for comparison.
  *
  * 2. SNR (Single Number Rating, EN ISO 4869-2, used on European packaging). SNR is subtracted
  *    from the C-weighted level:
@@ -106,7 +106,7 @@ export function computeProtection({
   cMinusA = 3,
   durationMinutes = 180,
 } = {}) {
-  if (![levelDb, ratingDb, cMinusA, durationMinutes].every(isNum)) {
+  if (![levelDb, ratingDb, durationMinutes].every(isNum)) {
     return { error: "Enter valid numbers for level, rating and duration." };
   }
   if (levelDb < MIN_LEVEL_DB || levelDb > MAX_LEVEL_DB) {
@@ -136,6 +136,9 @@ export function computeProtection({
   } else if (method === "snr") {
     if (ratingDb > MAX_SNR_DB) {
       return { error: `SNR values above ${MAX_SNR_DB} dB are not sold — check the label.` };
+    }
+    if (!isNum(cMinusA)) {
+      return { error: "Enter a valid number for the C minus A offset." };
     }
     if (cMinusA < 0 || cMinusA > 15) {
       return { error: "The C minus A offset should be between 0 and 15 dB." };

@@ -43,7 +43,6 @@ export default function PollMaker() {
   const [theme, setTheme] = useState("dark");
   const [optionImages, setOptionImages] = useState([]);
   const [showDraftSaved, setShowDraftSaved] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState([]);
 
   // Once voting has started, the option list is locked: adding/editing
   // options after votes exist would desync `pollOptions` from the `votes`
@@ -85,7 +84,12 @@ export default function PollMaker() {
   useEffect(() => {
     const saved = localStorage.getItem("poll_voters");
     if (saved) {
-      setVoters(JSON.parse(saved));
+      try {
+        setVoters(JSON.parse(saved));
+      } catch {
+        // Corrupt data — self-heal instead of crashing the tool.
+        localStorage.removeItem("poll_voters");
+      }
     }
   }, []);
 
@@ -94,7 +98,14 @@ export default function PollMaker() {
     const savedDraft = localStorage.getItem("poll_draft");
 
     if (savedDraft) {
-      const parsed = JSON.parse(savedDraft);
+      let parsed;
+      try {
+        parsed = JSON.parse(savedDraft);
+      } catch {
+        // Corrupt data — self-heal instead of crashing the tool.
+        localStorage.removeItem("poll_draft");
+        return;
+      }
 
       if (parsed.pollQuestion) setPollQuestion(parsed.pollQuestion);
       if (parsed.pollOptions) setPollOptions(parsed.pollOptions);
@@ -111,6 +122,28 @@ export default function PollMaker() {
       }
       if (parsed.theme) setTheme(parsed.theme);
     }
+  }, []);
+
+  // Keep a ref in sync with the latest optionImages so the unmount
+  // cleanup below can revoke whatever is current, not just what was
+  // present on first render.
+  const optionImagesRef = useRef(optionImages);
+  useEffect(() => {
+    optionImagesRef.current = optionImages;
+  }, [optionImages]);
+
+  // Revoke every option-image blob: URL when this component unmounts
+  // (e.g. client-side navigation away from the tool), otherwise each
+  // uploaded image leaks for the rest of the tab's life. Per-slot
+  // revocation on replace is already handled in ImageUploader.jsx.
+  useEffect(() => {
+    return () => {
+      optionImagesRef.current.forEach((img) => {
+        if (typeof img === "string" && img.startsWith("blob:")) {
+          URL.revokeObjectURL(img);
+        }
+      });
+    };
   }, []);
 
   //  AUTO SAVE
@@ -166,15 +199,6 @@ export default function PollMaker() {
     setVoters({});
     localStorage.setItem("poll_voters", JSON.stringify({}));
   };
-  // handle multi select click
-  const handleSelectOption = (index) => {
-    if (selectedOptions.includes(index)) {
-      setSelectedOptions(selectedOptions.filter((i) => i !== index));
-    } else {
-      setSelectedOptions([...selectedOptions, index]);
-    }
-  };
-
   const handleVote = (index) => {
     // Defensive guard: the option list is locked once votes exist (see
     // pollLocked), but this keeps handleVote itself safe against ever
@@ -240,29 +264,6 @@ export default function PollMaker() {
     }
   };
 
-  //  submit multi votes
-  const handleMultiVote = () => {
-    if (selectedOptions.length === 0) {
-      alert("Select at least one option");
-      return;
-    }
-
-    const newVotes = [...votes];
-
-    selectedOptions.forEach((index) => {
-      newVotes[index] += 1;
-    });
-
-    setVotes(newVotes);
-    setHasVoted(true);
-    updateGamification(newVotes, selectedOptions[0]);
-    generateInsights(pollOptions, newVotes);
-
-    setSelectedOptions([]);
-
-    setShowConfetti(true);
-    setTimeout(() => setShowConfetti(false), 1500);
-  };
   return (
     <div
       className={`min-h-screen text-(--foreground)  px-4 py-10
@@ -316,6 +317,7 @@ export default function PollMaker() {
           <input
             type="text"
             placeholder="Enter your question"
+            aria-label="Poll question"
             value={pollQuestion}
             onChange={(e) => setPollQuestion(e.target.value)}
             disabled={pollLocked}
@@ -334,6 +336,7 @@ export default function PollMaker() {
               <input
                 type="text"
                 placeholder={`Option ${index + 1}`}
+                aria-label={`Option ${index + 1}`}
                 value={option}
                 onChange={(e) => handleOptionChange(index, e.target.value)}
                 disabled={pollLocked}
@@ -369,22 +372,30 @@ export default function PollMaker() {
             <div className="flex items-center gap-2 mt-2">
               <input
                 type="checkbox"
+                id="hide-results"
                 checked={hideResults}
                 onChange={(e) => setHideResults(e.target.checked)}
                 className="cursor-pointer"
               />
-              <label className="text-sm text-(--muted-foreground)">
+              <label
+                htmlFor="hide-results"
+                className="text-sm text-(--muted-foreground) cursor-pointer"
+              >
                 Hide results until vote
               </label>
 
               <div className="flex items-center gap-2 mt-1">
                 <input
                   type="checkbox"
+                  id="anonymous-voting"
                   checked={isAnonymous}
                   onChange={(e) => setIsAnonymous(e.target.checked)}
                   className="cursor-pointer"
                 />
-                <label className="text-sm text-(--muted-foreground)">
+                <label
+                  htmlFor="anonymous-voting"
+                  className="text-sm text-(--muted-foreground) cursor-pointer"
+                >
                   Anonymous voting
                 </label>
               </div>

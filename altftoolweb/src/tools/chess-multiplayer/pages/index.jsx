@@ -92,9 +92,12 @@ export default function ToolHome() {
   const restart = useCallback(() => {
     setLoading(true);
     setTimeout(() => setLoading(false), 300);
-    // Restart with the previous time control: we keep an Unlimited-safe default.
-    game.startGame(state.clocks.w || 300);
-  }, [game, state.clocks.w]);
+    // Restart with the originally-selected time control (not whatever time
+    // happened to be left on White's clock, which would silently change an
+    // Unlimited game into a 5-minute blitz or a Bullet game into a near-zero
+    // one).
+    game.startGame(state.timeControl);
+  }, [game, state.timeControl]);
 
   return (
     <div className="min-h-screen bg-(--background) p-4 text-(--foreground) md:p-8">
