@@ -1,4 +1,12 @@
 const seo = {
+  title: "US B-1/B-2 Visa Cover Letter Builder, 214(b) Ready",
+  metaDescription:
+    "Draft a B-1/B-2 cover letter with itinerary, funding and a 214(b) ties statement, and check passport validity and the US$185 MRV receipt dates.",
+  steps: [
+    "Fill the Applicant block — Full name (as in passport), Passport number, Passport expiry date, Occupation, Home address — then Application and interview: Visa class, Purpose of travel, the DS-160 confirmation number in the AA00ABC123 format, MRV fee paid on, and Interview date.",
+    "Add the Trip arrival and departure dates, the \"Itinerary (one line per leg)\" lines and Accommodation or host address, then under Funding and ties set \"Who is paying?\", Funds available (USD), Travellers covered by that budget, and your \"Ties to your home country (214(b) statement)\".",
+    "Check Length of stay and the \"Passport must stay valid to\", \"MRV receipt valid until\" and \"Interview to departure\" cards for warnings, then press Copy letter to take the text under \"Your cover letter\" and work through the Interview document checklist.",
+  ],
   intro:
     "The USA Visa Cover Letter Builder writes a B-1/B-2 cover letter that states your purpose, dates, itinerary, who is paying and — the part refusals turn on — why you will return home. Section 214(b) of the Immigration and Nationality Act presumes every visitor-visa applicant intends to immigrate until they prove otherwise, so the letter is structured around that burden. It also checks the practical timing: the passport six-month rule, the one-year life of the US$185 MRV fee receipt, the DS-160 confirmation format, and the gap between your interview and your flight.",
   useCases: [

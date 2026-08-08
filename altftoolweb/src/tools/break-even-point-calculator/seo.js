@@ -1,4 +1,12 @@
 const seo = {
+  title: "Break-Even Point Calculator: Units, Revenue & Margin",
+  metaDescription:
+    "Divide fixed costs by contribution per unit to get break-even units and revenue, plus margin of safety, target-profit volume and operating leverage.",
+  steps: [
+    "Enter \"Fixed costs for the period (INR)\", \"Selling price per unit (INR)\" and \"Variable cost per unit (INR)\", and name what you sell in the \"What you sell\" field — unit, plate, subscription or hour.",
+    "Add the units you expect to sell, the \"Profit you want for the period (INR)\", and a figure in \"Tax on profit (%)\" — leave it at 0 for a pre-tax target.",
+    "Read \"Break-even volume\" in units and revenue, then the \"Contribution per unit\", \"Margin of safety\" and \"Degree of operating leverage\" rows; \"Copy result\" puts the whole take-off on the clipboard.",
+  ],
   intro:
     "The break-even point is the sales volume at which total contribution exactly covers fixed costs, calculated as fixed costs divided by contribution per unit, where contribution is selling price minus variable cost per unit. This calculator returns that volume and the revenue it represents, then adds the figures a small business actually plans with: units needed for a profit target, the margin of safety between expected sales and break-even, and the degree of operating leverage. It works for any unit — a plate, a subscription, a billable hour or a box.",
   useCases: [

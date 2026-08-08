@@ -1,4 +1,7 @@
 const seo = {
+  title: "TOTP Authenticator: 6-Digit 2FA Codes in Browser",
+  metaDescription:
+    "Paste a Base32 secret or otpauth:// URI for RFC 6238 codes - SHA1, SHA256 or SHA512, 6 or 8 digits, 15-60s periods. Saved secrets are encrypted.",
   intro:
     "This is a browser-based TOTP authenticator that turns a Base32 secret into the same six-digit code Google Authenticator or Authy would show, using the RFC 6238 time-step algorithm over HMAC and RFC 4226 dynamic truncation. Paste a secret or an otpauth:// URI and it derives the counter from the current 30-second window, signs it with HMAC-SHA1, SHA-256 or SHA-512 via the Web Crypto API, and shows the code with a live countdown. Secrets you choose to keep are stored as AES-256-GCM ciphertext in IndexedDB, never in plaintext and never sent anywhere.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Window Blind Size Calculator: Recess or Face Fit",
+  metaDescription:
+    "Turn three width and three height readings into an inside or outside mount order size, with the factory deduction, squareness and depth checked.",
+  steps: [
+    "Choose Millimetres, Centimetres or Inches, then enter the Width at the top, across the middle and at the sill, and the Height at the left, down the centre and at the right.",
+    "Set the Blind type — Roller blind, Aluminium venetian 25 mm slats, Wood or faux-wood venetian 50 mm slats, Zebra / day-night roller, Roman blind, Cellular / honeycomb or Vertical 89 mm louvres — add the Clear recess depth, and tick \"Blackout blind — use the wider face-fix overlap\" if it applies.",
+    "Read the Inside mount order size with the Factory deduction, Clearance each side, Squareness and Depth verdict, take the Outside mount order width and drop if the recess fails either check, then press Copy result.",
+  ],
   intro:
     "This helper applies the standard made-to-measure blind rule: for an inside (recess) mount you order the NARROWEST of three width measurements and the LONGEST of three heights, and you subtract nothing, because the factory takes its own deduction — typically 12.7 mm for a venetian, 9.5 mm for a roller and 6.4 mm for a cellular blind. For an outside (face) mount it adds an overlap of 38 mm per side, 75 mm above the opening for the brackets and 50 mm below the sill. It also checks whether the recess is square enough and deep enough to take the blind at all.",
   useCases: [

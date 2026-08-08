@@ -1,4 +1,12 @@
 const seo = {
+  title: "Cheque Stop Payment Request Letter Generator, India",
+  metaDescription:
+    "Draft a stop payment instruction with the 6-digit cheque number and IFSC checked, the 3-month validity date worked out and the fee totalled with tax.",
+  steps: [
+    "Fill the Account block — account holder name, account number, bank, branch, IFSC in the HDFC0001234 form, and MICR.",
+    "Under Cheque, enter the 6-digit cheque number, the 'Date written on the cheque', the 'Date of this request' and the amount, or tick 'Stop a range of cheque numbers, not just one'.",
+    "'Total stop payment charge' and the ready-to-send Stop payment letter appear below, with warnings if the cheque is already stale; press Copy letter.",
+  ],
   intro:
     "A stop payment request is the written instruction telling your bank not to honour a cheque you have already issued. This generator writes that letter with the details a branch actually needs, checks the cheque number against the 6-digit CTS-2010 format and the IFSC against its 11-character pattern, works out the date the cheque stops being presentable under the RBI's three-month validity rule, and totals the stop payment charge with tax. For account holders whose cheque was lost, stolen, wrongly written, or superseded by a payment made another way.",
   useCases: [

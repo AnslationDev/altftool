@@ -1,4 +1,12 @@
 const seo = {
+  title: "Weekly Pill Organiser Builder: 7-Day, 4-Slot Grid",
+  metaDescription:
+    "Lay out morning, noon, evening and night across all seven days, count tablets per compartment and per week, and flag any slot your box cannot hold.",
+  steps: [
+    "For each row fill the \"Medicine 1\" name field (placeholder \"Name and strength\") and Tablets per dose, then use the Quick frequency list — Once daily morning, Twice daily (BD), Three times daily (TDS), Four times daily (QDS) — to fill the Morning, Noon, Evening and Night chips under Compartments, or toggle them by hand.",
+    "Pick the Days chips or the \"Every day\" shortcut, press \"Add another medicine\" for each further item, and set \"Tablets one compartment holds\" so the builder can test the box's capacity.",
+    "Read \"Tablets to load for the week\" with its \"N doses across M of 28 compartments\" line and any over-capacity warning, then The grid and the \"Tablets to count out\" tables, and press Copy layout to save the plan or Reset to clear the list.",
+  ],
   intro:
     "This builder turns a medicine list into the 7 x 4 grid a standard weekly pill organiser uses — morning, noon, evening and night for each of the seven days — and counts the tablets that belong in every compartment. Give each medicine its tablets per dose, the compartments it goes in and the days it is taken; the tool works out tablets per week for each medicine, the total for the whole box, and flags any compartment that would hold more tablets than your box physically fits. It is a counting and layout aid to use alongside your prescription, not a dosing decision.",
   useCases: [

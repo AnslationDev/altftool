@@ -1,4 +1,12 @@
 const seo = {
+  title: "Subnet Calculator: CIDR to Network, Broadcast, Hosts",
+  metaDescription:
+    "Enter an IPv4 address and prefix for the network and broadcast address, first and last usable host, host count, binary view and RFC 3021 /31 handling.",
+  steps: [
+    "Type an address into IPv4 address (CIDR allowed) — the placeholder shows both accepted forms, 192.168.1.10 or 10.0.0.5/22 — and pick a Prefix length from the list beside it.",
+    "The Network heading updates with the CIDR and its usable host count, and the table beneath prints Address, Netmask and Network in binary so you can see where the prefix boundary falls.",
+    "Read Netmask, Wildcard mask, Network address, Broadcast address, First usable host, Last usable host, Host bits, Scope and Classful, use Split into subnets with a New prefix length, then press Copy result or Reset.",
+  ],
   intro:
     "A subnet calculator turns an IPv4 address and a prefix length into the four numbers a network actually runs on: the network address, the broadcast address, the first and last usable host, and how many hosts fit. It applies the CIDR rules of RFC 4632 — network = address AND mask, broadcast = network OR the wildcard — plus the RFC 3021 exception that makes a /31 point-to-point link carry two usable addresses instead of none. It is for network engineers sizing a VLAN, cloud users choosing a VPC CIDR, and anyone studying for CCNA who wants to check their working.",
   useCases: [

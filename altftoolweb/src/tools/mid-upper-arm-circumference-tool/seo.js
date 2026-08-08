@@ -1,4 +1,12 @@
 const seo = {
+  title: "MUAC Calculator: WHO 115/125 mm Bands for Children",
+  metaDescription:
+    "Read a MUAC tape measurement in mm or cm against the WHO cut-offs for children 6-59 months: red under 115 mm, yellow to 125 mm, green above.",
+  steps: [
+    "Set \"Who was measured\" to \"Child aged 6-59 months\", which adds an \"Age in months\" box, or to \"Pregnant or lactating woman\".",
+    "Type the figure into \"Tape reading\" and set \"Unit\" to \"millimetres (mm)\" or \"centimetres (cm)\".",
+    "\"Screening band\" names the result - Severe acute malnutrition under 115 mm, Moderate from 115 to under 125 mm, none at 125 mm and above - with the tape colour and \"Distance to the next band\" beneath; \"Copy result\" copies the reading and band.",
+  ],
   intro:
     "The Mid-Upper Arm Circumference Tool reads a MUAC tape measurement against the WHO screening cut-offs for children aged 6 to 59 months: below 115 mm is severe acute malnutrition, 115 mm to under 125 mm is moderate acute malnutrition, and 125 mm or more is green. It converts between millimetres and centimetres, names the band, and states the usual next step, plus a separate view for the 230 mm threshold used for pregnant and lactating women in Indian nutrition programmes. This is screening information for parents and community health workers, not a diagnosis.",
   useCases: [

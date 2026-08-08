@@ -1,4 +1,12 @@
 const seo = {
+  title: "Indian Resume Prompt Builder: Pages, Bullets, Keywords",
+  metaDescription:
+    "Budget your resume at 46 lines a page and ~28 words a bullet, check job-description keyword coverage, and get an AI prompt with notice period and CTC.",
+  steps: [
+    "Under What you want written pick a Task such as Rewrite my experience bullets, set the Tone, and name the Target job title and Target sector (optional).",
+    "In Length budget enter Total years of experience, Pages allowed (1, 2 or 3 pages) and Roles you will list, then paste the opening's terms into Key terms from the job description and your bullets into Your current resume text.",
+    "Keyword coverage reports how many of the terms matched, with rows for Missing keywords, Page budget, Lines left for bullets and Bullet allocation (recent first); Copy prompt copies the finished prompt shown below them.",
+  ],
   intro:
     "Indian Resume Prompt Builder sizes your resume and then writes the AI prompt to rewrite it, using an A4 line budget of 46 usable lines per page at 11 pt and about 14 words per line. It works out how many pages your experience warrants, how many bullets actually fit once the header, summary, skills and education blocks have taken their lines, and how much of a job description's vocabulary your current text already covers. The prompt it produces carries Indian recruiter conventions — notice period, CTC in lakhs — and ATS parsing constraints into the model.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Puberty Stage Timeline: Tanner Stages by Age",
+  metaDescription:
+    "Typical age windows for each Tanner stage in girls and boys, with the conventional early (before 8 or 9) and delayed (13 or 14) thresholds.",
+  steps: [
+    "Set Reference chart to Girl or Boy and enter Current age (years).",
+    "Enter Age at first sign (years, blank if none yet) — breast budding for girls, testicular enlargement to 4 mL for boys — plus Age at first period (optional) on the girls' chart.",
+    "Read Timing of the first pubertal sign against the early and delayed cut-offs, check the Milestone windows table of typical ages, then press Copy result.",
+  ],
   intro:
     "The Puberty Stage Timeline Guide lays out the typical age window for every Tanner stage and pubertal milestone, then checks whether a child's first sign appeared inside that window. It uses the Tanner sexual maturity rating scale described by Marshall and Tanner, together with the conventional clinical thresholds of before 8 years in girls and before 9 years in boys for early puberty, and no first sign by 13 in girls or 14 in boys for delayed puberty. It is written for parents and older teenagers who want a reference point rather than a diagnosis.",
   useCases: [

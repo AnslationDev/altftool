@@ -1,4 +1,12 @@
 const seo = {
+  title: "Coupon Graphic Generator with Real Discount Maths",
+  metaDescription:
+    "Design a promo-code graphic and see the true saving — buy 2 get 1 free is 33.3%, not 50%. Six sizes from 1080x1080 to a 1500x600 voucher, PNG export.",
+  steps: [
+    "Enter the Promo code and Eyebrow, pick an Offer type — Percent off, Amount off, Buy X get Y free or Free shipping — and fill its value along with Example order value, Minimum spend (0 for none) and Maximum discount (blank for none).",
+    "Set Expires and Countdown measured from, then choose a Placement size (Instagram square — 1080x1080 through Printable voucher — 1500x600) and a Palette; the canvas preview redraws as you type.",
+    "Read the Real saving headline with the Effective discount, Days remaining and Text contrast rows, then press PNG to save coupon-CODE-1080x1080.png, or Copy terms for the assembled terms line.",
+  ],
   intro:
     "A coupon graphic is the image that carries a promo code, the offer, the expiry date and the small print, and this generator builds one while working out what the discount is actually worth. Percent off is capped at any maximum discount you set, amount off is limited to the order value so a basket can never go below zero, buy-X-get-Y is converted to its true effective rate — buy 2 get 1 free is a 33.3% saving, not 50% — and free shipping is checked against the minimum spend. It also assembles the terms line and counts the days to expiry in whole UTC days.",
   useCases: [

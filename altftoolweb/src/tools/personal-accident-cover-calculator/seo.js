@@ -1,4 +1,12 @@
 const seo = {
+  title: "Personal Accident Cover Calculator for India",
+  metaDescription:
+    "Size accidental death and disability cover from income, loans, goals and existing cover, then test it against the 10x income underwriting cap.",
+  steps: [
+    "Enter Gross annual income (INR), Years of income to replace, Outstanding loans (INR) and Education / marriage corpus needed (INR).",
+    "Subtract what you already hold with Personal accident cover already held (INR) and Liquid savings the family can use (INR), then set Underwriting ceiling (times annual income), Permanent total disablement payout (% of cover) and Occupation risk group.",
+    "Read the Recommended sum insured against the cap insurers usually stop at, with the payout at each benefit level, then press Copy result.",
+  ],
   intro:
     "This calculator sizes a personal accident policy by the human life value method: the income your dependants would have to replace, plus loans to clear and goals to fund, minus cover you already hold and savings you can fall back on. It then tests that figure against the underwriting ceiling Indian insurers apply, which is typically ten times gross annual income. You also see the payout at each benefit level — accidental death, permanent total disablement, the scheduled percentage for loss of a limb, and the weekly benefit for temporary disability.",
   useCases: [

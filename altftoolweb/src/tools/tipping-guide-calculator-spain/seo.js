@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tipping in Spain: How Much Propina Locals Leave",
+  metaDescription:
+    "Around 5% after dinner, loose change after a menú del día, €1 a bag for a porter. Also explains the cubierto and terraza lines on the bill.",
+  steps: [
+    "Pick a Service — Restaurant, sit-down dinner; Menú del día; Tapas bar or drinks; Café, per visit; Taxi; Hotel housekeeping, per night; or Porter, per bag.",
+    "Enter Bill as printed (EUR) or the number of nights or bags, choose Just the coins, As expected (5%) or Excellent (10%) under 'How was the service?', and set People splitting it.",
+    "The Customary tip appears with Total to hand over, Effective rate on the printed bill and Per person; Copy result copies the breakdown.",
+  ],
   "intro": "This calculator applies customary Spanish tipping ranges — roughly 5% after a sit-down dinner, the loose change after a menú del día or a coffee, €1 a bag for a porter — so visitors stop over-tipping out of habit. Spanish propina is small and genuinely optional because menu prices include IVA and service and hospitality staff are salaried under the hostelería collective agreement. It also separates the two lines that confuse visitors: a 'cubierto' charge is for bread and covers, and the higher terraza price is a price difference, not a service charge.",
   "useCases": [
     "Check whether anything is expected after a €14 menú del día in Valencia.",

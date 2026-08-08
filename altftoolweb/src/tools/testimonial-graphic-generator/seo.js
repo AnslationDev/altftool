@@ -1,4 +1,12 @@
 const seo = {
+  title: "Testimonial Graphic Generator: Quote Cards as PNG",
+  metaDescription:
+    "Set a quote, name, job title, company and half-star rating, pick a size such as 1080x1350 or 1080x1920, and download the card as a PNG.",
+  steps: [
+    "Type the testimonial and fill in the name, job title, company, source or date and a star rating from 0 to 5 in halves.",
+    "Choose a placement size such as Instagram portrait at 1080x1350 or Story at 1080x1920, and pick a palette.",
+    "Check the export size, quote contrast and story safe area, then press PNG to download testimonial-<preset>-<width>x<height>.png.",
+  ],
   intro:
     "A testimonial graphic is a customer quote set as an image with the reviewer's name, role, company and star rating attached, and this generator lays one out at the exact pixel size each placement needs. Stars are drawn as true five-point polygons with the golden-ratio inner radius, half stars included, and the quote type is auto-fitted so a two-line and a six-line testimonial both sit correctly on the card. It also scores how complete the attribution is, because a quote with a full name, job title and company reads very differently from an anonymous one.",
   useCases: [

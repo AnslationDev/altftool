@@ -1,4 +1,12 @@
 const seo = {
+  title: "Maharashtra HSC Percentage Calculator (Base 600)",
+  metaDescription:
+    "Six subject marks out of 100 give your MSBSHSE HSC percentage on the 600 base, with the best-five additional subject rule and result class.",
+  steps: [
+    "Enter your English (compulsory) mark out of 100, then Subject 2 to Subject 6 — the fields carry the stream examples Physics / Economics, Chemistry / Book-Keeping, Maths / Secretarial Practice, Biology / OC and Second language / IT.",
+    "Tick \"I offered an additional (seventh) subject\" and fill the Additional subject marks field, and the board rule keeps English plus your best five other scores, reporting the Lowest score dropped.",
+    "Read the HSC percentage with Marks counted out of 600, Pass status (Passed — 35+ in every subject) and Result class against the MSBSHSE result classes table, then press Copy result.",
+  ],
   intro:
     "This calculator computes a Maharashtra HSC (Std XII) percentage exactly as the MSBSHSE marksheet does: six subjects of 100 marks each on a base of 600, with English compulsory. If you offered an additional seventh subject, it applies the board's rule of counting English plus your best five other scores, and it reports the result class — Distinction (75%+), First Class (60%+), Second Class (45%+) or Pass Class (35%+). It is built for Maharashtra board students checking their percentage for FYJC-to-degree admissions, CET forms and scholarship applications.",
   useCases: [

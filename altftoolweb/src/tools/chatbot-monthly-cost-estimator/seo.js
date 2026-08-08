@@ -1,4 +1,12 @@
 const seo = {
+  title: "Chatbot Monthly Cost Estimator: Tokens vs Agents",
+  metaDescription:
+    "Estimate a support bot's monthly token bill from turns, system prompt and RAG context resent every turn, then set it against agent cost saved.",
+  steps: [
+    "Tap a preset such as Simple FAQ bot or RAG support agent, then set Conversations per month, Turns per conversation, System prompt tokens and Retrieved context tokens per turn.",
+    "Enter Input rate and Output rate in USD per 1M tokens, the cached input rate and cache hit rate, then Deflection rate (%) and the fully loaded agent cost per contact.",
+    "Read the Estimated monthly token bill and cost per conversation, plus Net monthly saving and the deflection needed to break even, then press Copy result.",
+  ],
   intro:
     "A support chatbot's monthly bill is conversation volume × cost per conversation, and cost per conversation is driven by what gets resent on every single turn: the system prompt, the retrieved knowledge-base context, and the transcript so far. For n turns with system prompt s, retrieval r, user message u and reply a, total prompt tokens are n(s + r) + u·n(n+1)/2 + a·n(n−1)/2, and output tokens are n·a. This estimator applies that model, adds prompt-cache discounts and retrieval cost, then compares the result against the agent handling cost the bot deflects.",
   useCases: [

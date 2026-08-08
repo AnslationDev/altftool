@@ -1,4 +1,12 @@
 const seo = {
+  title: "Text Size for Viewing Distance: Cap Height and pt",
+  metaDescription:
+    "Minimum cap height in mm, inches, points and pixels from visual angle: 16 arcminutes is the floor, 20-22 comfortable, near 30 for signage.",
+  steps: [
+    "Enter the Viewing distance and its Distance unit (millimetres, centimetres, metres, inches or feet), then pick a Legibility target: Signage and wayfinding, Comfortable reading, Standard recommended, Absolute minimum, or Custom angle.",
+    "Set the Typeface class so the cap-height ratio matches — Grotesque sans at 0.716 em down to Transitional serif at 0.662 — and tick 'Also convert to pixels for a slide, screen or artboard' for a pixel size.",
+    "Read Minimum cap height in mm with the inch and point equivalents, plus Em box height, Typical x-height, Target visual angle and the 1 in / 10 ft rule of thumb, then press 'Copy result'.",
+  ],
   intro:
     "This calculator returns the minimum capital-letter height text needs in order to stay legible at a given viewing distance, in millimetres, inches, points and screen pixels. It works from visual angle rather than a rule of thumb: cap height = 2 × distance × tan(angle ÷ 2), using the character heights human-factors standards call for — roughly 20 to 22 minutes of arc for comfortable reading, about 16 arcminutes as the floor, and near 30 arcminutes for signage read at a glance. Useful for wayfinding, exhibition graphics, posters, packaging and presentation slides.",
   useCases: [

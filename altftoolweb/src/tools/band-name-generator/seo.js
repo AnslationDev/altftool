@@ -1,4 +1,7 @@
 const seo = {
+  title: "Band Name Generator: Rock, Indie, Metal, Electronic",
+  metaDescription:
+    "Get five 'The [adjective] [noun]' band names per run from genre-matched word lists - rock, indie, metal or electronic. Regenerate for more.",
   intro:
     "The Band Name Generator builds names in the classic \"The [adjective] [noun]\" pattern by pairing a genre-specific adjective with a genre-specific noun, and returns five distinct names each time you press regenerate. Four genres are wired in — rock, indie, metal and electronic — each with its own five adjectives and five nouns, so the vocabulary matches the sound rather than coming from one shared word bag. It is for people naming a new band, a side project, an open-mic act or a fictional group who want a starting shortlist instead of a blank page.",
   useCases: [

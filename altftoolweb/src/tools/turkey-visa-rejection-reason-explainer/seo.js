@@ -1,4 +1,12 @@
 const seo = {
+  title: "Turkey Visa Rejection Reasons and How to Fix Them",
+  metaDescription:
+    "The 60-day passport validity margin, conditional nationality rules and the 90-in-180 cap — plus why an e-Visa refusal has no appeal.",
+  steps: [
+    "Paste the reason lines from your notice into 'Paste the wording from your refusal notice' to have Closest matching grounds suggested.",
+    "Tick every applicable ground under 'Which reason was ticked on your notice?', then work through each 'Fix this before you reapply' checklist.",
+    "Reapplication readiness shows the percentage of fixes ticked off beside Review or appeal route and Before you reapply; Copy result copies the explanation and checklist.",
+  ],
   intro:
     "Turkey refuses on two very different tracks, and this explainer covers both. The e-Visa is an automated eligibility check under Law No. 6458 on Foreigners and International Protection - it fails on the 60-day passport validity margin, on conditional nationality requirements, on the 90-days-in-180 short-stay cap or on a mistyped field, with no appeal and no refund. A consular sticker visa is decided by a person on the documents filed, and its refusal notice states its own remedy. Select what applies to see the rule behind it and exactly what to change.",
   useCases: [

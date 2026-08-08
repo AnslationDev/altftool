@@ -1,4 +1,12 @@
 const seo = {
+  title: "Break-Even Accuracy Calculator for Negative Marking",
+  metaDescription:
+    "Break-even accuracy is P ÷ (M + P) — 20% at +4/−1, 25% at one-third. Pick NEET, UPSC, IBPS or a custom scheme to see when a guess pays.",
+  steps: [
+    "Choose your paper from the Marking scheme menu — NEET UG, JEE Main, UPSC Prelims, IBPS/SBI, SSC CGL, CAT, CLAT and GATE are preset — or pick Custom scheme and type the marks, penalty and option count yourself.",
+    "Fill in Options you can rule out, Your accuracy on this question type (%) and Questions you plan to answer.",
+    "Read the Break-even accuracy figure with its a* = P ÷ (M + P) working and the net marks from those attempts, then press Copy result for the full breakdown.",
+  ],
   intro:
     "Break-even accuracy is the accuracy at which answering a question and leaving it blank are worth exactly the same, and it equals P ÷ (M + P) where M is the marks for a correct answer and P is the deduction for a wrong one. This calculator applies that identity to any marking scheme — NEET and JEE at +4/-1 give 20%, UPSC prelims at one-third gives 25%, and IBPS at one-fourth gives 20% — and then shows how many options you must rule out before a guess becomes profitable. It is for candidates deciding, question by question, whether to attempt or move on.",
   useCases: [

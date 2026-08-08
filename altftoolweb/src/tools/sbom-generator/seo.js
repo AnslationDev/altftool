@@ -1,4 +1,12 @@
 const seo = {
+  title: "CycloneDX 1.7 SBOM Generator for npm Lockfiles",
+  metaDescription:
+    "Turn a package.json or package-lock.json into a CycloneDX 1.7 bom.cdx.json in your browser, each component carrying a pkg:npm purl.",
+  steps: [
+    "Paste a package.json, package-lock.json or npm-shrinkwrap.json into the 'Manifest or lockfile' box, or press 'Choose JSON' to load the file — the cap is 2,000,000 characters.",
+    "Leave 'Add timestamp and random serial number' unticked for byte-identical output, then press 'Generate incomplete SBOM'.",
+    "Check the Components, Resolved, Unresolved and Direct edges counts, then press 'Download bom.cdx.json' to save the CycloneDX 1.7 JSON.",
+  ],
   intro:
     "This tool turns a package.json, package-lock.json or npm-shrinkwrap.json into a CycloneDX 1.7 JSON SBOM in the browser, emitting one library component per package with a pkg:npm purl, its declared license and its resolved version. It is aimed at developers who need a machine-readable bill of materials for a customer questionnaire, a procurement checklist or a CI artifact without uploading their dependency tree to a service. Every BOM it produces is marked compositions.aggregate = \"incomplete\", because it reports only what the file you pasted actually states.",
   useCases: [

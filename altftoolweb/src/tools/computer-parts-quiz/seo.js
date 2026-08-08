@@ -1,4 +1,7 @@
 const seo = {
+  title: "Computer Parts Quiz: 15 Questions on PC Hardware",
+  metaDescription:
+    "Fifteen multiple-choice questions on CPU, GPU, PSU, SSD, BIOS and motherboard form factors. Each answer is marked as you pick it; score out of 15.",
   intro:
     "The Computer Parts Quiz is a 15-question multiple-choice test on desktop PC hardware, covering what CPU, GPU, PSU, SSD, BIOS and HDMI stand for, the difference between volatile RAM and permanent storage, what thermal paste and the chipset do, and which motherboard form factor is standard. Each answer is marked immediately — the correct option turns green even when you pick wrong — and the final screen gives a score out of 15 with the percentage. It suits students revising IT basics, first-time PC builders and anyone preparing for an entry-level hardware exam.",
   useCases: [

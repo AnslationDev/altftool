@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wood Stain Calculator: Litres, Coats and Tin Sizes",
+  metaDescription:
+    "Turns surface area into litres of stain, oil, sealer or varnish using spreading rate, texture and porosity factors and a 1.3x first coat on bare wood.",
+  steps: [
+    "Choose 'From piece dimensions' or 'I already know the area', then give Piece length (m), Piece width (m), Piece thickness (mm) and Number of pieces with the both-faces and edges tick boxes — or type the Surface area in square metres or square feet.",
+    "Pick the Product, from Penetrating oil-based wood stain at 9 m²/L to Exterior decking / fence stain at 6, plus Surface texture, Wood porosity, Number of coats, Brush loss and wastage (%) and a Tin size (litres) between 0.25 L and 20 L.",
+    "Read 'Finish to buy' in litres with the tin count, effective coverage, net requirement, leftover and cost, and the coat-by-coat table showing the heavier bare-wood first coat, then press 'Copy result'.",
+  ],
   intro:
     "This calculator converts a wood surface area into the litres of stain, oil, sealer or varnish the job actually needs. It starts from the product's spreading rate in square metres per litre per coat, divides it by a texture factor and a porosity factor — rough-sawn timber and open-grained softwood both have far more real surface than their measured area — and loads the first coat on bare wood by 1.3× because raw grain drinks it. Furniture makers, decorators and DIY finishers use it to buy the right tin size instead of running out halfway through the second coat.",
   useCases: [

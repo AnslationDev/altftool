@@ -1,4 +1,12 @@
 const seo = {
+  title: "Japan Plug and Voltage Guide: 100V, Type A, 50/60Hz",
+  metaDescription:
+    "Japan runs 100 V through Type A sockets, 50 Hz in the east and 60 Hz in the west. See whether you need an adapter, a converter, or neither.",
+  steps: [
+    "Set Your device was bought in to your home country and Where in Japan to one of the 27 cities, which fixes the 50 Hz or 60 Hz grid.",
+    "Pick What are you plugging in and How it uses power, or type Lowest voltage on the label (V), Highest voltage on the label (V) and Wattage on the label (W) straight from the device plate.",
+    "Read the Verdict with Plug adapter needed, Voltage converter needed, Power delivered on 100 V and Current drawn against the 15 A socket, then press Copy result.",
+  ],
   intro:
     "Japan supplies mains power at 100 V — the lowest national voltage in the world — through Type A sockets, on a grid that runs at 50 Hz in the east and 60 Hz in the west. This guide takes the country your device was bought in, where in Japan you are going and the figures printed on the device label, and tells you whether you need a plug adapter, a voltage converter, or nothing. For heating appliances it also works out the real power on 100 V using the resistive relation P = V²/R, which is why a 120 V, 1800 W hair dryer delivers only 1250 W in Japan.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Instagram Self-Search: 12 Queries for Your Handle",
+  metaDescription:
+    "Builds 12 site:, quoted-phrase and OR queries from your username to find indexed posts, embeds and reposts. Assembled in your browser only.",
   intro:
     "This builder assembles twelve search-engine queries from your Instagram username — validated against the platform's own rule of up to 30 characters using letters, numbers, full stops and underscores — plus an optional name, city and hashtag. The queries use documented operators (site:, quoted phrases, OR, minus) to surface your indexed profile and posts, articles that embed them, reposts on Pinterest, Reddit, Tumblr and X, and other networks where the same handle appears. It builds strings for you to run; it never searches, scrapes or stores anything.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "GDPR Article 20 Data Portability Request Generator",
+  metaDescription:
+    "Drafts a GDPR Art. 20 portability letter, switches to an Art. 15 access request when the lawful basis rules it out, and dates the reply deadline.",
+  steps: [
+    "Fill Your full name, Organisation holding your data, Your email address and Username or account reference, then set Applicable law, Lawful basis they rely on, Export format you want and Date you send the request.",
+    "Tick the boxes under Categories you want exported — each is tagged you supplied it, observed from your use or derived by them — and choosing Legitimate interests or Legal obligation rewrites the letter as an Article 15 access request instead.",
+    "Read the They must reply by date with the Portability right applies and Format is machine-readable rows, then press Copy request to take the drafted letter, or Reset to clear the form.",
+  ],
   intro:
     "The Data Portability Request Generator drafts a GDPR Article 20 request for a machine-readable copy of your personal data, and first checks whether Article 20 actually applies — it attaches only to automated processing based on consent or a contract, and only to data you provided or that was observed from your use of the service. Where it does not apply, the letter is rewritten as an Article 15 access request so you still get the data. It also calculates the reply deadline: one calendar month under Art. 12(3), or 45 days under Cal. Civ. Code s.1798.130(a)(2).",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Gujarati Kahevat Explorer: 25 Proverbs with Meanings",
+  metaDescription:
+    "25 Gujarati proverbs in script with Roman transliteration, the literal image, everyday usage and the closest English proverb. Search or filter by theme.",
+  steps: [
+    "Type into \"Search sayings\" — Gujarati script, transliteration, literal reading, meaning and the English match are all searched together, so \"mango\" and \"ઘડો\" both find entries.",
+    "Narrow the list with the \"Theme\" dropdown — \"Wisdom & judgement\", \"Money & thrift\", \"Folly & blame\" and seven more, each showing its count — or set a date in \"Kahevat of the day for\".",
+    "Read the featured saying's \"Transliteration\", \"Literal reading\", \"How it is used\" and \"English equivalent\" rows and press \"Copy saying\"; every match is listed below with its theme tag.",
+  ],
   intro:
     "Gujarati Kahevat Explorer is a searchable set of 25 Gujarati proverbs, each shown in Gujarati script with a Roman transliteration, the literal picture behind the words, the situation people actually use it in, and the closest English proverb. A kahevat is a complete proverbial sentence carrying folk wisdom, which is what distinguishes it from a rudhiprayog — an idiomatic phrase that only works inside a longer sentence. It is aimed at students, speakers preparing a talk, and anyone who grew up hearing these lines and wants the exact wording and sense.",
   useCases: [

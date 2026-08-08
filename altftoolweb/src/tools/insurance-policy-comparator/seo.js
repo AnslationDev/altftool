@@ -1,4 +1,12 @@
 const seo = {
+  title: "Insurance Policy Comparator: Premium, Waiting, Co-Pay",
+  metaDescription:
+    "Paste one policy per line as pipe-separated fields, then rank them by higher coverage, lower premium or shorter waiting period.",
+  steps: [
+    "Enter one policy per line in Policy comparison rows, following the pipe order shown in the hint: Policy | premium | coverage | waiting | co-pay | key limits | exclusions — or load the Two health policies example chip.",
+    "Set Primary comparison priority to Higher coverage, Lower premium or Shorter waiting period; the ranking re-sorts on that one field, and the caption notes it uses only the entered fields.",
+    "Read the Result line naming which policy ranks first, the Policies compared, Lowest premium and Highest coverage figures and the Policy/Premium/Coverage/Waiting/Co-pay/Limits/Exclusions table, then Copy it or Download insurance-policy-comparator.txt.",
+  ],
   intro:
     "Insurance Policy Comparator lays competing policies side by side on the seven things that decide a claim — premium, sum insured, waiting period, co-pay, room and sub-limits, and exclusions — and ranks them by the one priority you pick: highest coverage, lowest premium, or shortest waiting period. You enter one policy per line as pipe-separated fields and get a sorted table plus the lowest premium and highest coverage in the set. It organises the comparison; it does not read the policy wording for you, so the ranking is only as good as the figures you copy in.",
   useCases: [

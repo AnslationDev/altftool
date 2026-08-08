@@ -1,4 +1,12 @@
 const seo = {
+  title: "Flight Hydration Planner: ml per Hour, Jet Lag",
+  metaDescription:
+    "Get an hourly ml target from cabin humidity, alcohol and caffeine, plus arrival local time and a caffeine cutoff before your destination bedtime.",
+  steps: [
+    "Enter 'Body weight (kg)' and 'Flight time (hours)', then 'Cabin temperature (°C)' and 'Cabin humidity (%)'.",
+    "Add 'Coffees on board', 'Teas on board' and each alcoholic drink, then set 'Departure time (local)', 'Intended bedtime at destination' and both UTC offsets.",
+    "Read 'Drink during the flight' in ml with its count of 500 ml bottles, the 'Arrival and time zones' caffeine cutoff, and the hour-by-hour Drink and Running total columns.",
+  ],
   intro:
     "The Flight Hydration Planner turns flight length, cabin conditions and what you drink on board into an hourly millilitre target, and works out your arrival local time and caffeine cutoff at the same time. Aircraft cabins are pressurised to a cabin altitude of up to 8,000 feet with relative humidity typically between 10% and 20%, and the extra water that costs you is computed here from psychrometrics rather than assumed. The usual finding surprises people: on a ten-hour flight the dry air costs roughly 50 ml, while two beers cost about 260 ml in extra urine.",
   useCases: [

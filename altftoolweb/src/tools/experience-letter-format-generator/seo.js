@@ -1,4 +1,12 @@
 const seo = {
+  title: "Experience Letter Format Generator with Dated Roles",
+  metaDescription:
+    "Enter joining and last working day plus each designation's dates, and get a certificate with tenure per role and any gap or overlap flagged before issue.",
+  steps: [
+    "Set Date of joining and Last working day, pick Nature of employment, and choose a Certificate style — Standard experience certificate, Detailed — includes duties, or Brief service certificate.",
+    "Use Add designation to date every title with its From and To, so each stint is measured and any gap or overlap against the employment period is flagged.",
+    "Read Total period certified in years, months and days, then use Copy certificate, or Copy summary line for a verification email.",
+  ],
   intro:
     "This generator produces an employer experience certificate in which every designation is dated and its duration computed, rather than a blank template you fill in by hand. It walks calendar months with end-of-month clamping so a 31 March promotion date does not drift, counts tenure inclusive of both the joining date and the last working day the way verification agencies read it, and flags any gap or overlap between designations before the letter is issued. Three styles are available: standard, detailed with duties, and a facts-only service certificate.",
   useCases: [

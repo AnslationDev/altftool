@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home Loan Tax Benefit Calculator: 80C + 24(b) by Year",
+  metaDescription:
+    "Splits your EMI into principal and interest for any loan year, then applies the ₹1.5 lakh 80C cap, the ₹2 lakh 24(b) cap and 80EEA.",
+  steps: [
+    "Enter the Loan amount (INR), Interest rate (% per year), Tenure (years) and the Loan year to analyse, plus Other 80C investments already claimed (INR).",
+    "Pick Your marginal tax slab from 5% to 30% + 4% cess and set Property type to Self-occupied or Let out / rented, ticking Eligible for Section 80EEA where it applies.",
+    "Read the tax saved for that loan year above the Section 80C deduction (principal), Section 24(b) deduction (interest) and Same year under the new regime rows, then the Year / 80C / 24(b) / Tax saved table; Copy result copies the summary.",
+  ],
   intro:
     "This calculator splits a home loan EMI into principal and interest for any year of the loan, then applies the Indian old-regime deductions: Section 80C on principal repayment up to ₹1,50,000 and Section 24(b) on interest up to ₹2,00,000 for a self-occupied house. It also handles let-out property, where interest is deductible in full but the house-property loss set-off against other income is capped at ₹2,00,000 a year, and the optional Section 80EEA extra ₹1,50,000 on interest. Use it to see the real, after-tax cost of your home loan instead of the headline EMI.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Potting Mix Ratio Calculator: Litres per Pot & Parts",
+  metaDescription:
+    "Pot size becomes litres of soil, compost, cocopeat, perlite and sand — tapered pots use the truncated-cone volume, and cocopeat converts to 5 kg blocks.",
+  steps: [
+    "Choose a \"Container shape\" — \"Round pot (tapered)\", \"Grow bag or straight-sided pot\" or \"Rectangular trough or planter\" — set the unit to centimetres or inches, then enter the rim and base diameters, height and \"Headspace below the rim\".",
+    "Pick a \"Mix recipe\" — \"General potting mix\", \"Container vegetables\", \"Seed starting mix\", \"Cactus and succulent\", \"Indoor foliage\" or \"Custom ratio\" — then set \"How many containers\" and \"Scoop or mug size (litres)\".",
+    "Read \"Total mix needed\" in litres with the litres per container and the ratio, then the recipe table's Ingredient, Parts, Litres, Scoops and Buy columns — soil and compost in kg, cocopeat in compressed blocks.",
+  ],
   intro:
     "This calculator converts a container's real dimensions into litres of each potting mix ingredient, using the parts-by-volume ratios gardeners actually work in. Pot volume is computed properly: a tapered nursery pot is a truncated cone, so its volume follows V = (π h / 3)(R² + Rr + r²) with the radius taken at the mix line rather than the rim — using rim diameter alone overstates a 12-inch pot by close to a third. Each ingredient then comes out in litres, in scoops of your chosen size, and in the units shops sell it by, including 5 kg cocopeat blocks.",
   useCases: [

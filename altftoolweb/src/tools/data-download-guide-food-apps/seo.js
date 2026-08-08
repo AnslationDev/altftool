@@ -1,4 +1,12 @@
 const seo = {
+  title: "Swiggy and Zomato Data Request Under the DPDP Act",
+  metaDescription:
+    "There is no export button - the request goes to the Grievance Officer. Draft it under Section 11 of the DPDP Act and estimate your address snapshots.",
+  steps: [
+    "Under '1. Choose what to ask for', tick the categories - Order history, Saved addresses, Payments and refunds, Device location, Profile and preferences, Support and delivery chat and the rest - or press Select all.",
+    "Under '2. Describe your account', enter Years using the app, Orders per month, 'Saved addresses in the app' and 'Saved payment methods'.",
+    "Read 'Address snapshots stored about you' with the estimated archive size, sensitivity band and the 24 h to acknowledge / 15 days to dispose Grievance Officer deadlines, then work down the 'How to make the request' checklist; Copy plan saves the summary.",
+  ],
   intro:
     "Food-delivery apps in India have no self-service export button, so a data request goes to the platform's published Grievance Officer instead. This guide drafts that request: it lists the categories worth naming explicitly, cites Section 11 of the DPDP Act 2023 for a summary of the personal data processed, and applies the IT Rules 2021 deadline of acknowledgement within 24 hours and disposal within 15 days. It also estimates how many delivery-address snapshots are frozen into your past orders and how many saved addresses and cards you can delete right now.",
   useCases: [

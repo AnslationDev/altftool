@@ -1,4 +1,12 @@
 const seo = {
+  title: "Scooter vs Bike Total Cost of Ownership Calculator",
+  metaDescription:
+    "Price both two-wheelers on depreciation, fuel, servicing, tyres and insurance, and find the kilometres a year where the cheaper one flips.",
+  steps: [
+    "Set Kilometres a year, Years you will keep it and Fuel price (₹ per litre), then name the machines in the Scooter name and Motorcycle name fields.",
+    "For each one enter On-road price (₹), Real mileage (km/l), Cost per service (₹), Service interval (km) and (months), Tyre set cost (₹), Tyre life (km), Insurance per year (₹) and Resale at the end (% of price).",
+    "The Cheaper to own panel names the winner and how much less it costs per month, the rows compare each cost head side by side, and Break-even distance gives the km a year where the answer flips; Copy result saves the comparison.",
+  ],
   intro:
     "A scooter versus bike cost comparison prices both machines on total cost of ownership rather than sticker price: depreciation (on-road price less resale), fuel from your real mileage, servicing counted on the manual's rule of every X kilometres or Y months whichever comes first, replacement tyre sets, and insurance across the years you keep it. It also solves for the break-even distance — the annual kilometres at which the cheaper-to-run machine overtakes the cheaper-to-buy one, found by splitting each into a fixed cost and a variable cost per kilometre.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Loan Comparison Calculator: EMI, Interest, Total Cost",
+  metaDescription:
+    "Enter amount, annual rate and term in years for the level monthly EMI, total interest and total payable. A 0% rate falls back to principal / months.",
   intro:
     "The Loan Comparison Tool turns a loan amount, an annual interest rate and a term in years into the level monthly payment, the total interest paid and the total amount payable, using the standard amortising EMI formula EMI = P x r x (1+r)^n / ((1+r)^n - 1), where r is the annual rate divided by 100 and by 12 and n is the term in months. Change one input and every figure updates, so you can put two quotes side by side and see which one actually costs less over its life. It is aimed at anyone weighing a mortgage, car loan or personal loan offer before signing.",
   useCases: [

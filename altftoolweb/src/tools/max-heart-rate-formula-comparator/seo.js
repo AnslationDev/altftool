@@ -1,4 +1,12 @@
 const seo = {
+  title: "Max Heart Rate Formulas: 220-Age vs Tanaka & Gulati",
+  metaDescription:
+    "Run Fox, Astrand, Inbar, Tanaka, Gellish, Gulati and Nes on one age and see the spread, each estimate's ±10 bpm band and the zone anchors.",
+  steps: [
+    "Enter Age (years) between 10 and 100 and pick a Sex — the page notes only the Gulati equation is sex-specific — then optionally add a Measured maximum heart rate from a lab or field test.",
+    "The All equations table runs Fox, Astrand, Inbar, Tanaka, Gellish, Gulati and Nes together, giving each one's Estimate, its ± band and its difference vs measured.",
+    "Read the Suggested estimate above it with Mean of applicable equations, Lowest estimate, Highest estimate and Spread between equations, check the Intensity anchors table, then press Copy result.",
+  ],
   intro:
     "This comparator runs seven published age-prediction equations for maximum heart rate — Fox (220 − age), Astrand, Inbar, Tanaka (208 − 0.7 × age), Gellish, Gulati (206 − 0.88 × age, women) and Nes (211 − 0.64 × age) — on the same age and shows how far apart they land. Each result carries its prediction band of roughly ±10 bpm, the study it came from, and its difference from a measured maximum if you have one. The spread is the real lesson: at any given age these equations disagree by several beats, and the individual variation around each is larger still.",
   useCases: [

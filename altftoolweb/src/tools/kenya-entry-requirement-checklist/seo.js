@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kenya eTA Checklist: Cost, 90 Days and Passport Rule",
+  metaDescription:
+    "Prices the Kenya eTA (USD 30 plus processing) for your party, checks the 90-day approval window against your arrival date and the 6-month passport rule.",
+  steps: [
+    "Pick an Entry route — Electronic Travel Authorisation (most visitors), Exempt African Union nationality, East African Community citizen or Transit without passing immigration — then set Purpose of the visit, Days you will stay, Arrival date and Passport expiry date.",
+    "Enter Travellers aged 16 and over, Children under 16 and, if you have already applied, the eTA approval date (optional), then tick Arriving from a yellow fever risk country under Anything else that applies?",
+    "Read Authorisation cost for the party with the eTA usable until and Approval window on arrival rows, then work down Required and Worth carrying before pressing Copy checklist or Reset.",
+  ],
   intro:
     "Kenya abolished visas on 1 January 2024 and replaced them with an Electronic Travel Authorisation, which is not the same thing as visa-free entry: the eTA costs USD 30 plus a processing charge, is single entry, permits a stay of up to 90 days, and must be used within 90 days of approval. This checklist prices the authorisation for your party, checks that the approval window still covers your arrival date, tests the six-month passport rule, and adds the yellow fever certificate and the Kenya Revenue Authority passenger declaration that people routinely forget.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Inverter and Battery Size Calculator: VA and Ah",
+  metaDescription:
+    "List your appliances and backup hours to get the VA rating, battery Ah, bank wiring, real backup time and recharge hours - every formula shown.",
+  steps: [
+    "Pick an appliance from the grouped dropdown - each option shows its watts and any starting surge - press Add, then set Qty and Hours on the row, or enter 'Desired backup (hours)' and press 'Apply to every appliance'.",
+    "Choose the System voltage (12, 24 or 48 V) and adjust Inverter efficiency, Depth of discharge and 'Charging current (A)'.",
+    "Read the Recommended rating (total W divided by the 0.8 power factor, rounded up to 600, 900, 1100, 1500 or 2500 VA), the required Ah snapped to a standard 100, 150, 180 or 220 Ah size, 'Real backup at' your load and 'Time to charge from flat'; 'Copy sizing report' copies the lot.",
+  ],
   intro:
     "The Inverter & Battery Backup Calculator sizes a home inverter and battery bank from a real appliance list, dividing total connected watts by a 0.8 power factor to get the VA rating and dividing watt-hours by (system voltage × inverter efficiency × depth of discharge) to get the required amp-hours. It is built for homeowners and electricians choosing between a 600, 900, 1100, 1500 or 2500 VA unit and a 100–220 Ah battery. You get the recommended standard size, the surge headroom needed when a motor starts, real backup hours and an estimated recharge time.",
   useCases: [

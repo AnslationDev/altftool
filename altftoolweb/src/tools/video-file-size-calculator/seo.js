@@ -1,4 +1,12 @@
 const seo = {
+  title: "Video File Size Calculator: Bitrate x Duration",
+  metaDescription:
+    "Total kb/s x seconds ÷ 8 gives kilobytes, shown in MB and MiB. Derive a bitrate from resolution, fps and codec, or use ProRes fixed data rates.",
+  steps: [
+    "Under Duration and bitrate, enter Hours, Minutes and Seconds, then Video bitrate (kb/s) and Audio bitrate (kb/s), or tap one of the YouTube SDR recommendation chips.",
+    "With no bitrate to hand, open 'Not sure what bitrate to use?' and derive one from Resolution, Frame rate (fps), Codec and Quality target.",
+    "Estimated file size is reported as Size in megabytes (SI) and Size in mebibytes (binary), with Per minute of footage, Per hour of footage and a card-duration figure from Free space (GB).",
+  ],
   intro:
     "This calculator returns the size of a video export from its data rate and duration, using the only formula that governs it: bits = (video bitrate + audio bitrate) × 1000 × seconds, divided by 8 for bytes. It also derives a bitrate when you do not have one, either from the pixel rate (width × height × fps × bits per pixel, adjusted for codec efficiency) or from the published fixed data rates of intra-frame codecs such as Apple ProRes. Results are given in both SI megabytes and binary mebibytes, plus per-minute and per-hour figures for storage planning.",
   useCases: [

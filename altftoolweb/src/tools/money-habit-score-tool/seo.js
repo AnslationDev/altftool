@@ -1,4 +1,12 @@
 const seo = {
+  title: "Money Habit Score: 11 Checks Against Real Benchmarks",
+  metaDescription:
+    "Score eleven saving, spending and planning habits out of 100 against the 20% savings rate, 3-6 month emergency fund, 40% EMI cap and 10x term cover.",
+  steps: [
+    "Under \"Your numbers\", enter monthly take-home income, living expenses excluding EMIs, the amount saved each month, your liquid emergency fund, total EMIs, term life sum assured and health cover in rupees.",
+    "Under \"Your habits\", answer the six dropdowns covering spending reviews, how retirement money goes in, the credit card bill, written goals, nominations and will, and review frequency.",
+    "Read the score out of 100 with its band, the saving, spending and planning pillar scores, and the \"Savings rate\", \"Emergency fund\", \"EMIs to income\" and \"Life cover\" rows, then work down \"Fix these first\".",
+  ],
   intro:
     "This tool scores eleven money habits out of 100 across three pillars — saving, spending and planning — using the benchmarks financial planners actually underwrite to rather than generic advice. It measures your savings rate against the 20% target from the 50/30/20 rule, your emergency fund against the three-to-six-month range, your EMIs against the 40% fixed obligation to income ratio lenders apply, and your term cover against the ten-times-annual-income guideline. The output ranks the weakest habits first and states the exact rupee gap for each one.",
   useCases: [

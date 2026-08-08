@@ -1,4 +1,12 @@
 const seo = {
+  title: "Mopping Calorie Calculator: 3.5 METs by Time or Area",
+  metaDescription:
+    "Calories burned mopping from your weight and either minutes or floor area, using MET x 3.5 x kg / 200 at 2.3, 3.5 or 4.3 METs.",
+  steps: [
+    "Press 'I know the minutes' or 'I know the floor area', then enter Body weight and choose kg or lb.",
+    "Under 'How hard were you working?' pick Light - quick wipe over a small area (2.3 MET), Moderate - standard mopping, standing (3.5 MET) or Vigorous (4.3 MET), then enter 'Minutes spent mopping', or 'Floor area mopped' with a Floor layout of 'Open floor, very little furniture' or 'Furnished rooms with obstacles'.",
+    "Read Calories burned with 'Net of resting metabolism', Burn rate in kcal/min, 'Per hour of mopping' and 'Calories per square metre', plus the Compendium MET source; Copy result copies the figures.",
+  ],
   intro:
     "The Mopping Calorie Burn Calculator estimates the energy cost of mopping floors from your body weight and either the minutes you spent or the floor area you covered, using the MET equation kcal/min = MET x 3.5 x kg / 200. Mopping while standing at moderate effort is rated at 3.5 METs in the Compendium of Physical Activities, with lighter wipe-overs at 2.3 and heavy scrubbing at 4.3. Area mode converts square metres into minutes using cleaning-industry damp-mopping production rates of roughly 4,000 sq ft per hour in open space and 2,000 in furnished rooms.",
   useCases: [

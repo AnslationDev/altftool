@@ -1,4 +1,12 @@
 const seo = {
+  title: "Font Glyph Coverage Checker for Your Own Text",
+  metaDescription:
+    "Load a TTF, OTF, WOFF or WOFF2 locally and see which of your exact characters it renders. Coverage only — it does not read GPOS kern tables.",
+  steps: [
+    "Choose a TTF, OTF, WOFF or WOFF2 file with the Local file(s) picker — it is registered through the FontFace API in this tab, never uploaded.",
+    "Paste the exact characters you need into the 'Characters, metadata edits, or processing notes' box, or leave it empty to test the default 63-character A-Z, a-z, 0-9 and space set, then press Run local workbench.",
+    "The Verified result panel reports how many of the requested characters are supported and lists the font name plus every character that resolved.",
+  ],
   intro:
     "This inspector loads a font file from your own machine with the browser's FontFace API and reports, character by character, which of the characters you asked for the font can actually render. You paste the exact string you care about — a headline, a name with diacritics, a currency symbol, a kerning-sensitive pair like AV or To — and it returns a supported-versus-requested count plus the list of characters that resolved, so you can see coverage gaps before the font ships. The font is registered only in your browser session; the file is never uploaded.",
   useCases: [

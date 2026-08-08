@@ -1,4 +1,12 @@
 const seo = {
+  title: "Future Salary Predictor: Compound Raises to 50 Years",
+  metaDescription:
+    "Compound your salary at a fixed annual raise for up to 50 years: final-year pay, total earned, average, and a year-by-year cumulative table.",
+  steps: [
+    "Enter 'Current Annual Salary' and 'Expected Annual Raise (%)'.",
+    "Set 'Years to Predict' — the field accepts 1 to 50 — and press 'Predict Future Salary'.",
+    "Read the final-year figure with 'Total Lifetime Earnings' and 'Average Annual Salary', plus the year-by-year table; 'Reset & calculate again' clears it.",
+  ],
   intro:
     "Future Salary Predictor compounds your current salary by a fixed annual increment to show what you will earn in each future year, using salary × (1 + rate)ⁿ where year 1 is your pay today and the first raise lands in year 2. It returns three summary figures — final-year salary, total earned across the whole period, and average annual salary — plus a year-by-year table with a running cumulative total. Increments run from 0% to 100% and the horizon from 1 to 50 years, so it works for both a modest cost-of-living rise and an aggressive growth scenario.",
   useCases: [

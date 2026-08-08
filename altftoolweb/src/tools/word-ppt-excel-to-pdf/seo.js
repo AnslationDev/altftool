@@ -1,4 +1,12 @@
 const seo = {
+  title: "Word, PPT & Excel to PDF Converter in Your Browser",
+  metaDescription:
+    "Turn DOCX, PPTX, XLSX, XLS, CSV and TXT into PDFs on your device - 20 files at 50 MB each, A4 or Letter, batch ZIP, nothing uploaded.",
+  steps: [
+    "Drop files on 'Drop documents here' or press Choose Files — DOCX, PPTX, XLSX, XLS, CSV and TXT are accepted, up to 20 files at 50 MB each, and legacy DOC/PPT must be saved as DOCX/PPTX first.",
+    "Under PDF Settings choose Page Size, Orientation (Auto, Portrait or Landscape), Margin and Table Density, and set Rows per Sheet and Max Columns for spreadsheets.",
+    "Press Download PDF: one document comes back as its own .pdf, while a queue of several downloads together as converted-pdfs.zip — Copy Summary puts the queue and settings on your clipboard.",
+  ],
   intro:
     "This converter reads DOCX, PPTX, XLSX, XLS, CSV and TXT files in the browser and rebuilds their text content as a clean PDF — Word headings, paragraphs and lists become styled blocks, PowerPoint slides become one framed panel per slide with speaker notes, and spreadsheets become paginated tables sheet by sheet. You can queue up to 20 files at 50 MB each, set A4 or Letter, portrait, landscape or auto orientation, and export them individually or as a single ZIP. Parsing and PDF generation both run on your device, so the documents are never uploaded.",
   useCases: [

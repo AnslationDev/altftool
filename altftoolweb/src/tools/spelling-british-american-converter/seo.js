@@ -1,4 +1,12 @@
 const seo = {
+  title: "British American Spelling Converter With Change Table",
+  metaDescription:
+    "Turn colour into color and organise into organize using a curated word list plus the -our, -ise and -yse rules, with every swap listed and explained.",
+  steps: [
+    "Set Convert to American English or British English, then paste your essay, report or article into the Your text box.",
+    "Optionally tick the suffix-rule option to catch every -our, -ise and -yse word, and the vocabulary option for lift to elevator.",
+    "Read the converted text and the What changed table of From, To, Rule and Times, then press Copy result.",
+  ],
   intro:
     "This converter rewrites a block of text from British to American spelling or back, changing colour to color, organise to organize, centre to center and travelled to traveled while leaving everything else exactly as typed. It works from a curated word list of roughly 400 forms plus three productive suffix rules (-our/-or, -ise/-ize, -yse/-yze), each guarded by an exception list so advertise, honorary, humorous, capsize and seize are never touched. Useful for students, editors and content teams who have to submit in one house style but wrote in the other.",
   useCases: [

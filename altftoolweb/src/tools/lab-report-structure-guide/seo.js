@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lab Report Structure: IMRaD Plan + Percent Error",
+  metaDescription:
+    "Builds an IMRaD skeleton with a word budget and checklist per section for a 300-8,000 word report, plus percent error from your own figures.",
+  steps: [
+    "Choose a \"Report style\" - School practical write-up, Undergraduate lab report or Formal IMRaD report - and set the \"Word target\" anywhere from 300 to 8,000 words.",
+    "Work down the \"Section skeleton\", ticking each section as you draft it; every card carries its own word budget and the checklist of what a marker looks for there.",
+    "Enter \"Your measured value\" and the \"Accepted / literature value\" for the percent error headline, with signed percent error, absolute error and percent difference beneath it; \"Copy skeleton\" copies the whole plan.",
+  ],
   intro:
     "A lab report structure guide lays out the IMRaD skeleton — Introduction, Methods, Results and Discussion — and assigns each section a word budget, a grammatical tense and a checklist of what a marker expects to find there. It also runs the two calculations a results section always needs: percent error, (measured − accepted) ÷ accepted × 100, and percent difference when there is no accepted value. Written for school practicals, undergraduate lab courses and formal journal-shaped reports, with the abstract capped at the 250-word APA ceiling most rubrics reuse.",
   useCases: [

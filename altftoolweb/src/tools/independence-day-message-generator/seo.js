@@ -1,4 +1,12 @@
 const seo = {
+  title: "Independence Day Messages in 11 Indian Languages",
+  metaDescription:
+    "15 August wishes and captions in 11 Indian languages, plus freedom-movement slogans with their meaning, source and the right anniversary number.",
+  steps: [
+    "Under What do you need pick Wish message, Short caption or Slogan card.",
+    "Set Language, Recipient name, Tone (Patriotic, Formal or Warm & simple), Year and How many, then press Shuffle wording for a different set.",
+    "Press Copy all to take every generated message, or Copy on a single one — slogan cards come with their meaning and attribution.",
+  ],
   intro:
     "This generator writes 15 August Independence Day wishes in eleven Indian languages — English, Hindi, Marathi, Bengali, Gujarati, Punjabi, Tamil, Telugu, Kannada, Malayalam and Urdu — and works out which Independence Day a given year marks by counting 1947 as the first. It also produces slogan cards that give a freedom-movement slogan with its meaning and the person or text it is attributed to, so you are not posting a quote you cannot source. Wishes, short captions and slogans are three separate formats rather than one paragraph trimmed to length.",
   useCases: [

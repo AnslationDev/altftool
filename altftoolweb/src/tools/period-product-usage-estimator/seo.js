@@ -1,4 +1,12 @@
 const seo = {
+  title: "Period Product Calculator: Pads or Tampons a Year",
+  metaDescription:
+    "Counts products per cycle and per year from heavy, moderate and light days at 4, 6 and 8-hour changes, with cost and a menstrual cup comparison.",
+  steps: [
+    "Enter Average cycle length (days), pick Sanitary pads, Tampons, Panty liners or Menstrual cup under 'Product you use', then fill Heavy days, Moderate days, Light or spotting days and Cost per product (INR).",
+    "Counts update live at a 4-hour change on heavy days, 6 hours on moderate and 8 on light, giving products per cycle, products a year and the yearly cost.",
+    "Add 'Price of one cup (INR)' and 'Years before you replace it' for the multi-year comparison, then press 'Copy result' for the estimate or 'Reset' to clear the inputs.",
+  ],
   intro:
     "The Period Product Usage Estimator converts your flow pattern into the number of pads, tampons or liners you get through per cycle and per year, and what that costs. It counts from safe wear time rather than habit: heavy days at a four-hour change, moderate days at six hours and light days at the eight-hour maximum that regulators set for tampons and pads, giving six, four and three products a day respectively. Cycles per year are worked out from your own cycle length against a 365.25-day year, and a menstrual cup comparison shows the five-year cost either way.",
   useCases: [

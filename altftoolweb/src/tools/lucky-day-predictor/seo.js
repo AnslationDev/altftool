@@ -1,4 +1,12 @@
 const seo = {
+  title: "Lucky Day Predictor: Birth-Date Numerology Score",
+  metaDescription:
+    "Enter your birth date for a 0-99 luck score built from your numerology and life path digits and the day of the year. Entertainment, not prediction.",
+  steps: [
+    "Enter Your Birth Date in the date field — your numerology digit and life path digit are reduced from it.",
+    "Press Predict Today's Luck to multiply those two digits by the day-of-year number and take the result modulo 100.",
+    "Read the score and its band, from Unlucky at 0-20 to Very Lucky at 81-100, with Advice for today, Numerology Number and Life Path Number.",
+  ],
   intro:
     "Lucky Day Predictor turns your birth date into a luck score from 0 to 99 for today, by reducing your date of birth to two single-digit numerology values and combining them with the current day-of-year number. The score lands in one of five bands — Unlucky (0-20), Neutral (21-40), Favorable (41-60), Lucky (61-80) or Very Lucky (81-100) — each with a short piece of advice and a lucky colour. It is entertainment built on deterministic arithmetic, not astronomy or prediction: the same birth date returns the same score all day and a different one tomorrow.",
   useCases: [

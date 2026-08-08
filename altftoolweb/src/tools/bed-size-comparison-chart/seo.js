@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bed Size Comparison Chart: India, US, UK and EU",
+  metaDescription:
+    "Single, double, queen and king sizes in cm, inches and feet, with the closest match in each standard and the walking space left in your room.",
+  steps: [
+    "Pick a Sizing standard - India, United States, United Kingdom or Europe (EU) - then choose the Bed size, such as Queen or King (Eastern).",
+    "Enter Room width (cm) and Room length (cm), and tick 'Headboard sits against a wall (no clearance needed behind it)' if nobody walks behind the bed's head.",
+    "Read the size in cm, inches and feet, the 'Closest equivalent in each standard' table, and the 'Will it fit your room?' verdict against the 60 cm comfortable and 45 cm minimum clearance bands; Copy result copies the summary.",
+  ],
   intro:
     "This bed size comparison chart converts any single, double, queen or king bed into its exact width and length in centimetres, inches and feet, then finds the closest equivalent size in the Indian, US, UK and European standards. It is built for anyone buying a mattress, frame or fitted sheets across markets — an Indian queen is 60 × 78 in while a US queen is 60 × 80 in, and a UK king (150 × 200 cm) is narrower than a US king (193 × 203 cm). It also checks whether the bed leaves the 60 cm of walking clearance interior planners recommend on each usable side.",
   useCases: [

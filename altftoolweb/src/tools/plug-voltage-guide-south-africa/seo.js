@@ -1,4 +1,12 @@
 const seo = {
+  title: "South Africa Plug Guide: 230V, Type M and Type N",
+  metaDescription:
+    "South Africa runs 230 V at 50 Hz. Enter your plug and label range to see whether the type M, N, D or G socket takes it, and if you need a converter.",
+  steps: [
+    "Choose the 'Plug on your device' — type M, type N, type C Europlug, type D, type G and the rest are each listed with the countries that use them.",
+    "Enter the Label minimum voltage (V), Label maximum voltage (V), Label frequency and Rated power (W) printed on the device's plate.",
+    "'Verdict for South Africa' names which of the SANS 164-1 type M (15 A), SANS 164-2 type N (16 A), type D and type G sockets accept the plug, and whether you need only an adapter or a step-down converter; press Copy result.",
+  ],
   intro:
     "This guide works out which South African socket will actually take your plug, and whether you also need a voltage converter. South Africa supplies 230 V at 50 Hz and is mid-way through a change of standard: the large three-round-pin SANS 164-1 socket (IEC type M, 15 A) still dominates existing buildings, while the 2018 edition of the wiring code SANS 10142-1 requires the slimmer SANS 164-2 socket (type N, 16 A) at every outlet point in new and rewired installations. Enter your plug and label details to see which outlets fit and what the load draws.",
   useCases: [

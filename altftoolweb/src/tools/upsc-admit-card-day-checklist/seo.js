@@ -1,4 +1,12 @@
 const seo = {
+  title: "UPSC Exam Day Checklist: Admit Card, ID and Timing",
+  metaDescription:
+    "Ticks off what gets you through the gate and what does not, with a leave-home time counted back from entry closing 10 minutes before the paper.",
+  steps: [
+    "Pick the Session — Paper I — General Studies (forenoon) 09:30-11:30 or Paper II — CSAT (afternoon) 14:30-16:30 — and enter Travel time to the centre, Buffer before gate closing and Time to get ready at home in minutes.",
+    "The plan counts back from the gate closing 10 minutes before the start and lists 'Start getting ready at', 'Leave home by', 'Be at the centre by', 'Gate closes' and 'Paper starts'.",
+    "Work through the Bag and document checklist, where entry-critical items such as the printed e-Admit Card, the original photo ID and black ball point pens are counted separately, then press 'Print' to carry it, or 'Copy result'.",
+  ],
   intro:
     "This checklist turns the instructions printed on the UPSC e-Admit Card into a tickable list and a reporting plan. It separates the entry-critical documents — the printed admit card, the photo ID whose number appears on it, and a black ball point pen — from the merely useful, and works the clock backwards from the Commission's rule that no candidate is admitted after the entry closing time, ten minutes before a session begins. Civil Services Preliminary day has two two-hour sessions, so the plan can be run once for the forenoon paper and again for the afternoon.",
   useCases: [

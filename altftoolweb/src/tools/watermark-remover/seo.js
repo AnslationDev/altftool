@@ -1,4 +1,12 @@
 const seo = {
+  title: "Watermark Remover: Mask a Region, Inpaint, Export",
+  metaDescription:
+    "Brush or box the mark and each selected pixel is rebuilt from nearby unselected pixels, weighted 1/r². Loads up to 50 MB; exports PNG, JPG or WebP.",
+  steps: [
+    "Use \"Drag & Drop or Browse Files\" to load a JPG, JPEG, PNG, WEBP, BMP, TIFF or AVIF image up to 50 MB.",
+    "Mask the watermark with the Brush Tool or Rectangle (or AI Auto Detect), pick a Removal Mode from Fast to Professional, set Feather, then press Apply Removal.",
+    "In the Export panel choose PNG, JPG, WEBP, TIFF or AVIF and a Quality level, then Download Image saves watermark-removed with that extension.",
+  ],
   intro:
     "Watermark Remover erases a marked region from an image by inpainting it: every selected pixel is rebuilt from the nearest unselected pixel found along each search direction, weighted by 1/r² so closer surrounding detail dominates the fill. You mark the watermark with a brush or rectangle (or run auto-detect), pick a removal strength, and export the repaired image as PNG, JPG, WebP, TIFF or AVIF. It is meant for images you own or are licensed to edit — your own stock purchases, drafts you exported with a preview mark, or scans with a stamp over the content.",
   useCases: [

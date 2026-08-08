@@ -1,4 +1,7 @@
 const seo = {
+  title: "Random Startup Idea Generator: 86,400 Combinations",
+  metaDescription:
+    "Five slots - audience, problem, delivery, differentiator, pricing - make 86,400 ideas, each with a 1-10 build-effort score and a reusable seed.",
   intro:
     "The Random Startup Idea Generator builds a business concept by combining five independent slots — audience, problem, delivery model, differentiator and pricing model — into one of 86,400 distinct combinations. Each generated idea also gets a build-effort score from 1 to 10, calculated by adding the effort weight of each slot (1 for a form and a spreadsheet, 5 for regulated or marketplace work) and mapping the 5-to-25 raw total onto a 1-to-10 scale. It is a structured brainstorming prompt for founders, hackathon teams and product classes, not a market forecast.",
   useCases: [

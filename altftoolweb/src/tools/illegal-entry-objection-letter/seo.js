@@ -1,4 +1,12 @@
 const seo = {
+  title: "Landlord Entry Without Notice: Objection Letter",
+  metaDescription:
+    "Logs each visit against the Model Tenancy Act 2021 rules — 24-hour written notice, 7 a.m. to 8 p.m. entry, your consent — and drafts the letter.",
+  steps: [
+    "Press Add entry and record the Date of entry, Time of entry and Stated purpose for each visit the landlord made.",
+    "Tick or clear \"Written notice was given\", \"I was present\" and \"I had agreed to this visit\" so every visit is tested against the 24-hour notice rule and the 7 a.m. to 8 p.m. window.",
+    "Fill in Your name (tenant), Landlord name, Premises address and Date of this letter, then press Copy letter to take the dated objection text.",
+  ],
   intro:
     "This tool audits a log of landlord visits against the three conditions on which a let premises may be entered — written notice at least 24 hours in advance, entry only between 7 a.m. and 8 p.m., and the tenant's presence or consent — and turns the failures into a dated objection letter. Those conditions come from the Model Tenancy Act, 2021; a tenant in lawful possession also has the implied right of quiet enjoyment, so entering without consent interferes with possession, not just privacy. Each entry you log is reported against the specific rule it failed.",
   useCases: [

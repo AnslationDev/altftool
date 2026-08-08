@@ -1,4 +1,12 @@
 const seo = {
+  title: "Swiss Pairing Generator That Avoids Rematches",
+  metaDescription:
+    "Paste Name | score | previous opponents and get the next round drawn in score order, each row marked no prior match, rematch unavoidable or BYE.",
+  steps: [
+    "Type the field into the Standings box, one player per line as Name | score | previous opponents with earlier opponents comma-separated, and set Round to the round you are drawing.",
+    "Pairings compute as you type: players sort by score descending with alphabetical tie-breaks, and each is matched with the highest-placed opponent not already in their history.",
+    "Read the Player A, Score, Player B, Score and Check columns — every row reads 'No prior match', 'Rematch unavoidable' or BYE — then use Copy, or Download to save swiss-pairing-engine.txt.",
+  ],
   intro:
     "This pairing engine takes a list of players with their current score and the opponents they have already faced, and produces the next round's matchups by pairing each player with the closest-scoring opponent they have not already played. It sorts the field by score descending (ties broken alphabetically), then walks down the standings greedily, skipping anyone already on a player's history list and flagging the pairing as \"Rematch unavoidable\" when no fresh opponent is left. An odd number of players leaves the last one with a BYE, shown explicitly in the table.",
   useCases: [

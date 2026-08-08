@@ -1,4 +1,12 @@
 const seo = {
+  title: "Laptop Hack: Fake Hacker Terminal Prank Screen",
+  metaDescription:
+    "Eight green-on-black lines type themselves over about 16 seconds, then a mock shell transcript holds on screen. Nothing is scanned or connected.",
+  steps: [
+    "Open the page — there is no input field of any kind; the terminal begins typing \"Connecting to target laptop...\" the moment it loads.",
+    "Let all eight lines run: each types over 2s on a 2s stagger, through \"Access granted!\" and \"All systems operational\".",
+    "After roughly 16 seconds the static mock shell block (root@laptop:~$ cat secret.txt … exit) holds on screen with a blinking block cursor, ready to film or project.",
+  ],
   intro:
     "Laptop Hack is a prank terminal animation: eight green-on-black status lines type themselves out in sequence — connecting to target laptop, bypassing firewall, injecting payload, access granted — over about 16 seconds, followed by a static mock shell transcript with a blinking cursor. Nothing is scanned, connected to or accessed; the lines and the fake command output are hard-coded text with a CSS typing effect. It is a joke screen for films, sketches, classroom demos of what movie hacking looks like, and winding up a friend who left their laptop unlocked.",
   useCases: [

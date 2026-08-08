@@ -1,4 +1,12 @@
 const seo = {
+  title: "Interview Prep Prompt Builder for AI Mock Interviews",
+  metaDescription:
+    "Builds a roleplay prompt that runs your round one question at a time — question count from the minutes left in the slot, follow-ups scaled to level.",
+  steps: [
+    "Under \"Which round?\" pick one of the seven rounds: Recruiter / phone screen, Technical / coding, System design, Behavioural, Hiring manager, Take-home review or Values / final round.",
+    "Fill in Role you are interviewing for, Level (Entry / junior up to Staff / principal) and Slot length (minutes), then list Topics to cover, one per line and Things you want pushed on.",
+    "\"Questions that fit\" shows how many questions the slot holds, with Minutes per question and Your speaking time per question; Copy prompt copies the Your mock interview prompt block to paste into an AI chat.",
+  ],
   intro:
     "Interview Prep Prompt Builder writes a roleplay prompt that makes an AI run a mock interview the way a real interviewer does: one question at a time, follow-ups scaled to the level, and a score against the rubric that round is assessed on. The number of questions is calculated from the slot, not guessed — five minutes goes to introductions, five to your own questions, and the rest is divided by the typical length of a question in that round at that level. Covers phone screens, coding, system design, behavioural, hiring manager, take-home review and final rounds.",
   useCases: [

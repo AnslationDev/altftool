@@ -1,4 +1,12 @@
 const seo = {
+  title: "Referrer Policy Chooser: See the Exact Referer Sent",
+  metaDescription:
+    "Enter a source and destination URL and see the Referer header all eight Referrer-Policy values send, with downgrade rules and risky query keys flagged.",
+  steps: [
+    "Enter \"Page the request starts from\" and \"Destination URL\", or click a preset chip such as Third-party script, HTTPS to HTTP, Same-origin link or Outbound user link.",
+    "Pick one of the eight values in \"Policy to inspect\" — strict-origin-when-cross-origin carries a (browser default) suffix — and the W3C algorithm computes the \"Referer header sent\" for that exact URL pair.",
+    "\"All eight policies for this navigation\" compares every value side by side, and \"Where to declare\" gives the Response header, Meta tag, Per element and Per link snippets, each with its own Copy button; Copy comparison takes the whole table.",
+  ],
   intro:
     "This chooser applies the W3C Referrer Policy algorithm to a source and destination URL you supply, and prints the exact Referer header each of the eight policy values would produce, including the same-origin and secure-to-insecure downgrade rules. It flags query parameters that look like tokens, session ids or email addresses, because those only escape when a policy sends the full URL. Modern browsers default to strict-origin-when-cross-origin, which sends the full URL within your own origin, the origin alone when leaving it, and nothing at all on a downgrade.",
   useCases: [

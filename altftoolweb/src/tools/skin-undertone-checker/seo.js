@@ -1,4 +1,5 @@
 const seo = {
+  title: "Skin Undertone Checker: Warm, Cool or Neutral",
   intro:
     "The Skin Undertone Checker classifies a selfie as warm, cool or neutral by detecting your face, sampling pixels from the centre of the face and from both cheeks, and comparing the combined red channel against the combined blue channel. A red-over-blue gap wider than 35 reads warm, a gap under 15 reads cool, and anything in between reads neutral, which it reports as a warm-versus-cool pigment balance along with foundation and jewellery suggestions. It is for anyone stuck between two foundation shades or unsure whether gold or silver sits better against their skin.",
   useCases: [

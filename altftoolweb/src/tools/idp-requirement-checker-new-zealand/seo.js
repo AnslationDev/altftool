@@ -1,4 +1,12 @@
 const seo = {
+  title: "Do You Need an IDP in New Zealand? 12-Month Window",
+  metaDescription:
+    "Dates the 12-month window from your last arrival, says whether your licence needs an IDP or English translation, and whether conversion needs a test.",
+  steps: [
+    "Choose \"Where was your driving licence issued?\" — the list separates Australia, the United Kingdom or Ireland and the United States or Canada from India, China, Japan, South Korea and non-Latin-script states.",
+    "Answer \"What do you already hold?\" (No IDP or translation, a 1949 Geneva permit, a 1968 Vienna permit, both, or an approved English translation), \"Why are you in New Zealand?\", Date you last arrived and Your age (years).",
+    "The Verdict for New Zealand reads IDP or translation required, Approved translation required or No IDP needed, with Window closes as a date and days left, Converts without a test, Minimum driving age and the Alcohol limit in mcg/L breath and mg/100 mL blood.",
+  ],
   intro:
     "This checker tells you whether New Zealand expects an International Driving Permit or an approved English translation alongside your overseas licence, and dates the 12-month window the Land Transport (Driver Licensing) Rule 1999 gives a visitor from the day they last arrived. The permit question turns on one thing: whether the licence is printed in English. The conversion question turns on another - whether your country sits on the NZ Transport Agency's exempt list, which is the difference between a paperwork swap and sitting both a theory and a practical test.",
   useCases: [

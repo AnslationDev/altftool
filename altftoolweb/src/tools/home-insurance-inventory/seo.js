@@ -1,4 +1,12 @@
 const seo = {
+  title: "Home Insurance Inventory: Local, Searchable, JSON",
+  metaDescription:
+    "Log each asset with its serial number and replacement value. Records stay in your browser's local storage and export to a JSON file you can back up.",
+  steps: [
+    "Type the item into the Asset box and its identifiers into 'Serial number and value' — make, model, serial or IMEI and the cost to replace it new — then press Add record.",
+    "Saved records shows the running count, the Search records box filters across both fields as you type, and each card carries a Delete button that asks you to confirm first.",
+    "Export JSON downloads the whole inventory as home-insurance-inventory.json; Import JSON loads a saved file back, replacing every record currently held in this browser's local storage.",
+  ],
   intro:
     "A home insurance inventory is the itemised list of what you own that an insurer asks for after a fire, flood or burglary, and this tool keeps that list as searchable records in your own browser. Each entry pairs an asset with its serial number and replacement value; records are held in this browser's local storage, never uploaded, and you export the whole set as a JSON file whenever you want a copy off the device. Homeowners and renters get a running schedule of possessions they can search, prune and back up without handing the list to a service.",
   useCases: [

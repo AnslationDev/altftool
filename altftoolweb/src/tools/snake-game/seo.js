@@ -1,4 +1,12 @@
 const seo = {
+  title: "Snake Game Online: 18x18 Grid, Four Speed Levels",
+  metaDescription:
+    "Classic Snake in the browser. Easy runs at 160ms for 5 points a food, Extreme at 60ms for 25. Arrow keys, WASD or an on-screen pad.",
+  steps: [
+    "Pick a Difficulty from Easy · 160ms, Medium · 120ms, Hard · 90ms or Extreme · 60ms, and toggle the Sound On / Sound Off button beside it.",
+    "Press 'Start Game' and steer with the arrow keys, WASD or the on-screen pad below the 18 x 18 board; 'Pause' holds the run and 'Restart' asks to confirm before ending it.",
+    "Every food adds one segment and 5 to 25 points depending on difficulty; a crash shows 'Collision detected' and updates the Score, High score, Games played, Average score, Survival and Longest tiles.",
+  ],
   intro:
     "This Snake game runs the classic grow-and-avoid-yourself arcade loop on an 18x18 grid, with four speed settings that also change what each piece of food is worth: Easy moves every 160ms for 5 points, Medium 120ms for 10, Hard 90ms for 15 and Extreme 60ms for 25. You start as a three-segment snake, gain a segment for every food eaten, and the run ends the moment the head leaves the grid or hits the body. Arrow keys, WASD and on-screen touch buttons all steer it, and the page tracks high score, games played, average score and longest survival across your session.",
   useCases: [

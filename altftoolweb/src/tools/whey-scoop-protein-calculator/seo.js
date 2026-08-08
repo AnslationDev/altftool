@@ -1,4 +1,12 @@
 const seo = {
+  title: "Whey Scoop Calculator: Purity and Cost per 25 g",
+  metaDescription:
+    "Divides protein per scoop by scoop weight for real purity — 24 g in a 30 g scoop is 80% — and compares tubs on cost per 25 g of protein.",
+  steps: [
+    "Copy the panel off the tub into Tub net weight (g), Tub price, Scoop weight (g) and Protein per scoop (g).",
+    "Add Carbohydrate per scoop (g), Fat per scoop (g), Protein you want per shake (g), Scoops per day and your Currency.",
+    "\"Cost per 25 g of protein\" heads the result, with % protein by weight, Scoops in the tub, Days one tub lasts and Cost per day set out below it.",
+  ],
   intro:
     "A whey scoop protein calculator converts the nutrition panel on your tub into the numbers that actually matter: protein purity as a percentage of the powder, grams of protein per scoop and per tub, and cost per 25 g of protein. Purity is simply protein per scoop divided by scoop weight — a 30 g scoop with 24 g of protein is 80% protein, which is standard WPC80 concentrate, while isolate is specified at around 90%. Comparing tubs on price per kilogram is misleading because scoop sizes and purity differ; price per 25 g of protein is the like-for-like figure.",
   useCases: [

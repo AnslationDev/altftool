@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Writing Tell Scanner: Delve, Tapestry, Realm",
+  metaDescription:
+    "Highlight 80+ AI giveaway words and stock phrases in your draft with a plainer replacement each, scored as weighted hits per 1,000 words.",
+  steps: [
+    "Paste your text into the Draft box; the whole scan happens in the browser as you type, with no upload.",
+    "Tick the Categories to scan, choosing inflated verbs, grand nouns, filler adjectives, stock phrases or hedges to narrow which of the 80-plus markers are flagged.",
+    "Read the Filler score out of 100 and the weighted hits per 1,000 words, check each highlight's plainer replacement, then press Copy report.",
+  ],
   intro:
     "The AI Writing Tell Scanner matches your draft against a bank of 80-plus words and phrases that appear far more often in unedited language-model prose than in ordinary writing — delve, tapestry, testament, realm, seamless, meticulous, plethora, \"it is important to note\", \"in today's fast-paced world\" — and highlights each one in place with a plainer replacement. Hits are weighted (strong markers count double) and reported as a density per 1,000 words, so a short email and a long report can be compared on the same scale. The whole scan runs in your browser.",
   useCases: [

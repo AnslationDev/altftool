@@ -1,4 +1,12 @@
 const seo = {
+  title: "Short Video Hook Marker: Timestamps + 9:16 Guide",
+  metaDescription:
+    "Write one line per moment as 00:02.500 | Beat | note beside a 9:16 safe-zone preview, then export a dated .txt sheet. No auto cut detection.",
+  steps: [
+    "Attach a frame or clip with 'Optional reference image/video' to see it inside the 9:16 preview.",
+    "Write one line per moment in Content and review notes as timestamp | label | note — 00:02.500 | Beat | Visual change — checking each against the Top safe-zone boundary and the Caption / controls obstruction review band.",
+    "Press Export review report to download altftool-short-video-hook-marker.txt containing your sheet and an ISO 8601 generation timestamp.",
+  ],
   intro:
     "This marker is a plain-text timeline sheet for a short vertical video: you write one line per moment in the form timestamp | label | note — 00:02.500 | Beat | Visual change — next to a 9:16 preview frame that draws the top safe-zone boundary and the bottom band where captions and player controls sit. You can drop in a reference frame or clip to look at while you write, then export the whole sheet as a dated text report. It is for creators and editors planning where the hook lands and what has to stay clear of the interface, before they open an editor.",
   useCases: [

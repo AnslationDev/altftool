@@ -1,4 +1,12 @@
 const seo = {
+  title: "Multitasking Test: 60-Second Math and Alert Dual Task",
+  metaDescription:
+    "Solve four-option sums while hitting the spacebar within 1.5s of every red flash. 60 seconds, minus 0.5 per error, then a score and grade.",
+  steps: [
+    "Read 'How to Play': 'Task 1: Math Engine' is solving the equations, 'Task 2: Danger Alert' is pressing SPACEBAR when the screen flashes RED.",
+    "Press 'Start Test (60s)' and keep answering four-option sums while hitting the spacebar or the Alert button within 1.5 seconds of each flash.",
+    "Read 'Total Score' with its grade plus correct answers, mistakes, missed alerts and 'False Alarms'; 'Try Again' restarts the minute.",
+  ],
   intro:
     "The Multitasking Ability Test runs a 60-second dual-task challenge: you answer four-option addition and subtraction problems continuously while the screen flashes red at random intervals and you have 1.5 seconds to hit the spacebar each time. It scores the two streams separately, deducting half a point for a wrong sum, a missed alert or a spacebar press when no alert was showing, then adds them into one score with a grade band. It is a quick, informal way to see how much your arithmetic slows down once something else is competing for your attention.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Supplement Cost Per Serving: Compare by Active Dose",
+  metaDescription:
+    "Compare tubs on cost per effective serving of active ingredient, not the label serving, with shipping, days per container and yearly cost included.",
+  steps: [
+    "Pick a reference dose or type your own dose per serving in mg of active, plus your effective servings per day.",
+    "For each product enter price, shipping and tax, container size, label serving size and active ingredient per label serving in mg.",
+    "Read the best cost per effective serving and the table of premium, days per container and cost per year.",
+  ],
   intro:
     "A supplement cost per serving tool compares products on the price of the dose you actually take, not on the serving the manufacturer printed on the label. It divides container size by label serving to get servings per tub, multiplies by the active ingredient per serving to get total active, then divides by your target dose to get effective servings — and price divided by that is the number worth comparing. Two creatine tubs at the same shelf price can differ by 80% or more on cost per effective 5 g serving once serving size and purity are accounted for.",
   useCases: [

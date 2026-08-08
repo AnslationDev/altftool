@@ -1,4 +1,12 @@
 const seo = {
+  title: "Banking App Permission Audit: What to Revoke Now",
+  metaDescription:
+    "Check which permissions a bank or wallet app really needs. SMS, accessibility, overlays and notification access are flagged as red flags to revoke.",
+  steps: [
+    "Type the bank, wallet or lending app into the App name box.",
+    "Tick every permission the app currently holds across the three groups — Needed for the app to do its job, Only needed for one feature, and A bank has no business asking — or press Keep only core permissions to start from a safe baseline.",
+    "Read the Risk score out of 100 and the Revoke first list, which names the safer alternative for each grant, then press Copy audit.",
+  ],
   intro:
     "The Banking App Permission Audit checks a bank, wallet or lending app against the permissions it genuinely needs: transaction notifications, biometric unlock, camera for QR or KYC, microphone for a one-off video call, and foreground location for branch or ATM search. It flags high-risk requests such as SMS, call logs, accessibility service, display-over-other-apps, notification access and installed-app inventory because those grants expose OTPs, contacts, screen contents or device fingerprints that a banking app should not need for day-to-day use.",
   useCases: [

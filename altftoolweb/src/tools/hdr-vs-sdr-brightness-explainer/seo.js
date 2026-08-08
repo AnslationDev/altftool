@@ -1,4 +1,12 @@
 const seo = {
+  title: "HDR vs SDR Nits: PQ and HLG Code Value Explainer",
+  metaDescription:
+    "Convert nits to PQ (ST 2084) and HLG code values, see headroom in stops over 203-nit reference white, and what skipping tone mapping costs.",
+  steps: [
+    "Enter HDR peak (nits), SDR display peak (nits) and Diffuse (paper) white in the grade (nits).",
+    "Set Level to explain (nits) to the highlight you want broken down.",
+    "Read the PQ code value and HLG signal for that level, the tone-mapped versus untone-mapped nits, Brightness lost by skipping tone mapping in stops and the Brightness ladder, then press Copy result.",
+  ],
   intro:
     "This explainer converts absolute brightness in nits into PQ (SMPTE ST 2084) and HLG (ITU-R BT.2100) code values, then shows how much headroom an HDR grade has above diffuse white and what happens to that headroom on an SDR screen. It tone maps with extended Reinhard against the HDR peak and contrasts that with the untone-mapped result a naive player produces, which is the usual reason an HDR grade looks flat and dark on SDR. Written for editors, colourists and developers who keep hearing about nits without a clear picture of what the numbers mean.",
   useCases: [

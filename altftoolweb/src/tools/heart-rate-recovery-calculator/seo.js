@@ -1,4 +1,12 @@
 const seo = {
+  title: "Heart Rate Recovery Calculator (HRR1 and HRR2)",
+  metaDescription:
+    "Enter peak HR and your pulse at 60 and 120 seconds for HRR1 and HRR2, checked against the 12 bpm cool-down and 18 bpm supine cut-offs.",
+  steps: [
+    "Enter Peak heart rate (bpm) and Heart rate at 1 minute (bpm); Heart rate at 2 minutes and Resting heart rate are optional.",
+    "Answer 'What did you do right after stopping?' so the 12 bpm cool-down or the 18 bpm supine cut-off is the one applied.",
+    "'One-minute recovery (HRR1)' shows with your fitness band, Two-minute recovery (HRR2), the drop in the second minute alone and HRR1 as a % of peak and of heart rate reserve; press Copy result.",
+  ],
   intro:
     "Heart rate recovery is the number of beats your pulse falls in the first minute after stopping exercise: HRR1 = peak heart rate − heart rate at 60 seconds, with HRR2 measured the same way at 120 seconds. This calculator reports both, expresses them as a share of peak heart rate and of heart rate reserve, and compares HRR1 against the published cut-offs — 12 bpm after an active cool-down (Cole et al., NEJM 1999) or 18 bpm when recovery is seated or supine (Watanabe et al., Circulation 2001). It is a fitness and monitoring aid, not a diagnostic test.",
   useCases: [

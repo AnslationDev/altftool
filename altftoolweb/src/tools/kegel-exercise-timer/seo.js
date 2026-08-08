@@ -1,4 +1,12 @@
 const seo = {
+  title: "Kegel Exercise Timer: Hold, Release and Rep Count",
+  metaDescription:
+    "Times the squeeze and the matching release, counts reps and sets, and totals contractions a day against the 24-a-day reference programme.",
+  steps: [
+    "Pick a progression level — Starter, Building, Steady or Maintenance — or type your own Hold (seconds), Release (seconds), Repetitions per set, Sets per session, Rest between sets and Sessions per day.",
+    "Press 'Start session' and follow the phase readout as it counts each hold and release down; Pause, Resume and Restart control the run while the progress bar tracks seconds elapsed of the whole session.",
+    "Read 'Your programme' for contractions per session, per day and per week against the 24-a-day reference, then press 'Copy plan' for the summary or 'Reset all' to go back to the Building defaults.",
+  ],
   intro:
     "A Kegel exercise timer paces a pelvic floor muscle training session: it counts each squeeze, cues a full release of equal or longer length, tracks sets, and totals how many contractions you complete a day. The progression levels follow the standard supervised prescription used in continence physiotherapy — short 3 second holds at first, built up towards 10 second maximal holds over about three months. It is built for anyone doing pelvic floor work for bladder control, postnatal recovery or prostate surgery rehabilitation who wants the counting handled for them.",
   useCases: [

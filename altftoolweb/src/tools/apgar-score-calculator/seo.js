@@ -1,4 +1,12 @@
 const seo = {
+  title: "Apgar Score Calculator: 1, 5 and 10-Minute Totals",
+  metaDescription:
+    "Score Appearance, Pulse, Grimace, Activity and Respiration 0-2 at 1 and 5 minutes. Flags when a 5-minute total under 7 needs 10-minute scoring.",
+  steps: [
+    "In the At 1 minute card set the five dropdowns — A — Appearance (Skin colour) through R — Respiration (Breathing effort) — to the 0, 1 or 2 descriptor that fits, such as 1 — Under 100 beats per minute for Pulse.",
+    "Repeat in the At 5 minutes card, and tick Include a 10-minute score when the 5-minute total falls below 7 and scoring continues.",
+    "The 5-minute Apgar headline shows the total out of 10 with its band, while rows list 1-minute total, 5-minute total, Change from 1 to 5 minutes and Repeat scoring advised; Copy result copies the whole series.",
+  ],
   intro:
     "The Apgar Score Calculator adds the five newborn signs described by Virginia Apgar in 1953 — Appearance (colour), Pulse (heart rate), Grimace (reflex response), Activity (muscle tone) and Respiration (breathing effort) — each scored 0, 1 or 2, for a total out of 10. It records the assessment at 1 and 5 minutes after birth, and at 10 minutes when the 5-minute total is below 7, which is the point at which AAP/ACOG guidance says scoring should continue every five minutes. Totals of 7-10 are described as reassuring, 4-6 as moderately abnormal and 0-3 as low.",
   useCases: [

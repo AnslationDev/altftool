@@ -1,4 +1,12 @@
 const seo = {
+  title: "Pregnancy Water Intake Calculator by Trimester",
+  metaDescription:
+    "Starts from EFSA's 2.0 L adequate intake, adds your trimester's energy cost at 1 ml per kcal, then splits the 80% drinks share into timed servings.",
+  steps: [
+    "Select your Trimester and a Baseline method — EFSA adequate intake (2.0 L/day) or Body weight (35 ml per kg per day) with your weight in kg.",
+    "Set Climate, Moderate activity (minutes a day), Wake-up time and Hours awake so the allowances and the serving schedule fit your day.",
+    "\"Drink each day\" gives the litre target and serving count, and the breakdown lists Trimester increment, Water you get from food and Drinks target.",
+  ],
   intro:
     "This calculator gives a daily fluid target for pregnancy and turns it into a timed drinking schedule. It starts from EFSA's Adequate Intake of 2.0 litres of total water a day for adult women (or 35 ml per kg if you prefer a weight-based baseline), then adds a trimester increment derived from the extra energy requirement of pregnancy — about 70 kcal a day in the first trimester, 260 in the second and 500 in the third — converted at roughly 1 ml of water per kcal. Because around 20% of total water comes from food, the drinks target shown is 80% of the total.",
   useCases: [

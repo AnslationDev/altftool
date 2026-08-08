@@ -1,4 +1,12 @@
 const seo = {
+  title: "PUC Renewal Planner: Expiry Date, Booking Day, Cost",
+  metaDescription:
+    "Turn your PUC certificate date into expiry and booking dates on the 12-month first, 6-month renewal rule, with test cost by vehicle type.",
+  steps: [
+    "Enter the Date on the current certificate, and tick the first-certificate checkbox if it was issued with a brand-new vehicle so 12 months validity applies instead of 6.",
+    "Pick a Vehicle category from two-wheeler to diesel goods vehicle, override Test fee you pay (INR) if your centre charges differently, and set the days-early booking buffer.",
+    "Read Certificate valid until, the Book the next test from date and the yearly cost, then press Copy result to keep the schedule.",
+  ],
   intro:
     "This planner converts the date printed on your Pollution Under Control certificate into an expiry date, a booking date and a running cost, using the validity rule in Rule 115(7) of the Central Motor Vehicles Rules, 1989 — twelve months for the certificate issued with a newly registered vehicle, six months for every renewal after that. Pick your vehicle category and it also projects how many emission tests you will pay for over the next few years. Written for private owners and small fleets who want the renewal on the calendar before a traffic stop finds it.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Technical Doc Prompt Builder on the Diátaxis Model",
+  metaDescription:
+    "Pick tutorial, how-to, reference or explanation and get a prompt with that type's sections, Google/Microsoft style rules and TODO(author) for gaps.",
+  steps: [
+    "Fill \"What is being documented? (required)\", choose the Document type (Diátaxis) — Tutorial (learning-oriented), How-to guide (task-oriented), Reference (information-oriented) or Explanation (understanding-oriented) — and an Audience, then add Product / project, Code example language, prerequisites and In scope / Out of scope as needed.",
+    "Tick \"Include runnable code examples\" and \"Insert [DIAGRAM] placeholders\" if you want them; the prompt rebuilds around that document type's own section outline and reports Estimated prompt tokens at roughly 4 characters per token.",
+    "Copy prompt puts the finished prompt on the clipboard — second person, present tense and active voice, with TODO(author) markers demanded for any version, default or URL you did not supply — and Reset restores the defaults.",
+  ],
   intro:
     "The Technical Doc Prompt Builder assembles a complete AI prompt for writing developer documentation, structured around the Diátaxis framework's four document types: tutorial, how-to guide, reference and explanation. It encodes your audience, scope boundaries and code-example language, plus prose rules drawn from the Google and Microsoft developer style guides — second person, present tense, active voice. It is built for developers and technical writers who want AI documentation drafts that follow a real docs architecture instead of generic blog-post structure.",
   useCases: [

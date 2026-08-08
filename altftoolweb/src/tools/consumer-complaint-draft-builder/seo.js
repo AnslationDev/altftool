@@ -1,4 +1,12 @@
 const seo = {
+  title: "Consumer Complaint Format India: 8-Section Draft",
+  metaDescription:
+    "Turns the business, transaction date, amount paid, facts in date order, relief and evidence into an eight-section draft with an evidence index.",
+  steps: [
+    "Fill the seven fields — Consumer name, Business / service provider, Purchase / service date, Amount paid (₹), Facts in date order, Relief requested and Evidence available — or load the Damaged delivery preset.",
+    "The draft rebuilds as you type, formatting the amount in Indian rupees and laying out eight labelled sections: Complainant, Opposite party, Transaction, Facts, Deficiency / grievance, Relief requested, Evidence index and Verification.",
+    "Take the draft away with the Copy or Download icon buttons; Reset first asks \"Reset all fields? This clears your Facts, Relief and Evidence text and cannot be undone.\"",
+  ],
   intro:
     "Consumer Complaint Draft Builder turns seven inputs — your name, the business, the transaction date, the amount paid in rupees, the facts in date order, the relief you want and the evidence you hold — into an eight-section complaint draft with complainant, opposite party, transaction, facts, deficiency, relief, evidence index and verification headings. It is for shoppers and service users in India who know what went wrong but not how to lay it out. The output is an organised draft for you or an advocate to check, not legal advice or a guaranteed filing format.",
   useCases: [

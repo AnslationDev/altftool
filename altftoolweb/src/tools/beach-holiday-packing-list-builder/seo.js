@@ -1,4 +1,12 @@
 const seo = {
+  title: "Beach Packing List Sized by Days, Heat and Laundry",
+  metaDescription:
+    "Garment counts come from your trip length and laundry interval, the sunscreen volume from the full dose, and the total weighed against your allowance.",
+  steps: [
+    "Enter trip length in days, travellers, laundry every N days, the daytime high in Celsius, hours in the sun and swims per day.",
+    "Choose a baggage plan, cabin bag only at 7 kg or a checked bag at 15 or 23 kg, and tick the trip details that apply.",
+    "Read the estimated pack weight against the allowance, the sunscreen volume in ml, and the cabin 1 litre liquids check.",
+  ],
   intro:
     "This builder sizes a beach packing list from four numbers — trip length, laundry interval, daytime high and hours in the sun — instead of handing you a generic checklist. Garment counts come from the laundry-cycle rule (you never need more than one wash cycle plus a day of turnaround), and the sunscreen figure comes from the 2 mg/cm² dermatology dose, about 30 ml to cover an adult body, reapplied every two hours. It also weighs the result against your cabin or checked allowance and audits the liquids against the 100 ml container and 1 litre bag limits.",
   useCases: [

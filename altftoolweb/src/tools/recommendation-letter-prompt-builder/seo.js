@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reference Letter Prompt Builder: Honest Percentiles",
+  metaDescription:
+    "Rank 3 of 120 is 2.5%, so it claims 'top 5%', never 'top 1%'. Under 20 people it drops percentages, and splits your word target six ways.",
+  steps: [
+    "Enter Person you are recommending, Letter type, Your relationship, Months you have known them and In what capacity you observed them.",
+    "List one incident per line under 'Specific things you saw them do', then give Their rank in the cohort, Size of that cohort and Target length (words).",
+    "Read the Strongest honest claim, the Example specificity scores and the Section word budget, then press Copy prompt to take the finished prompt.",
+  ],
   intro:
     "The Recommendation Letter Prompt Builder converts what you personally observed into an AI prompt that produces a specific, defensible reference letter instead of a page of superlatives. It calculates the strongest percentile claim your cohort size honestly supports — rank 3 of 120 is 2.5%, which rounds up to 'top 5%', never down to 'top 1%' — and splits your target length across the six sections of a letter so each part gets a word allowance. Each example you supply is scored for whether it names an artefact, states an outcome and offers a comparison.",
   useCases: [

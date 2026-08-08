@@ -1,4 +1,12 @@
 const seo = {
+  title: "Delhi University CGPA to Percentage (x 9.5 Rule)",
+  metaDescription:
+    "Convert DU CGPA with the notified 9.5 multiplier, build it from semester SGPAs and credits, and check the 55% UGC NET and 60% First Class bars.",
+  steps: [
+    "Type your figure into Your CGPA (0 to 10) and leave Conversion rule set to DU notified rule — CGPA x 9.5, or switch to Plain multiply — CGPA x 10 to see the difference.",
+    "Under CGPA from your semester SGPAs press Add a semester and enter each semester's credits and SGPA, so the CGPA is credit-weighted rather than a plain average of the SGPAs.",
+    "Percentage of marks updates instantly, Eligibility bars this percentage clears ticks or crosses each cutoff — 55% UGC NET general, 50% reserved, 60% First Class / First Division — with the CGPA each needs and its source; Copy result copies the figure and rule.",
+  ],
   intro:
     "The University of Delhi converts CGPA to a percentage of marks by multiplying by 9.5, the UGC Choice Based Credit System equivalence its own conversion notification adopts. This converter applies that multiplier, builds the CGPA itself as the credit-weighted mean of semester SGPAs, and checks the result against the thresholds DU graduates most often need — 55% for UGC NET in the general category, 50% with the reserved-category relaxation, and the conventional 60% First Division mark. It also works backwards, showing the CGPA a stated percentage requires.",
   useCases: [

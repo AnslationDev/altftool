@@ -1,4 +1,12 @@
 const seo = {
+  title: "Power to Weight Ratio Calculator: PS/tonne & 0-100",
+  metaDescription:
+    "Peak power ÷ mass in PS/tonne, kW/tonne, bhp/tonne, W/kg and kg per PS, at kerb and laden weight, plus a 0-to-target-speed estimate capped by traction.",
+  steps: [
+    "Enter \"Peak power\" and pick its unit — \"PS (metric hp)\", \"kW\" or \"bhp (imperial hp)\" — then \"Kerb weight (kg)\" and \"Rider, passengers and luggage (kg)\".",
+    "Choose a \"Vehicle type\" from Motorcycle, Scooter / step-through, Car (petrol/diesel) or Electric vehicle, and set \"Target speed for 0-to-X (km/h)\".",
+    "Read the headline PS/t with load against the kerb figure, then the \"kW per tonne\", \"bhp per tonne\", \"Watts per kg\", \"Weight carried per PS\", estimated 0-to-target time and \"Limiting factor\" rows.",
+  ],
   intro:
     "Power-to-weight ratio is peak power divided by the mass being moved, and it predicts acceleration far better than power alone. This calculator reports the ratio in PS per tonne, kW per tonne, bhp per tonne, watts per kilogram and kilograms carried per PS, using both kerb weight and kerb weight plus rider or passengers. It also estimates 0-to-target-speed time from the work-energy relation t = ½mv² ÷ (k × P), floored by the traction limit t = v ÷ (a × g), so an over-powered machine is correctly reported as wheelie-limited rather than impossibly quick.",
   useCases: [

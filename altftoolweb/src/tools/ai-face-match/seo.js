@@ -1,4 +1,7 @@
 const seo = {
+  title: "AI Face Match: Compare Two Photos in the Browser",
+  metaDescription:
+    "Compares two faces with face-api.js in your tab: 128-value descriptors, Euclidean distance, a 12-99% score. Look-alike curiosity, not identity checks.",
   intro:
     "AI Face Match compares two photographs by running face-api.js in your browser — a tiny face detector, a 68-point landmark model and a face-recognition network that turns each face into a 128-number descriptor — then measures the Euclidean distance between those two descriptors and maps it to a similarity percentage. A distance of 0 reads as a perfect match and a distance of 1.4 as no resemblance, with the score clamped between 12% and 99%. It is built for look-alike and family-resemblance curiosity, not identity verification, and the images never leave the page.",
   useCases: [

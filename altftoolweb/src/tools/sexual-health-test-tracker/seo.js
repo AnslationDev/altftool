@@ -1,4 +1,12 @@
 const seo = {
+  title: "Sexual Health Test Tracker with Retest Reminders",
+  metaDescription:
+    "Log each screening as test | date | result | next review | reference and see days left or days overdue against a reminder window you set.",
+  steps: [
+    "Enter one screening per line in 'Private test records' as test name | date taken | result or status | next review date | private reference.",
+    "Set 'Review date' to today and 'Reminder window (days)' to the lead time you want — it starts at 30.",
+    "Read the Reminder column of the results table: it shows a countdown marked upcoming inside the window, or the number of days overdue past the next review date.",
+  ],
   intro:
     "This tracker keeps a private list of sexual health screenings — test name, the date it was taken, the result you were given, the next review date and your own reference — and counts the days between today and each next-review date so you can see what is coming up or already overdue. Anything falling within your reminder window, 30 days by default, is flagged as upcoming; anything past its date is shown with the number of days it has been outstanding. It is an organiser for people managing a regular testing schedule, not a source of results or interpretation.",
   useCases: [

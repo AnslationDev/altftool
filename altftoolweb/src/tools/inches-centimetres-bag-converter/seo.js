@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bag Size Converter: Inches to cm, Plus Fit Check",
+  metaDescription:
+    "Converts at exactly 2.54 cm per inch, compares sorted dimensions against a cabin allowance in any orientation, and checks the 158 cm limit.",
+  steps: [
+    "Type your case's Length, Width and Depth / height, and set Measured in to Inches or Centimetres.",
+    "Pick a published allowance from the Allowance menu, or choose 'Enter my airline's own figures' and type its three dimensions.",
+    "The converted size appears with a fits-in-some-orientation verdict or the worst-side overhang in cm, plus Linear total (L + W + H) against the 158 cm checked-bag limit.",
+  ],
   intro:
     "This converter turns bag dimensions between inches and centimetres at the exact rate of 1 inch = 2.54 cm, then tests whether the bag fits a chosen cabin or checked allowance. The fit test sorts your three dimensions and the allowance's three dimensions from largest to smallest and compares them pairwise, which is the correct check for whether a rectangular case will pass a rectangular gauge in any orientation. It also reports the linear total — length plus width plus height — against the 62 linear inch (158 cm) checked-bag limit most airlines publish.",
   useCases: [

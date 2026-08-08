@@ -1,4 +1,7 @@
 const seo = {
+  title: "Database Connection String Builder: URI & Default Ports",
+  metaDescription:
+    "Build scheme://user:password@host:port/database for Postgres, MySQL, MariaDB, MongoDB, Redis or SQL Server — leave the port blank for 5432, 3306 or 27017.",
   intro:
     "The Database Connection String Builder assembles a URI in the form scheme://user:password@host:port/database for PostgreSQL, MySQL, MariaDB, MongoDB, Redis and SQL Server, filling in the correct scheme and the engine's default port — 5432, 3306, 27017, 6379 and 1433 — whenever you leave the port blank. Developers wiring up a DATABASE_URL or a container environment file get the exact string plus a breakdown of the scheme, host, port and database name it used. Credentials are typed in plain text, so use throwaway values rather than production secrets.",
   useCases: [

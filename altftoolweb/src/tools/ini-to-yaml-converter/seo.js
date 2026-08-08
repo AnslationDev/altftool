@@ -1,4 +1,12 @@
 const seo = {
+  title: "INI to YAML Converter with Nested Dotted Sections",
+  metaDescription:
+    "Paste INI and get YAML 1.2: [database.primary] nests into a hierarchy, true/false and numbers become real types, and every duplicate key is reported.",
+  steps: [
+    "Paste your config into INI input — both = and : delimit keys, and ; or # start a comment line.",
+    "Tick Nest dotted section names ([a.b] becomes a: b:) and Infer types (true/false, numbers, empty = null), or untick to keep every value a string.",
+    "Check the key count, the output size and any duplicate-key warnings beside the YAML, then use Copy YAML.",
+  ],
   intro:
     "This converter turns INI configuration into structured YAML 1.2, nesting dotted section names like [database.primary] into a real hierarchy and inferring booleans, integers and floats from the text values. Because INI has no formal specification, it follows the de facto rules of Python's configparser and git config: = and : both work as delimiters, ; and # start comments, and the last duplicate key wins with a warning. It is built for developers migrating legacy INI config into YAML for Docker Compose, Kubernetes, CI pipelines or modern app frameworks.",
   useCases: [

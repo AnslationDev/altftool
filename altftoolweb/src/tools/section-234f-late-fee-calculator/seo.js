@@ -1,4 +1,12 @@
 const seo = {
+  title: "Section 234F Late Fee Calculator with 234A Interest",
+  metaDescription:
+    "Rs 1,000 below Rs 5 lakh of total income, Rs 5,000 above it, plus section 234A interest at 1% a month on unpaid self-assessment tax.",
+  steps: [
+    "Enter Total income for the year (INR), choose your Basic exemption limit, and set the Due date under section 139(1) — presets cover 31 July, 31 October and 30 November.",
+    "Set Date the return is furnished and Self-assessment tax still unpaid on the due date (INR), and tick the seventh proviso box if filing was compulsory anyway.",
+    "The Section 234F fee shows as Rs 1,000 or Rs 5,000 with the reason, beside Delay beyond due date in days, Section 234A interest at 1% per month or part month and Total extra payable; Copy result copies all of it.",
+  ],
   intro:
     "This calculator works out the fee payable under section 234F of the Income-tax Act, 1961 when an income tax return is filed after the due date under section 139(1) — Rs 1,000 where total income does not exceed Rs 5,00,000 and Rs 5,000 where it is higher. It also adds simple interest under section 234A at 1% for every month or part of a month of delay on any self-assessment tax still unpaid. It is built for salaried taxpayers, freelancers and small business owners who missed the 31 July deadline and want to know what the belated return will cost before they file.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Business Card Maker: 15 Layouts, PNG Download",
+  metaDescription:
+    "Drag name, contact lines, logo and photo around a live card preview, pick one of 15 layouts and three colours, then download a 3x-density PNG.",
   intro:
     "This is a visual business card designer: you fill in name, job title, company, tagline and four contact lines, pick a layout, and drag each element into place on a live card preview that exports as a high-resolution PNG. It ships 15 background layouts — from Corporate Bottom-Bar and Diagonal Split to Glassmorphism, Vibrant Mesh and Modern Geometric — plus three colour pickers (card, accent and text) and a per-element font-size slider. It is built for freelancers, small business owners and job seekers who want a card image today without opening design software.",
   useCases: [

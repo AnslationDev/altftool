@@ -1,4 +1,12 @@
 const seo = {
+  title: "Course Trailer Script Builder with Per-Beat Word Counts",
+  metaDescription:
+    "Split a 15–300 second course trailer across seven beats — hook to call to action — and get each beat's seconds and word budget at 120, 140 or 160 wpm.",
+  steps: [
+    "Fill in \"Course title\", \"Who it is for\", \"Outcome they walk away with\", \"Modules or skills (comma separated)\", \"Credibility line\" and \"Call to action\".",
+    "Set \"Trailer length (seconds)\" between 15 and 300 and \"Narration pace (words per minute)\" between 80 and 220, or click the \"Measured (120 wpm)\", \"Standard narration (140 wpm)\" or \"Energetic promo (160 wpm)\" preset.",
+    "Read the \"Total narration budget\" in words, check the \"Hook length (target 3s or less)\" row, then work down the \"Beat sheet\" — Hook, Problem, Promise, What you'll learn, Who it's for, Credibility and Call to action, each with its timecode and word budget.",
+  ],
   intro:
     "A course trailer script builder splits your promo video's running time across seven fixed beats — hook, problem, promise, curriculum, audience, credibility and call to action — and converts each beat's seconds into a word budget at your chosen narration pace. It is built for course creators who keep recording trailers that overrun, because the word count is derived from the plain rule words = seconds × words-per-minute ÷ 60. Beat seconds are distributed with the largest-remainder method, so the beat lengths always add back to the exact total you set.",
   useCases: [

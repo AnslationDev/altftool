@@ -1,4 +1,12 @@
 const seo = {
+  title: "Loan Eligibility from Salary: FOIR and RBI LTV Caps",
+  metaDescription:
+    "Enter take-home pay, running EMIs, rate and tenure to get the loan a FOIR band supports, capped by the RBI 90/80/75% loan-to-value ladder for home loans.",
+  steps: [
+    "Enter Net take-home salary (INR a month), EMIs already running, Interest rate (% a year) and Tenure (months).",
+    "Pick Home loan and add the Property value, or switch FOIR to Enter my lender's FOIR instead of the typical band for your income.",
+    "Read Loan you are eligible for and which ceiling capped it, with EMI ceiling at this FOIR, Own contribution needed and Income left after all EMIs.",
+  ],
   intro:
     "Loan eligibility from salary is set by the fixed obligation to income ratio: the share of your net monthly income a lender will let all EMIs consume, commonly 40% to 55% depending on how much you take home. This calculator turns that ceiling into a maximum EMI, converts the EMI into a loan amount with the present-value-of-an-annuity formula, and for home loans applies the RBI loan-to-value ladder of 90% up to Rs 30 lakh, 80% up to Rs 75 lakh and 75% above that. The result is the smaller of the two ceilings, which is what a bank would actually sanction.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Curtain Fabric Calculator: Widths, Metres & Repeat",
+  metaDescription:
+    "Track width × fullness ÷ roll width gives whole widths; cut length rounds up to a full pattern repeat. Returns face fabric, lining, tape and hook count.",
+  steps: [
+    "Switch between \"Centimetres\" and \"Inches\", enter \"Track or pole width\" and \"Finished drop\", and choose \"A pair that meets in the middle\" or \"One single curtain\".",
+    "Pick a \"Heading type\" — \"Pencil pleat tape\" at 2.5x, \"Eyelet\" at 2.0x or \"Tab top\" at 1.75x — then set \"Fabric roll width (cm)\" and \"Pattern repeat (cm, 0 if plain)\".",
+    "Read \"Face fabric to buy\" in metres with the widths and cut length beneath it, then the \"Lining to buy\", \"Heading tape\" and \"Curtain hooks\" rows; \"Copy result\" saves the take-off.",
+  ],
   intro:
     "This calculator works the way a curtain workroom does: it multiplies the track width plus returns and centre overlap by the heading's fullness ratio, divides by the usable width of the roll to get the number of whole widths (drops), then rounds the cut length up to a whole pattern repeat so the design matches across every seam. Fullness follows standard specifications — 2.5x for pencil and pinch pleat, 2.0x for eyelet and rod pocket, 1.75x for tab top. It returns face fabric, lining, heading tape and hook count so a single order covers the whole job.",
   useCases: [

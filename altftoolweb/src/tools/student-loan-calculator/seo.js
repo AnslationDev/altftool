@@ -1,4 +1,12 @@
 const seo = {
+  title: "Student Loan Calculator: Payment, Interest, Payoff",
+  metaDescription:
+    "Amortised monthly payment plus the grace-period interest that capitalises, a year-by-year schedule, and what an extra payment each month would save.",
+  steps: [
+    "Enter Amount borrowed, pick a Currency, then set Annual interest rate (%) and Repayment term (years) — the US standard plan runs 10 years.",
+    "Add Months before repayment starts and any Extra payment each month, or tick \"Subsidised loan — interest is paid for me before repayment starts\".",
+    "Monthly payment heads the result, with Interest capitalised before repayment, Total repaid and Payoff time below, plus a year-by-year Interest, Principal and Balance table.",
+  ],
   intro:
     "This student loan calculator gives the level monthly payment, the interest that capitalises before repayment begins, and the total amount you will repay, using the standard amortisation formula M = B × i ÷ (1 − (1 + i)^−n) with i as the monthly rate and n the number of instalments. It also models the grace period, where an unsubsidised loan accrues simple interest that is added to the balance when repayment starts, and shows what an extra payment each month would save. It is built for students and graduates deciding how much to borrow or how fast to repay.",
   useCases: [

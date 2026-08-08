@@ -1,4 +1,7 @@
 const seo = {
+  title: "Keyboard Shortcut Trainer: Press 135 Shortcuts",
+  metaDescription:
+    "Drills 135 shortcuts for Windows, macOS, Linux, VS Code, Chrome, Figma, Photoshop and Excel — you press the keys, and modifiers must match exactly.",
   intro:
     "The Keyboard Shortcut Trainer drills 135 shortcuts across eight platforms and apps — Windows, macOS, Linux, VS Code, Chrome, Figma, Photoshop and Excel — by asking you to physically press the combination rather than pick it from a list. A press only counts as correct when every modifier matches exactly, so Ctrl+Shift+N is not accepted for Ctrl+N, and each app is split into easy, medium and hard tiers with progress saved per tier. It is for anyone moving to a new editor, OS or design tool who wants the shortcuts in muscle memory instead of on a cheat sheet.",
   useCases: [

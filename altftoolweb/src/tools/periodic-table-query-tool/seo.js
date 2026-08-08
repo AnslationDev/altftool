@@ -1,4 +1,12 @@
 const seo = {
+  title: "Periodic Table Query Tool: Search & Sort 118 Elements",
+  metaDescription:
+    "Search all 118 elements by name, symbol or atomic number, filter by category, orbital block, period or state, sort by any property, export CSV.",
+  steps: [
+    "Type into \"Search by name, symbol or atomic number\" - the placeholder shows iron, Fe, 26.",
+    "Narrow the list with Category, \"Orbital block\", \"Standard state at 298 K\" and Period, then set \"Sort by\" to a property such as \"Electronegativity (Pauling)\" or \"First ionisation energy\" and choose Ascending or Descending.",
+    "\"Matching elements\" counts the hits out of 118 and the Results table lists them; \"Copy CSV\" puts the filtered set on the clipboard and \"Download\" saves elements.csv.",
+  ],
   intro:
     "This periodic table query tool searches all 118 confirmed elements by name, symbol or atomic number and filters them by category, orbital block, period and standard state, then sorts on any measured property — atomic mass, Pauling electronegativity, first ionisation energy, radius, density, melting and boiling point. Period, group and block are derived from the atomic number using the standard IUPAC 18-column layout rather than stored as data. It is built for chemistry students, teachers and anyone who needs a specific number faster than a wall chart allows.",
   useCases: [

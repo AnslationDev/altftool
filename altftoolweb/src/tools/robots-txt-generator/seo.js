@@ -1,4 +1,12 @@
 const seo = {
+  title: "Robots.txt Generator: Allow, Disallow, Crawl-delay",
+  metaDescription:
+    "Build robots.txt from a form: global allow or Disallow: /, per-crawler rules grouped by user agent, Crawl-delay and a Sitemap line, with a live preview.",
+  steps: [
+    "In the Crawler Configuration Form set Global Bot Access to \"Allow All Bots (*)\" or \"Block All Bots (*)\", pick a Crawl Delay of 2, 5 or 10 seconds, and paste a Sitemap Path such as https://example.com/sitemap.xml.",
+    "Add each path under Global Disallowed Directories, then use \"Add Bot-Specific Directives\" to pair Googlebot, Bingbot, Baiduspider, Yandex, Yahoo Slurp or Alexa ia_archiver with Disallow or Allow and a path.",
+    "\"File Preview (robots.txt)\" rebuilds on every change so you see the literal text that will ship; Copy puts it on the clipboard and Download saves it as robots.txt for your site root.",
+  ],
   intro:
     "The Robots.txt Generator builds a valid Robots Exclusion Protocol file from a form: a global User-agent: * group that either allows everything (an empty Disallow:) or blocks everything (Disallow: /), a list of disallowed paths, per-crawler Allow and Disallow rules grouped by user agent, an optional Crawl-delay, and a Sitemap line. The preview updates as you type and you can copy it or download it as robots.txt ready for your site root. It is for site owners who know which directories should stay out of search results but not the exact syntax that expresses it.",
   useCases: [

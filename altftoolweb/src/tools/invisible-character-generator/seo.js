@@ -1,4 +1,11 @@
 const seo = {
+  metaDescription:
+    "Copy Zero-Width Space (U+200B), ZWNJ, ZWJ, Non-Breaking Space (U+00A0) and 6 more, each with its code point and a preview toggle.",
+  steps: [
+    "Tick \"Show invisible character previews\" to render each blank character between brackets before you take it.",
+    "Find the one you need by code point — U+200B Zero-Width Space, U+200C ZWNJ, U+200D ZWJ, U+00A0 Non-Breaking Space, U+2009 Thin Space.",
+    "Press Copy on that card; the label flips to \"Copied!\" and the character is on your clipboard, with its Usage note printed underneath.",
+  ],
   intro:
     "The Invisible Character Generator gives you 10 zero-width and blank Unicode characters — including Zero-Width Space (U+200B), Zero-Width Non-Joiner (U+200C), Zero-Width Joiner (U+200D), Non-Breaking Space (U+00A0), Thin Space (U+2009) and Invisible Separator (U+2063) — each with a one-click copy button. Every entry shows its official code point, what it does and where it is normally used, plus an optional preview mode that reveals the otherwise unseeable characters. It is for anyone who needs a blank-looking character that a form will still accept as text.",
   useCases: [

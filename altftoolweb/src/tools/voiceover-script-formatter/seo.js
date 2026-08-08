@@ -1,4 +1,10 @@
 const seo = {
+  title: "Voiceover Script Formatter: Cue Sheet With Timecodes",
+  steps: [
+    "Paste the narration into the Script box, keeping any stage direction in [square brackets] on its own line.",
+    "Set 'Words per cue (max)' between 5 and 120 and 'Reading pace (words per minute)' - or press the Slow / audiobook 130, Standard narration 150, Conversational 165 or Fast / promo 185 chip - and a Cue label prefix such as CUE.",
+    "The Cue sheet numbers each block with its start timecode, word count and seconds and marks bracketed lines 'not spoken', while Estimated read time, Cues generated and Longest cue sit above; 'Copy cue sheet' copies the formatted script.",
+  ],
   intro:
     "A voiceover cue sheet is a script broken into short numbered blocks a narrator can read in one breath group without losing their place, and this formatter builds one automatically. It groups whole sentences up to your chosen word limit, splits an over-long sentence at clause punctuation rather than mid-phrase, and stamps each cue with a word count and running timecode derived from the standard words-per-minute model (seconds = words divided by pace, times 60). Text inside square brackets is preserved as a direction and excluded from the spoken word count.",
   useCases: [

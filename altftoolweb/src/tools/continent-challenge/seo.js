@@ -1,4 +1,7 @@
 const seo = {
+  title: "Continent Challenge: Timed Country & Capital Quiz",
+  metaDescription:
+    "Timed four-option quiz on 197 countries and their capitals. Pick one continent or all six, from Easy (10 Qs, 25s) to Expert (50 Qs, 8s).",
   intro:
     "Continent Challenge is a timed four-option geography quiz drawn from 197 countries across Africa, Asia, Europe, North America, South America and Oceania, asking you to match a country to its continent, a country to its capital, or a capital back to its country. Four difficulty levels set both the length and the clock — Easy is 10 questions at 25 seconds each, Expert is 50 questions at 8 seconds — and you can restrict the pool to a single continent. It suits students revising for a geography test and anyone who wants their capitals drilled rather than listed.",
   useCases: [

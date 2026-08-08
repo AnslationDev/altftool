@@ -1,4 +1,12 @@
 const seo = {
+  title: "NCERT Coverage Tracker for UPSC: Classes 6 to 12",
+  metaDescription:
+    "Cycle each NCERT cell through Not started, In progress and Done across six subjects and classes 6-12, and see your weakest subject and class.",
+  steps: [
+    "Tap any cell in the grid to cycle it Not started → In progress → Done; the rows are History, Geography, Polity / Civics, Economics (classes 9-12), Science (classes 6-10) and Sociology (classes 11-12) against columns for classes 6 to 12.",
+    "Blank cells mean no commonly-read NCERT exists for that subject and class, so they are excluded from every percentage; the grid is saved in your browser and Reset clears it.",
+    "Overall coverage weights Done as 100% and In progress as 50%, and the rows below give each subject's percentage with its book count plus the Weakest subject and Weakest class; press Copy summary to take the lot.",
+  ],
   intro:
     "This map tracks NCERT reading for UPSC-style preparation as a subject-by-class grid covering classes 6 to 12, and computes coverage percentages per subject, per class and overall. It uses the standard UPSC NCERT reading list — History, Geography and Polity across classes 6-12, Economics from class 9, Science for classes 6-10 and Sociology in 11-12 — and weights each book as 0%, 50% or 100% depending on whether it is untouched, in progress or done. It is built for aspirants who read NCERTs across many classes at once and need to see gaps, not just lists.",
   useCases: [

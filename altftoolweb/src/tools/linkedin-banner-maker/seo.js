@@ -1,4 +1,12 @@
 const seo = {
+  title: "LinkedIn Banner Maker: 1584x396 Safe Zone Guide",
+  metaDescription:
+    "Lays out a 1584x396 profile or 1128x191 company banner, measures the largest text rectangle clear of the avatar circle, exports an SVG guide.",
+  steps: [
+    "Pick a \"Surface\": \"Personal profile background - 1584 × 396\" or \"Company page cover - 1128 × 191\", which fills the \"Canvas width (px)\" and \"Canvas height (px)\" fields.",
+    "Tune \"Avatar diameter (× banner height)\", \"Avatar centre (× banner width)\" and \"Edge safety trim (× each side)\", and enter your \"Headline size in the artwork (px)\".",
+    "Read the \"Safe text zone\" size and its x, y position, check \"Headline size on screen\", then press \"Copy guide\" to paste the SVG guide layer into Figma, Illustrator or Canva.",
+  ],
   intro:
     "LinkedIn Banner Maker lays out a profile background at LinkedIn's recommended 1584 × 396 pixels, or a company page cover at 1128 × 191, and measures the largest rectangle of artwork that clears the circular profile photo overlapping the lower left. It reports the safe zone in exact pixel coordinates, checks the headline size against the width the banner actually renders at, and exports an SVG guide layer to paste into Figma, Illustrator or Canva. Sizes come from LinkedIn's own guidance; the avatar overlap is an adjustable approximation of the current layout.",
   useCases: [

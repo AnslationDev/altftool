@@ -1,4 +1,12 @@
 const seo = {
+  title: "Promotion Congratulations Messages in 6 Languages",
+  metaDescription:
+    "Write promotion, new-job or award congratulations in six languages, checked against SMS 160, X 280 and LinkedIn 1,250 / 3,000 limits.",
+  steps: [
+    "Fill in Who you are congratulating, the New role or title and Company, then choose an Occasion — Promotion, New job, First job, Career switch or Award or recognition — and what they are to you.",
+    "Pick a Language (English, Hinglish (Roman), हिन्दी, मराठी, বাংলা or தமிழ்) and a Tone chip — Warm, Professional, Light-hearted or Admiring — and press Shuffle for different wording.",
+    "The Channel / Limit / Fits? table checks message 1 against SMS (single part, GSM-7) at 160, X / Twitter post at 280, LinkedIn comment at 1,250 and LinkedIn post at 3,000 characters; press Copy to take the draft.",
+  ],
   intro:
     "Promotion Congratulations Generator writes congratulation messages for a promotion, a new job, a first job, a career switch or an award, and checks each draft against the real character limits of the channel you will send it on — 160 for a single-part SMS, 280 for an X post, 1,250 for a LinkedIn comment and 3,000 for a LinkedIn post. If you supply the date the previous role started, it also works out the exact time spent in that role, calendar-accurate rather than days divided by 365. Wording comes in English, Hinglish, Hindi, Marathi, Bengali and Tamil.",
   useCases: [

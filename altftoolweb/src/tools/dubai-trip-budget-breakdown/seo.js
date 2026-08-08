@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dubai Trip Cost Calculator with Tourism Dirham & VAT",
+  metaDescription:
+    "Price a Dubai trip with the 10% municipality fee, 10% service charge, 5% VAT and the 7-20 AED Tourism Dirham per room per night, then per person per day.",
+  steps: [
+    "Set Travel style, Season (moves the room rate), Property class (sets the Tourism Dirham), Travellers and Nights in Dubai.",
+    "Edit the room and on-the-ground rate boxes and the Contingency buffer (%), ticking 'My quoted rate already includes the fees and VAT' if your booking site showed a tax-inclusive price.",
+    "'Total trip cost' shows with the per person and per person per day figures and a table line for the municipality fee, service charge, VAT and Tourism Dirham; press Copy result.",
+  ],
   intro:
     "This planner breaks a Dubai trip into flights, room, the charges stacked on that room, food, transport, activities and a contingency buffer, then reports the cost per person and per person per day. Dubai is the city where the quoted rate is least like the final bill, so the stay is itemised the way a hotel folio is: base rate, plus a 10% municipality fee and a 10% service charge, then 5% UAE VAT on that sum, then the Tourism Dirham — a flat charge per room per night set by the property's star rating, from 7 AED at a 1-star up to 20 AED at a 5-star.",
   useCases: [

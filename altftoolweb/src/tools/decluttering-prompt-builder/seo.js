@@ -1,4 +1,12 @@
 const seo = {
+  title: "Decluttering Prompt Builder: Four-Box, 20/20, KonMari",
+  metaDescription:
+    "Pick a room, a decision rule and your session length to get a zone-by-zone AI prompt plus the number of sessions the clear-out will take.",
+  steps: [
+    "Pick a Room preset — wardrobe, kitchen, bathroom, home office and paperwork, living room, bedroom, garage/loft/store room or kids' room — and edit \"Zones, in the order you will work through them (one per line)\".",
+    "Choose a Decision rule (Four-box method, 20/20 rule, 90/90 rule, One-year rule or KonMari category order), then set Items you expect to review, Seconds per decision, Session length (minutes) and a Tone.",
+    "The plan reports Sessions needed, Items per session, Total hands-on time and Minutes per zone, and Your prompt shows the full text below — press Copy prompt to paste it into any AI assistant.",
+  ],
   intro:
     "This builder turns a room, a decision rule and the time you have into a ready-to-paste AI prompt that walks you zone by zone through keep-or-let-go choices. You choose the framework — the four-box sort (Keep, Donate or sell, Relocate, Bin), the Minimalists' 20/20 rule, their 90/90 rule, the one-year seasonal rule, or Marie Kondo's fixed category order — and it also sizes the job into working sessions from your item count and seconds per decision. It is for anyone who stalls halfway through a wardrobe or garage because there is no rule deciding for them.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Reel Audio Clearance Planner for Organic and Ads",
+  metaDescription:
+    "List every reel’s track and check it against your account type, whether the post is boosted, the platform clip limit and how recently you reused it.",
+  steps: [
+    "Set Account type — personal/creator or business/brand — and the 'Minimum gap before reusing a track (posts)'.",
+    "Press Add post for each reel, then fill Track or audio name, Platform, Audio source, Clip length (seconds), any Licence or invoice number, and tick the box if the post will be boosted.",
+    "'Posts cleared to publish' shows the cleared count against the total, with how many are blocked and how many need a check, plus the reason for each; press Copy plan.",
+  ],
   intro:
     "Reel Audio Usage Planner lists the audio you plan to use post by post and checks each track against four things: whether your account sees the consumer music catalogue or the commercial-use library, whether the post will be boosted as an ad, the platform's maximum clip length, and how recently the same track was used. It separates organic clearance from paid clearance, because a track that is fine on a personal organic reel usually cannot be used in a promoted post. Built for social managers and agencies who need an audit trail rather than a guess.",
   useCases: [

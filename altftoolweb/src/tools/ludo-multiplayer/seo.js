@@ -1,4 +1,7 @@
 const seo = {
+  title: "Ludo Multiplayer: 2-4 Players on One Device or AI",
+  metaDescription:
+    "Classic Ludo in the browser: 2-4 players on one device or an easy, medium or hard AI. 52-square circuit, 56 steps, exact roll to finish.",
   intro:
     "Ludo Multiplayer is a browser version of the classic four-token race game for two to four players on one device, or one player against an AI opponent with easy, medium and hard settings. It follows the standard rules: a 52-square shared circuit, four tokens each, a 6 to leave the yard, an extra roll after a six, capture on any unstarred square, three sixes in a row forfeiting the turn, and an exact roll needed to bring the last token home after 56 steps. Nothing installs and nothing is uploaded — the board, the AI and your statistics all live in the browser.",
   useCases: [

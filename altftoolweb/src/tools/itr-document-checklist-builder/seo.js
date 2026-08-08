@@ -1,4 +1,12 @@
 const seo = {
+  title: "ITR Document Checklist: What to Collect Before Filing",
+  metaDescription:
+    "Tick your income sources and deductions to get the exact Form 16, interest certificates, broker statements and 80C/80D proofs your return needs.",
+  steps: [
+    "Choose your tax regime, old regime with deductions or new regime under Section 115BAC, and your residential status.",
+    "Tick the income sources and deductions that apply: salary, rent, capital gains, freelancing, F&O, foreign assets, HRA, 80C, 80D, 80G.",
+    "Work through the grouped checklist, watch the completion tracker, then press Copy result to hand the list to your CA.",
+  ],
   intro:
     "The ITR Document Checklist Builder turns your income profile into an exact list of the papers you need before you open the e-filing portal. Tick what applies — salary, rent, capital gains, freelancing, F&O, foreign assets, HRA, 80C, 80D, 80G — and it assembles the matching Form 16, interest certificates, broker statements, loan certificates and deduction proofs, grouped by section with a progress tracker. It is built for salaried filers, freelancers and investors who want to gather everything once instead of hunting for a missing certificate mid-filing.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Washington Sales Tax Calculator: 6.5% Plus Local",
+  metaDescription:
+    "Add Washington's 6.5% state rate to the destination local rate, deduct a like-kind trade-in, add the 0.3% motor vehicle tax, or back tax out of a price.",
+  steps: [
+    "Pick the Destination (where the buyer receives the goods), or type the Local rate only (%) from the Department of Revenue rate lookup.",
+    "Enter the Selling price of taxable goods ($), Shipping and handling charged ($) and any Like-kind trade-in allowance ($), then tick Motor vehicle sale or lease for the extra 0.3%.",
+    "Read Total sales tax split into the state and local shares, with Subtotal before tax, Total due and the effective rate, then use Copy result.",
+  ],
   intro:
     "This calculator works out Washington retail sales tax by adding the 6.5% state rate under RCW 82.08.020 to the local city, county and transit rate that applies where the buyer takes delivery, which is the destination-based sourcing rule in RCW 82.32.730. It handles taxable shipping, a like-kind trade-in deduction and the extra 0.3% state tax on motor vehicle sales, and it can back the tax out of a price that already includes it. Sellers, online merchants shipping into Washington and buyers checking a quote all get the same state, local and total split.",
   useCases: [

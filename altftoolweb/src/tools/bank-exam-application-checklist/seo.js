@@ -1,4 +1,12 @@
 const seo = {
+  title: "IBPS & SBI Age Eligibility and Application Checklist",
+  metaDescription:
+    "Check your DOB against the IBPS or SBI age window on the notification cut-off date. Stacked relaxations, plus photo, signature and thumb upload specs.",
+  steps: [
+    "Choose the Exam (IBPS PO, Clerk, SO, RRB or SBI PO/Junior Associate), your Category, and your Date of birth (as on the Class 10 certificate).",
+    "Enter the 'Cut-off date from the notification' and tick anything under 'Further relaxation claimed'.",
+    "'Age on the cut-off date' returns the verdict with the earliest and latest acceptable date of birth and the Scanned upload specification table (passport photograph 200 x 230 px, 20 - 50 KB); press Copy checklist.",
+  ],
   intro:
     "This checklist tests whether you fall inside an IBPS or SBI age window on the notification's cut-off date, then lists every field, scanned upload and certificate the online form will ask for. Age is worked out the way the notification states it — as a date-of-birth range running from the cut-off minus the relaxed upper age plus one day, through the cut-off minus the minimum age — so a candidate sitting on the boundary gets a straight answer instead of a rounded one. It covers IBPS PO, Clerk, SO and both RRB cadres, plus SBI PO and Junior Associate.",
   useCases: [

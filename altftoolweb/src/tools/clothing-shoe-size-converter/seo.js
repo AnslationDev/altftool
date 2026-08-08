@@ -1,4 +1,12 @@
 const seo = {
+  title: "Clothing & Shoe Size Converter: US, UK, EU, IN, cm",
+  metaDescription:
+    "Convert a size between US, UK, EU, Indian and cm, or get a recommendation from a chest, waist or foot-length measurement and a fit preference.",
+  steps: [
+    "Choose a Main Category of Clothing or Footwear, a Demographic of Men, Women or Kids, and for clothing a Garment Type.",
+    "In Instant Converter pick the From System and type Your Size (e.g. 10, M, 42) to see the Equivalent Sizes in every other system; Pin to History or Add to My Vault keeps the row.",
+    "Or open Measurement Lab, enter Chest and Waist under Anatomic Inputs or a Foot Length (CM), pick a Preferred Fit Silhouette — SLIM, REGULAR, LOOSE or OVERSIZED — and read the size in Recommended Matrix.",
+  ],
   intro:
     "Clothing & Shoe Size Converter maps a size between the US, UK, EU, Indian and centimetre systems using a reference table, and separately recommends a size from a measurement you take yourself — chest or waist in inches for clothing, foot length in centimetres for shoes. It is for anyone ordering from an overseas store where a UK 8 and a US 9 are the same shoe. Conversion is a lookup rather than a calculation because the scales are incompatible by design: EU sizes step 2/3 cm at a time (the Paris point) while US and UK sizes step 1/3 inch (a barleycorn).",
   useCases: [

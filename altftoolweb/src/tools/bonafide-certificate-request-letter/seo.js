@@ -1,4 +1,12 @@
 const seo = {
+  title: "Bonafide Certificate Request Letter Format + Timing",
+  metaDescription:
+    "Date, subject line, body and a signature block with your roll number — plus a check of your deadline against the office turnaround in working days.",
+  steps: [
+    "Choose \"What do you need it for?\" — Passport application, Scholarship application, Bus or rail concession pass, Income tax / education loan and six more — then set Date of this letter, Needed by, Office turnaround (working days) and Copies needed (1 to 20).",
+    "Fill in Full name (as in records), Roll / registration number, Class / course and year, Academic year, Addressed to, Institution name and Institution address.",
+    "Expected collection date is counted from the turnaround, with Buffer after the office turnaround and the date it is usually treated as stale; the finished letter appears under Your request letter with a word count, and Copy letter copies it.",
+  ],
   intro:
     "A bonafide certificate request letter is a formal application to the head of your school, college or university asking them to certify in writing that you are currently enrolled there. This builder assembles that letter from your roll number, course, academic year and the purpose the certificate is for, and it checks your deadline against the office turnaround so you know whether the request needs to be marked urgent. The output follows the conventional Indian application format — date, addressee, subject line, body, and a signature block with your roll number.",
   useCases: [

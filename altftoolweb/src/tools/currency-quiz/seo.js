@@ -1,4 +1,12 @@
 const seo = {
+  title: "Currency Quiz: 82 World Currencies, Symbols, Flags",
+  metaDescription:
+    "Timed four-option rounds on country, symbol and currency. Easy is 10 questions at 25s each, Expert 30 at 8s, with a streak bonus after two right.",
+  steps: [
+    "Under Select Difficulty choose one of the four cards — Easy 10 questions at 25s each, Medium 15 at 18s, Hard 20 at 12s or Expert 30 at 8s.",
+    "Answer each question by pressing one of the four option buttons before the timer expires; once you have two correct in a row every further correct answer scores 2 points instead of 1, and Quit Quiz ends the run early.",
+    "Quiz Complete! reports Score, Accuracy and Best Streak with an Answer Review list; Download saves the report as Currency_Quiz_Easy.txt named for your level, and Play Again restarts.",
+  ],
   intro:
     "The Currency Quiz is a timed four-option multiple-choice game built from 82 distinct world currencies, testing three things: which currency a country uses, which country uses a named currency, and which currency a symbol such as ₭, ₾ or ₪ belongs to. Four difficulty levels change both the length and the pressure — Easy is 10 questions at 25 seconds each, while Expert is 30 questions at 8 seconds each. Answer three or more in a row and each further correct answer is worth 2 points instead of 1, and at the end you get a scored report with your best streak.",
   useCases: [

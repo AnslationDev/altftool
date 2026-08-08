@@ -1,4 +1,12 @@
 const seo = {
+  title: "AI Tone Rewrite Prompt Builder With Flesch Scoring",
+  metaDescription:
+    "Scores your text on Flesch Reading Ease and Flesch-Kincaid grade, then writes a rewrite prompt naming the tone, target band and the gap in points.",
+  steps: [
+    "Paste the paragraph, email or page into the text box; Flesch Reading Ease and Flesch-Kincaid grade level are measured from it.",
+    "Pick a target tone and target reading band, name who is reading it, and tick what the rewrite must preserve.",
+    "Read the gap to target in Flesch points, then press Copy prompt to take the generated rewrite instruction.",
+  ],
   intro:
     "This builder scores your text with the Flesch Reading Ease formula — 206.835 − 1.015 × (words ÷ sentences) − 84.6 × (syllables ÷ words) — and the Flesch–Kincaid grade level, then writes the rewrite prompt that moves it to the tone and readability band you choose. The prompt carries the measured numbers, the size of the gap in Flesch points, and an explicit list of what must not change: facts, quotations, structure, terminology or length. It is for writers, support teams and anyone turning dense copy into something a specific reader can actually follow.",
   useCases: [

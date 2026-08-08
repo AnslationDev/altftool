@@ -1,4 +1,12 @@
 const seo = {
+  title: "Raised Bed Planner: Plants, Litres, Harvest Date",
+  metaDescription:
+    "Plants per bed at square spacing, weekly litres at the 25 mm guideline, harvest date and a frost warning — then an AI planting prompt.",
+  steps: [
+    "Enter Crop or plant, USDA hardiness zone, Bed length (cm), Bed width (cm) and Plant spacing (cm).",
+    "Add Days to maturity, Sowing date and Last spring frost date so the harvest date and the tender-crop frost warning can be worked out.",
+    "Read Plants that fit at this spacing with Bed area, Water at 25 mm a week and First harvest, then press Copy prompt to take the generated planting prompt.",
+  ],
   intro:
     "The Gardening Prompt Builder turns a bed size, a plant spacing and a sowing date into the numbers a growing plan actually needs — how many plants fit at square spacing, how many litres a week the bed needs at the standard 25 mm (1 inch) guideline, and the date maturity falls due — then writes an AI prompt around them. It also converts a USDA hardiness zone into its defined minimum-temperature band and warns when a tender crop is being sown before the last spring frost. For kitchen gardeners who want a plan tied to their plot, not to a generic article.",
   useCases: [

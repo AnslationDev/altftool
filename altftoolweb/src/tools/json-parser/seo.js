@@ -1,4 +1,12 @@
 const seo = {
+  title: "JSON Parser: Type-Coloured Tree View and Validator",
+  metaDescription:
+    "Validate JSON with JSON.parse and read it as a type-coloured tree with indexed arrays, a two-space formatted view, minify, and the exact error.",
+  steps: [
+    "Paste your JSON into the input box (placeholder {\"name\": \"John\", \"age\": 30}) or press 'Sample' to load one.",
+    "Press 'Parse JSON' — invalid input shows the engine's own error message; 'Minify' rewrites the input with no whitespace and 'Clear' empties it.",
+    "Switch the output between 'Tree' and 'Formatted', then press 'Copy' or 'Download' to save data.json.",
+  ],
   intro:
     "The JSON parser validates a document with the browser's own JSON.parse and then renders it three ways: an indented tree that colour-codes each value by its actual type, a formatted two-space view, and the raw text. Because the tree is built from the parsed value rather than the text, it shows you what the data really is — a number `42` and a string `\"42\"` are drawn differently, and array entries are labelled by index. Beautify and minify rewrite the input in place, and if parsing fails you get the parser's own error message instead of a blank panel.",
   useCases: [

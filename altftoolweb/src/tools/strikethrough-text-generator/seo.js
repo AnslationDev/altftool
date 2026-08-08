@@ -1,4 +1,7 @@
 const seo = {
+  title: "Strikethrough Text Generator: Copy-Paste U+0336 Text",
+  metaDescription:
+    "Inserts Unicode U+0336 after every character, so crossed-out text pastes intact into bios, usernames and comment boxes that strip formatting.",
   intro:
     "The Strikethrough Text Generator adds U+0336, the Unicode combining long stroke overlay, after every character you type, producing c̶r̶o̶s̶s̶e̶d̶-̶o̶u̶t̶ ̶t̶e̶x̶t̶ that survives copy and paste into places with no formatting toolbar. Because the line is part of the characters themselves rather than HTML or markdown, it works in social bios, usernames, chat messages and comment boxes that strip styling. It is for anyone who wants a struck-through price, a crossed-out joke or a deliberately edited-looking line where the platform gives them no way to format text.",
   useCases: [

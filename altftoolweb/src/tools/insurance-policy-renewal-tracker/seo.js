@@ -1,4 +1,12 @@
 const seo = {
+  title: "Insurance Renewal Tracker with IRDAI Grace Dates",
+  metaDescription:
+    "Track every policy in one table: premiums annualised, IRDAI grace dates (15 days monthly, 30 otherwise), lapse flags and the 10x cover check.",
+  steps: [
+    "Enter 'Annual income (for the cover benchmark)', then fill the first policy's 'Policy type', 'Insurer', 'Sum insured (INR)' and 'Renewal date'.",
+    "Set 'Premium per instalment (INR)', 'Payment mode' and 'Grace period (days)', and press 'Add a policy' for each further policy.",
+    "Read 'Total annual premium' and the Policy / Cover / Renewal table, then press 'Copy result'.",
+  ],
   intro:
     "This tracker holds every policy — term life, health, motor, home — on one page and puts the premiums on a common annual footing, so a monthly term premium and an annual floater premium can be added together honestly. For each policy it dates the grace period (15 days for a monthly premium mode and 30 days for quarterly, half-yearly and annual modes under IRDAI's health insurance rules, and none at all for motor cover) and flags anything already lapsed. It also compares the life cover in force against the common ten-times-annual-income rule of thumb.",
   useCases: [

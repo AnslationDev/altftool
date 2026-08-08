@@ -1,4 +1,5 @@
 const seo = {
+  title: "Wave Interference Simulator: 6 Modes and Phasors",
   intro:
     "Wave Interference Simulator animates the superposition of sinusoidal waves in real time, summing y = A·sin(kx − ωt + φ) with k = 2π/λ and ω = 2πf so you can watch amplitude, wavelength, frequency and phase reshape the combined wave as you drag them. It covers six modes — single wave, two-wave interference, standing waves, 2D ripple tanks, Young's double slit, and a custom formula box — with a phasor diagram and live resultant amplitude alongside. It is built for physics students and teachers who need to see why two identical waves cancel when one is shifted by π.",
   useCases: [

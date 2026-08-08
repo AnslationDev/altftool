@@ -1,4 +1,12 @@
 const seo = {
+  title: "Trade Licence Renewal Reminder Builder for India",
+  metaDescription:
+    "Track FSSAI, fire NOC, factory and pollution licences on one board, each with the date its renewal must start — 120 days for a Consent to Operate.",
+  steps: [
+    "Set Today's date, then for each row choose a Licence type — Municipal trade licence, FSSAI licence or registration, Fire safety NOC, Consent to Operate (pollution board), Drug licence (Form 20 / 21) and more — and fill Name on your board, Licence number and Valid until.",
+    "Where a certificate shows only an issue date, use \"Issued on (used if no expiry above)\" with Validity (months); each type preloads \"Start renewal this many days early\" from its own rule — 120 days for a Consent to Operate, 30 for FSSAI — and \"Add a licence\" adds another row.",
+    "Read the Needs attention count with the \"Expiring within 90 days\" and \"Next expiry\" rows, then the Renewal board table's Licence / Expires / Start by columns, and press Copy result to take the board or Reset to clear it.",
+  ],
   intro:
     "This builder keeps every business licence — trade licence, FSSAI, fire NOC, factory licence, pollution consent — on a single board and works out the date each renewal has to start, by subtracting the licence's own lead time from its expiry date. It carries the lead times the governing rules expect, such as the 120-day window that State Pollution Control Boards want for a Consent to Operate renewal and the pre-expiry application FSSAI requires before the Rs 100-per-day late fee begins. Everything is computed in your browser; no licence number is uploaded anywhere.",
   useCases: [

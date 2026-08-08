@@ -1,4 +1,5 @@
 const seo = {
+  title: "Celebrity Look-Alike: 68-Point Face Landmark Match",
   intro:
     "This celebrity look-alike quiz runs a face detector and a 68-point facial landmark model on your photo in the browser, then turns those landmark coordinates into a deterministic result — one of ten well-known faces, with an overall percentage plus separate jawline, eyes and cheekbones-and-mouth scores. Because the result is derived from your landmark positions, the same photo always returns the same celebrity, while a different angle or crop can change it. It is a novelty for entertainment, not a biometric identity match, and the photo never leaves your device.",
   useCases: [

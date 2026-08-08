@@ -1,4 +1,12 @@
 const seo = {
+  title: "INR to VND Mental Math: Drop 3 Zeros, Multiply",
+  metaDescription:
+    "Enter today's rupees-per-dong rate for a rule you can run in a market - drop three zeros, then multiply - with each shortcut's error percentage.",
+  steps: [
+    "Type the day's rate into \"Today's rate (₹ per 1 VND)\" — rupees per single dong, so around 0.003 — and put a price into 'A price to check (VND)', or tap a Common prices chip such as ₫60,000 Bowl of phở.",
+    "'The rule to memorise' numbers the steps of the closest easy shortcut, and 'All three rules compared' ranks the whole-or-half multiplier, the tuned multiplier and the nearest fraction by implied rate and error, tagging one best.",
+    "The panel shows the exact rupee figure beside what you would say in your head, with a price ladder, what each note from ₫5,000 to ₫500,000 is worth and rupees back into dong; Copy sheet copies the lot.",
+  ],
   intro:
     "This cheat sheet converts a rupees-per-dong exchange rate into arithmetic you can run in a Hanoi market. Because a single dong is worth a fraction of a rupee, it first factors the rate into a decimal shift — dropping three zeros from the price — and a working multiplier between 1 and 10, then tests a whole-or-half multiplier, that multiplier with an easy percentage nudge, and the nearest simple fraction, reporting the fixed percentage error of each. It is written for Indian travellers who want a rule that survives a menu full of six-digit prices.",
   useCases: [

@@ -1,4 +1,7 @@
 const seo = {
+  title: "Headphone Break Timer with WHO-ITU Sound Dose",
+  metaDescription:
+    "Alternate listening and rest blocks — 60/5, 45/10, 30/5 or 90/15 — and see what share of the WHO-ITU daily allowance your session uses at that dB(A).",
   intro:
     "A listening break timer splits a long headphone session into repeating listen-and-rest blocks so your ears get regular quiet, and this one pairs that schedule with the sound-dose maths behind it. The default cycle follows the widely used 60/60 guidance — around an hour of continuous listening, then a rest — while the dose panel applies the WHO-ITU safe listening standard (Recommendation ITU-T H.870), which allows 80 dB(A) for 40 hours a week and halves the permitted time for every 3 dB you turn up. It is informational and does not replace a hearing test.",
   useCases: [

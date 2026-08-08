@@ -1,4 +1,12 @@
 const seo = {
+  title: "Akasa Air Excess Baggage Cost: Booking vs Counter",
+  metaDescription:
+    "Price your excess kilos three ways — added at booking, at web check-in, or weighed at the airport counter — with block rounding and the 32 kg bag limit.",
+  steps: [
+    "Choose the 'Free checked allowance on your ticket' (domestic economy 15 kg or an international 30 kg sector) and the Passengers on the booking.",
+    "Enter Total checked baggage weight (kg) and Heaviest single bag (kg), then set the per-kg 'Rate at booking', 'Rate at web check-in' and 'Rate at the airport counter'.",
+    "The cheapest channel and its cost appear with the chargeable excess over your allowance, the advance block you would be forced to buy, and a warning if a single bag passes the 32 kg per-piece ceiling; press Copy result.",
+  ],
   intro:
     "This estimator prices the kilograms above your Akasa Air checked allowance through all three buying channels — added at booking, added at web check-in, and weighed at the airport counter — and reports which costs least. The comparison matters because advance weight is sold in fixed blocks per passenger while the counter bills the exact kilos with a part kilogram rounded up, so a small overweight and a large one have different cheapest answers. All three per-kilogram rates are editable, so you can price your own sector rather than a stored average.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "English Pronunciation Practice with Your Microphone",
+  metaDescription:
+    "Hear 30 tricky English words and phrases read aloud, then say them back — your browser transcribes the attempt and marks it against the target.",
+  steps: [
+    "Pick a deck in the Categories sidebar — Commonly Mispronounced, Tongue Twisters, Business & Tech or Advanced Vocabulary — and the card shows the word, its IPA and a Pronunciation Hint such as \"Wuss-ter-sheer.\" for Worcestershire.",
+    "Press Listen to hear the model reading through your browser's speech synthesis, then press Speak and say it — the button switches to \"Listening...\" while the microphone is open.",
+    "The feedback panel marks the attempt correct or replies `You said: \"...\". Try again.`, and Previous and Next move you through the deck against the counter in the card's top-left corner.",
+  ],
   intro:
     "Pronunciation Practice plays a model reading of a tricky English word through your browser's speech synthesis, then listens through your microphone with the Web Speech API and tells you whether what you said matched the target. It ships with 30 items across four decks - Commonly Mispronounced, Tongue Twisters, Business & Tech, and Advanced Vocabulary - each with IPA phonetics and a plain-English hint like \"Wuss-ter-sheer\" for Worcestershire. Learners, presenters and anyone rehearsing a word before a meeting get instant spoken feedback without an account.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "IELTS Band Score Calculator: Overall and Raw Score",
+  metaDescription:
+    "Average the four skill bands with the official IELTS rounding - .25 up to the next half band - and convert Listening and Reading scores out of 40.",
+  steps: [
+    "For Listening and Reading choose \"Raw score out of 40\" or \"Band score\"; on raw, set the Reading module to Academic or General Training and type the score, then pick a Writing band and a Speaking band.",
+    "Raw scores convert through the indicative IELTS tables and the four skill bands are averaged with the official rounding — an average ending in .25 goes up to the next half band, .75 to the next whole band.",
+    "The Overall Band Score appears with the unrounded mean beneath it and a row per skill; Copy result copies the summary and Reset returns every input to its default.",
+  ],
   intro:
     "This calculator computes the IELTS Overall Band Score — the mean of your Listening, Reading, Writing and Speaking bands rounded to the nearest half band, with averages ending in .25 rounding up to the next half band and .75 up to the next whole band, as defined by IELTS. It also converts Listening and Reading raw scores out of 40 into bands using the indicative tables IELTS publishes, with separate tables for Academic and General Training Reading. Test-takers use it to score practice tests and check what Writing or Speaking band they need for a target overall.",
   useCases: [

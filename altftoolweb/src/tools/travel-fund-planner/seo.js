@@ -1,4 +1,12 @@
 const seo = {
+  title: "Travel Fund Planner: Forex, TCS and Monthly Saving",
+  metaDescription:
+    "Build a trip budget with forex markup on the foreign share, a contingency buffer and section 206C(1G) TCS, then back-solve the monthly saving.",
+  steps: [
+    "Under 'The trip', enter Travellers, Nights away, 'Return airfare per person', 'Accommodation per night, total', daily food and local spend, activities, visa, insurance and shopping extras in rupees.",
+    "Under 'Forex, buffer and tax', choose 'Domestic trip - no TCS', 'Overseas tour package from an operator' or 'Other overseas remittance under LRS', set the foreign-currency share, forex markup and contingency buffer percentages, then under 'How you are funding it' enter Months until departure, what you have already saved and the expected return.",
+    "'Save every month' gives the monthly figure, with Trip budget, Forex markup, Contingency buffer, 'TCS under section 206C(1G)', Total to fund, Per person and 'Shortfall to save' listed below plus a 'Where the budget goes' share table; Copy result copies the plan.",
+  ],
   intro:
     "A travel fund planner turns a trip into a single funded number and then into a monthly saving. It builds the budget from per-person and per-night components, adds the forex markup on the share actually paid in foreign currency, applies a contingency buffer, and includes tax collected at source under section 206C(1G) of the Income-tax Act where the spending is an overseas tour package or an LRS remittance. The shortfall left after your existing savings compound to the departure date is converted to a monthly contribution using the ordinary-annuity formula.",
   useCases: [

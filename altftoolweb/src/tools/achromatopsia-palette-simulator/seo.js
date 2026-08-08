@@ -1,4 +1,12 @@
 const seo = {
+  title: "Achromatopsia Simulator: Palette in True Greyscale",
+  metaDescription:
+    "Convert swatches to greyscale by WCAG luminance, CSS grayscale() or Rec. 601, and score every pair against the 3:1 and 4.5:1 contrast thresholds.",
+  steps: [
+    "Give each swatch a Name and a Hex value, using Add colour for up to 12 swatches.",
+    "Choose a Greyscale model — WCAG relative luminance, CSS grayscale() filter, or Rec. 601 luma.",
+    "Read Pairs that collapse with the Worst pair in greyscale and the counts Pairs below 3:1 and Pairs below 4.5:1, then use Copy report.",
+  ],
   intro:
     "Achromatopsia Palette Simulator converts a palette to true greyscale and scores every pair of colours with the WCAG 2.x contrast formula, (L1 + 0.05) / (L2 + 0.05), so you can see which swatches survive on their luminance alone. Three conversions are offered — WCAG relative luminance on linearised sRGB, the CSS grayscale() filter matrix, and Rec. 601 luma — because they produce visibly different greys from the same colour. It is for designers checking that a chart, status badge or state colour still communicates when hue carries no information at all.",
   useCases: [

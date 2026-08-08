@@ -1,4 +1,12 @@
 const seo = {
+  title: "English Text to IPA Transcription, Word by Word",
+  metaDescription:
+    "Paste English and get IPA per word, each labelled a dictionary match or an estimate, with en-US playback and a downloadable transcription.",
+  steps: [
+    "Type or paste English into the 'English Text' box, or press 'Load sample' for a ready sentence.",
+    "Press 'Listen to text' to hear it in an en-US voice, and read the 'Word-by-word breakdown' where rule-estimated words are tagged 'est.'",
+    "Check the 'Dictionary matches' and 'Estimated' counts, then Copy the IPA string or press Save to download ipa-transcription.txt.",
+  ],
   intro:
     "Paste English text and this tool transcribes it into the International Phonetic Alphabet, matching each word against a built-in dictionary of roughly 450 common words in General American pronunciation and falling back to a letter-pattern estimate for anything outside it. Every word is shown individually with its transcription and labelled as a dictionary match or an estimate, and a counter tells you how many of each the passage produced. A speech button reads the original text aloud through your browser's en-US voice so you can hear it alongside the symbols.",
   useCases: [

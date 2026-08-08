@@ -1,4 +1,12 @@
 const seo = {
+  title: "URL Slug Collision Checker With WordPress Suffixes",
+  metaDescription:
+    "Paste titles one per line and see which slugs collide after NFKD folding, lowercasing and truncation, with -2 and -3 suffixes assigned as a CMS would.",
+  steps: [
+    "Paste your post titles into the box, one title per line.",
+    "Choose hyphen or underscore as the separator, set the maximum slug length, and optionally drop English stop words.",
+    "Read the collision groups and the per-title table of final slug and normalisation steps, then press Copy result.",
+  ],
   intro:
     "This checker normalises a list of titles into URL slugs and reports which ones land on the same path once accents, case and punctuation have been folded away. Normalisation follows the usual pipeline — transliterate the letters NFKD cannot decompose, apply Unicode NFKD and strip the combining marks in U+0300 to U+036F, lowercase, reduce everything outside a-z and 0-9 to a single separator, then truncate — and duplicates get WordPress-style numeric suffixes starting at -2. It also flags slugs that are empty, all-numeric, or reserved by a framework route.",
   useCases: [

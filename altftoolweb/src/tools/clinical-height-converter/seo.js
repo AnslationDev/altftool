@@ -1,4 +1,7 @@
 const seo = {
+  title: "Clinical Height Converter: cm to Feet, Inches, m²",
+  metaDescription:
+    "Convert height between cm, m, total inches and feet-and-inches on the exact 2.54 cm inch, with height squared for BMI and the rounding shift.",
   intro:
     "The Clinical Height Converter changes a height between centimetres, metres, total inches and feet-and-inches using the exact international inch of 2.54 cm, so a foot is exactly 30.48 cm. It applies the recording step your chart uses — 0.1 cm on a stadiometer, or half and whole centimetres on many forms — reports how far that rounding moved the value, and gives the height squared in square metres that a BMI calculation needs. It is for filling in medical forms, growth charts and dosing calculations where the units differ from the ones on the measuring device.",
   useCases: [

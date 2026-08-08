@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tailwind Color Generator: 50-950 Scale in OKLCH",
+  metaDescription:
+    "One base colour becomes eleven Tailwind shades stepped in OKLCH, each with WCAG contrast, as v4 @theme, CSS vars, v3 config or JSON.",
+  steps: [
+    "Paste a hex into Base colour or use the swatch picker, then set Colour name in the CSS.",
+    "Answer 'Which step is your colour?' to anchor your brand shade, and pick an Output format: Tailwind v4 @theme (oklch), @theme (hex), CSS custom properties, tailwind.config.js (v3) or JSON.",
+    "The ramp lists all eleven shades from 50 to 950 and 'Contrast against white and black' gives each one its ratio; Copy result copies the generated code.",
+  ],
   intro:
     "A Tailwind color generator turns one brand colour into the eleven shades Tailwind expects — 50, 100, 200 through 900 and 950 — ready to paste into a v4 @theme block or a v3 tailwind.config.js. This one works in OKLCH, the perceptual colour space Björn Ottosson published in 2020 and the one Tailwind v4's own palette is written in, so each step really does look a fixed amount lighter than the last instead of merely being a fixed number apart. Every shade is also scored for WCAG 2.1 contrast against white and black, so you know which ones can carry text.",
   useCases: [

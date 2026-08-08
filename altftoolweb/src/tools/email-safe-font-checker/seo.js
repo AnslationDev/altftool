@@ -1,4 +1,12 @@
 const seo = {
+  title: "Email Safe Font Checker: Stack Resolved by Client",
+  metaDescription:
+    "Resolve a font-family stack across twelve email client and platform combinations, catch a missing generic fallback, and get a safe replacement stack.",
+  steps: [
+    "Type your CSS stack into the \"font-family stack\" field (placeholder Georgia, 'Times New Roman', serif) or click one of the ready-made chips below it — Neutral sans, Wide sans (small type), Classic serif, System UI, Monospace or Google font with fallback.",
+    "If you load a webfont, name it in \"Family loaded via @font-face (optional)\" and set the Preview text; resolution re-runs immediately across every client, with no check button to press.",
+    "Read \"Subscribers who see your first choice\" plus the \"Ends in a generic keyword\" and \"Clients falling through to their own default\" rows and the Client / Renders / Why table, then press Copy stack under Suggested safe stack, or Copy report for the whole thing.",
+  ],
   intro:
     "Email Safe Font Checker resolves a CSS font-family stack the way a mail client does — first family that resolves wins — across twelve common client and platform combinations, and reports exactly which typeface each subscriber ends up seeing. Two things decide the outcome: whether the client honours @font-face at all (Gmail, Outlook on Windows, Outlook.com, Yahoo and AOL do not) and which families ship with the reader's operating system. It also flags stacks with no generic keyword at the end, the single most common cause of an email rendering in Times New Roman.",
   useCases: [

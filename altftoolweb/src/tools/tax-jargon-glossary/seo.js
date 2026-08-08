@@ -1,4 +1,12 @@
 const seo = {
+  title: "Tax Jargon Glossary: Indian Income Tax and GST Terms",
+  metaDescription:
+    "Search Indian income tax, GST, investing and banking terms by word, abbreviation or section number. TDS, 87A, ITC and XIRR all resolve to an entry.",
+  steps: [
+    "Type a word, abbreviation or section number into the search box, such as TDS, 87A, input tax credit or XIRR.",
+    "Narrow the list with the area chips: Income tax, GST, Investing, Banking & credit or Compliance.",
+    "Read the plain-language definition and the Act, section or regulation it names, then press Copy on that entry.",
+  ],
   intro:
     "This is a searchable glossary of the terms that appear on Indian tax notices, GST invoices, fund factsheets and loan sanction letters, written in plain language with the governing section named against each one. It covers income tax vocabulary from gross total income to updated returns, GST from input tax credit to place of supply, and the investing and banking terms that get used interchangeably but do not mean the same thing. Searching works on the word, the abbreviation or the section number, so typing 87A, ITC or XIRR gets you straight to the entry.",
   useCases: [

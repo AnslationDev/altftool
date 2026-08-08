@@ -1,4 +1,12 @@
 const seo = {
+  title: "Loop Bars Calculator: Bars, Seconds, Samples, BPM",
+  metaDescription:
+    "Convert a loop between bars, beats, seconds and samples at any BPM, plus plain, dotted and triplet delay times for every note division.",
+  steps: [
+    "Enter Loop length (bars), Tempo (BPM) and Beats per bar, then pick a Sample rate (Hz) from the six options between 44100 and 192000 — the 1, 2, 4, 8, 16 and 32 bars chips fill the length in one tap.",
+    "Type an Existing clip length (seconds) to run the reverse lookup, which reports Your clip in bars, whether it lands exactly, and the Tempo that fits the clip to the bar count.",
+    "Read the loop length as Seconds, Milliseconds, Samples and Video frames (24 / 25 / 30 fps), scroll to the Note / Plain / Dotted / Triplet delay table for that tempo, and press Copy result.",
+  ],
   intro:
     "The Loop Bars Calculator converts a loop length between bars, beats, seconds, milliseconds and samples at any tempo, using the single relationship that one beat lasts 60 / BPM seconds. It works both ways: enter bars to get the exact length of the region, or enter the length of an existing clip to find out how many bars it covers and what tempo would make it land on a whole number. It also prints the standard delay-time table — plain, dotted and triplet values from a whole note down to a 1/64 — so tempo-synced delays and reverbs can be dialled in by hand.",
   useCases: [

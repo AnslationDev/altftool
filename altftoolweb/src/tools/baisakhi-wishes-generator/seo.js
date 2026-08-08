@@ -1,4 +1,12 @@
 const seo = {
+  title: "Baisakhi Wishes in Gurmukhi With SMS Segment Count",
+  metaDescription:
+    "Write a Vaisakhi greeting in Gurmukhi, Roman and English, see the GSM-7 or UCS-2 segment count, and get the Khalsa anniversary for any year.",
+  steps: [
+    "Choose a greeting style and add the recipient and sender names.",
+    "Tick Gurmukhi, Roman transliteration and English, plus the wheat and drum emoji, to build the lines you want.",
+    "Read the SMS encoding and segment count, and the Khalsa anniversary for your chosen year and Vaisakhi date, then press Copy text.",
+  ],
   intro:
     "The Baisakhi Wishes Generator composes a Vaisakhi greeting in Gurmukhi, Roman transliteration and English at once, in one of four styles, and scores the finished message against the SMS rules in 3GPP TS 23.038 so you know how many texts it will cost to send. It also works out the Khalsa anniversary for any year — simply that year minus 1699, the Vaisakhi on which Guru Gobind Singh founded the Khalsa at Anandpur Sahib. It is for anyone sending Vaisakhi greetings to family, sangat, staff or clients who wants the Gurmukhi right and the length predictable.",
   useCases: [

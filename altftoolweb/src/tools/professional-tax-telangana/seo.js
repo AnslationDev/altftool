@@ -1,4 +1,12 @@
 const seo = {
+  title: "Telangana Professional Tax Calculator: Slabs & Enrolment",
+  metaDescription:
+    "Monthly PT on the Telangana slabs — nil to Rs 15,000, Rs 150 to Rs 20,000, Rs 200 above — plus the Rs 2,500 enrolment tax after five years' standing.",
+  steps: [
+    "In the \"You are\" dropdown pick \"A salaried employee (employer deducts PT)\" or \"A self-employed professional (enrolled under the Act)\".",
+    "For salaried, enter \"Monthly salary or wage (INR)\" and \"Months employed in Telangana this year\" from 1 to 12; for self-employed, enter \"Completed years in the profession\".",
+    "Read the headline figure with the \"Applicable slab\", \"Monthly deduction\", \"Total professional tax\" and \"Deductible under Section 16(iii)\" rows, and check them against the salary slab table below.",
+  ],
   intro:
     "This calculator applies the Schedule to the Telangana Tax on Professions, Trades, Callings and Employments Act, 1987 to work out professional tax two ways: the monthly deduction an employer makes from a salary, and the annual enrolment tax a self-employed professional pays. Salaried slabs are nil up to Rs 15,000 a month, Rs 150 between Rs 15,001 and Rs 20,000 and Rs 200 above that, while enrolled professionals pay Rs 2,500 a year once they have five years' standing. It is aimed at Hyderabad payroll teams, consultants and employees checking a payslip.",
   useCases: [

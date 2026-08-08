@@ -1,4 +1,7 @@
 const seo = {
+  title: "Focus Timer With Session Score and Distraction Log",
+  metaDescription:
+    "Pomodoro 25/5, Deep Work 50/10 or Quick Focus 15/3. Finishing adds 20 to a 0-100 score, each \"I got distracted\" tap takes 5, quitting takes 10.",
   intro:
     "A focus timer that runs Pomodoro-style focus and break cycles and scores each session on what you actually did: +20 for finishing a focus block, +10 for taking the break, -5 each time you tap 'I got distracted' and -10 if you abandon a running session. It ships with three presets — Pomodoro 25/5, Deep Work 50/10 and Quick Focus 15/3 — plus a custom option from one minute upwards, and keeps a daily streak, a session count and per-day stats in your browser's own storage. Optional rain, forest or ocean loops play during focus and pause automatically on break.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "HRV Trend Tracker: Rolling Baseline and Deviation",
+  metaDescription:
+    "Paste date | HRV readings and see each day's deviation from your own rolling baseline - 7 readings by default - with anything past 15% flagged.",
+  steps: [
+    "Paste your readings into Daily HRV readings, one per line as date | value — the loaded example runs 2026-07-17 | 55 through seven mornings.",
+    "Set Rolling baseline window, which defaults to 7 readings and will not go below 3, and Deviation flag (%), which starts at 15.",
+    "The result line gives the latest baseline deviation as a percentage, and the table lists Date, HRV, Prior baseline, Deviation and a Context flag of 'Review context' or 'Within entered band' for every day; Download saves it as hrv-readiness-trend-tracker.txt.",
+  ],
   intro:
     "This tracker compares each day's heart-rate variability reading against a rolling baseline — the mean of the preceding readings, 7 by default — and reports the percentage deviation, flagging any day that sits more than your chosen threshold (±15% by default) away from that baseline. Paste your own readings as date | value, and you get a per-day table of HRV, prior baseline, deviation and whether it crossed the band. It is a trend aid for people already logging HRV from a chest strap or wearable, not a readiness score and not a medical assessment.",
   useCases: [

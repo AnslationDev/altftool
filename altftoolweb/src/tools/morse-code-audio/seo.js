@@ -1,4 +1,12 @@
 const seo = {
+  title: "Morse Code Audio: Hear Text at 5 to 40 WPM",
+  metaDescription:
+    "Type text and hear International Morse at standard PARIS timing, 5-40 WPM and 300-1000 Hz, with each letter and symbol lit up as it sounds.",
+  steps: [
+    "Type up to 500 characters into Enter English Text — letters, digits and basic punctuation are supported.",
+    "Open Playback Settings to set Speed (WPM) anywhere from 5 to 40 and Pitch (Hz) from 300 to 1000, then press Listen.",
+    "Follow Morse Code Output & Playback Highlights as the active character and its dot or dash light up, and press Stop to end playback.",
+  ],
   intro:
     "Morse Code Audio converts typed text into International Morse and plays it as a real tone, using the standard PARIS timing where one dot lasts 1.2 ÷ WPM seconds, a dash is three dots, and the gaps run 1 unit inside a letter, 3 between letters and 7 between words. Speed is adjustable from 5 to 40 words per minute, pitch from 300 Hz to 1 kHz, and the character and symbol currently sounding are highlighted as it plays. It is for someone learning to hear Morse rather than read it — the sound, the spacing and the written symbols lined up on one screen.",
   useCases: [

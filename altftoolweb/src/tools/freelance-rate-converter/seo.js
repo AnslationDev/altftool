@@ -1,4 +1,12 @@
 const seo = {
+  title: "Freelance Rate Converter: Hourly to Day, Year, Project",
+  metaDescription:
+    "Converts a freelance rate between hourly, daily, monthly, annual and project figures using real billable hours, plus take-home after costs and tax.",
+  steps: [
+    "Under Your rate enter the Rate figure, pick Quoted per and Currency, and add Hours in the fixed-fee project if you want a project fee back.",
+    "Set Billable capacity — Hours a working day, Days a week, Weeks worked a year (52 minus leave) and Utilisation (% of hours that are billable), or tap one of the utilisation percentage chips below those fields.",
+    "Read Equivalent hourly rate with the Per day, Per week, Per month, Per year and Fixed project fee rows, then fill What you actually keep and Rate needed to replace a salary before pressing Copy rates or Reset.",
+  ],
   intro:
     "This converter moves a freelance rate between hourly, daily, weekly, monthly, annual and fixed-project figures by routing all of them through one anchor: billable hours a year, calculated as hours a day × utilisation × days a week × weeks actually worked. Because it uses working weeks rather than 52 and applies a utilisation percentage to unpaid admin and pitching time, the annual figure it shows is the one you could really bill. It also converts billings into take-home after business costs and tax, and works out the rate needed to replace a salaried package.",
   useCases: [

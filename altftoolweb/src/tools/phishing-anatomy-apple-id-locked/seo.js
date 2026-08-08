@@ -1,4 +1,12 @@
 const seo = {
+  title: "Is the ‘Apple ID Locked’ Email Real? Phishing Check",
+  metaDescription:
+    "Check an Apple ID account-locked email, text or call: the link’s real domain against apple.com and icloud.com, plus what Apple never asks for.",
+  steps: [
+    "Set \"How did it arrive?\" to Email, SMS / text message, iMessage or \"Phone call or voicemail\", and paste the \"Sender address\".",
+    "Paste the real link target into \"Where the button or link goes\" - long press on a phone, or right click then \"Copy link address\" - and the wording into \"Message text\", ticking the attachment box if one came with it.",
+    "The \"Red-flag score\" out of 100 names a band from \"No strong signals found\" to \"Phishing - do not interact\", with every finding tagged Red flag, Caution, Note or Reassuring; \"Copy result\" copies the analysis.",
+  ],
   intro:
     "Account-locked messages are judged on two things: the registrable domain the link actually goes to, and whether the message asks for something Apple never asks for. This page checks both — sender and link domains against apple.com and icloud.com, and the wording against Apple's published position that it does not request passwords, verification codes or security answers by email, message or phone. It also covers the SMS, iMessage and cold-call versions of the same script, and the anatomy of the email itself, from the fake case number to the 24-hour deadline.",
   useCases: [

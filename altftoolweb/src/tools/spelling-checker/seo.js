@@ -1,4 +1,12 @@
 const seo = {
+  title: "Spelling and Grammar Checker (LanguageTool, en-US)",
+  metaDescription:
+    "Paste text and check it against LanguageTool’s en-US rules. Each match shows the rule and up to five replacements; Apply All Suggestions accepts them all.",
+  steps: [
+    "Paste your draft into the Text Input box marked 'Type or paste your text...'.",
+    "Press Check Spelling & Grammar to run it through LanguageTool's en-US rule set.",
+    "The Results panel reports 'Found N issues' with each flagged span, its rule message and up to five replacement buttons; Apply All Suggestions inserts the first replacement for every match.",
+  ],
   intro:
     "This spelling checker runs your text through the LanguageTool proofreading engine set to en-US and returns each flagged span with the rule that caught it and up to five replacement suggestions you can apply with a click. It catches more than misspellings — LanguageTool's rules cover grammar, agreement, punctuation and commonly confused word pairs — which makes it useful for anyone doing a last read of an email, essay or product description. Apply a single suggestion, or use Apply All Suggestions to accept the top replacement for every issue at once.",
   useCases: [

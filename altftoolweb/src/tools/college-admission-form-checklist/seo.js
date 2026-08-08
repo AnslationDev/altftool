@@ -1,4 +1,12 @@
 const seo = {
+  title: "College Admission Checklist with UGC Refund Slab",
+  metaDescription:
+    "Track each application's deadline and fee, tick one shared document pile, and get the UGC refund against the notified last date of admission.",
+  steps: [
+    "Press 'Add an application' and fill in the college name, 'Last date to apply' and 'Application fee (INR)' for each one.",
+    "Set 'Today's date' and tick the documents you already hold, so every application shows the days left or how long ago it closed.",
+    "For a withdrawal, enter 'Fee already paid (INR)', 'Notified last date of admission' and 'Date you give notice of withdrawal' to get the refund percentage, the processing charge kept and the amount forfeited.",
+  ],
   intro:
     "This tracker holds every college application in one place — the deadline, the fee, and the shared pile of documents each of them will ask for — and applies the University Grants Commission's fee refund slab if you end up withdrawing from a seat you have already paid for. That slab is measured against the institution's formally notified last date of admission: a full refund less a processing charge of at most ₹1,000 if you withdraw 15 days or more before it, 90% inside 15 days before, 80% up to 15 days after, 50% up to 30 days after, and nothing beyond that.",
   useCases: [

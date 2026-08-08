@@ -1,4 +1,12 @@
 const seo = {
+  title: "Nakshatra Name Letter Chart: All 108 Pada Syllables",
+  metaDescription:
+    "Every nakshatra pada with its namakarana syllable, 3 degree 20 minute span, rashi, navamsa, Vimshottari lord and deity - searchable by syllable or longitude.",
+  steps: [
+    "Choose a Nakshatra from the numbered list of 27, then a Pada (quarter) from Pada 1 to Pada 4.",
+    "Or type a sound into 'Starting syllable' to list every pada that carries it, or enter a figure into 'Sidereal longitude (0 to 360)' to have the pada resolved for you.",
+    "The Naming syllable appears in Roman and Devanagari with its Zodiac span, Rashi (sign), Navamsa (D-9) sign, Nakshatra lord, Deity, Symbol and pada number out of 108; Copy result copies the detail.",
+  ],
   intro:
     "The Nakshatra Name Letter Chart lists the traditional namakarana syllable assigned to each of the 108 padas — the four quarters of all 27 nakshatras — together with the exact 3°20′ arc that pada occupies on the sidereal zodiac. Every entry also shows the rashi the pada sits in, its navamsa (D-9) sign, the Vimshottari ruling planet, the presiding deity and the classical symbol. It is a reference for parents choosing a name after a birth star, students of jyotisha learning the pada system, and anyone who needs to check a syllable against a panchang reading.",
   useCases: [

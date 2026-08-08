@@ -1,4 +1,12 @@
 const seo = {
+  title: "AED to INR Mental Math: Rules You Can Do at a Till",
+  metaDescription:
+    "Turn today’s rupee-dirham rate into a head calculation: add a zero, times 7, divide by 3 (70/3). Each rule’s error shows as a % of the exact answer.",
+  steps: [
+    "Enter 'Rupees per 1 dirham (today's rate)' and 'A quoted price (AED)'.",
+    "Adjust the Service charge (%), Municipality fee (%) and VAT (%) boxes so the add-ons match the bill you are pricing.",
+    "The exact rupee figure appears with the till figure after the compounded add-ons and a 'Best rule to memorise' row giving each shortcut's error; press Copy sheet.",
+  ],
   intro:
     "This cheat sheet turns today's rupee-dirham rate into a multiplication you can run at a till. It rewrites the rate as a decimal shift plus a working multiplier between 1 and 10, then tests rounding to the nearest quarter or half, an easy percentage nudge, and the closest simple fraction — reporting each rule's error as a fixed percentage of the exact answer. Because the dirham has been pegged to the US dollar at 3.6725 since 1997, the rupee-dirham rate only moves when the rupee-dollar rate moves, which makes a memorised rule unusually durable here.",
   useCases: [

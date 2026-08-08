@@ -1,4 +1,7 @@
 const seo = {
+  title: "Bookmark Manager With Notes, Tags and JSON Export",
+  metaDescription:
+    "Save links with your own description, notes and tags, then pin, favourite or archive them. Stored in your browser; export a dated JSON backup.",
   intro:
     "Bookmark Capsule is a private link library that stores each bookmark's URL, title, description, category, tags and notes in your browser's localStorage, then lets you pin, favourite, archive and search across the whole set. It suits anyone whose browser bar has become an unusable wall of icons and who wants links described in their own words rather than by page title alone. Seven categories are set up by default — Development, Design, Education, Business, Marketing, Personal and News — and you can add your own, with a one-click JSON export as your backup.",
   useCases: [

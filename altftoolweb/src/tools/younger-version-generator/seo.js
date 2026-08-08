@@ -1,4 +1,10 @@
 const seo = {
+  title: "Younger Version Generator - Childhood Polaroid Filter",
+  steps: [
+    "Pick a stage under \"Select Younger Target Stage\": \"Toddler (2-4 yrs)\", \"Child (6-10 yrs)\" or \"Teen (13-17 yrs)\".",
+    "Press \"Select Photo\" or drop an image on the dashed zone (max size 10MB); a TinyFaceDetector and 68-point landmark pass locates the face, then the canvas warms the exposure and blurs inside the face oval.",
+    "Compare \"Your Photo\" with the \"Childhood Self\" polaroid and its Smooth Skin Index, Cheek Roundness Density and Relative Eye Proportion bars, then press \"Download\" for younger-self-toddler.png or \"Copy Report\" for the plain-text version.",
+  ],
   intro:
     "The Younger Version Generator takes a photo, finds the face with a 68-point landmark model running in your browser, and renders a nostalgic 'childhood self' polaroid by warming the exposure, softening the skin inside the detected face oval and adding rosy cheek tint. You pick one of three target stages — toddler (2-4), child (6-10) or teen (13-17) — and get back a framed image plus a playful profile with smooth-skin, cheek-roundness and eye-proportion figures. It is a photo filter and a novelty read, not a scientific reconstruction of how you actually looked.",
   useCases: [

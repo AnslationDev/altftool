@@ -1,4 +1,12 @@
 const seo = {
+  title: "Salary Negotiation Prompt Builder + Compa-Ratio",
+  metaDescription:
+    "Turn current pay, your ask and the market band into an AI roleplay prompt, with compa-ratio and range penetration worked out from your numbers.",
+  steps: [
+    "Fill Role or job title, Current annual pay, Pay you will ask for and the Market range minimum and maximum, set Rounds to rehearse (1-10), and pick a counterpart under \"Who you are practising against\" — Budget-constrained manager, Data-driven HR partner, Hard bargainer, Friendly but avoidant or Recruiter with a competing offer on the table.",
+    "Toggle the chips under \"Levers you are willing to trade\" (Base salary, Signing bonus, Equity or stock options, Guaranteed review date and six more) and type your Evidence you can point to and Constraints on your side — there is no generate button, the prompt rebuilds on every change.",
+    "Read \"Range penetration of your ask\" with its band verdict, plus the Band midpoint, \"Compa-ratio (ask ÷ midpoint)\" and Prompt length rows, then press Copy prompt to take the roleplay text under \"Your prompt\" into any chat model, or Reset to restore the sample figures.",
+  ],
   intro:
     "The Salary Negotiation Prompt Builder converts your current pay, target pay and researched market range into a ready-to-paste roleplay prompt that makes a chat model argue back as the manager or recruiter across as many rounds as you choose. Alongside the prompt it works out compa-ratio (your ask divided by the band midpoint) and range penetration ((ask − minimum) ÷ (maximum − minimum)), the two figures compensation teams use to judge where a number sits inside a band. It is for anyone who wants to hear the objections once in private before hearing them for real.",
   useCases: [

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Wedding Budget Split & Planning Prompt Builder",
+  metaDescription:
+    "Split a wedding budget by category with 10% contingency held back, get cost per guest and per plate, and copy a prompt carrying those numbers.",
+  steps: [
+    "Enter the Total budget, pick a Currency, then set Guest count and Months until the wedding.",
+    "Choose a Budget model of Single-day wedding or Multi-event wedding, say what you will not compromise on, and add a city, a non-negotiable and anything to avoid.",
+    "Read the all-in cost per guest and the category split that holds back 10% contingency, then press Copy prompt to paste those figures into an AI assistant.",
+  ],
   intro:
     "Wedding Planning Prompt Builder divides a fixed wedding budget across categories, derives the all-in cost per guest and the combined venue-and-catering budget per plate, and places you in a planning phase based on the months remaining. The category percentages are planner rules of thumb — including the 10% contingency most planning guides advise holding back — applied to your own total rather than to national averages. The output is a planning prompt that already carries those numbers, so an AI assistant answers about your wedding rather than a generic one.",
   useCases: [

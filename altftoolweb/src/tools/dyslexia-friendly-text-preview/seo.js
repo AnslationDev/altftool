@@ -1,4 +1,12 @@
 const seo = {
+  title: "Dyslexia Friendly Text Preview: WCAG 1.4.12 Check",
+  metaDescription:
+    "Preview line height, letter and word spacing live, test them against WCAG 1.4.12 and the British Dyslexia Association guide, then copy the CSS.",
+  steps: [
+    "Choose a Typeface, then set Font size (px), Line height (× font size), Letter spacing (em), Word spacing (em), Paragraph spacing (× font size), Column width (px) and Alignment, and paste your own copy into Sample text.",
+    "Press \"Apply recommended values\" to load the WCAG 1.4.12 numbers — 1.5 line height, 0.12 em letter spacing, 0.16 em word spacing and 2× paragraph spacing at 19px in a 700px column — or tick All capitals and Italic to see what they cost in the Live preview.",
+    "Read \"Characters per line\" against the 60–70 target, plus Font size in points, Flesch Reading Ease and Flesch-Kincaid grade, and the pass/fail rule list citing WCAG 1.4.12 or the British Dyslexia Association guide, then press Copy CSS.",
+  ],
   intro:
     "Dyslexia Friendly Text Preview applies typographic settings to a live paragraph and checks them against two published standards: WCAG 2.2 success criterion 1.4.12 Text Spacing, which names 1.5× line height, 0.12 em letter spacing, 0.16 em word spacing and 2× paragraph spacing, and the British Dyslexia Association style guide, which asks for 12–14 pt body text, 60–70 characters a line, left alignment and bold rather than italics. It also scores the text itself with Flesch Reading Ease and the Flesch-Kincaid grade level, and hands back the settings as a CSS block.",
   useCases: [

@@ -1,4 +1,10 @@
 const seo = {
+  title: "Reddit Banner Size Checker: Safe Area on Mobile",
+  steps: [
+    "Upload under 'Banner artwork (stays in your browser)' — a JPG, PNG, WEBP, GIF or SVG — or just type the Artwork width (px) and Artwork height (px).",
+    "Choose a Banner height preset (1920 x 384, 256, 192 or 128 px) or set Banner height (px) yourself.",
+    "Read the safe centre width, the 'Keep clear each side' margin and the 'Old Reddit header fit' row, then press Export banner to save reddit-banner-1920x384.png.",
+  ],
   intro:
     "Reddit Banner Size Generator measures how much of a subreddit banner actually survives on each screen size, because the banner is painted as a full-width cover fill: a 1920 x 384 px banner keeps roughly its centre 824 px once a phone-width header is taken into account. It also fits the same artwork into the old Reddit header slot, which is capped at 500 x 100 px and 500 KB, and checks a 256 x 256 px community icon against the much smaller sizes Reddit renders it at. Useful for moderators building a consistent look across the new and old interfaces.",
   useCases: [

@@ -1,4 +1,10 @@
 const seo = {
+  title: "Apple Health export.xml: Summarize Records by Type",
+  steps: [
+    "Paste your Apple Health export.xml text into the 'Apple Health export.xml content or Record lines' box, or load the 'Two records' example.",
+    "Set 'Maximum records to summarize' — the default is 5,000 and the field accepts up to 50,000 Record elements.",
+    "Read the Type / Count / Unit / Mean / Min / Max table, then use Copy or Download to save it as apple-health-export-explorer.txt.",
+  ],
   metaDescription:
     "Explore an Apple Health export locally with readable summaries and charts, while keeping the selected health data in the browser.",
   intro:

@@ -1,4 +1,12 @@
 const seo = {
+  title: "Container Base Image Chooser: Alpine vs Distroless",
+  metaDescription:
+    "Answer three questions on libc, shell and CA certs to get the smallest workable base image, from 0 MB scratch to 117 MB debian, with reject reasons.",
+  steps: [
+    "Pick what you are shipping: Fully static binary (Go CGO_ENABLED=0, Rust musl), Dynamically linked against glibc, Built for musl, or Interpreted runtime (Python, Node, Ruby, JVM...).",
+    "Tick the requirements that apply — a shell in the running container, installing OS packages with apt or apk at build time, and outbound HTTPS calls needing CA certificates.",
+    "Recommended base image shows the FROM line, approximate uncompressed size, libc and debug tooling, and Full ranking for your workload lists scratch at 0 MB through debian (full) at 117 MB with the reason each rejected image does not fit.",
+  ],
   intro:
     "This tool picks the smallest container base image that still satisfies your workload's real requirements — libc flavour (glibc vs musl vs none), shell access, package manager and CA certificates — comparing scratch, distroless static and base, alpine, debian slim, ubuntu LTS and full debian. It encodes the standard hardening guidance: ship the minimum filesystem your binary needs, because every extra megabyte is pull time and attack surface. Built for backend and platform engineers writing Dockerfiles for Go, Rust, Java, Python and Node services.",
   useCases: [

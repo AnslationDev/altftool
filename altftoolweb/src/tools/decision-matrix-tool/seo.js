@@ -1,4 +1,12 @@
 const seo = {
+  title: "Decision Matrix: Weighted Scoring and Sensitivity",
+  metaDescription:
+    "Rate options 1-10 against weighted criteria, mirror lower-is-better costs, and see the exact weight at which the runner-up would overtake the winner.",
+  steps: [
+    "Name your criteria under Criteria and weights, set each Weight from 0 to 10, and tick Lower is better for cost or lead time.",
+    "Use Add option for up to 10 options, then rate each option from 1 to 10 against every criterion in the Ratings table.",
+    "Read the Ranking and Margin, check What would change the answer for the weight that flips the runner-up ahead, then use Copy report.",
+  ],
   intro:
     "A decision matrix scores each option against weighted criteria and ranks them: normalise the weights so they sum to 1, multiply each rating by its weight share, and add up. This tool runs that weighted scoring model on a 1-10 rating scale, mirrors the rating for criteria where lower is better such as cost or lead time, and then does the part most templates skip — telling you which weight would have to change, and by how much, for the runner-up to win. It is for teams making a build-versus-buy, vendor or hiring call that has to be defensible afterwards.",
   useCases: [

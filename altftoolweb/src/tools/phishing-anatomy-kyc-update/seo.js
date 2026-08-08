@@ -1,4 +1,12 @@
 const seo = {
+  title: "KYC Expiry Scam SMS: Anatomy and 13-Marker Scanner",
+  metaDescription:
+    "Line-by-line teardown of the KYC-expiry scam SMS, plus a scanner scoring anything you paste on 13 weighted markers and each link's registrable domain.",
+  steps: [
+    "Paste the SMS, email or WhatsApp message into the Scan a message box — defanged addresses such as bad[.]xyz and hxxp:// are read as written, and you should never paste your own Aadhaar, PAN, OTP or UPI PIN.",
+    "The Risk score and its band update as you type, splitting Points from the wording and Points from the links across 13 weighted markers, with screen-sharing and UPI-PIN requests carrying the heaviest weights.",
+    "Read What matched, and why it matters, The links in that message and The specimen, line by line, then press Copy result, or Reset to restore the specimen message.",
+  ],
   intro:
     "This explainer dissects the KYC-expiry scam message — \"your KYC has expired as per RBI guidelines, the account will be blocked today\" — and names the pressure tactic in each line, including the two endings that actually take the money: a screen-sharing app installed for \"assisted KYC\", and a one-rupee verification approved with your UPI PIN. A scanner scores anything you paste against 13 weighted markers of the same family and inspects every link's registrable domain. Periodic KYC updation is a genuine RBI requirement, which is exactly why this pretext works.",
   useCases: [

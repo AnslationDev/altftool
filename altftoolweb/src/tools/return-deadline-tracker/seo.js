@@ -1,4 +1,9 @@
 const seo = {
+  steps: [
+    "Enter 'What did you buy?' and choose 'Retailer or policy' from the built-in list, which shows each policy's day count, or set your own 'Return window (days)'.",
+    "Fill 'Purchase date' and 'Delivery date', set 'Today' and pick the 'Return status'.",
+    "Read the deadline, then press 'Add to tracked list' to build the 'Tracked purchases' table, or 'Copy result' to take the dates with you.",
+  ],
   intro:
     "The Return Deadline Tracker calculates the last day you can send a purchase back by adding the retailer's published return window to the correct start date — the delivery date for Amazon, Flipkart and Myntra, the purchase date for Walmart, Target, Best Buy and IKEA. It covers 13 built-in policies plus statutory windows, including the EU's 14-day withdrawal period under Directive 2011/83/EU and the UK's 14 days under the Consumer Contracts Regulations 2013. It is for online shoppers juggling several open orders who want one list of what expires when.",
   useCases: [
